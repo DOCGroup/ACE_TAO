@@ -1,0 +1,4579 @@
+Wed Jan 30 21:08:22 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp:
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.h:
+	* performance-tests/Latency/AMH/Single_Threaded/client.cpp:
+	* performance-tests/Latency/AMH/Single_Threaded/server.cpp:
+	* performance-tests/Latency/AMI/Roundtrip.cpp:
+	* performance-tests/Latency/AMI/Roundtrip.h:
+	* performance-tests/Latency/AMI/Roundtrip_Handler.cpp:
+	* performance-tests/Latency/AMI/Roundtrip_Handler.h:
+	* performance-tests/Latency/AMI/Server_Task.cpp:
+	* performance-tests/Latency/AMI/client.cpp:
+	* performance-tests/Latency/AMI/server.cpp:
+	* performance-tests/Latency/DII/Roundtrip.cpp:
+	* performance-tests/Latency/DII/Roundtrip.h:
+	* performance-tests/Latency/DII/client.cpp:
+	* performance-tests/Latency/DII/server.cpp:
+	* performance-tests/Latency/DSI/Roundtrip.cpp:
+	* performance-tests/Latency/DSI/Roundtrip.h:
+	* performance-tests/Latency/DSI/client.cpp:
+	* performance-tests/Latency/DSI/server.cpp:
+	* performance-tests/Latency/Deferred/Roundtrip.cpp:
+	* performance-tests/Latency/Deferred/Roundtrip.h:
+	* performance-tests/Latency/Deferred/client.cpp:
+	* performance-tests/Latency/Deferred/server.cpp:
+	* performance-tests/Latency/Single_Threaded/Roundtrip.cpp:
+	* performance-tests/Latency/Single_Threaded/Roundtrip.h:
+	* performance-tests/Latency/Single_Threaded/client.cpp:
+	* performance-tests/Latency/Single_Threaded/server.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/Client_Task.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/Client_Task.h:
+	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.h:
+	* performance-tests/Latency/Thread_Per_Connection/client.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/server.cpp:
+	* performance-tests/Latency/Thread_Pool/Client_Task.cpp:
+	* performance-tests/Latency/Thread_Pool/Client_Task.h:
+	* performance-tests/Latency/Thread_Pool/Roundtrip.cpp:
+	* performance-tests/Latency/Thread_Pool/Roundtrip.h:
+	* performance-tests/Latency/Thread_Pool/Worker_Thread.cpp:
+	* performance-tests/Latency/Thread_Pool/client.cpp:
+	* performance-tests/Latency/Thread_Pool/server.cpp:
+
+	  Conversion to the ACE_ENV_ macros.
+	  Thanks to Johnny Willemsen for keeping an eye out.
+
+Wed Jan 30 13:38:03 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.h (RefCountServantBase): Fixed
+	  a cut&paste error.  Thanks to Gautam H Thaker
+ 	  <gthaker@atl.lmco.com> for reporting this.
+
+Wed Jan 30 12:49:43 2002  Rob Ruff  <rruff@scires.com>
+                          Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Change ACE_ENV_ARG_DECL to
+	  ACE_ENV_ARG_DECL_NOT_USED.
+	* orbsvcs/orbsvcs/AV/RTCP.cpp:  Clean up debugging statements.
+	  Change value of RTCP_SDES_NOTE to "An important note..."
+	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp (update_seq): 
+	  Only show debug statement if TAO_debug_level is > 0.
+	* orbsvcs/orbsvcs/AV/Transport.cpp: Default initialize timer_id_ to
+	  -1.  Only call cancel_timer() and handle_timeout() if timer_id_ is
+	  not -1. 
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	 (TAO_AV_UDP_Connector::connect) Set the control address.
+	 (TAO_AV_UDP_Connection_Setup::setup) Treat the setup of sockets
+	 which are used as acceptors or connectors differently.
+
+Wed Jan 30 16:07:33 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Makefile.bor:
+          Added Structured_Filter and Structured_Multi_Filter
+
+        * orbsvcs/tests/Notify/Structured_Filter/*.bor:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/*.bor:
+          Added BCB makefiles for these tests
+
+Wed Jan 30 11:19:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Added backwards compatible macro define for TAO_ENV_DECLARE_NEW_ENV
+
+Wed Jan 30 07:39:09 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp
+	  (Notify_Push_Consumer::push_structured_event): Corrected
+	  usage of ACE_ENV_ARG_DECL_NOT_USED.
+
+Tue Jan 29 17:13:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Changed the code in idl_store_pragma() to keep track of how
+          many characters it 'crunches' when removing whitespace
+          between the '#' and the 'pragma'. When the trailing '\n' of
+          the pragma string is removed later on, it must be shifted
+          this many places to the left, to skip over the characters
+          that have now become garbage. Thanks to Ossama Othman
+          <ossama@doc.ece.uci.edu> for providing the KCC preprocessor
+          output that showed the source of the problem.
+
+Tue Jan 29 23:31:14 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* rules.tao.GNU:
+	  Removed the include_env switch, it now lives in
+          $ACE_ROOT/include/makeinclude/wrapper_macros.GNU.
+
+Tue Jan 29 21:34:20 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+	  Oops, fixed bad comment in line 1.
+
+Tue Jan 29 21:09:12 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* tao/orbconf.h (TAO_ENV_*):
+	  Deprecated. Instead, use the equivalent ACE_ENV_ macros from
+	  $ACE_ROOT/ace/CORBA_macros.h.
+
+	* (many source files):
+	  Corresponding to the above change, changed all relevant source
+	  files to use the new ACE_ENV_ARG macros instead of the TAO_ENV_ARG
+	  macros. All exception related macros are now defined in
+	  $ACE_ROOT/ace/CORBA_macros.h.
+
+Tue Jan 29 09:01:41 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Removed bogus semicolon.
+
+	* TAO_IDL/be_include/be_visitor_interface/amh_ch.h:
+	  Changed broken private inheritance to public inheritance.
+
+Tue Jan 29 08:57:31 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Messaging.h:
+	  Add TAO_Export to the function declaration, otherwise it is
+	  invisible outside the library.
+
+Tue Jan 29 10:56:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+
+          Added throw spec to push_structured_event() to match the
+          declaration.
+
+Tue Jan 29 09:38:35 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tao/CORBALOC_Parser.cpp:
+	  Fixed compile error. Added #include "tao/debug.h".
+
+Tue Jan 29 13:09:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Makefile.bor:
+          Added Blocking, Discarding, MT_Dispatching,
+          Sequence_Multi_ETCL_Filter and Sequence_Multi_Filter directory
+
+        * orbsvcs/tests/Notify/Blocking/*.bor:
+          Added new BCB makefiles to build this test
+
+        * orbsvcs/tests/Notify/Discarding/*.bor:
+          Added new BCB makefiles to build this test
+
+        * orbsvcs/tests/Notify/MT_Dispatching/*.bor:
+          Added new BCB makefiles to build this test
+
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/*.bor:
+          Added new BCB makefiles to build this test
+
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/*.bor:
+          Added new BCB makefiles to build this test
+
+Tue Jan 29 11:20:36 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/performance-tests/Makefile.bor:
+          Added Throughput and Filter directory
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.bor:
+          Added new BCB makefile to build this test
+
+        * orbsvcs/tests/Notify/performance-tests/Filter/*.bor:
+          Added new BCB makefiles to build these tests
+
+        * orbsvcs/tests/Notify/Makefile.bor:
+          Added Ordering directory
+
+        * orbsvcs/tests/Notify/Ordering/*.bor:
+          Added new BCB makefiles to build these tests
+
+Tue Jan 29 09:10:17 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+	* tao/Messaging.h:
+          Removed TAO_Export from namespace definitions because namespaces
+          aren't exported. BCB compiler complains about this
+
+Tue Jan 29 08:14:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvs/tests/Makefile.bor:
+          Added CosEvent and Notify directory
+
+        * orbsvcs/tests/CosEvent/Makefile.bor:
+          Added new BCB makefile to build subdirectories
+
+        * orbsvcs/tests/CosEvent/lib/Makefile.bor:
+          Added new BCB makefile to build this test library
+
+        * orbsvcs/tests/CosEvent/Basic/Makefile.bor:
+          Added new BCB makefile to build these tests
+
+        * orbsvcs/tests/Notify/Makefile.bor:
+          Added new BCB makefile to build subdirectories
+
+        * orbsvcs/tests/Notify/lib/Makefile.bor:
+          Added new BCB makefile to build this test library
+
+        * orbsvcs/tests/Notify/Basic/Makefile.bor:
+          Added new BCB makefile to build these tests
+
+        * orbsvcs/tests/Notify/performance-tests/Makefile.bor:
+          Added new BCB makefile to build subdirectories
+
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.bor:
+          Added new BCB makefile to build this test
+
+Mon Jan 28 20:21:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CORBALOC_Parser.cpp
+	  (check_prefix, parse_string_count_helper):
+
+	  Only print debugging information if desired by the user.
+
+	  Improved efficiency of some code.
+
+Mon Jan 28 16:21:59 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Add Messaging.cpp to the project files.
+
+Mon Jan 28 16:11:36 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Add generation of the AMH_*ExceptionHolder valuetype.
+
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+	  The IDL compiler simply calls the shared code in
+	  TAO_Messaging_Helper::exception_holder_raise().
+	  Using a shared function for the raise methods in the
+	  ExceptionHolders reduced the line count from 59Kloc to 56Kloc,
+	  more importantly it saved 10% in the text segment for
+	  param_testC.o.
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+	  Cleanup indentation.
+	  Generate throw specs for valuetype operations.
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	  Remove obsolete @@ comment.
+
+	* tao/Messaging.h:
+	* tao/Messaging.cpp:
+	  Add new Messaging.cpp, it should contain helper code used in the
+	  implementation of CORBA Messaging.
+
+	* tao/Makefile:
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+	  Add new Messaging.cpp file and update deps.
+
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	  Update deps.
+
+Mon Jan 28 13:40:38 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Fixed typo in UTL_ScopeActiveIterator change, the loop
+	  termination should have been !si.is_done(), but I typed
+	  si.is_done().
+
+Mon Jan 28 12:40:15 2002  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Latency/AMH/Single_Threaded/client.dsp:
+	* performance-tests/Latency/AMH/Single_Threaded/server.dsp:
+	* performance-tests/Latency/AMI/client.dsp:
+	* performance-tests/Latency/AMI/server.dsp:
+	* performance-tests/Latency/DII/client.dsp:
+	* performance-tests/Latency/DII/server.dsp:
+	* performance-tests/Latency/DSI/client.dsp:
+	* performance-tests/Latency/DSI/server.dsp:
+	* performance-tests/Latency/Deferred/client.dsp:
+	* performance-tests/Latency/Deferred/server.dsp:
+	* performance-tests/Latency/Single_Threaded/client.dsp:
+	* performance-tests/Latency/Single_Threaded/server.dsp:
+	* performance-tests/Latency/Thread_Per_Connection/client.dsp:
+	* performance-tests/Latency/Thread_Per_Connection/server.dsp:
+	* performance-tests/Latency/Thread_Pool/client.dsp:
+	* performance-tests/Latency/Thread_Pool/server.dsp:
+
+	  Updated paths in accordance with the new "Latency" performance
+	  test organization.
+
+Mon Jan 28 12:39:50 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/EC_Throughput/README:
+	  Fixed paths in the README file, some of the binaries were
+	  completely wrong.  Made a pass to improved documentation.
+
+Mon Jan 28 12:30:38 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  The code was generating a TAO_ENV_ARG_PARAMETER in the header
+	  file.  BIG mistake, I should have generated a TAO_ENV_ARG_DECL.
+
+Mon Jan 28 14:25:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.dsp:
+
+	  Removed these files and added them below, renamed uniquely so they
+	  could be inserted into the workspace containing all the Notify tests.
+
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp:
+
+	  Added these files as renamings of the ones removed above.
+
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter.dsw:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter.dsw:
+
+	  Changed the names of the included projects to reflect the
+	  changes above.
+
+	* orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+
+	  Changed the way a signed 64-bit integer is handled in a case
+	  statement.
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.h:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+	* orbsvcs/tests/Notify/Basic/Events_Test.h:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.h:
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.h:
+	* orbsvcs/tests/Notify/Basic/Simple.cpp:
+	* orbsvcs/tests/Notify/Basic/Simple.h:
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	* orbsvcs/tests/Notify/Basic/Updates.h:
+	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+
+	  Cosmetic changes.
+
+Mon Jan 28 12:23:39 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_argument/argument.h:
+	* TAO_IDL/be/be_visitor_argument/argument.cpp:
+	  Add functionality to support fixed-direction arguments, i.e. the
+	  visitor caller can override the actual direction of the
+	  argument.  This is used in AMH to make all the INOUT arguments
+	  behave as IN arguments.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Use the set_fixed_direction() functionality in the
+	  be_visitor_args visitors to generate correct code for the INOUT
+	  arguments in an AMH function.
+
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	  Removed extra argument in the generate_shared_section() helper,
+	  the argument is no longer needed.
+
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Fixed problem in UTL_ScopeActiveIterator, a bogus si.next() was
+	  left in the for()-loop body.
+
+Mon Jan 28 12:15:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Forward/server.dsp:
+
+	  Corrected TAO_IDL compiler path in "Debug" configuration
+	  dependencies.
+
+Mon Jan 28 11:50:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Latency/AMH/Single_Threaded/run_test.pl:
+	* performance-tests/Latency/AMI/run_test.pl:
+	* performance-tests/Latency/DII/run_test.pl:
+	* performance-tests/Latency/Deferred/run_test.pl:
+	* performance-tests/Latency/Single_Threaded/run_test.pl:
+	* performance-tests/Latency/Thread_Per_Connection/run_test.pl:
+	* performance-tests/Latency/Thread_Pool/run_test.pl:
+
+	  Corrected Perl include path.  Thanks to Carlos for pointing out
+	  the problem.
+
+Mon Jan 28 11:38:22 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	  Another iteration in the AMH support.  This time we make sure
+	  that only IN and INOUT arguments are generated in the AMH
+	  skeletons, but I believe that INOUT arguments are not generated
+	  correctly.
+
+Mon Jan 28 11:17:40 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Removed last instances of head-allocated
+	  UTL_ScopeActiveIterator, hopefully this will stop the madness
+	  and people will cut&paste the "Right Thing"[tm] from now on.
+
+Mon Jan 28 10:50:40 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+
+          Removed some lines of unreachable code.
+
+Mon Jan 28 10:39:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/Application_Test/ifr_dii_client.cpp:
+
+          Changed the name of a local variable to avoid a warning,
+          on SunOS Forte, of a possible hiding of a class member
+          variable.
+
+Mon Jan 28 08:39:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * performance-tests/Makefile.bor:
+          Updated BCB makefile with changes in Latency tests
+
+Sun Jan 27 14:35:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Pluggable.cpp (make_mprofile):
+
+	  Fixed support for parsing URL style IORs with multiple addrs in
+	  them.  [Bug 1130]
+
+Sun Jan 27 13:22:11 2002  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/README:
+	* performance-tests/Latency/README:
+
+	  Updated in accordance with the new "Latency" performance test
+	  organization.
+
+Sun Jan 27 12:51:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/Makefile (DIRS):
+
+	  Updated in accordance with the new "Latency" performance
+	  test organization.
+
+	* performance-tests/Latency/Makefile (DIRS):
+	* performance-tests/Latency/Makefile.bor (DIRS):
+	* performance-tests/Latency/AMH/Makefile (DIRS):
+	* performance-tests/Latency/AMH/Makefile.bor (DIRS):
+
+	  Makefiles for the newly reorganized "Latency" performance
+	  tests.
+
+Sun Jan 27 12:02:37 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+	  Added missing explicit template instantiation.
+
+Sun Jan 27 15:04:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * Makefile.bor:
+          Added the XML library
+
+Sun Jan 27 00:52:49 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp:
+	* tests/ORT/client.cpp:
+	* tests/ORT/server.cpp:
+
+	  Minor code review.  Nothing major.  Just style issues.
+
+Sat Jan 26 23:09:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp (id, register_initial_reference):
+
+	  The CORBA specification recently added these methods to the
+	  CORBA::ORB interface.  Implemented them.
+
+	* tao/ORB_Core.cpp:
+
+	  Moved template instantiations from `ORB.cpp' to this file. They
+	  aren't used in the former.
+
+	* tao/Object_Ref_Table.h:
+	* tao/Object_Ref_Table.cpp:
+
+	  Synchronize access to the underlying hash map by instantiating
+	  the template(s) with a TAO_SYNCH_MUTEX instead of an
+	  ACE_Null_Mutex.  Multiple threads may potentially attempt to
+	  register an object reference concurrently.
+
+	* tao/ClientRequestInfo_i.cpp (get_service_context_i):
+
+	  Corrected exception minor code (26 instead of incorrect 23).
+
+Sat Jan 26 22:53:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* examples/Callback_Quoter/Notifier_i.cpp:
+	* tao/Asynch_Invocation.cpp:
+	* tao/corbafwd.h:
+	* tao/PortableServer/poa_macros.h:
+	  Removed dependence on tao/try_macros.h.
+
+	* tao/orbconf.h: Added back special comment line for Doxygen.
+
+Sat Jan 26 13:44:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/TODO.html:
+
+	  Updated Bugzilla URL.
+
+Sat Jan 26 20:10:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tao/orbconf.h (TAO_ENV_ARG_DEFN): Removed.
+
+Sat Jan 26 20:10:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.cpp
+	  (ORT_test_IORInterceptor_ORBInitializer::post_init):
+	  Removed TAO_ENV_ARG_DEFN and corrected usage of
+	  TAO_ENV_ARG_PARAMETER.
+
+Fri Jan 25 19:05:24 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Forward/server.dsp:
+
+	  Added missing IDL custom build step for the "Release"
+	  configuration.
+
+Fri Jan 25 20:14:19 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/PortableServer/Makefile:
+
+	  Added missing PortableGroup_Hooks.
+
+Fri Jan 25 14:25:11 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* performance-tests/AMH_Single_Threaded_Latency/Roundtrip.h:
+	* performance-tests/AMH_Single_Threaded_Latency/Roundtrip.cpp:
+	  Changed TAO_ENV_SINGLE_ARG_DECL to TAO_ENV_ARG_DECL.  I had
+	  copied the code as is from the Single_threaded_Latency test and
+	  since for AMH_skeletons we add an extra rh paramater, the 'void
+	  shutdown (void)' method now had an argument (comapred to none
+	  before).  This was causing a problem on builds that used
+	  emulated exceptions.
+
+Fri Jan 25 14:10:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp (handle_stop):
+
+	  Removed unreachable statement.
+
+Fri Jan 25 13:26:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Any/AnyS_impl.cpp (magic):
+
+	  Removed unsed global variable.
+
+Fri Jan 25 11:34:35 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_root/root_sth.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	  For some mystifying reason many UTL_ScopeActiveIterator
+	  instances were created on the heap, and immediately deleted (or
+	  not, leaking memory.)
+	  Funny enough the language has a perfectly usable feature for
+	  that kind of behavior, it is called "automatic variables".
+	  Also, several while()-loops were really for()-loops in disguise,
+	  changed them to make the behavior more obvious.
+
+Fri Jan 25 10:40:03 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/SecurityLevel1/client.dsp:
+	* orbsvcs/tests/Security/SecurityLevel1/server.dsp:
+	* orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.dsw:
+
+	  Added missing MSVC++ project and workspace files.
+
+Fri Jan 25 10:21:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Big_Request/client.dsp:
+	* orbsvcs/tests/Security/Big_Request/server.dsp:
+	* orbsvcs/tests/Security/Callback/client.dsp:
+	* orbsvcs/tests/Security/Callback/server.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/server.dsp:
+
+	  Corrected the "Release" configuration output filenames.
+	  Binaries for "Release" builds belong in the `Release' directory,
+	  by convention.
+
+Fri Jan 25 10:06:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Any/client.dsp:
+
+	  Added missing custom build step in the "Release" configuration
+	  for the this test's IDL file.
+
+Fri Jan 25 11:24:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_array.cpp:
+
+          Added base class constructor calls to class be_array
+          constructor.
+
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+
+          Cosmetic changes to source code.
+
+        * TAO_IDL/fe/fe_declarator.cpp:
+
+          Removed addition of arrays to AST at global scope. This seems to
+          be legacy code that there is no good reason for, and it was
+          causing problems when an array is declared, typedef'd, and
+          used as the element of another array at global scope. Anonymous
+          arrays and the corresponding typdef (if any) are still
+          added to the scope where they are declared. Thanks to Boris
+          Kolpackov <boris@upsa.kent.orc.ru> for reporting this bug.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+
+          Made change for sequences similar to change for arrays
+          above.
+
+Fri Jan 25 12:14:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * TAO/performance-tests/AMH_Single_Threaded_Latency/*.bor:
+          Added BCB makefiles
+
+Fri Jan 25 00:04:05 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	* docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+	* docs/tutorials/Quoter/AMI/Makefile:
+	* docs/tutorials/Quoter/idl/Makefile:
+	  Regenerated dependencies.
+
+Thu Jan 24 20:15:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/AMH_Single_Threaded_Latency.dsw:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.dsp:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/server.dsp:
+	  Workspace and projects for the AMH performance test.
+
+Thu Jan 24 18:51:21 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO/performance-tests/AMH_Single_Threaded_Latency:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.cpp:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/server.cpp:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/Roundtrip.h:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/Roundtrip.cpp:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/Makefile:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/run_test.pl:
+	* TAO/performance-tests/Makefile:
+	* TAO/performance-tests/Makefile.bor:
+	* TAO/performance-tests/README:
+	  Performance test for AMH based on the Single_Threaded_Latency
+	  test.
+
+Thu Jan 24 17:47:00 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_decl.cpp:
+	  Fixed the implementation of compute_flat_name() there was
+	  nothing flat about the named computed: it used the regular full
+	  name for the containing scope, so for nested modules the results
+	  were wrong.
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Fixed warning about unused argument and made several cosmetic
+	  fixes.
+
+	* TAO_IDL/be/be_visitor_argument.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	  Cosmetic fixes.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Implement code to process attributes as well as operations.
+
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Fixed implementation of the _downcast() method on the AMH
+	  skeleton.
+
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Generate correct code for AMH-copy constructors.  I used the new
+	  class-based traverse_inheritance_graph().
+
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Add support for attributes, in both cases I used a technique
+	  slightly different from what the rest of the IDL compiler does.
+	  Normally a fake be_operation node is generated on the fly
+	  (usually heap allocated) and used to generate the code "as if"
+	  it was a real operation.  However, the code to generate
+	  operations has to be modified to treat these nodes with some
+	  magic, because the attribute name (on GIOP) are different than
+	  the actual name of the attribute.
+	  My approach was to re-factor the common code to generate
+	  attributes and operations in these new fangled things called
+	  "subroutines".  The attribute code calls the subroutines to
+	  generate the desired code.  I did have to generate a temporary
+	  node (of type be_argument), but I was able to stack-allocate it
+	  and use it in a very localized section of the code.
+	  Also, none of the operation code has to understand about
+	  attributes.
+
+
+Thu Jan 24 15:48:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/TAO_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+
+	  Fixed worspaces regarding moving of the AMH_Response_Handler
+	  files.
+
+Thu Jan 24 11:48:01 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	  Use the new class-based version traverse_inheritance_graph() to
+	  generate the operation table.  The name of the derived class is
+	  computed by the caller and pass through the Worker class down to
+	  the code generation routines.  This was useful to factor out the
+	  common code between the AMH-class (where the base class name is
+	  not obtainable via a simple method call) and the regular
+	  (non-AMH) skeletons.
+	  Also use stack-allocate iterators, it makes no sense in the
+	  world to allocate an object from the head only to delete when we
+	  return from the function!
+	  Change some while() loops to for() loops because the latter
+	  document the intent better.
+
+Thu Jan 24 12:35:17 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Fixed a bug in typecode generation for multidimension arrays.
+	  Implemented first part of new recursive IDL handling machanism.
+ 	  Refactored some repetitive code.
+
+Thu Jan 24 00:08:22 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp:
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+	* tao/PortableServer/ObjectReferenceTemplate.h:
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POA.i:
+
+	  Code review!  Left a whole slew of "@@" comments regarding
+	  disfunctional code, exception safety, memory leaks, etc.
+
+Wed Jan 23 22:00:16 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp
+	  (manager_id, state, current_factory):
+
+	  Fixed code that couldn't possibly work since an exception was
+	  always thrown.  Where's the testing?!
+
+Wed Jan 23 16:40:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+	* tao/ORB.cpp:
+	  Made changes to get the correct port value to search the NameService
+	  when the ORBDefaultInitRef option is used.
+	  The changes are made thanks to Andrew L. Shwaika<als@solvo.ru>
+
+Wed Jan 23 14:16:35 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/include/ast_argument.h:
+	  Changed values of the AST_Argument::Direction enum.  The new
+	  values allow me to specify sets of directions as bit masks.
+
+	* TAO_IDL/include/ast_operation.h:
+	* TAO_IDL/ast/ast_operation.cpp:
+	  Add new method to count the arguments in a given set of
+	  directions, for example, all (dir_IN|dir_OUT) arguments.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  The AMH_<Interface> class was deriving from the non-AMH
+	  classes.
+	  Remove stale comments.
+	  Use UTL_ScopeActiveIterator on the stack, there is no sense in
+	  declaring objects with a well-defined scope on the heap!  Fixed
+	  a memory leak in the process.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  After we generate the ResponseHandler argument in AMH-operations
+	  we need to insert a comma, but only if there are IN or INOUT
+	  arguments.  The code used to check for any kind of argument.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Generate the code for the _tao_in variable (the TAO_InputCDR) in
+	  the skeleton.
+	  Fix indentation in the skeleton.
+	  Insert the arguments for the upcall.  Unfortunately we are
+	  generating *all* the arguments, not only the IN and INOUT ones.
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	  Eliminate duplicate code using the
+	  count_arguments_with_direction routine.
+
+
+Wed Jan 23 13:09:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.h:
+
+	  Fixed a "fuzz" error related to a filename mismatch.
+
+	  Declare the class attributes after the class methods to more
+	  closely match ACE/TAO programming styles and common C++
+	  conventions.  Darn Java programmers!
+
+	  Wrapped overly long lines in class documentation.
+
+Wed Jan 23 12:06:37 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO/tao/Makefile:
+	* TAO/tao/Makefile.bor:
+	* TAO/tao/PortableServer/Makefile:
+	* TAO/tao/PortableServer/Makefile.bor:
+
+	  Updated the files with the changes of moving the
+	  AMH_Response_Handler files from `tao' and `tao/PortableServer'.
+
+Wed Jan 23 12:03:01 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+
+	  Fixed generate of the _downcast() method for AMH skeletons.  I
+	  used the new worker class to traverse inheritance graphs to do
+	  the job.
+
+Wed Jan 23 12:00:35 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp
+	  (authentication_state):
+
+	  Do not check if the credential is valid.  Once the credential
+	  has been authenticated it remains authenticated.  Users should
+	  call the is_valid() method if they wish to determine whether or
+	  not the credential has expired.
+
+Wed Jan 23 11:10:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.h:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/TAO.dsp:
+
+          Changed workspaces and header file to compile/link on Windows
+	  platforms.
+
+Wed Jan 23 10:47:30 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	  Add a new traverse_inheritance_graph() method that takes a class
+	  (with a virtual method) instead of a naked pointer to function.
+	  I will need the new version to pass state into one of the
+	  traversals.
+
+Wed Jan 23 09:55:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+
+	  Changed code to generate the right signatures for constructors
+	  and destructors, similar to the way it is done in
+	  be_visitor_operation/amh_rh_ss.cpp.
+
+Wed Jan 23 09:33:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp
+	  (establish_components, components_established):
+
+	  Fixed unused argument warnings.
+
+Wed Jan 23 09:30:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Current.pidl:
+
+	  Removed backslashes in comments.  Some compilers correctly flag
+	  them as potential problems through warnings.
+
+Wed Jan 23 09:25:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+
+	  Corrected some documentation.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (is_valid):
+
+	  Implemented this method.
+
+Wed Jan 23 11:05:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * examples/Quoter/Quoter.idl:
+
+          Added leading underscore to an operation parameter
+          named 'object' because it clashes with the IDL
+          keyword 'Object'.
+
+Wed Jan 23 16:14:43 2002 Boris Kolpackov  <bosk@ipmce.ru>
+
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+
+	  Fixed mistake in initialization of _tao_retval for valuetypes.
+
+	* tests/OBV/Any/Makefile:
+	* tests/OBV/Forward/Makefile:
+
+	  Fixed few stupid mistakes that made some time ago.
+
+	* tao/ValueBase.h
+
+	  Added work around for famous Sun CC "pure virtual function called"
+	  bug. Unfortunately this involves introduction of yet another #define.
+	  See include/makeinclude/platform_sunos5_sunc++.GNU for more information.
+
+Wed Jan 23 06:43:27  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
+
+          Added missing include files.
+
+Wed Jan 23 06:24:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp (create):
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Fixed warnings in
+	  Borland builds.
+
+Tue Jan 22 17:21:15 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	  Made stupid mistake in last round of changes: I did not test on
+	  a platform without exceptions enabled.
+	  This revealed a number of inconsistencies in the generated code,
+	  as well as very complicated logic to process arrays, sequences
+	  and interfaces as return arguments.
+	  Unfortunately, we were generating '_tao_safe_retval' for some
+	  types, and using _tao_retval for a dummy variable.  In yet other
+	  places we generated such a variable but not used it, yuck.
+	  I have made the generated code mode consistent, this allows the
+	  re-use in the last change, but it forces us to always call the
+	  return variable (if any) '_tao_retval'.
+
+Tue Jan 22 19:14:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+          Shortened some line lengths that were over 80 characters
+          in both source code and generated code. plus other
+          cosmetic changes.
+
+Tue Jan 22 15:32:10 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/ami_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_reply_stub_operation_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/direct_collocated_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/direct_proxy_impl_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/thru_poa_collocated_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
+	  I found multiple copies of the following routines:
+	  gen_raise_exception(): generate the code to raise exceptions
+	  using either 'throw', 'ACE_THROW' or 'ACE_THROW_RETURN'.
+	  gen_check_interceptor_exception(): generate the code to check
+	  for exceptions (in interceptors) using either
+	  'TAO_INTERCEPTOR_CHECK or 'TAO_INTERCEPTOR_CHECK_RETURN_RETURN'.
+	  gen_check_exception(): generate the code to check
+	  for exceptions (in interceptors) using either 'ACE_CHECK' or
+	  'ACE_CHECK_RETURN'.
+	  Interestingly the implementations of these routines were all
+	  slightly different, for example, some did not deal with non-void
+	  routines properly, while others did not deal with the
+	  use_raw_throw() IDL-compiler option.
+	  The changes were motivated by some Borland warnings, another
+	  lesson on why we need to keep looking at warnings carefully, and
+	  not simply shut them up using some hack.
+
+Tue Jan 22 13:36:05 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo_i.h (~TAO_ClientRequestInfo_i):
+	* tao/ClientRequestInfo_i.cpp (~TAO_ClientRequestInfo_i):
+
+	  Added a virtual destructor to silence G++ warnings.
+
+Tue Jan 22 13:19:52 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
+
+	  Fixed problem where a const variable was passed as a non-const
+	  parameter.
+
+Tue Jan 22 12:42:13 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/OBV/Forward/Makefile:
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* orbsvcs/tests/Security/Callback/Makefile:
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	  Regenerated dependencies.
+
+Tue Jan 22 12:25:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Strategies/simple_test.idl:
+
+          Changed a 'Boolean' to 'boolean'.
+
+Tue Jan 22 11:25:13 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+          Fixed MSVC warning.
+
+Tue Jan 22 11:22:33 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/tests/Miop/McastHello/Makefile:
+	  Added check to skip compilation under minimum CORBA
+	  builds.
+
+Tue Jan 22 11:08:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/NestedUpcall/Simple/test.idl:
+
+          Changed several operation parameter types from 'UShort'
+          to 'unsigned short'.
+
+Tue Jan 22 10:46:41 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_idlist.cpp (copy):
+
+          Fixed method to propagate the value of the 'escaped_'
+          member of each contained instance of class Identifier.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          When checking for case difference errors, modified logic
+          to pass the check if one or the other (but not both) of
+          the identifiers is escaped.
+
+        * orbsvcs/orbsvcs/LifeCycleService.idl:
+
+          Added an escape to an operation parameter named 'object',
+          since it clashes with the IDL keyword 'Object'.
+
+Tue Jan 22 06:52:32 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+
+          Reverting the const_cast change from "Mon Jan 21 08:02:28 2002".
+          It was not necessary.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> and Johnny Willemsen <jwillemsen@remedy.nl>
+          for pointing this out.
+
+Mon Jan 21 17:37:47 2002  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+
+          Added checks for illegal oneway operation properties
+          (non-void return type, user exceptions, OUT or INOUT
+          parameters) that CORBA 2.6 says must cause BAD_PARAM
+          minor code 31 to be thrown.
+
+Mon Jan 21 18:03:11 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/TAO_AMH_Response_Handler.cpp
+	* tao/TAO_AMH_Response_Handler.h
+	* tao/PortableServer/AMH_Response_Handler.cpp
+	* tao/PortableServer/AMH_Response_Handler.h
+
+	  Removed TAO_AMH_Response_Handler.* files from ORB_CORE and added
+	  them to tao/PortableServer, also renaming them to
+	  AMH_Response_Handler. This was doen to reduce tao orb_core
+	  foot-print.  Other changes to the AMH_Response_Handler:
+
+	- The RH methods are now thread-safe.
+	- Documentation of class, methods and members
+	- The 'once-only' semantics is now made more
+	  explicit by using an enum to hold the various ststes.
+	- init_reply and send_reply method names changed with _tao_rh_
+	  prefix to reduce possibility of user defining similar methods in
+	  IDL and creating a conflict.  Thanks to Carlos for all the '@@'
+	  comments regarding the above :-)
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp
+
+	  Changed code-generation to generate _tao_rh_init_reply () and
+	  _tao_init_send_reply () as per changes above.
+
+	* TAO_IDL/be/be_codegen.cpp (start_server_header):
+	  Changed code generation to include the (tao) ResponseHandler
+	  classes from the tao/PortableServer/ rather than from tao/
+
+Mon Jan 21 17:15:18 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Because things like 'CORBA::ULong' and 'CORBA::Float'
+          are added to the AST automatically, the IDL compiler
+          was wrongly accepting types like 'ULong' and "Float'.
+          This was fixed in lookup_by_name_local() and a new
+          method lookup_pseudo() was added to specialize the
+          cases 'Object' and 'TypeCode', where we want to find
+          a match. Thanks to Jerome Julius <julius@erols.com> for
+          sending in the example IDL file that uncovered this
+          problem.
+
+Mon Jan 21 20:59:09 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+        * tests/OBV/Any/Makefile:
+
+          Fixed minor bug.
+
+Mon Jan 21 10:51:52 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/Filter/Filter.dsp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+
+          Added the ETCL directory to libpath.
+
+Mon Jan 21 10:42:41 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Blocking/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+
+          Reverse the order of the CosNotification and ETCL libs in order to
+          link properly with static libraries.
+
+Mon Jan 21 10:30:38 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+
+          Added the ETCL directory to libpath.
+
+Mon Jan 21 08:02:28 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+
+          Added const cast's to appease the Borland compiler.
+
+Mon Jan 21 07:15:35 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+
+          Fix build errors for Debian Minimum.  Added a missing include of
+          "orbsvcs/TimeBaseC.h".
+
+Mon Jan 21 06:59:24 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+	  Fixed compile error. Added #include "tao/debug.h".
+
+Mon Jan 21 04:35:14 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP.idl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+
+	  Removed all uses of the OpenSSL RSA data structure and related
+	  functions in favor of the OpenSSL EVP_PKEY data structure and
+	  functions.  The latter is more generic, and automatically
+	  handles multiple private key types.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+
+	  New TAO_SSLIOP_EVP_PKEY_var class that provides CORBA-style
+	  memory management of the OpenSSL "EVP_PKEY" key data structure.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+
+	  Removed these files.  They have been superseded by the EVP_PKEY
+	  files above.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.inl (_duplicate):
+
+	  Do not attempt to increase the reference count if the X509
+	  pointer is zero.  Fixes a segmentation fault.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/SSLIOP.bor:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Added new SSLIOP_EVP_PKEY.* files and removed the deprecated
+	  SSLIOP_RSA.* files.
+
+Mon Jan 21 02:12:34 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h
+	  (retrieved_credentials):
+
+	  Changed the return type to be a Credentials object, thus making
+	  the method act as advertised.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	  (ssliop_connect):
+
+	  Once a connection has been made and before it is cached, set the
+	  quality-of-protection, establishment-of-trust and credentials
+	  specific to the connection in the TAO_SSLIOP_Endpoint.  They
+	  must be taken into account when searching the transport cache
+	  for suitable SSLIOP connections.
+
+	  (retrieve_credentials):
+
+	  Returned the retrieved credentials to the caller instead of
+	  attempting to do too much in this method.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp
+	  (operator==, hash):
+
+	  Added these comparison methods for use with TAO's transport
+	  caching mechanism.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+
+	  Added a SSLIOP_Credentials attribute, and accompanying
+	  accessors.
+
+	  Removed unnecessary `tao/ORB.h' include.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (credentials):
+
+	  New "credentials_" member set/get accessor methods.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
+	  (is_equivalent, hash):
+
+	  Use the corresponding methods in the SSLIOP_Credentials class
+	  when comparing/hashing two SSLIOP_Credentials objects.
+
+Mon Jan 21 01:05:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp
+	  (TAO_SSLIOP_password_callback):
+
+	  Fixed static_cast from "void *" to "const char *".  Such a cast
+	  is invalid.  Instead, static_cast to a "char *" and then assign
+	  to a "const char *".
+
+	  (make_X509, make_RSA):
+
+	  Corrected misuse of ACE_OS::close() where ACE_OS::fclose() was
+	  expected.
+
+Sun Jan 20 23:14:47 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP.idl:
+
+	  Added structures to be filled in with certificate and key
+	  information.  These will be used in conjunction with the
+	  SecurityLevel2::PrincipalAuthenticator object, i.e passed in via
+	  the authenticate() method.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	  (retrieve_credentials):
+
+	  Set the RSA private key for the current invocation if one was
+	  set in the retrieved credentials.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_RSA.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_RSA.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_RSA.cpp:
+
+	  New TAO_SSLIOP_RSA_var class that provides CORBA-style memory
+	  management of the OpenSSL "RSA" key data structure.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+
+	  The Credentials objects now hold a pointer to an OpenSSL "RSA"
+	  key data structure.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h (make_X509, make_RSA):
+
+	  Added these methods to the TAO_SSLIOP_Vault class.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp (acquire_credentials):
+
+	  Completed initial implementation of this method.  Support for
+	  ASN.1 and PEM encoded certificates and RSA private keys is
+	  available.
+
+	  (make_X509, make_RSA):
+
+	  New methods create OpenSSL X509 and RSA data structures,
+	  respectively, based on authentication data supplied by the user.
+
+	  (TAO_SSLIOP_password_callback):
+
+	  Callback method passed to OpenSSL calls that require passwords
+	  or passphrases to decrypt PEM files.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.h:
+
+	  Include "ace/config-all.h" instead of "tao/corbafwd.h."  The
+	  former is all that is needed.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/SSLIOP.bor:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Added new SSLIOP_RSA.* files to the appropriate file lists.
+
+Mon Jan 21 00:13:42 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * orbsvcs/Notify_Service/NT_Notify_Service.bor:
+        * orbsvcs/Notify_Service/Notify_Service.bor:
+          Added in ETCL library now required for static linking.
+
+        * orbsvcs/orbsvcs/CosNotification.bor:
+          Added missing source files Notify_Extensions and
+          Notify_StructuredEvents.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Security/SecurityManager.cpp:
+          Added .in()s in places to fix Borland C++ compiler error about
+          ambiguous conversion.
+
+Sun Jan 20 17:38:01 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+
+          Added a check in be_valuetype::in_recursion() to catch
+          the case where a valuetype contains a valuetype that
+          is recursive. Also changed in_recursion in each of the
+          files above to create the scope visitor on the stack
+          instead of on the heap. Also removed narrowing of return
+          value from field->field_type() to AST_Type - that method
+          returns an AST_Type already.
+
+Sun Jan 20 16:33:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/Notify_Service/Makefile:
+
+          Added orbsvcs/orbsvcs/ETCL to library search path.
+
+Sun Jan 20 15:56:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/OBV/Any/Any.dsw:
+        * tests/OBV/Any/client.dsp:
+        * tests/OBV/Any/server.dsp:
+
+          Added some files to server.dsp. Also recreated client.dsp
+          and added it again to the workspace, since the original
+          project file wouldn't load.
+
+Sun Jan 20 09:44:12 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	  Added TAO_CosNaming.lib to link list for Win32 Release.
+
+Sat Jan 19 18:23:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Fixed some more
+	  errors with exception specifications.
+
+Sat Jan 19 23:57:13 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+        * tests/OBV/Any/Makefile:
+          Regenerated dependencies.
+
+Sat Jan 19 23:30:42 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+          Fixed some bugs in generated any extraction operator.
+
+Sat Jan 19 14:15:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Not sure why this
+	  was lying in workspace for a long time. Fixed a compile error
+	  with g++. Exceptions were not specified in the signature and
+	  hence the error.
+
+Sat Jan 19 10:58:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ServerRequestInfo.cpp (server_id, orb_id):
+
+	  Fixed code that didn't conform to the C++ mapping.  The caller
+	  owns the storage.  Return a string using CORBA::string_dup().
+	  Don't just return a string with the const-ness casted away.
+
+Sat Jan 19 11:36:22 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/tests/Miop/McastHello/server.cpp (main):
+	  Fixed a few warnings.  Thanks to Venkita for catching them.
+
+Sat Jan 19 11:16:09 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* utils/nslist/nsdel.cpp:
+	  Fixed (hopefully!!) compile errors.
+
+Sat Jan 19 09:22:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Transport.cpp: Just swapped a couple of
+	  #includes. The dependency generation was getting messed up
+	  somehow.
+
+	* orbsvcs/orbsvcs/Makefile.av: Fixed the dependencies.
+
+Sat Jan 19 09:03:32 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+	  Fixed Makefile error.
+
+Sat Jan 19 09:00:16 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	  Fixed Makefile error.
+
+Sat Jan 19 08:52:55 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/OBV/Forward/Test_impl.cpp:
+	  tests/OBV/Forward/Test_impl.h:
+	  Fixed compile errors.
+
+Sat Jan 19 08:41:01 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/OBV/Factory/FactoryS_impl.cpp:
+	  tests/OBV/Factory/FactoryS_impl.h:
+	  Fixed compile errors.
+
+Sat Jan 19 08:24:10 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tao/ValueBase.cpp:
+	  Fixed compile error. Added "#include tao/debug.h".
+
+Fri Jan 18 21:34:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile*: Regenerated dependencies.
+
+Fri Jan 18 18:46:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+
+	  Removed duplicate template instantiations.  They were already
+	  defined in ObjectReferenceTemplateC.cpp.
+
+Fri Jan 18 18:25:55 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO_AMH_Response_Handler.cpp:
+	  Fixed inconsistency in _tao_out field name.
+
+Fri Jan 18 18:02:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+
+	  Updated with new Portable Interceptor updates.
+
+Fri Jan 18 16:42:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientInterceptorAdapter.h:
+
+	  No need to include corbafwd.h, ClientRequestInfo.h.  Forward
+	  declaring classes is sufficient.
+
+	  Added a new "TAO_ClientRequestInfo *" member.  It is the cached
+	  value of the object retrieved from TSS.
+
+	* tao/ClientInterceptorAdapter.inl:
+
+	  Initialize the new "info_" member in the base member initializer
+	  list.
+
+	* tao/ClientInterceptorAdapter.cpp:
+
+	  Updated all interception point methods to accept pointers to the
+	  new TAO_ClientRequestInfo_i pointer.
+
+	* tao/ClientRequestInfo_i.h:
+	* tao/ClientRequestInfo_i.inl:
+	* tao/ClientRequestInfo_i.cpp:
+
+	  New files containing the new "underlying" implementation of the
+	  PortableInterceptor::ClientRequestInfo interface.  They
+	  basically contain the implementation that was previously found
+	  in TAO_ClientRequestInfo.  This new class, i.e.
+	  "TAO_ClientRequestInfo_i," does not inherit from any class.  All
+	  operation-specific ClientRequestInfo subclasses in the client
+	  stubs now inherit from this class.  This removes a lock
+	  initialization from the critical path, and replaces it with a
+	  TSS access.  This should improve performance on the client side
+	  significantly in both cases where interceptors were registered
+	  and not registered with the ORB.   [Bug 874]
+
+	* tao/ClientRequestInfo.h:
+
+	  No need to include "StringSeqC.h."
+
+	  Added a new "TAO_ClientRequestInfo_Guard" class that is designed
+	  to ensure the swapping of TAO_ClientRequestInfo_i pointers in a
+	  TAO_ClientRequestInfo object is performed in an exception-safe
+	  manner when interception points are being invoked.
+
+	* tao/ClientRequestInfo.inl:
+	* tao/ClientRequestInfo.cpp:
+
+	  Moved implementation code to the new TAO_ClientRequestInfo_i
+	  class.
+
+	  Added "TAO_ClientRequestInfo_Guard" class implementation.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+
+	  Store a TAO_ClientRequestInfo object in the ORB_Core's TSS
+	  resources.
+
+	* tao/DomainC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PortableServer/ImplRepoC.cpp:
+
+	  Updated to use new TAO_ClientRequestInfo_i class.
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+
+	  Updated generated code to use new TAO_ClientRequestInfo_i class.
+	  [Bug 874]
+
+Fri Jan 18 17:29:36 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_AMH_Response_Handler.h:
+	* tao/TAO_AMH_Response_Handler.cpp:
+	  The TAO_Server_Request class does not depend on
+	  TAO_AMH_Response_Handler anymore,  instead of forsing
+	  ServerRequest to know about AMH and make it copy its state to
+	  the AMH_Response_Handler we make AMH_Response_Handler a
+	  friend. That way the AMH_Response_Handler can copy whatever
+	  state it needs.
+	  Add some comments for Mayur about this stuff.
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Do not generate AMH_*ResponseHandler nodes for AMI nodes or
+	  other implied-IDL nodes.
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+	  Fixed inconsistencies in the generated name for the
+	  TAO_AMH_<InterfaceName>ResponseHandler class.
+	  Change the constructor of those generated classes to take the
+	  TAO_ServerRequest parameter.
+
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  Fixed indentation problems.
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	  Fixed class name in operations (made it consistent with the
+	  generated name in be_visitor_interface/amh_rh_*.cpp).
+	  Fixed exception throwing code (it was hardcoded to use
+	  ACE_THROW, but the IDL compiler should be able to generate raw
+	  throws also).
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  Fixed indentation problem in the generated code.
+	  Improved error messages in case of failure.
+	  Set the visitor context state properly for the arglist visitor.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Use the right constructor for the TAO_AMH_*ResponseHandler
+	  class.
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h:
+	  Move several helper methods to the base class
+	  (be_visitor_operation), because we need them in classes that do
+	  not derive from be_visitor_operation_ss
+
+	* TAO_IDL/ast/ast_decl.cpp:
+	  Fixed small compilation warning.
+
+Fri Jan 18 15:55:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/client.dsp:
+	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+
+	  Added missing TAO_IDL include flag and ValueType generation
+	  flag.  PortableInteceptor.pidl now has support for
+	  ObjectReferenceTemplates, which requires ValueType support.
+
+Fri Jan 18 22:30:03 GMT 2002  Boris Kolpackov <bosk@ipmce.ru>
+
+        * tests/OBV/Any/*:
+        * tests/OBV/Factory/Makefile:
+        * tests/OBV/Forward/Makefile:
+        * tests/OBV/README:
+        * tests/OBV/Makefile:
+        * tests/Makefile:
+
+          Added OBV-and-Any test. Updated relevant Makefile's.
+
+Fri Jan 18 15:41:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp (idl_store_pragma):
+
+          Changed the string "id" to match for #pragma ID to
+          upper case.
+
+        * TAO_IDL/ast/ast_decl.cpp:
+
+          Changed check in version setting function to correspond to
+          the CORBA 2.5 change that now allows the version to be reset
+          if it is reset to the same value.
+
+Fri Jan 18 13:19:00 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* tao/TAO_AMH_Response_handler.h:
+	* tao/TAO_AMH_Response_handler.cpp:
+
+	  Added code that now generates AMH-RH code for operation in
+	  skeleton-source file.  Changed 'tao_out' CDR stream in
+	  TAO_AMH_Response_Handler so that the variable names of the
+	  generated IDL code and that in the tao orb_core files match.
+
+Fri Jan 18 13:47:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+
+          Removed duplicate file inclusions.
+
+Fri Jan 18 13:21:28 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Added patch sent in by Andy Olsen <olsona@uswest.net> that
+          limits the last component of the name of the temporary file
+          used by gperf to no more than 48 characters, when the
+          platform is QNX.
+
+Fri Jan 18 22:16:06 2002  Boris Kolpackov <bosk@ipmce.ru>
+
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h:
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/any_op_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/any_op_cs.h:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/be_include/be_visitor_valuetype.h:
+	* TAO_IDL/be/be_visitor_module/module.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype.cpp:
+	* tao/Typecode.h:
+	* tao/Marshal.h:
+	* tao/Marshal.i:
+	* tao/Marshal.cpp:
+	* tao/Typecode.cpp:
+	* tao/ValueBase.cpp:
+	* tao/append.cpp:
+	* tao/skip.cpp:
+	  Added Any and TypeCode support for valuetypes.
+
+Fri Jan 18 11:50:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* */Makefile: Regenerated dependencies.
+
+Fri Jan 18 09:32:57 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	  Improved comments in generated code.
+	  New gen_operation_table() helper method, it can generate an
+	  operation table with a different class name (and class flat
+	  name).  This is useful for the AMH code generation.
+	  Changed the related methods to take a flat_name argument.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  Do not create a temporary "AMH_*" node, the visitors deal with
+	  the original interface node directly.
+	  Fixed generation of the _this() method to use the new
+	  TAO_ENV_ARG_* macros.
+
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Make the "flat_name" customizable in the be_visitor_interface_ss
+	  vistor.  This is used to generate an AMH-specific flat name and
+	  take advantage of the new gen_operation_table() helper method in
+	  be_interface.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  Since there is no AMH_* node anymore then we need to add the
+	  AMH_ prefix explicitly.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Removed traditional visitors, but I still need to add the new
+	  ones.
+
+Fri Jan 18 09:23:42 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	  Fixed custom build for .idl files for Release builds.
+
+Fri Jan 18 06:54:48 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+
+          Added ETCL to the dependencies for the Fault_Tolerance workspace.
+
+Thu Jan 17 23:31:13 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Added missing ObjectReferenceTemplateC.* files.
+
+Fri Jan 18 07:55:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+          Added Policy_Validator, ObjectReferenceTemplateC
+
+        * tao/PortableServer/Makefile.bor:
+          Removed Policy_Validator
+
+        * tao/BiDir_GIOP/Makefile.bor:
+          Added BiDirPolicy_Validator
+
+Thu Jan 17 21:46:16 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.{h,cpp}
+	  (retrieve_credentials):
+
+	  New method that extracts SSLIOP-specific credentials from the
+          SecurityLevel2::InvocationCredentialsPolicy via the ORB's policy
+	  framework.  Extracted credentials will be used when establishing
+	  the underlying SSL connection.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  Fixed a memory leak that occurred on error before an attempt to
+	  establish a connection was made.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+
+	  Added downcast related methods that make it possible to downcast
+	  to the TAO_SSLIOP-specific interfaces.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl (x509):
+
+	  New file that contains the new x509() accessor method.
+
+Thu Jan 17 22:02:38 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+	* tao/BiDir_GIOP/BiDirPolicy_Validator.h:
+	  Fixed Fuzz compile errors.
+
+Thu Jan 17 21:52:22 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* utils/nslist/nsdel.cpp:
+	  Fixed compile errors on Win32 builds.
+
+Thu Jan 17 19:24:24 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ObjectReferenceTemplateC.h:
+	  Removed the if-defs around the ValueBase and ValueFactory
+	  includes. The includes are needed in all cases and not just when
+	  minimum_corba=1
+
+Thu Jan 17 19:06:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+	  Fixed unused parameter warnings.
+
+Thu Jan 17 18:59:14 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp:
+	  Fixes for the KCC statement-not-reachable warnings.
+
+Thu Jan 17 18:40:49 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/TAO_Internal.cpp:
+	  Included the missing debug.h
+
+Thu Jan 17 17:40:55 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* be_include/be_visitor_interface/amh_rh_sh.h:
+	* be_include/be_visitor_interface/amh_rh_ss.h:
+	* be_include/be_visitor_operation/amh_rh_sh.h:
+	* be_include/be_visitor_operation/amh_rh_ss.h:
+	* be/be_visitor_interface/amh_rh_sh.cpp:
+	* be/be_visitor_interface/amh_rh_ss.cpp:
+	* be/be_visitor_operation/amh_rh_sh.cpp:
+	* be/be_visitor_operation/amh_rh_ss.cpp:
+
+	  Most of the 'bugs' have been fixed with the AMH-RH generated
+	  code now.  The only known remaining 'to-do' is the generation of
+	  the marshalling code for the RH-parametes in the skeleton source
+	  file.
+
+Thu Jan 17 17:39:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+
+	  Use the Security::QOP type instead of an integer to store the
+	  desired quality-of-protection.  The former is more descriptive.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h (TAO_SSLIOP_Endpoint):
+
+  	  Cache the quality-of-protection and establishment-of-trust
+	  settings associated with the endpoint object.  They are need
+	  when determining if a given cached connection is suitable for an
+	  invocation with a given set of security policies
+	  (e.g. QOPPolicy).
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (qop, trust):
+
+	  Accessors methods for their cached counterparts.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (is_equivalent, hash):
+
+	  Take into account the quality-of-protection and
+	  establishment-of-trust settings when determining endpoint
+	  equivalence and computing hashes.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  Added support for the Security::SecQOPIntegrity
+	  quality-of-protection.  Integrity without confidentiality is
+	  achieved by using the "eNULL" SSL cipher.  Despite the fact that
+	  encryption is disabled, a secure hash is still used to ensure
+	  integrity.
+
+	  Cleaned up the code in this method.
+
+Thu Jan 17 17:34:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ObjectReferenceTemplate.pidl:
+	* tao/PortableInterceptor.pidl:
+	  Moved the ObjectReferenceTemplate stuff from
+	  PortableInterceptor.pidl to the new
+	  ObjectReferenceTemplate.pidl. This is needed to get the builds
+	  straight for the minimum corba. By moving the ORT related part
+	  to a separate pidl, we are making it (ORT) usable irrespective
+	  of the usage of interceptors.
+
+	* tao/PortableInterceptorC.i:
+	* tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.cpp:
+	  Regenerated and applied patches.
+
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/ObjectReferenceTemplateC.h:
+	  Generated and made modifications as needed.
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+	* tao/PortableServer/ObjectReferenceTemplate.h:
+	* tao/PortableServer/ObjectReferenceFactory.cpp:
+	* tao/PortableServer/ObjectReferenceFactory.h:
+	  Since this part is out of the interceptor loop, removed the
+	  if-defines checking for interceptors. Removed the include of
+	  PortableInterceptorC.h and included ObjectReferenceTemplateC.h
+	  instead.
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+	  Included StringSeqC.h needed for minimum corba builds.
+	  Moved wrongly placed #endif for TAO_HAS_MINIMUM_POA check.
+
+	* tao/Makefile:
+	  Added ObjectReferenceTemplateC to the list of ORB_CORE files.
+
+Thu Jan 17 16:02:50 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.h:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Override visit_operation() and visit_attribute() to invoke the
+	  AMH-specific visitors.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  Improve comments in generated code, instead of saying silly
+	  things like "//constructor" (like I didn't know what a
+	  constructor looks like).  Instead we generate a pointer to where
+	  the code is generated from.
+	  Fixed indentation in the generated code also.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Do not use CORBA::_tc_Object to get the CORBA::Object interface
+	  repository ID, the string can as easily get hard-coded, is not
+	  like the OMG changes that string every week.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  The AMH-operations have their AMH_*ResponseHandler argument
+	  generated, however we still need to double check the arglist
+	  because some black magic is going on inside the AMH visitor for
+	  interfaces that seems to create a special operation node.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Improved skeletons for AMH-operations.  The skeleton is
+	  starting to take shape, it creates the AMH_*ResponseHandler but
+	  no marshaling or demarshaling code is present.
+
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	  Factor out code to generate the TAO_ENV_ARG parameter to a
+	  separate function, that makes it easier to reuse the arglist
+	  visitors.
+
+Thu Jan 17 17:20:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: Added the files the Policy_Validator.*
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp: Added the policy validator
+	  class files.
+
+Thu Jan 17 17:09:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO.dsp (SOURCE): Added the files the Policy_Validator.*
+	* tao/PortableServer/*.dsp: Removed the file Policy_Validator.*.
+
+Thu Jan 17 17:04:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Acceptor_Impl.h: Removed the out_of_sockets_handler ()
+	  method as this was not used. Thanks to Andrew
+	  <andrew@activesol.net> for pointing this out.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Removed the method parse_bidir_policy () method
+	  and added a new method load_policy_validators ().
+
+	* tao/orbconf.h: Added a new cached policy for BiDir connections.
+
+	* tao/Policy_Validators.h:
+	* tao/Policy_Validators.cpp: Moved this class from PortableServer
+	  library. This is very useful in TAO when policy validators from
+	  other libraries needs to be added to the POA policy
+	  validator. We now use this as a basis of a new policy validator
+	  class in BiDir library. The BiDir library would add its policy
+	  validator to the POA policy validator.
+
+	* tao/BiDir_Adapter.h: Added a method load_policy_validators () to
+	  add the policy validator.
+
+	* tao/Makefile: Added the new files.
+
+	* tao/BiDir_GIOP/BiDirPolicy_Validator.h:
+	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp: The new policy
+	  validator for BiDir GIOP.
+
+	* tao/BiDir_GIOP/BiDirGIOP.cpp:
+	* tao/BiDir_GIOP/BiDirGIOP.h:
+	* tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+	* tao/BiDir_GIOP/BiDir_Policy_i.h:
+	* tao/BiDir_GIOP/Makefile: Changes to create and use the validator
+	  properly.
+
+	* tao/PortableServer/Default_Policy_Validator.cpp:
+	* tao/PortableServer/Default_Policy_Validator.h: Changes to use
+	  the Policy_Validator in TAO.
+
+	* tao/PortableServer/Makefile: Removed the Policy_Validator.* and
+	  generated dependecies.
+
+	* tao/PortableServer/Policy_Validator.h:
+	* tao/PortableServer/Policy_Validator.cpp: Moved to
+	  $TAO_ROOT/tao.
+
+	* tao/PortableServer/Object_Adapter.h
+	* tao/PortableServer/Object_Adapter.i
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POA_Policy_Set.cpp:
+	* tao/PortableServer/POA_Policy_Set.h:
+	* tao/PortableServer/Policy_Validator.h:
+	* tao/RTPortableServer/RT_Policy_Validator.cpp:
+	* tao/RTPortableServer/RT_Policy_Validator.h: Changes to
+	  accomodate the new policy_Validator class in $TAO_ROOT/tao.
+
+Thu Jan 17 12:22:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+	* tao/TAO_Internal.cpp (open_services):
+
+	  Moved the parsing code for the "-ORBDebug" and "-ORBDebugLevel"
+	  options to TAO_Internal::open_services() so that Service_Objects
+	  and ORBInitializers may use debugging output dependent on their
+	  values.  Note that this change does not affect other debugging
+	  code in the ORB.  It simply moves the option parsing code
+	  earlier in the bootstrapping process.
+
+Thu Jan 17 12:04:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  The certificate must be set before the private key since the
+	  ACE_SSL_Context attempts to check the private key for
+	  consistency.  That check requires the certificate to be
+	  available in the underlying SSL_CTX.
+
+Thu Jan 17 13:40:09 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        Added new features to the Notification Service.  The following items
+        have been implemented: Sequence Push Consumers/Suppliers, Pacing
+        Interval, Maximum Batch Size, Deadline ordering policy,
+        Deadline, Priority and LIFO discarding policies.
+
+        Tests were written by Chip Jones <jones_c@ociweb.com> and Pete
+        Maher <maher_p@ociweb.com>.
+
+        * docs/releasenotes/index.html:
+
+          Update the documentation to reflect the current state of the
+          Notification Service.
+
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/examples/Notify/Filter/Filter.dsp:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+
+          Update Makefiles and project files to use the ETCL library.
+
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i:
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Command.i:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.inl:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Signal_Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Signal_Property_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
+
+          Modifications and additions for the new features.
+
+        * orbsvcs/tests/Notify/Makefile:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.h:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.h:
+        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.h:
+        * orbsvcs/tests/Notify/Basic/Simple.cpp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.h:
+        * orbsvcs/tests/Notify/Basic/Updates.cpp:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+
+          Update the current Nofication tests to allow smooth integration of
+          the new tests.
+
+        * orbsvcs/tests/Notify/Blocking/Blocking.dsw:
+        * orbsvcs/tests/Notify/Blocking/Makefile:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/README:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Blocking/common.h:
+        * orbsvcs/tests/Notify/Blocking/common.cpp:
+        * orbsvcs/tests/Notify/Blocking/go.idl:
+        * orbsvcs/tests/Notify/Blocking/notify.conf:
+        * orbsvcs/tests/Notify/Blocking/run_test.pl:
+        * orbsvcs/tests/Notify/Discarding/Discarding.dsw:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/README:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/common.h:
+        * orbsvcs/tests/Notify/Discarding/common.cpp:
+        * orbsvcs/tests/Notify/Discarding/go.idl:
+        * orbsvcs/tests/Notify/Discarding/notify.conf:
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+        * orbsvcs/tests/Notify/MT_Dispatching/MT_Dispatching.dsw:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/README:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/go.idl:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtlistener.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtsource.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_nothreads.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Ordering.dsw:
+        * orbsvcs/tests/Notify/Ordering/README:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/common.h:
+        * orbsvcs/tests/Notify/Ordering/common.cpp:
+        * orbsvcs/tests/Notify/Ordering/go.idl:
+        * orbsvcs/tests/Notify/Ordering/notify.conf:
+        * orbsvcs/tests/Notify/Ordering/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/README:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Multi_ETCL_Filter.dsw:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/go.idl:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/README:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Multi_Filter.dsw:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/go.idl:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/README:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter.dsw:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/control.idl:
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.h:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/README:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter.dsw:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/control.idl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Filter.dsw:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/README:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/go.idl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl:
+
+          Add many new tests to test the various features of the
+          Notification Service.
+
+Thu Jan 17 11:03:14 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	  Fixed code generation for the AMH_* classes, at this point the
+	  code for *S.h looks reasonable (and compiles!).
+	  Ditto for the _is_a(), _interface() and similar methods in the
+	  *S.cpp file, but we need to fix the generated skeletons.
+
+Thu Jan 17 10:40:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.cpp
+	  (policy_type, destroy, trust):
+	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp
+	  (policy_type, destroy, qop):
+
+	  Fixed unused parameter warnings.
+
+Thu Jan 17 10:30:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
+
+	  Create and register the SecurityManager object with the ORB's
+	  resolve_initial_references() mechanism.
+
+Thu Jan 17 10:17:18 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Add the #include for "tao/TAO_AMH_Response_Handler.h" if needed.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  Add missing close braces in the generated code.  We never
+	  finished the definition of the AMH_* class.
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	  We were not closing the definition of the
+	  TAO_AMH_*ResponseHandler class either.
+	  Fixed TAO_AMH_Response_Handler name in generated code.
+	  Fixed indentation in the generated code too.
+
+Thu Jan 17 10:08:36 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/SecurityManager.cpp
+	  (remove_own_credentials):
+
+	  Corrected assignment where equality conditional was expected.
+
+Thu Jan 17 09:49:23 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Fixed the UTL_ScopedName for the AMH_*ResponseHandler, finally
+	  we got the generated code to look like we want (and compiles
+	  too!)
+
+Thu Jan 17 10:28:54 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp.diff:
+
+          Initialized two register char* variables in the generated
+          lex file. Even though they are clearly initialized about
+          20 lines down and never skipped, Redhat Static seems to
+          have a problem with it.
+
+Thu Jan 17 10:25:54 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface_strategy.h:
+	  Fixed compile errors.
+
+Thu Jan 17 09:25:11 2002  Frank Hunleth   <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/tests/Miop/Makefile: Added.
+
+Thu Jan 17 09:25:11 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+	  Fixed KCC warning.
+
+Thu Jan 17 00:54:41 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  Made code generation logic for AMH-skeletons and AMH-RH
+	  consistent (and symmetric) in the amh_rh and amh_ss files.
+
+Tue Jan 17 08:12:22 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security.bor:
+          Added missing IDL build rule for SecurityReplaceable.idl
+
+Wed Jan 16 22:46:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (ssliop_connect):
+
+	  Updated this method to accept a "no protection" parameter.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	  (connect, ssliop_connect):
+
+	  In the "NoProtection/EstablishTrust" case, establish a
+	  connection using the "eNULL" cipher.  This disables encryption
+	  but allows certificate authentication to occur.  Previously two
+	  connections were used, one to authenticate over SSL and the
+	  other to invoke requests over plain IIOP, which is clearly
+	  undesirable.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  If "NoProtection" is enabled, then add the "eNULL" cipher to the
+	  default cipher list.  This allows encryption to be disabled
+	  while allowing certificate authentication to occur.
+
+Wed Jan 16 20:08:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
+
+	  Cache a reference to the SecurityManager passed in as a
+	  parameter to the constructor.
+
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp
+	  (authenticate, continue_authentication):
+
+  	  Register authenticated credentials with the SecurityManager's
+	  "own credentials" list.
+
+	* orbsvcs/orbsvcs/Security/SecurityManager.h:
+
+	  Added an "own_credentials" attribute.  All credentials
+	  authenticated by the PrincipalAuthenticator will be stored in
+	  it.
+
+	* orbsvcs/orbsvcs/Security/SecurityManager.cpp
+	  (principal_authenticator):
+
+	  Pass a pointer to the SecurityManager to the
+	  PrincipalAuthenticator's constructor so that the
+	  PrincipalAuthenticator may call back some of the
+	  SecurityManager's methods.
+
+	  (own_credentials, remove_own_credentials):
+
+	  Implemented these SecurityLevel2::SecurityManager methods.
+
+	  (add_own_credentials):
+
+	  New TAO-specific method used internally by the
+	  PrincipalAuthenticator to register authenticated credentials
+	  with SecurityManager's "own credentials" list.
+
+Wed Jan 16 21:26:14 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Disabled compiling PortableGroup when Minimum CORBA is
+	  enabled.
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	  Regenerated dependencies.
+
+	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	  Fixed a misuses of TAO_ENV_ARG_*.
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	  Fixed subtle typo on MIOP packet segmentation.
+
+	* orbsvcs/tests/Makefile:
+	  Added MIOP.
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/PortableGroup_Hooks.h:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/PortableServer/PortableServerC.i:
+	* tao/diffs/PortableServerC.cpp.diff:
+	* tao/diffs/PortableServerC.h.diff:
+	* tao/diffs/PortableServerC.i.diff:
+	  #ifdef'd out PortableGroup additions to the POA when
+	  minimum CORBA is enabled.
+
+Wed Jan 16 20:28:56 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/PortableGroup.bor:
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	  Added custom wait strategy for UIPMC to prevent any
+	  one from waiting for a response.  Previously, if
+	  someone tried invoking a twoway using MIOP, execution
+	  would hang until a time out.  This way, the user
+	  gets a system exception if they ever try to wait for
+	  a response.
+
+Wed Jan 16 19:18:14 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* performance-tests/AMI_Latency/client.cpp:
+	  Fixed compile errors.
+
+Wed Jan 16 13:17:04 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_interface/interface.h:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  Added method to check if a particular node is an 'AMH' node that
+	  was added during pre-processing.  This check is used to
+	  dynamically create the amh_rh visitors in interface_s{h/s}
+	  visitors.
+
+Wed Jan 16 12:57:56 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  The AMH_*ResponseHandler identifier should not include the
+	  Module:: prefix.  The fix is incomplete, as I believe that the
+	  Identifier for the implied be_interface node should have the
+	  enclosing scope identifier, but this change makes the *C.h file
+	  compilable.
+	  Also fixed the operations for the implied AMH_*ResponseHandler,
+	  they were supposed to be 'local' too.
+
+Wed Jan 16 12:22:13 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+
+	  Fixed Fuzz errors for @file
+
+Wed Jan 16 14:12:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+
+          Added initialization of the gen_amh_classes_ member.
+
+        * TAOACE.dsw:
+
+          Restored ETCL project to workspace and updated project
+          dependencies for this project and for CosNotifcation. My
+          previous checkin of these changes got clobbered someehow.
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+
+          Somehow these settings got clobbered as well.
+
+Wed Jan 16 12:02:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PICurrent.cpp (copy):
+
+	  Only perform the shallow/logical copy if the source slot table
+	  was modified.  Fixes a problem where values logically copied
+	  from the RSC to the TSC were lost after the TSC was copied back
+	  to the RSC, despite the fact the TSC's slot table was not
+	  modifed.  Thanks to Greg Hall <Greg.Hall@Australia.Boeing.com>
+	  for discovering the problem.
+
+Wed Jan 16 11:45:23 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp (adapter_name):
+	  Fixed warnings on Debian_NoInline build.
+
+Wed Jan 16 11:38:21 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ORT/server.cpp (main):
+	* orbsvcs/examples/ORT/Object_Factory_i.cpp:
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
+	* orbsvcs/examples/ORT/gateway_server.cpp :
+	* orbsvcs/examples/ORT/server.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp:
+	  Fixed fuzz compile errors.
+
+Wed Jan 16 11:23:04 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ior_corbaloc/README (ftp):
+	  Updated the README.
+
+	  Thanks to Gerhard Voss <Gerhard_Voss@t-online.de> for
+	  reporting that it is outdated.
+
+Wed Jan 16 08:37:55 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* utils/nslist/nsdel.cpp:
+	  Fixed compile errors.
+
+Wed Jan 16 08:33:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ETCL.bor:
+          Added BCB makefile for this new library
+
+        * orbsvcs/orbsvcs/CosNotification.bor:
+          Added ETCL and DynamicAny libraries, removed Trading
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Added ETCL
+
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.bor:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.bor:
+        * orbsvcs/tests/FaultTolerance/IOGR/Server.bor:
+          Use the FTORB library instead of the FT library
+
+        * tests/Portable_Interceptors/ForwardRequest/server.bor:
+        * tests/Portable_Interceptors/ForwardRequest/client.bor:
+          Added -Gv to the TAO_IDL since PortableInterceptor.pidl now
+ 	  has valuetypes.
+
+Tue Jan 15 20:24:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/any_op_cs.h:
+
+          New files that generate Any operators for value types.
+          For now, all that's generated is the TAO_Valuetype_Manager
+          template class instantiation that takes the value type
+          as its parameter. The TAO_Object_Manager template
+          instantiations for interfaces are generated along with
+          the Any operators, so the same approach is followed for
+          value types, even though Any operators for value types
+          are not yet supported.
+
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+
+          Modified files to create and call the visitors in the new
+          files above.
+
+Tue Jan 15 17:59:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+
+	  New SSLIOP-specific (no-op) implementation of the
+	  SecurityReplaceable::Vault interface.  These files supersede the
+	  SSLIOP_PrincipalAuthenticator.* files.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+
+	  Register the SSLIOP-specific Vault object with the Security
+	  Service's PrincipalAuthenticator object.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_PrincipalAuthenticator.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_PrincipalAuthenticator.h:
+
+	  Removed these files.  They have been superseded by the
+	  SSLIOP_Vault* files.
+
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp:
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
+
+	  Updated the PrincipalAuthenticator implementation to use the
+	  Chain-of-Responsibility design pattern on all registered
+	  SecurityReplaceable::Vault implementations until one is found
+	  that recognizes the user-supplied parameters.
+
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator_Impl.h:
+
+	  Removed this file in favor of the standard
+	  SecurityReplaceable::Vault functionality.
+
+Tue Jan 15 16:22:48 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Use a local interface for the AMH_*ResponseHandler, that
+	  generates *exactly* the right code for the *C.{h,i,cpp} files.
+	  We need different visitors for the implementation class on the
+	  *S.{h,i,cpp} files.
+
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	  Enable compilation of AMH visitors by default.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	  Improved generated AMH code.  For starters the IDL compiler does
+	  not crash while generating AMH code :-)  But the generated code
+	  does not compile yet.
+	  Mayur and myself factored out the shared code between the
+	  skeleton source visitors (*S.cpp files) for AMH and non-AMH
+	  interfaces.
+	  Also stopped the system from generating any AMH classes for
+	  implied AMH or AMI classes.
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	  Fixed warnings.
+
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.EXE:
+	* TAO_IDL/Makefile.FE:
+	  Updated dependencies.
+
+Tue Jan 15 15:55:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.Security (IDL_FILES):
+
+	  Added the `SecurityReplaceable.idl' file to the IDL file list.
+
+Tue Jan 15 15:46:20 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+
+	  Corrected typo.  "Replaceable" not "Replacable."
+
+Tue Jan 15 15:01:48 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/ServerRequestInfo.cpp :
+	* tao/PortableServer/POA.i :
+	* tao/PortableServer/ObjectReferenceTemplate.h :
+	* tao/PortableServer/ObjectReferenceFactory.cpp :
+	* tao/PortableServer/ObjectReferenceTemplate.cpp :
+	* tao/PortableServer/IORInfo.cpp :
+	  Corrected the usage of TAO_ENV_ARG_DECL and
+	  TAO_ENV_ARG_PARAMETER
+
+	* tao/PortableServer/POA.h :
+	* tao/PortableServer/POA.cpp :
+	  In addition to correcting the usage of TAO_ENV_ARG_DECL, added a
+	  new protected method so that there is only a single ACE_TRY
+	  block in TAO_POA::establish_components method.
+
+Tue Jan 15 14:28:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableInterceptorC.h:
+	  Fixed by inserting a space where needed.
+
+Tue Jan 15 13:30:07 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_rh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_rh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ch.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  This is a snap-shot of the changes to facilitate parallel
+	  working on AMH.  The new files and changes to old ones is part
+	  of a new approach to generate AMh code from the IDL-compiler.
+	  In the new approach, only one new implied-idl node is added to
+	  the main AST i.e. the ResponseHandler (RH) node.  With this
+	  node, code is generated in the following files:
+		- The Client Header (Base abstract RH class)
+		- The Skeleton Header (implementation RH class declaration)
+		- The Skeleton Source (implementation RH class definition)
+	  In this snapshot, the code for the above is in place and there
+	  are no compilation errors.  The implementation is yet to be
+	  tested, though.  Also, in keeping with the new approach,
+	  AMH-skeleton code is generated 'on the fly'.  In the
+	  interface_{ch/sh/ss} files, AMH_skeleton code is generated if
+	  the be_global->generate_amh_classes () is set.  Currently, this
+	  code is commented out and the amh_{ch/sh/ss} files are not
+	  included in the compiltation of TAO_IDL but once the code is in
+	  place amd working, the IDL compiler will include these visitors.
+
+Tue Jan 15 13:35:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableInterceptorS.h:
+	  Committing the right one.
+
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+	  Added -Gv to the TAO_IDLFLAGS since PortableInterceptor.pidl now
+ 	  has valuetypes.
+
+Tue Jan 15 12:33:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp:
+	  Removed stray characters put in by mistake.
+
+Tue Jan 15 12:28:21 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableInterceptorC.i:
+	* tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.cpp:
+ 	  Regenerated and applied patches.
+
+Tue Jan 15 12:03:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated Security Service and SSLIOP release notes.
+
+Tue Jan 15 14:02:04 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.bor:
+	* orbsvcs/orbsvcs/PortableGroup.rc:
+          Added resource files for the PortableGroup library.  Thanks
+	  to Johnny Willemsen <johnny_willemsen@planet.nl> for pointing
+	  this out.
+
+Tue Jan 15 11:50:37 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* utils/nslist/nsdel: There were 2 problems with nsdel:
+	  1. difficult to remove subcontexts
+	  2. not possible to remove contexts where the name.kind is not null
+
+          We've now fixe this problem so it's possible to do the following:
+	  usage example nsdel --name com/sun/server/app1.service
+	  usage example nsdel --name com/sun/server.context
+
+	  Thanks to Paul Caffrey <pcaffrey@iel.ie> for contributing this.
+
+Tue Jan 15 11:43:48 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+
+          Added items to IDL compiler section about the expanded
+          support of value types, and about the revamped/expanded
+          support of the IDL #pragma directives. Also add item in the
+          Notification Service section about the new support of the
+          Extended Trader Constraint Language (ETCL) grammar for filter
+          construction.
+
+Tue Jan 15 09:08:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+	  Added new methods to class FOO_IORInterceptor to go along with
+	  the added methods in PortableInterceptor::IORInterceptor. Missed
+	  committing in the first round.
+
+Tue Jan 15 08:55:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp (create_stub_object):
+          Fixed usage of TAO_ENV_ARG_DECL
+
+Tue Jan 15 09:16:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+
+          Added Makefile.ETCL to the list when Makefile>CosNotification
+          is added.
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Static.dsp:
+
+          Fixed path errors.
+
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+
+          Changed an incorrect TAO_ENV_ARG_PARAMETER to
+          TAO_ENV_ARG_DECL.
+
+Tue Jan 15 13:22:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/ORT/*.bor:
+          Added BCB makefiles for this test
+
+        * tests/Makefile.bor:
+          Added new ORT test
+
+Tue Jan 15 11:09:13 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Makefile.bor:
+          Added PortableGroup_Hooks
+
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+          Added new BCB makefile for building PortableGroup
+
+        * orbsvcs/orbsvcs/Makefile.bor
+          Added PortableGroup
+
+Tue Jan 15 02:51:04 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp: Return 0 in
+	  TAO_AV_RTCP_Callback::handle_destroy().
+
+Tue Jan 15 07:35:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+          Removed IORInfo
+
+        * tao/PortableServer/Makefile.bor:
+          Added IORInfo, ObjectReferenceFactory and ObjectReferenceTemplate
+
+Mon Jan 14 22:08:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	From Bruce Trask <trask_b@ociweb.com>
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+
+	  Use the ACE_STATIC_SVC_DECLARE_EXPORT macro instead of
+	  ACE_STATIC_SVC_DECLARE to force the static service descriptor to
+	  be exported on Windows, and thus allow it to be used when the
+	  TAO SSLIOP pluggable protocol is linked statically.
+
+Tue Jan 15 00:01:09 2002  Rob Ruff <rruff@scires.com>
+                          Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/UDP.:
+	* orbsvcs/orbsvcs/AV/UDP.cpp: Fix memory leaks of address
+	  and control_address.
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp:  Fix TAO_AV_RTCP_Object::destroy().
+	  Call send_report() from TAO_AV_RTCP_Callback::handle_stop() and
+	  TAO_AV_RTCP_Callback::handle_destroy().
+
+Mon Jan 14 23:51:54 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/server_discovery: Removed.
+	  Depends on files from the old mpeg player which is no longer
+	  in repository.
+
+Mon Jan 14 19:53:18 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp (current_factory):
+	  Was a returning a void value. Fixed it.
+
+	* tao/PortableServer/POA.cpp (establish_components):
+	  Modified variable i as variable j to satisfy win.
+	  Also modified a const variable as non-const.
+
+Mon Jan 14 19:37:03 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/TAO_PortableServer_Static.dsp (SOURCE):
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	  Updated to add IORInfor, ObjectReferenceTemplate and
+	  ObjectReferenceFactory.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Updated to remove IORInfo
+
+Mon Jan 14 18:08:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.h (TAO_ORB_Core):
+	  Used the correct form of TAO_ENV_ARG_DECL
+
+Mon Jan 14 17:56:09 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.ETCL:
+
+          Updated dependencies.
+
+Mon Jan 14 15:25:25 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ci.cpp:
+	  Fixed syntax error generated in the CDR operators for
+`	  valuetypes.  There was no blank after the export macro name.
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_global.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	  Cosmetic fixes
+
+Mon Jan 14 15:19:05 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/PortableInterceptorC.h:
+	  Fixed compilation problem due to bugs in IDL compiler.
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+	  Removed bogus #include for ObjectReferenceTemplate.i, the file
+	  does not exist.
+
+	* tao/Makefile:
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	  Update dependencies.
+
+Mon Jan 14 15:03:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp:
+	  Removed include of IORInfo.h
+
+Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	The following set of changes are wrt to Object Reference Template.
+
+	* tao/IORInfo.h:
+	* tao/IORInfo.cpp:
+	  Moved these files to PortableServer directory to continue
+	  keeping the TAO library independent of PortableServer.
+
+	* tao/Exception.cpp:
+	  Added a new minor code to the OBJ_ADAPTER_TABLE.
+	  The description of the minor code is "Exception in
+	  IORInterceptor::components_established in call
+          to POA::create_POA "
+
+	* tao/ClientRequestInfo.cpp (get_service_context_i):
+	  Changed the minor code from 23 to 26 according to the ORT
+	  spec.
+
+	* tao/ORB_Core.h :
+	* tao/ORB_Core.i :
+	* tao/ORB_Core.cpp :
+
+	  Removed the include of IORInfo.h since ORB_Core doesnt use
+	  IORInfo anymore.
+
+	  Added support for the new ORB Configuration Options:
+	  -ORBId: is to set an Id to the ORB as the name suggests.
+	  -ORBServerId:  is to uniquely identify a server.
+	  -ORBListenEndpoints: is similar to ORBEndPoint option.
+	      The ORBEndpoint Option will be deprecated later.
+	  -ORBNoProprietaryActivation: is to set a glabal flag so
+	  that none of the ORB's proprietary can be used.
+
+	  Added a new method set_endpoint_helper for code reusing purposes
+	  since the two ORB options -ORBEndpoint and -ORBListenEndPoints
+	  are the same. This might not be needed later when the
+	  -ORBEndpoint is deprecated totally.
+
+	  New accessor method for the ORBServerId that was passed
+	  using	the -ORBServerId Option:
+	  const char *server_id (void) const;
+
+	  Added another accessor method is to get the underlying
+	  transport cache:
+	  TAO_Transport_Cache_Manager *transport_cache (void);
+
+	  Modified the implementation of create_stub_object method.
+	  The establish_components method should now be invoked
+	  every time a new POA is created and hence should be
+	  invoked even before the create_stub_object is invoked.
+	  Hence the implementation of TAO_ORB_Core::create_stub_object
+	  now doesnt involve invoking the establish components method.
+
+	  The establish_components method is now modified and moved to
+	  TAO_POA.
+
+	  Added a new method open (TAO_ENV_ARG_DECL) to set endpoints for
+	  listening.
+
+	  In the TAO_ORB_Core::run method, the Environment variable is
+	  going to be used. So, changed TAO_ENV_ARG_DECL_NOT_USED to
+	  TAO_ENV_ARG_DECL. Also, invoke the new TAO_ORB_Core::open method
+	  in here. We donot want to setup the listening points
+	  when the RootPOA is created but now. One of the main features of
+	  ORT is the ability to set a new factory (and possibly point the
+	  ior to another endpoint) with the help of interceptors.
+	  If we open an endpoint when the RootPOA is created, then it
+	  would endup costly if another endpoint has to be
+	  opened during run time (i.e. because of the interceptors being
+	  used). So, we are going to open the endpoints during the run
+	  time rather than during the RootPOA creation.
+
+	  Private variables: server_id_, open_lock_, open_called_;
+
+	* tao/PortableServer/IORInfo.h:
+	* tao/PortableServer/IORInfo.h:
+	  Moved the files from tao to PortableServer. And, added new
+	  methods: manager_id, state, adapter_template, current_factory
+	  according to the ORT spec.
+
+	  Modified the implementation of add_ior_component and
+	  add_ior_component_to_profile to invoke
+	  TAO_POA::save_ior_component and
+	  save_ior_component_and_profile_id instead of adding them
+	  immediately for reasons explained later.
+
+	* tao/PortableServer/ObjectReferenceTemplate.h :
+	* tao/PortableServer/ObjectReferenceTemplate.cpp :
+	* tao/PortableServer/ObjectReferenceFactory.h :
+	* tao/PortableServer/ObjectReferenceFactory.cpp :
+	  New files for the ObjectReferenceFactory and
+	  ObjectReferenceTemplate classes.
+
+	* tao/RTPortableServer/RT_POA.i (create_reference_with_priority):
+	  Modified the call create_reference_i and
+ 	  create_reference_with_id_i to go along with the
+	  modified signatures of the respective methods.
+
+	* tao/PortableServer/ServerRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+	  New methods server_id, orb_id and adapter_name from the ORT
+	  spec. Accessor methods to get the server_id of the server
+	  ( passed via -ORBServerId option), orb_id ( ORBId value that
+	  is passed to the ORB_init call) and the name of the related
+	  Object Adapter.
+
+	* tao/PortableServer/POAManager.h:
+	* tao/PortableServer/POAManager.cpp:
+	  New method adapter_manager_state_changed which calls all
+	  the registered interceptor's adapter_manager_state_changed
+	  methods. Included new header files as needed.
+
+	* tao/PortableServer/Object_Adapter.cpp (open):
+	  As explained in ORB_Core changes, we are going to open
+	  the default resources during run time and not during RootPOA
+	  creation. So, removed the invocation leading to opening the
+	  endpoints.
+
+	* tao/PortableServer/POA.cpp :
+	  This file has a big bunch of changes.
+
+	  Included new header files as needed.
+
+	  New methods:
+
+	  set_obj_ref_factory: Public method to set the private
+	  variable: TAO_ObjectReferenceFactory *obj_ref_factory_
+	  The value of this variable is initially the same as
+	  TAO_ObjectReferenceTemplate *obj_ref_template_.
+	  The value of obj_ref_factory_ can be reset by the
+	  TAO_IOR_Info::current_factory method.
+
+	  tao_establish_components: Helper method for
+	  establish_components. Instantiates the needed variables and
+	  calls establish_components.
+
+	  adapter_name: Returns the adapter_name of an object_adapter
+	  (POA).
+
+	  adapter_name_i: Helper method for adapter_name.
+
+	  get_adapter_template:
+	  set_adapter_template:
+	  get_obj_ref_factory:
+	  set_obj_ref_factory: Accessor methods to ort_template_ and
+	  obj_ref_factory_ member variables related to a POA.
+
+	  get_policy_list:
+	  set_policy_list:
+	  get_mprofile:
+	  set_mprofile: Accessor methods to get policy_list_ and
+	  mprofile_ respectively. TAO_IORInfo needs these values.
+
+	  save_ior_component:
+	  save_ior_component_and_profile_id:
+	  According to the ORT spec, the Interceptor's
+	  establish_components method should be invoked each time a new
+	  POA is created. And, the establish_components method is where
+	  the IORInfo can get hold of the ior components that are to be
+	  added to the mprofiles. But, we donot add the components to the
+	  profile when the POA is created but rather when the stub object is
+	  to be created. So, to solve this, we save the tagged component
+	  and profile_id that we get via the establish_components method
+	  and use them later when we are actually creating the stub
+	  object. These two methods help save the values, as the name of
+	  the method suggests.
+
+	  tao_add_ior_component:
+	  tao_add_ior_component_to_profile: Methods to call the
+	  add_tagged_component of all the registered interceptors.
+
+	  get_adapter_state:
+	  set_adapter_state: Accessor methods to the POA state which could
+	  be in one of HOLDING, ACTIVE, DISCARDING, INACTIVE and
+	  NON_EXISTENT states.
+
+	  adapter_state_changed: Method to notify the IOR Interceptors
+  	  when there is a change in the state of the POA not related to the
+	  POA Manager.
+
+	  invoke_key_to_object: The TAO_ObjectReferenceFactory::make_object
+	  creates the object references by default (ie. unless the factory
+	  is changed with the help of interceptors). It invokes the POA's
+	  invoke_key_to_object method for the same purpose. This method
+	  gets all the required values and invokes the key_to_object which
+	  actually creates the object reference.
+
+	  get_manager_id: Accessor method to get the manager id.
+
+	  The constructor of TAO_POA is also changed. Each POA has an
+	  ObjectReferenceTemplate * and ObjectReferenceFactory * member
+	  variables. The initial values of the ObjectReferenceTemplate is
+	  set in the TAO_POA constructor. The initial value of
+	  obj_ref_factory_  is the same as that of ort_template_. While
+	  the value of ort_template_ is remains the same, the value of the
+	  obj_ref_factory_ can be changed with the help of the
+	  interceptors.
+
+	  According to the ORT specification, the interceptor's
+	  establish_components method needs to be invoked each time any
+	  new POA is created. By invoking the tao's
+	  establish_components method from the constructor itself, we
+	  are making sure that this method is called for all the POA's
+	  including the RootPOA.
+
+	  Changed the order in which the private variables are
+	  instantiated in the constructor.
+
+	  Modified the signature of create_reference_i and
+	  create_reference_with_id_i to not have the priority as
+	  an argument. Where needed, we can get the priority value using
+	  the cached_policies_ variable.
+
+	  Modified their implementation to call the this->obj_ref_factory_
+	  's make_object method instead of calling the key_to_object
+	  method directly. Made changes accordingly. The implementation of
+	  servant_to_reference method is also modified similarly.
+	  This is because the ObjectReferenceFactory associated with the
+	  POA is the one that is supposed to create the object references.
+	  To generalize between the default case and the case in which the
+	  object reference factory is changed with the help of interceptors,
+	  all the methods that end up creating a object reference (by
+	  invoking key_to_object method) now end up invoking the
+	  associated object reference factory's make_object method. If the
+	  default value of the obj_ref_factory_ is not changed, the
+	  TAO_ObjectReferenceFactory::make_object is invoked. If the value
+	  of obj_ref_factory_ is changed, the make_object of that
+	  particular class in invoked.
+
+	  Also, in the servant_to_reference method, instead of setting
+	  value of the priority variable to
+	  this->cached_policies_.server_priority (), am setting it to
+	  TAO_INVALID_PRIORITY. This is because when the control comes to
+	  this method, this->cached_policies_ is nil. By setting it to
+	  TAO_INVALID_PRIORITY doesnt hurt since the priority is actually
+	  set in servant_to_system_id method.
+
+	  Added TAO_ObjectReferenceFactory and TAO_ObjectReferenceTemplate
+	  as friend classes to TAO_POA class.
+
+	* tao/PortableServer/Makefile:
+	  Added new files.
+	  IORInfo
+	  ObjectReferenceTemplate
+	  ObjectReferenceFactory
+
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.i:
+	* tao/PortableInterceptorS.h:
+	  Regenerated and applied patches. The diffs are generated and
+	  placed in diffs directory.
+
+	* tao/PortableInterceptor.pidl:
+	  Modified according to the ORT specification.
+
+
+	* tao/Makefile:
+	  Removed IORInfo since its now moved to PortableServer. Updated
+	  dependencies.
+
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	  Updated dependencies.
+
+	* orbsvcs/examples/ORT/README :
+	* orbsvcs/examples/ORT/Makefile :
+	* orbsvcs/examples/ORT/server.cpp :
+	* orbsvcs/examples/ORT/client.cpp :
+	* orbsvcs/examples/ORT/Gateway.idl :
+	* orbsvcs/examples/ORT/sum_server.idl :
+	* orbsvcs/examples/ORT/sum_server_i.h :
+	* orbsvcs/examples/ORT/sum_server_i.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor.h :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.h :
+	* orbsvcs/examples/ORT/Gateway_i.h :
+	* orbsvcs/examples/ORT/Gateway_i.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp :
+	* orbsvcs/examples/ORT/Object_Factory_i.h :
+	* orbsvcs/examples/ORT/Object_Factory_i.cpp :
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h :
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.cpp :
+
+	  Example to show how ORT can be used.
+
+	* tests/ORT/README:
+	* tests/ORT/Makefile:
+	* tests/ORT/server.cpp:
+	* tests/ORT/ORT_test.idl:
+	* tests/ORT/ORT_test_IORInterceptor.cpp:
+	* tests/ORT/ORT_test_IORInterceptor.h:
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.cpp:
+	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.h:
+	* tests/ORT/ORT_test_i.cpp:
+	* tests/ORT/ORT_test_i.h:
+	* tests/ORT/client.cpp:
+	  Test for the ORT changes.
+
+Mon Jan 14 14:46:54 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	  Update dependencies.
+
+Mon Jan 14 14:44:31 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.av:
+	  The dependencies for AV/md5c.c were not generated properly
+	  because the Makefile assumed all sources were .cpp files.
+
+Tue Jan 15 00:30:30 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* TAO_IDL/be/be_valuetype.cpp:
+	  Moved implementation to client stubs for _var and _out classes.
+
+Mon Jan 14 15:35:13 2002  Rob Ruff <rruff@scires.com>
+                          Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Add remove_acceptor(), remove_connector(),
+	  get_control_flowname() methods.
+
+	* orbsvcs/orbsvcs/AV/UDP.h: Add close() method.
+	* orbsvcs/orbsvcs/AV/UDP.i: Add close() method.
+	* orbsvcs/orbsvcs/AV/UDP.cpp: Improve cleanup in TAO_AV_UDP_Connector
+	  TAO_AV_UDP_Flow_Handler, and TAO_AV_UDP_Acceptor classes.  Close
+	  socket in TAO_AV_UDP_Flow_Handler destructor.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Improve cleanup in destructors
+	  and destroy() method.  TAO_Tokenizer::operator[] returns
+	  a const char * instead of dynamically allocated char *.
+	  In TAO_StreamEndpoint::destroy(), call destroy() on protocol
+	  objects AFTER calling remove_connector() on the AV core.
+
+	* orbsvcs/orbsvcs/AV/TCP.h: Add virtual destructor to TAO_AV_TCP_Flow_Handler.
+	* orbsvcs/orbsvcs/AV/TCP.cpp: Add destructor to TAO_AV_TCP_Flow_Handler, improve cleanup in other classes.
+	* orbsvcs/orbsvcs/AV/Transport.h: Add close() methods to
+	  TAO_AV_Connector_Registry and TAO_AV_Acceptor_Registry.
+	* orbsvcs/orbsvcs/AV/Transport.cpp: Add close() methods to
+	  TAO_AV_Connector_Registry and TAO_AV_Acceptor_Registry.
+	  Return result of reactor()->cancel_timer() in
+	  TAO_AV_Flow_Handler::cancel_timer().
+	* orbsvcs/orbsvcs/AV/RTCP.cpp: In TAO_AV_RTCP_Object::destroy(),
+	  delete this.
+	* orbsvcs/orbsvcs/AV/RTP.cpp: In TAO_AV_RTP_Object::destroy(),
+	  delete this.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h: Make operator[] return
+	  const char *.  Add variables for cleanup.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Add variables for cleanup.
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: Memory leak fixes.
+	  Comment out calls to activate_with_poa().
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+	  Do not call orb->shutdown(), instead set a flag.
+
+
+Mon Jan 14 14:04:36 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Regenerated
+	  dependencies.
+
+Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL.dsp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Static.dsp:
+        * orbsvcs/orbsvcs/ETCL/ETCL.rc:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp.diff:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.h.diff:
+
+          New files added to finish the implementation of the
+          Extended Trader Constraint Language library that was
+          begun by Carlos O'Ryan <coryan@uci.edu>. Thanks to
+          Chad Elliott <elliott_c@ociweb.com> for supplying
+          ETCL_Static.dsp.
+
+        * orbsvcs/orbsvcs/ETCL/ETCL.ll:
+        * orbsvcs/orbsvcs/ETCL/ETCL.yy:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp.diff:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.ETCL:
+        * TAOACE_Static.dsw:
+
+          Changes to ETCL and Notification Service files to complete
+          the implementation of the ETCL library and to make the
+          Notification Service use this library to filter events,
+          instead of using the Trading Service's Trader Constraint
+          Language, as it did previously.
+
+        * orbsvcs/tests/Notify/Notify_Tests.dsw:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+
+          Changes to Notification Service test coce submitted by
+          Chad Elliott <elliott_c@ociweb.com>.
+
+Mon Jan 14 13:09:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+
+          Added .in() to instances of TAO_String_Manager and
+          TAO_Object_Manager when used in the rhs of an expression,
+          and made other cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+
+          Removed unused local variable in visit_valuetype().
+
+Mon Jan 14 10:01:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/PortableServerC.i
+	  (tao_PortableServer_IdUniquenessPolicy_narrow):
+	* tao/diffs/PortableServerC.i.diff:
+
+	  Fixed incorrect use of TAO_ENV_ARG_PARAMETER where
+	  TAO_ENV_ARG_DECL was expected.
+
+	* tao/PortableServer/POA.cpp (reference_to_ids):
+
+	  Fixed incorrect use of PortableServer::IDs::_nil().  There is no
+	  such thing.  Zero is the correct value.
+
+Mon Jan 14 10:32:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp: Fixed the
+	  libraries that are linked to.
+
+Mon Jan 14 10:25:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp (RSC): Added the right
+	  library for linking in the debug  builds.
+
+Mon Jan 14 09:34:35 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/IDL_Test/including.idl:
+
+          Prefix the enum value FE with TAO_ to avoid a conflict on HP-UX
+          10.20.
+
+Mon Jan 14 09:27:44 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Added missing
+	  PortableGroup directory for POA_Hooks.
+
+Mon Jan 14 09:19:43 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* performance-tests/AMI_Latency/client.cpp:
+	  Fixed compile error.
+
+Mon Jan 14 08:49:31 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.idl: Changed include
+	  specification to work under Win32 release builds.
+
+Mon Jan 14 09:52:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+          Added Request_Dispatcher
+
+        * orbsvcs/tests/Makefile.bor:
+          Added new Miop directory
+
+        * orbsvcs/tests/Miop/Makefile.bor:
+          Added new BCB makefile
+
+        * orbsvcs/orbsvcs/FT_ORB.bor:
+          Added new BCB makefile for this library
+
+        * orbsvcs/orbsvcs/FaultTolerance.bor:
+          Updated makefile to use the new FT_ORB library
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Added new FT_ORB.bor makefile
+
+Sun Jan 13 21:50:22 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: Added Request_Dispatcher.{cpp,h} to the
+	  file listing.
+
+Sun Jan 13 21:24:59 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/Request_Dispatcher.cpp: Fixed ACE_CHECK typo.  Thanks to
+	  Venkita for catching it.
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h:
+	  Cleaned up two comments.
+
+Sun Jan 13 18:23:11 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/Makefile:
+	  Regenerated dependencies.
+
+Sun Jan 13 16:19:24 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
+	  (pre_init):
+
+	  Corrected erroneous comments.
+
+Sun Jan 13 15:22:10 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* docs/releasenotes/index.html (MIOP): Added a section for
+	  MIOP.
+
+Sun Jan 13 14:35:08 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* performance-tests/AMI_Latency/client.cpp: Rearranged the code
+	  a bit to perform better in single-threaded configurations.
+  	  Thanks to Sean McCauliff <seanm@Narus.com> for reporting this.
+
+Sun Jan 13 13:02:41 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* TAOACE.dsw:
+	* orbsvcs/orbsvcs/PortableGroup.dsp
+	  Added PortableGroup (MIOP) to the workspace.
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	  Build the PortableGroup code now.
+
+	* orbsvcs/orbsvcs/PortableGroup.idl:
+	* orbsvcs/orbsvcs/mgm.idl:
+	* orbsvcs/orbsvcs/miop.idl:
+	  Added new IDL from the MIOP specification:
+
+	* tao/IOP.pidl:
+	* tao/corbafwd.h:
+	  Added MIOP specification tag identifiers.  These need to be
+	  updated to OMG specified numbers as soon as they come out.
+
+	* orbsvcs/orbsvcs/PortableGroup/README:
+	  Readme for the MIOP and PortableGroup code.
+
+	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.h:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h:
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+	* orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h:
+	  PortableGroup implementation.  Includes hooks to handle
+	  new POA methods to associate group references with normal
+	  references, dispatch code based on group ID, and code to
+	  dynamically open multicast endpoint acceptors when association
+	  is made.
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.i:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.i:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.i:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.i:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.i:
+	  UIPMC (Unreliable IP MultiCast) pluggable protocol
+	  implementation.
+
+	* orbsvcs/tests/Miop/README:
+	  README for MIOP tests.  Currently just describes the
+	  McastHello test.
+
+	* orbsvcs/tests/Miop/McastHello/Makefile:
+	* orbsvcs/tests/Miop/McastHello/Makefile.bor:
+	* orbsvcs/tests/Miop/McastHello/McastHello.cpp:
+	* orbsvcs/tests/Miop/McastHello/McastHello.dsw:
+	* orbsvcs/tests/Miop/McastHello/McastHello.h:
+	* orbsvcs/tests/Miop/McastHello/README:
+	* orbsvcs/tests/Miop/McastHello/Test.idl:
+	* orbsvcs/tests/Miop/McastHello/client.bor:
+	* orbsvcs/tests/Miop/McastHello/client.conf:
+	* orbsvcs/tests/Miop/McastHello/client.cpp:
+	* orbsvcs/tests/Miop/McastHello/client.dsp:
+	* orbsvcs/tests/Miop/McastHello/run_test.pl:
+	* orbsvcs/tests/Miop/McastHello/server.bor:
+	* orbsvcs/tests/Miop/McastHello/server.conf:
+	* orbsvcs/tests/Miop/McastHello/server.cpp:
+	* orbsvcs/tests/Miop/McastHello/server.dsp:
+	  Added a simple unit test to try out multicast
+	  request generation, transmission, reception,
+	  and dispatch.
+
+	* tao/CORBALOC_Parser.cpp:
+	  Added check to allow "miop" corbaloc specifiers.
+
+	* tao/GIOP_Message_Base.cpp:
+	  Added call to request dispatcher to strategize how
+	  requests are dispatched to the POA.  For MIOP, a
+	  request be identified by a GroupId and be dispatched
+	  to one or more ObjectKeys.
+
+	* tao/GIOP_Message_Generator_Parser.cpp:
+	* tao/GIOP_Message_Generator_Parser.h:
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	  Moved GIOP 1.2 target address spec demarshal code
+	  to Tagged_Profile.*, so that the TAO_Tagged_Profile could
+	  know what kind of addressing mode it was actually
+	  representing.  Previously, it was always assumed that
+	  TAO_Tagged_Profile contained an object key.  Now, with
+	  MIOP, it is possible for requests to not have ObjectKeys
+	  in their target specifiers.  Instead, they have a profile
+	  that has a GroupID embedded within it.
+
+	* tao/Tagged_Profile.cpp:
+	* tao/Tagged_Profile.h:
+	* tao/Tagged_Profile.i:
+	  Added logic to unmarshal target specifications from
+	  GIOP_Message_Generator_Parser*.  Note that
+	  TAO_Tagged_Profile is only used to handle the target
+	  specification field and was specialized for this
+	  purpose before this change - despite what it's name
+	  may imply.
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/Strategies/DIOP_Acceptor.cpp:
+	* tao/Strategies/SHMIOP_Acceptor.cpp:
+	  Fixed debug text to indicate the right method name.
+
+	* tao/Makefile:
+	  Added Request_Dispatcher and updated dependencies.
+
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+	* tao/Profile.i:
+	* tao/Stub.cpp
+	* tao/Stub.h
+	* tao/Stub.i
+	* tao/Invocation.cpp:
+	  Changes to maintain the GIOP 1.2 target addressing mode
+	  in the profile as opposed to the stub.  This is the needed
+	  since the target addressing mode is decided upon based on
+	  the profile.  For example, a UIPMC profile needs to use
+	  the "profile" addressing mode, since it does not have an
+	  object key.  Additionally, if a remote ORB sends an
+	  addressing mode exception back, it should only affect the
+	  current profile as opposed to all profiles on a stub, since
+	  those profiles might go to some other ORB.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	  Added request dispatcher strategy and hooks for the
+	  PortableGroup library to replace functionality in the
+	  PortableServer library.
+
+	* tao/Request_Dispatcher.cpp:
+	* tao/Request_Dispatcher.h:
+	  Default request dispatcher to send requests to the POA
+	  based on their ObjectKey.  (Replaced when the
+	  PortableGroup library is active.)
+
+	* tao/TAO.dsp:
+	  Added Request_Dispatcher.{cpp,h}.
+
+	* tao/TAO_Server_Request.cpp:
+          Added missing this-> to conform to ACE standard.
+
+	* tao/orbconf.h:
+	  Added MIOP version definitions.
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+	  Added methods to forward processing of the new group
+	  functionality introduced by the MIOP specification.
+
+	* tao/PortableServer/PortableGroup_Hooks.cpp:
+	* tao/PortableServer/PortableGroup_Hooks.h:
+	  Base class to implementing the PortableGroup functionality.
+
+	* tao/PortableServer/TAO_PortableServer.dsp:
+          Added PortableGroup_Hooks.{cpp,h}.
+
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	  Regenerated dependencies.
+
+	* tao/PortableServer/PortableServer.pidl:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/PortableServer/PortableServerC.i:
+	* tao/diffs/PortableServerC.cpp.diff:
+	* tao/diffs/PortableServerC.h.diff:
+	* tao/diffs/PortableServerC.i.diff:
+	  Updated the POA with the group reference association
+	  methods introduced by the MIOP specification.
+
+Sun Jan 13 10:52:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGManpulation/Makefile: Updated
+	  dependencies.
+	* orbsvcs/tests/FaultTolerance/IOGManpulation/IOGRTest.cpp: Fixed
+	  a compilation error.
+
+Sun Jan 13 10:33:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Added an FTORB option.
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile: Updated
+	  dependencies.
+
+Sun Jan 13 09:35:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAOACE_Static.dsw (Project): Added FT_ORB.dsp.
+
+Sun Jan 13 09:03:25 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/worker.h:
+	* tests/Two_Objects/server.cpp:
+	  Fixed compile errors on SunCC51.
+
+Sat Jan 12 21:45:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FT_ORB.dsp (RSC): Added a new dsp file
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Made some slight changes.
+
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw: Added the new dsp file to
+	  the workspace.
+
+Sat Jan 12 21:14:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: A new file that contains
+	  additions only to the ORB core. This would be good for a variety
+	  of reasons. Some point in time, users would like to have only
+	  the FT ORB features loaded without the service layer. This
+	  should be useful for such cases. An excellent example is when
+	  the Heartbeats are going to be implemented. Regular users may
+	  need that without any extra stuff, like Notification, DynamicAny
+	  etc.
+
+	* orbsvcs/orbsvcs/FT_CORBA.idl: Has only the service layer
+	  interfaces.
+
+	* orbsvcs/orbsvcs/Makefile.FTORB: A new file for the TAO_FTORB
+	  library.
+
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated this file.
+
+	* orbsvcs/orbsvcs/Makefile: Added the new Makefile.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h: Included
+	  FT_CORBA_ORBC.h.
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile: Updated
+	  the file to include the TAO_FTORB library.
+
+	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Used the new library
+	  to load.
+
+Sat Jan 12 10:46:47 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/worker.h:
+	  Fixed compile error on Fuzz builds.
+
+Sat Jan 12 09:46:00 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/server.cpp:
+	* tests/Two_Objects/First_i.cpp:
+	* tests/Two_Objects/Second_i.cpp:
+	* tests/Two_Objects/Second_i.h:
+	* tests/Two_Objects/Object_Factory_i.cpp:
+	  Fixed compile errors on certain builds.
+
+Sat Jan 12 13:06:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added new Two_Obects directory to BCB makefile
+
+Fri Jan 11 17:36:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Removed the #if defined clause for the
+	  TAO_NAMESPACE definition. Now TAO_NAMESPACE will define
+	  namespace by default with no conditionality associated. The
+	  macro has been left behind for backward compatibility. This
+	  shoudl fix the LynxOS builds.
+
+Fri Jan 11 12:28:48 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/Security/Makefile (DIRS):
+	  Added MT_SSLIOP to DIRS section.
+
+Fri Jan 11 07:50:41 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.h:
+	  Fixed some Fuzz warnings.
+
+Fri Jan 11 09:53:41 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Makefile:
+	  Added entry for Two_Objects test.
+
+Thu Jan 10 17:43:22 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTCORBAEvent:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.inl:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.cpp:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.inl:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
+	  Add new dispatching strategy based on RT-CORBA.  Still
+	  work-in-progress.
+
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Makefile:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Consumer.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Consumer.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.inl:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Receive_Task.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Receive_Task.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Send_Task.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Send_Task.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Servant_var.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Servant_var.inl:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Servant_var.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Supplier.h:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/Supplier.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/driver.cpp:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.supplier_filter_null.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/ec.supplier_filter_per_supplier.conf:
+	* orbsvcs/performance-tests/EC_Colocated_Latency/run_supplier_filtering.sh:
+	  Add new performance test to measure latency in the colocated
+	  case.
+
+Thu Jan 10 12:48:02 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/worker.cpp:
+	* tests/Two_Objects/worker.h:
+
+	Fixed compile errors.
+
+Thu Jan 10 12:13:28 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/Two_Objects.idl:
+	* tests/Two_Objects/server.cpp:
+	* tests/Two_Objects/client.cpp:
+	* tests/Two_Objects/worker.h:
+	* tests/Two_Objects/worker.cpp:
+	* tests/Two_Objects/First_i.cpp:
+	* tests/Two_Objects/First_i.h:
+	* tests/Two_Objects/Second_i.cpp:
+	* tests/Two_Objects/Second_i.h:
+	* tests/Two_Objects/Object_Factory_i.h:
+	* tests/Two_Objects/Object_Factory_i.cpp:
+	* tests/Two_Objects/Two_Objects.dsw:
+	* tests/Two_Objects/server.dsp:
+	* tests/Two_Objects/client.dsp:
+	* tests/Two_Objects/run_test.pl:
+	* tests/Two_Objects/Makefile:
+	* tests/Two_Objects/Makefile.bor:
+	* tests/Two_Objects/server.bor:
+	* tests/Two_Objects/client.bor:
+	* tests/Two_Objects/README:
+
+	Created a new test for bug fix 575. This is a test to show
+	that there can be concurrent upcalls to two objects in the
+	same POA on the same connection.
+
+Thu Jan 10 11:53:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP.pidl: Added come comments.
+	* tao/GIOPC.h:
+	* tao/GIOPC.cpp:
+	* tao/GIOPC.i (Version_var): Added GIOP::Version_var to the
+	  generated code.
+
+	* tao/diffs/GIOPC.cpp.diff:
+	* tao/diffs/GIOPC.h.diff:
+	* tao/diffs/GIOPC.i.diff:
+	* tao/diffs/GIOPS.cpp.diff:
+	* tao/diffs/GIOPS.h.diff:
+	* tao/diffs/GIOPS.i.diff:
+	* tao/diffs/GIOPS_T.cpp.diff:
+	* tao/diffs/GIOPS_T.h.diff:
+	* tao/diffs/GIOPS_T.i.diff: Added diffs to the generated code.
+
+
+Wed Jan  9 18:07:55 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TO_IDL/fe/fe_init.cpp (populate_global_scope):
+
+          Removed the guards around the calls related to valuetypes.
+
+Wed Jan  9 11:35:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+
+	  Removed last remnants of the long deprecated -ORBSetUID and
+	  -ORBSetGID ORB options.
+
+Wed Jan  9 13:36:14 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+
+          Changed the order of member initialization to match the
+          order of declaration.
+
+Wed Jan  9 11:39:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+
+          Added declaration of CDR operators for anonymous sequence
+          array element to the stub inline file. When ACE_INLINE is
+          defined, the declarations of these in the header file is
+          not included.
+
+Wed Jan  9 08:46:58 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* docs/Options.html: Clarified the use of the
+	  -ORBDottedDecimalAddresses option.  Thanks to Michael Gillmann
+	  <michael.gillmann@infor.de> for motivating this.
+
+Tue Jan  8 16:20:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+
+          Added '::' to instances of 'CORBA::TypeCode_ptr' in
+          type code generation. If there is a nested module
+          named 'CORBA', MSVC gets confused. Thanks to
+          Tom Howard <tom_howard@yahoo.com> for pointing out
+          the problem.
+
+Tue Jan  8 14:52:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+
+          Added explicit calls to base class constructors.
+
+        * TAO_IDL/be/be_decl.cpp:
+
+          Added explicit calls to base class constructors, and
+          added missing member initialization.
+
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ci.cpp:
+
+          Changed the logic for generating CDR operators for
+          named arrays of anonymous sequences. Some recent
+          change broke this, and it was showing up in IDL_Test.
+          Also made cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp:
+
+          Added line breaks to strings of output stream operators,
+          to avoid side effects when a method call is in the string.
+          Also made cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+
+          Changed the logic of the code generation for forward
+          declared interfaces. The existing logic was a case of two
+          wrongs making a right, and was causing a problem with the
+          implementation of AMH in the IDL compiler. Thanks to
+          Carlos O'Ryan <coryan@uci.edu> and Mayur Deshpande
+          <mayur@ics.uci.edu> for pointing out the problem.
+
+Mon Jan  7 10:27:43 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PortableServer/PolicyS_T.i:
+
+          Corrected an invalid ENV parameter macro name.  This was detected
+          as an error on HP-UX.  Thanks to Rob Martin <martin_r@ociweb.com>
+          for pointing this out.
+
+Sun Jan  6 13:18:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_operation_strategy.cpp:
+
+          Removed an unused argument, and made cosmetic changes.
+
+Sun Jan  6 09:45:24 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Advanced/ch_8_and_10/client.cpp (main):
+	  Added some casts to make certain C++ compilers happy.
+	  Thanks to Roy Sharon <roysharon@hotmail.com> for
+	  reporting this.
+
+Sat Jan  5 21:31:43 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+
+	  Added code to generate the Client side abstract RH class and the
+	  skeleton RH class. For the above two interfaces, there should be
+	  no classes generated on teh 'other side' i.e. for the client RH
+	  interface node, there should be no class generatd in the
+	  skeleton files.  Currently there are a few problems with this
+	  and with the exact names and inheritance of the generated
+	  classes.
+
+Sat Jan  5 18:27:59 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+
+	  Added code to generate the skeleton-source code for AMH-skelton
+	  operation.  The amh-method differs from the original method in
+	  the following ways:
+	  - Return type is always void
+	  - IN and INOUT parameters _only_ are de-marshalled
+	  One part left to be done is the creation and instantiation of
+	  the RH inside the generated method body.
+
+Sat Jan  5 18:15:34 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+
+	  Added actions for all the AMH states (including amh_rh).
+	  Previously some of them returned 0 or just didn't do anything.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  Removed all the code from the visit_interface that generates
+	  code for the this_method and put it into a seperate method
+	  called this_method.  This method already existed but for some
+	  reason a part of the code was left in the visit_interface
+	  method.  With this in place, the AMH class can now implement all
+	  the changes that are needed in the _this () method.
+
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+
+	  - Changed the this_method().  This method now generates all the
+	  code for the _this() method in amh-skeleton.  Changes include a
+	  narrow of original interface rather than teh AMH-skeleton narrow
+	  and commenting of the generation of the safe_stub.release()
+	  line.  - Changed the dispath_method () so that it now generates
+	  a call to asynchronous_upcall_dispatch rather than
+	  synchronous_upcall_dispatch as is generated for a normal
+	  skeleton.
+
+Sat Jan  5 20:39:25 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Connection_Handler.cpp (handle_input, handle_output):
+
+	  Reverted my change that avoided a function call.  Bala correctly
+	  points out that the handled passed in as a parameter may be an
+	  invalid handle if the event handler is dispatched by the
+	  reactor's notification mechanism.  Not bueno.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	  (handle_input, handle_output):
+
+	  Likewise.
+
+Sat Jan  5 20:00:21 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Connection_Handler.inl (TAO_Connection_Handler):
+
+	  Initialize "pending_upcalls_" and "pending_upcall_lock_" in the
+	  base member initializer list.  Although this constructor is not
+	  used, it is best to ensure that proper initialization is
+	  performed in the event this constructor is used in the future.
+
+Sat Jan  5 19:30:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/orbconf.h:
+
+	  Include "ace/Basic_Types.h" to pull in the definition of
+	  ACE_LITTLE_ENDIAN.
+
+Sat Jan  5 17:54:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/LF_Strategy.h:
+
+	  No need to include "tao/orbconf.h."  Forward declaring
+	  ACE_Time_Value is enough.
+
+	* tao/orbconf.h:
+
+	  Instead of "ace/OS.h", include "ace/config-all.h".  The latter
+	  is all that is needed.  This change should improve compile times
+	  since "config-all.h" does not include the large number of system
+	  headers found in "OS.h," which provides for improved C++
+	  preprocessing times in TAO.
+
+	  (TAO_DEFAULT_ORB_TABLE_SIZE):
+
+	  New constant that is used when setting the initial size of the
+	  ORB table.  Previously a default of 1024 was used.  However,
+	  most applications rarely use more than one ORB, meaning that
+	  an ORB table size of 1024 is overkill.  The default is now 16.
+	  This size should be more than adequate for the majority of
+	  applications.
+
+	  (MCAST_SERVICE_ID, NO_OF_MCAST_SERVICES):
+
+	  Prepend "TAO_" to these macros to avoid polluting the global
+	  namespace.
+
+	* tao/ORB.h (resolve_service):
+	* tao/ORB.cpp (resolve_service):
+	* tao/params.h (service_port):
+	* tao/params.i (service_port):
+	* tao/params.cpp (TAO_ORB_Parameters):
+
+	  Changed the parameter type "MCAST_SERVICEID" to
+	  "TAO_MCAST_SERVICEID," in accordance with the changes made to
+	  `orbconf.h' described above.
+
+	* tao/ORB_Table.cpp (TAO_ORB_Table):
+
+	  Initialize the underlying hash map (the ORB table) to a size of
+	  TAO_DEFAULT_ORB_TABLE_SIZE.  This change reduces the default ORB
+	  table size from 1024 to 16 (TAO_DEFAULT_ORB_TABLE_SIZE), thus
+	  greatly reducing the initial ORB table memory utilization.
+
+	* tao/IIOP_Connection_Handler.cpp (handle_input, handle_output):
+
+	  No need to make a function call to retrieve the handle.  Just
+	  use the handle parameter passed in to the method.
+
+Sat Jan  5 15:04:46 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:  Fix comments.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
+ 	* orbsvcs/performance-tests/EC_Scalability/Makefile:
+ 	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
+ 	* orbsvcs/performance-tests/EC_Latency/Makefile:
+
+	  Only build these tests if RTEvent is set in TAO_ORBSVCS.
+
+Fri Jan 4 17:30:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/index.html:
+	  Corrected some broken links. The errors were pointed out thanks
+	  to Eric Peters <egpeters@u.washington.edu>.
+
+Fri Jan  4 19:02:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ChangeLogs/ChangeLog-01c: A new file after splitting from this
+	  one.
+
+Fri Jan  4 18:28:44 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Removed compute_repoID(), the version that is always
+          called in in the base class AST_Decl. Thanks to
+          Brian Olson <bolson@rtlogic.com> for pointing out
+          that the be_decl version was not doing the version
+          part of the string correctly.
+
+Fri Jan  4 16:30:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynCommon.cpp (insert_reference):
+
+          Since the argument is passed in as a CORBA::Object_ptr,
+          and ultimately inserted into the member Any with the
+          non-virtual operator <<=, then
+          dyn_any->to_any()->type ()->id() would always yield
+          "IDL:CORBA/Object:1.0", no matter what
+          dyn_any->type()->id() yields. So the insertion into
+          the memeber Any has been changed to use _tao_replace(),
+          and passing in the dyn_any's type code, which is
+          always of the derived type. Thanks to Mahesh Vedantam
+          <mahesh@ociweb.com> for reporting the problem.
+
+Fri Jan  4 15:21:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_visitor.cpp (visit_factory):
+
+          Removed an unused argument.
+
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+
+          Removed explicit instantiation of ACE_Node<char *>, since
+          it already appears in ACE.
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Changed isspace() to ACE_OS::ace_isspace().
+
+        * TAO_IDL/be/be_interface_strategy.cpp (compute_coll_names):
+
+          Changed a local const char[] to static const char*. The
+          string  "POA_" is assigned to this constant, and there
+          has been a long-standing intermittent problem with
+          garbage being generated in place of the string. Although
+          the problem has never been duplicated by the DOC Group,
+          Sorin Iordachescu <sorin.iordachescu@am-beo.com> has
+          produced it repeated and has suggested the above fix.
+
+        * TAO_IDL/util/utl_err.cpp:
+
+          Removed all use of ACE_TEXT from methods that return char*.
+          When compilation is done with ACE_USES_WCHAR, the return
+          type is incorrect. Thanks to Johnny Willemsen
+          <johnny_willemsen@planet.nl> for reporting the problem.
+
+Fri Jan  4 14:32:43 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/Fill_QoS.h: Add #include <ace/OS_QoS.h>.
+
+Thu Jan  3 07:18:22 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.bor:
+          Added library required for a statically linked build.
+
+        * orbsvcs/Notify_Service/NT_Notify_Service.bor:
+        * orbsvcs/Notify_Service/Notify_Service.bor:
+          Reverted the changes made to these files in
+          Sun Dec 30 20:30:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+          as the trading library is required for a static build.
+
+        * orbsvcs/orbsvcs/*.bor:
+        * orbsvcs/orbsvcs/Security.rc:
+        * tao/*/Makefile.bor:
+        * tao/*/*.rc:
+          Added Borland makefile support for the new resource files.
+
+Wed Jan  2 20:48:36 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
+
+	* TAO-INSTALL.html: Fixed a couple of missing links.  Thanks to
+	  Patrick Cosmo <Patrick@incognito.com> for reporting this.
+
+Wed Jan  2 18:00:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Changed an instance of != ' ' to !isspace.
+
+Wed Jan  2 15:57:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp (to_url):
+	  The to_url method should actually be returning a corbaname type
+	  URL instead of the corbaloc style URL. According to the
+	  INS specification, the method should return a fully formed URL
+	  along with the key_string and corbaname format is the one that
+	  can have the key_string in it.
+
+	  Moved the pointer to the end of the dest string before
+	  concatenating something to it. Previously, it was returning only
+	  escaped key_string.
+
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp :
+	  Modified the string that is passed to the to_url method to have
+	  a ':' before the dummy address. Now, its in one of the correct
+	  syntaxes.
+
+	  Thanks to Scott Harris <harris_s@ociweb.com> for reporting all
+	  these.
+
+Wed Jan 02 15:25:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ValueFactory.h: Removed the non-standard tao extension
+	  repository_id().  According to the spec, for valuetypes without
+	  a factory method, the developer supplied ValueFactory class
+	  should inherit from CORBA::ValueFactoryBase directly.
+	  Therefore, we can no longer generate this repository_id() method
+	  in the IDL compiler.
+
+	  Changed the TAO_OBV_REGISTER_FACTORY to take the type of
+	  valuetype it handles as an extra parameter.  The macro will
+	  simply use the non-standard TAO extension to stick in the
+	  repository_id for the valuetype.  This may not be the correct
+	  way to get the repository_id for a valuetype as it is not clear
+	  to me how one can get it.
+
+	* examples/OBV/Typed_Events/Event_Types_impl.h: Changed to inherit
+	  valuetype factories from CORBA::ValueFactoryBase.
+
+	* examples/OBV/Typed_Events/Server_i.cpp:
+	* examples/OBV/Typed_Events/Client_i.cpp: Added type of valuetype
+	  when registering factory with the TAO_OBV_REGISTER_FACTORY
+	  macro.
+
+Wed Jan  2 15:27:57 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_valuetype.cpp:
+
+          Added some missing ACE_INLINEs to the _var and _out class
+          method implementation code generation.
+
+Wed Jan  2 12:02:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp (idl_valid_version):
+
+          Had to add a check for trailing whitespace. SunCC's
+          preprocessor leaves it in, it seems, and this was
+          leading to version strings being falsely invalidated.
+
+Wed Jan  2 10:22:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp (visit_array):
+
+          Made changes that were overlooked in
+
+          Fri Dec 28 15:41:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+          that correspond to changes made in typedef_ch.cpp.
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp (visit_array):
+
+          Cosmetic changes.
+
+Wed Jan  2 09:41:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvvcs/IFR_Service/drv_init_ifr.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvvcs/IFR_Service/ifr_visitor.h:
+
+          Changes related to corresponding changes in the TAO IDL
+          compiler regarding value types and #pragma prefix.
+
+Tue Jan  1 17:40:23 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	  Remove dummy copy constructor, that should clear some of the
+	  builds.
+
+Tue Jan  1 09:38:58 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/Activity.cpp:
+	  examples/RTCORBA/Activity/Builder.cpp:
+	  Fixed compile errors.

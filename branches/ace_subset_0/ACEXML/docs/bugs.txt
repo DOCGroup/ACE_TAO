@@ -1,0 +1,25 @@
+/**
+@page acexml_bugs ACEXML Known Bugs
+
+<ul>
+  <li>ACEXML currently do not validate an XML files.
+
+  <li>Exception handling is not implemented.  Maybe we should not try
+      to use the environment variables/exceptions scheme again.
+      Considering changing to a simpler error reporting method.
+
+  <li>Need to verify predefined entities are working correctly.  Check
+      out the SAXPrint example.
+
+  <li>Currently, replacement of parameterized reference (PEReference) is
+      not working.
+
+  <li>Although most namespace supporting features/interfaces are
+  there, the parser currently does not interpret namespace.
+
+  <li>I'm sure this list will grow. :)
+
+</ul>
+
+
+*/
