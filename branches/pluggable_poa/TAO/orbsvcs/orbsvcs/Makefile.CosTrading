@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Trader
 
-ACE_SHLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

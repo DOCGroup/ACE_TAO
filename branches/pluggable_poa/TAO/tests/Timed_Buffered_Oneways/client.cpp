@@ -250,19 +250,10 @@ main (int argc, char **argv)
       if (parse_args_result != 0)
         return parse_args_result;
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (),
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Get an object reference from the argument string.
-      object = orb->string_to_object (IOR,
-                                      ACE_TRY_ENV);
+      CORBA::Object_var object =
+        orb->string_to_object (IOR,
+                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
@@ -309,11 +300,6 @@ main (int argc, char **argv)
           test_object->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
       // library is closed at the end of main().  This means that any

@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:LifeCycle
 
-ACE_SHLIBS = -lTAO_CosNaming -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

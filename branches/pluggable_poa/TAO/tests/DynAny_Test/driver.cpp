@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "ace/Get_Opt.h"
+#include "driver.h"
 #include "test_dynany.h"
 #include "test_dynarray.h"
 #include "test_dynenum.h"
@@ -25,7 +25,8 @@
 #include "test_dynstruct.h"
 #include "test_dynunion.h"
 #include "test_wrapper.h"
-#include "driver.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "ace/Get_Opt.h"
 
 int main (int argc, char* argv[])
 {

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "data.h"
+#include "tao/PortableServer/PortableServer.h"
 
 Data::Data (CORBA::ORB_var orb)
   : m_bool1 (1),                                m_bool2 (0),

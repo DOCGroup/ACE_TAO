@@ -37,8 +37,9 @@ endif # COMSPEC
 ####
 #### TAO libraries
 ####
-TAO_SRVR_LIBS=-lTAO_PortableServer -lTAO $(ACELIB) $(LIBS)
-TAO_CLNT_LIBS=-lTAO $(ACELIB) $(LIBS)
+TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
+TAO_SRVR_LIBS=-lTAO_PortableServer $(TAO_BASE_LIBS)
+TAO_CLNT_LIBS=-lTAO $(TAO_BASE_LIBS)
 
 ####
 #### Macro customization.
