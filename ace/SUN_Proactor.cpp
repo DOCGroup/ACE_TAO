@@ -280,33 +280,33 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
 }
 
 int
-ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
+ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
 {
   ACE_UNUSED_ARG (result);
-  return 2 ; // not implemented
+  // Force I/O completion.
+  ACE::set_flags (result->aio_fildes, ACE_NONBLOCK);
 
-// AL
-// I tried to implement the following code
-// But result was : aiocancel returned -1 with errno=ACCESS_DENIED
-// moreover, later this operation had been never finished
-// on aiowait . 
-// Is it Sun error ??
-//
-// So with SUN_Proactor there is only one way to cancel AIO
-// just close the file handle.
-//
-// 
-//  int rc = ::aiocancel (& result->aio_resultp);
-//  
-// Check the return value and return 0/1/2 appropriately.
-//  if (rc == 0)    //  AIO_CANCELED
-//    return 0;
-//
-//  ACE_ERROR_RETURN ((LM_ERROR,
-//                       "%N:%l:(%P | %t)::%p\n",
-//                       "cancel_aiocb:"
-//                       "Unexpected result from <aiocancel>"),
-//                      -1);
+  return 2;
+  // AL
+  // I tried to implement the following code but result was:
+  // aiocancel returned -1 with errno=ACCESS_DENIED moreover, later
+  // this operation had been never finished on aiowait .  Is it Sun
+  // error ??
+  //
+  // So with SUN_Proactor there is only one way to cancel AIO just
+  // close the file handle.
+  // 
+  //  int rc = ::aiocancel (& result->aio_resultp);
+  //  
+  // Check the return value and return 0/1/2 appropriately.
+  //  if (rc == 0)    //  AIO_CANCELED
+  //    return 0;
+  //
+  //  ACE_ERROR_RETURN ((LM_ERROR,
+  //                       "%N:%l:(%P | %t)::%p\n",
+  //                       "cancel_aiocb:"
+  //                       "Unexpected result from <aiocancel>"),
+  //                      -1);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
