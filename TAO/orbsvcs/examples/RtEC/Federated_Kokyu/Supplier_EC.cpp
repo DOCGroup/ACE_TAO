@@ -117,10 +117,15 @@ public:
             Supplier(1));
     ACE_NEW(timeout_consumer_impl1,
             Timeout_Consumer(supplier_impl1));
-    ACE_Time_Value tv(4,0);
-    add_supplier_with_timeout(supplier_impl1,"supplier1",ACE_ES_EVENT_UNDEFINED,
-                              timeout_consumer_impl1,"supplier1_timeout_consumer",
-                              tv,RtecScheduler::VERY_LOW_CRITICALITY,RtecScheduler::VERY_LOW_IMPORTANCE
+    ACE_Time_Value tv(4,0); //period
+    add_supplier_with_timeout(supplier_impl1,
+                              "supplier1",
+                              ACE_ES_EVENT_UNDEFINED,
+                              timeout_consumer_impl1,
+                              "supplier1_timeout_consumer",
+                              tv,
+                              RtecScheduler::VERY_LOW_CRITICALITY,
+                              RtecScheduler::VERY_LOW_IMPORTANCE
                               ACE_ENV_ARG_PARAMETER
                               );
     ACE_CHECK;
@@ -170,7 +175,7 @@ public:
     ACE_NEW(consumer_impl2_1,
             Consumer(supplier_impl2_2));
 
-    tv.set(6,0);
+    tv.set(2,0);
     consumer_impl2_1->setWorkTime(tv);
     //consumer's rate will get propagated from the supplier.
     //so no need to specify a period here.

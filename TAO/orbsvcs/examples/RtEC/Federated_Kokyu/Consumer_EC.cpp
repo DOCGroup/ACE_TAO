@@ -132,7 +132,7 @@ public:
     Supplier * supplier_impl3;
     ACE_NEW(supplier_impl3,
             Supplier(4));
-    tv.set(12,0); //period
+    tv.set(3,0); //period
     add_supplier(supplier_impl3,
                  "supplier3",
                  ACE_ES_EVENT_UNDEFINED+3
@@ -150,7 +150,7 @@ public:
     Once_Handler * task3_trigger;
     ACE_NEW(task3_trigger,
             Once_Handler);
-    tv.set(12,0);
+    tv.set(3,0); //period
     RtEventChannelAdmin::SchedInfo info;
     info.criticality = RtecScheduler::LOW_CRITICALITY;
     info.period = time_val_to_period (tv);
@@ -188,12 +188,12 @@ public:
     ACE_NEW(consumer_impl2_2,
             Consumer);
 
-    tv.set(6,0);
+    tv.set(2,0);
     consumer_impl2_2->setWorkTime(tv);
     consumer_impl2_2->handler(once_); //trigger Task3 on first event!
-    //consumer's rate will get propagated from the supplier.
-    //so no need to specify a period here.
-    tv.set(6,0);
+    //consumer's rate will NOT get propagated from the supplier
+    //because supplier is Gateway, so need to specify a period here.
+    tv.set(6,0); //period
     add_consumer(consumer_impl2_2,
                  "consumer2_2",
                  tv,
@@ -209,11 +209,11 @@ public:
     ACE_NEW(consumer_impl3,
             Consumer);
 
-    tv.set(12,0);
+    tv.set(1,800000);
     consumer_impl3->setWorkTime(tv);
     //consumer's rate will get propagated from the supplier.
     //so no need to specify a period here.
-    tv.set(0,0);
+    tv.set(0,0); //period
     add_consumer(consumer_impl3,
                  "consumer3",
                  tv,
