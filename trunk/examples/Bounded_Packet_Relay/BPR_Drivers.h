@@ -11,13 +11,17 @@
 //
 // = DESCRIPTION
 //    This code builds an abstraction to factor out common code from
-//    the different implementations of the Timer_Queue based bounded 
-//    packet relay example.
+//    the different possible implementations of the Timer_Queue based
+//    bounded packet relay example.
 //
 // = AUTHORS
-//    Chris Gill           <cdgill@cs.wustl.edu>
+//    Chris Gill           <cdgill@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
 //
-//    Based on examples/Timer_Queue/Driver.h written by
+//    Based on the Timer Queue Test example written by
+//
+//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================
@@ -28,11 +32,7 @@
 #include "ace/Task.h"
 
 class Command_Base
-// @@ Chris, make sure that you ALWAYs put the opening '{' BEFORE the
-// =TITLE and =DESCRIPTION comments.  Otherwise, it's hard to format
-// correctly via emacs.  I've reformatted most of the comments in the
-// *.h files, but I left this one to show how you were doing it
-// incorrectly.
+{
   // = TITLE
   //    Defines an abstract class that allows us to invoke commands
   //    without knowing anything about the implementation.
@@ -41,7 +41,6 @@ class Command_Base
   //    This class declares an interface to execute a command
   //    independent of the effect of the command, or the objects used
   //    to implement it.
-{
 public:
   virtual int execute (void *arg) = 0;
   // Invokes the method <action_> from the object <receiver_>.
@@ -50,7 +49,7 @@ public:
 class Input_Device_Wrapper_Base : public ACE_Task_Base
 {
   // = TITLE
-  //    Defines an abstract base class for an input device wrapper
+  //    This class defines an abstract base class for an input device wrapper
   //    that hides the details of the specific device and provides a
   //    consistent message passing interface without knowing anything
   //    about the implementation of the input device or the message
@@ -75,22 +74,22 @@ class Input_Device_Wrapper_Base : public ACE_Task_Base
 public:
   // = Initialization and termination methods.
   Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
-  // ctor
+  // Constructor.
 
   virtual ~Input_Device_Wrapper_Base ();
-  // dtor
+  // Destructor.
  
   int set_send_input_msg_cmd (Command_Base *send_input_msg_cmd);
-  // sets send input message command in the input device driver object
+  // Sets send input message command in the input device driver object.
 
   int set_input_period (u_long input_period);
-  // sets period (in usecs) between when inputs are created
+  // Sets period (in usecs) between when inputs are created.
 
   int set_send_count (long count);
-  // sets count of messages to send
+  // Sets count of messages to send.
 
   int request_stop (void);
-  // request that the input device stop sending messages and terminate
+  // Requests that the input device stop sending messages and terminate
   // its thread.  Should return 1 if it will do so, 0 if it has
   // already done so, or -1 if there is a problem doing so.
 
@@ -99,36 +98,36 @@ public:
 
 protected:
   virtual ACE_Message_Block *create_input_message (void) = 0;
-  // creates a new message block, carrying data read from the
-  // underlying input device
+  // Creates a new message block, carrying data read from the
+  // underlying input device.
 
   virtual int send_input_message (ACE_Message_Block *);
-  // sends a newly created message block, carrying data read from the
+  // Sends a newly created message block, carrying data read from the
   // underlying input device, by passing a pointer to the message
-  // block to its command execution
+  // block to its command execution.
 
   Command_Base *send_input_msg_cmd_;
-  // send newly created input message.
+  // Send newly created input message.
 
   u_long input_period_;
-  // period between when input values are produced (usecs)
+  // Period between when input values are produced (usecs).
 
   ACE_Reactor reactor_;
-  // reactor used to multiplex input streams, timeouts
+  // Reactor used to multiplex input streams, timeouts.
 
   int is_active_;
-  // flag to indicate whether or not input object is and should remain
-  // active
+  // Flag to indicate whether or not input object is 
+  // (and should remain) active.
 
   long send_count_;
-  // count of messages to send before stopping (-1 indicates the
-  // device should not stop)
+  // Count of messages to send before stopping (-1 indicates the
+  // device should not stop).
 };
 
 class Output_Device_Wrapper_Base
 {
   // = TITLE
-  //    Defines an abstract base class for an output device wrapper
+  //    This class defines an abstract base class for an output device wrapper
   //    that hides the details of the specific device and provides a
   //    consistent write method interface without knowing anything
   //    about the implementation.
@@ -140,21 +139,21 @@ class Output_Device_Wrapper_Base
   //    output device, and update device settings, respectively.
 public:
   virtual int write_output_message (void *) = 0;
-  // writes contents of the passed message block out to the underlying
-  // output device
+  // Writes contents of the passed message block out to the underlying
+  // output device.
 
   virtual int modify_device_settings (void *) = 0;
-  // provides an abstract interface to allow modifying device settings
+  // Provides an abstract interface to allow modifying device settings.
 };
 
 class Bounded_Packet_Relay_Base
 {
   // = TITLE
-  //   @@ Chris, please fill in here.
+  //     Base class for the time-bounded packet relay class.
   //
   // = DESCRIPTION
   //     This enum must go here to avoid confusing certain broken C++
-  //     compilers...
+  //     compilers.
 public:
   enum Transmission_Status 
   {
@@ -171,24 +170,29 @@ template <class SYNCH>
 class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
 {
   // = TITLE
-  //   @@ Chris, please fill in here.
+  //     This class defines a packet relay abstraction for a transmission
+  //     bounded external commands to start and end the transmission.  The
+  //     transmission may be bounded by the number of packets to send, the
+  //     dration of the transmission, or any other factors.
   //
   // = DESCRIPTION
-  //   @@ Chris, please fill in here.
+  //     The relay abstraction implemented by this class registers a callback
+  //     command with an input device wrapper, and relays input to an output
+  //     device at a pace specified in the start transmission call.
 public:
-  // @@ Chris, where is Input_Task:: defined?
-  typedef int (Input_Task::*ACTION) (void *);
-  // Command entry point type definition
+
+  typedef int (Bounded_Packet_Relay::*ACTION) (void *);
+  // Command entry point type definition.
 
   // = Enumerates possible status values at the end of a transmission.
 
   Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                         Input_Device_Wrapper_Base *input_wrapper,
                         Output_Device_Wrapper_Base *output_wrapper);
-  // ctor
+  // Constructor.
 
   virtual ~Bounded_Packet_Relay (void);
-  // dtor
+  // Destructor.
 
   int send_input (void);
   // Requests output be sent to output device.
@@ -207,50 +211,52 @@ public:
   // = Command Accessible Entry Points.
 
   int receive_input (void *);
-  // public entry point to which to push input.
+  // Public entry point to which to push input.
 
 private:
   // = Concurrency Management.
 
   ACE_Thread_Manager * input_task_mgr_;
-  // Thread manager for the input device task
+  // Thread manager for the input device task.
 
   Input_Device_Wrapper_Base * input_wrapper_;
-  // pointer to the input device wrapper
+  // Pointer to the input device wrapper.
 
   Output_Device_Wrapper_Base * output_wrapper_;
-  // pointer to the output device wrapper
+  // Pointer to the output device wrapper.
 
   ACE_Message_Queue<SYNCH> queue_;
+  // Queue used to buffer input messages.
 
   SYNCH transmission_lock_;
-  // lock for safe thread synchronization 
-  // of transmission startup and termination
+  // Lock for thread-safe synchronization 
+  // of transmission startup and termination.
 
   // = Transmission Statistics
 
   u_long transmission_number_;
-  // number of transmissions sent
+  // Number of transmissions sent.
 
   u_long packets_sent_;
-  // count of packets sent in the most recent transmission
+  // Count of packets sent in the most recent transmission.
 
   Transmission_Status status_;
-  // status of the current or most recent transmission
+  // Status of the current or most recent transmission.
 
   ACE_Time_Value transmission_start_;
-  // start time of the most recent transmission
+  // Start time of the most recent transmission.
 
   ACE_Time_Value transmission_end_;
-  // ending time of the most recent transmission
+  // Ending time of the most recent transmission.
+
 };
 
 template <class TQ>
 class Bounded_Packet_Relay_Driver
 {
   // = TITLE
-  //    Defines a class that provides a simmple implementation for
-  //      a test driver for timer queues.
+  //    This abstract base class provides a simple abstraction for
+  //    a test driver for the bounded packet relay example.
   //
   // = DESCRIPTION
   //    This is the place where the common code to test the different
@@ -280,7 +286,7 @@ public:
   // error.
 
   virtual int display_menu (void);
-  // Prints the user interface for the driver to STDOUT.
+  // Prints the user interface for the driver to STDERR.
 
   virtual int init (void)=0;
   // Initializes values and operations for the driver.
@@ -289,36 +295,36 @@ protected:
   // = Major Driver Mechanisms
 
   TQ timer_queue_;
-  // timer queue for transmission timeouts
+  // Timer queue for transmission timeouts.
 
   // = Set of <Command>s to be executed.
 
   Command_Base *packet_count_cmd_;
-  // set packet count command
+  // Set packet count command.
 
   Command_Base *arrival_period_cmd_;
-  // set arrival period command.
+  // Set arrival period command.
 
   Command_Base *transmit_period_cmd_;
-  // set transmit period command.
+  // Set transmit period command.
 
   Command_Base *duration_limit_cmd_;
-  // set duration limit command.
+  // Set duration limit command.
 
   Command_Base *logging_level_cmd_;
-  // set logging level command.
+  // Set logging level command.
 
   Command_Base *run_transmission_cmd_;
-  // run transmission command.
+  // Run transmission command.
 
   Command_Base *cancel_transmission_cmd_;
-  // cancel transmission command.
+  // Cancel transmission command.
 
   Command_Base *report_stats_cmd_;
-  // report statistics command.
+  // Report statistics command.
 
   Command_Base *shutdown_cmd_;
-  // shutdown the driver.
+  // Shut down the driver.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

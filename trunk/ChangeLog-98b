@@ -1,3 +1,12 @@
+Sun Sep 20 12:17:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers.{h,cpp}
+
+          Second checkin of bounded packet relay example,
+          addressed several coding style issues.
+          (very rough, still does not compile)
+
 Sun Sep 20 11:25:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: with ACE_HAS_TSS_EMULATION, use u_long instead of
@@ -40,7 +49,18 @@ Sat Sep 19 12:27:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Sat Sep 19 10:43:41 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-        * ace/Asynch_IO.cpp (open): Fixed the build errors with WIN32.
+	* ace/Asynch_IO.cpp (open): Fixed the build errors with WIN32.
+
+Sat Sep 19 09:02:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers.{h,cpp}
+          examples/Bounded_Packet_Relay/bpr_thread.cpp
+          examples/Bounded_Packet_Relay/Makefile
+          examples/Bounded_Packet_Relay/README:
+
+          First checkin of bounded packet relay example
+          (very rough, does not even compile yet)
 
 Sat Sep 19 00:42:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
