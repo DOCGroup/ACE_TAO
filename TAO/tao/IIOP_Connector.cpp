@@ -143,10 +143,10 @@ TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
-                      ACE_TEXT ("TAO (%P|%t) This is most likely ")
-                      ACE_TEXT ("due to a hostname lookup ")
-                      ACE_TEXT ("failure.\n")));
+                      ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                      ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
+                      ACE_LIB_TEXT ("due to a hostname lookup ")
+                      ACE_LIB_TEXT ("failure.\n")));
         }
 
       return -1;
@@ -163,16 +163,16 @@ TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                    ACE_TEXT ("got an existing transport with id %d\n"),
+                    ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_LIB_TEXT ("got an existing transport with id %d\n"),
                     base_transport->id ()));
     }
   else
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                    ACE_TEXT ("making a new connection\n")));
+                    ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_LIB_TEXT ("making a new connection\n")));
 
       // Purge connections (if necessary)
       this->orb_core ()->lane_resources ().transport_cache ().purge ();
@@ -207,21 +207,21 @@ TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
           if (TAO_debug_level)
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                          ACE_TEXT ("%s:%d failed (%p)\n"),
-                          __FILE__,
+                          ACE_LIB_TEXT ("(%P|%t) %s:%u, connection to ")
+                          ACE_LIB_TEXT ("%s:%d failed (%p)\n"),
+                          ACE_TEXT_CHAR_TO_TCHAR(__FILE__),
                           __LINE__,
-                          iiop_endpoint->host (),
+                          ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()),
                           iiop_endpoint->port (),
-                          ACE_TEXT ("errno")));
+                          ACE_LIB_TEXT ("errno")));
             }
           return -1;
         }
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                    ACE_TEXT ("new connection on HANDLE %d\n"),
+                    ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_LIB_TEXT ("new connection on HANDLE %d\n"),
                     svc_handler->peer ().get_handle ()));
 
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
@@ -233,8 +233,8 @@ TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
       if (retval != 0 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                      ACE_TEXT ("could not add the new connection to Cache \n")));
+                      ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                      ACE_LIB_TEXT ("could not add the new connection to Cache \n")));
         }
     }
 
@@ -312,9 +312,9 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) No port specified for <%s>.  ")
-                              ACE_TEXT ("Using <%d> as default port.\n"),
-                              where,
+                              ACE_LIB_TEXT ("TAO (%P|%t) No port specified for <%s>.  ")
+                              ACE_LIB_TEXT ("Using <%d> as default port.\n"),
+                              ACE_TEXT_CHAR_TO_TCHAR(where),
                               dest.get_port_number ()));
                 }
             }
@@ -325,7 +325,7 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
       num_connections = dests.size ();
       ACE_INET_Addr *remote_addrs = 0;
       TAO_IIOP_Connection_Handler **handlers = 0;
-      char *failures = 0;
+      ACE_TCHAR* failures = 0;
 
       ACE_NEW_RETURN (remote_addrs,
                       ACE_INET_Addr[num_connections],
@@ -341,7 +341,7 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
         safe_handlers (handlers);
 
       ACE_NEW_RETURN (failures,
-                      char[num_connections],
+                      ACE_TCHAR[num_connections],
                       -1);
 
       // No longer need to worry about exception safety at this point.
@@ -379,20 +379,20 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
 
               if (retval != 0 && TAO_debug_level > 4)
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) Unable to add handles\n"),
-                            ACE_TEXT ("to cache \n")));
+                            ACE_LIB_TEXT ("TAO (%P|%t) Unable to add handles\n"),
+                            ACE_LIB_TEXT ("to cache \n")));
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> ")
-                            ACE_TEXT ("succeeded.\n"),
-                            remote_addrs[slot].get_host_name (),
+                            ACE_LIB_TEXT ("TAO (%P|%t) Preconnection <%s:%d> ")
+                            ACE_LIB_TEXT ("succeeded.\n"),
+                            ACE_TEXT_CHAR_TO_TCHAR(remote_addrs[slot].get_host_name ()),
                             remote_addrs[slot].get_port_number ()));
             }
           else if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> failed.\n"),
-                        remote_addrs[slot].get_host_name (),
+                        ACE_LIB_TEXT ("TAO (%P|%t) Preconnection <%s:%d> failed.\n"),
+                        ACE_TEXT_CHAR_TO_TCHAR(remote_addrs[slot].get_host_name ()),
                         remote_addrs[slot].get_port_number ()));
         }
 
@@ -400,8 +400,8 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) IIOP preconnections: %d successes and ")
-                    ACE_TEXT ("%d failures.\n"),
+                    ACE_LIB_TEXT ("TAO (%P|%t) IIOP preconnections: %d successes and ")
+                    ACE_LIB_TEXT ("%d failures.\n"),
                     successes,
                     num_connections - successes));
     }

@@ -70,7 +70,7 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
 }
 
 int
-TAO_Default_Resource_Factory::init (int argc, char *argv[])
+TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("TAO_Default_Resource_Factory::init");
 
@@ -79,8 +79,8 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
   // are useless
   if (this->factory_disabled_) {
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
-                ACE_TEXT ("Default Resource Factory is disabled\n")));
+                ACE_LIB_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                ACE_LIB_TEXT ("Default Resource Factory is disabled\n")));
     return 0;
   }
   this->options_processed_ = 1;
@@ -93,7 +93,7 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
   {
     // Parse thro' and find the number of Parsers to be loaded.
     if (ACE_OS::strcasecmp (argv[curarg],
-                            "-ORBIORParser") == 0)
+                            ACE_LIB_TEXT("-ORBIORParser")) == 0)
       ++this->parser_names_count_;
 
     ++curarg;
@@ -114,46 +114,45 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
       }
   }
 
-
-  for (curarg = 0; curarg < argc; curarg++)
+  for (curarg = 0; curarg < argc; ++curarg)
     if (ACE_OS::strcasecmp (argv[curarg],
-                            "-ORBResources") == 0)
+                            ACE_LIB_TEXT("-ORBResources")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "global") == 0)
+                                    ACE_LIB_TEXT("global")) == 0)
               this->use_tss_resources_ = 0;
             else if (ACE_OS::strcasecmp (name,
-                                         "tss") == 0)
+                                         ACE_LIB_TEXT("tss")) == 0)
               this->use_tss_resources_ = 1;
             else
-              this->report_option_value_error ("-ORBResources", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBResources"), name);
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBReactorMaskSignals") == 0)
+                                 ACE_LIB_TEXT("-ORBReactorMaskSignals")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "0") == 0)
+            if (ACE_OS::strcasecmp (name, ACE_LIB_TEXT("0")) == 0)
               this->reactor_mask_signals_ = 0;
-            else if (ACE_OS::strcasecmp (name, "1") == 0)
+            else if (ACE_OS::strcasecmp (name, ACE_LIB_TEXT("1")) == 0)
               this->reactor_mask_signals_= 1;
             else
-              this->report_option_value_error ("-ORBReactorMaskSignals", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBReactorMaskSignals"), name);
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBProtocolFactory") == 0)
+                                 ACE_LIB_TEXT("-ORBProtocolFactory")) == 0)
       {
         TAO_ProtocolFactorySet *pset = this->get_protocol_factories ();
         curarg++;
@@ -165,101 +164,101 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Unable to add protocol factories for %s: %p\n"),
+                          ACE_LIB_TEXT ("(%P|%t) Unable to add protocol factories for %s: %p\n"),
                           argv[curarg]));
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectionCachingStrategy") == 0)
+                                 ACE_LIB_TEXT("-ORBConnectionCachingStrategy")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "lru") == 0)
+                                    ACE_LIB_TEXT("lru")) == 0)
               this->connection_caching_type_ =
                 TAO_Resource_Factory::LRU;
             else if (ACE_OS::strcasecmp (name,
-                                         "lfu") == 0)
+                                         ACE_LIB_TEXT("lfu")) == 0)
               this->connection_caching_type_ =
                 TAO_Resource_Factory::LFU;
             else if (ACE_OS::strcasecmp (name,
-                                         "fifo") == 0)
+                                         ACE_LIB_TEXT("fifo")) == 0)
               this->connection_caching_type_ =
                 TAO_Resource_Factory::FIFO;
             else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
+                                         ACE_LIB_TEXT("null")) == 0)
               this->connection_caching_type_ =
                   TAO_Resource_Factory::NOOP;
             else
-              this->report_option_value_error ("-ORBConnectionCachingStrategy", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCachingStrategy"), name);
           }
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectionCacheMax") == 0)
+                                ACE_LIB_TEXT("-ORBConnectionCacheMax")) == 0)
       {
         curarg++;
         if (curarg < argc)
             this->cache_maximum_ = ACE_OS::atoi (argv[curarg]);
         else
-          this->report_option_value_error ("-ORBConnectionCacheMax", argv[curarg]);
+          this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCacheMax"), argv[curarg]);
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectionCachePurgePercentage") == 0)
+                                ACE_LIB_TEXT("-ORBConnectionCachePurgePercentage")) == 0)
       {
         curarg++;
         if (curarg < argc)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
-          this->report_option_value_error ("-ORBConnectionCachePurgePercentage",
+          this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCachePurgePercentage"),
                                            argv[curarg]);
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPurgePercentage") == 0)
+                                ACE_LIB_TEXT("-ORBPurgePercentage")) == 0)
       {
          ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) This option has been ")
-                     ACE_TEXT ("deprecated\n")
-                     ACE_TEXT ("using -ORBConnectionCachePurgePercentage ")
-                     ACE_TEXT ("instead ")));
+                     ACE_LIB_TEXT ("TAO (%P|%t) This option has been ")
+                     ACE_LIB_TEXT ("deprecated\n")
+                     ACE_LIB_TEXT ("using -ORBConnectionCachePurgePercentage ")
+                     ACE_LIB_TEXT ("instead ")));
         curarg++;
         if (curarg < argc)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
-          this->report_option_value_error ("-ORBPurgePercentage",
+          this->report_option_value_error (ACE_LIB_TEXT("-ORBPurgePercentage"),
                                            argv[curarg]);
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBIORParser") == 0)
+                                 ACE_LIB_TEXT("-ORBIORParser")) == 0)
       {
         curarg++;
 
         if (curarg < argc)
           {
-            this->add_to_ior_parser_names (argv[curarg]);
+            this->add_to_ior_parser_names (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectionCacheLock") == 0)
+                                 ACE_LIB_TEXT("-ORBConnectionCacheLock")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "thread") == 0)
+                                    ACE_LIB_TEXT("thread")) == 0)
               this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
+                                         ACE_LIB_TEXT("null")) == 0)
               {
                 // @@ Bug 940 :This is a sort of hack now. We need to put
                 // this in a common place once we get the common
@@ -268,27 +267,27 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
             else
-              this->report_option_value_error ("-ORBConnectionCacheLock", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCacheLock"), name);
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectionLock") == 0)
+                                 ACE_LIB_TEXT("-ORBConnectionLock")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) This option has been deprecated \n")
-                        ACE_TEXT ("using -ORBConnectionCacheLock instead ")));
+                        ACE_LIB_TEXT ("TAO (%P|%t) This option has been deprecated \n")
+                        ACE_LIB_TEXT ("using -ORBConnectionCacheLock instead ")));
 
             if (ACE_OS::strcasecmp (name,
-                                    "thread") == 0)
+                                    ACE_LIB_TEXT("thread")) == 0)
               this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
+                                         ACE_LIB_TEXT("null")) == 0)
               {
                 // @@ Bug 940 :This is a sort of hack now. We need to put
                 // this in a common place once we get teh common
@@ -297,27 +296,27 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
             else
-              this->report_option_value_error ("-ORBConnectionLock", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionLock"), name);
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectorLock") == 0)
+                                 ACE_LIB_TEXT("-ORBConnectorLock")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) This option has been deprecated \n")
-                        ACE_TEXT ("using -ORBConnectionCacheLock instead \n")));
+                        ACE_LIB_TEXT ("TAO (%P|%t) This option has been deprecated \n")
+                        ACE_LIB_TEXT ("using -ORBConnectionCacheLock instead \n")));
 
             if (ACE_OS::strcasecmp (name,
-                                    "thread") == 0)
+                                    ACE_LIB_TEXT("thread")) == 0)
               this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
+                                         ACE_LIB_TEXT("null")) == 0)
               {
                 // @@ Bug 940 :This is a sort of hack now. We need to put
                 // this in a common place once we get teh common
@@ -326,32 +325,32 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
             else
-              this->report_option_value_error ("-ORBConnectorLock", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectorLock"), name);
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBFlushingStrategy") == 0)
+                                 ACE_LIB_TEXT("-ORBFlushingStrategy")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "leader_follower") == 0)
+                                    ACE_LIB_TEXT("leader_follower")) == 0)
               this->flushing_strategy_type_ = TAO_LEADER_FOLLOWER_FLUSHING;
             else if (ACE_OS::strcasecmp (name,
-                                    "reactive") == 0)
+                                         ACE_LIB_TEXT("reactive")) == 0)
               this->flushing_strategy_type_ = TAO_REACTIVE_FLUSHING;
             else if (ACE_OS::strcasecmp (name,
-                                         "blocking") == 0)
+                                         ACE_LIB_TEXT("blocking")) == 0)
               this->flushing_strategy_type_ = TAO_BLOCKING_FLUSHING;
             else
-              this->report_option_value_error ("-ORBFlushingStrategy", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBFlushingStrategy"), name);
           }
       }
-    else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
+    else if (ACE_OS::strncmp (argv[curarg], ACE_LIB_TEXT("-ORB"), 4) == 0)
       {
         // Can we assume there is an argument after the option?
         // curarg++;
@@ -439,7 +438,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
       // second argument passed to the ACE_STATIC_SVC_DEFINE macro:
       //
       // ACE_STATIC_SVC_DEFINE (PP_Protocol_Factory,
-      //                        ACE_TEXT ("PP_Factory"), ...)
+      //                        ACE_LIB_TEXT ("PP_Factory"), ...)
       //
       // "PP_Protocol_Factory" is the name of your protocol factory
       // class.  A "_make_" is prepended to your protocol factory
@@ -471,11 +470,11 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT ("TAO (%P|%t) No %s found in ")
-                        ACE_TEXT ("Service Repository. ")
-                        ACE_TEXT ("Using default instance IIOP ")
-                        ACE_TEXT ("Protocol Factory.\n"),
-                        ACE_TEXT ("IIOP Protocol Factory")));
+                        ACE_LIB_TEXT ("TAO (%P|%t) No %s found in ")
+                        ACE_LIB_TEXT ("Service Repository. ")
+                        ACE_LIB_TEXT ("Using default instance IIOP ")
+                        ACE_LIB_TEXT ("Protocol Factory.\n"),
+                        ACE_LIB_TEXT ("IIOP Protocol Factory")));
 
           ACE_NEW_RETURN (protocol_factory,
                           TAO_IIOP_Protocol_Factory,
@@ -493,7 +492,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
         }
 
       ACE_NEW_RETURN (item,
-                      TAO_Protocol_Item ("IIOP_Factory"),
+                      TAO_Protocol_Item (ACE_LIB_TEXT("IIOP_Factory")),
                       -1);
       // If the TAO_Protocol_Item retains ownership of the
       // TAO_Protocol_Factory then we used an auto_ptr<> above, so
@@ -510,8 +509,8 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
       if (this->protocol_factories_.insert (item) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Unable to add ")
-                      ACE_TEXT ("<%s> to protocol factory set.\n"),
+                      ACE_LIB_TEXT ("TAO (%P|%t) Unable to add ")
+                      ACE_LIB_TEXT ("<%s> to protocol factory set.\n"),
                       item->protocol_name ().c_str ()));
 
           delete item;
@@ -525,8 +524,8 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Loaded default ")
-                      ACE_TEXT ("protocol <IIOP_Factory>\n")));
+                      ACE_LIB_TEXT ("TAO (%P|%t) Loaded default ")
+                      ACE_LIB_TEXT ("protocol <IIOP_Factory>\n")));
         }
 
   return 0;
@@ -545,23 +544,23 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 
   for (; factory != end; factory++)
     {
-      const ACE_CString &name = (*factory)->protocol_name ();
+      const ACE_TString &name = (*factory)->protocol_name ();
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                             ACE_TEXT ("protocol <%s>, %p\n"),
-                             name.c_str (), ""),
+                             ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
+                             ACE_LIB_TEXT ("protocol <%s>, %p\n"),
+                             name.fast_rep (), ""),
                             -1);
         }
 
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
-                      name.c_str ()));
+                      ACE_LIB_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
+                      name.fast_rep ()));
         }
     }
 
@@ -790,9 +789,9 @@ TAO_Default_Resource_Factory::create_purging_strategy (void)
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("no usable purging strategy ")
-                  ACE_TEXT ("was found.\n")));
+                  ACE_LIB_TEXT ("TAO (%P|%t) - ")
+                  ACE_LIB_TEXT ("no usable purging strategy ")
+                  ACE_LIB_TEXT ("was found.\n")));
     }
 
   return strategy;
@@ -812,12 +811,12 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
 
 void
 TAO_Default_Resource_Factory::report_option_value_error (
-                                 const char* option_name,
-                                 const char* option_value)
+                                 const ACE_TCHAR* option_name,
+                                 const ACE_TCHAR* option_value)
 {
   ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Default_Resource_Factory - unknown argument")
-             ACE_TEXT (" <%s> for <%s>\n"),
+             ACE_LIB_TEXT ("Default_Resource_Factory - unknown argument")
+             ACE_LIB_TEXT (" <%s> for <%s>\n"),
              option_value, option_name));
 }
 
@@ -828,15 +827,15 @@ TAO_Default_Resource_Factory::disable_factory (void)
   if (this->options_processed_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
-                  ACE_TEXT ("Default Resource Factory is disabled\n")));
+                  ACE_LIB_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                  ACE_LIB_TEXT ("Default Resource Factory is disabled\n")));
     }
 }
 
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
-                       ACE_TEXT ("Resource_Factory"),
+                       ACE_LIB_TEXT ("Resource_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Resource_Factory),
                        ACE_Service_Type::DELETE_THIS

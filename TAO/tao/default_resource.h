@@ -74,10 +74,10 @@ public:
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Parse svc.conf arguments
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   //@}
 
   /**
@@ -133,8 +133,8 @@ protected:
   /// Add a Parser name to the list of Parser names.
   int add_to_ior_parser_names (const char *);
 
-  void report_option_value_error (const char* option_name,
-                                  const char* option_value);
+  void report_option_value_error (const ACE_TCHAR* option_name,
+                                  const ACE_TCHAR* option_value);
 
 protected:
 

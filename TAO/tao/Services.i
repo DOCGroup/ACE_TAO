@@ -177,6 +177,13 @@ CORBA_ServiceDetail_out::operator-> (void)
   return this->ptr_;
 }
 
+// *************************************************************
+// Inline operations for class CORBA::ServiceDetail::_tao_seq_Octet
+// *************************************************************
+
+ACE_INLINE
+CORBA::ServiceDetail::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
+{}
 
 #if !defined (_CORBA_SERVICEDETAIL__TAO_SEQ_OCTET_CI_)
 #define _CORBA_SERVICEDETAIL__TAO_SEQ_OCTET_CI_

@@ -39,7 +39,7 @@ public:
   /// argument vector, and initialize the ACE Service Configurator.
   /// This method should be called before the ORB Core is initialized,
   /// and before any ORBInitializers are invoked.
-  static int open_services (int &argc, char **argv);
+  static int open_services (int &argc, ACE_TCHAR **argv);
 
   /**
    * The complement to open_services(), this will perform appropriate

@@ -56,8 +56,6 @@ CORBA::ServiceDetail::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq)
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
-CORBA::ServiceDetail::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
-{}
 
 static const CORBA::Long _oc_CORBA_ServiceDetail__tao_seq_Octet[] =
 {
