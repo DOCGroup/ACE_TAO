@@ -306,7 +306,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           <<"_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();"
           << be_nl << "this->proxy_ = " << "::" << node->full_name ()
           << "::_unchecked_narrow (this->base_proxy_.in ());"
-          << be_uidt_nl << "}" << be_nl << be_nl
+          << be_uidt_nl
+          << "}" << be_uidt_nl
           << "return this->proxy_.in ();" << be_uidt_nl
           << "}" << be_nl << be_nl;
 

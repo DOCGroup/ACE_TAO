@@ -226,23 +226,14 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
   *os << " ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  *os << "Messaging::ExceptionHolder::_tao_seq_Octet *"
-      << "marshaled_exception_ptr = 0;" << be_nl
-      << "ACE_NEW (" << be_idt << be_idt_nl
-      << "marshaled_exception_ptr," << be_nl
-      << "Messaging::ExceptionHolder::_tao_seq_Octet ("
-      << be_idt << be_idt_nl
-      << "cdr->length (), // max"
-      << be_nl
-      << "cdr->length (), // length" << be_nl
-      << "(unsigned char*) cdr->rd_ptr (), // data" << be_nl
-      << "0 // release" << be_uidt_nl
+  *os << "Messaging::ExceptionHolder::_tao_seq_Octet "
+      << "_tao_marshaled_exception (" << be_idt << be_idt_nl
+      << "cdr->length ()," << be_nl
+      << "cdr->length ()," << be_nl
+      << "(unsigned char*) cdr->rd_ptr ()," << be_nl
+      << "0" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl
-      << "Messaging::ExceptionHolder::_tao_seq_Octet_var "
-      << "marshaled_exception_var =" << be_idt_nl
-      << "marshaled_exception_ptr;" << be_uidt_nl << be_nl
-      << "exception_holder_var->marshaled_exception (marshaled_exception_var.in ());"
+      << "exception_holder_var->marshaled_exception (_tao_marshaled_exception);"
       << be_nl << be_nl;
 
   *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl

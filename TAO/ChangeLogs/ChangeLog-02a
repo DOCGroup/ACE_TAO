@@ -1,3 +1,26 @@
+Sun Apr  1 19:35:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+          The generated code for AMI was using T_var classes for anonymous
+          types in the Messaging module.
+          However such anonymous types cannot have T_var classes, the
+          newly created version of MessagingC.* does not contain the T_var
+          type.
+          In summary, fixing two bugs (1) the incorrect generation of
+          T_var for anonymous types, and (2) updating MessagingC.* with
+          the latest version of the IDL compiler, exposed another bug!
+          (3) Using anonymous T_vars in the AMI code.
+
+          The fix was to *not* use a T_var at all, in fact, there was no
+          reason to heap allocate this object, it could be created on the
+          stack without any problems.
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+          The generated code was missing an ACE_CHECK statement.
+
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+          Fixed indentation problem in generated code
+
 Sun Apr  1 18:59:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/MessagingC.h:
