@@ -1,3 +1,7 @@
+Tue Apr 27 00:03:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Collection_Test.cpp (main): Added test code for ACE_Array.
+
 Mon Apr 26 23:55:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch_T.h (class ACE_Reverse_Lock): Removed constructor that
