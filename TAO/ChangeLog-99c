@@ -1,4 +1,7 @@
-Wed Jun 16 22:44:48 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Wed Jun 16 23:12:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
+	  (_default_POA): Must duplicate before return poa.
 
 	* orbsvcs/orbsvcs/Log/Logger_i.cpp (Logger_Factory_i): Removed
 	  template specialization.  ACE_CString already has a hash()

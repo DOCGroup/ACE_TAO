@@ -164,7 +164,7 @@ Cubit_i::~Cubit_i (void)
 PortableServer::POA_ptr
 Cubit_i::_default_POA (CORBA::Environment &)
 {
-  return this->poa_.ptr ();
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
