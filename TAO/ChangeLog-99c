@@ -1,3 +1,13 @@
+Fri Jul  2 14:14:28 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/{IIOP,UIOP}_Profile.cpp (parse_string):
+
+	  More exception handling fixes.
+
+	* tao/IIOP_Profile.cpp:
+
+	  Modified code that causes g++ 2.7.x to complain.
+
 Fri Jul  2 14:03:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/ub_objref_seq.cpp:
