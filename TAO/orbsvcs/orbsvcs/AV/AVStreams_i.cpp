@@ -21,51 +21,6 @@
 
 ACE_RCSID(AV, AVStreams_i, "$Id$")
 
-int
-deactivate_servant (PortableServer::Servant servant)
-{
-
-  // Because of reference counting, the POA will automatically delete
-  // the servant when all pending requests on this servant are
-  // complete.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      PortableServer::POA_var poa = servant->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::ObjectId_var id = poa->servant_to_id (servant,
-                                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa->deactivate_object (id.in (),
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "deactivate_servant");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-  return 0;
-}
-
-char *
-get_flowname (const char *flow_spec_entry_str)
-{
-  ACE_CString flow_spec_entry (flow_spec_entry_str);
-  int slash_pos = flow_spec_entry.find ('\\');
-  ACE_CString flow_name;
-  if (slash_pos != flow_spec_entry.npos)
-    flow_name = flow_spec_entry.substring (0, slash_pos);
-  else
-    flow_name = flow_spec_entry_str;
-  return CORBA::string_dup (flow_name.c_str ());
-}
-
 #if !defined (__ACE_INLINE__)
 #include "AVStreams_i.i"
 #endif /* __ACE_INLINE__ */
@@ -173,7 +128,7 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec,
           if (flow_spec.length () > 0)
             for (u_int i=0;i<flow_spec.length ();i++)
               {
-                char *flowname = get_flowname (flow_spec[i]);
+                char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
                 TAO_String_Hash_Key flow_name_key (flowname);
                 FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key,
@@ -223,7 +178,7 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec,
           if (flow_spec.length () > 0)
             for (u_int i = 0; i < flow_spec.length (); i++)
               {
-                char *flowname = get_flowname (flow_spec[i]);
+                char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
                 TAO_String_Hash_Key flow_name_key (flowname);
                 FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key,
@@ -273,7 +228,7 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &flow_spec,
           if (flow_spec.length () > 0)
             for (u_int i=0;i<flow_spec.length ();i++)
               {
-                char *flowname = get_flowname (flow_spec[i]);
+                char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
                 TAO_String_Hash_Key flow_name_key (flowname);
                 FlowConnection_Map::ENTRY *flow_connection_entry = 0;
                 if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
@@ -1943,7 +1898,7 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow))
 {
-  int result = deactivate_servant (this);
+  int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::destroy failed\n"));
 
@@ -3298,7 +3253,7 @@ TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr /* the_ep */,
   // Remove self from POA.  Because of reference counting, the POA
   // will automatically delete the servant when all pending requests
   // on this servant are complete.
-  int result = deactivate_servant (this);
+  int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_MMDevice::destroy failed\n"));
 }
@@ -3607,7 +3562,7 @@ TAO_FlowConnection::destroy (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_ENDTRY;
   ACE_CHECK;
-  int result = deactivate_servant (this);
+  int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_FlowConnection::destroy failed\n"));
 }
@@ -4121,7 +4076,7 @@ void
 TAO_FlowEndPoint::destroy (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int result = deactivate_servant (this);
+  int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::destroy failed\n"));
   TAO_AV_FlowSpecSetItor end = this->flow_spec_set_.end ();
