@@ -63,6 +63,13 @@ TAO_AliasDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
   TAO_IDLType_i *impl = 
     TAO_IFR_Service_Utils::path_to_idltype (original_type,
                                             this->repo_);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (0 == impl)
+  {
+     ACE_THROW( CORBA::OBJECT_NOT_EXIST() );
+     ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  }
 
   CORBA::TypeCode_var tc = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
