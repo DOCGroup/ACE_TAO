@@ -16,11 +16,11 @@ ACE_Name_Request::ACE_Name_Request (void)
 
 ACE_Name_Request::ACE_Name_Request (ACE_INT32 t, // Type of request.
                                     const ACE_USHORT16 name[], // Name
-                                    const size_t name_length, // size in bytes
+                                    const ACE_UINT32 name_length, // size in bytes
                                     const ACE_USHORT16 value[], //
-                                    const size_t value_length, // size in bytes
+                                    const ACE_UINT32 value_length, // size in bytes
                                     const char type[], //
-                                    const size_t type_length, // size in bytes
+                                    const ACE_UINT32 type_length, // size in bytes
                                     ACE_Time_Value *timeout) // Max time waiting for request.
 {
   ACE_TRACE ("ACE_Name_Request::ACE_Name_Request");

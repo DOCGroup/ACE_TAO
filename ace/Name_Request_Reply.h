@@ -72,11 +72,11 @@ public:
   /// Create a <ACE_Name_Request> message.
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
                     const ACE_USHORT16 name[], //
-                    const size_t name_length,
+                    const ACE_UINT32 name_length,
                     const ACE_USHORT16 value[],
-                    const size_t value_length,
+                    const ACE_UINT32 value_length,
                     const char type[],
-                    const size_t type_length,
+                    const ACE_UINT32 type_length,
                     ACE_Time_Value *timeout = 0); // Max time willing to wait for request.
 
   /// Initialize length_ in order to ensure correct byte ordering
