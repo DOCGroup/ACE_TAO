@@ -18,11 +18,12 @@ ACE_RCSID(Event, EC_ProxySupplier, "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 
-TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* ec)
+TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* ec, int validate_connection)
   : event_channel_ (ec),
     refcount_ (1),
     suspended_ (0),
-    child_ (0)
+    child_ (0),
+    consumer_validate_connection_(validate_connection)
 {
   this->lock_ =
     this->event_channel_->create_supplier_lock ();
@@ -260,6 +261,20 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
         if (this->is_connected_i ())
           return; // @@ Should we throw
       }
+
+    if ( consumer_validate_connection_ == 1 )
+      {
+        // Validate connection during connect.
+        CORBA::PolicyList_var unused;
+        int status = push_consumer->_validate_connection (unused
+                                                          ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+#if TAO_EC_ENABLE_DEBUG_MESSAGES
+        ACE_DEBUG ((LM_DEBUG, "Validated connection to PushConsumer on connect. Status[%d]\n", status));
+#else
+        ACE_UNUSED_ARG(status);
+#endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
+    }
 
     this->consumer_ =
       RtecEventComm::PushConsumer::_duplicate (push_consumer);

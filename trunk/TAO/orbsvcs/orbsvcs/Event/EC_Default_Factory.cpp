@@ -435,6 +435,18 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECConsumerValidateConnection")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              this->consumer_validate_connection_ = ACE_OS::atoi (opt);
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECPushSupplierSet")) == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -567,7 +579,7 @@ TAO_EC_Default_Factory::destroy_supplier_admin (TAO_EC_SupplierAdmin *x)
 TAO_EC_ProxyPushSupplier*
 TAO_EC_Default_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_ProxyPushSupplier (ec);
+  return new TAO_EC_ProxyPushSupplier (ec, consumer_validate_connection_);
 }
 
 void
