@@ -24,6 +24,9 @@ Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.sh: added ACE version number printouts.
 
+        * BUG-REPORT-FORM: added phase (compilation/linking/execution/other),
+          and ACE+TAO/application/both.
+
 Mon Nov  9 02:52:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Signal.cpp: handle_close() wasn't being called when
