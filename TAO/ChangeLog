@@ -1,3 +1,13 @@
+Mon Mar 24 13:12:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp (close_connection_eh): Call the
+	  state_changed () on the LF_CH_Event with the lock held. If not,
+	  we could potentially run into a race between two threads trying
+	  to change states from
+	  TAO_Connection_Handler::close_connection_eh () and
+	  TAO_Transport::close_connection_shared (). The lock within
+	  state_changed () is not sufficient to prevent the race. 
+
 Mon Mar 24 13:07:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_T.cpp:
