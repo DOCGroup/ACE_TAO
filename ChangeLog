@@ -1,3 +1,9 @@
+Tue Feb  6 20:11:28 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU:
+
+	Remove double inclusion of $(CFLAGS) for Sun CC 5.0.
+
 Tue Feb  6 19:30:26 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (shared_malloc):
