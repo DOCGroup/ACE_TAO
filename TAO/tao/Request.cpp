@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/Request.h"
-
+#include "tao/Sequence_T.h"
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Object.h"
@@ -137,11 +137,38 @@ CORBA_Request::poll_response (CORBA::Environment &ACE_TRY_ENV)
 }
 
 
-// Default constructor.
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (void)
+//  constructor.
+CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (max)
 {
+  // no-op
 }
 
+CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (rhs)
+{
+  // no-op
+}
+
+CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max,
+                                            CORBA::ULong length,
+                                            CORBA_Request **data,
+                                            CORBA::Boolean release)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (max,
+                                                   length,
+                                                   data,
+                                                   release)
+{
+  // no-op
+}
+
+
+CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (void)
+{
+  // no-op
+}
+
+/*
 // Constructor using a maximum length value.
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))
@@ -353,5 +380,5 @@ CORBA_ORB_RequestSeq::replace (CORBA::ULong max,
   this->buffer_ = data;
   this->release_ = release;
 }
-
+*/
 #endif /* TAO_HAS_MINIMUM_CORBA */
