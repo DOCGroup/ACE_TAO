@@ -1,6 +1,5 @@
 #include "ace/TkReactor.h"
 
-#if defined (ACE_HAS_TK)
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 
@@ -434,5 +433,14 @@ ACE_TkReactor::cancel_timer (long timer_id,
       return 0;
     }
 }
+ACE_Reactor_Impl *
+ACE_create_tkreactor(void)
+{
+    ACE_Reactor_Impl *reactor = 0;
 
-#endif /* ACE_HAS_TK */
+    ACE_NEW_RETURN (reactor,
+                    ACE_TkReactor,
+                    0);
+    return reactor;
+}
+

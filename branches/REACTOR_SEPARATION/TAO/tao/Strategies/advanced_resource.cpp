@@ -29,7 +29,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
-#include "ace/TkReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
@@ -42,6 +41,8 @@ ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
 #define ACE_FLREACTOR_DLL_NAME     ACE_TEXT( "ACE_FlReactor" )
 #define ACE_FLREACTOR_FACTORY_NAME ACE_TEXT( "ACE_create_flreactor" )
+#define ACE_TKREACTOR_DLL_NAME     ACE_TEXT( "ACE_TkReactor" )
+#define ACE_TKREACTOR_FACTORY_NAME ACE_TEXT( "ACE_create_tkreactor" )
 
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
@@ -163,12 +164,12 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
               if ( !has_flreactor() )
                   this->report_unsupported_error (ACE_TEXT("FlReactor"));
           }
-          else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT("tk_reactor")) == 0)
-#if defined(ACE_HAS_TK)
-            this->reactor_type_ = TAO_REACTOR_TK;
-#else
-            this->report_unsupported_error (ACE_TEXT("TkReactor"));
-#endif /* ACE_HAS_TK */
+          else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT("tk")) == 0)
+          {
+              this->reactor_type_ = TAO_REACTOR_TK;
+              if ( !has_tkreactor() )
+                  this->report_unsupported_error (ACE_TEXT("TkReactor"));
+          }
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("wfmo")) == 0)
 #if defined(ACE_WIN32)
@@ -661,11 +662,8 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
       return create_flreactor( const_cast< ACE_DLL &> ( reactor_impl_factory_dll_ ) );
       break;
     case TAO_REACTOR_TK:
-#if defined(ACE_HAS_TK)
-      ACE_NEW_RETURN (impl, ACE_TkReactor, 0);
-#endif /* ACE_HAS_TK */
+      return create_tkreactor( const_cast< ACE_DLL &> ( reactor_impl_factory_dll_ ) );
       break;
-
     case TAO_REACTOR_WFMO:
 #if defined(ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
       ACE_NEW_RETURN (impl, ACE_WFMO_Reactor, 0);
@@ -992,6 +990,20 @@ bool
 TAO_Advanced_Resource_Factory::has_flreactor( ) const
 {
     return has_reactor_in_dll( ACE_FLREACTOR_DLL_NAME, ACE_FLREACTOR_FACTORY_NAME );
+}
+
+ACE_Reactor_Impl *
+TAO_Advanced_Resource_Factory::create_tkreactor( ACE_DLL &dll) const
+{
+    return create_reactor_impl_from_dll( dll,
+                                         ACE_TKREACTOR_DLL_NAME,
+                                         ACE_TKREACTOR_FACTORY_NAME );
+}
+
+bool
+TAO_Advanced_Resource_Factory::has_tkreactor( ) const
+{
+    return has_reactor_in_dll( ACE_TKREACTOR_DLL_NAME, ACE_TKREACTOR_FACTORY_NAME );
 }
 
 // ****************************************************************

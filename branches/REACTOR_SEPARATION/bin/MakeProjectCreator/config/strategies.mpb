@@ -1,9 +1,6 @@
 // -*- MPC -*-
 // $Id$
-// Strategies should depend on tao_flreactor and tao_tkreactor,
-// but cannot now due many additional dependencies.
-
-project : taolib, tao_tkreactor {
+project : taolib {
   after   += Strategies
   libs    += TAO_Strategies
 }

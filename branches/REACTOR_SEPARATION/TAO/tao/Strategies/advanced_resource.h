@@ -152,12 +152,20 @@ protected:
 
 
   /// creates ACE_FlReactor by loading and executing factory method from DLL
-  /// dll i DLL object responsible for loaded shared library
+  /// dll is DLL object responsible for loaded shared library
   ACE_Reactor_Impl *create_flreactor( ACE_DLL &dll) const;
 
   /// tries to load ACE_FlReactor by temporarily loading it from DLL
   /// return true if suceed
   bool has_flreactor( ) const;
+
+  /// creates ACE_TkReactor by loading and executing factory method from DLL
+  /// dll is DLL object responsible for loaded shared library
+  ACE_Reactor_Impl *create_tkreactor( ACE_DLL &dll) const;
+
+  /// tries to load ACE_TkReactor by temporarily loading it from DLL
+  /// return true if suceed
+  bool has_tkreactor( ) const;
 
   /// DLL with factory method creating reactor implementations
   ACE_DLL reactor_impl_factory_dll_;
