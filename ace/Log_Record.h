@@ -79,7 +79,7 @@ public:
   /// <ostream>.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
-             ostream &stream);
+             ACE_OSTREAM_TYPE &stream);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   int format_msg (const ACE_TCHAR host_name[],

@@ -1,3 +1,15 @@
+Wed Jun 18 17:20:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Log_Record.cpp:
+	* ace/Log_Record.h (print): Changed the 3rd argument to be of type
+	  ACE_OSTREAM_TYPE instead of ostream.
+
+	* ace/ace/config-sunos5.5.h: Added ACE_HAS_TEMPLATE_TYPEDEFS.
+
+	  Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
+          Noseworthy <j.russell.noseworthy@objectsciences.com> for
+	  providing these patches.
+
 Wed Jun 18 15:59:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:

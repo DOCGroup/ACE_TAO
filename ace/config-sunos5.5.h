@@ -36,6 +36,7 @@
 #   if (__SUNPRO_CC_COMPAT >= 5)
 #     define ACE_HAS_USING_KEYWORD
 #     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+#       define ACE_HAS_TEMPLATE_TYPEDEFS
     // Note that SunC++ 5.0 doesn't yet appear to support
     // ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
     // However, Forte 6 Update 1 does... if this needs to be backed up,
