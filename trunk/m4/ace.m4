@@ -361,17 +361,9 @@ AC_DEFUN(ACE_COMPILATION_OPTIONS, dnl
       if test -n "$GXX"; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 changequote(, )dnl
-        if g++ --version | egrep -v '^2\.[0-7]' > /dev/null; then
+        if $CXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
 changequote([, ])dnl
           ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-exceptions"
-        fi
-      fi
-      if test -n "$GCC"; then
-dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-changequote(, )dnl
-        if gcc --version | egrep -v '^2\.[0-7]' > /dev/null; then
-changequote([, ])dnl
-          ACE_CFLAGS="$ACE_CFLAGS -fno-exceptions" 
         fi
       fi
       ;;
@@ -382,6 +374,14 @@ changequote([, ])dnl
   ],
   [
    ace_user_enable_exceptions=no
+   if test -n "$GXX"; then
+dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
+changequote(, )dnl
+     if $CXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
+changequote([, ])dnl
+       ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-exceptions"
+     fi
+   fi
   ])
 
 

@@ -142,6 +142,12 @@ if test -n "$AWK"; then
   ACE_MINOR=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]2 }'`
   ACE_BETA=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]3 }'`
 
+dnl Make sure all of the versions have a legitimate value, i.e. not an
+dnl empty string.
+  test -z $ACE_MAJOR && ACE_MAJOR=0
+  test -z $ACE_MINOR && ACE_MINOR=0
+  test -z $ACE_BETA && ACE_BETA=0
+
 dnl This is a terrible kludge to fool libtool into making it produce a shared
 dnl library with the "right" version information.
 dnl We really should switch to a version scheme that is compatible with
@@ -623,6 +629,10 @@ if test "$ac_cv_header_xti_h" = yes ||
     [
      AC_EGREP_CPP([ACE_BROKEN_XTI_MACROS],
        [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+
 #if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
 #  if defined (ACE_HAS_TIUSER_H)
 #    include /**/ <tiuser.h>
@@ -678,6 +688,10 @@ if test "$ace_has_tli" = yes; then
 dnl We only check for t_accept.  This should hopefully be enough.
    AC_EGREP_CPP(t_accept,
      [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+
 #if defined (ACE_HAS_TIMOD_H)
 # include <sys/timod.h>
 #endif
@@ -721,6 +735,10 @@ dnl Check for t_errno type in TLI headers
    dnl Check if t_errno is declared in the TLI headers
    AC_EGREP_CPP(t_errno,
      [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+
 #if defined (ACE_HAS_TIMOD_H)
 # include <sys/timod.h>
 #endif
@@ -764,6 +782,10 @@ dnl Check if t_error incorrectly accepts char *
    dnl Check if t_errno is declared in the TLI headers
    AC_TRY_COMPILE(
      [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+
 #if defined (ACE_HAS_TIMOD_H)
 # include <sys/timod.h>
 #endif
@@ -794,7 +816,7 @@ dnl Check if t_error incorrectly accepts char *
      ],
      [
       const char *ace_errmsg = "FOO";
-      t_error (errmsg);
+      t_error (ace_errmsg);
      ],
      [
       ace_cv_lib_has_broken_t_error=no
@@ -3504,53 +3526,8 @@ AC_CHECK_FUNC(difftime, dnl
   ,
   AC_DEFINE(ACE_LACKS_DIFFTIME))
 
-AC_CHECK_FUNC(lseek64, dnl
-  [
-   AC_DEFINE(ACE_HAS_LSEEK64)
-   dnl Check if _LARGEFILE64_SOURCE macro is needed to make the
-   dnl lseek64() prototype visible, or if the prototype itself is missing.
-   ACE_CACHE_CHECK(for lseek64 prototype,
-     ace_cv_lib_has_lseek64_prototype,
-     [
-      ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_largefile64="-U_LARGEFILE64_SOURCE"
-      CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
-      AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
-        [
-         ace_cv_lib_has_lseek64_prototype=yes
-        ],
-        [
-         ace_cv_lib_has_lseek64_prototype=no
-        ])
-      dnl Reset the compiler flags
-      CPPFLAGS="$ace_save_CPPFLAGS"
-     ],, AC_DEFINE(ACE_LACKS_LSEEK64_PROTOTYPE))
-  ],
-  [
-   AC_CHECK_FUNC(llseek,
-     [
-      AC_DEFINE(ACE_HAS_LLSEEK)
-      dnl Check if _LARGEFILE64_SOURCE macro is needed to make the
-      dnl llseek() prototype visible, or if the prototype itself is
-      dnl missing.
-      ACE_CACHE_CHECK(for llseek prototype,
-        ace_cv_lib_has_llseek_prototype,
-        [
-         ace_save_CPPFLAGS="$CPPFLAGS"
-         ace_no_largefile64="-U_LARGEFILE64_SOURCE"
-         CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
-         AC_EGREP_HEADER([[^_]+llseek], unistd.h,
-           [
-            ace_cv_lib_has_llseek_prototype=no
-           ],
-           [
-            ace_cv_lib_has_llseek_prototype=yes
-           ],)
-         dnl Reset the compiler flags
-         CPPFLAGS="$ace_save_CPPFLAGS"
-        ],, AC_DEFINE(ACE_LACKS_LLSEEK_PROTOTYPE))
-     ],)
-  ])
+dnl Check for 64 bit llseek() or lseek64()
+ACE_CHECK_LSEEK64
 
 AC_CHECK_FUNC(bind, dnl
   [

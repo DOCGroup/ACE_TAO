@@ -515,6 +515,118 @@ dnl parentheses.
 fi  dnl test "$ac_cv_func_getrusage" = yes
 ])
 
+
+dnl Check for 64 bit llseek() or lseek64()
+dnl Usage: ACE_CHECK_LSEEK64
+AC_DEFUN([ACE_CHECK_LSEEK64],
+[
+ AC_CHECK_FUNC([lseek64],
+   [
+    AC_DEFINE([ACE_HAS_LSEEK64])
+
+    dnl Check for 64 bit offset type in the lseek64() prototype, if it
+    dnl exists.
+    dnl ACE_CHECK_OFF64_T([lseek64])
+
+    dnl Check if _LARGEFILE64_SOURCE macro is needed to make the
+    dnl lseek64() prototype visible, or if the prototype itself is missing.
+    ACE_CACHE_CHECK([for lseek64 prototype],
+      [ace_cv_lib_has_lseek64_prototype],
+      [
+       ace_save_CPPFLAGS="$CPPFLAGS"
+       ace_no_largefile64="-U_LARGEFILE64_SOURCE"
+       CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
+       AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
+         [
+          ace_cv_lib_has_lseek64_prototype=yes
+         ],
+         [
+          ace_cv_lib_has_lseek64_prototype=no
+         ])
+       dnl Reset the compiler flags
+       CPPFLAGS="$ace_save_CPPFLAGS"
+      ],, AC_DEFINE(ACE_LACKS_LSEEK64_PROTOTYPE))
+   ],
+   [
+    AC_CHECK_FUNC([llseek],
+      [
+       AC_DEFINE([ACE_HAS_LLSEEK])
+       dnl Check if _LARGEFILE64_SOURCE macro is needed to make the
+       dnl llseek() prototype visible, or if the prototype itself is
+       dnl missing.
+
+       dnl Check for 64 bit offset type in the llseek() prototype, if
+       dnl it exists.
+       dnl ACE_CHECK_OFF64_T([llseek])
+
+       ACE_CACHE_CHECK([for llseek prototype],
+         [ace_cv_lib_has_llseek_prototype],
+         [
+          ace_save_CPPFLAGS="$CPPFLAGS"
+          ace_no_largefile64="-U_LARGEFILE64_SOURCE"
+          CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
+          AC_EGREP_HEADER([[^_]+llseek], unistd.h,
+            [
+             ace_cv_lib_has_llseek_prototype=no
+            ],
+            [
+             ace_cv_lib_has_llseek_prototype=yes
+            ],)
+          dnl Reset the compiler flags
+          CPPFLAGS="$ace_save_CPPFLAGS"
+         ],, AC_DEFINE(ACE_LACKS_LLSEEK_PROTOTYPE))
+
+
+      ],)
+   ])
+])
+
+dnl Check what the 64 bit offset type is by checking what the offset
+dnl argument for llseek()/lseek64() is.
+dnl Usage: ACE_CHECK_LOFF_64(LSEEK64-FUNC)
+AC_DEFUN([ACE_CHECK_OFF64_T],
+[
+  AC_MSG_CHECKING([for 64 bit offset type])
+  AC_EGREP_HEADER([[ ]+$1.*\(.*], unistd.h,
+    [
+     cat > conftest.$ac_ext <<EOF
+#include "confdefs.h"
+
+/* Make sure 64 bit file feature test macro is defined. */
+#ifndef _LARGEFILE64_SOURCE
+# define _LARGEFILE64_SOURCE
+#endif
+
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>  /* needed for lseek64()/llseek() prototype */
+#endif
+EOF
+
+changequote(, )dnl
+dnl Here we attempt to determine the type of the second argument of
+dnl lseek64()/llseek() from its prototype.
+     ace_off64_t=`eval "$ac_cpp conftest.$ac_ext" | \
+       egrep '[ ]+lseek64.*\(.*' | \
+       sed -e 's/^.*(.*,[ ]*\(.*\) .*,.*$/\1/'`
+changequote([, ])dnl
+
+
+if test -n "$ace_off64_t"; then
+     AC_MSG_RESULT([$ace_off64_t])
+     AC_DEFINE_UNQUOTED([ACE_LOFF_T_TYPEDEF], [$ace_off64_t])
+fi
+
+     rm -rf conftest*
+
+dnl Do not remove this parenthesis --> )
+dnl It's only purpose is to keep Emacs from getting confused about
+dnl mismatched parentheses.
+    ],
+    [
+     AC_MSG_RESULT([no])
+    ])
+])
+
 dnl   checks for structures
 
 dnl   checks for system services
