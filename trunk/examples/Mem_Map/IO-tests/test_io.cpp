@@ -31,9 +31,9 @@ static ACE_Profile_Timer profile_timer;
 static void 
 print_usage_and_die (void)
 {
-  cerr << "usage: " 
-       << program_name 
-       << " [-i input_file] [-o output_file] [-n iteration_count] [-r]\n";
+  ACE_OS::fprintf (stderr, "usage: %s"
+                   " [-i input_file] [-o output_file] [-n iteration_count] [-r]\n",
+                   program_name);
   ACE_OS::exit (1);
 }
 
