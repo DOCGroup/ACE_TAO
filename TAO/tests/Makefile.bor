@@ -51,6 +51,7 @@ DIRS = \
 	Muxing \
         Native_Exceptions \
 	Nested_Event_Loop \
+        Nested_Upcall_Crash \
         NestedUpcall \
 	No_Server_MT_Connect_Test \
         Object_Loader \
