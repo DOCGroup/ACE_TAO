@@ -1,0 +1,465 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1999-01-26 19:48 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/008'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    515 -rw-rw-r-- hdr
+#     59 -rw-rw-r-- bodies
+#   2769 -rw-rw-r-- page01.pre
+#    416 -rw-rw-r-- page02.pre
+#    345 -rw-rw-r-- page03.pre
+#    481 -rw-rw-r-- page04.pre
+#    578 -rw-rw-r-- page05.pre
+#    952 -rw-rw-r-- page02.pst
+#    367 -rw-rw-r-- page03.pst
+#   1173 -rw-rw-r-- page04.pst
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh30434; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hdr ==============
+if test -f 'hdr' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hdr' '(file already exists)'
+else
+  $echo 'x -' extracting 'hdr' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hdr' &&
+<HTML>
+<HEAD>
+X   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+X   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+X   <META NAME="Author" CONTENT="James CE Johnson">
+X   <TITLE>ACE Tutorial 008</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+X
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 008</FONT></B></CENTER>
+X
+<CENTER><B><FONT SIZE=+2>Sending and receiving datagrams</FONT></B></CENTER>
+X
+X
+<P>
+<HR WIDTH="100%">
+X
+SHAR_EOF
+  $shar_touch -am 0121153899 'hdr' &&
+  chmod 0664 'hdr' ||
+  $echo 'restore of' 'hdr' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hdr:' 'MD5 check failed'
+e74ecd3335da844c263f961a8ba5f867  hdr
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
+    test 515 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '515,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= bodies ==============
+if test -f 'bodies' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'bodies' '(file already exists)'
+else
+  $echo 'x -' extracting 'bodies' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'bodies' &&
+PAGE=2
+server.cpp
+directed_client.cpp
+broadcast_client.cpp
+SHAR_EOF
+  $shar_touch -am 0121153799 'bodies' &&
+  chmod 0664 'bodies' ||
+  $echo 'restore of' 'bodies' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'bodies:' 'MD5 check failed'
+707d1735ca25694e2b5fddc1f6e7e124  bodies
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
+    test 59 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '59,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page01.pre ==============
+if test -f 'page01.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page01.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page01.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
+<P>In a lot of IPC&nbsp;programming, the clients know where the servers
+are.&nbsp; A mail client, for instance, has a configuration file that says
+where the mail host is.&nbsp; Your web browser has a "location" field that
+you type into to give it a destination.
+X
+<P>What if you have written a server application and then you execute it
+on several systems in your network?&nbsp; All of the instances are probably
+more or less equal to the client's point of view, so you don't want to
+"configure"&nbsp;the clients to a single server each.&nbsp; Likewise, you
+want the ability to add and remove servers at any time so you can't just
+give the clients a list to choose from.
+X
+<P>So... how do the clients know where the servers are?
+X
+<P>Let 'em ask!
+X
+<P>Datagrams are great for this.&nbsp; You can toss a datagram out onto
+the network and any servers listening at the correct port will* hear it.&nbsp;
+Like ACE_SOCK_Stream that we've seen before, you can get the peer address
+from a datagram.&nbsp; With that, the server can&nbsp; send a response
+back to the client.&nbsp; The client, in turn, can pull the peer address
+out and know exactly where the server lives.
+X
+<P>In this tutorial we'll develop three applications:&nbsp; a server listening
+for datagrams, a client that can send to a known host and a client that
+can send to the entire (sub)network.&nbsp; In the next tutorial, we'll
+expand on this to make the server a bit more prudish.
+<P>
+Kirthika's abstract:
+<UL>
+Here, we play with datagram sockets and use it for server discovery by
+the client. Datagrams are used by UDP, which  is an unreliable and
+connectionless protocol. Datagrams packets are generally very small in
+size and aren't designed to be used to handle serious communication
+between the server and the client.
+<P>
+The server waits for datagrams to arrive at a fixed port.
+The client either sends to a datagram to the server at a known host,
+which is not really the case generally, as the client needs to discover
+the server and so it needs to broadcast its datagram request in its
+subnet. Then, all servers listening at that interface receive it. The
+appropriate server will then handle the request. Remember that
+no solid connection is made. On the recv() itself the server obtains the
+address of the remote client and then communicates with it.
+<P>
+Thus, we get a fair glimpse of using another means of communication via
+datagrams.  
+</UL>
+<P><FONT SIZE=-1>*&nbsp;Actually, the servers <I>might</I> hear the datagram.&nbsp;
+Datagrams are rather unreliable.&nbsp; (Sort of like some operating systems
+I know.)&nbsp; Still, if the network traffic isn't too bad, they generally
+get through.&nbsp; Your clients can always send out more queries if there
+aren't any responses in a timely fashion.</FONT>
+X
+SHAR_EOF
+  $shar_touch -am 0121155099 'page01.pre' &&
+  chmod 0664 'page01.pre' ||
+  $echo 'restore of' 'page01.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page01.pre:' 'MD5 check failed'
+829e35e4a7b8e8c75e38abf492033395  page01.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
+    test 2769 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2769,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pre ==============
+if test -f 'page02.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
+X
+<P>The first thing we want to look at is <A HREF="server.cpp">server.cpp</A>.&nbsp;
+This is a pretty simple application that listens for datagrams at a known
+port and sends back a response.&nbsp; In order to implement a true "discovery"&nbsp;
+mechanism, the server will have to be a little bit more picky about who
+it responds to.&nbsp; We'll tackle that issue in the next tutorial though...
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 0121153899 'page02.pre' &&
+  chmod 0664 'page02.pre' ||
+  $echo 'restore of' 'page02.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pre:' 'MD5 check failed'
+6b27ef52d53a13d2d9e5a5ad16e9be4d  page02.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
+    test 416 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '416,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pre ==============
+if test -f 'page03.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
+X
+<P>In <A HREF="directed_client.cpp">directed_client.cpp</A> we create a
+client that knows how to send a datagram to a server on a known host.&nbsp;
+This is a good thing if you know where the server lives and want to have
+a conversation.&nbsp;&nbsp; The Unix <I>talk</I> utilitiy, for instance,
+could be written this way.
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 0121153899 'page03.pre' &&
+  chmod 0664 'page03.pre' ||
+  $echo 'restore of' 'page03.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pre:' 'MD5 check failed'
+aa0724ca0a09f5b5e6c7e3f355646111  page03.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
+    test 345 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '345,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pre ==============
+if test -f 'page04.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pre' &&
+In <A HREF="broadcast_client.cpp">broadcast_client.cpp</A> we
+find out how to send a single datagram to every host on our (sub)network.&nbsp;
+I have to say <I>(sub)network</I> because broadcast datagrams typically
+are not passed through routers.&nbsp; So, if your network admin has divided
+up your network into subnets, your broadcasts will likey stay on the
+subnet you're a part of.
+X
+<P>I've only commented the parts that are different from the directed_client.
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 0124144899 'page04.pre' &&
+  chmod 0664 'page04.pre' ||
+  $echo 'restore of' 'page04.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pre:' 'MD5 check failed'
+8811bded669a7a7be85a4878d5076190  page04.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
+    test 481 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '481,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pre ==============
+if test -f 'page05.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
+<BR>That's it for this tutorial.&nbsp; In the next one we'll add some intelligence
+to the data put into the datagrams.&nbsp; By doing so, we'll be able to
+classify our clients and servers into groups.&nbsp; By combining the data
+content and the server's port we can get fairly fine-grained control over
+who talks to who.
+X
+<P>For you convenience:
+<UL>
+<LI>
+<A HREF="server.cpp">server.cpp</A></LI>
+X
+<LI>
+<A HREF="directed_client.cpp">directed_client.cpp</A></LI>
+X
+<LI>
+<A HREF="broadcast_client.cpp">broadcast_client.cpp</A></LI>
+X
+<LI>
+<A HREF="Makefile">Makefile</A></LI>
+</UL>
+SHAR_EOF
+  $shar_touch -am 0121153799 'page05.pre' &&
+  chmod 0664 'page05.pre' ||
+  $echo 'restore of' 'page05.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pre:' 'MD5 check failed'
+b05fdac8c7eb81813c74eb99525cf601  page05.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
+    test 578 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '578,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pst ==============
+if test -f 'page02.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pst' &&
+<HR WIDTH="100%">
+X
+<P>And that's really all there is to it.&nbsp; Obviously there is some
+room for improvement.&nbsp; The most blatant is the somewhat small buffer
+size for receiving the datagram.&nbsp; I've never been able to get a solid
+answer on datagram sizes.&nbsp; The theoretical limit is just under 64k
+but you have to deal with fragmentation.&nbsp; Some readings indicate that
+8k is a reasonable size, others go much smaller.&nbsp; My general rule
+of thumb is to keep datagrams relatively small (eg -- under 8k or so) and
+test a lot.&nbsp; If you find that your routers are fragmenting your larger
+datagrams, back off to something smaller.&nbsp; Of course, if you must
+send 100k and can only do so 1k at a time, you'll have to worry about retransmissions
+&amp; reordering.&nbsp; At that point, you might consider going to TCP.&nbsp;
+Remember:&nbsp; datagrams are unreliable!&nbsp; Don't try to make 'em do
+something they werent' designed for!
+SHAR_EOF
+  $shar_touch -am 0121153899 'page02.pst' &&
+  chmod 0664 'page02.pst' ||
+  $echo 'restore of' 'page02.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pst:' 'MD5 check failed'
+3cb7da5f75a40616f6cc498a731f4a16  page02.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pst'`"
+    test 952 -eq "$shar_count" ||
+    $echo 'page02.pst:' 'original size' '952,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pst ==============
+if test -f 'page03.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pst' &&
+<HR WIDTH="100%">
+X
+<P>That's all neat and good but the point of what we're doing here is not
+to talk to a server we know about but to discover servers we don't know
+about.&nbsp; Now, you could send a directed datagram to every possible
+host address on your network but that's not a very nice thing to do.&nbsp;
+On the next page, we'll find out the right approach...
+X
+SHAR_EOF
+  $shar_touch -am 0121153899 'page03.pst' &&
+  chmod 0664 'page03.pst' ||
+  $echo 'restore of' 'page03.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pst:' 'MD5 check failed'
+0fcbc10be47175a0d42590fb4adab43b  page03.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pst'`"
+    test 367 -eq "$shar_count" ||
+    $echo 'page03.pst:' 'original size' '367,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pst ==============
+if test -f 'page04.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pst' &&
+<HR WIDTH="100%">
+X
+<P>&nbsp;About that subnet thing:
+<BLOCKQUOTE>If you run this client on a host that has multiple network
+interfaces, the broadcast will go to all of those (sub)networks.&nbsp;
+What do you do, though, if you need to get past a router?&nbsp; My advice
+is to write a server that will run on hosts on both sides of your router.&nbsp;
+When a server on one side of the router receives a broadcast, it would
+send a directed datagram to it's counterpart on the other side of the router.&nbsp;
+The counterpart would then re-broadcast the original datagram on that sub-net.&nbsp;
+Cheap, simple and effective.</BLOCKQUOTE>
+One final word of warning:
+<BLOCKQUOTE>When creating your broadcast datagrams you may see something
+like this:&nbsp; <I>ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not
+enable for this interface.: Unknown error</I>.&nbsp; There are some interfaces
+(ppp, slip) that don't support broadcast datagrams.&nbsp; That's what you're
+seeing here.</BLOCKQUOTE>
+Ok, one more warning:
+<blockquote>If you happen to have multiple servers running on your
+network when you invoke this client, the response could come from any
+one of them.
+</blockquote>
+X
+SHAR_EOF
+  $shar_touch -am 0126194899 'page04.pst' &&
+  chmod 0664 'page04.pst' ||
+  $echo 'restore of' 'page04.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pst:' 'MD5 check failed'
+2e01fc6b6638dfa77ed629c0e3e77e21  page04.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
+    test 1173 -eq "$shar_count" ||
+    $echo 'page04.pst:' 'original size' '1173,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh30434
+exit 0
