@@ -1,3 +1,9 @@
+Thu May 11 08:44:50 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+	  In the release build I mistakenly was trying to use the debug
+	  version of the TAO_RTOLDEvent library.
+
 Thu May 11 08:35:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
