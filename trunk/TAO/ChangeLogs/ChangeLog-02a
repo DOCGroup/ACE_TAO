@@ -1,53 +1,53 @@
 Thu Aug 17 11:46:49 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args): 
-	  Initialized the local variable <time> when declaring as it was 
+	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
+	  Initialized the local variable <time> when declaring as it was
 	  causing a problem on some compilers.
 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.h   : 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp : 
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.h   :
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp :
 
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.h   : 
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp : 
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.h   :
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp :
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h   : 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp : 
-	  Added the missed exception specification ACE_THROW_SPEC (()) 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h   :
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp :
+	  Added the missed exception specification ACE_THROW_SPEC (())
 	  to the create_object () method.
-		
+
 Thu Aug 17 00:04:47 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_QosAdmin_i.h:
 	  Added QoS data members.
-	
+
 	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp
 	  using ESF_Copy_On_Write_Collection instead of
 	  ESF_Immediate_Changes.
-	
-	* orbsvcs/tests/Notify/lib/Makefile: 
+
+	* orbsvcs/tests/Notify/lib/Makefile:
 	  Added new files.
-	
+
 	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.cpp
-	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.h 
+	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.h
  	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp
-	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.h 
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp 
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h 
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp 
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h 
+	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.h
+ 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp
+ 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h
+ 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp
+ 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h
 	  Corrected ref counting and deactivation code.
-	
- 	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.cpp 
-	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.h 
- 	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp 
-	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h 
-	  Added Sequence consumer and supplier. 
-	
-	* orbsvcs/tests/Notify/Basic/Makefile 
+
+ 	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.cpp
+	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.h
+ 	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp
+	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h
+	  Added Sequence consumer and supplier.
+
+	* orbsvcs/tests/Notify/Basic/Makefile
 	* orbsvcs/tests/Notify/Basic/README
 	  Updated.
-	
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp 
+
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp
 	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h
 	  The ConnectDisconnect tests connecting/disconnecting clients to
 	  the Notify's EC.
