@@ -215,6 +215,44 @@ AC_CONFIG_FILES([
   orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile
   orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile
   orbsvcs/performance-tests/RTEvent/lib/Makefile
+  orbsvcs/tests/Makefile
+  orbsvcs/tests/AVStreams/Makefile
+  orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile
+  orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile
+  orbsvcs/tests/AVStreams/Component_Switching/Makefile
+  orbsvcs/tests/AVStreams/Full_Profile/Makefile
+  orbsvcs/tests/AVStreams/Latency/Makefile
+  orbsvcs/tests/AVStreams/Modify_QoS/Makefile
+  orbsvcs/tests/AVStreams/Multicast/Makefile
+  orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile
+  orbsvcs/tests/AVStreams/Multiple_Flows/Makefile
+  orbsvcs/tests/AVStreams/Pluggable/Makefile
+  orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile
+  orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile
+  orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile
+  orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile
+  orbsvcs/tests/Bug_1334_Regression/Makefile
+  orbsvcs/tests/Bug_1393_Regression/Makefile
+  orbsvcs/tests/Bug_1395_Regression/Makefile
+  orbsvcs/tests/Bug_1630_Regression/Makefile
+  orbsvcs/tests/Concurrency/Makefile
+  orbsvcs/tests/CosEvent/Makefile
+  orbsvcs/tests/CosEvent/Basic/Makefile
+  orbsvcs/tests/CosEvent/lib/Makefile
+  orbsvcs/tests/EC_Custom_Marshal/Makefile
+  orbsvcs/tests/EC_MT_Mcast/Makefile
+  orbsvcs/tests/EC_Mcast/Makefile
+  orbsvcs/tests/EC_Multiple/Makefile
+  orbsvcs/tests/EC_Throughput/Makefile
+  orbsvcs/tests/Event/Makefile
+  orbsvcs/tests/Event/Basic/Makefile
+  orbsvcs/tests/Event/Mcast/Makefile
+  orbsvcs/tests/Event/Mcast/Common/Makefile
+  orbsvcs/tests/Event/Mcast/Complex/Makefile
+  orbsvcs/tests/Event/Mcast/Simple/Makefile
+  orbsvcs/tests/Event/Mcast/Two_Way/Makefile
+  orbsvcs/tests/Event/Performance/Makefile
+  orbsvcs/tests/Event/lib/Makefile
  ])
 
 dnl Note that the "TAO_VERSION" in the message below is an M4 macro
