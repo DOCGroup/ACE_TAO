@@ -1,3 +1,11 @@
+Mon Nov 23 12:58:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/ASX/Message_Queue,
+	  tests:
+	  Replaced the improper (though technically correct) use of the
+ 	  rd_ptr() with wr_ptr().  Thanks to Susan Liebeskind
+ 	  (susan.liebeskind@gtri.gatech.edu) for reporting this.
+
 Mon Nov 23 10:47:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/generate_man_pages: added this script, which generates

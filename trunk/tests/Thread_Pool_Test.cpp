@@ -75,7 +75,8 @@ Thread_Pool::~Thread_Pool (void)
 int
 Thread_Pool::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) close of worker\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) close of worker\n")));
   return 0;
 }
 
@@ -113,8 +114,11 @@ Thread_Pool::svc (void)
       if (length > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("(%t) in iteration %d, queue len = %d, length = %d, text = \"%*s\"\n"),
-                    count, this->msg_queue ()->message_count (),
-                    length, length - 1, mb->rd_ptr ()));
+                    count,
+                    this->msg_queue ()->message_count (),
+                    length,
+                    length - 1,
+                    mb->rd_ptr ()));
 
       // We're responsible for deallocating this.
       mb->release ();
@@ -123,13 +127,14 @@ Thread_Pool::svc (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
-                      count, this->msg_queue ()->message_count ()));
+                      count,
+                      this->msg_queue ()->message_count ()));
           break;
         }
     }
 
-  // Note that the ACE_Task::svc_run () method automatically removes
-  // us from the Thread_Manager when the thread exits.
+  // Note that the <ACE_Task::svc_run> method automatically removes us
+  // from the <ACE_Thread_Manager> when the thread exits.
   return 0;
 }
 
@@ -141,8 +146,12 @@ Thread_Pool::open (void *)
   this->dump ();
 
   // Create a pool of worker threads.
-  if (this->activate (THR_NEW_LWP, this->n_threads_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("activate failed")), -1);
+  if (this->activate (THR_NEW_LWP,
+                      this->n_threads_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("activate failed")),
+                      -1);
 
   for (size_t count = 0; count < n_iterations; count++)
     {
@@ -150,12 +159,18 @@ Thread_Pool::open (void *)
 
       // Allocate a new message.
       ACE_NEW_RETURN (mb,
-                      ACE_Message_Block (BUFSIZ, ACE_Message_Block::MB_DATA,
-                                         0, 0, 0, &this->lock_adapter_),
+                      ACE_Message_Block (BUFSIZ,
+                                         ACE_Message_Block::MB_DATA,
+                                         0,
+                                         0,
+                                         0,
+                                         &this->lock_adapter_),
                       -1);
 
-      ACE_OS::sprintf ((ASYS_TCHAR *) mb->rd_ptr (), ASYS_TEXT ("%d\n"), count);
-      int n = ACE_OS::strlen ((ASYS_TCHAR *)mb->rd_ptr ());
+      ACE_OS::sprintf ((ASYS_TCHAR *) mb->rd_ptr (),
+                       ASYS_TEXT ("%d\n"),
+                       count);
+      int n = ACE_OS::strlen ((ASYS_TCHAR *) mb->rd_ptr ());
 
       if (count == 0 || (count % 20 == 0))
         ACE_OS::sleep (1);
@@ -166,7 +181,9 @@ Thread_Pool::open (void *)
 
       // Pass the message to the Thread_Pool.
       if (this->put (mb) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT (" (%t) %p\n"),
+                    ASYS_TEXT ("put")));
     }
 
   // Send a shutdown message to the waiting threads and exit.
@@ -178,8 +195,12 @@ Thread_Pool::open (void *)
   ACE_Message_Block *mb;
 
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
-                                     0, 0, 0, &this->lock_adapter_),
+                  ACE_Message_Block (0,
+                                     ACE_Message_Block::MB_DATA,
+                                     0,
+                                     0,
+                                     0,
+                                     &this->lock_adapter_),
                   -1);
 
   for (int i = this->thr_count (); i > 0; i--)
@@ -194,12 +215,15 @@ Thread_Pool::open (void *)
       ACE_Message_Block *dup = mb->duplicate ();
 
       if (this->put (dup) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT (" (%t) %p\n"),
+                    ASYS_TEXT ("put")));
     }
 
   mb->release ();
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n(%t) end loop, dump of task:\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\n(%t) end loop, dump of task:\n")));
   this->dump ();
 
   return 0;
@@ -221,7 +245,9 @@ main (int, ASYS_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) threads = %d\n"), n_threads));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) threads = %d\n"),
+              n_threads));
 
   // Create the worker tasks.
   Thread_Pool thread_pool (n_threads);
@@ -232,12 +258,14 @@ main (int, ASYS_TCHAR *[])
 
   // Wait for all the threads to reach their exit point.
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) waiting for worker tasks to finish...\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) waiting for worker tasks to finish...\n")));
 
   ACE_Thread_Manager::instance ()->wait ();
 
   ACE_ASSERT (thread_pool.msg_queue ()->is_empty ());
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) destroying worker tasks and exiting...\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) destroying worker tasks and exiting...\n")));
 
 #else
   ACE_ERROR ((LM_INFO,

@@ -105,8 +105,10 @@ producer (void *args)
 
       // Allocate a new message
 
-      ACE_NEW_RETURN (mb, ACE_Message_Block (1), 0);
-      *mb->rd_ptr () = *c;
+      ACE_NEW_RETURN (mb,
+                      ACE_Message_Block (1),
+                      0);
+      *mb->wr_ptr () = *c;
 
       // Set the priority.
       mb->msg_priority (count);

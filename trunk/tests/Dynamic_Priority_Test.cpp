@@ -204,7 +204,7 @@ order_producer (void *args)
 
       // Set the current send character in the current message block
       // at its read pointer position, and adjust the write pointer.
-      *mb->rd_ptr () = *c;
+      *mb->wr_ptr () = *c;
       mb->wr_ptr (1);
 
 

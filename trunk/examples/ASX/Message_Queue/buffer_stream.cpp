@@ -130,7 +130,7 @@ Producer::svc (void)
                       ACE_Message_Block (BUFSIZ + 1),
                       -1);
 
-      n = ACE_OS::read (ACE_STDIN, mb->rd_ptr (), BUFSIZ);
+      n = ACE_OS::read (ACE_STDIN, mb->wr_ptr (), BUFSIZ);
 
       if (n <= 0)
         {
@@ -239,9 +239,10 @@ Filter::put (ACE_Message_Block *mb,
       mb->length (mb->size ());
 
       // Prepend the line count in front of the buffer.
-      ACE_OS::sprintf (mb->rd_ptr (), "%d: %s", 
-         this->count_++, buf);
-
+      ACE_OS::sprintf (mb->rd_ptr (),
+                       "%d: %s", 
+                       this->count_++,
+                       buf);
       return this->put_next (mb, tv);
     }
 }
