@@ -210,13 +210,16 @@ int
 MT_Test::svc (void)
 {
   // Obtain object reference to the Naming Service (create new stub.)
+
+  CosNaming::NamingContext_var name_service;
+
   TAO_TRY_EX (SETUP)
     {
       CORBA::Object_var name_service_obj =
         orb_->string_to_object (name_service_ior_, TAO_TRY_ENV);
       TAO_CHECK_ENV_EX (SETUP);
 
-      CosNaming::NamingContext_var name_service =
+      name_service =
         CosNaming::NamingContext::_narrow (name_service_obj.in (),
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV_EX (SETUP);
