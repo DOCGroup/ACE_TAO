@@ -61,7 +61,6 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       if (TAO_Singleton_Manager::starting_up () ||
           TAO_Singleton_Manager::shutting_down ())
         {
@@ -71,13 +70,12 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
           // so the preallocated lock is not available.  Either way,
           // don't register for destruction with the
           // TAO_Singleton_Manager:  we'll have to leak this instance.
-#endif /* ACE_MT_SAFE */
 
           ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
         {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per TAO_Singleton
           // instantiation.
@@ -90,15 +88,15 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           if (singleton == 0)
             {
-              ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
 #endif /* ACE_MT_SAFE */
+              ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with TAO_Singleton_Manager.
               TAO_Singleton_Manager::at_exit (singleton);
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
-        }
 #endif /* ACE_MT_SAFE */
+        }
     }
 
   return &singleton->instance_;
