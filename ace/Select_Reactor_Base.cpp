@@ -15,7 +15,6 @@
 
 ACE_RCSID(ace, Select_Reactor_Base, "$Id$")
 
-
 #if defined (ACE_WIN32)
 #define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
 #define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)

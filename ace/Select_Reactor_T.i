@@ -116,29 +116,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations (void)
 }
 
 // = The remaining methods in this file must be called with locks
-// held.  Note the queue handles its own locking.
-
-template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler *handler,
-                                                              int dont_call_handle_close)
-{
-  ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
-  if (this->timer_queue_ != 0)
-    return this->timer_queue_->cancel (handler, dont_call_handle_close);
-  else
-    return 0;
-}
-
-template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
-                                                              const void **arg,
-                                                              int dont_call_handle_close)
-{
-  ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
-  return this->timer_queue_->cancel (timer_id,
-                                     arg,
-                                     dont_call_handle_close);
-}
+// held.
 
 // Performs operations on the "ready" bits.
 

@@ -1,3 +1,10 @@
+Thu Jun  6 12:28:20 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp: Moved the cancel_timer() methods
+	  from the Select_Reactor_T.i file and added ACE_GUARD's around
+ 	  them to ensure we're serialized correctly.  Thanks to Johnny
+ 	  Chen <jchen@informatica.com> for motivating this.
+
 Thu Jun  6 08:24:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Malloc_T.h:
