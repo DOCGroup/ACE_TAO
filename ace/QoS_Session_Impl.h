@@ -184,8 +184,8 @@ private:
   
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/QoS_Session_Impl.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
-#endif /*ACE_QOS_SESSION_IMPL_H */
+#endif /* ACE_QOS_SESSION_IMPL_H */
