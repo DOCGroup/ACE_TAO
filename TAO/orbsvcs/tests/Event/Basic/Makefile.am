@@ -14,7 +14,8 @@ Atomic_Reconnect_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Atomic_Reconnect_SOURCES = \
@@ -35,7 +36,6 @@ Atomic_Reconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_BCast.am 
 
 noinst_PROGRAMS += BCast
@@ -45,7 +45,8 @@ BCast_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 BCast_SOURCES = \
@@ -66,7 +67,6 @@ BCast_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Bitmask.am 
 
 noinst_PROGRAMS += Bitmask
@@ -76,7 +76,8 @@ Bitmask_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Bitmask_SOURCES = \
@@ -105,7 +106,6 @@ Bitmask_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Complex.am 
 
 noinst_PROGRAMS += Complex
@@ -115,7 +115,8 @@ Complex_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Complex_SOURCES = \
@@ -144,7 +145,6 @@ Complex_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Control.am 
 
 noinst_PROGRAMS += Control
@@ -154,7 +154,8 @@ Control_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Control_SOURCES = \
@@ -175,7 +176,6 @@ Control_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Disconnect.am 
 
 noinst_PROGRAMS += Disconnect
@@ -185,7 +185,8 @@ Disconnect_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Disconnect_SOURCES = \
@@ -214,7 +215,6 @@ Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Gateway.am 
 
 noinst_PROGRAMS += Gateway
@@ -224,7 +224,8 @@ Gateway_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Gateway_SOURCES = \
@@ -253,7 +254,6 @@ Gateway_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_MT_Disconnect.am 
 
 noinst_PROGRAMS += MT_Disconnect
@@ -263,7 +263,8 @@ MT_Disconnect_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 MT_Disconnect_SOURCES = \
@@ -284,7 +285,6 @@ MT_Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Negation.am 
 
 noinst_PROGRAMS += Negation
@@ -294,7 +294,8 @@ Negation_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Negation_SOURCES = \
@@ -323,7 +324,6 @@ Negation_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Observer.am 
 
 noinst_PROGRAMS += Observer
@@ -333,7 +333,8 @@ Observer_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Observer_SOURCES = \
@@ -354,7 +355,6 @@ Observer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Random.am 
 
 noinst_PROGRAMS += Random
@@ -364,7 +364,8 @@ Random_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Random_SOURCES = \
@@ -385,7 +386,6 @@ Random_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Reconnect.am 
 
 noinst_PROGRAMS += Reconnect
@@ -395,7 +395,8 @@ Reconnect_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Reconnect_SOURCES = \
@@ -416,7 +417,6 @@ Reconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Shutdown.am 
 
 noinst_PROGRAMS += Shutdown
@@ -426,7 +426,8 @@ Shutdown_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Shutdown_SOURCES = \
@@ -447,7 +448,6 @@ Shutdown_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Timeout.am 
 
 noinst_PROGRAMS += Timeout
@@ -457,7 +457,8 @@ Timeout_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Timeout_SOURCES = \
@@ -486,7 +487,6 @@ Timeout_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Basic_Wildcard.am 
 
 noinst_PROGRAMS += Wildcard
@@ -496,7 +496,8 @@ Wildcard_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Wildcard_SOURCES = \
@@ -524,7 +525,6 @@ Wildcard_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
 
 ## Clean up template repositories, etc.
 clean-local:

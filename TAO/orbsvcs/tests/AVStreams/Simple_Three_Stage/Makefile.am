@@ -14,7 +14,8 @@ distributer_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 distributer_SOURCES = \
   distributer.cpp \
@@ -34,7 +35,6 @@ distributer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.AVS_Simple_Three_Stage_Recv.am 
 
 noinst_PROGRAMS += receiver
@@ -44,7 +44,8 @@ receiver_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 receiver_SOURCES = \
   receiver.cpp \
@@ -64,7 +65,6 @@ receiver_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.AVS_Simple_Three_Stage_Send.am 
 
 noinst_PROGRAMS += sender
@@ -74,7 +74,8 @@ sender_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 sender_SOURCES = \
   sender.cpp \
@@ -93,7 +94,6 @@ sender_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
 
 ## Clean up template repositories, etc.
 clean-local:

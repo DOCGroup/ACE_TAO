@@ -10,17 +10,16 @@ TAO_BUILDDIR = $(top_builddir)
 if BUILD_AMI
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
-noinst_PROGRAMS = LoadManager
-endif
-endif
-endif
+
+bin_PROGRAMS = LoadManager
 
 LoadManager_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 LoadManager_SOURCES = \
   LoadManager.cpp \
@@ -42,23 +41,25 @@ LoadManager_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_INTERCEPTORS
+endif BUILD_AMI
 
 ## Makefile.CosLoadMonitor.am 
 
 if BUILD_AMI
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
-noinst_PROGRAMS += LoadMonitor
-endif
-endif
-endif
+
+bin_PROGRAMS += LoadMonitor
 
 LoadMonitor_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 LoadMonitor_SOURCES = \
   LoadMonitor.cpp \
@@ -84,6 +85,9 @@ LoadMonitor_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_INTERCEPTORS
+endif BUILD_AMI
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -8,21 +8,25 @@ TAO_BUILDDIR = $(top_builddir)
 ## Makefile.CosEvent_Test_Lib.am 
 
 if !BUILD_MINIMUM_CORBA
+
 noinst_LTLIBRARIES = libCECTests.la
-endif
 
 libCECTests_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DCEC_TEST_BUILD_DLL
 
 libCECTests_la_SOURCES = \
   Counting_Consumer.cpp \
   Counting_Supplier.cpp
+
+libCECTests_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libCECTests_la_LIBADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
@@ -44,6 +48,7 @@ noinst_HEADERS = \
   Counting_Supplier.h \
   cectest_export.h
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

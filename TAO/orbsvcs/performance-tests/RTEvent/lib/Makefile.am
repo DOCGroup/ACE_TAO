@@ -10,6 +10,9 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 
 ## Makefile.RTEC_Perf.am 
 
+if BUILD_RT_CORBA
+if !BUILD_MINIMUM_CORBA
+
 BUILT_SOURCES = \
   Federated_TestS_T.cpp \
   Federated_TestC.inl \
@@ -36,21 +39,18 @@ CLEANFILES = \
 Federated_TestS_T.cpp Federated_TestC.inl Federated_TestS.inl Federated_TestS_T.inl Federated_TestC.cpp Federated_TestS.cpp Federated_TestC.h Federated_TestS.h Federated_TestS_T.h: Federated_Test-stamp
 
 Federated_Test-stamp: $(srcdir)/Federated_Test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(srcdir)/Federated_Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(srcdir)/Federated_Test.idl
 	@touch $@
 
-if BUILD_RT_CORBA
-if !BUILD_MINIMUM_CORBA
-lib_LTLIBRARIES = libTAO_RTEC_Perf.la
-endif
-endif
+noinst_LTLIBRARIES = libTAO_RTEC_Perf.la
 
 libTAO_RTEC_Perf_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_RTEC_PERF_BUILD_DLL
 
 libTAO_RTEC_Perf_la_SOURCES = \
@@ -176,6 +176,8 @@ noinst_HEADERS = \
   Task_Activator.cpp \
   Federated_Test.idl
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_RT_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

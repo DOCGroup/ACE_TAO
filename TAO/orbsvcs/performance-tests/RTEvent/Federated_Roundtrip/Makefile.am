@@ -9,19 +9,18 @@ TAO_BUILDDIR = $(top_builddir)
 
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS = client
-endif
-endif
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../lib \
-  -I../lib \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(srcdir)/../lib \
+  -I../lib
 
 client_SOURCES = \
   client.cpp
@@ -42,29 +41,28 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_RT_CORBA
 
 ## Makefile.Federated_Roundtrip_Server.am 
 
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += server
-endif
-endif
 
 server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
-  -I../lib \
-  -I$(TAO_ROOT)/orbsvcs
+  -I../lib
 
 server_SOURCES = \
   server.cpp
-
-server_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 server_LDADD = \
   ../lib/libTAO_RTEC_Perf.la \
@@ -82,6 +80,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_RT_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -18,7 +18,6 @@ Notify_Logging_Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Notify_Logging_Service_SOURCES = \

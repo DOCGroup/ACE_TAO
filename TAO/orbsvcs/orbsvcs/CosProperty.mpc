@@ -3,7 +3,7 @@
 
 project(CosProperty) : orbsvcslib, core, portableserver {
   sharedname   = TAO_CosProperty
-  idlflags    += -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h
+  idlflags    += -Wb,export_macro=TAO_Property_Export -Wb,export_include=orbsvcs/Property/property_export.h
   dynamicflags = TAO_PROPERTY_BUILD_DLL
   tagchecks   += Property
   pch_header   =

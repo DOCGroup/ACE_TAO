@@ -253,6 +253,12 @@ AC_CONFIG_FILES([
   orbsvcs/tests/Event/Mcast/Two_Way/Makefile
   orbsvcs/tests/Event/Performance/Makefile
   orbsvcs/tests/Event/lib/Makefile
+  orbsvcs/tests/FT_App/Makefile
+  orbsvcs/tests/FaultTolerance/Makefile
+  orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
+  orbsvcs/tests/FaultTolerance/IOGR/Makefile
+  orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile
+  orbsvcs/tests/FtRtEvent/Makefile
  ])
 
 dnl Note that the "TAO_VERSION" in the message below is an M4 macro

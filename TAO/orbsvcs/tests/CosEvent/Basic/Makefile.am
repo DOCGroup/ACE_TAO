@@ -8,15 +8,16 @@ TAO_BUILDDIR = $(top_builddir)
 ## Makefile.CosEvent_Basic_Disconnect.am 
 
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS = Disconnect
-endif
 
 Disconnect_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
@@ -41,19 +42,21 @@ Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosEvent_Basic_MT_Disconnect.am 
 
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += MT_Disconnect
-endif
 
 MT_Disconnect_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
@@ -77,19 +80,21 @@ MT_Disconnect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosEvent_Basic_Pull_Push_Event.am 
 
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += Pull_Push_Event
-endif
 
 Pull_Push_Event_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
@@ -114,19 +119,21 @@ Pull_Push_Event_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosEvent_Basic_Push_Event.am 
 
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += Push_Event
-endif
 
 Push_Event_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
@@ -151,19 +158,21 @@ Push_Event_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosEvent_Basic_Random.am 
 
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += Random
-endif
 
 Random_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
@@ -187,19 +196,21 @@ Random_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.CosEvent_Basic_Shutdown.am 
 
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += Shutdown
-endif
 
 Shutdown_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
@@ -224,6 +235,7 @@ Shutdown_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

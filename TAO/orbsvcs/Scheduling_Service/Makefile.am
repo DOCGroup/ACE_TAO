@@ -7,17 +7,19 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Scheduling_Service.am 
 
-noinst_PROGRAMS = Scheduling_Service
+bin_PROGRAMS = Scheduling_Service
 
 Scheduling_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Scheduling_Service_SOURCES = \
-  Scheduling_Service.cpp
+  Scheduling_Service.cpp \
+  Scheduling_Service.h
 
 Scheduling_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
@@ -31,9 +33,6 @@ Scheduling_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-noinst_HEADERS = \
-  Scheduling_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:

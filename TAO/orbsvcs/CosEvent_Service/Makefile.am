@@ -8,15 +8,16 @@ TAO_BUILDDIR = $(top_builddir)
 ## Makefile.CosEvent_Service.am 
 
 if !BUILD_MINIMUM_CORBA
-noinst_PROGRAMS = CosEvent_Service
-endif
+
+bin_PROGRAMS = CosEvent_Service
 
 CosEvent_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 CosEvent_Service_SOURCES = \
@@ -37,6 +38,7 @@ CosEvent_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

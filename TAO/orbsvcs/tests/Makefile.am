@@ -13,11 +13,11 @@ SUBDIRS = \
         EC_Mcast \
         EC_Multiple \
         EC_Throughput \
-        Event 
+        Event \
+	FT_App \
+        FaultTolerance \
+	FtRtEvent
 
-#        FT_App \
-#        FaultTolerance \
-#        FtRtEvent \
 #        IOR_MCast \
 #        ImplRepo \
 #        InterfaceRepo \

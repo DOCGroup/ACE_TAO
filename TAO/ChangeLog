@@ -1,24 +1,133 @@
+Mon Aug 16 23:35:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Update to configure orbsvcs/tests/F*.
+
+	* orbsvcs/tests/Makefile.am:
+
+	  Update to build new tests.
+
+	* orbsvcs/tests/FT_App/Makefile.am:
+	* orbsvcs/tests/FaultTolerance/Makefile.am:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.am:
+	* orbsvcs/tests/FtRtEvent/Makefile.am:
+
+	  New files.
+
+	* orbsvcs/orbsvcs/AV.mpc:
+	* orbsvcs/orbsvcs/CosConcurrency.mpc:
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
+	* orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosProperty.mpc:
+	* orbsvcs/orbsvcs/CosTime.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+	* orbsvcs/orbsvcs/FTORB.mpc:
+	* orbsvcs/orbsvcs/FaultTolerance.mpc:
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+	* orbsvcs/orbsvcs/PortableGroup.mpc:
+	* orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+	* orbsvcs/orbsvcs/RTCosScheduling.mpc:
+	* orbsvcs/orbsvcs/RTEvent.mpc:
+	* orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/RTSched.mpc:
+	* orbsvcs/orbsvcs/RT_Notification.mpc:
+	* orbsvcs/orbsvcs/SSLIOP.mpc:
+	* orbsvcs/orbsvcs/Security.mpc:
+	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+
+	  Changed to prepend "orbsvcs/" to export include path.
+
+	* orbsvcs/Concurrency_Service/Makefile.am:
+	* orbsvcs/CosEvent_Service/Makefile.am:
+	* orbsvcs/Dump_Schedule/Makefile.am:
+	* orbsvcs/Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+	* orbsvcs/FT_ReplicationManager/Makefile.am:
+	* orbsvcs/Fault_Detector/Makefile.am:
+	* orbsvcs/Fault_Notifier/Makefile.am:
+	* orbsvcs/IFR_Service/Makefile.am:
+	* orbsvcs/LifeCycle_Service/Makefile.am:
+	* orbsvcs/LoadBalancer/Makefile.am:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/Naming_Service/Makefile.am:
+	* orbsvcs/Notify_Service/Makefile.am:
+	* orbsvcs/Scheduling_Service/Makefile.am:
+	* orbsvcs/Time_Service/Makefile.am:
+	* orbsvcs/Trading_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+	* orbsvcs/tests/Bug_1334_Regression/Makefile.am:
+	* orbsvcs/tests/Concurrency/Makefile.am:
+	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
+	* orbsvcs/tests/CosEvent/lib/Makefile.am:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile.am:
+	* orbsvcs/tests/EC_Mcast/Makefile.am:
+	* orbsvcs/tests/EC_Multiple/Makefile.am:
+	* orbsvcs/tests/EC_Throughput/Makefile.am:
+	* orbsvcs/tests/Event/Basic/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+	* orbsvcs/tests/Event/Performance/Makefile.am:
+	* orbsvcs/tests/Event/lib/Makefile.am:
+
+	  Updated to access orbsvcs headers with -I$(TAO_ROOT)/orbsvcs.:
+
 Mon Aug 16 16:45:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Kokyu_dsrt_schedulers/muf_example/muf_example.mpc:
 
 	  Changed muf_client project to inherit from svc_utils.
-	
+
 	* {docs,examples,orbsvcs,performance-tests,utils}/.../*.{cpp,h,idl}:
-	
+
 	  Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/...".
 
 Mon Aug 16 18:14:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
-        
+
           Fixed logic in generation of constructor taking stub and
           servant, for abstract interfaces that inherit from other
           abstract interfaces.
 
 Mon Aug 16 16:31:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO-INSTALL.html (href): 
+	* TAO-INSTALL.html (href):
 
 	  Addressed an additional concern from Dr. Schmidt regarding
 	  broken documentation.

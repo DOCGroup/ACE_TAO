@@ -14,7 +14,8 @@ Connect_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Connect_SOURCES = \
@@ -35,7 +36,6 @@ Connect_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Performance_Inversion.am 
 
 noinst_PROGRAMS += Inversion
@@ -45,7 +45,8 @@ Inversion_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Inversion_SOURCES = \
@@ -66,7 +67,6 @@ Inversion_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Performance_Latency.am 
 
 noinst_PROGRAMS += Latency
@@ -76,7 +76,8 @@ Latency_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Latency_SOURCES = \
@@ -98,7 +99,6 @@ Latency_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Performance_Latency_Server.am 
 
 noinst_PROGRAMS += Latency_Server
@@ -108,7 +108,8 @@ Latency_Server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Latency_Server_SOURCES = \
@@ -133,7 +134,6 @@ Latency_Server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.Event_Performance_Throughput.am 
 
 noinst_PROGRAMS += Throughput
@@ -143,7 +143,8 @@ Throughput_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
 Throughput_SOURCES = \
@@ -163,7 +164,6 @@ Throughput_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
 
 ## Clean up template repositories, etc.
 clean-local:
