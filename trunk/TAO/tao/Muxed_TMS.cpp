@@ -74,7 +74,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
 
   if (TAO_debug_level > 0 && rd == 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher -")
+                ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
                 ACE_TEXT ("null reply dispatcher\n")));
 
   if (rd == 0)
@@ -88,7 +88,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::bind_dispatcher: ")
+                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
                     ACE_TEXT ("bind dispatcher failed: result = %d, request id = %d \n"),
                     result, request_id));
 
@@ -130,16 +130,15 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
     if (TAO_debug_level > 8)
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, "
-                  "id = %d\n",
+                  ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
+                  ACE_TEXT ("id = %d\n"),
                   params.request_id_));
-
 
     if (result != 0)
       {
-        if (TAO_debug_level > 0 && result != 0)
+        if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply-")
+                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
                       ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
                       result));
 
@@ -149,13 +148,6 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         // the reply timed out - just forget about the reply.
         return 0;
       }
-
-
-    if (TAO_debug_level > 8)
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, "
-                  "id = %d\n",
-                  params.request_id_));
 
     // Do not move it outside the scope of the lock. A follower thread
     // could have timedout unwinding the stack and the reply
