@@ -33,7 +33,8 @@ Wed Jul 10 15:38:48 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 Wed Jul 10 14:25:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ccm_core/Component_Base.idl:
-	* tao/ccm_core/CosPersistentState.idl: Moved these files under the new
+	* tao/ccm_core/CosPersistentState.idl: Moved these files under the
+	  new CIAO subdir.
 
 Wed Jul 10 11:35:05 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
