@@ -130,6 +130,61 @@ ACE_OS::chdir (const wchar_t *path)
 #endif /* ACE_HAS_WCHAR */
 #endif /* ACE_LACKS_CHDIR */
 
+ACE_INLINE int
+ACE_OS::rmdir (const ACE_TCHAR * path)
+{
+#if defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_PSOS)
+  //The pSOS remove_dir fails if the last character is a '/'
+  int location;
+  char *phile_path;
+
+  phile_path = (char *) ACE_OS::malloc (strlen (path));
+  if (phile_path == 0)
+    {
+//       ACE_OS::printf ("malloc in remove_dir failed: [%X]\n",
+//                       errno);
+      return -1;
+    }
+  else
+    {
+      ACE_OS::strcpy (phile_path, path);
+    }
+
+  location = ACE_OS::strlen (phile_path);
+  if (phile_path[location-1] == '/')
+    {
+      phile_path[location-1] = 0;
+    }
+
+  unsigned long result;
+  result = ::remove_dir ((char *) phile_path);
+  if (result != 0)
+    {
+      result = -1;
+    }
+
+  ACE_OS::free (phile_path);
+
+  return (int) result;
+
+#elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (::rmdir ((char *) path), int, -1);
+#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)  
+  ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
+#elif defined (ACE_HAS_WINCE)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path, NULL),
+                                          ace_result_),
+                        int, -1);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wrmdir (path), int, -1);
+#else
+  ACE_OSCALL_RETURN (::rmdir (path), int, -1);
+#endif /* ACE_HAS_PACE */
+}
+
 // @todo: which 4 and why???  dhinton
 // NOTE: The following four function definitions must appear before
 // ACE_OS::sema_init ().
