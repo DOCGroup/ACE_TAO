@@ -1,3 +1,25 @@
+Mon Jun  5 14:18:18 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T):
+
+	  If the Reactor fails to open with the hard-coded default size
+	  then set the Reactor size to be the current run-time limit on
+	  the number of file descriptors available to the process.  This
+	  size is not necessarily the maximum limit.  On platforms that do
+	  not support run-time evaluation of the current file descriptor
+	  limit, a default value of FD_SETSIZE will be used.  This
+	  corrects a problem on Solaris in 32 bit mode, and on any other
+	  platform where the per-process file descriptor limit is less
+	  than FD_SETSIZE.
+	  Reported by Marvin Allen Wolfthal <maw@ziplink.net>.
+
+	* ace/config-linux-common.h (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+
+	  It is no longer necessary to hard-code the default reactor size
+	  for older Linux kernels that had a file descriptor limit less
+	  than FD_SETSIZE since the Select Reactor now falls back on the
+	  run-time file descriptor limit for the given process.
+
 Mon Jun  5 10:22:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_Memory.h:
