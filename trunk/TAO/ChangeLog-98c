@@ -1,3 +1,8 @@
+Wed Nov 25 18:20:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/Invocation.cpp:  Added a couple of TAO_CHECK_ENV_SYS macros
+          to the check for thrown exceptions.
+
 Wed Nov 25 10:26:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Simple/echo: Reenabled the use of the Naming Service
