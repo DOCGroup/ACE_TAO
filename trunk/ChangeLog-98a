@@ -2,7 +2,8 @@ Tue Mar 10 15:57:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Handle_Set.cpp (dump):  Cast mask_.fd_count to size_t.
 	  Depend on whether you are using standard C++ library, the type
-	  of fd_count count be size_t or ssize_t.  	
+	  of fd_count count be size_t or ssize_t.  Thanks to Darrell for
+	  discovering this.	
 
 Tue Mar 10 13:22:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
