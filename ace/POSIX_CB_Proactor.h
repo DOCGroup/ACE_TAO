@@ -26,7 +26,7 @@
 /**
  * @class ACE_POSIX_CB_Proactor
  *
- * @brief Implementation of SGI IRIX Proactor
+ * @brief Implementation of Callback-based Proactor
  * };
  */
 class ACE_Export ACE_POSIX_CB_Proactor : public ACE_POSIX_AIOCB_Proactor
@@ -44,7 +44,7 @@ public:
 
 protected:
 
-  static void aio_completion_func ( sigval_t cb_data );
+  static void aio_completion_func (sigval_t cb_data);
 
   /**
    * Dispatch a single set of events.  If <wait_time> elapses before
