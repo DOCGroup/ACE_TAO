@@ -116,7 +116,7 @@ ACE_Data_Block::size (size_t length)
 {
   ACE_TRACE ("ACE_Data_Block::size");
 
-  if (length < this->max_size_)
+  if (length <= this->max_size_)
     this->cur_size_ = length;
   else 
     {
