@@ -84,7 +84,7 @@ CORBA::ValueBase::_tao_any_destructor (void *x)
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
-                                CORBA::ValueBase *this_,
+                                const CORBA::ValueBase *this_,
                                 ptrdiff_t /* formal_type_id */)
 {
   CORBA::Boolean retval = true;

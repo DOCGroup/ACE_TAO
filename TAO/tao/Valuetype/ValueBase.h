@@ -82,7 +82,7 @@ namespace CORBA
     /// Marshal a valuetype (see operator<< in tao_idl generated file
     /// how it is called)
     static CORBA::Boolean _tao_marshal (TAO_OutputCDR &strm,
-                                        ValueBase *_this,
+                                        const ValueBase *_this,
                                         ptrdiff_t formal_type_id = 0);
 
     /// Unmarshal a valuetype, if formal type is a pointer to
@@ -105,7 +105,7 @@ namespace CORBA
   public:  // otherwise these cannot be called from a static function
 
     /// during marshal jump to the most derived part
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) = 0;
+    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const = 0;
 
     /// called after obtaining the fresh object from create_for_unmarshal ()
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) = 0;
