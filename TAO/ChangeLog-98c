@@ -1,3 +1,14 @@
+Sat Jul  4 01:18:21 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitor.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:	
+	* orbsvcs/orbsvcs/Trader/Offer_Interpreters.cpp:		
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:	
+	Addressed warnings/errors on IRIX.
+
 Fri Jul 03 21:51:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp (parse_args):
