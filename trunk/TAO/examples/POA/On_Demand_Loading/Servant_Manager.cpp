@@ -43,11 +43,11 @@ ServantManager_i::obtain_servant (const char *str,
 {
   // The string format is <dllname:factory_function> that must be
   // parsed.
-  this->parse_string (str); 
+  this->parse_string (str);
 
   // Create the DLL object.
   ACE_DLL *dll;
- 
+
   ACE_NEW_RETURN (dll,
                   ACE_DLL,
                   0);
@@ -61,10 +61,10 @@ ServantManager_i::obtain_servant (const char *str,
                "before bind\n"));
   // Make an HASH_MAP entry by binding the object_id and the DLL
   // object associated with it together.
-   if (this->servant_map_.bind (oid.in (), 
+   if (this->servant_map_.bind (oid.in (),
                                 dll) == -1)
-     ACE_ERROR_RETURN ((LM_ERROR,                      
-                        "%p\n", 
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "%p\n",
                         "Bind failed"),
                        0);
    // Now that the dll name is available we open the dll.
@@ -76,8 +76,8 @@ ServantManager_i::obtain_servant (const char *str,
 
    // The next step is to obtain the symbol for the function that will
   // create the servant object and return it.
-  SERVANT_FACTORY servant_creator = ACE_reinterpret_cast
-    (SERVANT_FACTORY, dll->symbol (create_symbol_.c_str ()));
+  SERVANT_FACTORY servant_creator =
+    (SERVANT_FACTORY) dll->symbol (create_symbol_.c_str ());
 
   // Checking whether it is possible to create the servant.
   if (servant_creator == 0)
@@ -95,7 +95,7 @@ ServantManager_i::obtain_servant (const char *str,
 // The objectID is in a format of dllname:factory_function which has
 // to be parsed and separated into tokens to be used.
 
-void 
+void
 ServantManager_i::parse_string (const char *s)
 {
   // The format of the objectid is <dll:factory_function>.  This
@@ -104,16 +104,16 @@ ServantManager_i::parse_string (const char *s)
 
   ACE_CString str (s);
 
-  size_t index = str.find (':');
+  int index = str.find (':');
   // On error, npos is returned.
   if (index == ACE_CString::npos)
     ACE_ERROR ((LM_ERROR,
                 "Required character absent!\n"));
-  
+
   // The index gives us the location which is equivalent to the size
   // of the dllname_ string.
   this->dllname_ = str.substr (0, index);
-  
+
   // Obtain the substring from the offset which is one greater than
   // the location of ':'.
   this->create_symbol_ = str.substr (index + 1);
@@ -146,19 +146,19 @@ ServantManager_i::create_dll_object_id (const char *libname,
 }
 
 // This method destroys the servant and its caretaking DLL object.
- 
+
 void
 ServantManager_i::destroy_servant (PortableServer::Servant servant,
                                    const PortableServer::ObjectId &oid)
 {
   // The servant is destroyed.
   delete servant;
-  
+
   // Since the servant is no more the DLL object associated with it
   // has to be destroyed too.
 
   ACE_DLL *dll = 0;
-  
+
   // Since the servant is no more the DLL object associated with it
   // has to be destroyed too.
 
@@ -167,7 +167,7 @@ ServantManager_i::destroy_servant (PortableServer::Servant servant,
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "Unbind failed!\n"));
-  delete dll;                          
+  delete dll;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

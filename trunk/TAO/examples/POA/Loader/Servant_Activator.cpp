@@ -24,7 +24,7 @@ ACE_RCSID(Loader, Servant_Activator, "$Id$")
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and
 // is used for obtaining the servant. The garbage_collection_function
-// is used to kill the servant. 
+// is used to kill the servant.
 
 ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
                                         const char *dllname,
@@ -37,17 +37,17 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
      ACE_ERROR ((LM_ERROR,
                  "%p\n",
                  this->dll_.error ()));
-                   
+
 
   // Obtain the symbol for the function that will
   // get the servant object.
-  servant_supplier_ = ACE_reinterpret_cast
-    (SERVANT_FACTORY, this->dll_.symbol (factory_function));
+  servant_supplier_ =
+    (SERVANT_FACTORY) this->dll_.symbol (factory_function);
 
   // Obtain tne symbol for the function which
-  // will destroy the servant.  
-  servant_garbage_collector_ = ACE_reinterpret_cast
-    (SERVANT_GARBAGE_COLLECTOR, this->dll_.symbol (garbage_collection_function));
+  // will destroy the servant.
+  servant_garbage_collector_ =
+    (SERVANT_GARBAGE_COLLECTOR) this->dll_.symbol (garbage_collection_function);
 
 }
 
@@ -91,4 +91,3 @@ ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
                                    servant);
 
 }
-
