@@ -1,3 +1,10 @@
+Sat May  6 16:44:46 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.cpp:
+          The non-copying insertion operator for CORBA::Object was
+          removing the Object_ptr pointer.  This is incorrect, in fact, I
+          suspect that the function itself should go away.
+
 Sat May  6 15:37:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:

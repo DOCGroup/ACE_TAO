@@ -613,7 +613,6 @@ CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
 
   TAO_OutputCDR stream;
   stream << *objptr;
-  delete objptr;
   this->_tao_replace (CORBA::_tc_Object,
                       TAO_ENCAP_BYTE_ORDER,
                       stream.begin ());
