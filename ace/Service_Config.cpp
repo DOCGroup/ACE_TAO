@@ -51,11 +51,11 @@ char ACE_Service_Config::no_static_svcs_ = 0;
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
 
+// Name of file used to store messages.
+LPCTSTR ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
+
 // Name of the service configuration file.
 const char *ACE_Service_Config::service_config_file_ = ACE_DEFAULT_SVC_CONF;
-
-// Name of file used to store messages.
-LPCTSTR ACE_Service_Config::logger_key_ = ACE_LOGGER_KEY;
 
 // The ACE_Service_Manager static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.
@@ -162,10 +162,10 @@ ACE_Service_Config::resume (const char svc_name[])
   return ACE_Service_Repository::instance ()->resume (svc_name);
 }
 
-// Initialize the Service Repository.  Note that this *must*
-// be performed in the constructor (rather than open()) since
-// otherwise the repository will not be properly initialized
-// to allow static configuration of services...
+// Initialize the Service Repository.  Note that this *must* be
+// performed in the constructor (rather than open()) since otherwise
+// the repository will not be properly initialized to allow static
+// configuration of services...
 
 ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
                                         size_t size,
@@ -182,8 +182,8 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   // size as the ACE_Service_Repository).
   ACE_Reactor::instance ();
 
-// There's no point in dealing with this on NT since it doesn't really
-// support signals very well...
+  // There's no point in dealing with this on NT since it doesn't really
+  // support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // This really ought to be a Singleton I suspect...
 
@@ -200,7 +200,7 @@ void
 ACE_Service_Config::parse_args (int argc, char *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args");
-  ACE_Get_Opt getopt (argc, argv, "bdf:ns:", 1); // Start at argv[1]
+  ACE_Get_Opt getopt (argc, argv, "bdf:k:ns:", 1); // Start at argv[1]
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -214,13 +214,16 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
       case 'f':
         ACE_Service_Config::service_config_file_ = getopt.optarg;
         break;
+      case 'k':
+        ACE_Service_Config::logger_key_ = getopt.optarg;
+        break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
         break;
       case 's':
         {
-// There's no point in dealing with this on NT since it doesn't really
-// support signals very well...
+          // There's no point in dealing with this on NT since it doesn't really
+          // support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
           ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
 
@@ -268,7 +271,7 @@ ACE_Service_Config::initialize (const char svc_name[],
 
 int
 ACE_Service_Config::initialize (const ACE_Service_Type *sr,
-                                char  parameters[])
+                                char parameters[])
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
@@ -368,7 +371,8 @@ ACE_Service_Config::load_static_svcs (void)
 // Performs an open without parsing command-line arguments.
 
 int
-ACE_Service_Config::open (const char program_name[])
+ACE_Service_Config::open (const char program_name[],
+                          LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::open");
 
@@ -376,36 +380,52 @@ ACE_Service_Config::open (const char program_name[])
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();
 
-  // Only use STDERR if the users hasn't already set the flags.
+  u_long flags = ACE_LOG_MSG->flags ();
+
+  if (flags == 0)
+    // Only use STDERR if the caller hasn't already set the flags.
+    flags = (u_long) ACE_Log_Msg::STDERR;
+
+  LPCTSTR key = logger_key;
+  
+  if (key == ACE_DEFAULT_LOGGER_KEY || key == 0)
+    // Only use the static <logger_key_> if the caller doesn't
+    // override it in the parameter list.
+    key = ACE_Service_Config::logger_key_;
+
   if (ACE_LOG_MSG->open (program_name,
-                         ACE_LOG_MSG->flags () ? ACE_LOG_MSG->flags () : (u_long) ACE_Log_Msg::STDERR,
-                         ACE_Service_Config::logger_key_) == -1)
-    return -1;
-  ACE_DEBUG ((LM_STARTUP, "starting up daemon %n\n"));
-
-  // Initialize the Service Repository (this will still work if user
-  // forgets to define an object of type ACE_Service_Config).
-  ACE_Service_Repository::instance (ACE_Service_Config::MAX_SERVICES);
-
-  // Initialize the ACE_Reactor (the ACE_Reactor should be the same
-  // size as the ACE_Service_Repository).
-  ACE_Reactor::instance ();
-
-  // Register ourselves to receive reconfiguration requests via
-  // signals!
-
-  if (ACE_Service_Config::no_static_svcs_ == 0
-      && ACE_Service_Config::load_static_svcs () == -1)
+                         flags,
+                         key) == -1)
     return -1;
   else
-    return ACE_Service_Config::process_directives ();
+    {
+      ACE_DEBUG ((LM_STARTUP, "starting up daemon %n\n"));
+
+      // Initialize the Service Repository (this will still work if
+      // user forgets to define an object of type ACE_Service_Config).
+      ACE_Service_Repository::instance (ACE_Service_Config::MAX_SERVICES);
+
+      // Initialize the ACE_Reactor (the ACE_Reactor should be the
+      // same size as the ACE_Service_Repository).
+      ACE_Reactor::instance ();
+
+      // Register ourselves to receive reconfiguration requests via
+      // signals!
+
+      if (ACE_Service_Config::no_static_svcs_ == 0
+          && ACE_Service_Config::load_static_svcs () == -1)
+        return -1;
+      else
+        return ACE_Service_Config::process_directives ();
+    }
 }
 
-ACE_Service_Config::ACE_Service_Config (const char program_name[])
+ACE_Service_Config::ACE_Service_Config (const char program_name[],
+                                        LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  if (this->open (program_name) == -1
+  if (this->open (program_name, logger_key) == -1
       && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.

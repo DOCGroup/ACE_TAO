@@ -8,7 +8,10 @@
                                                         
 // ACE SOCK_SAP client.
                                                         
-int main (int argc, char *argv[])                       
+static const char QUIT_STRING[] = "quit";
+
+int 
+main (int argc, char *argv[])                       
 {                                                       
   const char *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short r_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
@@ -54,19 +57,20 @@ int main (int argc, char *argv[])
   // Send data to server (correctly handles "incomplete writes").
   
   for (ssize_t r_bytes;
-       (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0; )
-    if (ACE_OS::strcmp (buf, "quit\n") == 0)
-      break;
-    else if (cli_stream.send (buf, r_bytes, 0, &timeout) == -1)
-      {
-	if (errno == ETIME)
-	  ACE_DEBUG ((LM_DEBUG, "%p\n", "send_n"));
-	else
-	  // Breakout if we didn't fail due to a timeout.
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), -1);
-      }
+       (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0; 
+       )
+      if (ACE_OS::strncmp (buf, QUIT_STRING, sizeof (QUIT_STRING) - 1) == 0)
+        break;
+      else if (cli_stream.send (buf, r_bytes, 0, &timeout) == -1)
+        {
+          if (errno == ETIME)
+            ACE_DEBUG ((LM_DEBUG, "%p\n", "send_n"));
+          else
+            // Breakout if we didn't fail due to a timeout.
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), -1);
+        }
 
-    // Explicitly close the writer-side of the connection.
+  // Explicitly close the writer-side of the connection.
   if (cli_stream.close_writer () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close_writer"), 1);
 

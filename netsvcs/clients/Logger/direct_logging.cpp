@@ -1,6 +1,6 @@
-// This program sends logging records directly to the server, rather
 // $Id$
 
+// This program sends logging records directly to the server, rather
 // than going through the client logging daemon.
 
 #include "ace/SOCK_Connector.h"
@@ -29,12 +29,9 @@ main (int argc, char *argv[])
   
   log_record.msg_data (DATA);
   size_t len = log_record.length ();
-  size_t encoded_len = htonl (len);
-
   log_record.encode ();
 
-  if (logger.send (4, &encoded_len, sizeof encoded_len,
-		   (char *) &log_record, len) == -1)
+  if (logger.send ((char *) &log_record, len) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
   else if (logger.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
