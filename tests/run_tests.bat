@@ -40,6 +40,7 @@ call %0 %dopure% Hash_Map_Manager_Test
 call %0 %dopure% High_Res_Timer_Test
 call %0 %dopure% IOStream_Test
 call %0 %dopure% Map_Manager_Test
+call %0 %dopure% Cache_Map_Manager_Test
 call %0 %dopure% Map_Test
 call %0 %dopure% Mem_Map_Test
 call %0 %dopure% Message_Block_Test
