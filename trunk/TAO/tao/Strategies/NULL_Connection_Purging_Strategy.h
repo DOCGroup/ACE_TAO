@@ -39,7 +39,7 @@ public:
   virtual ~TAO_NULL_Connection_Purging_Strategy (void);
 
   /// Does nothing.
-  virtual void update_item (TAO_Cache_IntId& int_id);
+  virtual void update_item (TAO_Transport* transport);
 
   /// Returns -1 to signify no maximum
   virtual int cache_maximum (void) const;

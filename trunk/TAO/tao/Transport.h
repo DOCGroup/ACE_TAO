@@ -271,8 +271,7 @@ public:
   /// now.
   virtual int idle_after_reply (void);
 
-  /// Call the corresponding connection handler's <close>
-  /// method.
+  /// Call the implementation method after obtaining the lock.
   virtual void close_connection (void);
 
   //@}
@@ -343,6 +342,12 @@ public:
   int id (void) const;
   /// Set the identifier for this transport instance.
   void id (int id);
+
+  /// Return the order for the purging strategy.
+  unsigned long purging_order (void) const;
+
+  /// Allow the purging strategy to set the order.
+  void purging_order(unsigned long value);
 
 protected:
   /** @name Template methods
@@ -422,6 +427,14 @@ protected:
   virtual ssize_t recv_i (char *buffer,
                           size_t len,
                           const ACE_Time_Value *timeout = 0) = 0;
+
+  /// This class needs priviledged access to
+  /// - close_connection_i()
+  friend class TAO_Transport_Cache_Manager;
+
+  /// Call the corresponding connection handler's <close>
+  /// method.
+  virtual void close_connection_i (void);
 
 public:
 
@@ -764,6 +777,9 @@ protected:
    * might choose to set this to the handle for their connection.
    */
   int id_;
+
+  /// Used by the LRU, LFU and FIFO Connection Purging Strategies.
+  unsigned long purging_order_;
 };
 
 #if defined (__ACE_INLINE__)
