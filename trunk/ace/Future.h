@@ -87,6 +87,8 @@ protected:
 /**
  * @class ACE_Future_Rep
  *
+ * @internal
+ *
  * @brief ACE_Future_Rep<T>
  *
  * An ACE_Future_Rep<T> object encapsules a pointer to an object
@@ -235,36 +237,36 @@ public:
   /// Constructor.
   ACE_Future (void);
 
-  /// Copy constructor binds <this> and <r> to the same
-  /// <ACE_Future_Rep>. An <ACE_Future_Rep> is created if necessary.
+  /// Copy constructor binds @a this and @a r to the same
+  /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
   ACE_Future (const ACE_Future<T> &r);
 
-  /// Constructor that initialises an <ACE_Future> to point to the
-  /// result <r> immediately.
+  /// Constructor that initialises an ACE_Future to point to the
+  /// result @a r immediately.
   ACE_Future (const T &r);
 
   /// Destructor.
   ~ACE_Future (void);
 
-  /// Assignment operator that binds <this> and <r> to the same
-  /// <ACE_Future_Rep>. An <ACE_Future_Rep> is created if necessary.
+  /// Assignment operator that binds @a this and @a r to the same
+  /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
   void operator = (const ACE_Future<T> &r);
 
-  /// Cancel an <ACE_Future> and assign the value <r>.  It is used if a
-  /// client does not want to wait for <T> to be produced.
+  /// Cancel an ACE_Future and assign the value @a r.  It is used if a
+  /// client does not want to wait for the value to be produced.
   int cancel (const T &r);
 
   /**
-   * Cancel an <ACE_Future>.  Put the future into its initial
+   * Cancel an ACE_Future.  Put the future into its initial
    * state. Returns 0 on succes and -1 on failure. It is now possible
-   * to reuse the ACE_Future<T>. But remember, the ACE_Future<T>
-   * is now bound to a new ACE_Future_Rep<T>.
+   * to reuse the ACE_Future. But remember, the ACE_Future
+   * is now bound to a new ACE_Future_Rep.
    */
   int cancel (void);
 
   /**
-   * Equality operator that returns 1 if both ACE_Future<T> objects
-   * point to the same ACE_Future_Rep<T> object.  Attention: It also
+   * Equality operator that returns 1 if both ACE_Future objects
+   * point to the same ACE_Future_Rep object.  Attention: It also
    * returns 1 if both objects have just been instantiated and not
    * used yet.
    */
@@ -283,17 +285,28 @@ public:
    */
   int set (const T &r);
 
-  /// Wait up to <tv> time to get the <value>.  Note that <tv> must be
-  /// specified in absolute time rather than relative time.
+  /**
+   * Wait to get the object's value.
+   *
+   * @arg value   Receives the value of this ACE_Future when it is set.
+   * @arg tv      Pointer to an ACE_Time_Value containing the absolute
+   *              time to wait until for the value to be set. If @a tv
+   *              is 0, the call waits indefinitely for the value to be
+   *              set, unless an error occurs.
+   *
+   * @retval  0   Success; @a value contains the value of the ACE_Future.
+   * @retval -1   Error; check ACE_OS::last_error() for an error code.
+   */
   int get (T &value,
            ACE_Time_Value *tv = 0) const;
 
   /**
+   * @deprecated  Note that this method is going away in a subsequent
+   *              release since it doesn't distinguish between failure
+   *              results and success results (exceptions should be
+   *              used, but they aren't portable...).
    * Type conversion, which obtains the result of the asynchronous
-   * method invocation.  Will block forever.  Note that this method is
-   * going away in a subsequent release since it doesn't distinguish
-   * between failure results and success results (exceptions should be
-   * used, but they aren't portable...).  The <get> method should be
+   * method invocation.  Will block forever. The get() method should be
    * used instead since it separates the error value from the result,
    * and also permits timeouts.
    */
@@ -303,25 +316,26 @@ public:
   int ready (void) const;
 
   /**
-   * Attaches the specified observer to a subject (i.e., the <ACE_Future>).
+   * Attaches the specified observer to a subject (this ACE_Future).
    * The update method of the specified subject will be invoked with a copy of
-   * the associated <ACE_Future> as input when the result gets set.  If the
+   * the associated ACE_Future as input when the result gets set.  If the
    * result is already set when this method gets invoked, then the update
    * method of the specified subject will be invoked immediately.
    *
-   * Returns 0 if the observer is successfully attached, 1 if the
-   * observer is already attached, and -1 if failures occur.
+   * @retval  0   Success.
+   * @retval  1   The observer was already attached.
+   * @retval -1   Error; check ACE_OS::last_error() for an error code.
    */
   int attach (ACE_Future_Observer<T> *observer);
 
   /**
-   * Detaches the specified observer from a subject (i.e., the <ACE_Future_Rep>).
+   * Detaches the specified observer from a subject (this ACE_Future).
    * The update method of the specified subject will not be invoked when the
-   * <ACE_Future_Reps> result gets set.  Returns 1 if the specified observer
-   * was actually attached to the subject prior to this call and 0 if was not.
+   * ACE_Future_Rep result gets set.
    *
-   * Returns 0 if the observer was successfully detached, and -1 if the
-   * observer was not attached in the first place.
+   * @retval  0   The observer was successfully detached.
+   * @retval -1   Error, including the observer not attached prior
+   *              to calling this method.
    */
   int detach (ACE_Future_Observer<T> *observer);
 
@@ -329,9 +343,9 @@ public:
   void dump (void) const;
 
   /**
-   * Get the underlying <ACE_Future_Rep>*. Note that this method should
-   * rarely, if ever, be used and that modifying the undlerlying <ACE_Future_Rep>*
-   * should be done with extreme caution.
+   * Get the underlying ACE_Future_Rep pointer. Note that this method should
+   * rarely, if ever, be used and that modifying the underlying
+   * ACE_Future_Rep should be done with extreme caution.
    */
   ACE_Future_Rep<T> *get_rep (void);
 
