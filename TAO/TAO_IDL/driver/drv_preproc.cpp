@@ -175,12 +175,12 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
          << GTDEVEL(": cannot open temp file ")
          << fn
          << GTDEVEL(" for writing\n");
-    exit(99);
+    ACE_OS::exit (99);
   }
   if (fin == NULL) {
       cerr << idl_global->prog_name()
            << GTDEVEL(": cannot open input file\n");
-      exit(99);
+      ACE_OS::exit (99);
   }
 #if !defined (ACE_WIN32)
   fprintf (f, "#line 1 \"%s\"\n", orig_filename);
@@ -259,7 +259,7 @@ DRV_pre_proc(char *myfile)
 
   ACE_OS::strcpy (tmp_file, tmpdir);
   ACE_OS::strcpy (tmp_ifile, tmpdir);
-  
+
   ACE_OS::strcat (tmp_file, "idlf_XXXXXX");
   ACE_OS::strcat (tmp_ifile, "idli_XXXXXX");
 
@@ -349,7 +349,7 @@ DRV_pre_proc(char *myfile)
          << GTDEVEL(": Could not open cpp output file ")
          << tmp_file
          << "\n";
-    exit(99);
+    ACE_OS::exit (99);
   }
   (*DRV_FE_set_yyin)(ACE_reinterpret_cast(File *, yyin));
 
@@ -364,7 +364,7 @@ DRV_pre_proc(char *myfile)
          << GTDEVEL(": Could not remove cpp input file ")
          << tmp_ifile
          << "\n";
-    exit(99);
+    ACE_OS::exit (99);
   }
 
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
@@ -373,12 +373,12 @@ DRV_pre_proc(char *myfile)
          << GTDEVEL(": Could not remove cpp output file ")
          << tmp_file
          << "\n";
-    exit(99);
+    ACE_OS::exit (99);
   }
 #endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
 
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
-    exit(0);
+    ACE_OS::exit (0);
 }
 
 // We really need to know whether this line is a "#include ...". If

@@ -75,10 +75,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** 4. Otherwise, for the single file, invoke DRV_drive
 */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
-#include	"drv_private.h"
+#include        "drv_private.h"
 #include        "drv_link.h"
 
 ACE_RCSID(TAO_IDL, tao_idl, "$Id$")
@@ -113,7 +113,7 @@ DRV_version()
 void
 DRV_drive(char *s)
 {
-  char	*fn;
+  char  *fn;
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (fn);
@@ -126,9 +126,9 @@ DRV_drive(char *s)
    */
   if (idl_global->compile_flags() & IDL_CF_INFORMATIVE)
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": preprocessing ")
-	 << s
-	 << "\n";
+         << GTDEVEL(": preprocessing ")
+         << s
+         << "\n";
   DRV_pre_proc(s);
   /*
    * Initialize FE stage 1
@@ -147,28 +147,28 @@ DRV_drive(char *s)
    */
   if (idl_global->compile_flags() & IDL_CF_INFORMATIVE)
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": parsing ")
-	 << s
-	 << "\n";
+         << GTDEVEL(": parsing ")
+         << s
+         << "\n";
   (*DRV_FE_yyparse)();
   /*
    * If there were any errors, stop
    */
   if (idl_global->err_count() > 0) {
     cerr << idl_global->prog_name()
-	 << ": "
-	 << s
-	 << GTDEVEL(": found ");
+         << ": "
+         << s
+         << GTDEVEL(": found ");
     cerr << idl_global->err_count()
-	 << GTDEVEL(" error");
+         << GTDEVEL(" error");
     cerr << (idl_global->err_count() > 1
-	    ? GTDEVEL("s") : "")
-    	 << "\n";
+            ? GTDEVEL("s") : "")
+         << "\n";
     /*
      * Call BE_abort to allow a BE to clean up after itself
      */
     (*DRV_BE_abort)();
-    exit((int) idl_global->err_count());
+    ACE_OS::exit (ACE_static_cast (int, idl_global->err_count()));
   }
   /*
    * Dump the code
@@ -176,9 +176,9 @@ DRV_drive(char *s)
   if ((idl_global->compile_flags() & IDL_CF_INFORMATIVE)
       && (idl_global->compile_flags() & IDL_CF_DUMP_AST))
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": dump ")
-	 << s
-	 << "\n";
+         << GTDEVEL(": dump ")
+         << s
+         << "\n";
   if (idl_global->compile_flags() & IDL_CF_DUMP_AST) {
     cerr << GTDEVEL("Dump of AST:\n");
     idl_global->root()->dump(cerr);
@@ -188,14 +188,14 @@ DRV_drive(char *s)
    */
   if (idl_global->compile_flags() & IDL_CF_INFORMATIVE)
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": BE processing on ")
-	 << s
-	 << "\n";
+         << GTDEVEL(": BE processing on ")
+         << s
+         << "\n";
   (*DRV_BE_produce)();
   /*
    * Exit cleanly
    */
-  exit(0);
+  ACE_OS::exit (0);
 }
 
 /*
@@ -226,14 +226,14 @@ main(int argc, char **argv)
    */
   if (idl_global->compile_flags() & IDL_CF_VERSION) {
     DRV_version();
-    exit(0);
+    ACE_OS::exit (0);
   }
   /*
    * If a usage message is requested, give it and exit
    */
   if (idl_global->compile_flags() & IDL_CF_ONLY_USAGE) {
     DRV_usage();
-    exit(0);
+    ACE_OS::exit (0);
   }
   /*
    * Fork off a process for each file to process. Fork only if
@@ -257,7 +257,7 @@ main(int argc, char **argv)
     DRV_file_index = 0;
     DRV_drive(DRV_files[DRV_file_index]);
   }
-  exit(0);
+  ACE_OS::exit (0);
   /* NOTREACHED */
   return 0;
 }
