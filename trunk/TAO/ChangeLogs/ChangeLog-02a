@@ -4,9 +4,11 @@ Tue Dec  5 19:39:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/diffs/InterfaceC.i.diff:
 
 	  Replaced missing 'TAO_Export' macros on declarations
-	  of sequences in th inline file used when __ACE_INLINE__
-	  is defined. Also update diff file. This fixes link
-	  errors in IFR_Service for the release build on Win32.
+	  of sequence CDR operators in the inline file used when 
+	  __ACE_INLINE__ is defined, and removed #if !defined guards
+	  and extra CDR operator declarations. Also updated diff file. 
+	  This fixes link errors in IFR_Service for the release build 
+	  on Win32.
 
 Tue Dec  5 15:47:23 2000  Marina Spivak  <marina@cs.wustl.edu>
 
