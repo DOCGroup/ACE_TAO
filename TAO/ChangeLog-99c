@@ -1,51 +1,56 @@
+Sat Mar 27 06:51:38 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Event_Comm/Makefile: updated dependencies so
+          that it can build.
+
 Fri Mar 26 23:50:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POA.pidl (PortableServer): Added State and get_state.
+        * tao/POA.pidl (PortableServer): Added State and get_state.
 
 Fri Mar 26 22:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Context.h:
-	* tao/DynAnyC.h:
-	* tao/Environment.h:
-	* tao/Exception.h:
-	* tao/NVList.h:
-	* tao/ORB.h:
-	* tao/Object.h:
-	* tao/POA_CORBA.h:
-	* tao/POAC.h:
-	* tao/Principal.h:
-	* tao/Request.h:
-	* tao/Server_Request.h:
-	* tao/TypeCode.h:
-	  Put in some more of the _ptr_type and _var_type
-	  typedefs. As I read in the Henning/Vinoski book, I
-	  see that these things are used just about anywhere
-	  xxx_ptr and/or xxx_var are defined. This should about do
-	  it for TAO code. Still some places in the IDL
-	  compiler left where these can be generated.
+        * tao/Any.h:
+        * tao/Context.h:
+        * tao/DynAnyC.h:
+        * tao/Environment.h:
+        * tao/Exception.h:
+        * tao/NVList.h:
+        * tao/ORB.h:
+        * tao/Object.h:
+        * tao/POA_CORBA.h:
+        * tao/POAC.h:
+        * tao/Principal.h:
+        * tao/Request.h:
+        * tao/Server_Request.h:
+        * tao/TypeCode.h:
+          Put in some more of the _ptr_type and _var_type
+          typedefs. As I read in the Henning/Vinoski book, I
+          see that these things are used just about anywhere
+          xxx_ptr and/or xxx_var are defined. This should about do
+          it for TAO code. Still some places in the IDL
+          compiler left where these can be generated.
 
 Fri Mar 26 21:57:44 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/POAManager.cpp (get_state):
-	Made changes to the type declarations in this file. The scoping
-	was not right to acces the enum variables. Thanks to Naga
-	for pointing out the mistake.
+        * tao/POAManager.cpp (get_state):
+        Made changes to the type declarations in this file. The scoping
+        was not right to acces the enum variables. Thanks to Naga
+        for pointing out the mistake.
 
 Fri Mar 26 18:08:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Removed the IIOP_ORB.{h,cpp} from the project files.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Removed the IIOP_ORB.{h,cpp} from the project files.
 
 Fri Mar 26 18:07:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POAC.h:
-	* tao/POAS.{h,cpp}:
-	* tao/POAManager.{h,cpp} (get_state): Added enum definition for
-	  PortableServer::POAManager::State and the get_state method which
-	  got added in Corba 2.3 spec.  Thanks to Umar Syyid
-	  <usyyid@hns.com> for pointing this out.
+        * tao/POAC.h:
+        * tao/POAS.{h,cpp}:
+        * tao/POAManager.{h,cpp} (get_state): Added enum definition for
+          PortableServer::POAManager::State and the get_state method which
+          got added in Corba 2.3 spec.  Thanks to Umar Syyid
+          <usyyid@hns.com> for pointing this out.
 
 Fri Mar 26 18:12:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -72,36 +77,36 @@ Fri Mar 26 17:59:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Mar 26 17:58:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/IIOP_ORB.h:
-	* tao/IIOP_ORB.i:
-	* tao/IIOP_ORB.cpp:
-	* tao/IOR_LookupTable.h:
-	* tao/IOR_LookupTable.cpp:
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB.cpp:
-	* tao/ORB_Core.cpp:
-	  Removed the IIOP_ORB class, it was not needed, it was confusing
-	  the pluggable protocols work and it added more layering than was
-	  desirable.
-	  Also added a pointer from the ORB to the ORB_Core that created
-	  it, that way we don't need to rely on the
-	  TAO_ORB_Core_instance() method.
-	  The more I think about it the more the ORB_Core looks like an
-	  implementation class for the ORB interface.
+        * tao/Makefile:
+        * tao/IIOP_ORB.h:
+        * tao/IIOP_ORB.i:
+        * tao/IIOP_ORB.cpp:
+        * tao/IOR_LookupTable.h:
+        * tao/IOR_LookupTable.cpp:
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+          Removed the IIOP_ORB class, it was not needed, it was confusing
+          the pluggable protocols work and it added more layering than was
+          desirable.
+          Also added a pointer from the ORB to the ORB_Core that created
+          it, that way we don't need to rely on the
+          TAO_ORB_Core_instance() method.
+          The more I think about it the more the ORB_Core looks like an
+          implementation class for the ORB interface.
 
-	* examples/Makefile:
-	  Added Event_Comm to the list.
+        * examples/Makefile:
+          Added Event_Comm to the list.
 
-	* docs/releasenotes/TODO.html:
-	  Updated with the new tasks ahead.
+        * docs/releasenotes/TODO.html:
+          Updated with the new tasks ahead.
 
 Fri Mar 26 15:38:00 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
-	  Cosmetic change. Moved the null termination of service name
-	  ahead so it prints properly in the ACE_DEBUG.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
+          Cosmetic change. Moved the null termination of service name
+          ahead so it prints properly in the ACE_DEBUG.
 
 Fri Mar 26 16:00:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
