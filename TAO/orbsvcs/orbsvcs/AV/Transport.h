@@ -19,6 +19,7 @@
 #define TAO_AV_TRANSPORT_H
 #include "ace/pre.h"
 
+#include "ace/Service_Object.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Connector.h"
@@ -26,13 +27,72 @@
 #include "ace/Addr.h"
 #include "ace/SOCK_Dgram.h"
 #include "orbsvcs/AV/AV_export.h"
-#include "AV_Core.h"
 #include "FlowSpec_Entry.h"
 
 // Forward declarations.
+class TAO_AV_Core;
+class TAO_AV_Transport_Factory;
 class TAO_AV_Protocol_Object;
 class TAO_AV_Callback;
 class TAO_AV_Transport;
+
+class TAO_AV_Export TAO_AV_Transport_Item
+{
+public:
+  TAO_AV_Transport_Item (const ACE_CString &name);
+  // creator method, the Transport name can only be set when the
+  // object is created.
+
+  const ACE_CString &name (void);
+  // return a reference to the character representation of the Transport
+  // factories name.
+
+  TAO_AV_Transport_Factory *factory (void);
+  // return a pointer to the Transport factory.
+
+  void factory (TAO_AV_Transport_Factory *factory);
+  // set the factory pointer's valus.
+
+private:
+  ACE_CString name_;
+  // Transport factory name.
+
+  TAO_AV_Transport_Factory *factory_;
+  // pointer to factory object.
+};
+
+
+
+
+class TAO_AV_Flow_Protocol_Factory;
+
+class TAO_AV_Export TAO_AV_Flow_Protocol_Item
+{
+public:
+  TAO_AV_Flow_Protocol_Item (const ACE_CString &name);
+  // creator method, the Flow_Protocol name can only be set when the
+  // object is created.
+
+  const ACE_CString &name (void);
+  // return a reference to the character representation of the Flow_Protocol
+  // factories name.
+
+  TAO_AV_Flow_Protocol_Factory *factory (void);
+  // return a pointer to the Flow_Protocol factory.
+
+  void factory (TAO_AV_Flow_Protocol_Factory *factory);
+  // set the factory pointer's valus.
+
+private:
+  ACE_CString name_;
+  // Flow_Protocol factory name.
+
+  TAO_AV_Flow_Protocol_Factory *factory_;
+  // pointer to factory object.
+};
+
+
+
 
 class TAO_AV_Flow_Handler
 {
@@ -197,10 +257,8 @@ protected:
   TAO_AV_ConnectorSet connectors_;
 };
 
-typedef ACE_Unbounded_Set<TAO_AV_Acceptor*>
-        TAO_AV_AcceptorSet;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>
-        TAO_AV_AcceptorSetItor;
+typedef ACE_Unbounded_Set<TAO_AV_Acceptor*> TAO_AV_AcceptorSet;
+typedef ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*> TAO_AV_AcceptorSetItor;
 
 class TAO_AV_Export TAO_AV_Acceptor_Registry
 {
@@ -219,6 +277,19 @@ protected:
                     TAO_FlowSpec_Entry *entry);
   TAO_AV_AcceptorSet acceptors_;
 };
+
+class TAO_AV_Export TAO_AV_Transport_Factory : public ACE_Service_Object
+{
+public:
+  TAO_AV_Transport_Factory (void);
+  virtual ~TAO_AV_Transport_Factory (void);
+  virtual int init (int argc, char *argv[]);
+  // Initialization hook.
+  virtual int match_protocol (const char *protocol_string);
+  virtual TAO_AV_Acceptor *make_acceptor (void);
+  virtual TAO_AV_Connector *make_connector (void);
+};
+
 
 #if defined (__ACE_INLINE__)
 #include "Transport.i"
