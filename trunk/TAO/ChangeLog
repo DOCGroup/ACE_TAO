@@ -1,3 +1,13 @@
+Sat Dec  7 09:44:33 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosTime.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+
+	  Changes to MFC project settings for IDL compilation. Thanks to
+	  John Morey <jmorey@mmintl.com for reporting the bugs.
+
 Sat Dec  7 11:59:06 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:  Removed close

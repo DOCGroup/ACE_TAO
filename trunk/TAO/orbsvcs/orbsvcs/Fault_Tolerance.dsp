@@ -317,6 +317,15 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
+USERDEP__FT_CO="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\FT_CORBA.idl
+InputName=FT_CORBA
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -I../ -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(InputName).idl
+
+# End Custom Build
 
 !ENDIF 
 
