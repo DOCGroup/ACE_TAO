@@ -46,9 +46,9 @@
 // Compiling for AIX.
 #define AIX
 
-// Use BSD 4.4 socket definitions for pre-AIX 4.3.  The _BSD setting also
+// Use BSD 4.4 socket definitions for pre-AIX 4.2.  The _BSD setting also
 // controls the data type used for waitpid(), wait(), and wait3().
-#if (ACE_AIX_MINOR_VERS < 3)
+#if (ACE_AIX_MINOR_VERS < 2)
 #  define _BSD 44
 #  define ACE_HAS_UNION_WAIT
 #endif /* ACE_AIX_MINOR_VERS < 3 */
