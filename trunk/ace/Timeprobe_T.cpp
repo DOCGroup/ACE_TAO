@@ -36,7 +36,7 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &)
   //
 
   ACE_ERROR ((LM_ERROR, 
-              __TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__)); 
+              ASYS_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__)); 
   errno = ENOTSUP;   
 }
 
