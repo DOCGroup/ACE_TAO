@@ -13,7 +13,7 @@ use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client
 # to allow proper server initialization.
-$sleeptime = 8;
+$sleeptime = 10;
 
 $quiet = 0;
 

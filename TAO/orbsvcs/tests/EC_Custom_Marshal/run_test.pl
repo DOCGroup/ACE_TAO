@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $port = PerlACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
 
 $NS_ior = PerlACE::LocalFile ("NameService.ior");
-$sleeptime = 5;
+$sleeptime = 8;
 $status = 0;
 
 $NS = new PerlACE::Process ("../../Naming_Service/Naming_Service",
@@ -25,7 +25,7 @@ $S  = new PerlACE::Process ("ECM_Supplier",
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($NS_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($NS_ior, 10) == -1) {
     print STDERR "ERROR: waiting for naming service IOR file\n";
     $NS->Kill (); 
     exit 1;

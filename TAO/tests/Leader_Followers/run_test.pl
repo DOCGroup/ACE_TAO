@@ -116,7 +116,7 @@ if ($single == 1) {
 
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
         print STDERR "ERROR: cannot find file <$iorfile>\n";
         $SV->Kill (); 
         exit 1;
@@ -143,7 +143,7 @@ if ($multi == 1) {
 
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
         print STDERR "ERROR: cannot find file <$iorfile>\n";
         $SV->Kill (); 
         exit 1;
