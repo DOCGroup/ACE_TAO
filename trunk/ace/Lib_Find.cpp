@@ -187,9 +187,13 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
       else
         {
 #ifdef ACE_WIN32
-          LPTSTR file_component;
-          DWORD pathlen = SearchPath(NULL, searchfilename, dll_suffix,
-                                maxpathnamelen, pathname, &file_component);
+          ACE_TCHAR *file_component = 0;
+          DWORD pathlen = ACE_TEXT_SearchPath(NULL,
+                                              searchfilename,
+                                              dll_suffix,
+                                              maxpathnamelen,
+                                              pathname,
+                                              &file_component);
           if(pathlen >= maxpathnamelen)
           {
               errno = ENOMEM;
