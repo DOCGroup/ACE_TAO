@@ -1,3 +1,43 @@
+Sat Nov 10 18:50:40 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h (preconnect):
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (preconnect):
+
+	  Removed this no-op implementation.  Just use the one in the
+	  IIOP_Connector base class.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+	  (create_shared_profile):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+	  Use IOP::TAG_INTERNET_IOP as the profile tag instead of
+	  TAO_TAG_IIOP_PROFILE.  The former is more technically correct.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+
+	  Correct TAO_SSLIOP_Connector class documentation.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	  (handle_input, handle_output):
+
+	  Force the connection handler to be called before waiting for
+	  additional events if there is still data in OpenSSL's internal
+	  buffers by returning a value greater than one.  That buffer must
+	  be flushed before additional events on the SSLIOP handle can be
+	  polled.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send_i):
+
+	  Pass the timeout value to the ACE_SSL_SOCK_Stream::sendv()
+	  method in order to support timeouts.
+
+	  (register_handler_i):
+
+	  Reverted code that registered a reactor and a handler with the
+	  underlying ACE_SSL_SOCK_Stream instance.  It is no longer
+	  needed.
+
 Sat Nov 10 19:08:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Factory.cpp (init): 

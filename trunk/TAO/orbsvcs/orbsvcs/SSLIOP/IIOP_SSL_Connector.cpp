@@ -130,7 +130,7 @@ TAO_IIOP_SSL_Connector::connect (
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
-  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
+  if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
     return -1;
 
   TAO_IIOP_Endpoint *iiop_endpoint =
@@ -252,12 +252,4 @@ TAO_IIOP_SSL_Connector::connect (
   // is going out of scope.  transport now has control of base_transport.
   transport = base_transport;
   return 0;
-}
-
-int
-TAO_IIOP_SSL_Connector::preconnect (const char *)
-{
-  // Deprecated.  Use _validate_connection() at run-time, instead.
-
-  ACE_NOTSUP_RETURN (0);
 }

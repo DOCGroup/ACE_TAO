@@ -278,7 +278,16 @@ TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE)
   TAO_Resume_Handle  resume_handle (this->orb_core (),
                                     this->get_handle ());
 
-  return this->transport ()->handle_output ();
+  int result = this->transport ()->handle_output ();
+
+  // Force this event handler to be called before waiting for
+  // additional events if there is still data in OpenSSL's internal
+  // buffers.  That buffer must be flushed before additional events on
+  // the SSLIOP handle can be polled.
+  if (result == 0 && ::SSL_pending (this->peer ().ssl ()))
+    return 1;
+
+  return result;
 }
 
 int
@@ -407,6 +416,13 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE handle)
       // handle_close () which could be harmful.
       retval = 0;
     }
+
+  // Force this event handler to be called before waiting for
+  // additional events if there is still data in OpenSSL's internal
+  // buffers.  That buffer must be flushed before additional events on
+  // the SSLIOP handle can be polled.
+  if (retval == 0 && ::SSL_pending (this->peer ().ssl ()))
+    return 1;
 
   if (retval == -1)
     {
