@@ -33,8 +33,7 @@
 //
 
 #include	"cubit.h"		// for stubs ...
-#include	"tao/boa.h"		// ... and skeletons
-#include	"tao/debug.h"		// ... and debugging
+#include	"tao/corba.h"		// ... and skeletons
 
 // CUBE OCTET
 

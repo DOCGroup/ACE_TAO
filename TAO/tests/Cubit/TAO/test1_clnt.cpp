@@ -21,9 +21,7 @@
 #endif	// unix
 
 #include "test1.h"
-#include "tao/debug.h"
-#include "tao/request.h"
-#include "tao/orbobj.h"
+#include "tao/corba.h"
 
 #if !defined (_WIN32)
 extern char 	*optarg;	// missing on some platforms

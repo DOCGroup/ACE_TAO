@@ -24,10 +24,7 @@
 
 #include "cubitC.h"
 
-#include "tao/debug.h"
-#include "tao/orbobj.h"
-#include "tao/nvlist.h"
-
+#include "tao/corba.h"
 
 #if !defined (_WIN32)
 extern char 	*optarg;	// missing on some platforms

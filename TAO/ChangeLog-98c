@@ -1,3 +1,21 @@
+Thu Jul 31 15:19:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/*.{h,i,cpp}: Changed all #include of specific
+ 	header files to include the application-level "tao/corba.h".
+
+	* tests/Cubit/TAO/Makefile (BIN): Removed test1_svr and test1_clnt
+ 	for now until we can get them working again.  They stopped working
+ 	after the BOA API changed and the non-standard get_request()
+ 	method removed.
+
+	* tao/any.h: Inserted #includes which insure that this header file
+ 	is not position-dependent on other header files.
+
+	* tao/corba.h: Created this catch-all header file for APPLICATIONS
+ 	to use as a single entry point.  Currently it just includes all
+ 	TAO header files, but will eventually be pared down to only those
+ 	headers which warrant public exposure.
+
 Wed Jul 30 16:55:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/typecode.i (CORBA_TypeCode): Re-ordered member
