@@ -1,3 +1,10 @@
+Sat Nov 27 18:36:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Priority_Buffer_Test.cpp (consumer): Revised the test
+	  so that it doesn't bother to check the priority in the
+ 	  ACE_ASSERT macro if we're sending a shutdown message.  Thanks to
+ 	  Ivan Murphy and Darrell Brunsch for narrowing this down.
+
 Thu Nov 25 13:32:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp (parse_args): Make sure
