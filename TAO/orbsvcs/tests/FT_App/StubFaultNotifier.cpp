@@ -169,7 +169,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   ACE_CHECK_RETURN (-1);
 
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -198,8 +198,8 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // resolve references to detector factory
 
   CORBA::Object_var obj = this->orb_->string_to_object(detector_ior_);
-  this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
-  if (CORBA::is_nil(this->factory_))
+  this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj.in ());
+  if (CORBA::is_nil(this->factory_.in ()))
   {
     std::cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << std::endl;
     result = -1;
@@ -213,8 +213,8 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     {
       const char * iorName = this->iorReplicaFiles_[nRep];
       CORBA::Object_var obj = this->orb_->string_to_object(iorName);
-      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj);
-      if (CORBA::is_nil(replica))
+      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj.in ());
+      if (CORBA::is_nil(replica.in ()))
       {
         std::cerr << "Can't resolve Replica IOR " << iorName << std::endl;
         result = -1;
@@ -231,12 +231,12 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         //////////////////
         // FaultDetectorFactory gets picky about FaultNotifier's object type.
         // coddle it.
-        ::FT::FaultNotifier_var notifier = ::FT::FaultNotifier::_narrow(this_obj);
-        value <<= notifier;
+        ::FT::FaultNotifier_var notifier = ::FT::FaultNotifier::_narrow(this_obj.in ());
+        value <<= notifier.in ();
         encoder.add(::FT::FT_NOTIFIER, value);
 
 
-        value <<= replica;
+        value <<= replica.in ();
         encoder.add(::FT::FT_MONITORABLE, value);
 
         FT::FTDomainId domain_id = 0;
@@ -394,6 +394,7 @@ void StubFaultNotifier::push_sequence_fault (
     CORBA::SystemException
   ))
 {
+  ACE_UNUSED_ARG (events);
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
@@ -406,6 +407,7 @@ void StubFaultNotifier::push_sequence_fault (
     , CosNotifyFilter::InvalidGrammar
   ))
 {
+  ACE_UNUSED_ARG (constraint_grammar);
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
@@ -419,6 +421,9 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
     CORBA::SystemException
   ))
 {
+  ACE_UNUSED_ARG(push_consumer);
+  ACE_UNUSED_ARG(filter);
+
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
@@ -432,6 +437,9 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
     CORBA::SystemException
   ))
 {
+  ACE_UNUSED_ARG(push_consumer);
+  ACE_UNUSED_ARG(filter);
+
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
@@ -444,6 +452,8 @@ void StubFaultNotifier::disconnect_consumer (
     , CosEventComm::Disconnected
   ))
 {
+  ACE_UNUSED_ARG(connection);
+
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
@@ -459,7 +469,7 @@ int StubFaultNotifier::idle(int & result)
   int quit = 0;
   ACE_TRY_NEW_ENV
   {
-    if(this->factory_.ptr() != 0 && !CORBA::is_nil(this->factory_))
+    if(!CORBA::is_nil(this->factory_.in ()))
     {
       if (!this->factory_->is_alive( ACE_ENV_SINGLE_ARG_PARAMETER))
       {
