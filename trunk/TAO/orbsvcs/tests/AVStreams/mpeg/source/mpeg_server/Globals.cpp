@@ -2933,3 +2933,11 @@ Audio_Global::on_exit_routine(void)
   ComCloseConn(serviceSocket);
   ComCloseConn(audioSocket);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Video_Global, ACE_Thread_Mutex>;
+template class ACE_Singleton<Audio_Global, ACE_Thread_Mutex>;
+#elif defined ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Video_Global, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Audio_Global, ACE_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

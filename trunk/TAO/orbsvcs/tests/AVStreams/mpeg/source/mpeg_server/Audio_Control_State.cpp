@@ -156,3 +156,11 @@ Audio_Control_Play_State::close (void)
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
   return;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Audio_Control_Play_State, ACE_Thread_Mutex>;
+template class ACE_Singleton<Audio_Control_Waiting_State, ACE_Thread_Mutex>;
+#elif defined ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Audio_Control_Play_State, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Audio_Control_Waiting_State, ACE_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
