@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_union.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -46,7 +46,7 @@ be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
   // computes the fully scoped typecode name
   compute_tc_name ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -65,11 +65,11 @@ be_union::compute_member_count (void)
       // instantiate a scope iterator.
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               this->member_count_++;
             }
@@ -90,7 +90,7 @@ be_union::compute_default_index (void)
   int i = 0; // counter
 
   this->default_index_ = -1;  // if not used at all, this is the value it will
-                              // take 
+                              // take
 
   // if there are elements in this scope
   if (this->nmembers () > 0)
@@ -98,15 +98,15 @@ be_union::compute_default_index (void)
       // instantiate a scope iterator.
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               bub = be_union_branch::narrow_from_decl (d);
               if (bub->label ()->label_kind () == AST_UnionLabel::UL_default)
-                this->default_index_ = i; // zero based indexing 
+                this->default_index_ = i; // zero based indexing
               i++;
             }
           si->next ();
@@ -164,16 +164,16 @@ be_union::gen_client_header (void)
 
       // generate default and copy constructors
       *ch << local_name () << " (void); // default constructor" << nl;
-      *ch << local_name () << " (const " << local_name () << 
+      *ch << local_name () << " (const " << local_name () <<
         " &); // copy constructor" << nl;
       // generate destructor
       *ch << "~" << local_name () << " (void); // destructor" << nl;
       // generate assignment operator
-      *ch << local_name () << " &operator= (const " << local_name () << 
+      *ch << local_name () << " &operator= (const " << local_name () <<
         " &); // copy constructor\n\n";
 
       // the discriminant type may have to be defined here if it was an enum
-      // declaration inside of the union statement. 
+      // declaration inside of the union statement.
 
       cg->push (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CH); // set current code gen state
       bt = be_type::narrow_from_decl (this->disc_type ());
@@ -181,18 +181,18 @@ be_union::gen_client_header (void)
       s  = cg->make_state (); // get the code gen object for the current state
       if (!s || !bt || (s->gen_code (bt, this) == -1))
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n")); 
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
           ACE_ERROR ((LM_ERROR, "Discriminant type generation failure\n"));
           return -1;
         }
       cg->pop ();
-  
+
       // now generate the public defn for the union branch members
       cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CH); // set current code gen state
 
       if (be_scope::gen_client_header () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n")); 
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
           ACE_ERROR ((LM_ERROR, "member generation failure\n"));
           return -1;
         }
@@ -207,7 +207,7 @@ be_union::gen_client_header (void)
 
       if (be_scope::gen_client_header () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n")); 
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
           ACE_ERROR ((LM_ERROR, "data member generation failure\n"));
           return -1;
         }
@@ -268,12 +268,65 @@ be_union::gen_client_stubs (void)
       cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CS); // set current code gen state
 
       cs = cg->client_stubs ();
-      cg->outstream (cs);
+
+      *cs << "// *************************************************************"
+          << nl;
+      *cs << "// Operations for union " << this->name () << nl;
+      *cs << "// *************************************************************\n\n";
+
+      // generate the copy constructor and the assignment operator here
+      cs->indent ();
+      *cs << "// copy constructor" << nl;
+      *cs << this->name () << "::" << this->local_name () << " (const " <<
+        this->name () << " &u)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      // first set the discriminant
+      *cs << "this->disc_ = u.disc_;" << nl;
+      // now switch based on the disc value
+      *cs << "switch (this->disc_)" << nl;
+      *cs << "{\n";
+      cs->incr_indent (0);
+      if (be_scope::gen_client_stubs () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_stubs\n"));
+          ACE_ERROR ((LM_ERROR, "constructor codegen failure\n"));
+          return -1;
+        }
+      cs->decr_indent ();
+      *cs << "}\n";
+      cs->decr_indent ();
+      *cs << "}\n\n";
+
+      cs->indent ();
+      *cs << "// assignment operator" << nl;
+      *cs << this->name () << " &" << nl; // return type
+      *cs << this->name () << "::operator= (const " <<
+        this->name () << " &u)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      // first set the discriminant
+      *cs << "this->disc_ = u.disc_;" << nl;
+      // now switch based on the disc value
+      *cs << "switch (this->disc_)" << nl;
+      *cs << "{\n";
+      cs->incr_indent (0);
+      if (be_scope::gen_client_stubs () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_stubs\n"));
+          ACE_ERROR ((LM_ERROR, "assignment op codegen failure\n"));
+          return -1;
+        }
+      cs->decr_indent ();
+      *cs << "}" << nl;
+      *cs << "return *this;\n";
+      cs->decr_indent ();
+      *cs << "}\n\n";
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
-        nl; 
+        nl;
       *cs << "{\n";
       cs->incr_indent (0);
       if (this->gen_encapsulation () == -1)
@@ -284,9 +337,9 @@ be_union::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "};" << nl;
 
-      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
-        " (CORBA::tk_union, sizeof (_oc_" <<  this->flatname () << 
-        "), (unsigned char *) &_oc_" << this->flatname () << 
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
+        " (CORBA::tk_union, sizeof (_oc_" <<  this->flatname () <<
+        "), (unsigned char *) &_oc_" << this->flatname () <<
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
@@ -309,19 +362,60 @@ be_union::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_union::gen_client_inline (void)
 {
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  be_type *bt;       // type node
+  be_state *s;       // code generation state
+
+
   if (!this->cli_inline_gen_)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      ci = cg->client_inline ();
+
+      *ci << "// *************************************************************"
+          << nl;
+      *ci << "// Inline operations for union " << this->name () << nl;
+      *ci << "// *************************************************************\n\n";
+
+      // generate the default constructor and the destructor here
+      ci->indent ();
+      *ci << "// default constructor" << nl;
+      *ci << "ACE_INLINE" << nl;
+      *ci << this->name () << "::" << this->local_name () << " (void)" << nl;
+      *ci << "{" << nl;
+      *ci << "}" << nl << nl;
+
+      *ci << "// destructor" << nl;
+      *ci << "ACE_INLINE" << nl;
+      *ci << this->name () << "::~" << this->local_name () << " (void)" << nl;
+      *ci << "{" << nl;
+      *ci << "}\n\n";
+
+      // the discriminant type may have to be defined here if it was an enum
+      // declaration inside of the union statement.
+
+      cg->push (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CI); // set current code gen state
+      bt = be_type::narrow_from_decl (this->disc_type ());
+
+      s  = cg->make_state (); // get the code gen object for the current state
+      if (!s || !bt || (s->gen_code (bt, this) == -1))
+        {
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_header\n"));
+          ACE_ERROR ((LM_ERROR, "Discriminant type generation failure\n"));
+          return -1;
+        }
+      cg->pop ();
 
       // now generate the implementation of the access methods
       cg->push (TAO_CodeGen::TAO_UNION_PUBLIC_CI); // set current code gen state
       if (be_scope::gen_client_inline () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_union::gen_client_inline\n")); 
+          ACE_ERROR ((LM_ERROR, "be_union::gen_client_inline\n"));
           ACE_ERROR ((LM_ERROR, "accessor generation failure\n"));
           return -1;
         }
@@ -343,7 +437,7 @@ be_union::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_union::gen_server_inline (void)
 {
   // nothing to be done
@@ -370,7 +464,7 @@ be_union::gen_typecode (void)
   return this->gen_encapsulation ();
 }
 
-// generate encapsulation. 
+// generate encapsulation.
 // An encapsulation for ourselves will be necessary when we are part of some
 // other IDL type and a typecode for that other type is being generated. This
 // will comprise our typecode kind. IDL types with parameters will additionally
@@ -390,8 +484,8 @@ be_union::gen_encapsulation (void)
   cs->indent (); // start from whatever indentation level we were at
 
   // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO 
-  *cs << "0, // byte order" << nl; 
+  // TODO
+  *cs << "0, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
@@ -416,7 +510,7 @@ be_union::gen_encapsulation (void)
       ACE_ERROR ((LM_ERROR, "be_union: cannot generate typecode for discriminant\n"));
       return -1;
     }
-  
+
   // generate the default used flag
   *cs << this->default_index () << ", // default used index" << nl;
   // generate the member count
@@ -473,5 +567,3 @@ be_union::tc_encap_len (void)
 IMPL_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_union)
 IMPL_NARROW_FROM_SCOPE (be_union)
-
-  

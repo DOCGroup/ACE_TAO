@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_state.cpp
 //
@@ -11,9 +11,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -105,7 +105,7 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
           if (bt->gen_client_header () == -1)
             return -1;
 
-        os->indent (); 
+        os->indent ();
         *os << bt->name () << " " << f->local_name () << ";\n\n";
       }
       break;
@@ -254,7 +254,7 @@ be_state_union_disctypedefn_ci::gen_code (be_type *t, be_decl *d, be_type *type)
         // the get method
         *os << "// accessor to get the discriminant" << nl;
         *os << "ACE_INLINE " << t->name () << nl;
-        *os << bu->name () << " _d (void) const" << nl;
+        *os << bu->name () << "::_d (void) const" << nl;
         *os << "{\n";
         os->incr_indent ();
         *os << "return this->disc_;\n";
@@ -305,9 +305,9 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_interface: // type is an obj reference
       {
         os->indent (); // start from current indentation
-        *os << "void " << ub->local_name () << " (" << bt->name () << 
+        *os << "void " << ub->local_name () << " (" << bt->name () <<
           "_ptr);// set" << nl;
-        *os << bt->name () << "_ptr " << ub->local_name () << 
+        *os << bt->name () << "_ptr " << ub->local_name () <<
           " (void) const; // get method\n\n";
       }
       break;
@@ -320,9 +320,9 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
             return -1;
 
         os->indent (); // start from current indentation
-        *os << "void " << ub->local_name () << " (" << bt->name () << 
+        *os << "void " << ub->local_name () << " (" << bt->name () <<
           ");// set" << nl;
-        *os << bt->name () << " " << ub->local_name () << 
+        *os << bt->name () << " " << ub->local_name () <<
           " (void) const; // get method\n\n";
       }
       break;
@@ -331,11 +331,11 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         os->indent (); // start from current indentation
         // three methods to set the string value
         *os << "void " << ub->local_name () << " (char *); // set" << nl;
-        *os << "void " << ub->local_name () << " (const char *); // set" 
-            << nl; 
-        *os << "void " << ub->local_name () << 
+        *os << "void " << ub->local_name () << " (const char *); // set"
+            << nl;
+        *os << "void " << ub->local_name () <<
           " (const CORBA::String_var&); // set"  << nl;
-        *os << "const char *" << ub->local_name () << 
+        *os << "const char *" << ub->local_name () <<
           " (void) const; // get method\n\n";
 
       }
@@ -349,9 +349,9 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
             return -1;
 
         os->indent ();
-        *os << "void " << ub->local_name () << " (" << bt->name () << 
+        *os << "void " << ub->local_name () << " (" << bt->name () <<
           ");// set" << nl;
-        *os << bt->name () << "_slice *" << ub->local_name () << 
+        *os << bt->name () << "_slice *" << ub->local_name () <<
           " (void) const; // get method\n\n";
 
       }
@@ -365,11 +365,11 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
           if (bt->gen_client_header () == -1)
             return -1;
         os->indent ();
-        *os << "void " << ub->local_name () << " (const " << bt->name () << 
+        *os << "void " << ub->local_name () << " (const " << bt->name () <<
           " &);// set" << nl;
-        *os << "const " << bt->name () << " &" << ub->local_name () << 
+        *os << "const " << bt->name () << " &" << ub->local_name () <<
           " (void) const; // get method (read only)" << nl;
-        *os << bt->name () << " &" << ub->local_name () << 
+        *os << bt->name () << " &" << ub->local_name () <<
           " (void); // get method (read/write only)\n\n";
 
       }
@@ -390,7 +390,7 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         temp = t->primitive_base_type ();
         // make a recursive call
         return this->gen_code (t, ub, temp);
-      } 
+      }
       break;
     } // end of switch
 
@@ -495,7 +495,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
             *os << "_slice *";
           }
         *os << nl;
-        *os << bu->name () << "::" << ub->local_name () << 
+        *os << bu->name () << "::" << ub->local_name () <<
           " (void) const" << nl;
         *os << "{\n";
         os->incr_indent ();
@@ -546,7 +546,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         *os << "// accessor to set the member" << nl;
         *os << "ACE_INLINE void" << nl;
         *os << bu->name () << "::" << ub->local_name () << " (const char *val)" <<
-          nl; 
+          nl;
         *os << "{\n";
         os->incr_indent ();
         // set the discriminant to the appropriate label
@@ -579,7 +579,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         // (3) set from const String_var&
         *os << "// accessor to set the member" << nl;
         *os << "ACE_INLINE void" << nl;
-        *os << bu->name () << "::" << ub->local_name () << 
+        *os << bu->name () << "::" << ub->local_name () <<
           " (char CORBA::String_var &val)" << nl;
         *os << "{\n";
         os->incr_indent ();
@@ -612,7 +612,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
 
         // return const char*
         *os << "ACE_INLINE const char *" << nl;
-        *os << bu->name () << "::" << ub->local_name () << 
+        *os << bu->name () << "::" << ub->local_name () <<
           " (void) const // get method" << nl;
         *os << "{\n";
         os->incr_indent ();
@@ -630,7 +630,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         // (1) set from a const
         *os << "// accessor to set the member" << nl;
         *os << "ACE_INLINE void" << nl;
-        *os << bu->name () << "::" << ub->local_name () << 
+        *os << bu->name () << "::" << ub->local_name () <<
           " (const " << bt->name () << " &val)" << nl;
         *os << "{\n";
         os->incr_indent ();
@@ -660,7 +660,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
           }
         os->decr_indent ();
         *os << "}" << nl;
-        
+
         // readonly get method
         *os << "// readonly get method " << nl;
         *os << "ACE_INLINE const " << bt->name () << " &" << nl;
@@ -699,7 +699,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         temp = t->primitive_base_type ();
         // make a recursive call
         return this->gen_code (t, ub, temp);
-      } 
+      }
       break;
     } // end of switch
 
@@ -743,7 +743,7 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_interface: // type is an obj reference
       {
         os->indent (); // start from current indentation
-        *os << bt->name () << "_var " << ub->local_name () << 
+        *os << bt->name () << "_var " << ub->local_name () <<
           "_;\n";
       }
       break;
@@ -751,21 +751,21 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_enum: // type is an enum
       {
         os->indent (); // start from current indentation
-        *os << bt->name () << " " << ub->local_name () << 
+        *os << bt->name () << " " << ub->local_name () <<
           "_;\n";
       }
       break;
     case AST_Decl::NT_string: // type is a string
       {
         os->indent (); // start from current indentation
-        *os << "CORBA::String_var " << ub->local_name () << 
+        *os << "CORBA::String_var " << ub->local_name () <<
           "_;\n";
       }
       break;
     case AST_Decl::NT_array: // type is an array
       {
         os->indent ();
-        *os << bt->name () << "_slice *" << ub->local_name () << 
+        *os << bt->name () << "_slice *" << ub->local_name () <<
           "_;\n";
       }
       break;
@@ -774,7 +774,7 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_union: // type is a union
       {
         os->indent ();
-        *os << bt->name () << " " << ub->local_name () << 
+        *os << bt->name () << " " << ub->local_name () <<
           "_;\n";
       }
       break;
@@ -794,7 +794,7 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         temp = t->primitive_base_type ();
         // make a recursive call
         return this->gen_code (t, ub, temp);
-      } 
+      }
       break;
     } // end of switch
   return 0;
@@ -825,6 +825,8 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       os = cg->server_header ();
       break;
     case TAO_CodeGen::TAO_OPERATION_SS:
+    case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+    case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
     case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
       os = cg->server_skeletons ();
       break;
@@ -845,15 +847,22 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
     case AST_Decl::NT_interface: // type is an obj reference
     case AST_Decl::NT_interface_fwd: // type is an obj reference
       {
-        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+        switch (cg->state ())
           {
-            *os << "result = new CORBA::Any (" << bt->tc_name () << 
-              ", retval, 1); // ORB owns" << nl; 
-            *os << "req.result (result, env);" << nl;
-          }
-        else
-          {
-            *os << bt->name () << "_ptr ";
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+            {
+              *os << bt->name () << "_ptr retval;"; // callee allocates
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
+            {
+              *os << "retval"; // assign to retval
+            }
+            break;
+          default:
+            {
+              *os << bt->name () << "_ptr ";
+            }
           }
       }
       break;
@@ -861,125 +870,192 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       {
         be_predefined_type *bpd = be_predefined_type::narrow_from_decl (bt);
 
-        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+        switch (cg->state ())
           {
-            if ((bpd->pt () != AST_PredefinedType::PT_any) &&
-                (bpd->pt () != AST_PredefinedType::PT_pseudo))
-              {
-                // for this case, pass the address of retval to the Any
-                *os << "result = new CORBA::Any (" << bt->tc_name () << 
-                  ", &retval, 1); // ORB owns" << nl; 
-              }
-            else
-              {
-                *os << "result = new CORBA::Any (" << bt->tc_name () << 
-                  ", retval, 1); // ORB owns" << nl; 
-              }
-            *os << "req.result (result, env);" << nl;
-          }
-        else
-          {
-            *os << bt->name ();
-            // check if the type is an any
-            if (bpd->pt () == AST_PredefinedType::PT_any)
-              {
-                // if it is an any, return a pointer to it
-                *os << " *";
-              }
-            else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
-              {
-                // pseudo object, return a pointer
-                *os << "_ptr";
-              }
-          }
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+            {
+              // check if the type is an any
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << bt->name () << " *retval;" << nl;
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << bt->name () << "_ptr retval;" << nl;
+                }
+              else
+                {
+                  *os << bt->name () << " *retval = new " << bt->name () << ";"
+                      << nl;
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
+            {
+              // check if the type is an any
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << "retval";
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << "retval";
+                }
+              else
+                {
+                  *os << " *retval";
+                }
+            }
+            break;
+          default:
+            {
+              *os << bt->name ();
+              // check if the type is an any
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << " *";
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << "_ptr";
+                }
+            }
+          } // end switch (cg->state())
       }
       break;
     case AST_Decl::NT_string: // type is a string
       {
-        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+        switch (cg->state ())
           {
-            *os << "result = new CORBA::Any (" << bt->tc_name () << 
-              ", retval, 1); // ORB owns" << nl; 
-            *os << "req.result (result, env);" << nl;
-          }
-        else
-          {
-            *os << "char *";
-          }
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+            {
+              *os << "char *retval;" << nl;
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
+            {
+              *os << "retval";
+            }
+            break;
+          default:
+            {
+              *os << "char *";
+            }
+          } // end of switch cg->state
       }
       break;
       // these are all anonymous types
     case AST_Decl::NT_array: // type is an array
       {
-        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+        switch (cg->state ())
           {
-            *os << "result = new CORBA::Any (" << bt->tc_name () << 
-              ", retval, 1); // ORB owns" << nl; 
-            *os << "req.result (result, env);" << nl;
-          }
-        else
-          {
-            // return a pointer to slice
-            *os << bt->name () << "_slice *";
-          }
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+            {
+              *os << bt->name () << "_slice *retval;" << nl;
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
+            {
+              *os << "retval";
+            }
+            break;
+          default:
+            {
+              // return a pointer to slice
+              *os << bt->name () << "_slice *";
+            }
+          } // end of switch cg->state
       }
       break;
     case AST_Decl::NT_sequence: // type is a sequence
       // return type is a pointer to sequence
       {
-        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+        switch (cg->state ())
           {
-            *os << "result = new CORBA::Any (" << bt->tc_name () << 
-              ", retval, 1); // ORB owns" << nl; 
-            *os << "req.result (result, env);" << nl;
-          }
-        else
-          {
-            *os << bt->name () << " *";
-          }
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+            {
+              *os << bt->name () << " *retval;" << nl;
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
+            {
+              *os << "retval";
+            }
+            break;
+          default:
+            {
+              *os << bt->name () << " *";
+            }
+          } // end of swithc cg->state
       }
       break;
     case AST_Decl::NT_enum: // type is an enum
       {
-        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+        switch (cg->state ())
           {
-            // pass address of retval to Any
-            *os << "result = new CORBA::Any (" << bt->tc_name () << 
-              ", &retval, 1); // ORB owns" << nl; 
-            *os << "req.result (result, env);" << nl;
-          }
-        else
-          {
-            *os << bt->name ();
-          }
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+            {
+              *os << bt->name () << " *retval = new " << bt->name () << ";" <<
+                nl;
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
+            {
+              *os << "*retval";
+            }
+            break;
+          default:
+            {
+              *os << bt->name ();
+            }
+          } // end of switch cg->state
       }
       break;
     case AST_Decl::NT_struct: // type is a struct
     case AST_Decl::NT_union: // type is a union
       {
-        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+        switch (cg->state ())
           {
-            if (type->size_type () == be_decl::VARIABLE)
-              {
-                *os << "result = new CORBA::Any (" << bt->tc_name () << 
-                  ", retval, 1); // ORB owns" << nl; 
-              }
-            else
-              {
-                // fixed size. so pass address to the Any
-                *os << "result = new CORBA::Any (" << bt->tc_name () << 
-                  ", &retval, 1); // ORB owns" << nl; 
-              }
-            *os << "req.result (result, env);" << nl;
-          }
-        else
-          {
-            *os << bt->name ();
-            // check if we are fixed size or variable sized. Depending on that we
-            // return a pointer or the aggregate itself
-            if (type->size_type () == be_decl::VARIABLE)
-              *os << " *";
-          }
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
+            {
+              if (type->size_type () == be_decl::VARIABLE)
+                {
+                  *os << bt->name () << " *retval;" << nl;
+                }
+              else
+                {
+                  *os << bt->name () << " *retval = new " << bt->name () << ";"
+                      << nl;
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
+            {
+              if (type->size_type () == be_decl::VARIABLE)
+                {
+                  *os << "retval";
+                }
+              else
+                {
+                  *os << "*retval";
+                }
+            }
+            break;
+          default:
+            {
+              *os << bt->name ();
+              // check if we are fixed size or variable sized. Depending on that we
+              // return a pointer or the aggregate itself
+              if (type->size_type () == be_decl::VARIABLE)
+                *os << " *";
+            }
+          } // end of switch cg->state
       }
       break;
     case AST_Decl::NT_except: // type is an exception
@@ -1000,7 +1076,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
         return this->gen_code (t, d, temp);
       } // end of switch
       break;
-    }
+    } // switch of main switch
   return 0;
 }
 
@@ -1063,7 +1139,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   ";" << nl;
                 // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () << 
+                  bt->tc_name () << ", " << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1082,7 +1158,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   ";" << nl;
                 // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () << 
+                  bt->tc_name () << ", " << arg->local_name () <<
                   ", 1); // ORB owns" << nl;
               }
             else
@@ -1101,10 +1177,10 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   ";" << nl;
                 // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () << 
+                  bt->tc_name () << ", " << arg->local_name () <<
                   ", 1); // ORB owns" << nl;
-              } 
-            else 
+              }
+            else
               {
                 *os << bt->name () << "_out ";
               }
@@ -1132,7 +1208,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () << 
+                      bt->tc_name () << ", &" << arg->local_name () <<
                       "); // ORB does not own" << nl;
                   }
                 else
@@ -1151,7 +1227,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () << 
+                      bt->tc_name () << ", &" << arg->local_name () <<
                       ", 1); // ORB owns" << nl;
                   }
                 else
@@ -1170,10 +1246,10 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () << 
+                      bt->tc_name () << ", " << arg->local_name () <<
                       ", 1); // ORB owns" << nl;
-                  } 
-                else 
+                  }
+                else
                   {
                     *os << bt->name () << "_out ";
                   }
@@ -1195,7 +1271,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () << 
+                      bt->tc_name () << ", " << arg->local_name () <<
                       "); // ORB does not own" << nl;
                   }
                 else
@@ -1214,7 +1290,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () << 
+                      bt->tc_name () << ", " << arg->local_name () <<
                       ", 1); // ORB owns" << nl;
                   }
                 else
@@ -1233,10 +1309,10 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () << 
+                      bt->tc_name () << ", " << arg->local_name () <<
                       ", 1); // ORB owns" << nl;
-                  } 
-                else 
+                  }
+                else
                   {
                     *os << bt->name () << "_out ";
                   }
@@ -1252,13 +1328,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   {
                     // declare a variable
                     *os << bt->name () << " " << arg->local_name () << ";" <<
-                      nl; 
+                      nl;
                     // now define a NamedValue_ptr
                     *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () << 
+                      bt->tc_name () << ", &" << arg->local_name () <<
                       "); // ORB does not own" << nl;
                   }
                 else
@@ -1271,13 +1347,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   {
                     // declare a variable
                     *os << bt->name () << " " << arg->local_name () << ";" <<
-                      nl; 
+                      nl;
                     // now define a NamedValue_ptr
                     *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () << 
+                      bt->tc_name () << ", &" << arg->local_name () <<
                       "); // ORB does not own" << nl;
                   }
                 else
@@ -1290,16 +1366,16 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   {
                     // declare a variable
                     *os << bt->name () << " " << arg->local_name () << ";" <<
-                      nl; 
+                      nl;
                     // now define a NamedValue_ptr
                     *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                       ";" << nl;
                     // declare an Any
                     *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () << 
+                      bt->tc_name () << ", &" << arg->local_name () <<
                       ", 1); // ORB owns" << nl;
-                  } 
-                else 
+                  }
+                else
                   {
                     *os << bt->name () << "_out";
                   }
@@ -1317,13 +1393,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               {
                     // declare a variable
                 *os << "char *" << arg->local_name () << ";" <<
-                  nl; 
+                  nl;
                     // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () << 
+                  bt->tc_name () << ", " << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1336,13 +1412,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               {
                     // declare a variable
                 *os << "char *" << arg->local_name () << ";" <<
-                  nl; 
+                  nl;
                     // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () << 
+                  bt->tc_name () << ", " << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1355,16 +1431,16 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               {
                 // declare a variable
                 *os << "char *" << arg->local_name () << ";" <<
-                  nl; 
+                  nl;
                     // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () << 
+                  bt->tc_name () << ", " << arg->local_name () <<
                   ", 1); // ORB owns" << nl;
-              } 
-            else 
+              }
+            else
               {
                 *os << bt->name () << "_out";
               }
@@ -1380,13 +1456,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               // declare a variable
               *os << bt->name () << " " << arg->local_name ()
-                  << ";" << nl; 
+                  << ";" << nl;
               // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                 ";" << nl;
               // declare an Any
               *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", " << arg->local_name () << 
+                bt->tc_name () << ", " << arg->local_name () <<
                 "); // ORB does not own" << nl;
             }
           else
@@ -1403,13 +1479,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   *os << "_slice *";
                 }
-              *os << " " << arg->local_name () << ";" << nl; 
+              *os << " " << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                 ";" << nl;
                     // declare an Any
               *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", " << arg->local_name () << 
+                bt->tc_name () << ", " << arg->local_name () <<
                 "); // ORB does not own" << nl;
             }
           else
@@ -1426,16 +1502,16 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
                     // declare a variable
               *os << bt->name () << "_slice *" << arg->local_name () << ";" <<
-                nl; 
+                nl;
                     // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                 ";" << nl;
                     // declare an Any
               *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", " << arg->local_name () << 
+                bt->tc_name () << ", " << arg->local_name () <<
                 ", 1); // ORB owns" << nl;
-            } 
-          else 
+            }
+          else
             {
               *os << bt->name () << "_out";
               break;
@@ -1453,13 +1529,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               // declare a variable
               *os << bt->name () << " " << arg->local_name () <<
-                ";" << nl; 
+                ";" << nl;
               // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                 ";" << nl;
               // declare an Any
               *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", &" << arg->local_name () << 
+                bt->tc_name () << ", &" << arg->local_name () <<
                 "); // ORB does not own" << nl;
             }
           else
@@ -1472,13 +1548,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               // declare a variable
               *os << bt->name () << " " << arg->local_name () <<
-                ";" << nl; 
+                ";" << nl;
               // now define a NamedValue_ptr
               *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                 ";" << nl;
               // declare an Any
               *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                bt->tc_name () << ", &" << arg->local_name () << 
+                bt->tc_name () << ", &" << arg->local_name () <<
                 "); // ORB does not own" << nl;
             }
           else
@@ -1493,30 +1569,30 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   // declare a variable
                   *os << bt->name () << " *" << arg->local_name () << ";" <<
-                    nl; 
+                    nl;
                   // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
                   *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", " << arg->local_name () << 
+                    bt->tc_name () << ", " << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
                 }
               else
                 {
                   // declare a variable
                   *os << bt->name () << " " << arg->local_name () << ";" <<
-                    nl; 
+                    nl;
                   // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
                   *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", &" << arg->local_name () << 
+                    bt->tc_name () << ", &" << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
                 }
-            } 
-          else 
+            }
+          else
             {
               *os << bt->name () << "_out";
               break;
@@ -1532,13 +1608,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               {
                     // declare a variable
                 *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl; 
+                  nl;
                     // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () << 
+                  bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1551,13 +1627,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               {
                     // declare a variable
                 *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl; 
+                  nl;
                     // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () << 
+                  bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1570,13 +1646,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               {
                     // declare a variable
                 *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl; 
+                  nl;
                     // now define a NamedValue_ptr
                 *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () << 
+                  bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1674,13 +1750,13 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "typedef " << bt->name () << " " << d->local_name ()
                       << ";" << nl;
                   *os << "typedef " << bt->name () << "_var " << d->local_name
-                    () << "_var;\n\n"; 
+                    () << "_var;\n\n";
                 }
               else
                 {
                   *os << "typedef CORBA::String " << d->local_name () << ";" << nl;
                   *os << "typedef CORBA::String_var " << d->local_name
-                    () << "_var;\n\n"; 
+                    () << "_var;\n\n";
                 }
             }
             break;
@@ -1712,16 +1788,16 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "typedef " << bt->name () << " " << d->local_name () <<
                 ";" << nl;
               *os << "typedef " << bt->name () << "_forany " << d->local_name () <<
-                "_forany;" << nl; 
+                "_forany;" << nl;
               // typedefs for the auxiliary methods. If we are nested inside
-              // some scope, these methods become 
+              // some scope, these methods become
               if (d->is_nested ())
                 *os << "static ";
-              *os << d->name () << "_slice* " << d->local_name () << 
-                "_alloc (void);" << nl; 
+              *os << d->name () << "_slice* " << d->local_name () <<
+                "_alloc (void);" << nl;
               if (d->is_nested ())
                 *os << "static ";
-              *os << d->name () << "_slice* " << d->local_name () << "_dup (" 
+              *os << d->name () << "_slice* " << d->local_name () << "_dup ("
                   << d->name () << "_slice* " << ");" << nl;
               if (d->is_nested ())
                 *os << "static ";
@@ -1755,10 +1831,10 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               be_type *temp;
               be_typedef *t = be_typedef::narrow_from_decl (bt);
-        
+
               if (!t)
                 return -1;
-        
+
               temp = t->primitive_base_type ();
               // make a recursive call
               return this->gen_code (t, tdef, temp);
@@ -1827,7 +1903,7 @@ be_state_array::gen_code (be_type *bt, be_decl *d, be_type *type)
         *os << "CORBA::String_var ";
       }
       break;
-    case AST_Decl::NT_array: 
+    case AST_Decl::NT_array:
       // type is an array. This is possible only if we
       // are here thru the typedef node
       {
@@ -1936,9 +2012,8 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
         temp = t->primitive_base_type ();
         // make a recursive call
         return this->gen_code (t, d, temp);
-      } 
+      }
       break;
     } // end of switch
   return 0;
 }
-

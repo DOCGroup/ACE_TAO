@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_operation.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -40,7 +40,7 @@ be_operation::be_operation (AST_Type *rt, AST_Operation::Flags fl,
   // computes the fully scoped name
   compute_fullname ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -55,7 +55,7 @@ be_operation::gen_client_header (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_OPERATION_CH); // we are now generating an operation
-                                         // definition 
+                                         // definition
 
   ch = cg->client_header ();
   cg->outstream (ch); // important to set the current stream
@@ -71,7 +71,7 @@ be_operation::gen_client_header (void)
 
   if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n"));
       ACE_ERROR ((LM_ERROR, "return type generation failure\n"));
       return -1;
     }
@@ -81,7 +81,7 @@ be_operation::gen_client_header (void)
   // generate the arguments with the appropriate mapping
   if (be_scope::gen_client_header () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n"));
       ACE_ERROR ((LM_ERROR, "Argument generation failure\n"));
       return -1;
     }
@@ -116,14 +116,14 @@ be_operation::gen_client_stubs (void)
 
   cs = cg->client_stubs ();
   cg->outstream (cs); // set the current stream
- 
+
   // for each operation, generate the paramdata and calldata tables followed by
   // the actual stub
 
   cs->indent (); // start with current indentation level
 
   // generate the TAO_Param_Data table
-  *cs << "static const TAO_Param_Data " << this->flatname () << 
+  *cs << "static const TAO_Param_Data " << this->flatname () <<
     "_paramdata [] = " << nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -140,11 +140,11 @@ be_operation::gen_client_stubs (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
@@ -202,18 +202,18 @@ be_operation::gen_client_stubs (void)
   *cs << this->flatname () << "_paramdata, ";
 
   // XXXASG - Exception list goes here (if it exists) - TODO
-  *cs << "0, 0};\n\n"; 
+  *cs << "0, 0};\n\n";
 
   // now generate the actual stub
 
   cg->push (TAO_CodeGen::TAO_OPERATION_CS); // we are now generating an operation
-                                         // definition 
+                                         // definition
   // first generate the return type
   bt = be_type::narrow_from_decl (this->return_type ());
   s = cg->make_state ();
   if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_stubs\n")); 
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_stubs\n"));
       ACE_ERROR ((LM_ERROR, "return type generation failure\n"));
       return -1;
     }
@@ -223,13 +223,13 @@ be_operation::gen_client_stubs (void)
   // generate the arguments with the appropriate mapping
   if (be_scope::gen_client_stubs () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n"));
       ACE_ERROR ((LM_ERROR, "Argument generation failure\n"));
       return -1;
     }
   // last argument
   *cs << "CORBA::Environment &env)" << nl;
-  *cs << "{\n"; 
+  *cs << "{\n";
   cs->incr_indent ();
 
   ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_OPERATION_CS);
@@ -240,7 +240,7 @@ be_operation::gen_client_stubs (void)
     {
       bpd = be_predefined_type::narrow_from_decl (bt);
     }
-  
+
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
       // generate return type
@@ -252,7 +252,7 @@ be_operation::gen_client_stubs (void)
   // generate code that calls QueryInterface
   *cs << "STUB_Object *istub;\n\n";
   cs->indent ();
-  *cs << "if (this->QueryInterface (IID_STUB_Object, " << 
+  *cs << "if (this->QueryInterface (IID_STUB_Object, " <<
     "(void **)&istub) != NOERROR)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -272,7 +272,7 @@ be_operation::gen_client_stubs (void)
   *cs << "}" << nl;
   *cs << "this->Release (); // QueryInterface has bumped up our refcount" << nl;
   *cs << "istub->do_call (env, &" << this->flatname () << "_calldata";
-  
+
   // if our return type is not void, then pass the address of retval
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
@@ -287,11 +287,11 @@ be_operation::gen_client_stubs (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
@@ -337,7 +337,7 @@ be_operation::gen_server_header (void)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_OPERATION_SH); // we are now generating an operation
-                                         // definition 
+                                         // definition
 
   sh = cg->server_header ();
   cg->outstream (sh); // set current stream
@@ -351,7 +351,7 @@ be_operation::gen_server_header (void)
   s = cg->make_state (); // retrieve code gen object for this state
   if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_server_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_server_header\n"));
       ACE_ERROR ((LM_ERROR, "return type generation failure\n"));
       return -1;
     }
@@ -360,7 +360,7 @@ be_operation::gen_server_header (void)
   // generate the arguments with the appropriate mapping
   if (be_scope::gen_server_header () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_server_header\n")); 
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_server_header\n"));
       ACE_ERROR ((LM_ERROR, "Argument generation failure\n"));
       return -1;
     }
@@ -385,7 +385,7 @@ be_operation::gen_server_header (void)
 // Special Note: We deviate a bit from our policy of handing over code
 // generation for elements in our scope to the be_scope class. For this method,
 // it is best to simulate that behavior here as it involves a lot of
-// complexity. 
+// complexity.
 int
 be_operation::gen_server_skeletons (void)
 {
@@ -397,34 +397,28 @@ be_operation::gen_server_skeletons (void)
   AST_Decl *d;       // temp node
   be_argument *bd;   // argument node
   be_state *s;       // state based code gen object
-  be_predefined_type *bpd=0; // predefined return type 
+  be_predefined_type *bpd=0; // predefined return type
   be_interface *intf; // enclosing interface node
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_OPERATION_SS); // we are now generating an operation
-                                         // definition 
-
   ss = cg->server_skeletons ();
   cg->outstream (ss); // set current stream
-
-  // get a state based code gen object
-  s = cg->make_state ();
 
   ss->indent (); // start with the current indentation level
 
   // retrieve our enclosing interface decl
   intf = be_interface::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
 
-  *ss << "void " << intf->full_skel_name () << "::" << this->local_name () << 
-    "_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, " << 
+  *ss << "void " << intf->full_skel_name () << "::" << this->local_name () <<
+    "_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, " <<
     "CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   // define an NVList to hold arguments
   *ss << "CORBA::NVList_ptr \t nvlist;" << nl;
   // define a variable that will eventually point to our implementation object
-  *ss << intf->name () << "_ptr \t impl;" << nl;
+  *ss << intf->full_skel_name () << "_ptr \t impl;" << nl;
 
   // verify if we need to define a variable intended to hold the operation
   // return type. We do not need one if the return type is void
@@ -432,7 +426,7 @@ be_operation::gen_server_skeletons (void)
   rt = be_type::narrow_from_decl (this->return_type ());
   if (!rt)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "be_operation::gen_server_skeletons - bad return type\n"));
       return -1;
     }
@@ -444,18 +438,25 @@ be_operation::gen_server_skeletons (void)
     {
       // not a void type
       *ss << "CORBA::Any *result;" << nl;
+
       // emit the return type
+      cg->push (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS); // we are now
+                                           // generating an operation
+                                           // definition
+      // get a state based code gen object
+      s = cg->make_state ();
+
       if (s->gen_code (rt, this) == -1)
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
            "be_operation::gen_server_skeletons - codegen failed for return type\n"));
           return -1;
         }
-      *ss << " retval;" << nl;
+      cg->pop ();
     }
 
   // if we have any arguments, get each one of them and allocate an Any and
-  // NamedValue for each. In addition, define a variable.
+  // NamedValue for each. In addition, define a variable of that type
   cg->push (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);
   s = cg->make_state ();
   if (!s)
@@ -469,31 +470,23 @@ be_operation::gen_server_skeletons (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
                 {
                   bd = be_argument::narrow_from_decl (d);
                   bt = be_type::narrow_from_decl (bd->field_type ());
-                  
+
                   // first define a variable (its type followed by the name)
                   if (s->gen_code (bt, bd) == -1)
                     {
                       return -1;
                     }
-#if 0
-                  *ss << bd->local_name () << ";" << nl;
-                  // now define a NamedValue_ptr
-                  *ss << "CORBA::NamedValue_ptr nv_" << bd->local_name () <<
-                    ";" << nl;
-                  *ss << "CORBA::Any \t any_" << bd->local_name () << " (" <<
-                    bt->tc_name () << ");" << nl;
-#endif
                 } // end if argument node
             } // end if ! imported
           si->next ();
@@ -518,19 +511,19 @@ be_operation::gen_server_skeletons (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
                 {
                   bd = be_argument::narrow_from_decl (d);
                   bt = be_type::narrow_from_decl (bd->field_type ());
-                  // emit code that adds this argument to the    
-                  *ss << "nv_" << bd->local_name () << 
+                  // emit code that adds this argument to the
+                  *ss << "nv_" << bd->local_name () <<
                     " = nvlist->add_value (\"" << bd->local_name () << "\", "
                       << "any_" << bd->local_name () << ", ";
                   switch (bd->direction ())
@@ -558,10 +551,19 @@ be_operation::gen_server_skeletons (void)
   *ss << "if (env.exception ()) return;" << nl;
 
   // make the upcall
-  *ss << "impl = (" << intf->name () << "_ptr) obj->get_subclass ();" << nl;
+  *ss << "impl = (" << intf->full_skel_name () << "_ptr) obj->get_subclass ();"
+      << nl;
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
-      *ss << "retval = impl->" << this->local_name () << "(";
+      cg->push (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);
+      s = cg->make_state ();
+      // emit code to assign to retval
+      if (!s || (s->gen_code (rt, this) == -1))
+        {
+          return -1;
+        }
+      *ss << " = impl->" << this->local_name () << "(";
+      cg->pop ();
     }
   else
     {
@@ -577,11 +579,11 @@ be_operation::gen_server_skeletons (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
@@ -599,22 +601,26 @@ be_operation::gen_server_skeletons (void)
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
       // not a void type
+      *ss << "result = new CORBA::Any (" << rt->tc_name () <<
+        ", retval, 1); // ORB owns" << nl;
+      *ss << "req.result (result, env);" << nl;
+#if 0
       cg->push (TAO_CodeGen::TAO_OPERATION_RESULT_SS);
       s = cg->make_state ();
       if (!s || (s->gen_code (rt, this) == -1))
         return -1;
       cg->pop ();
+#endif
     }
   *ss << "\n";
   ss->decr_indent ();
   *ss << "}\n\n";
 
-  cg->pop ();
   return 0;
 }
 
 // Generates the client-side inline information
-int 
+int
 be_operation::gen_client_inline (void)
 {
   // nothing to be done
@@ -622,7 +628,7 @@ be_operation::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_operation::gen_server_inline (void)
 {
   // nothing to be done
@@ -633,4 +639,3 @@ be_operation::gen_server_inline (void)
 IMPL_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl)
 IMPL_NARROW_FROM_DECL (be_operation)
 IMPL_NARROW_FROM_SCOPE (be_operation)
-
