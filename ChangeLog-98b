@@ -1,3 +1,9 @@
+Tue Jun 30 11:45:12 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Message_Queue_T.cpp: Added explicit class names where needed
+	  for ANSI C++.  Fixed some compile errors.  Still needs more work to
+	  compile correctly on HP-UX aCC.
+
 Tue Jun 30 09:27:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/ACE-guidelines.html: added a guideline about using ACE_Export.
