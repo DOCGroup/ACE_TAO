@@ -1,6 +1,6 @@
 //$Id$
 #include "Thread_Task.h"
-#include "tao/RTScheduling/Scheduler.h"
+#include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
 

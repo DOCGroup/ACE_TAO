@@ -1,5 +1,5 @@
 //$Id$
-#include "tao/RTScheduling/Scheduler.h"
+#include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testS.h"
 
