@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   EC_UDP_Receiver.h
+ *  @file   ECG_UDP_Receiver.h
  *
  *  $Id$
  *
