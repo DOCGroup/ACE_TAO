@@ -21,6 +21,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Endpoint.cpp
       Connector_Registry.cpp
       Connection_Handler.cpp
+      Thread_Per_Connection_Handler.cpp
       Acceptor_Registry.cpp
       Protocol_Factory.cpp
       Acceptor_Filter.cpp
@@ -77,7 +78,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Environment.cpp
       Object.cpp
       LocalObject.cpp
-      ObjectIDList.cpp
+      ObjectIdListC.cpp
       ORB.cpp
       corbafwd.cpp
       Policy_ForwardC.cpp
@@ -96,10 +97,6 @@ project(TAO) : acelib, taoversion, core, tao_output {
       MProfile.cpp
       Stub.cpp
       Typecode.cpp
-      AbstractBase.cpp
-      ValueBase.cpp
-      ValueFactory.cpp
-      ValueFactory_Map.cpp
       CDR.cpp
       Client_Strategy_Factory.cpp
       debug.cpp
@@ -115,7 +112,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       ClientRequestInfo_i.cpp
       RequestInfo_Util.cpp
       ClientInterceptorAdapter.cpp
-      ObjectReferenceTemplateC.cpp
+      PI_ForwardC.cpp
       PortableInterceptorC.cpp
       PICurrent.cpp
       PICurrent_ORBInitializer.cpp
@@ -125,6 +122,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Codeset_Manager.cpp
       Codeset_Translator_Factory.cpp
       ORB_Core.cpp
+      ORB_Core_Auto_Ptr.cpp
       Collocation_Resolver.cpp
       Default_Collocation_Resolver.cpp
       Stub_Factory.cpp
@@ -135,9 +133,10 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Leader_Follower.cpp
       Leader_Follower_Flushing_Strategy.cpp
       LF_Event.cpp
+      LF_Invocation_Event.cpp
+      LF_CH_Event.cpp
       LF_Event_Binder.cpp
       LF_Event_Loop_Thread_Helper.cpp
-      LF_Invocation_Event.cpp
       LF_CH_Event.cpp
       LF_Strategy.cpp
       LF_Strategy_Complete.cpp
@@ -148,6 +147,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       TAO_Internal.cpp
       TAO_Server_Request.cpp
       Typecode_Constants.cpp
+      PredefinedType_Seq_Tmplinst.cpp
       TypeCodeFactory_Adapter.cpp
       Wait_Strategy.cpp
       Wait_On_Read.cpp
@@ -160,6 +160,8 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Synch_Reply_Dispatcher.cpp
       Synch_Refcountable.cpp
       Asynch_Reply_Dispatcher_Base.cpp
+      IOP_IORC.cpp
+      IOP_CodecC.cpp
       IOPC.cpp
       PollableC.cpp
       CONV_FRAMEC.cpp
@@ -184,6 +186,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Bind_Dispatcher_Guard.cpp
       Fault_Tolerance_Service.cpp
       Interceptor_List.cpp
+      IORInterceptor_Adapter.cpp
       IFR_Client_Adapter.cpp
       ORBInitInfo.cpp
       ORBInitializer_Registry.cpp
@@ -219,12 +222,14 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Default_Thread_Lane_Resources_Manager.cpp
       Default_Stub_Factory.cpp
       Request_Dispatcher.cpp
+      Valuetype_Adapter.cpp
+      ObjectKey_Table.cpp
+      Refcounted_ObjectKey.cpp
       Policy_Manager.cpp
       Buffering_Constraint_Policy.cpp
       Messaging_PolicyValueC.cpp
-      Services.cpp
+      ServicesC.cpp
       NVList.cpp
-      IFR_TypeCodes.cpp
       Dynamic_Adapter.cpp
     }
   }
