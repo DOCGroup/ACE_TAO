@@ -1,0 +1,17 @@
+project: server {
+  Source_Files {
+    MT_Object_i.cpp
+    server.cpp
+  }
+}
+
+project(client): server {
+  exename = client
+
+  Source_Files {
+    MT_Object_i.cpp
+    local_server.cpp
+    client.cpp
+  }
+}
+

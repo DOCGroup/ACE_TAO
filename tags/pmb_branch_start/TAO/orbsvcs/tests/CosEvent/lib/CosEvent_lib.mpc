@@ -1,0 +1,11 @@
+project(CosEvent Test Lib): orbsvcslib {
+  sharedname = CECTests
+  depends   += CosEvent CosNaming Svc_Utils IORTable PortableServer
+  libs      += TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+  dllflags   = CEC_TEST_BUILD_DLL
+  comps     += CosEvent
+
+  Header_Files {
+    cectest_export.h
+  }
+}
