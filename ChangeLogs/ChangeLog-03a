@@ -1,3 +1,7 @@
+Thu Oct 12 12:15:23 2000  Angelo  <corsaro@cs.wustl.edu>
+
+        * ACE version 5.1.10 released.
+
 Tue Oct 10 21:54:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/msvc_auto_compile.pl (Build_Core): Updated LIB core build
