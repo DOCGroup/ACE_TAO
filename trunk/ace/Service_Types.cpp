@@ -22,14 +22,14 @@ ACE_Service_Type_Impl::dump (void) const
   ACE_TRACE ("ACE_Service_Type_Impl::dump");
 }
 
-ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so, 
-                                              const ASYS_TCHAR *s_name, 
+ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
+                                              const ASYS_TCHAR *s_name,
                                               u_int f,
                                               void (*gobbler)(void*))
   : name_ (0),
-    obj_ (so), 
-    flags_ (f),
-    gobbler_ (gobbler)
+    obj_ (so),
+    gobbler_ (gobbler),
+    flags_ (f)
 {
   ACE_TRACE ("ACE_Service_Type_Impl::ACE_Service_Type_Impl");
   this->name (s_name);
@@ -48,7 +48,7 @@ int
 ACE_Service_Type_Impl::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("destroying %s, flags = %d\n"), 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("destroying %s, flags = %d\n"),
 	     this->name_, this->flags_));
 
   delete [] (ASYS_TCHAR *) this->name_;
@@ -65,7 +65,7 @@ ACE_Service_Type_Impl::fini (void) const
 #endif /* 0 */
 
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_THIS))
-    delete (ACE_Service_Type_Impl *) this; 
+    delete (ACE_Service_Type_Impl *) this;
 
   return 0;
 }
@@ -415,4 +415,3 @@ template class ACE_Thru_Task<ACE_SYNCH>;
 #endif /* ACE_HAS_THREADS */
 #else
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
