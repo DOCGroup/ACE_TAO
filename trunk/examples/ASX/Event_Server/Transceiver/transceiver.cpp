@@ -32,7 +32,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'C':
-	role = 'C';
+	role = c;
 	break;
       case 'h':
 	host_name = get_opt.optarg;
@@ -41,11 +41,11 @@ parse_args (int argc, char *argv[])
 	port_number = ACE_OS::atoi (get_opt.optarg);
 	break;
       case 'S':
-	role = 'S';
+	role = c;
 	break;
       default:
 	ACE_ERROR ((LM_ERROR, 
-		    "usage: %n [-C] [-S] [-p portnum] [-h host_name]\n%a", 1));
+		    "usage: %n [-p portnum] [-h host_name]\n%a", 1));
 	/* NOTREACHED */
 	break;
       }
@@ -118,14 +118,21 @@ Event_Transceiver::Event_Transceiver (void)
   ACE_Sig_Set sig_set;
   
   sig_set.sig_add (SIGINT);
+  sig_set.sig_add (SIGQUIT);
 
 #if !defined (ACE_WIN32)
-  sig_set.sig_add (SIGQUIT);
-#endif /* ACE_WIN32 */
 
   if (ACE_Service_Config::reactor ()->register_handler 
       (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+
+#else
+
+  if (ACE_Service_Config::reactor ()->register_handler 
+      (SIGINT, this) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+
+#endif /* ACE_WIN32 */
 
   // We need to register <this> here before we're connected since
   // otherwise <get_handle> will return the connection socket handle

@@ -63,7 +63,7 @@ ACE_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
     return -1;
 
   // We are connected now, so try to open things up.
-  else if (svc_handler->open ((void *) this) == -1)
+  if (svc_handler->open ((void *) this) == -1)
     {
       // Make sure to close down the <svc_handler> to avoid descriptor
       // leaks.
@@ -457,6 +457,10 @@ fail2:
 				    | ACE_Event_Handler::DONT_CALL);
   /* FALLTHRU */
 fail1:
+
+  // Close the svc_handler
+  sh->close (0);
+
   delete ast;
   return -1;
 }
@@ -496,7 +500,11 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 
 	  AST *ast = 0;
 	  this->cleanup_AST (me->ext_id_, ast);
+
+	  // Close the svc_handler
 	  ACE_ASSERT (ast == me->int_id_);
+	  me->int_id_->svc_handler ()->close (0);
+
 	  delete me->int_id_;
 	}
     }
