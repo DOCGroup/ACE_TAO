@@ -6,6 +6,9 @@ Fri Oct 18 16:09:37 2002  Priyanka Gontla  <pgontla@ociweb.com>
 	  is looking for only txt files besides the normal implementation,
 	  header and inline files.
 
+	  Thanks to Bala for pointing the reason why the index.html is not
+	  getting generated via doxygen.
+	
 Fri Oct 18 15:52:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/tests/ImplRepo/Makefile: 
