@@ -15,10 +15,18 @@ Sun Jul 27 19:11:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/Simple/grid/Grid_i.h:
         * examples/Simple/time/Time_i.cpp:
         * examples/Simple/time/Time_i.h:
-        * orbsvcs/tests/Trading/Offer_Importer.cpp:
 
           Removed no-op copy constructors that were there only to placate
           old g++.
+
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+
+          Changed use of CosTrading::Lookup::SpecifiedProps union case 'all_'
+          removed in
+
+          Thu Jul 24 11:36:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+          to use of existing case 'prop_names'.
 
         * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
 
