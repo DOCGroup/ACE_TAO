@@ -11,7 +11,9 @@ Fri Mar 28 11:34:38 1997  David L. Levine  <levine@cs.wustl.edu>
 	  priority logic.  Thanks to Thilo Kielmann
 	  <kielmann@informatik.uni-siegen.de> for the patch.
 
-	* ace/OS.cpp (thr_create): only support THR_SCHED_OTHER on Solaris.
+	* ace/config-sunos5.5*.h,README,OS.cpp (thr_create): added
+	  ACE_HAS_ONLY_SCHED_OTHER to indicate that platform (Solaris 2.5)
+	  only supports POSIX SCHED_OTHER scheduling policy.
 
 	* tests/Priority_Task_Test.cpp (open): added THR_SCHED_FIFO flag.
 	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
