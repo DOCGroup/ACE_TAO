@@ -1,3 +1,8 @@
+Wed Aug 13 18:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h:
+          Fixed fuzz error about missing /**/ before post.h
+
 Wed Aug 13 10:34:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_exception.cpp (in_recursion):
@@ -27,12 +32,12 @@ Wed Aug 13 10:34:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Aug 13 10:36:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Map.h: 
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Map.h:
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Struct.h: 
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Struct.h:
 
 	  Fixed fuzz errors.
-	  
+
 Wed Aug 13 10:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bench/wire:
@@ -41,11 +46,11 @@ Wed Aug 13 10:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Wed Aug 13 10:08:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORManipulation/IORC.h: 
+	* tao/IORManipulation/IORC.h:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
 
 	  Fixed fuzz errors.
-	
+
 Wed Aug 13 14:03:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
