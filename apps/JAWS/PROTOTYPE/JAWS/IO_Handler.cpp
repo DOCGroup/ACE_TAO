@@ -64,6 +64,11 @@ JAWS_IO_Handler::~JAWS_IO_Handler (void)
 
   ACE_OS::close (this->handle_);
   this->handle_ = ACE_INVALID_HANDLE;
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  delete this->handler_;
+  this->handler_ = 0;
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
 
 void
@@ -105,6 +110,7 @@ JAWS_IO_Handler::read_error (void)
 void
 JAWS_IO_Handler::transmit_file_complete (void)
 {
+  JAWS_TRACE ("JAWS_IO_Handler::transmit_file_complete");
   // this->pipeline_->transmit_file_complete ();
   this->status_ = TRANSMIT_OK;
 }
@@ -112,6 +118,7 @@ JAWS_IO_Handler::transmit_file_complete (void)
 void
 JAWS_IO_Handler::transmit_file_error (int result)
 {
+  JAWS_TRACE ("JAWS_IO_Handler::transmit_file_error");
   ACE_UNUSED_ARG (result);
   // this->pipeline_->transmit_file_complete (result);
   this->status_ = TRANSMIT_ERROR;
@@ -199,6 +206,12 @@ JAWS_IO_Handler::status (void)
   return this->status_;
 }
 
+void
+JAWS_IO_Handler::idle (void)
+{
+  this->status_ = IDLE;
+}
+
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 
 ACE_Handler *
@@ -229,16 +242,13 @@ JAWS_Asynch_Handler::open (ACE_HANDLE h,
   // ioh_ set from the ACT hopefully
   //this->dispatch_handler ();
 
-  this->handler ()->mb_->rd_ptr (this->handler ()->mb_->wr_ptr ());
-  this->handler ()->mb_->crunch ();
-
   // Assume at this point there is no data.
-  //if (mb.rd_ptr ()[0] != '\0')
-  //  this->handler ()->mb_->copy (mb.rd_ptr (), mb.length ());
-  ACE_Message_Block &mb2 = *(this->handler ()->mb_);
+  mb.rd_ptr (mb.wr_ptr ());
+  mb.crunch ();
+
   ACE_Asynch_Accept::Result fake_result
     (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
-     h, mb2, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
+     h, mb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
      this->ioh_, ACE_INVALID_HANDLE);
 
   this->handler ()->handler_ = this;
@@ -320,7 +330,7 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
       else
         this->handler ()->receive_file_error (code);
 
-      delete &result.message_block ();
+      result.message_block ().release ();
       delete (ACE_Filecache_Handle *) result.act ();
     }
   else

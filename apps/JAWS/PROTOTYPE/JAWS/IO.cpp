@@ -240,6 +240,8 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
 {
   JAWS_TRACE ("JAWS_Asynch_IO::accept");
 
+  ioh->idle ();
+
   JAWS_Data_Block *db = ioh->message_block ();
   //ACE_HANDLE listen_handle = db->policy ()->acceptor ()->get_handle ();
 
@@ -259,6 +261,8 @@ JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
 {
   JAWS_TRACE ("JAWS_Asynch_IO::read");
 
+  ioh->idle ();
+
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
@@ -276,6 +280,8 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
                               unsigned int initial_data_length,
                               unsigned int entire_length)
 {
+  ioh->idle ();
+
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
@@ -328,6 +334,8 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                const char *trailer,
                                unsigned int trailer_size)
 {
+  ioh->idle ();
+
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
@@ -389,6 +397,8 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
                               unsigned int length,
                               int act)
 {
+  ioh->idle ();
+
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 

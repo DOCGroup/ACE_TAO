@@ -115,6 +115,17 @@ public:
   virtual int status (void) = 0;
   // Returns the status of the handler
 
+  virtual void idle (void) = 0;
+  // puts handler in an idle state
+
+  enum { IDLE = 0,
+         ACCEPT_OK, ACCEPT_ERROR,
+         READ_OK, READ_ERROR,
+         WRITE_OK, WRITE_ERROR,
+         TRANSMIT_OK, TRANSMIT_ERROR,
+         RECEIVE_OK, RECEIVE_ERROR };
+  // The different states of the handler
+
 };
 
 #if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
@@ -190,20 +201,13 @@ public:
 
   virtual void done (void);
   virtual int status (void);
+  virtual void idle (void);
 
   virtual void task (JAWS_Pipeline_Handler *ph);
   virtual JAWS_Pipeline_Handler *task (void);
 
   virtual void message_block (JAWS_Data_Block *mb);
   virtual JAWS_Data_Block *message_block (void);
-
-  enum { IDLE = 0,
-         ACCEPT_OK, ACCEPT_ERROR,
-         READ_OK, READ_ERROR,
-         WRITE_OK, WRITE_ERROR,
-         TRANSMIT_OK, TRANSMIT_ERROR,
-         RECEIVE_OK, RECEIVE_ERROR };
-  // The different states of the handler
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   virtual ACE_Handler *handler (void);
