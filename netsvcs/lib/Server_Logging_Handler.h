@@ -93,7 +93,7 @@ protected:
   // passed into the <SERVER_LOGGING_HANDLER>.
 
 private:
-  ACE_SYNCH_MUTEX_T lock_;
+  ACE_SYNCH_MUTEX lock_;
   // Lock used to serialize output by the various
   // <ACE_Server_Logging_Handler>'s.
 

@@ -15,7 +15,8 @@ int
 ACE_Server_Logging_Acceptor::make_svc_handler (SERVER_LOGGING_HANDLER *&handler)
 {
   ACE_NEW_RETURN (handler, SERVER_LOGGING_HANDLER (ACE_Service_Config::thr_mgr (),
-						   &this->lock_));
+						   &this->lock_),
+						   -1);
   return 0;
 }
 
