@@ -16,15 +16,20 @@ ACE_RCSID(ESF, ESF_Delayed_Command, "$Id$")
 template<class Target, class Object> int
 TAO_ESF_Connected_Command<Target,Object>::execute (void* arg)
 {
-  CORBA::Environment *env = &TAO_default_environment ();
   if (arg != 0)
-    env = ACE_static_cast(CORBA::Environment*, arg);
+    {
+      CORBA::Environment &ACE_TRY_ENV =
+        *ACE_static_cast(CORBA::Environment*, arg);
+      this->target_->connected_i (this->object_
+                                  TAO_ENV_ARG_PARAMETER);
+    }
+  else
+    {
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
+      this->target_->connected_i (this->object_
+                                  TAO_ENV_ARG_PARAMETER);
+    }
 
-  this->target_->connected_i (this->object_
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
-                              , *env
-#endif
-                              );
   return 0;
 }
 
@@ -37,11 +42,19 @@ TAO_ESF_Reconnected_Command<Target,Object>::execute (void* arg)
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 
-  this->target_->reconnected_i (this->object_
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
-                              , *env
-#endif
-                              );
+  if (arg != 0)
+    {
+      CORBA::Environment &ACE_TRY_ENV =
+        *ACE_static_cast(CORBA::Environment*, arg);
+      this->target_->reconnected_i (this->object_
+                                    TAO_ENV_ARG_PARAMETER);
+    }
+  else
+    {
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
+      this->target_->reconnected_i (this->object_
+                                    TAO_ENV_ARG_PARAMETER);
+    }
   return 0;
 }
 
@@ -50,15 +63,19 @@ TAO_ESF_Reconnected_Command<Target,Object>::execute (void* arg)
 template<class Target, class Object> int
 TAO_ESF_Disconnected_Command<Target,Object>::execute (void* arg)
 {
-  CORBA::Environment *env = &TAO_default_environment ();
   if (arg != 0)
-    env = ACE_static_cast(CORBA::Environment*, arg);
-
-  this->target_->disconnected_i (this->object_
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
-                              , *env
-#endif
-                              );
+    {
+      CORBA::Environment &ACE_TRY_ENV =
+        *ACE_static_cast(CORBA::Environment*, arg);
+      this->target_->disconnected_i (this->object_
+                                     TAO_ENV_ARG_PARAMETER);
+    }
+  else
+    {
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
+      this->target_->disconnected_i (this->object_
+                                     TAO_ENV_ARG_PARAMETER);
+    }
   return 0;
 }
 
@@ -67,15 +84,17 @@ TAO_ESF_Disconnected_Command<Target,Object>::execute (void* arg)
 template<class Target> int
 TAO_ESF_Shutdown_Command<Target>::execute (void* arg)
 {
-  CORBA::Environment *env = &TAO_default_environment ();
   if (arg != 0)
-    env = ACE_static_cast(CORBA::Environment*, arg);
-
-  this->target_->shutdown_i (
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
-                             *env
-#endif
-                              );
+    {
+      CORBA::Environment &ACE_TRY_ENV =
+        *ACE_static_cast(CORBA::Environment*, arg);
+      this->target_->shutdown_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+    }
+  else
+    {
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
+      this->target_->shutdown_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+    }
   return 0;
 }
 

@@ -1,3 +1,13 @@
+Mon Dec 03 13:51:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+	  Use a different technique to deal with plaforms with and without
+	  exception handling.  This does not require #ifdefs in this code,
+	  and it actually may improve performance.
+
+	* tao/PortableServer/POA.cpp:
+	  Clear warning about unused variable
+
 Wed Nov 14 13:42:42 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/RTCP.h:
