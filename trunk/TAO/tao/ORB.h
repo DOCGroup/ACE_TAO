@@ -224,6 +224,14 @@ public:
     virtual int _is_a (const char* interface_id) const;
   };
 
+  // Typedefs for CORBA_ORB_RequestSeq,
+  // which is an argument of send_multiple_requests_*().
+  // See Request.{h,i,cpp} for definitions.
+  typedef CORBA_ORB_RequestSeq RequestSeq;
+  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
+  typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
+  typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
+
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
   // complete, it should be freed up using <CORBA::release()>.
@@ -241,9 +249,9 @@ public:
   // but not necessarily locally.
 
   virtual CORBA::String object_to_string (
-         CORBA::Object_ptr obj,
-         CORBA_Environment &ACE_TRY_ENV =
-               CORBA::default_environment ());
+              CORBA::Object_ptr obj,
+              CORBA_Environment &ACE_TRY_ENV =
+                CORBA::default_environment ());
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
@@ -253,7 +261,47 @@ public:
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void create_list (CORBA::Long count,
-                    CORBA::NVList_ptr &retval);
+                    CORBA::NVList_ptr &new_list,
+                    CORBA_Environment &ACE_TRY_ENV =
+                      CORBA::default_environment ());
+
+  // The following are not implemented and just throw
+  // CORBA::NO_IMPLEMENT.
+
+  void create_named_value (CORBA::NamedValue_ptr &nmval,
+                           CORBA_Environment &ACE_TRY_ENV =
+                             CORBA::default_environment ());
+
+  void create_exception_list (CORBA::ExceptionList_ptr &exclist,
+                              CORBA_Environment &ACE_TRY_ENV =
+                                CORBA::default_environment ());
+
+  void create_context_list (CORBA::ContextList_ptr &ctxtlist,
+                            CORBA_Environment &ACE_TRY_ENV =
+                              CORBA::default_environment ());
+
+  void get_default_context (CORBA::Context_ptr &ctx,
+                            CORBA_Environment &ACE_TRY_ENV =
+                              CORBA::default_environment ());
+
+  void create_environment (CORBA::Environment_ptr &new_env,
+                           CORBA_Environment &ACE_TRY_ENV =
+                             CORBA::default_environment ());
+
+  void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq req,
+                                      CORBA_Environment &ACE_TRY_ENV =
+                                        CORBA::default_environment ());
+
+  void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq req,
+                                        CORBA_Environment &ACE_TRY_ENV =
+                                          CORBA::default_environment ());
+
+  void get_next_response (CORBA_Request_ptr &req,
+                          CORBA_Environment &ACE_TRY_ENV =
+                            CORBA::default_environment ());
+
+  CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
+                                       CORBA::default_environment ());
 
   // = New Things from the POA Specification
   //

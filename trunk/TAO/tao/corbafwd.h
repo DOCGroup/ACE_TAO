@@ -150,6 +150,11 @@ class CORBA_Request_var;
 class CORBA_Request_out;
 typedef class CORBA_Request *CORBA_Request_ptr;
 
+class CORBA_ORB_RequestSeq;
+class CORBA_ORB_RequestSeq_var;
+class CORBA_ORB_RequestSeq_out;
+typedef class CORBA_ORB_RequestSeq *CORBA_ORB_RequestSeq_ptr;
+
 class CORBA_NamedValue;
 class CORBA_NamedValue_var;
 class CORBA_NamedValue_out;

@@ -15,6 +15,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
+//     Additions and RequestSeq by Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,6 +30,7 @@
 #include "tao/NVList.h"
 #include "tao/Environment.h"
 #include "tao/Context.h"
+#include "tao/Sequence.h"
 
 class TAO_Export CORBA_Request
 {
@@ -234,6 +236,113 @@ public:
 
 private:
   CORBA_Request_ptr &ptr_;
+};
+
+class CORBA_ORB_RequestSeq : public TAO_Unbounded_Base_Sequence
+{
+public:
+
+  // Helpful with template programming.
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_ORB_RequestSeq_ptr _ptr_type;
+  typedef CORBA_ORB_RequestSeq_var _var_type;
+#endif /* __GNUC__ */
+
+  // Default constructor.
+  CORBA_ORB_RequestSeq (void);
+
+  // Constructor using a maximum length value.
+  CORBA_ORB_RequestSeq (CORBA::ULong maximum); 
+
+  // Constructor with all the sequence parameters.
+  CORBA_ORB_RequestSeq (CORBA::ULong maximum,
+                        CORBA::ULong length,
+                        CORBA::Request_ptr *data,
+                        CORBA::Boolean release = 0);
+
+  // Copy constructor.
+  CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs);
+
+  // Assignment operator.
+  CORBA_ORB_RequestSeq &operator= (const CORBA_ORB_RequestSeq &rhs);
+
+  // Dtor.
+  ~CORBA_ORB_RequestSeq (void); 
+
+  // = Accessors.
+  CORBA::Request_ptr operator[] (CORBA::ULong i);
+
+  const CORBA::Request_ptr operator[] (CORBA::ULong i) const;
+
+  // = Static operations.
+
+  // Allocate storage for the sequence.
+  static CORBA::Request_ptr *allocbuf (CORBA::ULong size);
+
+  // Free the sequence.
+  static void freebuf (CORBA::Request_ptr *buffer);
+
+  virtual void _allocate_buffer (CORBA::ULong length);
+
+  virtual void _deallocate_buffer (void);
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+  CORBA::Request_ptr *get_buffer (CORBA::Boolean orphan = 0);
+
+  const CORBA::Request_ptr *get_buffer (void) const;
+
+  void replace (CORBA::ULong max,
+                CORBA::ULong length,
+                CORBA::Request_ptr *data,
+                CORBA::Boolean release);
+};
+
+class CORBA_ORB_RequestSeq_var
+{
+public:
+  CORBA_ORB_RequestSeq_var (void); // default constructor
+  CORBA_ORB_RequestSeq_var (CORBA_ORB_RequestSeq *);
+  CORBA_ORB_RequestSeq_var (const CORBA_ORB_RequestSeq_var &); // copy constructor
+  ~CORBA_ORB_RequestSeq_var (void); // destructor
+
+  CORBA_ORB_RequestSeq_var &operator= (CORBA_ORB_RequestSeq *);
+  CORBA_ORB_RequestSeq_var &operator= (const CORBA_ORB_RequestSeq_var &);
+  CORBA_ORB_RequestSeq *operator-> (void);
+  const CORBA_ORB_RequestSeq *operator-> (void) const;
+
+  operator const CORBA_ORB_RequestSeq &() const;
+  operator CORBA_ORB_RequestSeq &();
+  operator CORBA_ORB_RequestSeq &() const;
+  CORBA::Octet &operator[] (CORBA::ULong index);
+  // in, inout, out, _retn
+  const CORBA_ORB_RequestSeq &in (void) const;
+  CORBA_ORB_RequestSeq &inout (void);
+  CORBA_ORB_RequestSeq *&out (void);
+  CORBA_ORB_RequestSeq *_retn (void);
+  CORBA_ORB_RequestSeq *ptr (void) const;
+
+private:
+  CORBA_ORB_RequestSeq *ptr_;
+};
+
+class CORBA_ORB_RequestSeq_out
+{
+public:
+  CORBA_ORB_RequestSeq_out (CORBA_ORB_RequestSeq *&);
+  CORBA_ORB_RequestSeq_out (CORBA_ORB_RequestSeq_var &);
+  CORBA_ORB_RequestSeq_out (CORBA_ORB_RequestSeq_out &);
+  CORBA_ORB_RequestSeq_out &operator= (CORBA_ORB_RequestSeq_out &);
+  CORBA_ORB_RequestSeq_out &operator= (CORBA_ORB_RequestSeq *);
+  operator CORBA_ORB_RequestSeq *&();
+  CORBA_ORB_RequestSeq *&ptr (void);
+  CORBA_ORB_RequestSeq *operator-> (void);
+  CORBA::Octet &operator[] (CORBA::ULong index);
+
+private:
+  CORBA_ORB_RequestSeq *&ptr_;
+  // assignment from T_var not allowed
+  void operator= (const CORBA_ORB_RequestSeq_var &);
 };
 
 #if defined (__ACE_INLINE__)
