@@ -70,7 +70,7 @@ public:
                                      ACE_Event_Handler *eh,
                                      ACE_Reactor_Mask mask);
 
-  ~ACE_Reactor_Notification_Strategy (void);
+  virtual ~ACE_Reactor_Notification_Strategy (void);
   // Default dtor.
 
   virtual int notify (void);
