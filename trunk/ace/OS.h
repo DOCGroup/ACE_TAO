@@ -1706,27 +1706,27 @@ struct utsname
 
 // The following defines are used by the ACE Name Server...
 #if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
-#define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp"
+#define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp\\"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 
 #if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
-#define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
+#define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp\\"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
 
 #if !defined (ACE_DEFAULT_LOCALNAME_A)
-#define ACE_DEFAULT_LOCALNAME_A "\\localnames"
+#define ACE_DEFAULT_LOCALNAME_A "localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_A */
 
 #if !defined (ACE_DEFAULT_LOCALNAME_W)
-#define ACE_DEFAULT_LOCALNAME_W L"\\localnames"
+#define ACE_DEFAULT_LOCALNAME_W L"localnames"
 #endif /* ACE_DEFAULT_LOCALNAME_W */
 
 #if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#define ACE_DEFAULT_GLOBALNAME_A "\\globalnames"
+#define ACE_DEFAULT_GLOBALNAME_A "globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_A */
 
 #if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#define ACE_DEFAULT_GLOBALNAME_W L"\\globalnames"
+#define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
 #endif /* ACE_DEFAULT_GLOBALNAME_W */
 
 // Need to work around odd glitches with NT.
