@@ -34,9 +34,10 @@
 #include "ace/Map_Manager.h"
 
 #include "tao/Timeprobe.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
 #include "Local_ESTypes.h"
 #include "CORBA_Utils_T.h"
-#include "Task_Manager.h"
+#include "Timer_Module.h"
 #include "ReactorTask.h"
 
 //ACE_INLINE void operator += (ACE_CORBA_Sequence<RtecEventComm::Event_var> &dest,
@@ -148,6 +149,30 @@ private:
 
 // ************************************************************
 
+class ACE_ES_Timer_ACT;
+class ACE_EventChannel;
+
+class TAO_ORBSVCS_Export TAO_EC_Timeout_Handler : public ACE_Event_Handler
+{
+  // = TITLE
+  //   Event Service Timeout handler.
+  //
+  // = DESCRIPTION
+  //   Receives the timeouts from the Timer_Module and dispatches them
+  //   as Event Channel events.
+  //
+public:
+  TAO_EC_Timeout_Handler (void);
+  // Default construction.
+
+private:
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *act);
+  // Casts <act> to ACE_ES_Timer_ACT and calls execute.
+};
+
+// ************************************************************
+
 // Chesire cat.
 class ACE_ES_Priority_Timer;
 // Forward declarations.
@@ -166,8 +191,8 @@ class TAO_EC_Gateway;
 class TAO_Module_Factory;
 // Factory class for the modules in the EC.
 
-// ec..
 class TAO_ORBSVCS_Export ACE_EventChannel : public POA_RtecEventChannelAdmin::EventChannel
+//
 // = TITLE
 //   TAO's Real-time Event Channel.
 //
@@ -198,9 +223,6 @@ public:
   ACE_RTU_Manager *rtu_manager (void);
   // Returns a reference to the RTU manager.
 
-  ACE_ES_Priority_Timer *timer (void);
-  // Timer accessor.
-
   // = These should be private.
   ACE_ES_Consumer_Module *consumer_module_;
   ACE_ES_Dispatching_Module *dispatching_module_;
@@ -208,7 +230,7 @@ public:
   ACE_ES_Subscription_Module *subscription_module_;
   ACE_ES_Supplier_Module *supplier_module_;
 
-  ACE_ES_Priority_Timer *timer_;
+  TAO_EC_Timeout_Handler timer_;
 
   void report_connect (u_long);
   // Consumer or supplier connected.
@@ -237,8 +259,8 @@ public:
   // The consumer (or supplier) list has changed, thus the EC has to
   // inform any gateways it has.
 
-  ACE_Task_Manager* task_manager (void) const;
-  // Each Event Channel has its own Task_Manager to handle timers.
+  TAO_EC_Timer_Module* timer_module (void) const;
+  // The timer module controls the strategy to dispatch timers.
 
   // = The RtecEventChannelAdmin::EventChannel methods.
 
@@ -262,7 +284,24 @@ public:
 				CORBA::Environment &env);
   // The observer manipulators
 
- private:
+  // = Timer managment
+  int schedule_timer (RtecScheduler::handle_t rt_info,
+                      const ACE_ES_Timer_ACT *act,
+                      RtecScheduler::OS_Priority preemption_priority,
+                      const RtecScheduler::Time& delta,
+                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
+  // Schedule a timer at the appropriate priority for <preemption_priority>.
+  // Returns the preemption priority used on success, -1 on failure.
+
+  int cancel_timer (RtecScheduler::OS_Priority preemption_priority,
+                    int id,
+		    ACE_ES_Timer_ACT *&act);
+  // Cancel the timer associated with the priority of
+  // <preemption_priority> and <id>.  <act> is filled in with the
+  // Timer_ACT used when scheduling the timer.  Returns 0 on success,
+  // -1 on failure.
+
+private:
   void cleanup_observers (void);
   // Remove all the observers, this simplifies the shutdown process.
 
@@ -318,10 +357,8 @@ private:
   Observer_Map observers_;
   // Keep the set of Gateways, i.e. connections to peer EC.
 
-  ACE_Task_Manager* task_manager_;
-  // @@ TODO: change that class and object name.
-  // This object handles the threads related to timers, is a bad name,
-  // but this is not the opportunity to change it.
+  TAO_EC_Timer_Module* timer_module_;
+  // The strategy to dispatch timers.
 
   int own_factory_;
   // If 1 then we created the factory, thus we have to destroy it.
@@ -329,50 +366,6 @@ private:
   TAO_Module_Factory* module_factory_;
   // This is the factory we use to create and destroy the Event
   // Channel modules.
-};
-
-// ************************************************************
-
-class ACE_ES_Timer_ACT;
-
-class TAO_ORBSVCS_Export ACE_ES_Priority_Timer : public ACE_Event_Handler
-// = TITLE
-//    Event Service Timer
-//
-// = DESCRIPTION
-//    Manages a thread per priority, each of which sits on its own
-//    ReactorEx dispatching the timers for its given priority.
-{
-public:
-  ACE_ES_Priority_Timer (ACE_Task_Manager* task_manager);
-  // Default construction.
-
-  int connected (RtecScheduler::handle_t rt_info);
-  // This allows the Priority Timer to prespawn threads.  Returns 0 on
-  // success, -1 on failure.
-
-  int schedule_timer (RtecScheduler::handle_t rt_info,
-                      const ACE_ES_Timer_ACT *act,
-                      RtecScheduler::OS_Priority preemption_priority,
-                      const RtecScheduler::Time& delta,
-                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
-  // Schedule a timer at the appropriate priority for <preemption_priority>.
-  // Returns the preemption priority used on success, -1 on failure.
-
-  int cancel_timer (RtecScheduler::OS_Priority preemption_priority,
-                    int id, ACE_ES_Timer_ACT *&act);
-  // Cancel the timer associated with the priority of
-  // <preemption_priority> and <id>.  <act> is filled in with the
-  // Timer_ACT used when scheduling the timer.  Returns 0 on success,
-  // -1 on failure.
-
-private:
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *act);
-  // Casts <act> to ACE_ES_Timer_ACT and calls execute.
-
-  ACE_Task_Manager* task_manager_;
-  // The pointer to the manager for the timer threads.
 };
 
 // ************************************************************

@@ -259,6 +259,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/try_macros.h \
@@ -525,6 +526,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/try_macros.h \
@@ -789,6 +791,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/try_macros.h \
@@ -1034,6 +1037,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/try_macros.h \

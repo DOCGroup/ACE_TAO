@@ -13,6 +13,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/Event/Module_Factory.h"
 #include "EC_Mcast.h"
 
 #if !defined (__ACE_INLINE__)
@@ -159,7 +160,10 @@ ECM_Driver::run (int argc, char* argv[])
 
       // Create the EventService implementation, but don't start its
       // internal threads.
-      ACE_EventChannel ec_impl (0);
+      TAO_Default_Module_Factory module_factory;
+      ACE_EventChannel ec_impl (0,
+                                ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                                &module_factory);
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
@@ -171,20 +175,14 @@ ECM_Driver::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%s>\n", str.in ()));
 
-      ACE_DEBUG ((LM_DEBUG, "waiting to start\n"));
-
-      ACE_Time_Value tv (15, 0);
-
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "starting....\n"));
 
       RtecEventChannelAdmin::EventChannel_var local_ec =
         ec_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "located local EC\n"));
+      ACE_DEBUG ((LM_DEBUG, "EC_Mcast: local EC objref ready\n"));
 
       this->open_federations (local_ec.in (),
                               scheduler.in (),
@@ -214,16 +212,16 @@ ECM_Driver::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: activate_federations done\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "activate the  EC\n"));
+      ACE_DEBUG ((LM_DEBUG, "EC_Mcast: activate the  EC\n"));
 
       // Create the EC internal threads
       ec_impl.activate ();
 
-      ACE_DEBUG ((LM_DEBUG, "running the test\n"));
+      ACE_DEBUG ((LM_DEBUG, "EC_Mcast: running the test\n"));
       if (this->orb_->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
-      ACE_DEBUG ((LM_DEBUG, "shutdown the EC\n"));
+      ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
       ec_impl.shutdown ();
 
       this->dump_results ();
@@ -236,9 +234,9 @@ ECM_Driver::run (int argc, char* argv[])
       this->close_federations (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
+      ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown grace period\n"));
 
-      tv.set (5, 0);
+      ACE_Time_Value tv (5, 0);
       if (this->orb_->run (&tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
     }

@@ -240,6 +240,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/try_macros.h \
@@ -325,10 +326,10 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Task_Manager.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Task_Manager.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \

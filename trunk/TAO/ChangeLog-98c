@@ -1,3 +1,46 @@
+Tue Sep 29 11:08:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Use the new abstractions in the Timer_Module to schedule and
+	  cancel timers.
+
+	* orbsvcs/orbsvcs/Event/Module_Factory.h: 
+	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
+	  Added methods to create the new module.
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.i: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.h: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.i: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
+	  New class Timer_Module that replaces the Task_Manager
+	  class. This module of the EC is in charge of implementing the
+	  timer queue.  Currently there are two implementations of the
+	  module: a pool of Reactors running at different priorities
+	  to dispatch the timers; a single reactor (shared with the ORB)
+	  to dispatch all the timers.
+	  In the future we plan to implement the timers using the
+	  Thread_Timer_Queue_Adapter or a similar mechanism.
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  Some experimental changes to test the new single threaded module
+	  factory for the Event Channel.
+
+	* Many makefiles were updated because the dependencies changed.
+
+	* tests/Param_Test/README: 
+	  Removed outdated arguments.
+
+	* docs/releasenotes/TODO.html: 
+	  Minor updates.
+
 Tue Sep 29 07:18:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Thruput/COOL/ttcp_decl.h,client.cpp,server.cpp:

@@ -43,8 +43,6 @@ To run the client, type
    [-f servant-IOR-file]		reads the servant-IOR from the
                                         specified file. 
    [-k Param_Test-obj-ref-key]          object key of Param_Test object
-   [-h hostname]                        host to bind to
-   [-p port]                            port number of server
    [-i invocation (sii/dii)]            default is static invocation
                                         interface. To use DII, type
                                         -i dii
