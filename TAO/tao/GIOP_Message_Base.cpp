@@ -325,16 +325,21 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // same Event_Handler in two threads at the same time.
   /************************************************************/
 
+  // Create a message block by stealing the data block
+  ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
+
+  // Move the wr_ptr () and rd_ptr in the message block. This is not
+  // generally required as we are not going to write anything. But
+  // this is *important* for checking the length of the CDR streams
+  size_t n = this->message_handler_.message_state ().message_size;
+  msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
+  msg_block.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+
   // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (this->message_handler_.data_block_dup (),
+  TAO_InputCDR input_cdr (&msg_block,
                           this->message_handler_.message_state ().byte_order,
                           orb_core);
 
-
-  // When the data block is used for creating the CDR stream, we loose
-  // track of the read pointer of the message block in the message
-  // handler.
-  input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Send the message state for the service layer like FT to log the
   // messages
@@ -345,7 +350,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   this->message_handler_.reset (0);
 
 
-  int retval = 0;
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
   switch (this->message_handler_.message_state ().message_type)
@@ -372,14 +376,19 @@ TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params
   )
 {
-  // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (this->message_handler_.data_block_dup (),
-                          this->message_handler_.message_state ().byte_order);
+  // Create a message block by stealing the data block
+  ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
 
-  // When the data block is used for creating the CDR stream, we loose
-  // track of the read pointer of the message block in the message
-  // handler.
-  input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
+  // Move the wr_ptr () and rd_ptr in the message block. This is not
+  // generally required as we are not going to write anything. But
+  // this is *important* for checking the length of the CDR streams
+  size_t n = this->message_handler_.message_state ().message_size;
+  msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
+  msg_block.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+
+  // Steal the input CDR from the message block
+  TAO_InputCDR input_cdr (&msg_block,
+                          this->message_handler_.message_state ().byte_order);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
@@ -517,6 +526,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
+
 
       // Do this before the reply is sent.
       orb_core->adapter_registry ()->dispatch (request.object_key (),
