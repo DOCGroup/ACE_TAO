@@ -1,3 +1,12 @@
+Thu Oct  3 11:05:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id):
+
+	  Minor tweak to the ACE_CHECK_RETURN macro argument.  Return a
+	  nil reference instead of the return value of _var._retn().  This
+	  is a precautionary measure to prevent potential memory leaks
+	  in emulated exception builds.
+
 Thu Oct  3 10:56:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Log/EventLog_i.cpp (activate):
