@@ -1,3 +1,8 @@
+Fri Mar 12 20:48:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp: 
+	  Fixed improper use of TAO_RETHROW macros.
+
 Fri Mar 12 19:51:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 

@@ -182,7 +182,7 @@ IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      TAO_RETHROW;
+      ACE_RETHROW;
     }
   ACE_ENDTRY;
 }
@@ -199,7 +199,7 @@ IR_Helper::notify_shutdown (CORBA_Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      TAO_RETHROW;
+      ACE_RETHROW;
     }
   ACE_ENDTRY;
 }
