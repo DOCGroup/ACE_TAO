@@ -1,3 +1,9 @@
+Sun Apr  3 23:52:50 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* examples/BasicSP/descriptors/flattern_deploymentplan.cdp
+
+	Fixed a mistake in the descriptor.
+	
 Sun Apr  3 18:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Container_Base.h:
