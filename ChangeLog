@@ -1,3 +1,16 @@
+Wed Dec 06 20:12:35 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Containers_T.cpp (operator=): In case the existing array is
+	  larger than the rhs (right hand side), we don't have to free and
+	  reallocate the existing array.  However, we do need to run the
+	  destructor on the array elements that will be replaced.  Hence,
+	  I added a call to ACE_DES_ARRAY_NOFREE for the elements being
+	  replaced.  
+
+	  This fixes bug 704.  Thanks to Martin Krumpolec
+	  <krumpo@pobox.sk> for reporting the bug and for providing an
+	  example illustrating the problem.
+
 Wed Dec  6 14:29:13 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Auto_Ptr.{h,i}: Added a new set of class (ACE_Refcounted_Auto_Ptr_Rep,
