@@ -1,3 +1,18 @@
+Tue Oct  7 23:53:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Domain/DomainS.cpp:
+	* tao/Domain/DomainS.h:
+	* tao/Domain/DomainS.i: Regenerated code again.
+
+	* tao/Messaging/Asynch_Invocation.cpp: Set the status of the bind
+	  dispatcher to NO_BIND so that the destructor will not unbind the
+	  dispatcher.
+	* tao/Messaging/MessagingS.cpp
+	* tao/Messaging/MessagingS.h:
+	* tao/Messaging/MessagingS.i: Regenreated code.
+
+	* tao/PortableServer/PolicyS.h: Added proper path to PolicyC.h.
+
 Tue Oct  7 16:48:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/Makefile.BE: Added the be_visitor_traits.cpp back into

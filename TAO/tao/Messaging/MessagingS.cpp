@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:619
+// be/be_codegen.cpp:610
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_CPP_
 #define _TAO_IDL_ORIG_MESSAGINGS_CPP_
@@ -41,10 +41,10 @@
 #include "tao/Profile.h"
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Fixed_Size_Argument_T.h"
-#include "tao/PortableInterceptor.h"
 #include "tao/Object_T.h"
+#include "tao/Typecode.h"
+#include "tao/DynamicC.h"
+#include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
 #include "tao/PICurrent.h"
@@ -66,7 +66,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:60
 
 // Arg traits specializations.
 namespace TAO
@@ -74,7 +74,7 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1403
+// be/be_interface.cpp:1445
 
 class TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -85,7 +85,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /project/tangotmp/bala/work/ACE+TAO/refactor/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /project/tangotmp/bala/work/ACE+TAO/main_merge/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -236,40 +236,58 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
   )
   ACE_THROW_SPEC ((CORBA::Exception))
 {
-  TAO_Collocated_Skeleton collocated_skel;
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      obj->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
   
-  if (obj->_servant ()->_find (op,
-        collocated_skel,
-        strategy,
-        op_len) == -1)
-    ACE_THROW (CORBA::BAD_OPERATION ());
-  
-  ACE_TRY
-    {
-      collocated_skel (
-        obj,
-        forward_obj,
-        args, 
-        num_args
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  #if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
-    {
-      forward_obj =
-        CORBA::Object::_duplicate (forward_request.forward_reference.in ());
-      return;
-    }
+  if (strategy == TAO::TAO_CS_THRU_POA_STRATEGY)
+   {
+    servant_upcall.prepare_for_upcall (
+    obj->_stubobj ()->object_key (),
+      op,
+      forward_obj
+      ACE_ENV_ARG_PARAMETER
+      );
+    ACE_CHECK;
+    
+    servant_upcall.pre_invoke_collocated_request (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+TAO_Collocated_Skeleton collocated_skel;
+
+if (servant_upcall.servant ()->_find (op,
+      collocated_skel,
+      strategy,
+      op_len) == -1)
+  ACE_THROW (CORBA::BAD_OPERATION ());
+
+ACE_TRY
+  {
+    collocated_skel (
+      servant_upcall.servant (),
+      args, 
+      num_args
+      ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+ACE_CATCH (PortableServer::ForwardRequest, forward_request)
+  {
+    forward_obj =
+      CORBA::Object::_duplicate (forward_request.forward_reference.in ());
+    return;
+  }
 #else
-  ACE_CATCHANY
-    {
-      ACE_UNUSED_ARG (forward_obj);
-      ACE_RE_THROW;
-    }
+ACE_CATCHANY
+  {
+    ACE_UNUSED_ARG (forward_obj);
+    ACE_RE_THROW;
+  }
 #endif /* TAO_HAS_MINIMUM_CORBA */
-  ACE_ENDTRY;
-  ACE_CHECK;
+ACE_ENDTRY;
+ACE_CHECK;
 }
 
 //
@@ -277,7 +295,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:603
+// be/be_visitor_interface/interface_ss.cpp:600
 
 TAO::Collocation_Proxy_Broker *
 Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -335,7 +353,7 @@ POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl::_TAO_ReplyHandler_Direct_Pro
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// be/be_visitor_interface/interface_ss.cpp:97
 
 POA_Messaging::ReplyHandler::ReplyHandler (void)
 {
@@ -353,7 +371,7 @@ POA_Messaging::ReplyHandler::~ReplyHandler (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:165
+// be/be_visitor_interface/interface_ss.cpp:162
 
 void POA_Messaging::ReplyHandler::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -516,7 +534,7 @@ const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:539
+// be/be_visitor_interface/interface_ss.cpp:536
 
 void POA_Messaging::ReplyHandler::_dispatch (
     TAO_ServerRequest &req,
@@ -531,7 +549,7 @@ void POA_Messaging::ReplyHandler::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:479
+// be/be_visitor_interface/interface_ss.cpp:476
 
 Messaging::ReplyHandler *
 POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -576,14 +594,5 @@ POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
         Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer
       );
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1740
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* ifndef */
