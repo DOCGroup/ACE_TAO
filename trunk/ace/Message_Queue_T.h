@@ -817,7 +817,7 @@ public:
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 };
 
-/** 
+/**
  * @class ACE_Message_Queue_Ex
  *
  * @brief A threaded message queueing facility, modeled after the
@@ -840,7 +840,7 @@ public:
     DEFAULT_PRIORITY = 0
   };
 
-#if 0 
+#if 0
   //  @@ Iterators are not implemented yet...
 
   friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE>;
@@ -1114,7 +1114,7 @@ public:
 
   /// Returns true if <deactivated_> is enabled.
   virtual int deactivated (void);
-  
+
   // = Notification hook.
 
   /**
@@ -1128,7 +1128,7 @@ public:
    * the notification occurs.
    */
   virtual int notify (void);
-  
+
   /// Get/set the notification strategy for the <Message_Queue>
   virtual ACE_Notification_Strategy *notification_strategy (void);
   virtual void notification_strategy (ACE_Notification_Strategy *s);
