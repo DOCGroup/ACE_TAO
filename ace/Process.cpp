@@ -85,7 +85,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
   if (options.env_argv ()[0] == 0)
     // command-line args
-    this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
+    this->child_id_ = ACE_OS::execvp (options.process_name (),
                                       options.command_line_argv ());
   else
     {
@@ -99,7 +99,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
       // Now the forked process has both inherited variables and the
       // user's supplied variables.
-      this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
+      this->child_id_ = ACE_OS::execvp (options.process_name (),
                                         options.command_line_argv ());
     }
 
@@ -109,7 +109,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
     return ACE_INVALID_PID;
   
   // Fork the new process.
-  this->child_id_ = ACE::fork (options.command_line_argv ()[0],
+  this->child_id_ = ACE::fork (options.process_name (),
                                options.avoid_zombies ());
 
   if (this->child_id_ == 0) 
@@ -193,7 +193,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
         if (options.env_argv ()[0] == 0)
           // command-line args
-          result = ACE_OS::execvp (options.command_line_argv ()[0],
+          result = ACE_OS::execvp (options.process_name (),
                                    options.command_line_argv ());
         else
           {
@@ -212,7 +212,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
             // Now the forked process has both inherited variables and
             // the user's supplied variables.
-            result = ACE_OS::execvp (options.command_line_argv ()[0],
+            result = ACE_OS::execvp (options.process_name (),
                                      options.command_line_argv ());
 #endif /* ghs */
           }
@@ -382,7 +382,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
            LPTSTR[mea]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
-
+  process_name_[0] = '\0';
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->startup_info_,
                   0,
