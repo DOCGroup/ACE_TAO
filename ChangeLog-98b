@@ -6,6 +6,10 @@ Thu Sep 03 09:24:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Block.cpp: added ACE_Guard <ACE_Lock> instantiation.
 
+        * ace/SPIPE_Stream.i (recv_handle): replaced "recvfd = recvfd" with
+          ACE_UNUSED_ARG (recvfd) to avoid egcs 1.1 warning about a
+          statement with no effect.
+
 Thu Sep 03 00:26:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Time_Request_Reply.cpp (ACE_Time_Request): The second
