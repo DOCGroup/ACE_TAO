@@ -32,6 +32,16 @@ Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/IPC_SAP/SOCK_SAP/Makefile:
         * examples/Connection/non_blocking/Makefile:
+        * examples/Misc/Makefile:
+          On AIX w/ IBM C++, delete the tempinc directory before compiling
+          each new program. Keeps the template instantiations from one
+          program from conflicting with the others.
+
+        * include/makeinclude/rules.lib.GNU: On AIX using IBM C++ only, don't
+          try to link in the auto-instantiated template object modules if
+          there aren't any.
+
+        * include/platform_aix4_cset++.GNU: Removed TMPL_OBJS - not needed now.
         * examples/Misc/Makefile: On AIX w/ IBM C++, delete the tempinc
 	  directory before compiling each new program. Keeps the template
  	  instantiations from one program from conflicting with the
