@@ -69,19 +69,10 @@ public:
 		     CosTradingDynamic::DPEvalFailure));
   // Point of demultiplexing.  
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-  CosTradingDynamic::DynamicProp*
-    construct_dynamic_prop (const char* name,			    
-			    CORBA::TypeCode_ptr returned_type,
-			    const CORBA::Any& extra_info,
-			    CORBA::ORB_ptr orb);
-#else
   CosTradingDynamic::DynamicProp*
     construct_dynamic_prop (const char* name,			    
 			    CORBA::TypeCode_ptr returned_type,
 			    const CORBA::Any& extra_info);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
-  
 private:
 
   typedef map

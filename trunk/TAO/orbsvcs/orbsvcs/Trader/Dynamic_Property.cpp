@@ -34,20 +34,11 @@ register_handler(const char* name,
     this->handlers_[prop_name] = make_pair (handler, release_on_delete);
 }
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-CosTradingDynamic::DynamicProp*
-TAO_DP_Dispatcher::
-construct_dynamic_prop (const char* name,
-			CORBA::TypeCode_ptr returned_type,
-			const CORBA::Any& extra_info,
-			CORBA::ORB_ptr orb)
-#else
 CosTradingDynamic::DynamicProp*
 TAO_DP_Dispatcher::
 construct_dynamic_prop (const char* name,
 			CORBA::TypeCode_ptr returned_type,
 			const CORBA::Any& extra_info)
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 {
   CosTradingDynamic::DynamicProp* dp_struct = 0;
 
@@ -58,6 +49,7 @@ construct_dynamic_prop (const char* name,
       CosTradingDynamic::DynamicPropEval* dp_eval = this->_this (TAO_TRY_ENV);
 
 #if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
       dp_struct->eval_if = orb->object_to_string (dp_eval, TAO_TRY_ENV);
 #else
       dp_struct->eval_if = dp_eval;

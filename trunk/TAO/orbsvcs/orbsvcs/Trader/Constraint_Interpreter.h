@@ -59,11 +59,7 @@ public:
   ~TAO_Constraint_Interpreter(void);
   // Destructor
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-  CORBA::Boolean evaluate(CosTrading::Offer* offer, CORBA::ORB_ptr orb);
-#else
   CORBA::Boolean evaluate(CosTrading::Offer* offer);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 
   CORBA::Boolean evaluate(TAO_Constraint_Evaluator& evaluator);
   

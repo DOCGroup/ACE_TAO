@@ -26,14 +26,8 @@
 #include "Admin.h"
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
-TAO_Trader (CORBA::ORB_ptr orb, Trader_Components components)
-  : TAO_Trader_Base (orb)
-#else
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 TAO_Trader (Trader_Components components)
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 {
   CORBA::Environment env;
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)

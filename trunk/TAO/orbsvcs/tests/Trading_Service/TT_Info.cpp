@@ -211,15 +211,8 @@ const char* TT_Info::QUERIES[][3] =
   {INTERFACE_NAMES[REMOTE_IO], "", ""}
 };
 
-
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-void
-TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
-			  CORBA::ORB_ptr orb)
-#else
 void
 TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 {
   CORBA::Environment env;
   TAO_Property_Evaluator prop_eval (prop_seq);
@@ -231,11 +224,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       TAO_TRY
 	{
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-	  value = prop_eval.property_value(k, orb, env);
-#else
 	  value = prop_eval.property_value(k, env);
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 	  TAO_CHECK_ENV;
 
 	  tc = value->type ();

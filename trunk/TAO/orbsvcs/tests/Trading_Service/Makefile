@@ -69,8 +69,6 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 LDLIBS  = -lTTest -lorbsvcs -lospace -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-CPPFLAGS += -DTAO_HAS_DYNAMIC_PROPERTY_BUG
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

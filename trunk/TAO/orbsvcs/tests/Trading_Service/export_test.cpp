@@ -89,7 +89,6 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter (root_poa.ptr (),
 					 register_if,
-					 orb.ptr (),
 					 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 	    

@@ -47,15 +47,9 @@ class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
 public:
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-  TAO_Constraint_Evaluator(CosTrading::Offer* offer,
-			   CORBA::ORB_ptr orb,
-			   CORBA::Boolean supports_dynamic_properties = 1);
-#else  
   TAO_Constraint_Evaluator(CosTrading::Offer* offer,
 			   CORBA::Boolean supports_dynamic_properties = 1);
-#endif
-  
+
   CORBA::Boolean evaluate_constraint(TAO_Constraint* root);
   // Evaluate returns 1 if the offer satisfies the constraints
   // represented by the the expression tree rooted at <root>, 0 if it
@@ -157,10 +151,6 @@ private:
 
   Operand_Queue queue_;
   // The result of a non_boolean operation.
-
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
-  CORBA::ORB_var orb_;
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 };
 
 template <class SEQ, class OPERAND_TYPE>
