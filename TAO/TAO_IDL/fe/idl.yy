@@ -1684,18 +1684,11 @@ case_branch :
 	   * Add them to the enclosing scope (the union scope)
 	   */
 	  if (s != NULL && $1 != NULL && $3 != NULL) {
-	    l = new UTL_LabellistActiveIterator($1);
-	    for (;!(l->is_done()); l->next()) {
-	      d = l->item();
-	      if (d == NULL)
-		continue;
-	      b = idl_global->gen()->create_union_branch(d,
+	      b = idl_global->gen()->create_union_branch($1,
 						      f->field_type(),
 						      f->name(),
 						      f->pragmas());
 	      (void) s->fe_add_union_branch(b);
-	    }
-	    delete l;
 	  }
 	}
 	| error

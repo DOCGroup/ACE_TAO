@@ -268,12 +268,12 @@ AST_Generator::create_union(AST_ConcreteType *dt,
  * Construct an AST_UnionBranch node (a branch in a union)
  */
 AST_UnionBranch *
-AST_Generator::create_union_branch(AST_UnionLabel *lab,
+AST_Generator::create_union_branch(UTL_LabelList *ll,
                                  AST_Type *ft,
                                  UTL_ScopedName *n,
                                  UTL_StrList *p)
 {
-  return new AST_UnionBranch(lab, ft, n, p);
+  return new AST_UnionBranch(ll, ft, n, p);
 }
 
 /*

@@ -33,11 +33,11 @@ public:
   be_union_branch (void);
   // default constructor
 
-  be_union_branch (AST_UnionLabel *lab, AST_Type *ft, UTL_ScopedName *n,
+  be_union_branch (UTL_LabelList *ll, AST_Type *ft, UTL_ScopedName *n,
                    UTL_StrList *p);
   // constructor
 
-  int gen_label_value (TAO_OutStream *os);
+  int gen_label_value (TAO_OutStream *os, unsigned long index = 0);
   // Generate the label value (as in a switch/case statement).
 
   // Visiting

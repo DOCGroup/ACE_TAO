@@ -121,6 +121,24 @@ int be_visitor_union_ch::visit_union (be_union *node)
                             -1);
         }
 
+      // now check if we need to generate the _default () method
+      be_union::DefaultValue dv;
+      if (node->default_value (dv) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_ch::"
+                             "visit_union - "
+                             "computing default value failed\n"),
+                            -1);
+        }
+      if ((dv.computed_ != 0) && (node->default_index () == -1))
+        {
+          // only if all cases are not covered AND there is no explicit
+          // default, we get the _default () method
+          os->indent ();
+          *os << "void _default ();\n";
+        }
+
       // now generate the private data members of the union
       os->decr_indent ();
       *os << "private:\n";
