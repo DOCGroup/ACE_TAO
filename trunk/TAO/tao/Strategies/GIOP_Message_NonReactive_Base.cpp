@@ -175,11 +175,17 @@ TAO_GIOP_Message_NonReactive_Base::more_messages (void)
       size_t wr_pos =
         mesg_block->wr_ptr () - mesg_block->base ();
 
+      TAO_GIOP_Message_State &state =
+        this->message_handler_.message_state ();
+
       // Create a new InputCDR stream
       TAO_InputCDR cdr (mesg_block->data_block (),
-                        0, 
+                        0,
                         rd_pos,
-                        wr_pos);
+                        wr_pos,
+                        state.byte_order,
+                        state.giop_version.major,
+                        state.giop_version.minor);
 
       this->message_handler_.input_cdr ().exchange_data_blocks (cdr);
 
