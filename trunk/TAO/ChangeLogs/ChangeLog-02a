@@ -1,3 +1,9 @@
+Mon Dec 18 19:03:10 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
+	  Added the new files.
+
 Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Makefile :
