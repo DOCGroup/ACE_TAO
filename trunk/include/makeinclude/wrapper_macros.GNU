@@ -182,8 +182,41 @@ include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 #----------------------------------------------------------------------------
 
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
+
+# Define default extentions for IDL-generated files
+ifeq ($(IDL_CLIENT_HDR_EXT),)
+IDL_CLIENT_HDR_EXT = C.h
+endif
+ifeq ($(IDL_CLIENT_INL_EXT),)
+IDL_CLIENT_INL_EXT = C.i
+endif
+ifeq ($(IDL_CLIENT_SRC_EXT),)
+IDL_CLIENT_SRC_EXT = C.cpp
+endif
+ifeq ($(IDL_SERVER_HDR_EXT),)
+IDL_SERVER_HDR_EXT = S.h
+endif
+ifeq ($(IDL_SERVER_INL_EXT),)
+IDL_SERVER_INL_EXT = S.i
+endif
+ifeq ($(IDL_SERVER_SRC_EXT),)
+IDL_SERVER_SRC_EXT = S.cpp
+endif
+ifeq ($(IDL_SERVER_THDR_EXT),)
+IDL_SERVER_THDR_EXT = S_T.h
+endif
+ifeq ($(IDL_SERVER_TINL_EXT),)
+IDL_SERVER_TINL_EXT = S_T.i
+endif
+ifeq ($(IDL_SERVER_TSRC_EXT),)
+IDL_SERVER_TSRC_EXT = S_T.cpp
+endif
+
+# This is for Orbix support, not related to TAO's IDL compiler.
+# It is probably obsolete by now, if it works at all.
 IDL             = idl
-IDLFLAGS        = -A -B -s S.cpp -c C.cpp
+IDLFLAGS        = -A -B -s $(IDL_SERVER_SRC_EXT) -c $(IDL_CLIENT_SRC_EXT)
+
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
@@ -215,13 +248,19 @@ ACE_NUL_STDERR = 2>$(ACE_NUL) || true
 PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
 PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
 VAR             =
+
+# Let users override the default VDIR directories
+ifndef VDIR
 VDIR            = .obj/
-ifndef ACELIB
-  ACELIB = -lACE
-endif
+endif # VDIR
 ifndef VSHDIR
   VSHDIR        = .shobj/
 endif # VSHDIR
+
+ifndef ACELIB
+  ACELIB = -lACE
+endif
+
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
 YACC            = yacc
