@@ -1,3 +1,17 @@
+Fri Mar 26 13:23:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BooleanSeq.pidl:
+        * tao/BooleanSeqC.cpp:
+        * tao/BooleanSeqC.h:
+        * tao/BooleanSeqC.i:
+        * tao/BooleanSeqS.h:
+        
+          New files, generating and defining CORBA::BooleanSeq in the ORB.
+          
+        * tao/tao.mpc:
+        
+          Added new files to project generator.
+
 Thu Mar 25 23:06:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_home.cpp:
