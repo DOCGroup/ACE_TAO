@@ -845,6 +845,9 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
 
     if(!notification_required)
       {
+        // No failures.
+        safe_handler.release ();
+
         return 0;
       }
   }
