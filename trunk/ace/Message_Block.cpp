@@ -16,9 +16,7 @@ ACE_Message_Block::data_block (ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Data_Block::data_block");
   if (this->data_block_ != 0)
-    // This call passes a 0 into release since we don't want to delete
-    // <this> at this point.
-    this->data_block_->release (0);
+    this->data_block_->release ();
 
   this->data_block_ = db;
 
@@ -165,40 +163,6 @@ ACE_Message_Block::size (size_t length)
       this->wr_ptr_ = this->data_block ()->base () + w_delta;
     }
   return 0;
-}
-
-ACE_Data_Block::~ACE_Data_Block (void)
-{
-  // Sanity check...
-  ACE_ASSERT (this->reference_count_ <= 1);
-
-  // Just to be safe...
-  this->reference_count_ = 0;
-
-  if (ACE_BIT_DISABLED (this->flags_, ACE_Message_Block::DONT_DELETE))
-    {
-      this->allocator_strategy_->free ((void *) this->base_);
-      this->base_ = 0;
-    }
-}
-
-ACE_Message_Block::~ACE_Message_Block (void)
-{
-  ACE_TRACE ("ACE_Message_Block::~ACE_Message_Block");
-
-  // Free up all the continuation messages.
-  if (this->cont_)
-    {
-      this->cont_->release ();
-      this->cont_ = 0;
-    }
-
-  this->prev_ = 0;
-  this->next_ = 0;
-
-  // This must come last since it may delete <this>.
-  if (this->data_block ())
-    this->data_block ()->release (this);
 }
 
 ACE_Data_Block::ACE_Data_Block (void)
@@ -414,42 +378,27 @@ ACE_Message_Block::init_i (size_t size,
   return 0;
 }
 
-ACE_Data_Block *
-ACE_Data_Block::release_i (ACE_Message_Block *mb)
+ACE_Data_Block::~ACE_Data_Block (void)
 {
-  ACE_TRACE ("ACE_Data_Block::release");
+  // Sanity check...
+  ACE_ASSERT (this->reference_count_ <= 1);
 
-  ACE_ASSERT (this->reference_count_ >= 0);
+  // Just to be safe...
+  this->reference_count_ = 0;
 
-  ACE_Data_Block *result = 0;
-
-  this->reference_count_--;
-
-  if (this->reference_count_ == 0)
+  if (ACE_BIT_DISABLED (this->flags_, ACE_Message_Block::DONT_DELETE))
     {
-      delete this;
-
-      if (mb != 0)
-	{
-	  // We need to delete <mb> here since the lock will be held
-	  // correctly at this point, which protects against race
-	  // conditions in multi-threaded programs.  Note that we must
-	  // reset <mb->data_block_> to 0 or else we'll end up in
-	  // infinite recursion.
-	  mb->data_block_ = 0;
-	  delete mb;
-	}
+      this->allocator_strategy_->free ((void *) this->base_);
+      this->base_ = 0;
     }
-  else // if (this->reference_count_ > 0)
-    result = this;
-
-  return result;
 }
 
 ACE_Data_Block *
-ACE_Data_Block::release (ACE_Message_Block *mb)
+ACE_Data_Block::release (void)
 {
   ACE_TRACE ("ACE_Data_Block::release");
+
+  ACE_Data_Block *result;
 
   // If there's a locking strategy then we need to acquire the lock
   // before decrementing the count.
@@ -457,10 +406,34 @@ ACE_Data_Block::release (ACE_Message_Block *mb)
     {
       ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
 
-      return this->release_i (mb);
+      ACE_ASSERT (this->reference_count_ > 0);
+      
+      this->reference_count_--;
+
+      if (this->reference_count_ == 0)
+	result = 0;
+      else 
+	result = this;
     }
   else
-    return this->release_i (mb);
+    {
+      ACE_ASSERT (this->reference_count_ >= 0);
+      
+      this->reference_count_--;
+
+      if (this->reference_count_ == 0)
+	result = 0;
+      else 
+	result = this;
+    }
+  
+  // We must delete this outside the scope of the locking_strategy_
+  // since otherwise we'd be trying to "release" through a deleted
+  // pointer!
+  if (result == 0)
+    delete this;
+
+  return result; 
 }
 
 ACE_Message_Block *
@@ -468,10 +441,16 @@ ACE_Message_Block::release (void)
 {
   ACE_TRACE ("ACE_Message_Block::release");
 
-  if (this->data_block ()->release (this) == 0)
-    return 0;
-  else
-    return this;
+  // Free up all the continuation messages.
+  if (this->cont_)
+    {
+      this->cont_->release ();
+      this->cont_ = 0;
+    }
+
+  delete this;
+
+  return 0;
 }
 
 /* static */ ACE_Message_Block *
@@ -483,6 +462,17 @@ ACE_Message_Block::release (ACE_Message_Block *mb)
     return mb->release ();
   else
     return 0;
+}
+
+ACE_Message_Block::~ACE_Message_Block (void)
+{
+  ACE_TRACE ("ACE_Message_Block::~ACE_Message_Block");
+
+  if (this->data_block ())
+    this->data_block ()->release ();
+
+  this->prev_ = 0;
+  this->next_ = 0;
 }
 
 ACE_Data_Block *

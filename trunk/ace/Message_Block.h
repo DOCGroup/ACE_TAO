@@ -410,7 +410,7 @@ public:
   ACE_Data_Block *duplicate (void);
   // Return a "shallow" copy that increments our reference count by 1.
 
-  ACE_Data_Block *release (ACE_Message_Block *mb = 0);
+  ACE_Data_Block *release (void);
   // Decrease the shared reference count by 1.  If the reference count
   // is > 0 then return this; else if reference count == 0 then delete
   // <this> and <mb> and return 0.  Behavior is undefined if reference
@@ -438,9 +438,6 @@ public:
   // Dump the state of an object.
 
 private:
-  ACE_Data_Block *release_i (ACE_Message_Block *mb);
-  // Performs the actual release.
-
   ACE_Message_Block::ACE_Message_Type type_;		
   // Type of message.
 
