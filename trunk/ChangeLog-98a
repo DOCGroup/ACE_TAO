@@ -27,7 +27,8 @@ Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Timer_Heap_T.cpp (get_first): fixed ACE_TRACE id string.
 
-        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (recv):
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp,
+        * apps/Gateway/Peer/Peer.cpp (recv):
           changed type of HEADER_SIZE to size_t to avoid signed/unsigned
           comparison.
 
