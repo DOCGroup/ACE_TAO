@@ -1,53 +1,59 @@
+Sat Feb 12 10:29:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html:
+	* docs/Options.html: Added information about shared memory
+	  transport.
+
 Fri Feb 11 19:50:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_argument.cpp 
-	* TAO_IDL/ast/ast_array.cpp 
-	* TAO_IDL/ast/ast_attribute.cpp 
-	* TAO_IDL/ast/ast_concrete_type.cpp 
-	* TAO_IDL/ast/ast_constant.cpp 
-	* TAO_IDL/ast/ast_enum.cpp 
-	* TAO_IDL/ast/ast_enum_val.cpp 
-	* TAO_IDL/ast/ast_exception.cpp 
-	* TAO_IDL/ast/ast_expression.cpp 
-	* TAO_IDL/ast/ast_field.cpp 
-	* TAO_IDL/ast/ast_interface_fwd.cpp 
-	* TAO_IDL/ast/ast_module.cpp 
-	* TAO_IDL/ast/ast_native.cpp 
-	* TAO_IDL/ast/ast_operation.cpp 
-	* TAO_IDL/ast/ast_predefined_type.cpp 
-	* TAO_IDL/ast/ast_root.cpp 
-	* TAO_IDL/ast/ast_sequence.cpp 
-	* TAO_IDL/ast/ast_string.cpp 
-	* TAO_IDL/ast/ast_structure.cpp 
-	* TAO_IDL/ast/ast_type.cpp 
-	* TAO_IDL/ast/ast_typedef.cpp 
-	* TAO_IDL/ast/ast_union.cpp 
-	* TAO_IDL/ast/ast_union_branch.cpp 
-	* TAO_IDL/ast/ast_union_label.cpp 
-	* TAO_IDL/include/ast_argument.h 
-	* TAO_IDL/include/ast_array.h 
-	* TAO_IDL/include/ast_attribute.h 
-	* TAO_IDL/include/ast_concrete_type.h 
-	* TAO_IDL/include/ast_constant.h 
-	* TAO_IDL/include/ast_enum.h 
-	* TAO_IDL/include/ast_enum_val.h 
-	* TAO_IDL/include/ast_exception.h 
-	* TAO_IDL/include/ast_expression.h 
-	* TAO_IDL/include/ast_field.h 
-	* TAO_IDL/include/ast_interface_fwd.h 
-	* TAO_IDL/include/ast_module.h 
-	* TAO_IDL/include/ast_native.h 
-	* TAO_IDL/include/ast_operation.h 
-	* TAO_IDL/include/ast_predefined_type.h 
-	* TAO_IDL/include/ast_root.h 
-	* TAO_IDL/include/ast_sequence.h 
-	* TAO_IDL/include/ast_string.h 
-	* TAO_IDL/include/ast_structure.h 
-	* TAO_IDL/include/ast_type.h 
-	* TAO_IDL/include/ast_typedef.h 
-	* TAO_IDL/include/ast_union.h 
-	* TAO_IDL/include/ast_union_branch.h 
-	* TAO_IDL/include/ast_union_label.h 
+	* TAO_IDL/ast/ast_argument.cpp
+	* TAO_IDL/ast/ast_array.cpp
+	* TAO_IDL/ast/ast_attribute.cpp
+	* TAO_IDL/ast/ast_concrete_type.cpp
+	* TAO_IDL/ast/ast_constant.cpp
+	* TAO_IDL/ast/ast_enum.cpp
+	* TAO_IDL/ast/ast_enum_val.cpp
+	* TAO_IDL/ast/ast_exception.cpp
+	* TAO_IDL/ast/ast_expression.cpp
+	* TAO_IDL/ast/ast_field.cpp
+	* TAO_IDL/ast/ast_interface_fwd.cpp
+	* TAO_IDL/ast/ast_module.cpp
+	* TAO_IDL/ast/ast_native.cpp
+	* TAO_IDL/ast/ast_operation.cpp
+	* TAO_IDL/ast/ast_predefined_type.cpp
+	* TAO_IDL/ast/ast_root.cpp
+	* TAO_IDL/ast/ast_sequence.cpp
+	* TAO_IDL/ast/ast_string.cpp
+	* TAO_IDL/ast/ast_structure.cpp
+	* TAO_IDL/ast/ast_type.cpp
+	* TAO_IDL/ast/ast_typedef.cpp
+	* TAO_IDL/ast/ast_union.cpp
+	* TAO_IDL/ast/ast_union_branch.cpp
+	* TAO_IDL/ast/ast_union_label.cpp
+	* TAO_IDL/include/ast_argument.h
+	* TAO_IDL/include/ast_array.h
+	* TAO_IDL/include/ast_attribute.h
+	* TAO_IDL/include/ast_concrete_type.h
+	* TAO_IDL/include/ast_constant.h
+	* TAO_IDL/include/ast_enum.h
+	* TAO_IDL/include/ast_enum_val.h
+	* TAO_IDL/include/ast_exception.h
+	* TAO_IDL/include/ast_expression.h
+	* TAO_IDL/include/ast_field.h
+	* TAO_IDL/include/ast_interface_fwd.h
+	* TAO_IDL/include/ast_module.h
+	* TAO_IDL/include/ast_native.h
+	* TAO_IDL/include/ast_operation.h
+	* TAO_IDL/include/ast_predefined_type.h
+	* TAO_IDL/include/ast_root.h
+	* TAO_IDL/include/ast_sequence.h
+	* TAO_IDL/include/ast_string.h
+	* TAO_IDL/include/ast_structure.h
+	* TAO_IDL/include/ast_type.h
+	* TAO_IDL/include/ast_typedef.h
+	* TAO_IDL/include/ast_union.h
+	* TAO_IDL/include/ast_union_branch.h
+	* TAO_IDL/include/ast_union_label.h
 	  Took the destructor bodies out of the header file,
 	  in preparation for someday adding some memory
 	  manangement to them.
@@ -61,8 +67,8 @@ Fri Feb 11 18:20:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/util/utl_scope.cpp:
 	  The prevention of the redefinition of a scope
 	  within itself was preventing that redefinition
-	  not just in the scope immediately within, but 
-	  in all contained scopes. Thanks to 
+	  not just in the scope immediately within, but
+	  in all contained scopes. Thanks to
 	  Klaus Hofmann <Klaus.Hofmann@astrum.de>
 	  for sending in the example IDL file that pointed
 	  this out.
