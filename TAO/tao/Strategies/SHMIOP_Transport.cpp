@@ -136,6 +136,7 @@ TAO_SHMIOP_Transport::recv (char *buf,
 }
 
 
+#if 0
 int
 TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
                                            ssize_t missing_data,
@@ -191,6 +192,7 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
   // process that
   return this->process_parsed_messages (&pqd, rh);
 }
+#endif
 
 int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,

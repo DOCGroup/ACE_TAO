@@ -179,7 +179,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                            ACE_LIB_TEXT("LF")) == 0)
                 this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
               else
-                this->report_option_value_error (ACE_LIB_TEXT("-ORBTransportMuxStrategy"), name);
+                this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectStrategy"), name);
             }
         }
       else if (ACE_OS::strcmp (argv[curarg],

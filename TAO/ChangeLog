@@ -1,3 +1,84 @@
+Wed Dec 10 13:58:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/default_client.cpp (parse_args): Corrected erroneous option
+	  name printed when -ORBConnectStrategy option parsing hits an
+	  error.
+
+	* tao/IIOP_Transport.cpp (recv): Corrected method name printed in
+	  debug message.
+
+	* tao/GIOP_Message_Base.cpp: 
+        * tao/GIOP_Message_Base.h: 
+        * tao/GIOP_Message_Base.i: 
+        * tao/GIOP_Message_Generator_Parser_Impl.inl: 
+        * tao/GIOP_Message_Lite.cpp: 
+        * tao/GIOP_Message_Lite.h: 
+        * tao/GIOP_Message_State.cpp: 
+        * tao/GIOP_Message_State.h: 
+        * tao/GIOP_Message_State.inl: 
+        * tao/Incoming_Message_Queue.cpp: 
+        * tao/Incoming_Message_Queue.h: 
+        * tao/Incoming_Message_Queue.inl: 
+        * tao/Pluggable_Messaging.h: 
+        * tao/Transport.cpp: 
+        * tao/Transport.h: 
+        * tao/orbconf.h:
+	* tao/Strategies/DIOP_Transport.cpp
+	* tao/Strategies/SHMIOP_Transport.cpp
+	* tao/Strategies/SHMIOP_Transport.h
+	
+
+	  Integrated aggregate fix to infamous Parse Magic Bytes problem.
+	  The fix was originally developed in OCI's repository and
+	  migrated here.  An overall description of the problem and
+	  solution follow, and a detailed changelog that follows the
+	  development of this solution is found in
+	  ChangeLogs/PMBChangeLog.
+
+	  The old way of handling input naively assumed that a header would
+	  never be broken across multiple read()s from the socket.  Back in
+	  the old days, this assumption was okay, because TAO performed a
+	  recv_n() specifically for the header, and thus insured that it
+	  wouldn't get less than a full header.  However, when it was
+	  changed to use a single read, that no longer worked.
+
+	  Further complicating matters was the incoming message queue, and
+	  the myriad of methods that manipulated elements on the message
+	  queue.
+
+	  The PMB changes rework things in the following ways:
+
+	  1. The incoming message queue now holds only completely-read
+	  GIOP messages awaiting processing.  Each GIOP message is held in
+	  a heap-allocated ACE_Message_Block.  When the message has been
+	  processed, the processing code is responsible for calling
+	  release on the queued message to return the memory to the heap.
+
+	  2. Since GIOP, by definition, assumes an ordered byte stream,
+	  there can be only one partially read, i.e., uncompleted, message;
+	  this is now held explicitly in TAO_Transport::uncompleted_message_
+	  as a pointer to a heap-allocated ACE_Message_Block of the exact
+	  correct size for the GIOP message.
+
+	  3. States for reading from the transport have been explicitly
+	  defined rather than implied from values of other data members.
+
+	  This change also correctly handles correct receipt of GIOP
+	  fragments:
+
+	  a. In the case of a GIOP 1.2 fragment, each fragment is a complete
+	  GIOP message.  It is, however, unable to be processed until all
+	  fragments have arrived.
+
+	  b. Unlike a TCP segment, a GIOP fragment is not stateless; all
+	  GIOP 1.2 fragments for a specific request must be sent in-order.
+	  However, with transport multiplexing, other messages--including
+	  fragments for other requests--may interleave these fragments.
+
+	  c. By design, there is no way to know the total number of payload
+	  bytes across all GIOP fragments until the final fragment is
+	  received.
+
 Wed Dec 10 15:12:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
