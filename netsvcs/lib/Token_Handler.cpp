@@ -877,8 +877,11 @@ ACE_TS_WLock::clone (void) const
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Schedule_All_Reactive_Strategy<ACE_Token_Handler>;
+template class ACE_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<ACE_Token_Handler>;
 template class ACE_Creation_Strategy<ACE_Token_Handler>;
-template class ACE_Accept_Strategy<ACE_Token_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>;
+template class ACE_Schedule_All_Reactive_Strategy<ACE_Token_Handler>;
+template class ACE_Scheduling_Strategy<ACE_Token_Handler>;
+template class ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
