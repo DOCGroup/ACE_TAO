@@ -1,3 +1,9 @@
+Sun Dec 14 12:29:26 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (exit,wait): Disabled thread join
+	  functionality in Chorus.  Thanks to Wei Chiang
+	  <chiang@tele.nokia.fi> for providing the fix.
+
 Fri Dec 12 21:48:38 1997  Torbjorn Lindgren <tl@funcom.com>
 
         * ace/config-linux*.h: All Linux platform files except the
