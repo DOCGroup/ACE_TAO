@@ -2,7 +2,33 @@
 // $Id$
 
 // The following configuration file is designed to work for Linux
-// platforms using GNU C++ and L. Xavier's pthreads package.
+// platforms using GNU C++ and the MIT threads package.
+
+/*	JCEJ 12/22/96
+
+	This is a slightly modified version of config-linux-pthreads
+	made to work with Xavier Leroy's pthreads package.  For more
+	information you should check out his Web site:
+		http://pauillac.inria.fr/~xleroy/linuxthreads/
+
+	The version I have installed and working is an RPM*
+	based on Xavier's 0.5 release. I don't know where
+	the tarball of 0.5 can be found, but I suspect that
+	Xavier's site has it...
+
+	* RPM == Redhat Package Management
+	My system is a Caldera-based distribution with many
+	upgraded packages.  If you don't use RPM, there is
+	a program (rpm2cpio) which will extract the files
+	for "normal consumption".
+
+	You may also want to check out the "ACE On Linux"
+	pages at:
+		http://users.deltanet.com/users/slg/ACE/
+
+	(They were a little out of date when I last was
+	there however.)
+ */
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -65,7 +91,7 @@
 #define ACE_PAGE_SIZE 4096
 
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
-#define LINUX 1.2.10
+#define LINUX 2.0.25
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
@@ -88,13 +114,22 @@
 #define ACE_HAS_THREADS
 // And they're even POSIX pthreads (MIT implementation)
 #define ACE_HAS_PTHREADS
-#define ACE_MT_SAFE
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_HAS_PTHREADS_XAVIER		// JCEJ 12/19/96
+
+#define ACE_MT_SAFE				// JCEJ 12/22/96	#1
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE		// jcej 12/22/96	#2
+#define PTHREAD_MIN_PRIORITY		0	// JCEJ 12/22/96	#3
+#define PTHREAD_MAX_PRIORITY		32	// JCEJ 12/22/96	#3
+#define	ACE_HAS_PTHREADS_1003_DOT_1C		// JCEJ 12/22/96	#4
+
+#define ACE_HAS_PTHREADS_XAVIER			// JCEJ 12/19/96
+
+#define ACE_LACKS_THREAD_STACK_ADDR		// JCEJ 12/17/96
+#define ACE_LACKS_THREAD_STACK_SIZE		// JCEJ 12/17/96
+
+#define	ACE_LACKS_RWLOCK_T			// JCEJ 12/23/96	#1
+
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
-#define ACE_LACKS_THREAD_STACK_ADDR	// JCEJ 12/17/96
-#define ACE_LACKS_THREAD_STACK_SIZE	// JCEJ 12/17/96
 
 // To use pthreads on Linux you'll need to use the MIT version, for
 // now...
