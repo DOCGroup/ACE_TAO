@@ -1,7 +1,7 @@
 # $Id$
 
 # This platform macros file is intended to work with
-# Digital UNIX 4.0 (OSF/1 4.0), using the cxx compiler..
+# Linux, using the cxx compiler..
 
 debug = 1
 exceptions = 1
@@ -9,16 +9,10 @@ rtti = 1
 
 CC              = cxx
 CXX             = $(CC)
-#### Note: -pthread uses POSIX threads.  If you want to use DCE threads
-####       instead, change "-pthread" to "-threads".
-CFLAGS          += -pthread
+CFLAGS          += -I/usr/include/g++
 
-#### These flags can only be used with cxx Version 6.0 and later.
-#### They are enabled by default; they can be disabled by settting
-#### CXX_VER to CXX_5 either on the make command line, or by
-#### or by setting the CXX_VER environment variable to CXX_5.
-ifneq ($(CXX_VER),CXX_5)
-  WARNING_FLAGS += -w0
+  #### RedHat 5.2 /usr/include/malloc.h has an extraneous semicolon.
+  WARNING_FLAGS += -w0 -msg_disable 381
   ifneq (,$(VERBOSE_WARNING))
     WARNING_FLAGS += -msg_display_number -msg_display_tag
   endif # VERBOSE_WARNING
@@ -29,13 +23,6 @@ ifneq ($(CXX_VER),CXX_5)
     WARNING_FLAGS += -msg_disable 1016
   endif # optimize
 
-  ifndef ACE_DU_VERSION
-    # In case this file wasn't included by platform_osf1_cxx.GNU:
-    # 9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
-    WARNING_FLAGS += -msg_disable 9
-  endif # ACE_DU_VERSION
-endif # 6.0 or later
-
 CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
 ifeq ($(rtti),)
   CCFLAGS += -nortti
@@ -43,19 +30,17 @@ endif # rtti
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
-LIBS            += $(CFLAGS) -ltli -lrt
-MATHLIB         = -lm
+LIBS            += -ldl -lpthread
+ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
+  LIBS += -lrt
+endif
 OCFLAGS         += -O4
 PIC             =
-ARFLAGS         = cruvZ
+ARFLAGS         = rsuv
 # When libraries are archived, a hash index is automatically created
 # so there is no need for ranlib
 RANLIB          = @true
-#### The -hidden [...] -non_hidden business avoids multiply defined
-#### symbols between the shared library and libcxxstd.a.  It's the
-#### workaround recommended in PTR 43-4-204.
-SOFLAGS         = -hidden /usr/lib/cmplrs/cxx/libcxxstd.a -non_hidden \
-                  -shared -use_ld_input $(ACELIB)
+SOFLAGS         = -shared -use_ld_input $(ACELIB) cxx_repository/*.o
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
