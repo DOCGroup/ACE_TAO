@@ -86,7 +86,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   else // now forward, in throwing the ForwardRequest Exception
   {
     // Throw forward exception
-    env.exception (new PortableServer::ForwardRequest (this->forward_to_var_));
+    env.exception (new PortableServer::ForwardRequest (this->forward_to_var_.in ()));
 
     ACE_DEBUG ((LM_DEBUG,"MyFooServantLocator::preinvoke: Threw the ForwardRequest exception.\n"));
     return 0;
