@@ -57,7 +57,7 @@ Peer_Handler::open (void *a)
   return 0;
 }
 
-void
+int
 Peer_Handler::transmit (ACE_Message_Block *mb,
                         size_t n,
                         int event_type)
@@ -89,7 +89,9 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
       // Caller is responsible for freeing a ACE_Message_Block
       // if failures occur.
       mb->release ();
+      return -1;
     }
+  return 0;
 }
 
 // Read events from stdin and send them to the gatewayd.
@@ -130,13 +132,14 @@ Peer_Handler::transmit_stdin (void)
           break;
           /* NOTREACHED */
         default:
-          this->transmit (mb, n, ROUTING_EVENT);
-          break;
+          return this->transmit (mb, n, ROUTING_EVENT);
           /* NOTREACHED */
         }
+      return 0;
     }
 
-  return 0;
+  ACE_DEBUG ((LM_DEBUG, "Must transmit over an opened channel.\n"));
+  return -1;
 }
 
 // Perform a non-blocking <put> of event MB.  If we are unable to send
