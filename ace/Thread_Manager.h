@@ -266,15 +266,19 @@ public:
   // are destroyed and thus, we don't try to wait but just clean up the thread
   // descriptor list.
 
-  // NOTE for VxWorks implementation only:  the ACE_thread_t * argument
-  // to any of the spawn () family is interpreted and used as follows:
-  // value of ACE_thread_t * argument    use
-  // ================================    ===
-  // 0                                   Not used.
-  // non-0, points to 0 char *           The task name is passed back in
-  //                                       the char *.
-  // non-0, points to non-0 char *       The char * is used as the task name.
-  //                                       The char * is not modified.
+  // The ACE_thread_t * argument to each of the spawn () family member
+  // functions is interpreted and used as shown in the following
+  // table.  NOTE:  the final option, to provide task names, is _only_
+  // supported on VxWorks!
+  //
+  // Value of ACE_thread_t * argument  Use                         Platforms
+  // ================================  ==========================  =========
+  // 0                                 Not used.                   All
+  // non-0 (and points to 0 char *     The task name is passed     All
+  //   on VxWorks)                       back in the char *.
+  // non-0, points to non-0 char *     The char * is used as       VxWorks only
+  //                                     the task name.  The
+  //                                     argument is not modified.
 
   int spawn (ACE_THR_FUNC func,
              void *args = 0,
