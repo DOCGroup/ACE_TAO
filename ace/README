@@ -237,6 +237,7 @@ ACE_TEMPLATES_REQUIRE_PRAGMA		Compiler's template mechanism must use a pragma Th
 ACE_TEMPLATES_REQUIRE_SOURCE		Compiler's template mechanim must see source code (i.e., .cpp files).  This is used for GNU G++.
 ACE_TEMPLATES_REQUIRE_SPECIALIZATION    Compiler's template mechanism requires the use of explicit C++ specializations for all used templates. This is also used for GNU G++ if you don't use the "repo" patches.
 ACE_USE_POLL				Use the poll() event demultiplexor rather than select().
+ACE_USES_ASM_SYMBOL_IN_DLSYM		Platform uses assembly symbols instead of C symbols in dlsym()
 ACE_WSOCK_VERSION 			A parameter list indicating the version of WinSock (e.g., "1, 1" is version 1.1).
 ----------------------------------------
 
