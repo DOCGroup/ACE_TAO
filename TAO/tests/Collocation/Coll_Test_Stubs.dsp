@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Coll_Test_Stubs" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Coll_Test_Stubs DLL" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=Coll_Test_Stubs - Win32 Debug
+CFG=Coll_Test_Stubs DLL - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Coll_Test_Stubs - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Coll_Test_Stubs.mak" CFG="Coll_Test_Stubs - Win32 Debug"
+!MESSAGE NMAKE /f "Coll_Test_Stubs.mak" CFG="Coll_Test_Stubs DLL - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Coll_Test_Stubs - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "Coll_Test_Stubs - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "Coll_Test_Stubs DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "Coll_Test_Stubs DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Coll_Test_Stubs - Win32 Release"
+!IF  "$(CFG)" == "Coll_Test_Stubs DLL - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLL_TEST_STUBS_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLL_TEST_STUBS_EXPORTS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "MY_Stub_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
 # ADD LINK32 ace.lib tao.lib /nologo /dll /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ELSEIF  "$(CFG)" == "Coll_Test_Stubs - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Coll_Test_Stubs DLL - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLL_TEST_STUBS_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D MY_Stub_HAS_DLL=1 /D "MY_Stub_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "MY_Stub_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -87,8 +87,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Coll_Test_Stubs - Win32 Release"
-# Name "Coll_Test_Stubs - Win32 Debug"
+# Name "Coll_Test_Stubs DLL - Win32 Release"
+# Name "Coll_Test_Stubs DLL - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -120,7 +120,7 @@ SOURCE=.\stub_export.h
 
 SOURCE=.\Diamond.idl
 
-!IF  "$(CFG)" == "Coll_Test_Stubs - Win32 Release"
+!IF  "$(CFG)" == "Coll_Test_Stubs DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__DIAMO="..\..\..\bin\release\tao_idl.exe"	
@@ -159,7 +159,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Coll_Test_Stubs - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Coll_Test_Stubs DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__DIAMO="..\..\..\bin\tao_idl.exe"	

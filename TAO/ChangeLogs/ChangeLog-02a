@@ -1,3 +1,31 @@
+Wed Jun  7 18:31:54 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/AMI/FL_Callback/AMI_Progress.dsp:
+
+          Release versions were linking to the wrong library.
+
+        * examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Event_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.dsp:
+
+          These projects were copying NavWeapon.idl from the upper
+          level directory.  This seemed a bit odd, so I changed it
+          just to compile the file where it is (and the generated
+          code gets produced in the current directory).
+
+        * tests/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Collocation/Diamond.dsp:
+
+          Changed name to include DLL (for msvc_auto_compile.pl's 
+          use) and fix its use of the BUILD_DLL macros.
+
+        * tests/MProfile/client.dsp:
+
+          This project was linking to both debug and release
+          versions of ace and tao in the release build, removed
+          the debug versions of the libraries.
+
 Wed Jun  7 18:07:28 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/CosNotification.bor:
