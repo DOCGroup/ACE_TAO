@@ -48,7 +48,7 @@ Bottom_Impl::bottom_quote (CORBA::Environment & )
 }
 
 void
-Bottom_Impl::shutdown (CORBA::Environment & )
+Bottom_Impl::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);

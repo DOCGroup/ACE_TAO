@@ -1,3 +1,8 @@
+Wed Mar 28 16:51:01 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Multiple/Multiple_Impl.cpp:
+          Add missing ACE_TRY_ENV
+
 Wed Mar 28 16:39:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Messaging.h:
