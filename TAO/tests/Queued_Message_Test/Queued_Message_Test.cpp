@@ -10,8 +10,13 @@
 
 #include "tao/Asynch_Queued_Message.h"
 #include "ace/Log_Msg.h"
+#include "ace/Message_Block.h"
 
-ACE_RCSID(tests, Queued_Message_Test, "$Id$")
+
+ACE_RCSID (tests,
+           Queued_Message_Test,
+           "$Id$")
+
 
 /// Max number of bytes on each message block
 const size_t max_block_length = 256;

@@ -1,3 +1,10 @@
+Sat Feb 22 08:44:46 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Queued_Message_Test/Queued_Message_Test.cpp:
+
+	  Include "ace/Message_Block.h".  Necessitated by inter-header
+	  dependency reductions.
+
 Sat Feb 22 08:40:11 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tests/OBV/Factory/FactoryC_impl.h:
