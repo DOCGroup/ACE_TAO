@@ -157,15 +157,35 @@ TAO_GIOP_Message_Base::generate_reply_header (TAO_OutputCDR &cdr,
                            -1);
     }
 
-  // Now call the implementation for the rest of the header
-  if (!this->generator_parser_->write_reply_header (cdr,
-                                                    params))
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Now call the implementation for the rest of the header
+      int result =
+        this->generator_parser_->write_reply_header (cdr,
+                                                     params,
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (!result)
+        {
+          if (TAO_debug_level > 4)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Error in writing reply ")
+                        ACE_TEXT ("header\n")));
+
+          return -1;
+        }
+    }
+  ACE_CATCHANY
     {
       if (TAO_debug_level > 4)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Error in writing reply header \n")),
-                           -1);
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_GIOP_Message_Base::generate_reply_header");
+
+      return -1;
     }
+  ACE_ENDTRY;
 
   return 0;
 }

@@ -1,3 +1,27 @@
+Tue May 01 08:50:11 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/GIOP_Message_Generator_Parser.h (write_reply_header):
+	* tao/GIOP_Message_Generator_Parser_10.h (write_reply_header):
+	* tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
+	* tao/GIOP_Message_Generator_Parser_12.h (write_reply_header):
+
+	  Removed a TSS access from the critical path on the server side
+	  by removing the default CORBA::Environment argument
+	  (i.e. TAO_default_environment()).  TAO_default_environment()
+	  causes a TSS access.
+
+	  NOTE: We should never use default CORBA::Environment arguments
+	  (i.e. TAO_default_environment()) in methods that are used
+	  internally by TAO for specifically this reason.
+
+	* tao/GIOP_Message_Base.cpp (generate_reply_header):
+
+	  Declare a new CORBA::Environment variable and wrap the
+	  write_reply_header() call within an ACE_TRY block.  That block
+	  was missing for some reason.  These changes are part of the
+	  fixes that remove a TSS access from the critical path on the
+	  server side.
+
 Tue May  1 09:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/AMI_Buffering/Makefile: Made a check for ami instead of
