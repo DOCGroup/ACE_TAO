@@ -1,3 +1,13 @@
+Tue Jun 19 16:08:34 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* ace/CDR_Stream.{i,cpp}:
+
+	  Fixed the skip_wchar() according to the changes in WChar 
+	  implementation of GIOP 1.2. Thanks to 
+	  Peter Phillips  <pphillip@opentext.com> for reporting the problem 
+	  the fix.
+
+	
 Tue Jun 19 08:13:52 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
         * tests/Max_Default_Port_Test.cpp:
