@@ -1,5 +1,6 @@
 Sun Feb 18 17:16:41 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* netsvcs/clients/Tokens/manual/manual.cpp (main),
 	* tests/Tokens_Test.cpp (main): Reordered the #ifdefs for the
 	  ACE_HAS_TOKENS_LIBRARY stuff.  Thanks to Kitty for reporting
  	  this.
