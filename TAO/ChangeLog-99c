@@ -2,7 +2,7 @@ Fri Mar 26 18:07:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POAC.h:
 	* tao/POAS.{h,cpp}:
-	* tao/POAManager.cpp (get_state): Added enum definition for
+	* tao/POAManager.{h,cpp} (get_state): Added enum definition for
 	  PortableServer::POAManager::State and the get_state method which
 	  got added in Corba 2.3 spec.  Thanks to Umar Syyid
 	  <usyyid@hns.com> for pointing this out.
