@@ -4,8 +4,9 @@ Wed Apr 23 14:27:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	  to match declaration order.
 
 	* tests/Process_Strategy_Test.cpp: added ACE_Singleton template
-	  specialization.  Also, fixed typo in test name (argument to
-	  ACE_START_TEST).
+	  specialization.  In function client (), null terminated "buf"
+	  before call to ACE_OS::strrchr () to avoid uninitialized memory
+	  read.  Also, fixed typo in test name (argument to ACE_START_TEST).
 
 	* examples/Service_Configurator/Misc/Timer_Service.cpp (init): changed
 	  type of loop index to int to avoid signed/unsigned comparison, and
