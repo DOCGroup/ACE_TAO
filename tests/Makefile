@@ -19,6 +19,7 @@ BIN = 	Barrier_Test \
 	Message_Queue_Test \
 	Mutex_Test \
 	Naming_Test \
+	Process_Mutex_Test \
 	Priority_Buffer_Test \
 	Pipe_Test \
 	Reactors_Test \
