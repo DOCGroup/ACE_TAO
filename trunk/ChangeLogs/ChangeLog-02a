@@ -1,3 +1,11 @@
+Thu Nov  2 12:11:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Name_Request_Reply.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Map_Manager.h:
+        * ace/Log_Record.h:
+          Minor adjustments to make doxygen happier.
+
 Thu Nov  2 11:57:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile:
