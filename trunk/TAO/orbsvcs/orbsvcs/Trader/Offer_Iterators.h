@@ -24,8 +24,8 @@
   // TAO_Offer_Iterator
   // *************************************************************
 
-class TAO_Offer_Iterator :
-  public POA_CosTrading::OfferIterator
+class TAO_Offer_Iterator : public POA_CosTrading::OfferIterator
+{
   // = TITLE
   //     This class implements CosTrading::OfferIterator IDL
   //     interface.
@@ -39,7 +39,6 @@ class TAO_Offer_Iterator :
   //   to be extracted by successive operations on the OfferIterator
   //   interface.
   // END SPEC
-{
 public:
   // = Initialization and termination methods.
 
