@@ -28,7 +28,7 @@ model</a>.  </p>
 href="http://www.cs.wustl.edu/~schmidt/Svc-Conf.ps.gz">ACE
 Service Configurator</a> framework. Thus, options are specified in the
 familiar <tt>svc.conf</tt> file (if you want to use a different file
-name, use the <tt><a href="Options.html#svcfonf">-ORBsvcconf</a></tt>
+name, use the <tt><a href="Options.html#svcfonf">-ORBSvcConf</a></tt>
 option).  You can also setup default configurations for your programs.
 Please see the <a href="#programming">Programming Considerations</a>
 for more detailed discussion on this.</p>
@@ -148,7 +148,7 @@ Roadmap</h3>
   <li><a NAME="concurrency"></a><b>Server concurrency strategy</b> --
       The default server strategy factory provided by down support two
       different concurrency strategy.  It can be specified by adding
-      the "<tt>-ORBconcurrency</tt>" flag in the <code><a
+      the <tt>-ORBConcurrency</tt> flag in the <code><a
       href="Options.html#orb_concurrency"> Server_Strategy_Factory
       </a></code> entry of the <code>svc.conf</code> file. This
       specifies the concurrency strategy an ORB uses.  This strategy
@@ -233,8 +233,8 @@ Roadmap</h3>
       is used by default to ensure proper access. <P>
 
       Using the switch <tt><a href="Options.html#-ORBProfileLock">
-      -ORBprofilelock </a></tt> this policy can be deactivated
-      specifying <tt>-ORBprofilelock null</tt>.
+      -ORBProfileLock </a></tt> this policy can be deactivated
+      specifying <tt>-ORBProfileLock null</tt>.
       The primary reason for doing this is to improve performance
       when no forwarding is used or no multithreading with access to
       shared <tt>CORBA::Object</tt>'s.  Using a null mutex reduces
@@ -373,7 +373,7 @@ The following are common ORB configurations used by TAO applications.<P>
             select_mt</tt> (default) or other thread-safe platform specific
             reactors.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
-            <tt>-ORBconcurrency thread-per-connection</tt></td>
+            <tt>-ORBConcurrency thread-per-connection</tt></td>
       </tr>
     </table>
     <P>
@@ -419,7 +419,7 @@ The following are common ORB configurations used by TAO applications.<P>
             select_mt</tt> (default) or other thread-safe platform specific
             reactors.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
-            <tt>-ORBconcurrency reactive</tt></td>
+            <tt>-ORBConcurrency reactive</tt></td>
       </tr>
 </table>
 <P>
@@ -464,7 +464,7 @@ The following are common ORB configurations used by TAO applications.<P>
             select_mt</tt> (default) or other thread-safe platform specific
             reactors.<br>
           <br><tt>TAO_Server_Strategy_Factory</tt>:
-          <tt>-ORBconcurrency thread-per-connection</tt></td>
+          <tt>-ORBConcurrency thread-per-connection</tt></td>
     </tr>
 </table>
 
@@ -512,7 +512,7 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
         <td><tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
             tp</tt>.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
-            <tt>-ORBconcurrency reactive</tt></td>
+            <tt>-ORBConcurrency reactive</tt></td>
       </tr>
     </table>
 
@@ -553,7 +553,7 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
         <td><tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
             tp</tt>.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
-            <tt>-ORBconcurrency reactive</tt></td>
+            <tt>-ORBConcurrency reactive</tt></td>
       </tr>
 </table>
 </ul>
@@ -577,9 +577,9 @@ components. <P>
       this approach is you always need a <code>svc.conf</code> file if
       you want to do use non-default configuration.</p>
 
-  <li><p>You can use <code>-ORBsvcconf <em>filename</em></code> to use
+  <li><p>You can use <code>-ORBSvcConf <em>filename</em></code> to use
       a config file that is not called <code>svc.conf</code>.
-      Specifying <code>-ORBsvcconf</code> exclude the reading of
+      Specifying <code>-ORBSvcConf</code> exclude the reading of
       default <code>svc.conf</code> file.</p>
 
   <li><p>If you don't want the application users to worry about
@@ -589,14 +589,14 @@ components. <P>
       to set up the default svc.conf entries.  In this case, if a TAO
       application cannot find a svc.conf file, it will configure TAO's
       components using the default settings.  You can still use a
-      <code>svc.conf</code> file or use <code>-ORBsvcconf</code>
+      <code>svc.conf</code> file or use <code>-ORBSvcConf</code>
       option to tune the program.<P>
 
   <li><p>TAO programs evaluate the configuration settings in the following
       order,</p>
 
       <ol>
-        <li>File specified in <code>-ORBsvcconf</code> command-line
+        <li>File specified in <code>-ORBSvcConf</code> command-line
             option, if one exist.  Otherwise, the
             <code>svc.conf</code> in the start-up directory will be
             evaluated, if one exist.
@@ -625,7 +625,7 @@ components. <P>
       in your ACE <code>config.h</code> file and recompile TAO
       library.  In this case, a TAO program will not try to search for
       the default <code>svc.conf</code> file.  However, if platform
-      support, you can still use <code>-ORBsvcconf</code> to change
+      support, you can still use <code>-ORBSvcConf</code> to change
       the program behavior temporarily.</p>
 
       <p>On these platform, you can alter the default settings for
@@ -677,7 +677,7 @@ Configuration for homogenous systems<a NAME="homogenous"></a></h3>
       sockets) can take advantage of TAO's UIOP pluggable transport protocol
       to improve performance considerably.  To use TAO's UIOP pluggable
       protocol, simply specify a UIOP endpoint on the command line using
-      the <tt>-ORBEndpoint</-tt> option described in the
+      the <tt>-ORBEndpoint</tt> option described in the
       <A HREF="Options.html">options</A> documentation.  Further performance
       improvement can be achieved by using the UIOP protocol in combination
       with the <tt>-ORBGIOPlite</tt> option.  Additional information about
@@ -739,7 +739,7 @@ choice of your configuration options.
       reactor for several concurrent requests; sometimes this configuration
       can be an overkill, if only one thread is using a reactor at the same
       time a lighter weight implementation can be used.  <p>This
-      configuration is controled by the <tt>-ORBclientconnectionhandler</tt>
+      configuration is controlled by the <tt>-ORBClientConnectionHandler</tt>
       option, good opportunities to use this option are:<P>
 
       <ul>
@@ -754,7 +754,7 @@ choice of your configuration options.
 <li>
     <b>Allocator for input CDR streams</b> -- Normally the application has no
     access to this buffer, and it is only used on the demarshaling of arguments
-    (or results). It is almost always better to use the "<tt>-ORBinputcdrallocator
+    (or results). It is almost always better to use the "<tt>-ORBInputCDRAllocator
     null</tt>" option since it will allocate memory from a thread specific allocator
     and it will not need locks to manage that memory.</li>
 
