@@ -13,13 +13,15 @@ TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
 IDLFILES = \
 	$(IDLDIR)\Security.idl \
 	$(IDLDIR)\SecurityLevel1.idl \
-	$(IDLDIR)\SecurityLevel2.idl
+	$(IDLDIR)\SecurityLevel2.idl \
+	$(IDLDIR)\SecurityReplaceable.idl
 
 OBJFILES = \
 	$(OBJDIR)\SecurityC.obj	\
-	$(OBJDIR)\SecurityLevel1C.obj	\
-	$(OBJDIR)\SecurityLevel2C.obj	\
+	$(OBJDIR)\SecurityLevel1C.obj \
+	$(OBJDIR)\SecurityLevel2C.obj \
 	$(OBJDIR)\SecurityLevel2S.obj \
+	$(OBJDIR)\SecurityReplaceableC.obj \
 	$(OBJDIR)\Security_Current.obj \
 	$(OBJDIR)\Security_Current_Impl.obj \
         $(OBJDIR)\Security_ORBInitializer.obj \
