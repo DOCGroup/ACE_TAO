@@ -20,7 +20,7 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
       if (destroy)
         {
           TAO_Endpoint *endpoint = iiop_endpoint->duplicate ();
-          
+
           new_endpoint = ACE_dynamic_cast (TAO_IIOP_Endpoint *,
                                            endpoint);
 
@@ -77,4 +77,28 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
     }
 
   return this->object_addr_;
+}
+
+ACE_INLINE void
+TAO_SSLIOP_Endpoint::qop (Security::QOP q)
+{
+  this->qop_ = q;
+}
+
+ACE_INLINE Security::QOP
+TAO_SSLIOP_Endpoint::qop (void) const
+{
+  return this->qop_;
+}
+
+ACE_INLINE void
+TAO_SSLIOP_Endpoint::trust (const Security::EstablishTrust &t)
+{
+  this->trust_ = t;
+}
+
+ACE_INLINE Security::EstablishTrust
+TAO_SSLIOP_Endpoint::trust (void) const
+{
+  return this->trust_;
 }

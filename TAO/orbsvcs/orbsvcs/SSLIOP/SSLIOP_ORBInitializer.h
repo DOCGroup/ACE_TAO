@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/SecurityC.h"
+
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
@@ -48,7 +50,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_ORBInitializer :
 public:
 
   /// Constructor.
-  TAO_SSLIOP_ORBInitializer (int no_protection);
+  TAO_SSLIOP_ORBInitializer (Security::QOP qop);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -67,10 +69,9 @@ private:
 
 private:
 
-  /// If set to 1, then the secure invocation server request
-  /// interceptor will be configured to allow requests coming in on
-  /// the insecure port to be handled.
-  int no_protection_;
+  /// The default quality-of-protection settings in use.
+  Security::QOP qop_;
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

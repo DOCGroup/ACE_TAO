@@ -19,8 +19,8 @@ ACE_RCSID (TAO_SSLIOP,
 #include "tao/Exception.h"
 #include "tao/ORBInitInfo.h"
 
-TAO_SSLIOP_ORBInitializer::TAO_SSLIOP_ORBInitializer (int no_protection)
-  : no_protection_ (no_protection)
+TAO_SSLIOP_ORBInitializer::TAO_SSLIOP_ORBInitializer (Security::QOP qop)
+  : qop_ (qop)
 {
 }
 
@@ -114,7 +114,7 @@ TAO_SSLIOP_ORBInitializer::post_init (
   ACE_NEW_THROW_EX (si,
                     TAO_SSLIOP_Server_Invocation_Interceptor (
                       ssliop_current.in (),
-                      this->no_protection_),
+                      this->qop_),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,

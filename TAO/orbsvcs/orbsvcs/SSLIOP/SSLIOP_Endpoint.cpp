@@ -20,7 +20,9 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
     object_addr_ (),
     next_ (0),
     iiop_endpoint_ (iiop_endp),
-    destroy_iiop_endpoint_ (0)
+    destroy_iiop_endpoint_ (0),
+    qop_ (Security::SecQOPIntegrityAndConfidentiality),
+    trust_ ()
 {
   if (ssl_component != 0)
     {
@@ -69,6 +71,9 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
 
   // Invalidate the Addr until the first attempt to use it is made.
   this->object_addr_.set_type (-1);
+
+  this->trust_.trust_in_target = 1;
+  this->trust_.trust_in_client = 1;
 }
 
 TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
@@ -128,9 +133,14 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == 0)
     return 0;
 
-  if (this->ssl_component_.port != 0
-      && endpoint->ssl_component_.port != 0
-      && this->ssl_component_.port != endpoint->ssl_component_.port)
+  Security::EstablishTrust t = endpoint->trust ();
+
+  if ((this->ssl_component_.port != 0
+       && endpoint->ssl_component_.port != 0
+       && this->ssl_component_.port != endpoint->ssl_component_.port)
+      || this->qop_ != endpoint->qop ()
+      || this->trust_.trust_in_target != t.trust_in_target
+      || this->trust_.trust_in_client != t.trust_in_client)
     return 0;
 
   return
@@ -155,5 +165,10 @@ TAO_SSLIOP_Endpoint::duplicate (void)
 CORBA::ULong
 TAO_SSLIOP_Endpoint::hash (void)
 {
-  return this->iiop_endpoint_->hash () + this->ssl_component_.port;
+  return
+    this->iiop_endpoint_->hash ()
+    + this->ssl_component_.port
+    + this->qop_
+    + this->trust_.trust_in_target
+    + this->trust_.trust_in_client;
 }

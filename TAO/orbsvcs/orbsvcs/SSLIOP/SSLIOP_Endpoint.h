@@ -9,6 +9,7 @@
  *  SSLIOP implementation of PP Framework Endpoint interface.
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -100,6 +101,19 @@ public:
 
   /// Return the SSLIOP-specific ACE_INET_Addr.
   const ACE_INET_Addr &object_addr (void) const;
+
+  /// Set the Quality-of-Protection settings for this endpoint.
+  void qop (Security::QOP qop);
+
+  /// Get the Quality-of-Protection settings for this endpoint.
+  Security::QOP qop (void) const;
+
+  /// Set the establishment of trust settings for this endpoint.
+  void trust (const Security::EstablishTrust &trust);
+
+  /// Get the establishment of trust settings for this endpoint.
+  Security::EstablishTrust trust (void) const;
+    
   //@}
 
 private:
@@ -127,6 +141,12 @@ private:
   /// Flag that determines whether or not the iiop_endpoint_ member is
   /// deallocated with delete().
   int destroy_iiop_endpoint_;
+
+  /// Quailty-of-Protection settings for this endpoint object.
+  Security::QOP qop_;
+
+  /// Establishment of trust settings for this endpoint object.
+  Security::EstablishTrust trust_;
 
 };
 
