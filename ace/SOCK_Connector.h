@@ -25,16 +25,17 @@
 /**
  * @class ACE_SOCK_Connector
  *
- * @brief Defines a factory that creates new <ACE_Stream>s actively.
+ * @brief Defines a factory that actively connects to a remote IP
+ * address and TCP port, creating a new @c ACE_SOCK_Stream object.
  *
- * The <ACE_SOCK_Connector> doesn't have a socket of its own,
- * i.e., it simply "borrows" the one from the ACE_SOCK_Stream
+ * The @c ACE_SOCK_Connector doesn't have a socket of its own,
+ * i.e., it simply "borrows" the one from the @c ACE_SOCK_Stream
  * that's being connected.  The reason for this is that the
- * underlying socket API doesn't use a "factory" socket to connect
- * "data-mode" sockets.  Therefore, there's no need to inherit
- * <ACE_SOCK_Connector> from <ACE_SOCK>.  A nice side-effect of
- * this is that <ACE_SOCK_Connector>'s do not store state so they
- * can be used reentrantly in multi-threaded programs.
+ * underlying socket API doesn't use a factory socket to connect
+ * data mode sockets.  Therefore, there's no need to inherit
+ * @c ACE_SOCK_Connector from @c ACE_SOCK.  A nice side-effect of
+ * this is that @c ACE_SOCK_Connector objects do not store state so
+ * they can be used reentrantly in multithreaded programs.
  */
 class ACE_Export ACE_SOCK_Connector
 {
@@ -44,24 +45,43 @@ public:
   ACE_SOCK_Connector (void);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
-   * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-   * the connection is done using non-blocking mode.  In this case, if
-   * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the maximum amount of time to wait before timing out; if the
-   * time expires before the connection is made <errno == ETIME>. Note
-   * the difference between this case and when a blocking connect
-   * is attmpted that TCP times out - in the latter case, errno will
-   * be ETIMEDOUT.
-   * The <local_sap> is the value of local address to bind to.  If it's
-   * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The <protocol_family> and <protocol> parameters are passed down
-   * to the <socket> call, whereas <flags> and <perms> are ignored.
+   * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
+   * object if the connection succeeds.
+   *
+   * @param new_stream  The @c ACE_SOCK_Stream object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The local address to bind to.  If it's
+   *                    the default value of @c ACE_Addr::sap_any then the
+   *                    OS will choose an unused port.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
+   *
+   * @return            Returns 0 if the connection succeeds. If it fails,
+   *                    -1 is returned and errno contains a specific error
+   *                    code.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
@@ -69,31 +89,49 @@ public:
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
-                      int perms = 0,
-                      int protocol_family = ACE_PROTOCOL_FAMILY_INET,
-                      int protocol = 0);
+                      int perms = 0);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <qos_params> contains QoS parameters that are passed
-   * to the IntServ (RSVP) and DiffServ protocols.  The <timeout> is
-   * the amount of time to wait to connect.  If it's 0 then we block
-   * indefinitely.  If *timeout == {0, 0} then the connection is done
-   * using non-blocking mode.  In this case, if the connection can't
-   * be made immediately the value of -1 is returned with <errno ==
-   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
-   * time to wait before timing out; if the time expires before the
-   * connection is made <errno == ETIME>.  Note the difference between
-   * this case and when a blocking connect is attmpted that TCP times
-   * out - in the latter case, errno will be ETIMEDOUT.
-   * The <local_sap> is the value of local address to bind to.  If
-   * it's the default value of <ACE_Addr::sap_any> then the user is
-   * letting the OS do the binding.
-   * If <reuse_addr> == 1 then the <local_addr> is reused,
-   * even if it hasn't been cleaned up yet.
-   * The <protocol_family> and <protocol> parameters are passed down
-   * to the <socket> call, whereas <flags> and <perms> are ignored.
+   * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
+   * object if the connection succeeds.
+   *
+   * @param new_stream  The @c ACE_SOCK_Stream object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   * @param qos_params  Contains QoS parameters that are passed to the
+   *                    IntServ (RSVP) and DiffServ protocols.
+   *                    @see ACE_QoS_Params.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The local address to bind to.  If it's
+   *                    the default value of @c ACE_Addr::sap_any then the
+   *                    OS will choose an unused port.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
+   *
+   * @return            Returns 0 if the connection succeeds. If it fails,
+   *                    -1 is returned and errno contains a specific error
+   *                    code.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
@@ -104,30 +142,46 @@ public:
                       ACE_SOCK_GROUP g = 0,
                       u_long flags = 0,
                       int reuse_addr = 0,
-                      int perms = 0,
-                      int protocol_family = ACE_PROTOCOL_FAMILY_INET,
-                      int protocol = 0);
+                      int perms = 0);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
-   * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-   * the connection is done using non-blocking mode.  In this case, if
-   * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the maximum amount of time to wait before timing out; if the
-   * time expires before the connection is made <errno == ETIME>.   Note
-   * the difference between this case and when a blocking connect
-   * is attmpted that TCP times out - in the latter case, errno will
-   * be ETIMEDOUT.
-   * The <local_sap> is the value of local address to bind to.  If it's
-   * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * Note that the <new_stream> always starts out in blocking mode.
-   * The <protocol_family> and <protocol> parameters are passed down
-   * to the <socket> call, whereas <flags> and <perms> are ignored.
+   * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
+   * object if the connection succeeds.
+   *
+   * @param new_stream  The @c ACE_SOCK_Stream object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The local address to bind to.  If it's
+   *                    the default value of @c ACE_Addr::sap_any then the
+   *                    OS will choose an unused port.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
+   *
+   * @return            Returns 0 if the connection succeeds. If it fails,
+   *                    -1 is returned and errno contains a specific error
+   *                    code.
    */
   int connect (ACE_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,
@@ -135,29 +189,49 @@ public:
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
-               int perms = 0,
-               int protocol_family = ACE_PROTOCOL_FAMILY_INET,
-               int protocol = 0);
+               int perms = 0);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <qos_params> contains QoS parameters that are passed
-   * to the IntServ (RSVP) and DiffServ protocols.  The <timeout> is
-   * the amount of time to wait to connect.  If it's 0 then we block
-   * indefinitely.  If *timeout == {0, 0} then the connection is done
-   * using non-blocking mode.  In this case, if the connection can't
-   * be made immediately the value of -1 is returned with <errno ==
-   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
-   * time to wait before timing out; if the time expires before the
-   * connection is made <errno == ETIME>.  Note the difference between
-   * this case and when a blocking connect is attmpted that TCP times
-   * out - in the latter case, errno will be ETIMEDOUT.
-   * The <local_sap> is the value of local address to bind to.  If
-   * it's the default value of <ACE_Addr::sap_any> then the user is
-   * letting the OS do the binding.
-   * If <reuse_addr> == 1 then the <local_addr> is reused,
-   * even if it hasn't been cleanedup yet.
+   * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
+   * object if the connection succeeds.
+   *
+   * @param new_stream  The @c ACE_SOCK_Stream object that will be connected
+   *                    to the peer.
+   * @param remote_sap  The address that we are trying to connect to.
+   *                    The protocol family of @c remote_sap is used for
+   *                    the connected socket. That is, if @c remote_sap
+   *                    contains an IPv6 address, a socket with family
+   *                    PF_INET6 will be used, else it will be PF_INET.
+   * @param qos_params  Contains QoS parameters that are passed to the
+   *                    IntServ (RSVP) and DiffServ protocols.
+   *                    @see ACE_QoS_Params.
+   * @param timeout     Pointer to an @c ACE_Time_Value object with amount
+   *                    of time to wait to connect. If the pointer is 0
+   *                    then the call blocks until the connection attempt
+   *                    is complete, whether it succeeds or fails.  If
+   *                    *timeout == {0, 0} then the connection is done
+   *                    using nonblocking mode.  In this case, if the
+   *                    connection can't be made immediately, this method
+   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    If *timeout > {0, 0} then this is the maximum amount
+   *                    of time to wait before timing out; if the specified
+   *                    amount of time passes before the connection is made,
+   *                    this method returns -1 and errno == ETIME. Note
+   *                    the difference between this case and when a blocking
+   *                    connect is attmpted that TCP times out - in the latter
+   *                    case, errno will be ETIMEDOUT.
+   * @param local_sap   (optional) The local address to bind to.  If it's
+   *                    the default value of @c ACE_Addr::sap_any then the
+   *                    OS will choose an unused port.
+   * @param reuse_addr  (optional) If the value is 1, the local address
+   *                    (@c local_sap) is reused, even if it hasn't been
+   *                    cleaned up yet.
+   * @param flags       Ignored.
+   * @param perms       Ignored.
+   *
+   * @return            Returns 0 if the connection succeeds. If it fails,
+   *                    -1 is returned and errno contains a specific error
+   *                    code.
    */
   int connect (ACE_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,
@@ -168,19 +242,23 @@ public:
                ACE_SOCK_GROUP g = 0,
                u_long flags = 0,
                int reuse_addr = 0,
-               int perms = 0,
-               int protocol_family = ACE_PROTOCOL_FAMILY_INET,
-               int protocol = 0);
+               int perms = 0);
 
   /// Default dtor.
   ~ACE_SOCK_Connector (void);
 
   // = Completion routine.
   /**
-   * Try to complete a non-blocking connection.
-   * If connection completion is successful then <new_stream> contains
-   * the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it
-   * will contain the address of the connected peer.
+   * Try to complete a nonblocking connection that was begun by a
+   * previous call to connect with a {0, 0} ACE_Time_Value timeout.
+   * @see connect().
+   *
+   * @param new_stream  The @c ACE_SOCK_Stream object that will be connected
+   *                    to the peer.
+   * @param remote_sap  If non-0, it points to the @c ACE_INET_Addr object
+   *                    that will contain the address of the connected peer.
+   * @param timeout     Same values and return value possibilites as for
+   *                    connect(). @see connect().
    */
   int complete (ACE_SOCK_Stream &new_stream,
                 ACE_Addr *remote_sap = 0,
