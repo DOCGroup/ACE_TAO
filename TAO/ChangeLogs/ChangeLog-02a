@@ -1,3 +1,23 @@
+Fri Jun 02 02:23:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Sync_Strategies.cpp (TAO_Delayed_Buffering_Sync_Strategy::send):
+	* tao/Pluggable.cpp (TAO_Transport::send_buffered_messages):
+
+	* tao/Pluggable.h (TAO_Transport::send):
+	* tao/UIOP_Transport.cpp (TAO_UIOP_Transport::send):
+	* tao/SHMIOP_Transport.cpp (TAO_SHMIOP_Transport::send):
+	* tao/IIOP_Transport.cpp (TAO_IIOP_Transport::send):
+
+	  The recent changes to the send_n()/recv_n() methods in ACE was
+	  causing a problem in tests/Timed_Buffered_Oneways.  The problem
+	  was that the code was expecting information about partial
+	  transfers to come through the return value.  Information about
+	  partial transfers now comes through the <bytes_transferred>
+	  parameter.  So the fix included expanding send() methods in TAO
+	  to have the additional <bytes_transferred> parameter and
+	  changing the algorithm to look at the correct place for partial
+	  bytes transfers.
+
 Thu Jun  1 18:42:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Interface.pidl:

@@ -412,13 +412,15 @@ TAO_UIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time,
+			  size_t *bytes_transferred)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
   return ACE::send_n (this->handle (),
                       message_block,
-                      max_wait_time);
+                      max_wait_time,
+		      bytes_transferred);
 }
 
 ssize_t
