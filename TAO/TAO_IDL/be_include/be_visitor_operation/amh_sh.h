@@ -21,12 +21,12 @@
 */
 class be_visitor_amh_operation_sh : public be_visitor_operation
 {
-public:
-be_visitor_amh_operation_sh (be_visitor_context *ctx);
+ public:
+    be_visitor_amh_operation_sh (be_visitor_context *ctx);
 
-~be_visitor_amh_operation_sh (void);
+    ~be_visitor_amh_operation_sh (void);
 
-virtual int visit_operation (be_operation *node);
+    virtual int visit_operation (be_operation *node);
 
 };
 
@@ -44,12 +44,12 @@ virtual int visit_operation (be_operation *node);
 */
 class be_visitor_amh_rh_operation_sh : public be_visitor_operation
 {
-public:
-be_visitor_amh_rh_operation_sh (be_visitor_context *ctx);
+ public:
+    be_visitor_amh_rh_operation_sh (be_visitor_context *ctx);
 
-~be_visitor_amh_rh_operation_sh (void);
+    ~be_visitor_amh_rh_operation_sh (void);
 
-virtual int visit_operation (be_operation *node);
+    virtual int visit_operation (be_operation *node);
 
 };
 
