@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Darrell Brunsch
+ *  @author Darrell Brunsch <brunsch@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_WCHAR_H
 #define ACE_WCHAR_H
@@ -86,7 +85,11 @@ using std::size_t;
 // Define the unicode/wchar related macros correctly
 
 # if !defined (ACE_TEXT_WIDE)
+# if defined (VXWORKS)
+#  define ACE_TEXT_WIDE_I(STRING) STRING
+# else /* VXWORKS */
 #  define ACE_TEXT_WIDE_I(STRING) L##STRING
+#endif /* VXWORKS */
 #  define ACE_TEXT_WIDE(STRING) ACE_TEXT_WIDE_I (STRING)
 # endif /* ACE_TEXT_WIDE */
 
