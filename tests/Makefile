@@ -128,9 +128,15 @@ ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
 ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
   BIN += $(BIN2)
 endif # ! Other
+
 ifeq (Codecs,$(findstring Codecs,$(ACE_BUILD_COMPONENTS)))
   BIN += Codecs_Test
-endif # ! Other
+else
+  #### Ensure that Codecs_Test gets cleaned up, even if the ace
+  #### directory was realcleaned first (and ACE_BUILD_COMPONENTS
+  #### is empty).
+  BIN2 += Codecs_Test
+endif # ! Codecs
 
 ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
   BIN += Tokens_Test

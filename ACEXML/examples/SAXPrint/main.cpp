@@ -7,6 +7,7 @@
 #include "Print_Handler.h"
 #include "SAXPrint_Handler.h"
 #include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
 
 static const ACEXML_Char *test_string =
 ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &amp; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
@@ -62,10 +63,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   ACEXML_DefaultHandler *handler = 0;
+  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
   ACEXML_CharStream *stm = 0;
   ACEXML_FileCharStream *fstm = 0;
   ACEXML_HttpCharStream *ustm = 0;
-  {
     if (filename != 0)
       {
         ACE_NEW_RETURN (fstm,
@@ -98,13 +99,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         -1);
       }
 
+  ACEXML_Char* name = (filename == 0) ? url : filename;
     if (sax == 0)
       ACE_NEW_RETURN (handler,
-                      ACEXML_Print_Handler (filename),
+                    ACEXML_Print_Handler (name),
                       -1);
     else
       ACE_NEW_RETURN (handler,
-                      ACEXML_SAXPrint_Handler (),
+                    ACEXML_SAXPrint_Handler (name),
                       -1);
 
     ACEXML_Parser parser;
@@ -115,10 +117,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     parser.setErrorHandler (handler);
     parser.setEntityResolver (handler);
 
-    ACEXML_Env xmlenv;
-
-    parser.parse (&input, xmlenv);
+  ACEXML_TRY_NEW_ENV
+    {
+      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_TRY_CHECK;
+    }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
+    {
+      ACE_UNUSED_ARG (ex);
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
   }
-  delete handler;
+  ACEXML_ENDTRY;
   return 0;
 }

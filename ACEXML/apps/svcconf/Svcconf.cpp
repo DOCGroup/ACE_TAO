@@ -42,7 +42,7 @@ ACEXML_Svcconf_Parser::operator new (size_t s)
 void
 ACEXML_Svcconf_Parser::operator delete (void *p)
 {
-  delete[] (char *)p;
+  delete[] (char*)p;
 }
 
 int
@@ -64,12 +64,17 @@ ACEXML_Svcconf_Parser::parse_file (const ACE_TCHAR file[])
 
   this->input_stream_.setCharStream (fstm);
 
-  this->parser_.parse (&this->input_stream_, this->env_);
-  if (this->env_.exception ())
+  ACEXML_TRY_NEW_ENV
     {
-      this->env_.exception ()->print ();
+      this->parser_.parse (&this->input_stream_ ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_TRY_CHECK;
+    }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
+    {
+      ex.print ();
       return -1;
     }
+  ACEXML_ENDTRY;
   return 0;
 }
 
@@ -86,13 +91,17 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
                   -1);
 
   this->input_stream_.setCharStream (stm);
-
-  this->parser_.parse (&this->input_stream_, this->env_);
-  if (this->env_.exception ())
+  ACEXML_TRY_NEW_ENV
     {
-      this->env_.exception ()->print ();
+      this->parser_.parse (&this->input_stream_ ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_TRY_CHECK;
+    }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
+    {
+      ex.print ();
       return -1;
     }
+  ACEXML_ENDTRY;
   return 0;
 }
 

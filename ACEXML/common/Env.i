@@ -1,10 +1,6 @@
 // -*- C++ -*- $Id$
 
-ACEXML_INLINE int
-ACEXML_Env::exception_occured (void) const
-{
-  return this->exception_ != 0;
-}
+#include "ACEXML/common/Exception.h"
 
 ACEXML_INLINE ACEXML_Exception *
 ACEXML_Env::exception (void) const
@@ -15,12 +11,14 @@ ACEXML_Env::exception (void) const
 ACEXML_INLINE void
 ACEXML_Env::exception (ACEXML_Exception *ex)
 {
-  delete this->exception_;
+  ACE_ASSERT (ex != this->exception_);
+  this->clear();
   this->exception_ = ex;
 }
 
 ACEXML_INLINE void
-ACEXML_Env::reset (void)
+ACEXML_Env::clear (void)
 {
-  this->exception (0);
+  delete this->exception_;
+  this->exception_ = 0;
 }
