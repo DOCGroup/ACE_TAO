@@ -210,6 +210,31 @@ TAO_OutStream::gen_endif (void)
   return 0;
 }
 
+
+// ifdef generation
+int
+TAO_OutStream::gen_ifdef_AHETI (void)
+{
+  *this << be_nl << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \\" << be_nl;
+  *this << "       || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)" << be_idt_nl;
+  return 0;
+}
+
+int
+TAO_OutStream::gen_else_AHETI (void)
+{
+  *this << be_uidt_nl << "#else /* AHETI */" << be_idt_nl;
+  return 0;
+}
+
+int
+TAO_OutStream::gen_endif_AHETI (void)
+{
+  *this << be_uidt_nl << "#endif /* AHETI */ " << be_nl;
+  return 0;
+}
+
+
 // printf style variable argument print
 int
 TAO_OutStream::print (const char *format, ...)
