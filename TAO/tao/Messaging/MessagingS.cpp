@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:609
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_CPP_
@@ -35,7 +35,7 @@
 
 #include "MessagingS.h"
 #include "tao/PortableServer/ForwardRequestC.h"
-#include "tao/PortableServer/Operation_Table.h"
+#include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Object_SArgument_T.h"
@@ -102,7 +102,7 @@ namespace
       : static_cast<typename TAO::SArg_Traits<T>::ret_val *> (
           skel_args[0])->arg ();
   }
-  
+
   template<typename T>
   typename TAO::SArg_Traits<T>::in_arg_type
   get_in_arg (TAO_Operation_Details const * details,
@@ -116,7 +116,7 @@ namespace
       : static_cast<typename TAO::SArg_Traits<T>::in_arg_val *> (
           skel_args[i])->arg ();
   }
-  
+
   template<typename T>
   typename TAO::SArg_Traits<T>::inout_arg_type
   get_inout_arg (TAO_Operation_Details const * details,
@@ -130,7 +130,7 @@ namespace
       : static_cast<typename TAO::SArg_Traits<T>::inout_arg_val *> (
           skel_args[i])->arg ();
   }
-  
+
   template<typename T>
   typename TAO::SArg_Traits<T>::out_arg_type
   get_out_arg (TAO_Operation_Details const * details,

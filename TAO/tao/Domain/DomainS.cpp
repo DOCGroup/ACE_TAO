@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:609
 
 #ifndef _TAO_IDL_ORIG_DOMAINS_CPP_
@@ -35,7 +35,7 @@
 
 #include "DomainS.h"
 #include "tao/PortableServer/ForwardRequestC.h"
-#include "tao/PortableServer/Operation_Table.h"
+#include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Basic_SArguments.h"
@@ -80,7 +80,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__SARG_TRAITS_SS_)
 #define _CORBA_POLICY__SARG_TRAITS_SS_
-  
+
   template<>
   class TAO_Domain_Export SArg_Traits<CORBA::Policy>
     : public
@@ -96,7 +96,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__SARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEF__SARG_TRAITS_SS_
-  
+
   template<>
   class TAO_Domain_Export SArg_Traits<CORBA::InterfaceDef>
     : public
@@ -121,7 +121,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_SS_)
 #define _CORBA_POLICY__ARG_TRAITS_SS_
-  
+
   template<>
   class TAO_Domain_Export Arg_Traits<CORBA::Policy>
     : public
@@ -138,7 +138,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_SS_
-  
+
   template<>
   class TAO_Domain_Export Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -172,7 +172,7 @@ namespace
       : static_cast<typename TAO::SArg_Traits<T>::ret_val *> (
           skel_args[0])->arg ();
   }
-  
+
   template<typename T>
   typename TAO::SArg_Traits<T>::in_arg_type
   get_in_arg (TAO_Operation_Details const * details,
@@ -186,7 +186,7 @@ namespace
       : static_cast<typename TAO::SArg_Traits<T>::in_arg_val *> (
           skel_args[i])->arg ();
   }
-  
+
   template<typename T>
   typename TAO::SArg_Traits<T>::inout_arg_type
   get_inout_arg (TAO_Operation_Details const * details,
