@@ -224,12 +224,12 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () 
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *tmp =" << be_idt_nl
+          << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
           << "ACE_static_cast (" << be_idt << be_idt_nl
           << node->local_name () << " *," << be_nl
           << "_tao_void_pointer" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
-          << "CORBA::remove_ref (tmp);" << be_uidt_nl
+          << "CORBA::remove_ref (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
