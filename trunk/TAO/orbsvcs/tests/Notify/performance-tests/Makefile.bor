@@ -4,6 +4,7 @@
 #
 
 DIRS = \
+        Filter \
         RedGreen \
         Throughput
 

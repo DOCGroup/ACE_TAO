@@ -1,10 +1,13 @@
 Tue Jan 29 11:20:36 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/performance-tests/Makefile.bor:
-          Added Throughput directory
+          Added Throughput and Filter directory
 
         * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.bor:
           Added new BCB makefile to build this test
+
+        * orbsvcs/tests/Notify/performance-tests/Filter/*.bor:
+          Added new BCB makefiles to build these tests
 
 Tue Jan 29 09:10:17 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
