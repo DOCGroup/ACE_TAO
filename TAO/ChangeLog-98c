@@ -1,3 +1,9 @@
+Tue Dec 15 19:39:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/corba.h: Commented out "#pragma pack" directive NT used.
+	  This fixed the mis-alignment problem specific on NT.
+
 Tue Dec 15 19:04:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/sfp.idl : Changed according to the version 1.1
@@ -9,11 +15,11 @@ Tue Dec 15 19:04:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 	frames without fragmentation.
 
 	* orbsvcs/tests/AVStreams/sfp/client.cpp:
-	* orbsvcs/tests/AVStreams/sfp/server.cpp:	
-		client and server test files for sfp.	
+	* orbsvcs/tests/AVStreams/sfp/server.cpp:
+		client and server test files for sfp.
 
 	* orbsvcs/orbsvcs/Makefile: Added sfp to the list of IDL_SRCS.
-	
+
 Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * *.h,TAO_IDL/be/be_codegen.cpp (end_server_template_header):
