@@ -2684,14 +2684,14 @@ typedef unsigned int size_t;
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
-#define ACE_ONE_SECOND_IN_MSECS 1000l
-#define ACE_ONE_SECOND_IN_USECS 1000000l
-#define ACE_ONE_SECOND_IN_NSECS 1000000000l
+#define ACE_ONE_SECOND_IN_MSECS 1000L
+#define ACE_ONE_SECOND_IN_USECS 1000000L
+#define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
 // Type-safe, and unsigned.
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000u;
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000u;
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000u;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
 # if defined (ACE_HAS_SIG_MACROS)
 #   undef sigemptyset
