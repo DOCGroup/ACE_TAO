@@ -169,17 +169,13 @@ namespace CIAO
 
   protected:
     /**
-     * Parse the global deployment plan, get the total number of
-     * child plans included in the global plan, and get the list of
-     * names of NodeManagers for each child plan.
+     * (1) Parse the global deployment plan, get the total number of
+     *     child plans included in the global plan, and get the list of
+     *     names of NodeManagers for each child plan.
+     * (2) Check whether all the NodeManager names are present in the
+     *     deployment information data file.
      */
-    bool get_plan_info (void);
-
-    /**
-     * Check whether all the NodeManager names are present in the
-     * deployment information data file.
-     */
-    bool check_validity (void);
+    int get_plan_info (void);
 
     /**
      * Split the global (domain-level) deployment plan to a set of
@@ -232,7 +228,7 @@ namespace CIAO
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> Chained_Artifacts_Table;
-                                    
+
     Chained_Artifacts_Table artifact_map_;
 
     /// The deployment information data file.

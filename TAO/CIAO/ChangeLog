@@ -1,3 +1,14 @@
+Fri Jun  4 09:52:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Removed the check_plan_validity () method and added its
+          functionality in the get_plan_info () method. This eliminates
+          the need to have a separate lopp to iterate over the list of
+          names to populate the NodeManager references, now this step is
+          done within a single loop.
+
 Thu Jun  3 17:28:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
