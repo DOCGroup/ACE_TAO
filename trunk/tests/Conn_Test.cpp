@@ -176,18 +176,18 @@ typedef ACE_Oneshot_Acceptor<Svc_Handler,
                              LOCK_SOCK_ACCEPTOR>
         ACCEPTOR;
 typedef ACE_Connector<Svc_Handler,
-                      ACE_SOCK_CONNECTOR> 
+                      ACE_SOCK_CONNECTOR>
         CONNECTOR;
 typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR> 
+                               ACE_SOCK_CONNECTOR>
         STRAT_CONNECTOR;
-typedef ACE_NOOP_Creation_Strategy<Svc_Handler> 
+typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
         NULL_CREATION_STRATEGY;
-typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler> 
+typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
         NULL_ACTIVATION_STRATEGY;
 typedef ACE_Cached_Connect_Strategy<Svc_Handler,
                                     ACE_SOCK_CONNECTOR,
-                                    ACE_SYNCH_RW_MUTEX> 
+                                    ACE_SYNCH_RW_MUTEX>
         CACHED_CONNECT_STRATEGY;
 
 // ****************************************
@@ -485,7 +485,7 @@ spawn_processes (ACCEPTOR *acceptor,
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping %d\n", child));
     }
   while (child != -1);
-  
+
   // Remove the lock so we don't have process semaphores lying around.
   return acceptor->acceptor ().lock ().remove ();
 }
@@ -604,10 +604,10 @@ template class ACE_Auto_Basic_Array_Ptr<pid_t>;
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate template class ACE_Recycling_Strategy<Svc_Handler>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<Svc_Handler>
+#pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
 #pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Svc_Tuple<Svc_Handler>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>;
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
