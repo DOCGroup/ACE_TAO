@@ -209,6 +209,10 @@ SOURCE=.\ImplRepoS_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInfo.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Key_Adapters.h
 # End Source File
 # Begin Source File
@@ -222,6 +226,14 @@ SOURCE=.\MessagingS_T.h
 # Begin Source File
 
 SOURCE=.\Object_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectReferenceFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectReferenceTemplate.h
 # End Source File
 # Begin Source File
 
@@ -341,6 +353,10 @@ SOURCE=.\ImplRepoS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Key_Adapters.cpp
 # End Source File
 # Begin Source File
@@ -350,6 +366,14 @@ SOURCE=.\MessagingS.cpp
 # Begin Source File
 
 SOURCE=.\Object_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectReferenceFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectReferenceTemplate.cpp
 # End Source File
 # Begin Source File
 

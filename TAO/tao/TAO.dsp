@@ -511,10 +511,6 @@ SOURCE=.\IOR_Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORInfo.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.cpp
 # End Source File
 # Begin Source File
@@ -1292,10 +1288,6 @@ SOURCE=.\ior_corbaname_export.h
 # Begin Source File
 
 SOURCE=.\IOR_Parser.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORInfo.h
 # End Source File
 # Begin Source File
 
