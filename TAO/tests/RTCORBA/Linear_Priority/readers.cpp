@@ -1,9 +1,13 @@
 // $Id$
 
 #include "ace/Read_Buffer.h"
+#include "ace/Array_Base.h"
+
+typedef ACE_Array_Base<CORBA::Short> Priorities;
 
 int
-get_priority_bands (const char *bands_file,
+get_priority_bands (const char *test_type,
+                    const char *bands_file,
                     RTCORBA::RTORB_ptr rt_orb,
                     CORBA::PolicyList &policies,
                     CORBA::Environment &ACE_TRY_ENV)
@@ -26,7 +30,8 @@ get_priority_bands (const char *bands_file,
   if (string == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\nNo bands set!\n\n"));
+                  "\n%s: No bands set!\n\n",
+                  test_type));
       return 0;
     }
 
@@ -37,7 +42,8 @@ get_priority_bands (const char *bands_file,
   bands.length (bands_length);
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nThere are %d bands: ",
+              "\n%s: There are %d bands: ",
+              test_type,
               bands_length));
 
   int result = 1;
@@ -89,16 +95,16 @@ get_priority_bands (const char *bands_file,
 }
 
 int
-get_priority_lanes (const char *lanes_file,
-                    RTCORBA::RTORB_ptr rt_orb,
-                    CORBA::PolicyList &policies,
-                    CORBA::Environment &ACE_TRY_ENV)
+get_priorities (const char *test_type,
+                const char *file_name,
+                const char *name,
+                Priorities &priorities)
 {
   //
   // Read lanes from a file.
   //
   FILE* file =
-    ACE_OS::fopen (lanes_file, "r");
+    ACE_OS::fopen (file_name, "r");
 
   if (file == 0)
     return -1;
@@ -112,39 +118,39 @@ get_priority_lanes (const char *lanes_file,
   if (string == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\nNo lanes set!\n\n"));
+                  "\n%s: No %s set!\n\n",
+                  test_type,
+                  name));
       return 0;
     }
 
-  CORBA::ULong lanes_length =
+  size_t length =
     reader.replaced () + 1;
 
-  RTCORBA::ThreadpoolLanes lanes;
-  lanes.length (lanes_length);
+  priorities.size (length);
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nThere are %d lanes: ",
-              lanes_length));
+              "\n%s: There are %d %s: ",
+              test_type,
+              length,
+              name));
 
   int result = 1;
   char* working_string = string;
-  for (CORBA::ULong i = 0; i < lanes_length; ++i)
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
       result = ::sscanf (working_string,
                          "%hd",
-                         &lanes[i].lane_priority);
+                         &priorities[i]);
       if (result == 0 || result == EOF)
         break;
 
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
 
-      lanes[i].static_threads = static_threads;
-      lanes[i].dynamic_threads = dynamic_threads;
-
       ACE_DEBUG ((LM_DEBUG,
                   "[%d] ",
-                  lanes[i].lane_priority));
+                  priorities[i]));
     }
 
   reader.alloc ()->free (string);
@@ -154,6 +160,45 @@ get_priority_lanes (const char *lanes_file,
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\n"));
+
+  return 0;
+}
+
+int
+get_priority_lanes (const char *test_type,
+                    const char *lanes_file,
+                    RTCORBA::RTORB_ptr rt_orb,
+                    CORBA::ULong stacksize,
+                    CORBA::ULong static_threads,
+                    CORBA::ULong dynamic_threads,
+                    CORBA::Boolean allow_request_buffering,
+                    CORBA::ULong max_buffered_requests,
+                    CORBA::ULong max_request_buffer_size,
+                    CORBA::Boolean allow_borrowing,
+                    CORBA::PolicyList &policies,
+                    CORBA::Environment &ACE_TRY_ENV)
+{
+  Priorities priorities;
+  int result =
+    get_priorities (test_type,
+                    lanes_file,
+                    "lanes",
+                    priorities);
+  if (result != 0 ||
+      priorities.size () == 0)
+    return result;
+
+  RTCORBA::ThreadpoolLanes lanes;
+  lanes.length (priorities.size ());
+
+  for (CORBA::ULong i = 0;
+       i < priorities.size ();
+       ++i)
+    {
+      lanes[i].lane_priority = priorities[i];
+      lanes[i].static_threads = static_threads;
+      lanes[i].dynamic_threads = dynamic_threads;
+    }
 
   RTCORBA::ThreadpoolId threadpool_id =
     rt_orb->create_threadpool_with_lanes (stacksize,

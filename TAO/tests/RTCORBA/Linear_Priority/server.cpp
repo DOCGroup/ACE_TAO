@@ -4,6 +4,7 @@
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
+#include "./readers.cpp"
 
 class test_i :
   public POA_test,
@@ -72,10 +73,10 @@ static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
 static CORBA::Boolean allow_borrowing = 0;
 
+static const char *ior = "ior";
+
 static const char *bands_file = "bands";
 static const char *lanes_file = "lanes";
-
-#include "./readers.cpp"
 
 static int
 parse_args (int argc, char **argv)
@@ -182,7 +183,8 @@ main (int argc, char **argv)
       CORBA::PolicyList policies;
 
       result =
-        get_priority_bands (bands_file,
+        get_priority_bands ("server",
+                            bands_file,
                             rt_orb.in (),
                             policies,
                             ACE_TRY_ENV);
@@ -191,8 +193,16 @@ main (int argc, char **argv)
         return result;
 
       result =
-        get_priority_lanes (lanes_file,
+        get_priority_lanes ("server",
+                            lanes_file,
                             rt_orb.in (),
+                            stacksize,
+                            static_threads,
+                            dynamic_threads,
+                            allow_request_buffering,
+                            max_buffered_requests,
+                            max_request_buffer_size,
+                            allow_borrowing,
                             policies,
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -241,7 +251,7 @@ main (int argc, char **argv)
 
       write_iors_to_file (test.in (),
                           orb.in (),
-                          "ior",
+                          ior,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
