@@ -222,84 +222,71 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
     }
 
-  if (! node->is_abstract ())
+  *os << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  if (! node->is_abstract () && ! node->is_local ())
     {
        // Generate the destructor and default constructor.
-      *os << be_nl;
-      *os << "// TAO_IDL - Generated from " << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-      *os << node->name () << "::" << node->local_name ();
+      *os << node->name () << "::" << node->local_name ()
+          << " (int collocated)" << be_nl
+          << "{" << be_idt_nl
+          << "this->" << node->flat_name ()
+          << "_setup_collocation (collocated);" << be_uidt_nl
+          << be_uidt << "}" << be_nl << be_nl;
 
-      if (!node->is_local ())
+      // Collocation setup method.
+      *os << "void" << be_nl
+          << node->name () << "::" << node->flat_name ()
+          << "_setup_collocation (int collocated)" << be_nl
+          << "{" << be_idt_nl
+          << "if (collocated)" << be_idt_nl
+          << "this->the" << node->base_proxy_broker_name ()
+          << "_ =" << be_idt_nl
+          << "::" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer (this);"
+          << be_uidt << be_uidt_nl
+          << "else" << be_idt_nl
+          << "this->the" << node->base_proxy_broker_name ()
+          << "_ =" << be_idt_nl
+          << "::" << node->full_remote_proxy_broker_name ()
+          << "::the" << node->remote_proxy_broker_name ()
+          << " ();" << be_uidt << be_uidt;
+
+      // Now we setup the immediate parents.
+      int n_parents = node->n_inherits ();
+      int has_concrete_parent = 0;
+
+      if (n_parents > 0)
         {
-          *os << " (int collocated)" << be_nl
-              << "{" << be_idt_nl
-              << "this->" << node->flat_name ()
-              << "_setup_collocation (collocated);" << be_uidt_nl
-              << be_uidt << "}" << be_nl << be_nl;
-        }
-      else
-        {
-          *os << " (void)" << be_nl
-              << "{}" << be_nl << be_nl;
-        }
-
-      if (!node->is_local ())
-        {
-          // Collocation setup method.
-          *os << "void" << be_nl
-              << node->name () << "::" << node->flat_name ()
-              << "_setup_collocation (int collocated)" << be_nl
-              << "{" << be_idt_nl
-              << "if (collocated)" << be_idt_nl
-              << "this->the" << node->base_proxy_broker_name ()
-              << "_ =" << be_idt_nl
-              << "::" << node->flat_client_enclosing_scope ()
-              << node->base_proxy_broker_name ()
-              << "_Factory_function_pointer (this);"
-              << be_uidt << be_uidt_nl
-              << "else" << be_idt_nl
-              << "this->the" << node->base_proxy_broker_name ()
-              << "_ =" << be_idt_nl
-              << "::" << node->full_remote_proxy_broker_name ()
-              << "::the" << node->remote_proxy_broker_name ()
-              << " ();" << be_uidt << be_uidt;
-
-          // Now we setup the immediate parents.
-          int n_parents = node->n_inherits ();
-          int has_concrete_parent = 0;
-
-          if (n_parents > 0)
+          for (int i = 0; i < n_parents; ++i)
             {
-              for (int i = 0; i < n_parents; ++i)
+              be_interface *inherited =
+                be_interface::narrow_from_decl (node->inherits ()[i]);
+
+              if (inherited->is_abstract ())
                 {
-                  be_interface *inherited =
-                    be_interface::narrow_from_decl (node->inherits ()[i]);
-
-                  if (inherited->is_abstract ())
-                    {
-                      continue;
-                    }
-
-                  if (has_concrete_parent == 0)
-                    {
-                      *os << be_nl;
-                    }
-
-                  has_concrete_parent = 1;
-
-                  *os << be_nl
-                      << "this->" << inherited->flat_name ()
-                      << "_setup_collocation" << " (collocated);";
+                  continue;
                 }
-            }
 
-          *os << be_uidt_nl << "}";
+              if (has_concrete_parent == 0)
+                {
+                  *os << be_nl;
+                }
+
+              has_concrete_parent = 1;
+
+              *os << be_nl
+                  << "this->" << inherited->flat_name ()
+                  << "_setup_collocation" << " (collocated);";
+            }
         }
+
+      *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
-  *os << be_nl << be_nl
-      << node->name () << "::~" << node->local_name ()
+  *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
