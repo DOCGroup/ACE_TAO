@@ -1,10 +1,12 @@
 project(*client) : taoexe, portableserver, naming  {
+  requires += exceptions
   source_files {
     client.cpp
   }
 }
 
 project(*server) : taoexe, portableserver, naming {
+  requires += exceptions
   source_files {
     server.cpp
     Stock_Factory_i.cpp
