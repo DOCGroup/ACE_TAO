@@ -131,8 +131,8 @@ case "$host_os" in
         ;;
       aCC)
 	case "$host_os" in
-	hpux9*) archive_cmds='$rm $output_objdir/$soname~$CC -b ${wl}+b ${wl}$install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
-	*) archive_cmds='$CC -b ${wl}+h ${wl}$soname ${wl}+b ${wl}$install_libdir -o $lib $libobjs $deplibs $linker_flags' ;;
+	hpux9*) archive_cmds='$rm $output_objdir/$soname~$CC -b ${wl}+b ${wl}$install_libdir -o $output_objdir/$soname $predep_objects $libobjs $deplibs $postdep_objects $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
+	*) archive_cmds='$CC -b ${wl}+h ${wl}$soname ${wl}+b ${wl}$install_libdir -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags' ;;
 	esac
 	hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
 	hardcode_libdir_separator=:
@@ -143,13 +143,13 @@ case "$host_os" in
 
         # Commands to make compiler produce verbose output that lists
         # what "hidden" libraries, object files and flags are used when
-        # linking.
+        # linking a shared library.
         #
         # There doesn't appear to be a way to prevent this compiler from
         # explicitly linking system object files so we need to strip them
         # from the output so that they don't get included in the library
         # dependencies.
-        output_verbose_link_cmds='templist=`($CC $CFLAGS -v conftest.$objext 2>&1) | egrep "\-L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+        output_verbose_link_cmds='templist=`($CC -b $CFLAGS -v conftest.$objext 2>&1) | egrep "\-L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
         ;;
       *)
         # FIXME: insert proper C++ library support
@@ -161,13 +161,13 @@ case "$host_os" in
     case "$CXX" in
       CC)
         # SGI C++
-        archive_cmds='$CC -shared -all -multigot $libobjs $deplibs $compiler_flags -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
+        archive_cmds='$CC -shared -all -multigot $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -soname $soname `test -n "$verstring" && echo -set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
         ;;
       *)
         if test "$with_gcc" = yes; then
-          archive_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` -update_registry ${objdir}/so_locations -o $lib'
+          archive_cmds='$CC -shared $predep_objects $libobjs $deplibs $postdep_objects $linker_flags ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` -update_registry ${objdir}/so_locations -o $lib'
         else
-          archive_cmds='$LD -shared $libobjs $deplibs $linkopts -soname $soname `test -n "$verstring" && echo -set_version $verstring` -o $lib'
+          archive_cmds='$LD -shared $predep_objects $libobjs $deplibs $postdep_objects $linkopts -soname $soname `test -n "$verstring" && echo -set_version $verstring` -o $lib'
         fi
         hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
         hardcode_libdir_separator=:
@@ -184,8 +184,8 @@ case "$host_os" in
         ;;
       cxx)
         # Compaq C++
-        archive_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-soname $wl$soname -o $lib'
-        archive_expsym_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-retain-symbols-file $wl$export_symbols'
+        archive_cmds='$CC -shared $predep_objects $libobjs $deplibs $postdep_objects $linker_flags ${wl}-soname $wl$soname -o $lib'
+        archive_expsym_cmds='$CC -shared $predep_objects $libobjs $deplibs $postdep_objects $linker_flags ${wl}-retain-symbols-file $wl$export_symbols'
 
         runpath_var=LD_RUN_PATH
         hardcode_libdir_flag_spec='-rpath $libdir'
@@ -193,19 +193,19 @@ case "$host_os" in
 
         # Commands to make compiler produce verbose output that lists
         # what "hidden" libraries, object files and flags are used when
-        # linking.
+        # linking a shared library.
         #
         # There doesn't appear to be a way to prevent this compiler from
         # explicitly linking system object files so we need to strip them
         # from the output so that they don't get included in the library
         # dependencies.
-        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | grep "ld"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld .*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+        output_verbose_link_cmds='templist=`$CC -shared $CFLAGS -v conftest.$objext 2>&1 | grep "ld"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld .*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
           ;;
       *)
         # GNU C++ compiler
         if test "$with_gcc" = yes; then
-          archive_cmds='$CC -shared -nostdlib $predeps $libobjs $deplibs $postdeps $compiler_flags ${wl}-soname $wl$soname -o $lib'
-          archive_expsym_cmds='$CC -shared -nostdlib $predeps $libobjs $deplibs $postdeps $compiler_flags ${wl}-retain-symbols-file $wl$export_symbols -o $lib'
+          archive_cmds='$CC -shared -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags ${wl}-soname $wl$soname -o $lib'
+          archive_expsym_cmds='$CC -shared -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags ${wl}-retain-symbols-file $wl$export_symbols -o $lib'
 
           runpath_var=LD_RUN_PATH
           hardcode_libdir_flag_spec='${wl}--rpath ${wl}$libdir'
@@ -222,8 +222,8 @@ case "$host_os" in
 
           # Commands to make compiler produce verbose output that lists
           # what "hidden" libraries, object files and flags are used when
-          # linking.
-          output_verbose_link_cmds='$CC $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
+          # linking a shared library.
+          output_verbose_link_cmds='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
         fi
         ;;
     esac
@@ -255,15 +255,15 @@ case "$host_os" in
   osf3*)
     if test "$with_gcc" = yes; then
       allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
-      archive_cmds='$CC -shared -nostdlib ${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $compiler_flags ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` ${wl}-update_registry ${wl}${objdir}/so_locations -o $lib'
+      archive_cmds='$CC -shared -nostdlib ${allow_undefined_flag} $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` ${wl}-update_registry ${wl}${objdir}/so_locations -o $lib'
 
       hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
       hardcode_libdir_separator=:
 
       # Commands to make compiler produce verbose output that lists
       # what "hidden" libraries, object files and flags are used when
-      # linking.
-      output_verbose_link_cmds='$CC $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
+      # linking a shared library.
+      output_verbose_link_cmds='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
     fi
 
     case "$CXX" in
@@ -279,20 +279,20 @@ case "$host_os" in
         ;;
       cxx)
         allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
-        archive_cmds='$CC -shared${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $linker_flags ${wl}-soname $soname `test -n "$verstring" && echo ${wl}-set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
+        archive_cmds='$CC -shared${allow_undefined_flag} $predep_objects $libobjs $deplibs $postdep_objects $linker_flags ${wl}-soname $soname `test -n "$verstring" && echo ${wl}-set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
         
         hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
         hardcode_libdir_separator=:
 
         # Commands to make compiler produce verbose output that lists
         # what "hidden" libraries, object files and flags are used when
-        # linking.
+        # linking a shared library.
         #
         # There doesn't appear to be a way to prevent this compiler from
         # explicitly linking system object files so we need to strip them
         # from the output so that they don't get included in the library
         # dependencies.
-        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | grep "ld" | grep -v "ld:"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld.*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+        output_verbose_link_cmds='templist=`$CC -shared $CFLAGS -v conftest.$objext 2>&1 | grep "ld" | grep -v "ld:"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld.*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
         ;;
       *)
         # FIXME: insert proper C++ library support
@@ -303,15 +303,15 @@ case "$host_os" in
   osf4* | osf5*)
     if test "$with_gcc" = yes; then
       allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
-      archive_cmds='$CC -shared -nostdlib ${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $compiler_flags ${wl}-msym ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` ${wl}-update_registry ${wl}${objdir}/so_locations -o $lib'
+      archive_cmds='$CC -shared -nostdlib ${allow_undefined_flag} $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags ${wl}-msym ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` ${wl}-update_registry ${wl}${objdir}/so_locations -o $lib'
 
       hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
       hardcode_libdir_separator=:
 
       # Commands to make compiler produce verbose output that lists
       # what "hidden" libraries, object files and flags are used when
-      # linking.
-      output_verbose_link_cmds='$CC $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
+      # linking a shared library.
+      output_verbose_link_cmds='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
     fi
 
     case "$CXX" in
@@ -327,20 +327,20 @@ case "$host_os" in
         ;;
       cxx)
         allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
-        archive_cmds='$CC -shared${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $linker_flags ${wl}-msym ${wl}-soname $soname `test -n "$verstring" && echo ${wl}-set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
+        archive_cmds='$CC -shared${allow_undefined_flag} $predep_objects $libobjs $deplibs $postdep_objects $linker_flags ${wl}-msym ${wl}-soname $soname `test -n "$verstring" && echo ${wl}-set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
         
         hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
         hardcode_libdir_separator=:
 
         # Commands to make compiler produce verbose output that lists
         # what "hidden" libraries, object files and flags are used when
-        # linking.
+        # linking a shared library.
         #
         # There doesn't appear to be a way to prevent this compiler from
         # explicitly linking system object files so we need to strip them
         # from the output so that they don't get included in the library
         # dependencies.
-        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | grep "ld" | grep -v "ld:"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld.*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+        output_verbose_link_cmds='templist=`$CC -shared $CFLAGS -v conftest.$objext 2>&1 | grep "ld" | grep -v "ld:"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld.*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
         ;;
       *)
         # FIXME: insert proper C++ library support
@@ -387,9 +387,9 @@ case "$host_os" in
       CC)
 	# Sun C++ 4.2, 5.x and Centerline C++
         no_undefined_flag=' -ztext'
-        archive_cmds='$CC -G${allow_undefined_flag} -nolib -h$soname -o $lib $predeps $libobjs $deplibs $postdeps $linker_flags'
+        archive_cmds='$CC -G${allow_undefined_flag} -nolib -h$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags'
         archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
-        $CC -G${allow_undefined_flag} -nolib ${wl}-M ${wl}$lib.exp -h$soname -o $lib $predeps $libobjs $deplibs $postdeps $linker_flags~$rm $lib.exp'
+        $CC -G${allow_undefined_flag} -nolib ${wl}-M ${wl}$lib.exp -h$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags~$rm $lib.exp'
 
         hardcode_libdir_flag_spec='-R$libdir'
         hardcode_shlibpath_var=no
@@ -407,13 +407,13 @@ case "$host_os" in
 
         # Commands to make compiler produce verbose output that lists
         # what "hidden" libraries, object files and flags are used when
-        # linking.
+        # linking a shared library.
         #
         # There doesn't appear to be a way to prevent this compiler from
         # explicitly linking system object files so we need to strip them
         # from the output so that they don't get included in the library
         # dependencies.
-        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | egrep "\-R|\-L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+        output_verbose_link_cmds='templist=`$CC -G $CFLAGS -v conftest.$objext 2>&1 | egrep "\-R|\-L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
 
 	# Archives containing C++ object files must be created using
 	# "CC -xar", where "CC" is the Sun C++ compiler.  This is
@@ -423,7 +423,7 @@ case "$host_os" in
         ;;
       gcx)
         # Green Hills C++ Compiler
-        archive_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-h $wl$soname -o $lib'
+        archive_cmds='$CC -shared $predep_objects $libobjs $deplibs $postdep_objects $linker_flags ${wl}-h $wl$soname -o $lib'
 
         # The C++ compiler must be used to create the archive.
         old_archive_cmds='$CC $LDFLAGS -archive -o $oldlib $oldobjs'
@@ -432,23 +432,28 @@ case "$host_os" in
         # GNU C++ compiler
         if test "$with_gcc" = yes; then
           if $CXX --version | egrep -v '^2\.7' > /dev/null; then
-            archive_cmds='$LD -shared -nostdlib $LDFLAGS $predeps $libobjs $deplibs $postdeps $linkopts ${wl}-h $wl$soname -o $lib'
+            archive_cmds='$LD -shared -nostdlib $LDFLAGS $predep_objects $libobjs $deplibs $postdep_objects $linkopts ${wl}-h $wl$soname -o $lib'
             archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
-		$LD -shared -nostdlib ${wl}-M $wl$lib.exp -o $lib $predeps $libobjs $deplibs $postdeps $linkopts~$rm $lib.exp'
+		$LD -shared -nostdlib ${wl}-M $wl$lib.exp -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linkopts~$rm $lib.exp'
+
+            # Commands to make compiler produce verbose output that lists
+            # what "hidden" libraries, object files and flags are used when
+            # linking a shared library.
+            output_verbose_link_cmds="$CC -shared $CFLAGS -v conftest.$objext 2>&1 | egrep \"\-L\""
           else
             # g++ 2.7 appears to require `-G' NOT `-shared' on this
             # platform.
-            archive_cmds='$LD -G -nostdlib $LDFLAGS $predeps $libobjs $deplibs $postdeps $linkopts ${wl}-h $wl$soname -o $lib'
+            archive_cmds='$LD -G -nostdlib $LDFLAGS $predep_objects $libobjs $deplibs $postdep_objects $linkopts ${wl}-h $wl$soname -o $lib'
             archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
-		$LD -G -nostdlib ${wl}-M $wl$lib.exp -o $lib $predeps $libobjs $postdeps $deplibs $linkopts~$rm $lib.exp'
+		$LD -G -nostdlib ${wl}-M $wl$lib.exp -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linkopts~$rm $lib.exp'
+
+            # Commands to make compiler produce verbose output that lists
+            # what "hidden" libraries, object files and flags are used when
+            # linking a shared library.
+            output_verbose_link_cmds="$CC -G $CFLAGS -v conftest.$objext 2>&1 | egrep \"\-L\""
           fi
 
           hardcode_libdir_flag_spec='${wl}-R $wl$libdir'
-
-          # Commands to make compiler produce verbose output that lists
-          # what "hidden" libraries, object files and flags are used when
-          # linking.
-          output_verbose_link_cmds="$CC $CFLAGS -v conftest.$objext 2>&1 | egrep \"\-L\""
         fi
         ;;
     esac   
@@ -479,72 +484,6 @@ case "$host_os" in
     ld_shlibs=no
     ;;
 esac
-
-# Figure out "hidden" C++ library dependencies from verbose
-# compiler output
-cat > conftest.$ac_ext <<EOF
-class Foo
-{
-public:
-  Foo (void) { a = 0; }
-private:
-  int a;
-};
-
-int main (int, char *[])
-{
-  Foo Bar;
-
-  return 0;
-}
-EOF
-
-
-if eval $ac_compile 2>&5; then
-  # Parse the compiler output and extract the necessary
-  # object, libraries and library flags.
-
-  # Sentinel used to keep track of whether or not we are before
-  # the conftest object file.
-  pre_object_deps_done=no
-
-  for p in `eval $output_verbose_link_cmds`; do
-    case $p in
-    *.$objext | -L* | -R* | -l*)
-       # Some compilers place space between "-{L,R}" and the path.
-       # Remove the space.
-       if test $p = "-L" \
-          || test $p = "-R"; then
-         prev=$p
-         continue
-       else
-         prev=
-       fi
-
-       # This assumes that the test object file only shows up
-       # once in the compiler output.
-       if test "$p" != "conftest.$objext"; then
-         if test "$pre_object_deps_done" = no; then
-           predeps="${predeps} ${prev}${p}"
-         else
-           postdeps="${postdeps} ${prev}${p}"
-         fi
-       else
-         pre_object_deps_done=yes
-       fi
-       ;;
-    *) ;; # Ignore the rest.
-    esac
-  done
-
-  # Clean up.
-  rm -f a.out
-else
-  echo "ltcf-cxx.sh: error: problem compiling test program"
-fi
-
-$rm -f confest.$objext
-
 
 
 ## Compiler Characteristics: PIC flags, static flags, etc
@@ -769,3 +708,91 @@ else
       ;;
   esac
 fi
+
+
+# Figure out "hidden" C++ library dependencies from verbose
+# compiler output whening linking a shared library.
+cat > conftest.$ac_ext <<EOF
+class Foo
+{
+public:
+  Foo (void) { a = 0; }
+private:
+  int a;
+};
+EOF
+
+
+if eval $ac_compile 2>&5; then
+  # Parse the compiler output and extract the necessary
+  # object, libraries and library flags.
+
+  # Sentinel used to keep track of whether or not we are before
+  # the conftest object file.
+  pre_test_object_deps_done=no
+
+  for p in `eval $output_verbose_link_cmds`; do
+
+    case $p in
+
+    -L* | -R* | -l*)
+       # Some compilers place space between "-{L,R}" and the path.
+       # Remove the space.
+       if test $p = "-L" \
+          || test $p = "-R"; then
+         prev=$p
+         continue
+       else
+         prev=
+       fi
+
+       if test "$pre_test_object_deps_done" = no; then
+         if test -z "$predeps"; then
+           predeps="${prev}${p}"
+         else
+           predeps="${predeps} ${prev}${p}"
+         fi
+       else
+         if test -z "$postdeps"; then
+           postdeps="${prev}${p}"
+         else
+           postdeps="${postdeps} ${prev}${p}"
+         fi
+       fi
+       ;;
+
+    *.$objext)
+       # This assumes that the test object file only shows up
+       # once in the compiler output.
+       if test "$p" = "conftest.$objext"; then
+         pre_test_object_deps_done=yes
+         continue
+       fi
+
+       if test "$pre_test_object_deps_done" = no; then
+         if test -z "$predep_objects"; then
+           predep_objects="$p"
+         else
+           predep_objects="$predep_objects $p"
+         fi
+       else
+         if test -z "$postdep_objects"; then
+           postdep_objects="$p"
+         else
+           postdep_objects="$postdep_objects $p"
+         fi
+       fi
+       ;;
+
+    *) ;; # Ignore the rest.
+
+    esac
+  done
+
+  # Clean up.
+  rm -f a.out
+else
+  echo "ltcf-cxx.sh: error: problem compiling test program"
+fi
+
+$rm -f confest.$objext
