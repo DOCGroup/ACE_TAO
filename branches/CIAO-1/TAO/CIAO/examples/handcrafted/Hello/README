@@ -104,3 +104,28 @@ hello_executors This library contains the CIDL generated executor definitions an
    in a single DLL, or be packaged in a separate DLL which, in turn,
    can be deployed with the component implementation together as an
    assembly, or be put in some sort of repository.
+
+
+How to Run:
+----------
+
+1. Start the Name Service and store the name service IOR in some file
+   <w:\ior>.
+
+   Naming_Service -o w:\ior
+
+2. Start the Component servier with the config file and the
+   NameService IOR we stored in the previous step:
+
+   w:\ACE_wrappers\bin\CIAO_single_com_server -ORBInitRef \
+         NameService=file://w:\ior -i config -o ior
+
+   The component server we use here will create the HomeFinder IOR.
+   Store the IOR in a file <ior>.
+
+3. Finally, start the client program as:
+
+   client -ORBInitRef HomeFinder=file://ior
+
+   The client will try to use all thru operations to find the
+   HelloHome interface.
