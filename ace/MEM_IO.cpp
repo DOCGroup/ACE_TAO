@@ -30,14 +30,6 @@ ACE_Reactive_MEM_IO::init (ACE_HANDLE handle,
 }
 
 int
-ACE_Reactive_MEM_IO::fini (int remove)
-{
-  ACE_TRACE ("ACE_Reactive_MEM_IO::fini");
-
-  return this->close_shm_malloc (remove);
-}
-
-int
 ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
                                int flags,
                                const ACE_Time_Value *timeout)
@@ -251,14 +243,6 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
 }
 
 int
-ACE_MT_MEM_IO::fini (int remove)
-{
-  ACE_TRACE ("ACE_MT_MEM_IO::fini");
-
-  return this->close_shm_malloc (remove);
-}
-
-int
 ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
                          int flags,
                          const ACE_Time_Value *timeout)
@@ -357,10 +341,10 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
 }
 
 int
-ACE_MEM_IO::fini (int remove)
+ACE_MEM_IO::fini ()
 {
   if (this->deliver_strategy_ != 0)
-    return this->deliver_strategy_->fini (remove);
+    return this->deliver_strategy_->fini ();
   else
     return -1;
 }

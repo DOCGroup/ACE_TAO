@@ -358,6 +358,7 @@ main (int argc, ACE_TCHAR *[])
       // Synchronize on the exit of the child.
       result = p.wait ();
       ACE_ASSERT (result != -1);
+      ACE_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_END_TEST;
       return 0;

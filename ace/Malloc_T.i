@@ -170,6 +170,26 @@ ACE_Allocator_Adapter<MALLOC>::sync (void *addr, size_t len, int flags)
   return this->allocator_.sync (addr, len, flags);
 }
 
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter (void)
+{
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_, -1);
+  if (this->cb_ptr_ != 0)
+    return this->cb_ptr_->ref_counter_;
+
+  return -1;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (void)
+{
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_, -1);
+  if (this->cb_ptr_ != 0)
+    return --this->cb_ptr_->ref_counter_;
+  else
+    return -1;
+}
+
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE ACE_MEM_POOL &
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::memory_pool (void)
 {

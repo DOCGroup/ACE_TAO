@@ -33,6 +33,14 @@ ACE_MEM_SAP::ACE_MEM_SAP (void)
 }
 
 int
+ACE_MEM_SAP::fini ()
+{
+  ACE_TRACE ("ACE_MEM_SAP::fini");
+
+  return this->close_shm_malloc ();
+}
+
+int
 ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
                                 MALLOC_OPTIONS *options)
 {
@@ -51,14 +59,16 @@ ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
 }
 
 int
-ACE_MEM_SAP::close_shm_malloc (const int remove)
+ACE_MEM_SAP::close_shm_malloc (void)
 {
   ACE_TRACE ("ACE_MEM_SAP::close_shm_malloc");
 
-  if (this->shm_malloc_ != 0 && remove != 0)
-      return this->shm_malloc_->remove ();
+  int retv = -1;
 
-  return -1;
+  if (this->shm_malloc_ != 0 && this->shm_malloc_->release () == 0)
+    retv = this->shm_malloc_->remove ();
+
+  return retv;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

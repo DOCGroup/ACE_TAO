@@ -43,11 +43,6 @@ public:
                     MALLOC_OPTIONS *options);
 
   /**
-   * Finalizing the MEM_SAP object.  This method doesn't invoke
-   * the <remove> method.
-   */
-  virtual int fini (int remove);
-  /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
    * using ACE::recv, <timeout> only applies to ACE::recv.
@@ -115,11 +110,6 @@ public:
                     const ACE_TCHAR *name,
                     MALLOC_OPTIONS *options);
 
-  /**
-   * Finalizing the MEM_SAP object.  This method doesn't invoke
-   * the <remove> method.
-   */
-  virtual int fini (int remove);
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
@@ -195,7 +185,7 @@ public:
    * Finalizing the MEM_IO object.  This method doesn't invoke
    * the <remove> method.
    */
-  int fini (int remove = 0);
+  int fini ();
 
   /// Send an <n> byte buffer to the other process using shm_malloc_
   /// connected thru the socket.

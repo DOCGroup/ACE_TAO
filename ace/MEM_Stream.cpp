@@ -23,8 +23,7 @@ ACE_MEM_Stream::close (void)
 {
   this->send ((char *)0, 0);
 
-  if (this->cleanup_ != 0)
-    this->fini (1);
+  this->fini ();
 
 #if defined (ACE_WIN32)
   // We need the following call to make things work correctly on
