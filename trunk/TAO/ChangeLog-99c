@@ -1,3 +1,15 @@
+Tue Mar 16 000:26:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Server_Request.cpp:
+	  Used Any::_tao_get_cdr() in init_reply() instead of casting
+	  to ACE_Messsage_Block* the return of Any::value().
+	  Also streamlined dsi_marshal(), again based on the use of
+	  Any::_tao_get_cdr().
+	* tao/Any.cpp:
+	  Changed the constructor from ACE_Message_Block* to set the
+	  value of any_owns_data_ to 0, since the value_ of this Any
+	  is 0, so we want the value() call to return the cdr_.
+
 Mon Mar 15 21:08:55 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/POAC.cpp:
