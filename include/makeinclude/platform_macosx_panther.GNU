@@ -1,6 +1,6 @@
 # $Id$
 # platform_macosx.GNU
-# support for Mac OS X 10.2
+# support for Mac OS X 10.3 (Panther)
 
 ifndef exceptions
   exceptions = 1
@@ -23,7 +23,6 @@ CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe
 DCFLAGS         += -g
 DLD             = libtool
 LD              = $(CXX)
-LDFLAGS		+= -L/sw/lib
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
 OCFLAGS         += -O3
