@@ -6,6 +6,7 @@ Tue Aug 03 18:30:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  <mark_as_closed> method.
 
 	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy): 
+	* ace/Cached_Connect_Strategy_T.h (ACE_Cached_Connect_Strategy_Ex): 
 	  Made <mark_as_closed_i> public.
 
 	* ace/Caching_Utility_T.{h,cpp}
