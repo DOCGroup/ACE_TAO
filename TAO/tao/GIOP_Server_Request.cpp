@@ -94,8 +94,8 @@ TAO_GIOP_ServerRequest::
         operation_ (operation),
         incoming_ (0),
         outgoing_ (&output),
-        sync_with_server_ (0),
         response_expected_ (response_expected),
+        sync_with_server_ (0),
         lazy_evaluation_ (0),
         
 #if !defined (TAO_HAS_MINIMUM_CORBA)

@@ -168,6 +168,9 @@ private:
   TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
+
+  TAO_ORB_Core *orb_core_;
+  // Our orb Core
   
   CORBA::Boolean lite_flag_;
   // We using GIOP lite?

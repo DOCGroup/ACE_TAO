@@ -132,7 +132,10 @@ TAO_UIOP_Client_Transport::
                                TAO_ORB_Core *orb_core)
   :  TAO_UIOP_Transport (handler, orb_core),
      client_handler_ (handler),
-     client_mesg_factory_ (0)
+     client_mesg_factory_ (0),
+     orb_core_ (orb_core),
+     lite_flag_ (0),
+     params_ ()
 {
 }
 
@@ -328,7 +331,7 @@ TAO_UIOP_Client_Transport::
       if (this->lite_flag_)
         {
           ACE_NEW_RETURN  (this->client_mesg_factory_,
-                           TAO_GIOP_Message_Lite,
+                           TAO_GIOP_Message_Lite (this->orb_core_),
                            -1);
         }
       else if (major == TAO_DEF_GIOP_MAJOR)

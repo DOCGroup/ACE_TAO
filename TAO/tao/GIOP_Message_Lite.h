@@ -33,7 +33,7 @@ class TAO_Export TAO_GIOP_Message_Lite :
   //   interface. Implmenetation may not vary much too. But we are
   //   having a seperate interface to have seperation of concerns.
 public:  
-  TAO_GIOP_Message_Lite (void);
+  TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core);
   //Ctor
 
   virtual ~TAO_GIOP_Message_Lite (void);
@@ -92,8 +92,7 @@ private:
   
   int process_connector_request (TAO_Transport *transport,
                                  TAO_ORB_Core* orb_core,
-                                 TAO_InputCDR &input,
-                                 TAO_OutputCDR &output);
+                                 TAO_InputCDR &input);
   // A request was received on the server side. <transport> is the
   // source of the message (and thus where the  replies should be
   // sent). <orb_core> is the ORB that received the message <input>
@@ -104,8 +103,7 @@ private:
 
   int process_connector_locate (TAO_Transport *transport,
                                 TAO_ORB_Core* orb_core,
-                                TAO_InputCDR &input,
-                                TAO_OutputCDR &output);
+                                TAO_InputCDR &input);
   // A LocateRequest was received on the server side. <transport> is
   // the source of the message (and thus where the replies should be
   // sent). <orb_core> is the ORB that received the message <input>
@@ -143,8 +141,12 @@ private:
                  const u_char *ptr,
                  size_t len);
   // Print out the contents of the buffer.
-  
 
+  TAO_OutputCDR output_;
+  // The output cdr for the GIOP lite message
+  
+  char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
+  // Char array to initialise our Output CDR class
 };
 
 

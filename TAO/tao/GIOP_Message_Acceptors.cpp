@@ -493,7 +493,7 @@ TAO_GIOP_Message_Acceptors::
   ACE_TRY
     {
       // Write the exception
-      CORBA::TypeCode_ptr except_tc = x->_type ();
+      // CORBA::TypeCode_ptr except_tc = x->_type ();
 
       CORBA::exception_type extype =
         CORBA::USER_EXCEPTION;

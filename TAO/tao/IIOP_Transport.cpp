@@ -130,7 +130,10 @@ TAO_IIOP_Client_Transport::
   :  TAO_IIOP_Transport (handler,
                          orb_core),
      client_handler_ (handler),
-     client_mesg_factory_ (0)
+     client_mesg_factory_ (0),
+     orb_core_ (orb_core),
+     lite_flag_ (0),
+     params_ ()
 {
 }
 
@@ -321,7 +324,7 @@ TAO_IIOP_Client_Transport::messaging_init (CORBA::Octet major,
       if (this->lite_flag_)
         {
           ACE_NEW_RETURN  (this->client_mesg_factory_,
-                           TAO_GIOP_Message_Lite,
+                           TAO_GIOP_Message_Lite (this->orb_core_),
                            -1);
         }
       else if (major == TAO_DEF_GIOP_MAJOR)
