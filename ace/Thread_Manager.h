@@ -336,6 +336,9 @@ private:
   int apply_all (THR_FUNC, int = 0);
   // Apply <func> to all members of the table.
 
+  int join_thr (int i);
+  // Join the thread at index <i>.
+
   int resume_thr (int i);
   // Resume the thread at index <i>.
 

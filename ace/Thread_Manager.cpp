@@ -728,7 +728,8 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait_grp");
 
-  return this->apply_grp (THR_FUNC (&ACE_Thread_Manager::join_thr));
+  return this->apply_grp (grp_id,
+			  THR_FUNC (&ACE_Thread_Manager::join_thr));
 }
 
 // Must be called when thread goes out of scope to clean up its table
