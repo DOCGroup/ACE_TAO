@@ -1,3 +1,11 @@
+Thu Jul  5 23:00:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Fixed some more
+	  compilation errors in g++.  
+
 Thu Jul  5 22:35:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
