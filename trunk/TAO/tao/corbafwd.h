@@ -555,7 +555,7 @@ class CORBA_OperationDef_out;
 class CORBA_OperationDef_var;
 typedef CORBA_OperationDef *CORBA_OperationDef_ptr;
 
-class CORBA_OperationDescription;
+struct CORBA_OperationDescription;
 class CORBA_OperationDescription_out;
 class CORBA_OperationDescription_var;
 typedef CORBA_OperationDescription *CORBA_OperationDescription_ptr;
