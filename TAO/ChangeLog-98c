@@ -1,3 +1,8 @@
+Sun Sep 20 20:38:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* tao/corba.h: added TAO_TRY_THROW macro, which should be used
+	inside  a TAO_TRY block, and caught by the following TAO_CATCH...
+
 Sun Sep 20 01:19:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/IIOP_Object.{cpp,i,h}: Fixed the static call to 
