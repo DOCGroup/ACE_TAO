@@ -34,6 +34,17 @@
 	  Startup and shutdown were revised, the event channel
 	  shutdown cleanly now.
 	</LI>
+	<LI>
+	  Added yet another example
+	  (<CODE>$TAO_ROOT/orbsvcs/tests/EC_Throughput</CODE>), this
+	  one ilustrate how to use the 
+	  TAO extensions to create octet sequences based on CDR
+	  streams, without incurring in extra copies.
+	  This is useful to implement custom marshalling or late
+	  dermashalling of the event payload.
+	  Future versions of the test will help measuring the EC
+	  throughput, hence the name.
+	</LI>
     </UL>
 
     <H3>Known issues:</H3>

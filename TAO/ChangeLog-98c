@@ -21,6 +21,10 @@ Thu Jul  2 19:22:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Added some padding so the payload (an encapsulated CDR) is
 	  always properly aligned.
 
+	* orbsvcs/tests/EC_Throughput/README: 
+	* docs/releasenotes/ec.html: 
+	  Included some info about this new test.
+
 Thu Jul  2 14:28:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_array.cpp: We were generating incorrect code for
