@@ -27,7 +27,8 @@ class ACE_Export ACE_Stats_Value
   // = DESCRIPTION
   //     Container struct for 64-bit signed quantity and its
   //     precision.  It would be nicer to use a fixed-point class, but
-  //     this is sufficient.
+  //     this is sufficient.  Users typically don't need to use this
+  //     class directly; see ACE_Stats below.
 public:
   ACE_Stats_Value (const u_int precision);
   // Constructor, which requires precision in terms of number of
@@ -85,6 +86,15 @@ class ACE_Export ACE_Stats
   //        internally.
   //     4) It checks for overflow of internal state variables.
   //     5) It has no static variables of other than built-in types.
+  //
+  //     Example usage:
+  //       ACE_Stats stats;
+  //       for (u_int i = 0; i < n; ++i)
+  //         {
+  //           const ACE_UINT32 sample = /* ... */;
+  //           stats.sample (sample);
+  //         }
+  //       stats.print_summary (3);
 public:
   ACE_Stats (void);
   // Default constructor.
