@@ -1,11 +1,11 @@
 // $Id$
 
 #include "ace/Auto_Ptr.h"
-
-#include "Kokyu_dsrt.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Synch.h"
+#include "Kokyu_dsrt.h"
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> guid=0;
 
