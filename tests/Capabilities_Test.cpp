@@ -22,11 +22,6 @@
 
 ACE_RCSID(tests, Capabilities_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 static const char config[] = "Capabilities_Test.cfg";
 
 static int

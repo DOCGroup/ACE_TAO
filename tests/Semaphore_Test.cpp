@@ -25,11 +25,6 @@
 
 ACE_RCSID(tests, Semaphore_Test, "$Id$")
 
-#if defined (__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB ("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined (__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // msec that times are allowed to differ before test fails.
 #define ACE_ALLOWED_SLACK  100
 

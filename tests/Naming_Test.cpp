@@ -14,7 +14,7 @@
 //      the local naming context.
 //
 // = AUTHOR
-//    Prashant Jain and Irfan Pyarali
+//    Prashant Jain <pjain@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,11 +24,6 @@
 #include "ace/Profile_Timer.h"
 
 ACE_RCSID(tests, Naming_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static char name[BUFSIZ];
 static char value[BUFSIZ];

@@ -27,11 +27,6 @@
 
 ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 // The shared memory allocator, which uses up the ACE_DEFAULT_SEM_KEY.

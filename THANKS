@@ -75,6 +75,7 @@ Carlos Garcia Braschi <cgarcia@caramba.tid.es>
 Jam Hamidi <jh1@osi.com>
 Eric Vaughan <evaughan@arinc.com>
 Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>,
+Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>
 Steve Ritter <ritter@titan.com>
 Chandra Venkatapathy <cvenkat@develop.bsis.com>
 Matt Stevens <mstevens@kirk.softeng.infonautics.com>
@@ -445,7 +446,7 @@ Ian Wright <I.Wright@elsevier.co.uk>
 David Janello <David.Janello@abnamro.com>
 Rich Wellner <rw2@wellner.org>
 Fernando D. Mato Mira <matomira@acm.org>
-Jonathan Reis <reis@minniemouse.cemax.com>
+Jonathan Reis <reis@stentorsoft.com>
 Seung-Lee Hoon <tarjan@lgsoft.com>
 Russell L. Carter <rcarter@pinyon.org>
 Bill Hall <hts@gte.net>
@@ -902,7 +903,7 @@ Alia Atlas <akatlas@bbn.com>
 David Hall <David.Hall@grc.nasa.gov>
 Todd Gruhn <tgruhn2@mail.com>
 John Hickin <hickin@nortelnetworks.com>
-Jonathan Reis <reis@stentorsoft.com>
+Alex Brown <abrown@3com-ne.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

@@ -10,12 +10,12 @@
 //
 // = DESCRIPTION
 //    This is a test to verify and illustrate the use of the
-//    ACE_RB_Tree ACE_RB_Tree_Iterator, and
-//    ACE_RB_Tree_Reverse_Iterator classes.  Two different key and
+//    <ACE_RB_Tree ACE_RB_Tree_Iterator> and
+//    <ACE_RB_Tree_Reverse_Iterator> classes.  Two different key and
 //    item types are used in order to demonstrate specialization of
-//    the ACE_Less_Than comparison function object template: int (for
-//    which the native < operator is sufficient), and const char *
-//    (for which < operator semantics must be replaced by strcmp
+//    the <ACE_Less_Than> comparison function object template: int
+//    (for which the native < operator is sufficient), and const char
+//    * (for which < operator semantics must be replaced by strcmp
 //    semantics).  An RB tree for each of the four possible type
 //    parameter permutations over int and const char * is constructed
 //    and filled in, and the resulting order is checked via an
@@ -31,11 +31,6 @@
 #include "RB_Tree_Test.h"
 
 ACE_RCSID(tests, RB_Tree_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Type definitions for the four distinct parameterizations of the
 // test.

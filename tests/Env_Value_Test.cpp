@@ -21,11 +21,6 @@
 
 ACE_RCSID(tests, Env_Value_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #define TEST_THIS(type, varname, defval, expval) \
 do { \
   ACE_Env_Value<type> val (varname, (defval)); \

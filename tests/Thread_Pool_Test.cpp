@@ -29,11 +29,6 @@
 
 ACE_RCSID(tests, Thread_Pool_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #if defined (ACE_HAS_THREADS)
 
 // Number of iterations to run the test.

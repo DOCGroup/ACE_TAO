@@ -2,9 +2,6 @@
 # Makefile for building the AMI test executables
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = server.bor client.bor simple_client.bor
 
-all:
-	$(MAKE) -f server.bor $(MAKE_FLAGS)
-	$(MAKE) -f client.bor $(MAKE_FLAGS)
-	$(MAKE) -f simple_client.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

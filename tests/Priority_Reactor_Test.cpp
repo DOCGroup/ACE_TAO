@@ -20,7 +20,7 @@
 //     simple <ACE_Svc_Handler>, <ACE_Connectors> and <ACE_Acceptors>.
 //
 // = AUTHOR
-//    Carlos O'Ryan
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -37,11 +37,6 @@
 #include "Priority_Reactor_Test.h"
 
 ACE_RCSID(tests, Priority_Reactor_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // The number of children to run, it can be changed using the -c
 // option.

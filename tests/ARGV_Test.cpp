@@ -19,12 +19,8 @@
 
 ACE_RCSID(tests, ARGV_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-int main(int, char *argv[])
+int 
+main (int, char *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("ARGV_Test"));
 

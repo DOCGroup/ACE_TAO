@@ -14,7 +14,7 @@
 //      command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Prashant Jain and Doug Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,11 +22,6 @@
 #include "ace/Thread_Manager.h"
 
 ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 static void *

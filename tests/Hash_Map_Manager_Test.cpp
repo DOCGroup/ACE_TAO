@@ -57,12 +57,6 @@ template class ACE_Static_Allocator<STRING_TABLE_SIZE>;
 
 static ACE_Static_Allocator<STRING_TABLE_SIZE> alloc;
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-
 typedef ACE_Hash_Map_Manager_Ex<LPCTSTR,
                                 LPCTSTR,
                                 ACE_Hash<LPCTSTR>,

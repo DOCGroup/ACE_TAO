@@ -30,7 +30,7 @@
 //      signaling mechanism works flawlessly.
 //
 // = AUTHOR
-//    Irfan Pyarali and Nanbor Wang.
+//    Irfan Pyarali <irfan@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -40,11 +40,6 @@
 #include "ace/Task.h"
 
 ACE_RCSID(tests, Message_Queue_Notifications_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static int iterations = 10;
 

@@ -12,7 +12,7 @@
 //    Checks the #defines in ace/Basic_Types.h, and a few other basics.
 //
 // = AUTHOR
-//    David L. Levine
+//    David L. Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -36,12 +36,6 @@
 #endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 ACE_RCSID(tests, Basic_Types_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 
 typedef void* (*a_function_pointer) (void*);
 

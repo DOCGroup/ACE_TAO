@@ -17,7 +17,7 @@
 //      required as far as command line arguments are concerned.
 //
 // = AUTHOR
-//    Prashant Jain
+//    Prashant Jain <pjain@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -30,11 +30,6 @@
 #include "ace/SPIPE_Acceptor.h"
 
 ACE_RCSID(tests, SPIPE_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 // pipe name to use

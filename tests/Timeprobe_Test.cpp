@@ -12,7 +12,7 @@
 //      This is a simple test of ACE Timeprobes.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,11 +24,6 @@
 #include "ace/Timeprobe.h"
 
 ACE_RCSID(tests, Timeprobe_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

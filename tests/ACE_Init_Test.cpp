@@ -1,20 +1,18 @@
 // $Id$
+
+// This is a Win32-only test for verifying that the ACE dll
+// initializes itself without having a nonstatic object manager
+// present by way of a console app's main function.  It's a MFC dialog
+// app - it pops up a dialog and spawns a thread - the thread will
+// wait 2 seconds and programatically dismiss the dialog box.  The
+// main thread waits for the other one to exit, and that's the test.
+// If the ACE DLL doesn't initialize correctly, it will go boom!
 //
-// ACE_Init_Test
-//
-// This is a Win32-only test for verifying that the ACE dll initializes itself
-// without having a nonstatic object manager present by way of a console app's
-// main function.  It's a MFC dialog app - it pops up a dialog and spawns a
-// thread - the thread will wait 2 seconds and programatically dismiss the
-// dialog box.  The main thread waits for the other one to exit, and that's
-// the test.  If the ACE DLL doesn't initialize correctly, it will go boom!
-//
-// This test program was initially generated from MSVC AppWizard, then some
-// files were renamed and moved around to fit in with the ACE test directory
-// structure.
+// This test program was initially generated from MSVC AppWizard, then
+// some files were renamed and moved around to fit in with the ACE
+// test directory structure.
 //
 // ACE_Init_Test.cpp : Defines the class behaviors for the application.
-//
 
 #include "ace/Thread_Manager.h"
 #include "ACE_Init_Test_StdAfx.h"
@@ -28,7 +26,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 static void * wait_and_kill_dialog (void *pBox);
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CACE_Init_TestApp

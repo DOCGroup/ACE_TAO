@@ -1,17 +1,3 @@
+DIRS = collection deadlock invariant manual mutex rw_lock
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
-all:
-	cd $(ACE_ROOT)\netsvcs\clients\Tokens\collection
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Tokens\deadlock
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Tokens\invariant
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Tokens\manual
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Tokens\mutex
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Tokens\rw_lock
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

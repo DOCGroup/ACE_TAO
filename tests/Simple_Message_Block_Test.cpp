@@ -9,14 +9,13 @@
 //    Simple_Message_Block_Test.cpp
 //
 // = DESCRIPTION
-//
 //      This test program is a torture test that illustrates how
 //      ACE_Message_Block reference counting works, how and when locks
 //      are used, how memory is managed, and how continuation chains
 //      of message blocks are made. Ideally used with purify :-)
 //
 // = AUTHOR
-//    Irfan Pyarali (irfan@cs.wustl.edu)
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -25,11 +24,6 @@
 #include "ace/Synch.h"
 
 ACE_RCSID(tests, Simple_Message_Block_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 int
 main (int, ASYS_TCHAR *[])

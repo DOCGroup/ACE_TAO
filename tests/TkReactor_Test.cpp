@@ -21,18 +21,13 @@
 //      No command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Nagarajan Surendran (naga@cs.wustl.edu)
+//    Nagarajan Surendran <naga@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "test_config.h"
 
 ACE_RCSID(tests, TkReactor_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if !defined (ACE_HAS_TK)
 

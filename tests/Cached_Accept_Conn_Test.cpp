@@ -46,20 +46,14 @@
 
 ACE_RCSID(tests, Cached_Accept_Conn_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // Note: To keep both sunCC5.0 without debugging symbols and gcc2.7.3
 // happy, it was necessary to have the definitions of the methods of
 // the Accept_Strategy before the instantiations.
-//
 
-// HPUX doesnt accept these declaration after their usage.
+// HPUX doesn't accept these declaration after their usage.
 
 // For some strange reason this must *not* be static since otherwise
-// certain versions of SunC++ will not link properly. 
+// certain versions of SunC++ will not link properly.
 int connection_accepted = 0;
 
 // For some strange reason this must *not* be static since otherwise

@@ -21,7 +21,7 @@
 //     test remotely.
 //
 // = AUTHOR
-//    Tim Harrison
+//    Tim Harrison <harrison@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -35,11 +35,6 @@
 #include "ace/Token_Invariants.h"
 
 ACE_RCSID(tests, Tokens_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 

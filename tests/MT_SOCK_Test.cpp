@@ -33,11 +33,6 @@
 
 ACE_RCSID(tests, MT_SOCK_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 static void *
 client (void *arg)
 {

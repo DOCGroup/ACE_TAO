@@ -15,6 +15,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali <irfan@cs.wustl.edu>,
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -24,11 +25,6 @@
 #include "ace/streams.h"
 
 ACE_RCSID(tests, Map_Manager_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Simple map manager.
 typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> MAP;

@@ -16,7 +16,7 @@
 //     in the Errno class.
 //
 // = AUTHOR
-//    Prashant Jain and Doug Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -27,11 +27,6 @@
 #include "TSS_Test_Errno.h"
 
 ACE_RCSID(tests, TSS_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static u_int errors = 0;
 

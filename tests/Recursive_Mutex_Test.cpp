@@ -14,7 +14,7 @@
 //      pthreads.
 //
 // = AUTHOR
-//    Prashant Jain and Doug C. Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,11 +24,6 @@
 #include "ace/Synch.h"
 
 ACE_RCSID(tests, Recursive_Mutex_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 

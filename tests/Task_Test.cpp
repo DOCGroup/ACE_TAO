@@ -25,11 +25,6 @@
 
 ACE_RCSID(tests, Task_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #if defined (ACE_HAS_THREADS)
 
 class My_Thread_Hook : public ACE_Thread_Hook

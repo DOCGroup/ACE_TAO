@@ -24,11 +24,6 @@
 
 ACE_RCSID(tests, Priority_Task_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 static const ASYS_TCHAR *usage = ASYS_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)

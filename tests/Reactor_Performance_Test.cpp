@@ -9,13 +9,12 @@
 //    Reactor_Performance_Test.cpp
 //
 // = DESCRIPTION
-//
 //    This test is used to time the dispatching mechanisms of the
-//    ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
-//    tested.
+//    <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
+//    <ACE_Select_Reactor> can be tested.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -33,11 +32,6 @@
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tests, Reactor_Performance_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 

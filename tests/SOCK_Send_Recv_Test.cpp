@@ -34,11 +34,6 @@
 
 ACE_RCSID(tests, SOCK_Send_Recv_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // Change to non-zero if test fails
 static int Test_Result = 0;
 
