@@ -1040,9 +1040,6 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Amba \n",
-                      n));
-          ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Transport[%d]::consolidate_message \n"
                       "queueing up the message \n",
                       this->id ()));
