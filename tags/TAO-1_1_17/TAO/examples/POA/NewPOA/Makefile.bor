@@ -1,0 +1,13 @@
+
+#
+# Makefile for building the NewPOA example
+#
+
+NAME = NewPOA
+
+OBJFILES = \
+        $(OBJDIR)\NewPOA.obj
+
+CPPDIR = .;..
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>

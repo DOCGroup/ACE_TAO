@@ -1,0 +1,16 @@
+
+#
+# Makefile for building the Queued_Message_Test
+#
+
+NAME = Queued_Message_Test
+
+OBJFILES = \
+        $(OBJDIR)\Queued_Message_Test.obj
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+

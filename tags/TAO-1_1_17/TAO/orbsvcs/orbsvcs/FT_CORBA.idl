@@ -1,0 +1,322 @@
+//$Id$
+// FT.idl
+#ifndef _FT_IDL_
+#define _FT_IDL_
+
+#include "TimeBase.pidl" // 98-10.47.idl
+#include "orbsvcs/CosNaming.idl" // 98-10-19.idl
+//#include "CosEventComm.idl" // 98-10-06.idl
+#include "orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
+#include "orbsvcs/CosNotifyFilter.idl"
+// Edited and included for TAO
+#include "tao/IOP.pidl" // from 98-03-01.idl
+#include "tao/GIOP.pidl" // from 98-03-01.idl
+//#include "tao/ORB.pidl" // from 98-03-01.idl
+//#include "tao/orb.idl"
+
+#include "tao/Policy.pidl"
+
+#pragma prefix "omg.org"
+
+
+// These have been moved to the file IOP.pidl
+module FT
+{
+  // Specification for Interoperable Object Group References
+  typedef string FTDomainId;
+  typedef unsigned long long ObjectGroupId;
+  typedef unsigned long ObjectGroupRefVersion;
+
+  struct TagFTGroupTaggedComponent
+  { // tag = TAG_FT_GROUP;
+    GIOP::Version version;
+    FTDomainId ft_domain_id;
+    ObjectGroupId object_group_id;
+    ObjectGroupRefVersion object_group_ref_version;
+  };
+
+  struct TagFTPrimaryTaggedComponent
+  { // tag = TAG_FT_PRIMARY;
+    boolean primary;
+  };
+
+  // Specification for Most Recent Object Group Reference
+  struct FTGroupVersionServiceContext
+  { //context_id = FT_GROUP_VERSION;
+    ObjectGroupRefVersion object_group_ref_version;
+  };
+
+  // Specification for Transparent Reinvocation
+  const CORBA::PolicyType REQUEST_DURATION_POLICY = 47;
+  struct FTRequestServiceContext
+  { // context_id = FT_REQUEST;
+    string client_id;
+    long retention_id;
+    TimeBase::TimeT expiration_time;
+  };
+
+  local interface RequestDurationPolicy : CORBA::Policy
+    {
+      readonly attribute TimeBase::TimeT request_duration_value;
+    };
+
+  // Specification for Transport Heartbeats
+  const CORBA::PolicyType HEARTBEAT_POLICY = 48;
+  const CORBA::PolicyType HEARTBEAT_ENABLED_POLICY = 49;
+
+  struct TagFTHeartbeatEnabledTaggedComponent
+  { // tag = TAG_FT_HEARTBEAT_ENABLED;
+    boolean heartbeat_enabled;
+  };
+
+  struct HeartbeatPolicyValue {
+    boolean heartbeat;
+    TimeBase::TimeT heartbeat_interval;
+    TimeBase::TimeT heartbeat_timeout;
+  };
+
+  local interface HeartbeatPolicy : CORBA::Policy {
+    readonly attribute HeartbeatPolicyValue heartbeat_policy_value;
+  };
+
+  local interface HeartbeatEnabledPolicy : CORBA::Policy {
+    readonly attribute boolean heartbeat_enabled_policy_value;
+  };
+
+  // Specification of Common Types and Exceptions for ReplicationManager
+  interface GenericFactory;
+  interface FaultNotifier;
+
+  typedef CORBA::RepositoryId TypeId;
+  typedef Object ObjectGroup;
+
+  typedef CosNaming::Name Name;
+  typedef any Value;
+
+  struct Property {
+    Name nam;
+    Value val;
+  };
+
+  typedef sequence<Property> Properties;
+  typedef Name Location;
+  typedef sequence<Location> Locations;
+  typedef Properties Criteria;
+
+  struct FactoryInfo {
+    GenericFactory _factory;
+    Location the_location;
+    Criteria the_criteria;
+  };
+
+  typedef sequence<FactoryInfo> FactoryInfos;
+
+  typedef long ReplicationStyleValue;
+  const ReplicationStyleValue STATELESS = 0;
+  const ReplicationStyleValue COLD_PASSIVE = 1;
+  const ReplicationStyleValue WARM_PASSIVE = 2;
+  const ReplicationStyleValue ACTIVE = 3;
+  const ReplicationStyleValue ACTIVE_WITH_VOTING = 4;
+  typedef long MembershipStyleValue;
+  const MembershipStyleValue MEMB_APP_CTRL = 0;
+  const MembershipStyleValue MEMB_INF_CTRL = 1;
+  typedef long ConsistencyStyleValue;
+  const ConsistencyStyleValue CONS_APP_CTRL = 0;
+  const ConsistencyStyleValue CONS_INF_CTRL = 1;
+  typedef long FaultMonitoringStyleValue;
+  const FaultMonitoringStyleValue PULL = 0;
+  const FaultMonitoringStyleValue PUSH = 1;
+  const FaultMonitoringStyleValue NOT_MONITORED = 2;
+  typedef long FaultMonitoringGranularityValue;
+  const FaultMonitoringGranularityValue MEMB = 0;
+  const FaultMonitoringGranularityValue LOC = 1;
+  const FaultMonitoringGranularityValue LOC_AND_TYPE = 2;
+  typedef FactoryInfos FactoriesValue;
+  typedef unsigned short InitialNumberReplicasValue;
+  typedef unsigned short MinimumNumberReplicasValue;
+
+  struct FaultMonitoringIntervalAndTimeoutValue {
+    TimeBase::TimeT monitoring_interval;
+    TimeBase::TimeT timeout;
+  };
+
+  typedef TimeBase::TimeT CheckpointIntervalValue;
+  exception InterfaceNotFound {};
+  exception ObjectGroupNotFound {};
+  exception MemberNotFound {};
+  exception ObjectNotFound {};
+  exception MemberAlreadyPresent {};
+  exception BadReplicationStyle {};
+  exception ObjectNotCreated {};
+  exception ObjectNotAdded {};
+  exception PrimaryNotSet {};
+  exception UnsupportedProperty {
+    Name nam;
+    Value val;
+  };
+
+  exception InvalidProperty {
+    Name nam;
+    Value val; };
+
+  exception NoFactory {
+    Location the_location;
+    TypeId type_id; };
+
+  exception InvalidCriteria {
+    Criteria invalid_criteria; };
+
+  exception CannotMeetCriteria {
+    Criteria unmet_criteria; };
+
+  // Specification of PropertyManager Interface
+  // which ReplicationManager Inherits
+
+  interface PropertyManager {
+
+    void set_default_properties(in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+    Properties get_default_properties();
+
+    void remove_default_properties(in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    void set_type_properties(in TypeId type_id,
+                             in Properties overrides)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    Properties get_type_properties(in TypeId type_id);
+
+    void remove_type_properties(in TypeId type_id,
+                                in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    void set_properties_dynamically(in ObjectGroup object_group,
+                                    in Properties overrides)
+      raises(ObjectGroupNotFound, InvalidProperty, UnsupportedProperty);
+
+    Properties get_properties(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound); };
+
+  // Specification of ObjectGroupManager Interface
+  // which ReplicationManager Inherits
+  interface ObjectGroupManager {
+    ObjectGroup create_member(in ObjectGroup object_group,
+                              in Location the_location,
+                              in TypeId type_id,
+                              in Criteria the_criteria)
+      raises(ObjectGroupNotFound,
+             MemberAlreadyPresent,
+             NoFactory,
+             ObjectNotCreated,
+             InvalidCriteria,
+             CannotMeetCriteria);
+
+    ObjectGroup add_member(in ObjectGroup object_group,
+                           in Location the_location,
+                           in Object member)
+      raises(ObjectGroupNotFound,
+             MemberAlreadyPresent,
+             ObjectNotAdded);
+
+    ObjectGroup remove_member(in ObjectGroup object_group,
+                              in Location the_location)
+      raises(ObjectGroupNotFound,
+             MemberNotFound);
+
+    ObjectGroup set_primary_member(in ObjectGroup object_group,
+                                   in Location the_location)
+      raises(ObjectGroupNotFound,
+             MemberNotFound,
+             PrimaryNotSet,
+             BadReplicationStyle);
+
+    Locations locations_of_members(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    ObjectGroupId get_object_group_id(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    ObjectGroup get_object_group_ref(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    Object get_member_ref(in ObjectGroup object_group,
+                          in Location loc)
+      raises(ObjectGroupNotFound, MemberNotFound); };
+
+
+  // Specification of GenericFactory Interface
+  // which ReplicationManager Inherits and Application Objects Implement
+  interface GenericFactory {
+    typedef any FactoryCreationId;
+    Object create_object(in TypeId type_id,
+                         in Criteria the_criteria,
+                         out FactoryCreationId factory_creation_id)
+      raises (NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              InvalidProperty,
+              CannotMeetCriteria);
+
+    void delete_object(in FactoryCreationId factory_creation_id)
+      raises (ObjectNotFound); };
+
+  // Specification of ReplicationManager Interface
+  interface ReplicationManager : PropertyManager,
+    ObjectGroupManager,
+    GenericFactory {
+    void register_fault_notifier(in FaultNotifier fault_notifier);
+    FaultNotifier get_fault_notifier()
+      raises (InterfaceNotFound); };
+
+  // Specifications for Fault Management
+  // Specification of PullMonitorable Interface
+  // which Application Objects Inherit
+  interface PullMonitorable { boolean is_alive(); };
+
+  // Specification of FaultNotifier Interface
+  interface FaultNotifier {
+    typedef unsigned long long ConsumerId;
+    void push_structured_fault( in CosNotification::StructuredEvent
+                                event);
+    void push_sequence_fault( in CosNotification::EventBatch events);
+    CosNotifyFilter::Filter create_subscription_filter (in string
+                                                        constraint_grammar)
+      raises (CosNotifyFilter::InvalidGrammar);
+    ConsumerId connect_structured_fault_consumer(in CosNotifyComm::StructuredPushConsumer push_consumer,
+                                                 in CosNotifyFilter::Filter filter) ;
+
+    ConsumerId connect_sequence_fault_consumer(in
+                                               CosNotifyComm::SequencePushConsumer push_consumer,
+                                               in
+                                               CosNotifyFilter::Filter
+                                               filter);
+
+    void disconnect_consumer( in ConsumerId connection)
+    raises(CosEventComm::Disconnected); };
+
+  // Specifications for Logging and Recovery
+  typedef sequence<octet> State;
+
+  exception NoStateAvailable {};
+  exception InvalidState {};
+
+  exception NoUpdateAvailable {};
+  exception InvalidUpdate {};
+
+  // Specification of Checkpointable Interface
+  // which Updateable and Application Objects Inherit
+  interface Checkpointable { State get_state()
+                               raises(NoStateAvailable);
+  void set_state(in State s) raises(InvalidState); };
+
+  // Specification of Updateable Interface
+  // which Application Objects Inherit
+  interface Updateable : Checkpointable { State get_update()
+                                            raises(NoUpdateAvailable);
+  void set_update(in State s) raises(InvalidUpdate);
+  };
+
+};
+
+#endif // for #ifndef _FT_IDL_
