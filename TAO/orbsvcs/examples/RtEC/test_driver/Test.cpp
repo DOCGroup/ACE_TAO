@@ -1,5 +1,6 @@
 // $Id$
 
+#include <dsui_types.h>
 #include "ace/Array.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Synch.h"
@@ -27,6 +28,7 @@ int
 main (int argc, char *argv[])
 {
   int retval = 0;
+  ds_control ctrl ("Test start","Test.dsui");
 
   ACEXML_TRY_NEW_ENV
     {
