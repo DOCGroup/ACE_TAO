@@ -168,7 +168,8 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *max_wait_time)
 {
-  /*
+
+#if !defined (TAO_HAS_COLLOCATION)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
@@ -327,8 +328,12 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     }
 
   return transport;
-  */
+#else
+  ACE_UNUSED_ARG (desc);
+  ACE_UNUSED_ARG (max_wait_time);
   return 0;
+#endif
+
 }
 
 
