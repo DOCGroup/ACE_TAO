@@ -169,7 +169,7 @@ ifneq (,$(findstring  Notify, $(TAO_ORBSVCS)))
   MKLIST += Makefile.ETCL Makefile.CosNotification
 endif
 ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.ETCL Makefile.DsLogAdmin
+  MKLIST += Makefile.ETCL Makefile.Svc_Utils Makefile.DsLogAdmin
 endif
 ifneq (,$(findstring  EventLog, $(TAO_ORBSVCS)))
   # The EventLog service depends on the CosEvent service.
