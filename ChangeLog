@@ -1,3 +1,14 @@
+Sat Mar 13 09:43:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Dirent_Test.cpp:
+          The first step of this test is to test the selector. To test this the
+          test uses Makefile as file to test for, but with the MPC builds we
+          remove the file Makefile and generate the file GNUMakefile, so at the
+          moment this tests runs there is no Makefile file and the test fails.
+          Changed the test so that it uses Dirent_Test.cpp as filename, this
+          is always there. Thanks to Martin Corino <mcorino@remedy.nl> for
+          figuring out the problem.
+
 Fri Mar 12 16:29:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/SString_Test.cpp:
