@@ -6,7 +6,7 @@
 
 #include "ace/streams.h"
 #include "ace/Reactor.h"
-#include "ace/Select_Reactor.h"
+#include "ace/TP_Reactor.h"
 #include "ace/Thread_Manager.h"
 
 #include <string>
@@ -86,14 +86,22 @@ static void *controller (void *arg) {
 
 int main (int argc, char *argv[])
 {
-  ACE_Select_Reactor select_reactor;
-  ACE_Reactor reactor (&select_reactor);
+  const size_t N_THREADS = 4;
+
+  size_t n_threads = argc > 1 ? atoi (argv[1]) : N_THREADS;
+
+  ACE_TP_Reactor tp_reactor;
+  ACE_Reactor reactor (&tp_reactor);
+  ACE_Reactor::instance (&reactor);
 
   Server_Logging_Daemon *server;
   ACE_NEW_RETURN (server,
-                  Server_Logging_Daemon (argc, argv, &reactor),
+                  Server_Logging_Daemon (argc, argv,
+                    ACE_Reactor::instance ()),
                   1);
-  ACE_Thread_Manager::instance ()->spawn (event_loop, &reactor);
-  ACE_Thread_Manager::instance ()->spawn (controller, &reactor);
+  ACE_Thread_Manager::instance ()->spawn_n
+    (n_threads, event_loop, ACE_Reactor::instance ());
+  ACE_Thread_Manager::instance ()->spawn
+    (controller, ACE_Reactor::instance ());
   return ACE_Thread_Manager::instance ()->wait ();
 }

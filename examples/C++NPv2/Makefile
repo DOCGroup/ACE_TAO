@@ -11,6 +11,7 @@
 
 EXAMPLES = Reactor_Logging_Server \
            Select_Reactor_Logging_Server \
+           TP_Reactor_Logging_Server \
            display_logfile
 
 all:

@@ -25,7 +25,7 @@ Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
   if (result == -1) reactor->end_reactor_event_loop ();
 }
 
-typedef Reactor_Logging_Server<Logging_Acceptor_Ex> 
+typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
         Server_Logging_Daemon;
 
 int main (int argc, char *argv[])
