@@ -6,9 +6,9 @@
 //    tests
 //
 // = DESCRIPTION
-//    This program tests the behavior of ACE_Token under a variety of senerios
+//    This program tests the behavior of ACE_Token under a variety of scenarios
 //    in order verify whether or not tokens are returned, and threads run, in
-//    a LIFO or FIFO maner.
+//    a LIFO or FIFO manner.
 //
 // = AUTHOR
 //    Don Hinton <dhinton@ieee.org>
