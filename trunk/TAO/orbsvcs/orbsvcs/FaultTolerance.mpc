@@ -36,4 +36,8 @@ project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup, m
 
   Template_Files {
   }
+
+  Pkgconfig_Files {
+    TAO_FaultTolerance.pc.in
+  }
 }
