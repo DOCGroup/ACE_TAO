@@ -73,6 +73,11 @@ else
 	LDLIBS += -lOrb-mt
 endif
 
+# 
+ifdef quantify
+	CPPFLAGS += -I/pkg/purify/quantify-3.0-solaris2
+endif
+
 .PRECIOUS: cubitC.h cubitC.i cubitC.cpp cubitS.h cubitS.i cubitS.cpp
 
 server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
@@ -85,7 +90,7 @@ clean:
 	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf cubitC.* cubitS.*
+	-/bin/rm -rf cubitC.* cubitS.* cubitS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
