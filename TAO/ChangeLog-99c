@@ -5,7 +5,8 @@ Mon Jun 14 22:02:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_MT_Dispatching.i:
 	* orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
 	  Added new dispatching strategy that uses several dispatching
-	  threads.  Thanks to 
+	  threads.  Thanks to  Thomas Lockhart
+	  <Thomas.G.Lockhart@jpl.nasa.gov> for motivating this use case.
 
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
