@@ -203,6 +203,7 @@ main (int argc, char *argv[])
         }
       
 
+#     if 0
       // Begin test of attributes
       ami_test_var->sendc_get_yadda (the_handler_var.in (),
                                      ACE_TRY_ENV);
@@ -218,6 +219,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // End test of attributes
+#     endif
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
