@@ -109,7 +109,7 @@ public:
   // A default argument is set, but please note that this not recommended
   // as the user may not be able to propagate the exceptions.
 
-  // The 'deferred sunchronous' methods.
+  // The 'deferred synchronous' methods.
   void send_deferred (CORBA::Environment &ACE_TRY_ENV =
                         CORBA::Environment::default_environment ());
   void get_response (CORBA::Environment &ACE_TRY_ENV =
