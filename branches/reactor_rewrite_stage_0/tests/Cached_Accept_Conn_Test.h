@@ -20,7 +20,6 @@
 #ifndef ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
 #define ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
 
-#include "ace/Strategies.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
