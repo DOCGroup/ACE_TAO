@@ -1,3 +1,14 @@
+Tue Nov 27 12:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Refcountable.h: Added a #define for the inlined file.
+	
+	* examples/Reactor/Misc/test_demuxing.cpp: 
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+	* examples/Timer_Queue/main_reactor.cpp: Added  #includes 
+
+	* examples/*/Makefile:
+	* tests/Makefile: Updated dependencies
+
 Wed Nov 21 10:44:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Cached_Accept_Conn_Test.h:
