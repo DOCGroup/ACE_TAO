@@ -727,6 +727,10 @@ private:
   // As above, but now the size and alignment requirements may be
   // different.
 
+  int do_byte_swap (void) const;
+  // If non-zero then this stream is writing in non-native byte order,
+  // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+
 protected:
   ACE_Message_Block start_;
   // The start of the chain of message blocks, even though in the
