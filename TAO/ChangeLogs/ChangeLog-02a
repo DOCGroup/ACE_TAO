@@ -1,3 +1,9 @@
+Tue Mar 14 16:26:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POAC.cpp: The typecode for _tc_Current was not properly
+	  defined using TAO_NAMESPACE_blah macros.  Applied those macros.
+	  Thanks to Pradeep and Darrell for noticing this.
+
 Tue Mar 14 14:37:58 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/time/README: added note that this example
