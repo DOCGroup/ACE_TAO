@@ -2279,19 +2279,29 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (!ACE_OS::strcmp (str.in (), "IDL:p_iface:1.0"));
 
-  length = fifd->operations[0].contexts.length ();
+  length = fifd->operations.length ();
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nInterfaceDef::describe_interface::")
-                ACE_TEXT ("operations[0]::contexts::length: %d\n"),
+                ACE_TEXT ("operations::length: %d\n"),
+                length));
+
+  ACE_ASSERT (length == 4);
+
+  length = fifd->operations[3].contexts.length ();
+
+  if (this->debug_)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("\nInterfaceDef::describe_interface::")
+                ACE_TEXT ("operations[3]::contexts::length: %d\n"),
                 length));
 
   ACE_ASSERT (length == 3);
 
   for (i = 0; i < length; i++)
     {
-      tmp = fifd->operations[0].contexts[i];
+      tmp = fifd->operations[3].contexts[i];
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
@@ -2303,7 +2313,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
       ACE_ASSERT (!ACE_OS::strcmp (tmp, contexts[i]));
     }
 
-  length = fifd->operations[0].exceptions.length ();
+  length = fifd->operations[3].exceptions.length ();
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
@@ -2315,11 +2325,11 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
 
   for (i = 0; i < length; i++)
     {
-      const char *tmp = fifd->operations[0].exceptions[i].name;
+      const char *tmp = fifd->operations[3].exceptions[i].name;
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("InterfaceDef::describe::operations[0]::")
+                    ACE_TEXT ("InterfaceDef::describe::operations[3]::")
                     ACE_TEXT ("contexts[%d]: %s\n"),
                     i,
                     tmp));
@@ -2335,7 +2345,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                 ACE_TEXT ("attributes::defined_in: %s\n"),
                 tmp));
 
-  ACE_ASSERT (!ACE_OS::strcmp (tmp, "IDL:p_iface:1.0"));
+  ACE_ASSERT (!ACE_OS::strcmp (tmp, "IDL:gp_iface:1.0"));
 
   in_bases[0] = CORBA::InterfaceDef::_duplicate (p_ivar.in ());
 
@@ -2361,7 +2371,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                 ACE_TEXT ("base_interfaces::length: %d\n"),
                 length));
 
-  ACE_ASSERT (ifd->base_interfaces.length () == 1);
+  ACE_ASSERT (length == 2);
 
   const char *base_iface_id = 0;
 
@@ -2372,10 +2382,9 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("InterfaceDef::describe::")
-                    ACE_TEXT ("base_interfaces[0]: %s\n"),
+                    ACE_TEXT ("base_interfaces[%d]: %s\n"),
+                    i,
                     base_iface_id));
-
-      ACE_ASSERT (ACE_OS::strcmp (base_iface_id, "IDL:p_iface:1.0") == 0);
     }
 
   CORBA::InterfaceDefSeq_var out_bases = ivar->base_interfaces (ACE_TRY_ENV);
@@ -2388,7 +2397,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                 ACE_TEXT ("\nInterfaceDef::base_interfaces::length: %d\n"),
                 length));
 
-  ACE_ASSERT (length == 1);
+  ACE_ASSERT (length == 2);
 
   for (i = 0; i < length; i++)
     {
@@ -2400,8 +2409,6 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                     ACE_TEXT ("InterfaceDef::base_interfaces[%d]::name: %s\n"),
                     i,
                     str.in ()));
-
-      ACE_ASSERT (!ACE_OS::strcmp (str.in (), "p_iface"));
     }
 
   CORBA::ContainedSeq_var contents = ivar->contents (CORBA::dk_all,
@@ -2416,7 +2423,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                 ACE_TEXT ("\nInterfaceDef::contents::length: %d\n"),
                 length));
 
-  ACE_ASSERT (length == 3);
+  ACE_ASSERT (length == 6);
 
   for (i = 0; i < length; i++)
     {
@@ -2428,10 +2435,6 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                     ACE_TEXT ("InterfaceDef::contents[%d]::name: %s\n"),
                     i,
                     str.in ()));
-
-      ACE_ASSERT (!ACE_OS::strcmp (str.in (), "p_op")
-                  || !ACE_OS::strcmp (str.in (), "p_attr")
-                  || !ACE_OS::strcmp (str.in (), "gp_attr"));
 
       CORBA::Container_var cr = contents[i]->defined_in (ACE_TRY_ENV);
       ACE_CHECK;
