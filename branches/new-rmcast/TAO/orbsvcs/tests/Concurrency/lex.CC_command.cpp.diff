@@ -1,0 +1,209 @@
+--- lex.CC_command.cpp.orig	Mon Nov 12 19:05:12 2001
++++ lex.CC_command.cpp	Mon Nov 12 19:14:49 2001
+@@ -220,10 +220,13 @@
+ static int ace_cc_yy_init = 1;		/* whether we need to initialize */
+ static int ace_cc_yy_start = 0;	/* start state number */
+ 
++#define ace_cc_yywrap() 1
+ /* Flag which is used to allow ace_cc_yywrap()'s to do buffer switches
+  * instead of setting up a fresh ace_cc_yyin.  A bit of a hack ...
+  */
++#if (ace_cc_yywrap() != 1)
+ static int ace_cc_yy_did_buffer_switch_on_eof;
++#endif
+ 
+ void ace_cc_yyrestart ACE_CC_YY_PROTO(( FILE *input_file ));
+ 
+@@ -262,7 +265,6 @@
+ #define ACE_CC_YY_AT_BOL() (ace_cc_yy_current_buffer->ace_cc_yy_at_bol)
+ 
+ 
+-#define ace_cc_yywrap() 1
+ #define ACE_CC_YY_SKIP_ACE_CC_YYWRAP
+ typedef unsigned char ACE_CC_YY_CHAR;
+ FILE *ace_cc_yyin = (FILE *) 0, *ace_cc_yyout = (FILE *) 0;
+@@ -644,6 +646,8 @@
+ 		ace_cc_yy_load_buffer_state();
+ 		}
+ 
++        ace_cc_yy_cp = ace_cc_yy_bp = 0; /* To avoid g++ warning about
++                                            possible uninitialized use. */
+ 	while ( 1 )		/* loops until end-of-file is reached */
+ 		{
+ 		ace_cc_yy_cp = ace_cc_yy_c_buf_p;
+@@ -705,90 +709,90 @@
+ case 1:
+ ACE_CC_YY_RULE_SETUP
+ return T_TERM;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 2:
+ ACE_CC_YY_RULE_SETUP
+ return T_START_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 3:
+ ACE_CC_YY_RULE_SETUP
+ return T_CREATE_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 4:
+ ACE_CC_YY_RULE_SETUP
+ return T_LOCK_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 5:
+ ACE_CC_YY_RULE_SETUP
+ return T_UNLOCK_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 6:
+ ACE_CC_YY_RULE_SETUP
+ return T_TRYLOCK_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 7:
+ ACE_CC_YY_RULE_SETUP
+ return T_CHANGEMODE_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 8:
+ ACE_CC_YY_RULE_SETUP
+ return T_SLEEP_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 9:
+ ACE_CC_YY_RULE_SETUP
+ return T_WAIT_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 10:
+ ACE_CC_YY_RULE_SETUP
+ return T_PRINT_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 11:
+ ACE_CC_YY_RULE_SETUP
+ return T_REPEAT_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 12:
+ ACE_CC_YY_RULE_SETUP
+ return T_EXCEP_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 13:
+ ACE_CC_YY_RULE_SETUP
+ return T_LOOKUP_CMD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 14:
+ ACE_CC_YY_RULE_SETUP
+ return T_READ;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 15:
+ ACE_CC_YY_RULE_SETUP
+ return T_IREAD;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 16:
+ ACE_CC_YY_RULE_SETUP
+ return T_UPGRADE;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 17:
+ ACE_CC_YY_RULE_SETUP
+ return T_WRITE;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 18:
+ ACE_CC_YY_RULE_SETUP
+ return T_IWRITE;
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 19:
+ ACE_CC_YY_RULE_SETUP
+ { ace_cc_yylval.id = ACE_OS::strdup(&ace_cc_yytext[1]);
+ 			 ace_cc_yylval.id[ace_cc_yyleng-2]='\0';
+ 			 return Q_STRING; }
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 20:
+ ACE_CC_YY_RULE_SETUP
+ { ace_cc_yylval.num = atoi(ace_cc_yytext); return T_NUM; }
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 21:
+ ACE_CC_YY_RULE_SETUP
+ { ace_cc_yylval.id = ACE_OS::strdup(ace_cc_yytext);
+                            return T_IDENT; }
+-	ACE_CC_YY_BREAK
++	/* ACE_CC_YY_BREAK */
+ case 22:
+ ACE_CC_YY_RULE_SETUP
+ { }
+@@ -882,7 +886,9 @@
+ 			{
+ 			case EOB_ACT_END_OF_FILE:
+ 				{
++#if (ace_cc_yywrap() != 1)
+ 				ace_cc_yy_did_buffer_switch_on_eof = 0;
++#endif
+ 
+ 				if ( ace_cc_yywrap() )
+ 					{
+@@ -903,8 +909,10 @@
+ 
+ 				else
+ 					{
++#if (ace_cc_yywrap() != 1)
+ 					if ( ! ace_cc_yy_did_buffer_switch_on_eof )
+ 						ACE_CC_YY_NEW_FILE;
++#endif
+ 					}
+ 				break;
+ 				}
+@@ -1188,7 +1196,7 @@
+ 	}
+ #endif	/* ifndef ACE_CC_YY_NO_UNPUT */
+ 
+-
++#ifndef ACE_CC_YY_NO_INPUT
+ #ifdef __cplusplus
+ static int ace_cc_yyinput()
+ #else
+@@ -1237,13 +1245,13 @@
+ 					if ( ace_cc_yywrap() )
+ 						return EOF;
+ 
+-					if ( ! ace_cc_yy_did_buffer_switch_on_eof )
++                                        /*					if ( ! ace_cc_yy_did_buffer_switch_on_eof )
+ 						ACE_CC_YY_NEW_FILE;
+ #ifdef __cplusplus
+ 					return ace_cc_yyinput();
+ #else
+ 					return input();
+-#endif
++                                        #endif */
+ 					}
+ 
+ 				case EOB_ACT_CONTINUE_SCAN:
+@@ -1261,6 +1269,7 @@
+ 
+ 	return c;
+ 	}
++#endif /* ! ACE_CC_YY_NO_INPUT */
+ 
+ 
+ #ifdef ACE_CC_YY_USE_PROTOS
+@@ -1304,7 +1313,9 @@
+ 	 * is looked at is after ace_cc_yywrap() is called, so it's safe
+ 	 * to go ahead and always set it.
+ 	 */
++#if (ace_cc_yywrap() != 1)
+ 	ace_cc_yy_did_buffer_switch_on_eof = 1;
++#endif
+ 	}
+ 
+ 

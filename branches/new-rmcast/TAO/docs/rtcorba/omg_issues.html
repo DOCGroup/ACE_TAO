@@ -1,0 +1,103 @@
+<html>
+
+<!-- $Id$ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Issues with OMG Real-Time CORBA 1.0 Specification</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+</head>
+
+<body>
+
+<h3>Issues with Real-Time CORBA 1.0 Specification</h3>
+
+This document lists what we believe to be the shortcomings of the
+Real-Time CORBA 1.0 specification, which we uncovered while implementing it in TAO.&nbsp;
+All items on this page refer to <a href="http://cgi.omg.org/cgi-bin/doc?ptc/99-05-03">ptc/99-05-03</a>, which was
+the basis for our implementation.&nbsp; This material will be submitted to the
+OMG.
+<h3>
+
+Unnecessary <i>ClientProtocolPolicy</i> complexity</h3>
+<p>
+
+<i>ClientProtocolPolicy</i> can be set on either client or server.&nbsp; Section 4.8.5
+in CORBA 2.4 cautions against defining policies that can be set
+in both places:&nbsp;
+<blockquote><br>
+  If the <b><font FACE="Arial" SIZE="2">Policy </font></b> can be 
+used with <b><font FACE="Arial" SIZE="2">POA </font></b>creation
+to tune <b><font FACE="Arial" SIZE="2">IOR </font></b>contents
+and can also be specified (overridden) in the client, specify how to reconcile the policy's
+presence from both the client and server. It is strongly recommended to avoid this
+case! As an exercise in completeness, most <b><font FACE="Arial" SIZE="2">POA </font></b>policies
+can probably be extended to have
+some meaning in the client and vice versa, but this does not help make usable
+systems, it just makes them more complicated without adding really useful
+features.
+There are very few cases where a policy is really appropriate to specify in
+both places, and for these policies the interaction between the two must be
+described. </blockquote>
+<p>While the specification does describe what happens if <i>ClientProtocolPolicy</i>
+is set on both client and server, it is not clear that being able to set the
+policy on the server-side adds any useful functionality.&nbsp; With <i>ServerProtocolPolicy,
+</i>the server already has the ability to specify which protocols and in what
+order can be used by clients for invocations.&nbsp; So, <i>ClientProtocolPolicy</i>
+should be made a pure client policy, to reduce the complexity of the
+system.&nbsp; A related issue, which becomes moot if the policy is made pure
+client, is whether <CODE>nil</CODE> <i>ProtocolProperties</i> are allowed in <i>ClientProtocolPolicy</i>,
+and, if so, how are they encoded into a <i>TaggedComponent</i> if the policy is
+set on the server-side.</p>
+<h3>Lack of standard APIs for managing Priority Mappings and Priority Transforms</h3>
+<p>The specification does not define APIs for setting and getting Priority Mappings and Priority Transforms,
+leaving it up to ORB implementations.&nbsp; These APIs should be standardized in
+order for application code to be portable.&nbsp;&nbsp;
+</p>
+<h3>
+Policy configurations ambiguities</h3>
+<p>The specification defines a number of policies involving priorities, and
+describes some of their interaction.&nbsp; However, it does not completely
+specify the validity and semantics of <i>all</i> possible combinations of those
+policies.&nbsp; For example, does the combination of Server Declared Priority
+Model with server-set Priority Banded Connections make sense?&nbsp; For all values?&nbsp;
+If the purpose of Priority Banded Connections is to avoid priority inversions,
+then why would we ever want to use <i>PriorityModelPolicy</i> without <i>PriorityBandedConnectionPolicy</i>?&nbsp;
+And, if we would <i>always</i> want to use Priority Banded Connections, why does
+there need to be a policy, why can't banded connections be a mechanism the ORB
+uses internally as needed, transparent to the user?&nbsp;&nbsp;</p>
+<p>What is clear from the spec is the availability of certain policies, what is
+not clear is what exactly using each one of those policies achieves - in other
+words, when and why different combinations of them are appropriate.&nbsp;</p>
+<h3>Lack of thread resources model</h3>
+<p> Section 4.12.2 of the specification says the following about server ORB and
+priority band establishment: <cite>&quot;if the priority band
+is inconsistent with the ORB's priority configuration then the ORB shall raise a
+INV_POLICY system exception&quot;.&nbsp;&nbsp; </cite>However, the specification
+never defines what is meant by <i>the ORB's priority configuration,</i> leaving
+it up to implementations.&nbsp; One implementation, for example, might use
+Threadpool threads for servicing banded connections, and <i>consistency with the
+ORB's configuration</i> would mean availability of a threadpool lane with
+priority matching band's priority range.&nbsp; Another implementation might be
+spawning separate threads for servicing banded connections, and <i>consistency
+with the ORB's configuration</i> would be automatic.&nbsp; With these two
+implementations, a band that will cause exception in the first implementation
+will work just fine in the second.&nbsp; The specification does not provide a
+model of ORB thread resources: it provides APIs for creating Threadpools, but
+does not describe how the threadpool threads are used.&nbsp; I/O threads are
+never even mentioned.&nbsp; On one hand, this lack of a resource model is
+beneficial: it allows greater freedom and variety of implementations.&nbsp; But,
+on the other hand, it hurts portability, since a configuration might work with
+one real-time ORB implementation but not another.&nbsp; Also, bounding priority inversions
+is a quality of implementation: there is no explicit requirement for I/O threads to run at the same priority as request processing threads.</p>
+
+<p>In summary, we believe that Real-Time CORBA 1.0 specification is a good
+start, but needs some work, especially in regards to resolving
+ambiguities.&nbsp; Currently, applications must depend on many implementation details.&nbsp;
+For example, a policy combination providing certain semantics in one ORB can
+provide different semantics or be invalid when used in another ORB, with both
+ORBs being compliant with the specification.&nbsp;&nbsp;&nbsp; </p>
+
+<hr>
+<p><i>Last Modified: $Date$</i></p>
+</body>
+</html>

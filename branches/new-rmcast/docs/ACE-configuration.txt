@@ -1,0 +1,180 @@
+* $Id$ *
+
+================================================================
+Configuring ACE Using the `configure' Script
+================================================================
+
+QuickStart
+----------
+GNU Autoconf support in ACE is still under development.  However it is
+a small subset of Autoconf support in ACE has been made available for
+testing and feedback purposes.  To use Autoconf support in ACE, do
+something like the following:
+
+    cd ACE_wrappers
+    mkdir objdir
+    cd objdir
+
+Then:
+    Bourne Shell:   CXX=c++ ../configure
+    C Shell:        env CXX=c++ ../configure
+make
+
+Description
+-----------
+To help speed development, the work being done by the ACE
+Configuration Project is being slowly introduced into the official ACE
+distribution.  Some of the functionality in the work created by the
+ACE Configuration Project has been removed so that ACE may be built in
+the usual fashion.  Once the ACE Configuration Project work stabilizes
+on more platforms that removed functionality may be added to ACE.
+
+Currently the configure script contains most of the tests that are
+necessary to properly configure ACE on most platforms.  However, there
+are still some autoconf tests that are missing.  As such, you may
+encounter and most likely will have compilation problems.  Please
+report any problems to the contacts listed at the end of this
+document.
+
+The `configure' script that is currently being used has been modified
+from the ACE Configuration Project's `configure' script to prevent
+makefiles from being automatically generated since there are still
+some issues that must be addressed before automatically generated
+makefiles are incorporated into the official ACE distribution.
+
+A listing of available configure script options can be shown by
+entering:
+
+	./configure --help
+
+at the command line.  The output should look something like the
+following:
+
+
+Usage: configure [options] [host]
+Options: [defaults in brackets after descriptions]
+Configuration:
+  --cache-file=FILE       cache test results in FILE
+  --help                  print this message
+  --no-create             do not create output files
+  --quiet, --silent       do not print `checking...' messages
+  --version               print the version of autoconf that created configure
+Directory and file names:
+  --prefix=PREFIX         install architecture-independent files in PREFIX
+                          [/usr/local]
+  --exec-prefix=EPREFIX   install architecture-dependent files in EPREFIX
+                          [same as prefix]
+  --bindir=DIR            user executables in DIR [EPREFIX/bin]
+  --sbindir=DIR           system admin executables in DIR [EPREFIX/sbin]
+  --libexecdir=DIR        program executables in DIR [EPREFIX/libexec]
+  --datadir=DIR           read-only architecture-independent data in DIR
+                          [PREFIX/share]
+  --sysconfdir=DIR        read-only single-machine data in DIR [PREFIX/etc]
+  --sharedstatedir=DIR    modifiable architecture-independent data in DIR
+                          [PREFIX/com]
+  --localstatedir=DIR     modifiable single-machine data in DIR [PREFIX/var]
+  --libdir=DIR            object code libraries in DIR [EPREFIX/lib]
+  --includedir=DIR        C header files in DIR [PREFIX/include]
+  --oldincludedir=DIR     C header files for non-gcc in DIR [/usr/include]
+  --infodir=DIR           info documentation in DIR [PREFIX/info]
+  --mandir=DIR            man documentation in DIR [PREFIX/man]
+  --srcdir=DIR            find the sources in DIR [configure dir or ..]
+  --program-prefix=PREFIX prepend PREFIX to installed program names
+  --program-suffix=SUFFIX append SUFFIX to installed program names
+  --program-transform-name=PROGRAM
+                          run sed PROGRAM on installed program names
+Host type:
+  --build=BUILD           configure for building on BUILD [BUILD=HOST]
+  --host=HOST             configure for HOST [guessed]
+  --target=TARGET         configure for TARGET [TARGET=HOST]
+Features and packages:
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --x-includes=DIR        X include files are in DIR
+  --x-libraries=DIR       X library files are in DIR
+--enable and --with options recognized:
+  --enable-static[=PKGS]  build static libraries [default=no]
+  --enable-shared[=PKGS]  build shared libraries [default=yes]
+  --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
+  --disable-libtool-lock  force libtool not to do file locking
+  --enable-debug          enable debugging                [default=yes]
+  --enable-exceptions     enable C++ exception handling   [default=yes]
+  --enable-fast           enable -fast flag, e.g. Sun C++ [default=no]
+  --enable-inline         enable code inlining            [default=yes]
+  --enable-log-msg-prop   enable threads inheriting
+                          ACE_Log_Msg properties from parent
+                          thread                          [default=yes]
+  --enable-logging        enable ACE logging macros       [default=yes]
+  --enable-malloc-stats   enable malloc statistics
+                          collection                      [default=no]
+  --enable-optimize       enable additional optimizations [default=yes]
+  --enable-probe          enable ACE_Timeprobes           [default=no]
+  --enable-profile        enable profiling                [default=no]
+  --enable-purify         Purify all executables          [default=no]
+  --enable-quantify       Quantify all executables        [default=no]
+  --enable-reentrant      enable reentrant functions      [default=yes]
+  --enable-repo           use GNU template repository
+                          GNU C++ with repo patches and
+                          EGCS only                       [default=no]
+  --enable-rtti           enable run-time type
+                          identification
+                          *Currently only for Sun C++     [default=no]
+  --enable-static-obj-mgr enable static Object_Manager    [default=yes]
+  --enable-threads        enable thread support           [default=yes]
+  --enable-verb-not-sup   enable verbose ENOTSUP reports  [default=no]
+  --enable-trace          enable ACE tracing              [default=no]
+  --enable-xt-reactor     build support for the XtReactor [default=no]
+  --with-x                use the X Window System
+  --with-gperf            compile the gperf program       [default=yes]
+  --with-tli-device[=DEV] device for TCP on TLI           [default=/dev/tcp]
+
+To enable debugging and disable code inlining, for example, just enter
+the following on the command line:
+
+	./configure --enable-debug --disable-inline
+
+This will generate a configuration header file `ace/config.h' to be
+used when compiling ACE that will enable ACE debugging macros and
+disable code inlining during compilation of ACE.
+
+Once the `ace/config.h' header has been created you will have to
+select a platform macros file.  Please read the ACE installation
+documents for more information about this.
+
+----------------------------------------------------------------
+Caveats
+----------------------------------------------------------------
+The `configure' script will check for libraries that contain certain
+functions. If it finds a library that isn't listed in your
+platform_macros.GNU file you will have to add that library to the list
+of libraries to link against.
+
+Shared library generation when using ACE Autoconf support is different
+from the stock ACE shared library generation mechanism.  The Autoconf
+supported shared library mechanism does not yet fully support all of
+the platforms ACE's stock shared library mechanism supports.  As such,
+you may encounter problems if an attempt is made to build a shared
+library when using ACE's autoconf support.
+
+Remember that the stock ACE build procedure is always available.  If
+your attempts to use ACE's Autoconf support are unsuccessful then
+contact the parties listed below, and use ACE stock build procedure as
+described in ACE-INSTALL.html.
+
+----------------------------------------------------------------
+Contacts
+----------------------------------------------------------------
+If you do have problems please e-mail the ACE Configuration Project
+maintainer at:
+
+	Ossama Othman <ossama@uci.edu>
+
+or send mail to the ACE mailing list.
+
+For more information take at a look at the ACE Configuration Project
+web page at:
+
+	http://www.cs.wustl.edu/~othman/aceconf
+
