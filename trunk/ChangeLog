@@ -1,3 +1,15 @@
+Sat Jun 10 20:51:56 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32-common.h:
+
+          Changed the "You must link with Multithreaded DLL" error
+          to make it sound less like it is a problem with the ACE
+          project file instead of the application project file.
+
+        * docs/ACE-guidelines.html:
+
+          Updated the section on wchar support in ACE.  
+
 Sat Jun 10 17:33:55 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Configuration.cpp:

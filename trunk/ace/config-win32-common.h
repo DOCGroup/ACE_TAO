@@ -319,7 +319,7 @@ typedef unsigned __int64 ACE_UINT64;
 // On MSVC, this is changed by selecting the Multithreaded 
 // DLL or Debug Multithreaded DLL in the Project Settings
 // under C++ Code Generation.
-#  error You must link ACE against multi-threaded libraries (check your project settings)
+#  error You must link against multi-threaded libraries when using ACE (check your project settings)
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
