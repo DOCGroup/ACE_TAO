@@ -1,3 +1,12 @@
+Tue Mar  6 17:56:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * utils/wxNamingViewer/pch.h:
+        * utils/wxNamingViewer/wxBindDialog.cpp:
+        * utils/wxNamingViewer/wxNamingViewer.dsp:
+        * utils/wxNamingViewer/wxNamingViewer.dsw:
+
+          Some fixes to get this util to work in MSVC 6.
+
 Tue Mar  6 17:29:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
