@@ -40,7 +40,7 @@ static void
 exit_server (int sig)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s exiting on signal %S",
+              "%s exiting on signal %S\n",
               tstamp (),
               sig));
   ACE_OS::exit (0);

@@ -1,3 +1,7 @@
+Sat Sep 12 21:21:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Made zillions of changes to "ACE"ify all of the code.
+
 Sun Sep  6 22:48:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Replaced all Str::*() methods with the new ACE::*() methods,
