@@ -39,7 +39,6 @@
 #undef ACE_HAS_NEW_H
 #undef ACE_HAS_STDEXCEPT_NO_H
 #undef ACE_HAS_EXCEPTION_H
-#undef ACE_HAS_IOMANIP_NO_H
 
 /* Platform provides <sys/ioctl.h> header */
 #undef ACE_HAS_SYS_IOCTL_H
@@ -1320,10 +1319,10 @@
 #undef ACE_LACKS_GETPGID_PROTOTYPE
 
 /* Platform/compiler lacks the setregid() prototype */
-#undef ACE_LACKS_SETREGID_PROTO
+#undef ACE_LACKS_SETREGID_PROTOTYPE
 
 /* Platform/compiler lacks the setreuid() prototype */
-#undef ACE_LACKS_SETREUID_PROTO
+#undef ACE_LACKS_SETREUID_PROTOTYPE
 
 /* Platform/compiler lacks the strptime() prototype */
 #undef ACE_LACKS_STRPTIME_PROTOTYPE
