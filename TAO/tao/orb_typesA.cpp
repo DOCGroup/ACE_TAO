@@ -35,17 +35,17 @@ static const CORBA::Long _oc_CORBA_ORBid[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   28,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4f52), 
-  ACE_NTOHL (0x4269643a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4f52),
+  ACE_NTOHL (0x4269643a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ORBid:1.0
     6,
-  ACE_NTOHL (0x4f524269), 
+  ACE_NTOHL (0x4f524269),
   ACE_NTOHL (0x64000000),  // name = ORBid
-    CORBA::tk_string, 
+    CORBA::tk_string,
   0U, // string length
 };
 
@@ -70,15 +70,15 @@ static const CORBA::Long _oc_CORBA_Flags[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   28,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f466c), 
-  ACE_NTOHL (0x6167733a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f466c),
+  ACE_NTOHL (0x6167733a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/Flags:1.0
     6,
-  ACE_NTOHL (0x466c6167), 
+  ACE_NTOHL (0x466c6167),
   ACE_NTOHL (0x73000000),  // name = Flags
     CORBA::tk_ulong,
 
@@ -105,20 +105,20 @@ static const CORBA::Long _oc_CORBA_Identifier[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4964), 
-  ACE_NTOHL (0x656e7469), 
-  ACE_NTOHL (0x66696572), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4964),
+  ACE_NTOHL (0x656e7469),
+  ACE_NTOHL (0x66696572),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
     11,
-  ACE_NTOHL (0x4964656e), 
-  ACE_NTOHL (0x74696669), 
+  ACE_NTOHL (0x4964656e),
+  ACE_NTOHL (0x74696669),
   ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
   0U, // string length
 };
 
@@ -143,21 +143,21 @@ static const CORBA::Long _oc_CORBA_RepositoryId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x49643a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5265),
+  ACE_NTOHL (0x706f7369),
+  ACE_NTOHL (0x746f7279),
+  ACE_NTOHL (0x49643a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
     13,
-  ACE_NTOHL (0x5265706f), 
-  ACE_NTOHL (0x7369746f), 
-  ACE_NTOHL (0x72794964), 
+  ACE_NTOHL (0x5265706f),
+  ACE_NTOHL (0x7369746f),
+  ACE_NTOHL (0x72794964),
   ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
   0U, // string length
 };
 
@@ -177,24 +177,24 @@ namespace CORBA
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:290
-
+/*
 static const CORBA::Long _oc_CORBA_ObjectId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4f62), 
-  ACE_NTOHL (0x6a656374), 
-  ACE_NTOHL (0x49643a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4f62),
+  ACE_NTOHL (0x6a656374),
+  ACE_NTOHL (0x49643a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ObjectId:1.0
     9,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63744964), 
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63744964),
   ACE_NTOHL (0x0),  // name = ObjectId
-    CORBA::tk_string, 
+    CORBA::tk_string,
   0U, // string length
 };
 
@@ -210,10 +210,10 @@ namespace CORBA
 {
   ::CORBA::TypeCode_ptr _tc_ObjectId =
     &_tc_TAO_tc_CORBA_ObjectId;
-}
+} */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
