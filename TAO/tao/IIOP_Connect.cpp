@@ -147,7 +147,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) connection from client <%s> on %d\n",
+                "(%P|%t) IIOP connection from client <%s> on %d\n",
                 client, this->peer ().get_handle ()));
   return 0;
 }
@@ -345,7 +345,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) connection to server <%s> on %d\n",
+                "(%P|%t) IIOP connection to server <%s> on %d\n",
                 server, this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
