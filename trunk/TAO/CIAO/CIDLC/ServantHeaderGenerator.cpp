@@ -132,7 +132,7 @@ namespace
     virtual void
     post (Type&)
     {
-      os << ";" << endl;
+      os << ";" << endl << endl;
     }
 
     virtual void
@@ -300,7 +300,7 @@ namespace
     Traversal::Belongs read_belongs_;
   };
 
-  struct InterfaceEmitter : Traversal::UnconstrainedInterface,
+  struct InterfaceEmitter : Traversal::Interface,
                             EmitterBase
   {
     InterfaceEmitter (Context& c)
@@ -308,22 +308,22 @@ namespace
     {}
 
     bool
-    add (UnconstrainedInterface& i)
+    add (Interface& i)
     {
       return interfaces_.insert (&i).second;
     }
 
     virtual void
-    traverse (UnconstrainedInterface& i)
+    traverse (Interface& i)
     {
       if (add (i))
       {
-        Traversal::UnconstrainedInterface::traverse (i);
+        Traversal::Interface::traverse (i);
       }
     }
 
   private:
-    std::set<UnconstrainedInterface*> interfaces_;
+    std::set<Interface*> interfaces_;
   };
 
   struct FacetEmitter : Traversal::UnconstrainedInterface,
