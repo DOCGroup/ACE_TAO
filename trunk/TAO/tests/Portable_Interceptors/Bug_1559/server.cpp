@@ -105,7 +105,7 @@ main (int argc, char *argv[])
 
       Echo_Server_Request_Interceptor * server_interceptor =
         temp_initializer->server_interceptor ();
-      
+
       if (server_interceptor == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Could not obtain reference to "
@@ -158,7 +158,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+                           "Caught exception in server:");
       return 1;
     }
   ACE_ENDTRY;
