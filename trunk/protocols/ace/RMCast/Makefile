@@ -34,6 +34,8 @@ FILES= \
 	RMCast_UDP_Reliable_Receiver \
 	RMCast_UDP_Reliable_Sender
 
+LIBS=$(ACELIB)
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
