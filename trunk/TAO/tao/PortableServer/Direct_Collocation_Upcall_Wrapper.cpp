@@ -2,9 +2,9 @@
 
 #include "Direct_Collocation_Upcall_Wrapper.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-  # include "ForwardRequestC.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+# include "ForwardRequestC.h"
+#endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "tao/Abstract_Servant_Base.h"
 #include "tao/SystemException.h"
