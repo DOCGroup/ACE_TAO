@@ -166,13 +166,14 @@ TAO_EC_Kokyu_Filter_Builder::build (
       //add the dependency between the root in the filter hierarchy and
       //the final consumer
       TAO_EC_QOS_Info qos_info;
-      kokyu_filter->get_qos_info (qos_info);
+      kokyu_filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
 
       scheduler->add_dependency (h_final_consumer_rt_info, 
                                  qos_info.rt_info,
                                  1,
                                  RtecBase::ONE_WAY_CALL
                                  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
     }
   return filter;
 }
