@@ -52,6 +52,7 @@ int
 ACE_Service_Manager::open (const ACE_INET_Addr &sia)
 {
   ACE_TRACE ("ACE_Service_Manager::open");
+
   // Reuse the listening address, even if it's already in use!
   if (this->acceptor_.open (sia, 1) == -1)
     return -1;
@@ -68,10 +69,11 @@ ACE_Service_Manager::info (ASYS_TCHAR **strp, size_t length) const
   if (this->acceptor_.get_local_addr (sa) == -1)
     return -1;
   
-  ACE_OS::sprintf (buf, ASYS_TEXT ("%d/%s %s"), sa.get_port_number (),
+  ACE_OS::sprintf (buf,
+                   ASYS_TEXT ("%d/%s %s"),
+                   sa.get_port_number (),
                    ASYS_TEXT ("tcp"), 
                    ASYS_TEXT ("# lists all services in the daemon\n"));
-
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
@@ -84,7 +86,7 @@ ACE_Service_Manager::init (int argc, ASYS_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
-  ACE_Get_Opt	getopt (argc, argv, ASYS_TEXT ("dp:s:"), 0); // Start at argv[0]
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
      switch (c)
@@ -103,11 +105,15 @@ ACE_Service_Manager::init (int argc, ASYS_TCHAR *argv[])
        }
   
   if (this->open (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler 
-	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("registering service with ACE_Reactor\n")), -1);
+	   (this,
+            ACE_Event_Handler::ACCEPT_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("registering service with ACE_Reactor\n")),
+                      -1);
   return 0;
 }
 
@@ -125,7 +131,8 @@ ACE_Service_Manager::fini (void)
 
   if (this->get_handle () != ACE_INVALID_HANDLE)
     return ACE_Reactor::instance ()->remove_handler 
-      (this, ACE_Event_Handler::ACCEPT_MASK);
+      (this,
+       ACE_Event_Handler::ACCEPT_MASK);
   return 0;
 }
   
@@ -141,7 +148,9 @@ ACE_Service_Manager::handle_signal (int sig, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Service_Manager::handle_signal");
   if (this->debug_)
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("got %S\n"), sig));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("got %S\n"),
+                sig));
   return 0;
 }
 
@@ -159,17 +168,22 @@ ACE_Service_Manager::list_services (void)
        sri.advance ())
     {
       int len = ACE_OS::strlen (sr->name ()) + 1;
-      ASYS_TCHAR buf[BUFSIZ], *p = buf + len;
+      ASYS_TCHAR buf[BUFSIZ];
+      ASYS_TCHAR *p = buf + len;
 
       ACE_OS::strcpy (buf, sr->name ());
+
       p[-1] = ' ';
       p[0]  = '\0';
 
       len += sr->type ()->info (&p, sizeof buf - len);
 
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("len = %d, info = %s%s"),
-		   len, buf, buf[len - 1] == '\n' ? ASYS_TEXT ("") : ASYS_TEXT ("\n")));
+	ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("len = %d, info = %s%s"),
+                    len,
+                    buf,
+                    buf[len - 1] == '\n' ? ASYS_TEXT ("") : ASYS_TEXT ("\n")));
 
       if (len > 0)
 	{
@@ -177,7 +191,9 @@ ACE_Service_Manager::list_services (void)
                                                    len);
 
 	  if (n != len || (n == -1 && errno != EPIPE))
-	    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("send_n")));
+	    ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT ("%p\n"),
+                        ASYS_TEXT ("send_n")));
 	}
     }
 
@@ -216,7 +232,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle = ACE_Reactor::instance ()->uses_event_associations ();
+  int reset_new_handle =
+    ACE_Reactor::instance ()->uses_event_associations ();
 
   if (this->acceptor_.accept (this->client_stream_, // stream
                               0, // remote address
@@ -228,14 +245,17 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
   if (this->debug_)
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("client_stream fd = %d\n"),
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("client_stream fd = %d\n"),
 		 this->client_stream_.get_handle ()));
       ACE_INET_Addr sa;
       if (this->client_stream_.get_remote_addr (sa) == -1)
 	return -1;
 
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("accepted from host %s at port %d\n"), 
-		sa.get_host_name (), sa.get_port_number ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("accepted from host %s at port %d\n"), 
+                  sa.get_host_name (),
+                  sa.get_port_number ()));
     }
 
   char request[BUFSIZ];
@@ -246,7 +266,9 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     {
     case -1:
       if (this->debug_)
-	ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("recv")));
+	ACE_DEBUG ((LM_ERROR,
+                    ASYS_TEXT ("%p\n"),
+                    ASYS_TEXT ("recv")));
       break;
     case 0:
       return 0;
@@ -256,7 +278,6 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 	char *p;
 
 	// Kill trailing newlines.
-
 	for (p = request; 
 	     (*p != '\0') && (*p != '\r') && (*p != '\n'); 
 	     p++)
@@ -265,9 +286,10 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 	*p = '\0';
 
 	ACE_Event_Handler *old_signal_handler = 0;
-	ACE_Reactor::instance ()->register_handler (SIGPIPE, this, 0,
+	ACE_Reactor::instance ()->register_handler (SIGPIPE,
+                                                    this,
+                                                    0,
 						    &old_signal_handler);
-	
 	if (ACE_OS::strcmp (request, "help") == 0)
 	  this->list_services ();
 	else if (ACE_OS::strcmp (request, "reconfigure") == 0)
@@ -276,11 +298,14 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 	// Additional management services may be handled here... 
 
 	// Restore existing SIGPIPE handler
-	ACE_Reactor::instance ()->register_handler (SIGPIPE, old_signal_handler);
+	ACE_Reactor::instance ()->register_handler (SIGPIPE,
+                                                    old_signal_handler);
       }
     }
-  if (this->client_stream_.close () == -1 && this->debug_)
-    ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("close")));
 
+  if (this->client_stream_.close () == -1 && this->debug_)
+    ACE_DEBUG ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("close")));
   return 0;
 }
