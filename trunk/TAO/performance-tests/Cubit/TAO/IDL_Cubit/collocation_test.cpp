@@ -50,8 +50,14 @@ main (int argc, char **argv)
 {
   int test_collocation = 0;
 
-  if (ACE_OS::strcasecmp (argv[0], "collocation_test") == 0)
-    test_collocation = 1;
+  if (ACE_OS::strstr (argv[0], "noncollocation_test") == 0)
+    // Check if we are running the test with collocation optimization enabled.
+    {
+      test_collocation = 1;
+      ACE_DEBUG ((LM_DEBUG, "Using collocation optimization\n"));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG, "Not using collocation optimization\n"));
 
   Cubit_Client cubit_client (test_collocation);
   // We want to test collocation, so create
