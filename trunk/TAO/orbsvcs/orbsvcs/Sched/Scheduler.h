@@ -55,6 +55,7 @@ public:
   typedef RtecScheduler::Config_Info Config_Info;
   typedef RtecScheduler::Time Time;
   typedef RtecScheduler::Dispatching_Type Dispatching_Type;
+  typedef RtecScheduler::Scheduling_Anomaly Scheduling_Anomaly;
 
   // Map some types to simplify re-use.
 
@@ -73,11 +74,13 @@ public:
     , ST_UNKNOWN_PRIORITY
     , ST_TASK_ALREADY_REGISTERED
     , ST_VIRTUAL_MEMORY_EXHAUSTED
+    , ST_BAD_INTERNAL_POINTER
 
     // The following are only used by the runtime Scheduler.
     , INVALID_MODE
     , MODE_COUNT_MISMATCH     // only used by schedule ()
     , TASK_COUNT_MISMATCH     // only used by schedule ()
+    , THREAD_COUNT_MISMATCH   // only used by schedule ()
     , INVALID_PRIORITY        // only used by schedule (): mismatch of
                               // (off-line, maybe) Scheduler output to
                               // the runtime Scheduler component.
@@ -166,7 +169,8 @@ public:
 
 
   // = Computes the schedule.
-  virtual status_t schedule (void) = 0;
+  virtual status_t 
+    schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set) = 0;
   // This actually generates the files.
 
   // = Access a thread priority.

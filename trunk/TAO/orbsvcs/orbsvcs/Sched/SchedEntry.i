@@ -120,6 +120,22 @@ Task_Entry::has_unresolved_remote_dependencies () const
 }
 
 
+// Sets a flag indicating whether node has unresolved local dependencies.
+
+ACE_INLINE void
+Task_Entry::has_unresolved_local_dependencies (int i)
+{
+  has_unresolved_local_dependencies_ = i;
+}
+
+// Gets the flag indicating whether node has unresolved local dependencies.
+
+ACE_INLINE int
+Task_Entry::has_unresolved_local_dependencies () const
+{
+  return has_unresolved_local_dependencies_;
+}
+
 // Gets the set of Task Entries on which this entry depends.
 
 ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &

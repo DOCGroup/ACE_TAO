@@ -169,6 +169,35 @@ module RtecScheduler
 
   typedef sequence<Config_Info> Config_Info_Set;
 
+  enum Anomaly_Severity
+  // Defines the type of prioritization strategy
+  // to be used by a dispatching queue
+  {
+    ANOMALY_FATAL,
+    ANOMALY_ERROR,
+    ANOMALY_WARNING,
+    ANOMALY_NONE
+  };
+
+  struct Scheduling_Anomaly
+    // = TITLE
+    //   Describes an anomalous condition encountered during scheduling.
+    //
+    // = DESCRIPTION
+    // The severity and description of an anomolous
+    // condition encountered during schedule computation
+    // is described by the following information.
+  {
+    // Application-defined string that describes
+    // the anomalous condition.
+    string description;
+
+    // Severity of the anomaly
+    Anomaly_Severity severity;
+  };
+
+  typedef sequence<Scheduling_Anomaly> Scheduling_Anomaly_Set;
+
   exception DUPLICATE_NAME {};
   // The application is trying to register the same task again.
 
@@ -269,7 +298,8 @@ module RtecScheduler
     void compute_scheduling (in long minimum_priority,
                              in long maximum_priority,
                              out RT_Info_Set infos,
-                             out Config_Info_Set configs)
+                             out Config_Info_Set configs,
+                             out Scheduling_Anomaly_Set anomalies)
       raises (UTILIZATION_BOUND_EXCEEDED,
               INSUFFICIENT_THREAD_PRIORITY_LEVELS,
               TASK_COUNT_MISMATCH);

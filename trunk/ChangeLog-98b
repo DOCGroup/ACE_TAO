@@ -729,6 +729,13 @@ Fri Oct 23 21:11:03 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
         * ace/OS.h: Changed a comment to be consistent.  Thanks to Serge
           Kolgan <skolgan@cisco.com> for reporting this.
 
+Fri Oct 23 20:39:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* Paul Christopher Gill was born Friday October 23, 1998, at
+          20:39 CDT, weighing 6 lbs. 7 oz., at 19 3/4 inches in length.  
+          A true hacker in the making, Paul decided to work through the 
+	  evening even though it was a Friday night. ;-)
+
 Fri Oct 23 11:37:38 1998  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4.2.GNU: Removed -qinitauto=5F from

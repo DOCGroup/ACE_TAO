@@ -99,6 +99,7 @@ Task_Entry::Task_Entry ()
     finished_ (-1),
     is_thread_delineator_ (0),
     has_unresolved_remote_dependencies_ (0),
+    has_unresolved_local_dependencies_ (0),
     calls_ (),
     callers_ ()
 {
@@ -127,10 +128,10 @@ Task_Entry::~Task_Entry ()
 // Merge dispatches according to info type and type of call,
 // update relevant scheduling characteristics for this entry.
 
-int
+Task_Entry::Propagation_Status
 Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
 {
-  int result = 0;
+  Task_Entry::Propagation_Status result = SUCCEEDED;
   switch (info_type ())
   {
     case RtecScheduler::DISJUNCTION:
@@ -140,12 +141,14 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       // NOTE: one interpretation of disjunction for two-way calls
       //       is that the caller calls one OR the other, but this
       //       is problematic: how do we map the dispatches for this ?
-      result = prohibit_dispatches (RtecScheduler::TWO_WAY_CALL);
-      if (result == 0)
-      {
-        result = disjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries);
-      }
-
+      if (prohibit_dispatches (RtecScheduler::TWO_WAY_CALL) < 0)
+        {
+          result = TWO_WAY_DISJUNCTION; 
+        }
+      if (disjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries) < 0)
+        {
+          result = INTERNAL_ERROR; 
+        }
       break;
 
     case RtecScheduler::CONJUNCTION:
@@ -158,12 +161,14 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       //       (prohibit for now, as the additional complexity of allowing
       //       conjunctions of two-ways, but not disjunctions does not
       //       buy us anything, anyway).
-      result = prohibit_dispatches (RtecScheduler::TWO_WAY_CALL);
-      if (result == 0)
-      {
-        result = conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries);
-      }
-
+      if (prohibit_dispatches (RtecScheduler::TWO_WAY_CALL) < 0)
+        {
+          result = TWO_WAY_CONJUNCTION; 
+        }
+      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries) < 0)
+        {
+          result = INTERNAL_ERROR; 
+        }
       break;
 
     case RtecScheduler::OPERATION:
@@ -171,27 +176,26 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
       // Disjunctively merge the operation's two-way dispatches,
       // and conjunctively merge its one-way dispatches.
-      result = disjunctive_merge (RtecScheduler::TWO_WAY_CALL, dispatch_entries);
-      if (result == 0)
-      {
-        result = conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries);
-      }
-
+      if (disjunctive_merge (RtecScheduler::TWO_WAY_CALL, dispatch_entries) < 0)
+        {
+          result = INTERNAL_ERROR; 
+        }
+      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries) < 0)
+        {
+          result = INTERNAL_ERROR; 
+        }
       break;
-
 
     default:
 
       // There should not be any other kind of RT_Info, or if
       // there is, the above switch logic is in need of repair.
-      result = -1;
+      result = UNRECOGNIZED_INFO_TYPE; 
       break;
   }
 
   return result;
 }
-
-
 
 // Prohibit calls of the given type: currently used to enforce
 // the notion that two-way calls to disjunctive or conjunctive
@@ -260,6 +264,22 @@ Task_Entry::disjunctive_merge (
               (const char*) this->rt_info ()->entry_point));
         }
 
+      // Check for and warn about unresolved local
+      // dependencies in the ONE_WAY call graph.
+      if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL &&
+          (*link)->caller ().has_unresolved_local_dependencies () &&
+          ! this->has_unresolved_local_dependencies ())
+        {
+          // Propagate the unresolved local dependency
+          // flag, and issue a debug scheduler warning.
+          this->has_unresolved_local_dependencies (1);
+          ACE_DEBUG (
+             (LM_DEBUG,
+              "Warning: an operation identified by "
+              "\"%s\" has unresolved local dependencies.\n",
+              (const char*) this->rt_info ()->entry_point));
+        }
+
       // Merge the caller's dispatches into the current set.
       if (merge_frames (dispatch_entries, *this, dispatches_,
                        (*link)->caller ().dispatches_, effective_period_,
@@ -317,6 +337,22 @@ Task_Entry::conjunctive_merge (
              (LM_DEBUG,
               "Warning: an operation identified by "
               "\"%s\" has unresolved remote dependencies.\n",
+              (const char*) this->rt_info ()->entry_point));
+        }
+
+      // Check for and warn about unresolved local 
+      // dependencies in the ONE_WAY call graph.
+      if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL &&
+          (*link)->caller ().has_unresolved_local_dependencies () &&
+          ! this->has_unresolved_local_dependencies ())
+        {
+          // Propagate the unresolved local dependency
+          // flag, and issue a debug scheduler warning.
+          this->has_unresolved_local_dependencies (1);
+          ACE_DEBUG (
+             (LM_DEBUG,
+              "Warning: an operation identified by "
+              "\"%s\" has unresolved local dependencies.\n",
               (const char*) this->rt_info ()->entry_point));
         }
 

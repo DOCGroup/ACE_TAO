@@ -109,6 +109,13 @@ public:
   // Info for DFS traversal, topological sort of call graph.
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
 
+  // Status of merging dispatches.
+  enum Propagation_Status {SUCCEEDED, 
+                           TWO_WAY_DISJUNCTION, 
+                           TWO_WAY_CONJUNCTION,
+                           INTERNAL_ERROR,
+                           UNRECOGNIZED_INFO_TYPE};
+
   // Constructor.
   Task_Entry ();
 
@@ -118,7 +125,7 @@ public:
   // Merges dispatches according to info type, update
   // relevant scheduling characteristics for this entry.
   // Returns 0 if all is well, or -1 if an error occurred.
-  int merge_dispatches (
+  Propagation_Status merge_dispatches (
     ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
 
   // Gets the pointer to the underlying RT_Info.
@@ -162,6 +169,12 @@ public:
 
   // Gets the flag indicating whether node has unresolved remote dependencies.
   int has_unresolved_remote_dependencies () const;
+
+  // Sets a flag indicating whether node has unresolved local dependencies.
+  void has_unresolved_local_dependencies (int i);
+
+  // Gets the flag indicating whether node has unresolved local dependencies.
+  int has_unresolved_local_dependencies () const;
 
   // Gets the set of links to Task Entries which this entry calls.
   ACE_Unbounded_Set <Task_Entry_Link *> & calls ();
@@ -258,6 +271,10 @@ private:
   // Flag indicating whether or not there are unresolved remote
   // dependencies in the entry's dependency call chain.
   int has_unresolved_remote_dependencies_;
+
+  // Flag indicating whether or not there are unresolved local
+  // dependencies in the entry's dependency call chain.
+  int has_unresolved_local_dependencies_;
 
   // Set of links to Task Entries which this entry calls.
   ACE_Unbounded_Set <Task_Entry_Link *> calls_;
