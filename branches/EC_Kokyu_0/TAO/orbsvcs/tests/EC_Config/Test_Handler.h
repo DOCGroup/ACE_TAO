@@ -16,12 +16,15 @@
 
 #include "TestConfig.h"
 
+#include "ace/String_Base.h"
 #include "ACEXML/common/ContentHandler.h"
 #include "ACEXML/common/ErrorHandler.h"
 
 #include <stack>
 
 enum element { TESTCONFIG,TEST_CONFIG_T,TYPE,PERIOD,CRITICALITY,IMPORTANCE,NUM_ENTITIES };
+
+// TODO Change XML format to list supplier and client RT_Infos separate, plus dependencies
 
 /**
  * @class Test_Handler
@@ -40,7 +43,7 @@ public:
   /*
    * Default constructor.
    */
-  Test_Handler (ACEXML_Char* fileName);
+  Test_Handler (const char *filename);
 
   /*
    * Default destructor.
@@ -167,7 +170,7 @@ public:
 private:
   TestConfig::TCFG_SET_SPTR configs_;
 
-  ACEXML_Char* fileName_;
+  ACE_CString fileName_;
   ACEXML_Locator* locator_;
 
   STACK scope_;

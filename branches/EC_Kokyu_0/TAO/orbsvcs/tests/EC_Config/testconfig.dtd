@@ -1,6 +1,7 @@
   <!ELEMENT testconfig (test_config_t*) >
   <!ELEMENT test_config_t (type,period,criticality,importance,num_entities) >
   <!ELEMENT type (#PCDATA) >
+<!-- period is in milliseconds -->
   <!ELEMENT period (#PCDATA) >
   <!ELEMENT criticality EMPTY >
   <!ELEMENT importance EMPTY >

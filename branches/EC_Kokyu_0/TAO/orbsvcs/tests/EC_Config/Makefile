@@ -23,7 +23,7 @@ ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
   endif # Sched
 endif # Event
 
-PSRC= Test.cpp Supplier.cpp Consumer.cpp ECConfig.cpp Service.cpp Config_Factory.cpp Test_Handler.cpp TestConfig.cpp
+PSRC= Test.cpp Supplier.cpp Consumer.cpp ECConfig.cpp Service.cpp Config_Factory.cpp Test_Handler.cpp TestConfig.cpp TimeoutConsumer.cpp
 LDLIBS = -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer -lTAO -lTAO_RTKokyuEvent -lACEXML_Parser
 
 # The complete path to orbsvcs/orbsvcs/Sched is required for DU/CXX
@@ -32,12 +32,16 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 	-I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
-Test_OBJS=$(addsuffix .o, Test Supplier Consumer ECConfig Config_Factory Test_Handler TestConfig)
+Test_OBJS=$(addsuffix .o, Test Consumer ECConfig Config_Factory Test_Handler TestConfig TimeoutConsumer)
 Service_OBJS=$(addsuffix .o, Service Supplier Consumer ECConfig TestConfig)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
+
+# To allow debug, disable optimization:
+debug=1
+optimize=0
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU

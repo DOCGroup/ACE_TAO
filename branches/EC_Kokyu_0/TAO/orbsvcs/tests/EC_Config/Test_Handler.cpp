@@ -9,9 +9,9 @@
 #include <stdlib.h> //for atol
 #include <sstream>  //for istringstream
 
-Test_Handler::Test_Handler (ACEXML_Char* fileName)
+Test_Handler::Test_Handler (const char *filename)
   : configs_(new TestConfig::Test_Config_Set(0)),
-    fileName_(ACE::strnew (fileName)),
+    fileName_(filename),
     didtype_(0), //false
     didperiod_(0),
     didcrit_(0),
@@ -23,8 +23,6 @@ Test_Handler::Test_Handler (ACEXML_Char* fileName)
 
 Test_Handler::~Test_Handler (void)
 {
-  delete[] this->fileName_;
-
   const TestConfig::Test_Config_Set &cfgs = *this->configs_;
 
   for(size_t i=0; i<cfgs.size(); ++i) {
@@ -408,7 +406,7 @@ Test_Handler::error (ACEXML_SAXParseException & ex ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 
-  ACE_DEBUG ((LM_DEBUG, "%s:%d:%d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s:%d:%d ", this->fileName_.c_str(),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -419,7 +417,7 @@ Test_Handler::fatalError (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_U
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 
-  ACE_DEBUG ((LM_DEBUG, "%s:%d:%d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s:%d:%d ", this->fileName_.c_str(),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();

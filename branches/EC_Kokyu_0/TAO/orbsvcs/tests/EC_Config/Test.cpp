@@ -3,6 +3,8 @@
 #include "ace/Array.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Synch.h"
+#include "ace/Get_Opt.h"
+#include "ace/String_Base.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/FileCharStream.h"
@@ -14,7 +16,12 @@
 
 using namespace TestConfig;
 
-//NOTE: Read from a formatted file rather than hardcode the configuration. Check ACE_XML.
+struct Arguments
+{
+  ACE_CString filename_;
+};
+
+int parse_args (int argc, char *argv[],Arguments &args);
 
 int
 main (int argc, char *argv[])
@@ -24,19 +31,24 @@ main (int argc, char *argv[])
   ACEXML_TRY_NEW_ENV
     {
       ACEXML_Parser parser;
+      Arguments args;
+      args.filename_.set(ACE_TEXT("test.xml"));
 
-      // TODO parse args for config filename
+      // parse args for config filename
+      if (parse_args(argc,argv,args) == -1)
+        {
+          return 1;
+        }
 
-      ACEXML_Char *filename = ACE_LIB_TEXT("test.xml");
-      ACEXML_FileCharStream fcs;
-      if ((retval = fcs.open(filename)) != 0) {
-        ACE_DEBUG ((LM_DEBUG, "Could not open file %s\n",filename));
+      ACEXML_FileCharStream *fcs = new ACEXML_FileCharStream();
+      if ((retval = fcs->open(args.filename_.c_str())) != 0) {
+        ACE_DEBUG ((LM_DEBUG, "Could not open file %s\n",args.filename_.c_str()));
         return retval;
       }
 
-      ACEXML_InputSource is (&fcs);
+      ACEXML_InputSource is (fcs); //takes responsibility of fcs
 
-      Test_Handler handler (filename);
+      Test_Handler handler (args.filename_.c_str());
       ACEXML_DefaultHandler dflt;
 
       parser.setContentHandler (&handler);
@@ -47,9 +59,14 @@ main (int argc, char *argv[])
       parser.parse(&is);
       ACEXML_TRY_CHECK;
 
+      if ((retval = fcs->close()) != 0) {
+        ACE_DEBUG ((LM_DEBUG, "Could not close file %s\n",args.filename_.c_str()));
+        return retval;
+      }
+
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished parsing\n")));
 
-      // TODO configure according to parsed XML
+      // configure according to parsed XML
       ConfigFactory::Default_Config_Factory fact;
       fact.init(argc,argv);
 
@@ -88,4 +105,29 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished successfully\n")));
 
   return retval;
+}
+
+int parse_args (int argc, char *argv[], Arguments &args)
+{
+  ACE_Get_Opt get_opts (argc, argv, "f:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'f':
+        args.filename_.set(get_opts.opt_arg());
+        ACE_DEBUG((LM_DEBUG,ACE_TEXT("Filename argument: %s\n"),args.filename_.c_str()));
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "[-f <filename>] "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
 }
