@@ -1,9 +1,16 @@
+Wed Apr 14 22:40:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.sh: call run_tests.check via sh, to support
+          platforms that don't have /bin/sh.  Thanks to Thomas Mehrkam
+          <Thomas_Mehrkam@i-o.com> for reporting that it's necessary on
+          his NT host.
+
 Wed Apr 14 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/OS.{h, i} 
-          ace/config-psos-diab-ppc.h 
+        * ace/OS.{h, i}
+          ace/config-psos-diab-ppc.h
           include/makeinclude/platform_psos_diab_ppc.GNU: changes to adapt
-          the pSOS Diab 68k/MIPS port to PPC.  Many thanks to Sarmeesha 
+          the pSOS Diab 68k/MIPS port to PPC.  Many thanks to Sarmeesha
           Reddy <sreddy@tr.comm.mot.com> for contributing these changes.
 
 Wed Apr 14 17:06:22 1999  David L. Levine  <levine@cs.wustl.edu>
