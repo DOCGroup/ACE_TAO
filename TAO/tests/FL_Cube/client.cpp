@@ -1,5 +1,5 @@
 // $Id$
-#include "tao/fl_resource_loader.h"
+#include "tao/FlResource_Loader.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
@@ -53,7 +53,7 @@ private:
 
 int main (int argc, char* argv[])
 {
-  TAO_FlResource_Loader fl_loader;
+  TAO::FlResource_Loader fl_loader;
 
   ACE_TRY_NEW_ENV
     {

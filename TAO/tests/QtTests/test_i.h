@@ -18,8 +18,6 @@
 
 #include "testS.h"
 
-
-#include "tao/qt_resource.h"
 #include <qapplication.h>
 #include <qobject.h>
 

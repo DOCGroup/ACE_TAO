@@ -191,6 +191,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       LF_Strategy_Complete.cpp
       params.cpp
       Resource_Factory.cpp
+      GUIResource_Factory.cpp
       Server_Strategy_Factory.cpp
       Sync_Strategies.cpp
       TAO_Internal.cpp

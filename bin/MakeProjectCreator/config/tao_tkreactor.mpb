@@ -1,6 +1,0 @@
-// -*- MPC -*-
-project: acelib, ace_tkreactor {
-  requires += tao_tkreactor
-  after    += tao_tkreactor
-  libs     += TAO_TkReactor
-}
