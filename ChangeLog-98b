@@ -6,7 +6,7 @@ Mon Jul 20 11:06:44 1998  Arturo Montes  <mitosys@colomsat.net.co>
           applications, use keys managed by ACE.
           To enable, add these #defines to your config.h:
           #define ACE_HAS_TSS_EMULATION
-          #define ACE_HAS_NATIVE_KEYS
+          #define ACE_USE_NATIVE_KEYS
 
 Sun Jul 19 22:21:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
