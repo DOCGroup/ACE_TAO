@@ -73,7 +73,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
 
       // Construct a scheduler implementation of the specified type.
       switch (this->scheduler_type_)
-	{
+        {
 
 // The templatized method parameters needed by the reconfig scheduler
 // class template are hopelessly broken on pre-2.8 versions of g++.
@@ -100,7 +100,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "TAO_Scheduling_Service::init: "
                                "unrecognized Scheduler_Type"), -1);
-	}
+        }
 
       // Locate the naming service.
       CORBA::Object_var naming_obj =
@@ -149,8 +149,8 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
-                               "%d\n",
-                               ACE_OS::getpid ());
+                               "%ld\n",
+                               ACE_static_cast (long, ACE_OS::getpid ()));
               ACE_OS::fclose (pidf);
             }
         }
@@ -288,7 +288,7 @@ int main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "schedule_service");
-	  return 1;
+          return 1;
     }
   ACE_ENDTRY;
 

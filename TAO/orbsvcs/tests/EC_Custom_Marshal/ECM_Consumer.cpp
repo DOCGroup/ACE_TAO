@@ -83,7 +83,8 @@ Driver::run (int argc, char* argv[])
           FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
           if (pid != 0)
             {
-              ACE_OS::fprintf (pid, "%d\n", ACE_OS::getpid ());
+              ACE_OS::fprintf (pid, "%ld\n",
+                               ACE_static_cast (long, ACE_OS::getpid ()));
               ACE_OS::fclose (pid);
             }
         }
@@ -195,8 +196,8 @@ Driver::push_consumer (void* /* consumer_cookie */,
   if (this->recv_count_ % x == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "ECM_Consumer (%P|%t): %d events received\n",
-		  this->recv_count_));
+                  "ECM_Consumer (%P|%t): %d events received\n",
+                  this->recv_count_));
     }
 
   if (this->recv_count_ >= this->event_count_)
@@ -239,7 +240,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
       cdr >> other;
 
       if (!cdr.good_bit ())
-	ACE_ERROR ((LM_ERROR, "Problem demarshalling C++ data\n"));
+        ACE_ERROR ((LM_ERROR, "Problem demarshalling C++ data\n"));
 
       ACE_Message_Block::release (mb);
 
