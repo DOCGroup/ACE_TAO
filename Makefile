@@ -196,7 +196,7 @@ RELEASE_FILES = \
         ACE_wrappers/man
 
 AUTOCONF_RELEASE_FILES = \
-	$(addprefix ACE_wrappers/,$(RELEASE_FILES)) \
+	$(RELEASE_FILES) \
 	ACE_wrappers/Makefile.in \
 	ACE_wrappers/configure \
 	ACE_wrappers/aclocal.m4 \
