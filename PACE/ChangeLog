@@ -1,3 +1,9 @@
+Mon Aug 21 19:40:23 2000 Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pthread.c (pthread_attr_init):
+
+	  Updated attr initialization in pthread_attr_init.
+
 Fri Aug 18 17:57:42 2000  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.common.GNU: Added section for HP-UX.
