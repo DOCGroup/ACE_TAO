@@ -1,28 +1,36 @@
+Thu Jan 20 07:00:15 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Honor the -into option by prefixing each open with the
+          correct output directory determined by the new method on the
+          Creator.
+
 Thu Jan 20 01:16:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/ACE-casts-convert:
+        * bin/ACE-casts-convert:
 
           New convenience script that converts all ACE cast macro calls
-	  (e.g. ACE_static_cast (foo, bar)) to their standard C++
-	  counterparts (e.g. static_cast<foo> (bar)).  It is meant as an
-	  aid to help app developers that use the ACE cast macros upgrade
-	  their apps to the standard C++ cast syntax since the ACE cast
-	  macros were deprecated back in ACE 5.4.2.
+          (e.g. ACE_static_cast (foo, bar)) to their standard C++
+          counterparts (e.g. static_cast<foo> (bar)).  It is meant as an
+          aid to help app developers that use the ACE cast macros upgrade
+          their apps to the standard C++ cast syntax since the ACE cast
+          macros were deprecated back in ACE 5.4.2.
 
 Wed Jan 19 23:06:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/acelib.mpb:
+        * bin/MakeProjectCreator/config/acelib.mpb:
 
-	  Changed to inherit from pkgconfig.mpb.
+          Changed to inherit from pkgconfig.mpb.
 
-	* bin/MakeProjectCreator/config/pkgconfig.mpb:
+        * bin/MakeProjectCreator/config/pkgconfig.mpb:
 
-	  New file, custom file definition for pkgconfig *.pc.in file.
+          New file, custom file definition for pkgconfig *.pc.in file.
 
 Wed Jan 19 15:20:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dev_Poll_Reactor.inl: Add #include "ace/Log_Msg.h" to pick up
-	  ACE_ASSERT. Fixes compile error on Solaris 9.
+        * ace/Dev_Poll_Reactor.inl: Add #include "ace/Log_Msg.h" to pick up
+          ACE_ASSERT. Fixes compile error on Solaris 9.
 
 Wed Jan 19 11:23:41 2005  Chad Elliott  <elliott_c@ociweb.com>
 
