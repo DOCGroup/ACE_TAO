@@ -4,14 +4,15 @@
 
 static char* request_strings [] =
 { 
-  "PUT filename.html HTTP/1.0\nContent-type: text/plain\nContent-length: 15\r\n\r\nTHIS IS DATA!!!",
   "GET \\~irfan\\hi\\mom.html\r\n\r\n",
+  "GET \\~irfan\\hi\\mom.html HTTP/1.0\r\n\r\n",
+  "PUT filename.html HTTP/1.0\nContent-type: text/plain\nContent-length: 15\r\n\r\nTHIS IS DATA!!!",
   "GET \\~harrison\\mybutt.html in my program\r\n\r\n",
   "PUT \\~harrison\bilename.html HTTP/1.0\ni suck... asldkasldk Content-type: text/plain\nContent-length: 1024 alskdkls",
   "PUT bomb in my program\r\n\r\n"
 };
 
-static int total = 1;
+static int total = 2;
 
 int
 main()
