@@ -1,3 +1,8 @@
+1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/Makefile, CC_command.tab.cpp
+	  Removed error detected by DU cxx
+
 Tue Jun 16 15:39:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/ss: use perl instead of cut to
@@ -17,7 +22,7 @@ Tue Jun 16 15:10:11 1998  Chris GIll <cdgill@cs.wustl.edu>
 	  Added usability features.  Added status enumerated
 	  type and accessor so user can see if factory is
 	  uninitialized, set up for a config run, or set up
-	  for run time.  Added explicit type casts for 
+	  for run time.  Added explicit type casts for
 	  enumerated types to output of dump_schedule,
 	  added defaulted argument to allow a different format
 	  string to be used in dump_schedule, made default
@@ -28,12 +33,12 @@ Tue Jun 16 15:10:11 1998  Chris GIll <cdgill@cs.wustl.edu>
 
 	  Removed duplicated explicit template instantiations for
 	  scheduling strategy instantiations of strategy scheduler.
-	
+
         * orbsvcs/orbsvcs/Sched/DynSched.cpp
 
 	  Fixed bug in add_dependency: put in a break so case
 	  for ONE_WAY dependency does not fall through to default.
-	
+
 Tue Jun 16 13:50:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/test/AVStreams/mpeg/source/server/augmented_server.{h,cpp}:
