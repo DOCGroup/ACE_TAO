@@ -195,7 +195,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                                               remote_address,
                                               synch_options);
 
-  int status = svc_handler->successful ();
+  int status = svc_handler->is_finalized ();
   // Reduce the refcount to the svc_handler that we have. The
   // increment to the handler is done in make_svc_handler (). Now
   // that we dont need the reference to it anymore we can decrement
