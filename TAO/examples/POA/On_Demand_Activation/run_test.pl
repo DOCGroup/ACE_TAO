@@ -51,7 +51,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 $iorfile_1 = $iorfile."_1";
 $iorfile_2 = $iorfile."_2";
 
-$SV = Process::Create ("server$Process::EXE_EXT", "-f $iorfile");
+$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-f $iorfile");
 
 ACE::waitforfile ($iorfile_1);
 ACE::waitforfile ($iorfile_2);
