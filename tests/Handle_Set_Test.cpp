@@ -87,7 +87,7 @@ static ACE_HANDLE handle_vector[] =
   (ACE_HANDLE) 129,
   (ACE_HANDLE) 254,
   (ACE_HANDLE) 255,
-  (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE - 1,
+  (ACE_HANDLE) (ACE_DEFAULT_SELECT_REACTOR_SIZE - 1),
   (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE,
   ACE_INVALID_HANDLE
 };
@@ -127,7 +127,7 @@ test_boundaries (void)
        handle_vector[i] != ACE_INVALID_HANDLE;
        i++)
     {
-      if (handle_vector[i] < ACE_DEFAULT_SELECT_REACTOR_SIZE)
+      if (handle_vector[i] < (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE)
         {
           handle_set.set_bit (handle_vector[i]);
           set.insert (handle_vector[i]);
