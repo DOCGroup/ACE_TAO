@@ -596,19 +596,19 @@ TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
 ACE_INLINE size_t
 TAO_InputCDR::length (void) const
 {
-  return this->start_->length ();
+  return this->start_.length ();
 }
 
 ACE_INLINE const ACE_Message_Block*
 TAO_InputCDR::start (void) const
 {
-  return this->start_;
+  return &this->start_;
 }
 
 ACE_INLINE char*
 TAO_InputCDR::rd_ptr (void)
 {
-  return this->start_->rd_ptr ();
+  return this->start_.rd_ptr ();
 }
 
 // ****************************************************************

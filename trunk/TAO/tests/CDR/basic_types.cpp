@@ -217,6 +217,29 @@ main (int argc, char *argv[])
                                             0,
 					    TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      for (int i = 0; i < nloops; ++i)
+	{
+	  TAO_OutputCDR output;
+	  CDR_Test_Types test_types;
+	  
+	  if (test_put (output, test_types) != 0)
+	    {
+	      return 1;
+	    }
+	  TAO_InputCDR input (output);
+#if 0
+	  ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
+	  ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+	  ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
+	  ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+#endif
+	  if (test_get (input, test_types) != 0)
+	    {
+	      return 1;
+	    }
+	}
+      
     }
   TAO_CATCHANY
     {
@@ -226,26 +249,5 @@ main (int argc, char *argv[])
     }
   TAO_ENDTRY;
 
-  for (int i = 0; i < nloops; ++i)
-    {
-      TAO_OutputCDR output;
-      CDR_Test_Types test_types;
-
-      if (test_put (output, test_types) != 0)
-	{
-	  return 1;
-	}
-      TAO_InputCDR input (output);
-#if 0
-      ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
-      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-      ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
-      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-#endif
-      if (test_get (input, test_types) != 0)
-	{
-	  return 1;
-	}
-    }
   return 0;
 }

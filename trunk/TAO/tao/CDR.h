@@ -551,7 +551,7 @@ private:
   // for that case, but that would be too platform dependent.
 
 private:
-  ACE_Message_Block* start_;
+  ACE_Message_Block start_;
   // The start of the chain of message blocks, even though in the
   // current version the chain always has length 1.
 

@@ -122,14 +122,14 @@ CDR::grow (ACE_Message_Block*& mb, size_t minsize)
         }
     }
 
-  ACE_Message_Block* tmp;
-  ACE_NEW_RETURN (tmp, ACE_Message_Block (newsize), -1);
+  ACE_Message_Block tmp (newsize);
 
-  CDR::mb_align (tmp);
+  CDR::mb_align (&tmp);
 
-  tmp->copy (mb->rd_ptr (), mb->length());
-  ACE_Message_Block::release (mb);
-  mb = tmp;
+  tmp.copy (mb->rd_ptr (), mb->length());
+  mb->data_block (tmp.data_block ()->duplicate ());
+  mb->rd_ptr (tmp.rd_ptr ());
+  mb->wr_ptr (tmp.wr_ptr ());
 
   return 0;
 }
@@ -549,49 +549,51 @@ TAO_OutputCDR::write_boolean_array (const CORBA::Boolean* x,
 TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
                             int byte_order,
                             TAO_Marshal_Factory *factory)
-  : factory_ (factory),
+  : start_ (buf, bufsiz),
+    factory_ (factory),
     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
     good_bit_ (1)
 {
-  ACE_NEW (this->start_, ACE_Message_Block (buf, bufsiz));
-  this->start_->wr_ptr (bufsiz);
+  this->start_.wr_ptr (bufsiz);
 }
 
 TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                             int byte_order,
                             TAO_Marshal_Factory *factory)
-  : factory_ (factory),
+  : start_ (bufsiz),
+    factory_ (factory),
     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
     good_bit_ (1)
 {
-  ACE_NEW (this->start_, ACE_Message_Block (bufsiz));
 }
 
 TAO_InputCDR::TAO_InputCDR (ACE_Message_Block *data,
                             int byte_order,
                             TAO_Marshal_Factory *factory)
-  :  factory_ (factory),
+  :  start_ (data->data_block ()->duplicate ()),
+     factory_ (factory),
      do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
      good_bit_ (1)
 {
-  this->start_ = ACE_Message_Block::duplicate (data);
+  this->start_.rd_ptr (data->rd_ptr ());
+  this->start_.wr_ptr (data->wr_ptr ());
 }
 
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                             size_t size,
                             CORBA::Long offset)
-  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
+  : start_ (rhs.start_.data_block ()->duplicate ()),
     factory_ (rhs.factory_),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1)
 {
-  char* newpos = this->start_->rd_ptr() + offset;
-  if (this->start_->base () <= newpos
-      && newpos <= this->start_->end ()
-      && newpos + size <= this->start_->end ())
+  char* newpos = rhs.start_.rd_ptr() + offset;
+  if (this->start_.base () <= newpos
+      && newpos <= this->start_.end ()
+      && newpos + size <= this->start_.end ())
     {
-      this->start_->rd_ptr (newpos);
-      this->start_->wr_ptr (newpos + size);
+      this->start_.rd_ptr (newpos);
+      this->start_.wr_ptr (newpos + size);
     }
   else
     {
@@ -601,19 +603,20 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                             size_t size)
-  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
+  : start_ (rhs.start_.data_block ()->duplicate ()),
     factory_ (rhs.factory_),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1)
 {
-  char* newpos = this->start_->rd_ptr();
-  if (this->start_->base () <= newpos
-      && newpos <= this->start_->end ()
-      && newpos + size <= this->start_->end ())
+  char* newpos = rhs.start_.rd_ptr();
+  if (this->start_.base () <= newpos
+      && newpos <= this->start_.end ()
+      && newpos + size <= this->start_.end ())
     {
       // Notice that ACE_Message_Block::duplicate may leave the
       // wr_ptr() with a higher value that what we actually want.
-      this->start_->wr_ptr (newpos + size);
+      this->start_.rd_ptr (newpos);
+      this->start_.wr_ptr (newpos + size);
 
       CORBA::Octet byte_order;
       this->read_octet (byte_order);
@@ -626,11 +629,13 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 }
 
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
-  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
+  : start_ (rhs.start_.data_block ()->duplicate ()),
     factory_ (rhs.factory_),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1)
 {
+  this->start_.rd_ptr (rhs.start_.rd_ptr ());
+  this->start_.wr_ptr (rhs.start_.wr_ptr ());
 }
 
 TAO_InputCDR&
@@ -638,8 +643,9 @@ TAO_InputCDR::operator= (const TAO_InputCDR& rhs)
 {
   if (this != &rhs)
     {
-      ACE_Message_Block::release (this->start_);
-      this->start_ = ACE_Message_Block::duplicate (rhs.start_);
+      this->start_.data_block (rhs.start_.data_block ()->duplicate ());
+      this->start_.rd_ptr (rhs.start_.rd_ptr ());
+      this->start_.wr_ptr (rhs.start_.wr_ptr ());
       this->factory_ = rhs.factory_;
       this->do_byte_swap_ = rhs.do_byte_swap_;
       this->good_bit_ = 1;
@@ -648,24 +654,20 @@ TAO_InputCDR::operator= (const TAO_InputCDR& rhs)
 }
 
 TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs)
-  : factory_ (rhs.factory_),
+  : start_ (rhs.total_length () + CDR::MAX_ALIGNMENT),
+    factory_ (rhs.factory_),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1)
 {
-  size_t size = rhs.total_length ();
-  ACE_NEW (this->start_,
-           ACE_Message_Block (size + CDR::MAX_ALIGNMENT));
-  CDR::mb_align (this->start_);
+  CDR::mb_align (&this->start_);
   for (ACE_Message_Block *i = rhs.begin ();
        i != rhs.end ();
        i = i->cont ())
-    this->start_->copy (i->rd_ptr (), i->length ());
+    this->start_.copy (i->rd_ptr (), i->length ());
 }
 
 TAO_InputCDR::~TAO_InputCDR (void)
 {
-  ACE_Message_Block::release (this->start_);
-  this->start_ = 0;
 }
 
 CORBA_Boolean
@@ -704,13 +706,13 @@ TAO_InputCDR::read_wstring (CORBA::WChar*& x)
 ACE_INLINE char*
 TAO_InputCDR::end (void)
 {
-  return this->start_->end ();
+  return this->start_.end ();
 }
 
 ACE_INLINE void
 TAO_InputCDR::rd_ptr (size_t offset)
 {
-  this->start_->rd_ptr (offset);
+  this->start_.rd_ptr (offset);
 }
 
 ACE_INLINE int
@@ -722,7 +724,7 @@ TAO_InputCDR::adjust (size_t size,
   char *end = buf + size;
   if (end <= this->end ())
     {
-      this->start_->rd_ptr (end);
+      this->start_.rd_ptr (end);
       return 0;
     }
 
@@ -743,7 +745,7 @@ TAO_InputCDR::read_1 (CORBA::Octet* x)
   if (this->rd_ptr () < this->end())
     {
       *x = *ACE_reinterpret_cast(CORBA::Octet*,this->rd_ptr());
-      this->start_->rd_ptr (1);
+      this->start_.rd_ptr (1);
       return CORBA::B_TRUE;
     }
 

@@ -605,6 +605,7 @@ Test_String_Sequence::check_validity (void)
 CORBA::Boolean
 Test_String_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
 
   Param_Test::StrSeq *out, *ret;
@@ -615,6 +616,7 @@ Test_String_Sequence::check_validity (CORBA::Request_ptr req)
   this->out_ = out;
   this->ret_ = ret;
 
+#endif
   return this->check_validity ();
 }
 
@@ -794,6 +796,7 @@ Test_Bounded_String_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_String_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
 
   Param_Test::Bounded_StrSeq *out, *ret;
@@ -803,6 +806,7 @@ Test_Bounded_String_Sequence::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
+#endif
 
   return this->check_validity ();
 }
@@ -1323,6 +1327,7 @@ Test_Struct_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Struct_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
   this->inout_ = new Param_Test::StructSeq (*(Param_Test::StructSeq *)
                                                 req->arguments ()->item
@@ -1331,6 +1336,8 @@ Test_Struct_Sequence::check_validity (CORBA::Request_ptr req)
                                               ()->item (2, env)->value ()->value ());
   this->ret_ = new Param_Test::StructSeq (*(Param_Test::StructSeq *)req->result
                                               ()->value ()->value ());
+
+#endif
   return this->check_validity ();
 }
 
@@ -1515,6 +1522,7 @@ Test_Bounded_Struct_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_Struct_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
   this->inout_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)
                                                                                                         req->arguments ()->item
@@ -1523,6 +1531,7 @@ Test_Bounded_Struct_Sequence::check_validity (CORBA::Request_ptr req)
                                                                                                   ()->item (2, env)->value ()->value ());
   this->ret_ = new Param_Test::Bounded_StructSeq (*(Param_Test::Bounded_StructSeq *)req->result
                                                                                                   ()->value ()->value ());
+#endif
   return this->check_validity ();
 }
 
@@ -2277,6 +2286,7 @@ Test_Short_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Short_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
 
   Param_Test::Short_Seq *out, *ret;
@@ -2287,6 +2297,7 @@ Test_Short_Sequence::check_validity (CORBA::Request_ptr req)
   this->out_ = out;
   this->ret_ = ret;
 
+#endif
   return this->check_validity ();
 }
 
@@ -2458,6 +2469,7 @@ Test_Bounded_Short_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
 
   Param_Test::Bounded_Short_Seq *out, *ret;
@@ -2467,7 +2479,7 @@ Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
-
+#endif
   return this->check_validity ();
 }
 
@@ -2636,6 +2648,7 @@ Test_Long_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Long_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
 
   Param_Test::Long_Seq *out, *ret;
@@ -2645,7 +2658,7 @@ Test_Long_Sequence::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
-
+#endif
   return this->check_validity ();
 }
 
@@ -2814,6 +2827,7 @@ Test_Bounded_Long_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_Long_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
 
   Param_Test::Bounded_Long_Seq *out, *ret;
@@ -2823,7 +2837,7 @@ Test_Bounded_Long_Sequence::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
-
+#endif
   return this->check_validity ();
 }
 
@@ -3017,6 +3031,7 @@ Test_ObjRef_Sequence::check_validity (void)
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
   this->inout_ = new Param_Test::Coffee_Mix (*(Param_Test::Coffee_Mix *)
                                                 req->arguments ()->item
@@ -3025,6 +3040,7 @@ Test_ObjRef_Sequence::check_validity (CORBA::Request_ptr req)
                                               ()->item (2, env)->value ()->value ());
   this->ret_ = new Param_Test::Coffee_Mix (*(Param_Test::Coffee_Mix *)req->result
                                               ()->value ()->value ());
+#endif
   return this->check_validity ();
 }
 
@@ -3335,6 +3351,7 @@ Test_AnySeq::check_validity (void)
 CORBA::Boolean
 Test_AnySeq::check_validity (CORBA::Request_ptr req)
 {
+#if 0
   CORBA::Environment env;
 
   Param_Test::AnySeq *out, *ret;
@@ -3344,6 +3361,7 @@ Test_AnySeq::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
+#endif
 
   return this->check_validity ();
 }
