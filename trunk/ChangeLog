@@ -1,3 +1,15 @@
+Sat Aug  9 01:03:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Malloc_Instantiations.cpp:
+        * ace/Timer_Hash.cpp:
+        * ace/Timer_Heap.cpp:
+        * ace/Timer_List.cpp:
+        * ace/Timer_Queue.cpp:
+        * ace/Timer_Wheel.cpp:
+          Added #include of various Synch headers needed on Solaris when
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION is defined.
+
 Fri Aug  8 13:26:25 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Dispatcher_Task.{h,cpp}: Changed typo TAO_SYNCH_MUTEX to

@@ -4,6 +4,7 @@
 #include "ace/Based_Pointer_Repository.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Synch_Traits.h"
+#include "ace/RW_Thread_Mutex.h"
 
 /**
  * @class ACE_Based_Pointer_Repository_Rep
