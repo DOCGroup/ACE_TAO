@@ -582,5 +582,6 @@ main (int, char *[])
           ])
        ])
     ], AC_DEFINE(ACE_HAS_AIO_CALLS), LIBS="$ace_save_LIBS")
+  rm -f test_aio.log
 fi dnl test "$ace_has_aio_funcs" = yes
 ])
