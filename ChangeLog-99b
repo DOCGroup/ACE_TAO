@@ -1,17 +1,23 @@
+Wed Jan 27 12:32:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html include/makeinclude/platform_vxworks5.x_g++.GNU:
+          default PERL_PATH to "perl", and added notes to set it to the full
+          perl path if perl is not on your path.
+
 Wed Jan 27 10:16:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/ACE-guidelines.html: 
-	  Added an entry for the creation of files containing template
-	  code.
+        * docs/ACE-guidelines.html:
+          Added an entry for the creation of files containing template
+          code.
 
 Tue Jan 26 20:44:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/SOCK_IO.cpp (send,recv): Changed to use sendv/recvv to
-	  handle variable arguments send/recv.
+        * ace/SOCK_IO.cpp (send,recv): Changed to use sendv/recvv to
+          handle variable arguments send/recv.
 
-	* ACE-INSTALL.html: Fixed the dead link to CE-status.  Thanks to
-	  Mike Preradovic <michael_preradovic@epicdata.com> for reporting
-	  this.
+        * ACE-INSTALL.html: Fixed the dead link to CE-status.  Thanks to
+          Mike Preradovic <michael_preradovic@epicdata.com> for reporting
+          this.
 
 Tue Jan 26 14:38:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
