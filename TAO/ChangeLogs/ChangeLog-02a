@@ -2,7 +2,8 @@ Tue Sep  4 15:11:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
 	  Generated dependencies again. Also fixed a cut and paste error
-	  in IDL names. This created problems during 'make realclean'.
+	  in IDL names. This created problems during 'make
+	  realclean'. This should fix compile errors in NoInline builds. 
 
 Tue Sep  4 11:19:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
