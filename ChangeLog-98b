@@ -1,3 +1,9 @@
+Mon May 11 02:43:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Misc/childbirth_time.cpp (main): Added
+	  a new method for benchmarking ACE_Thread_Manager::spawn_n.
+	  Added other cosmetic changes.
+
 Sun May 10 23:28:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp(inherit_log_msg):
