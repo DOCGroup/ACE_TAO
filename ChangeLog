@@ -1,3 +1,8 @@
+Thu Feb 15 03:36:46 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst (WEB): 
+	Added a new build with TAO_MINIMUM linked statically.
+
 Wed Feb 14 05:28:59 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,i}: Added const to state(), grp_id(),
