@@ -155,6 +155,10 @@ SOURCE=.\Task_Ex_Test.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
+SOURCE=.\Task_Ex_Test.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\test_config.h
 # End Source File
 # End Group
