@@ -297,7 +297,7 @@ CORBA::Boolean
 CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
 			    CORBA::Environment &ACE_TRY_ENV) const
 {
-  CORBA::TypeCode_var rcvr = CORBA::TypeCode::_duplicate (this);
+  CORBA::TypeCode_var rcvr = CORBA::TypeCode::_duplicate (ACE_const_cast(CORBA_TypeCode *, this));
   CORBA::Boolean status = 0;
 
   if (this->kind_ == CORBA::tk_alias)
