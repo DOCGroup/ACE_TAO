@@ -5,6 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_errno.h"
+#include "ace/os_include/os_search.h"
 
 // Doesn't need a macro since it *never* returns!
 

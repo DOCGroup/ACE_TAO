@@ -1,3 +1,12 @@
+Tue Nov 11 15:45:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.inl:
+          Added #include of ace/os_include/os_search.h to get bsearch and other
+          search functions
+
+        * ace/WFMO_Reactor.i:
+          Added #include of ace/Thread.h
+
 Tue Nov 11 15:13:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/ASX/CCM_App/Makefile:
@@ -13,7 +22,7 @@ Mon Nov 10 17:02:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added cast to ACE_CDR::Boolean of return values where necessary in
           extraction methods, similarly to what is already in insertion
-          methods. Thanks to Ted Mules <ned@technisyst.com.au> for the 
+          methods. Thanks to Ted Mules <ned@technisyst.com.au> for the
           resulting warnings on MSVC at warning level 4. This closes
           [BUGID:1632].
 
@@ -62,7 +71,7 @@ Mon Nov 10 16:43:19 2003  Steve Huston  <shuston@riverace.com>
 
 Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi  <kobi@mivzak.com>
 
-	* ace/TSS_T.cpp: 
+	* ace/TSS_T.cpp:
 	  Fix ts_get and ts_object functions to check ts_init() return value,
 	  and return 0 when ts_init failed.
 
