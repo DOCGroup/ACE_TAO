@@ -79,9 +79,6 @@ protected:
                                         int value,
                                         Deployment::Property& ccd_property);
 
-  /// parse a document
-  DOMDocument* create_document (const char *url);
-
   /// process attributes for deploy requirement
   void process_attributes_for_deploy_requirement (DOMNamedNodeMap* nm,
                                                   DOMDocument* doc,
