@@ -1,3 +1,30 @@
+Sat Mar  1 04:15:39 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/IFR_Service/be_global.cpp:
+	* orbsvcs/IFR_Service/be_global.h:
+	* orbsvcs/IFR_Service/be_produce.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+	* orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+	* orbsvcs/IFR_Service/ifr_visitor_macro.h:
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
+
+	  "CORBA_" -> "CORBA::".
+
+	* tests/RTCORBA/Server_Protocol/server.cpp
+	  (check_default_server_protocol):
+
+	  Added missing CORBA::Environment argument.  Fixes a compile-time
+	  error.
+
 Sat Mar  1 03:41:30 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.cpp:

@@ -92,7 +92,10 @@ check_default_server_protocol (CORBA::ORB_ptr orb
   // It is for testing purposes only! (Unfortunately, there
   // is no standard way to access ORB default policies).
   CORBA::Policy_var server_protocol =
-    orb->orb_core ()->get_default_policies ()->get_policy (RTCORBA::SERVER_PROTOCOL_POLICY_TYPE);
+    orb->orb_core ()->get_default_policies ()->get_policy (
+      RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
   RTCORBA::ServerProtocolPolicy_var policy =
     RTCORBA::ServerProtocolPolicy::_narrow (server_protocol.in ()
@@ -175,7 +178,7 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
-        
+
       // Make sure we can support multiple priorities that are required
       // for this test.
       check_supported_priorities (orb.in());

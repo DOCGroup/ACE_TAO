@@ -4,8 +4,8 @@
 #include "ifr_removing_visitor.h"
 #include "utl_scope.h"
 
-ACE_RCSID (IFR_Service, 
-           ifr_removing_visitor, 
+ACE_RCSID (IFR_Service,
+           ifr_removing_visitor,
            "$Id$")
 
 ifr_removing_visitor::ifr_removing_visitor (void)
@@ -54,7 +54,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
                   continue;
                 }
 
-              CORBA_Contained_var top_level =
+              CORBA::Contained_var top_level =
                 be_global->repository ()->lookup_id (d->repoID ()
                                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -85,4 +85,3 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
   return 0;
 }
-
