@@ -69,8 +69,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir ""
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACE_DLL_EXPORTS" /YX /FD  /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "../.." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACE_DLL_EXPORTS" /FD  /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACE_DLL_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "../.." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACE_DLL_EXPORTS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -206,11 +206,19 @@ SOURCE=.\wait.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\aio.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\aio.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\aio.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\assert.h
 # End Source File
 # Begin Source File
 
@@ -222,11 +230,39 @@ SOURCE=.\assert.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\config\compiler.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\config\config.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\config\constants.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\ctype.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ctype.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\ctype.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\config\defaults.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\config\defines.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\dirent.h
 # End Source File
 # Begin Source File
 
@@ -238,11 +274,27 @@ SOURCE=.\dirent.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\errno.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\fcntl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\fcntl.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\fcntl.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\config\features.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\grp.h
 # End Source File
 # Begin Source File
 
@@ -254,7 +306,15 @@ SOURCE=.\grp.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\limits.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\limits.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\locale.h
 # End Source File
 # Begin Source File
 
@@ -266,11 +326,19 @@ SOURCE=.\locale.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\math.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\math.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\math.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\sys\mman.h
 # End Source File
 # Begin Source File
 
@@ -282,11 +350,23 @@ SOURCE=.\mman.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\mqueue.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\mqueue.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\mqueue.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\config\platform.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\pthread.h
 # End Source File
 # Begin Source File
 
@@ -298,11 +378,19 @@ SOURCE=.\pthread.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\pwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\pwd.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\pwd.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\sched.h
 # End Source File
 # Begin Source File
 
@@ -314,11 +402,19 @@ SOURCE=.\sched.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\semaphore.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\semaphore.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\semaphore.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\setjmp.h
 # End Source File
 # Begin Source File
 
@@ -330,11 +426,19 @@ SOURCE=.\setjmp.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\signal.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\signal.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\signal.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\sys\stat.h
 # End Source File
 # Begin Source File
 
@@ -346,11 +450,23 @@ SOURCE=.\stat.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\stddef.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\stdio.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\stdio.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\stdio.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\stdlib.h
 # End Source File
 # Begin Source File
 
@@ -362,11 +478,23 @@ SOURCE=.\stdlib.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\string.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\string.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\string.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\config\temp.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\termios.h
 # End Source File
 # Begin Source File
 
@@ -378,11 +506,19 @@ SOURCE=.\termios.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\time.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\time.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\time.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\sys\times.h
 # End Source File
 # Begin Source File
 
@@ -394,7 +530,15 @@ SOURCE=.\times.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\sys\types.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\types.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\unistd.h
 # End Source File
 # Begin Source File
 
@@ -406,6 +550,14 @@ SOURCE=.\unistd.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\config\utility.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\utime.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\utime.h
 # End Source File
 # Begin Source File
@@ -414,11 +566,19 @@ SOURCE=.\utime.inl
 # End Source File
 # Begin Source File
 
+SOURCE=..\sys\utsname.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\utsname.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\utsname.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\sys\wait.h
 # End Source File
 # Begin Source File
 
