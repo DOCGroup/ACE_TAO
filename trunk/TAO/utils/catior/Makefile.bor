@@ -2,13 +2,23 @@
 # Makefile for building the catior executable
 #
 
+!ifndef MINIMUM_CORBA
 NAME = catior
+!else
+!undef NAME
+!endif
 
 OBJFILES = $(OBJDIR)\catior.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_RTCORBA_CFLAGS)
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_RTCORBA_LIB)
 
 CPPDIR = .
 
