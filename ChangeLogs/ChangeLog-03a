@@ -1,3 +1,23 @@
+Mon Feb 21 16:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.h:
+	  Protect the definitions of the CDR macros, so users can override
+	  them in their config.h file.  Thanks to Jim Scheller
+	  <csoftware@iname.com> for pointing this out.
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
+	  Fixed the algorithm to allocate new CDR blocks in the chain.  In
+	  all but a few weird cases it was allocating fixed sized blocks,
+	  while the intention was to grow the size of the blocks to
+	  minimize the number of allocations.  Thanks to Jim Scheller
+	  <csoftware@iname.com> for finding this problem.
+	  Also added a new ACE_CDR::consolidate() method to reduce a
+	  message block chain into a single message block (with proper
+	  alignment).  This is useful in the implementation of the CDR
+	  streams and Anys.
+
 Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com> 
   
         * ace/Makefile.bor: Added new files.  

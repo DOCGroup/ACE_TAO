@@ -12,38 +12,11 @@ ACE_RCSID(ace, CDR_Stream, "$Id$")
 int
 ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
 {
-  // Calculate the new buffer's length; if growing for encode, we
-  // don't grow in "small" chunks because of the cost.
+  size_t newsize =
+    ACE_CDR::first_size (minsize);
 
-  size_t size = mb->size();
-  size_t newsize = size;
-
-  if (minsize == 0)
-    {
-      // TODO The growth strategy should be controlled using
-      // the ORB parameters....
-      if (newsize == 0)
-        newsize = ACE_CDR::DEFAULT_BUFSIZE;
-      else if (size < ACE_CDR::EXP_GROWTH_MAX)
-        newsize *= 2;
-      else
-        newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
-    }
-  else if (minsize + ACE_CDR::MAX_ALIGNMENT <= size)
+  if (newsize < mb->size ())
     return 0;
-  else
-    {
-      if (newsize == 0)
-        newsize = ACE_CDR::DEFAULT_BUFSIZE;
-
-      while (newsize < minsize + ACE_CDR::MAX_ALIGNMENT)
-        {
-          if (newsize < ACE_CDR::EXP_GROWTH_MAX)
-            newsize *= 2;
-          else
-            newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
-        }
-    }
 
   ACE_Message_Block tmp (newsize);
 
@@ -70,6 +43,36 @@ ACE_CDR::total_length (const ACE_Message_Block* begin,
   return l;
 }
 
+void
+ACE_CDR::consolidate (ACE_Message_Block *dst,
+                      const ACE_Message_Block *src)
+{
+  if (src == 0)
+    return;
+
+  size_t newsize =
+    ACE_CDR::first_size (ACE_CDR::total_length (src, 0));
+  dst->size (newsize);
+
+  // We must copy the contents of <src> into the new buffer, but
+  // respecting the alignment.
+  ptr_arith_t srcalign =
+    ptr_arith_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+  ptr_arith_t dstalign =
+    ptr_arith_t(dst->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+  int offset = srcalign - dstalign;
+  if (offset < 0)
+    offset += ACE_CDR::MAX_ALIGNMENT;
+  dst->rd_ptr (offset);
+  dst->wr_ptr (dst->rd_ptr ());
+
+  for (const ACE_Message_Block* i = src;
+       i != 0;
+       i = i->cont ())
+    {
+      dst->copy (i->rd_ptr (), i->length ());
+    }
+}
 
 #if defined (NONNATIVE_LONGDOUBLE)
 int
@@ -184,19 +187,27 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
   if (this->current_->cont () == 0
       || this->current_->cont ()->size () < size + ACE_CDR::MAX_ALIGNMENT)
     {
-      // Allocate the next block, it must be large enough.
-      size_t block_size = ACE_CDR::DEFAULT_BUFSIZE;
-      while (block_size < size + ACE_CDR::MAX_ALIGNMENT)
+      // Calculate the new buffer's length; if growing for encode, we
+      // don't grow in "small" chunks because of the cost.
+      size_t cursize = this->current_->size ();
+      if (this->current_->cont () != 0)
+        cursize = this->current_->cont ()->size ();
+
+      size_t minsize = size + ACE_CDR::MAX_ALIGNMENT;
+      // Make sure that there is enough room for <minsize> bytes, but
+      // also make it bigger than whatever our current size is.
+      if (minsize < cursize)
         {
-          if (block_size < ACE_CDR::EXP_GROWTH_MAX)
-            block_size *= 2;
-          else
-            block_size += ACE_CDR::LINEAR_GROWTH_CHUNK;
+          minsize = cursize;
         }
+
+      size_t newsize =
+        ACE_CDR::next_size (minsize);
+
       this->good_bit_ = 0;
       ACE_Message_Block* tmp;
       ACE_NEW_RETURN (tmp,
-                      ACE_Message_Block (block_size,
+                      ACE_Message_Block (newsize,
                                          ACE_Message_Block::MB_DATA,
                                          0,
                                          0,
@@ -212,7 +223,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       // The new block must start with the same alignment as the
       // previous block finished.
       ptr_arith_t tmpalign =
-        ptr_arith_t(tmp->wr_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+        ptr_arith_t(tmp->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
       ptr_arith_t curalign =
         ptr_arith_t(this->current_->wr_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
       int offset = curalign - tmpalign;
@@ -998,27 +1009,7 @@ ACE_InputCDR::reset (const ACE_Message_Block* data,
                      int byte_order)
 {
   this->reset_byte_order (byte_order);
-  this->start_.size (ACE_CDR::total_length (data, 0)
-                     + ACE_CDR::MAX_ALIGNMENT);
-
-  // We must copy the contents of <data> into the new buffer, but
-  // respecting the alignment.
-  ptr_arith_t curalign =
-    ptr_arith_t(data->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  ptr_arith_t tmpalign =
-    ptr_arith_t(this->start_.rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  int offset = curalign - tmpalign;
-  if (offset < 0)
-    offset += ACE_CDR::MAX_ALIGNMENT;
-  this->start_.rd_ptr (offset);
-  this->start_.wr_ptr (offset);
-
-  for (const ACE_Message_Block* i = data;
-       i != 0;
-       i = i->cont ())
-    {
-      this->start_.copy (i->rd_ptr (), i->length ());
-    }
+  ACE_CDR::consolidate (&this->start_, data);
 }
 
 void
