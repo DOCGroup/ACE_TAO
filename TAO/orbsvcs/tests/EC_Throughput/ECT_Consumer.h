@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "ace/Task.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
