@@ -1,3 +1,16 @@
+Thu Mar 30 15:45:25 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/SHMIOP_Acceptor.cpp (TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor):
+	* tao/IIOP_Acceptor.cpp (TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor):
+	* tao/UIOP_Acceptor.cpp (TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor):
+
+	  Make sure we close down before we start destroying the
+	  strategies.  This will make sure that the base class will not
+	  try to access the destroyed strategies in its destructor.
+	  TAO_UIOP_Acceptor::close() needed a little modification that
+	  would make it ok to call it multiple times.  Thanks to Sangwoo
+	  Jin <swjinjin@sei.co.kr> for reporting this bug.
+
 Thu Mar 30 12:16:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.{h.cpp}:

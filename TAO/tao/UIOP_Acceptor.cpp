@@ -72,6 +72,10 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
 
 TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
 {
+  // Make sure we are closed before we start destroying the
+  // strategies.
+  this->close ();
+
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
@@ -144,13 +148,15 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
 int
 TAO_UIOP_Acceptor::close (void)
 {
-  ACE_UNIX_Addr addr;
-
-  if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
-    return -1;
-
   if (this->unlink_on_close_)
-    (void) ACE_OS::unlink (addr.get_path_name ());
+    {
+      ACE_UNIX_Addr addr;
+
+      if (this->base_acceptor_.acceptor ().get_local_addr (addr) == 0)
+        (void) ACE_OS::unlink (addr.get_path_name ());
+
+      this->unlink_on_close_ = 0;
+    }
 
   return this->base_acceptor_.close ();
 }
