@@ -11,6 +11,9 @@
 // 2) Create a feature file anywhere you like with the features you want and
 //    use the -feature_file option to specify where it is located.
 //
+// Feature definitions from this file are always overwritten by -features
+// command option of mwc.pl.
+//
 // This file is somewhat akin to the platform_macros.GNU file in that build
 // settings can be set here.
 
