@@ -31,8 +31,7 @@ void CAD_Handler::process_ComponentAssemblyDescription
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
-      else if (node_name == XStr
+      if (node_name == XStr
                 (ACE_TEXT ("Deployment:ComponentAssemblyDescription")))
         {
         }
@@ -133,7 +132,10 @@ void CAD_Handler::process_instance (DOMNodeIterator* iter,
       ACE_DEBUG ((LM_DEBUG, "node name is %s \n", XMLString::transcode
 (node_name)));
 
-      if (false);
+      if (node_name == XStr
+                (ACE_TEXT ("Deployment:SubcomponentInstantiationDescription")))
+        {
+        }
       else if
         (process_string (iter, node_name, "name", sid.name));
       else if
@@ -174,7 +176,10 @@ void CAD_Handler::process_connection (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr
+                (ACE_TEXT ("Deployment:AssemblyConnectionDescription")))
+        {
+        }
       else if
         (process_string(iter, node_name, "name", acd.name));
       else if
@@ -216,7 +221,10 @@ void CAD_Handler::process_spe (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr
+                (ACE_TEXT ("Deployment:SubcomponentPortEndpoint")))
+        {
+        }
       else if
         (process_string (iter, node_name, "portName", spe.portName));
       else if
@@ -243,7 +251,10 @@ void CAD_Handler::process_spr (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr
+                (ACE_TEXT ("Deployment:SubcomponentPropertyReference")))
+        {
+        }
       else if
         (process_string (iter, node_name, "propertyName", spr.propertyName));
       else if
@@ -270,7 +281,10 @@ void CAD_Handler::process_property(DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr
+                (ACE_TEXT ("Deployment:AssemblyPropertyMapping")))
+        {
+        }
       else if
         (process_string (iter, node_name, "name", apm.name));
       else if

@@ -35,7 +35,6 @@ void CompPkgDesc_Handler::process_ComponentPackageDescription
       ACE_DEBUG ((LM_DEBUG, "node name in PCD is %s\n",
                   XMLString::transcode (node_name)));
 
-      if (false);
       else if (node_name == XStr
           (ACE_TEXT ("Deployment:ComponentPackageDescription")))
         {

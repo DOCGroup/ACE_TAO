@@ -26,7 +26,10 @@ void PCI_Handler::process_PackagedComponentImplementation
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:PackagedComponentImplementation")))
+        {
+        }
       else if
         (process_string(this->iter_, node_name, "name", pci.name));
       else if

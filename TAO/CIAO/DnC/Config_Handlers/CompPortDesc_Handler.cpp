@@ -55,7 +55,12 @@ namespace CIAO
            node = this->iter_->nextNode())
         {
           XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
+
+          if (node_name == XStr
+              (ACE_TEXT ("Deployment:ComponentPortDescription")))
+            {
+            }
+          else if (node_name == XStr (ACE_TEXT ("name")))
             {
               // Fetch the text node which contains the "name"
               node = this->iter_->nextNode();
