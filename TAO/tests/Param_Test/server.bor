@@ -5,14 +5,11 @@
 NAME = server
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I..\.. \
-	-hc Cli.h -cs Cli.cpp -ci Cli.i \
-	-hs Ser.h -ss Ser.cpp -si Ser.i \
-	-hT Ser_T.h -sT Ser_T.cpp -st Ser_T.i \
 	-Ge 1
 
 OBJFILES = \
-	$(OBJDIR)\param_testSer.obj \
-	$(OBJDIR)\param_testCli.obj \
+	$(OBJDIR)\param_testS.obj \
+	$(OBJDIR)\param_testC.obj \
 	$(OBJDIR)\server.obj \
 	$(OBJDIR)\param_test_i.obj \
 	$(OBJDIR)\tmplinst.obj
@@ -40,5 +37,5 @@ IDLFILES = \
 # IDL Build rules
 #
 
-$(IDLDIR)\param_testSer.cpp $(IDLDIR)\param_testCli.cpp: $(IDLDIR)\param_test.idl
+$(IDLDIR)\param_testS.cpp $(IDLDIR)\param_testC.cpp: $(IDLDIR)\param_test.idl
 	$(TAO_IDL) $**
