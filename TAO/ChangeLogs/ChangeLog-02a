@@ -1,3 +1,10 @@
+Fri Jul 14 12:05:13 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated "Recent Work" section in the Load Balancer release
+	  notes.
+
 Fri Jul 14 13:42:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/Contained_i.cpp:
