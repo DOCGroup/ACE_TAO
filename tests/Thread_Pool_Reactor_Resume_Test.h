@@ -43,25 +43,15 @@ public:
   /// Dtor..
   ~Request_Handler (void);
 
+  virtual int open (void * = 0);
+
 protected:
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
   virtual int resume_handler (void);
 
 private:
-  void _incr_ref_count (void);
-  void _decr_ref_count (void);
-
-private:
   size_t  nr_msgs_rcvd_;
-
-  /// Reference count of the number of threads using the handle. This
-  /// is needed  to make sure that one thread doesnt delete the handle
-  /// when the other thread has just resumed the handle..
-  int ref_count_;
-
-  /// The lock for the ref count
-  ACE_Lock *refcount_lock_;
 };
 
 #endif /* ACE_TESTS_THREAD_POOL_REACTOR_RESUME_TEST_H */
