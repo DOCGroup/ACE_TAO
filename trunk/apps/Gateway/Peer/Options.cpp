@@ -19,7 +19,7 @@ void
 Options::print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n"));
+              ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
   ACE_OS::exit (1);
 }
 
@@ -93,7 +93,7 @@ Options::supplier_connector_port (void) const
   return this->supplier_connector_port_;
 }
 
-const char *
+const ACE_TCHAR *
 Options::connector_host (void) const
 {
   return this->connector_host_;
@@ -106,9 +106,9 @@ Options::enabled (int option) const
 }
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "a:c:C:h:m:t:v", 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:c:C:h:m:t:v"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -118,10 +118,11 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become an Acceptor.
 
-            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
+            for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (),
+                                                   ACE_TEXT ("|"));
                  flag != 0;
-                 flag = ACE_OS::strtok (0, "|"))
-              if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
+                 flag = ACE_OS::strtok (0, ACE_TEXT ("|")))
+              if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::CONSUMER_ACCEPTOR);
@@ -129,7 +130,7 @@ Options::parse_args (int argc, char *argv[])
                     // Set the Consumer Acceptor port number.
                     this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
                 }
-              else if (ACE_OS::strncasecmp (flag, "S", 1) == 0)
+              else if (ACE_OS::strncasecmp (flag, ACE_TEXT ("S"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::SUPPLIER_ACCEPTOR);
@@ -144,10 +145,11 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become a Connector.
 
-            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
+            for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (),
+                                                   ACE_TEXT ("|"));
                  flag != 0;
-                 flag = ACE_OS::strtok (0, "|"))
-              if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
+                 flag = ACE_OS::strtok (0, ACE_TEXT ("|")))
+              if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::CONSUMER_CONNECTOR);
@@ -155,7 +157,7 @@ Options::parse_args (int argc, char *argv[])
                     // Set the Consumer Connector port number.
                     this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
                 }
-              else if (ACE_OS::strncasecmp (flag, "S", 1) == 0)
+              else if (ACE_OS::strncasecmp (flag, ACE_TEXT ("S"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::SUPPLIER_CONNECTOR);

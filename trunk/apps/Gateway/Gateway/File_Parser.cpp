@@ -22,9 +22,9 @@ typedef FP::Return_Type FP_RETURN_TYPE;
 // File_Parser stuff.
 
 template <class ENTRY> int
-File_Parser<ENTRY>::open (const char filename[])
+File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
 {
-  this->infile_ = ACE_OS::fopen (filename, "r");
+  this->infile_ = ACE_OS::fopen (filename, ACE_TEXT ("r"));
   if (this->infile_ == 0)
     return -1;
   else
