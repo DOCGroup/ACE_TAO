@@ -1,3 +1,10 @@
+Fri Jun 29 22:31:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Reverted the changes in this entry.
+	  Thu Jun 28 13:44:52 2001  Chad Elliott
+	  <elliott_c@ociweb.com>. The changes seem to be breaking the Sun
+	  builds. 
+
 Fri Jun 29 10:14:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/config-macosx.h: Removed some macros that don't apply to
