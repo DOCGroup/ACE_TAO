@@ -10,6 +10,11 @@ Mon Dec 14 08:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp (print_util_stats):
           fixed printout to reflect whether -l option had been used or not.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+          moved ACE_OS::exit () call to run (), in the hope that we'll
+          eventually be able to run more than one iteration of the
+          utilization test before exiting.
+
 Mon Dec 14 08:08:32 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
