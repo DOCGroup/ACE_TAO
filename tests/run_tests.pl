@@ -77,7 +77,14 @@ sub run
 	if (m/Ending/) {
 	  $ending_matched = 1;
 	}
-	if (m/assertion failed|Invalid argument|timeout|Bad file number/) {
+	if (m/assertion failed|timeout|Bad file number/) {
+	  $bad_matched = 1;
+	}
+	# On Linux the /etc/hosts files contains IPV6 addresses that
+	# tend to confuse the heck out of this test
+	if (($program ne "SOCK_Connector_Test"
+	     || $^O ne "linux")
+	    && m/Invalid argument/) {
 	  $bad_matched = 1;
 	}
 	if ($program ne "Cached_Accept_Conn_Test"
@@ -144,7 +151,7 @@ if ($chorus eq "" || $chorus == 0) {
 $ace_version=`head -1 ../VERSION | sed -e 's/.*version \\([0-9.]*\\).*\$/\\1/'`;
 chop $ace_version;
 
-print "Starting ACE version $ace_version tests . . .\n";
+print STDERR "Starting ACE version $ace_version tests . . .\n";
 open (LIST, '<run_tests.lst')
   || die "Can't read program list\n";
 PROGRAM: while (<LIST>) {
@@ -158,7 +165,7 @@ PROGRAM: while (<LIST>) {
 #    print "var = $var -> $program\n";
     local $e = $$var;
     if ($e == 1) {
-      print "Skipping $program on this platform\n";
+      print STDERR "Skipping $program on this platform\n";
       next PROGRAM;
     }
   }
@@ -166,7 +173,7 @@ PROGRAM: while (<LIST>) {
 }
 close (LIST)
   || die "Can't close program list\n";
-print "Finished ACE version $ace_version tests.\n";
+print STDERR "Finished ACE version $ace_version tests.\n";
 
 unlink "ace_pipe_name";
 unlink "pattern";
@@ -177,8 +184,8 @@ unlink "$tmp/ace_temp_file";
 if ($chorus eq "" || $chorus == 0) {
   $end_test_resources=`ipcs | egrep $user`;
   if ("$start_test_resources" ne "$end_test_resources") {
-    print "WARNING: the ACE tests _may_ have leaked OS resources!\n";
-    print "$end_test_resources";
+    print STDERR "WARNING: the ACE tests _may_ have leaked OS resources!\n";
+    print STDERR "$end_test_resources";
   }
 }
 
