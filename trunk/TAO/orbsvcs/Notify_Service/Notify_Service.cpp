@@ -14,13 +14,13 @@
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
   : notify_service_ (0),
-        bootstrap_ (0),
+    bootstrap_ (0),
     use_name_svc_ (1),
     ior_output_file_ (0),
     notify_factory_name_ (NOTIFY_KEY),
     notify_channel_name_ (NOTIFY_CHANNEL_NAME),
     register_event_channel_ (0),
-    nthreads_ (0)
+    nthreads_ (1)
 {
   // No-Op.
 }
@@ -102,8 +102,17 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
       ACE_DEBUG ((LM_DEBUG, "Running %d server threads\n", this->nthreads_));
       worker_.orb (this->orb_.in ());
 
-      if (worker_.activate (THR_NEW_LWP | THR_JOINABLE,
-                            this->nthreads_) != 0)
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy ()
+                                                     , this->orb_->orb_core ()->orb_params ()->scope_policy ());
+
+      if (worker_.activate (flags,
+                            this->nthreads_, 0, priority) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"), -1);
     }
@@ -444,6 +453,18 @@ Worker::orb (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
+  ACE_hthread_t current;
+  ACE_Thread::self (current);
+
+  int priority;
+  if (ACE_Thread::getprio (current, priority) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Failed to get Worker thread priority\n")));
+      return -1;
+    }
+
+  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread to tun the ORB @ priority:%d \n", priority));
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
