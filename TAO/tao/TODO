@@ -47,3 +47,9 @@
 . FTCORBA and service_comm_raise_failure
 
 . DII and oneways
+
+. test non-gperf generated code
+
+. test direct collocation generated code
+
+. test Collocation_Opportunities after talking to Irfan

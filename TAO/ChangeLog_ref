@@ -1,3 +1,14 @@
+Sat Oct  4 23:09:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp: Call
+	  send_connection_closed_notification () only after the reactor
+	  and the cache have been cleaned. The call in question can make
+	  upcalls into the application during AMI or AMH. The upcalls can
+	  then try to make a remote invocation which will use the
+	  transport from the cache or the handler from the reactor. Both
+	  of them are bad and they lead to deadlocks. This should fix BUG
+	  1482 properly.
+
 Wed Oct  1 10:57:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
