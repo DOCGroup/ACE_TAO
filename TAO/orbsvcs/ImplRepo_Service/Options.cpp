@@ -10,6 +10,7 @@
 
 #include "Options.h"
 #include "NT_Service.h"
+#include "tao/Environment.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/ARGV.h"
 #include "ace/Configuration.h"
@@ -682,4 +683,3 @@ template class ACE_Singleton <Options, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Options, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
