@@ -7,6 +7,14 @@
 #include "JAWS/server/IO.h"
 #include "JAWS/server/HTTP_Server.h"
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class LOCK_SOCK_Acceptor<ACE_Thread_Mutex>;
+template class ACE_Task<ACE_NULL_SYNCH>;
+template class ACE_Thru_Task<ACE_NULL_SYNCH>;
+template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+template class ACE_Module<ACE_NULL_SYNCH>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 void
 HTTP_Server::parse_args (int argc, char *argv[])
 {
@@ -103,6 +111,8 @@ Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor, ACE_Thr
 int
 Synch_Thread_Pool_Task::open (void *args)
 {
+  ACE_UNUSED_ARG (args);
+
   if (this->activate () == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"), -1);
 
@@ -156,6 +166,8 @@ Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
 int
 Thread_Per_Request_Task::open (void *args)
 {
+  ACE_UNUSED_ARG (args);
+
   if (this->activate () == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"), -1);
 

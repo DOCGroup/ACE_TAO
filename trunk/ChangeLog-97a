@@ -1,3 +1,18 @@
+Tue Apr 15 21:51:45 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+        * apps/JAWS/server/IO.cpp: Added a template instance for
+          ACE_Singleton so it would link using GCC.  Removed GCC
+          warnings.
+
+        * apps/JAWS/server/HTTP_Server.cpp: Added template instances for
+          LOCK_SOCK_Acceptor, ACE_Task, ACE_Thru_Task, ACE_Message_Queue,
+          ACE_Module so it would link using GCC.  Removed GCC warnings.
+
+        * apps/JAWS/server/HTTP_Server_T.cpp: Removed template instance of
+          LOCK_SOCK_Acceptor, since it was not really being compiled.
+
+        * apps/JAWS/server/HTTP_Handler.cpp: Removed GCC warnings.
+
 Tue Apr 15 17:09:33 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib: Moved all the class definitions into the *.h files

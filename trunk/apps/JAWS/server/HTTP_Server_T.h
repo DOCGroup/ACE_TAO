@@ -1,6 +1,8 @@
 #if !defined (HTTP_SERVER_T_H)
 #define HTTP_SERVER_T_H
 
+#include "ace/SOCK_Acceptor.h"
+
 // Specialize ACE_SOCK_Acceptor to lock around accept();
 template <class LOCK>
 class LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor

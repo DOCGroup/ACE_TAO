@@ -5,6 +5,10 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Singleton<JAWS_VFS, ACE_Thread_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 JAWS_IO::JAWS_IO (void)
   : handle_ (ACE_INVALID_HANDLE),
     handler_ (0)
@@ -115,7 +119,8 @@ JAWS_Synch_IO::transmit_file (char *filename,
       stream.set_handle (this->handle_);
       
       if ((stream.send_n (header, header_size) == header_size) &&
-	  (stream.send_n (vf->addr (), vf->size ()) == vf->size ()) &&
+	  ((unsigned long) stream.send_n (vf->addr (), vf->size ())
+           == vf->size ()) &&
 	  (stream.send_n (trailer, trailer_size) == trailer_size))
 	this->handler_->transmit_file_complete ();
       else

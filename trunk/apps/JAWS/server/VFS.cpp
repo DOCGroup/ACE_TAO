@@ -8,17 +8,24 @@
 #include "JAWS/server/VFS.h"
 #include "JAWS/server/HTTP_Helpers.h"
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class JXH_List<JAWS_VFS_Node *>;
+template class JAWS_VFS_Node_Bucket<ACE_Thread_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #if defined (ACE_WIN32)
-static const int READ_FLAGS = FILE_FLAG_SEQUENTIAL_SCAN | FILE_FLAG_OVERLAPPED | O_RDONLY;
-static const int WRITE_FLAGS = FILE_FLAG_SEQUENTIAL_SCAN | FILE_FLAG_OVERLAPPED | O_RDWR | O_CREAT;
+static const int READ_FLAGS
+  = FILE_FLAG_SEQUENTIAL_SCAN | FILE_FLAG_OVERLAPPED | O_RDONLY;
+static const int WRITE_FLAGS
+  = FILE_FLAG_SEQUENTIAL_SCAN | FILE_FLAG_OVERLAPPED | O_RDWR | O_CREAT;
 #else
 static const int READ_FLAGS = O_RDONLY;
 static const int WRITE_FLAGS = O_RDWR | O_CREAT;
 #endif /* ACE_WIN32 */
 
 JAWS_VFS_Node::JAWS_VFS_Node (char *uri)
-  : map_state_ (NOT_OPEN),
-    uri_ (ACE_OS::strdup (uri))
+  : uri_ (ACE_OS::strdup (uri)),
+    map_state_ (NOT_OPEN)
 {
   this->uritopath ();
 }
@@ -49,7 +56,9 @@ JAWS_VFS_Node::open (int flags)
       handle_ = ACE_INVALID_HANDLE;
     }
 
-  this->handle_ = ACE_OS::open (this->path_, flags, S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH);
+  this->handle_ = ACE_OS::open (this->path_, flags,
+                                S_IRUSR|S_IRGRP|S_IROTH
+                                |S_IWUSR|S_IWGRP|S_IWOTH);
   if (this->handle_ == ACE_INVALID_HANDLE) 
     {
       switch (errno) 
@@ -289,6 +298,7 @@ int
 JAWS_VFS::close (JAWS_VFS_Node * &handle)
 {
   // In the future, do something intelligent here.
+  ACE_UNUSED_ARG (handle);
   return 0;
 }
 

@@ -15,10 +15,10 @@ const int HTTP_Handler::HTTP_TRAILER_LENGTH = ACE_OS::strlen (HTTP_Handler::HTTP
 
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 			    HTTP_Handler_Factory &factory)
-  : io_ (io),
-    handle_ (ACE_INVALID_HANDLE),
+  : factory_ (factory),
     request_data_ (0),
-    factory_ (factory)
+    handle_ (ACE_INVALID_HANDLE),
+    io_ (io)
 {
   this->io_.handler (this);
 }

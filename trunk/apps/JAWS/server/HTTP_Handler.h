@@ -47,7 +47,7 @@ protected:
   // The constructor is passed the factory that created <this> and the
   // IO mechanism that the handler should use.
 
-  ~HTTP_Handler (void);
+  virtual ~HTTP_Handler (void);
   // Destructor
 
   virtual void done (void);

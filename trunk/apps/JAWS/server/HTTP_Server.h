@@ -18,19 +18,12 @@ class ACE_Proactor;
 // Include the templates here.
 #include "JAWS/server/HTTP_Server_T.h"
 
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define ONESHOT_SOCK_ACCEPTOR HTTP_SOCK_Acceptor
-#else /* TEMPLATES are broken */
-#define ONESHOT_SOCK_ACCEPTOR HTTP_SOCK_Acceptor, HTTP_SOCK_Acceptor::PEER_ADDR
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
-
 #if defined (ACE_WIN32)
 typedef LOCK_SOCK_Acceptor<ACE_Null_Mutex> HTTP_SOCK_Acceptor;
 #else
 typedef LOCK_SOCK_Acceptor<ACE_Thread_Mutex> HTTP_SOCK_Acceptor;
 #endif /* ACE_WIN32 */
 
-//typedef ACE_Oneshot_Acceptor <HTTP_Handler, ONESHOT_SOCK_ACCEPTOR> HTTP_Acceptor;
 typedef HTTP_SOCK_Acceptor HTTP_Acceptor;
 
 class HTTP_Server : public ACE_Service_Object
