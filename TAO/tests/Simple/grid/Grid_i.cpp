@@ -19,14 +19,16 @@ Grid_i::Grid_i (CORBA::Short x,
   : width_ (x),
     height_ (y)
 {
-  ACE_NEW (array_,
-	   CORBA::Long *[y]);
+  ACE_NEW_THROW (array_,
+	         CORBA::Long *[y],
+                 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   // Allocate memory for the matrix.
 
   for (int ctr = 0; ctr < y; ctr++)
-    ACE_NEW (array_[ctr],
-	     CORBA::Long[x]);
+    ACE_NEW_THROW (array_[ctr],
+	           CORBA::Long[x],
+                   CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 }
 
 // Default destructor.
