@@ -1,3 +1,15 @@
+Thu Jan 14 00:52:48 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp (run): Added a new version of the run() method.
+  	  This variant takes no timeout parameters and hence does not
+ 	  terminate the event loop if the Reactor returns a 0.  This
+ 	  variant is necessary for TAO to work correctly with Reactor
+ 	  implementations such as XtReactor that returns zero even when
+ 	  the timeout does not expire.
+
+	  Thanks to JM Strauss <jms97@club-internet.fr> for suggesting
+ 	  this change.
+
 Wed Jan 13 14:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp

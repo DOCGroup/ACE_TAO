@@ -872,28 +872,17 @@ public:
   // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
 
-  int run (ACE_Time_Value *tv = 0);
+  int run (void);
+  int run (ACE_Time_Value &tv);
+  int run (ACE_Time_Value *tv);
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
-  // method will return -1.  If <tv> is non-NULL then if no requests
+  // method will return -1.  If <tv> is non-NULL, then if no requests
   // arrive at this thread before the timeout elapses we return to the
   // caller with a value of 0 (this allows timeouts).  Otherwise, if
   // we've returned since we've been asked to shut down the value of 1
   // is returned.
-  //
-  // <{Note that this interface differs from the POA specification,
-  // which is reproduced below:}>
-  //
-  // Returns when the ORB has shut down.  If called by the main
-  // thread, it enables the ORB to perform work using the main
-  // thread. Otherwise, it simply waits until the ORB has shut down.
-  //
-  // This operation can be used instead of perform_work() to give the
-  // main thread to the ORB if there are no other activities that need
-  // to share the main thread. Even in a pure multi-threaded server,
-  // calling run() in the main thread is useful to ensure that the
-  // process does not exit until the ORB has been shut down.
 
   void shutdown (CORBA::Boolean wait_for_completion = 0);
   // This operation instructs the ORB to shut down. Shutting down the
@@ -956,10 +945,6 @@ public:
   // reported by the ORB.  If the POA is a "Named POA" the client's
   // ORB will not normally return OBJECT_NOT_EXIST unless the POA
   // reports that fault.
-
-  int run (const ACE_Time_Value &tv);
-  // This is the same as the more "standard" <run> method, except that
-  // you don't need to put the & in front of <tv>.
 
   int preconnect (CORBA::String connections);
   // Establish connectsion to each of the comma-separated
@@ -1030,6 +1015,10 @@ protected:
 
   CORBA_Object_ptr resolve_poa_current (void);
   // Resolve the POA current.
+
+  int run (ACE_Time_Value *tv, 
+           int break_on_timeouts);
+  // Implements the run routine
 
 private:
   CORBA_Object_ptr resolve_name_service (ACE_Time_Value *timeout);

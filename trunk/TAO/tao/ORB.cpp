@@ -316,7 +316,8 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
 }
 
 int
-CORBA_ORB::run (ACE_Time_Value *tv)
+CORBA_ORB::run (ACE_Time_Value *tv, 
+                int break_on_timeouts)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
 
@@ -372,7 +373,8 @@ CORBA_ORB::run (ACE_Time_Value *tv)
       switch (r->handle_events (tv))
         {
         case 0: // Timed out, so we return to caller.
-          result = 0;
+          if (break_on_timeouts)
+            result = 0;
           break;
           /* NOTREACHED */
         case -1: // Something else has gone wrong, so return to caller.
@@ -403,9 +405,21 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 }
 
 int
-CORBA_ORB::run (const ACE_Time_Value &tv)
+CORBA_ORB::run (ACE_Time_Value &tv)
 {
-  return this->run ((ACE_Time_Value *) &tv);
+  return this->run (&tv, 1);
+}
+
+int
+CORBA_ORB::run (ACE_Time_Value *tv)
+{
+  return this->run (tv, 1);
+}
+
+int
+CORBA_ORB::run (void)
+{
+  return this->run (0, 0);
 }
 
 CORBA_Object_ptr
