@@ -40,7 +40,7 @@ public:
   ACE_Read_Buffer (FILE *fp, int close_on_delete = 0, ACE_Allocator * = 0);
   // Read from a FILE *.
 
-  ACE_Read_Buffer (int handle, int close_on_delete = 0, ACE_Allocator * = 0);
+  ACE_Read_Buffer (ACE_HANDLE handle, int close_on_delete = 0, ACE_Allocator * = 0);
   // Read from an open HANDLE.
 
   ~ACE_Read_Buffer (void);

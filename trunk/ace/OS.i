@@ -4713,7 +4713,7 @@ ACE_OS::writev (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle, 
-	       ACE_READV_TYPE *iov, 
+	       struct iovec *iov,
 	       int iovlen)
 {
   // ACE_TRACE ("ACE_OS::readv");

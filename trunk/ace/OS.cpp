@@ -2152,9 +2152,11 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 // "Fake" readv for sites without it.  Note that this is thread-safe.
 
 extern "C" int
-readv (ACE_HANDLE handle, struct iovec *iov, int n)
+readv (ACE_HANDLE handle, 
+       ACE_READV_TYPE *iov,
+       int n)
 {
-// ACE_TRACE ("::readv");
+// ACE_TRACE ("readv");
 
   ssize_t length = 0;
   int i;
