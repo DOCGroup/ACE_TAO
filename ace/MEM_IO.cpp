@@ -47,7 +47,13 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
                             timeout);
 
   if (retv == 0)
-    return 0;
+    {
+      // Something bad has happened.  It looks like only Solaris and
+      // Win32 will fall into this place when the other end closes the
+      // connection.
+      errno = EIO;
+      return -1;
+    }
   else if (retv != sizeof (off_t))
     {
       //  Nothing available or we are really screwed.
