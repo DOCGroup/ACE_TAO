@@ -30,13 +30,13 @@ int
 read_ior (char *filename)
 {
   // Open the file for reading.
-    ACE_HANDLE f_handle_ = ACE_OS::open (filename,0);
+  ACE_HANDLE f_handle_ = ACE_OS::open (filename,0);
   
   if (f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-    "Unable to open %s for writing: %p\n",
-    filename),
-    -1);
+		       "Unable to open %s for writing: %p\n",
+		       filename),
+		      -1);
   ACE_Read_Buffer ior_buffer (f_handle_);
   server_IOR_ = ior_buffer.read ();
   
@@ -44,14 +44,14 @@ read_ior (char *filename)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
-   return 0;
+  return 0;
 }
 
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:i:");
+  ACE_Get_Opt get_opts (argc, argv, "f:i:k:O:");
   int c;
   int result;
 
@@ -62,9 +62,12 @@ parse_args (int argc, char **argv)
         result = read_ior (get_opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-          "Unable to read ior from %s : %p\n",
-          get_opts.optarg),
-          -1);
+			     "Unable to read ior from %s : %p\n",
+			     get_opts.optarg),
+			    -1);
+        break;
+      case 'k':
+        server_IOR_ = get_opts.optarg;
         break;
       case 'i':
         iterations = ::atoi (get_opts.optarg);
@@ -78,11 +81,11 @@ parse_args (int argc, char **argv)
                            argv [0]),
                           -1);
       }
-
+  
   if (server_IOR_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
-
+  
   // Indicates successful parsing of command line.
   return 0;
 }
@@ -91,7 +94,7 @@ int
 main (int argc, char **argv)
 {
   CORBA::Environment env;
-
+  
   // Initialize the ORB
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
@@ -99,12 +102,12 @@ main (int argc, char **argv)
       env.print_exception ("CORBA::ORB_init");
       return -1;
     }
-
+  
   // Initialize options based on command-line arguments.
   int parse_args_result = parse_args (argc, argv);
   if (parse_args_result != 0)
     return parse_args_result;
-
+  
   // Get an object reference from the argument string.
   CORBA::Object_var object = orb->string_to_object (server_IOR_, env);
 
@@ -113,16 +116,16 @@ main (int argc, char **argv)
       env.print_exception ("CORBA::ORB::string_to_object");
       return -1;
     }
-
+  
   // Try to narrow the object reference to a Foo reference.
   Foo_var foo = Foo::_narrow (object.in (), env);
-
+  
   if (env.exception () != 0)
     {
       env.print_exception ("Foo::_narrow");
       return -1;
     }
-
+  
   CORBA::String_var original_location = orb->object_to_string (foo.in (), env);
   if (env.exception () == 0)
     {
@@ -133,17 +136,17 @@ main (int argc, char **argv)
       env.print_exception ("ORB::object_to_string");
       return -1;
     }
-
+  
   CORBA::Long result = 0;
-
+  
   for (int i = 1; i <= iterations; i++)
     {
-
+      
       // About half way through
       if (i % 3 == 0)
         {
           foo->forward (env);
-
+	  
           // If exception
           if (env.exception () != 0)
             {
@@ -155,7 +158,7 @@ main (int argc, char **argv)
         {
           // Invoke the doit() method of the foo reference.
           result = foo->doit (env);
-
+	  
           // If exception
           if (env.exception () != 0)
             {
@@ -166,6 +169,7 @@ main (int argc, char **argv)
             ACE_DEBUG ((LM_DEBUG, "doit() returned %d \n", result));
         }
     }
-
+  
   return 0;
 }
+
