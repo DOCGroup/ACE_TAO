@@ -8,16 +8,14 @@
 // Modified by: Brian Mendel
 
 #include "tao/corba.h"    // ... and skeletons
-
 #include "cubit_i.h"
 
-
-Cubit_i::Cubit_i(const char* obj_name)
-: _skel_Cubit(obj_name)
+Cubit_i::Cubit_i (const char* obj_name)
+  : _skel_Cubit (obj_name)
 {
 }
 
-Cubit_i::~Cubit_i()
+Cubit_i::~Cubit_i (void)
 {
 }
 
@@ -37,7 +35,6 @@ Cubit_i::Cubit_cube_short (CORBA_Short       s,
   return (CORBA_Short) (s * s * s);
 }
 
-
 CORBA_Long
 Cubit_i::Cubit_cube_long (CORBA_Long        l,
                           CORBA_Environment &env)
@@ -46,7 +43,7 @@ Cubit_i::Cubit_cube_long (CORBA_Long        l,
   return (CORBA_Long) (l * l * l);
 }
 
-Cubit_Many*
+Cubit_Many *
 Cubit_i::Cubit_cube_struct (Cubit_Many        &values,
                             CORBA_Environment &env)
 {
@@ -58,7 +55,7 @@ Cubit_i::Cubit_cube_struct (Cubit_Many        &values,
   return &values;
 }
 
-Cubit_oneof*
+Cubit_oneof *
 Cubit_i::Cubit_cube_union (Cubit_oneof       &values,
                            CORBA_Environment &env)
 {
@@ -85,9 +82,9 @@ Cubit_i::Cubit_cube_union (Cubit_oneof       &values,
 
 void Cubit_i::Cubit_please_exit (CORBA_Environment &env)
 {
-   TAO_OA_Parameters* params = TAO_OA_Parameters::instance();
+  TAO_OA_Parameters* params = TAO_OA_Parameters::instance ();
    
-   dmsg ("I've been asked to shut down...");
-   params->oa()->please_shutdown(env);
-   dexc (env, "please_exit, please_shutdown");
+  dmsg ("I've been asked to shut down...");
+  params->oa ()->please_shutdown (env);
+  dexc (env, "please_exit, please_shutdown");
 }
