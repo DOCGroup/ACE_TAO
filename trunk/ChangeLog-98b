@@ -1,8 +1,8 @@
 Thu Dec 17 17:18:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU: This file
- 	  was been modified to get rid of thread related stuff until we
- 	  can obtain the FSU threads library.  Thanks to Michael
+	* include/makeinclude/platform_sco5.0.0-{nothread,fsu-pthread}.GNU:
+	  This file was been modified to get rid of thread related stuff
+ 	  until we can obtain the FSU threads library.  Thanks to Michael
  	  Preobrazhensky <mikep@xpedite.com> for this.
 
 Thu Dec 17 16:56:28 1998  David L. Levine  <levine@cs.wustl.edu>
