@@ -1,3 +1,16 @@
+Fri Feb  7 17:29:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/OS.cpp (set_sched_params): added support for POSIX
+	  threads.  Thanks to Thilo Kielmann
+	  <kielmann@informatik.uni-siegen.de> for figuring it out and
+	  for providing the code.
+
+	* tests/Naming_Test.cpp (test_find): Changed final delete[] to
+	  not try to delete a static buffer. :-(
+
+	* tests/SOCK_Test.cpp (server): Added assertion test for
+	  modified select timeval.
+
 Fri Feb 07 13:56:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/{OS.cpp,Thread_Priority.cpp}: added ACE_Thread_Priority
