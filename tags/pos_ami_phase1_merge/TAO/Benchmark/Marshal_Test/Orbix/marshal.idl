@@ -1,0 +1,90 @@
+// $Id$
+
+// Interface for the marshal benchmark
+
+interface Marshal 
+{
+  struct Marshal_Struct
+  {
+    short s;
+    long  l;
+    char  c;
+    octet o;
+    double d;
+  };
+
+  enum discrim {e_0th, e_1st, e_2nd, e_3rd, e_4th, e_5th, e_6th};
+
+  union Marshal_Union
+    switch (discrim)
+      {
+      case e_0th:
+	short s;
+      case e_1st:
+	long  l;
+      case e_2nd:
+	char  c;
+      case e_3rd:
+	octet o;
+      case e_4th:
+	double d;
+      default:      // this will test typecode indirection
+	Marshal_Struct ms;
+      };
+
+  /*
+  typedef sequence<short> ShortSeq;
+  typedef sequence<long>  LongSeq;
+  typedef sequence<octet> OctetSeq;
+  typedef sequence<char>  CharSeq;
+  typedef sequence<double> DoubleSeq;
+  typedef sequence<Marshal_Struct> StructSeq;
+  typedef sequence<Marshal_Union> UnionSeq;
+  */
+  // for testing sequences of Any
+  typedef sequence<any> AnySeq;
+
+  // testing recursive behavior
+  // complex.
+  struct Marshal_Recursive
+  {
+    // we use this to test the limited recursion allowed by IDL. This is an
+    // ideal test for indirected typecodes.
+
+    // simulate a behavior of a list node
+    any value;
+    sequence <Marshal_Recursive> next;
+  };
+
+  void test_short (in short s1, out short s2); // test a short
+  void test_long (in long l1, out long l2); // test a long
+  void test_octet (in octet o1, out octet o2); // test an octet
+  void test_char (in char c1, out char c2); // test a char
+  void test_double (in double d1, out double d2); // test a double
+  void test_struct (in Marshal_Struct ms1, out Marshal_Struct ms2); // test a
+								    // struct 
+  void test_union (in Marshal_Union u1, out Marshal_Union u2); // test a
+							       // union.
+  void test_any (in any a1, out any a2); // test an Any
+  /*
+  void test_sequence (in ShortSeq ss1, in LongSeq ls1, in OctetSeq os1, in
+		      CharSeq cs1, in DoubleSeq ds1, in StructSeq Ss1, in
+		      UnionSeq us1, in AnySeq as1,
+		      out ShortSeq ss2, out LongSeq ls2, out OctetSeq os2, out
+		      CharSeq cs2, out DoubleSeq ds2, out StructSeq Ss2, out
+		      UnionSeq us2, out AnySeq as2);
+		      */
+  void test_sequence (in AnySeq as1, out AnySeq as2); // this will result in a
+						      // 3 level indirection -
+						      // sequence, any, and its
+						      // value type
+  void test_recursive (in Marshal_Recursive mr1, out Marshal_Recursive mr2); //
+						      // very complicated
+};
+
+
+
+
+
+
+

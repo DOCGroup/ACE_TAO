@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 009</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 009</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Sending and receiving datagrams again</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+<P>Let's take a look at our new <A HREF="server.cpp">server.cpp</A> where
+we add in just a bit of code to examine the datagram contents before responding.
+
+<P>
+<HR WIDTH="100%"><TT></TT>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=red>/* The actual datagram operations here are exactly the same as those
+   used in the previous tutorial.  What we've added is some logic that
+   will prevent this server from responding to just any old datagram.
+   I'll limit my comments to those pieces of code.  */</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Dgram.h">ace/SOCK_Dgram.h</A>"
+<font color=blue>#include</font> "<A HREF="../../../ace/INET_Addr.h">ace/INET_Addr.h</A>"
+
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
+
+<font color=red>/* In order to be more selective, our server will be started with a
+   "<font color=green>signature</font>".  If none is given, we'll use the one here instead.  */</font>
+static const char *default_signature = "<font color=green>Hello World!</font>";
+
+int 
+main (int argc, char *argv[])
+{
+  ACE_INET_Addr local (PORT);
+  ACE_SOCK_Dgram dgram;
+
+  if (dgram.open (local) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>open</font>"),
+                      -1);
+
+  char buf[BUFSIZ];
+  ACE_INET_Addr remote;
+
+  while (dgram.recv (buf,
+                     sizeof (buf),
+                     remote) != -1)
+    {
+      <font color=red>/* What did the client say?  */</font>
+      ACE_DEBUG ((LM_DEBUG,
+                  "<font color=green>(%P|%t) Received (%s) from (%s)\n</font>",
+                  buf,
+                  remote.get_host_name ()));
+
+      <font color=red>/* Use a simple string-op to decide if the client is one of our
+        own.  Of course, you could have sent numeric values or even a
+        struct of data. For this simple exercise, however, strings are
+        just fine.  */</font>
+      if (<font color=#008888>ACE_OS::strcmp</font> (buf,
+                          argc > 1 ? argv[1] : default_signature))
+        {
+          <font color=red>/* If the client didn't say something we like then log it
+            *and move on.  /
+          ACE_DEBUG ((LM_DEBUG,
+		      "<font color=green>(%P|%t) Client query does not match our signature (%s).  Response not sent.\n</font>",
+		      argc > 1 ? argv[1] : default_signature));
+        }
+      else
+        {
+          <font color=red>/* As before, we respond to the client's query.  */</font>
+
+          ACE_INET_Addr local ((u_short) 0);
+          ACE_SOCK_Dgram peer;
+          if (peer.open (local) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "<font color=green>%p\n</font>",
+                               "<font color=green>response open</font>"),
+                              -1);
+          sprintf (buf,
+                   "<font color=green>I am here</font>");
+          if (peer.send (buf,
+                         <font color=#008888>ACE_OS::strlen</font> (buf) + 1,
+                         remote) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "<font color=green>%p\n</font>",
+                               "<font color=green>response send</font>"),
+                              -1);
+        }
+    }
+
+  return 0;
+}
+</PRE>
+<HR WIDTH="100%">
+
+<P>Let's move on and see what changes the clients require...
+
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
