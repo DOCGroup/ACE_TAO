@@ -1,3 +1,9 @@
+Sun Feb 15 09:40:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/os_include/sys/os_stat.h: Added a #define for
+	  S_IFLNK for Windows platforms, which lack this #define.  Thanks
+ 	  to Zvika Ashani for reporting this.
+
 Sun Feb 15 10:00:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Dirent_Test.cpp:
