@@ -9,6 +9,7 @@
 
 #include "ace/ACE.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/INET_Addr.h"
 #include "Reactor_Logging_Server_Adapter.h"
 
 template <class ACCEPTOR> int
