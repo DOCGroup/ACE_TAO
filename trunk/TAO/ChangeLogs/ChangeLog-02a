@@ -1,64 +1,70 @@
+Thu Oct 19 15:42:13 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Add new files to the MSVC projects.
+
 Thu Oct 19 14:30:59 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/DynamicC.i:
-	* tao/DynamicC.h:
-	* tao/DynamicC.cpp:
-	* tao/PortableInterceptorC.i:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.h :
-	  Regenerated so that they are properly locality constrained.
-	  This reduces the footprint.
+        * tao/DynamicC.i:
+        * tao/DynamicC.h:
+        * tao/DynamicC.cpp:
+        * tao/PortableInterceptorC.i:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h :
+          Regenerated so that they are properly locality constrained.
+          This reduces the footprint.
 
-	* tao/Dynamic.pidl:
-	* tao/PortableInterceptor.pidl:
-	  Corrected idl typedefs to match the spec.
+        * tao/Dynamic.pidl:
+        * tao/PortableInterceptor.pidl:
+          Corrected idl typedefs to match the spec.
 
-	* tao/orb.idl:
-	* tao/corbafwd.h:
-	* tao/corba.h:
-	* tao/StringSeq.inl:
-	* tao/StringSeq.h:
-	* tao/StringSeq.cpp:
-	* tao/Request_Info.h:
-	  Updates necessary to make the code work with the corrected pidl
-	  and the newly generated locality constrained stubs. 
+        * tao/orb.idl:
+        * tao/corbafwd.h:
+        * tao/corba.h:
+        * tao/StringSeq.inl:
+        * tao/StringSeq.h:
+        * tao/StringSeq.cpp:
+        * tao/Request_Info.h:
+          Updates necessary to make the code work with the corrected pidl
+          and the newly generated locality constrained stubs.
 
-	Thanks to Ossama for helping with these changes.
+        Thanks to Ossama for helping with these changes.
 
-	* tao/OctetSeq.pidl: 
-	* tao/OctetSeqC.i: 
-	* tao/OctetSeqC.h: 
-	* tao/OctetSeqC.cpp: 
-	  Added the new pidl file for Octet Sequence and generated stubs.
+        * tao/OctetSeq.pidl:
+        * tao/OctetSeqC.i:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.cpp:
+          Added the new pidl file for Octet Sequence and generated stubs.
 
-	* tao/Makefile: 
-	  Added the new files to the Makefile.
-	
-	* tao/diffs/Dynamic.diff: 
-	* tao/diffs/PortableInterceptorC.i.diff: 
-	* tao/diffs/PortableInterceptorC.h.diff: 
-	* tao/diffs/PortableInterceptorC.cpp.diff: 
-	  Generated the diffs.
+        * tao/Makefile:
+          Added the new files to the Makefile.
 
-	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
-	* tests/Portable_Interceptors/Dynamic/interceptors.h :
-	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
-	* tests/Portable_Interceptors/Benchmark/interceptors.h :
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h :
-	  Added dummy virtual functions to get the code compiled.
+        * tao/diffs/Dynamic.diff:
+        * tao/diffs/PortableInterceptorC.i.diff:
+        * tao/diffs/PortableInterceptorC.h.diff:
+        * tao/diffs/PortableInterceptorC.cpp.diff:
+          Generated the diffs.
+
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.h :
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.h :
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h :
+          Added dummy virtual functions to get the code compiled.
 
 Thu Oct 19 11:54:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
 
-	  In code recently added to these files, replaced calls
-	  to be_predefined_type::base_type with
-	  be_predefined_type::primitive_base_type, to allow for
-	  a chain of typedefs in the IDL file. Thanks to
-	  J. Russell Noseworthy <rnosewor@objectsciences.com> for
-	  pointing out this bug.
+          In code recently added to these files, replaced calls
+          to be_predefined_type::base_type with
+          be_predefined_type::primitive_base_type, to allow for
+          a chain of typedefs in the IDL file. Thanks to
+          J. Russell Noseworthy <rnosewor@objectsciences.com> for
+          pointing out this bug.
 
 Thu Oct 19 11:31:39 2000  Paul Calabrese  <calabrese_p@ociweb.com>
 
@@ -70,820 +76,820 @@ Thu Oct 19 11:31:39 2000  Paul Calabrese  <calabrese_p@ociweb.com>
 
 Wed Oct 18 20:26:55 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp
-	* tao/PortableServer/POA.h
-	* tao/PortableServer/POA.i:
+        * tao/PortableServer/POA.cpp
+        * tao/PortableServer/POA.h
+        * tao/PortableServer/POA.i:
 
-	  - Added TAO_PriorityBandedConnectionsPolicy data member to
-	  TAO_POA_Policies.  We need to keep track of this policy
-	  separately so that we can perform error checking and use it in
-	  acceptor filters.
+          - Added TAO_PriorityBandedConnectionsPolicy data member to
+          TAO_POA_Policies.  We need to keep track of this policy
+          separately so that we can perform error checking and use it in
+          acceptor filters.
 
-	  - Added <make_filter> method to TAO_POA_Policies.  It creates
-	  an appropriate acceptor filter based on POA's policies.
+          - Added <make_filter> method to TAO_POA_Policies.  It creates
+          an appropriate acceptor filter based on POA's policies.
 
-	  - Added <acceptor_filter_> data member to TAO_POA.  Rather than
-	  allocating new acceptor filter in each <key_to_stub_i> call, an
-	  appropriate filter is allocated once, during POA creation, and
-	  reused.
+          - Added <acceptor_filter_> data member to TAO_POA.  Rather than
+          allocating new acceptor filter in each <key_to_stub_i> call, an
+          appropriate filter is allocated once, during POA creation, and
+          reused.
 
         * tao/PortableServer/Default_Acceptor_Filter.h
-	* tao/PortableServer/RT_Acceptor_Filters.cpp
-	* tao/PortableServer/RT_Acceptor_Filters.h
-	* tao/PortableServer/RT_Acceptor_Filters.i:
+        * tao/PortableServer/RT_Acceptor_Filters.cpp
+        * tao/PortableServer/RT_Acceptor_Filters.h
+        * tao/PortableServer/RT_Acceptor_Filters.i:
 
-	  Moved Acceptor_Filter classes from POA.cpp into their own file.
-	  Added two new filters to deal with
-	  RTCORBA::PriorityBandedConnectionPolicy and
-	  RTCORBA::SERVER_DECLARED priority model.
+          Moved Acceptor_Filter classes from POA.cpp into their own file.
+          Added two new filters to deal with
+          RTCORBA::PriorityBandedConnectionPolicy and
+          RTCORBA::SERVER_DECLARED priority model.
 
-	* tao/PortableServer/Makefile
-	* tao/PortableServer/Makefile.bor:
-	* tao/PortableServer/TAO_PortableServer.dsp
-	* tao/PortableServer/TAO_PortableServer_Static.dsp
+        * tao/PortableServer/Makefile
+        * tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/TAO_PortableServer.dsp
+        * tao/PortableServer/TAO_PortableServer_Static.dsp
 
-	  Updated to include new filter files.
+          Updated to include new filter files.
 
-	* tests/RTCORBA/RTCORBA_tests.dsw:
+        * tests/RTCORBA/RTCORBA_tests.dsw:
 
-	  Added MT_Client_Protocol_Priority.dsw projects.
+          Added MT_Client_Protocol_Priority.dsw projects.
 
 Wed Oct 18 10:20:10 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Exception.cpp (TAO_SYSTEM_EXCEPTION):
-	  Added helper functions for the insertion and extraction
-	  operators. This would help reduce the Foot Print since instead
-	  of the same code repeated for each of the 30 or so exceptions,
-	  there will be 30 or so invocations of these helper methods.
+        * tao/Exception.cpp (TAO_SYSTEM_EXCEPTION):
+          Added helper functions for the insertion and extraction
+          operators. This would help reduce the Foot Print since instead
+          of the same code repeated for each of the 30 or so exceptions,
+          there will be 30 or so invocations of these helper methods.
 
 Wed Oct 18 10:49:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
 
-	  Had to put back the context substate and the set/unset
-	  code removed in the checkin below. It's necessary to
-	  keep the ACE_NESTED_CLASS macro from being generated
-	  in skeleton code for portable interceptors.
+          Had to put back the context substate and the set/unset
+          code removed in the checkin below. It's necessary to
+          keep the ACE_NESTED_CLASS macro from being generated
+          in skeleton code for portable interceptors.
 
 Tue Oct 17 16:08:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
 
-	  Replaced the several checks for the necessity of using
-	  the ACE_NESTED_CLASS macro in portable interceptor
-	  generated code with a single check: whether or not the
-	  scope of the declaration of the argument type in question
-	  is the same the scope of the visitor's context. This change
-	  also eliminates the need for the extra context sub-state
-	  added recently, so that was removed, along with the code to
-	  set and unset it. Thanks to Francois Bernier
-	  <fbernier@gel.ulaval.ca> for reporting the bug that led to
-	  these changes.
+          Replaced the several checks for the necessity of using
+          the ACE_NESTED_CLASS macro in portable interceptor
+          generated code with a single check: whether or not the
+          scope of the declaration of the argument type in question
+          is the same the scope of the visitor's context. This change
+          also eliminates the need for the extra context sub-state
+          added recently, so that was removed, along with the code to
+          set and unset it. Thanks to Francois Bernier
+          <fbernier@gel.ulaval.ca> for reporting the bug that led to
+          these changes.
 
 Tue Oct 17 01:13:25 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile
-	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile.bor
-	* tests/RTCORBA/MT_Client_Protocol_Priority/README
-	* tests/RTCORBA/MT_Client_Protocol_Priority/MT_Client_Protocol_Priority.dsw
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.bor
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp
-	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.bor
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.dsp
-	* tests/RTCORBA/MT_Client_Protocol_Priority/test.idl
+        * tests/RTCORBA/MT_Client_Protocol_Priority/Makefile
+        * tests/RTCORBA/MT_Client_Protocol_Priority/Makefile.bor
+        * tests/RTCORBA/MT_Client_Protocol_Priority/README
+        * tests/RTCORBA/MT_Client_Protocol_Priority/MT_Client_Protocol_Priority.dsw
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.bor
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.bor
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.dsp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/test.idl
 
-	  Added new RTCORBA multithreaded test.  Several client threads of
-	  different priority and different ClientProtocolPolicy
-	  Current-level overrides concurrently make invocations on one
-	  object reference, which has a CLIENT_PROPAGATED priority model.
+          Added new RTCORBA multithreaded test.  Several client threads of
+          different priority and different ClientProtocolPolicy
+          Current-level overrides concurrently make invocations on one
+          object reference, which has a CLIENT_PROPAGATED priority model.
 
-	* tests/RTCORBA/Makefile
-	* tests/RTCORBA/Makefile.bor
-	* tests/RTCORBA/README:
+        * tests/RTCORBA/Makefile
+        * tests/RTCORBA/Makefile.bor
+        * tests/RTCORBA/README:
 
-	  Updated to include the new MT_Client_Protocol_Priority test.
+          Updated to include the new MT_Client_Protocol_Priority test.
 
 Mon Oct 16 18:54:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_array.cpp:
-	* TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/ast/ast_predefined_type.cpp:
-	* TAO_IDL/ast/ast_sequence.cpp:
-	* TAO_IDL/ast/ast_string.cpp:
-	* TAO_IDL/be/be_array.cpp:
-	* TAO_IDL/be/be_predefined_type.cpp:
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_string.cpp:
-	* TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/include/ast_decl.h:
 
-	  Added boolean member to AST_Decl indicating
-	  whether or not the IDL type is anonymous. Also
-	  added accessor method, and an optional argument in
-	  the constructor. Finally, extra arguments were added
-	  to the call to the AST_Decl constructor for the supported
-	  node types which are anonymous (array, primitive type,
-	  string, wstring, and sequence).
+          Added boolean member to AST_Decl indicating
+          whether or not the IDL type is anonymous. Also
+          added accessor method, and an optional argument in
+          the constructor. Finally, extra arguments were added
+          to the call to the AST_Decl constructor for the supported
+          node types which are anonymous (array, primitive type,
+          string, wstring, and sequence).
 
 Mon Oct 16 16:15:15 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Pluggable.cpp
-	* tao/Endpoint.i
+        * tao/Pluggable.cpp
+        * tao/Endpoint.i
 
-	  Initialize <priority> member to -1.  Since legal CORBA::Priority
-	  values start at 0, -1 is a good indicator that priority hasn't
-	  been set.
+          Initialize <priority> member to -1.  Since legal CORBA::Priority
+          values start at 0, -1 is a good indicator that priority hasn't
+          been set.
 
-	* tao/Pool_Per_Endpoint.cpp (run):
+        * tao/Pool_Per_Endpoint.cpp (run):
 
-	  Throw DATA_CONVERSION exception if conversion from CORBA to
-	  native priority fails.
+          Throw DATA_CONVERSION exception if conversion from CORBA to
+          native priority fails.
 
-	* tests/RTCORBA/RTCORBA_tests.dsw:
+        * tests/RTCORBA/RTCORBA_tests.dsw:
 
-	  Added Server_Declared projects.
+          Added Server_Declared projects.
 
 Mon Oct 16 15:38:06 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Declared/Makefile
-	* tests/RTCORBA/Server_Declared/Makefile.bor
-	* tests/RTCORBA/Server_Declared/README
-	* tests/RTCORBA/Server_Declared/Server_Declared.dsw
-	* tests/RTCORBA/Server_Declared/client.bor
-	* tests/RTCORBA/Server_Declared/client.cpp
-	* tests/RTCORBA/Server_Declared/client.dsp
-	* tests/RTCORBA/Server_Declared/run_test.pl
-	* tests/RTCORBA/Server_Declared/server.bor
-	* tests/RTCORBA/Server_Declared/server.conf
-	* tests/RTCORBA/Server_Declared/server.cpp
-	* tests/RTCORBA/Server_Declared/server.dsp
-	* tests/RTCORBA/Server_Declared/test.idl
+        * tests/RTCORBA/Server_Declared/Makefile
+        * tests/RTCORBA/Server_Declared/Makefile.bor
+        * tests/RTCORBA/Server_Declared/README
+        * tests/RTCORBA/Server_Declared/Server_Declared.dsw
+        * tests/RTCORBA/Server_Declared/client.bor
+        * tests/RTCORBA/Server_Declared/client.cpp
+        * tests/RTCORBA/Server_Declared/client.dsp
+        * tests/RTCORBA/Server_Declared/run_test.pl
+        * tests/RTCORBA/Server_Declared/server.bor
+        * tests/RTCORBA/Server_Declared/server.conf
+        * tests/RTCORBA/Server_Declared/server.cpp
+        * tests/RTCORBA/Server_Declared/server.dsp
+        * tests/RTCORBA/Server_Declared/test.idl
 
-	  Added a test for SERVER_DECLARED priority model.
+          Added a test for SERVER_DECLARED priority model.
 
-	* tests/RTCORBA/Makefile
-	* tests/RTCORBA/Makefile.bor
-	* tests/RTCORBA/README:
+        * tests/RTCORBA/Makefile
+        * tests/RTCORBA/Makefile.bor
+        * tests/RTCORBA/README:
 
-	  Updated to include the new Server_Declared test.
+          Updated to include the new Server_Declared test.
 
 Mon Oct 16 14:14:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_enum.cpp:
-	* TAO_IDL/be/be_enum.cpp:
-	* TAO_IDL/be_include/be_enum.h:
-	* TAO_IDL/include/ast_enum.h:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be_include/be_enum.h:
+        * TAO_IDL/include/ast_enum.h:
 
-	  Moved the method value_to_name() from be_enum to
-	  AST_Enum. The method is useful to visitors, so it
-	  needs to be available to visitors of AST_<node>
-	  as well as to visitors of be_<node>.
+          Moved the method value_to_name() from be_enum to
+          AST_Enum. The method is useful to visitors, so it
+          needs to be available to visitors of AST_<node>
+          as well as to visitors of be_<node>.
 
 Sun Oct 15 18:58:16 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Client_Protocol/README:
+        * tests/RTCORBA/Client_Protocol/README:
 
-	  Added expected output.
+          Added expected output.
 
-	* tests/RTCORBA/Client_Protocol/client.cpp:
+        * tests/RTCORBA/Client_Protocol/client.cpp:
 
-	  Updated comment.
+          Updated comment.
 
-	* tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Protocol/server.cpp:
 
-	  Set transport and orb protocol properties in the
-	  ClientProtocolPolicy to be non-nil.  This is a temporary change
-	  to make the test work until policy streaming code is fixed to
-	  handle nil properties.
+          Set transport and orb protocol properties in the
+          ClientProtocolPolicy to be non-nil.  This is a temporary change
+          to make the test work until policy streaming code is fixed to
+          handle nil properties.
 
 Sun Oct 15 00:11:07 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Profile.h
-	* tao/Profile.cpp:
+        * tao/Profile.h
+        * tao/Profile.cpp:
 
-	  Removed <reset_hint> and <addr_to_string> methods from
-	  TAO_Unknown_Profile since they were removed from TAO_Profile.
+          Removed <reset_hint> and <addr_to_string> methods from
+          TAO_Unknown_Profile since they were removed from TAO_Profile.
 
-	* tao/Connector_Registry.cpp
-	* tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Connector_Registry.cpp
+        * tao/Invocation_Endpoint_Selectors.cpp:
 
-	  Added logic for handling TAO_Unknown_Profile(s), i.e., protocols
-	  the ORB does not understand, during profile selection and
-	  connection establishment.  When the ORB encounters an unknown
-	  profile, it transparently retries with the next appropriate one.
-	  (Handling unknown protocols worked in the past, but was broken
-	  with the introduction of Endpoint component to the PP framework.
-	  This change restores the functionality.)
+          Added logic for handling TAO_Unknown_Profile(s), i.e., protocols
+          the ORB does not understand, during profile selection and
+          connection establishment.  When the ORB encounters an unknown
+          profile, it transparently retries with the next appropriate one.
+          (Handling unknown protocols worked in the past, but was broken
+          with the introduction of Endpoint component to the PP framework.
+          This change restores the functionality.)
 
-	* tao/Invocation.cpp:
+        * tao/Invocation.cpp:
 
-	  Added comment.
+          Added comment.
 
 Sat Oct 14 19:49:39 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/tests/RTCORBA/Client_Protocol/server.cpp:
+        * tao/tests/RTCORBA/Client_Protocol/server.cpp:
 
-	  Fixed copy/paste error.
+          Fixed copy/paste error.
 
 Sat Oct 14 17:15:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_argument.cpp:
-	* TAO_IDL/ast/ast_array.cpp:
-	* TAO_IDL/ast/ast_attribute.cpp:
-	* TAO_IDL/ast/ast_constant.cpp:
-	* TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/ast/ast_enum.cpp:
-	* TAO_IDL/ast/ast_enum_val.cpp:
-	* TAO_IDL/ast/ast_exception.cpp:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/ast/ast_field.cpp:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/ast/ast_interface_fwd.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/ast/ast_native.cpp:
-	* TAO_IDL/ast/ast_operation.cpp:
-	* TAO_IDL/ast/ast_predefined_type.cpp:
-	* TAO_IDL/ast/ast_root.cpp:
-	* TAO_IDL/ast/ast_sequence.cpp:
-	* TAO_IDL/ast/ast_string.cpp:
-	* TAO_IDL/ast/ast_structure.cpp:
-	* TAO_IDL/ast/ast_type.cpp:
-	* TAO_IDL/ast/ast_typedef.cpp:
-	* TAO_IDL/ast/ast_union.cpp:
-	* TAO_IDL/ast/ast_union_branch.cpp:
-	* TAO_IDL/ast/ast_union_label.cpp:
-	* TAO_IDL/include/ast.h:
-	* TAO_IDL/include/ast_argument.h:
-	* TAO_IDL/include/ast_array.h:
-	* TAO_IDL/include/ast_attribute.h:
-	* TAO_IDL/include/ast_constant.h:
-	* TAO_IDL/include/ast_decl.h:
-	* TAO_IDL/include/ast_enum.h:
-	* TAO_IDL/include/ast_enum_val.h:
-	* TAO_IDL/include/ast_exception.h:
-	* TAO_IDL/include/ast_expression.h:
-	* TAO_IDL/include/ast_field.h:
-	* TAO_IDL/include/ast_interface.h:
-	* TAO_IDL/include/ast_interface_fwd.h:
-	* TAO_IDL/include/ast_module.h:
-	* TAO_IDL/include/ast_native.h:
-	* TAO_IDL/include/ast_operation.h:
-	* TAO_IDL/include/ast_predefined_type.h:
-	* TAO_IDL/include/ast_root.h:
-	* TAO_IDL/include/ast_sequence.h:
-	* TAO_IDL/include/ast_string.h:
-	* TAO_IDL/include/ast_structure.h:
-	* TAO_IDL/include/ast_type.h:
-	* TAO_IDL/include/ast_typedef.h:
-	* TAO_IDL/include/ast_union.h:
-	* TAO_IDL/include/ast_union_branch.h:
-	* TAO_IDL/include/ast_union_label.h:
-	* TAO_IDL/include/utl_scope.h:
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_label.cpp:
+        * TAO_IDL/include/ast.h:
+        * TAO_IDL/include/ast_argument.h:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_attribute.h:
+        * TAO_IDL/include/ast_constant.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_enum.h:
+        * TAO_IDL/include/ast_enum_val.h:
+        * TAO_IDL/include/ast_exception.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_native.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/include/ast_string.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/ast_union_label.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  Renamed the recently added accept() method as ast_accept().
-	  Some compilers were confused by the accept() method in the
-	  be_<node> classes, even though it has a different signature.
+          Renamed the recently added accept() method as ast_accept().
+          Some compilers were confused by the accept() method in the
+          be_<node> classes, even though it has a different signature.
 
 Sat Oct 14 16:46:48 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Invocation_Endpoint_Selectors.i:
+        * tao/Invocation_Endpoint_Selectors.i:
 
-	  Added missing #if RTCORBA protection.  This fixes minimum CORBA
-	  build problems.
+          Added missing #if RTCORBA protection.  This fixes minimum CORBA
+          build problems.
 
-	* tao/ORB_Core.cpp (~TAO_ORB_Core):
+        * tao/ORB_Core.cpp (~TAO_ORB_Core):
 
-	  Fixed the scope of #if protection.
+          Fixed the scope of #if protection.
 
-	* tao/Invocation_Endpoint_Selectors.cpp (get_selector):
+        * tao/Invocation_Endpoint_Selectors.cpp (get_selector):
 
-	  Fixed unused arg warning.
+          Fixed unused arg warning.
 
 Sat Oct 14 00:09:48 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/Policies/Manipulation.cpp:
+        * tests/Policies/Manipulation.cpp:
 
-	  Removed TAO::ClientPriorityPolicy from the test since it is
-	  disabled by default.
+          Removed TAO::ClientPriorityPolicy from the test since it is
+          disabled by default.
 
-	* tests/Endpoint_Per_Priority/client.cpp
-	* tests/Endpoint_Per_Priority/server.cpp
-	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
-	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
-	* tests/RTCORBA/Client_Propagated/client.cpp
-	* tests/RTCORBA/Client_Propagated/server.cpp
-	* tests/RTCORBA/Client_Protocol/client.cpp
-	* tests/RTCORBA/Client_Protocol/server.cpp
-	* tests/RTCORBA/Server_Protocol/client.cpp
-	* tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/Endpoint_Per_Priority/client.cpp
+        * tests/Endpoint_Per_Priority/server.cpp
+        * performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+        * performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+        * tests/RTCORBA/Client_Propagated/client.cpp
+        * tests/RTCORBA/Client_Propagated/server.cpp
+        * tests/RTCORBA/Client_Protocol/client.cpp
+        * tests/RTCORBA/Client_Protocol/server.cpp
+        * tests/RTCORBA/Server_Protocol/client.cpp
+        * tests/RTCORBA/Server_Protocol/server.cpp:
 
-	  Took care of unused arguments warnings (in the second <main>).
+          Took care of unused arguments warnings (in the second <main>).
 
 Fri Oct 13 21:35:52 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/RTCORBA_tests.dsw
-	* tests/RTCORBA/Makefile.bor
-	* tests/RTCORBA/Makefile:
-	* tests/RTCORBA/README:
+        * tests/RTCORBA/RTCORBA_tests.dsw
+        * tests/RTCORBA/Makefile.bor
+        * tests/RTCORBA/Makefile:
+        * tests/RTCORBA/README:
 
-	  Added Client_Protocol test.
+          Added Client_Protocol test.
 
-	* tests/RTCORBA/Client_Protocol/Makefile:
+        * tests/RTCORBA/Client_Protocol/Makefile:
 
-	  Generated dependencies.
+          Generated dependencies.
 
-	* tests/RTCORBA/Client_Protocol/run_test.pl
-	* tests/RTCORBA/Client_Protocol/README:
+        * tests/RTCORBA/Client_Protocol/run_test.pl
+        * tests/RTCORBA/Client_Protocol/README:
 
-	  Updated.
+          Updated.
 
-	* tests/RTCORBA/Client_Protocol/client.cpp
-	* tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Protocol/client.cpp
+        * tests/RTCORBA/Client_Protocol/server.cpp:
 
-	  Fixed compile warnings/errors.
+          Fixed compile warnings/errors.
 
-	* tests/RTCORBA/Client_Protocol/server.dsp
-	* tests/RTCORBA/Client_Protocol/client.dsp:
+        * tests/RTCORBA/Client_Protocol/server.dsp
+        * tests/RTCORBA/Client_Protocol/client.dsp:
 
-	  Changed project names.
+          Changed project names.
 
-	* tao/IIOP_Connector.cpp (connect)
-	* tao/UIOP_Connector.cpp (connect)
-	* tao/SHMIOP_Connector.cpp (connect)
-	* tao/orbsvcs/orbsvcs/SSLIOP_Connector.cpp (connect)
-	* tao/Connector_Registry.cpp (connect):
+        * tao/IIOP_Connector.cpp (connect)
+        * tao/UIOP_Connector.cpp (connect)
+        * tao/SHMIOP_Connector.cpp (connect)
+        * tao/orbsvcs/orbsvcs/SSLIOP_Connector.cpp (connect)
+        * tao/Connector_Registry.cpp (connect):
 
-	  Added debugging message.
+          Added debugging message.
 
-	* tests/Endpoint_Per_Priority/client.cpp
-	* tests/Endpoint_Per_Priority/server.cpp
-	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
-	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+        * tests/Endpoint_Per_Priority/client.cpp
+        * tests/Endpoint_Per_Priority/server.cpp
+        * performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+        * performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
 
-	  Compile tests only if TAO::ClientPriorityPolicy is enabled.
+          Compile tests only if TAO::ClientPriorityPolicy is enabled.
 
 Fri Oct 13 20:03:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Client_Protocol/Client_Protocol.dsw
-	* tests/RTCORBA/Client_Protocol/Makefile
-	* tests/RTCORBA/Client_Protocol/Makefile.bor
-	* tests/RTCORBA/Client_Protocol/README
-	* tests/RTCORBA/Client_Protocol/client.bor
-	* tests/RTCORBA/Client_Protocol/client.cpp
-	* tests/RTCORBA/Client_Protocol/client.dsp
-	* tests/RTCORBA/Client_Protocol/run_test.pl
-	* tests/RTCORBA/Client_Protocol/server.bor
-	* tests/RTCORBA/Client_Protocol/server.cpp
-	* tests/RTCORBA/Client_Protocol/server.dsp
-	* tests/RTCORBA/Client_Protocol/test.idl:
+        * tests/RTCORBA/Client_Protocol/Client_Protocol.dsw
+        * tests/RTCORBA/Client_Protocol/Makefile
+        * tests/RTCORBA/Client_Protocol/Makefile.bor
+        * tests/RTCORBA/Client_Protocol/README
+        * tests/RTCORBA/Client_Protocol/client.bor
+        * tests/RTCORBA/Client_Protocol/client.cpp
+        * tests/RTCORBA/Client_Protocol/client.dsp
+        * tests/RTCORBA/Client_Protocol/run_test.pl
+        * tests/RTCORBA/Client_Protocol/server.bor
+        * tests/RTCORBA/Client_Protocol/server.cpp
+        * tests/RTCORBA/Client_Protocol/server.dsp
+        * tests/RTCORBA/Client_Protocol/test.idl:
 
-	  Added a test for RTCORBA::ClientProtocolPolicy policy.
+          Added a test for RTCORBA::ClientProtocolPolicy policy.
 
 Fri Oct 13 18:17:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
 
-	  Added missing 'const' to code generation of request
-	  info class private member declaration for simple
-	  predefined types.
+          Added missing 'const' to code generation of request
+          info class private member declaration for simple
+          predefined types.
 
-	* TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/ast_visitor.h:
 
-	  Removed unnecessary #if defined (IDL_HAS_VALUETYPE) guard
-	  around two pure virtual functions.
+          Removed unnecessary #if defined (IDL_HAS_VALUETYPE) guard
+          around two pure virtual functions.
 
 Fri Oct 13 14:32:50 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
-	  (receive_exception, send_exception):
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp
+          (receive_exception, send_exception):
 
-	  The CORBA::Exception::_info() method return an ACE_CString, not
-	  a const char *.  Invoked the ACE_CString::c_str() method to
-	  correct a warning.
+          The CORBA::Exception::_info() method return an ACE_CString, not
+          a const char *.  Invoked the ACE_CString::c_str() method to
+          correct a warning.
 
 Fri Oct 13 13:21:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/tao_idl.cpp:
 
-	  Added some missing commas in the functions that output
-	  the FE and BE version. Thanks to Craig Rodrigues
-	  <rodrigc@mediaone.net> for pointing this out and
-	  supplying a patch.
+          Added some missing commas in the functions that output
+          the FE and BE version. Thanks to Craig Rodrigues
+          <rodrigc@mediaone.net> for pointing this out and
+          supplying a patch.
 
 Fri Oct 13 11:27:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
 
-	  Added a check for an imported node along with all the
-	  other checks that are there to decide whether to
-	  generate the ACE_NESTED_CLASS macro or not for the
-	  members of the request info subclasses constructor signature
-	  and private member declaration. If the member is imported,
-	  the full scoped name should be generated on all platforms.
-	  Thanks to Base V Paul <basev@wiproge.med.ge.com> for
-	  reporting this bug.
+          Added a check for an imported node along with all the
+          other checks that are there to decide whether to
+          generate the ACE_NESTED_CLASS macro or not for the
+          members of the request info subclasses constructor signature
+          and private member declaration. If the member is imported,
+          the full scoped name should be generated on all platforms.
+          Thanks to Base V Paul <basev@wiproge.med.ge.com> for
+          reporting this bug.
 
-	  While I was there, I added the above decision branch to
-	  all the other applicable data types. It had been added
-	  piecemeal up to now, as bugs were reported.
+          While I was there, I added the above decision branch to
+          all the other applicable data types. It had been added
+          piecemeal up to now, as bugs were reported.
 
 Fri Oct 13 10:06:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/ast_visitor.h:
-	* TAO_IDL/ast/ast_visitor.cpp:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/ast/ast_visitor.cpp:
 
-	  New files containing the abstract class ast_visitor.
-	  Anyone writing a pluggable back end for the IDl
-	  compiler and who wishes to have the visitors
-	  traverse the AST_<node> classes instead of the
-	  be_<node> classes can subclass this class.
+          New files containing the abstract class ast_visitor.
+          Anyone writing a pluggable back end for the IDl
+          compiler and who wishes to have the visitors
+          traverse the AST_<node> classes instead of the
+          be_<node> classes can subclass this class.
 
-	* TAO_IDL/Makefile.FE:
-	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
-	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
-	* TAO_IDL/TAI_IDL_FE.bor:
-	* TAO_IDL/ast/Makefile.am:
+        * TAO_IDL/Makefile.FE:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/TAI_IDL_FE.bor:
+        * TAO_IDL/ast/Makefile.am:
 
-	  Added the above new files to the Makefiles and
-	  to the MSVC projects.
+          Added the above new files to the Makefiles and
+          to the MSVC projects.
 
-	* TAO_IDL/ast/ast_argument.cpp:
-	* TAO_IDL/ast/ast_array.cpp:
-	* TAO_IDL/ast/ast_attribute.cpp:
-	* TAO_IDL/ast/ast_constant.cpp:
-	* TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/ast/ast_enum.cpp:
-	* TAO_IDL/ast/ast_enum_val.cpp:
-	* TAO_IDL/ast/ast_exception.cpp:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/ast/ast_field.cpp:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/ast/ast_interface_fwd.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/ast/ast_native.cpp:
-	* TAO_IDL/ast/ast_operation.cpp:
-	* TAO_IDL/ast/ast_predefined_type.cpp:
-	* TAO_IDL/ast/ast_root.cpp:
-	* TAO_IDL/ast/ast_sequence.cpp:
-	* TAO_IDL/ast/ast_string.cpp:
-	* TAO_IDL/ast/ast_structure.cpp:
-	* TAO_IDL/ast/ast_type.cpp:
-	* TAO_IDL/ast/ast_typedef.cpp:
-	* TAO_IDL/ast/ast_union.cpp:
-	* TAO_IDL/ast/ast_union_branch.cpp:
-	* TAO_IDL/ast/ast_union_label.cpp:
-	* TAO_IDL/include/ast.h:
-	* TAO_IDL/include/ast_argument.h:
-	* TAO_IDL/include/ast_array.h:
-	* TAO_IDL/include/ast_attribute.h:
-	* TAO_IDL/include/ast_constant.h:
-	* TAO_IDL/include/ast_decl.h:
-	* TAO_IDL/include/ast_enum.h:
-	* TAO_IDL/include/ast_enum_val.h:
-	* TAO_IDL/include/ast_exception.h:
-	* TAO_IDL/include/ast_expression.h:
-	* TAO_IDL/include/ast_field.h:
-	* TAO_IDL/include/ast_interface.h:
-	* TAO_IDL/include/ast_interface_fwd.h:
-	* TAO_IDL/include/ast_module.h:
-	* TAO_IDL/include/ast_native.h:
-	* TAO_IDL/include/ast_operation.h:
-	* TAO_IDL/include/ast_predefined_type.h:
-	* TAO_IDL/include/ast_root.h:
-	* TAO_IDL/include/ast_sequence.h:
-	* TAO_IDL/include/ast_string.h:
-	* TAO_IDL/include/ast_structure.h:
-	* TAO_IDL/include/ast_type.h:
-	* TAO_IDL/include/ast_typedef.h:
-	* TAO_IDL/include/ast_union.h:
-	* TAO_IDL/include/ast_union_branch.h:
-	* TAO_IDL/include/ast_union_label.h:
-	* TAO_IDL/include/utl_scope.h:
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_label.cpp:
+        * TAO_IDL/include/ast.h:
+        * TAO_IDL/include/ast_argument.h:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_attribute.h:
+        * TAO_IDL/include/ast_constant.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_enum.h:
+        * TAO_IDL/include/ast_enum_val.h:
+        * TAO_IDL/include/ast_exception.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_native.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/include/ast_string.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/ast_union_label.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  Added virtual accept() method to the above classes,
-	  for use by the AST visitors.
+          Added virtual accept() method to the above classes,
+          for use by the AST visitors.
 
-	* TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_argument.cpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 Fri 13 10:07:16 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* examples/Quoter/Quoter_i.cpp: Removed the code to move the
-	  Quoter object. This code was relying on the proprietary
-	  TAO_POA::forward_object () method. To implement the move ()
-	  operation in a standard way, the whole example would have
-	  needed to be rewritten using a PortableServer::ServantLocator.
+        * examples/Quoter/Quoter_i.cpp: Removed the code to move the
+          Quoter object. This code was relying on the proprietary
+          TAO_POA::forward_object () method. To implement the move ()
+          operation in a standard way, the whole example would have
+          needed to be rewritten using a PortableServer::ServantLocator.
 
-	* examples/Quoter/client.cpp: Removed the code for moving
-	  the Quoter object.
+        * examples/Quoter/client.cpp: Removed the code for moving
+          the Quoter object.
 
-	* examples/Quoter/README: Documented the step described above.
+        * examples/Quoter/README: Documented the step described above.
 
 Fri Oct 13 06:28:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/IFR_Service.bor:
-	  Fixed link problem by adding required libraries.
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+          Fixed link problem by adding required libraries.
 
         * orbsvcs/orbsvcs/FaultTolerance.bor:
-	* orbsvcs/orbsvcs/Makefile.bor:
-   	* orbsvcs/tests/FaultTolerance/*/*.bor:
-	  Added new makefiles for FaultTolerance library and tests.
+        * orbsvcs/orbsvcs/Makefile.bor:
+        * orbsvcs/tests/FaultTolerance/*/*.bor:
+          Added new makefiles for FaultTolerance library and tests.
 
-	* tests/Collocation/*.bor:
-	  Changed DLL macros to fix case mismatch.
+        * tests/Collocation/*.bor:
+          Changed DLL macros to fix case mismatch.
 
-	* tests/IORManipulation/Makefile.bor:
-	* tests/MProfile/client.bor:
-	  Fixed link problem by adding missing IORManip library.
+        * tests/IORManipulation/Makefile.bor:
+        * tests/MProfile/client.bor:
+          Fixed link problem by adding missing IORManip library.
 
-	  Thanks to Christopher Kohlhoff for providing these fixes.
+          Thanks to Christopher Kohlhoff for providing these fixes.
 
 Thu Oct 12 18:14:16 2000  Phillip DiCorpo  <dicorpo@cs.wustl.edu>
 
-	* examples/Advanced/ch_12/client.cpp (operator<<):
-	* examples/Advanced/ch_12/server.h:
-	* examples/Advanced/ch_12/server.cpp: Added an #if 0 around the
-	  insertion operator to exceptions. We dont need these as TAO
-	  provides them already. Also, added the right environment
-	  variables for preinvoke & postinvoke operations.
+        * examples/Advanced/ch_12/client.cpp (operator<<):
+        * examples/Advanced/ch_12/server.h:
+        * examples/Advanced/ch_12/server.cpp: Added an #if 0 around the
+          insertion operator to exceptions. We dont need these as TAO
+          provides them already. Also, added the right environment
+          variables for preinvoke & postinvoke operations.
 
-	* examples/Advanced/ch_12/Makefile: Added the right libraries for
-	  linking.
+        * examples/Advanced/ch_12/Makefile: Added the right libraries for
+          linking.
 
-	  Thanks to Bala for helping me with this.
+          Thanks to Bala for helping me with this.
 
 Thu Oct 12 14:24:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Acceptor_Registry.cpp (open_default, open_i,
-	  extract_endpoint_version):
+        * tao/Acceptor_Registry.cpp (open_default, open_i,
+          extract_endpoint_version):
 
-	  Initialize major and minor endpoint versions to
-	  TAO_DEF_GIOP_MAJOR and TAO_DEF_GIOP_MINOR, respectively, instead
-	  of -1 so that a valid version is passed to pluggable protocol
-	  open() and/or open_default() methods.  This makes things less
-	  error prone, especially since initializing to -1 did not provide
-	  us with anything useful.
+          Initialize major and minor endpoint versions to
+          TAO_DEF_GIOP_MAJOR and TAO_DEF_GIOP_MINOR, respectively, instead
+          of -1 so that a valid version is passed to pluggable protocol
+          open() and/or open_default() methods.  This makes things less
+          error prone, especially since initializing to -1 did not provide
+          us with anything useful.
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Updated ORB option documentation in accordance with the changes
-	  made to the TAO_ORB_Core::init() method described below.
+          Updated ORB option documentation in accordance with the changes
+          made to the TAO_ORB_Core::init() method described below.
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Added warning message about the fact that the "-ORBPreconnect"
-	  option is obsolete, and that validate_connection() should be
-	  used instead.
+          Added warning message about the fact that the "-ORBPreconnect"
+          option is obsolete, and that validate_connection() should be
+          used instead.
 
-	  Removed support for the long obsolete
-	  "-ORB{Name,Trading,ImplRepo}ServiceIOR" options.  Their
-	  functionality is already provided by the standard -ORBInitRef
-	  ORB option.
+          Removed support for the long obsolete
+          "-ORB{Name,Trading,ImplRepo}ServiceIOR" options.  Their
+          functionality is already provided by the standard -ORBInitRef
+          ORB option.
 
-	* tao/Connector_Registry.h (connect):
+        * tao/Connector_Registry.h (connect):
 
-	  Removed the default value for the ACE_Time_Value pointer
-	  argument.  There is no reason why it should have a default value
-	  since TAO's invocation code always passes an ACE_Time_Value when
-	  calling connect(), even if that value is zero.
+          Removed the default value for the ACE_Time_Value pointer
+          argument.  There is no reason why it should have a default value
+          since TAO's invocation code always passes an ACE_Time_Value when
+          calling connect(), even if that value is zero.
 
-	* tao/Connector_Registry.cpp (connect):
-	* tao/Pluggable.h (connect):
-	* tao/IIOP_Connector.h (connect):
-	* tao/IIOP_Connector.cpp (connect):
-	* tao/SHMIOP_Connector.h (connect):
-	* tao/SHMIOP_Connector.cpp (connect):
-	* tao/UIOP_Connector.h (connect):
-	* tao/UIOP_Connector.cpp (connect):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (connect):
+        * tao/Connector_Registry.cpp (connect):
+        * tao/Pluggable.h (connect):
+        * tao/IIOP_Connector.h (connect):
+        * tao/IIOP_Connector.cpp (connect):
+        * tao/SHMIOP_Connector.h (connect):
+        * tao/SHMIOP_Connector.cpp (connect):
+        * tao/UIOP_Connector.h (connect):
+        * tao/UIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (connect):
 
-	  Added CORBA::Environment argument to the connect() call to make
-	  it possible to throw exceptions within that method.  Most
-	  pluggable protocols may not need this argument, and can rely on
-	  the GIOP_Invocation class to figure out the appropriate exception
-	  to throw, if any.  However, the SSLIOP pluggable protocol may
-	  need to throw the CORBA::NO_PERMISSION exception when attempting
-	  to connect to an endpoint.
+          Added CORBA::Environment argument to the connect() call to make
+          it possible to throw exceptions within that method.  Most
+          pluggable protocols may not need this argument, and can rely on
+          the GIOP_Invocation class to figure out the appropriate exception
+          to throw, if any.  However, the SSLIOP pluggable protocol may
+          need to throw the CORBA::NO_PERMISSION exception when attempting
+          to connect to an endpoint.
 
-	* tao/Invocation.cpp (start):
+        * tao/Invocation.cpp (start):
 
-	  Pass the CORBA::Environment variable ACE_TRY_ENV to the
-	  TAO_Connector_Registry::connect() call.
+          Pass the CORBA::Environment variable ACE_TRY_ENV to the
+          TAO_Connector_Registry::connect() call.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
-	  Only allow connection to the insecure IIOP port if the endpoint
-	  explicitly allows it, i.e. if the Security::NoProtection
-	  security association bit is set in the
-	  SSLIOP::SSL::target_supports field.  The server will soon
-	  perform the same permission check, so this check is an
-	  optimization since a connection will not be established
-	  needlessly, i.e. rejected due to lack of permission.
+          Only allow connection to the insecure IIOP port if the endpoint
+          explicitly allows it, i.e. if the Security::NoProtection
+          security association bit is set in the
+          SSLIOP::SSL::target_supports field.  The server will soon
+          perform the same permission check, so this check is an
+          optimization since a connection will not be established
+          needlessly, i.e. rejected due to lack of permission.
 
-	  Removed the check that causes an attempt to connect to the
-	  insecure port if the SSL port is set to zero.  The SSL port will
-	  never be set to zero on the client side.  It will default to
-	  port 684, the IANA assigned port for IIOP over SSL.
+          Removed the check that causes an attempt to connect to the
+          insecure port if the SSL port is set to zero.  The SSL port will
+          never be set to zero on the client side.  It will default to
+          port 684, the IANA assigned port for IIOP over SSL.
 
-	  Note that it is still possible for the standard non-SSLIOP aware
-	  IIOP pluggable protocol to attempt to connect to the insecure
-	  port.  In that case, the server will have to prevent the
-	  connection, and subsequently the request, from completing.  This
-	  feature will be added soon.
+          Note that it is still possible for the standard non-SSLIOP aware
+          IIOP pluggable protocol to attempt to connect to the insecure
+          port.  In that case, the server will have to prevent the
+          connection, and subsequently the request, from completing.  This
+          feature will be added soon.
 
-	  If the endpoint requires an insecure connection, i.e. the
-	  Security::NoProtection security association bit in the
-	  SSLIOP::SSL::target_requires field is enabled, then prevent an
-	  SSL connection from occuring.  This seems silly, but nothing
-	  appears to be in the spec that states this can't be done.
+          If the endpoint requires an insecure connection, i.e. the
+          Security::NoProtection security association bit in the
+          SSLIOP::SSL::target_requires field is enabled, then prevent an
+          SSL connection from occuring.  This seems silly, but nothing
+          appears to be in the spec that states this can't be done.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (TAO_SSLIOP_Endpoint):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (TAO_SSLIOP_Endpoint):
 
-	  Pass pointer to entire SSLIOP::SSL component so that its
-	  entire contents may be copied, not just the port.  This is
-	  particularly necessary to make it possible to keep track of the
-	  security associations corresponding to the given endpoint.  If
-	  the pointer is zero, then initialize the SSLIOP::SSL component
-	  with conservative security association options, and set the port
-	  to be the IANA assigned port for IIOP over SSL, 684.
+          Pass pointer to entire SSLIOP::SSL component so that its
+          entire contents may be copied, not just the port.  This is
+          particularly necessary to make it possible to keep track of the
+          security associations corresponding to the given endpoint.  If
+          the pointer is zero, then initialize the SSLIOP::SSL component
+          with conservative security association options, and set the port
+          to be the IANA assigned port for IIOP over SSL, 684.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (ssl_port):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (ssl_port):
 
-	  Removed this method.  It is more useful to return the entire
-	  SSLIOP::SSL component in most cases, hence the newly added
-	  ssl_component() accessor described below.
+          Removed this method.  It is more useful to return the entire
+          SSLIOP::SSL component in most cases, hence the newly added
+          ssl_component() accessor described below.
 
-	  (ssl_component):
+          (ssl_component):
 
-	  Accessor method that returns a constant reference to the
-	  SSLIOP::SSL component associated with the given SSLIOP endpoint.
-	  In most cases, we need to check the "target_supports" and
-	  "target_requires" fields, not just the "port" field.
+          Accessor method that returns a constant reference to the
+          SSLIOP::SSL component associated with the given SSLIOP endpoint.
+          In most cases, we need to check the "target_supports" and
+          "target_requires" fields, not just the "port" field.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
 
-	  The constructor now accepts an argument that sets the default
-	  value for the Security::NoProtection bit in the
-	  SSLIOP::SSL::target_supports field.  The need for this change
-	  will obviated once the security policy support is added.
+          The constructor now accepts an argument that sets the default
+          value for the Security::NoProtection bit in the
+          SSLIOP::SSL::target_supports field.  The need for this change
+          will obviated once the security policy support is added.
 
-	  (create_mprofile, create_rt_mprofile):
+          (create_mprofile, create_rt_mprofile):
 
-	  Pass pointer to the entire SSLIOP::SSL component, not just the
-	  port.  Its other fields are important for enforcing security.
+          Pass pointer to the entire SSLIOP::SSL component, not just the
+          port.  Its other fields are important for enforcing security.
 
-	  (verify_secure_configuration):
+          (verify_secure_configuration):
 
-	  New method that ensures neither the endpoint configuration nor
-	  the ORB configuration violate security measures.
+          New method that ensures neither the endpoint configuration nor
+          the ORB configuration violate security measures.
 
-	  In order to support a secure connection, the SSLIOP::SSL tagged
-	  component must be embedded in the IOR.  This isn't possible if
-	  the user elects to disable standard profile components.
-	  Similarly, IIOP 1.0 does not support tagged components, which it
-	  makes it impossible to embed the SSLIOP::SSL tagged component
-	  within the IOR.  If the given object explicitly disallows
-	  insecure invocations and standard profile components are
-	  disabled, then return with an error since secure invocations
-	  cannot be supported without standard profile components.  Note
-	  that it isn't enough to support Security::NoProtection.
-	  Security::NoProtection must be required since "support" does not
-	  preclude the secure port from being used.
+          In order to support a secure connection, the SSLIOP::SSL tagged
+          component must be embedded in the IOR.  This isn't possible if
+          the user elects to disable standard profile components.
+          Similarly, IIOP 1.0 does not support tagged components, which it
+          makes it impossible to embed the SSLIOP::SSL tagged component
+          within the IOR.  If the given object explicitly disallows
+          insecure invocations and standard profile components are
+          disabled, then return with an error since secure invocations
+          cannot be supported without standard profile components.  Note
+          that it isn't enough to support Security::NoProtection.
+          Security::NoProtection must be required since "support" does not
+          preclude the secure port from being used.
 
-	  (open, open_default):
+          (open, open_default):
 
-	  Call the newly added verify_secure_configuration() method prior
-	  to opening any endpoints to ensure that neither the endpoint
-	  configuration nor the ORB configuration violate security
-	  measures.
+          Call the newly added verify_secure_configuration() method prior
+          to opening any endpoints to ensure that neither the endpoint
+          configuration nor the ORB configuration violate security
+          measures.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
 
-	  The new "no_protection_" field is now used instead of the old
-	  "use_ssl_" field.
+          The new "no_protection_" field is now used instead of the old
+          "use_ssl_" field.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
 
-	  Deprecated the "-SSLDisable" option.  It has been superseded by
-	  the "-SSLNoProtection" option since it is better emphasizes the
-	  consequences of disabling SSL support, and since it is also
-	  applicable on the server side.
+          Deprecated the "-SSLDisable" option.  It has been superseded by
+          the "-SSLNoProtection" option since it is better emphasizes the
+          consequences of disabling SSL support, and since it is also
+          applicable on the server side.
 
-	  (make_acceptor):
+          (make_acceptor):
 
-	  Pass the newly added "no_protection_" field to the
-	  SSLIOP_Acceptor constructor.
+          Pass the newly added "no_protection_" field to the
+          SSLIOP_Acceptor constructor.
 
 Thu Oct 12 15:29:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Did
-	  some clean up of the code. Added a pointer to the ORB_Core in
-	  the TAO_FT_Service_Callback class so that the class is aware of
-	  the ORB_Core that activated him.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Did
+          some clean up of the code. Added a pointer to the ORB_Core in
+          the TAO_FT_Service_Callback class so that the class is aware of
+          the ORB_Core that activated him.
 
 Thu Oct 12 15:25:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Stub.i: Removed a lock on the critical path.
+        * tao/Stub.i: Removed a lock on the critical path.
 
 Thu Oct 12 15:14:09 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
 
-	  Fixed unused variables and other warnings/typos.
+          Fixed unused variables and other warnings/typos.
 
 Thu Oct 12 15:12:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* All the Makefiles have been updated.
+        * All the Makefiles have been updated.
 
 Thu Oct 12 14:31:13 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB_Core.h
-	* tao/ORB_Core.i:
+        * tao/ORB_Core.h
+        * tao/ORB_Core.i:
 
-	  Changed return types for all endpoint selector accessors to be
-	  the most derived types rather than the base type.
+          Changed return types for all endpoint selector accessors to be
+          the most derived types rather than the base type.
 
 Thu Oct 12 13:16:05 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * tao/IIOP_Profile.cpp
-	* tao/IIOP_Profile.h
-	* tao/Profile.cpp
-	* tao/Profile.h
-	* tao/SHMIOP_Profile.cpp
-	* tao/SHMIOP_Profile.h
-	* tao/UIOP_Profile.cpp
-	* tao/UIOP_Profile.h:
+        * tao/IIOP_Profile.h
+        * tao/Profile.cpp
+        * tao/Profile.h
+        * tao/SHMIOP_Profile.cpp
+        * tao/SHMIOP_Profile.h
+        * tao/UIOP_Profile.cpp
+        * tao/UIOP_Profile.h:
 
-	  Added <endpoint_count> method.
+          Added <endpoint_count> method.
 
         * tao/orbconf.h:
 
-	  Disabled TAO_HAS_CLIENT_PRIORITY_POLICY by default.  This policy
-	  is deprecated.  New RTCORBA policies should be used instead.
-	  Users can still use Client_Priority_Policy by explicitly
-	  enabling it in orbconf.h, but enabling it disables the use of
-	  RTCORBA policies.
+          Disabled TAO_HAS_CLIENT_PRIORITY_POLICY by default.  This policy
+          is deprecated.  New RTCORBA policies should be used instead.
+          Users can still use Client_Priority_Policy by explicitly
+          enabling it in orbconf.h, but enabling it disables the use of
+          RTCORBA policies.
 
-	* tao/TAOC.i:
+        * tao/TAOC.i:
 
-	  Moved streaming operators for Client_Prioririty_Policy inside
-	  the #ifdef protections.  They were outside causing the compilation
-	  to fail if the policy was disabled.
+          Moved streaming operators for Client_Prioririty_Policy inside
+          the #ifdef protections.  They were outside causing the compilation
+          to fail if the policy was disabled.
 
-	* tao/ORB_Core.cpp
-	* tao/ORB_Core.h
-	* tao/ORB_Core.i:
+        * tao/ORB_Core.cpp
+        * tao/ORB_Core.h
+        * tao/ORB_Core.i:
 
-	  Added TAO_Endpoint_Selector_Factory and TAO_*_Selector data
-	  members to the ORB Core class.
+          Added TAO_Endpoint_Selector_Factory and TAO_*_Selector data
+          members to the ORB Core class.
 
-	* tao/Stub.cpp (client_protocol):
+        * tao/Stub.cpp (client_protocol):
 
-	  When figuring out effective ClientProtocolPolicy for the object,
-	  ORB default value should not be used - it creates conflict in
-	  case the policy is also set for the object on the server side.
+          When figuring out effective ClientProtocolPolicy for the object,
+          ORB default value should not be used - it creates conflict in
+          case the policy is also set for the object on the server side.
 
-	* tao/Invocation.h
-	* tao/Invocation.cpp
-	* tao/Invocation_Endpoint_Selectors.h:
+        * tao/Invocation.h
+        * tao/Invocation.cpp
+        * tao/Invocation_Endpoint_Selectors.h:
 
-	  The logic for selection/reselection of a profile/endpoint used
-	  for an Invocation has been strategized.
-	  TAO_Invocation_Endpoint_Selector represents the interface for
-	  the strategy.  Added five concrete strategies: for the default
-	  case and for various combinations of RTCORBA policies.
-	  TAO_Endpoint_Selector_Factory is used to obtain the appropriate
-	  strategy for each invocation.  Note, that all selector
-	  strategies are stateless, and, therefore, can be used
-	  concurrently by multiple threads.  This makes it possible to use
-	  a preallocated set of selectors from the ORB_Core for all
-	  Invocations rather than dynamically allocating a new selector
-	  for each Invocation.
+          The logic for selection/reselection of a profile/endpoint used
+          for an Invocation has been strategized.
+          TAO_Invocation_Endpoint_Selector represents the interface for
+          the strategy.  Added five concrete strategies: for the default
+          case and for various combinations of RTCORBA policies.
+          TAO_Endpoint_Selector_Factory is used to obtain the appropriate
+          strategy for each invocation.  Note, that all selector
+          strategies are stateless, and, therefore, can be used
+          concurrently by multiple threads.  This makes it possible to use
+          a preallocated set of selectors from the ORB_Core for all
+          Invocations rather than dynamically allocating a new selector
+          for each Invocation.
 
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp
-	* tao/Makefile.bor
-	* tao/Makefile:
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp
+        * tao/Makefile.bor
+        * tao/Makefile:
 
-	  Updated.
+          Updated.
 
 Thu Oct 12 12:17:44 2000  Angelo  <corsaro@cs.wustl.edu>
 
@@ -891,449 +897,449 @@ Thu Oct 12 12:17:44 2000  Angelo  <corsaro@cs.wustl.edu>
 
 Thu Oct 12 00:07:36 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/MProfile.cpp:
+        * tao/MProfile.cpp:
 
-	  Fixed problem with double checked locking. Thanks to Marina
-	  for noting that.
+          Fixed problem with double checked locking. Thanks to Marina
+          for noting that.
 
 Wed Oct 11 23:12:03 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
 
-	  Added ACE_UNUSED_ARG to avoid warning.
+          Added ACE_UNUSED_ARG to avoid warning.
 
 Wed Oct 11 22:39:59 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Profile.cpp:
 
-	  Removed duplicate definition of <encode_endpoints> method left
-	  from the previous modification.
+          Removed duplicate definition of <encode_endpoints> method left
+          from the previous modification.
 
 Wed Oct 11 19:13:23 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.cpp (fini):
+        * tao/ORB_Core.cpp (fini):
 
-	  Deallocate reactor registry prior to deallocating the resource
-	  factory.  The resource factory must still exist when
-	  deallocating the reactor registry since the resource factory
-	  reclaims some resources during reactory registry destruction.
-	  This fixes a memory access violation.
+          Deallocate reactor registry prior to deallocating the resource
+          factory.  The resource factory must still exist when
+          deallocating the reactor registry since the resource factory
+          reclaims some resources during reactory registry destruction.
+          This fixes a memory access violation.
 
 Wed Oct 11 22:00:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Profile.cpp:
+        * tao/Profile.cpp:
 
-	  Changed accessor method used to get the policy list from
-	  the MProfile.
+          Changed accessor method used to get the policy list from
+          the MProfile.
 
-	* tao/MProfile.h:
-	* tao/MProfile.i:
+        * tao/MProfile.h:
+        * tao/MProfile.i:
 
-	  Fixed bug that could occur in multithreaded environment
-	  while initializing the policy list.
+          Fixed bug that could occur in multithreaded environment
+          while initializing the policy list.
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Removed rewind of the MProfile that were not useful.
+          Removed rewind of the MProfile that were not useful.
 
-	* tao/Object.h:
+        * tao/Object.h:
 
-	  Added declaration of the function pointer
-	  _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer.
+          Added declaration of the function pointer
+          _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer.
 
-	* tao/Object.cpp:
+        * tao/Object.cpp:
 
-	  Changed constructor to initialize the proxy broker to the
-	  strategized one when the the object is collocated.
+          Changed constructor to initialize the proxy broker to the
+          strategized one when the the object is collocated.
 
-	  Added initialization to zero of the function pointer
-	  _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer.
+          Added initialization to zero of the function pointer
+          _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer.
 
-	* tao/Stub.cpp:
+        * tao/Stub.cpp:
 
-	  Removed rewind of the MProfile that were not useful.
+          Removed rewind of the MProfile that were not useful.
 
-	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
 
-	  Added code needed to initialize the function pointer
-	  _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer
-	  with the proper factory function.
+          Added code needed to initialize the function pointer
+          _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer
+          with the proper factory function.
 
 Wed Oct 11 18:05:15 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/IIOP_Profile.cpp
-	* tao/IIOP_Profile.h
-	* tao/Profile.cpp
-	* tao/Profile.h
-	* tao/SHMIOP_Profile.cpp
-	* tao/SHMIOP_Profile.h
-	* tao/UIOP_Profile.cpp
-	* tao/UIOP_Profile.h
-	* tao/PortableServer/POA.cpp
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * tao/IIOP_Profile.cpp
+        * tao/IIOP_Profile.h
+        * tao/Profile.cpp
+        * tao/Profile.h
+        * tao/SHMIOP_Profile.cpp
+        * tao/SHMIOP_Profile.h
+        * tao/UIOP_Profile.cpp
+        * tao/UIOP_Profile.h
+        * tao/PortableServer/POA.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
 
-	  Changed the time of profile's endpoints encoding into a tagged
-	  component (<encode_endpoints> method in *_Profile) from
-	  profile encoding to mprofile creation, i.e., from
-	  *_Profile::encode to *_Acceptor_Filter::fill_mprofile.  In other
-	  words, removed 'lazy evaluation' of endpoints encoding.  This
-	  fixes multithreading issues with multiple threads attempting to
-	  encode one profile at the same time.
+          Changed the time of profile's endpoints encoding into a tagged
+          component (<encode_endpoints> method in *_Profile) from
+          profile encoding to mprofile creation, i.e., from
+          *_Profile::encode to *_Acceptor_Filter::fill_mprofile.  In other
+          words, removed 'lazy evaluation' of endpoints encoding.  This
+          fixes multithreading issues with multiple threads attempting to
+          encode one profile at the same time.
 
 Wed Oct 11 17:58:35 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* examples/Simple/time-date/svc.conf: Added the CORBA LOC
-	  and CORBA NAME parsers to be loaded explicitly before
-	  the ORB is loaded dynamically. This is necessary to avoid
-	  having the ORB call process_directive () on the Service
-	  Configurator and prohibiting further processing of the
-	  svc.conf during startup.
+        * examples/Simple/time-date/svc.conf: Added the CORBA LOC
+          and CORBA NAME parsers to be loaded explicitly before
+          the ORB is loaded dynamically. This is necessary to avoid
+          having the ORB call process_directive () on the Service
+          Configurator and prohibiting further processing of the
+          svc.conf during startup.
 
 Wed Oct 11 16:14:35 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
-	* orbsvcs/tests/CosEvent/lib/CECTest.dsp:
-	* orbsvcs/tests/Event/lib/ECTest.dsp:
-	* tests/Collocation/Coll_Test_Stubs.dsp:
-	* tests/Collocation/Diamond.dsp:
-	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
-	* tests/Smart_Proxies/Collocation/Diamond.dsp: The newly generated
-	  export.h files uses a different capitalization scheme for
-	  BLAH_BUILD_DLL.  Fixed the project files.
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+        * orbsvcs/tests/CosEvent/lib/CECTest.dsp:
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+        * tests/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Collocation/Diamond.dsp:
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Smart_Proxies/Collocation/Diamond.dsp: The newly generated
+          export.h files uses a different capitalization scheme for
+          BLAH_BUILD_DLL.  Fixed the project files.
 
 Wed Oct 11 12:34:36 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent.bor:
+        * orbsvcs/orbsvcs/CosEvent.bor:
 
-	  Removed files that shouldn't be listed in this makefile.
+          Removed files that shouldn't be listed in this makefile.
 
 Wed Oct 11 10:06:19 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: Prevented building FT service in
-	  Minimum CORBA build.
+        * orbsvcs/orbsvcs/Makefile: Prevented building FT service in
+          Minimum CORBA build.
 
 Tue Oct 10 22:14:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAOACE_Static.dsw: Added Event_Service_Static project.
+        * TAOACE_Static.dsw: Added Event_Service_Static project.
 
-	* examples/Simple/time/client_static.dsp:
-	* examples/Simple/time/server_static.dsp:
-	* orbsvcs/Event_Service/Event_Service_static.dsp: Added
-	  TAO_IORTable and TAO_PortableServer into the list of libraries
-	  these projects require.
+        * examples/Simple/time/client_static.dsp:
+        * examples/Simple/time/server_static.dsp:
+        * orbsvcs/Event_Service/Event_Service_static.dsp: Added
+          TAO_IORTable and TAO_PortableServer into the list of libraries
+          these projects require.
 
 Tue Oct 10 19:08:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DomainC.h:
-	* tao/DomainC.cpp:
-	* tao/PortableServer/DomainS.h:
-	* tao/PortableServer/DomainS.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.cpp:
 
-	  Fixed typos in DomainS.* and made cosmetic changes
-	  to all the above files.
+          Fixed typos in DomainS.* and made cosmetic changes
+          to all the above files.
 
 Tue Oct 10 08:50:07 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/Exception.cpp:
 
-	  Reverted changes that remove <ace/SString.h> header dependency.
-	  They introduced a memory access violation.  To be revisted in
-	  the near future.
+          Reverted changes that remove <ace/SString.h> header dependency.
+          They introduced a memory access violation.  To be revisted in
+          the near future.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (create_rt_mprofile):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (create_rt_mprofile):
 
-	  Corrected typo that prevented SSLIOP::SSL tagged component from
-	  being embedded in current profile.
+          Corrected typo that prevented SSLIOP::SSL tagged component from
+          being embedded in current profile.
 
-	* docs/ORBEndpoint.html:
+        * docs/ORBEndpoint.html:
 
-	  Corrected SHMIOP endpoint syntax.
+          Corrected SHMIOP endpoint syntax.
 
 Tue Oct 10 16:59:18 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAOACE_Static.dsw: Updated some project dependencies.
+        * TAOACE_Static.dsw: Updated some project dependencies.
 
-	* TAO_IDL/be_include/TAO_IDL_BE_Export.h:
-	* TAO_IDL/include/TAO_IDL_FE_Export.h:
-	* examples/POA/Generic_Servant/generic_servant_export.h:
-	* orbsvcs/IFR_Service/TCF_Export.h:
-	* orbsvcs/examples/CosEC/RtEC_Based/lib/rtec_cosec_export.h:
-	* orbsvcs/orbsvcs/orbsvcs_export.h:
-	* orbsvcs/orbsvcs/svc_utils_export.h:
-	* orbsvcs/orbsvcs/AV/AV_export.h:
-	* orbsvcs/orbsvcs/Concurrency/concurrency_export.h:
-	* orbsvcs/orbsvcs/CosEvent/event_export.h:
-	* orbsvcs/orbsvcs/ESF/esf_export.h:
-	* orbsvcs/orbsvcs/ETCL/etcl_export.h:
-	* orbsvcs/orbsvcs/Event/event_export.h:
-	* orbsvcs/orbsvcs/Event/old_event_export.h:
-	* orbsvcs/orbsvcs/Event/sched_event_export.h:
-	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
-	* orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
-	* orbsvcs/orbsvcs/Log/log_export.h:
-	* orbsvcs/orbsvcs/Naming/naming_export.h:
-	* orbsvcs/orbsvcs/Notify/notify_export.h:
-	* orbsvcs/orbsvcs/Property/property_export.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h:
-	* orbsvcs/orbsvcs/Sched/sched_export.h:
-	* orbsvcs/orbsvcs/Security/security_export.h:
-	* orbsvcs/orbsvcs/Time/time_export.h:
-	* orbsvcs/orbsvcs/Trader/trading_export.h:
-	* orbsvcs/tests/CosEvent/lib/cectest_export.h:
-	* orbsvcs/tests/Event/lib/ectest_export.h:
-	* orbsvcs/tests/Notify/lib/notify_test_export.h:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/rtcorba_common_export.h
-	* tao/TAO_Export.h:
-	* tao/ior_corbaloc_export.h:
-	* tao/ior_corbaname_export.h:
-	* tao/DynamicAny/dynamicany_export.h:
-	* tao/IORManipulation/ior_manip_export.h:
-	* tao/IORTable/iortable_export.h:
-	* tao/PortableServer/portableserver_export.h:
-	* tests/Collocation/diamond_export.h:
-	* tests/Collocation/stub_export.h:
-	* tests/Object_Loader/OLT_Export.h:
-	* tests/Smart_Proxies/Collocation/diamond_export.h:
-	* tests/Smart_Proxies/Collocation/stub_export.h: Added a new macro
-	  TAO_AS_STATIC_LIBS that controls the default value of a whole
-	  slew of BLAH_HAS_DLL values so we can build and use static TAO
-	  libraries easily.  Notice that you can still override the value
-	  of BLAH_HAS_DLL.  Thanks to Darrell for writing a made-to-order
-	  script that makes my life easier.
+        * TAO_IDL/be_include/TAO_IDL_BE_Export.h:
+        * TAO_IDL/include/TAO_IDL_FE_Export.h:
+        * examples/POA/Generic_Servant/generic_servant_export.h:
+        * orbsvcs/IFR_Service/TCF_Export.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/rtec_cosec_export.h:
+        * orbsvcs/orbsvcs/orbsvcs_export.h:
+        * orbsvcs/orbsvcs/svc_utils_export.h:
+        * orbsvcs/orbsvcs/AV/AV_export.h:
+        * orbsvcs/orbsvcs/Concurrency/concurrency_export.h:
+        * orbsvcs/orbsvcs/CosEvent/event_export.h:
+        * orbsvcs/orbsvcs/ESF/esf_export.h:
+        * orbsvcs/orbsvcs/ETCL/etcl_export.h:
+        * orbsvcs/orbsvcs/Event/event_export.h:
+        * orbsvcs/orbsvcs/Event/old_event_export.h:
+        * orbsvcs/orbsvcs/Event/sched_event_export.h:
+        * orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
+        * orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
+        * orbsvcs/orbsvcs/Log/log_export.h:
+        * orbsvcs/orbsvcs/Naming/naming_export.h:
+        * orbsvcs/orbsvcs/Notify/notify_export.h:
+        * orbsvcs/orbsvcs/Property/property_export.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h:
+        * orbsvcs/orbsvcs/Sched/sched_export.h:
+        * orbsvcs/orbsvcs/Security/security_export.h:
+        * orbsvcs/orbsvcs/Time/time_export.h:
+        * orbsvcs/orbsvcs/Trader/trading_export.h:
+        * orbsvcs/tests/CosEvent/lib/cectest_export.h:
+        * orbsvcs/tests/Event/lib/ectest_export.h:
+        * orbsvcs/tests/Notify/lib/notify_test_export.h:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/rtcorba_common_export.h
+        * tao/TAO_Export.h:
+        * tao/ior_corbaloc_export.h:
+        * tao/ior_corbaname_export.h:
+        * tao/DynamicAny/dynamicany_export.h:
+        * tao/IORManipulation/ior_manip_export.h:
+        * tao/IORTable/iortable_export.h:
+        * tao/PortableServer/portableserver_export.h:
+        * tests/Collocation/diamond_export.h:
+        * tests/Collocation/stub_export.h:
+        * tests/Object_Loader/OLT_Export.h:
+        * tests/Smart_Proxies/Collocation/diamond_export.h:
+        * tests/Smart_Proxies/Collocation/stub_export.h: Added a new macro
+          TAO_AS_STATIC_LIBS that controls the default value of a whole
+          slew of BLAH_HAS_DLL values so we can build and use static TAO
+          libraries easily.  Notice that you can still override the value
+          of BLAH_HAS_DLL.  Thanks to Darrell for writing a made-to-order
+          script that makes my life easier.
 
-	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
-	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
-	* TAO_IDL/tao_idl_static.dsp:
-	* orbsvcs/Naming_Service/NT_Naming_Service.dsp:
-	* orbsvcs/Naming_Service/Naming_Server_static.dsp:
-	* orbsvcs/orbsvcs/AV_Static.dsp:
-	* orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
-	* orbsvcs/orbsvcs/CosEvent_Static.dsp:
-	* orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
-	* orbsvcs/orbsvcs/CosNaming_Static.dsp:
-	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
-	* orbsvcs/orbsvcs/CosProperty_Static.dsp:
-	* orbsvcs/orbsvcs/CosTime_Static.dsp:
-	* orbsvcs/orbsvcs/CosTrading_Static.dsp:
-	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
-	* orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
-	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTSched_Static.dsp:
-	* orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/IORTable/TAO_IORTable_Static.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp: Changed the
-	  ten thousand kinds of BLAH_HAS_DLL to use ACE_AS_STATIC_LIBS and
-	  TAO_AS_STATIC_LIBS.  Also fixed a bunch of the broken project
-	  files.  Many of these static project configurations were
-	  completely broken.
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/tao_idl_static.dsp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        * orbsvcs/Naming_Service/Naming_Server_static.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+        * orbsvcs/orbsvcs/CosEvent_Static.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/CosProperty_Static.dsp:
+        * orbsvcs/orbsvcs/CosTime_Static.dsp:
+        * orbsvcs/orbsvcs/CosTrading_Static.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/IORTable/TAO_IORTable_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp: Changed the
+          ten thousand kinds of BLAH_HAS_DLL to use ACE_AS_STATIC_LIBS and
+          TAO_AS_STATIC_LIBS.  Also fixed a bunch of the broken project
+          files.  Many of these static project configurations were
+          completely broken.
 
 Tue Oct 10 14:52:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Any.i:
-	* tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
 
-	  Added missing insertion/extraction operators for
-	  Any_var and bounded wstrings. Thanks to
-	  Mateu Batle <mbatle@iname.com> for reporting
-	  this bug. Also made cosmetic changes to all Any
-	  files.
+          Added missing insertion/extraction operators for
+          Any_var and bounded wstrings. Thanks to
+          Mateu Batle <mbatle@iname.com> for reporting
+          this bug. Also made cosmetic changes to all Any
+          files.
 
-	* tao/ifrfwd.h:
+        * tao/ifrfwd.h:
 
-	  Removed the 'TAO_Export' from the DefinitionKind
-	  enum in the IR namespace. Since the namespace is
-	  exported, the enum shouldn't be, and none of the other
-	  enums are.
+          Removed the 'TAO_Export' from the DefinitionKind
+          enum in the IR namespace. Since the namespace is
+          exported, the enum shouldn't be, and none of the other
+          enums are.
 
-	* tao/DomainC.h:
-	* tao/DomainC.cpp:
-	* tao/PortableServer/DomainS.h:
-	* tao/PortableServer/DomainS.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.cpp:
 
-	  Made the constructor signature and the private member
-	  types agree for the portable interceptor classes
-	  TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager
-	  and
-	  TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager.
-	  The generated code has already been fixed in the IDL compiler.
+          Made the constructor signature and the private member
+          types agree for the portable interceptor classes
+          TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager
+          and
+          TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager.
+          The generated code has already been fixed in the IDL compiler.
 
-	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for reporting
-	  the above pair of bugs.
+          Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for reporting
+          the above pair of bugs.
 
-	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
 
-	  While investigatiing the last bug above, came across another
-	  mismatch of the same type, for interfaces and pseudo objects,
-	  but only on the skeleton side.
+          While investigatiing the last bug above, came across another
+          mismatch of the same type, for interfaces and pseudo objects,
+          but only on the skeleton side.
 
 Tue Oct 10 14:15:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Makefile.bor (DIRS): Updated the list of subdirectories
-	  to build for Borland compilers.  Thanks to Johnny Willemsen
-	  <meco.nl> for reporting this.
+        * examples/Makefile.bor (DIRS): Updated the list of subdirectories
+          to build for Borland compilers.  Thanks to Johnny Willemsen
+          <meco.nl> for reporting this.
 
 Tue Oct 10 14:05:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Fault_Tolerance_Service.h:
-	* tao/Fault_Tolerance_Service.i:
-	* orbsvcs/orbsvcs/Fault_Tolerance/FT_Policy_i.cpp: Fixed link
-	  errors on Guajira. They should be hopefully be fixed.
+        * tao/Fault_Tolerance_Service.h:
+        * tao/Fault_Tolerance_Service.i:
+        * orbsvcs/orbsvcs/Fault_Tolerance/FT_Policy_i.cpp: Fixed link
+          errors on Guajira. They should be hopefully be fixed.
 
 Tue Oct 10 13:11:09 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
-	* tests/Object_Loader/driver.dsp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+        * tests/Object_Loader/driver.dsp:
 
-	  Made some other project setting to fix linking errors.
+          Made some other project setting to fix linking errors.
 
-	* tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/Makefile.bor:
 
-	  Fixed typo i.e. renamed RT_PortableServerC.obj
-	  to RTPortableServerC.obj.
+          Fixed typo i.e. renamed RT_PortableServerC.obj
+          to RTPortableServerC.obj.
 
 Tue Oct 10 07:20:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile : Fixed a pre GNU 2.8 problem for FT
-	  service.
+        * orbsvcs/orbsvcs/Makefile : Fixed a pre GNU 2.8 problem for FT
+          service.
 
 Mon Oct 09 15:56:58 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/IORManipulation/TAO_IORManip.dsp:
-	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
-	* orbsvcs/tests/Property/client.dsp:
-	* orbsvcs/tests/Property/server.dsp:
-	* orbsvcs/tests/Simple_Naming/client.dsp:
-	* tao/IORManipulation/TAO_IORManip.dsp:
-	* tests/IORManipulation/IORTest.dsp:
-	* tests/MProfile/client.dsp:
-	* tests/MProfile/server.dsp:
-	* tests/Object_Loader/Test_DLL.dsp:
-	* tests/Object_Loader/driver.dsp:
+        * tao/IORManipulation/TAO_IORManip.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * orbsvcs/tests/Property/server.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * tao/IORManipulation/TAO_IORManip.dsp:
+        * tests/IORManipulation/IORTest.dsp:
+        * tests/MProfile/client.dsp:
+        * tests/MProfile/server.dsp:
+        * tests/Object_Loader/Test_DLL.dsp:
+        * tests/Object_Loader/driver.dsp:
 
-	  Udated the Release configuration to fix compilation and or
-	  link errors caused by erroneous or missing configuration
-	  info.
+          Udated the Release configuration to fix compilation and or
+          link errors caused by erroneous or missing configuration
+          info.
 
 Mon Oct 09 10:39:59 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/Makefile.bor:
 
-	  Added missing file RT_PortableServerC to the build list.
+          Added missing file RT_PortableServerC to the build list.
 
 Sun Oct  8 22:23:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: FaultTolerance library will not be
-	  built with g++ 2.8 and before. This is because Notify service is
-	  not built.
+        * orbsvcs/orbsvcs/Makefile: FaultTolerance library will not be
+          built with g++ 2.8 and before. This is because Notify service is
+          not built.
 
 Sun Oct 08 16:49:15 2000  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i: Fixed a typo in
-	  the constructors.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i: Fixed a typo in
+          the constructors.
 
 Sun Oct 08 12:19:15 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Object.cpp:
+        * tao/Object.cpp:
 
-	  Fixed _tao_QueryInterface to return the correct
-	  value instead of 0.
+          Fixed _tao_QueryInterface to return the correct
+          value instead of 0.
 
-	* tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/Makefile.bor:
 
-	  Removed typo.
+          Removed typo.
 
 Sat Oct 07 16:00:45 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/corbafwd.h: Changed CORBA::is_nil (CORBA::Object_ptr) to
-	  non-inlined.
+        * tao/corbafwd.h: Changed CORBA::is_nil (CORBA::Object_ptr) to
+          non-inlined.
 
 Sat Oct 07 14:00:27 2000 Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
-	  compilation warnings in SunCC5.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
+          compilation warnings in SunCC5.
 
 Sat Oct 07 11:06:31 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/CORBANAME_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
 
-	  Added initalization of a local variable to avoid compilation
-	  warnings.
+          Added initalization of a local variable to avoid compilation
+          warnings.
 
 Sat Oct 07 10:39:27 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/Makefile.bor
+        * tao/PortableServer/Makefile.bor
 
-	  Added missing ".obj" extension to fix compilation error.
+          Added missing ".obj" extension to fix compilation error.
 
 Fri Oct 06 12:14:35 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/DynamicAny/DynArray_i.cpp:
-	* tao/DynamicAny/DynArray_i.h:
-	* tao/DynamicAny/DynSequence_i.cpp:
-	* tao/DynamicAny/DynSequence_i.h:
-	* tao/DynamicAny/DynStruct_i.cpp:
-	* tao/DynamicAny/DynStruct_i.h:
-	* tao/DynamicAny/DynUnion_i.cpp:
-	* tao/DynamicAny/DynUnion_i.h:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynUnion_i.h:
 
-	  Changed Throw clause in the to_any method.
+          Changed Throw clause in the to_any method.
 
 Fri Oct  6 11:56:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FT_CORBA.idl: Made some of the policy
-	  interfaces local.
+        * orbsvcs/orbsvcs/FT_CORBA.idl: Made some of the policy
+          interfaces local.
 
 Thu Oct 05 19:49:38 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/DynamicAny/DynArray_i.cpp:
-	* tao/DynamicAny/DynSequence_i.cpp:
-	* tao/DynamicAny/DynStruct_i.cpp:
-	* tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
 
-	  Added exception declaration in the throw clause.
+          Added exception declaration in the throw clause.
 
-	* tao/CORBANAME_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
 
-	  Changed ACE_CHECK_RETURN to ACE_TRY_CHECK.
+          Changed ACE_CHECK_RETURN to ACE_TRY_CHECK.
 
 Thu Oct  5 13:48:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/corbafwd.h:
-	  Added a new macro TAO_OMG_MINOR_BAD_PARAM_10
-	  to be used a semi-symbolic name for the standard minor codes.
+        * tao/corbafwd.h:
+          Added a new macro TAO_OMG_MINOR_BAD_PARAM_10
+          to be used a semi-symbolic name for the standard minor codes.
 
-	* tao/Exception.h:
-	* tao/Exception.cpp:
-	  Added a new case for the above macro.
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+          Added a new case for the above macro.
 
-	* tao/CORBANAME_Parser.cpp:
-	  Instead of using dynamic requests, used two-way invocation for
-	  making the requests.
+        * tao/CORBANAME_Parser.cpp:
+          Instead of using dynamic requests, used two-way invocation for
+          making the requests.
 
-	  Thanks to Carlos for all this.
+          Thanks to Carlos for all this.
 
 Thu Oct 05 15:24:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao\DynamicAny\DynArray_i.h:
-	* tao\DynamicAny\DynSequence_i.h:
-	* tao\DynamicAny\DynStruct_i.h:
-	* tao\DynamicAny\DynUnion_i.h:
+        * tao\DynamicAny\DynArray_i.h:
+        * tao\DynamicAny\DynSequence_i.h:
+        * tao\DynamicAny\DynStruct_i.h:
+        * tao\DynamicAny\DynUnion_i.h:
 
-	  Added exception declaration in the throw clause to avoid
-	  warning on borland compilers.
+          Added exception declaration in the throw clause to avoid
+          warning on borland compilers.
 
-	* tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/Makefile.bor:
 
-	  Added missing extension ".obj".
+          Added missing extension ".obj".
 
 Thu Oct  5 09:47:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -1352,7 +1358,7 @@ Thu Oct  5 09:47:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Thu Oct  5 11:37:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: Added FT library to the makefile.
+        * orbsvcs/orbsvcs/Makefile: Added FT library to the makefile.
 
 Thu Oct  5 09:31:06 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -1363,311 +1369,311 @@ Thu Oct  5 09:31:06 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Oct  5 10:17:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
 
-	  Fixed order of initialization in the constructor.
+          Fixed order of initialization in the constructor.
 
 Thu Oct 05 00:49:42 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* test/Exposed_Policies/RT_Properties.cpp:
+        * test/Exposed_Policies/RT_Properties.cpp:
 
-	  Removed ".cpp" from a field in the ACE_RCSID that
-	  a couple of compiler were disliking.
+          Removed ".cpp" from a field in the ACE_RCSID that
+          a couple of compiler were disliking.
 
 Wed Oct  4 17:41:53 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaname_export.h:
-	* tao/ior_corbaname/CORBANAME_Parser.*:
+        * tao/ior_corbaname_export.h:
+        * tao/ior_corbaname/CORBANAME_Parser.*:
 
-	  Moved the files up one directory to tao.
-	  Removed all the files in tao/ior_corbaname/.
+          Moved the files up one directory to tao.
+          Removed all the files in tao/ior_corbaname/.
 
-	* tao/default_resource.cpp:
-	  Added the code for dynamically loading CORBANAME_Parser.
+        * tao/default_resource.cpp:
+          Added the code for dynamically loading CORBANAME_Parser.
 
-	* tao/Makefile:
-	  Added an entry for CORBANAME_Parser.
+        * tao/Makefile:
+          Added an entry for CORBANAME_Parser.
 
-	* orbsvcs/tests/ior_corbaname/
-	* tao/tests/ior_corbaname/
+        * orbsvcs/tests/ior_corbaname/
+        * tao/tests/ior_corbaname/
 
-	  Moved the $TAO_ROOT/tests/ior_corbaname directory contents here
-	  as the test depends on Naming Service.
-	  Removed all the files in $TAO_ROOT/tests/ior_corbaname.
+          Moved the $TAO_ROOT/tests/ior_corbaname directory contents here
+          as the test depends on Naming Service.
+          Removed all the files in $TAO_ROOT/tests/ior_corbaname.
 
-	  With these set of changes, TAO supports corbaname scheme.
+          With these set of changes, TAO supports corbaname scheme.
 
 Wed Oct  4 18:49:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
-	* TAO_IDL/ast/ast_generator.cpp:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/ast/ast_interface_fwd.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/be/be_valuetype.cpp:
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be_include/be_interface_fwd:
-	* TAO_IDL/be_include/be_valuetype.h:
-	* TAO_IDL/be_include/be_valuetype_fwd:
-	* TAO_IDL/include/ast_interface.h:
-	* TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface_fwd:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_valuetype_fwd:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
 
-	  Changes to allow valuetype information to be
-	  extracted from the base class AST_Interface and
-	  AST_InterfaceFwd, as well as from the be_valuetype
-	  and be_valuetype_fwd classes. Also modified the
-	  be_generator base class AST_Generator to generate
-	  these base class valuetype nodes. If the visitors of a
-	  pluggable IDL compiler BE iterate only over the
-	  AST_<node> classes, an instantiation of AST_Generator
-	  can then be used, and be_generator need not be
-	  included in the BE library.
+          Changes to allow valuetype information to be
+          extracted from the base class AST_Interface and
+          AST_InterfaceFwd, as well as from the be_valuetype
+          and be_valuetype_fwd classes. Also modified the
+          be_generator base class AST_Generator to generate
+          these base class valuetype nodes. If the visitors of a
+          pluggable IDL compiler BE iterate only over the
+          AST_<node> classes, an instantiation of AST_Generator
+          can then be used, and be_generator need not be
+          included in the BE library.
 
 Wed Oct  4 15:05:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/DynamicAny/Makefile:
-	* tao/IORManipulation/Makefile:
-	* tao/IORTable/Makefile:
-	* tao/PortableServer/Makefile:
-	* tao/examples/POA/DSI/Makefile:
-	* tao/tests/DSI_Gateway/Makefile:
+        * tao/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/examples/POA/DSI/Makefile:
+        * tao/tests/DSI_Gateway/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Wed Oct  4 13:45:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO_Server_Request.cpp:
-	* tao/TAO_Server_Request.h:
-	* tao/TAO_Server_Request.i:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i:
 
-	  The GIOP_Server_Request.* files have been renamed.
-	  Class TAO_GIOP_ServerRequest is now
-	  TAO_ServerRequest. It no longer inherits from
-	  CORBA::ServerRequest and contains no DSI-specific
-	  members or functions. Likewise the CORBA::ServerRequest
-	  class contains only DSI-specific functionality.
+          The GIOP_Server_Request.* files have been renamed.
+          Class TAO_GIOP_ServerRequest is now
+          TAO_ServerRequest. It no longer inherits from
+          CORBA::ServerRequest and contains no DSI-specific
+          members or functions. Likewise the CORBA::ServerRequest
+          class contains only DSI-specific functionality.
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
 
-	  Relevant files changed to use 'TAO_ServerRequest' in generating
-	  skeleton code.
+          Relevant files changed to use 'TAO_ServerRequest' in generating
+          skeleton code.
 
-	* examples/POA/DSI/Database_i.cpp:
+        * examples/POA/DSI/Database_i.cpp:
 
-	  Added #include for Server_Request.h, since this file is no longer
-	  included in corba.h.
+          Added #include for Server_Request.h, since this file is no longer
+          included in corba.h.
 
-	* orbsvcs/IFR_Service/InterfaceS.cpp:
-	* orbsvcs/IFR_Service/InterfaceS.h:
-	* orbsvcs/IFR_Service/InterfaceS.i:
-	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/InterfaceS.i:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
 
-	  Necessary changes to hand-crafted skeleton code.
+          Necessary changes to hand-crafted skeleton code.
 
-	* tao/Abstract_Servant_Base.h:
-	* tao/Adapter.cpp:
-	* tao/Adapter.h:
-	* tao/GIOP_Message_Accept_State.cpp:
-	* tao/GIOP_Message_Accept_State.h:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/Makefile:
-	* tao/Makefile.am:
-	* tao/Makefile.bor:
-	* tao/NVList.cpp:
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/Pluggable_Messaging_Utils.i:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/Server_Request.cpp:
-	* tao/Server_Request.h:
-	* tao/Server_Request.i:
-	* tao/corba.h:
-	* tao/corbafwd.h:
+        * tao/Abstract_Servant_Base.h:
+        * tao/Adapter.cpp:
+        * tao/Adapter.h:
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Accept_State.h:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * tao/NVList.cpp:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Pluggable_Messaging_Utils.i:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Server_Request.cpp:
+        * tao/Server_Request.h:
+        * tao/Server_Request.i:
+        * tao/corba.h:
+        * tao/corbafwd.h:
 
-	  Changes to TAO library files. Besides the changes mentioned
-	  above, TAO_Pluggable_Reply_Params has been modified to no longer
-	  include an NVList member, but instead includes a boolean and a
-	  ptr_arith_t member used in CDR stream padding for DSI requests
-	  in the message acceptors.
+          Changes to TAO library files. Besides the changes mentioned
+          above, TAO_Pluggable_Reply_Params has been modified to no longer
+          include an NVList member, but instead includes a boolean and a
+          ptr_arith_t member used in CDR stream padding for DSI requests
+          in the message acceptors.
 
-	* tao/IORTable/Table_Adapter.cpp:
-	* tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/IORTable/Table_Adapter.h:
 
-	  Corresponding changes to the IORTable library.
+          Corresponding changes to the IORTable library.
 
-	* tao/PortableServer/DomainS.cpp:
-	* tao/PortableServer/DomainS.h:
-	* tao/PortableServer/DomainS.i:
-	* tao/PortableServer/ImplRepoS.cpp:
-	* tao/PortableServer/ImplRepoS.h:
-	* tao/PortableServer/MessagingS.cpp:
-	* tao/PortableServer/MessagingS.h:
-	* tao/PortableServer/Object_Adapter.cpp:
-	* tao/PortableServer/Object_Adapter.h:
-	* tao/PortableServer/POA_CORBA.h:
-	* tao/PortableServer/PolicyS.cpp:
-	* tao/PortableServer/Servant_Base.cpp:
-	* tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/POA_CORBA.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
 
-	  Corresponding changes to the PortableServer library.
-	  Also, TAO_DynamicImplementation now instantiates
-	  a CORBA::ServerRequest and passes it up to the
-	  DSI application.
+          Corresponding changes to the PortableServer library.
+          Also, TAO_DynamicImplementation now instantiates
+          a CORBA::ServerRequest and passes it up to the
+          DSI application.
 
-	* tao/diffs/MessagingS.cpp.diff:
-	* tao/diffs/PolicyS.cpp.diff:
+        * tao/diffs/MessagingS.cpp.diff:
+        * tao/diffs/PolicyS.cpp.diff:
 
-	  Corresponding changes to the diff files.
+          Corresponding changes to the diff files.
 
-	* tests/DSI_Gateway/test_dsi.h:
+        * tests/DSI_Gateway/test_dsi.h:
 
-	  Added #include of Server_Request.h, since this file is
-	  no longer included in corba.h.
+          Added #include of Server_Request.h, since this file is
+          no longer included in corba.h.
 
-	  The next step will be to move all the DII/DSI files and
-	  classes out of the TAO library and into a library of
-	  their own.
+          The next step will be to move all the DII/DSI files and
+          classes out of the TAO library and into a library of
+          their own.
 
 Wed Oct 04 13:15:39 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/Exposed_Policies/Policy_Tester.cpp:
-	* tests/Exposed_Policies/Policy_Tester.h:
-	* tests/Exposed_Policies/Policy_Verifier.cpp:
-	* tests/Exposed_Policies/Policy_Verifier.h:
-	* tests/Exposed_Policies/RT_Properties.cpp:
-	* tests/Exposed_Policies/RT_Properties.h:
-	* tests/Exposed_Policies/client.cpp:
-	* tests/Exposed_Policies/server.cpp:
+        * tests/Exposed_Policies/Policy_Tester.cpp:
+        * tests/Exposed_Policies/Policy_Tester.h:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.h:
+        * tests/Exposed_Policies/RT_Properties.cpp:
+        * tests/Exposed_Policies/RT_Properties.h:
+        * tests/Exposed_Policies/client.cpp:
+        * tests/Exposed_Policies/server.cpp:
 
-	  Added flag to avoid compiling RT CORBA related stuff when
-	  building minimun CORBA, fixed warning caused on certain platform
-	  when using implicit conversion from _var to _ptr type.
+          Added flag to avoid compiling RT CORBA related stuff when
+          building minimun CORBA, fixed warning caused on certain platform
+          when using implicit conversion from _var to _ptr type.
 
 Wed Oct 04 12:01:47 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* docs/releasenotes/index.html
-	* docs/releasenotes/RTCorba.html
+        * docs/releasenotes/index.html
+        * docs/releasenotes/RTCorba.html
 
-	  Added documentation relative to RT-CORBA implementation, as well
-	  as the development status, and updated the release notes to
-	  point to the new document.
+          Added documentation relative to RT-CORBA implementation, as well
+          as the development status, and updated the release notes to
+          point to the new document.
 
-	* tests/Exposed_Policies/Policy_Tester.cpp:
-	* tests/Exposed_Policies/Policy_Verifier.cpp:
-	* tests/Exposed_Policies/server.cpp:
+        * tests/Exposed_Policies/Policy_Tester.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/server.cpp:
 
-	  Removed ";" after the ACE_RCSID to avoid warning on certaion
-	  platform.
+          Removed ";" after the ACE_RCSID to avoid warning on certaion
+          platform.
 
 Tue Oct  3 22:04:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be_include/be_interface.h:
 
-	  Shouldn't have been included in
+          Shouldn't have been included in
 
-	  Tue Oct  3 19:20:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+          Tue Oct  3 19:20:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	  checkin.
+          checkin.
 
 Tue Oct  3 19:20:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_interface_fwd.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/ast/ast_native.cpp:
-	* TAO_IDL/ast/ast_recursive.cpp:
-	* TAO_IDL/ast/ast_root.cpp:
-	* TAO_IDL/ast/ast_string.cpp:
-	* TAO_IDL/ast/ast_typedef.cpp:
-	* TAO_IDL/ast/ast_union_branch.cpp:
-	* TAO_IDL/ast/ast_union_label.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_scope.cpp:
-	* TAO_IDL/be/be_visitor_enum/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/include/ast_interface_fwd.h:
-	* TAO_IDL/include/ast_module.h:
-	* TAO_IDL//ast_native.h:
-	* TAO_IDL/include/ast_root.h:
-	* TAO_IDL/include/ast_string.h:
-	* TAO_IDL/include/ast_typedef.h:
-	* TAO_IDL/include/ast_union_branch.h:
-	* TAO_IDL/include/ast_union_label.h:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_recursive.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_label.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL//ast_native.h:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/ast_string.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/ast_union_label.h:
 
-	  More cosmetizing and ACE-ifying of IDL compiler
-	  files, and a fix to a problem with IDL files containing
-	  unions that was inadvertently introduced by previous
-	  cosmetizing.
+          More cosmetizing and ACE-ifying of IDL compiler
+          files, and a fix to a problem with IDL files containing
+          unions that was inadvertently introduced by previous
+          cosmetizing.
 
 Tue Oct  3 13:42:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Portable_Interceptors/Dynamic/run_test.pl:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl:
-	  Fixed incorrect lib include paths.
+        * tests/Portable_Interceptors/Dynamic/run_test.pl:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl:
+          Fixed incorrect lib include paths.
 
-	* tests/Portable_Interceptors/Benchmark/interceptors.h:
-	* tests/Portable_Interceptors/Dynamic/client.cpp:
-	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
-	* tests/Portable_Interceptors/Dynamic/interceptors.h:
-	* tests/Portable_Interceptors/Dynamic/server.cpp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
-	  Fixed Minimum CORBA build errors.
+        * tests/Portable_Interceptors/Benchmark/interceptors.h:
+        * tests/Portable_Interceptors/Dynamic/client.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.h:
+        * tests/Portable_Interceptors/Dynamic/server.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+          Fixed Minimum CORBA build errors.
 
 Tue Oct 03 12:48:10 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/MProfile.i (policy_list):
+        * tao/MProfile.i (policy_list):
 
-	  Moved assignment of flag used for enabling lazy-evaluation
-	  to a more opportune place.
+          Moved assignment of flag used for enabling lazy-evaluation
+          to a more opportune place.
 
-	* tao/Makefile.bor:
+        * tao/Makefile.bor:
 
-	  Added missing .obj extesion to the file Remote_Object_Proxy_Impl,
-	  to fix build problem.
+          Added missing .obj extesion to the file Remote_Object_Proxy_Impl,
+          to fix build problem.
 
-	* tests/Makefile:
-	* tests/Exposed_Policies/Makefile:
+        * tests/Makefile:
+        * tests/Exposed_Policies/Makefile:
 
-	  Updated Makefiles.
+          Updated Makefiles.
 
-	* test/Exposed_Policies/run_test.pl:
+        * test/Exposed_Policies/run_test.pl:
 
-	  Added Perl Script to automatically run the test.
+          Added Perl Script to automatically run the test.
 
-	* tests/Exposed_Policies/Policy_Tester.cpp:
-	* tests/Exposed_Policies/Policy_Verifier.cpp:
-	* tests/Exposed_Policies/Policy_Verifier.h:
-	* tests/Exposed_Policies/RT_Properties.cpp:
+        * tests/Exposed_Policies/Policy_Tester.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.h:
+        * tests/Exposed_Policies/RT_Properties.cpp:
 
-	  Fixed some typo in the error messages. Removed some dependencies
-	  that were not needed.
+          Fixed some typo in the error messages. Removed some dependencies
+          that were not needed.
 
 Tue Oct  3 10:36:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.cpp (parse_string_rir_helper):
-	  Removed the declaration of an unused variable.
+        * tao/CORBALOC_Parser.cpp (parse_string_rir_helper):
+          Removed the declaration of an unused variable.
 
 Tue Oct  3 09:47:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -1678,21 +1684,21 @@ Tue Oct  3 09:47:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Oct  3 10:52:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_structure.cpp:
-	* TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
 
-	  Fixed some cut-and-paste mistakes from a previous checking,
-	  where add_to_scope() was incorrectly pasted where
-	  add_to_local_types() should have been.
+          Fixed some cut-and-paste mistakes from a previous checking,
+          where add_to_scope() was incorrectly pasted where
+          add_to_local_types() should have been.
 
 Tue Oct  3 10:33:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface.h:
 
-	  Had to add 'virtual' to a couple of function declarations,
-	  to keep cxx from being confused about functions with the
-	  same name in the base class AST_Decl, even though the
-	  signatures are not quite the same.
+          Had to add 'virtual' to a couple of function declarations,
+          to keep cxx from being confused about functions with the
+          same name in the base class AST_Decl, even though the
+          signatures are not quite the same.
 
 Tue Oct 03 10:08:19 2000  David L. Levine <levine@cs.wustl.edu>
 

@@ -1772,6 +1772,25 @@ SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OctetSeqC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\operation_details.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2779,6 +2798,25 @@ SOURCE=.\Smart_Proxies.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\StringSeq.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Stub.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3742,6 +3780,10 @@ SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OctetSeqC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\orb.h
 # End Source File
 # Begin Source File
@@ -3951,6 +3993,14 @@ SOURCE=.\singletons.h
 # Begin Source File
 
 SOURCE=.\Smart_Proxies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeq.inl
 # End Source File
 # Begin Source File
 
@@ -4355,6 +4405,10 @@ SOURCE=.\Object_Loader.i
 # Begin Source File
 
 SOURCE=.\ObjectIDList.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\OctetSeqC.i
 # End Source File
 # Begin Source File
 
