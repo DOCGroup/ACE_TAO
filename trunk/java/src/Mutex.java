@@ -13,7 +13,6 @@ package ACE.Concurrency;
 
 import java.util.*;
 import ACE.ASX.*;
-import ACE.Reactor.*;
 
 class TimedWaitMAdapter extends TimedWait
 {
@@ -41,7 +40,7 @@ class TimedWaitMAdapter extends TimedWait
 
 /**
  * <hr>
- * <h2>TITLE</h2>
+ * <h2>SYNOPSIS</h2>
  *<blockquote>
  *     Value added abstraction for mutex variable creation.
  *</blockquote>

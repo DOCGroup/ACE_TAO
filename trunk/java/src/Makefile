@@ -6,45 +6,108 @@ JACE_WRAPPER = ..
 CLASSDIR = $(JACE_WRAPPER)/classes
 DOCDIR = $(JACE_WRAPPER)/doc
 
+JC = javac_g
+JCOPTS = -g -d $(CLASSDIR)
+JD = javadoc
+JDOPTS = -d $(DOCDIR)
+
+COMPILE.java = $(JC) $(JCOPTS) $(filter %.java,$?)
+
 CLASSPATH := $(CLASSDIR):$(CLASSPATH)
 
-all:
-	javac -d ${JACE_WRAPPER}/classes $(files)
-doc:
-	javadoc -d ${JACE_WRAPPER}/doc $(files) $(packages)
+all:	asx os concurrency connection timers misc reactor svcconfig socksap
 
-files = \
-         ACE.java \
-         AcceptStrategy.java \
-         Acceptor.java \
-         ActivateStrategy.java \
-         Condition.java \
-         Connector.java \
-         CreationStrategy.java \
-         EventHandler.java \
-         GetOpt.java \
-         MessageBlock.java \
-         MessageQueue.java \
-         MessageType.java \
-         Mutex.java \
-         OS.java \
-         ProfileTimer.java \
-         RWMutex.java \
-         SOCKAcceptor.java \
-         SOCKConnector.java \
-         SOCKStream.java \
-         Semaphore.java \
-         ServiceConfig.java \
-         ServiceObject.java \
-         ServiceRepository.java \
-         StrategyAcceptor.java \
-         SvcHandler.java \
-         Task.java \
-         TaskFlags.java \
-         ThreadManager.java \
-         TimeValue.java \
-         TimedWait.java \
-         TimeoutException.java 
+doc:
+	$(JD) $(JDOPTS) $(files) $(packages)
+
+clean:
+	find ${JACE_WRAPPER}/classes/ACE -name '*.class' -print | xargs ${RM}
+
+docclean:
+	find ${JACE_WRAPPER}/doc -name '*.html' -print | xargs ${RM}
+
+realclean:	clean docclean
+
+
+pkg_asx_timestuff = \
+	TimeValue \
+	TimeoutException \
+	TimedWait
+
+asx_timestuff:	$(addsuffix .java,$(pkg_asx_timestuff))
+	$(COMPILE.java)
+
+pkg_asx = \
+	Task \
+	TaskFlags \
+	MessageType \
+	MessageBlock \
+	MessageQueue
+
+asx:	os asx_timestuff reactor concurrency $(addsuffix .java,$(pkg_asx))
+	$(COMPILE.java)
+
+pkg_os = \
+	OS \
+	ACE
+
+os:	$(addsuffix .java,$(pkg_os))
+	$(COMPILE.java)
+	
+pkg_concurrency = \
+	Mutex \
+	RWMutex \
+	Semaphore \
+	ThreadManager
+
+concurrency:	$(addsuffix .java,$(pkg_concurrency)) asx_timestuff os
+	$(COMPILE.java)
+
+pkg_connection = \
+	SvcHandler \
+	Acceptor \
+	Connector \
+	AcceptStrategy \
+	ActivateStrategy \
+	CreationStrategy \
+	StrategyAcceptor
+
+connection:	os socksap svcconfig $(addsuffix .java,$(pkg_connection))
+	$(COMPILE.java)
+
+pkg_timers = \
+	ProfileTimer
+
+timers:	$(addsuffix .java,$(pkg_timers))
+	$(COMPILE.java)
+
+pkg_misc = \
+	GetOpt
+
+misc:	$(addsuffix .java,$(pkg_misc))
+	$(COMPILE.java)
+
+pkg_reactor = \
+	EventHandler
+
+reactor:	asx_timestuff $(addsuffix .java,$(pkg_reactor))
+	$(COMPILE.java)
+
+pkg_socksap = \
+	SOCKStream \
+	SOCKAcceptor \
+	SOCKConnector
+
+socksap:	os $(addsuffix .java,$(pkg_socksap))
+	$(COMPILE.java)
+
+pkg_svcconfig = \
+	ServiceObject \
+	ServiceConfig \
+	ServiceRepository
+
+svcconfig:	os reactor misc $(addsuffix .java,$(pkg_svcconfig))
+	$(COMPILE.java)
 
 packages = ACE \
 	   ACE.ASX \
@@ -58,10 +121,3 @@ packages = ACE \
 	   ACE.Timers
 
 
-clean:
-	find ${JACE_WRAPPER}/classes/ACE -name '*.class' -print | xargs ${RM}
-
-docclean:
-	find ${JACE_WRAPPER}/doc -name '*.html' -print | xargs ${RM}
-
-realclean:	clean docclean
