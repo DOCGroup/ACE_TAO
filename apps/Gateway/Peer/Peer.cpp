@@ -3,7 +3,6 @@
 #define ACE_BUILD_SVC_DLL
 
 #include "Peer.h"
-#include "Options.h"
 
 Peer_Handler::Peer_Handler (void)
   : connection_id_ (0),
