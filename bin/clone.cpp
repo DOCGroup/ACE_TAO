@@ -331,7 +331,9 @@ remove_item (char* s_path, char* d_path)
 
 #ifndef USG
 static void
-mk_symbolic_link (const char *s_path, const char *d_path)
+mk_symbolic_link (const char *s_path,
+                  const char *d_path,
+                  int level)
 {
   int result = 0;
  
