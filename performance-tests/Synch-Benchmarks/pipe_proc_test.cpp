@@ -1,14 +1,12 @@
-#include "Options.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-extern int buffer;
-extern int synch_count;
-
-class Pipe_Proc_Test : public Benchmark
+class ACE_Svc_Export Pipe_Proc_Test : public Benchmark
 {
 public:
   int init (int, char **);
@@ -77,12 +75,8 @@ Pipe_Proc_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *pipe_proc_test (void);
-
-ACE_Service_Object *pipe_proc_test (void)
-{
-  return new Pipe_Proc_Test;
-}
+ACE_SVC_FACTORY_DECLARE (Pipe_Proc_Test)
+ACE_SVC_FACTORY_DEFINE  (Pipe_Proc_Test)
 
 // ACE_Service_Object_Type ppt (&pipe_proc_test, "Pipe_Proc_Test");
 #endif /* ACE_HAS_THREADS */

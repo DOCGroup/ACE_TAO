@@ -1,12 +1,13 @@
-#include "ace/Synch.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/Synch.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class Mutex_Test : public Benchmark
+class ACE_Svc_Export Mutex_Test : public Benchmark
 {
 public:
   virtual int svc (void);
@@ -36,11 +37,8 @@ Mutex_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *mutex_test (void);
+ACE_SVC_FACTORY_DECLARE (Mutex_Test) 
+ACE_SVC_FACTORY_DEFINE  (Mutex_Test)
 
-ACE_Service_Object *mutex_test (void)
-{
-  return new Mutex_Test;
-}
 // ACE_Service_Object_Type mut (&mutex_test, "Mutex_Test");
 #endif /* ACE_HAS_THREADS */

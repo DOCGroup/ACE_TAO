@@ -1,12 +1,13 @@
-#include "ace/Synch.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/Synch.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class RWWR_Test : public Benchmark
+class ACE_Svc_Export RWWR_Test : public Benchmark
 {
 public:
   virtual int svc (void);
@@ -35,12 +36,8 @@ RWWR_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *rwwr_test (void);
-
-ACE_Service_Object *rwwr_test (void)
-{
-  return new RWWR_Test;
-}
+ACE_SVC_FACTORY_DECLARE (RWWR_Test)
+ACE_SVC_FACTORY_DEFINE  (RWWR_Test)
 
 // ACE_Service_Object_Type rwwrt (&rwwr_test, "RWWR_Mutext_Test");
 #endif /* ACE_HAS_THREADS */
