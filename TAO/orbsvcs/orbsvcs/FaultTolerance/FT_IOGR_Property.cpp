@@ -1,4 +1,4 @@
-#include "FT_Service_Activate.h"
+#include "FT_IOGR_Property.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
