@@ -18,6 +18,7 @@ suppress miu malloc; *alloc; thr_setspecific
 suppress miu malloc; realloc; thr_keycreate
 suppress mlk malloc; calloc; thr_setspecific
 suppress plk malloc; *alloc; thr_setspecific
+suppress miu malloc; realloc; putenv
 
 ####
 #### This looks like a minor problem in the g++ rx library or the Solaris 2.5
