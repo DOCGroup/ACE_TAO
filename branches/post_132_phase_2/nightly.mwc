@@ -1,0 +1,7 @@
+workspace {
+  ace/ace.mpc
+  ace/RMCast
+  apps/gperf/src
+  tests
+  TAO
+}
