@@ -1,3 +1,21 @@
+Thu Aug  1 13:24:21 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.cpp:
+
+	  A client request interceptor that injects an IOP::ServiceContext
+	  into a request's IOP::ServiceContextList.  It is needed to
+	  support load shedding on servers that host both load balanced
+	  and non-load balanced object.
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+
+	  Altered logic of AMI test to check if AMI is disabled instead of
+	  enabled.  If AMI is disabled, force no library to be built.
+	  Previously, library builds were enabled if AMI support was
+	  enabled.  That caused strange interactions with static library
+	  builds.
+
 Thu Aug  1 12:22:17 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
