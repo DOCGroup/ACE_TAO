@@ -63,8 +63,56 @@ my(%validNames) = ('exename'         => 1,
                    'idlgendir'       => 1,
                   );
 
+## Custom definitions only
+my(%customDefined) = ('automatic'               => 1,
+                      'command'                 => 1,
+                      'commandflags'            => 1,
+                      'inputext'                => 1,
+                      'output_option'           => 1,
+                      'pre_extension'           => 1,
+                      'pre_filename'            => 1,
+                      'source_outputext'        => 1,
+                      'template_outputext'      => 1,
+                      'header_outputext'        => 1,
+                      'inline_outputext'        => 1,
+                      'documentation_outputext' => 1,
+                      'resource_outputext'      => 1,
+                     );
+
+## Custom sections as well as definitions
+my(%custom) = ('commandflags'  => 1,
+               'gendir'        => 1,
+              );
+
 ## Deal with these components in a special way
 my(@specialComponents) = ('header_files', 'inline_files');
+
+## Valid component names within a project along with the valid file extensions
+my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
+           'template_files'      => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.c", "_T\\.C", ],
+           'header_files'        => [ "\\.h", "\\.hxx", "\\.hh", ],
+           'inline_files'        => [ "\\.i", "\\.inl", ],
+           'idl_files'           => [ "\\.idl", ],
+           'documentation_files' => [ "README", "readme", "\\.doc", "\\.txt", ],
+           'resource_files'      => [ "\\.rc", ],
+          );
+
+## Exclude these extensions when auto generating the component values
+my(%ec) = ('source_files' => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.C", ],
+          );
+
+## Match up assignments with the valid components
+my(%ma) = ('idl_files'    => [ 'idlgendir', 'idlflags' ],
+          );
+
+my(%genext) = ('idl_files' => {'automatic'     => 1,
+                               'pre_filename'  => [ '' ],
+                               'pre_extension' => [ 'C', 'S' ],
+                               'source_files'  => [ '\\.cpp', '\\.cxx', '\\.cc', '\\.C', ],
+                               'inline_files'  => [ '\\.i', '\\.inl', ],
+                               'header_files'  => [ '\\.h', '\\.hxx', '\\.hh', ],
+                              },
+              );
 
 # ************************************************************
 # Subroutine Section
@@ -97,42 +145,16 @@ sub new {
   $self->{'lexe_template_input'}   = undef;
   $self->{'lib_template_input'}    = undef;
   $self->{'dll_template_input'}    = undef;
-  $self->{'idl_defaulted'}         = 0;
-  $self->{'source_defaulted'}      = 0;
   $self->{'writing_type'}          = 0;
   $self->{'flag_overrides'}        = {};
   $self->{'special_supplied'}      = {};
+  $self->{'verbatim'}              = {};
+  $self->{'type_specific_assign'}  = {};
+  $self->{'pctype'}                = $self->extractType("$self");
+  $self->{'defaulted'}             = {};
+  $self->{'custom_types'}          = {};
 
-  ## Set up the verbatim constructs
-  $self->{'verbatim'} = {};
-
-  ## Valid component names within a project along with the valid file extensions
-  my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
-             'template_files'      => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.c", "_T\\.C", ],
-             'header_files'        => [ "\\.h", "\\.hxx", "\\.hh", ],
-             'inline_files'        => [ "\\.i", "\\.inl", ],
-             'idl_files'           => [ "\\.idl", ],
-             'documentation_files' => [ "README", "readme", "\\.doc", "\\.txt", ],
-             'resource_files'      => [ "\\.rc", ],
-            );
-
-  ## Exclude these extensions when auto generating the component values
-  my(%ec) = ('source_files' => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.C", ],
-            );
-
-  ## Match up assignments with the valid components
-  my(%ma) = ('source_files' => [ 'includes' ],
-             'idl_files'    => [ 'idlgendir', 'idlflags' ],
-            );
-  $self->{'matching_assignments'} = \%ma;
-  $self->{'valid_components'}     = \%vc;
-  $self->{'exclude_components'}   = \%ec;
-  $self->{'skeleton_endings'}     = [ 'C', 'S' ];
-  $self->{'type_specific_assign'} = {};
-  $self->{'pctype'}               = $self->extractType("$self");
-
-  ## Allow subclasses to override the default extensions
-  $self->set_component_extensions();
+  $self->reset_generating_types();
 
   return $self;
 }
@@ -212,21 +234,21 @@ sub parse_line {
 
           if ($status) {
             ## End of project; Write out the file.
-            $self->write_project();
+            ($status, $errorString) = $self->write_project();
 
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
+              $self->{'defaulted'}->{$key} = 0;
             }
-            $self->{'assign'}   = {};
-            $self->{'verbatim'} = {};
+            $self->{'assign'}               = {};
+            $self->{'verbatim'}             = {};
+            $self->{'special_supplied'}     = {};
             $self->{'type_specific_assign'} = {};
+            $self->{'flag_overrides'}       = {};
+            $self->reset_generating_types();
           }
         }
-        $self->{$typecheck}         = 0;
-        $self->{'idl_defaulted'}    = 0;
-        $self->{'flag_overrides'}   = {};
-        $self->{'source_defaulted'} = 0;
-        $self->{'special_supplied'} = {};
+        $self->{$typecheck} = 0;
       }
       else {
         ## Project Beginning
@@ -373,6 +395,9 @@ sub parse_line {
                        $ih, $values[1], $values[2], \%validNames,
                        $self->{'type_specific_assign'}->{$self->{'pctype'}});
         }
+        elsif ($comp eq 'define_custom') {
+          ($status, $errorString) = $self->parse_define_custom($ih, $name);
+        }
         else {
           $errorString = "ERROR: Invalid component name: $comp";
           $status = 0;
@@ -389,6 +414,62 @@ sub parse_line {
   }
 
   return $status, $errorString;
+}
+
+
+sub parse_scoped_assignment {
+  my($self)   = shift;
+  my($tag)    = shift;
+  my($type)   = shift;
+  my($name)   = shift;
+  my($value)  = shift;
+  my($flags)  = shift;
+  my($over)   = {};
+  my($status) = 0;
+
+  if (defined $self->{'matching_assignments'}->{$tag}) {
+    foreach my $possible (@{$self->{'matching_assignments'}->{$tag}}) {
+      if ($possible eq $name) {
+        $status = 1;
+        last;
+      }
+    }
+  }
+
+  if ($status) {
+    if (defined $self->{'flag_overrides'}->{$tag}) {
+      $over = $self->{'flag_overrides'}->{$tag};
+    }
+    else {
+      $self->{'flag_overrides'}->{$tag} = $over;
+    }
+
+    if ($type eq 'assignment') {
+      $self->process_assignment($name,
+                                $value, $flags);
+    }
+    elsif ($type eq 'assign_add') {
+      ## If there is no value in $$flags, then we need to get
+      ## the outer scope value and put it in there.
+      if (!defined $self->get_assignment($name, $flags)) {
+        my($outer) = $self->get_assignment($name);
+        $self->process_assignment($name, $outer, $flags);
+      }
+      $self->process_assignment_add($name,
+                                    $value, $flags);
+    }
+    elsif ($type eq 'assign_sub') {
+      ## If there is no value in $$flags, then we need to get
+      ## the outer scope value and put it in there.
+      if (!defined $self->get_assignment($name, $flags)) {
+        my($outer) = $self->get_assignment($name);
+        $self->process_assignment($name, $outer, $flags);
+      }
+      $self->process_assignment_sub($name,
+                                    $value, $flags);
+    }
+  }
+  return $status;
 }
 
 
@@ -466,37 +547,9 @@ sub parse_components {
       my(@values) = ();
       ## If this returns true, then we've found an assignment
       if ($self->parse_assignment($line, \@values)) {
-        my($over) = {};
-        if (defined $self->{'flag_overrides'}->{$tag}) {
-          $over = $self->{'flag_overrides'}->{$tag};
-        }
-        else {
-          $self->{'flag_overrides'}->{$tag} = $over;
-        }
-
-        if ($values[0] eq 'assignment') {
-          $self->process_assignment($values[1],
-                                    $values[2], \%flags);
-        }
-        elsif ($values[0] eq 'assign_add') {
-          ## If there is no value in %flags, then we need to get
-          ## the outer scope value and put it in there.
-          if (!defined $self->get_assignment($values[1], \%flags)) {
-            my($outer) = $self->get_assignment($values[1]);
-            $self->process_assignment($values[1], $outer, \%flags);
-          }
-          $self->process_assignment_add($values[1],
-                                        $values[2], \%flags);
-        }
-        elsif ($values[0] eq 'assign_sub') {
-          ## If there is no value in %flags, then we need to get
-          ## the outer scope value and put it in there.
-          if (!defined $self->get_assignment($values[1], \%flags)) {
-            my($outer) = $self->get_assignment($values[1]);
-            $self->process_assignment($values[1], $outer, \%flags);
-          }
-          $self->process_assignment_sub($values[1],
-                                        $values[2], \%flags);
+        $status = $self->parse_scoped_assignment($tag, @values, \%flags);
+        if (!$status) {
+          last;
         }
       }
       else {
@@ -550,6 +603,147 @@ sub parse_verbatim {
   }
 
   return 1;
+}
+
+
+sub process_array_assignment {
+  my($self)  = shift;
+  my($aref)  = shift;
+  my($type)  = shift;
+  my($array) = shift;
+
+  if (!defined $$aref || $type eq 'assignment') {
+    if ($type ne 'assign_sub') {
+      $$aref = $array;
+    }
+  }
+  else {
+    if ($type eq 'assign_add') {
+      push(@{$$aref}, @$array);
+    }
+    elsif ($type eq 'assign_sub') {
+      my($count) = scalar(@{$$aref});
+      for(my $i = 0; $i < $count; ++$i) {
+        foreach my $val (@$array) {
+          if ($$aref->[$i] eq $val) {
+            splice(@{$$aref}, $i, 1);
+            --$i;
+            --$count;
+            last;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+sub parse_define_custom {
+  my($self)        = shift;
+  my($fh)          = shift;
+  my($tag)         = shift;
+  my($status)      = 0;
+  my($errorString) = "ERROR: Unable to process $tag";
+  my(%flags)       = ();
+
+  ## Make the tag something _files
+  $tag = lc($tag) . '_files';
+
+  if (defined $self->{'valid_components'}->{$tag}) {
+    $errorString = "ERROR: $tag has already been defined";
+  }
+  else {
+    ## Update the custom_types assignment
+    $self->process_assignment_add('custom_types', $tag);
+
+    if (!defined $self->{'matching_assignments'}->{$tag}) {
+      my(@keys) = keys %custom;
+      $self->{'matching_assignments'}->{$tag} = \@keys;
+    }
+
+    while(<$fh>) {
+      my($line) = $self->strip_line($_);
+
+      if ($line eq '') {
+      }
+      elsif ($line =~ /^}/) {
+        $status = 1;
+        $errorString = '';
+        if (!defined $self->{'generated_exts'}->{$tag}->{'pre_filename'}) {
+          $self->{'generated_exts'}->{$tag}->{'pre_filename'} = [ '' ];
+        }
+        if (!defined $self->{'generated_exts'}->{$tag}->{'pre_extension'}) {
+          $self->{'generated_exts'}->{$tag}->{'pre_extension'} = [ '' ];
+        }
+        if (!defined $self->{'generated_exts'}->{$tag}->{'automatic'}) {
+          $self->{'generated_exts'}->{$tag}->{'automatic'} = 1;
+        }
+        last;
+      }
+      else {
+        my(@values) = ();
+        ## If this returns true, then we've found an assignment
+        if ($self->parse_assignment($line, \@values)) {
+          my($type)  = $values[0];
+          my($name)  = $values[1];
+          my($value) = $values[2];
+          if (defined $customDefined{$name}) {
+            if ($name eq 'inputext') {
+              $value = $self->escape_regex_special($value);
+              my(@array) = split(/\s*,\s*/, $value);
+              $self->process_array_assignment(
+                        \$self->{'valid_components'}->{$tag}, $type, \@array);
+            }
+            else {
+              if (!defined $self->{'generated_exts'}->{$tag}) {
+                $self->{'generated_exts'}->{$tag} = {};
+              }
+              if ($name eq 'command'      || $name eq 'automatic' ||
+                  $name eq 'commandflags' || $name eq 'output_option') {
+                if ($type eq 'assignment') {
+                  $self->process_assignment(
+                                     $name, $value,
+                                     $self->{'generated_exts'}->{$tag});
+                }
+                elsif ($type eq 'assign_add') {
+                  $self->process_assignment_add(
+                                     $name, $value,
+                                     $self->{'generated_exts'}->{$tag});
+                }
+                elsif ($type eq 'assign_sub') {
+                  $self->process_assignment_sub(
+                                     $name, $value,
+                                     $self->{'generated_exts'}->{$tag});
+                }
+              }
+              else {
+                ## Transform the name from something outputext to
+                ## something files.  We expect this to match the
+                ## names of valid_assignments.
+                $name =~ s/outputext/files/g;
+
+                ## Get it ready for regular expressions
+                $value = $self->escape_regex_special($value);
+
+                ## Process the array assignment
+                my(@array) = split(/\s*,\s*/, $value);
+                $self->process_array_assignment(
+                            \$self->{'generated_exts'}->{$tag}->{$name},
+                            $type, \@array);
+              }
+            }
+          }
+          else {
+            $status = 0;
+            $errorString =  "ERROR: Invalid assignment name: $name";
+            last;
+          }
+        }
+      }
+    }
+  }
+
+  return $status, $errorString;
 }
 
 
@@ -690,34 +884,29 @@ sub already_added {
 }
 
 
-sub add_idl_generated {
+sub add_generated_files {
   my($self)    = shift;
+  my($gentype) = shift;
   my($tag)     = shift;
-  my($idl)     = shift;
+  my($arr)     = shift;
   my($names)   = $self->{$tag};
-  my($vc)      = $self->{'valid_components'};
-  my($wanted)  = $$vc{$tag}->[0];
-  my(@added)   = ();
+  my($wanted)  = $self->{'valid_components'}->{$gentype}->[0];
 
-  $wanted =~ s/\\//;
   foreach my $name (keys %$names) {
     my($comps) = $$names{$name};
     foreach my $key (keys %$comps) {
+      my(@added) = ();
       my($array) = $$comps{$key};
-      foreach my $i (@$idl) {
+      foreach my $i (@$arr) {
         my($file) = $i;
-        $file =~ s/\.idl$//;
-        foreach my $ending (@{$self->{'skeleton_endings'}}) {
-          my($created) = "$file$ending$wanted";
-          if (!$self->already_added($array, $created)) {
-            push(@added, $created);
+        $file =~ s/$wanted$//;
+        foreach my $pf (@{$self->{'generated_exts'}->{$gentype}->{'pre_filename'}}) {
+          foreach my $pe (@{$self->{'generated_exts'}->{$gentype}->{'pre_extension'}}) {
+            $self->list_generated_file($gentype, $tag, \@added, "$pf$file$pe");
           }
         }
       }
-      ## Put the generated files at the front
-      if (defined $added[0]) {
-        unshift(@$array, @added);
-      }
+      unshift(@$array, @added);
     }
   }
 }
@@ -893,12 +1082,7 @@ sub escape_regex_special {
   my($self) = shift;
   my($name) = shift;
 
-  $name =~ s/\\/\\\\/g;
-  $name =~ s/\$/\\\$/g;
-  $name =~ s/\[/\\\[/g;
-  $name =~ s/\]/\\\]/g;
-  $name =~ s/\(/\\\(/g;
-  $name =~ s/\)/\\\)/g;
+  $name =~ s/([\\\$\[\]\(\)\.])/\\$1/g;
 
   return $name;
 }
@@ -1022,39 +1206,43 @@ sub generate_default_components {
 
         if (!$self->is_special_tag($tag)) {
           $self->sift_files($files, $exts, $pchh, $pchc, $tag, $array);
-          if ($tag eq 'idl_files' && defined $$array[0]) {
-            $self->{'idl_defaulted'} = 1;
+          if (defined $self->{'generated_exts'}->{$tag}) {
+            if (defined $$array[0]) {
+              $self->{'defaulted'}->{$tag} = 1;
+            }
           }
           elsif ($tag eq 'source_files') {
-            ## If we are auto-generating the source_files, then
-            ## we need to make sure that any idl generated source
-            ## files that are added are put at the front of the list.
-            my(@front) = ();
-            my(@copy)  = @$array;
-            my(@exts)  = $self->generated_source_extensions($tag);
+            foreach my $gentype (keys %{$self->{'generated_exts'}}) {
+              ## If we are auto-generating the source_files, then
+              ## we need to make sure that any generated source
+              ## files that are added are put at the front of the list.
+              my(@front) = ();
+              my(@copy)  = @$array;
+              my(@exts)  = $self->generated_extensions($gentype, $tag);
 
-            $self->{'source_defaulted'} = 1;
-            @$array = ();
-            foreach my $file (@copy) {
-              my($found) = 0;
-              foreach my $ext (@exts) {
-                if ($file =~ /$ext$/) {
+              $self->{'defaulted'}->{$tag} = 1;
+              @$array = ();
+              foreach my $file (@copy) {
+                my($found) = 0;
+                foreach my $ext (@exts) {
+                  if ($file =~ /$ext$/) {
+                    ## No need to check for previously added files
+                    ## here since there are none.
+                    push(@front, $file);
+                    $found = 1;
+                    last;
+                  }
+                }
+                if (!$found) {
                   ## No need to check for previously added files
                   ## here since there are none.
-                  push(@front, $file);
-                  $found = 1;
-                  last;
+                  push(@$array, $file);
                 }
               }
-              if (!$found) {
-                ## No need to check for previously added files
-                ## here since there are none.
-                push(@$array, $file);
-              }
-            }
 
-            if (defined $front[0]) {
-              unshift(@$array, @front);
+              if (defined $front[0]) {
+                unshift(@$array, @front);
+              }
             }
           }
         }
@@ -1079,7 +1267,7 @@ sub remove_duplicated_files {
       my($count) = scalar(@$array);
       for(my $i = 0; $i < $count; ++$i) {
         foreach my $sfile (@slist) {
-          ## Is the source file is in the component array?
+          ## Is the source file in the component array?
           if ($$array[$i] eq $sfile) {
             ## Remove the element and fix the index and count
             splice(@$array, $i, 1);
@@ -1094,28 +1282,31 @@ sub remove_duplicated_files {
 }
 
 
-sub generated_source_extensions {
+sub generated_extensions {
   my($self) = shift;
+  my($name) = shift;
   my($tag)  = shift;
-  my($vc)   = $self->{'valid_components'};
-  my($gc)   = $$vc{$tag};
-  my(@gen)  = ();
+  my(@exts) = ();
+  my($gen)  = $self->{'generated_exts'}->{$name};
 
-  foreach my $e (@$gc) {
-    foreach my $ending (@{$self->{'skeleton_endings'}}) {
-      push(@gen, "$ending$e");
+  if (defined $gen->{$tag}) {
+    foreach my $pe (@{$gen->{'pre_extension'}}) {
+      foreach my $ext (@{$gen->{$tag}}) {
+        push(@exts, "$pe$ext");
+      }
     }
   }
-  return @gen;
+  return @exts;
 }
 
 
 sub generated_source_listed {
   my($self)  = shift;
+  my($gent)  = shift;
   my($tag)   = shift;
-  my($idl)   = shift;
+  my($arr)   = shift;
   my($names) = $self->{$tag};
-  my(@gen)   = $self->generated_source_extensions($tag);
+  my(@gen)   = $self->generated_extensions($gent, $tag);
   my(@found) = ();
 
   ## Find out which generated source files are listed
@@ -1125,7 +1316,7 @@ sub generated_source_listed {
       my($array) = $$comps{$key};
       foreach my $val (@$array) {
         foreach my $ext (@gen) {
-          foreach my $i (@$idl) {
+          foreach my $i (@$arr) {
             my($ifile) = $self->escape_regex_special($i);
             if ($val =~ /$ifile$ext$/) {
               push(@found, $val);
@@ -1139,32 +1330,35 @@ sub generated_source_listed {
 }
 
 
-sub generate_default_idl_generated {
-  my($self) = shift;
-  my($tags) = shift;
+sub list_default_generated {
+  my($self)    = shift;
+  my($gentype) = shift;
+  my($tags)    = shift;
 
-  if ($self->{'idl_defaulted'}) {
+  if ($self->{'defaulted'}->{$gentype} &&
+      $self->{'generated_exts'}->{$gentype}->{'automatic'}) {
     ## After all source and headers have been defaulted, see if we
-    ## need to add the idl generated .h, .i and .cpp files
-    if (defined $self->{'idl_files'}) {
-      ## Build up the list of idl files
-      my(@idl) = ();
-      my($names) = $self->{'idl_files'};
+    ## need to add the generated .h, .i and .cpp files
+    if (defined $self->{$gentype}) {
+      ## Build up the list of files
+      my(@arr)    = ();
+      my($wanted) = $self->{'valid_components'}->{$gentype}->[0];
+      my($names)  = $self->{$gentype};
       foreach my $name (keys %$names) {
         my($comps) = $$names{$name};
         foreach my $key (keys %$comps) {
           my($array) = $$comps{$key};
           foreach my $val (@$array) {
             my($f) = $val;
-            $f =~ s/\.idl$//;
-            push(@idl, $f);
+            $f =~ s/$wanted$//;
+            push(@arr, $f);
           }
         }
       }
 
       foreach my $type (@$tags) {
-        if (!$self->generated_source_listed($type, \@idl)) {
-          $self->add_idl_generated($type, \@idl);
+        if (!$self->generated_source_listed($gentype, $type, \@arr)) {
+          $self->add_generated_files($gentype, $type, \@arr);
         }
       }
     }
@@ -1172,13 +1366,57 @@ sub generate_default_idl_generated {
 }
 
 
-sub add_source_corresponding_component_files {
+sub list_generated_file {
+  my($self)    = shift;
+  my($gentype) = shift;
+  my($tag)     = shift;
+  my($array)   = shift;
+  my($file)    = shift;
+
+  if (defined $self->{'generated_exts'}->{$gentype}->{$tag}) {
+    my(@gen)     = $self->get_component_list($gentype);
+    my(@genexts) = $self->generated_extensions($gentype, $tag);
+    foreach my $gen (@gen) {
+      ## If we are converting slashes, then we need to
+      ## convert the component back to forward slashes
+      if ($self->convert_slashes()) {
+        $gen =~ s/\\/\//g;
+      }
+
+      ## Remove the extension
+      my($start) = $gen;
+      foreach my $ext (@{$self->{'valid_components'}->{$gentype}}) {
+        $gen =~ s/$ext$//;
+        if ($gen ne $start) {
+          last;
+        }
+      }
+
+      ## See if we need to add the file
+      foreach my $pf (@{$self->{'generated_exts'}->{$gentype}->{'pre_filename'}}) {
+        foreach my $genext (@genexts) {
+          if ("$pf$gen$genext" =~ /$file(.*)?$/) {
+            my($created) = "$file$1";
+            $created =~ s/\\//g;
+            if (!$self->already_added($array, $created)) {
+              push(@$array, $created);
+            }
+            last;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+sub add_corresponding_component_files {
   my($self)  = shift;
+  my($ftags) = shift;
   my($tag)   = shift;
   my(@all)   = ();
-  my($vc)    = $self->{'valid_components'};
 
-  foreach my $filetag ('source_files', 'template_files') {
+  foreach my $filetag (@$ftags) {
     my($names) = $self->{$filetag};
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
@@ -1188,74 +1426,47 @@ sub add_source_corresponding_component_files {
     }
   }
 
-  ## We need to cross-check the idl files.  But we need to remove
-  ## the idl extension first.
-  my(@idl) = $self->get_component_list('idl_files');
-  for(my $i = 0; $i <= $#idl; $i++) {
-    $idl[$i] =~ s/\.idl$//;
+  my(@exts)  = ();
+  my($names) = $self->{$tag};
+
+  foreach my $ext (@{$self->{'valid_components'}->{$tag}}) {
+    $ext =~ s/\\//g;
+    push(@exts, $ext);
   }
 
-  ## for each cpp file, we add a corresponding header or inline file
-  ## if it exists and is not already in the list of headers
-  my($names) = $self->{$tag};
   foreach my $name (keys %$names) {
     my($comps) = $$names{$name};
     foreach my $comp (keys %$comps) {
       my($array) = $$comps{$comp};
-      foreach my $cpp (@all) {
+      foreach my $sfile (@all) {
         my($found) = 0;
-        my($c) = $cpp;
-        $c =~ s/\.[^\.]+$//;
+        my($scopy) = $sfile;
+        $scopy =~ s/\.[^\.]+$//;
         foreach my $file (@$array) {
-          my($added) = $c;
-          if ($file =~ /(\.[^\.]+)$/) {
-            $added .= $1;
-          }
-
-          if ($added eq $file) {
-            $found = 1;
-            last;
+          foreach my $ext (@exts) {
+            if ("$scopy$ext" eq $file) {
+              $found = 1;
+              last;
+            }
+            if ($found) {
+              last;
+            }
           }
         }
 
         if (!$found) {
-          my($added) = 0;
-          foreach my $e (@{$$vc{$tag}}) {
-            my($ext) = $e;
-            $ext =~ s/\\//g;
-
-            ## If the file is readable
-            my($file) = "$c$ext";
-            if (-r $file) {
-              if (!$self->already_added($array, $file)) {
-                push(@$array, $file);
-              }
-              $added = 1;
-              last;
+          foreach my $ext (@exts) {
+            my($built) = "$scopy$ext";
+            if (-r $built) {
+               push(@$array, $built);
+               $found = 1;
+               last;
             }
           }
-          if (!$added) {
-            ## If we did not add the file in the above loop,
-            ## we must check to see if the file *would be* generated
-            ## from idl.  If so, we will add the file with the default
-            ## (i.e. first) file extension.
-            foreach my $idlfile (@idl) {
-              my($idl) = $self->escape_regex_special($idlfile);
-              if ($c =~ /^$idl/) {
-                foreach my $ending (@{$self->{'skeleton_endings'}}) {
-                  if ($c =~ /^$idl$ending$/) {
-                    my($ext) = $$vc{$tag}->[0];
-                    $ext =~ s/\\//g;
-                    my($file) = "$c$ext";
-                    if (!$self->already_added($array, $file)) {
-                      push(@$array, $file);
-                    }
-                    $added = 1;
-                    last;
-                  }
-                }
-              }
-              last;
+
+          if (!$found) {
+            foreach my $gentype (keys %{$self->{'generated_exts'}}) {
+              $self->list_generated_file($gentype, $tag, $array, $scopy);
             }
           }
         }
@@ -1309,14 +1520,17 @@ sub generate_defaults {
   ## once, we need to remove the extras
   $self->remove_extra_pch_listings();
 
-  ## Generate the default idl generated list of source files
-  ## only if we defaulted the idl file list
-  $self->generate_default_idl_generated(['source_files']);
+  ## Generate the default generated list of source files
+  ## only if we defaulted the generated file list
+  foreach my $gentype (keys %{$self->{'generated_exts'}}) {
+    $self->list_default_generated($gentype, ['source_files']);
+  }
 
   ## Add @specialComponents files based on the
   ## source_components (i.e. .h and .i or .inl based on .cpp)
   foreach my $tag (@specialComponents) {
-    $self->add_source_corresponding_component_files($tag);
+    $self->add_corresponding_component_files(['source_files',
+                                              'template_files'], $tag);
   }
 
   ## Now, if the @specialComponents are still empty
@@ -1329,7 +1543,8 @@ sub generate_defaults {
           my($comps) = $$names{$name};
           foreach my $comp (keys %$comps) {
             my($array) = $$comps{$comp};
-            if (!defined $$array[0] || $self->{'source_defaulted'}) {
+            if (!defined $$array[0] ||
+                $self->{'defaulted'}->{'source_files'}) {
               $self->generate_default_components(\@files, $tag);
             }
           }
@@ -1390,12 +1605,101 @@ sub get_component_list {
 }
 
 
+sub check_custom_output {
+  my($self)    = shift;
+  my($based)   = shift;
+  my($pf)      = shift;
+  my($cinput)  = shift;
+  my($type)    = shift;
+  my($comps)   = shift;
+  my(@outputs) = ();
+  my($gen)     = $self->{'generated_exts'}->{$based};
+
+  if (defined $gen->{$type}) {
+    foreach my $pe (@{$gen->{'pre_extension'}}) {
+      foreach my $ext (@{$gen->{$type}}) {
+        my($ge) = "$pe$ext";
+        $ge =~ s/\\//g;
+        my($built) = "$pf$cinput$ge";
+        if (@$comps == 0) {
+          push(@outputs, $built);
+          last;
+        }
+        else {
+          foreach my $c (@$comps) {
+            if ($c =~ /$built$/) {
+              push(@outputs, $built);
+              last;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return @outputs;
+}
+
+
+sub get_custom_value {
+  my($self)  = shift;
+  my($cmd)   = shift;
+  my($based) = shift;
+  my($value) = undef;
+
+  if ($cmd eq 'input_files') {
+    my(@array) = $self->get_component_list($based);
+    $value = \@array;
+
+    $self->{'custom_output_files'} = {};
+    my(%vcomps) = ();
+    foreach my $vc (keys %{$self->{'valid_components'}}) {
+      my(@comps) = $self->get_component_list($vc);
+      $vcomps{$vc} = \@comps;
+    }
+    foreach my $input (@array) {
+      my(@outputs) = ();
+      my($cinput)  = $input;
+      $cinput =~ s/\.[^\.]+$//;
+      foreach my $pf (@{$self->{'generated_exts'}->{$based}->{'pre_filename'}}) {
+        foreach my $vc (keys %{$self->{'valid_components'}}) {
+          push(@outputs,
+               $self->check_custom_output($based, $pf,
+                                          $cinput, $vc, $vcomps{$vc}));
+        }
+      }
+      $self->{'custom_output_files'}->{$input} = \@outputs;
+    }
+  }
+  elsif ($cmd eq 'output_files') {
+    # Generate output files based on $based
+    if (defined $self->{'custom_output_files'}) {
+      $value = $self->{'custom_output_files'}->{$based};
+    }
+  }
+  elsif ($cmd eq 'inputexts') {
+    my(@array) = @{$self->{'valid_components'}->{$based}};
+    foreach my $val (@array) {
+      $val =~ s/\\\.//g;
+    }
+    $value = \@array;
+  }
+  elsif ($cmd eq 'command'       ||
+         $cmd eq 'output_option' || defined $custom{$cmd}) {
+    $value = $self->get_assignment($cmd,
+                                   $self->{'generated_exts'}->{$based});
+  }
+
+  return $value;
+}
+
+
 sub need_to_write_project {
   my($self) = shift;
-  foreach my $key ('source_files', 'idl_files') {
+  foreach my $key ('source_files', keys %{$self->{'generated_exts'}}) {
     my($names) = $self->{$key};
     foreach my $name (keys %$names) {
-      foreach my $key (sort keys %{$names->{$name}}) {
+      foreach my $key (keys %{$names->{$name}}) {
         if (defined $names->{$name}->{$key}->[0]) {
           return 1;
         }
@@ -1497,13 +1801,9 @@ sub write_project {
                                 $prjname . $self->get_type_append());
       ($status, $error) = $self->write_output_file($name);
     }
-
-    if (!$status) {
-      print STDERR "$error\n";
-    }
   }
 
-  return $status;
+  return $status, $error;
 }
 
 
@@ -1543,6 +1843,29 @@ sub set_component_extensions {
 sub reset_values {
   my($self) = shift;
   $self->{'project_info'} = [];
+}
+
+
+sub reset_generating_types {
+  my($self) = shift;
+
+  foreach my $key (keys %ma) {
+    $self->{'matching_assignments'}->{$key} = $ma{$key};
+  }
+  foreach my $key (keys %vc) {
+    $self->{'valid_components'}->{$key} = $vc{$key};
+  }
+  foreach my $key (keys %genext) {
+    $self->{'generated_exts'}->{$key} = $genext{$key};
+  }
+  foreach my $key (keys %ec) {
+    $self->{'exclude_components'}->{$key} = $ec{$key};
+  }
+
+  $self->{'custom_types'} = {};
+
+  ## Allow subclasses to override the default extensions
+  $self->set_component_extensions();
 }
 
 

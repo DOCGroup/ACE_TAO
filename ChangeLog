@@ -1,22 +1,50 @@
+Fri May  9 08:01:59 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Added documentation on the Custom File Definitions.
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed bad error handling.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Added support for custom build definitions.  See the
+          "Custom File Definitions" section of the README for more
+          information.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Utilize the custom types in the supported template files.
+
 Thu May  8 18:50:24 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/run_test.lst: Moved Cached_Accept_Conn_Test down the list
-	  to put some time between it and Cached_Conn_Test. They both suck up
-	  all available sockets and one after the other is a guaranteed fail
-	  on Windows XP due to socket starvation.
+        * tests/run_test.lst: Moved Cached_Accept_Conn_Test down the list
+          to put some time between it and Cached_Conn_Test. They both suck up
+          all available sockets and one after the other is a guaranteed fail
+          on Windows XP due to socket starvation.
 
 Thu May  8 16:57:18 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Date_Time.i (update): WinCE doesn't do localtime(), so extract
-	  the FILETIME value from ACE_Time_Value and convert it to system time.
-	  Fixes Bugzilla #1502.
+        * ace/Date_Time.i (update): WinCE doesn't do localtime(), so extract
+          the FILETIME value from ACE_Time_Value and convert it to system time.
+          Fixes Bugzilla #1502.
 
-	* ace/OS.cpp (uname): Added proper sensing of Windows CE at runtime
-	  as well as the ARM processor type.
+        * ace/OS.cpp (uname): Added proper sensing of Windows CE at runtime
+          as well as the ARM processor type.
 
-	* tests/Enum_Interfaces_Test.cpp: Convert the interface address
-	  strings to ACE_TCHAR for logging. Makes them legible on wide-char
-	  builds. Fixes Bugzilla #1501.
+        * tests/Enum_Interfaces_Test.cpp: Convert the interface address
+          strings to ACE_TCHAR for logging. Makes them legible on wide-char
+          builds. Fixes Bugzilla #1501.
 
 Thu May 08 15:03:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -28,8 +56,8 @@ Thu May 08 15:03:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Thu May  8 06:44:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/topinfo_iorsize_stats.sh (FILES): Fixed a typo in the
-	  script!
+        * bin/topinfo_iorsize_stats.sh (FILES): Fixed a typo in the
+          script!
 
 Wed May  7 17:51:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -42,34 +70,34 @@ Wed May  7 17:51:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed May  7 18:32:45 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/FIFO_Test.cpp: Fix the version of main() that was actually
-	  causing the problem (see: Tue May  6 18:06:39 2003  Steve Huston)
+        * tests/FIFO_Test.cpp: Fix the version of main() that was actually
+          causing the problem (see: Tue May  6 18:06:39 2003  Steve Huston)
 
 Wed May  7 17:02:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_component.mpb: Added the
-	  required libraries to build the server. This was necessitated by
-	  the recent subsetting in TAO.
+        * bin/MakeProjectCreator/config/ciao_component.mpb: Added the
+          required libraries to build the server. This was necessitated by
+          the recent subsetting in TAO.
 
 Wed May  7 17:25:49 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Service_Config.h: Added description of the -s option to
-	  ACE_Service_Config::open(). Also clarified -f, -k, -n, -y and -S.
+        * ace/Service_Config.h: Added description of the -s option to
+          ACE_Service_Config::open(). Also clarified -f, -k, -n, -y and -S.
 
 Wed May  7 14:00:31 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Basic_Types.h: In ACE_LONGLONG_TO_PTR macro, replace use
-	  of ptr_arith_t with ptrdiff_t. Thanks to Ossama for noticing this.
+        * ace/Basic_Types.h: In ACE_LONGLONG_TO_PTR macro, replace use
+          of ptr_arith_t with ptrdiff_t. Thanks to Ossama for noticing this.
 
 Wed May  7 12:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
-	  tracking on the client side since its of no use. Added code to
-	  collect the actual size of the server growth once data is
-	  marshalled.
+        * bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
+          tracking on the client side since its of no use. Added code to
+          collect the actual size of the server growth once data is
+          marshalled.
 
-	* bin/generate_topinfo_stats.sh: Used the 4th argument to plot
-	  information on the y axis.
+        * bin/generate_topinfo_stats.sh: Used the 4th argument to plot
+          information on the y axis.
 
 Wed May  7 08:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -78,26 +106,26 @@ Wed May  7 08:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May  6 18:06:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Basic_Types.h: Add typedef of ptrdiff_t for WinCE 3. Follow-up:
-	  Tue May  6 13:39:27 2003  Steve Huston <shuston@riverace.com>
+        * ace/Basic_Types.h: Add typedef of ptrdiff_t for WinCE 3. Follow-up:
+          Tue May  6 13:39:27 2003  Steve Huston <shuston@riverace.com>
 
-	* tests/FIFO_Test.cpp: Changed main() to ACE_TMAIN() to fix WinCE
-	  (wide char) build error.
+        * tests/FIFO_Test.cpp: Changed main() to ACE_TMAIN() to fix WinCE
+          (wide char) build error.
 
-	* bin/PerlACE/Process_Win32.pm: Corrected comments about what the
-	  PocketPC script is doing.
+        * bin/PerlACE/Process_Win32.pm: Corrected comments about what the
+          PocketPC script is doing.
 
 Tue May  6 13:39:27 2003  Steve Huston <shuston@riverace.com>
 
-	* ace/Functor.i (ACE_Hash<void*>::operator()):
-	* ace/OS_Memory.h (ACE_align_binary): Replace ptr_arith_t with
-	  the standard type ptrdiff_t.
+        * ace/Functor.i (ACE_Hash<void*>::operator()):
+        * ace/OS_Memory.h (ACE_align_binary): Replace ptr_arith_t with
+          the standard type ptrdiff_t.
 
-	* ace/Basic_Types.h: Removed all the conditionals for trying to figure
-	  out how to define ptr_arith_t. Replaced it with a typedef
-	  ptrdiff_t ptr_arith_t. This is a temporary placeholder until all
-	  ptr_arith_t usage can be expunged from TAO. Required adding
-	  #include <stddef.h> to pick up the ptrdiff_t type.
+        * ace/Basic_Types.h: Removed all the conditionals for trying to figure
+          out how to define ptr_arith_t. Replaced it with a typedef
+          ptrdiff_t ptr_arith_t. This is a temporary placeholder until all
+          ptr_arith_t usage can be expunged from TAO. Required adding
+          #include <stddef.h> to pick up the ptrdiff_t type.
 
 Tue May  6 11:50:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 

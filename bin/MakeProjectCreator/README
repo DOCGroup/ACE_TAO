@@ -123,7 +123,7 @@ verbatim        This allows arbitrary information to be place in a generated
                 When MPC is generating a project of type <project type> and
                 comes upon a marker that matches the <location> name, it
                 will place the text found inside the construct directly into
-                the generated project.  If you need to preserve whitespace,
+                the generated project.  If you need to preserve white space,
                 the line or lines should be placed inside double quotes.
 
 The Following are GNU only:
@@ -135,6 +135,102 @@ tagname         Specifies the make macro to check before building the target
 tagchecks       Specifies the values for tagname to check
 
 
+Custom File Definitions
+-----------------------
+In order to support a variety of custom build rules, MPC allows you to
+define your own custom file types.  Below is an example of a custom
+definition.
+
+project {
+  Define_Custom(MOC) {
+    automatic        = 0
+    command          = $(QTDIR)/bin/moc
+    output_option    = -o
+    inputext         = .h
+    pre_extension    = _moc
+    source_outputext = .cpp
+  }
+
+  MOC_Files {
+    QtReactor.h
+  }
+
+  Source_Files {
+    QtReactor_moc.cpp
+  }
+}
+
+The above example defines a custom file type "MOC" which describes basic
+information about how to process the input files and what output files are
+created.  Once the custom file type is defined, MOC_Files can be defined in
+order to specify the input files for this new file type.
+
+Here is a list of keywords that can be used within the scope of
+Define_Custom:
+
+automatic           If set to 1, then attempt to automatically determine
+                    which files belong to the set of input files for the
+                    custom type.  If set to 0, then no files are
+                    automatically added to the input files.  If omitted,
+                    then automatic is assumed to be 1.  Custom file types
+                    that are automatic will have the side effect of possibly
+                    adding files to Source_Files, Inline_Files, Header_Files
+                    Template_Files, Resource_Files and Documenation_Files
+                    depending on which extension types the command generates.
+command             The name of the command that should be used to process
+                    the input files for the custom type.
+commandflags        Any options that should be passed to the command go here.
+inputext            This is a comma separated list of input file extensions
+                    that belong to the command.
+output_option       If the command takes an option to specify a single file
+                    output name, then set it here.  Otherwise, this should be
+                    omitted.
+pre_extension       If the command produces multiple files of the same
+                    extension, this comma separated list can be used to
+                    specify them.  For example, tao_idl creates two types of
+                    files per extension (C.h, S.h, C.cpp, S.cpp, etc).
+pre_filename        This is similar to pre_extension except that the values
+                    are prepended to the file name instead of the extension.
+source_outputext    This is a comma separated list of possible source file
+                    output extensions.  If the command does not produce
+                    source files, then this can be omitted.
+inline_outputext    This is a comma separated list of possible inline file
+                    output extensions.  If the command does not produce
+                    inline files, then this can be omitted.
+header_outputext    This is a comma separated list of possible header file
+                    output extensions.  If the command does not produce
+                    header files, then this can be omitted.
+template_outputext  This is a comma separated list of possible template file
+                    output extensions.  If the command does not produce
+                    template files, then this can be omitted.
+resource_outputext  This is a comma separated list of possible resource file
+                    output extensions.  If the command does not produce
+                    resource files, then this can be omitted.
+documenation_outputext  This is a comma separated list of possible
+                        documentation file output extensions.  If the
+                        command does not produce documenation files, then
+                        this can be omitted.
+
+For custom file types, there are two keywords that can be used within the
+custom file type input lists: commandflags and gendir.  The commandflags can
+be used to augment or override the commandflags defined in the Define_Custom
+section.  gendir can be used (only if output_option is set in Define_Custom)
+to specify the directory in which the generated output will go.  Below is an
+example:
+
+  MOC_Files {
+    commandflags += -nw
+    gendir = moc_generated
+    QtReactor.h
+  }
+
+  Source_Files {
+    moc_generated/QtReactor_moc.cpp
+  }
+
+In the above example, the generated file (QtReactor_moc.cpp) is placed in
+the moc_generated directory and the -nw option is added to commandflags.
+
 Special Keywords Available to Templates
 ---------------------------------------
 project_name	This contains the name of the project.
@@ -143,9 +239,10 @@ guid		This is used by the VC7 project and workspace creator.
 configurations	When used within a foreach context, this info (each
 		configuration) is gathered for use with the VC7 workspace
 		creator.
-flag_overrides  Used to determine flags that have been overriden on a per
+flag_overrides  Used to determine flags that have been overridden on a per
                 file basis.
-
+custom_types    The list of custom file types that may have been defined
+                in the mpc file or a base project.
 
 Defaulting Behavior
 -------------------
