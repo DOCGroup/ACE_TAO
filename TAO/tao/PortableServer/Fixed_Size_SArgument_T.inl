@@ -7,7 +7,7 @@ ACE_INLINE
 S const &
 TAO::In_Fixed_Size_SArgument_T<S>::arg (void) const
 {
-  return *this->x_;
+  return this->x_;
 }
 
 // ==========================================================================
@@ -21,7 +21,7 @@ template<typename S>
 S &
 TAO::Inout_Fixed_Size_SArgument_T<S>::arg (void)
 {
-  return *this->x_;
+  return this->x_;
 }
 
 // ==========================================================================
@@ -50,5 +50,5 @@ ACE_INLINE
 S &
 TAO::Ret_Fixed_Size_SArgument_T<S>::arg (void)
 {
-  return *this->x_;
+  return this->x_;
 }
