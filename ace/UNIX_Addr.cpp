@@ -73,14 +73,13 @@ ACE_UNIX_Addr::set (const char rendezvous_point[])
 {
   (void) ACE_OS::memset ((void *) &this->unix_addr_, 0, 
 		   sizeof this->unix_addr_);
-  int len = ACE_OS::strlen (rendezvous_point);
-
   this->unix_addr_.sun_family = AF_UNIX;
+  size_t len = ACE_OS::strlen (rendezvous_point);
 
   if (len >= sizeof this->unix_addr_.sun_path)
     {
-      /* At this point, things are screwed up, so let's make sure we 
-         don't crash. */
+      // At this point, things are screwed up, so let's make sure we
+      // don't crash.
       (void) ACE_OS::strncpy (this->unix_addr_.sun_path, 
 			rendezvous_point, 
 			sizeof this->unix_addr_.sun_path);

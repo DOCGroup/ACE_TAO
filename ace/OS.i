@@ -2177,7 +2177,7 @@ ACE_OS::getprotobyname_r (const char *name,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if !defined (AIX)
+#if !defined (AIX) || !defined (DIGITAL_UNIX)
   ACE_SOCKCALL_RETURN (::getprotobyname_r (name, result, buffer, sizeof (ACE_PROTOENT_DATA)),
 		       struct protoent *, 0);
 #else
@@ -2211,7 +2211,7 @@ ACE_OS::getprotobynumber_r (int proto,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if !defined (AIX)
+#if !defined (AIX) || !defined (DIGITAL_UNIX)
   ACE_SOCKCALL_RETURN (::getprotobynumber_r (proto, result, buffer, sizeof (ACE_PROTOENT_DATA)),
 		       struct protoent *, 0);
 #else
@@ -2426,7 +2426,7 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if !defined (AIX)
+#if !defined (AIX) || !defined (DIGITAL_UNIX)
   ACE_SOCKCALL_RETURN (::gethostbyaddr_r (addr, length, type, result, 
 					  buffer, sizeof (ACE_HOSTENT_DATA), 
 					  h_errnop),
@@ -2463,7 +2463,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if !defined (AIX)
+#if !defined (AIX) || !defined (DIGITAL_UNIX)
   ACE_SOCKCALL_RETURN (::gethostbyname_r (name, result, buffer, 
 					  sizeof (ACE_HOSTENT_DATA), h_errnop), 
 		       struct hostent *, 0);
@@ -2502,7 +2502,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if !defined (AIX)
+#if !defined (AIX) || !defined (DIGITAL_UNIX)
   ACE_SOCKCALL_RETURN (::getservbyname_r (svc, proto, result, buf,
 					  sizeof (ACE_SERVENT_DATA)),
 		       struct servent *, 0);
@@ -3227,6 +3227,7 @@ ACE_OS::thr_sigsetmask (int how,
   //    commented this out since nothing appropriate 
   //    found in the man pages...
   ACE_NOTSUP_RETURN (-1);
+
 #elif defined (ACE_HAS_DCETHREADS)
 #if defined (ACE_HAS_PTHREADS_1003_DOT_1C)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigaction (how, nsm, osm),
@@ -4600,23 +4601,21 @@ ACE_INLINE char *
 ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 {
 // ACE_TRACE ("ACE_OS::ctime_r");
-  char *result;
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
-#if !defined (AIX) && !defined (UNIXWARE)
-  ACE_OSCALL (::ctime_r (t, buf, buflen), char *, 0, result);
-#elif defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
+#if defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
   char *result;
   ACE_OSCALL (::ctime_r (t, buf), char *, 0, result);
-  ::strncpy (buf, result, TIMELEN);
-  return buf;
-#else
-  ACE_OSCALL (::ctime_r (t, buf), char *, 0, result);
-#endif /* !defined (AIX) */
-#else
-  ACE_OSCALL (::ctime (t), char *, 0, result);
-#endif
   ::strncpy (buf, result, buflen);
   return buf;
+#else
+  ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), char *, 0);
+#endif /* !defined (AIX) */
+#else
+  char *result;
+  ACE_OSCALL (::ctime (t), char *, 0, result);
+  ::strncpy (buf, result, buflen);
+  return buf;
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
 }
 
 ACE_INLINE struct tm *
@@ -4649,19 +4648,20 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 {
 // ACE_TRACE ("ACE_OS::asctime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
-#if !defined (AIX) && !defined (UNIXWARE)
-  ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
-#elif defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
+#if defined (ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R)
   char *result;
   ACE_OSCALL (::asctime_r (t, buf), char *, 0, result);
-  ::strncpy (buf, result, TIMELEN);
+  ::strncpy (buf, result, buflen);
   return buf;
 #else
-  ACE_OSCALL_RETURN (::asctime_r (t, buf), char *, 0);
-#endif /* !defined (AIX) */
+  ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
+#endif /* ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R */
 #else
+  char *result;
   ACE_OSCALL_RETURN (::asctime (t), char *, 0);
-#endif
+  ::strncpy (buf, result, buflen);
+  return buf;
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
 }
 
 ACE_INLINE int 

@@ -1,14 +1,39 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for the
-// Digital UNIX V4.0a platforms with the DEC 5.4 C++ compiler.  It is
+// Digital UNIX V4.0a platforms with the G+C+compiler.  It is
 // configured to use the IEEE Std 1003.1c-1995, POSIX System
 // Application Program Interface.  By 4.0a the version is meant that
 // is called "V4.0 464" by uname -a.
-     
+
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
+
+/////////////////////////////////////////////////////////////////////////////
+/
+//
+// The following lines are copied from the sunos5.5-g+configuration.
+// (This is the GNU-specific part.)
+// 
+// Must specialize templates due to G++'s lame parameterized type
+// support...
+#define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+
+// Compiler's template mechanism must see source code (i.e., .C
+// files).
+#define ACE_TEMPLATES_REQUIRE_SOURCE
+
+// Denotes that GNU has cstring.h as standard which redefines memchr()
+#define ACE_HAS_GNU_CSTRING_H
+
+// Compiler doesn't support static data member templates.
+#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+
+// Define this file to keep /usr/include/memory.h from being included.
+#include <cstring>
+
+/////////////////////////////////////////////////////////////////////////////
+/
 
 // DJT removed this due to some minor issues related to the
 // definitions of timestruc_t and tid_t in procfs.h not sure what
@@ -54,7 +79,7 @@
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-// Platform supports C++ headers
+// Platform supports C+headers
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Compiler/platform has the getrusage() system call.
@@ -173,8 +198,6 @@
 //#define ACE_PAGE_SIZE 4096
 #define ACE_PAGE_SIZE 8192
 
-// DJT added 6/6/96
-// uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R
 
 #define ACE_HAS_BROKEN_IF_HEADER
@@ -182,4 +205,5 @@
 #define DIGITAL_UNIX
 #define ACE_LACKS_T_ERRNO
 #define ACE_HAS_BROKEN_T_ERRNO
+
 #endif /* ACE_CONFIG_H */

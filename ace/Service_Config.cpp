@@ -553,9 +553,9 @@ ACE_Service_Config::open (const char program_name[])
 {   
   ACE_TRACE ("ACE_Service_Config::open");
 
-  // Only use STDERR if the users hasn't yet set the flags.
+  // Only use STDERR if the users hasn't already set the flags.
   if (ACE_LOG_MSG->open (program_name, 
-			 ACE_LOG_MSG->flags() ? ACE_LOG_MSG->flags() : (u_long) ACE_Log_Msg::STDERR,
+			 ACE_LOG_MSG->flags () ? ACE_LOG_MSG->flags () : (u_long) ACE_Log_Msg::STDERR,
 			 ACE_Service_Config::logger_key_) == -1)
     return -1;
   ACE_DEBUG ((LM_STARTUP, "starting up daemon %n\n"));

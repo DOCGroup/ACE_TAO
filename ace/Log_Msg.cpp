@@ -365,7 +365,7 @@ ACE_Log_Msg::log (const char *format_str,
     return 0;
 
   ACE_Log_Record log_record (log_priority, 
-			     ACE_OS::time ((time_t *) 0),
+			     ACE_OS::gettimeofday (),
 			     this->getpid ());
   char *bp = this->msg ();
   int abort_prog = 0;

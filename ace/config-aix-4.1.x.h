@@ -9,6 +9,7 @@
 
 // Compiling for AIX.
 #define AIX
+#define ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R
 #define _BSD 43
 #define ACE_HAS_UNION_WAIT
 #define ACE_HAS_MULTICAST

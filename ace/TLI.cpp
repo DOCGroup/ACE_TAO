@@ -10,6 +10,16 @@
 
 #if defined (ACE_HAS_TLI)
 
+#if defined (ACE_HAS_BROKEN_T_ERRNO)
+// We have to provide _terrno() ourselves.
+
+int *
+_terrno (void)
+{
+  return &t_errno;
+}
+#endif /* ACE_HAS_BROKEN_T_ERRNO */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI)
 
 void

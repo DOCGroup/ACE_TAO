@@ -12,8 +12,8 @@
 // Default "do nothing" constructor.
 
 ACE_Token_Request::ACE_Token_Request (void)
-  : client_id_ (0), 
-    token_name_ (0)
+  : token_name_ (0),
+    client_id_ (0)
 {
 }
 

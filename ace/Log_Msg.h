@@ -98,18 +98,19 @@ class ACE_Export ACE_Log_Msg
   //     communicate errors between framework methods and callers.
 {
 public:
-  enum /* Logger Flags */
+  // Logger Flags.
+  enum 
   {
-    STDERR       = 01,  
+    STDERR = 01,  
     // Write messages to stderr. 
-    LOGGER       = 02,  
+    LOGGER = 02,  
     // Write messages to the local client logger deamon.
-    OSTREAM     = 04,
+    OSTREAM = 04,
     // Write messages to the ostream * stored in thread-specific
     // storage.
-    VERBOSE	 = 010,
-    // Display messages in a verbose manner 
-    SILENT       = 020  
+    VERBOSE = 010,
+    // Display messages in a verbose manner.
+    SILENT = 020  
     // Do not print messages at all (just leave in thread-specific
     // storage for later inspection).
   };

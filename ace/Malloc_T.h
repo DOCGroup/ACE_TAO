@@ -126,9 +126,6 @@ public:
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
-  size_t avail_chunks (const size_t size) const;
-  // Returns a count of the number of available chunks.
-
   ALLOCATOR &alloc (void);
   // Returns the underlying allocator.
 
@@ -264,6 +261,10 @@ public:
   int protect (void *addr, size_t len, int prot = PROT_RDWR);
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
+
+  size_t avail_chunks (size_t size) const;
+  // Returns a count of the number of available chunks that can hold
+  // <size> byte allocations.
 
 #if defined (ACE_MALLOC_STATS)
   void print_stats (void);

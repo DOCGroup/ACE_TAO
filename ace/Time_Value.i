@@ -19,7 +19,7 @@ static const long ONE_SECOND = 1000000L;
 ACE_INLINE void
 ACE_Time_Value::set (const timestruc_t &tv)
 {
-  ACE_TRACE ("ACE_Time_Value::set");
+  // ACE_TRACE ("ACE_Time_Value::set");
   this->tv_sec_ = tv.tv_sec;
   this->tv_usec_ = tv.tv_nsec / 1000;
 
@@ -31,7 +31,7 @@ ACE_Time_Value::set (const timestruc_t &tv)
 ACE_INLINE 
 ACE_Time_Value::operator timestruc_t () const
 {
-  ACE_TRACE ("ACE_Time_Value::operator timestruc_t");
+  // ACE_TRACE ("ACE_Time_Value::operator timestruc_t");
   timestruc_t tv;
   tv.tv_sec = this->tv_sec_;
   tv.tv_nsec = this->tv_usec_ * 1000;
@@ -43,14 +43,14 @@ ACE_Time_Value::operator timestruc_t () const
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const timestruc_t &tv)
 {
-  ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
 }
 
 ACE_INLINE void
 ACE_Time_Value::set (const timeval &tv)
 {
-  ACE_TRACE ("ACE_Time_Value::set");
+  // ACE_TRACE ("ACE_Time_Value::set");
   this->tv_sec_ = tv.tv_sec;
   this->tv_usec_ = tv.tv_usec;
 
@@ -64,7 +64,7 @@ ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
   : tv_sec_ (tv.tv_sec_), 
     tv_usec_ (tv.tv_usec_)
 {
-  ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
 }
 
 // Returns number of seconds.
@@ -72,7 +72,7 @@ ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
 ACE_INLINE long 
 ACE_Time_Value::sec (void) const
 {
-  ACE_TRACE ("ACE_Time_Value::sec");
+  // ACE_TRACE ("ACE_Time_Value::sec");
   return this->tv_sec_;
 }
 
@@ -81,7 +81,7 @@ ACE_Time_Value::sec (void) const
 ACE_INLINE void 
 ACE_Time_Value::sec (long sec) 
 {
-  ACE_TRACE ("ACE_Time_Value::sec");
+  // ACE_TRACE ("ACE_Time_Value::sec");
   this->tv_sec_ = sec;
 }
 
@@ -90,7 +90,7 @@ ACE_Time_Value::sec (long sec)
 ACE_INLINE long 
 ACE_Time_Value::msec (void) const
 {
-  ACE_TRACE ("ACE_Time_Value::msec");
+  // ACE_TRACE ("ACE_Time_Value::msec");
   return this->tv_sec_ * 1000 + this->tv_usec_ / 1000;
 }
 
@@ -99,7 +99,7 @@ ACE_Time_Value::msec (void) const
 ACE_INLINE void
 ACE_Time_Value::msec (long milliseconds)
 {
-  ACE_TRACE ("ACE_Time_Value::msec");
+  // ACE_TRACE ("ACE_Time_Value::msec");
   // Convert millisecond units to seconds;
   this->tv_sec_ = milliseconds / 1000;
   // Convert remainder to microseconds;
@@ -111,7 +111,7 @@ ACE_Time_Value::msec (long milliseconds)
 ACE_INLINE long 
 ACE_Time_Value::usec (void) const
 {
-  ACE_TRACE ("ACE_Time_Value::usec");
+  // ACE_TRACE ("ACE_Time_Value::usec");
   return this->tv_usec_;
 }
 
@@ -120,7 +120,7 @@ ACE_Time_Value::usec (void) const
 ACE_INLINE void 
 ACE_Time_Value::usec (long usec) 
 {
-  ACE_TRACE ("ACE_Time_Value::usec");
+  // ACE_TRACE ("ACE_Time_Value::usec");
   this->tv_usec_ = usec;
 }
 
@@ -130,7 +130,7 @@ ACE_INLINE int
 operator < (const ACE_Time_Value &tv1, 
 	    const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator <");
+  // ACE_TRACE ("operator <");
   return tv2 > tv1;
 }
 
@@ -140,7 +140,7 @@ ACE_INLINE int
 operator <= (const ACE_Time_Value &tv1, 
 	     const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator <=");
+  // ACE_TRACE ("operator <=");
   return tv2 >= tv1;
 }
 
@@ -150,7 +150,7 @@ ACE_INLINE int
 operator == (const ACE_Time_Value &tv1, 
 	     const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator ==");
+  // ACE_TRACE ("operator ==");
   return tv1.tv_sec_ == tv2.tv_sec_ 
     && tv1.tv_usec_ == tv2.tv_usec_;
 }
@@ -161,6 +161,6 @@ ACE_INLINE int
 operator != (const ACE_Time_Value &tv1, 
 	     const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator !=");
+  // ACE_TRACE ("operator !=");
   return !(tv1 == tv2);
 }
