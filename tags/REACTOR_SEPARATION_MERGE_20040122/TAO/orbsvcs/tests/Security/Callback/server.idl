@@ -1,0 +1,14 @@
+//
+// Server interface definition.
+//
+// $Id$
+//
+
+#include "client.idl"
+
+interface server
+{
+  void set_client (in client c);
+  void test_request (in string msg);
+  oneway void shutdown ();
+};

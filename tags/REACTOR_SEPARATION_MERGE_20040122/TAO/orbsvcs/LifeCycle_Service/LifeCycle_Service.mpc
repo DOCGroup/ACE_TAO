@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcsexe, core, lifecycle, naming, trading_serv, minimum_corba {
+  exename  = LifeCycle_Service
+}

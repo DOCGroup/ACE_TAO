@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  version = 5.4.3
+}

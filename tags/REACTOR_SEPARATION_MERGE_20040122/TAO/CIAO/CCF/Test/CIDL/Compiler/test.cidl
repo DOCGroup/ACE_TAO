@@ -1,0 +1,21 @@
+// file      : CCF/Test/CIDL/Compiler/test.cidl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+component C
+{
+};
+
+home H manages C
+{
+};
+
+composition session SC
+{
+  home executor H_Exec
+  {
+    implements H;
+    manages C_Exec;
+  };
+};
+
