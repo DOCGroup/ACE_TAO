@@ -1,3 +1,11 @@
+Mon Feb 01 13:08:11 1999  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/CDR_Test.cpp:
+          Used an auto_ptr to manage a string sent to string_read(). I
+          had included the .h file for auto ptrs (Carlos corrected my
+          typo, see below), but had never checked in the code using
+          auto_ptr.
+
 Mon Feb 01 12:54:11 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/NT_Service.(h i): Some fixes provided by Martin Krumpolec
