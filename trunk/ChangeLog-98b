@@ -47,6 +47,10 @@ Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
           egcs 1.1b won't complain that it might be used without
           initialization.
 
+        * ace/OS.i,ace/config-osf1-4.0.h (readdir_r): use
+          ACE_HAS_PTHREADS_STD instead of _POSIX_PTHREAD_SEMANTICS to
+          select the three-arg ::readdir_r ().
+
 Mon Sep  7 01:02:58 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/ACE.i: Changed ACE_INLINE to ASYS_INLINE.
