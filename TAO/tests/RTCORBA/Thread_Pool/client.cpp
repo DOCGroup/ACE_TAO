@@ -80,6 +80,8 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           ACE_ASSERT (r == i);
+          /// Assert disappears on with optimizations on.
+          ACE_UNUSED_ARG (r);
         }
 
       if (shutdown_server)

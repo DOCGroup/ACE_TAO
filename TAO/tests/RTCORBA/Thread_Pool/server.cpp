@@ -114,7 +114,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::ULong stacksize = 0;
-      RTCORBA::Priority default_priority = ACE_DEFAULT_THREAD_PRIORITY;
+      RTCORBA::Priority default_priority =
+        RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
       CORBA::Boolean allow_request_buffering = 0;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
@@ -139,6 +140,7 @@ main (int argc, char *argv[])
                                    max_request_buffer_size,
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      ACE_UNUSED_ARG (id1);
 
       CORBA::Boolean allow_borrowing = 0;
       RTCORBA::ThreadpoolLanes lanes;
@@ -157,6 +159,7 @@ main (int argc, char *argv[])
                                               max_request_buffer_size,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      ACE_UNUSED_ARG (id1);
 
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
