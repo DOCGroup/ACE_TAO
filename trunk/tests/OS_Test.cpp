@@ -53,7 +53,9 @@ access_test (void)
 int
 rename_test (void)
 {
-#if defined (ACE_LACKS_RENAME)
+#if defined (ACE_LACKS_RENAME) || defined (ACE_VXWORKS)
+  // On VxWorks only some filesystem drivers support rename
+  // and as we do not know which is used, skip the test here
   ACE_ERROR_RETURN ((LM_INFO,
                      ACE_TEXT ("rename not supported on this platform\n")),
                     0);
