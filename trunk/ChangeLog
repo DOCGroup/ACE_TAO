@@ -1,3 +1,9 @@
+Wed Nov 14 21:36:42 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/usage-bugzilla.html:
+
+	  Corrected link to the DOC Center's bugzilla site.
+
 Wed Nov 14 23:11:59 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/Naming_Context.cpp (info): Fixed Unicode build problems
