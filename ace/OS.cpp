@@ -706,8 +706,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ACE_HAS_SETKIND_NP */
 	    return -1;
 	  }
-      }
 #endif /* !ACE_LACKS_THREAD_STACK_SIZE */
+      }
 
 #if !defined (ACE_LACKS_THREAD_STACK_ADDR)
     if (stack != 0)
