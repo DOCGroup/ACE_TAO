@@ -239,7 +239,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   // handle octet sequences using the optimizations provided by the TAO ORB
   // Core. If these optimizations are not available, then use the normal form
 
-  if (node->pt () == AST_PredefinedType::PT_octet)
+  if (node->pt () == AST_PredefinedType::PT_octet && sequence->unbounded ())
     {
       *os << "\n#if defined (TAO_NO_COPY_OCTET_SEQUENCES)" << be_nl;
       switch (this->ctx_->sub_state ())
@@ -250,9 +250,9 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                 << "ACE_Message_Block::DONT_DELETE))" << be_nl
                 << "{" << be_idt_nl
                 << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  ACE_reinterpret_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, "
-                << "&_tao_sequence);" << be_nl;
-            *os << "oseq->replace (_tao_seq_len, strm.start ());"
+                << "  ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "&_tao_sequence);" << be_nl
+                << "oseq->replace (_tao_seq_len, strm.start ());"
                 << be_nl
                 << "oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + "
                 << "_tao_seq_len);" << be_nl
@@ -269,9 +269,9 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
           {
             *os << "{" << be_idt_nl
                 << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  ACE_reinterpret_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, "
-                << "(" << sequence->name () << " *)&_tao_sequence);" << be_nl;
-            *os << "if (oseq->mb ())" << be_idt_nl
+                << "  ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "(" << sequence->name () << " *)&_tao_sequence);" << be_nl
+                << "if (oseq->mb ())" << be_idt_nl
                 << "return strm.write_octet_array_mb (oseq->mb ());"
                 << be_uidt_nl
                 << "else" << be_idt_nl
@@ -389,7 +389,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
 
   *os << "_tao_sequence.length ());" << be_uidt_nl;
 
-  if (node->pt () == AST_PredefinedType::PT_octet)
+  if (node->pt () == AST_PredefinedType::PT_octet && sequence->unbounded ())
     *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCES */" << be_nl;
   return 0;
 }
