@@ -1,3 +1,8 @@
+Thu Jan 15 18:50:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/ACE_Init_Test.cpp:
+	  Fixed compile problem in BCB6 Unicode build
+
 Thu Jan 15 18:42:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/config/portablegroup.mpb:
