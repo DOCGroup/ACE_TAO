@@ -1284,27 +1284,31 @@ sub generate_default_pch_filenames {
     my($hmatching) = undef;
     my($cmatching) = undef;
     foreach my $file (@$files) {
-      if (!$pchhdef) {
-        foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
-          if ($file =~ /(.*_pch$ext)$/) {
-            $self->process_assignment('pch_header', $1);
-            ++$hcount;
-            if ($file =~ /$pname/) {
-              $hmatching = $file;
+      ## If the file doesn't even contain _pch, then there's no point
+      ## in looping through all of the extensions
+      if ($file =~ /_pch/) {
+        if (!$pchhdef) {
+          foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
+            if ($file =~ /(.*_pch$ext)$/) {
+              $self->process_assignment('pch_header', $1);
+              ++$hcount;
+              if ($file =~ /$pname/) {
+                $hmatching = $file;
+              }
+              last;
             }
-            last;
           }
         }
-      }
-      if (!$pchcdef) {
-        foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
-          if ($file =~ /(.*_pch$ext)$/) {
-            $self->process_assignment('pch_source', $1);
-            ++$ccount;
-            if ($file =~ /$pname/) {
-              $cmatching = $file;
+        if (!$pchcdef) {
+          foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
+            if ($file =~ /(.*_pch$ext)$/) {
+              $self->process_assignment('pch_source', $1);
+              ++$ccount;
+              if ($file =~ /$pname/) {
+                $cmatching = $file;
+              }
+              last;
             }
-            last;
           }
         }
       }

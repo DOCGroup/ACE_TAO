@@ -702,12 +702,6 @@ sub generate_hierarchy {
       $self->{'project_info'}   = \%sinfo;
       $self->{'workspace_name'} = $self->base_directory();
 
-      ## Add implict project dependencies based on source files
-      ## that have been used by multiple projects
-      if ($self->generate_implicit_project_dependencies()) {
-        $self->add_implicit_project_dependencies($creator, $self->getcwd());
-      }
-
       my($status, $error) = $self->write_workspace($creator);
       if (!$status) {
         $self->error($error);
@@ -732,12 +726,6 @@ sub generate_hierarchy {
     $self->{'projects'}       = \@saved;
     $self->{'project_info'}   = \%sinfo;
     $self->{'workspace_name'} = $self->base_directory();
-
-    ## Add implict project dependencies based on source files
-    ## that have been used by multiple projects
-    if ($self->generate_implicit_project_dependencies()) {
-      $self->add_implicit_project_dependencies($creator, $self->getcwd());
-    }
 
     my($status, $error) = $self->write_workspace($creator);
     if (!$status) {
@@ -907,20 +895,26 @@ sub generate_project_files {
     }
   }
 
+  ## Add implict project dependencies based on source files
+  ## that have been used by multiple projects.  If we do it here
+  ## before we call generate_hierarchy(), we don't have to call it
+  ## in generate_hierarchy() for each workspace.
+  $self->{'projects'}     = \@projects;
+  $self->{'project_info'} = \%pi;
+  if ($status && $genimpdep) {
+    $self->add_implicit_project_dependencies($creator, $cwd);
+  }
+
+  ## If we are generating the hierarchical workspaces, then do so
   if ($self->get_hierarchy()) {
     my($orig) = $self->{'workspace_name'};
     $self->generate_hierarchy($creator, \@projects, \%pi);
     $self->{'workspace_name'} = $orig;
   }
 
+  ## Reset the projects and project_info
   $self->{'projects'}     = \@projects;
   $self->{'project_info'} = \%pi;
-
-  ## Add implict project dependencies based on source files
-  ## that have been used by multiple projects
-  if ($status && $genimpdep) {
-    $self->add_implicit_project_dependencies($creator, $cwd);
-  }
 
   return $status, $creator;
 }

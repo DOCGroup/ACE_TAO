@@ -1,3 +1,13 @@
+Wed Mar  3 13:06:59 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Put in some more optimizations that make MPC about 9% faster.
+          Also, fixed a problem with generating implicit project
+          dependencies too many times when the -hierarchy option is used.
+
 Wed Mar  3 16:58:16 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * include/makeinclude/rules.nested.GNU:
