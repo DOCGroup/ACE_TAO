@@ -1,5 +1,9 @@
 Thu Jun 18 16:25:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* examples/Threads/task_five.cpp (main): Extracted out the body of
+ 	  the test loop so that the delete[] gets called everytime the
+ 	  body gets executed.
+
 	* ace/Thread_Manager.cpp (ACE_EXECUTE_OP,kill): We need to guard
  	  against non-existing target thread after searching the thread
  	  table.  Thanks to Savas Parastatidis
