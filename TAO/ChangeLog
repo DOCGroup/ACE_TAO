@@ -1,3 +1,22 @@
+Thu Nov  4 13:51:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated for recent *.mpc changes, HTIOP, etc.
+
+	* orbsvcs/orbsvcs/FTORB.mpc:
+
+	  Added PortableGroup_Simple_DSS.h and
+	  FaultTolerance/FT_ORB_Utils_export.h to Header_Files.
+
+	* orbsvcs/orbsvcs/FaultTolerance.mpc:
+
+	  Added FaultTolerance/fault_tol_export.h to Header_Files.
+
+	* orbsvcs/orbsvcs/PortableGroup.mpc:
+
+	  Added PortableGroup/portablegroup_export.h to Header_Files.
+
 Thu Nov  4 13:14:24 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
