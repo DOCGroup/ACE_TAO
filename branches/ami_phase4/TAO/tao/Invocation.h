@@ -71,8 +71,8 @@ public:
                        TAO_ORB_Core* orb_core);
   // Constructor.
   
-  ~TAO_GIOP_Invocation (void);
-  // Destructor.
+  virtual ~TAO_GIOP_Invocation (void);
+  // Destructor. This is virtual so that we can have 
 
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
@@ -171,7 +171,10 @@ public:
                               const char *operation,
                               TAO_ORB_Core* orb_core);
   // Constructor.
-  
+
+  ~TAO_GIOP_Twoway_Invocation (void);
+  // Destructor.
+
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -230,6 +233,9 @@ public:
                               TAO_ORB_Core* orb_core);
   // Constructor.
 
+  ~TAO_GIOP_Oneway_Invocation (void);
+  // Destructor.
+
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -252,6 +258,9 @@ public:
   TAO_GIOP_Locate_Request_Invocation (TAO_Stub *data,
                                       TAO_ORB_Core* orb_core);
   // Constructor.
+
+  ~TAO_GIOP_Locate_Request_Invocation (void);
+  // Destructor.
 
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
