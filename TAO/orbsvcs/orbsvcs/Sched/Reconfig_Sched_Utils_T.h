@@ -118,9 +118,18 @@ class TAO_RSE_DFS_Visitor :
 {
 public:
 
+
   TAO_RSE_DFS_Visitor
-    (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-     ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+    (ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & dependency_map,
+     ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK>& rt_info_map);
   // Constructor.
 
 protected:
@@ -166,8 +175,16 @@ class TAO_RSE_SCC_Visitor :
 public:
 
   TAO_RSE_SCC_Visitor
-    (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-     ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+    (ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & dependency_map,
+     ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & rt_info_map);
   // Constructor.
 
   int number_of_cycles (void);
@@ -242,8 +259,16 @@ class TAO_RSE_Propagation_Visitor :
 public:
 
   TAO_RSE_Propagation_Visitor
-    (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-     ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+    (ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & dependency_map,
+     ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & rt_info_map);
   // Constructor.
 
   int unresolved_locals (void);

@@ -40,7 +40,15 @@ ACE_RCSID(Sched, Reconfig_Sched_Utils_T, "$Id$")
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Dependency_Visitor
-    (DEPENDENCY_SET_MAP & dependency_map, RT_INFO_MAP & rt_info_map)
+    (ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & dependency_map, ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & rt_info_map)
   : dependency_map_ (dependency_map),
     rt_info_map_ (rt_info_map)
 {
@@ -243,8 +251,16 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_DFS_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & dependency_map,
+   ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0)
@@ -327,8 +343,16 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_SCC_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & dependency_map,
+   ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0),
@@ -473,8 +497,16 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Propagation_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & dependency_map,
+   ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map),
     unresolved_locals_ (0),
     unresolved_remotes_ (0),
