@@ -1,14 +1,27 @@
+Fri Jul 06 18:20:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp: #if 0'd out a bunch of
+          ACE_DEBUG statements that aren't appropriate for use in commercial
+          logging. These can be #if 1'd if there's some doubt while debugging
+          this stuff, but they aren't useful once debugged, and are
+          distracting since they're interespersed with application records.
+
 Fri Jul  6 13:40:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg_UNIX_Syslog.cpp: Fixed a warning in g++. 
 
 Fri Jul 06 11:39:41 2001  Steve Huston  <shuston@riverace.com>
-  
+
         * ace/INET_Addr.h: Clarified (and improved doxygenation) of
           constructor and set() methods regarding byte orders.
 
         * tests/Max_Default_Port_Test.icc: New file for this test.
         * tests/tests.icp: Added Max_Default_Port_Test
+
+Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * netsvcs/Makefile: Don't build this if ACE_COMPONENTS does not
+	  contain Other.  The netsvcs library requires Naming_Context.
 
 Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -28,16 +41,6 @@ Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/config-macosx.h: Added a new file courtesy of John
 	  Zorko so that things will work on MacOSX.
-
-Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
-
-        * netsvcs/Makefile: Don't build this if ACE_COMPONENTS does not
-	  contain Other.  The netsvcs library requires Naming_Context.
-	
-Thu Jul  5 23:22:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	  Fixes that were required for fixing bug 575. Merged in from
-	  branch bug_575_stage_2.  
   
 Thu Jul  5 23:22:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
