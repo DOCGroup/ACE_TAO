@@ -1,7 +1,7 @@
 Sat Dec 14 09:19:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Timer_Queue.cpp: #included Reactor.h. No
-	  reason to do this,but this change in ACE makes us do this
+	  reason to do this, but this change in ACE makes us do this
 	  "Fri Dec 13 16:05:05 2002  Douglas C. Schmidt
 	  <schmidt@ace.cs.wustl.edu>" 
 
