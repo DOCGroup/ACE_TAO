@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "Repository_i.h"
@@ -6,9 +7,14 @@
 #include "ExceptionDef_i.h"
 #include "Options.h"
 #include "Servant_Factory.h"
+
+#include "tao/ORB.h"
+
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(IFR_Service, Repository_i, "$Id$")
+ACE_RCSID (IFR_Service,
+           Repository_i,
+           "$Id$")
 
 TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
