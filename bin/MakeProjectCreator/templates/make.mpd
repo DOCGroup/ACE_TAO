@@ -123,7 +123,7 @@ specialscript:
 <%endif%>
 <%if(prelink)%>
 <%prelink%>: specialscript $(OBJS)
-	@specialscript $(NM) $(OBJS) "$(LDLIBS)" "<%if(libpaths)%><%libpaths%><%else%>.<%endif%>" <%prelink%>
+	@specialscript $(NM) "$(OBJS)" "$(LDLIBS)" "<%if(libpaths)%><%libpaths%><%else%>.<%endif%>" <%prelink%>
 	@$(RM) specialscript
 
 <%noextension(prelink)%>.o: <%prelink%>
