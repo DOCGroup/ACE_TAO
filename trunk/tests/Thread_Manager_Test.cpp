@@ -81,6 +81,8 @@ worker (int iterations)
 			  i));
 	      break;
 	    }
+#else
+          ACE_UNUSED_ARG (thr_mgr);
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 	  ACE_OS::sleep (1);
 	}
@@ -150,3 +152,9 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_TSS<Signal_Catcher>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Signal_Catcher>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
