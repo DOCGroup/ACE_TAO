@@ -1,3 +1,9 @@
+Tue Dec 14 19:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/implrepo/index.html:
+          Corrected link to stable Doxygen documentation and added a
+          link for the last night documentation
+
 Tue Dec 14 14:10:00 UTC 2004  Simon Massey  <sma@prismtech.com>
 
         * TAO/orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp
@@ -15,7 +21,7 @@ Mon Dec 13 18:08:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_sequence.cpp:
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
         * TAO_IDL/be_include/be_visitor_sequence/cdr_op_cs.h:
-        
+
           Added some missing virtual visit_* methods for sequences
           of eventtypes, components and homes. Thanks to Gary Duzan
           <gduzan@bbn.com> for reporting the marhshaling exception
