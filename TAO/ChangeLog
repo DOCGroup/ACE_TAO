@@ -1,3 +1,9 @@
+Sat Jul 17 12:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+          Only build when TAO_HAS_CORBA_MESSAGING is 1, just the same as in
+          the header file used
+
 Mon Jul 12 21:50:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Direct_Priority_Mapping.h:
