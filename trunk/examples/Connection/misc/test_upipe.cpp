@@ -177,21 +177,21 @@ template class ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<Server_Service>;
 template class ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>;
 template class ACE_Creation_Strategy<Server_Service>;
-template class ACE_Guard<ACE_Null_Mutex>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Client_Service> *, ACE_Null_Mutex>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Client_Service> *, ACE_Null_Mutex>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
-template class ACE_Read_Guard<ACE_Null_Mutex>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Scheduling_Strategy<Server_Service>;
 template class ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Client_Service>;
-template class ACE_TSS<ACE_Dynamic>;
-template class ACE_Task<ACE_NULL_SYNCH>;
 template class ACE_Thread_Strategy<Server_Service>;
-template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-template class ACE_Write_Guard<ACE_Null_Mutex>;
+
+#if defined (ACE_HAS_THREADS)
+  template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+  template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+  template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#else
+  // These are specialized in libACE if ACE doesn't have threads.
+#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else

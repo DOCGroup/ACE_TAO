@@ -192,16 +192,16 @@ IPC_Client::parse_args (int argc, char *argv[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>;
-template class ACE_Guard<ACE_RW_Mutex>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Peer_Handler> *, ACE_RW_Mutex>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Peer_Handler> *, ACE_RW_Mutex>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
-template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Peer_Handler>;
-template class ACE_TSS<ACE_Dynamic>;
-template class ACE_Task<ACE_NULL_SYNCH>;
-template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-template class ACE_Write_Guard<ACE_RW_Mutex>;
+
+#if defined (ACE_HAS_THREADS)
+  template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+  template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+  template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#else
+  // These are specialized in libACE if ACE doesn't have threads.
+#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

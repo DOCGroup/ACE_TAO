@@ -243,13 +243,8 @@ template class ACE_Accept_Strategy<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Creation_Strategy<ACE_TS_Server_Handler>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Scheduling_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_TSS<ACE_Dynamic>;
-template class ACE_Task<ACE_NULL_SYNCH>;
-template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
