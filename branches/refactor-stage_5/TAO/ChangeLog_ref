@@ -1,3 +1,18 @@
+Sun Aug 31 19:50:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+
+          Moved generation of Any widening extraction to Object
+          and to ValueBase from inline file to source file. Did
+          the same for the no-op specializations for marshal_value()
+          and demarshal_value() necessary for local interfaces.
+          This will allow all inclusions of Any-related ORB files
+          to occur in the source file and thus avoid the propagation
+          that would occur if they were included in the header file.
+
 Sun Aug 31 19:39:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Bounds.pidl:
