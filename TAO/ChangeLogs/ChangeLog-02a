@@ -6,6 +6,7 @@ Wed May 23 09:36:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * examples/PluggableUDP/tests/Performance/server.dsp:
         * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
         * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+
           Updated static release settings to avoid using anything or
           having any dependencies on things that aren't built in the
           static release automatic build.  This should fix the problems
@@ -13,26 +14,26 @@ Wed May 23 09:36:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Wed May 23 09:04:35 2001  Chad Elliott  <elliott_c@ociweb.com>
 
-        * Cache_Entries.cpp:
-        * Cache_Entries.h:
-        * Cache_Entries.inl:
-        * Connection_Purging_Strategy.h:
-        * LRU_Connection_Purging_Strategy.cpp:
-        * LRU_Connection_Purging_Strategy.h:
-        * Transport.cpp:
-        * Transport.h:
-        * Transport.inl:
-        * Transport_Cache_Manager.cpp:
-        * Transport_Cache_Manager.h:
-        * Transport_Cache_Manager.inl:
-        * Strategies/FIFO_Connection_Purging_Strategy.cpp:
-        * Strategies/FIFO_Connection_Purging_Strategy.h:
-        * Strategies/LFU_Connection_Purging_Strategy.cpp:
-        * Strategies/LFU_Connection_Purging_Strategy.h:
-        * Strategies/NULL_Connection_Purging_Strategy.cpp:
-        * Strategies/NULL_Connection_Purging_Strategy.h:
+        * tao/Cache_Entries.cpp:
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+        * tao/Connection_Purging_Strategy.h:
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/LRU_Connection_Purging_Strategy.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.h:
 
-          Performance enhancment and race condition fix for the connection
+          Performance enhancement and race condition fix for the connection
           purging strategy change.  This version has far less allocations and
           locking in the main line of execution.
 
