@@ -36,7 +36,7 @@ TAO_EC_Bitmask_Filter::end (void) const
   return ACE_const_cast(TAO_EC_Filter**,&this->child_) + 1;
 }
 
-ACE_INLINE int
+int
 TAO_EC_Bitmask_Filter::size (void) const
 {
   return 1;

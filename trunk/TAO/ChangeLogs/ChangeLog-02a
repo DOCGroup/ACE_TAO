@@ -1,3 +1,17 @@
+Sat Jun 03 17:08:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+	  Remove ACE_INLINE macros in the .cpp files.
+
+	* examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
+	* examples/Simulator/Event_Supplier/Event_Sup.dsp:
+	* examples/Simulator/Event_Supplier/Logging_Sup.dsp:
+	  Add missing libraries to the project file
+
 Sat Jun  3 15:51:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/PolicyC.cpp:
