@@ -120,6 +120,11 @@
          cookie = servant;
 
          return servant;
+        }
+        else {
+          throw CORBA::OBJECT_NOT_EXIST ();
+        }
+
       }catch (const CORBA::BAD_PARAM &) {
         throw CORBA::OBJECT_NOT_EXIST ();
       }
