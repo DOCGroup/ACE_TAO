@@ -1,3 +1,19 @@
+Thu Apr 13 02:00:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object.h:
+	* tao/Object.i:
+	* tao/Object.cpp: Added implementation of _tao_QueryInterface.
+	  This method is used to downcast local object.  Added a member
+	  data called <is_local_> and a readonly accessor.  We use this
+	  method to find out whether an object reference points to a local
+	  object or not.  <_narrow> behaves differently for LocalObject
+	  and Object.
+
+	* tao/LocalObject.h:
+	* tao/LocalObject.i:
+	* tao/LocalObject.cpp: Added implementation of
+	  _tao_QueryInterface.
+
 Sat Apr 01 02:04:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/corbafwd.h:

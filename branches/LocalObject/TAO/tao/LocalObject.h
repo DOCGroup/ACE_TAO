@@ -48,6 +48,12 @@ public:
   static CORBA::LocalObject_ptr _narrow (CORBA::Object_ptr obj,
                                          CORBA_Environment &ACE_TRY_ENV =
                                            TAO_default_environment ());
+  // @@ Narrowing a CORBA::LocalObject to a CORBA::Object is broken
+  // right now.  The solution seems to be making CORBA::Object an
+  // abstract base class and create a CORBA::RemoteObject for regular
+  // object.  Or, even easier, add a <is_local> member into
+  // CORBA::Object.  I'll take the easier route for now.
+
   static CORBA::LocalObject_ptr _unchecked_narrow (CORBA::Object_ptr obj,
                                                    CORBA_Environment &ACE_TRY_ENV =
                                                      TAO_default_environment ());
@@ -189,6 +195,10 @@ public:
   // probably crash.  This method does not create a new copy.
 #endif /* 0 */
 
+  virtual void * _tao_QueryInterface (ptr_arith_t type);
+  // Downcasting this object pointer to some other derived class.
+  // This QueryInterface stuff only work for local object.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::LocalObject_ptr _ptr_type;
   typedef CORBA::LocalObject_var _var_type;
@@ -196,6 +206,10 @@ public:
   // Useful for template programming.
 
 protected:
+  LocalObject ();
+  // Default constructor.  Make it protected to prevent instantiation
+  // of this class.
+
 private:
 
   // = Unimplemented methods

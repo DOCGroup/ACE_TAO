@@ -21,18 +21,31 @@ CORBA::LocalObject::_nil (void)
 ACE_INLINE CORBA::LocalObject_ptr
 CORBA::LocalObject::_narrow (CORBA::Object_ptr obj, CORBA::Environment& ACE_TRY_ENV)
 {
-  if (obj->_is_a ("IDL:omg.org/CORBA/LocalObject:1.0", ACE_TRY_ENV))
-    return CORBA::LocalObject::_unchecked_narrow (obj, ACE_TRY_ENV);
-  else
-    return 0;
+  if (obj->_is_local () != 0)
+    return
+      ACE_reinterpret_cast (CORBA::LocalObject_ptr,
+                            obj->_tao_QueryInterface
+                              (ACE_reinterpret_cast (ptr_arith_t,
+                                                     &CORBA::LocalObject::_narrow)));
+  return 0;
 }
 
 ACE_INLINE CORBA::LocalObject_ptr
 CORBA::LocalObject::_unchecked_narrow (CORBA::Object_ptr obj, CORBA::Environment&)
 {
-  return CORBA::LocalObject::_duplicate
-    (ACE_reinterpret_cast (CORBA::LocalObject_ptr,
-                           ACE_reinterpret_cast (void *, obj)));
+  if (obj->_is_local () != 0)
+    return
+      ACE_reinterpret_cast (CORBA::LocalObject_ptr,
+                            obj->_tao_QueryInterface
+                              (ACE_reinterpret_cast (ptr_arith_t,
+                                                     &CORBA::LocalObject::_narrow)));
+  return 0;
+}
+
+ACE_INLINE
+CORBA::LocalObject::LocalObject ()
+  : ACE_NESTED_CLASS (CORBA, Object (0))
+{
 }
 
 // *************************************************************

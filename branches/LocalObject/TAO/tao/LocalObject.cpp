@@ -98,6 +98,25 @@ CORBA::LocalObject::_key (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
+void *
+CORBA::LocalObject::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (ptr_arith_t,
+                                    &CORBA::LocalObject::_narrow))
+    retv = ACE_reinterpret_cast (void *, this);
+  else if (type == ACE_reinterpret_cast (ptr_arith_t,
+                                         &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+                                 ACE_static_cast (CORBA::Object_ptr,
+                                                  this));
+  if (retv)
+    this->_add_ref ();
+
+  return retv;
+}
+
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // NON_EXISTENT ... send a simple call to the object, which will
