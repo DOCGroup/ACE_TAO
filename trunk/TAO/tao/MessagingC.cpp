@@ -170,6 +170,9 @@ TAO_NAMESPACE_TYPE (const CORBA::UShort)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::UShort, ORDER_DEADLINE, 8)
 TAO_NAMESPACE_END
+
+#if (TAO_HAS_REBIND_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REBIND_POLICY_TYPE,
@@ -248,6 +251,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RebindPolicy, &_tc_TAO_tc_Messaging_RebindPolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_REBIND_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, SYNC_SCOPE_POLICY_TYPE,
@@ -326,6 +334,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_SyncScopePolicy, &_tc_TAO_tc_Messaging_SyncScopePolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_PRIORITY_POLICY_TYPE,
@@ -510,6 +523,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyPriorityPolicy, &_tc_TAO_tc_Messaging_ReplyPriorityPolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_START_TIME_POLICY_TYPE,
@@ -588,6 +606,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestStartTimePolicy, &_tc_TAO_tc_Messaging_RequestStartTimePolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_END_TIME_POLICY_TYPE,
@@ -666,6 +689,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestEndTimePolicy, &_tc_TAO_tc_Messaging_RequestEndTimePolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_START_TIME_POLICY_TYPE,
@@ -744,6 +772,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyStartTimePolicy, &_tc_TAO_tc_Messaging_ReplyStartTimePolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_END_TIME_POLICY_TYPE,
@@ -822,6 +855,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyEndTimePolicy, &_tc_TAO_tc_Messaging_ReplyEndTimePolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_REQ_TIMEOUT_POLICY_TYPE,
@@ -900,6 +938,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RelativeRequestTimeoutPolicy, &_tc_TAO_tc_Messaging_RelativeRequestTimeoutPolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_RT_TIMEOUT_POLICY_TYPE,
@@ -979,6 +1022,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RelativeRoundtripTimeoutPolicy, &_tc_TAO_tc_Messaging_RelativeRoundtripTimeoutPolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, ROUTING_POLICY_TYPE,
@@ -1085,6 +1133,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RoutingPolicy, &_tc_TAO_tc_Messaging_RoutingPolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, MAX_HOPS_POLICY_TYPE,
@@ -1163,6 +1216,11 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_MaxHopsPolicy, &_tc_TAO_tc_Messaging_MaxHopsPolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, QUEUE_ORDER_POLICY_TYPE,
@@ -1241,6 +1299,9 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_QueueOrderPolicy, &_tc_TAO_tc_Messaging_QueueOrderPolicy)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
+
 static const CORBA::Long _oc_Messaging_PolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -2073,6 +2134,8 @@ TAO_NAMESPACE_END
 
 // ****************************************************************
 
+#if (TAO_HAS_REBIND_POLICY == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::RebindPolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -2131,6 +2194,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RebindPolicy_
   return 0;
 }
 
+#endif /* TAO_HAS_REBIND_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::SyncScopePolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -2188,6 +2255,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::SyncScopePoli
   _tao_elem = Messaging::SyncScopePolicy::_nil ();
   return 0;
 }
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
 {
@@ -2391,6 +2462,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyPriority
   return 0;
 }
 
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::RequestStartTimePolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -2448,6 +2523,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestStartT
   _tao_elem = Messaging::RequestStartTimePolicy::_nil ();
   return 0;
 }
+
+#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RequestEndTimePolicy_ptr _tao_elem)
 {
@@ -2507,6 +2586,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestEndTim
   return 0;
 }
 
+#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyStartTimePolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -2565,6 +2648,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyStartTim
   return 0;
 }
 
+#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyEndTimePolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -2622,6 +2709,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyEndTimeP
   _tao_elem = Messaging::ReplyEndTimePolicy::_nil ();
   return 0;
 }
+
+#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RelativeRequestTimeoutPolicy_ptr _tao_elem)
 {
@@ -2682,6 +2773,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeReque
   return 0;
 }
 
+#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::RelativeRoundtripTimeoutPolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -2740,7 +2835,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeRound
   return 0;
 }
 
-// ****************************************************************
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::RoutingTypeRange &_tao_elem) // copying
 {
@@ -2828,8 +2925,6 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Routing
   return _tao_any >>= ACE_const_cast(Messaging::RoutingTypeRange *&,_tao_elem);
 }
 
-// ****************************************************************
-
 void operator<<= (CORBA::Any &_tao_any, Messaging::RoutingPolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -2887,6 +2982,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingPolicy
   _tao_elem = Messaging::RoutingPolicy::_nil ();
   return 0;
 }
+
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::MaxHopsPolicy_ptr _tao_elem)
 {
@@ -2946,6 +3045,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::MaxHopsPolicy
   return 0;
 }
 
+#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+
+#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
+
 void operator<<= (CORBA::Any &_tao_any, Messaging::QueueOrderPolicy_ptr _tao_elem)
 {
     TAO_OutputCDR stream;
@@ -3003,6 +3106,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::QueueOrderPol
   _tao_elem = Messaging::QueueOrderPolicy::_nil ();
   return 0;
 }
+
+#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::PolicyValue &_tao_elem) // copying
 {

@@ -1,15 +1,93 @@
+Mon Mar 27 16:11:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: The following changes allows the user finer grain control
+	  over the CORBA Messaging policies.  Most (all?) of the CORBA
+	  Messaging policies are evaluated in the critical path and
+	  therefore having finer grain control over the policies is
+	  important.  Thanks to Dennis Noll <Dennis.Noll@MW.Boeing.com>
+	  for suggesting this.
+
+	  - For all the policies, support is enabled by default if TAO is
+	  configured for CORBA Messaging.  If TAO is not configured for
+	  CORBA Messaging, then policies cannot be enabled.  Default
+	  support for all policies can be turned off by setting
+	  TAO_DISABLE_CORBA_MESSAGING_POLICIES to 1.  Once
+	  TAO_DISABLE_CORBA_MESSAGING_POLICIES is set to 1, individual
+	  policies can be turned on through their own #define.  Here is
+	  how to make it work:
+
+	  (a) If you want most policies turned on and a few disabled,
+	  disable the few explicitly, e.g.:
+
+	  #define TAO_HAS_REBIND_POLICY 0
+
+	  (b) If you want most policies turned off and a few enabled,
+	  diable all by default and enable the few explicitly, e.g.:
+
+	  #define TAO_DISABLE_CORBA_MESSAGING_POLICIES 1
+	  #define TAO_HAS_REBIND_POLICY 1
+
+	  - The following #defines were added, one for each CORBA
+	  Messaging policy.  Code related to each of the policies now use
+	  the appropriate #define instead of using
+	  TAO_HAS_CORBA_MESSAGING.
+
+	    - TAO_HAS_REBIND_POLICY
+	    - TAO_HAS_SYNC_SCOPE_POLICY
+	    - TAO_HAS_PRIORITY_POLICIES
+	    - TAO_HAS_REQUEST_START_TIME_POLICY
+	    - TAO_HAS_REQUEST_END_TIME_POLICY
+	    - TAO_HAS_REPLY_START_TIME_POLICY
+	    - TAO_HAS_REPLY_END_TIME_POLICY
+	    - TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY
+	    - TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
+	    - TAO_HAS_ROUTING_POLICY
+	    - TAO_HAS_MAX_HOPS_POLICY
+	    - TAO_HAS_QUEUE_ORDER_POLICY
+	    - TAO_HAS_CLIENT_PRIORITY_POLICY
+	    - TAO_HAS_BUFFERING_CONSTRAINT_POLICY
+
+	  The following files were effected:
+
+	    - Buffering_Constraint_Policy.{cpp,h}
+	    - Client_Priority_Policy.{cpp,h,i}
+	    - IIOP_Connect.cpp
+	    - UIOP_Connect.cpp
+	    - Invocation.cpp
+	    - ORB.{cpp,h}
+	    - ORB_Core.{cpp,h,i}
+	    - Object.{cpp,h}
+	    - Stub.{cpp,h}
+	    - Sync_Strategies.{cpp,h}
+	    - TAOC.{cpp,h,i}
+	    - TAOS.{cpp,h,i}
+	    - Policy_Manager.{cpp,h,i}
+	    - Messaging_Policy_i.{cpp,h,i}
+	    - MessagingC.{cpp,h.i}
+	    - MessagingS.{cpp,h.i}
+
+	  - AMI is part of Messaging.  Therefore, checking for
+	  TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK or
+	  TAO_HAS_AMI_POLLER is redundant.  Removed the extra
+	  TAO_HAS_CORBA_MESSAGING check.  Following files were effected:
+
+	    - Asynch_Invocation.{cpp,h,i}
+	    - PollableC.{cpp,h}
+	    - PollableS.{cpp,h}
+	    - Reply_Dispatcher.{cpp,h,i}
+
 Mon Mar 27 11:11:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Acceptors.h:
 	* tao/GIOP_Message_Acceptors.i: Added a destructor to the class
 	  TAO_GIOP_Message_Acceptors. This would reset the OutputCDR
-	  that it holds. 
+	  that it holds.
 
 Mon Mar 27 09:05:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Basic/Makefile:
 	* orbsvcs/tests/Event/Basic: Needed the library libTAO_Svc_Utils
-	  for successful linking. 
+	  for successful linking.
 
 Mon Mar 27 08:57:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -20,13 +98,13 @@ Sun Mar 26 20:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
-	  Generated an implementation for <_stubobj> method in 
-	  the Smart_Proxy_Base class which delegated this call 
+	  Generated an implementation for <_stubobj> method in
+	  the Smart_Proxy_Base class which delegated this call
 	  to the underlying <base_proxy_> member. This allows
-	  <_narrow> on a smart proxy object to succeed. Thanks 
+	  <_narrow> on a smart proxy object to succeed. Thanks
 	  to Brian Wallis <brian.wallis@ot.com.au> for reporting
 	  this bug.
-	  
+
 Sun Mar 26 14:57:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
@@ -40,7 +118,7 @@ Sun Mar 26 14:57:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  generated code can contain identifiers identical to
 	  IDL keywords. Note that if the stripped identifier
 	  matches a C++ keyword "_cxx_" will be prepended in
-	  generated code as before. Thanks to Alex Bangs 
+	  generated code as before. Thanks to Alex Bangs
 	  <bangs@entelos.com> for uncovering this problem by
 	  reporting that the IDL compiler would not accept
 	  CosLifeCycle.idl with valuetype support enabled
@@ -69,19 +147,19 @@ Sun Mar 26 13:32:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  statement were all superfluous in UTL_ScopeStack::push().
 
 Sat Mar 25 22:10:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-	
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 	  Added a check for TAO_Stub pointer in the generated code for
-	  <_unchecked_narrow>. This check allowed <_unchecked_narrow> on 
+	  <_unchecked_narrow>. This check allowed <_unchecked_narrow> on
 	  a smart proxy to succeed. Previously this was failing as the
 	  <protocol_proxy_> member for a smart proxy is nil and it was
 	  used to increment its reference count. Thanks to Brian Wallis
 	  <brian.wallis@ot.com.au> for reporting this bug.
-	  
+
 	  This did not solve the bug, more changes had to be made. Please
 	  see ChangeLogTag:Sun Mar 26 20:20:00 2000  Kirthika Parameswaran
 	  <kirthika@cs.wustl.edu>
-			
+
 Sat Mar 25 15:24:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Callback_Quoter/Makefile:
@@ -180,6 +258,25 @@ Fri Mar 24 10:21:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
         * TAO_IDL/ast/ast_expression.cpp:
           Initialized some variables to avoid cxx warnings,
           and made some cosmetic changes.
+
+Thu Mar 23 23:57:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* rules.tao.GNU: There was a problem with the current make rules
+	  that define default values some #defines, e.g., if nothing is
+	  specified by the user with the make command wrt corba messaging,
+	  -DTAO_HAS_CORBA_MESSAGING=1 gets added automatically.  Make
+	  rules such as these are too aggressive since this prevents the
+	  user from setting #define TAO_HAS_CORBA_MESSAGING 0 in their
+	  config files.  Therefore, the default setting of the following
+	  variables was removed from rules.tao.GNU since they will
+	  automatically be picked up from the orb config file unless
+	  overridden by the user in their config file:
+
+	  - TAO_HAS_CORBA_MESSAGING
+	  - TAO_HAS_RT_CORBA
+	  - TAO_HAS_AMI
+	  - TAO_HAS_AMI_POLLER
+	  - TAO_HAS_AMI_CALLBACK
 
 Thu Mar 23 21:49:36 2000  Darrell Brunsch <brunsch@uci.edu>
 

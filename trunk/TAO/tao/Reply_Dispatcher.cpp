@@ -136,8 +136,6 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 
 // *********************************************************************
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 // Constructor.
@@ -234,8 +232,6 @@ TAO_Asynch_Reply_Dispatcher::message_state (void)
 }
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // *********************************************************************
 

@@ -40,11 +40,9 @@
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
 #include "tao/Buffering_Constraint_Policy.h"
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # if defined (ACE_MVS)
@@ -436,29 +434,41 @@ CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 CORBA_Object_ptr
 CORBA_ORB::resolve_policy_manager (CORBA::Environment &ACE_TRY_ENV)
 {
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   TAO_Policy_Manager *policy_manager =
     this->orb_core_->policy_manager ();
   if (policy_manager == 0)
     return CORBA_Object::_nil ();
 
   return policy_manager->_this (ACE_TRY_ENV);
+
 #else
+
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_policy_current (CORBA::Environment &ACE_TRY_ENV)
 {
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
   return policy_current._this (ACE_TRY_ENV);
+
 #else
+
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 }
 
 CORBA_Object_ptr
@@ -1709,25 +1719,42 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 
   switch (type)
     {
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       return TAO_RelativeRoundtripTimeoutPolicy::create (root_poa.in (),
                                                          val,
                                                          ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
     case TAO_CLIENT_PRIORITY_POLICY_TYPE:
       return TAO_Client_Priority_Policy::create (root_poa.in (),
                                                  val,
                                                  ACE_TRY_ENV);
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
     case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
       return TAO_Sync_Scope_Policy::create (root_poa.in (),
                                             val,
                                             ACE_TRY_ENV);
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
     case TAO_BUFFERING_CONSTRAINT_POLICY_TYPE:
       return TAO_Buffering_Constraint_Policy::create (root_poa.in (),
                                                       val,
                                                       ACE_TRY_ENV);
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
     case TAO_MESSAGING_REBIND_POLICY_TYPE:
     case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:

@@ -1,9 +1,6 @@
 // $Id$
 
 #include "tao/Messaging_Policy_i.h"
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -11,6 +8,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (PortableServer::POA_ptr poa,
                                                                         const TimeBase::TimeT& relative_expiry)
@@ -141,7 +140,11 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
     }
 }
 
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
 ////////////////////////////////////////////////////////////////////////////////
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization,
                                               PortableServer::POA_ptr poa)
@@ -235,6 +238,8 @@ TAO_Sync_Scope_Policy::_default_POA (CORBA_Environment &)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
 ////////////////////////////////////////////////////////////////////////////////
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -242,5 +247,3 @@ TAO_Sync_Scope_Policy::_default_POA (CORBA_Environment &)
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

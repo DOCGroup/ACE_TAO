@@ -19,7 +19,7 @@
 
 #include "tao/PollableS.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1) && (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_POLLER == 1)
 
 #include "tao/Operation_Table.h"
 #include "tao/Server_Request.h"
@@ -932,4 +932,4 @@ POA_CORBA::PollableSet::_this (CORBA_Environment &ACE_TRY_ENV)
 
   return retval;
 }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER == 1 */

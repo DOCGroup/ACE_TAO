@@ -149,9 +149,7 @@ private:
 
 // *********************************************************************
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-#  if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
@@ -221,9 +219,7 @@ private:
   // This invocation is using this transport, may change...
 };
 
-#  endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 // *********************************************************************
 

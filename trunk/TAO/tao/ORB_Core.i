@@ -116,6 +116,7 @@ TAO_ORB_Core::to_unicode (void) const
 }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
 ACE_INLINE TAO_Policy_Manager *
 TAO_ORB_Core::policy_manager (void)
 {
@@ -130,11 +131,19 @@ TAO_ORB_Core::get_default_policy (
   return this->default_policies_->get_policy (policy, ACE_TRY_ENV);
 }
 
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
 ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {
   return this->default_policies_->relative_roundtrip_timeout ();
 }
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 ACE_INLINE TAO_Client_Priority_Policy *
 TAO_ORB_Core::default_client_priority (void) const
@@ -142,11 +151,19 @@ TAO_ORB_Core::default_client_priority (void) const
   return this->default_policies_->client_priority ();
 }
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
 ACE_INLINE TAO_Sync_Scope_Policy *
 TAO_ORB_Core::default_sync_scope (void) const
 {
   return this->default_policies_->sync_scope ();
 }
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 ACE_INLINE TAO_Buffering_Constraint_Policy *
 TAO_ORB_Core::default_buffering_constraint (void) const
@@ -154,7 +171,7 @@ TAO_ORB_Core::default_buffering_constraint (void) const
   return this->default_policies_->buffering_constraint ();
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources (void)
@@ -203,7 +220,7 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 
 // ****************************************************************
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 ACE_INLINE TAO_Eager_Buffering_Sync_Strategy &
 TAO_ORB_Core::eager_buffering_sync_strategy (void)
@@ -217,7 +234,7 @@ TAO_ORB_Core::delayed_buffering_sync_strategy (void)
   return *this->delayed_buffering_sync_strategy_;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 ACE_INLINE TAO_Transport_Sync_Strategy &
 TAO_ORB_Core::transport_sync_strategy (void)

@@ -2,7 +2,6 @@
 // $Id$
 
 #include "tao/Sync_Strategies.h"
-
 #include "tao/Buffering_Constraint_Policy.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
@@ -26,7 +25,7 @@ TAO_Transport_Sync_Strategy::send (TAO_Transport &transport,
                          max_wait_time);
 }
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 ssize_t
 TAO_Delayed_Buffering_Sync_Strategy::send (TAO_Transport &transport,
@@ -239,4 +238,4 @@ TAO_Eager_Buffering_Sync_Strategy::time_conversion (const TimeBase::TimeT &time)
                          ACE_U64_TO_U32 (microseconds));
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

@@ -498,7 +498,9 @@ CORBA_Object::_get_implementation (CORBA::Environment &)
 // @@ Does it make sense to support policy stuff for locality constrained
 //    objects?  Also, does it make sense to bind policies with stub object?
 //    - nw.
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
 CORBA::Policy_ptr
 CORBA_Object::_get_policy (
     CORBA::PolicyType type,
@@ -565,8 +567,11 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
   inconsistent_policies = 0;
 
 #if defined (TAO_HAS_MINIMUM_CORBA)
+
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+
 #else
+
   // If the object is collocated then use non_existent to see whether
   // it's there.
   if (this->is_collocated_)
@@ -575,7 +580,9 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
   if (this->protocol_proxy_)
     return this->protocol_proxy_->validate_connection (inconsistent_policies,
                                                        ACE_TRY_ENV);
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
   return 0;
 }
 

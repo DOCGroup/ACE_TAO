@@ -50,7 +50,7 @@ public:
                 const ACE_Time_Value *max_wait_time);
 };
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 class TAO_Export TAO_Eager_Buffering_Sync_Strategy : public TAO_Sync_Strategy
 {
@@ -79,7 +79,7 @@ public:
                 const ACE_Time_Value *max_wait_time);
 };
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 #if defined (__ACE_INLINE__)
 # include "tao/Sync_Strategies.i"

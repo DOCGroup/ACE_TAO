@@ -15,7 +15,7 @@
 #include "tao/TAOC.i"
 #endif /* !defined INLINE */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 static const CORBA::Long _oc_TAO_PrioritySelectionMode[] =
 {
@@ -346,6 +346,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::ClientPriorityPolic
 #  pragma instantiate TAO_Object_Field_T<TAO::ClientPriorityPolicy,TAO::ClientPriorityPolicy_var>
 #  pragma instantiate TAO_Object_Manager<TAO::ClientPriorityPolicy,TAO::ClientPriorityPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
 static const CORBA::Long _oc_TAO_BufferingConstraintMode[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -689,7 +694,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
 #  pragma instantiate TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (TAO)

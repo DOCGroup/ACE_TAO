@@ -7,7 +7,7 @@
 #include "tao/Client_Priority_Policy.i"
 #endif /* __ACE_INLINE__ */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 ACE_RCSID(TAO, Client_Priority_Policy, "$Id$")
 
@@ -118,4 +118,4 @@ TAO_Client_Priority_Policy::_default_POA (CORBA_Environment &)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */

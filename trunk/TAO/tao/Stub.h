@@ -41,13 +41,12 @@
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
 // Forward declarations.
+
 class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
@@ -151,19 +150,12 @@ public:
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
-
-  TAO_Client_Priority_Policy *client_priority (void);
-
-  TAO_Sync_Scope_Policy *sync_scope (void);
-
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void);
 
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,
@@ -186,7 +178,32 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
+  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
+
+  TAO_Client_Priority_Policy *client_priority (void);
+
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
+  TAO_Sync_Scope_Policy *sync_scope (void);
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
+  TAO_Buffering_Constraint_Policy *buffering_constraint (void);
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   TAO_Sync_Strategy &sync_strategy (void);
   // Return the sync strategy to be used in by the transport.
@@ -378,9 +395,11 @@ private:
   //      the ORB's RootPOA.
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   TAO_Policy_Manager_Impl *policies_;
   // The policy overrides in this object, if nil then use the default
   // policies.
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   // = Disallow copy constructor and assignment operator

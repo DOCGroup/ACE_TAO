@@ -133,6 +133,7 @@ public:
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   CORBA::Policy_ptr _get_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
@@ -159,6 +160,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
