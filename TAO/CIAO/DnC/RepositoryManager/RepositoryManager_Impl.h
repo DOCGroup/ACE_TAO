@@ -26,6 +26,7 @@
 #include "CIAO/DnC/Config_Handlers/XercesString.h"
 #include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/parsers/AbstractDOMParser.hpp>
 #include "CIAO/DnC/Config_Handlers/Config_Handler_export.h"
 #include "CIAO/DnC/Config_Handlers/Domain_Handler.h"
 #include "CIAO/DnC/Config_Handlers/PC_Handler.h"
@@ -55,6 +56,7 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::XercesDOMParser;
+using xercesc::AbstractDOMParser;
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
