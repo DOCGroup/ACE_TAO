@@ -258,7 +258,8 @@ protected:
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
                           const TAO_Temporary_Creation_Time &poa_creation_time,
-                          TAO_POA *&poa);
+                          TAO_POA *&poa,
+                          CORBA_Environment &ACE_TRY_ENV);
 
   int find_persistent_poa (const poa_name &system_name,
                            TAO_POA *&poa,
