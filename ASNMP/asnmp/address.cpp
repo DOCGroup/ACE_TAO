@@ -553,7 +553,12 @@ int IpAddress::addr_to_friendly()
     return 0;
  }
  else {
+#if defined (VXWORKS)
+   // VxWorks doesn't have h_errno
+   iv_friendly_name_status_ = errno;
+#else
    iv_friendly_name_status_ = h_errno;
+#endif /* VXWORKS */
    return iv_friendly_name_status_;
  }
 }

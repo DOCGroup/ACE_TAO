@@ -1,12 +1,18 @@
+Tue Nov 23 10:35:41 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ASNMP/asnmp/address.cpp:
+
+          VxWorks doesn't have h_errno.
+
 Tue Nov 23 15:33:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Auto_Ptr.h:
-	  Added missing auto_ptr(auto_ptr<X> &) constructor.
+          Added missing auto_ptr(auto_ptr<X> &) constructor.
 
 Tue Nov 23 15:20:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks5.x.h:
-	  Fixed auto_ptr config for GNU-G builds.
+          Fixed auto_ptr config for GNU-G builds.
 
 Tue Nov 23 07:56:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
