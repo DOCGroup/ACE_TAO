@@ -1,3 +1,8 @@
+Tue Apr 22 12:43:17 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tests/Proactor_Scatter_Gather_Test.cpp:
+	  Fixed build error on win32.
+
 Tue Apr 22 07:30:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
