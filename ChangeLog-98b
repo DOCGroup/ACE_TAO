@@ -1,3 +1,10 @@
+Wed Jul 15 14:33:15 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Select_Reactor.cpp: Added some MVS-specific behavior in the
+	  error checking/recovery code so that bad handles are properly
+	  located and removed on MVS Open Edition.  Thanks to Chuck Gehr
+	  for his hard work in tracking these down.
+
 Tue Jul 14 14:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp: Changed the handling
