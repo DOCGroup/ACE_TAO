@@ -1,3 +1,8 @@
+1998-12-31  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{cpp,h}:
+	  Fixed a crazy #include problem with g++. 
+
 Thu Dec 31 09:46:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
