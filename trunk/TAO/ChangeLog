@@ -1,3 +1,38 @@
+Fri Aug 13 11:06:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h (OpenSSL_st_var):
+
+	  The types used as template parameters for this class template do
+	  not inherit from a common base class so there is no need to
+	  inherit from TAO_Base_var and declare undefined a TAO_Base_var
+	  copy constructor and assignment operator to prevent widening
+	  assignments.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl (OpenSSL_st_var):
+
+	  Removed TAO_Base_var constructor call from the base member
+	  initializer list.  This class no longer inherits from
+	  TAO_Base_var.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h (Current_var):
+
+	  Define this class in terms of the TAO::Pseudo_Var_T class
+	  template instead of customized class.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+
+	  Removed the custom TAO::SSLIOP::Current_var class definition.
+	  It is no longer needed.
+
+	* orbsvsc/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvsc/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp:
+
+	  Added missing explicit template instantiations for
+	  TAO_Pseudo_Var_T template instances defined in the corresponding
+	  headers of these files.  Fixes link-time errors in explicit
+	  template instantiation builds.
+
 Fri Aug 13 17:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IOR_Parser.h:
