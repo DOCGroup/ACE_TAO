@@ -1,3 +1,27 @@
+Wed Jun  2 19:07:01 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ciao/CIAO_Client_Export.h:
+	* ciao/CIAO_Container_Export.h:
+	* ciao/CIAO_Export.h:
+	* ciao/CIAO_Server_Export.h:
+	* examples/OEP/BasicSP/BasicSP_stub_export.h:
+	* examples/OEP/BasicSP/BasicSP_svnt_export.h:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_exec_export.h:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_stub_export.h:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_svnt_export.h:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+	* examples/OEP/BasicSP/EC/EC_exec_export.h:
+	* examples/OEP/BasicSP/EC/EC_stub_export.h:
+	* examples/OEP/BasicSP/EC/EC_svnt_export.h:
+	* tools/Segment_Timer/Segment_Timer_Export.h:
+	* tools/Simple_Component_Server/Simple_Server_Stub_Export.h:
+	* tools/XML_Helpers/XML_Helpers_Export.h:
+
 Wed Jun  2 18:57:29 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Core/NodeApplication_Impl.cpp:

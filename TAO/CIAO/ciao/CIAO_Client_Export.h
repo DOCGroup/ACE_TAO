@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl CIAO_CLIENT
+// This file is generated automatically by generate_export_file.pl -s CIAO_CLIENT
 // ------------------------------
 #ifndef CIAO_CLIENT_EXPORT_H
 #define CIAO_CLIENT_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (CIAO_CLIENT_HAS_DLL)
+#  define CIAO_CLIENT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && CIAO_CLIENT_HAS_DLL */
 
 #if !defined (CIAO_CLIENT_HAS_DLL)
 #  define CIAO_CLIENT_HAS_DLL 1
@@ -42,7 +46,11 @@
 #if (CIAO_CLIENT_NTRACE == 1)
 #  define CIAO_CLIENT_TRACE(X)
 #else /* (CIAO_CLIENT_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define CIAO_CLIENT_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (CIAO_CLIENT_NTRACE == 1) */
 
 #endif /* CIAO_CLIENT_EXPORT_H */

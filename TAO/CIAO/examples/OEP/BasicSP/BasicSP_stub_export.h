@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl BASICSP_STUB
+// This file is generated automatically by generate_export_file.pl -s BASICSP_STUB
 // ------------------------------
 #ifndef BASICSP_STUB_EXPORT_H
 #define BASICSP_STUB_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (BASICSP_STUB_HAS_DLL)
+#  define BASICSP_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && BASICSP_STUB_HAS_DLL */
 
 #if !defined (BASICSP_STUB_HAS_DLL)
 #  define BASICSP_STUB_HAS_DLL 1
@@ -42,7 +46,11 @@
 #if (BASICSP_STUB_NTRACE == 1)
 #  define BASICSP_STUB_TRACE(X)
 #else /* (BASICSP_STUB_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define BASICSP_STUB_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (BASICSP_STUB_NTRACE == 1) */
 
 #endif /* BASICSP_STUB_EXPORT_H */

@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl Segment_Timer
+// This file is generated automatically by generate_export_file.pl -s Segment_Timer
 // ------------------------------
 #ifndef SEGMENT_TIMER_EXPORT_H
 #define SEGMENT_TIMER_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (SEGMENT_TIMER_HAS_DLL)
+#  define SEGMENT_TIMER_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && SEGMENT_TIMER_HAS_DLL */
 
 #if !defined (SEGMENT_TIMER_HAS_DLL)
 #  define SEGMENT_TIMER_HAS_DLL 1
