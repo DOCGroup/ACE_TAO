@@ -185,9 +185,15 @@ class HelpFrame extends Frame
   public HelpFrame (String codeBase)
   {
     super ("Help");
+    this.setBackground (Color.cyan);
+    this.text_.setEditable (false);
+    Font defaultFont = new Font ("TimesRoman", Font.PLAIN, 14);
+    this.text_.setFont (defaultFont);
+
     try
       {
 	URL url = new URL (codeBase + "../ImageProcessing/framework/help.conf");
+	String delim = "\n";
 	
 	// Get the input stream and pipe it to a DataInputStream
 	DataInputStream iStream = new DataInputStream (url.openStream ());
@@ -196,8 +202,20 @@ class HelpFrame extends Frame
 	String tempString = iStream.readLine ();
 	while (tempString != null)
 	  {
-	    helpInfo_.addElement (tempString);
-	    tempString = iStream.readLine ();
+	    if (tempString.startsWith ("<START>"))
+	      delim = "";
+	    else if (tempString.startsWith ("<END>"))
+	      delim = "\n";
+	    else if (tempString.startsWith ("<TAB>"))
+	      this.text_.appendText ("\t");
+	    else if (tempString.startsWith ("<P>"))
+	      this.text_.appendText ("\n");
+	    else
+	      {
+		this.text_.appendText (tempString);
+		this.text_.appendText (delim);
+	      }
+	    tempString = iStream.readLine ();		
 	  }
       }
     catch (MalformedURLException e)
@@ -209,27 +227,13 @@ class HelpFrame extends Frame
 	System.err.println (e);
       }
     
-    this.resize (500,700);
+    this.resize (600,700);
     this.setLayout (new BorderLayout ());
     
     Panel okButtonPanel = new Panel ();
     okButtonPanel.add (this.okButton_);
     this.add ("South", okButtonPanel);
-  }
-
-  public void paint (Graphics g)
-  {
-    g.clearRect (0, 0, this.size ().width, this.size ().height);
-    g.setFont (new Font ("TimesRoman", Font.PLAIN, 18));
-    this.setBackground (Color.white);
-    int x = 20;
-    int y = 100;
-
-    for (int i = 0; i < helpInfo_.size (); i++)
-      {
-	g.drawString((String) helpInfo_.elementAt (i), x, y);
-	y += g.getFont ().getSize () + 5;
-      }
+    this.add ("Center", this.text_);
   }
 
   // Handle window destroy events
@@ -260,5 +264,6 @@ class HelpFrame extends Frame
 
   private Vector helpInfo_ = new Vector ();
   private Button okButton_ = new Button (" ok ");
+  private TextArea text_ = new TextArea ();
 }
 
