@@ -330,36 +330,6 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 }
 
 int
-TAO_IIOP_Transport::schedule_output (void)
-{
-  if (TAO_debug_level > 3)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport[%d]::schedule_output\n",
-                  this->handle ()));
-    }
-  ACE_Reactor *r =
-    this->connection_handler_->reactor ();
-  return r->schedule_wakeup (this->connection_handler_,
-                             ACE_Event_Handler::WRITE_MASK);
-}
-
-int
-TAO_IIOP_Transport::cancel_output (void)
-{
-  if (TAO_debug_level > 3)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport[%d]::cancel_output\n",
-                  this->handle ()));
-    }
-  ACE_Reactor *r =
-    this->connection_handler_->reactor ();
-  return r->cancel_wakeup (this->connection_handler_,
-                           ACE_Event_Handler::WRITE_MASK);
-}
-
-int
 TAO_IIOP_Transport::process_message (void)
 {
   // Get the <message_type> that we have received

@@ -1,3 +1,17 @@
+Sat Mar 17 17:52:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Removed the current_message_ field, using the head of the queue
+          works just as well, at least as long as we always push events to
+          the end of the queue.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Use the Flushing Strategy to schedule output and cancel output
+          with the reactor.
+
 Sat Mar 17 15:34:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Big_Oneways/Session.h:

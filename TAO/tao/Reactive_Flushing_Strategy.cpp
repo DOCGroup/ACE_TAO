@@ -5,6 +5,7 @@
 #include "Transport.h"
 #include "ORB_Core.h"
 #include "Queued_Message.h"
+#include "debug.h"
 
 ACE_RCSID(tao, Reactive_Flushing_Strategy, "$Id$")
 
@@ -14,19 +15,32 @@ TAO_Reactive_Flushing_Strategy::schedule_output (TAO_Transport *transport)
   ACE_Reactor *reactor =
     transport->orb_core ()->reactor ();
 
-  return reactor->register_handler (transport->event_handler (),
-                                    ACE_Event_Handler::READ_MASK
-                                    | ACE_Event_Handler::WRITE_MASK);
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Reactive_Flushing_Strategy[%d]::schedule_output\n",
+                  transport->handle ()));
+    }
+
+  return reactor->schedule_wakeup (transport->event_handler (),
+                                   ACE_Event_Handler::WRITE_MASK);
 }
 
 int
 TAO_Reactive_Flushing_Strategy::cancel_output (TAO_Transport *transport)
 {
   ACE_Reactor *reactor =
-    transport->orb_core ()->reactor ();
+    transport->event_handler ()->reactor ();
 
-  return reactor->register_handler (transport->event_handler (),
-                                    ACE_Event_Handler::READ_MASK);
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Reactive_Flushing_Strategy[%d]::cancel_output\n",
+                  transport->handle ()));
+    }
+
+  return reactor->cancel_wakeup (transport->event_handler (),
+                                 ACE_Event_Handler::WRITE_MASK);
 }
 
 int
