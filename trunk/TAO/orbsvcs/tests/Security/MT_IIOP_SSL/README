@@ -11,4 +11,15 @@ http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1421
 communication to take place  over an insecure TCP/IP port. This test
 just makes sure that the fallback port actually works!
 
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+@NOTE: 
+       
+       This test links *and* loads the SSLIOP library. They are needed
+due to the way the test is setup.
+
 */
