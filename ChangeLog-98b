@@ -1,3 +1,41 @@
+Wed Jun 17 19:01:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The following changes provide an interface for ACE programmers
+	  of more finer control over how Win32 structured exceptions are
+	  handled.  Thanks to Detlef Backer <Detlef.Backer@med.siemens.de>
+	  for contemplating the idea and passing it to us.
+
+	* ace/Log_Msg.{h,cpp} (seh_except_{selector,handler}): Added
+	  new methods to retrieve/set structured exception handling
+ 	  behavior.  <Selector> is used to determine the "proper" action a
+ 	  thread should take upon a structured exception and <handler>
+ 	  performs the actual exception handling routine.  They are
+ 	  structured as below in ace_thread_adapter:
+
+	      __except (ACE_LOG_MSG->seh_except_selector () (0))
+	        {
+		  ACE_LOG_MSG->seh_except_handler () (0);
+		}
+
+	* ace/OS.{h,cpp} (ACE_SEH_EXCEPT_HANDLER): New typedef used to
+	  define user win32 structured exception handler.
+
+	  (ACE_SEH_Exception_{Selector,Handler}): Default structured
+	  exception handler.  Two handlers ACE_Log_Msg are initialized to
+	  them by default.
+
+	  (ACE_Thread_Adapter,inherit_log_msg):  Added initializing and
+	  inheriting code to pass the spawning thread's structured
+	  exception handling behaviors.
+
+	* ace/config-win32-common.h
+	  (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION):  This macro defines
+	  the default action taken by ACE when a win32 structured
+	  exception occurs.  It is by default defined to
+	  EXCEPTION_CONTINUE_SEARCH, which does not handle the exception
+	  but simply pass the exception out.  Users can overwrite the
+	  default behavior by defining the macro in their config.h files. 
+
 Wed Jun 17 17:30:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * ace/OS.h: Added a condition variable and a flag to 
