@@ -1793,7 +1793,7 @@ private:
   int restore (ACE_recursive_thread_mutex_t &mutex);
 
   ACE_Recursive_Thread_Mutex &mutex_;
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES) && defined (ACE_WIN32)
   // On windows the mutex is a CRITICAL_SECTION, so just save
   // everything!
   size_t lock_count_;
