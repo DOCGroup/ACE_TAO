@@ -97,12 +97,12 @@ public:
   CORBA::Boolean equal (const CORBA::TypeCode_ptr,
                         CORBA_Environment &ACE_TRY_ENV =
                           TAO_default_environment ()) const;
-  // Compares two typecodes.
+  // Compares two typecodes. Must be identical in every respect.
 
   CORBA::Boolean equivalent (CORBA::TypeCode_ptr,
                              CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) const;
-  // Unaliases receiver and argument before comparing.
+  // Conforms to CORBA 2.3.1 (99-10-07).
 
   CORBA::TCKind kind (CORBA_Environment &ACE_TRY_ENV =
                         TAO_default_environment ()) const;
@@ -279,7 +279,18 @@ public:
 private:
   // = All the private/helper methods
 
+  CORBA::Boolean equ_common (CORBA::TypeCode_ptr tc,
+                             CORBA::Boolean equiv_only,
+                             CORBA_Environment &ACE_TRY_ENV =
+                                TAO_default_environment ()) const;
+  // equal() and equivalent() must both recurse, but their 
+  // behavior is somewhat different (as defined in CORBA 2.3).
+  // This function allows us to reuse the same code by acting
+  // as the point of recursion and by adding the equiv_only
+  // flag, to differentiate the behavior where necessary.
+
   CORBA::Boolean private_equal (CORBA::TypeCode_ptr tc,
+                                CORBA::Boolean equiv_only,
                                 CORBA_Environment &ACE_TRY_ENV =
                                   TAO_default_environment ()) const;
   // Compares the typecodes.
@@ -349,51 +360,61 @@ private:
   // = All the private helpers testing for equality of typecodes
 
   CORBA::Boolean private_equal_objref (CORBA::TypeCode_ptr tc,
+                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of objrefs
 
   CORBA::Boolean private_equal_struct (CORBA::TypeCode_ptr tc,
+                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of structs
 
   CORBA::Boolean private_equal_union (CORBA::TypeCode_ptr tc,
+                                      CORBA::Boolean equiv_only,
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ()) const;
   // test equality for typecodes of unions
 
   CORBA::Boolean private_equal_enum (CORBA::TypeCode_ptr tc,
+                                     CORBA::Boolean equiv_only,
                                      CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ()) const;
   // test equality for typecodes of enums
 
   CORBA::Boolean private_equal_string (CORBA::TypeCode_ptr tc,
+                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of strings
 
   CORBA::Boolean private_equal_wstring (CORBA::TypeCode_ptr tc,
+                                        CORBA::Boolean equiv_only,
                                         CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ()) const;
   // test equality for typecodes of wide strings
 
   CORBA::Boolean private_equal_sequence (CORBA::TypeCode_ptr tc,
+                                         CORBA::Boolean equiv_only,
                                          CORBA_Environment &ACE_TRY_ENV =
                                            TAO_default_environment ()) const;
   // test equality for typecodes of sequences
 
   CORBA::Boolean private_equal_array (CORBA::TypeCode_ptr tc,
+                                      CORBA::Boolean equiv_only,
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ()) const;
   // test equality for typecodes of array
 
   CORBA::Boolean private_equal_alias (CORBA::TypeCode_ptr tc,
+                                      CORBA::Boolean equiv_only,
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ()) const;
   // test equality for typecodes of typedefs
 
   CORBA::Boolean private_equal_except (CORBA::TypeCode_ptr tc,
+                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of exceptions
