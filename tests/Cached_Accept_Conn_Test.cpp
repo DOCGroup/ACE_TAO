@@ -54,6 +54,17 @@ USELIB("..\ace\aced.lib");
 // Note: To keep both sunCC5.0 without debugging symbols and gcc2.7.3
 // happy, it was necessary to have the definitions of the methods of
 // the Accept_Strategy before the instantiations.
+//
+
+// HPUX doesnt accept these declaration after their usage.
+
+// For some strange reason this must *not* be static since otherwise
+// certain versions of SunC++ will not link properly. 
+int connection_accepted = 0;
+
+// For some strange reason this must *not* be static since otherwise
+// certain versions of SunC++ will not link properly.
+int debug = 0;
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
@@ -333,10 +344,6 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// For some strange reason this must *not* be static since otherwise
-// certain versions of SunC++ will not link properly.
-int debug = 0;
-
 Client_Svc_Handler::Client_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
 {
@@ -396,10 +403,6 @@ static int user_has_specified_iterations = 0;
 static size_t keep_handles_available = 100;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-
-// For some strange reason this must *not* be static since otherwise
-// certain versions of SunC++ will not link properly.
-int connection_accepted = 0;
 
 // On Win32, the handle gobbling doesn't work.  Therefore, we need
 // more iterations to get to the handle limit.
