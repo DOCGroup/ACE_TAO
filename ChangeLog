@@ -1,3 +1,13 @@
+Thu Feb 22 08:51:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i:  
+
+          Bleh.  Changed an && to || to make sure we get a symbolname
+          variable for non-Unicode Win32.
+
+          "He who lives without committing any folly is not so 
+          wise as he thinks"  - La Rochefoucauld
+ 
 Thu Feb 22 08:43:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/rules.local.GNU:
