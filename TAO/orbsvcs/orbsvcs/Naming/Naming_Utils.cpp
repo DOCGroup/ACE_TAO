@@ -174,6 +174,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       ACE_Reactor *reactor =
         TAO_ORB_Core_instance ()->reactor ();
 
+      // See if the -ORBMulticastDiscoveryEndpoint option was specified.
+      ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()
+                       ->mcast_discovery_endpoint ());
+
       // First, see if the user has given us a multicast port number
       // on the command-line;
       u_short port =
@@ -197,11 +201,24 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       // Instantiate a handler which will handle client requests for
       // the root Naming Context ior, received on the multicast port.
       ACE_NEW_RETURN (this->ior_multicast_,
-                      TAO_IOR_Multicast (this->naming_service_ior_.in (),
-                                         port,
-                                         ACE_DEFAULT_MULTICAST_ADDR,
-                                         TAO_SERVICEID_NAMESERVICE),
+                      TAO_IOR_Multicast (),
                       -1);
+
+      if (mde.length () != 0)
+        {
+          if (this->ior_multicast_->init (this->naming_service_ior_.in (),
+                                          mde.c_str (),
+                                          TAO_SERVICEID_NAMESERVICE) == -1)
+            return -1;
+        }
+      else
+        {
+          if (this->ior_multicast_->init (this->naming_service_ior_.in (),
+                                          port,
+                                          ACE_DEFAULT_MULTICAST_ADDR,
+                                          TAO_SERVICEID_NAMESERVICE) == -1)
+            return -1;
+        }
 
       // Register event handler for the ior multicast.
       if (reactor->register_handler (this->ior_multicast_,
