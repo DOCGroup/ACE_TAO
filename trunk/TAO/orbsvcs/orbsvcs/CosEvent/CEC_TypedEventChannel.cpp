@@ -416,7 +416,9 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (uses_interface_);
+      int result = cache_interface_description (uses_interface_ ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
       if (result == 0)
         {
           this->uses_interface_ = uses_interface_;
@@ -478,7 +480,9 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (supported_interface_);
+      int result = cache_interface_description (supported_interface_ ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
       if (result == 0)
         {
           this->supported_interface_ = supported_interface_;

@@ -107,17 +107,16 @@ class TAO_Event_Export TAO_CEC_TypedEventChannel : public virtual POA_CosTypedEv
 public:
 
   /**
-   * constructor
+   * Constructor
    * If <own_factory> is not 0 it assumes ownership of the factory.
    * If the factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
-  //Constructor
   TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attributes,
                              TAO_CEC_Factory* factory = 0,
                              int own_factory = 0);
 
-  //Destructor
+  /// Destructor
   virtual ~TAO_CEC_TypedEventChannel (void);
 
   /// Start the internal threads (if any), etc.
@@ -205,7 +204,7 @@ public:
   typedef ACE_Hash_Map_Manager_Ex<const char *, TAO_CEC_Operation_Params *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex> InterfaceDescription;
   typedef InterfaceDescription::iterator Iterator;
 
-  // Finds a operation/parameter from the IFR cache
+  /// Finds a operation/parameter from the IFR cache
   TAO_CEC_Operation_Params * find_from_ifr_cache (const char *operation);
 
   /// Function allows consumer admin to register the uses interface
@@ -246,13 +245,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  // Function caches the full interface description from the IFR
+  /// Function caches the full interface description from the IFR
   int cache_interface_description (const char *interface ACE_ENV_ARG_DECL);
 
-  // Insert a operation/parameter into the IFR cache
+  /// Insert a operation/parameter into the IFR cache
   int insert_into_ifr_cache (const char *operation, TAO_CEC_Operation_Params *parameters);
 
-  // Function clears the IFR cache
+  /// Function clears the IFR cache
   int clear_ifr_cache (void);
 
 private:
@@ -321,10 +320,10 @@ private:
 class TAO_Event_Export TAO_CEC_Param
 {
 public:
-  /// constructor
+  /// Constructor
   TAO_CEC_Param (void);
 
-  /// destructor
+  /// Destructor
   ~TAO_CEC_Param (void);
 
 private:
