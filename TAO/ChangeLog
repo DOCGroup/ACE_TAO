@@ -1,3 +1,8 @@
+Mon Oct 21 18:17:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* rules.tao.GNU: Used awk for library versioning instead of
+	  perl. Thanks to Craig Rodrigues for providing this patch.
+
 Mon Oct 21 14:29:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/AMH/Sink_Server/run_test.pl:
