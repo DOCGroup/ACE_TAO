@@ -8,7 +8,7 @@ unshift @INC, '../../../../bin';
 require Process;
 
 $server_port = 0;
-$iorfile = "theior";
+$iorfile = "time.ior";
 $sleeptime = 5;
 
 $SV = Process::Create ("server".$Process::EXE_EXT, 
