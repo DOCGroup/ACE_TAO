@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // ace_xt.mpb,v
 
-project : ace_x11 {
-  macros   += ACE_HAS_XT
+project {
+  requires += ace_with_xt
 
   // Depends on configration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {

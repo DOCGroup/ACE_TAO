@@ -41,3 +41,6 @@ cidl          = 0
 boost         = 0
 wince         = 0
 uses_wchar    = 0
+
+ace_with_motif  = 0
+ace_with_athena = 0

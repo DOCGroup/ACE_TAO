@@ -2,8 +2,6 @@
 
 #include "test_i.h"
 
-#if defined(ACE_HAS_XT)
-
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
@@ -37,4 +35,3 @@ Stopwatch_imp::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->orb_->shutdown (0);
 }
 
-#endif /* ACE_HAS_XT */

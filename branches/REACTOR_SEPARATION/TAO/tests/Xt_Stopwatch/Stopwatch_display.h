@@ -18,8 +18,6 @@
 #include /**/ "ace/pre.h"
 #include "tao/ORB_Constants.h"
 
-#if defined (ACE_HAS_XT)
-
 #include <Xm/Xm.h>
 #include <Xm/Frame.h>
 #include <Xm/Label.h>
@@ -48,7 +46,6 @@ private:
   // Label Widget that is used to display time..
 };
 
-#endif /*ACE_HAS_XT*/
 
 #include /**/ "ace/post.h"
 #endif /* STOPWATCH_H */

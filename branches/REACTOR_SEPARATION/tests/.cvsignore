@@ -152,4 +152,6 @@ Unbounded_Set_Test_Ex
 Upgradable_RW_Test
 Vector_Test
 WFMO_Reactor_Test
+XtAthenaReactor_Test
+XtMotifReactor_Test
 XtReactor_Test

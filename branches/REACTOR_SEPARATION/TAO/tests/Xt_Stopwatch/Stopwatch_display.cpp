@@ -2,7 +2,6 @@
 
 #include "Stopwatch_display.h"
 
-#if defined (ACE_HAS_XT)
 
 #include "ace/OS_NS_stdio.h"
 
@@ -58,4 +57,3 @@ Stopwatch_display::set_time (CORBA::Float time)
   XmStringFree (xmstr);
 }
 
-#endif /*ACE_HAS_XT*/

@@ -19,7 +19,6 @@
 #include "testS.h"
 #include "timer.h"
 
-#if defined(ACE_HAS_XT)
 
 class Stopwatch_imp : public POA_Stopwatch
 {
@@ -55,6 +54,5 @@ private:
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_XT */
 
 #endif /* SERVER_TEST_I_H */

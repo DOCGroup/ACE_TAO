@@ -4,6 +4,6 @@
  <!--  $Id$ -->
  <!--  -->
  <dynamic id="Resource_Factory" type="Service_Object">
-   <initializer path="TAO" init="_make_TAO_XT_Resource_Factory"/>
+   <initializer path="TAO_XtReactor" init="_make_TAO_XT_Resource_Factory"/>
  </dynamic>
 </ACE_Svc_Conf>

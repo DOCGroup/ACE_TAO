@@ -921,11 +921,18 @@ project(Thread Pool Reactor Resume Test) : acetest {
   }
 }
 
-project(XtReactor Test) : acetest {
-  exename   = XtReactor_Test
-  requires += ace_other
+project(XtMotifReactor Test) : acetest, ace_xtreactor, ace_motif {
+  exename   = XtMotifReactor_Test
+
   Source_Files {
-    XtReactor_Test.cpp
+    XtMotifReactor_Test.cpp
+  }
+}
+
+project(XtAthenaReactor Test) : acetest, ace_xtreactor, ace_athena {
+  exename   = XtAthenaReactor_Test
+  Source_Files {
+    XtAthenaReactor_Test.cpp
   }
 }
 

@@ -1,3 +1,66 @@
+Fri Dec 10 00:45:56 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/.cvsignore (Module):
+	Created few ignores to make cvs silent.
+
+	* ace/ace_xtreactor.mpc (Module):
+
+	* ace/config-tandem.h (Module):
+	* ace/config-doxygen.h (Module):
+	* ace/XtReactor.cpp (Module):
+	Removed ACE_HAS_XT macros.
+
+	* ace/XtReactor.h (Module):
+	Removed ACE_HAS_XT macros and applied export macros for ACE_XtReactor.
+
+	* ace/README (Module):
+	Removed notice on ACE_HAS_XT.
+
+	* ace/ACE_XtReactor_export.h (Module):
+	Create export macros for XtReactor. Please, do not ask if anyone needs these macros
+	under Windows. Probably no, but they are present here to remain consistent with
+	the rest of ACE.
+
+	* tests/tests.mpc (Module):
+	Created two project XtReactor_Tests for Athena widgets and Motif.
+	Removed XtReactor_Test.
+
+	* tests/XtReactor_Test.cpp (Module):
+	* tests/XtMotifReactor_Test.cpp (Module):
+	* tests/XtAthenaReactor_Test.cpp (Module):
+	XtReactor_Test was splitted into separate test for Athena widgets and Motif,
+	hence they depend on distinct libraries. Removed ACE_HAS_XT and ACE_LACKS_MOTIF
+	macros, as they are not needed now.
+
+	* examples/Misc/test_XtReactor2.cpp (Module):
+	* examples/Misc/test_XtReactor1.cpp (Module):
+	Removed ACE_HAS_XT macros.
+
+	* examples/Misc/Misc.mpc (Module):
+	Added dependencies on ace_xtreactor and ace_motif.
+
+	* bin/MakeProjectCreator/config/tao_xtreactor.mpb (Module):
+	* bin/MakeProjectCreator/config/ace_xtreactor.mpb (Module):
+	Created base projects for applications using ACE/TAO_XtReactor
+	libraries.
+
+	* bin/MakeProjectCreator/config/global.features (Module):
+	By default ace_with_x11, ace_withxt, ace_with_motif, ace_with_athena features
+	are not avalaible.
+
+	* bin/MakeProjectCreator/config/ace_xt.mpb (Module):
+	* bin/MakeProjectCreator/config/ace_x11.mpb (Module):
+	Transformed features into projects with explicit requirements.
+
+	* bin/MakeProjectCreator/config/ace_motif.mpb (Module):
+	Created base project for motif/lestif  library.
+
+	* bin/MakeProjectCreator/config/ace_athena.mpb (Module):
+	Created base project for athena widgets library.
+
+	* ACE-INSTALL.html (Module):
+	Modified section on QtReactor and added section on XtReactor.
+
 Tue Dec  7 20:48:36 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* ace/ace_qtreactor.mpc (Module):

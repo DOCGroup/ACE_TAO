@@ -344,7 +344,6 @@
 //TryEnterCriticalSection() (WinNT 4.0 and beyond)
 //ACE_HAS_WINSOCK2                      The Win32 platform supports WinSock 2.0
 //ACE_HAS_XLI                           Platform has the XLI version of TLI
-//ACE_HAS_XT                            Platform has Xt and Motif
 //ACE_LACKS_CONST_TIMESPEC_PTR          Platform forgot const in cond_timewait
 // (e.g., HP/UX).
 //ACE_LACKS_COND_T                      Platform lacks condition variables
