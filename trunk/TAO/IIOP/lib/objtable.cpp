@@ -12,8 +12,8 @@ TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable()
   this->hash_.close();
 }
 
-int TAO_Dynamic_Hash_ObjTable::register_obj(const CORBA_OctetSeq &key, const
-					     CORBA_Object_ptr &obj)
+int TAO_Dynamic_Hash_ObjTable::register_obj(const CORBA_OctetSeq &key,
+					    CORBA_Object_ptr obj)
 {
   ACE_CString objkey ((char *)key.buffer);
   return this->hash_.bind(objkey, obj);
@@ -44,7 +44,8 @@ TAO_Linear_ObjTable::~TAO_Linear_ObjTable()
 }
 
 // ****** we should really make sure that the same key doesn't exist ******
-int TAO_Linear_ObjTable::register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj)
+int TAO_Linear_ObjTable::register_obj(const CORBA_OctetSeq &key,
+				      CORBA_Object_ptr obj)
 {
   CORBA_ULong i = this->next_;
 
@@ -107,7 +108,8 @@ TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable()
 }
 
 // ****** we should really make sure that the same key doesn't exist ******
-int TAO_Active_Demux_ObjTable::register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj)
+int TAO_Active_Demux_ObjTable::register_obj(const CORBA_OctetSeq &key,
+					    CORBA_Object_ptr obj)
 {
   CORBA_ULong i = this->next_;
 

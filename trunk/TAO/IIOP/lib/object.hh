@@ -113,20 +113,21 @@ class _EXPCLASS CORBA_Object : public IUnknown
 				CORBA_Object (IUnknown *p = NULL);
 				virtual ~CORBA_Object ();
 
-    virtual skeleton                    lookup(const CORBA_String &opname) { return
+  virtual skeleton                    lookup(const CORBA_String &opname) { return
 								       optable_->lookup(opname); } 
-  virtual void register_op(const CORBA_String &opname, skeleton skel_ptr) 
-  { optable_->register_op(opname, skel_ptr); }
+  virtual int register_op(const CORBA_String &opname, skeleton skel_ptr) 
+  { return optable_->register_op(opname, skel_ptr); }
     // Register a CORBA IDL operation name
   // TAO extension that retrieves the name (key) assigned to the object.
   virtual CORBA_String _get_name(CORBA_Environment &env);
+  virtual void *get_subclass() { return sub_;}
 protected:
     TAO_Operation_Table         *optable_;
-  void  set_parent(IUnknown *p);
+    void *sub_;  // keeps track of the most derived class.
+    void  set_parent(IUnknown *p);
 private:
   //    IUnknown			*const parent;
     IUnknown			*parent;
-
     //
     // these two are not provided!
     //

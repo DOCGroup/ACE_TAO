@@ -35,7 +35,7 @@ public:
   virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key);
   // CORBA Object key lookup strategy
 
-  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
+  virtual int register_obj(const CORBA_OctetSeq &key, CORBA_Object_ptr obj);
   // registers a CORBA_Object into the object table and associates the key with
   // it
 private:
@@ -53,7 +53,7 @@ public:
   virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key);
   // CORBA Object key lookup strategy
 
-  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
+  virtual int register_obj(const CORBA_OctetSeq &key, CORBA_Object_ptr obj);
   // registers a CORBA_Object into the object table and associates the key with
   // it
 
@@ -82,7 +82,7 @@ public:
   virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key);
   // CORBA Object key lookup strategy
 
-  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
+  virtual int register_obj(const CORBA_OctetSeq &key, CORBA_Object_ptr obj);
   // registers a CORBA_Object into the object table and associates the key with
   // it
 
