@@ -205,7 +205,7 @@ svc_location
       u_int flags
         = ACE_Service_Type::DELETE_THIS
         | ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      ACE_Service_Object_Exterminator gobbler;
+      ACE_Service_Object_Exterminator gobbler = 0;
       void *sym = $3->symbol (&gobbler);
 
       if (sym != 0)
