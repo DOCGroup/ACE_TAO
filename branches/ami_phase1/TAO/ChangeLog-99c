@@ -1,3 +1,9 @@
+Sat May 29 14:02:41 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/MT_Client/MT-client.cpp:  Removed this file.
+	* tests/MT_Client/client.cpp: MT version of simple_client.cpp. Old
+	client.cpp with new method get_number.
+
 Fri May 28 22:45:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Wait_Strategy.h:
