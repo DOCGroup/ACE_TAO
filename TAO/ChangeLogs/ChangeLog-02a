@@ -1,3 +1,13 @@
+Tue Feb  6 10:20:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+
+          Removed unnecessary inlclusion of corbafwd.h.
+
+        * orbsvcs/IFR_Service/drv_arg_ifr.cpp:
+
+          Removed unused function DRV_prep_cpp_arg().
+
 Mon Feb  5 19:41:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.h (object_ref_table):
