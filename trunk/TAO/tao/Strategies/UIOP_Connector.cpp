@@ -188,7 +188,7 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
 
   int status =
-    svc_handler->successful ();
+    svc_handler->is_finalized ();
 
   // Reduce the refcount to the svc_handler that we have. The
   // increment to the handler is done in make_svc_handler (). Now
