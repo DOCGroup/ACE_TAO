@@ -1,3 +1,8 @@
+Thu Jun 21 06:52:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+	  Updated dependencies. 
+
 Wed Jun 20 19:20:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/RTCORBA/Banded_Connections/run_test.pl: 
