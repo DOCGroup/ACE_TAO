@@ -194,7 +194,7 @@ ACE_NT_Service::insert (DWORD start_type,
         return -1;
       // Make sure that this_exe is quoted
       this_exe[0] = ACE_TEXT ('\"');
-      ACE_OS::strcat (this_exe, ACE_TEXT ("\"");
+      ACE_OS::strcat (this_exe, ACE_TEXT ("\""));
       exe_path = this_exe;
     }
 
@@ -549,32 +549,32 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
   DWORD last_state, last_check_point;
   int first_time = 1;
   int service_ok;
-    
+
   ACE_Time_Value time_out = ACE_OS::gettimeofday ();
   if (wait_time != 0)
     time_out += *wait_time;
-    
+
   // Poll until the service reaches the desired state.
   for (;;)
     {
       service_ok = 0 != QueryServiceStatus (this->svc_sc_handle_,
                                             &this->svc_status_);
-       
+
       // If we cannot query the service, we are done.
       if (!service_ok)
         break;
-        
+
       // If the service has the desired state, we are done.
       if (desired_state == this->svc_status_.dwCurrentState)
         break;
-        
+
       // If we time-out, we are done
       if (wait_time != 0 && ACE_OS::gettimeofday () > time_out )
         {
           errno = ETIME;
           break;
         }
-        
+
       if (first_time)
         {
           // remember the service state, the first time we wait
@@ -603,10 +603,10 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
                 }
             }
         }
-        
+
       ::Sleep (this->svc_status_.dwWaitHint);
     }
-    
+
   return;
 }
 
