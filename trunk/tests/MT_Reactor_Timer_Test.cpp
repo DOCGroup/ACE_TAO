@@ -32,38 +32,36 @@ USELIB("..\ace\aced.lib");
 
 #if defined (ACE_HAS_THREADS)
 
-// This test exercises the setting and cancelling of timers from a thread
-// other than the one the reactor is running in.  It sets up an initial set
-// of timers (3, 4, 5 seconds) from the main thread.  When the second thread
-// starts, it cancels the 3 second timer and sets a 2-second timer and an
-// already-expired timer, which should be the first to fire.
-// It then sleeps for 3 seconds (letting the 2 second timer fire, and if things
-// are slow, the 4 second timer will also fire.  Then it sets 2 more timers at
-// 10 and 12 seconds and cancels the original 5 second timer.  Then returns,
-// ending the thread.  The destructor for Time_Handler insures that everything
-// happened correctly.
-
+// This test exercises the setting and cancelling of timers from a
+// thread other than the one the reactor is running in.  It sets up an
+// initial set of timers (3, 4, 5 seconds) from the main thread.  When
+// the second thread starts, it cancels the 3 second timer and sets a
+// 2-second timer and an already-expired timer, which should be the
+// first to fire.  It then sleeps for 3 seconds (letting the 2 second
+// timer fire, and if things are slow, the 4 second timer will also
+// fire.  Then it sets 2 more timers at 10 and 12 seconds and cancels
+// the original 5 second timer.  Then returns, ending the thread.  The
+// destructor for Time_Handler insures that everything happened
+// correctly.
 
 Time_Handler::Time_Handler (void)
 {
-
   for (int i = 0;
        i < Time_Handler::TIMER_SLOTS;
        this->timer_id_[i++] = Time_Handler::TIMER_NOTSET)
     continue;
-  this->prev_timer_ = -1;
 
+  this->prev_timer_ = -1;
 }
 
+// Set up initial timer conditions.  Timers set up at 3, 4, and 5
+// seconds.  The one at 3 seconds will get cancelled when the thread
+// starts.
 
-// Set up initial timer conditions.
-// Timers set up at 3, 4, and 5 seconds.  The one at 3 seconds will get
-// cancelled when the thread starts.
 void 
 Time_Handler::setup (void)
 {
-
-  ACE_Reactor *r = ACE_Reactor::instance();
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
   this->timer_id_[2] = r->schedule_timer (this,
                                           (const void *) 2,
@@ -75,14 +73,11 @@ Time_Handler::setup (void)
                                           (const void *) 4,
                                           ACE_Time_Value (5));
   return;
-
 }
-
 
 int
 Time_Handler::verify_results (void)
 {
-
   ACE_ASSERT (this->timer_id_[0] == Time_Handler::TIMER_FIRED);
   ACE_ASSERT (this->timer_id_[1] == Time_Handler::TIMER_FIRED);
   ACE_ASSERT (this->timer_id_[2] == Time_Handler::TIMER_CANCELLED);
@@ -90,21 +85,17 @@ Time_Handler::verify_results (void)
   ACE_ASSERT (this->timer_id_[4] == Time_Handler::TIMER_CANCELLED);
   ACE_ASSERT (this->timer_id_[5] == Time_Handler::TIMER_FIRED);
   ACE_ASSERT (this->timer_id_[6] == Time_Handler::TIMER_FIRED);
+
   for (int i = 7; i < Time_Handler::TIMER_SLOTS; i++)
-    {
-      ACE_ASSERT (this->timer_id_[i] == Time_Handler::TIMER_NOTSET);
-    }
+    ACE_ASSERT (this->timer_id_[i] == Time_Handler::TIMER_NOTSET);
 
   return 0;
-
 }
-
 
 int 
 Time_Handler::svc (void)
 {
-
-  ACE_Reactor *r = ACE_Reactor::instance();
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
   ACE_ASSERT (r->cancel_timer (this->timer_id_[2]) == 1);
   this->timer_id_[2] = Time_Handler::TIMER_CANCELLED;
@@ -113,11 +104,11 @@ Time_Handler::svc (void)
                                          (const void *) 1,
                                          ACE_Time_Value (2));
   // This one may get the callback before we return, so serialize.
-  this->lock_.acquire();
+  this->lock_.acquire ();
   this->timer_id_[0] = r->schedule_timer(this,
                                          (const void *) 0,
                                          ACE_Time_Value (0, -5));
-  this->lock_.release();
+  this->lock_.release ();
   ACE_OS::sleep(3);
 
   this->timer_id_[5] = r->schedule_timer(this,
@@ -131,7 +122,6 @@ Time_Handler::svc (void)
   this->timer_id_[4] = Time_Handler::TIMER_CANCELLED;
 
   return 0;
-
 }
 
 int 
@@ -163,7 +153,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 Dispatch_Count_Handler::Dispatch_Count_Handler (void)
 {
 
-  ACE_Reactor *r = ACE_Reactor::instance();
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
   // Initialize the pipe.
   if (this->pipe_.open () == -1)
@@ -195,8 +185,7 @@ int
 Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
                                       ACE_Reactor_Mask m)
 {
-
-  ACE_Reactor *r = ACE_Reactor::instance();
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("%T (%t): handle_close\n")));
@@ -296,13 +285,12 @@ main (int, ASYS_TCHAR *[])
   status = ACE_Reactor::run_event_loop (time_limit);
   // Should have returned only because the time limit is up...
   ACE_ASSERT (status != -1);
-  ACE_ASSERT (time_limit.sec() == 0);
+  ACE_ASSERT (time_limit.sec () == 0);
 
   status = other_thread.wait ();
   ACE_ASSERT (status != -1);
 
-  status = other_thread.verify_results();
-
+  status = other_thread.verify_results ();
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
