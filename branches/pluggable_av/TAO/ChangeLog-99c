@@ -1,3 +1,33 @@
+Mon Jul 26 18:27:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/RTCP.{h,cpp}: 
+	  These 2 new files contain all the classes for TAO AV's RTCP
+	  implementation. Applications now dont have to write RTCP
+	  code. The AV framework also gives hooks to get to the statistics
+	  for a particular section. There'll be one RTCP object per flow.
+
+	* orbsvcs/orbsvcs/AV/media-timer.h:
+	* orbsvcs/orbsvcs/AV/ntp-time.h:
+	  These files contain the media specific timestamp classes. These
+	  provide default implementations for RTCP. Application objects
+	  can override this behavior.
+
+	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}:
+	  Added RTP over UDP Multicast classes. Now the RTP layer
+	  interacts with the source Manager to collect RTP statistics.
+
+	* orbsvcs/orbsvcs/AV/source.{h,cpp}:
+	  These files provide a RTP source class. Applications should
+	  derive if they want to extend the behavior.
+
+	* orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
+	  Added a new TAO_AV_frame_info struct which contains information
+	  for a frame. This helps resolve the differences between the
+	  different framing layer protocols like RTP and SFP.
+	  
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	  Added support for RTP_UDP_MCAST.
+	
 Tue Jul 20 14:50:52 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/:
