@@ -174,6 +174,7 @@ HTTP_Request::version (void) const
   return this->version_;
 }
 
+#if 0 // This static function currently isn't used.
 static void
 HTTP_fix_path (char *path)
 {
@@ -194,6 +195,7 @@ HTTP_fix_path (char *path)
   }
   path[j] = path[i];
 }
+#endif // 0: This static function currently isn't used.
 
 int HTTP_Request::got_request_line (void)
 {
