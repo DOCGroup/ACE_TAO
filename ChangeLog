@@ -1,3 +1,12 @@
+Tue Aug 28 10:36:10 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/vxworks_modify.pl:
+        * bin/perltest2cpp.pl:
+
+          Added these scripts for use with VxWorks and the newly added TAO
+          TestUtils.  These scripts modify c++ and perl to generate
+          "one-button" modules for TAO testing on VxWorks.
+
 Tue Aug 28 11:07:26 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/MEM_Stream_Test.cpp: Be sure to close the stream from the
