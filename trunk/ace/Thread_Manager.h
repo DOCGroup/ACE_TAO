@@ -136,8 +136,8 @@ public:
   // thread descriptor before it gets fully built.  This function is
   // only called from ACE_Log_Msg::thr_desc.
 
-  ACE_INLINE void set_next (ACE_Thread_Descriptor *td);
-  ACE_INLINE ACE_Thread_Descriptor *get_next (void);
+  void set_next (ACE_Thread_Descriptor *td);
+  ACE_Thread_Descriptor *get_next (void);
   // Set/get the <next_> pointer.  These are required by the
   // ACE_Free_List.  ACE_INLINE is specified here because one version
   // of g++ couldn't grok this code without it.
