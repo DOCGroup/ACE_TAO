@@ -205,10 +205,6 @@ TAO_Trader_Factory::TAO_TRADER*
 TAO_Trader_Factory::create_linked_trader (void)
 {
   typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  NULL_TRADER;
-
-#if defined(_MSC_VER)
-  //#pragma warning (once:4250)
-#endif /* _MSC_VER */
   
   NULL_TRADER::Trader_Components linked_trader =
     (NULL_TRADER::Trader_Components)
@@ -217,11 +213,6 @@ TAO_Trader_Factory::create_linked_trader (void)
      NULL_TRADER::ADMIN |
      NULL_TRADER::LINK);
   return new NULL_TRADER (linked_trader);
-
-#if defined(_MSC_VER)
-  //#pragma warning(default:4250)
-#endif /* _MSC_VER */
-
 }
 
 

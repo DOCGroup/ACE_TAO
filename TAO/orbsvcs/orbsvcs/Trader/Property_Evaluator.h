@@ -18,7 +18,6 @@
 #define TAO_PROPERTY_EVALUATOR_H
 
 #include "Trader.h"
-#include "orbsvcs/CosTradingC.h"
 
 class TAO_Property_Evaluator
 //
