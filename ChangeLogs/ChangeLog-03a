@@ -1,3 +1,13 @@
+Thu Nov  1 14:25:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/config-win32-borland.h:
+
+          Added fix sent in by Chris Kohlhoff <kohlhoff@pop.ihug.com.au>
+          to ACE_CC_PREPROCESSOR_ARGS to enable the recognition of a
+          filename to which the preprocessor output is to be directed.
+          There is also a corresponding fix in TAO_IDL/driver/drv_preproc.cpp
+          that carries out the redirection.
+
 Thu Nov  1 10:27:21 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Select_Reactor_Base.h (open):
