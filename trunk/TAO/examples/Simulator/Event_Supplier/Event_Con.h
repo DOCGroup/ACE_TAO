@@ -1,7 +1,6 @@
 // $Id$
-//
+
 // ============================================================================
-//
 // 
 // = FILENAME
 //    Event_Con.h
@@ -13,9 +12,6 @@
 //    modified
 //    Michael Kircher (mk1@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   
-//
 // ============================================================================
 
 #if !defined (EVENT_CON_H)
@@ -26,15 +22,15 @@
 #include "orbsvcs/RtecEventCommS.h"
 
 class Demo_Consumer : public POA_RtecEventComm::PushConsumer
-// = TITLE
-//    Demo Consumer
-//
-// = DESCRIPTION
-//    Simple example of a consumer that registers for supplier
-//    notifications.
 {
+  // = TITLE
+  //    Demo Consumer
+  //
+  // = DESCRIPTION
+  //    Simple example of a consumer that registers for supplier
+  //    notifications.
 public:
-  Demo_Consumer ();
+  Demo_Consumer (void);
 
   int open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 		     const char *my_name);
@@ -47,7 +43,7 @@ public:
   virtual void disconnect_push_consumer (CORBA::Environment &);
   // The channel is disconnecting.
 
-// (not protected to allow short-circuiting) protected:
+  // = (not protected to allow short-circuiting) protected:
   virtual void push (const RtecEventComm::EventSet &events,
 		     CORBA::Environment &);
   // If the <events>[0] is a notification, prints out the data from
@@ -65,9 +61,6 @@ protected:
 
 private:
   RtecScheduler::handle_t rt_info_;
-
 };
-
-
 
 #endif /* EVENT_CON_H */

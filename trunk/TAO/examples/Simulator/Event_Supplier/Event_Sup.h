@@ -1,10 +1,12 @@
 // $Id$
-//
+
 // ============================================================================
-//
 // 
 // = FILENAME
 //    Event_Sup.h
+//
+// = DESCRIPTION
+//   Event Supplier for the simulation
 //
 // = AUTHOR
 //    originally
@@ -12,9 +14,6 @@
 //    Tim Harrison (harrison@cs.wustl.edu)
 //    modified
 //    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   Event Supplier for the simulation
 //
 // ============================================================================
 
@@ -41,16 +40,15 @@ struct Schedule_Viewer_Data
 };
 
 class Demo_Supplier 
-// = TITLE
-//    Demo Supplier
-//
-// = DESCRIPTION
-//    Generates event nofications and a shutdown message.
 {
+  // = TITLE
+  //    Demo Supplier.
+  //
+  // = DESCRIPTION
+  //    Generates event nofications and a shutdown message.
 public:
-
-
-  class Internal_Demo_Consumer : public POA_RtecEventComm::PushConsumer {
+  class Internal_Demo_Consumer : public POA_RtecEventComm::PushConsumer 
+  {
   public:
     virtual void push (const RtecEventComm::EventSet &events,
 		       CORBA::Environment &);
@@ -66,13 +64,13 @@ public:
   private:
     Demo_Supplier* impl_;
   };
-
   
   // The following Supplier is needed because Demo_Supplier has not
-  // inherited from PushSupplier, therefore we register with the 
-  // following and send with Demo_Supplier
+  // inherited from PushSupplier, therefore we register with the
+  // following and send with Demo_Supplier.
 
-  class Internal_Demo_Supplier : public POA_RtecEventComm::PushSupplier {
+  class Internal_Demo_Supplier : public POA_RtecEventComm::PushSupplier 
+  {
   public:
     virtual void disconnect_push_supplier (CORBA::Environment &);
 
@@ -84,8 +82,7 @@ public:
     Demo_Supplier* impl_;
   };
 
-
-  Demo_Supplier (unsigned int supplier_id);
+  Demo_Supplier (u_int supplier_id);
   // Construction.  Requires the total number of messages to be
   // sent.  If the timestamp flag is enabled, then events are
   // timestamped, e.g., for use in measuring jitter.
@@ -103,16 +100,13 @@ public:
 
   void start_generating_events (void);
 
-  void load_schedule_data (
-    ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
+  void load_schedule_data (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
 
-  void insert_event_data (
-    CORBA::Any &data, 
-    ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
+  void insert_event_data (CORBA::Any &data, 
+                          ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
 
   void push (const RtecEventComm::EventSet &events,
 	     CORBA::Environment &);
-  
 protected:
 
   void shutdown (void);
@@ -123,7 +117,7 @@ protected:
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_;
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
 
-  // Because we get timeout events in our internal_demo_consumer
+  // = Because we get timeout events in our internal_demo_consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
 
@@ -131,11 +125,10 @@ private:
   Navigation navigation_;
   Weapons weapons_;
   RtecScheduler::handle_t rt_info_;
-  unsigned int supplier_id_;
+  u_int supplier_id_;
 
   Internal_Demo_Consumer *internal_demo_consumer_;
   Internal_Demo_Supplier *internal_demo_supplier_;
 };
-
 
 #endif /* EVENT_SUP_H */
