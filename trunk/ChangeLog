@@ -1,3 +1,13 @@
+Sun Jan 18 10:13:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Logging/LogManager.h:
+	* Logging/Use_Multiple_Sinks.cpp:
+	* Logging/Use_Ostream.cpp:
+	* Naming/Name_Binding.h:
+
+	  #included fstream conditionally on VC6. This should fix the
+	  remaining compile errors on VC6 with MPC builds.
+
 Sun Jan 18 09:48:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/TMCast/member.cpp:
