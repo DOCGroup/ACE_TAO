@@ -6000,7 +6000,7 @@ private:
 
   ACE_OS_WString (void);
   ACE_OS_WString (ACE_OS_WString &);
-  operator= (ACE_OS_WString &);
+  ACE_OS_WString& operator= (ACE_OS_WString &);
   // Disallow these operation.
 };
 
@@ -6029,7 +6029,7 @@ private:
 
   ACE_OS_CString (void);
   ACE_OS_CString (ACE_OS_CString &);
-  operator= (ACE_OS_CString &);
+  ACE_OS_CString operator= (ACE_OS_CString &);
   // Disallow these operation.
 };
 
