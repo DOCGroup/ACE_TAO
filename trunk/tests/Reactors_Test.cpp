@@ -68,10 +68,10 @@ Test_Task::~Test_Task (void)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
 
-  ACE_ASSERT (Test_Task::task_count_ == 0);
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) TT- Test_Task::task_count_ = %d\n", 
 	      Test_Task::task_count_));
+  ACE_ASSERT (Test_Task::task_count_ == 0);
 }
 
 int 
@@ -97,6 +97,8 @@ int
 Test_Task::svc (void)
 {
   ACE_NEW_THREAD;
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc\n"));
 
   for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
@@ -206,7 +208,9 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   ACE_Thread_Manager::instance ()->wait ();
+
   reactor->close ();
+  delete reactor;
   // Note that the destructor of ACE_Service_Config daemon will close
   // down the ACE_Reactor::instance().
 #else
