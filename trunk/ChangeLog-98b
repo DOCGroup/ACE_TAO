@@ -1,10 +1,10 @@
 Sun Jun 21 00:16:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.{h,cpp}: Changed the parent class of
+	* ace/WFMO_Reactor.{h,i,cpp}: Changed the parent class of
 	  ACE_WFMO_Reactor_Notify from ACE_Event_Handler to
 	  ACE_Reactor_Notify.
 	  (dump): Added this virtual function implementation for
-	  ACE_WFMO_Reactor_Notify. 
+	  ACE_WFMO_Reactor_Notify.
 
 	* Ace/Proactor.cpp (timeout): Fixed a typo.
 

@@ -964,11 +964,11 @@ ACE_WFMO_Reactor::open (size_t size,
   if (this->notify_handler_ == 0)
     {
       ACE_NEW_RETURN (this->notify_handler_,
-                      ACE_WMFO_Reactor_Notify,
+                      ACE_WFMO_Reactor_Notify,
                       -1);
 
       if (this->notify_handler_ == 0)
-        result = -1;
+        return -1;
       else
         this->delete_notify_handler_ = 1;
     }
@@ -1873,6 +1873,16 @@ ACE_WFMO_Reactor_Notify::max_notify_iterations (void)
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::max_notify_iterations");
   return this->max_notify_iterations_;
+}
+
+void
+ACE_WFMO_Reactor_Notify::dump (void) const
+{
+  ACE_TRACE ("ACE_WFMO_Reactor_Notify::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  this->timer_queue_->dump ();
+  ACE_DEBUG ((LM_DEBUG, "Max. iteration: %d\n", this->max_notify_iterations_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 void
