@@ -6,8 +6,17 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
-TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (const char * repository_ids)
-  : repository_ids_ (repository_ids)
+TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
+  const CORBA::StringSeq & object_groups,
+  const CORBA::StringSeq & repository_ids,
+  const char * location,
+  CosLoadBalancing::LoadManager_ptr lm,
+  const char * orb_id)
+  : object_groups_ (object_groups),
+    repository_ids_ (repository_ids),
+    location_ (location),
+    lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
+    orb_id_ (CORBA::string_dup (orb_id))
 {
 }
 
@@ -22,6 +31,9 @@ void
 TAO_LB_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Force the LoadManager reference to be released since the ORB's
+  // lifetime is tied to object reference lifetimes.
+  (void) this->lm_.out ();
 }
 
 void
@@ -38,15 +50,40 @@ TAO_LB_IORInterceptor::components_established (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  int argc = 0;
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        0,
+                                        this->orb_id_.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   // Save a copy of the current ObjectReferenceFactory.
   PortableInterceptor::ObjectReferenceFactory_var old_orf =
     info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // This is slightly evil.  We're creating an object reference
+  // through a POA that hasn't completed construction!  This can't be
+  // portable.  :(
+  //
+  // Note that this components_established() method is only called
+  // once.  This means that there is no chance of the below _this()
+  // call causing the load balancer's swapped-in
+  // ObjectReferenceFactory from being used to create the object
+  // reference.
+  CosLoadBalancing::LoadAlert_var la =
+    this->load_alert_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   PortableInterceptor::ObjectReferenceFactory * tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_LB_ObjectReferenceFactory (old_orf.in (),
-                                                   this->repository_ids_),
+                                                   this->object_groups_,
+                                                   this->repository_ids_,
+                                                   location,
+                                                   orb.in (),
+                                                   this->lm_.in (),
+                                                   la.in ()),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
