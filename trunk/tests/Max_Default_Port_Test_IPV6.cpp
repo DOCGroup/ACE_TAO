@@ -94,6 +94,7 @@ My_Accept_Handler::port ()
 
 long max_connected_port = 0;
 
+#if defined (ACE_HAS_IPV6)
 static void *
 client (void *arg)
 {
@@ -135,6 +136,7 @@ client (void *arg)
 
   return 0;
 }
+#endif /*ACE_HAS_IPV6*/
 
 int
 run_main (int argc, ACE_TCHAR *argv[])

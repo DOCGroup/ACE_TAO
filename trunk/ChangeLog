@@ -1,3 +1,12 @@
+Sun Jan 18 00:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Max_Default_Port_Test_IPV6.cpp:
+	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
+	* tests/SOCK_Test_IPv6.cpp:
+
+	  Fixed unused function warnings in the daily builds.
+
+
 Sat Jan 17 23:52:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/SOCK_Dgram_Test.cpp:

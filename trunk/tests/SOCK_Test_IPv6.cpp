@@ -206,6 +206,7 @@ server (void *arg)
   return 0;
 }
 
+#if defined (ACE_HAS_IPV6)
 static void
 spawn (void)
 {
@@ -272,6 +273,7 @@ spawn (void)
       peer_acceptor.close ();
     }
 }
+#endif /*ACE_HAS_IPV6*/
 
 int
 run_main (int, ACE_TCHAR *[])
