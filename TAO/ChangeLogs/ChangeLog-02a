@@ -1,3 +1,10 @@
+Wed Dec 13 10:52:55 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+
+          AV now compiles.
+
 Wed Dec 13 10:25:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Av.bor:

@@ -347,7 +347,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
         flow_spec.length (index);
         for (i = 0; i < index; i++)
           {
-            flow_spec [j] = new_flowspec [j];
+            flow_spec [i] = new_flowspec [i];
           }
       }
       break;
