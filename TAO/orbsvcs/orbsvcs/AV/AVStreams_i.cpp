@@ -1753,15 +1753,27 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       AVStreams::streamQoS network_qos;
       if (qos.length () > 0)
         {
-          int result = this->translate_qos (qos, network_qos);
+	  if (TAO_debug_level > 0)
+	    ACE_DEBUG ((LM_DEBUG,
+			"QoS is Specified\n"));
+
+          int result = this->translate_qos (qos, 
+					    network_qos);
           if (result != 0)
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG, "QoS translation failed\n"));
+              ACE_DEBUG ((LM_DEBUG, 
+			  "QoS translation failed\n"));
+
+	  this->qos ().set (network_qos);
         }
+
+
       AVStreams::flowSpec flow_spec (the_spec);
       this->handle_preconnect (flow_spec);
+
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::connect: flow_spec_length = %d\n",
+        ACE_DEBUG ((LM_DEBUG, 
+		    "TAO_StreamEndPoint::connect: flow_spec_length = %d\n",
                     flow_spec.length ()));
       u_int i;
       for (i=0;i<flow_spec.length ();i++)
@@ -1807,17 +1819,27 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                           TAO_Reverse_FlowSpec_Entry,
                           0);
           if (entry->parse (flow_spec[i].in ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "Reverse_Flow_Spec_Set::parse failed\n"), 0);
+            ACE_ERROR_RETURN ((LM_ERROR, 
+			       "Reverse_Flow_Spec_Set::parse failed\n"), 
+			      0);
+
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::Connect: Reverse Flow Spec %s\n",  entry->entry_to_string ()));
+            ACE_DEBUG ((LM_DEBUG, 
+			"TAO_StreamEndPoint::Connect: Reverse Flow Spec %s\n",  
+			entry->entry_to_string ()));
+
           this->reverse_flow_spec_set.insert (entry);
         }
+
       result = TAO_AV_CORE::instance ()->init_reverse_flows (this,
                                                              this->forward_flow_spec_set,
                                                              this->reverse_flow_spec_set,
                                                              TAO_AV_Core::TAO_AV_ENDPOINT_A);
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "TAO_AV_Core::init_reverse_flows failed\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, 
+			   "TAO_AV_Core::init_reverse_flows failed\n"), 
+			  0);
+
       // Make the upcall to the app
       retv = this->handle_postconnect (flow_spec);
     }
@@ -1840,6 +1862,7 @@ TAO_StreamEndPoint::translate_qos (const AVStreams::streamQoS& application_qos,
   for (u_int i=0;i<len;i++)
     {
       network_qos [i].QoSType = application_qos [i].QoSType;
+      network_qos [i].QoSParams = application_qos [i].QoSParams;
     }
   return 0;
 }
@@ -2042,7 +2065,7 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec,
 CORBA::Boolean
 TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiator*/,
                                         CORBA::Boolean /*is_mcast*/,
-                                        AVStreams::streamQoS &/*qos*/,
+                                        AVStreams::streamQoS &qos,
                                         AVStreams::flowSpec &flow_spec,
                                         CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -2052,11 +2075,29 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                    AVStreams::FPError))
 
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, 
+		"\n(%P|%t) TAO_StreamEndPoint::request_connection called"));
+  
+
   int result = 0;
   ACE_TRY
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) TAO_StreamEndPoint::request_connection called"));
+      AVStreams::streamQoS network_qos;
+      if (qos.length () > 0)
+        {
+	  
+	  ACE_DEBUG ((LM_DEBUG,
+		      "QoS is Specified\n"));
+	  
+          int result = this->translate_qos (qos, network_qos);
+          if (result != 0)
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG, "QoS translation failed\n"));
+	  
+	  this->qos ().set (network_qos);
+	}
+      
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\n(%P|%t) TAO_StreamEndPoint::request_connection: "
@@ -2074,7 +2115,10 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
           if (entry->parse (flow_spec[i]) == -1)
             return 0;
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::request_connection Flow Spec %s", entry->entry_to_string ()));
+            ACE_DEBUG ((LM_DEBUG, 
+			"TAO_StreamEndPoint::request_connection Flow Spec %s", 
+			entry->entry_to_string ()));
+
           this->forward_flow_spec_set.insert (entry);
         }
 
@@ -2093,7 +2137,8 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_StreamEndpoint::request_connection");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+			   "TAO_StreamEndpoint::request_connection");
       return 0;
     }
   ACE_ENDTRY;
