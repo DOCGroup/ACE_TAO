@@ -141,9 +141,9 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -166,6 +166,21 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
+# Begin Source File
+
+SOURCE=.\Active_Object_Map.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\Any.cpp
@@ -678,21 +693,6 @@ SOURCE=.\Object_KeyC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Table.cpp
-
-!IF  "$(CFG)" == "TAO - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Operation_Table.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -1027,6 +1027,10 @@ SOURCE=.\Union.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
+SOURCE=.\Active_Object_Map.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\align.h
 # End Source File
 # Begin Source File
@@ -1147,10 +1151,6 @@ SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Table.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Operation_Table.h
 # End Source File
 # Begin Source File
@@ -1265,6 +1265,10 @@ SOURCE=.\varout.h
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "*.i"
+# Begin Source File
+
+SOURCE=.\Active_Object_Map.i
+# End Source File
 # Begin Source File
 
 SOURCE=.\any.i

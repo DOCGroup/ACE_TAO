@@ -62,10 +62,15 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual TAO_Object_Table_Impl *create_object_table (int user_id_policy);
-  // Return a new id-->object table.  If <user_id_policy> is true, the
-  // request is being made for a POA with USER ID policy. Otherwise,
+  virtual TAO_Active_Object_Map_Impl *create_active_object_map (int user_id_policy);
+  // Return a new id-->sevant table.  If <user_id_policy> is true, the
+  // request is being made for a POA with USER_ID policy. Otherwise,
   // the SYSTEM_ID policy is being used.
+
+  virtual TAO_Reverse_Active_Object_Map_Impl *create_reverse_active_object_map (int unique_id_policy);
+  // Return a new servant-->id table.  If <unique_id_policy> is true,
+  // the request is being made for a POA with UNIQUE_ID
+  // policy. Otherwise, the MULTIPLE_ID policy is being used.
 
   virtual ACE_Lock *create_poa_lock (void);
   // Return a new lock for use in locking the POA.
@@ -85,7 +90,7 @@ public:
   virtual ACE_Lock *create_cached_connector_lock (void);
   // Create the lock to be used by the cached connector.
 
-  virtual u_long object_table_size (void) const;
+  virtual u_long active_object_map_size (void) const;
   // Return the object table size
 };
 

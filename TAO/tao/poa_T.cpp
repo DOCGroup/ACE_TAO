@@ -21,23 +21,6 @@ TAO_Locked_POA<ACE_LOCKING_MECHANISM>::TAO_Locked_POA (const char *adapter_name,
 {
 }
 
-template <class ACE_LOCKING_MECHANISM>
-TAO_Locked_POA<ACE_LOCKING_MECHANISM>::TAO_Locked_POA (const char *adapter_name,
-                                                       PortableServer::POAManager_ptr poa_manager,
-                                                       TAO_POA_Policies &policies,
-                                                       PortableServer::POA_ptr parent,
-                                                       TAO_Object_Table &active_object_table,
-                                                       CORBA::Environment &env)
-  : TAO_POA (adapter_name,
-             poa_manager,
-             policies,
-             parent,
-             active_object_table,
-             env)
-{
-}
-
-
 template <class ACE_LOCKING_MECHANISM> TAO_POA *
 TAO_Locked_POA<ACE_LOCKING_MECHANISM>::clone (const char *adapter_name,
                                               PortableServer::POAManager_ptr poa_manager,
@@ -49,23 +32,6 @@ TAO_Locked_POA<ACE_LOCKING_MECHANISM>::clone (const char *adapter_name,
                    poa_manager,
                    policies,
                    parent,
-                   env);
-}
-
-
-template <class ACE_LOCKING_MECHANISM> TAO_POA *
-TAO_Locked_POA<ACE_LOCKING_MECHANISM>::clone (const char *adapter_name,
-                                              PortableServer::POAManager_ptr poa_manager,
-                                              TAO_POA_Policies &policies,
-                                              PortableServer::POA_ptr parent,
-                                              TAO_Object_Table &active_object_table,
-                                              CORBA::Environment &env)
-{
-  return new SELF (adapter_name,
-                   poa_manager,
-                   policies,
-                   parent,
-                   active_object_table,
                    env);
 }
 

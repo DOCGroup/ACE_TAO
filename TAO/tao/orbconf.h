@@ -81,10 +81,18 @@
                                                    "-ORBtablesize", "128" }
 #endif /* TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS */
 
-// The default size of TAO's server object table.
-#if !defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)
-#define TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE 64
-#endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
+// The default size of TAO's server active object map.
+#if !defined (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE)
+# if defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)
+//
+// TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE is deprecated. Please use
+// TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE.
+//
+#  define TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE
+# else
+#  define TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE 64
+# endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
+#endif /* ! TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE */
 
 // The default UDP multicast port number for locating the TAO Naming
 // Service.

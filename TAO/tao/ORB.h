@@ -67,7 +67,6 @@ typedef enum
 
 class TAO_POA_Manager;
 class TAO_POA_Policies;
-class TAO_Object_Table;
 
 class CORBA_Any;
 class CORBA_Any_var;
@@ -172,7 +171,6 @@ typedef class CORBA_InterfaceDef *
 
 // =Forward declarations
 struct TAO_Dispatch_Context;
-class TAO_Object_Table_Impl;
 class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
@@ -928,8 +926,7 @@ public:
 
   CORBA_Object_ptr resolve_root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                      TAO_POA_Manager *poa_manager = 0,
-                                     const TAO_POA_Policies *policies = 0,
-                                     TAO_Object_Table *active_object_map = 0);
+                                     const TAO_POA_Policies *policies = 0);
   // Resolve the POA.
 
   STUB_Object *create_stub_object (const TAO_ObjectKey &key,

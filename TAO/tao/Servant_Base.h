@@ -75,10 +75,16 @@ protected:
   virtual const char *_interface_repository_id (void) const = 0;
   // Get this interface's repository id.
 
-protected:
   TAO_Operation_Table *optable_;
   // The operation table for this servant, it is initialized by the
   // most derived class.
+};
+
+class TAO_Export TAO_Servant_Hash
+{
+public:
+  u_long operator () (PortableServer::Servant servant) const;
+  // Returns hash value.
 };
 
 class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
@@ -134,5 +140,9 @@ protected:
                           CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Turns around and calls invoke.
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Servant_Base.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_SERVANT_BASE_H */

@@ -3,6 +3,13 @@
 // Exception macros
 #include "tao/poa_macros.h"
 
+ACE_INLINE u_long 
+TAO_ObjectId_Hash::operator () (const PortableServer::ObjectId &id) const
+{
+  return ACE::hash_pjw ((const char *) id.get_buffer (),
+                        id.length ());
+}
+
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA_Policies::thread (void) const
 {
@@ -229,22 +236,6 @@ TAO_POA::clone (const TAO_POA::String &adapter_name,
                       env);
 }
 
-ACE_INLINE TAO_POA *
-TAO_POA::clone (const TAO_POA::String &adapter_name,
-                TAO_POA_Manager &poa_manager,
-                const TAO_POA_Policies &policies,
-                TAO_POA *parent,
-                TAO_Object_Table &active_object_map,
-                CORBA::Environment &env)
-{
-  return new TAO_POA (adapter_name,
-                      poa_manager,
-                      policies,
-                      parent,
-                      active_object_map,
-                      env);
-}
-
 ACE_INLINE ACE_Lock &
 TAO_POA::lock (void)
 {
@@ -340,7 +331,7 @@ TAO_POA::policies (void)
   return this->policies_;
 }
 
-ACE_INLINE TAO_Object_Table &
+ACE_INLINE TAO_Active_Object_Map &
 TAO_POA::active_object_map (void) const
 {
   return *this->active_object_map_;

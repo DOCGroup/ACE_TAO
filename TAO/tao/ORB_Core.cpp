@@ -933,8 +933,7 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
 void
 TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                                        TAO_POA_Manager *poa_manager,
-                                       const TAO_POA_Policies *policies,
-                                       TAO_Object_Table *active_object_map)
+                                       const TAO_POA_Policies *policies)
 {
   CORBA::Environment env;
   TAO_POA *poa = 0;
@@ -956,29 +955,16 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
       policies = root_poa_policies;
     }
 
-  if (active_object_map == 0)
-    {
-      // Construct a new POA without passing active object map
-      poa = new TAO_POA (adapter_name,
-                         *poa_manager,
-                         *policies,
-                         0,
-                         env);
-    }
-  else
-    {
-      // Construct a new POA passing active object map
-      poa = new TAO_POA (adapter_name,
-                         *poa_manager,
-                         *policies,
-                         0,
-                         *active_object_map,
-                         env);
-    }
+  // Construct a new POA
+  poa = new TAO_POA (adapter_name,
+                     *poa_manager,
+                     *policies,
+                     0,
+                     env);
 
   if (delete_policies)
     delete root_poa_policies;
-
+  
   if (env.exception () == 0)
     // set the poa in the orbcore instance
     this->root_poa (poa);

@@ -42,10 +42,17 @@ TAO_Server_Strategy_Factory::scheduling_strategy (void)
   return 0;
 }
 
-TAO_Object_Table_Impl *
-TAO_Server_Strategy_Factory::create_object_table (int user_id_policy)
+TAO_Active_Object_Map_Impl *
+TAO_Server_Strategy_Factory::create_active_object_map (int user_id_policy)
 {
   ACE_UNUSED_ARG (user_id_policy);
+  return 0;
+}
+
+TAO_Reverse_Active_Object_Map_Impl *
+TAO_Server_Strategy_Factory::create_reverse_active_object_map (int unique_id_policy)
+{
+  ACE_UNUSED_ARG (unique_id_policy);
   return 0;
 }
 
@@ -86,9 +93,9 @@ TAO_Server_Strategy_Factory::create_cached_connector_lock (void)
 }
 
 u_long 
-TAO_Server_Strategy_Factory::object_table_size (void) const
+TAO_Server_Strategy_Factory::active_object_map_size (void) const
 {
-  return TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE;
+  return TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
