@@ -100,27 +100,38 @@ while ( $#ARGV >= 0)
 }
  
 if ($#configs < 0) {
-    if (!defined $ENV{PIPPEN_CONFIGS}) {
+    if (defined $ENV{WINMAKE_CONFIGS}) {
+        @configs = split /:/, $ENV{WINMAKE_CONFIGS};
+    }
+    elsif (defined $ENV{PIPPEN_CONFIGS}) {
+        @configs = split /:/, $ENV{PIPPEN_CONFIGS};
+    }
+    else {
         print STDERR "Error: No config specified\n";
         exit 1;
     }
-
-    @configs = split /:/, $ENV{PIPPEN_CONFIGS};
 }
 
 if (!defined $extension) {
-    if (!defined $ENV{PIPPEN_COMPILER}) {
+    my $compiler = '';
+    if (defined $ENV{WINMAKE_COMPILER}) {
+        $compiler = $ENV{WINMAKE_COMPILER};
+    }
+    elsif (defined $ENV{PIPPEN_COMPILER}) {
+        $compiler = $ENV{PIPPEN_COMPILER};
+    }
+    else {
         print STDERR "Error: No compiler specified\n";
         exit 1;
     }
-    
-    if ($ENV{PIPPEN_COMPILER} eq "evc3") {
+
+    if ($compiler eq "evc3") {
         $extension = "vcp";
     }
-    elsif ($ENV{PIPPEN_COMPILER} eq "msvc6") {
+    elsif ($compiler eq "msvc6") {
         $extension = "dsp";
     }
-    elsif ($ENV{PIPPEN_COMPILER} eq "msvc7") {
+    elsif ($compiler eq "msvc7") {
         $extension = "vcproj";
     }
 }
