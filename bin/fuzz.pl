@@ -818,7 +818,6 @@ sub check_for_changelog_errors ()
     foreach $file (@files_changelog) {
         my $line = 0;
         if (open (FILE, $file)) {
-            my $disable = 0;
             my $found_backslash = 0;
             my $found_cvs_conflict = 0;
 
@@ -829,16 +828,14 @@ sub check_for_changelog_errors ()
                 next if m/^\s*\/\//;
                 next if m/^\s*$/;
 
-                if ($disable == 0) {
-		    # Check for backslashes in paths.
-                    if (m/\*.*\\[^ ]*:/) {
-                        print_error ("Backslashes in file path - $file ($line)");
-                    }
+		# Check for backslashes in paths.
+                if (m/\*.*\\[^ ]*:/) {
+                    print_error ("Backslashes in file path - $file ($line)");
+                }
 
-                    # Check for CVS conflict tags
-                    if (m/^<<<<</ || m/^=====/ || m/^>>>>>/) {
-                        print_error ("CVS conflict markers in $file ($line)");
-                    }
+                # Check for CVS conflict tags
+                if (m/^<<<<</ || m/^=====/ || m/^>>>>>/) {
+                    print_error ("CVS conflict markers in $file ($line)");
                 }
             }
             close (FILE);
@@ -900,7 +897,7 @@ check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_missing_rir_env () if ($opt_l >= 5);
 check_for_ace_check () if ($opt_l >= 3);
-check_for_changelog_errors () if ($opt_l >= 1);
+check_for_changelog_errors () if ($opt_l >= 4);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
