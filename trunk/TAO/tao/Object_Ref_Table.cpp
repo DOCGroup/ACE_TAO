@@ -20,6 +20,9 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 
 TAO_Object_Ref_Table::~TAO_Object_Ref_Table (void)
 {
+  // @@ We seem to be calling destroy () twice in normal
+  // circumstances. One from ORB_Core::shutdown () and another from
+  // here. Seems goofy in a first pass.. Bala
   //  this->destroy ();
 
   this->table_.close ();  // Only call close() in this destructor!
