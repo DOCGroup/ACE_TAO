@@ -82,7 +82,8 @@ DIRS  = CDR \
 	Oneways_Invoking_Twoways \
 	AMI_Buffering \
 	DLL_ORB \
-	Two_Objects
+	Two_Objects \
+	Nested_Upcall_Crash
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
