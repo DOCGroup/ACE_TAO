@@ -1,4 +1,6 @@
 // $Id$
+#ifndef HANDLER_TEST_CPP
+#define HANDLER_TEST_CPP
 
 #include "Handler_Test.h"
 
@@ -65,7 +67,7 @@ int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&))
     }
 
   if (url == 0) {
-    usage(argv[0]);
+    usage (argv[0]);
     return -1;
   }
 
@@ -199,15 +201,4 @@ int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&))
 }
 
 
-#ifdef ACE_HAS_BROKEN_NESTED_TEMPLATES
-
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
-{
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("DaNCe internal testing doesn't work with compilers ")
-              ACE_TEXT ("not supporting nested templates (like VC6).\n")));
-  return -1;
-}
-
-#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
+#endif /*HANDLER_TEST_CPP*/
