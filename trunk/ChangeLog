@@ -1,3 +1,29 @@
+Sun Mar 14 12:10:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.{h,cpp}:
+          MingW has a problem importing static class data members (even with
+          --enable-auto-import) in case these members are referenced inside
+          heavily nested template class methods. It is somehow related to
+          optimization since with higher optim. levels more linking errors
+          are detected as with lower optim. levels. Since this is something
+          which is not going to be solved soon in the MingW environment and
+          the number of affected members are relatively few and the possible
+          fixes relatively simple (create accessor methods) we added accessor
+          methods for the zero and max_time static members of ACE_Time_Value.
+
+        * ace/Select_Reactor_T.{cpp ,i}:
+        * ace/Timer_Queue_Adapters.{h,cpp}:
+        * ace/Timer_Queue_T.{h,i,cpp}:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_List_T.cpp:
+          Use the accessor methods to get zero and max_time instead of the
+          static public members.
+
+          This fixes the link errors in the MinGW build. Thanks to
+          Martin Corino <mcorino@remedy.nl> for figuring out the problem and
+          making the patches.
+
 Sun Mar 14 10:01:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Lib_Find.cpp (ld_find):
