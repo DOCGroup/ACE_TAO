@@ -1,11 +1,5 @@
 #include "ace/Timer_List.h"
 
-int
-ACE_Timer_List::expire (void)
-{
-  return this->ACE_Timer_Queue::expire ();
-}
-
 ACE_Timer_List_Iterator::ACE_Timer_List_Iterator (ACE_Timer_List &list)
   : timer_list_ (list)
 {

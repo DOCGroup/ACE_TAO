@@ -16,15 +16,20 @@
 //      command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Prashant Jain
+//    Prashant Jain and Douglas C. Schmidt
 // 
 // ============================================================================
 
+#include "ace/Profile_Timer.h"
 #include "ace/Timer_List.h"
 #include "ace/Timer_Heap.h"
 #include "test_config.h"
 
-const int MAX_ITERATIONS = ACE_DEFAULT_MAX_TIMERS - 1;
+// Number of iterations for the performance tests.
+static const int MAX_ITERATIONS = ACE_DEFAULT_MAX_TIMERS;
+
+// Keep track of the timer ids that were assigned to us.
+static int timer_ids[MAX_ITERATIONS];
 
 class Example_Handler : public ACE_Event_Handler
 {
@@ -42,29 +47,29 @@ test_functionality (ACE_Timer_Queue *tq)
 {
   Example_Handler eh;
 
-  ACE_ASSERT (tq.is_empty ());
+  ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
   int timer_id; 
   
-  timer_id = tq.schedule (&eh, (const void *) 1, ACE_OS::gettimeofday ());
+  timer_id = tq->schedule (&eh, (const void *) 1, ACE_OS::gettimeofday ());
   ACE_ASSERT (timer_id != -1);
 
-  ACE_ASSERT (tq.schedule (&eh, (const void *) 42,
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
 			   ACE_OS::gettimeofday ()) != -1);
-  ACE_ASSERT (tq.schedule (&eh, (const void *) 42,
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
 			   ACE_OS::gettimeofday ()) != -1);
-  ACE_ASSERT (tq.cancel (timer_id) == 1);
-  ACE_ASSERT (!tq.is_empty ());
+  ACE_ASSERT (tq->cancel (timer_id) == 1);
+  ACE_ASSERT (!tq->is_empty ());
 
-  ACE_ASSERT (tq.expire (ACE_OS::gettimeofday () == 1));
+  ACE_ASSERT (tq->expire () == 2);
 
-  ACE_ASSERT (tq.schedule (&eh, (const void *) 4, ACE_OS::gettimeofday
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 4, ACE_OS::gettimeofday
 			   ()) != -1);
-  ACE_ASSERT (tq.schedule (&eh, (const void *) 5, ACE_OS::gettimeofday
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 5, ACE_OS::gettimeofday
 			   ()) != -1);
-  ACE_ASSERT (tq.cancel (&eh) == 2);
-  ACE_ASSERT (tq.is_empty ());
-  ACE_ASSERT (tq.expire (ACE_OS::gettimeofday ()) == 0);
+  ACE_ASSERT (tq->cancel (&eh) == 2);
+  ACE_ASSERT (tq->is_empty ());
+  ACE_ASSERT (tq->expire () == 0);
 }
 
 static void
@@ -78,11 +83,19 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
 
+  // Test the amount of time required to schedule all the timers.
+
   timer.start ();
 
-  // Test the amount of time required to schedule all the timers.
   for (i = 0; i < MAX_ITERATIONS; i++)
-    tq->schedule (&eh, (const void *) 42, ACE_OS::gettimeofday ());
+    {
+      timer_ids[i] = tq->schedule (&eh, (const void *) 42, ACE_OS::gettimeofday ());
+      ACE_ASSERT (timer_ids[i] != -1);
+    }
+
+  ACE_ASSERT (!tq->is_empty ());
+
+  timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
 
@@ -95,20 +108,18 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
 	      (et.real_time / double (MAX_ITERATIONS)) * 1000000));
 
+  // Test the amount of time required to cancel all the timers.  We
+  // start from the "back" in order to measure the worst case
+  // performance for the <ACE_Timer_List> (which uses linear search).
+
   timer.start ();
 
-  int timer_id = tq->schedule (&eh, (const void *) 42,
-			       ACE_OS::gettimeofday ());
-
-  ACE_ASSERT (timer_id);
-
-  // Test the amount of time required to cancel all the timers (this
-  // takes advantage of the fact that <timer_ids> are always allocated
-  // contiguously starting at 0.
-  for (i = 0; i < MAX_ITERATIONS + 1; i++)
-    tq->cancel (timer_id--);
+  for (i = MAX_ITERATIONS - 1; i >= 0; i--)
+    tq->cancel (timer_ids[i]);
 
   ACE_ASSERT (tq->is_empty ());
+
+  timer.stop ();
 
   timer.elapsed_time (et);
 
@@ -119,6 +130,29 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
 	      (et.real_time / double (MAX_ITERATIONS)) * 1000000));
 
+  // Test the amount of time required to schedule and expire all the
+  // timers.
+
+  timer.start ();
+
+  for (i = 0; i < MAX_ITERATIONS; i++)
+    ACE_ASSERT (tq->schedule (&eh, (const void *) 42, ACE_OS::gettimeofday ()) != -1);
+
+  ACE_ASSERT (!tq->is_empty ());
+
+  // Expire all the timers.
+  tq->expire ();
+
+  timer.stop ();
+
+  timer.elapsed_time (et);
+
+  ACE_DEBUG ((LM_DEBUG, "time to schedule and expire %d timers for %s\n", 
+	      MAX_ITERATIONS, test_name));
+  ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
+	    et.real_time, et.user_time, et.system_time));
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+	      (et.real_time / double (MAX_ITERATIONS)) * 1000000));
 }
 
 struct Timer_Queues
@@ -133,9 +167,9 @@ struct Timer_Queues
 static Timer_Queues timer_queues[] =
 {
   { new ACE_Timer_List, "ACE_Timer_List" },
-  { new ACE_Timer_Heap, "ACE_Timer_Queue" },
-  { 0, 0 };
-}
+  { new ACE_Timer_Heap, "ACE_Timer_Heap" },
+  { 0, 0 },
+};
 
 int
 main (int, char *[])
@@ -145,7 +179,7 @@ main (int, char *[])
   for (int i = 0; timer_queues[i].name_ != 0; i++)
     {
       test_performance (timer_queues[i].queue_, timer_queues[i].name_);
-      test_functionality (timer_queues[i].queue_, timer_queues[i].name_);
+      test_functionality (timer_queues[i].queue_);
       delete timer_queues[i].queue_;
     }
 
