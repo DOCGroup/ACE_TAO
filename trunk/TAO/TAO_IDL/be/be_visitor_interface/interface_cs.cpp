@@ -82,7 +82,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << node->name () << "_ptr " << node->name ()
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "CORBA::Environment &" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
