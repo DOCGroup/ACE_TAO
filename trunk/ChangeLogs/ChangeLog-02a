@@ -1,3 +1,16 @@
+Wed Feb 02 12:46:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (open): Changed to determine whether files should be
+	  opened using FILE_SHARE_DELETE flag on Win32 at runtime.  This
+	  allows ace libraries built for Win95/98 work correctly on NT.
+	  Thanks to Alex Chachanashvili <achacha@panix.com> for reporting
+	  this. [Bug 419]
+
+	* ace/OS.{h,i,cpp}:  Added a static data member of type
+	  OSVERSIONINFO on win32 and initialize it in
+	  ACE_OS_Object_Manager::init to cache the OS version
+	  informaiton.
+
 Wed Feb  2 11:08:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Thread.h: Clarified that cancel() is only portable
@@ -39,7 +52,7 @@ Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           ace/OS.cpp: Removed processor architecture "hack" since
 	  Borland C++Builder 4 supports the required structure definition,
 	  and earlier versions are no longer supported.
- 
+
 	  ace/OS.h: Do not define the ACE_No_Heap_Check class when
 	  building with Borland C++Builder.
 
@@ -57,10 +70,10 @@ Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	  include/makeinclude/outputdir.bor: Allow object directory to be
  	  overridden.
-	
+
           Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
  	  contributing these.
-	
+
 	* ace/OS.i: Minor reformatting.
 
 	* ace/SOCK_Dgram_Mcast: Updated the implementation comments related to
@@ -73,7 +86,7 @@ Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  out.  This is now fixed.  Thanks to David Levine for reporting
  	  this.
 
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp: 
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
 	  Added a typedef to handle cases where
  	  ACE_HAS_POSITION_INDEPENDENT_MALLOC is not set.  Thanks to David
  	  Levine for reporting this.

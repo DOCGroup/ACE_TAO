@@ -36,6 +36,11 @@ const wchar_t *ACE_OS::month_name[] = {ACE_TEXT ("Jan"), ACE_TEXT ("Feb"),
 static const ASYS_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
 # endif /* ACE_HAS_WINCE */
 
+# if defined (ACE_WIN32)
+OSVERSIONINFO ACE_OS::win32_versioninfo_;
+// Cached win32 version information.
+# endif /* ACE_WIN32 */
+
 class ACE_OS_Thread_Mutex_Guard
 {
   // = TITLE
@@ -5118,12 +5123,13 @@ ACE_OS::open (const char *filename,
         )
     }
 
+  DWORD shared_mode = FILE_SHARE_READ | FILE_SHARE_WRITE;
+  if (ACE_OS::get_win32_versioninfo().dwPlatformId ==
+      VER_PLATFORM_WIN32_NT)
+    shared_mode |= FILE_SHARE_DELETE;
+
   ACE_HANDLE h = ::CreateFileA (filename, access,
-#if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
-                                FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-#else
-                                FILE_SHARE_READ | FILE_SHARE_WRITE,
-#endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
+                                shared_mode,
                                 ACE_OS::default_win32_security_attributes (sa),
                                 creation,
                                 flags,
@@ -5252,13 +5258,13 @@ ACE_OS::open (const wchar_t *filename,
         )
     }
 
+  DWORD shared_mode = FILE_SHARE_READ | FILE_SHARE_WRITE;
+  if (ACE_OS::get_win32_versioninfo().dwPlatformId ==
+      VER_PLATFORM_WIN32_NT)
+    shared_mode |= FILE_SHARE_DELETE;
+
   ACE_HANDLE h = ::CreateFileW (filename, access,
-#if !defined (ACE_HAS_WINCE)
-                                FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-#else
-                                // @@ CE doesn't support FILE_SHARE_DELETE???
-                                FILE_SHARE_READ | FILE_SHARE_WRITE,
-#endif /* !ACE_HAS_WINCE */
+                                shared_mode,
                                 ACE_OS::default_win32_security_attributes (sa),
                                 creation,
                                 flags,
@@ -6685,6 +6691,11 @@ ACE_OS_Object_Manager::init (void)
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
 
+# if defined (ACE_WIN32)
+      ACE_OS::win32_versioninfo_.dwOSVersionInfoSize =
+        sizeof (OSVERSIONINFO);
+      ::GetVersionEx (&ACE_OS::win32_versioninfo_);
+# endif /* ACE_WIN32 */
       return 0;
     } else {
       // Had already initialized.
