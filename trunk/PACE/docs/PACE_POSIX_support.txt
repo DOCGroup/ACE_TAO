@@ -158,4 +158,50 @@ FILE                    linux   lynxos  sunos   win32
   stat()                                        -N
   umask()                                       -N
 .............................................................  
-  
+<stdio.h>
+  clearerr()                                    -N
+  fclose()                                      -N
+  ctermid()                                     x
+  fdopen()                                      -N
+  ferror()                                      -N
+  feof()                                        -N
+  fflush()                                      -N
+  fileno()                                      -N
+  fgetc()                                       -N
+  fgetpos()                                     -N
+  fgets()                                       -N
+  flockfile()                                   -N
+  fopen()                                       -N
+  fputc()                                       -N
+  fputs()                                       -N
+  fread()                                       -N
+  freopen()                                     -N
+  fseek()                                       -N
+  fsetpos()                                     -N
+  ftell()                                       -N
+  ftrylockfile()                                -N
+  funlockfile()                                 -N
+  fwrite()                                      -N
+  getc()                                        -N
+  getc_unlocked()                               -N
+  getchar()                                     -N
+  getchar_unlocked()                            -N
+  gets()                                        -N
+  perror()                                      -N
+  putc()                                        -N
+  putc_unlocked()                               -N
+  putchar()                                     -N
+  putchar_unlocked()                            -N
+  puts()                                        -N
+  remove()                                      -N
+  rename()                                      -N
+  rewind()                                      -N
+  setbuf()                                      -N
+  setvbuf()                                     -N
+  tmpfile()                                     -N
+  tmpnam()                                      -N
+  ungetc()                                      -N
+  vfprintf()                                    -N
+  vprintf()                                     -N
+  vsprintf()                                    -N
+.............................................................  

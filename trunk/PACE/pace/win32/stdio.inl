@@ -13,8 +13,6 @@
  *
  * =========================================================================== */
 
-#include <stdarg.h>
-
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 void
@@ -39,7 +37,9 @@ PACE_INLINE
 char *
 pace_ctermid (char * s)
 {
-  return ctermid (s);
+  char * retval = (char*)0;
+  PACE_UNUSED_ARG (s);
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
@@ -476,11 +476,7 @@ pace_vfprintf (PACE_FILE * stream,
                const char * format,
                va_list arg)
 {
-  /*  return vfprintf (stream, format, arg); */
-  PACE_UNUSED_ARG (stream);
-  PACE_UNUSED_ARG (format);
-  PACE_UNUSED_ARG (arg);
-  return -1;
+  return vfprintf (stream, format, arg);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -490,10 +486,7 @@ int
 pace_vprintf (const char * format,
               va_list arg)
 {
-  /*  return vfprintf (format, arg); */
-  PACE_UNUSED_ARG (format);
-  PACE_UNUSED_ARG (arg);
-  return -1;
+  return vprintf (format, arg);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -504,10 +497,6 @@ pace_vsprintf (char * s,
                const char * format,
                va_list arg)
 {
-  /*  return vsprintf (s, format, arg);*/
-  PACE_UNUSED_ARG (s);
-  PACE_UNUSED_ARG (format);
-  PACE_UNUSED_ARG (arg);
-  return -1;
+  return vsprintf (s, format, arg);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
