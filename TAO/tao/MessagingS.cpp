@@ -25,6 +25,8 @@
 
 ACE_RCSID(tao, MessagingS, "$Id$")
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 class TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -406,5 +408,7 @@ CORBA::Boolean POA_Messaging::_tao_direct_collocated_ReplyHandler::_non_existent
 {
   return this->servant_->_non_existent (ACE_TRY_ENV);
 }
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
