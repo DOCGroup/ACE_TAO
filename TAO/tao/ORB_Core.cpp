@@ -175,7 +175,12 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   // Make sure these two objects are deleted last (other objects may
   // depend on this).
+#if !defined (__Lynx__)  ||  !defined (__powerpc__)
+  // This statement causes a seg fault on ORB shutdown, on LynxOS
+  // 3.0.0/ppc only.
   delete this->poa_current_;
+#endif /* ! __Lynx__  ||  ! __powerpc__ */
+
   delete this->object_adapter_;
 }
 
