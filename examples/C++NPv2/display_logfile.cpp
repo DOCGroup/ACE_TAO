@@ -316,7 +316,7 @@ public:
          -1);
       separator->copy ("|");
 
-      ACE_Message_Block *dup;
+      ACE_Message_Block *dup = 0;
       for (ACE_Message_Block *temp = mblk; temp != 0; ) {
         dup = separator->duplicate ();
         dup->cont (temp->cont ());
