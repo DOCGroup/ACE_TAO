@@ -1,4 +1,0 @@
-// $Id$
-project: namingexe, rteventlogadmin {
-  includes += $(TAO_ROOT)/orbsvcs
-}
