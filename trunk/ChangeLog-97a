@@ -33,6 +33,10 @@ Fri May 23 21:27:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	  so that these can easily be built on platforms that have
 	  trouble with ACE_IOStream.
 
+	* Priority_Task_Test.cpp: removed close () because it didn't really
+	  close the Task, and added printout to main () after all tasks have
+	  been spawned to help debug non-termination.
+
 Fri May 23 20:12:33 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* tests/SV_Shared_Memory_Test.cpp: Thanks to Chuck Gehr, fixed
