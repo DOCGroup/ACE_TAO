@@ -390,7 +390,7 @@ main (int argc, ASYS_TCHAR *argv[])
                       Reader_Task (time_Calculation,
                                   barrier),
                       -1);
-      reader_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO,
+      reader_tasks[i]->activate (THR_BOUND | THR_SCHED_FIFO,
                                  1,
                                  0,
                                  ACE_DEFAULT_THREAD_PRIORITY);
