@@ -1,3 +1,11 @@
+Tue Jun  9 13:29:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_typedef (be_visitor_typedef_ch::visit_predefined)
+
+	  We had forgottent to generate the typedef for the _var types for
+	  pseudo objects and Anys. Thanks to Seth Widoff for reporting
+	  this.
+
 Tue Jun 09 12:52:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (add_to_collocation_table): ACE_Hash_Addr must
