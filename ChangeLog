@@ -1,3 +1,11 @@
+Thu Jul  1 07:54:11 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_Thread.inl: Changed the thr_min_stack() wrapper method
+	  so it just calls the underlying OS function without using
+ 	  ACE_ADAPT_RETVAL.  Thanks to Mattias Nilsson
+ 	  <mattias.o.nilsson@ericsson.com> for reporting this bug and
+ 	  providing a fix.
+
 Thu Jul  1 09:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/index.html:
