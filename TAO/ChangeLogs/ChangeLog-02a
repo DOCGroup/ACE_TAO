@@ -1,8 +1,26 @@
+Sat Jun 10 14:23:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+          The RTSchedEvent.dsp file was lost in the LoadBalancing merge.
+
+        * orbsvcs/orbsvcs/orbsvcs_static.dsw:
+        * orbsvcs/orbsvcs/LoadBalancing_static.dsp:
+          Add the new LoadBalancing_Static project.
+
+        * orbsvcs/tests/LoadBalancing/LoadBalancing.dsw:
+        * orbsvcs/tests/LoadBalancing/client.dsp:
+        * orbsvcs/tests/LoadBalancing/server.dsp:
+          Add the server.dsp file.
+          Fixed the configuration for the release build.
+
+        * utils/nslist/nslist.dsw:
+          Add missing projects to this file.
+
 Sat Jun 10 13:33:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
-	  Add missing 'class' in friend declaration. DU/CXX was unhappy
-	  about that.
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+          Add missing 'class' in friend declaration. DU/CXX was unhappy
+          about that.
 
 Sat Jun 10 11:23:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
