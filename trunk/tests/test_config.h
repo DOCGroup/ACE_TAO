@@ -291,7 +291,7 @@ randomize (int array[], size_t size)
   size_t i;
 
   for (i = 0; i < size; i++)
-    array [i] = i;
+    array [i] = ACE_static_cast (int, i);
 
   // See with a fixed number so that we can produce "repeatable"
   // random numbers.
@@ -301,7 +301,7 @@ randomize (int array[], size_t size)
 
   for (i = 0; i < size; i++)
     {
-      int index = ACE_OS::rand() % size--;
+      size_t index = ACE_OS::rand() % size--;
       int temp = array [index];
       array [index] = array [size];
       array [size] = temp;
