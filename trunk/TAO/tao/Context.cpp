@@ -78,7 +78,7 @@ CORBA_Context::set_one_value (const char * /* propname */,
 }
 
 void
-CORBA_Context::set_values (CORBA::NVList_ptr values,
+CORBA_Context::set_values (CORBA::NVList_ptr,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,

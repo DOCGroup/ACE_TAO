@@ -57,7 +57,7 @@ CORBA_ValueBase::_downcast (CORBA_ValueBase* vt)
 CORBA::Boolean
 CORBA_ValueBase::_tao_marshal (TAO_OutputCDR &strm,
                                CORBA_ValueBase *this_,
-                               ptr_arith_t formal_type_id)
+                               ptr_arith_t /* formal_type_id */)
 {
   CORBA::Boolean retval = 1;
   // %! yet much to do ... look for +++ !
