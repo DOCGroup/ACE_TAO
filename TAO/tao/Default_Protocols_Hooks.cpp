@@ -62,7 +62,7 @@ TAO_Default_Protocols_Hooks::validate_policy_type (CORBA::ULong,
 
 void
 TAO_Default_Protocols_Hooks::add_rt_service_context_hook (
-                                TAO_GIOP_Invocation *,
+                                TAO_Service_Context &,
                                 CORBA::Policy *,
                                 CORBA::Short &,
                                 CORBA::Environment &)
