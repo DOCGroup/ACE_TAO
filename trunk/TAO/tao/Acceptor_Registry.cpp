@@ -257,14 +257,22 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core)
   TAO_ProtocolFactorySetItor end =
     orb_core->protocol_factories ()->end ();
 
-  // loop through loaded protocols looking for protocol_prefix
+  // loop through all the loaded protocols...
   for (TAO_ProtocolFactorySetItor i =
          orb_core->protocol_factories ()->begin ();
        i != end;
        ++i)
     {
-      if (this->open_default (orb_core, i) != 0)
-        return -1;
+      // if the protocol requires an explicit -ORBendpoint option then 
+      // don't use it, otherwise open a default endpoint for that
+      // protocol, this solves the problem with persistent endpoints
+      // (such as UNIX domain rendesvouz points), that are not cleaned 
+      // up if the server crashes.
+      if (!(*i)->factory ()->requires_explicit_endpoint ())
+        {
+          if (this->open_default (orb_core, i) != 0)
+            return -1;
+        }
     }
 
   return 0;

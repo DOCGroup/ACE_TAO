@@ -1,3 +1,22 @@
+Tue Jul 13 16:05:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.cpp:
+	* tao/Protocol_Factory.h:
+	* tao/IIOP_Factory.cpp:
+	* tao/IIOP_Factory.h:
+	* tao/UIOP_Factory.cpp:
+	* tao/UIOP_Factory.h:
+	  Some protocols (like UIOP) should not create endpoints unless
+	  the user requires one; the problem is that they tend to leave
+	  garbage on the filesystem (in the future we may have the same
+	  problem with shared memory segments or semaphores) if the server 
+	  crashes.
+	  The current behavior is to automatically create an IIOP endpoint 
+	  if the user does not specify any -ORBendpoint options, yet the
+	  UIOP protocol is loaded by default and uiop endpoints (including 
+	  uiop://) can be specified in the command line.
+	  This fixes [BUGID:22]
+
 Tue Jul 13 14:57:38 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
