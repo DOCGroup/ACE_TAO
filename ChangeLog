@@ -1,3 +1,16 @@
+Tue Oct 14 13:54:19 2003  Steve Huston  <shuston@riverace.com>
+	Picked up from ACE 5.3:
+	Wed Jun 11 17:18:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/wrapper_macros.GNU: Make SOVERSION
+	  user-settable if versioned_so is enabled. Thanks to Craig L.
+	  Ching <cching@mqsoftware.com> for this idea.
+	  Also moved the versioned_so and SOVERSION setup to after
+	  platform_macros.GNU is included so that users can set this stuff
+	  up in their platform_macros.GNU file. The ACE_MAJOR_VERSION,
+	  etc. variables are still set up before platform_macros.GNU, though,
+	  in case platform_macros.GNU wants to use them.
+
 Tue Oct 14 10:45:32 2003  Nanbor Wang  <nanbor@.cs.wustl.edu>
 
 	* Makefile: Added a new CIAO_Core target for building all CIAO
@@ -342,7 +355,6 @@ Thu Oct  2 07:33:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
         * Kokyu/tests/EDF/test.cpp:
         * Kokyu/tests/FIFO/test.cpp:
           Added shutdown of the dispatcher at the end.
-
 
 Wed Oct  1 10:59:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
