@@ -35,7 +35,7 @@ static ACE_TSS<Signal_Catcher> *signal_catcher = 0;
 extern "C" void
 handler (int signum)
 {
-  if (signal_catcher && *signal_catcher)
+  if (signal_catcher)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d, signaled = %d\n",
                   signum, (*signal_catcher)->signaled ()));
