@@ -208,7 +208,7 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int shutdown (int s, int how);
+    PACE_INLINE int pace_shutdown (int s, int how);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int socket (int protofamily, int type, int protocol);
+    PACE_INLINE int pace_socket (int protofamily, int type, int protocol);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
     
 /**
@@ -226,10 +226,10 @@ extern "C" {
    (IEEE Std P1003.1g, D6.6, March 1997 Edition)
 */
 #if (PACE_HAS_POSIX_SOCK_UOF)
-    PACE_INLINE int socketpair (int protofamily,
-                                int type,
-                                int protocol,
-                                int sv[2]);
+    PACE_INLINE int pace_socketpair (int protofamily,
+                                     int type,
+                                     int protocol,
+                                     int sv[2]);
 #endif /* PACE_HAS_POSIX_SOCK_UOF */
     
 #if defined (PACE_HAS_INLINE)
