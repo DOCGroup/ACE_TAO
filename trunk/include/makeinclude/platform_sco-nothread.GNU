@@ -1,9 +1,4 @@
-# According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
-# should allow ACE to be built on Linux.
-
 CC              = gcc
-# for threads
-# for no threads
 CXX		= g++
 CFLAGS		+= -w -O2
 CCFLAGS		+= -w -O2 -fno-implicit-templates -fno-strict-prototypes
