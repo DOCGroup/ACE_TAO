@@ -2,7 +2,7 @@ Thu May 20 17:14:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_ch.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-        
+
           Added leading '::' before generating scoped names
           of inherited interfaces (for component, supported
           interfaces) to avoid ambiguity when a module name
@@ -12,7 +12,7 @@ Thu May 20 17:14:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed May 19 18:28:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Diffserv: 
+	* tests/RTCORBA/Diffserv:
 
 	  Renamed TAO_Custom_Network_Priority_Mapping to
 	  Custom_Network_Priority_Mapping.
@@ -20,9 +20,9 @@ Wed May 19 18:28:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 Wed May 19 09:14:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
-        
-          Changed more instances similar to the change in 
-          
+
+          Changed more instances similar to the change in
+
           Tue May 18 10:15:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Again, thanks to Olli Savia <ops@iki.fi> for pointing them out.
