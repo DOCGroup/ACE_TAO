@@ -2633,6 +2633,8 @@ public:
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
+#     define THR_SCOPE_PROCESS       0
+#     define THR_SCOPE_SYSTEM        0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
 
 #   if defined (ACE_LACKS_COND_T) && !defined (ACE_HAS_PACE)
