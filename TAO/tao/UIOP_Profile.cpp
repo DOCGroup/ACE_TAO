@@ -102,11 +102,11 @@ TAO_UIOP_Profile::parse_string (const char *string,
   if (!string || !*string)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO),
-        -1);
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        -1);
     }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
@@ -129,7 +129,12 @@ TAO_UIOP_Profile::parse_string (const char *string,
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor  > TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        -1);
     }
 
   // Pull off the "rendezvous point" part of the objref
@@ -142,11 +147,11 @@ TAO_UIOP_Profile::parse_string (const char *string,
   if (cp == 0)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO),
-        -1);
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        -1);
       // No rendezvous point specified
     }
 
@@ -161,8 +166,8 @@ TAO_UIOP_Profile::parse_string (const char *string,
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
+          TAO_DEFAULT_MINOR_CODE,
+          EINVAL),
         CORBA::COMPLETED_NO),
         -1);
     }

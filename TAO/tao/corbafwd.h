@@ -1091,14 +1091,13 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06U << 7)
 #define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07U << 7)
 #define TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  (0x08U << 7)
-#define TAO_NULL_POINTER_MINOR_CODE                (0x09U << 7)
-#define TAO_MPROFILE_CREATION_ERROR                (0x0AU << 7)
-#define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0BU << 7)
-#define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0CU << 7)
-#define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0DU << 7)
-#define TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION      (0x0EU << 7)
-#define TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   (0x0FU << 7)
-#define TAO_ORB_CORE_INIT_LOCATION_CODE            (0x10U << 7)
+#define TAO_MPROFILE_CREATION_ERROR                (0x09U << 7)
+#define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0AU << 7)
+#define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0BU << 7)
+#define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0CU << 7)
+#define TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION      (0x0DU << 7)
+#define TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   (0x0EU << 7)
+#define TAO_ORB_CORE_INIT_LOCATION_CODE            (0x0FU << 7)
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 
 // errno encoding:  bottom 7 bits.

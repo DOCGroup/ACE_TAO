@@ -229,8 +229,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
+          TAO_DEFAULT_MINOR_CODE,
+          EINVAL),
         CORBA::COMPLETED_NO),
         -1);
     }
@@ -255,7 +255,12 @@ TAO_IIOP_Profile::parse_string (const char *string,
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        -1);
     }
 
   // Pull off the "hostname:port/" part of the objref
@@ -269,11 +274,11 @@ TAO_IIOP_Profile::parse_string (const char *string,
     {
       // No host/port delimiter!
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO),
-        -1);
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        -1);
     }
 
   char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
@@ -283,8 +288,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
       // No object key delimiter!
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
+          TAO_DEFAULT_MINOR_CODE,
+          EINVAL),
         CORBA::COMPLETED_NO),
         -1);
     }

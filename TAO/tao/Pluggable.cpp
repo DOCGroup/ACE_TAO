@@ -272,11 +272,11 @@ TAO_Connector::make_mprofile (const char *string,
   if (!string || !*string)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_NULL_POINTER_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO),
-        -1);
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        -1);
     }
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
