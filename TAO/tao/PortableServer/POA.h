@@ -302,15 +302,13 @@ protected:
   void parse_policy (const CORBA::Policy_ptr policy,
                      CORBA_Environment &ACE_TRY_ENV);
 
-  int validity_check (void);
+  void validity_check (CORBA::Environment &ACE_TRY_ENV);
 
   int validate_priority_model (void);
 
   int validate_server_protocol (void);
 
 #if (TAO_HAS_RT_CORBA == 1)
-
-  int validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr);
 
   int validate_priority_bands (void);
 
@@ -342,6 +340,8 @@ protected:
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   CORBA::PolicyList client_exposed_fixed_policies_;
+
+  TAO_ORB_Core &orb_core_;
 };
 
 class TAO_Temporary_Creation_Time;
@@ -914,8 +914,7 @@ protected:
 
   int valid_priority (RTCORBA::Priority priority);
 
-  void validate_priority_and_policies (RTCORBA::Priority priority,
-                                       CORBA::Environment &ACE_TRY_ENV);
+  void validate_policies (CORBA::Environment &ACE_TRY_ENV);
 
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
