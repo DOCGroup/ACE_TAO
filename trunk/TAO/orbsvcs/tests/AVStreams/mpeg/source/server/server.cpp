@@ -52,6 +52,7 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
   int result;
   u_short port;
   ACE_UINT32 ip;
+
   // Client is sending us JUNK
   this->peer ().recv_n (&junk, sizeof junk);
   
