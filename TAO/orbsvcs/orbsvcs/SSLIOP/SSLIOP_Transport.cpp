@@ -1,9 +1,10 @@
 #include "SSLIOP_Transport.h"
-#include "tao/debug.h"
-
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Acceptor.h"
+
+#include "tao/debug.h"
+
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
@@ -186,9 +187,10 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
 
 
 int
-TAO_SSLIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
-                                               TAO_Target_Specification &spec,
-                                               TAO_OutputCDR &msg)
+TAO_SSLIOP_Transport::generate_request_header (
+  TAO_Operation_Details &opdetails,
+  TAO_Target_Specification &spec,
+  TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir IIOP policy set, whether the
   // messaging objects are ready to handle bidirectional connections
@@ -253,7 +255,6 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   // Get a handle on to the acceptor registry
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
-
 
   // Get the first acceptor in the registry
   TAO_AcceptorSetIterator acceptor = ar.begin ();
@@ -352,8 +353,8 @@ TAO_SSLIOP_Transport::get_listen_point (
 
   for (size_t index = 0; index < count; ++index)
     {
-      if (local_addr.get_ip_address()
-          == endpoint_addr[index].get_ip_address())
+      if (local_addr.get_ip_address ()
+          == endpoint_addr[index].get_ip_address ())
         {
           // Get the count of the number of elements
           const CORBA::ULong len = listen_point_list.length ();
