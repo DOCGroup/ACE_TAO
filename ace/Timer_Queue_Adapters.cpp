@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Timer_Queue_Adapters.cpp"
+#include "ace/Timer_Queue_Adapters.h"
 
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_C)
 #define ACE_TIMER_QUEUE_ADAPTERS_C
