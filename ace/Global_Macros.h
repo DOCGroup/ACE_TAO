@@ -719,17 +719,17 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 # define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
-     else { new (POINTER) CONSTRUCTOR; } \
+     else { (void) new (POINTER) CONSTRUCTOR; } \
    } while (0)
 # define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return;} \
-     else { new (POINTER) CONSTRUCTOR; } \
+     else { (void) new (POINTER) CONSTRUCTOR; } \
    } while (0)
 # define ACE_NEW_MALLOC_NORETURN(POINTER,ALLOCATOR,CONSTRUCTOR) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM;} \
-     else { new (POINTER) CONSTRUCTOR; } \
+     else { (void) new (POINTER) CONSTRUCTOR; } \
    } while (0)
 
 /* ACE_Metrics */
@@ -738,26 +738,26 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
      else { for (u_int i = 0; i < COUNT; ++i) \
-              {new (POINTER) CONSTRUCTOR; ++POINTER;} \
+              {(void) new (POINTER) CONSTRUCTOR; ++POINTER;} \
             POINTER -= COUNT;} \
    } while (0)
 # define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return;} \
      else { for (u_int i = 0; i < COUNT; ++i) \
-              {new (POINTER) CONSTRUCTOR; ++POINTER;} \
+              {(void) new (POINTER) CONSTRUCTOR; ++POINTER;} \
             POINTER -= COUNT;} \
    } while (0)
 #else /* ! defined ACE_LACKS_ARRAY_PLACEMENT_NEW */
 # define ACE_NEW_MALLOC_ARRAY_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT,RET_VAL) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
-     else { new (POINTER) CONSTRUCTOR [COUNT]; } \
+     else { (void) new (POINTER) CONSTRUCTOR [COUNT]; } \
    } while (0)
 # define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return;} \
-     else { new (POINTER) CONSTRUCTOR [COUNT]; } \
+     else { (void) new (POINTER) CONSTRUCTOR [COUNT]; } \
    } while (0)
 #endif /* defined ACE_LACKS_ARRAY_PLACEMENT_NEW */
 

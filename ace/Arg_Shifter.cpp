@@ -37,10 +37,10 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
   this->init ();
 }
 
-void 
-ACE_Arg_Shifter::init (void) 
-{ 
-  // If not provided with one, allocate a temporary array.  
+void
+ACE_Arg_Shifter::init (void)
+{
+  // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
     ACE_NEW (this->temp_,
              const ACE_TCHAR *[this->total_size_]);

@@ -59,11 +59,11 @@ namespace ACE_OS {
 
 #if defined (ACE_LACKS_STRCASECMP)
   /// Emulated strcasecmp - Performs a case insensitive comparison of strings.
-  extern ACE_Export 
+  extern ACE_Export
   int strcasecmp_emulation (const char *s, const char *t);
 
   /// Emulated strncasecmp - Performs a case insensitvie comparison of arrays.
-  extern ACE_Export 
+  extern ACE_Export
   int strncasecmp_emulation (const char *s, const char *t, size_t len);
 #endif /* ACE_LACKS_STRCASECMP */
 

@@ -11,16 +11,17 @@ in this directory to see what's already been defined.  If you need to
 add new macros, please send them to me and I'll add them to this file.
 
 Eventually, most of this information should be auto-discovered via GNU
-autoconf, which Ossama Othman is working on, at
-http://www.cs.wustl.edu/~othman/aceconf/.
+autoconf, which is currently available in the ACE distribution.
 
 Macro                                   Description
 -----                                   -----------
 
-ACE_HAS_DUMP                            Used to enable the dump() method bodies.
-                                        If not defined, the bodies are ifdef out
-                                        in order to reduce footprint.  By default,
-                                        it is not defined.
+ACE_HAS_DUMP                            Used to enable the dump()
+                                        method bodies.  If not
+                                        defined, the bodies are ifdef
+                                        out in order to reduce
+                                        footprint.  By default, it is
+                                        not defined.
 ACE_CAST_CONST                          Used to work around broken
                                         SunCC ANSI casts that require
                                         an extra const.
@@ -142,7 +143,7 @@ ACE_HAS_PRIOCNTL                        OS has priocntl (2).
 ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive
                                         (e.g., Win32)
 ACE_HAS_NONRECURSIVE_MUTEXES            In addition to recursive mutexes,
-                                        platform has non-recursive ones also.   
+                                        platform has non-recursive ones also.
 ACE_HAS_RECV_TIMEDWAIT                  Platform has the MIT pthreads
                                         APIs for
 ACE_HAS_RECVFROM_TIMEDWAIT              timed send/recv operations
@@ -1633,4 +1634,3 @@ ACE_USES_GPROF:
     When using gprof mainly on Linux, #define ACE_USES_GPROF
     will add calls to getitimer/setitimer in order to initialize profile
     timer and overcome the problem of gprof with multithreaded applications.
-
