@@ -69,22 +69,24 @@ static const CORBA::TypeCode_ptr any_table [] =
 
 int
 Test_Any::init_parameters (Param_Test_ptr objref,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->cobj_ = objref->make_coffee (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception doing make_coffee");
+      //ACE_UNUSED_ARG (sysex);
+
+      ACE_PRINT_EXCEPTION (sysex, "System Exception doing make_coffee");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   this->reset_parameters ();
   return 0;
@@ -163,20 +165,21 @@ Test_Any::reset_parameters (void)
 
 int
 Test_Any::run_sii_test (Param_Test_ptr objref,
-                        CORBA::Environment &env)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
+
   CORBA::Any_out out (this->out_.out ());
   this->ret_ = objref->test_any (this->in_,
                                  this->inout_,
                                  out,
-                                 env);
-  return (env.exception () ? -1:0);
+                                 ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Any::add_args (CORBA::NVList_ptr param_list,
                     CORBA::NVList_ptr retval,
-                    CORBA::Environment &env)
+                    CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any in_arg (CORBA::_tc_any,
                      &this->in_,
@@ -194,23 +197,23 @@ Test_Any::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("o1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("o2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("o3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value
-  retval->item (0, env)->value ()->replace (CORBA::_tc_any,
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_any,
                                             &this->ret_.inout (), // see above
                                             0, // does not own
-                                            env);
+                                            ACE_TRY_ENV);
   return 0;
 }
 

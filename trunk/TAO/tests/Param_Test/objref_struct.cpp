@@ -56,18 +56,18 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req,
 
 int
 Test_Objref_Struct::init_parameters (Param_Test_ptr objref,
-				     CORBA::Environment &env)
+				     CORBA::Environment &ACE_TRY_ENV)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
   // set the length of the sequence
   this->in_.x = gen->gen_long ();
-  this->in_.y = objref->make_coffee (env);
-  if (env.exception () != 0) return -1;
+  this->in_.y = objref->make_coffee (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return -1;
   Coffee::Desc d;
   d.name = gen->gen_string ();
-  this->in_.y->description (d, env);
-  if (env.exception () != 0) return -1;
+  this->in_.y->description (d, ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return -1;
 
   return 0;
 }
@@ -83,20 +83,20 @@ Test_Objref_Struct::reset_parameters (void)
 
 int
 Test_Objref_Struct::run_sii_test (Param_Test_ptr objref,
-                               CORBA::Environment &env)
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
   Param_Test::Objref_Struct_out out (this->out_.out ());
   this->ret_ = objref->test_objref_struct (this->in_,
-                                        this->inout_.inout (),
-                                        out,
-                                        env);
-  return (env.exception () ? -1:0);
+                                           this->inout_.inout (),
+                                           out,
+                                           ACE_TRY_ENV);
+  return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
 int
 Test_Objref_Struct::add_args (CORBA::NVList_ptr param_list,
-			   CORBA::NVList_ptr retval,
-			   CORBA::Environment &env)
+                              CORBA::NVList_ptr retval,
+                              CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any in_arg (Param_Test::_tc_Objref_Struct,
                     &this->in_,
@@ -114,23 +114,23 @@ Test_Objref_Struct::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         env);
+                         ACE_TRY_ENV);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         env);
+                         ACE_TRY_ENV);
 
   // add return value
-  retval->item (0, env)->value ()->replace (Param_Test::_tc_Objref_Struct,
-                                            &this->ret_.inout (), // see above
-                                            0, // does not own
-                                            env);
+  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Objref_Struct,
+                                                    &this->ret_.inout (), // see above
+                                                    0, // does not own
+                                                    ACE_TRY_ENV);
   return 0;
 }
 
@@ -143,21 +143,22 @@ Test_Objref_Struct::check_validity (void)
       || this->in_.x != this->ret_->x)
     return 0;
 
-  CORBA::Environment env;
-  if (CORBA::is_nil (this->in_.y.in ())
-      || CORBA::is_nil (this->out_->y.in ())
-      || CORBA::is_nil (this->ret_->y.in ())
-      || CORBA::is_nil (this->inout_->y.in ()) )
-    return 0;
-
-  Coffee::Desc_var s_in = this->in_.y->description (env);
-  if (env.exception () != 0) return 0;
-  Coffee::Desc_var s_out = this->out_->y->description (env);
-  if (env.exception () != 0) return 0;
-  Coffee::Desc_var s_inout = this->inout_->y->description (env);
-  if (env.exception () != 0) return 0;
-  Coffee::Desc_var s_ret = this->ret_->y->description (env);
-  if (env.exception () != 0) return 0;
+  //  CORBA::Environment env;
+ ACE_DECLARE_NEW_CORBA_ENV;
+ if (CORBA::is_nil (this->in_.y.in ())
+     || CORBA::is_nil (this->out_->y.in ())
+     || CORBA::is_nil (this->ret_->y.in ())
+     || CORBA::is_nil (this->inout_->y.in ()) )
+   return 0;
+ 
+  Coffee::Desc_var s_in = this->in_.y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return 0;
+  Coffee::Desc_var s_out = this->out_->y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return 0;
+  Coffee::Desc_var s_inout = this->inout_->y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return 0;
+  Coffee::Desc_var s_ret = this->ret_->y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return 0;
 
   if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
       || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
@@ -168,9 +169,8 @@ Test_Objref_Struct::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Objref_Struct::check_validity (CORBA::Request_ptr req)
+Test_Objref_Struct::check_validity (CORBA::Request_ptr /*req*/)
 {
-  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
@@ -188,16 +188,18 @@ Test_Objref_Struct::print_values (void)
               this->out_->x,
               this->ret_->x ));
 
-  CORBA::Environment env;
+  //CORBA::Environment env;
 
-  Coffee::Desc_var s_in = this->in_.y->description (env);
-  if (env.exception () != 0) return;
-  Coffee::Desc_var s_out = this->out_->y->description (env);
-  if (env.exception () != 0) return;
-  Coffee::Desc_var s_inout = this->inout_->y->description (env);
-  if (env.exception () != 0) return;
-  Coffee::Desc_var s_ret = this->ret_->y->description (env);
-  if (env.exception () != 0) return;
+ ACE_DECLARE_NEW_CORBA_ENV;
+
+  Coffee::Desc_var s_in = this->in_.y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return;
+  Coffee::Desc_var s_out = this->out_->y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return;
+  Coffee::Desc_var s_inout = this->inout_->y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return;
+  Coffee::Desc_var s_ret = this->ret_->y->description (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0) return;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"

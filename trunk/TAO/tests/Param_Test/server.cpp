@@ -61,15 +61,16 @@ main (int argc, char *argv[])
   PortableServer::POA_var oa_ptr;
   Param_Test_i *param_test = 0;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       char *orb_name = "internet"; // unused by TAO
       CORBA::Object_var temp; // holder for the myriad of times we get
                               // an object which we then have to narrow.
 
       // get the underlying ORB
-      CORBA::ORB_var orb_ptr = CORBA::ORB_init (argc, argv, orb_name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::ORB_var orb_ptr = CORBA::ORB_init (argc, argv, orb_name, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Get the Root POA
 
@@ -79,21 +80,21 @@ main (int argc, char *argv[])
                            "(%P|%t) Unable to get root poa reference.\n"),
                           1);
 
-      oa_ptr = PortableServer::POA::_narrow (temp.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      oa_ptr = PortableServer::POA::_narrow (temp.in(), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        oa_ptr->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        oa_ptr->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (2);
       policies.length (2);
       policies[0] =
         oa_ptr->create_id_assignment_policy (PortableServer::USER_ID,
-                                             TAO_TRY_ENV);
+                                             ACE_TRY_ENV);
       policies[1] =
         oa_ptr->create_lifespan_policy (PortableServer::PERSISTENT,
-                                        TAO_TRY_ENV);
+                                        ACE_TRY_ENV);
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
@@ -101,8 +102,8 @@ main (int argc, char *argv[])
         oa_ptr->create_POA ("child_poa",
                             poa_manager.in (),
                             policies,
-                            TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse remaining command line and verify parameters.
       parse_args (argc, argv);
@@ -118,19 +119,20 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("param_test");
       good_poa->activate_object_with_id (id.in (),
                                          param_test,
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
 
-      temp = good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      temp = good_poa->id_to_reference (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::String_var str =
         orb_ptr->object_to_string (temp.in (),
-                                   TAO_TRY_ENV);
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) The IOR is <%s>\n", str.in ()));
       if (ior_output_file)
@@ -141,35 +143,33 @@ main (int argc, char *argv[])
       
 
       // Make the POAs controlled by this manager active
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (orb_ptr->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
       good_poa->destroy (1,
                          1,
-                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       oa_ptr->destroy (1,
                        1,
-                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_PRINT_EXCEPTION (sysex, "System Exception");
       return -1;
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_PRINT_EXCEPTION (userex, "User Exception");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   // Free resources
   delete param_test;

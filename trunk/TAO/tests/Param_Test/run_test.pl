@@ -6,6 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "../../../bin";
 require ACEutils;
+require Process;
 
 $port = 0;
 $iorfile = "server.ior";
