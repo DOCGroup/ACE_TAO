@@ -185,6 +185,7 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    ACE_DEBUG ((LM_DEBUG, "i am installing the home servant\n"));
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
@@ -244,6 +245,7 @@ namespace CIAO
                      Deployment::InstallationFailure))
   {
 
+    ACE_DEBUG ((LM_DEBUG, "I am here to install the home\n"));
     HomeFactory hcreator = 0;
     ServantFactory screator = 0;
 
@@ -323,6 +325,8 @@ namespace CIAO
       Components::CCMHome::_narrow (objref.in ()
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
+
+    ACE_DEBUG ((LM_DEBUG, "returning the home reference back\n"));
 
     return homeref._retn ();
 
