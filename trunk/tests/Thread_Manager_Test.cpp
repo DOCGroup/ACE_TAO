@@ -324,7 +324,7 @@ run_main (int, ACE_TCHAR *[])
                   (ACE_THR_FUNC) worker,
                   reinterpret_cast <void *> (n_iterations),
                   THR_BOUND
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
                   , ACE_DEFAULT_THREAD_PRIORITY
                   , -1
                   , 0
