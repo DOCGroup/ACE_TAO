@@ -1,3 +1,9 @@
+Sun Jun 06 09:08:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * PROBLEM-REPORT-FORM: added requests to not send
+          as attachment, or tar'red, compressed, and/or
+          uuencoded, or with line lengths >= 80 characters.
+
 Sun Jun 06 08:19:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
