@@ -1114,6 +1114,33 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 
 <hr>
+<h3><a href="http://www.cs.wustl.edu/~doc/PACE/">PACE</a>
+  Software Development Guidelines</h3>
+
+PACE code should be developed following the ACE guidelines
+above, with these exceptions:
+<ul>
+  <li>An <code>if</code> statement that has just one statement must
+    be written with the braces:
+
+<pre>
+if (condition)
+  {
+    statement;
+  }
+</pre>
+
+This avoids bugs caused by subsequent insertion of code:
+
+<pre>
+  if (condition)
+    ACE_OS::fprintf (stderr, "I need to see what's going on here\n");
+    statement;  /* Ooops!  This statement will always be executed!!!! */
+</pre>
+</ul>
+
+
+<hr>
 <h3><a href="http://www.cs.wustl.edu/~schmidt/rules.html">ACE
   Design Rules</a></h3>
 

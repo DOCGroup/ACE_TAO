@@ -1,11 +1,15 @@
+Fri Jun 16 08:12:37 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added a section for PACE.
+
 Thu Jun 15 21:30:37 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Makefile.am (pkgincludedir):
+        * ace/Makefile.am (pkgincludedir):
 
-	  Corrected value for this variable.  It should have been
-	  "$(includedir)/ace" instead of "$(prefix)/include/ace."  In any
-	  case, this was more of a consistency change than anything else,
-	  since this variable is actually commented out.
+          Corrected value for this variable.  It should have been
+          "$(includedir)/ace" instead of "$(prefix)/include/ace."  In any
+          case, this was more of a consistency change than anything else,
+          since this variable is actually commented out.
 
 Thu Jun 15 20:01:35 2000  Steve Huston  <shuston@riverace.com>
 
