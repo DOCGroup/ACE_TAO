@@ -212,6 +212,9 @@ make: *** [libACE.so] Error 8
       <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
       and <code>ace/config_linux_lxpthreads.h</code> platform/config
       files.<p>
+                                                                                     The ACE <code>Tokens_Test</code> hangs with egcs 1.1b on
+      Linux.  It runs properly when built with egcs 1.0.2.  All
+      other ACE tests run properly with both egcs versions.<p>
 
       <strong>NOTE:</strong> The TAO NameService uses IP multicasting
       by default, though it is not required.  IP multicast on Linux
@@ -356,6 +359,13 @@ make: *** [libACE.so] Error 8
       has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.<P>
 
   <LI><B>LynxOS</B> <P>
+
+      ACE builds and run properly on LynxOS 3.0.0.  Some of the ACE
+      tests fail; they are disabled in
+      <code>ACE_wrappers/tests/run_tests.sh</code.<p>
+
+      We actively maintain ACE on LynxOS 3.0.0.  It should build and
+      run on LynxOS 2.5, but we no longer test on that OS version.<p>
 
       Dave Mayerhoefer &lt<A HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt
       has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.  However, you may need
@@ -564,9 +574,9 @@ If you use the GNU GCC g++ compiler please note the following:
       invocation, or to your
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.<p>
 
-  <li>egcs may have trouble linking the ACE IOStream_Test if
-      its static libraries are used.  It's best to build
-      egcs with the <code>--enabled-shared</code> config option,
+  <li>egcs may have trouble linking some executables, such as the ACE
+      IOStream_Test, if its static libraries are used.  It's best to build
+      egcs with the <code>--enable-shared</code> egcs config option,
       so that it provides shared libraries.  Be sure to set your
       <code>LD_LIBRARY_PATH</code> environment variable, if necessary,
       to pick up those shared libraries.<p>
