@@ -33,6 +33,7 @@
 #   define ACE_HAS_THR_C_DEST
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
+
 # define ACE_CAST_CONST const
 # define ACE_HAS_HI_RES_TIMER
 # define ACE_HAS_SIG_C_FUNC /* Sun CC 5.0 needs this, 4.2 doesn't mind. */
@@ -227,7 +228,9 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
-#if defined (_REENTRANT)
+#if defined (_REENTRANT) || \
+ (defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE - 0 >= 199506L)) || \
+ defined (_POSIX_PTHREAD_SEMANTICS)
   // Compile using multi-thread libraries.
 # define ACE_HAS_THREADS
 
@@ -240,7 +243,9 @@
   // -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.  Or, #define it right
   // here.  See the Intro (3) man page for information on
   // -D_POSIX_PTHREAD_SEMANTICS.
-# if !defined (_POSIX_PTHREAD_SEMANTICS)
+# if defined (_POSIX_PTHREAD_SEMANTICS)
+#   define ACE_LACKS_RWLOCK_T
+# else
 #   define ACE_HAS_STHREADS
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
 
@@ -259,7 +264,8 @@
 # define ACE_NEEDS_LWP_PRIO_SET
 # define ACE_HAS_THR_YIELD
 # define ACE_LACKS_PTHREAD_YIELD
-#endif /* _REENTRANT */
+#endif /* _REENTRANT || _POSIX_C_SOURCE >= 199506L || \
+          _POSIX_PTHREAD_SEMANTICS */
 
 # define ACE_HAS_PRIOCNTL
 
