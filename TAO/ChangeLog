@@ -1,3 +1,10 @@
+Sun Aug  1 08:53:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/tao.mpc:
+	  Updated Header_Files, Inline_Files, and Template_Files so that 
+	  generated project files will contain complete list for install.
+	  Suggested by Chad Elliot <elliot_c@ociweb.com>.
+
 Sun Aug  1 15:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp:
