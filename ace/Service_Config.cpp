@@ -90,7 +90,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
   // = Set by command-line options. 
 char ACE_Service_Config::debug_ = 0;
 char ACE_Service_Config::be_a_daemon_ = 0;
-char ACE_Service_Config::no_defaults_ = 0;
+char ACE_Service_Config::no_static_svcs_ = 0;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
@@ -318,12 +318,12 @@ ACE_Service_Config::resume (const char svc_name[])
 // otherwise the repository will not be properly initialized
 // to allow static configuration of services... 
 
-ACE_Service_Config::ACE_Service_Config (int ignore_defaults, 
+ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs, 
 					size_t size, 
 					int signum)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-  ACE_Service_Config::no_defaults_ = ignore_defaults;
+  ACE_Service_Config::no_static_svcs_ = ignore_static_svcs;
   ACE_Service_Config::signum_ = signum;
 
   // Initialize the Service Repository.
@@ -383,7 +383,7 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
 	ACE_Service_Config::service_config_file_ = getopt.optarg;
 	break;
       case 'n':
-	ACE_Service_Config::no_defaults_ = 1;
+	ACE_Service_Config::no_static_svcs_ = 1;
 	break;
       case 's':
 	{
@@ -497,9 +497,9 @@ ACE_Service_Config::process_directives (void)
 // Repository.
 
 int
-ACE_Service_Config::load_defaults (void)
+ACE_Service_Config::load_static_svcs (void)
 {
-  ACE_TRACE ("ACE_Service_Config::load_defaults");
+  ACE_TRACE ("ACE_Service_Config::load_static_svcs");
 
   ACE_Static_Svc_Descriptor **ssdp = 0;
   ACE_STATIC_SVCS &svcs = *ACE_Service_Config::static_svcs ();
@@ -572,8 +572,8 @@ ACE_Service_Config::open (const char program_name[])
   // Register ourselves to receive reconfiguration requests via
   // signals!
 
-  if (ACE_Service_Config::no_defaults_ == 0 
-      && ACE_Service_Config::load_defaults () == -1)
+  if (ACE_Service_Config::no_static_svcs_ == 0 
+      && ACE_Service_Config::load_static_svcs () == -1)
     return -1;
   else
     return ACE_Service_Config::process_directives ();

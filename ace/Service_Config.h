@@ -78,7 +78,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Service_Config (int ignore_defaults = 0, 
+  ACE_Service_Config (int ignore_static_svcs = 0, 
 		      size_t size = ACE_Service_Config::MAX_SERVICES, 
 		      int signum = SIGHUP);
   // Initialize the Service Repository.
@@ -269,7 +269,7 @@ protected:
   static int start_daemon (void);
   // Become a daemon. 
 
-  static int load_defaults (void);
+  static int load_static_svcs (void);
   // Add the default statically-linked services to the <ACE_Service_Repository>.
 
   static void handle_signal (int sig, siginfo_t *, ucontext_t *);
@@ -336,7 +336,7 @@ private:
   // = Set by command-line options. 
   static char debug_;
   static char be_a_daemon_;
-  static char no_defaults_;
+  static char no_static_svcs_;
 
   static int signum_;
   // Number of the signal used to trigger reconfiguration.
