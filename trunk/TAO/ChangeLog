@@ -1,3 +1,4 @@
+
 Fri Jun 27 12:12:09 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
@@ -12,6 +13,87 @@ Fri Jun 27 12:12:09 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	  instantiation builds didn't trip the problem because they had
 	  exceptions turned on.
 
+Thu Jun 26 22:34:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
+
+	The following checkins correspond to the implementation of Dynamic
+	Scheduling in TAO. This implementation is based on OMG's
+	RTCORBA 2.0 specification.
+	
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.cpp: 
+
+	  Added member variables rtscheduler_current_impl_ and
+	  rtscheduler_previous_current_impl_ to TSS to store the
+	  thread specific implementation of RTScheduling::Current.
+
+	* tao/RTScheduling/RTScheduler.pidl:
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTScheduling/RTSchedulerC.i:
+
+	  The psuedo IDL file and corresponding stubs/skeletons defining
+	  the various interfaces constituting the dynamic scheduling
+	  framework as defined by the RTCORBA 2.0 specification. 
+	
+	* tao/RTScheduling/Current.cpp: 
+	* tao/RTScheduling/Current.h:
+
+	  Contains implementation of the RTScheduling::Current
+	  interface. The operations of the Current interface facilitate
+	  creation, termination and updation of scheduling segments and
+	  Distributable Threads (DTs).
+	
+	* tao/RTScheduling/Distributable_Thread.cpp:
+	* tao/RTScheduling/Distributable_Thread.h: 
+
+	  Implements the RTScheduling::DistributableThread interface. This
+	  interface is used to cancel the corresponding DT.
+
+	* tao/RTScheduling/Request_Interceptor.cpp:
+	* tao/RTScheduling/Request_Interceptor.h:	
+
+	  Provide interception points when sending/receiving requests so
+	  the ORB can interact with the scheduler. This helps the
+	  scheduler make scheduling decisions at these scheduling points
+	  where the DTs are entering or leaving the host.
+
+	* tao/RTScheduling/RTScheduler_Manager.cpp:
+	* tao/RTScheduling/RTScheduler_Manager.h:
+	* tao/RTScheduling/RTScheduler_Manager.i:  
+
+	  Manages addition/removal of schedulers implementing specific
+	  scheduling disciplines. The scheduler manager facilitates
+	  changing schedulers at run-time.
+		
+	* tao/RTScheduling/RTScheduler_Initializer.cpp:
+	* tao/RTScheduling/RTScheduler_Initializer.h:
+
+	  Registers the "RTScheduler_Current" and "RTScheduler_Manager" in
+	  the object table when the ORB is initialized. They can be
+	  queried with the corresponding names using
+	  resolve_initial_references. It also registers the Client and
+	  Server interceptors defined in Request_Interceptor.{h,cpp}.
+	
+	* tao/RTScheduling/RTScheduler_Loader.cpp:
+	* tao/RTScheduling/RTScheduler_Loader.h:
+
+	  Registers the orb initializer, RTScheduler_Initializer.
+
+	* tao/RTScheduling/RTScheduler.cpp: 
+	* tao/RTScheduling/RTScheduler.h:
+	  
+	  Bootstraps the dynamic scheduling framework by loading in the
+	  RTScheduler_Loader. The header file 'MUST' be included in the
+	  application that wants to use the RTScheduler library.
+
+	* tao/RTScheduling/ThreadAction.h
+
+	  Defines the RTScheduling::Thread_Action interface that is used
+	  as an entry point when spawning new DTs.
+	
+	* tao/RTScheduling/Makefile
+
+	
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * TAOACE.mwc:
