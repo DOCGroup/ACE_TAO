@@ -268,6 +268,11 @@ public:
   // re-alignment.
   // It returns ACE_CDR::MAX_ALIGNMENT to indicate errors.
 
+  CORBA::Boolean _lazy_has_arguments (void) const;
+  // If this list is used by a DII request, this will tell us if 
+  // our CDR stream contains any marshaled arguments (needed for
+  // GIOP 1.2).
+
   // Useful for template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_NVList_ptr _ptr_type;

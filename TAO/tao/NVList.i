@@ -269,6 +269,12 @@ CORBA_NVList::_nil (void)
   return 0;
 }
 
+ACE_INLINE CORBA::Boolean
+CORBA_NVList::_lazy_has_arguments (void) const
+{
+  return this->incoming_->length () == 0 ? 0 : 1;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_NVList_var
 // *************************************************************
