@@ -138,6 +138,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 
 void
 Demo_Consumer::disconnect_push_consumer (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Consumer received disconnect from channel.\n"));
@@ -146,6 +147,7 @@ Demo_Consumer::disconnect_push_consumer (CORBA::Environment &)
 void
 Demo_Consumer::push (const RtecEventComm::EventSet &events,
                      CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   if (events.length () == 0)
