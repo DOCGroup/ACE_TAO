@@ -428,6 +428,9 @@ protected:
   virtual PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid,
                                                    CORBA::Environment &env);
 
+  virtual CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
+                                               CORBA::Environment &env);
+
   virtual ACE_Lock &lock (void);
 
   virtual TAO_POA_Policies &policies (void);

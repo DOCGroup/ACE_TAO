@@ -1,3 +1,14 @@
+Sat Jan 24 03:04:51 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa.cpp (id_to_reference): Reimplemented this method so that
+ 	  it does not use id_to_servant and servant_to_reference combo.
+  	  This is necessary since id_to_reference may be used in a
+ 	  MULTI_ID mode.
+
+	* tao/poaS: Added explicit copy and destroy to all collocated
+ 	  policies.  This will help avoid the inheritance via dominance
+ 	  warnings.
+
 Fri Jan 23 17:13:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Merged changes from main_to_poa_merge_11 up to
