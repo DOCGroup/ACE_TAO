@@ -98,8 +98,8 @@ private:
 
 //////////////////////////////////////////////////
 
-#if defined (__GNUC__)
-// This stuff only works with g++...
+#if defined (__GNUC__) && (__GNUC__ >= 3 || __GNUC_MINOR__ > 95)
+// This stuff only works with g++ 2.96 and later...
 
 // Listing 3 code/ch03
 
