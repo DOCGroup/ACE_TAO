@@ -13,7 +13,10 @@ Wed Dec 02 03:31:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* decode.cpp:
 	* deep_free.cpp: Integrated exception handling macros into TAO in
 	  order to document the code better and to unify TAO's behavior
-	  with or without native exception support.
+	  with or without native exception support.  The code got modified
+	  according to how it would work with native exception enabled.
+	  I don't expect to finish integrating the macros in a short
+	  time.
 
 Wed Dec  2 01:48:54 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
