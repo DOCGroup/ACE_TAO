@@ -28,6 +28,7 @@ OBJFILES = \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Queued_Message.obj \
+        $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
 	$(OBJDIR)\Base_Transport_Property.obj \
 	$(OBJDIR)\BiDir_Adapter.obj \
 	$(OBJDIR)\Bind_Dispatcher_Guard.obj \
