@@ -18,7 +18,7 @@
 #define _COMMAND_PROCESSOR_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define  ACE_LACKS_PRAGMA_ONCE 
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Containers.h"
