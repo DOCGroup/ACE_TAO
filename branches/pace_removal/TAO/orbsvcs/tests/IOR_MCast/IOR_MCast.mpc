@@ -1,0 +1,19 @@
+project: namingexe {
+  Source_Files {
+    server_i.cpp
+    MCast_Server_i.cpp
+    server.cpp
+  }
+}
+
+project(client): namingexe {
+  exename = client
+
+  Source_Files {
+    ior_mcast_client_i.cpp
+    server_i.cpp
+    MCast_Server_i.cpp
+    client.cpp
+  }
+}
+

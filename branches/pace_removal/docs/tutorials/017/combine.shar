@@ -1,0 +1,380 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/017'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    422 -rw-rw-r-- hdr
+#     65 -rw-rw-r-- bodies
+#   1393 -rw-rw-r-- page01.pre
+#    420 -rw-rw-r-- page02.pre
+#    736 -rw-rw-r-- page03.pre
+#    479 -rw-rw-r-- page04.pre
+#    375 -rw-rw-r-- page05.pre
+#    374 -rw-rw-r-- page06.pre
+#    216 -rw-rw-r-- page05.pst
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh00331; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hdr ==============
+if test -f 'hdr' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hdr' '(file already exists)'
+else
+  $echo 'x -' extracting 'hdr' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hdr' &&
+<HTML>
+<HEAD>
+X   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+X   <META NAME="Author" CONTENT="James CE Johnson">
+X   <TITLE>ACE Tutorial 017</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+X
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 017</FONT></B></CENTER>
+X
+<CENTER><B><FONT SIZE=+2>Using the ACE_Barrier synch object</FONT></B></CENTER>
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'hdr' &&
+  chmod 0664 'hdr' ||
+  $echo 'restore of' 'hdr' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hdr:' 'MD5 check failed'
+9991b747f6aff75784cbeb88a79c06fc  hdr
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
+    test 422 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '422,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= bodies ==============
+if test -f 'bodies' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'bodies' '(file already exists)'
+else
+  $echo 'x -' extracting 'bodies' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'bodies' &&
+PAGE=2
+barrier.cpp
+Barrier_i.h
+Barrier_i.cpp
+PAGE=6
+barrier2.cpp
+SHAR_EOF
+  $shar_touch -am 0224165499 'bodies' &&
+  chmod 0664 'bodies' ||
+  $echo 'restore of' 'bodies' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'bodies:' 'MD5 check failed'
+95ff65d56968b60df92224ca27a34387  bodies
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
+    test 65 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '65,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page01.pre ==============
+if test -f 'page01.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page01.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page01.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
+The ACE_Barrier implements the barrier synchronization pattern.
+<P>
+That's nice.  What does it mean?
+<P>
+What it means is that you can use the ACE_Barrier to cause a set of
+threads to all wait at a specific point in your application.  In other
+words:  the threads reach a barrier that none can pass until all are
+present.
+<P>
+This would typically be used in scientific applications where a set of
+threads are all working in parallel on some great computation but they
+have to synch and summarize before continuing to the next stage of calculation.  With
+proper use of ACE_Barrier, the threads can easily synch before
+continuing.
+<P>
+In this tutorial I'll create a simple wrapper for the ACE_Barrier.  In
+reality, the ACE_Barrier is so easy that a wrapper isn't really
+needed.  I created the wrapper anyway though just because I wanted to.
+<P>
+Kirthika's abstract:
+<ul>
+The ACE_Barrier class is used for collective thread syncronisation. All
+the threads block at the barrier and advance only after everyone is at
+the
+barrier. A thread blocks by calling the wait() method and stays until
+all the other threads invoke wait() one-by-one at the barrier and then
+all
+move ahead.
+Here, an abstract barrier class is created which incorporates the
+ACE_Barrier
+mechanism and is used in a test case of an ACE_Task with 10 and 5
+threads respectively
+which illustrate the use of the barrier pattern.
+</ul>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page01.pre' &&
+  chmod 0664 'page01.pre' ||
+  $echo 'restore of' 'page01.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page01.pre:' 'MD5 check failed'
+6d94644272d64ed997ae76b98475d84e  page01.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
+    test 1393 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1393,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pre ==============
+if test -f 'page02.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
+First, lets take a look at the main() routine and how it will use the
+Barrier wrapper class.  A simple ACE_Task derivative is used so that
+we can perform work in multiple threads.  These threads will use the
+barrier to synch in a couple of places.
+<P>
+Obviously this isn't a very realistic example but you should be able
+to get the idea of how to use a Barrier without getting hung up in
+application-level details.
+<HR>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page02.pre' &&
+  chmod 0664 'page02.pre' ||
+  $echo 'restore of' 'page02.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pre:' 'MD5 check failed'
+9e2b4b85abf1bff15b94b6d20bc20f91  page02.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
+    test 420 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '420,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pre ==============
+if test -f 'page03.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
+The Barrier class used by the test task is a simple wrapper around
+ACE_Barrier.  One of the things about ACE_Barrier is that you have to
+tell it how many threads it will be managing.  Since that number
+usually isn't known when you create your Task derivative, you have to
+dynamically allocate the ACE_Barrier.  My Barrier wrapper takes care
+of that for you and even provides for a clean way to delete the
+ACE_Barrier instance if you want to save a few bytes.
+<P>
+An interesting extension of this Barrier class would be to wrap it up
+in a smart pointer.  You could then have the Barrier destructor invoke
+wait() as a now-protected method.  The result would allow you to treat
+the Barrier object almost as a "synchronization guard".
+<HR>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page03.pre' &&
+  chmod 0664 'page03.pre' ||
+  $echo 'restore of' 'page03.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pre:' 'MD5 check failed'
+4d6cead716800d7625b2a903d0df1b34  page03.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
+    test 736 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '736,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pre ==============
+if test -f 'page04.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pre' &&
+The Barrier implementation is quite simple.  The threads() mutator
+took a couple of tries to get right.  In particular, be sure you know
+when to apply the _wait paramter and when not to!  In fact, the
+requirement that only the "owning" thread can change the thread count
+is rather limiting.  A more appropriate solution would allow any
+thread to safely change the count but that would require more complex
+locking that is just a bit more than what I wanted to present here.
+<HR>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page04.pre' &&
+  chmod 0664 'page04.pre' ||
+  $echo 'restore of' 'page04.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pre:' 'MD5 check failed'
+0c46b51370a57179cea56ef57fd0b1f4  page04.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
+    test 479 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '479,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pre ==============
+if test -f 'page05.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
+Well, that's it for the simple Barrier Tutorial.  I encourage you to
+try it out and see what you like and dislike.  Any improvements or
+enhancements will gladly be integrated into the Tutorial.
+<P>
+<UL>
+<LI><A HREF="Makefile">Makefile</A>
+<LI><A HREF="barrier.cpp">barrier.cpp</A>
+<LI><A HREF="Barrier_i.h">Barrier_i.h</A>
+<LI><A HREF="Barrier_i.cpp">Barrier_i.cpp</A>
+</UL>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page05.pre' &&
+  chmod 0664 'page05.pre' ||
+  $echo 'restore of' 'page05.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pre:' 'MD5 check failed'
+616a2293adddb11896d28c7172436a65  page05.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
+    test 375 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '375,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page06.pre ==============
+if test -f 'page06.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page06.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page06.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page06.pre' &&
+I could have included this in the first Test object of the tutorial
+but that may have complicated things a bit.  What we're doing here is
+recognizing when the "owner" thread adds more threads to the pool.
+When we notice that, we use the barrier to wait until everything
+stabilizes and then we recalibrate and move on.
+<P>
+The source is <A HREF="barrier2.cpp">here</A>.
+<HR>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page06.pre' &&
+  chmod 0664 'page06.pre' ||
+  $echo 'restore of' 'page06.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page06.pre:' 'MD5 check failed'
+0e05cdb27f2d6bfda8fc2246ed981aab  page06.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page06.pre'`"
+    test 374 -eq "$shar_count" ||
+    $echo 'page06.pre:' 'original size' '374,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pst ==============
+if test -f 'page05.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pst' &&
+<HR>
+Before we call it a wrap though, there's one more thing I want to show
+you.  Remember the comments around Barrier::threads()?  On the next
+page, I'll show you how to synch up when the number of threads changes.
+SHAR_EOF
+  $shar_touch -am 03191459100 'page05.pst' &&
+  chmod 0664 'page05.pst' ||
+  $echo 'restore of' 'page05.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pst:' 'MD5 check failed'
+4f18e2b82827f498992bd11b36c4ca09  page05.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
+    test 216 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '216,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh00331
+exit 0

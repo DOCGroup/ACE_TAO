@@ -1,0 +1,121 @@
+Project Delcarations
+--------------------
+
+project(project_name) : baseproject, anotherbaseproject {
+  exename   = foo
+  includes += "."
+  libpaths  = directory
+  idlflags -= -Sc
+
+  Source_Files {
+    file1.cpp
+    file2.cpp
+    .
+    .
+    fileN.cpp
+  }
+
+  Header_Files {
+    file1.h
+    file2.h
+    .
+    .
+    fileN.h
+  }
+}
+
+
+The (project_name) part of the project declaration is optional.  If it is
+left off, the project name will default to the directory name.  Inheritance
+is optional.
+
+
+Project Keywords
+----------------
+exename		Specifies the name of the executable that will be created
+sharedname	Specifies the name of the shared library that will be created
+staticname	Specifies the name of the static library that will be created
+dllout		(Windows Only) Specifies where the dll will be placed
+libout		(Windows Only) Specifies where the lib will be placed
+install		Specifies where the executable (or library non-Windows) will go
+idlflags	Specifies the idl flags to be used when processing idl files
+idlpreprocessor	Simple assignment used in the gnu template only
+pch_header	Specifies the precompiled header file name
+pch_source	Specifies the precompiled source file name
+ssl             Specifies that the project will use ssl
+tao		Specifies that the project will use TAO
+version         Specifies the version number for the library or executable
+
+libpaths	Specifies 1 or more locations to find libraries
+includes	Specifies 1 or more locations to find include files
+libs		Specifies 1 or more libraries to link into the exe or library
+defaultlibs	Specifies 1 or more default libraries to link in
+depends         Specifies 1 or more projects upon which this project depends
+dllflags	(Windows Only) Specifies preprocessor flags needed for dll's
+libflags	(Windows Only) Specifies preprocessor flags needed for lib's
+
+
+Special Keywords Available to Templates
+---------------------------------------
+project_name	This contains the name of the project.
+project_file	This contains the name of the output file.
+guid		This is used by the VC7 project and workspace creator.
+configurations	When used within a foreach context, this info (each
+		configuration) is gathered for use with the VC7 workspace
+		creator.
+
+
+Defaulting Behavior
+-------------------
+1) If a project name is not specified
+
+   it will be defaulted to the name of the current directory
+
+2) If a particular list is not specified (Source_Files, Header_Files, etc.)
+
+   all of the files in the directory will be added to the corresponding list
+   by extension
+
+3) If idl files exist in the directory and
+   the IDL_Files components are left defaulted (i.e. not listed) and
+   none of the idl generated files are listed in the corresponding lists
+
+   the project is assumed to be a TAO project, the idl files are added to
+   the IDL_Files list  and all of the (would be) generated files will be
+   added to the front of the corresponding lists (source, inline and
+   header lists)
+
+4) If files are listed in the Source_Files list and
+   a corresponding header or inline file exists
+
+   the corresponding file will be added to the corresponding list (if it
+   isn't already there)
+
+5) If a sharedname is specified and staticname is not
+
+   staticname is assigned the sharedname value (the same applies if
+   staticname is specified and sharedname is not)
+
+6) If a target name is not listed (exename, sharedname or staticname)
+
+   it is assumed that the target is a library and the name chosen matches
+   the name of the current directory
+
+7) If pch_header is not specified and a header file matches *_pch.h
+
+   it is assumed to be the precompiled header file (the same applies to
+   pch_source)
+
+8) If -relative is not used to set ACE_ROOT and the ACE_ROOT environment
+   variable is set
+
+   it will be used to set the relative value for ACE_ROOT.  If -relative is
+   not used to set TAO_ROOT, it will be set from the TAO_ROOT environment
+   variable.  If that is not set, the relative value of ACE_ROOT plus /TAO.
+
+Processing Order
+----------------
+1) Project file is read
+2) Template input file is read
+3) Template file is read
+4) Output project is written

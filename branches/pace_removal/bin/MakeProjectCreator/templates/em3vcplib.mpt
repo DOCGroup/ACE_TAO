@@ -1,0 +1,48 @@
+type_description      = "Static Library"
+platform_longs        = "WCE ARM" "WCE x86" 
+default_configuration = "Static Debug"
+default_platform_long = "WCE ARM"
+configurations        = "Static Release" "Static Debug"
+common_defines        = UNICODE _UNICODE
+type_is_static        = 1
+need_libflags         = 1
+pch_defines           = ACE_USING_PCH
+
+WCE x86 {
+  type_code   = 0x8304
+  cpu_id      = D6518FF3-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = IX86
+  cpu_defines = _i386_ _X86_ x86
+}
+
+WCE ARM {
+  type_code   = 0x8504
+  cpu_id      = D6518FFC-710F-11D3-99F2-00105A0DF099
+  platform_id = 8A9A2F80-6887-11D3-842E-005004848CBA
+  machine     = ARM
+  cpp         = clarm.exe
+  cpu_defines = ARM _ARM_
+}
+
+Static Release {
+  use_debug_libraries   = 0
+  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Static_Release
+  intermediate_dir      = Static_Release
+  lib_modifier          = s
+}
+
+Static Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /Gy /MDd
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  output_dir            = Static_Debug
+  intermediate_dir      = Static_Debug
+  lib_modifier          = sd
+  pdb                   = 1
+}
+

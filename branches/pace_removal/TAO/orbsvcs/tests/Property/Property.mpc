@@ -1,0 +1,19 @@
+project: server, namingexe {
+  depends += CosProperty
+  libs    += TAO_CosProperty
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(client): server, namingexe {
+  depends += CosProperty
+  libs    += TAO_CosProperty
+  exename  = client
+
+  Source_Files {
+    server.cpp
+  }
+}
+

@@ -1,0 +1,17 @@
+$Id$
+These are the plans for splitting up ACE_OS and their status for both being
+split up and being PACE enabled.
+
+Finished:
+---------
+OS_Dirent
+OS_String
+
+Planned:
+--------
+OS_Stdio
+OS_Memory
+OS_Process
+OS_Synch
+OS_Socket
+OS_QoS

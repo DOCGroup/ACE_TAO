@@ -1,0 +1,5 @@
+project(InterfaceRepo IFR Test): taoexe {
+  depends += IFR_Client
+  libs    += TAO_IFR_Client
+  exename  = IFR_Test
+}
