@@ -2,6 +2,10 @@
 # $Id$
 #
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 BIN = FindPOA
 
 LSRC = 	$(addsuffix .cpp,$(BIN))
@@ -28,10 +32,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 
 #----------------------------------------------------------------------------
 #	Dependencies

@@ -8,6 +8,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 LDLIBS     	= -lTAO
 
 IDL_SRC		= ttcpC.cpp ttcpS.cpp
@@ -44,9 +48,6 @@ include $(TAO_ROOT)/taoconfig.mk
 # Local modifications to variables imported by includes above.
 #----------------------------------------------------------------------------
 
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
 

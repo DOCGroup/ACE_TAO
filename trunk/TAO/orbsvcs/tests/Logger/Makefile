@@ -9,6 +9,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 LDLIBS     =  -lorbsvcs -lTAO
 
 PROG_SRCS = logger_i.cpp 

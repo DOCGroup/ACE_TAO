@@ -9,6 +9,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 LDLIBS = -lTAO
 
 LIB = libserver.a
@@ -54,10 +58,6 @@ DCFLAGS = -g
 
 client: $(POA_CLT_OBJS)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
-
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 
 ########
 # Sanity check builds by running basic functionality tests.
