@@ -17,9 +17,8 @@ process-output.pl must be updated to reflect debug output changes.
 Description
 -----------
 
-Server creates a POA threadpool with lanes, creates an object with
-RTCORBA::CLIENT_PROPAGATED priority model, and writes its IOR to the
-file.
+Server creates an object with RTCORBA::CLIENT_PROPAGATED priority
+model, and writes its IOR to the file.
 
 Client spawns two threads of different priorities.  Each thread sets
 RTCORBA::ClientProtocolPolicy override to a single protocol on the

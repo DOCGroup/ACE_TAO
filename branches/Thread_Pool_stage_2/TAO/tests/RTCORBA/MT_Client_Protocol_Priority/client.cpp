@@ -6,6 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "../check_supported_priorities.cpp"
+#include "tao/Strategies/advanced_resource.h"
 
 class Worker_Thread : public ACE_Task_Base
 {
@@ -219,8 +220,10 @@ main (int argc, char *argv[])
       int flags  = THR_NEW_LWP|THR_JOINABLE|THR_BOUND;
 
       // Worker 1.
-      Worker_Thread worker1 (orb.in (), server.in (),
-                             protocol1, &barrier);
+      Worker_Thread worker1 (orb.in (),
+                             server.in (),
+                             protocol1,
+                             &barrier);
 
       CORBA::Short native_priority1 = 0;
       if (pm->to_native (priority1, native_priority1) == 0)
@@ -237,8 +240,10 @@ main (int argc, char *argv[])
                           1);
 
       // Worker 2.
-      Worker_Thread worker2 (orb.in (), server.in (),
-                             protocol2, &barrier);
+      Worker_Thread worker2 (orb.in (),
+                             server.in (),
+                             protocol2,
+                             &barrier);
 
       CORBA::Short native_priority2 = 0;
       if (pm->to_native (priority2, native_priority2) == 0)
