@@ -23,7 +23,7 @@ Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	Sat Sep 28 13:55:56 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	that led to all this.
 
-Sat Sep 28 13:55:56 2002  Mayur Deshpande  <coryan@uci.edu>
+Sat Sep 28 13:55:56 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* examples/AMH/Sink_Server/Timer_Handler.cpp (class
 	Timer_Handler):
