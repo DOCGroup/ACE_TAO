@@ -41,8 +41,7 @@
 #include "atmcom.h"
 #endif /* NATIVE_ATM */
 
-// @@ Make sure you use the -I option in the makefile to avoid having to use the ../... pathname stuff..
-#include "../mpeg_server/Video_Server.h"
+#include "mpeg_server/Video_Server.h"
 
 // Forward declaration.
 class AV_Svc_Handler;
