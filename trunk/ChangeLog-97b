@@ -7,8 +7,12 @@ Thu Sep 25 15:25:53 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/SOCK.{h,cpp}: removed dummy_ static now that the
 	  Object_Manager initializes WinSock.
 
-	  No, I'm not a Win32 wizard.  Thanks to Irfan and Nanbor for
-	  directing these changes.
+	  No, I'm not a Win32 wizard all of the sudden.  Thanks to
+	  Irfan and Nanbor for directing these changes.
+
+	* tests/run_tests.vxworks: commented out tests that don't run
+	  productively on VxWorks: SV_Shared_Memory_Test,
+	  Reactor_Exceptions_Test, SPIPE_Test, and UPIPE_SAP_Test.
 
 Thu Sep 25 03:50:27 1997    <irfan@TWOSTEP>
 
