@@ -1,3 +1,11 @@
+Wed Dec 10 16:24:09 1997    <irfan@TWOSTEP>
+
+	* ace/Auto_Ptr.i: Apparently, the standard states that in order to
+ 	  access members of a templated superclass from a templated
+ 	  subclass, then the member name must be fully qualified.
+  	  Therefore, changed access to p_ to ACE_Auto_Basic_Ptr<X>::p_.
+  	  Thanks to Stephen Coy <stevec@magna.com.au> for reporting this.
+
 Tue Dec 09 13:05:00 1997    <nw1@CHA-CHA>
 
 	* ace/Containers.cpp (copy_all_nodes): Added a temporary

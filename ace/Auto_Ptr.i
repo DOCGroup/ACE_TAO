@@ -74,7 +74,7 @@ template<class X> ACE_INLINE X *
 auto_ptr<X>::operator-> () const 
 {
   ACE_TRACE ("auto_ptr<X>::operator->");
-  return p_;
+  return ACE_Auto_Basic_Ptr<X>::p_;
 }
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
@@ -151,6 +151,6 @@ ACE_Auto_Array_Ptr<X>::ACE_Auto_Array_Ptr (X *p)
 template<class X> ACE_INLINE X *
 ACE_Auto_Array_Ptr<X>::operator->() const
 {
-  return p_;
+  return ACE_Auto_Basic_Array_Ptr<X>::p_;
 }
 
