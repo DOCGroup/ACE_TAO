@@ -15,16 +15,25 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      if (server.init (argc, argv, ACE_TRY_ENV) == -1)
-        return 1;
+      int status = server.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (status == -1)
+        {
+          return 1;
+        }
       else
         {
           server.run (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (server.fini (ACE_TRY_ENV) == -1)
-            return 1;
+          status = server.fini (ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
+          if (status == -1)
+            {
+              return 1;
+            }
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)

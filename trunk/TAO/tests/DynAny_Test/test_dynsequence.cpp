@@ -142,9 +142,13 @@ Test_DynSequence::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: length/set_elements/get_elements\n"));
 
-      if (ftc1->get_length (ACE_TRY_ENV) != 2)
-        ++this->error_count_;
+      CORBA::ULong length = ftc1->get_length (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (length != 2)
+        {
+          ++this->error_count_;
+        }
 
       ftc1->set_length (3,
                         ACE_TRY_ENV);
