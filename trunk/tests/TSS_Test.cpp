@@ -65,11 +65,9 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-#if defined (ACE_HAS_64BIT_LONGS)
-  int count = long (c);
-#else /* ! ACE_HAS_64BIT_LONGS */
-  int count = int (c);
-#endif /* ! ACE_HAS_64BIT_LONGS */
+  // Cast the arg to a long, first, because a pointer is the same
+  // size as a long on all current ACE platforms.
+  int count = (int) (long) c;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) worker, iterations = %d\n", count));
 
