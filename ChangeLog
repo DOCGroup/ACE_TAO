@@ -1,3 +1,8 @@
+Tue May 11 17:39:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.rc: Converted back to
+	  neutral text format.
+
 Tue May 11 14:21:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Streams/streams.mpc: Added 'threads' to the requires
