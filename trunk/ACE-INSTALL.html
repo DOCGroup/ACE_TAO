@@ -698,12 +698,14 @@ for these notes):<p>
       are done on a workstation creating object modules which are
       downloaded and loaded into the VxWorks target system.<p>
   <LI>C++ object modules must be post-processed by a VxWorks
-      utility called ``munch''.  ACE includes a perl script called
-      <code>ace_ld</code> which is called from the Makefiles, replacing
+      utility called ``munch.''  ACE includes a perl script called
+      <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/bin/ace_ld">$ACE_ROOT/bin/ace_ld</A>,
+which is called from the Makefiles, replacing
       the traditional <code>ld</code> step.  You must have Perl installed
-      to use <code>ace_ld</code>.
+      to use <code>ace_ld</code>. <P>
 
-  <LI>WindRiver provides GCC/G++ cross-compilers for the
+  <LI>Wind River provides GCC/G++ cross-compilers for the
       supported target platforms.  The executables are named cc&lt;target&gt;
       and g++&lt;target&gt;; for example, ccppc and g++cpp for PowerPC targets.
 </UL>
@@ -722,9 +724,9 @@ if you use TAO on VxWorks that you will need to set your LD_LIBRARY_PATH
 to find the TAO IDL compiler libraries (installed in the ace directory)
 on the host.<P>
 
-With g++, bin/ace_ld is used to munch object files and libraries to
-set up calls to static constructors and destructors.  bin/ace_ld requires
-perl on the host platform.<P>
+With g++, $ACE_ROOT/bin/ace_ld is used to munch object files and
+libraries to set up calls to static constructors and destructors.
+bin/ace_ld requires perl on the host platform.<P>
 
 These non-default VxWorks kernel configuration <code>#defines</code>
 are required with ACE:<P>
