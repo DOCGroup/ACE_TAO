@@ -39,11 +39,13 @@
 #define SOURCE_ID    1001
 
 static const char usage [] = "[-? |\n"
-"            [-m <count> of messages to send [100]]]";
+"            [-O[RBport] ORB port number]"
+"            [-m <count> of messages to send [100]]"
+"            [-f name of schedler input data file]]";
 
 unsigned int total_messages = 100;
 
-
+char *input_file_name = 0;
 
 // ------------ Internal_Demo_Consumer ---------------------------------
 
@@ -197,50 +199,48 @@ Demo_Supplier::disconnect_push_supplier (CORBA::Environment &)
 void
 Demo_Supplier::start_generating_events (void)
 {
-  ACE_Time_Value pause (0, 400000);
-
   unsigned int total_sent_ = 0;
+
+  // load the scheduling data for the simulation
+  ACE_Unbounded_Queue<Schedule_Viewer_Data *> schedule_data;
+  this->load_schedule_data (schedule_data);
+  ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> 
+    schedule_iter (schedule_data);
+
+  if (schedule_iter.done ())
+  {
+    ACE_ERROR ((LM_ERROR,
+                "Demo_Supplier::start_generating_events: "
+                "there is no scheduling data\n"));
+    return;
+  }
 
   TAO_TRY
     {
       do {
-	      RtecEventComm::Event event1, event2;
-	      event1.source_ = SOURCE_ID;
-	      event1.type_ = ACE_ES_EVENT_NOTIFICATION;
-	      event1.ttl_ = 1;
-	      event1.creation_time_ = ORBSVCS_Time::zero;
-	      event1.ec_recv_time_ = ORBSVCS_Time::zero;
-	      event1.ec_send_time_ = ORBSVCS_Time::zero;
-	      event1.data_.x = 0;
-	      event1.data_.y = 0;
-	      event2.source_ = SOURCE_ID;
-	      event2.type_ = ACE_ES_EVENT_NOTIFICATION;
-	      event2.ttl_ = 1;
-	      event2.creation_time_ = ORBSVCS_Time::zero;
-	      event2.ec_recv_time_ = ORBSVCS_Time::zero;
-	      event2.ec_send_time_ = ORBSVCS_Time::zero;
-	      event2.data_.x = 0;
-	      event2.data_.y = 0;	      // Send one time navigation data and one time weapons data
+	      RtecEventComm::Event event;
+	      event.source_ = SOURCE_ID;
+	      event.type_ = ACE_ES_EVENT_NOTIFICATION;
+	      event.ttl_ = 1;
+	      event.creation_time_ = ORBSVCS_Time::zero;
+	      event.ec_recv_time_ = ORBSVCS_Time::zero;
+	      event.ec_send_time_ = ORBSVCS_Time::zero;
+	      event.data_.x = 0;
+	      event.data_.y = 0;
 
-	      this->insert_event_data (event1.data_.any_value, event2.data_.any_value);
+	      this->insert_event_data (event.data_.any_value, schedule_iter);
 	      
 	      RtecEventComm::EventSet events;
-	      events.length (2);	      
-	      events[0] = event1;
-	      events[1] = event2;
+	      events.length (1);
+	      events[0] = event;
 	      
-	      //events[1] = event2; // two events are not supported right now
-
 	      proxy_consumer_->push (events, TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
 	      
 	      if (total_sent_ < 5)		
 		ACE_DEBUG ((LM_DEBUG, "Pushing event data.\n"));
 	      else if (total_sent_ == 5)
-		ACE_DEBUG ((LM_DEBUG, "Everything is running. Going to be mute.\n"));
-		
-
-	      ACE_OS::sleep (pause);
+		ACE_DEBUG ((LM_DEBUG, "Everything is running. Going to be mute.\n"));		
 
       } while (++total_sent_ < total_messages);
 
@@ -267,63 +267,250 @@ Demo_Supplier::start_generating_events (void)
     }
   TAO_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR, 
-                         "Latency_Supplier::generate_events:"
-                         " unexpected exception.\n"));
+      ACE_ERROR ((LM_ERROR, "Demo_Supplier::start_generating_events: "
+                            " unexpected exception.\n"));
     }
   TAO_ENDTRY;
+
+  // clean up the scheduling data
+  Schedule_Viewer_Data **data_temp;
+  for (schedule_iter.first (); schedule_iter.done () == 0; schedule_iter.advance ())
+  {
+    if ((schedule_iter.next (data_temp)) && (data_temp))
+    {
+      delete (*data_temp);
+    }
+  }
+
   this->shutdown (); 
 }
 
 
+void
+Demo_Supplier::load_schedule_data (
+  ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data)
+{
+  Schedule_Viewer_Data *data = 0;
+
+  if (input_file_name)
+  {
+    // open the scheduler data input file and read its contents into a queue
+    FILE *input_file;
+    int scan_count = 0;
+    input_file = ACE_OS::fopen(input_file_name, "r");
+    if (input_file)
+    {
+      // get a line at a time from the data file and parse it
+      char input_buf[BUFSIZ];
+      while (ACE_OS::fgets (input_buf, BUFSIZ, input_file))
+      {
+        // run through leading whitespace
+        char *temp = input_buf;
+        while ((*temp) && (isspace (*temp)))
+        {
+          ++temp; 
+        }
+
+        // if there is anything besides whitespace in the line read,
+        // scan its fields into the scheduling data structure
+        if (ACE_OS::strlen (temp) > 0)
+        {
+          ACE_NEW (data, Schedule_Viewer_Data);
+          if (! data)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "Demo_Supplier::start_generating_events: "
+                        "memory allocation for scheduling data failed\n"));
+            return;
+          }              
+          
+          scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
+                                     &(data->operation_name), &(data->utilitzation), 
+                                     &(data->overhead), &(data->arrival_time),
+                                     &(data->deadline_time), &(data->completion_time), 
+                                     &(data->computation_time));
+          if (scan_count != 7)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "Demo_Supplier::start_generating_events: "
+                        "scanned incorrect number of data elements: %d\n", scan_count));
+
+            delete data;
+            return;
+          }
+          
+          // insert the data into the queue
+          schedule_data.enqueue_tail (data);
+        }
+      }
+    }
+    else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Demo_Supplier::start_generating_events: "
+                  "could not open input file [%s].\n", 
+                  input_file_name));
+      return;
+    }
+  }
+  else
+  {
+    u_long last_completion = 0;
+
+    // just create 10 dummy scheduling records and use them
+    for (int i = 0; i < 10; ++i)
+    {
+      ACE_NEW (data, Schedule_Viewer_Data);
+      if (! data)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Demo_Supplier::start_generating_events: "
+                    "memory allocation for scheduling data failed\n"));
+        return;
+      }              
+
+
+      char *oper_name = 0;
+      switch (i % 4)
+      {
+      case 0:
+        oper_name = "high_20";
+        break;
+
+      case 1:
+        oper_name = "low_20";
+        break;
+
+      case 2:
+        oper_name = "high_10";
+        break;
+
+      case 3:
+      default:
+        oper_name = "low_10";
+        break;
+      }
+
+      strncpy(data->operation_name, oper_name, BUFSIZ-1);
+
+      data->utilitzation = ((double)(ACE_OS::rand() %100))/100.0;
+      data->overhead = ((double)(ACE_OS::rand() %20))/100.0;
+
+      data->arrival_time = ACE_OS::rand() % 200;
+      data->computation_time = (ACE_OS::rand() % 100)+10;
+
+      data->completion_time = last_completion + (ACE_OS::rand() % 100) + 100;
+      data->completion_time = 
+        data->completion_time <  data->arrival_time + data->computation_time
+        ? data->arrival_time + data->computation_time 
+        : data->completion_time;
+
+      last_completion = data->completion_time;
+
+      data->deadline_time = data->completion_time + (ACE_OS::rand() % 200) - 50;
+
+    // insert the data into the queue
+    schedule_data.enqueue_tail (data);
+	 }
+  }
+}
+
 // This function fills in the random data into the anys transported by 
 // the event channel
 void
-Demo_Supplier::insert_event_data (CORBA::Any &data1, CORBA::Any &data2)
+Demo_Supplier::insert_event_data (
+  CORBA::Any &data,
+  ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter)
 {
+  static u_long last_completion = 0;
+
   TAO_TRY
     {
-      navigation_.position_latitude = ACE_OS::rand() % 90;
-      navigation_.position_longitude = ACE_OS::rand() % 180;
-      navigation_.altitude = ACE_OS::rand() % 100;
-      navigation_.heading = ACE_OS::rand() % 180;
-      navigation_.roll = (navigation_.roll == 180) ? -180 : navigation_.roll + 1;
-      navigation_.pitch =  (navigation_.pitch == 90) ? -90 : navigation_.pitch + 1;
-      navigation_.utilitzation = ((double)(ACE_OS::rand() %50))/100.0;
-      navigation_.overhead = ((double)(ACE_OS::rand() %20))/100.0;
-      navigation_.arrival_time = ACE_OS::rand()+200;
-      navigation_.deadline_time = navigation_.arrival_time + (ACE_OS::rand() % 500)-100;
-      navigation_.completion_time = navigation_.deadline_time - (ACE_OS::rand() % 100);
-      navigation_.computation_time = (ACE_OS::rand() % 100)+10;
+      Schedule_Viewer_Data **sched_data;
 
+      if ((schedule_iter.next (sched_data)) && (sched_data) && (*sched_data))
+      {
+        if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+            (strcmp((*sched_data)->operation_name, "low_20") == 0)  ||
+            (strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
+            (strcmp((*sched_data)->operation_name, "low_1") == 0))
+        {
+          navigation_.position_latitude = ACE_OS::rand() % 90;
+          navigation_.position_longitude = ACE_OS::rand() % 180;
+          navigation_.altitude = ACE_OS::rand() % 100;
+          navigation_.heading = ACE_OS::rand() % 180;
+          navigation_.roll = (navigation_.roll == 180) ? -180 : navigation_.roll + 1;
+          navigation_.pitch =  (navigation_.pitch == 90) ? -90 : navigation_.pitch + 1;
 
-	
-      weapons_.number_of_weapons = 2;
-      weapons_.weapon1.identifier = CORBA::string_alloc (30);
-      strcpy (weapons_.weapon1.identifier,"Photon Torpedoes");
-      weapons_.weapon1.status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
-      weapons_.weapon2.identifier = CORBA::string_alloc (30);
-      strcpy (weapons_.weapon2.identifier,"Quantum Torpedoes");
-      weapons_.weapon2.status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
-      weapons_.weapon3.identifier = CORBA::string_alloc (1);
-      weapons_.weapon3.identifier[0] = 0;
-      weapons_.weapon3.status = 0;
-      weapons_.weapon4.identifier = CORBA::string_alloc (1);
-      weapons_.weapon4.identifier[0] = 0;
-      weapons_.weapon4.status = 0; 
-      weapons_.weapon5.identifier = CORBA::string_alloc (1);
-      weapons_.weapon5.identifier[0] = 0;	    
-      weapons_.weapon5.status = 0;
+          navigation_.utilitzation =     (*sched_data)->utilitzation;
+          navigation_.overhead =         (*sched_data)->overhead;
+          navigation_.arrival_time =     (*sched_data)->arrival_time;
+          navigation_.deadline_time =    (*sched_data)->deadline_time;
+          navigation_.completion_time =  (*sched_data)->completion_time;
+          navigation_.computation_time = (*sched_data)->computation_time;
 
-      weapons_.utilitzation = ((double)(ACE_OS::rand() %50))/100.0;
-      weapons_.overhead = ((double)(ACE_OS::rand() %20))/100.0;
-      weapons_.arrival_time = ACE_OS::rand()+200;
-      weapons_.deadline_time = weapons_.arrival_time + (ACE_OS::rand() % 500)-100;
-      weapons_.completion_time = weapons_.deadline_time - (ACE_OS::rand() % 100);
-      weapons_.computation_time = (ACE_OS::rand() % 100)+10;
+          data.replace (_tc_Navigation, &navigation_, CORBA::B_TRUE, TAO_TRY_ENV);
+        }
+        else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+                 (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
+                 (strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
+                 (strcmp((*sched_data)->operation_name, "low_5") == 0))
+        {
+          weapons_.number_of_weapons = 2;
+          weapons_.weapon1.identifier = CORBA::string_alloc (30);
+          strcpy (weapons_.weapon1.identifier,"Photon Torpedoes");
+          weapons_.weapon1.status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
+          weapons_.weapon2.identifier = CORBA::string_alloc (30);
+          strcpy (weapons_.weapon2.identifier,"Quantum Torpedoes");
+          weapons_.weapon2.status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
+          weapons_.weapon3.identifier = CORBA::string_alloc (1);
+          weapons_.weapon3.identifier[0] = 0;
+          weapons_.weapon3.status = 0;
+          weapons_.weapon4.identifier = CORBA::string_alloc (1);
+          weapons_.weapon4.identifier[0] = 0;
+          weapons_.weapon4.status = 0; 
+          weapons_.weapon5.identifier = CORBA::string_alloc (1);
+          weapons_.weapon5.identifier[0] = 0;	    
+          weapons_.weapon5.status = 0;
 
-      data1.replace (_tc_Navigation, &navigation_, CORBA::B_TRUE, TAO_TRY_ENV);
-      data2.replace (_tc_Weapons, &weapons_, CORBA::B_TRUE, TAO_TRY_ENV);
+          weapons_.utilitzation =     (*sched_data)->utilitzation;
+          weapons_.overhead =         (*sched_data)->overhead;
+          weapons_.arrival_time =     (*sched_data)->arrival_time;
+          weapons_.deadline_time =    (*sched_data)->deadline_time;
+          weapons_.completion_time =  (*sched_data)->completion_time;
+          weapons_.computation_time = (*sched_data)->computation_time;
+
+          data.replace (_tc_Weapons, &weapons_, CORBA::B_TRUE, TAO_TRY_ENV);
+        }
+        else
+        {
+          ACE_ERROR ((LM_ERROR, "Demo_Supplier::insert_event_data: unrecognized operation name [%s]",
+                      (*sched_data)->operation_name));
+        }
+
+        if (last_completion > (*sched_data)->completion_time)
+        {
+          last_completion = 0;
+        }
+
+        if ((*sched_data)->completion_time >= last_completion)
+        {
+          ACE_Time_Value pause (0, (*sched_data)->completion_time - 
+                                   last_completion);
+          ACE_OS::sleep (pause);
+          last_completion = (*sched_data)->completion_time;
+        }
+      }
+      else 
+      {
+        ACE_ERROR ((LM_ERROR, "Demo_Supplier::insert_event_data: Could Not access scheduling data"));
+      }
+  	
+      schedule_iter.advance ();
+      if (schedule_iter.done ())
+      {
+        schedule_iter.first ();
+      }
     } 
   TAO_CATCHANY
     {
@@ -372,7 +559,7 @@ get_options (int argc, char *argv [])
 {
   // We need the 'O' in get_opt() because we also want to have ORB parameters, they
   // all start with 'O'
-  ACE_Get_Opt get_opt (argc, argv, "O?m:");
+  ACE_Get_Opt get_opt (argc, argv, "O?m:f:");
   int opt;
   int temp;
 
@@ -389,12 +576,26 @@ get_options (int argc, char *argv [])
       if ((temp = ACE_OS::atoi (get_opt.optarg)) > 0)
         {
           total_messages = (u_int) temp;
-	  cout << "Messages to send:" << total_messages << endl;
+          cout << "Messages to send:" << total_messages << endl;
         }
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
 			     "%s: count must be > 0",
+			     argv[0]), 1);
+        }
+      break;
+    case 'f':
+      input_file_name = get_opt.optarg;
+      if ((! input_file_name) || (ACE_OS::strlen (input_file_name)) > 0)
+        {
+          cout << "Messages to send:" << total_messages << endl;
+        }
+      else
+        {
+          input_file_name = 0;
+          ACE_ERROR_RETURN ((LM_ERROR,
+			     "%s: file name must be specified with -f option",
 			     argv[0]), 1);
         }
       break;
@@ -510,7 +711,6 @@ main (int argc, char *argv [])
       TAO_CHECK_ENV;
 
     }
-
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("SYS_EX");
