@@ -51,6 +51,9 @@ Mon Feb 23 11:40:37 1998  David L. Levine  <levine@cs.wustl.edu>
           (be_visitor_sequence_ch::visit_sequence): commented out unused
           local "cg".
 
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp
+          (Latency_Supplier::push): added ACE_UNUSED_ARG (_env).
+
 Mon Feb 23 10:58:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
