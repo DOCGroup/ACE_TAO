@@ -14,7 +14,7 @@
 
 #ifndef TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #define TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
@@ -35,10 +35,10 @@ public:
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr _ptr_type;
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_var _var_type;
 
-  //Constructor 
+  //Constructor
   TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedEventChannel* typed_event_channel);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~TAO_CEC_TypedProxyPushConsumer (void);
 
   /// Activate in the POA
@@ -179,6 +179,6 @@ private:
 #include "CEC_TypedProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_ */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_CEC_TYPEDEVENTCHANNEL_H_
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "CEC_Factory.h"
 
@@ -79,7 +79,7 @@ public:
   int disconnect_callbacks;
 
   /**
-   * If not zero the event channel will deactive its Impl and call 
+   * If not zero the event channel will deactive its Impl and call
    * orb->shutdown(0), when destoy is invoked.
    */
   int destroy_on_shutdown;
@@ -112,12 +112,12 @@ public:
    * If the factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
-  //Constructor 
+  //Constructor
   TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attributes,
                              TAO_CEC_Factory* factory = 0,
-                             int own_factory = 0);  
+                             int own_factory = 0);
 
-  //Destructor 
+  //Destructor
   virtual ~TAO_CEC_TypedEventChannel (void);
 
   /// Start the internal threads (if any), etc.
@@ -203,7 +203,7 @@ public:
 
   // Hash map which will operate as a IFR cache for the Supported Interface's operations and parameters
   typedef ACE_Hash_Map_Manager_Ex<const char *, TAO_CEC_Operation_Params *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex> InterfaceDescription;
-  typedef InterfaceDescription::iterator Iterator; 
+  typedef InterfaceDescription::iterator Iterator;
 
   // Finds a operation/parameter from the IFR cache
   TAO_CEC_Operation_Params * find_from_ifr_cache (const char *operation);
@@ -234,11 +234,11 @@ public:
                             ACE_ENV_ARG_DECL);
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
-  virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr 
+  virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
     for_consumers (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr 
+  virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
     for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -357,6 +357,6 @@ private:
 #include "CEC_TypedEventChannel.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CEC_TYPEDEVENTCHANNEL_H_ */

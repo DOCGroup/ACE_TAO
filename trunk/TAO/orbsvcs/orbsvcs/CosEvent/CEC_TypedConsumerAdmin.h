@@ -14,7 +14,7 @@
 #ifndef TAO_CEC_TYPEDCONSUMERADMIN_H_
 #define TAO_CEC_TYPEDCONSUMERADMIN_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
@@ -33,10 +33,10 @@ class TAO_Event_Export TAO_CEC_TypedConsumerAdmin : public POA_CosTypedEventChan
 {
 public:
 
-  // Constructor 
+  // Constructor
   TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~TAO_CEC_TypedConsumerAdmin (void);
 
   /// For each elements call <worker->work()>.
@@ -66,9 +66,9 @@ public:
     obtain_typed_push_supplier (const char * uses_interface)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::NoSuchImplementation));
-  virtual CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr 
+  virtual CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
     obtain_typed_pull_supplier (const char * supported_interface)
-      ACE_THROW_SPEC ((CORBA::SystemException, 
+      ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::InterfaceNotSupported));
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
@@ -117,6 +117,5 @@ private:
 #include "CEC_TypedConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
-
+#include /**/ "ace/post.h"
 #endif /* TAO_CEC_TYPEDCONSUMERADMIN_H_ */

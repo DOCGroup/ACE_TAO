@@ -4,7 +4,7 @@
 /**
  *  @file   CEC_TypedSupplierAdmin.h
  *
- *  $Id: 
+ *  $Id:
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  *
@@ -16,7 +16,7 @@
 #ifndef TAO_CEC_TYPEDSUPPLIERADMIN_H_
 #define TAO_CEC_TYPEDSUPPLIERADMIN_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
@@ -33,10 +33,10 @@ class TAO_CEC_TypedEventChannel;
 class  TAO_Event_Export TAO_CEC_TypedSupplierAdmin : public POA_CosTypedEventChannelAdmin::TypedSupplierAdmin
 {
 public:
-  //Constructor 
+  //Constructor
    TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~TAO_CEC_TypedSupplierAdmin (void);
 
   /// For each elements call <worker->work()>.
@@ -93,6 +93,6 @@ private:
 #include "CEC_TypedSupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CEC_TYPEDSUPPLIERADMIN_H_ */
