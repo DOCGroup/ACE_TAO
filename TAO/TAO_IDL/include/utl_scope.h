@@ -166,7 +166,8 @@ public:
                                                 idl_bool in_parent = 1);
 
   // Look up the Identifier * specified only in the local scope
-  virtual AST_Decl              *lookup_by_name_local(Identifier *);
+  virtual AST_Decl              *lookup_by_name_local(Identifier *,
+                                                      long index);
 
   // Look up a predefined type by its ExprType
   virtual AST_Decl

@@ -172,9 +172,9 @@ UTL_NameList *
 AST_Operation::fe_add_exceptions(UTL_NameList *t)
 {
   UTL_NamelistActiveIterator *nl_i;
-  UTL_ScopedName	     *nl_n;
+  UTL_ScopedName	 *nl_n;
   UTL_Scope		     *fs = idl_global->scopes()->top();
-  AST_Exception		     *fe;
+  AST_Exception		 *fe;
   AST_Decl		     *d;
 
   // Macro to avoid "warning: unused parameter" type warning.
@@ -220,7 +220,7 @@ AST_Argument *AST_Operation::fe_add_argument(AST_Argument *t)
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_by_name_local(t->local_name())) != NULL) {
+  if ((d = lookup_by_name_local(t->local_name(), 0)) != NULL) {
     if (!can_be_redefined(d)) {
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;

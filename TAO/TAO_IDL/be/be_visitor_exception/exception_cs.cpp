@@ -129,14 +129,14 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       // narrow method
       os->indent ();
       *os << "// narrow" << be_nl;
-      *os << node->name () << "_ptr " << be_nl;
+      *os << node->name () << " *" << be_nl;
       *os << node->name () << "::_narrow (CORBA::Exception *exc)" << be_nl;
       *os << "{\n";
       os->incr_indent ();
       *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
           << "\", exc->_id ())) // same type" << be_nl;
       *os << "  return ACE_dynamic_cast (" << node->local_name ()
-          << "_ptr, exc);" << be_nl;
+          << " *, exc);" << be_nl;
       *os << "else" << be_nl;
       *os << "  return 0;\n";
       os->decr_indent ();
