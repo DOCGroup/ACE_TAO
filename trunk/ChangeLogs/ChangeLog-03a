@@ -1,3 +1,11 @@
+Fri Apr 13 12:21:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.h: Added an explanation on the requirement about
+	  sizeof (TYPE)link of ACE_Cached_Allocator and a link to
+	  ACE_Cached_Mem_Pool_Node where this stuff was explained.  Thanks
+	  to Rachel G. Smith <Rachel_G_Smith@raytheon.com> for motivating
+	  the change.
+
 Fri Apr 13 12:05:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.h:

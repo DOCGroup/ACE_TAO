@@ -70,7 +70,11 @@ private:
  * sizeof (TYPE) size.
  *
  * This class enables caching of dynamically allocated,
- * fixed-sized classes.
+ * fixed-sized classes.  Notice that the <code>sizeof (TYPE)</code>
+ * must be greater than or equal to <code> sizeof (void*) </code> for
+ * this to work properly.
+ *
+ * @sa ACE_Cached_Mem_Pool_Node
  */
 template <class T, class ACE_LOCK>
 class ACE_Cached_Allocator : public ACE_New_Allocator
@@ -95,7 +99,7 @@ public:
    * Get a chunk of memory from free list cache, giving them
    * <initial_value>.  Note that <nbytes> is only checked to make sure
    * that it's <= to sizeof T, and is otherwise ignored since <malloc>
-   * always returns a pointer to an item of sizeof (T).  
+   * always returns a pointer to an item of sizeof (T).
    */
   virtual void *calloc (size_t nbytes,
                         char initial_value = '\0');
