@@ -1,3 +1,11 @@
+Wed Jul  2 23:58:11 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
+
+        * ace/config-freebsd.h:
+          FreeBSD 5.1 implements <stdint.h> (ACE_LACKS_STDINT_H) and
+          reentrant password functions (ACE_LACKS_PWD_REENTRANT_FUNCTIONS).
+          rand_r has been implemented for quite some time now
+          (ACE_LACKS_RAND_REENTRANT_FUNCTIONS).
+
 Wed Jul  2 23:34:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/RMCast/RMCast_Fragment_Test.dsp:
