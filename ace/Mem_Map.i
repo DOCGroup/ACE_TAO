@@ -40,6 +40,13 @@ ACE_Mem_Map::map (int len,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
+  // If we're already mapped at a particular location then try to
+  // remap the file using the same base address.
+  if (addr == 0 && this->base_addr_ != 0 && this->base_addr_ != MAP_FAILED)
+    {
+      share |= MAP_FIXED;
+      addr = this->base_addr_;
+    }
   return this->map_it (this->handle (), len, prot,
                        share, addr, offset, sa);
 }
