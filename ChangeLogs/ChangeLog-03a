@@ -4,6 +4,9 @@
           the hosts not providing getipnodebyname (uses gethostbyname2
           instead) and getipnodebyaddr (no substitute).
 
+        * ace/INET_Addr.cpp (get_ip_address): Fixed a "fall off the end"
+          warning for the IPv6 case.
+
 (IPv6 changes) Fri Sep 14 17:36:21 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK.cpp (get_local_addr): After fetching the address, be
