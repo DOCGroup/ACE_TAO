@@ -64,7 +64,7 @@ Test_DynSequence::run_test (void)
         this->orb_->create_dyn_any (in_any1,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynSequence_var fa1 = CORBA_DynSequence::_narrow (dp1,
+      CORBA_DynSequence_var fa1 = CORBA_DynSequence::_narrow (dp1.in (),
                                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->seek (1,

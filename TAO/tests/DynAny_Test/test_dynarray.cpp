@@ -58,9 +58,9 @@ Test_DynArray::run_test (void)
       CORBA::Any in_any1;
       in_any1 <<= ta;
       CORBA_DynAny_var dp1 = this->orb_->create_dyn_any (in_any1,
-                                                        ACE_TRY_ENV);
+                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynArray_var fa1 = CORBA_DynArray::_narrow (dp1,
+      CORBA_DynArray_var fa1 = CORBA_DynArray::_narrow (dp1.in (),
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->seek (1,

@@ -54,7 +54,7 @@ Test_DynEnum::run_test (void)
       CORBA_DynAny_var dp1 = this->orb_->create_dyn_any (in_any1,
                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynEnum_var de1 = CORBA_DynEnum::_narrow (dp1,
+      CORBA_DynEnum_var de1 = CORBA_DynEnum::_narrow (dp1.in (),
                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
       de1->value_as_ulong (2,
