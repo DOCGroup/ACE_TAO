@@ -2,6 +2,8 @@
 
 #define ACE_BUILD_DLL
 
+#include "ace/Timer_Queue.h"
+
 int
 ACE_Event_Handler_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
 						      ACE_Event_Handler *handler,
