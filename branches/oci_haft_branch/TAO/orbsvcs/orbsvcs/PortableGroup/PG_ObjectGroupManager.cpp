@@ -629,14 +629,12 @@ TAO_PG_ObjectGroupManager::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr p)
   int result = 0;
 
   // Get an object reference for the ORBs IORManipulation object!
-  CORBA::Object_var IORM =
-    orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                      0
-                                      ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var IORM = this->orb_->resolve_initial_references (
+    TAO_OBJID_IORMANIPULATION, 0 ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+  this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
+    IORM.in () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
   return result;
