@@ -46,13 +46,19 @@ public:
 
   ~TAO_Naming_Service (void);
   // Destructor.
-	
+
 private:
   int parse_args (int argc, char *argv[]);
   // parses the arguments.
 
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
+
+  size_t context_size_;
+  // Size of the hash_table allocated upon the creation of the Naming
+  // Service context (if one is created).  Note: all the contexts
+  // created under the given context will use the same size for their
+  // initial hash table allocations.
 
   TAO_Naming_Server my_naming_server_;
   // Naming Server instance.

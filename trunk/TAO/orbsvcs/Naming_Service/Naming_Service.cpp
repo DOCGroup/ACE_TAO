@@ -24,7 +24,8 @@ ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 
 TAO_Naming_Service::TAO_Naming_Service (void)
   : ior_output_file_ (0),
-    pid_file_name_ (0)
+    pid_file_name_ (0),
+    context_size_ (ACE_DEFAULT_MAP_SIZE)
 {
 }
 
@@ -33,7 +34,8 @@ TAO_Naming_Service::TAO_Naming_Service (void)
 TAO_Naming_Service::TAO_Naming_Service (int argc,
                                         char* argv[])
   : ior_output_file_ (0),
-    pid_file_name_ (0)
+    pid_file_name_ (0),
+    context_size_ (ACE_DEFAULT_MAP_SIZE)
 {
   this->init (argc, argv);
 }
@@ -42,8 +44,9 @@ int
 TAO_Naming_Service::parse_args (int argc,
                                 char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:p:");
+  ACE_Get_Opt get_opts (argc, argv, "do:p:s:");
   int c;
+  int size;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -62,6 +65,11 @@ TAO_Naming_Service::parse_args (int argc,
         break;
       case 'p':
         this->pid_file_name_ = get_opts.optarg;
+        break;
+      case 's':
+        size = ACE_OS::atoi (get_opts.optarg);
+        if (size >= 0)
+          this->context_size_ = size;
         break;
       case '?':
       default:
@@ -93,12 +101,24 @@ TAO_Naming_Service::init (int argc,
                                          "child_poa",
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       orb = this->orb_manager_.orb ();
       child_poa = this->orb_manager_.child_poa ();
-      
+
+      // Check the non-ORB arguments.
+      // this needs to come before we initialize my_naming_server so
+      // that we can pass on some of the command-line arguments.
+
+      result = this->parse_args (argc,
+                             argv);
+
+      if (result < 0)
+        return result;
+
+
       result = this->my_naming_server_.init (orb.in (),
                                              child_poa.in (),
+                                             context_size_,
                                              0,
                                              0);
       TAO_CHECK_ENV;
@@ -112,12 +132,7 @@ TAO_Naming_Service::init (int argc,
     }
   TAO_ENDTRY;
 
-  // Check the non-ORB arguments.
-  result = this->parse_args (argc,
-                             argv);
 
-  if (result < 0)
-    return result;
   if (this->ior_output_file_ != 0)
     {
       CORBA::String_var str =
@@ -145,7 +160,8 @@ TAO_Naming_Service::init (int argc,
 int
 TAO_Naming_Service::run (CORBA_Environment& env)
 {
-  return this->orb_manager_.run (env);
+  ACE_Time_Value * time_ = new ACE_Time_Value (180);
+  return this->orb_manager_.run (env, time_);
 }
 
 // Destructor.
@@ -177,4 +193,3 @@ main (int argc, char* argv[])
   TAO_ENDTRY;
   return 0;
 }
-
