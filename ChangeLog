@@ -25,7 +25,9 @@ Wed May  5 14:52:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Misc/test_XtReactor1.cpp:
 	* examples/Misc/test_XtReactor2.cpp:
-	* examples/OS/Process/imore.cpp: Added #include "ace/Log_Msg.h".
+	* examples/OS/Process/imore.cpp:
+	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp:
+	  Added #include "ace/Log_Msg.h".
 
 Wed May  5 09:18:00 2004  Justin Michel  <michel_j@ociweb.com>
 
