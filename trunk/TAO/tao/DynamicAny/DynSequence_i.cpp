@@ -50,29 +50,25 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 
   this->type_ = tc;
 
-  // Get the CDR stream of the argument.
-  ACE_Message_Block *mb = any._tao_get_cdr ();
-  bool type_known = false;
-
-  if (mb == 0)
-    {
-      ACE_NEW (mb,
-               ACE_Message_Block);
-      TAO_OutputCDR out;
-      any.impl ()->marshal_value (out);
-      ACE_CDR::consolidate (mb, out.begin ());
-      type_known = true;
-    }
-
-  TAO_InputCDR cdr (mb,
-                    any._tao_byte_order ());
-
-  if (type_known)
-    {
-      mb->release ();
-    }
-
+  // Get the CDR stream of the Any, if there isn't one, make one.
+  TAO::Any_Impl *impl = any.impl ();
   CORBA::ULong length;
+  TAO_OutputCDR out;
+  TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
+
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      cdr = unk->_tao_get_cdr ();
+    }
+  else
+    {
+      impl->marshal_value (out);
+      TAO_InputCDR tmp_in (out);
+      cdr = tmp_in;
+    }
 
   // If the any is a sequence, first 4 bytes of cdr hold the
   // length.
@@ -91,12 +87,11 @@ TAO_DynSequence_i::init (const CORBA::Any& any
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       CORBA::Any field_any;
-      TAO::Unknown_IDL_Type *unk = 0;
-      ACE_NEW (unk,
+      TAO::Unknown_IDL_Type *field_unk = 0;
+      ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (),
-                                      cdr.start (),
-                                      cdr.byte_order ()));
-      field_any.replace (unk);
+                                      TAO_InputCDR (cdr)));
+      field_any.replace (field_unk);
 
       // This recursive step will call the correct constructor
       // based on the type of field_any.
@@ -565,27 +560,25 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
 
   if (equivalent)
     {
-      // Get the CDR stream of the argument.
-      ACE_Message_Block *mb = any._tao_get_cdr ();
-      bool type_known = false;
+      // Get the CDR stream of the Any, if there isn't one, make one.
+      TAO::Any_Impl *impl = any.impl ();
+      TAO_OutputCDR out;
+      TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
 
-      if (mb == 0)
+      if (impl->encoded ())
         {
-          ACE_NEW (mb,
-                   ACE_Message_Block);
-          TAO_OutputCDR out;
-          any.impl ()->marshal_value (out);
-          ACE_CDR::consolidate (mb, out.begin ());
-          type_known = true;
+          TAO::Unknown_IDL_Type *unk =
+            dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+            
+          cdr = unk->_tao_get_cdr ();
+        }
+      else
+        {
+          impl->marshal_value (out);
+          TAO_InputCDR tmp_in (out);
+          cdr = tmp_in;
         }
 
-      TAO_InputCDR cdr (mb,
-                        any._tao_byte_order ());
-
-      if (type_known)
-        {
-          mb->release ();
-        }
 
       CORBA::ULong arg_length;
 
@@ -606,12 +599,11 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
       for (CORBA::ULong i = 0; i < arg_length; ++i)
         {
           CORBA::Any field_any;
-          TAO::Unknown_IDL_Type *unk = 0;
-          ACE_NEW (unk,
+          TAO::Unknown_IDL_Type *field_unk = 0;
+          ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
-                                          cdr.start (),
-                                          cdr.byte_order ()));
-          field_any.replace (unk);
+                                          TAO_InputCDR (cdr)));
+          field_any.replace (field_unk);
 
           if (i < this->component_count_)
             {
@@ -668,14 +660,11 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   TAO_OutputCDR out_cdr;
-
   out_cdr.write_ulong (this->component_count_);
 
   CORBA::TypeCode_var field_tc =
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
-  bool type_known = false;
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
@@ -684,26 +673,22 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
         this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
+      TAO::Any_Impl *field_impl = field_any->impl ();
+      TAO_OutputCDR field_out;
+      TAO_InputCDR field_cdr (static_cast<ACE_Message_Block *> (0));
 
-      if (field_mb == 0)
+      if (field_impl->encoded ())
         {
-          ACE_NEW_RETURN (field_mb,
-                          ACE_Message_Block,
-                          0);
-          TAO_OutputCDR out;
-          field_any->impl ()->marshal_value (out);
-          ACE_CDR::consolidate (field_mb, out.begin ());
-          type_known = true;
+          TAO::Unknown_IDL_Type *field_unk =
+            dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
+            
+          field_cdr = field_unk->_tao_get_cdr ();
         }
-
-      TAO_InputCDR field_cdr (field_mb,
-                              field_any->_tao_byte_order ());
-
-      if (type_known)
+      else
         {
-          field_mb->release ();
-          type_known = false;
+          field_impl->marshal_value (field_out);
+          TAO_InputCDR tmp_in (field_out);
+          field_cdr = tmp_in;
         }
 
       (void) TAO_Marshal_Object::perform_append (field_tc.in (),
@@ -724,8 +709,7 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
-                                           in_cdr.start (),
-                                           in_cdr.byte_order ()),
+                                           in_cdr),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

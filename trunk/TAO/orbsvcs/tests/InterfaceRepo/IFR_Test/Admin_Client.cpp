@@ -1500,11 +1500,11 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
   TAO_OutputCDR maker2;
   maker2.write_ulong (3);  // THREE
+  TAO_InputCDR maker2_in (maker2);
   TAO::Unknown_IDL_Type *impl2 = 0;
   ACE_NEW (impl2,
            TAO::Unknown_IDL_Type (d_type.in (),
-                                  maker2.begin (),
-                                  TAO_ENCAP_BYTE_ORDER));
+                                  maker2_in));
   CORBA::Any any2;
   any2.replace (impl2);
   u_members[0].label = any2;
@@ -1532,11 +1532,11 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_OutputCDR maker1;
   maker1.write_ulong (0); // ZERO
+  TAO_InputCDR maker1_in (maker1);
   TAO::Unknown_IDL_Type *impl1 = 0;
   ACE_NEW (impl1,
            TAO::Unknown_IDL_Type (d_type.in (),
-                                  maker1.begin (),
-                                  TAO_ENCAP_BYTE_ORDER));
+                                  maker1_in));
   CORBA::Any any1;
   any1.replace (impl1);
   u_members[2].label = any1;
@@ -1628,14 +1628,19 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      TAO_InputCDR cdr (label->_tao_get_cdr ());
+      TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
       CORBA::ULong val;
+      
+      TAO::Any_Impl *impl = label->impl ();
+      TAO_OutputCDR out;
+      impl->marshal_value (out);
+      TAO_InputCDR in (out);
 
       // If we're at the default index, it's in the label as octet 0,
       // so just assign the slot value to val.
       if (i != (CORBA::ULong) slot)
         {
-          cdr.read_ulong (val);
+          in.read_ulong (val);
           tmp = d_members[val];
         }
 

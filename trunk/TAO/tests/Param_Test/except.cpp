@@ -114,7 +114,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
                                "unexpected (but known) user exception\n");
 
           // Since 'BadBoy' is not in the exception list the DII request,
-          // it should not be caught explicityly. See comment below.
+          // it should not be caught explicitly. See comment below.
           this->inout_ = this->in_ * 5;
           this->out_ = this->in_ * 5;
           this->ret_ = this->in_ * 5;

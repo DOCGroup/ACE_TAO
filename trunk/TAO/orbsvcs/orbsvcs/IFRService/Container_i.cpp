@@ -9,7 +9,7 @@
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
-#include "tao/CDR.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -821,7 +821,24 @@ TAO_Container_i::create_constant_i (const char *id,
                                             type_path);
 
   // Store the value.
-  ACE_Message_Block *mb = value._tao_get_cdr ();
+  ACE_Message_Block *mb = 0;
+  TAO::Any_Impl *impl = value.impl ();
+  
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      mb = unk->_tao_get_cdr ().steal_contents ();
+    }
+  else
+    {
+      TAO_OutputCDR out;
+      impl->marshal_value (out);
+      TAO_InputCDR in (out);
+      mb = in.steal_contents ();
+    }
+
   CORBA::TypeCode_var val_tc = value.type ();
 
   CORBA::TCKind kind = val_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -2247,9 +2264,6 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
   CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_InputCDR cdr (value._tao_get_cdr (),
-                    value._tao_byte_order ());
-
   u_int result = 0;
   int default_label = 0;
 
@@ -2261,49 +2275,49 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     case CORBA::tk_char:
     {
       CORBA::Char x;
-      cdr.read_char (x);
+      value >>= CORBA::Any::to_char (x);
       result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_wchar:
     {
       CORBA::WChar x;
-      cdr.read_wchar (x);
+      value >>= CORBA::Any::to_wchar (x);
       result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_boolean:
     {
       CORBA::Boolean x;
-      cdr.read_boolean (x);
+      value >>= CORBA::Any::to_boolean (x);
       result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_short:
     {
       CORBA::Short x;
-      cdr.read_short (x);
+      value >>= x;
       result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_ushort:
     {
       CORBA::UShort x;
-      cdr.read_ushort (x);
+      value >>= x;
       result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_long:
     {
       CORBA::Long x;
-      cdr.read_long (x);
+      value >>= x;
       result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_ulong:
     {
       CORBA::ULong x;
-      cdr.read_ulong (x);
+      value >>= x;
       result = static_cast<u_int> (x);
       break;
     }
@@ -2311,7 +2325,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     case CORBA::tk_longlong:
     {
       CORBA::LongLong x;
-      cdr.read_longlong (x);
+      value >>= x;
       // We could lose data here.
       result = static_cast<u_int> (x);
       break;
@@ -2320,7 +2334,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     case CORBA::tk_ulonglong:
     {
       CORBA::ULongLong x;
-      cdr.read_ulonglong (x);
+      value >>= x;
       // We could lose data here.
       result = static_cast<u_int> (x);
       break;
@@ -2328,7 +2342,25 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     case CORBA::tk_enum:
     {
       CORBA::ULong x;
-      cdr.read_ulong (x);
+      TAO::Any_Impl *impl = value.impl ();
+      TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+      
+      if (impl->encoded ())
+        {
+          TAO::Unknown_IDL_Type *unk =
+            dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+            
+          in = unk->_tao_get_cdr ();
+        }
+      else
+        {
+          TAO_OutputCDR out;
+          impl->marshal_value (out);
+          TAO_InputCDR tmp (out);
+          in = tmp;
+        }
+       
+      in.read_ulong (x);  
       result = static_cast<u_int> (x);
       break;
     }

@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Any_Impl.h"
+#include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,34 +37,28 @@ namespace TAO
   {
   public:
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
-                      const ACE_Message_Block *mb = 0,
-                      int byte_order = TAO_ENCAP_BYTE_ORDER,
-                      ACE_Char_Codeset_Translator *ctrans = 0,
-                      ACE_WChar_Codeset_Translator *wtrans = 0);
+                      TAO_InputCDR &cdr);
+                  
+    Unknown_IDL_Type (CORBA::TypeCode_ptr);
+                      
     virtual ~Unknown_IDL_Type (void);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     virtual const void *value (void) const;
     virtual void free_value (void);
 
-    virtual ACE_Message_Block *_tao_get_cdr (void) const;
+    virtual TAO_InputCDR &_tao_get_cdr (void);
     virtual int _tao_byte_order (void) const;
 
     virtual void _tao_decode (TAO_InputCDR &
                               ACE_ENV_ARG_DECL);
-    virtual void assign_translator (CORBA::TypeCode_ptr,
-                                    TAO_InputCDR *
-                                    ACE_ENV_ARG_DECL);
 
     virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
     virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
     virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
 
   private:
-    ACE_Message_Block *cdr_;
-    int byte_order_;
-    ACE_Char_Codeset_Translator *char_translator_;
-    ACE_WChar_Codeset_Translator *wchar_translator_;
+    mutable TAO_InputCDR cdr_;
   };
 }
 
