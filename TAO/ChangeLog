@@ -1,3 +1,22 @@
+Fri Feb 25 12:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
+        * examples/Advanced/ch_3/Advanced_ch_3.mpc:
+        * docs/tutorials/Quoter/AMI/Quoter_AMI.mpc:
+        * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+        * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+        * docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+        * docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+        * docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+          Simplified these mpc files by using the correct base projects
+
 Fri Feb 25 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Root_POA.cpp:
