@@ -1,3 +1,15 @@
+Thu Oct 21 10:49:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          Modified generation of implied IDL for event consumer interfaces
+          to always inherit from EventConsumerBase regardless of
+          whether the associated eventtype is derived or not. This makes
+          sense not only from the implementer's point of view, but also
+          since it avoids a double chain of inheritance (eventtypes +
+          interfaces). Thanks to Gary Duzan <gduzan@bbn.com> for
+          reporting the bug.
+
 Thu Oct 21 08:37:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Server.cpp:
