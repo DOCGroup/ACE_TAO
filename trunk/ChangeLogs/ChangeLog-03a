@@ -1,152 +1,152 @@
 Mon Jan 10 12:50:10 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Select_Reactor_T.h (class ACE_Select_Reactor_T): Reformatted the
-	  documentation a bit...
+        * ace/Select_Reactor_T.h (class ACE_Select_Reactor_T): Reformatted the
+          documentation a bit...
 
 Mon Jan 10 15:37:22 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Pair_T: Added const accessors to the pair class.  Also,
-	  changed the Reference_Pair accessors to be const.  Thanks to
-	  Serge Kolgan <skolgan@cisco.com> for reporting this.
+        * ace/Pair_T: Added const accessors to the pair class.  Also,
+          changed the Reference_Pair accessors to be const.  Thanks to
+          Serge Kolgan <skolgan@cisco.com> for reporting this.
 
 Sun Jan  9 00:25:58 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process.i (setreugid): Added an ACE_UNUSED_ARG for the
-	  ACE_LACKS_PWD_FUNCTIONS case.  Thanks to David for catching
-	  this!
+        * ace/Process.i (setreugid): Added an ACE_UNUSED_ARG for the
+          ACE_LACKS_PWD_FUNCTIONS case.  Thanks to David for catching
+          this!
 
-	* ace/Process.i (setreugid): Guard against the case where
-	  ACE_LACKS_PWD_FUNCTIONS.  Thanks to David Levine for
-	  reporting this problem with VxWorks.
+        * ace/Process.i (setreugid): Guard against the case where
+          ACE_LACKS_PWD_FUNCTIONS.  Thanks to David Levine for
+          reporting this problem with VxWorks.
 
-	* ace/Pair_T.h: Reformatted to conform to the ACE style.
+        * ace/Pair_T.h: Reformatted to conform to the ACE style.
 
 Sat Jan  8 09:44:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Threads/thread_pool.cpp: Revised the example to
-	  illustrate the new "wait_for_threads_in_destructor" feature of
- 	  ACE_Task.
+        * examples/Threads/thread_pool.cpp: Revised the example to
+          illustrate the new "wait_for_threads_in_destructor" feature of
+          ACE_Task.
 
-	* examples/Threads/task_four.cpp: Reformatted the code.
+        * examples/Threads/task_four.cpp: Reformatted the code.
 
-	* ace/Task_T: Added a new flag to the constructor that enables
-	  applications to request that an ACE_Task will wait in its
- 	  destructor for any and all threads in the task to exit before
- 	  returning.  Thanks to Valery Arkhangorodsky
- 	  <valerya@servicesoft.com> for suggesting this.
+        * ace/Task_T: Added a new flag to the constructor that enables
+          applications to request that an ACE_Task will wait in its
+          destructor for any and all threads in the task to exit before
+          returning.  Thanks to Valery Arkhangorodsky
+          <valerya@servicesoft.com> for suggesting this.
 
-	* ace/OS.i: Needed to add an extern "C" {} block around the
-	  setregid() and setreuid() functions.  Thanks to David Levine
-	  for reporting this.
+        * ace/OS.i: Needed to add an extern "C" {} block around the
+          setregid() and setreuid() functions.  Thanks to David Levine
+          for reporting this.
 
 Fri Jan  7 20:01:48 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i,
-	  ace/config-sunos5.5.h: Some platforms seem to lack function
- 	  prototypes for setreuid() and setregid(), even though they are
- 	  in the library.  Therefore, I've added
+        * ace/OS.i,
+          ace/config-sunos5.5.h: Some platforms seem to lack function
+          prototypes for setreuid() and setregid(), even though they are
+          in the library.  Therefore, I've added
 
- 	  #define ACE_LACKS_SETREGID_PROTOTYPE
+          #define ACE_LACKS_SETREGID_PROTOTYPE
 
-	  and
+          and
 
-	  #define ACE_LACKS_SETREUID_PROTOTYPE
+          #define ACE_LACKS_SETREUID_PROTOTYPE
 
           macros to handle this case.
 
-	* ace/Process: Added support to allow UNIX applications to
-	  automagically set the real and effective user/group ids when
- 	  ACE_Process::spawn() is called.  Thanks to Craig Perras
- 	  <cperras@watchguard.com> for contributing this.
+        * ace/Process: Added support to allow UNIX applications to
+          automagically set the real and effective user/group ids when
+          ACE_Process::spawn() is called.  Thanks to Craig Perras
+          <cperras@watchguard.com> for contributing this.
 
-	* ace: Updated the following files to include
+        * ace: Updated the following files to include
 
           #define ACE_LACKS_SETREGID
-	  #define ACE_LACKS_SETREUID
+          #define ACE_LACKS_SETREUID
 
           config-chorus.h
-	  config-cray.h:168
-	  config-cygwin32-common.h
-	  config-freebsd-pthread.h
-	  config-freebsd.h:33
-	  config-hpux-9.x.h
-	  config-lynxos.h
-	  config-netbsd.h
-	  config-sunos4-g++.h
-	  config-sunos4-sun4.1.4.h
-	  config-win32-common.h
+          config-cray.h:168
+          config-cygwin32-common.h
+          config-freebsd-pthread.h
+          config-freebsd.h:33
+          config-hpux-9.x.h
+          config-lynxos.h
+          config-netbsd.h
+          config-sunos4-g++.h
+          config-sunos4-sun4.1.4.h
+          config-win32-common.h
 
           Ideally, Ossama's autoconf stuff will auto-detect anything that
- 	  I'm missing.
+          I'm missing.
 
-	* ace/OS: Added wrapper facade methods for setregid() and
-	  setregid().
+        * ace/OS: Added wrapper facade methods for setregid() and
+          setregid().
 
 Fri Jan  7 16:05:32 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Only define ACE_HAS_XT if both the Xt headers and libraries are
-	  available.  Previously, the existence of the Xt libraries was
-	  not part of the XtReactor enable criterion.
+          Only define ACE_HAS_XT if both the Xt headers and libraries are
+          available.  Previously, the existence of the Xt libraries was
+          not part of the XtReactor enable criterion.
 
-	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
 
-	  Added C++ preprocessor flag documentation and trivial support.
+          Added C++ preprocessor flag documentation and trivial support.
 
-	  Many AIX related compiler flag updates.
+          Many AIX related compiler flag updates.
 
-	* m4/platform.m4 (ACE_SET_PLATFORM_MACROS):
+        * m4/platform.m4 (ACE_SET_PLATFORM_MACROS):
 
-	  Moved/consolidated platform-specific settings from configure.in
-	  to here.
+          Moved/consolidated platform-specific settings from configure.in
+          to here.
 
-	  Improved AIX support (updates, fixes, etc).
+          Improved AIX support (updates, fixes, etc).
 
 Fri Jan  7 10:48:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/run_all_list.pm: Added missing commas.
+        * bin/run_all_list.pm: Added missing commas.
 
 Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (fcntl): There was a special fcntl() for Win32.
-	  Removed that special version and added ACE_LACKS_FCNTL to
-	  config-win32-common.h.
+        * ace/OS.i (fcntl): There was a special fcntl() for Win32.
+          Removed that special version and added ACE_LACKS_FCNTL to
+          config-win32-common.h.
 
-	* ace/ACE.cpp: Removed the non-"_n" versions of send/recv
-	  functions that deal with message blocks.  Since we deal with
-	  continuation chains and linked messages, we are essentially
-	  dealing with "_n" style functions.  Also, improved the error
-	  handling in case of timeouts.
+        * ace/ACE.cpp: Removed the non-"_n" versions of send/recv
+          functions that deal with message blocks.  Since we deal with
+          continuation chains and linked messages, we are essentially
+          dealing with "_n" style functions.  Also, improved the error
+          handling in case of timeouts.
 
-	* ace/Strategies_T.cpp
-	  (ACE_Cached_Connect_Strategy::connect_svc_handler): If an error
-	  occurs while activating the handler, the <activate_svc_handler>
-	  method will close the handler.  We must set the handler to zero
-	  to make sure that the higher layer doesn't try to close the
-	  handler again!
+        * ace/Strategies_T.cpp
+          (ACE_Cached_Connect_Strategy::connect_svc_handler): If an error
+          occurs while activating the handler, the <activate_svc_handler>
+          method will close the handler.  We must set the handler to zero
+          to make sure that the higher layer doesn't try to close the
+          handler again!
 
 Thu Jan  6 15:00:56 2000  Ossama Othman  <othman@cs.wustl.edu>
 
-	* aclocal.m4:
-	* configure:
-	* All Makefile.in:
+        * aclocal.m4:
+        * configure:
+        * All Makefile.in:
 
-	  Removed these files.  They are automatically generated, so they
-	  should not be in the repository.  Thanks to David for pointing
-	  out that my ACE+autoconf updates caused CVS conflicts when
-	  updating existing workspaces.
+          Removed these files.  They are automatically generated, so they
+          should not be in the repository.  Thanks to David for pointing
+          out that my ACE+autoconf updates caused CVS conflicts when
+          updating existing workspaces.
 
 Wed Jan  5 10:09:35 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Dirent.h: Added an ACE_Export on the ACE_Dirent class.  I'm
-	  surprised this hasn't been a problem before...  Thanks to
- 	  Dominic Williams <dom@connected-place.co.uk> for indirectly
- 	  motivating this change.
+        * ace/Dirent.h: Added an ACE_Export on the ACE_Dirent class.  I'm
+          surprised this hasn't been a problem before...  Thanks to
+          Dominic Williams <dom@connected-place.co.uk> for indirectly
+          motivating this change.
 
-	* ace/SString.h: Updated the documentation for the various string
-	  wrapper facades to clarify that they don't perform any locking.
-	  Thanks to Jerry Jiang <javalist@21cn.com> for motivating this.
+        * ace/SString.h: Updated the documentation for the various string
+          wrapper facades to clarify that they don't perform any locking.
+          Thanks to Jerry Jiang <javalist@21cn.com> for motivating this.
 
 Wed Jan 05 09:53:04 2000  David L. Levine  <levine@cs.wustl.edu>
 
