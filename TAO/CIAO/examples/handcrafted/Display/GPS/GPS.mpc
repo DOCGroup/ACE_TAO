@@ -1,5 +1,5 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay GPS"
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -c -i GPS"
 
 project(GPS_stub): ciao_client {
   depends += HUDisplay_stub
@@ -19,7 +19,7 @@ project(GPS_stub): ciao_client {
 project(GPS_svnt) : ciao_server {
   depends += HUDisplay_svnt GPS_stub
   sharedname  = GPS_svnt
-  libs    += GPS_stub HUDisplay_stub
+  libs    += GPS_stub HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=GPS_SVNT_Export -Wb,export_include=GPS_svnt_export.h
   dllflags = GPS_SVNT_BUILD_DLL
@@ -39,18 +39,32 @@ project(GPS_svnt) : ciao_server {
 project(GPS_exec) : ciao_server {
   depends   += GPS_svnt
   sharedname = GPS_exec
-  libs      += GPS_stub HUDisplay_stub GPS_svnt
+  libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
   dllflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {
+    GPSEI.idl
   }
 
   Source_Files {
+    GPSEIC.cpp
     GPS_exec.cpp
   }
 }
 
 
+
+project (GPS_client) : ciao_client {
+  exename = client
+  depends += GPS_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}
 

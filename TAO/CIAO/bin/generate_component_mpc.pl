@@ -12,12 +12,13 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-if (!getopts ('dcnp:l:h') || $opt_h) {
+if (!getopts ('dcnip:l:h') || $opt_h) {
     print "generate_component_mpc.pl [-d] [-h] component_name\n";
     print "\n";
     print "    -d         Turn on debug mode\n";
     print "    -p         Dependent component name\n";
     print "    -l         Dependent component path\n";
+    print "    -i         Use an executor definition IDL file\n";
     print "    -n         Supress component make/project\n";
     print "    -c         Create a client makefile\n";
     print "\n";
@@ -49,7 +50,7 @@ $UCOM_NAME = uc $com_name;
 if (defined $opt_p) {
     $stub_depend = "depends += $opt_p".'_stub';
     $svnt_depend = "$opt_p".'_svnt';
-    $lib_depend = "$opt_p".'_stub';
+    $lib_depend = "$opt_p".'_stub '."$opt_p".'_svnt';
 }
 
 if (defined $opt_l) {
@@ -59,7 +60,7 @@ if (defined $opt_l) {
 if (defined $opt_c) {
     $client_def =
 '
-project (client) : ciao_client {
+project ('."$com_name".'_client) : ciao_client {
   exename = client
   depends += '."$com_name".'_stub
 
@@ -73,22 +74,30 @@ project (client) : ciao_client {
 ';
 }
 
+if (defined $opt_i) {
+    $exec_impl_idl = "$com_name".'EI.idl';
+    $exec_impl_cpp = "$com_name".'EIC.cpp';
+}
+
+
 if (! defined $opt_n) {
     $component_def =
 '
 project('."$com_name".'_exec) : ciao_server {
   depends   += '."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
-  libs      += '."$com_name".'_stub '."$lib_depend $com_name".'_svnt'."
+  libs      += '."$com_name".'_stub '."$com_name".'_svnt'." $lib_depend
   $lib_paths".'
   idlflags  +=  -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export -Wb,export_include='."$com_name".'_exec_export.h
   dllflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
 
-  IDL_Files {
+  IDL_Files {'."
+    $exec_impl_idl".'
   }
 
-  Source_Files {
-    '."$com_name".'_exec.cpp
+  Source_Files {'."
+    $exec_impl_cpp
+    $com_name".'_exec.cpp
   }
 }
 ';

@@ -1,15 +1,15 @@
 // $Id$
 
 /**
- * @file RateGen_Impl.idl
+ * @file RateGenEI.idl
  *
  * Definition of the RateGen (a rate generator) component implementation.
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
-#ifndef RATEGEN_IMPL_IDL
-#define RATEGEN_IMPL_IDL
+#ifndef RATEGENEI_IDL
+#define RATEGENEI_IDL
 
 #include "RateGenE.idl"
 
@@ -28,4 +28,4 @@ module HUDisplay
 
 };
 
-#endif /* RATEGEN_IMPL_IDL */
+#endif /* RATEGENEI_IDL */

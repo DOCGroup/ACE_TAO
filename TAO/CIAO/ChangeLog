@@ -1,3 +1,39 @@
+Fri Mar 21 15:51:57 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/new_components.html: Revised naming convention for
+	  user-defined component executor impl IDL.
+
+	* bin/generate_component_mpc.pl: Added an option for adding
+	  user-defined component executor impl IDL automatically,
+	  according the the naming convention.  Fixed the dependencies to
+	  "dependent" libraries.
+
+	* examples/handcrafted/Display/RateGen/RateGen.csd:
+	* examples/handcrafted/Display/RateGen/RateGen.ssd: Simplified the
+	  XML descriptors.
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Display/RateGen/RateGenEI.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h: Fixed
+	  dependencies and naming convention.
+
+	* examples/handcrafted/Display/GPS/GPS.csd:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/GPS/GPS.ssd:
+	* examples/handcrafted/Display/GPS/GPSEI.idl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.csd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.ssd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplayEI.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.h:
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini: Added
+	  component implementaions for GPS and NavDisplay.
+
 Thu Mar 20 21:50:07 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/ComponentInstallation_Impl.cpp: Added a more comprehensive

@@ -1,5 +1,5 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay RateGen"
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i -c RateGen"
 
 project(RateGen_stub): ciao_client {
   depends += HUDisplay_stub
@@ -45,14 +45,16 @@ project(RateGen_exec) : ciao_server {
   dllflags   = RATEGEN_EXEC_BUILD_DLL
 
   IDL_Files {
-    RateGen_Impl.idl
+    RateGenEI.idl
   }
 
   Source_Files {
-    RateGen_ImplC.cpp
+    RateGenEIC.cpp
     RateGen_exec.cpp
   }
 }
+
+
 
 project (RateGen_client) : ciao_client {
   exename = client
@@ -65,3 +67,4 @@ project (RateGen_client) : ciao_client {
     client.cpp
   }
 }
+
