@@ -1,7 +1,7 @@
 Tue Feb 24 00:41:48 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Added TITLE,
-	DESCRIPTION for all the classes
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Added TITLE,
+          DESCRIPTION for all the classes
 
 Mon Feb 23 22:40:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -18,7 +18,7 @@ Mon Feb 23 22:40:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Feb 23 22:13:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
-	* TAO version 0.1.5, released Mon Feb 23 22:13:14 1998.
+        * TAO version 0.1.5, released Mon Feb 23 22:13:14 1998.
 
 Mon Feb 23 21:30:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -31,26 +31,26 @@ Mon Feb 23 21:30:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Feb 23 20:45:03 1998  Michael Kircher  <mk1@cec.wustl.edu>
 
-	* orbsvcs/tests/Simulator/Sim_Display: Fixed some small
-     	bugs concerning the representation
+        * orbsvcs/tests/Simulator/Sim_Display: Fixed some small
+        bugs concerning the representation
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
-	Changed the rate on which events are supplied
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+        Changed the rate on which events are supplied
 
 
 Mon Feb 23 18:51:03 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (main): Set the handle
- 	limit to the maximum.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (main): Set the handle
+        limit to the maximum.
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp (initialize_orb): Fixed a
- 	warning from compiler.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (initialize_orb): Fixed a
+        warning from compiler.
 
 Mon Feb 23 17:33:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile:
-	  We don't generate the compiler as a single executable, without
-	  multiple shared libraries.
+        * TAO_IDL/Makefile:
+          We don't generate the compiler as a single executable, without
+          multiple shared libraries.
 
 Mon Feb 23 16:55:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -63,18 +63,18 @@ Mon Feb 23 16:55:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Feb 23 12:25:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
-	* orbsvcs/orbsvcs/Event/Memory_Pools.i:
-	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
- 	  We cannot use TSS memory pools: in some cases the memory is
-	  allocated in one thread and disposed in another. Until we can
-	  clean out that behavior I'm using a singleton.
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.i:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+          We cannot use TSS memory pools: in some cases the memory is
+          allocated in one thread and disposed in another. Until we can
+          clean out that behavior I'm using a singleton.
 
 Mon Feb 23 11:57:16 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/ : Changed the names EXT_ID and INT_ID
-	that I used for Hash_Table operations to less generic
-	CosProperty_Hash_Key and CosProperty_Hash_Value respectively.
+        * orbsvcs/orbsvcs/Property/ : Changed the names EXT_ID and INT_ID
+        that I used for Hash_Table operations to less generic
+        CosProperty_Hash_Key and CosProperty_Hash_Value respectively.
 
 Mon Feb 23 11:40:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -119,44 +119,44 @@ Mon Feb 23 11:40:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Feb 23 10:58:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/Fast_Reactor.h:
-	* orbsvcs/orbsvcs/Event/GPlot_File.h:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
-	* orbsvcs/orbsvcs/Sched/DynSched.h:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.h:
-	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
-	* Added more TAO_ORBSVCS_Export macros, this time in files that
-	  are not compiled all the time.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Fast_Reactor.h:
+        * orbsvcs/orbsvcs/Event/GPlot_File.h:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.h:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
+        * Added more TAO_ORBSVCS_Export macros, this time in files that
+          are not compiled all the time.
 
 Sun Feb 22 22:14:08 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
-	* tao/giop.cpp (invoke): Created my own temporary variable in
- 	order to de-warn on g++ and Sun CC.
+        * tao/giop.cpp (invoke): Created my own temporary variable in
+        order to de-warn on g++ and Sun CC.
 
 Sun Feb 22 20:12:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs/orbsvcs.dsp: Adapted chages to the directory
-	  rearrangement.
+        * orbsvcs/orbsvcs/orbsvcs/orbsvcs.dsp: Adapted chages to the directory
+          rearrangement.
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.h:
-	* orbsvcs/orbsvcs/Scheduler_Utilities.h:
-	* orbsvcs/orbsvcs/Event/BCU.h:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
-	* orbsvcs/orbsvcs/Event/RT_Task.h:
-	* orbsvcs/orbsvcs/Event/ReactorTask.h:
-	* orbsvcs/orbsvcs/Event/Task_Manager.h:
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.h:
-	* orbsvcs/orbsvcs/Naming/Entries.h:
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
-	* orbsvcs/orbsvcs/Sched/Scheduler.h:
-	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.h: Added
-	  TAO_ORBSVCS_Export flags.
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/orbsvcs/Scheduler_Utilities.h:
+        * orbsvcs/orbsvcs/Event/BCU.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
+        * orbsvcs/orbsvcs/Event/ReactorTask.h:
+        * orbsvcs/orbsvcs/Event/Task_Manager.h:
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.h:
+        * orbsvcs/orbsvcs/Naming/Entries.h:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.h: Added
+          TAO_ORBSVCS_Export flags.
 
 Sat Feb 21 08:08:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -182,42 +182,42 @@ Sat Feb 21 08:08:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Feb 21 00:31:20 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
-	* tao/connect.* (send_request): Modified to take an extra arg
- 	which specifies whether or not the request is a twoway, i.e.,
- 	whether or not it should enter a sub-event loop looking for a
- 	reply.
+        * tao/connect.* (send_request): Modified to take an extra arg
+        which specifies whether or not the request is a twoway, i.e.,
+        whether or not it should enter a sub-event loop looking for a
+        reply.
 
-	* tao/giop.cpp (invoke): Changed to match signature of
- 	send_request.
+        * tao/giop.cpp (invoke): Changed to match signature of
+        send_request.
 
-	* tests/NestedUpcall/Reactor.idl: Added a oneway method to test
- 	nested upcalls with oneways.
+        * tests/NestedUpcall/Reactor.idl: Added a oneway method to test
+        nested upcalls with oneways.
 
-	* tests/NestedUpcall/reactor_i.*: Added the oneway implementation.
+        * tests/NestedUpcall/reactor_i.*: Added the oneway implementation.
 
-	* tests/NestedUpcall/client.cpp: Made oneway invocation to test a
- 	problem that the nested upcall allowing ORB exhibited.  Thanks to
- 	Carlos for reporting this!
+        * tests/NestedUpcall/client.cpp: Made oneway invocation to test a
+        problem that the nested upcall allowing ORB exhibited.  Thanks to
+        Carlos for reporting this!
 
 Fri Feb 20 14:40:28 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
-	* tao/connect.*: Extended TAO_Client_Connection_Handler to be run
- 	a sub-event loop while sending a request in order to handle nested
- 	upcalls.  A really cool side-effect of this is that if your
- 	application start out being a client but has servants too, it's
- 	really easy to get that up and running.  An example of this is
- 	shown in the new test, NestedUpcall.
+        * tao/connect.*: Extended TAO_Client_Connection_Handler to be run
+        a sub-event loop while sending a request in order to handle nested
+        upcalls.  A really cool side-effect of this is that if your
+        application start out being a client but has servants too, it's
+        really easy to get that up and running.  An example of this is
+        shown in the new test, NestedUpcall.
 
-	* tao/giop.cpp (invoke): Changed to call send_request on the
- 	client connection handler rather than TAO_GIOP.  This new
- 	send_request will handle nested upcalls (see above).
+        * tao/giop.cpp (invoke): Changed to call send_request on the
+        client connection handler rather than TAO_GIOP.  This new
+        send_request will handle nested upcalls (see above).
 
-	* tao/giop.* (send_request): Changed signature so that the
- 	TAO_SVC_HANDLER* wasn't passed by reference.  This was totally
- 	unnecessary.
+        * tao/giop.* (send_request): Changed signature so that the
+        TAO_SVC_HANDLER* wasn't passed by reference.  This was totally
+        unnecessary.
 
-	* tao/{iioporb,orbobj}.* (string_to_object): Removed unnecessary
- 	'const' preceding CORBA::String.
+        * tao/{iioporb,orbobj}.* (string_to_object): Removed unnecessary
+        'const' preceding CORBA::String.
 
 Fri Feb 20 08:29:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -233,12 +233,12 @@ Fri Feb 20 08:29:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Feb 19 12:54:50 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
-	(create_initial_propertysetdef):  Assigned dummy return values in
-	order to avoid Warnings.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+        (create_initial_propertysetdef):  Assigned dummy return values in
+        order to avoid Warnings.
 
-	* orbsvcs/orbsvcs/Property/CosProeprtyService.idl file removed
-	from here. It is supposed to be there in ./..
+        * orbsvcs/orbsvcs/Property/CosProeprtyService.idl file removed
+        from here. It is supposed to be there in ./..
 
 Thu Feb 19 12:49:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -254,164 +254,164 @@ Thu Feb 19 12:49:49 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/tao_util.cpp (orb): added .in () dereference to orb_ argument.
 
 Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
-	* orbsvcs/test/Simulator: Set the file permissions right.
+        * orbsvcs/test/Simulator: Set the file permissions right.
 
 Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
-	* orbsvcs/test/Simulator:
-	  Intruduced new demo, using the Event Service as transport
-	  media for monitoring events.
-	  See orbsvcs/test/Simulator/README for more information
+        * orbsvcs/test/Simulator:
+          Intruduced new demo, using the Event Service as transport
+          media for monitoring events.
+          See orbsvcs/test/Simulator/README for more information
 
           in orbsvcs/tests/Simulator:
-	     NavWeap.idl - IDL definition of the Navigation and Weapons struct
-	     ss - restart services script
+             NavWeap.idl - IDL definition of the Navigation and Weapons struct
+             ss - restart services script
 
-	  in orbsvcs/tests/Simulator/Event_Supplier:
-	     Event_Sup.cpp - Event Supplier
-	     Event_Sup.h   - Event Supplier class definition
-	     Makefile      - Event Supplier Makefile
-	     (Event_Con.cpp, Event_Con.h - Event Consumer for testing)
-	     svc.conf - helper file
+          in orbsvcs/tests/Simulator/Event_Supplier:
+             Event_Sup.cpp - Event Supplier
+             Event_Sup.h   - Event Supplier class definition
+             Makefile      - Event Supplier Makefile
+             (Event_Con.cpp, Event_Con.h - Event Consumer for testing)
+             svc.conf - helper file
 
-	  in orbsvcs/tests/Simulator/Sim_Display:
-	    Display.java  - Simulation
-	    Display_Client.java - Main Entry point of the Simulation
-	    Display_Consumer.java - Event Consumer
-	    Display_Object.java - Interface for an Display_Object
-	    Display_Weapons.java - Implementation of an Display_Object
-	    Display_Art_Horizon.java - Implementation of an Display_Object
-	    Display_Object_Factory.java - Factory Object for Display_Objects
-	    Graph.java - Simulation
-	    Graph_Panel.java - Simulation
-	    NS_Resolve.java - Resolving the inital reference to the Naming Service
-	    Queue.java - Simulation
-	    Sim_Panel.java - Simulation
-	    Border_Panel.java - Simulation
+          in orbsvcs/tests/Simulator/Sim_Display:
+            Display.java  - Simulation
+            Display_Client.java - Main Entry point of the Simulation
+            Display_Consumer.java - Event Consumer
+            Display_Object.java - Interface for an Display_Object
+            Display_Weapons.java - Implementation of an Display_Object
+            Display_Art_Horizon.java - Implementation of an Display_Object
+            Display_Object_Factory.java - Factory Object for Display_Objects
+            Graph.java - Simulation
+            Graph_Panel.java - Simulation
+            NS_Resolve.java - Resolving the inital reference to the Naming Service
+            Queue.java - Simulation
+            Sim_Panel.java - Simulation
+            Border_Panel.java - Simulation
 
 
 Wed Feb 18 22:15:06 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* tao/tao_util.cpp,h: Updated class to include a constructor so
-	user can supply his own orb, poa or manager.
+        * tao/tao_util.cpp,h: Updated class to include a constructor so
+        user can supply his own orb, poa or manager.
 
 Wed Feb 18 21:40:24 1998    <coryan@MILONGA>
 
-	* docs/orbsvcs.html:
-	  Updated the description of orbsvcs directory hierarchy.
+        * docs/orbsvcs.html:
+          Updated the description of orbsvcs directory hierarchy.
 
 Wed Feb 18 19:45:57 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* Added the idl file for the CosPropertyService , i.e.
-	orbsvcs/orbsvcs/Property/CosPropertyService.idl
+        * Added the idl file for the CosPropertyService , i.e.
+        orbsvcs/orbsvcs/Property/CosPropertyService.idl
 
 Wed Feb 18 17:56:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs:
-	  Moved all the implementations to the orbsvcs libraries, this is
-	  the first step to give the user control over object
-	  collocation.
-	  Please note that this version is only known to compile on
-	  Solaris/CC, it will *not* compile on NT (some "export" macros
-	  are missing); since this change is very disruptive (because it
-	  moves files around) it was thought that holding it for a long
-	  time will result in more harm than good.
-	  A top-level make on $TAO_ROOT/orbsvcs works OK.
+        * orbsvcs:
+          Moved all the implementations to the orbsvcs libraries, this is
+          the first step to give the user control over object
+          collocation.
+          Please note that this version is only known to compile on
+          Solaris/CC, it will *not* compile on NT (some "export" macros
+          are missing); since this change is very disruptive (because it
+          moves files around) it was thought that holding it for a long
+          time will result in more harm than good.
+          A top-level make on $TAO_ROOT/orbsvcs works OK.
 
 Wed Feb 18 17:10:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* tao/tao_util.cpp (init): The ORB_Manager class does not create
-	it's own POA, but uses the default root POA instead.
+        * tao/tao_util.cpp (init): The ORB_Manager class does not create
+        it's own POA, but uses the default root POA instead.
 
 Wed Feb 18 16:02:34 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* Commented and indented the follwing files in orbsvcs/orbsvcs/
-	  CosPropertyService.idl
-	  CosPropertyService_i.h
-	  CosPropertyService_i.cpp
+        * Commented and indented the follwing files in orbsvcs/orbsvcs/
+          CosPropertyService.idl
+          CosPropertyService_i.h
+          CosPropertyService_i.cpp
 
 Wed Feb 18 12:28:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Thruput/TAO/tmplinst.cpp:
-	  The templates should be instantiated over the CORBA:: typedefs,
-	  otherwise they fail in weird platforms.
+        * tests/Thruput/TAO/tmplinst.cpp:
+          The templates should be instantiated over the CORBA:: typedefs,
+          otherwise they fail in weird platforms.
 
 Wed Feb 18 11:57:24 1998  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile (LDLIBS): Removed -lposix4
- 	from the LDLIBS.  Thanks to Bob Olson <olson@mcs.anl.gov> for
- 	reporting this.
+        * tests/Cubit/TAO/MT_Cubit/Makefile (LDLIBS): Removed -lposix4
+        from the LDLIBS.  Thanks to Bob Olson <olson@mcs.anl.gov> for
+        reporting this.
 
 Wed Feb 18 02:58:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (IOR_Multicast): Make
-	  sure that response_addr_ is properly initialized before it is
-	  used to initialize response_, which is an ACE_SOCK_Dgram.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (IOR_Multicast): Make
+          sure that response_addr_ is properly initialized before it is
+          used to initialize response_, which is an ACE_SOCK_Dgram.
 
 Tue Feb 17 20:20:35 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/giop.cpp: Removed an extra explicit template instantiation
- 	  of TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>.  Thanks to
- 	  Ben Eng <ben@jetpen.com> for reporting this!
+        * tao/giop.cpp: Removed an extra explicit template instantiation
+          of TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>.  Thanks to
+          Ben Eng <ben@jetpen.com> for reporting this!
 
-	* tests/Thruput/TAO/Makefile: Removed the "clean" macro since it
- 	  was conflicting with the TAO default.
+        * tests/Thruput/TAO/Makefile: Removed the "clean" macro since it
+          was conflicting with the TAO default.
 
 Tue Feb 17 21:47:41 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (shutdown): Renamed please_exit
-	method to shutdown.
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (shutdown): Renamed please_exit
+        method to shutdown.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: Renamed please_exit operation to
-	shutdown.
+        * tests/Cubit/TAO/IDL_Cubit/cubit.idl: Renamed please_exit operation to
+        shutdown.
 
 Tue Feb 17 17:22:47 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* TAO version 0.1.4, released Tue Feb 17 17:22:47 1998.
+        * TAO version 0.1.4, released Tue Feb 17 17:22:47 1998.
 
 Tue Feb 17 16:50:20 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tao/orbobj.cpp (open): Modified so that if it's been called
- 	multiple times it returns '1' rather than '-1', thus not appearing
- 	to calling code as an error.
+        * tao/orbobj.cpp (open): Modified so that if it's been called
+        multiple times it returns '1' rather than '-1', thus not appearing
+        to calling code as an error.
 
 Tue Feb 17 16:05:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Chris G. updated the file list of
-	  this project.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Chris G. updated the file list of
+          this project.
 
-	* orbsvcs/orbsvcs/Time_Utilities.h:
-	* orbsvcs/orbsvcs/Event_Utilities.h: Added MS keayword,
-	  TAO_ORBSVCS_Export.
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.h: Added MS keayword,
+          TAO_ORBSVCS_Export.
 
-	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/server.dsp: Updated project setting to
-	  take the advantage of TAO naming service.
+        * tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/server.dsp: Updated project setting to
+          take the advantage of TAO naming service.
 
-	* orbsvcs/tests/Event_Latency/Event_Latency.dsp: Updated project
-	  setting to use DLL version of orbsvcs.
+        * orbsvcs/tests/Event_Latency/Event_Latency.dsp: Updated project
+          setting to use DLL version of orbsvcs.
 
 Tue Feb 17 15:39:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h::
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.h:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.h: Made a bunch of changes to
- 	correctly support the POA.  In addition, MT_Cubit now uses the
- 	Name Service to bind the Cubit objects.  In case the Name Service
- 	doesn't exist, there is still the "cut&paste" ior method that uses
- 	a cubit factory to give the client a reference to the cubit
- 	objects.
+        * tests/Cubit/TAO/MT_Cubit/Makefile:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h::
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit.idl:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.h: Made a bunch of changes to
+        correctly support the POA.  In addition, MT_Cubit now uses the
+        Name Service to bind the Cubit objects.  In case the Name Service
+        doesn't exist, there is still the "cut&paste" ior method that uses
+        a cubit factory to give the client a reference to the cubit
+        objects.
 
 Tue Feb 17 13:25:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Added instructions on using the CPP_LOCATION
-	  environment variable in NT's section.  You can also use it on
-	  UNIX but NT is the only platform which depends on it.
+        * TAO-INSTALL.html: Added instructions on using the CPP_LOCATION
+          environment variable in NT's section.  You can also use it on
+          UNIX but NT is the only platform which depends on it.
 
 Tue Feb 17 11:30:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -429,114 +429,114 @@ Tue Feb 17 11:30:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Feb 17 10:43:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosTimeBase.idl:
-	* orbsvcs/orbsvcs/Time_Utilities.cpp:
-	* orbsvcs/orbsvcs/Time_Utilities.h:
-	* orbsvcs/orbsvcs/Time_Utilities.i:
-	  Added the standard CORBA types for time, also added some helper
-	  routines to convert between BasicTime::TimeT and the common
-	  representations of time in ACE (ACE_Time_Value and ACE_hrtime_t)
+        * orbsvcs/orbsvcs/CosTimeBase.idl:
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.i:
+          Added the standard CORBA types for time, also added some helper
+          routines to convert between BasicTime::TimeT and the common
+          representations of time in ACE (ACE_Time_Value and ACE_hrtime_t)
 
-	* orbsvcs/orbsvcs/RtecEventComm.idl:
-	* orbsvcs/orbsvcs/RtecScheduler.idl:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	* orbsvcs/Event_Service/ReactorTask.cpp:
-	* orbsvcs/Event_Service/Task_Manager.cpp:
-	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
-	* orbsvcs/Scheduling_Service/Config_Scheduler.h:
-	* orbsvcs/Scheduling_Service/Scheduler.cpp:
-	* orbsvcs/orbsvcs/Channel_Clients_T.i:
-	* orbsvcs/orbsvcs/Event_Service_Constants.h:
-	* orbsvcs/orbsvcs/Event_Utilities.i:
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Runtime_Scheduler.h:
-	* orbsvcs/Event_Service/Dispatching_Modules.cpp:
-	* orbsvcs/Event_Service/Event_Channel.cpp:
-	  Adapted all the code to use the new time structures.
+        * orbsvcs/orbsvcs/RtecEventComm.idl:
+        * orbsvcs/orbsvcs/RtecScheduler.idl:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * orbsvcs/Event_Service/ReactorTask.cpp:
+        * orbsvcs/Event_Service/Task_Manager.cpp:
+        * orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
+        * orbsvcs/Scheduling_Service/Config_Scheduler.h:
+        * orbsvcs/Scheduling_Service/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Channel_Clients_T.i:
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/Event_Service/Dispatching_Modules.cpp:
+        * orbsvcs/Event_Service/Event_Channel.cpp:
+          Adapted all the code to use the new time structures.
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/tests/EC_Multiple/Makefile:
-	* orbsvcs/tests/Event_Latency/Makefile:
-	* orbsvcs/tests/Logger/Makefile:
-	* orbsvcs/tests/Simple_Naming/Makefile:
-	* orbsvcs/Event_Service/Makefile:
-	* orbsvcs/Naming_Service/Makefile:
-	* orbsvcs/Scheduling_Service/Makefile:
-	* orbsvcs/Dump_Schedule/Makefile:
-	  Updated dependencies.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+        * orbsvcs/tests/Logger/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+          Updated dependencies.
 
-	* docs/releasenotes/ec.html:
-	  Updated documentation for this release.
+        * docs/releasenotes/ec.html:
+          Updated documentation for this release.
 
 Tue Feb 17 07:40:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/any.cpp: Added a "return *this" to operator= to stop certain
- 	  compilers from complaining.  Thanks to Andy for fixing this.
+        * tao/any.cpp: Added a "return *this" to operator= to stop certain
+          compilers from complaining.  Thanks to Andy for fixing this.
 
 Tue Feb 17 04:08:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Setting the
-	  CPP_PATH has been causing a lot of nasty trouble on NT.  I
-	  changed this function to allow overwriting the internal c++
-	  compiler location at run time using $CPP_LOCATION.  If someone
-	  forgets to set the CPP_PATH when compiling tao_idl, one can
-	  make tao_idl work by defining this environment variable to
-	  something like:
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Setting the
+          CPP_PATH has been causing a lot of nasty trouble on NT.  I
+          changed this function to allow overwriting the internal c++
+          compiler location at run time using $CPP_LOCATION.  If someone
+          forgets to set the CPP_PATH when compiling tao_idl, one can
+          make tao_idl work by defining this environment variable to
+          something like:
 
-	     set CPP_LOCATION="C:/Program Files/DevStudio/VC/BIN/CL.exe"
+             set CPP_LOCATION="C:/Program Files/DevStudio/VC/BIN/CL.exe"
 
-	  Notice that CPP_LOCATION _must_ be a full pathname of the c++
-	  compiler.
+          Notice that CPP_LOCATION _must_ be a full pathname of the c++
+          compiler.
 
 Tue Feb 17 00:56:08 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/CosPropertyService/main.cpp (main): Added some
-	more testing for Any in and out of Hash Table.
+        * orbsvcs/tests/CosPropertyService/main.cpp (main): Added some
+        more testing for Any in and out of Hash Table.
 
 Mon Feb 16 18:01:23 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* TAO version 0.1.3, released Mon Feb 16 18:01:23 1998.
+        * TAO version 0.1.3, released Mon Feb 16 18:01:23 1998.
 
 Mon Feb 16 18:00:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* release.pl: Changed C++ comment leaders to Perl comment leaders.
+        * release.pl: Changed C++ comment leaders to Perl comment leaders.
 
 Mon Feb 16 17:51:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -s option to use the
-	NamingService. Default doesn't use NamingService.
+        * tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -s option to use the
+        NamingService. Default doesn't use NamingService.
 
 Mon Feb 16 17:38:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tao/iioporb.cpp: Made sure to count separators when allocating
- 	space for the IOR.  This corrected ABW errors in purify.
+        * tao/iioporb.cpp: Made sure to count separators when allocating
+        space for the IOR.  This corrected ABW errors in purify.
 
-	* tao/connect.cpp: Explicitly set the buffer when being purified
- 	to avoid complaints.
+        * tao/connect.cpp: Explicitly set the buffer when being purified
+        to avoid complaints.
 
 Mon Feb 16 17:22:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: Changed LDFLAGS to link orbsvcs
-	library.Now uses the Naming service.
+        * tests/Cubit/TAO/IDL_Cubit/Makefile: Changed LDFLAGS to link orbsvcs
+        library.Now uses the Naming service.
 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: Added code to register
-	IDL_Cubit/cubit_factory name with the naming service.
+        * tests/Cubit/TAO/IDL_Cubit/svr.cpp: Added code to register
+        IDL_Cubit/cubit_factory name with the naming service.
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Added a -s flag to use the
-	NamingService to resolve the cubit_factory flag. It still has the
-	commandline IOR and -f ior_file options.
+        * tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Added a -s flag to use the
+        NamingService to resolve the cubit_factory flag. It still has the
+        commandline IOR and -f ior_file options.
 
 Mon Feb 16 13:29:31 1998  Brian Mendel <brian.r.mendel@boeing.com>
 
-	* tao/poa.cpp: Added SCE_HAS_TEMPLATE_TYPEDEFS_CHAR guards
+        * tao/poa.cpp: Added SCE_HAS_TEMPLATE_TYPEDEFS_CHAR guards
            around ACE_OS:strlen calls for WChar(s).
         * tao/default.bld, tao.bld: Update VxWorks GHS Build files.
 
 Mon Feb 16 12:24:04 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.h (needed.): Added missing member
- 	variable.  Things now compile.
+        * tests/Cubit/TAO/IDL_Cubit/clnt.h (needed.): Added missing member
+        variable.  Things now compile.
 
 Mon Feb 16 10:18:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -573,24 +573,24 @@ Mon Feb 16 10:14:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Feb 16 02:34:24 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosPropertyService_i.cpp: Defined some of the
-	functions for the TAO_PropertySet class.
+        * orbsvcs/orbsvcs/CosPropertyService_i.cpp: Defined some of the
+        functions for the TAO_PropertySet class.
 
-	* orbsvcs/orbsvcs/CosPropertyService_i.h: Defined the  classes for
-	implementing the CosPropertyService for TAO.
+        * orbsvcs/orbsvcs/CosPropertyService_i.h: Defined the  classes for
+        implementing the CosPropertyService for TAO.
 
-	* orbsvcs/tests/CosPropertyService/Makefile:  Added this
-	Makefile ( Makefile for making test program for the
-	PropertyService )
+        * orbsvcs/tests/CosPropertyService/Makefile:  Added this
+        Makefile ( Makefile for making test program for the
+        PropertyService )
 
-	* orbsvcs/orbsvcs/CosProperty_Hash.cpp:  Added this file.
+        * orbsvcs/orbsvcs/CosProperty_Hash.cpp:  Added this file.
 
-	* orbsvcs/orbsvcs/CosProperty_Hash.h (Table): Added this
-	file. This contains  the classes for maintaining Hash Table for
-	storing the PropertySets.
+        * orbsvcs/orbsvcs/CosProperty_Hash.h (Table): Added this
+        file. This contains  the classes for maintaining Hash Table for
+        storing the PropertySets.
 
-	* orbsvcs/tests/CosPropertyService/main.cpp (main): Added this
-	test file for CosPropertyService
+        * orbsvcs/tests/CosPropertyService/main.cpp (main): Added this
+        test file for CosPropertyService
 
 
 Sun Feb 15 20:12:00 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
