@@ -1844,7 +1844,7 @@ typedef pthread_t ACE_thread_t;
 
 #     if defined (ACE_HAS_TSS_EMULATION)
 typedef pthread_key_t ACE_OS_thread_key_t;
-typedef u_int ACE_thread_key_t;
+typedef u_long ACE_thread_key_t;
 #else
 typedef pthread_key_t ACE_thread_key_t;
 #     endif /* ACE_HAS_PTHREAD_T */
