@@ -1,3 +1,8 @@
+Sun Sep 17 17:04:22 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/ace_flags.bor:
+          Add support for the IORTable library under Borland C++
+
 Sat Sep 16 16:11:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/CDR_Array_Test.cpp:
