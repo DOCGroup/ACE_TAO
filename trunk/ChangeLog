@@ -1,77 +1,83 @@
+Thu Mar 18 08:59:40 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Removed an extraneous dash in the install target.
+
 Wed Mar 17 21:00:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Global_Macros.h:
-	* ace/config-aix-4.x.h:
-	* ace/config-g++-common.h:
-	* ace/config-win32-visualage.h:	
-	  
-	  Added a new #define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
-	  and enabled this feature only on the above platforms. With g++,
-	  it is supported with g++ 3.4. This #define is used by
-	  ACE_DES_FREE_TEMPLATE3 declarations in Global_Macros.h. Thanks
-	  to Oliver Kellog for providing the patches. 
-	
-	* ace/Task.h (activate):
-	* ace/Thread_Manager.h (spawn):
-	* ace/Timer_Queue_Adapters.h (activate):
+        * ace/Global_Macros.h:
+        * ace/config-aix-4.x.h:
+        * ace/config-g++-common.h:
+        * ace/config-win32-visualage.h:
 
-	  The last argument <inherit_priority> is now set to true as
- 	  default. This will get the behavior that C++ NPV1 and NPV2
- 	  prescribes. Thanks to Dr. Schmidt and Abhijit Sachdev for
- 	  motivating this.
-    
+          Added a new #define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
+          and enabled this feature only on the above platforms. With g++,
+          it is supported with g++ 3.4. This #define is used by
+          ACE_DES_FREE_TEMPLATE3 declarations in Global_Macros.h. Thanks
+          to Oliver Kellog for providing the patches.
+
+        * ace/Task.h (activate):
+        * ace/Thread_Manager.h (spawn):
+        * ace/Timer_Queue_Adapters.h (activate):
+
+          The last argument <inherit_priority> is now set to true as
+          default. This will get the behavior that C++ NPV1 and NPV2
+          prescribes. Thanks to Dr. Schmidt and Abhijit Sachdev for
+          motivating this.
+
 Wed Mar 17 17:55:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Proactor.cpp (ctor): Change the default proactor implementation
-	  to favor CB, then SIG, then AIOCB. The CB proactor works best on
-	  many platforms, avoiding multithread issues with aio_suspend() on
-	  most platforms other than HP-UX, and avoiding signal/thread mixes
-	  on as many platforms as possible because it raises so many problems.
+        * ace/Proactor.cpp (ctor): Change the default proactor implementation
+          to favor CB, then SIG, then AIOCB. The CB proactor works best on
+          many platforms, avoiding multithread issues with aio_suspend() on
+          most platforms other than HP-UX, and avoiding signal/thread mixes
+          on as many platforms as possible because it raises so many problems.
 
-	* ace/POSIX_CB_Proactor.{h cpp}: Remove __sun as a condition that
-	  prevents compilation of ACE_POSIX_CB_Proactor. Sun can do this
-	  proactor type just fine. Added an 'extern "C"' variant of the
-	  aio completion function for platforms (such as Solaris 8) that
-	  have ACE_HAS_SIG_C_FUNC.
+        * ace/POSIX_CB_Proactor.{h cpp}: Remove __sun as a condition that
+          prevents compilation of ACE_POSIX_CB_Proactor. Sun can do this
+          proactor type just fine. Added an 'extern "C"' variant of the
+          aio completion function for platforms (such as Solaris 8) that
+          have ACE_HAS_SIG_C_FUNC.
 
-	* ace/config-sunos5.7.h: For Solaris 7 and later, use the default
-	  proactor, ACE_POSIX_CB_Proactor.
+        * ace/config-sunos5.7.h: For Solaris 7 and later, use the default
+          proactor, ACE_POSIX_CB_Proactor.
 
-	* ace/config-linux-common.h: Remove ACE_POSIX_AIOCB_PROACTOR setting.
-	  The AIOCB proactor doesn't work with multiple threads since the
-	  aio_suspend() call isn't multi-thread safe and ACE doesn't protect
-	  the aiocb list. The SIG proactor doesn't work before the 2.6 kernel
-	  because signals can't be queued across threads. CB works everywhere.
-	  Note though, that even at the 2.6 kernel, read/write to sockets (and
-	  some other things, I believe) get converted to blocking regardless of
-	  what the application does. Thus, the only way to use aio on Linux
-	  at this time is by ping-ponging, like the half-duplex mode in
-	  Proactor_Test. Not terribly useful...
+        * ace/config-linux-common.h: Remove ACE_POSIX_AIOCB_PROACTOR setting.
+          The AIOCB proactor doesn't work with multiple threads since the
+          aio_suspend() call isn't multi-thread safe and ACE doesn't protect
+          the aiocb list. The SIG proactor doesn't work before the 2.6 kernel
+          because signals can't be queued across threads. CB works everywhere.
+          Note though, that even at the 2.6 kernel, read/write to sockets (and
+          some other things, I believe) get converted to blocking regardless of
+          what the application does. Thus, the only way to use aio on Linux
+          at this time is by ping-ponging, like the half-duplex mode in
+          Proactor_Test. Not terribly useful...
 
-	* tests/Proactor_Test.cpp:
-	* tests/Proactor_Test_IPV6.cpp: Only allow the CB-type proactor for
-	  !__Lynx__. Lynx is the only remaining AIO-enabled platform for
-	  which this proactor type is not valid.
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp: Only allow the CB-type proactor for
+          !__Lynx__. Lynx is the only remaining AIO-enabled platform for
+          which this proactor type is not valid.
 
 Wed Mar 17 13:54:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Logging_Strategy.cpp:
+        * ace/Logging_Strategy.cpp:
 
-	  Reverting this change since it breaks MSVC builds! Looks like
-	  VC6 is an old compiler wrt to ANSI C++ standards. Working things
-	  for g++ 3.4 needs to wait. "Tue Mar 16 10:48:48 2004
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".  
+          Reverting this change since it breaks MSVC builds! Looks like
+          VC6 is an old compiler wrt to ANSI C++ standards. Working things
+          for g++ 3.4 needs to wait. "Tue Mar 16 10:48:48 2004
+          Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
 
 Wed Mar 17 14:20:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-aix5.1.h: The AIO enable/disable check added at
-	  Mon Mar 15 15:42:33 2004  Steve Huston  <shuston@riverace.com>
-	  confuses the Visual Age C++ preprocessor. Rearrange it to use
-	  a temporary macro, _ACE_DISABLE_AIO_CALLS_ if we need to turn off
-	  ACE_HAS_AIO_CALLS after including config-aix-4.x.h.
+        * ace/config-aix5.1.h: The AIO enable/disable check added at
+          Mon Mar 15 15:42:33 2004  Steve Huston  <shuston@riverace.com>
+          confuses the Visual Age C++ preprocessor. Rearrange it to use
+          a temporary macro, _ACE_DISABLE_AIO_CALLS_ if we need to turn off
+          ACE_HAS_AIO_CALLS after including config-aix-4.x.h.
 
-	* examples/APG/Proactor/HA_Proactive_Status.cpp: Add #include
-	  "ace/Message_Block.h" so Visual Age C++ can see ACE_Message_Block.
+        * examples/APG/Proactor/HA_Proactive_Status.cpp: Add #include
+          "ace/Message_Block.h" so Visual Age C++ can see ACE_Message_Block.
 
 Wed Mar 17 18:34:14 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -88,36 +94,36 @@ Wed Mar 17 18:20:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar 16 16:56:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* asnmp/tests/Gauge_test.cpp:
-	* asnmp/tests/Counter_test.cpp:
+        * asnmp/tests/Gauge_test.cpp:
+        * asnmp/tests/Counter_test.cpp:
 
-	  #ifdef'ed portions of the code which has no chances of compiling
-	  on Win32, since native support for the used basic types are
-	  missing. Changing the types to something else makes the test
-	  useless. Commenting it out for Win32 shouldn't hurt anyone.
+          #ifdef'ed portions of the code which has no chances of compiling
+          on Win32, since native support for the used basic types are
+          missing. Changing the types to something else makes the test
+          useless. Commenting it out for Win32 shouldn't hurt anyone.
 
 Tue Mar 16 16:34:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* asnmp/tests/Varbind_Test.cpp:
-	* asnmp/tests/Counter64_Test.cpp:
+        * asnmp/tests/Varbind_Test.cpp:
+        * asnmp/tests/Counter64_Test.cpp:
 
-	  #ifdef'ed portions of the code which has no chances of compiling
-	  on Win32, since native support for the used basic types are
-	  missing. Changing the types to something else makes the test
-	  useless. Commenting it out for Win32 shouldn't hurt anyone.
+          #ifdef'ed portions of the code which has no chances of compiling
+          on Win32, since native support for the used basic types are
+          missing. Changing the types to something else makes the test
+          useless. Commenting it out for Win32 shouldn't hurt anyone.
 
 Tue Mar 16 10:48:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Logging_Strategy.cpp:
+        * ace/Logging_Strategy.cpp:
 
-	  Use std::streamoff () to get the offset instead of casting.
+          Use std::streamoff () to get the offset instead of casting.
 
-	* ace/Malloc_T.i:
-	* ace/Strategies_T.cpp:
+        * ace/Malloc_T.i:
+        * ace/Strategies_T.cpp:
 
-	  #included OS_NS_string.h.
+          #included OS_NS_string.h.
 
-	  Thanks to Oliver Kellog for providing the patches.
+          Thanks to Oliver Kellog for providing the patches.
 
 Tue Mar 16 09:40:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 

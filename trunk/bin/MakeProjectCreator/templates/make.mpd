@@ -193,7 +193,7 @@ INSTARGET = $(BIN)
 install:
 	@if [ "<%install%>" != "." ]; then \
 	echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"; \
-	-test -d "<%install%>" || mkdir -p "<%install%>" 2> /dev/null || true; \
+	test -d "<%install%>" || mkdir -p "<%install%>" 2> /dev/null || true; \
 	$(RM) "<%install%>/$(INSTARGET)"; \
 	$(LN) "$(PWD)/$(INSTARGET)" "<%install%>"; \
 	fi
