@@ -81,6 +81,8 @@ ACE_RCSID(IFR_Service, drv_preproc_ifr, "$Id$")
 static long argcount = 0;
 static long max_argcount = 128;
 static const char *arglist[128];
+static const char *output_arg_format = 0;
+static long output_arg_index = 0;
 
 // Push the new CPP location if we got a -Yp argument
 void
@@ -106,6 +108,29 @@ DRV_cpp_putarg (const char *str)
     }
 
   arglist[argcount++] = str == 0 ? 0 : ACE::strnew (str);
+}
+
+// Expand the output argument with the given filename.
+void
+DRV_cpp_expand_output_arg (const char *filename)
+{
+  if (output_arg_format != 0)
+    {
+      delete [] ACE_const_cast (char *, arglist[output_arg_index]);
+      arglist[output_arg_index] = 0; 
+
+      char *output_arg = 0;
+      ACE_NEW (output_arg,
+               char [ACE_OS::strlen (output_arg_format)
+                     + ACE_OS::strlen (filename)
+                     + 1]);
+
+      ACE_OS::sprintf (output_arg,
+                       output_arg_format,
+                       filename);
+
+      arglist[output_arg_index] = output_arg;
+    }
 }
 
 // Initialize the cpp argument list.
@@ -149,7 +174,6 @@ DRV_cpp_init (void)
     }
 
   DRV_cpp_putarg (cpp_loc);
-  DRV_cpp_putarg ("-DIDL");
   DRV_cpp_putarg ("-I.");
 
   // Added some customizable preprocessor options
@@ -167,10 +191,11 @@ DRV_cpp_init (void)
       if (args2 != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Warning: The environment variable ")
-                      ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS has been ")
-                      ACE_TEXT ("deprecated.\n")
-                      ACE_TEXT ("         Please use ")
+                      "%s%s%s%s%s",
+                      ACE_TEXT ("Warning: The environment variable "),
+                      ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS has been "),
+                      ACE_TEXT ("deprecated.\n"),
+                      ACE_TEXT ("         Please use "),
                       ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS instead.\n")));
 
           cpp_args = args2;
@@ -199,6 +224,7 @@ DRV_cpp_init (void)
           ACE_OS::strcat (option, TAO_IDL_INCLUDE_DIR);
 #else
           const char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+          
           if (TAO_ROOT != 0)
             {
               ACE_OS::strcat (option, TAO_ROOT);
@@ -207,6 +233,7 @@ DRV_cpp_init (void)
           else
             {
               const char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+
               if (ACE_ROOT != 0)
                 {
                   ACE_OS::strcat (option, ACE_ROOT);
@@ -216,9 +243,10 @@ DRV_cpp_init (void)
                 {
                   ACE_ERROR ((
                       LM_ERROR,
-                      ACE_TEXT ("Note: The environment variables ")
-                      ACE_TEXT ("TAO_ROOT and ACE_ROOT are not defined.\n")
-                      ACE_TEXT ("      TAO_IDL may not be able to ")
+                      "%s%s%s%s",
+                      ACE_TEXT ("Note: The environment variables "),
+                      ACE_TEXT ("TAO_ROOT and ACE_ROOT are not defined.\n"),
+                      ACE_TEXT ("      TAO_IDL may not be able to "),
                       ACE_TEXT ("locate orb.idl\n")
                     ));
 
@@ -233,9 +261,20 @@ DRV_cpp_init (void)
 
   // Add any flags in cpp_args to cpp's arglist.
   ACE_ARGV arglist (cpp_args);
+
   for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
     {
-      DRV_cpp_putarg (arglist[arg_cnt]);
+      // Check for an argument that specifies the preprocessor's output file.
+      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 && output_arg_format == 0)
+        {
+          output_arg_format = ACE::strnew (arglist[arg_cnt]);
+          output_arg_index = argcount;
+          DRV_cpp_putarg (0);
+        }
+      else
+        {
+          DRV_cpp_putarg (arglist[arg_cnt]);
+        }
     }
 }
 
@@ -288,6 +327,7 @@ DRV_copy_input (FILE *fin,
   if (f == NULL) 
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s%s%s",
                   idl_global->prog_name (),
                   ACE_TEXT (": cannot open temp file "),
                   fn,
@@ -299,6 +339,7 @@ DRV_copy_input (FILE *fin,
   if (fin == NULL) 
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s",
                   idl_global->prog_name (),
                   ACE_TEXT (": cannot open input file\n")));
 
@@ -471,31 +512,45 @@ DRV_pre_proc (const char *myfile)
   ACE_Process_Options cpp_options (1,       // Inherit environment.
                                    TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
 
+  DRV_cpp_expand_output_arg (tmp_file);
   DRV_cpp_putarg (tmp_ifile);
   DRV_cpp_putarg (0); // Null terminate the arglist.
 
   cpp_options.command_line (arglist);
   
-  ACE_HANDLE fd = ACE_OS::open (tmp_file, 
-                                O_WRONLY | O_CREAT | O_TRUNC, 
-                                ACE_DEFAULT_FILE_PERMS);
+  /// Remove any existing output file.
+  (void) ACE_OS::unlink (tmp_file);
 
-  if (fd == ACE_INVALID_HANDLE)
+  ACE_HANDLE fd = ACE_INVALID_HANDLE;
+
+  if (output_arg_format == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  idl_global->prog_name (),
-                  ACE_TEXT (": cannot open temp file "),
-                  tmp_file,
-                  ACE_TEXT (" for writing\n")));
+      // If the following open() fails, then we're either being hit with a
+      // symbolic link attack, or another process opened the file before
+      // us.
+      fd = ACE_OS::open (tmp_file,
+                         O_WRONLY | O_CREAT | O_EXCL,
+                         ACE_DEFAULT_FILE_PERMS);
 
-      return;
+      if (fd == ACE_INVALID_HANDLE)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s",
+                      idl_global->prog_name (),
+                      ACE_TEXT (": cannot open temp file "),
+                      tmp_file,
+                      ACE_TEXT (" for writing\n")));
+
+          return;
+        }
+
+      cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
     }
-
-  cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
 
   if (process.spawn (cpp_options) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s%s%s",
                   idl_global->prog_name (),
                   ACE_TEXT (": spawn of "),
                   arglist[0],
@@ -504,16 +559,20 @@ DRV_pre_proc (const char *myfile)
       return;
     }
 
-  // Close the output file on the parent process.
-  if (ACE_OS::close (fd) == -1)
+  if (fd != ACE_INVALID_HANDLE)
     {
-      ACE_ERROR ((LM_ERROR,
-                  idl_global->prog_name (),
-                  ACE_TEXT (": cannot close temp file"),
-                  tmp_file,
-                  ACE_TEXT (" on parent\n")));
+      // Close the output file on the parent process.
+      if (ACE_OS::close (fd) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s",
+                      idl_global->prog_name (),
+                      ACE_TEXT (": cannot close temp file"),
+                      tmp_file,
+                      ACE_TEXT (" on parent\n")));
 
-      return;
+          return;
+        }
     }
 
   // Remove the null termination and the input file from the arglist,
@@ -524,6 +583,7 @@ DRV_pre_proc (const char *myfile)
   if (process.wait (&status) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s",
                   idl_global->prog_name (),
                   ACE_TEXT (": wait for child process failed\n")));
 
@@ -538,6 +598,7 @@ DRV_pre_proc (const char *myfile)
           errno = WEXITSTATUS ((status));
 
           ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s",
                       idl_global->prog_name (),
                       ACE_TEXT (": preprocessor "),
                       arglist[0],
@@ -552,6 +613,7 @@ DRV_pre_proc (const char *myfile)
       errno = EINTR;
 
       ACE_ERROR ((LM_ERROR,
+                  "%s%s%s%s",
                   idl_global->prog_name (),
                   ACE_TEXT (": preprocessor "),
                   arglist[0],
