@@ -1,3 +1,22 @@
+Fri Dec 07 14:22:41 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/Logging_Service/Logging_Service.dsp:
+	* orbsvcs/Logging_Service/Logging_Service.dsw:
+	* orbsvcs/TAO_Service/TAO_Service.dsp:
+	* orbsvcs/TAO_Service/TAO_Service.dsw:
+	* orbsvcs/examples/CosEC/Simple/Simple.dsw:
+	* orbsvcs/examples/CosEC/Simple/CEC_Simple_Service.dsp:
+	* orbsvcs/examples/CosEC/Simple/CEC_Simple_Consumer.dsp:
+	* orbsvcs/examples/CosEC/Simple/CEC_Simple_Supplier.dsp:
+	* orbsvcs/examples/Log/Client/Client.dsw:
+	* orbsvcs/examples/Log/Client/tls_client.dsp:
+	* orbsvcs/examples/Log/test/test.dsw:
+	* orbsvcs/examples/Log/test/client.dsp:
+	  Add more missing MSVC6 project files.
+
+	* orbsvcs/examples/Log/Client/TLS_Client.cpp:
+	  Was using CORBA::Long even when CORBA::LongLong is available.
+
 Fri Dec 07 11:44:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.dsp:
