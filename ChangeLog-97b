@@ -1,5 +1,12 @@
 Sun Nov 09 17:55:50 1997    <nw1@COYOTE>
 
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (open):
+	  Removed codes that reset a socket's non-blocking flag.  This has
+	  been taken care of by ACE_Acceptor::activate_svc_handler now and
+	  resetting this flag twice on NT caused us grief.  Thanks to
+	  Georges Ata <George_ata@srt.ccmail.compuserve.com> for reporting
+	  the bug.
+
 	* ace/ACE.i (hex2byte,nibble2hex): Replaced ACE_INLINE to inline
  	  for these two functions.  Functions in this file are always
  	  inlined.
