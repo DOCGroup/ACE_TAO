@@ -1,3 +1,11 @@
+Wed Sep 25 14:49:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended the types of files that are tested in the doxygen
+          @file with the files_idl. Some of the idl files are parsed to
+          generate doxygen documentation and when then a @file tag
+          exists the filename must be correct.
+
 Tue Sep 24 20:17:50 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 
         * tests/Process_Manager_Test.cpp:  Removed the ACE_HAS_THREADS
@@ -40,7 +48,7 @@ Tue Sep 24 06:30:31 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Map_T.i (find, unbind):
         * ace/Timer_Hash_T.cpp:
           Made arguments in method definition and implementation the
-	  same. 
+	  same.
 
         * ace/Future.h:
           Improved doxygen documentation.

@@ -467,7 +467,7 @@ sub check_for_push_and_pop ()
 sub check_for_mismatched_filename ()
 {
     print "Running doxygen \@file test\n";
-    foreach $file (@files_h, @files_cpp, @files_inl) {
+    foreach $file (@files_h, @files_cpp, @files_inl, @files_idl) {
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
