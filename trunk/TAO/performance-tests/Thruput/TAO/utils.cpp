@@ -585,6 +585,8 @@ prep_timer (void)
 double
 read_timer (CORBA::Char *str, CORBA::Long len)
 {
+  ACE_UNUSED_ARG(str);
+  ACE_UNUSED_ARG(len);
   ACE_NOTSUP_RETURN (0.0);
 }
 
