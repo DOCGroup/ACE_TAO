@@ -55,7 +55,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   if (! node->is_abstract ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
           << be_idt <<  be_idt_nl
@@ -70,7 +70,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   if (node->is_abstract () || node->has_mixed_parentage ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Impl_T<" << node->name ()
           << ">::to_abstract_base ("
@@ -93,7 +93,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   if (node->is_local ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
@@ -102,7 +102,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
