@@ -33,7 +33,7 @@ class Token_Strategy_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
 
-  Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy = ACE_Token::FIFO, 
+  Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy = ACE_Token::FIFO,
                        int threads = 5, int invocations = 10);
   ~Token_Strategy_Test (void);
 
@@ -69,8 +69,8 @@ private:
   // Errors count, set in svc() and returned from open().
   ACE_Atomic_Op<ACE_Thread_Mutex, int> errors_;
 
-  ACE_UNIMPLEMENTED_FUNC (Token_Strategy_Test (const Token_Strategy_Test &));
-  ACE_UNIMPLEMENTED_FUNC (Token_Strategy_Test &operator= (const Token_Strategy_Test &));
+  ACE_UNIMPLEMENTED_FUNC (Token_Strategy_Test (const Token_Strategy_Test &))
+  ACE_UNIMPLEMENTED_FUNC (Token_Strategy_Test &operator= (const Token_Strategy_Test &))
 };
 
 
@@ -92,9 +92,9 @@ Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy,
       this->vec_token_count_.push_back (sample);
     }
 
-  this->token_.queueing_strategy (this->strategy_); 
+  this->token_.queueing_strategy (this->strategy_);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT (" (tid = %t) Token_Test::Token_Test (\n"
                             "    token_type = %s\n"
                             "        thread = %d\n"
@@ -107,13 +107,13 @@ Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy,
 Token_Strategy_Test::~Token_Strategy_Test (void)
 {}
 
-int 
+int
 Token_Strategy_Test::open (void *)
 {
   // spawn threads in ace task...
   // Make this Task into an Active Object.
   this->activate (THR_BOUND | THR_DETACHED, this->threads_);
-  
+
   // Wait for all the threads to exit.
   this->thr_mgr ()->wait ();
   return this->errors_.value ();
@@ -140,7 +140,7 @@ Token_Strategy_Test::svc (void)
         ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (tid = %t) token count = %d, "
                                             "waiters = %d, loop: %d/%d\n"),
                   this->counter_.value (),
-                  this->token_.waiters (), i + 1, 
+                  this->token_.waiters (), i + 1,
                   this->invocations_));
 
       // Yield, then simulate some work in order to give the other threads a chance to queue up.
@@ -149,7 +149,7 @@ Token_Strategy_Test::svc (void)
         {
           ACE::is_prime (k, 2, k/2);
         }
-      
+
       // If we are the first thread to finish, compute the stats.
       if (i + 1 == this->invocations_)
         {
@@ -162,35 +162,35 @@ Token_Strategy_Test::svc (void)
                 {
                   stats.sample (this->vec_token_count_[i]);
                 }
-        
+
               //stats.print_summary (2);
               stats.std_dev (std_dev);
               stats.mean (mean);
-              ACE_DEBUG ((LM_DEBUG, 
-                          ACE_LIB_TEXT (" (tid = %t) mean = %d.%d, std_dev = %d.%d, max = %d, min = %d\n"), 
-                          mean.whole (), mean.fractional (), std_dev.whole (), std_dev.fractional (), 
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_LIB_TEXT (" (tid = %t) mean = %d.%d, std_dev = %d.%d, max = %d, min = %d\n"),
+                          mean.whole (), mean.fractional (), std_dev.whole (), std_dev.fractional (),
                           stats.max_value (), stats.min_value ()));
 
-              // These are pretty simplistic tests, so let me know if you have a better idea.  
+              // These are pretty simplistic tests, so let me know if you have a better idea.
               // The assumption is that the standard deviation will be small when using the
               // FIFO strategy since all threads will share the token more or less evenly.
               // In contrast, the LIFO strategy will allow the two threads to alternate, thus
               // several threads will have a low, or zero, token count and create a low mean and
-              // high standard deviation.  If the the thread count is over say 4 or 5, the 
+              // high standard deviation.  If the the thread count is over say 4 or 5, the
               // standard deviation will actually excide the mean, hence the test.
               if (this->strategy_ == ACE_Token::LIFO &&
-                  (mean.whole () > std_dev.whole () && 
-                   mean.fractional () > std_dev.fractional ())) 
+                  (mean.whole () > std_dev.whole () &&
+                   mean.fractional () > std_dev.fractional ()))
                 {
-                  ACE_DEBUG ((LM_ERROR, 
+                  ACE_DEBUG ((LM_ERROR,
                               ACE_LIB_TEXT (" (tid = %t) LIFO: mean greater than std_dev.\n")));
                   this->errors_++;
                 }
               if (this->strategy_ == ACE_Token::FIFO &&
-                  (mean.whole () < std_dev.whole () && 
-                   mean.fractional () < std_dev.fractional ())) 
+                  (mean.whole () < std_dev.whole () &&
+                   mean.fractional () < std_dev.fractional ()))
                 {
-                  ACE_DEBUG ((LM_ERROR, 
+                  ACE_DEBUG ((LM_ERROR,
                               ACE_LIB_TEXT (" (tid = %t) FIFO: mean less than std_dev.\n")));
                   this->errors_++;
                 }
@@ -201,7 +201,7 @@ Token_Strategy_Test::svc (void)
 }
 
 
-int run_test (ACE_Token::QUEUEING_STRATEGY strategy, int threads = 5, 
+int run_test (ACE_Token::QUEUEING_STRATEGY strategy, int threads = 5,
               int invocations = 10)
 {
   Token_Strategy_Test test (strategy, threads, invocations);
@@ -213,7 +213,7 @@ main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_LIB_TEXT ("Token_Strategy_Test"));
   int retval = 0;
-  
+
   if (argc > 3)
     {
       // print usage
@@ -223,10 +223,10 @@ main (int argc, ACE_TCHAR *argv[])
     {
       int threads = 5;
       int invocations = 100;
-      
+
       if (argc > 1) threads = atoi (argv[1]);
       if (argc > 2) invocations = atoi (argv[2]);
-      
+
       // New test using ACE_Token::queueing_strategy ()
       retval += run_test (ACE_Token::FIFO, threads, invocations);
       retval += run_test (ACE_Token::LIFO, threads, invocations);
