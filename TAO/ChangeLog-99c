@@ -1,3 +1,13 @@
+Wed Mar 24 15:07:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * TAO_IDL/Makefile: Hardcoded our specialized yacc path in
+          it (and it can be overridden via the command line).  Also
+          automatically put an CVS ID string in the y.tab.cpp also.
+
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp: 
+          Removed some warnings and updated the diff.
+
 Wed Mar 24 10:04:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp: 
