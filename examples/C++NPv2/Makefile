@@ -9,36 +9,46 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+#----------------------------------------------------------------------------
+#	Local macros
+#----------------------------------------------------------------------------
+MAKEFILE=Makefile
+
 # These examples don't require SSL support... those that do are below.
-EXAMPLES = Reactor_Logging_Server \
-           Select_Reactor_Logging_Server \
-           TP_Reactor_Logging_Server \
-           Configurable_Logging_Server \
-           SLD \
-           SLDex \
-           CLD \
-           TPLS \
-           SR_Configurable_Logging_Server \
-           display_logfile
+MKLIST = Makefile.Reactor_Logging_Server \
+           Makefile.Select_Reactor_Logging_Server \
+           Makefile.TP_Reactor_Logging_Server \
+           Makefile.Configurable_Logging_Server \
+           Makefile.SLD \
+           Makefile.SLDex \
+           Makefile.CLD \
+           Makefile.TPLS \
+           Makefile.SR_Configurable_Logging_Server \
+           Makefile.display_logfile
 
 ifneq ($(ssl),)
-  EXAMPLES += AC_CLD  AIO_CLD  TPCLS
+  MKLIST += Makefile.AC_CLD  Makefile.AIO_CLD  Makefile.TPCLS
 endif # ssl
 
-all:
-	@for ex in $(EXAMPLES); \
-	do \
-		$(MAKE) -f Makefile.$$ex; \
-	done
+## Ensure that Makefiles in MKLIST are executed in sequence during a
+## parallel build because we share some files between multiple libraries.
+.NOTPARALLEL:
 
-clean:
-	@for ex in $(EXAMPLES); \
-	do \
-		$(MAKE) -f Makefile.$$ex clean; \
-	done
+## Makefile.Reactive_Logging_Server.mkfile is a dummy target which will cause
+## $(MAKE) -f Makefile.Reactive_Logging_Server to be invoked
+%.mkfile: %
+	@echo $(MAKE) -f $< $(MKFILE_TARGET)
+	@$(MAKE) -f $< $(MKFILE_TARGET)
 
-realclean:
-	@for ex in $(EXAMPLES); \
-	do \
-		$(MAKE) -f Makefile.$$ex realclean; \
-	done
+# This rule invokes make again with the list of .mkfile targets as a
+# parameter.  For example, if the all target is being made, make is invoked
+# as follows:
+#
+# make -f Makefile MKFILE_TARGET=all Makefile.Reactive_Logging_Server_Ex 
+
+all clean depend realclean:
+ifneq ($(MKLIST),)
+	@echo $(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+	@$(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+endif
+

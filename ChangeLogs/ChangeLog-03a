@@ -1,3 +1,9 @@
+Sun Oct 20 13:34:45 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* examples/C++NPv2/Makefile: Replace with recursive Makefile which
+          does not use for loops.  Add .NOTPARALLEL target to fix
+	  build errors on parallel builds.
+
 Sun Oct 20 08:10:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Recursive_Condition_Test.cpp: Fixed a unused variable warning.
