@@ -1,3 +1,9 @@
+Thu Jul  1 19:46:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/Makefile:
+	  Fixed order of libraries so the test would compile with static
+	  libraries.
+
 Thu Jul  1 12:37:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/decode.cpp:
