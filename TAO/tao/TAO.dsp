@@ -247,6 +247,10 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientInterceptorAdapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ClientRequestInfo.cpp
 # End Source File
 # Begin Source File
@@ -647,10 +651,6 @@ SOURCE=.\Pool_Per_Endpoint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableInterceptor.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableInterceptorC.cpp
 # End Source File
 # Begin Source File
@@ -1024,6 +1024,10 @@ SOURCE=.\Client_Priority_Policy.h
 # Begin Source File
 
 SOURCE=.\Client_Strategy_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientInterceptorAdapter.h
 # End Source File
 # Begin Source File
 
@@ -1860,6 +1864,10 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientInterceptorAdapter.inl
 # End Source File
 # Begin Source File
 

@@ -176,6 +176,10 @@ SOURCE=.\Direct_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepo_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImplRepoC.cpp
 # End Source File
 # Begin Source File
@@ -197,10 +201,6 @@ SOURCE=.\Object_Adapter.cpp
 # Begin Source File
 
 SOURCE=.\Operation_Table.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepo_i.cpp
 # End Source File
 # Begin Source File
 
@@ -248,6 +248,10 @@ SOURCE=.\Servant_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerInterceptorAdapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServerRequestInfo.cpp
 # End Source File
 # Begin Source File
@@ -284,6 +288,10 @@ SOURCE=.\Direct_Object_Proxy_Impl.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepo_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImplRepoC.h
 # End Source File
 # Begin Source File
@@ -313,10 +321,6 @@ SOURCE=.\Object_Adapter.h
 # Begin Source File
 
 SOURCE=.\Operation_Table.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepo_i.h
 # End Source File
 # Begin Source File
 
@@ -369,6 +373,10 @@ SOURCE=.\Servant_Base.h
 # Begin Source File
 
 SOURCE=.\Servant_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerInterceptorAdapter.h
 # End Source File
 # Begin Source File
 
@@ -445,6 +453,10 @@ SOURCE=.\RTPortableServerC.i
 # Begin Source File
 
 SOURCE=.\Servant_Base.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerInterceptorAdapter.inl
 # End Source File
 # Begin Source File
 
