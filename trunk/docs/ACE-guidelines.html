@@ -587,7 +587,7 @@ bgcolor="#ffffff">
         should be avoided for non-template classes.<p>
 
     <li>Never use <code>bool</code>, <code>BOOL</code>, or similar
-        types.   (CORBA::Boolean is acceptable).  Use <code>int</code>
+        types.  (CORBA::Boolean is acceptable).  Use <code>int</code>
         or <code>u_int</code> instead for boolean types.<p>
 
     <li>Functions should always return -1 to indicate failure, and
@@ -596,6 +596,11 @@ bgcolor="#ffffff">
     <li>Separate the code of your templates from the code for
         non-parametric classes: some compilers get confused when
         template and non-template code is mixed in the same file.<p>
+
+    <li>It's a good idea to specify the include path (with <code>-I</code>)
+      to include any directory which contains files with template
+      definitions.  The <code>-ptv</code> Digital Unix cxx compiler option
+      may help diagnose missing template instantiation problems.<p>
     </li>
   </ul>
 
