@@ -30,17 +30,17 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (be_interface *node)
       << "//" << be_nl << be_nl;
   // Create the destructor implementation for the base
   // proxy implementation.
-  
+
   // Ctor Impl.
   *os << node->full_base_proxy_impl_name () << "::"
       << node->base_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-
+  /*
   // Dtor Impl.
   *os << node->full_base_proxy_impl_name () << "::~"
       << node->base_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-
+  */
   // Create the destructor implementation for the remote
   // proxy implementation.
 
@@ -49,11 +49,12 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (be_interface *node)
       << node->remote_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
 
+  /*
   // Dtor Impl
   *os << node->full_remote_proxy_impl_name () << "::~"
       << node->remote_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-
+  */
 
   // Generate the code for the Remote Proxy Impl.
   // operations

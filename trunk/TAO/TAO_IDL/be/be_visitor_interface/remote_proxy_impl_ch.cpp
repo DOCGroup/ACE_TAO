@@ -62,7 +62,7 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (be_interface *node)
       << be_nl  << be_nl;
 
   // Destructor Declaration.
-  *os << "virtual ~" << node->remote_proxy_impl_name () << " (void);"
+  *os << "virtual ~" << node->remote_proxy_impl_name () << " (void) { }"
       << be_nl  << be_nl;
 
   if (this->visit_scope (node) == -1)

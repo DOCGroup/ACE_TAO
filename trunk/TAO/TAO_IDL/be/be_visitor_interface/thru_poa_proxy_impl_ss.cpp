@@ -32,12 +32,12 @@ be_visitor_interface_thru_poa_proxy_impl_ss::visit_interface (be_interface *node
   *os << node->full_thru_poa_proxy_impl_name () << "::"
       << node->thru_poa_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-
+  /*
   // Dtor Implementation
   *os << node->full_thru_poa_proxy_impl_name () << "::~"
       << node->thru_poa_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-
+  */
 
   // Generate the code for the ThruPOA Proxy Impl.
   // operations
@@ -52,7 +52,7 @@ be_visitor_interface_thru_poa_proxy_impl_ss::visit_interface (be_interface *node
                          "codegen for Base Proxy Broker class failed\n"),
                         -1);
     }
-  
+
   *os << "//\n"
       << "//           End ThruPOA Proxy Implementation\n"
       << "///////////////////////////////////////////////////////////////////////"
