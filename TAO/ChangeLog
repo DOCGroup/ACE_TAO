@@ -1,7 +1,20 @@
+Wed Jul 28 00:03:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl
+	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.h
+	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
+	  (authorize_level1):
+
+	  Added SLevel1_Server::NoSecurityAttributes to the exception
+	  specification for this method.  The implementation of this
+	  method potentially throws this exception.  Fixes a CBuilderX
+	  compile-time warning regarding exception specification
+	  violation.
+
 Tue Jul 27 17:42:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/OctetSeqC.h:
-        
+
           Put back explicit template instantiation of the sequence
           base class that was inadvertently left out of the hand-crafting
           from the last regeneration.

@@ -22,7 +22,7 @@ interface SLevel1_Server
   exception NoSecurityAttributes {};
 
   /// Test method to authorize access to a client.
-  boolean authorize_level1 ();
+  boolean authorize_level1 () raises (NoSecurityAttributes);
 
   /// Shutdown the server.
   oneway void shutdown ();
