@@ -1,3 +1,14 @@
+Mon Oct  4 14:46:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_test/params.idl:
+	* tests/IDL_Test/idl_test/dsp:
+	* tests/IDL_Test/Makefile:
+	  New IDL file for IDL problem files relating to
+	  function return types and args. The example was
+	  originally sent in by Torsten Kuepper 
+	  <kuepper2@uni-wuppertal.de> and modified by me
+	  and Michael Kircher <Michael.Kircher@mchp.siemens.de>.
+
 Mon Oct  4 13:23:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/argument.cpp:
