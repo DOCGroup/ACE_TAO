@@ -290,7 +290,7 @@ protected:
   // Returns 1 if <id1> == <id2>, else 0.  This is defined as a
   // separate method to facilitate template specialization.
 
-  virtual size_t new_size (void);
+  size_t new_size (void);
   // This function returns the new size of the Map Manager.  This
   // function is called when we run out of room and need to resize.
 
