@@ -185,6 +185,10 @@ SOURCE=.\RTPortableServer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RTPortableServerA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTPortableServerC.cpp
 # ADD CPP /GR
 # End Source File
@@ -223,6 +227,10 @@ SOURCE=.\RTPortableServer.h
 # Begin Source File
 
 SOURCE=.\rtportableserver_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTPortableServerA.h
 # End Source File
 # Begin Source File
 

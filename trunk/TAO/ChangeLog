@@ -1,3 +1,10 @@
+Thu Jan 01 20:10:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+
+	  Fixed the release version of the project files.
+
 Thu Jan  1 17:07:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Secure_Inovcation/Foo_i.h:
