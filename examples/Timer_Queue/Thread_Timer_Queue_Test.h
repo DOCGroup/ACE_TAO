@@ -12,7 +12,7 @@
 //
 // = DESCRIPTION
 //    This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
-//    an <ACE_Timer_Heap_T>
+//    an <ACE_Timer_Heap_T>.
 //
 // = AUTHORS
 //    Carlos O'Ryan <coryan@cs.wustl.edu> and
@@ -43,10 +43,11 @@ typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
 typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
         Thread_Timer_Queue;
 
-// Forward declaration
+// Forward declaration.
 class Thread_Timer_Queue_Test_Driver;
 
 class Input_Task : public ACE_Task_Base
+{
   // = TITLE
   //   Read user actions on the Timer_Queue from stdin.
   //
@@ -54,7 +55,6 @@ class Input_Task : public ACE_Task_Base
   //   This class reads user input from stdin; those commands permit
   //   the control of a Timer_Queue, which is dispatched by another
   //   thread.
-{
 public:
   typedef int (Input_Task::*ACTION) (void *);
 
@@ -88,21 +88,21 @@ private:
   const int usecs_;
   // How many micro seconds are in a second.
 
-  Timer_Queue_Test_Driver<Thread_Timer_Queue, Input_Task, Input_Task::ACTION> &driver_;
-  // The thread timer queue test driver
+  Thread_Timer_Queue_Test_Driver &driver_;
+  // The thread timer queue test driver.
 };
 
 class Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task, Input_Task::ACTION>
+{
   // = TITLE
-  //    Implements an example application that exercises <Thread_Timer_Queue>
-  //    timer queue.
+  //    Implements an example application that exercises
+  //    <Thread_Timer_Queue> timer queue.
   //
   // = DESCRIPTION
   //    This class implements a simple test driver for the
   //    <Thread_Timer_Queue>.  The <display_menu> hook method is
   //    called from the base class to print a menu specific to the
   //    thread implementation of the timer queue.
-{
 public:
   Thread_Timer_Queue_Test_Driver (void);
   ~Thread_Timer_Queue_Test_Driver (void);
@@ -117,13 +117,13 @@ private:
 };
 
 class Handler : public ACE_Event_Handler
+{
   // = TITLE
   //     Event handler for the timer queue timeout events.
   //
   // = DESCRIPTION
-  //     The <handle_timeout> hook method prints out the current
-  //     time, prints the time when this timer expired and deletes "this".
-{
+  //     The <handle_timeout> hook method prints out the current time,
+  //     prints the time when this timer expired and deletes "this".
 public:
   Handler (const ACE_Time_Value &expiration_time);
   ~Handler (void);

@@ -44,7 +44,7 @@ Handler::set_id (int id)
 
 int
 Handler::handle_timeout (const ACE_Time_Value &current_time,
-                        const void *)
+                         const void *)
 {
   ACE_Time_Value delay = current_time - this->expires_;
 
@@ -80,13 +80,15 @@ Input_Task::Input_Task (Thread_Timer_Queue *queue,
 {
 }
 
-// Svc method is called from the thread library to read input from  the user.
+// Svc method is called from the thread library to read input from the
+// user.
 
 int
 Input_Task::svc (void)
 {
   for (;;)
-    // call back to the driver's implementation on how to read and parse input.
+    // call back to the driver's implementation on how to read and
+    // parse input.
     if (this->driver_.get_next_request () == -1)
       break;
 
