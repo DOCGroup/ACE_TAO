@@ -563,8 +563,8 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
               {
                 TAO::Unknown_IDL_Type *unk =
                   dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-                  
-                // We don't want unk's rd_ptr to move, in case 
+
+                // We don't want unk's rd_ptr to move, in case
                 // we are shared by another Any, so we use this
                 // to copy the state, not the buffer.
                 TAO_InputCDR for_reading (unk->_tao_get_cdr ());
