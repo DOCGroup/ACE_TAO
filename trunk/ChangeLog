@@ -1,3 +1,8 @@
+Mon Sep  6 10:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          When using VxWorks also include OS_NS_stdio.h
+
 Mon Sep  6 07:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.h:
