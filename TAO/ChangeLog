@@ -1,3 +1,19 @@
+Sun Jun 01 19:34:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Added a
+	  work  around for linking errors that show up in SunCC
+	  builds. The problem was that there was a typedef for the same
+	  sequence in two different IDL files (ie. in this file and
+	  CosLifeCycle.idl). This generated two explicit template
+	  instantiations which lead to multiply defined symbols. The IDL
+	  file is perfectly valid only that our IDL compiler need to made
+	  smarter for these cases.
+
+	  We work around the short-coming of the IDL compile by making a
+	  typedef which would suppress the generation of the second
+	  explicit template instantiations. This is just work around for
+	  the timebeing.
+
 Sun Jun  1 10:08:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Simulator/Event_Supplier/Makefile: Updated 

@@ -6,7 +6,7 @@
 //    LifeCycleService.idl
 //
 // = DESCRIPTION
-//    A generic creation service named lifecycle service using 
+//    A generic creation service named lifecycle service using
 //    the GenericFactory interface of the LifeCycle Service specification.
 //
 // = AUTHOR
@@ -23,18 +23,18 @@ module LifeCycleService
 {
   interface Life_Cycle_Service : CosLifeCycle::GenericFactory
     {
-      // = TITLE 
+      // = TITLE
       //   Wrapper for the CosLifeCycle GenericFactory
       //
-      // = inherits: 
+      // = inherits:
       //    boolean supports(in Key k);
       //    Object create_object(in Key k, in Criteria the_criteria)
       //          raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
 
-      void register_factory (in string name, 
-			     in string location,
-			     in string description,
-			     in Object _object);
+      void register_factory (in string name,
+                             in string location,
+                             in string description,
+                             in Object _object);
       // provide an method for registering factories with their properties
     };
 
@@ -48,22 +48,30 @@ module LifeCycleService
       //   Criterias. It is mainly a wrapper, which should make
       //   access easier.
       //
-      typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
+      // @@ NOTE: The definition should be this. But see note below!
+      // typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
 
+      // @@ NOTE: This is just a workaround for a problem seen with
+      // explicit template builds. This file and CosLifeCycle.idl
+      // define a sequence of the same data structure which creates
+      // multiply defined symbols in the above configuration. We need
+      // to fix the IDL compile at some point of time. Till then this
+      // should be okay...
+      typedef CosLifeCycle::Criterias SeqNamedValuePair;
       typedef CosLifeCycle::Criteria Criteria;
 
       exception NotAvailable { string reason; };
       // raised if the questioned configuration is not available
 
       SeqNamedValuePair getInitialization ();
-      // get the initialization 
+      // get the initialization
 
       string getFilter ();
-      // get a filter string 
+      // get a filter string
 
       SeqNamedValuePair getLogicalLocation ();
       // get the logical location
-      
+
       string getPreferences ();
       // get the preferences, not implemented
 
