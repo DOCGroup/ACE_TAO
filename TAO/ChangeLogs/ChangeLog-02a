@@ -1,3 +1,18 @@
+Mon Mar  5 14:21:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/Container_i.cpp:
+        * orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/OperationDef_i.cpp:
+        * orbsvcs/IFR_Service/StructDef_i.cpp:
+        * orbsvcs/IFR_Service/UnionDef_i.cpp:
+
+          Added .in () to instances where the 'type_def'
+          member of the struct StructMember, UnionMember, or
+          ParameterDescription is passed as an argument.
+          The type of that member in each case is
+          IDLType_var.
+
 Mon Mar  5 11:37:18 2001  Fuzz Master D <brunsch@uci.edu>
 
         * tests/Leader_Followers/run_test_mt.pl: (added)
