@@ -1,7 +1,0 @@
-#
-# Makefile for building the Faults test executables
-#
-
-MAKEFILES = client.bor st_client.bor dii_client.bor server.bor st_server.bor ami-latency-client.bor ami-throughput-client.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
