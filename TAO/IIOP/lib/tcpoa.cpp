@@ -179,6 +179,33 @@ tcp_oa_dispatcher (
   }
 }
 
+//
+// Helper routine that provides IIOP glue for forwarding requests
+// to specific objects from one process to another.
+//
+static GIOP::LocateStatusType
+tcp_oa_forwarder (
+    opaque			&target_key,
+    CORBA_Object_ptr		&forward_reference,
+    void			*ctx
+)
+{
+    TCP_OA::dispatch_context	*helper;
+    CORBA_Environment		env;
+
+    helper = (TCP_OA::dispatch_context *) ctx;
+    assert (helper->check_forward != 0);
+    helper->check_forward (target_key, forward_reference, helper->context, env);
+
+    if (env.exception () != 0)
+	return GIOP::UNKNOWN_OBJECT;
+    else if (forward_reference == 0)
+	return GIOP::OBJECT_HERE;
+    else
+	return GIOP::OBJECT_FORWARD;
+}
+
+
 TCP_OA::TCP_OA (CORBA_ORB_ptr owning_orb,
 		ACE_INET_Addr& rendesvous,
 		CORBA_Environment &env)
@@ -202,9 +229,6 @@ TCP_OA::TCP_OA (CORBA_ORB_ptr owning_orb,
     }
   
   clientAcceptor_.acceptor().get_local_addr(addr);
-
-  // Set the callback for our implementation (cheesy!!!)
-  ACE_ROA::upcall((TOA::dsi_handler)tcp_oa_dispatcher);
 
   if (env.exception () != 0)  {
     dmsg2 ("TCP OA:  '%s', port %u", namebuf, port);
@@ -446,33 +470,6 @@ TCP_OA::get_client_principal (
 
     return request_tsd->requesting_principal;
 }
-
-//
-// Helper routine that provides IIOP glue for forwarding requests
-// to specific objects from one process to another.
-//
-static GIOP::LocateStatusType
-tcp_oa_forwarder (
-    opaque			&target_key,
-    CORBA_Object_ptr		&forward_reference,
-    void			*ctx
-)
-{
-    TCP_OA::dispatch_context	*helper;
-    CORBA_Environment		env;
-
-    helper = (TCP_OA::dispatch_context *) ctx;
-    assert (helper->check_forward != 0);
-    helper->check_forward (target_key, forward_reference, helper->context, env);
-
-    if (env.exception () != 0)
-	return GIOP::UNKNOWN_OBJECT;
-    else if (forward_reference == 0)
-	return GIOP::OBJECT_HERE;
-    else
-	return GIOP::OBJECT_FORWARD;
-}
-
 
 //
 // Generic routine to handle a message.

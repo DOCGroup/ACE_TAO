@@ -7,6 +7,7 @@ ACE_Reactor ACE_ROA::theReactor;
 int         ACE_ROA::usingThreads_ = 0;
 void*       ACE_ROA::context_p = 0;
 ACE_ROA::UpcallFunc ACE_ROA::theUpcall = 0;
+ACE_ROA::ForwardFunc ACE_ROA::theForwarder = 0;
 TCP_OA_ptr     ACE_ROA::theOA = 0;
 
 ROA_Handler::ROA_Handler()
@@ -50,9 +51,7 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
 
   ctx.skeleton = ACE_ROA::upcall();
   ctx.context = ACE_ROA::context();
-  // For right now, the value here doesn't matter.  But, when we do
-  // threads, we'll need to figure out some way to get commute a
-  // handle to the OA to the handling mechanism (i.e., thread).
+  ctx.check_forward = ACE_ROA::forwarder();
   ctx.oa = ACE_ROA::oa();
   ctx.endpoint = fd;
 
