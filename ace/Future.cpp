@@ -188,7 +188,7 @@ ACE_Future<T>::ACE_Future (void)
 
 template <class T>
 ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
-  : future_rep_ (FUTURE_REP::attach (r.future_rep_))
+  : future_rep_ (FUTURE_REP::attach (((ACE_Future<T> &) r).future_rep_))
 {
 }
 
