@@ -152,7 +152,9 @@ int
 Supplier::send_market_status (const char *stock_name,
                               long value)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Make the RMI.
       this->notifier_->market_status (stock_name,
@@ -210,7 +212,9 @@ Supplier::run (void)
 int
 Supplier::via_naming_service (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -240,7 +244,8 @@ Supplier::via_naming_service (void)
       return -1;
     }
   ACE_ENDTRY;
-
+  ACE_CHECK_RETURN (-1);
+  
   return 0;
 }
 
@@ -252,7 +257,9 @@ Supplier::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
@@ -301,7 +308,7 @@ Supplier::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

@@ -140,7 +140,8 @@ Consumer_Handler::parse_args (void)
 int
 Consumer_Handler::via_naming_service (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -173,6 +174,7 @@ Consumer_Handler::via_naming_service (void)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -213,7 +215,8 @@ Consumer_Handler::init (int argc, char **argv)
 		       "register_handler for SIGINT"),
 		      -1);
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
@@ -270,7 +273,8 @@ Consumer_Handler::run (void)
 {
   //CORBA::Environment TAO_TRY_ENV;
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       ACE_NEW_RETURN (this->consumer_servant_,
 		      Consumer_i (),
@@ -294,10 +298,11 @@ Consumer_Handler::run (void)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Consumer_Handler::run ()");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Consumer_Handler::run ()");
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
