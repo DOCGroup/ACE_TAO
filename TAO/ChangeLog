@@ -1,3 +1,15 @@
+Thu Feb 12 14:28:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        
+          Changed the implementation of insertion and extraction operators
+          for unbounded (w)strings to be identical to those for the
+          bounded versions, only with the bound set to 0. This eliminates
+          bogus failures when (w)strings are inserted as bounded and
+          extracted as unbounded, or vice versa. Thanks to
+          David Kinder <david.kinder@sophos.com> for pointing out
+          the problem.
+
 Thu Feb 12 13:10:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
