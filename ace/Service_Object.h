@@ -98,6 +98,9 @@ public:
   void fini (void);
   // Calls fini() on <type_>
 
+  int fini_called (void) const;
+  // Check if the service has been fini'ed.
+
   void dump (void) const;
   // Dump the state of an object.
 
