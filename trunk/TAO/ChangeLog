@@ -1,3 +1,39 @@
+Mon Jul  8 16:29:16 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Utils/Makefile:
+	  Add new library with helper classes and templates that make
+	  type-safe, exception-safe CORBA programming significantly
+	  easier.
+
+	* tao/Utils/Auto_Functor.h:
+	* tao/Utils/Auto_Functor.inl:
+	* tao/Utils/Auto_Functor.cpp:
+	  Policy-based auto_ptr<>-like helper class.
+
+	* tao/Utils/Implicit_Deactivator.h:
+	* tao/Utils/Implicit_Deactivator.cpp:
+	  Automatically deactivate an implicitly activated (i.e. via
+	  _this()) servant.
+
+	* tao/Utils/ORB_Destroyer.h:
+	* tao/Utils/ORB_Destroyer.cpp:
+	  Automatically call orb->destroy()
+
+	* tao/Utils/PolicyList_Destroyer.h:
+	* tao/Utils/PolicyList_Destroyer.inl:
+	* tao/Utils/PolicyList_Destroyer.cpp:
+	  Automatically destroy all the policies in a policy list.
+
+	* tao/Utils/RIR_Narrow.h:
+	* tao/Utils/RIR_Narrow.cpp:
+	  Call resolve_initial_references() and then narrow.
+
+	* tao/Utils/Servant_Var.h:
+	* tao/Utils/Servant_Var.inl:
+	* tao/Utils/Servant_Var.cpp:
+	  Automatically manage the reference count on a Servant, like
+	  ServantBase_var, but type-safe.
+
 Mon Jul  8 15:16:34 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/DynAny_Test/Makefile:
