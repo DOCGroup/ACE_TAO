@@ -1,3 +1,28 @@
+Mon Jun 15 20:56:20 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POAC: Changed all the exception from user exceptions to
+ 	  system exceptions.
+
+	* tao/GIOP.cpp (convert_CORBA_to_GIOP_exception): Added new
+ 	  function to convert CORBA Exception type to GIOP reply type.
+
+	* tao/Exception.cpp
+
+	  (init): Register POA exceptions as system exceptions
+
+	  (exception_type): Added code to determine if exception is a POA
+ 	  exception.
+
+	  (print_exception): Changed code to use exception_type.
+	  
+	  Removed sys_exceptions and NUM_SYS_EXCEPTIONS.  They were not
+ 	  being used.
+
+	* tao/Connect.cpp (send_error): Cannot assume that the exception
+ 	  is a system exception.  Must use
+ 	  TAO_GIOP::convert_CORBA_to_GIOP_exception to find the correct
+ 	  type of the exception.
+	
 Mon Jun 15 16:14:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* test/Cubit/TAO/IDL_Cubit/collocation_test.cpp: New program to

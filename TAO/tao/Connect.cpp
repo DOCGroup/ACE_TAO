@@ -360,7 +360,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
       else
       {
         // write the reply_status
-        output.write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+        output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (env.exception_type ()));
 
         // write the actual exception
         output.encode (except_tc, x, 0, env2);
