@@ -37,7 +37,7 @@ static int entrycount = 0;
 static int
 selector (const dirent *d)
 {
-  return ACE_OS_String::strcmp (d->d_name, "Dirent_Test.cpp") == 0;
+  return ACE_OS_String::strcmp (d->d_name, ACE_TEXT ("Dirent_Test.cpp")) == 0;
 }
 
 static int
