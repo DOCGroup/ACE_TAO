@@ -556,7 +556,6 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
 {
   ACE_INET_Addr *local_addr;
 
-  int result = -1;
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
   this->flow_component_ = flow_component;

@@ -565,7 +565,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 
   if (this->control_address_ != 0)
     {
-      u_short control_port;
+      u_short control_port = 0;
 
       switch (this->protocol_)
         {
@@ -742,7 +742,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
 
   if (this->control_address_ != 0)
     {
-      u_short control_port;
+      u_short control_port = 0;
 
 
       switch (this->protocol_)
