@@ -1,3 +1,7 @@
+Thu Dec 12 12:55:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Add missing snprintf() method declaration for ACE_HAS_WCHAR
+
 Thu Dec 12 08:49:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Log_Msg.cpp: Fixed a warning in LynxOS builds.
