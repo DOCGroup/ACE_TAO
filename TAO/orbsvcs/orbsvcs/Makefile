@@ -17,11 +17,16 @@ IDL_FILES = \
 	RtecSchedulerC \
 	RtecSchedulerS \
 	RtecEventChannelAdminC \
-	RtecEventChannelAdminS \
+	RtecEventChannelAdminS
+
+# Compile using av=1 to compile the AVStreams stuff.
+ifdef av
+IDL_FILES += \
 	CosPropertyServiceS \
 	CosPropertyServiceC \
 	AVStreamsS \
-	AVStreamsC \
+	AVStreamsC
+endif
 
 FILES= $(IDL_FILES) \
 	Event_Utilities \
@@ -54,6 +59,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
+
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
