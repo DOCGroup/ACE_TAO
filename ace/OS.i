@@ -5253,6 +5253,10 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                       qos.SendingFlowspec.ServiceType,
                                       qos.SendingFlowspec.MaxSduSize,
                                       qos.SendingFlowspec.MinimumPolicedSize,
+#else /* ACE_HAS_WINSOCK2_GQOS */
+                                      0,
+                                      0,
+                                      0,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                       0,
                                       0);
@@ -5266,6 +5270,10 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                         qos.ReceivingFlowspec.ServiceType,
                                         qos.ReceivingFlowspec.MaxSduSize,
                                         qos.ReceivingFlowspec.MinimumPolicedSize,
+#else /* ACE_HAS_WINSOCK2_GQOS */
+                                        0,
+                                        0,
+                                        0,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                         0,
                                         0);
