@@ -132,13 +132,13 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
 // The symbol refernce of the name specified is obtained.
 
 void *
-ACE_DLL::symbol (const ACE_TCHAR *sym_name)
+ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
 {
   ACE_TRACE ("ACE_DLL::symbol");
 
   this->error_ = 0;
 
-  void *sym = this->dll_handle_->symbol (sym_name);
+  void *sym = this->dll_handle_->symbol (sym_name, ignore_errors);
 
   if (!sym)
     this->error_ = 1;

@@ -635,6 +635,32 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #endif /* ACE_HAS_PACE */
 
 // ============================================================================
+// Macros for controlling the lifetimes of dlls loaded by ACE_DLL--including
+// all dlls loaded via the ACE Service Config framework.
+//
+// Please don't change these values or add new ones wantonly, since we use 
+// the ACE_BIT_ENABLED, etc..., macros to test them.
+// ============================================================================
+
+// Per-process policy that unloads dlls eagerly.
+#define ACE_DLL_UNLOAD_POLICY_PER_PROCESS 0
+// Apply policy on a per-dll basis.  If the dll doesn't use one of the macros
+// below, the current per-process policy will be used.
+#define ACE_DLL_UNLOAD_POLICY_PER_DLL 1
+// Don't unload dll when refcount reaches zero, i.e., wait for either an 
+// explicit unload request or program exit.
+#define ACE_DLL_UNLOAD_POLICY_LAZY 2
+// Default policy allows dlls to control their own destinies, but will
+// unload those that don't make a choice eagerly.
+#define ACE_DLL_UNLOAD_POLICY_DEFAULT ACE_DLL_UNLOAD_POLICY_PER_DLL
+
+// Add this macro you one of your cpp file in your dll.  X should
+// be either ACE_DLL_UNLOAD_POLICY_DEFAULT or ACE_DLL_UNLOAD_POLICY_LAZY.
+#define ACE_DLL_UNLOAD_POLICY(CLS,X) \
+extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
+  { return X;}
+
+// ============================================================================
 // ACE_USES_CLASSIC_SVC_CONF macro
 // ============================================================================
 
