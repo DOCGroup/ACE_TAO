@@ -1,3 +1,11 @@
+Sun Sep 24 12:20:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Abstract_ServantBase.cpp
+	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+
+	  Removed ";" at the end of the ACE_RCSID entry, to avoid
+	  having this notified as extra ";" on OSF1 builds. 
+
 Sat Sep 23 22:30:05 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
