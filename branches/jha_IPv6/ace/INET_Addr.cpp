@@ -280,7 +280,6 @@ ACE_INET_Addr::set (u_short port_number,
   this->ACE_Addr::base_set (ACE_AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
                          this->inet_addr_);
-  printf("in set(port,hostname)\n");
   // Yow, someone gave us a NULL host_name!
   if (host_name == 0)
     {
@@ -369,6 +368,7 @@ ACE_INET_Addr::set (const char port_name[],
 // Initializes a ACE_INET_Addr from a <port_name> and an Internet
 // address.
 
+#if 0
 int
 ACE_INET_Addr::set (const char port_name[],
                     ace_in_addr_t inet_address,
@@ -395,6 +395,7 @@ ACE_INET_Addr::set (const char port_name[],
     return this->set (sp->s_port, inet_address, 0);
 #endif /* VXWORKS */
 }
+#endif
 
 // Creates a ACE_INET_Addr from a PORT_NUMBER and the remote
 // HOST_NAME.
@@ -690,11 +691,13 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 }
 
 const char *
-ACE_INET_Addr::get_host_addr (char *, int) const
+ACE_INET_Addr::get_host_addr (char *dst, int size) const
 {
-  // XXXXX
-  printf("Error: get_host_addr not defined yet for IPv6 addresses\n");
-  return 0;
+#if defined (ACE_HAS_IPV6)
+  return ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr_.sin6_addr,dst,size);
+#else
+  return ACE_OS::inet_ntop (AF_INET,  (const void*)&this->inet_addr_.sin_addr,dst,size);
+#endif
 }
 
 // Return the dotted Internet address.
@@ -702,10 +705,9 @@ const char *
 ACE_INET_Addr::get_host_addr (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_addr");
-#if defined ACE_HAS_IPV6
-  // XXXXXXXXXXX
-  ACE_ERROR ((LM_ERROR,"ACE_INET_Addr::get_host_name needs to be written for IPv6\n"));
-  return 0;
+#if defined (ACE_HAS_IPV6)
+  static char buf[INET6_ADDRSTRLEN];
+  return this->get_host_addr(buf,INET6_ADDRSTRLEN);
 #else
   return ACE_OS::inet_ntoa (this->inet_addr_.sin_addr);
 #endif

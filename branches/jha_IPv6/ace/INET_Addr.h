@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Doug Schmidt
+ *  Revised to support IPv6 by John Aughey
  */
 //=============================================================================
 
@@ -23,6 +24,7 @@
 
 #include "ace/Addr.h"
 
+// To simplify the code, the ANY address is defined here.
 #if defined (ACE_HAS_IPV6)
 #define ACE_INADDR_ANY in6addr_any
 #define ACE_AF_INET AF_INET6
@@ -40,6 +42,8 @@
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
+  /* These typedefs simplify the set methods in the protected
+     section. */
 #if defined (ACE_HAS_IPV6)
   typedef sockaddr_in6 ace_sockaddr_in_t;
   typedef in6_addr ace_in_addr_t;
@@ -55,13 +59,34 @@ public:
   /// Copy constructor.
   ACE_INET_Addr (const ACE_INET_Addr &);
 
+  // BEGIN IPv4 backwards compatible definitions
+
   /// Creates an <ACE_INET_Addr> from a ace_sockaddr_in structure.
+  /// This method may be depreciated in the future.
   ACE_INET_Addr (const sockaddr_in *, int len);
+
+  // Initializes an <ACE_INET_Addr> from a <port_number> and the
+  // remote <host_name>.  If <encode> is enabled then <port_number> is
+  // converted into network byte order, otherwise it is assumed to be
+  // in network byte order already and are passed straight through.
+  // Note: if ACE_HAS_IPV6 is defined, this will create a IPv4 address
+  // inside the IPv6 structure.  This interface is likely to be depreciated
+  // very soon.
+  int set (u_short port_number,
+           ACE_UINT32 ip_addr = INADDR_ANY,
+           int encode = 1);
 
   /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
   int set (const sockaddr_in *,
 	   int len);
 
+  /// Return the 4-byte IP address, converting it into host byte
+  /// order.
+  // XXXXXXXXXXX This needs to have something done with it for IPv6 addressing
+  // Multicast depends on this.  We need to figure out what to do with this.
+  ACE_UINT32 get_ip_address (void) const;
+
+  // END IPv4 backwards compatible definitions
 
   /// Creates an <ACE_INET_Addr> from a <port_number> and the remote
   /// <host_name>.
@@ -112,11 +137,6 @@ public:
 		 const wchar_t host_name[],
                  const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
-#if !defined (ACE_HAS_IPV6)
-  ACE_INET_Addr (const wchar_t port_name[],
-		 ace_in_addr_t ip_addr,
-                 const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
-#endif /* ! ACE_HAS_IPV6 */
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
@@ -137,17 +157,6 @@ public:
    */
   int set (u_short port_number,
 	   const char host_name[],
-           int encode = 1);
-
-  // Initializes an <ACE_INET_Addr> from a <port_number> and the
-  // remote <host_name>.  If <encode> is enabled then <port_number> is
-  // converted into network byte order, otherwise it is assumed to be
-  // in network byte order already and are passed straight through.
-  // Note: if ACE_HAS_IPV6 is defined, this will create a IPv4 address
-  // inside the IPv6 structure.  This interface is likely to be depreciated
-  // very soon.
-  int set (u_short port_number,
-           ACE_UINT32 ip_addr = INADDR_ANY,
            int encode = 1);
 
   /// Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
@@ -174,13 +183,7 @@ public:
 	   const wchar_t host_name[],
            const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
-#if !defined (ACE_HAS_IPV6)
-  int set (const wchar_t port_name[],
-	   ace_in_addr_t ip_addr,
-           const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
-
   int set (const wchar_t addr[]);
-#endif /* ! ACE_HAS_IPV6 */
 #endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
@@ -213,9 +216,9 @@ public:
   virtual int string_to_addr (const char address[]);
 
 #if defined (ACE_HAS_WCHAR)
-  /*
+
   virtual int string_to_addr (const char address[]);
-  */
+
 #endif /* ACE_HAS_WCHAR */
 
 
@@ -256,12 +259,6 @@ public:
 
   /// Return the "dotted decimal" Internet address into the string provided.
   const char *get_host_addr (char *dst, int size) const;
-
-  /// Return the 4-byte IP address, converting it into host byte
-  /// order.
-  // XXXXXXXXXXX This needs to have something done with it for IPv6 addressing
-  // Multicast depends on this.  We need to figure out what to do with this.
-  ACE_UINT32 get_ip_address (void) const;
 
   /**
    * Returns true if <this> is less than <rhs>.  In this context,
@@ -307,6 +304,7 @@ public:
 	   int len);
 #endif
 
+#if 0
   /**
    * Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
    * <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
@@ -315,6 +313,7 @@ public:
   int set (const char port_name[],
 	   ace_in_addr_t ip_addr,
            const char protocol[] = "tcp");
+#endif
 
 private:
   /// Underlying representation.
