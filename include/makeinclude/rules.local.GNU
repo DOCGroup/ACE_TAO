@@ -207,7 +207,12 @@ clean.local:
 	-$(RM) -r Templates.DB gcctemp.c gcctemp so_locations *.ics
 	-$(RM) -r templateregistry SunWS_cache ir.out core.*
 
-realclean.local: clean.local deinstall.local
+clean_idl_stubs.local:
+	-$(RM) $(addsuffix $(IDL_CLIENT_HDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_CLIENT_INL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_CLIENT_SRC_EXT),$(IDL_FILES))
+	-$(RM) $(addsuffix $(IDL_SERVER_HDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_INL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_SRC_EXT),$(IDL_FILES))
+	-$(RM) $(addsuffix $(IDL_SERVER_THDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_TINL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_TSRC_EXT),$(IDL_FILES))
+
+realclean.local: clean.local deinstall.local clean_idl_stubs.local
 	-$(RM) $(BIN:%=%$(EXEEXT)) $(BIN:%=%_debug$(EXEEXT)) $(BIN:%=%_profile$(EXEEXT)) $(BIN:%=%_optimize$(EXEEXT)) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%.*) $(SHLIB:%.so=%.a) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2:%=%$(EXEEXT)) $(BIN2:%=%_debug$(EXEEXT)) $(BIN2:%=%_profile$(EXEEXT)) $(BIN2:%=%_optimize$(EXEEXT)) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
 
 #----------------------------------------------------------------------------

@@ -15,33 +15,14 @@ ifdef SHLIBA
 VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 endif
 
-VLOBJS   += $(subst .c,.$(OBJEXT), \
-                $(subst .cpp,.$(OBJEXT), \
-                    $(foreach file,$(LSRC),$(VDIR)$(notdir $(file)))))
-
+VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(LSRC)))))
 LSRC    += $(LSRC2)
-ifdef PRELIB
-ifdef PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .c,.$(OBJEXT), \
-                $(subst .cpp,.$(OBJEXT), \
-                    $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
-else  # ! PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .c,.$(OBJEXT), \
-                $(subst .cpp,.$(OBJEXT), \
-                     $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
-endif # ! PRELIB_USES_OBJ_ONLY
-  VSHOBJS1 = $(VSHOBJS)
-else  # ! PRELIB
-  VSHOBJS = $(subst .c,.$(OBJEXT), \
-                $(subst .cpp,.$(OBJEXT), \
-                     $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
-  VSHOBJS1 = $(subst .c,.$(OBJEXT), \
-                 $(subst .cpp,.$(OBJEXT), \
-                     $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
-endif # ! PRELIB
 
-# Comment out for now...
-# $(DEFS:%=$(INSINC)/%) \
+
+ifdef PRELIB
+VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
+VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
+endif # ! PRELIB
 
 ifdef static_libs
   INSTALL += $(VLIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT))
@@ -55,27 +36,8 @@ ifdef SHLIBA
 endif
 endif # shared_libs
 
-ifdef PRELIB
-# Unfortunately, gcc has to do a link of all of the objects (during which
-# it may decide to recompile some of the objects), before we can safely build
-# any libraries or shared objects.  Comment this line if no shared
-# libraries or objects are used.
-#
-# I have no idea why this dependency has any effect similar to what is
-# described above, so I will comment it out.  This eliminates the VERY
-# annoying messages from make such as:
-# make: Circular .shobj/interp.so <- libcorba.so dependency dropped.
-#$(VSHOBJS): $(VSHLIB)
-endif
-
-# Comment these lines out if you want to build both *.a and *.so libraries...
-#$(VSHLIB): $(VSHOBJS)
-#ifdef PRELIB
-#	$(PRELIB)
-#endif
-#	$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(LDFLAGS) $(VSHDIR)*.$(OBJEXT)
-
-# Uncomment the remaining lines if you want to build both *.a and *.so libraries...
+# Uncomment the remaining lines if you want to build both *.a and *.so
+# libraries...
 VLIB    = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 $(VLIB): $(VLOBJS)
@@ -118,7 +80,8 @@ ifneq (,$(RANLIB))
 	-$(RANLIB) $@
 endif # RANLIB
 
-# Note that if you don't want to build shared libraries, just remove the $(VSHOBJS)
+# Note that if you don't want to build shared libraries, just remove the
+# $(VSHOBJS)
 ifdef SHLIBBUILD
 $(VSHLIB): $(VSHOBJS)
 else
