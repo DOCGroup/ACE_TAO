@@ -111,7 +111,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
   , rs_pi_current_ ()
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
-  profile_.object_key (object_key);
+  this->profile_.object_key (object_key);
   parse_error = 0;
 }
 

@@ -7,6 +7,7 @@
 #include "MessagingC.h"
 #include "Stub.h"
 #include "debug.h"
+#include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Profile.i"
@@ -312,6 +313,37 @@ TAO_Profile::verify_profile_version (TAO_ENV_SINGLE_ARG_DECL)
                    CORBA::COMPLETED_NO));
     }
 }
+
+int
+TAO_Profile::supports_multicast (void) const
+{
+  // Most profiles do not support multicast endpoints.
+  return 0;
+}
+
+
+void
+TAO_Profile::addressing_mode (CORBA::Short addr
+                              TAO_ENV_ARG_DECL)
+{
+  // ** See race condition note about addressing mode in Profile.h **
+  switch (addr) 
+    {
+    case TAO_Target_Specification::Key_Addr:
+    case TAO_Target_Specification::Profile_Addr:
+    case TAO_Target_Specification::Reference_Addr:
+      this->addressing_mode_ = addr;
+      break;
+
+    default:
+      ACE_THROW (CORBA::BAD_PARAM (
+             CORBA_SystemException::_tao_minor_code (
+               TAO_DEFAULT_MINOR_CODE,
+               EINVAL),
+             CORBA::COMPLETED_NO));
+    }
+}
+
 
 // ****************************************************************
 

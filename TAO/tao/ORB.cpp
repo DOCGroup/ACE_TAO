@@ -1082,7 +1082,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     return this->orb_core ()->resolve_typecodefactory (TAO_ENV_SINGLE_ARG_PARAMETER);
 
-
   // -----------------------------------------------------------------
 
   // Search the object reference table.  This search must occur before

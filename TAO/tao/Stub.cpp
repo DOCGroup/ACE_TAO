@@ -48,7 +48,6 @@ TAO_Stub::TAO_Stub (const char *repository_id,
 #if (TAO_HAS_CORBA_MESSAGING == 1)
     policies_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-    addressing_mode_ (0),
     ior_info_ (0),
     forwarded_ior_info_ (0)
 {

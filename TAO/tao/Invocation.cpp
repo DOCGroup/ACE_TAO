@@ -310,23 +310,21 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // The target specification mode
-  if (this->stub_->addressing_mode () ==
-      TAO_Target_Specification::Key_Addr)
+  // Set the target specification mode
+  switch (this->profile_->addressing_mode ()) 
     {
+    case TAO_Target_Specification::Key_Addr:
       this->target_spec_.target_specifier (
             this->profile_->object_key ());
-    }
-  else if (this->stub_->addressing_mode ()
-             == TAO_Target_Specification::Profile_Addr)
-    {
+      break;
+
+    case TAO_Target_Specification::Profile_Addr:
       this->target_spec_.target_specifier (
                 this->profile_->create_tagged_profile ()
               );
-    }
-  else if (this->stub_->addressing_mode ()
-             == TAO_Target_Specification::Reference_Addr)
-    {
+      break;
+
+    case TAO_Target_Specification::Reference_Addr:
       // We need to call the method seperately. If there is no
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
@@ -351,6 +349,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
 
       this->target_spec_.target_specifier (*ior_info,
                                            index);
+      break;
     }
 
   // Update the response flags
@@ -674,7 +673,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
       // loaded services.
       return this->orb_core_->service_raise_comm_failure (this,
                                                           this->profile_
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                          TAO_ENV_ARG_PARAMETER);
     }
 
   // @@ Alex: the old version of this had some error handling code,
@@ -735,7 +734,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
 
         CORBA::SystemException* ex =
           TAO_Exceptions::create_system_exception (type_id.in ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                   TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_OK);
 
         if (ex == 0)
@@ -762,7 +761,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
       // Handle the forwarding and return so the stub restarts the
       // request!
       return this->location_forward (this->inp_stream ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                     TAO_ENV_ARG_PARAMETER);
     case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
       {
         // We have received an exception with a request to change the
@@ -778,9 +777,10 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
                               TAO_INVOKE_OK);
           }
 
-        // Now set this addressing mode in the stub object, so that
+        // Now set this addressing mode in the profile, so that
         // the next invocation need not go through this.
-        this->stub_->addressing_mode (addr_mode);
+        this->profile_->addressing_mode (addr_mode
+                                         TAO_ENV_ARG_PARAMETER);
 
         // Now restart the invocation
         return TAO_INVOKE_RESTART;
@@ -1061,9 +1061,10 @@ TAO_GIOP_Locate_Request_Invocation::invoke (TAO_ENV_SINGLE_ARG_DECL)
                               TAO_INVOKE_OK);
           }
 
-        // Now set this addressing mode in the stub object, so that
+        // Now set this addressing mode in the profile, so that
         // the next invocation need not go through this.
-        this->stub_->addressing_mode (addr_mode);
+        this->profile_->addressing_mode (addr_mode
+                                         TAO_ENV_ARG_PARAMETER);
 
         // Restart the invocation.
         return TAO_INVOKE_RESTART;

@@ -199,6 +199,10 @@ public:
   void argument_flag (CORBA::Boolean flag);
   CORBA::Boolean argument_flag (void);
 
+  /// 1: Request dispatch information in tagged profile
+  /// 0: Request dispatch information in object key
+  CORBA::Boolean profile_has_dispatch_info_;
+
 #if TAO_HAS_INTERCEPTORS == 1
   /// Return a reference to the number of interceptors pushed on to
   /// the current interceptor flow stack.

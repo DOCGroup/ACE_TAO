@@ -459,7 +459,6 @@ const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 #define TAO_OBJID_CODECFACTORY "CodecFactory"
 #define TAO_OBJID_PICurrent "PICurrent"
 
-
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
 // The CORBA_ORB::list_initial_services () method iterates through
@@ -1045,6 +1044,19 @@ enum TAO_Policy_Scope
 #if !defined (TAO_DEF_FT_CORBA_MINOR)
 #define TAO_DEF_FT_CORBA_MINOR 0
 #endif /* TAO_DEF_FT_CORBA_MINOR */
+
+// This is the version of the MIOP spec that TAO supports. The
+// exact usage of the version has not been emphasized. But TAO should
+// get a TaggedComponents for a group with this version number. So, for 
+// the present, we do a sanity check for our version and raise an error on
+// a mismatch.
+
+#if !defined (TAO_DEF_MIOP_MAJOR)
+#define TAO_DEF_MIOP_MAJOR 1
+#endif /* TAO_DEF_MIOP_MAJOR */
+#if !defined (TAO_DEF_MIOP_MINOR)
+#define TAO_DEF_MIOP_MINOR 0
+#endif /* TAO_DEF_MIOP_MINOR */
 
 #if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
 #   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024

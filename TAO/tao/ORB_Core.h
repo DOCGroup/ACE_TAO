@@ -79,7 +79,8 @@ class TAO_Thread_Lane_Resources;
 class TAO_Stub_Factory;
 class TAO_Endpoint_Selector_Factory;
 class TAO_Service_Context;
-
+class TAO_POA_PortableGroup_Hooks;
+class TAO_Request_Dispatcher;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -700,6 +701,12 @@ public:
   /// Resolve the RT Current flyweight for this ORB.
   CORBA::Object_ptr resolve_rt_current (TAO_ENV_SINGLE_ARG_DECL);
 
+#if (TAO_HAS_MIOP == 1)
+  /// Set/Get the current PortableGroup POA hooks.
+  TAO_POA_PortableGroup_Hooks *portable_group_poa_hooks (void) const;
+  void portable_group_poa_hooks(TAO_POA_PortableGroup_Hooks *poa_hooks);
+#endif /* TAO_HAS_MIOP == 1 */
+
   /// List all the service known by the ORB
   CORBA_ORB_ObjectIdList_ptr list_initial_references (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
@@ -856,6 +863,14 @@ public:
   /// the resolve_initial_references() mechanism.
   TAO_Object_Ref_Table &object_ref_table (void);
 
+  /// Return the current request dispatcher strategy.
+  TAO_Request_Dispatcher *request_dispatcher (void);
+
+  /// Set a new request dispatcher.  The ORB Core retains ownership
+  /// of the request dispatcher once it gets it.  Currently, this only
+  /// gets called at initialization.
+  void request_dispatcher (TAO_Request_Dispatcher *rd);
+
   /// Return the flushing strategy
   /**
    * The flushing strategy is created by the resource factory, and it
@@ -996,6 +1011,12 @@ protected:
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
   CORBA::Object_var root_poa_;
 
+#if (TAO_HAS_MIOP == 1)
+  // Hold a pointer for the POA if it needs to use any of the Portable 
+  // group hooks.
+  TAO_POA_PortableGroup_Hooks *portable_group_poa_hooks_;
+#endif /* TAO_HAS_MIOP == 1 */
+
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;
 
@@ -1121,6 +1142,9 @@ protected:
   TAO_Policy_Current *policy_current_;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+    /// The request dispatching strategy.
+  TAO_Request_Dispatcher *request_dispatcher_;
 
   /**
    * POA current.
