@@ -29,14 +29,16 @@
 #include "ace/Dirent.h"
 #include "ace/Dirent_Selector.h"
 
-ACE_RCSID(tests, Dirent_Test, "$Id$")
+ACE_RCSID (tests,
+           Dirent_Test,
+           "$Id$")
 
 #if defined (VXWORKS) || defined(CHORUS)
 #define TEST_DIR "."
 #define TEST_ENTRY ".."
 #else
 #define TEST_DIR "../tests"
-#define TEST_ENTRY "Dirent_Test.cpp"
+#define TEST_ENTRY "Makefile"
 #endif /* VXWORKS || CHORUS */
 
 // Number of entries in the directory.
