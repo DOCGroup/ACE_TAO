@@ -103,6 +103,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       DOMDocument* tpd_doc = tpd_parser->parseURI (package_url);
+
+      ACE_UNUSED_ARG (tpd_doc);
+
       if (tpd_handler.getErrors())
         {
           return 1;
