@@ -1,3 +1,12 @@
+Mon Jul 26 18:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/run_tests.sh (Cached_Conn_Test and
+	  Cached_Accept_Conn_Test): These two tests are known to leak
+	  memory when compiled with old gcc (g++).  Therefore, we skip
+	  these tests when using purify and old gcc (g++).  A -p option
+	  was added to the script to indicate that we want to run with
+	  purify.	
+	
 Mon Jul 26 17:09:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.{h,cpp},Makefile: don't create the
