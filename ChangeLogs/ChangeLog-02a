@@ -1,3 +1,10 @@
+Sun May 14 12:19:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl:
+
+          Added a -TAO option to specify that the TAO subdirectory
+          should be compiled.
+
 Sat May 13 19:05:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/SString.cpp:
