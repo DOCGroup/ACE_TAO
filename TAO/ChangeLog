@@ -1,3 +1,12 @@
+Thu May 22 14:06:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added checks for IDL_CF_NOWARNINGS flag having been set, so that
+          the -w option will suppress all warnings, not just those specific
+          to the preprocessor. Thanks to Bill Church <wchurch@ara.com> for
+          reporting the problem.
+
 Thu May 22 11:35:51 2003  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
