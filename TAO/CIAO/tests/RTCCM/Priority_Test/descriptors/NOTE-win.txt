@@ -1,6 +1,8 @@
 Conventional test:
 ==================
 
+SET CIAO_DEBUG_LEVEL=25
+
 Remote Daemon:
 --------------
 
@@ -29,7 +31,9 @@ Assembly Deployer
 
     w:\TAO\CIAO\tests\RTCCM\Priority_Test\descriptors\
     title Assembly Deployer
-    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a demo.cad
+    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior -o ck_file -a demo.cad
+
+    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior -d ck_file
 
 client
 ------

@@ -2,7 +2,8 @@
 
 #include "CCM_DeploymentC.h"
 #include "Assembly_ServiceC.h"
-#include "Client_init.h"
+#include "Server_init.h"
+#include "Cookies.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "ace/High_Res_Timer.h"
@@ -78,9 +79,13 @@ parse_args (int argc, char *argv[])
 }
 
 void
-create_assembly (Components::Deployment::AssemblyFactory_ptr *factory
+create_assembly (Components::Deployment::AssemblyFactory_ptr factory
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
+  ACE_High_Res_Timer overall, make_assembly, build_assembly;
+  overall.start ();             // Start measuring the overall time to
+                                // deploy an application.
+
   ACE_DEBUG ((LM_DEBUG, "Creating an Assembly with %s\n", cad));
 
   make_assembly.start ();   // Start measuring the time to parse a
@@ -120,38 +125,60 @@ create_assembly (Components::Deployment::AssemblyFactory_ptr *factory
                   build_time.sec (), build_time.usec ()));
     }
 
-  // Output Cookie value here.
+  ACE_Active_Map_Manager_Key key;
+  CIAO::Map_Key_Cookie::extract (ck.in (), key);
 
+  // Output Cookie value here.
+  FILE *ckh = ACE_OS::fopen (cookie_output, "w");
+  if (ckh != NULL)
+    {
+      ACE_OS::fprintf (ckh, "%d %d",
+                       key.slot_index (),
+                       key.slot_generation ());
+
+      ACE_OS::fclose (ckh);
+    }
+  else
+    ACE_ERROR ((LM_ERROR, "Unable to open cookie file: %s\n", cookie_output));
 }
 
 void
-teardown_assembly (Components::Deployment::AssemblyFactory_ptr *factory
+teardown_assembly (Components::Deployment::AssemblyFactory_ptr factory
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
   // Extract and restore Cookie value (ck) here.
+  ACE_UINT32 i, g;
+  FILE *ckh = ACE_OS::fopen (cookie_teardown, "r");
+  if (ckh != NULL)
+    {
+      fscanf (ckh, "%d %d", &i, &g);
+      ACE_OS::fclose (ckh);
+    }
+  else
+    ACE_ERROR ((LM_ERROR, "Unable to open cookie file: %s\n", cookie_teardown));
+
+  CIAO::Map_Key_Cookie ck;
+  ACE_Active_Map_Manager_Key key (i, g);
+  ck.insert (key);
 
   // Look up the assembly from the factory.
   Components::Deployment::Assembly_var assembly =
-    factory->lookup (ck.in ()
+    factory->lookup (&ck
                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   assembly->tear_down (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
-  factory->destroy (ck.in ()
+  factory->destroy (&ck
                     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_High_Res_Timer overall, make_assembly, build_assembly;
-  overall.start ();             // Start measuring the overall time to
-                                // deploy an application.
-
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -161,7 +188,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CIAO::Client_init (orb.in ());
+      CIAO::Server_init (orb.in ());
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
