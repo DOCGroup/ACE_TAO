@@ -166,6 +166,7 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 #define ACE_END_LOG \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
+  ACE_LOG_MSG->set_flags(ACE_Log_Msg::SILENT); \
   ace_file_stream.close ();
 
 #if defined (VXWORKS)
@@ -235,6 +236,9 @@ ACE_Test_Output::ACE_Test_Output (void)
 ACE_Test_Output::~ACE_Test_Output (void)
 {
 #if !defined (ACE_HAS_WINCE)
+  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
   delete this->output_file_;
 #endif /* ACE_HAS_WINCE */
 }
