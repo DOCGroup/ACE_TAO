@@ -54,7 +54,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Time_Value *
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, max_wait_time));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, max_wait_time));
   
   if (this->is_empty ())
     // Nothing on the Timer_Queue, so use whatever the caller gave us.
@@ -178,6 +178,12 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::free_node (ACE_Timer_Node_T<TYPE> *n
   this->free_list_->add (node);
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_LOCK &
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::lock (void)
+{
+  return this->lock_;
+}
+
 // Run the <handle_timeout> method for all Timers whose values are <=
 // <cur_time>.
 
@@ -185,7 +191,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_time)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::expire");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
 
   int number_of_timers_expired = 0;
 

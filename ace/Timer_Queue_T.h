@@ -254,7 +254,7 @@ public:
   void timer_skew (const ACE_Time_Value &skew);
   const ACE_Time_Value &timer_skew (void) const;
 
-  ACE_LOCK &mutex (void); 
+  ACE_LOCK &lock (void); 
   // Synchronization variable used by the queue
 
   FUNCTOR &upcall_functor (void);
@@ -285,7 +285,7 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
   // Factory method that frees a previously allocated node.
 
-  ACE_LOCK mutex_; 
+  ACE_LOCK lock_;
   // Synchronization variable for <ACE_Timer_Queue>.
 
   ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_;
