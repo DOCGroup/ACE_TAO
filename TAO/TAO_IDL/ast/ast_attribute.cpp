@@ -133,6 +133,38 @@ AST_Attribute::ast_accept (ast_visitor *visitor)
   return visitor->visit_attribute (this);
 }
 
+UTL_ExceptList *
+AST_Attribute::be_add_get_exceptions (UTL_ExceptList *t)
+{
+  if (this->pd_get_exceptions != 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                  this);
+    }
+  else
+    {
+      this->pd_get_exceptions = t;
+    }
+
+  return this->pd_get_exceptions;
+}
+
+UTL_ExceptList *
+AST_Attribute::be_add_set_exceptions (UTL_ExceptList *t)
+{
+  if (this->pd_set_exceptions != 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                  this);
+    }
+  else
+    {
+      this->pd_set_exceptions = t;
+    }
+
+  return this->pd_set_exceptions;
+}
+
 // Data accessors.
 
 idl_bool
