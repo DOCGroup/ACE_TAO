@@ -4,8 +4,8 @@
 #include "ace/Event_Handler.h"
 #include "ace/Get_Opt.h"
 
-static char *data = "Hello how are you";
-static char *addr = server_addr;
+static char *data;
+static char *addr;
 int fragment = 0;
 
 class frame_handler: public ACE_Event_Handler
@@ -92,6 +92,9 @@ parse_args (int argc,char **argv)
 int
 main (int argc, char **argv)
 {
+  server_addr = ACE_OS::strdup ("localhost:10000");
+  addr = server_addr;
+  data = ACE_OS::strdup ("Hello how are you");
   TAO_ORB_Manager orb_manager;
   
   orb_manager.init (argc,argv);
