@@ -21,8 +21,8 @@
 
 #include "tao/ORB.h"
 
-ACE_RCSID (FindPOA, 
-           FindPOA, 
+ACE_RCSID (FindPOA,
+           FindPOA,
            "$Id$")
 
 void
@@ -92,7 +92,7 @@ main (int argc, char **argv)
 
       // Get a TAO_Adapter_Activator reference
       PortableServer::AdapterActivator_var activator =
-        new TAO_Adapter_Activator (poa_manager.in ());
+        new TAO::Portable_Server::Adapter_Activator (poa_manager.in ());
 
       // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
