@@ -1,3 +1,16 @@
+Sat Aug  2 13:08:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Event_Service/Event_Service.h:
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.h:
+	* orbsvcs/LoadBalancer/Signal_Handler.h:
+	* orbsvcs/Notify_Service/Notify_Service.h:
+	* orbsvcs/PSS/PSDL_Datastore.cpp:
+	* orbsvcs/PSS/PSDL_Datastore.h:
+	* orbsvcs/PSS/PSDL_Scope.h:
+	* orbsvcs/PSS/PSDL_String.cpp: Fixed compile errors that were
+	  caused due to the refactoring done in ACE+TAO core.
+
 Sat Aug  2 09:14:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_interceptor.cpp:

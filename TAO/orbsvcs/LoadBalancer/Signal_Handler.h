@@ -22,6 +22,7 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServerC.h"
+#include "ace/Signal.h"
 
 
 /**

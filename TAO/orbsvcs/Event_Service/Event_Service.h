@@ -10,13 +10,15 @@
 
 #ifndef EC_EVENT_SERVICE_H
 #define EC_EVENT_SERVICE_H
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/RtecSchedulerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "orbsvcs/RtecSchedulerS.h"
+#include "ace/SString.h"
 
 class TAO_Module_Factory;
 
@@ -102,4 +104,5 @@ private:
   // A reference to the ORB, to shut it down properly.
 };
 
+#include /**/ "ace/post.h"
 #endif /* EC_EVENT_SERVICE_H */

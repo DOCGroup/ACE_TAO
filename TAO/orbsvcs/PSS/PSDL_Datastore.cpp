@@ -3,6 +3,7 @@
 #include "PSDL_Datastore.h"
 #include "PSDL_OctetSeq.h"
 #include "PSDL_String.h"
+#include "ace/SString.h"
 
 #include "tao/debug.h"
 #include "tao/OctetSeqC.h"
