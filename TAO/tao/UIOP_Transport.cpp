@@ -59,7 +59,12 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
 
 TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
-  this->flush_buffered_messages ();
+  // Cannot deal with errors, and therefore they are ignored.
+  this->send_buffered_messages ();
+
+  // Note that it also doesn't matter how much of the data was
+  // actually sent.
+  this->dequeue_all ();
 }
 
 TAO_UIOP_Handler_Base *&
@@ -311,7 +316,7 @@ TAO_UIOP_Client_Transport::register_handler (void)
 ssize_t
 TAO_UIOP_Transport::send (TAO_Stub *stub,
                           const ACE_Message_Block *message_block,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   if (stub == 0)
     {
@@ -331,93 +336,37 @@ TAO_UIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_UIOP_Transport::send (const ACE_Message_Block *mblk,
-                          ACE_Time_Value *max_time_wait)
+                          const ACE_Time_Value *max_time_wait)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
-  // @@ This code should be refactored into ACE.cpp or something
-  // similar!
-
-  // For the most part this was copied from GIOP::send_request and
-  // friends.
-
-  iovec iov[IOV_MAX];
-  int iovcnt = 0;
-  ssize_t n = 0;
-  ssize_t nbytes = 0;
-
-  for (const ACE_Message_Block *i = mblk;
-       i != 0;
-       i = i->cont ())
-    {
-      // Make sure there is something to send!
-      if (i->length () > 0)
-        {
-          iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = i->length ();
-          iovcnt++;
-
-          // The buffer is full make a OS call.  @@ TODO this should
-          // be optimized on a per-platform basis, for instance, some
-          // platforms do not implement writev() there we should copy
-          // the data into a buffer and call send_n(). In other cases
-          // there may be some limits on the size of the iovec, there
-          // we should set IOV_MAX to that limit.
-          if (iovcnt == IOV_MAX)
-            {
-              if (max_time_wait == 0)
-                n = this->handler_->peer ().sendv_n (iov,
-                                                     iovcnt);
-              else
-                n = ACE::writev (this->handler_->peer ().get_handle (),
-                                 iov,
-                                 iovcnt,
-                                 max_time_wait);
-
-              if (n <= 0)
-                return n;
-
-              nbytes += n;
-              iovcnt = 0;
-            }
-        }
-    }
-
-  // Check for remaining buffers to be sent!
-  if (iovcnt != 0)
-    {
-      n = this->handler_->peer ().sendv_n (iov,
-                                           iovcnt);
-      if (n < 1)
-        return n;
-
-      nbytes += n;
-    }
-
-  return nbytes;
+  return ACE::send_n (this->handle (),
+                      message_block,
+                      max_wait_time);
 }
 
 ssize_t
 TAO_UIOP_Transport::send (const u_char *buf,
                           size_t len,
-                          ACE_Time_Value *)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
-  return this->handler_->peer ().send_n (buf, len);
+  return this->handler_->peer ().send_n (buf,
+                                         len,
+                                         max_wait_time);
 }
 
 ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
-  return ACE::recv_n (this->handler_->peer ().get_handle (),
-                      buf,
-                      len,
-                      max_wait_time);
+  return this->handler_->peer ().recv_n (buf,
+                                         len,
+                                         max_wait_time);
 }
 
 // Default action to be taken for send request.

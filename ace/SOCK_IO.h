@@ -28,6 +28,27 @@ class ACE_Export ACE_SOCK_IO : public ACE_SOCK
   // = TITLE
   //     Defines the methods for the ACE socket wrapper I/O routines
   //     (e.g., send/recv).
+  //
+  // = NOTES
+  //
+  //     If <timeout> == 0, then the call behaves as a normal
+  //     send/recv call, i.e., for blocking sockets, the call will
+  //     block until action is possible; for non-blocking sockets,
+  //     EWOULDBLOCK will be returned if no action is immediately
+  //     possible.
+  //
+  //     If <timeout> != 0, the call will wait until the relative time
+  //     specified in *<timeout> elapses.
+  //
+  //     Errors are reported by -1 and 0 return values.  If the
+  //     operation times out, -1 is returned with <errno == ETIME>.
+  //     If it succeeds the number of bytes transferred is returned.
+  //
+  //     Methods with the extra <flags> argument will always result in
+  //     <send> getting called. Methods without the extra <flags>
+  //     argument will result in <send> getting called on Win32
+  //     platforms, and <write> getting called on non-Win32 platforms.
+  //
 public:
   // = Initialization and termination methods.
 
@@ -37,38 +58,29 @@ public:
   ~ACE_SOCK_IO (void);
   // Destructor.
 
-  ssize_t send (const void *buf,
+  ssize_t recv (void *buf,
                 size_t n,
-                int flags) const;
-  // Send an <n> byte buffer to the connected socket (uses
-  // <send(3n)>).
+                int flags,
+                const ACE_Time_Value *timeout = 0) const;
+  // Recv an <n> byte buffer from the connected socket.
 
   ssize_t recv (void *buf,
                 size_t n,
-                int flags) const;
-  // Recv an <n> byte buffer from the connected socket (uses
-  // <recv(3n)>).
+                const ACE_Time_Value *timeout = 0) const;
+  // Recv an <n> byte buffer from the connected socket.
 
-  ssize_t send (const void *buf,
-                size_t n) const;
-  // Send an <n> byte buffer to the connected socket (uses
-  // <write(2)>).
+  ssize_t recvv (iovec iov[],
+                 size_t n,
+                 const ACE_Time_Value *timeout = 0) const;
+  // Recv an <iovec> of size <n> from the connected socket.
 
-  ssize_t recv (void *buf,
-                size_t n) const;
-  // Recv an <n> byte buffer from the connected socket (uses
-  // <read(2)>).
-
-  ssize_t sendv (const iovec iov[],
-                 size_t n) const;
-  // Send an <iovec> of size <n> to the connected socket.
-
-  ssize_t send (const iovec iov[],
-                size_t n) const;
+  ssize_t recv (iovec iov[],
+                size_t n,
+                const ACE_Time_Value *timeout = 0) const;
   // Same as above.  Deprecated.
 
   ssize_t recvv (iovec *io_vec,
-                 const ACE_Time_Value *timeout = 0);
+                 const ACE_Time_Value *timeout = 0) const;
   // Allows a client to read from a socket without having to provide a
   // buffer to read.  This method determines how much data is in the
   // socket, allocates a buffer of this size, reads in the data, and
@@ -77,60 +89,47 @@ public:
   // delete [] io_vec->iov_base.
 
   ssize_t recv (iovec *io_vec,
-                const ACE_Time_Value *timeout = 0);
+                const ACE_Time_Value *timeout = 0) const;
   // Same as above.  Deprecated.
-
-  ssize_t send (const void *buf,
-                size_t n,
-                int flags,
-                const ACE_Time_Value *timeout) const;
-  // Wait to to <timeout> amount of time to send up to <n> bytes into
-  // <buf> from <handle> (uses the <send> call).  If <send> times out
-  // a -1 is returned with <errno == ETIME>.  If it succeeds the
-  // number of bytes sent is returned.
-
-  ssize_t recv (void *buf,
-                size_t n,
-                int flags,
-                const ACE_Time_Value *timeout) const;
-  // Wait up to <timeout> amount of time to receive up to <n> bytes
-  // into <buf> from <handle> (uses the <recv> call).  If <recv> times
-  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
-  // number of bytes received is returned.
-
-  ssize_t send (const void *buf,
-                size_t n,
-                const ACE_Time_Value *timeout) const;
-  // Wait to to <timeout> amount of time to send up to <n> bytes into
-  // <buf> from <handle> (uses the <send> call).  If <send> times out
-  // a -1 is returned with <errno == ETIME>.  If it succeeds the
-  // number of bytes sent is returned.
-
-  ssize_t recv (void *buf,
-                size_t n,
-                const ACE_Time_Value *timeout) const;
-  // Wait up to <timeout> amount of time to receive up to <n> bytes
-  // into <buf> from <handle> (uses the <recv> call).  If <recv> times
-  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
-  // number of bytes received is returned.
-
-  ssize_t send (size_t n,
-                ...) const;
-  // Send <n> varargs messages to the connected socket.
 
   ssize_t recv (size_t n,
                 ...) const;
   // Recv <n> varargs messages to the connected socket.
 
-  ssize_t send (const void *buf,
-                size_t n,
-                ACE_OVERLAPPED *overlapped) const;
-  // Send <n> bytes via Win32 <WriteFile> using overlapped I/O.
-
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
   // Recv <n> bytes via Win32 <ReadFile> using overlapped I/O.
+
+  ssize_t send (const void *buf,
+                size_t n,
+                int flags,
+                const ACE_Time_Value *timeout = 0) const;
+  // Send an <n> byte buffer to the connected socket.
+
+  ssize_t send (const void *buf,
+                size_t n,
+                const ACE_Time_Value *timeout = 0) const;
+  // Send an <n> byte buffer to the connected socket.
+
+  ssize_t sendv (const iovec iov[],
+                 size_t n,
+                 const ACE_Time_Value *timeout = 0) const;
+  // Send an <iovec> of size <n> to the connected socket.
+
+  ssize_t send (const iovec iov[],
+                size_t n,
+                const ACE_Time_Value *timeout = 0) const;
+  // Same as above.  Deprecated.
+
+  ssize_t send (size_t n,
+                ...) const;
+  // Send <n> varargs messages to the connected socket.
+
+  ssize_t send (const void *buf,
+                size_t n,
+                ACE_OVERLAPPED *overlapped) const;
+  // Send <n> bytes via Win32 <WriteFile> using overlapped I/O.
 
   void dump (void) const;
   // Dump the state of an object.
