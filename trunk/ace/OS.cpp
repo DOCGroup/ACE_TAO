@@ -3682,7 +3682,7 @@ ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
       tsparms_t tsparms;
       ACE_OS::memcpy (&tsparms, pcparms.pc_clparms, sizeof tsparms);
 
-      sched_params.policy (ACE_SCHED_RR);
+      sched_params.policy (ACE_SCHED_OTHER);
       sched_params.priority (tsparms.ts_upri);
       sched_params.scope (ACE_SCOPE_THREAD);
       return 0;
