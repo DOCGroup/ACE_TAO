@@ -32,7 +32,7 @@ TAO::TypeCode::Value<StringType,
     (cdr << TAO_ENCAP_BYTE_ORDER)
     && (cdr << this->base_attributes_.id ())
     && (cdr << this->base_attributes_.name ())
-    && (cdr << this->value_modifier_)
+    && (cdr << this->type_modifier_)
     && (cdr << *this->concrete_base_)
     && (cdr << this->nfields_);
 
@@ -113,6 +113,9 @@ TAO::TypeCode::Value<StringType,
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  if (!equal_concrete_base_types)
+    return 0;
+
   CORBA::ULong const tc_nfields =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -126,8 +129,8 @@ TAO::TypeCode::Value<StringType,
 
       CORBA::Visibility const lhs_visibility = lhs_field.visibility;
       CORBA::Visibility const rhs_visibility =
-        tc->member_visibility_i (i
-                                 ACE_ENV_ARG_PARAMETER);
+        tc->member_visibility (i
+                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (lhs_visibility != rhs_visibility)
@@ -207,6 +210,9 @@ TAO::TypeCode::Value<StringType,
         this->equivalent (rhs_concrete_base_type.in ()
                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+
+      if (!equivalent_concrete_base_types)
+        return 0;
 
       // Perform a structural comparison, excluding the name() and
       // member_name() operations.
@@ -294,9 +300,9 @@ TAO::TypeCode::Value<StringType,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-      safe_fields.reset (fields);
+      safe_fields.reset (tc_fields);
 
-      static char const * const empty_name = "";
+      static char const empty_name[] = "";
 
       for (CORBA::ULong i = 0; i < this->nfields_; ++i)
         {
@@ -304,15 +310,15 @@ TAO::TypeCode::Value<StringType,
           // the compact TypeCode.
 
           tc_fields[i].name = empty_name;
-          tc_fields[i].type =
-            &(*(this->fields_[i].type)->get_compact_typecode (
-                  ACE_ENV_SINGLE_ARG_PARAMETER));
-          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+          tc_fields[i].type = 0;  // FIX ME!!!!!
+//             &(*(this->fields_[i].type))->get_compact_typecode (
+//               ACE_ENV_SINGLE_ARG_PARAMETER);
+//           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
           tc_fields[i].visibility = this->fields_[i].visibility;
         }
     }
 
-  TAO_TypeCodeFactory_Adapter * adapter =
+  TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
       TAO_ORB_Core::typecodefactory_adapter_name ());
 
@@ -325,9 +331,9 @@ TAO::TypeCode::Value<StringType,
   CORBA::TypeCode_var tc =
     adapter->_tao_create_value_event_tc (Kind,
                                          this->base_attributes_.id (),
-                                         ""  /* empty name */,
-                                         this->value_modifier_,
-                                         *this->concrete_base_,
+                                         "", // empty name
+                                         this->type_modifier_,
+                                         this->concrete_base_,
                                          tc_fields,
                                          this->nfields_
                                          ACE_ENV_ARG_PARAMETER);
@@ -437,7 +443,7 @@ TAO::TypeCode::Value<StringType,
 {
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      CORBA::TypeCode::_nil ());
+                      CORBA::PRIVATE_MEMBER);
 
   return this->fields_[index].visibility;
 }

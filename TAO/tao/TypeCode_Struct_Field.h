@@ -87,7 +87,7 @@ namespace TAO
       char const * get_name (void) const;
 
       /// The name of the field.
-      STRING_TYPE const name;
+      STRING_TYPE name;
 
       /// Pointer to the @c CORBA::TypeCode of the field.
       /**

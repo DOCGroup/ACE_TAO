@@ -184,4 +184,6 @@ TAO::unaliased_kind (CORBA::TypeCode_ptr tc
     TAO::unaliased_typecode (tc
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TAO_TC_KIND_COUNT);
+
+  return unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
