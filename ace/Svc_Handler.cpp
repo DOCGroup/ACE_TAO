@@ -493,7 +493,7 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
                 "next_timeout_.sec = %d, next_timeout_.usec = %d\n",
                 this->next_timeout_.sec (),
                 this->next_timeout_.usec ()));
-
+}
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout (const ACE_Time_Value &,
