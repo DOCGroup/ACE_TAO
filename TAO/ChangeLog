@@ -1,3 +1,11 @@
+Wed Jul 31 08:07:22 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/PSS/PSDL.dsw: 
+	* orbsvcs/PSS/PSDL.dsp:
+	* orbsvcs/PSS/PSDL_Datastore.dsp:
+	* orbsvcs/PSS/PSDL_Parser.dsp: 
+	  Updated. These should load correctly.
+
 Wed Jul 31 07:13:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/PSS/server.cpp (main): 
