@@ -288,7 +288,7 @@ Command_Handler::init_av (void)
   /* try to stop and close previous playing */
   if (audioSocket >= 0 || videoSocket >= 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+      //      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
       // this may have to be taken care of afterwards.
       unsigned char tmp = CmdCLOSE;
       int result = 
@@ -773,7 +773,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
               exit(1);
             }
             while (msgo + msgs < pkts) {
-              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+              //              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
               //              cerr << "expecting a packet of size " << sizeof (*msg)                   << endl;
 
               VideoRead(buf, sizeof(*msg));
