@@ -123,7 +123,7 @@ void
 
 // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
-ACE_INLINE ::Components::Cookie_ptr
+::Components::Cookie_ptr
 [ciao module name]::[component name]_Context::subscribe_[publish name] ([eventtype]Consumer_ptr c
                                                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -140,7 +140,7 @@ ACE_INLINE ::Components::Cookie_ptr
   return retv._retn ();
 }
 
-ACE_INLINE [eventtype]Consumer_ptr
+[eventtype]Consumer_ptr
 [ciao module name]::[component name]_Context::unsubscribe_[publish name] (::Components::Cookie_ptr ck
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -166,7 +166,7 @@ ACE_INLINE [eventtype]Consumer_ptr
 
 ##  if [receptacle name] is a simplex receptacle ('uses')
 
-ACE_INLINE [uses type]_ptr
+[uses type]_ptr
 [ciao module name]::[component name]_Context::get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -174,7 +174,7 @@ ACE_INLINE [uses type]_ptr
 }
 
 // Simplex [receptacle name] connection management operations
-ACE_INLINE void
+void
 [ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c
                                                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -191,7 +191,7 @@ ACE_INLINE void
   this->ciao_uses_[receptacle name]_ = [uses type]::_duplicate (c);
 }
 
-ACE_INLINE [uses type]_ptr
+[uses type]_ptr
 [ciao module name]::[component name]_Context::disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
@@ -199,12 +199,12 @@ ACE_INLINE [uses type]_ptr
   if (CORBA::is_nil (this->ciao_uses_[receptacle name]_.in ()))
     ACE_THROW (::Components::NoConnection ());
 
-  return this->ciao_uses_[receptacle name]_.retn ();
+  return this->ciao_uses_[receptacle name]_._retn ();
 }
 
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
 // Multiplex [receptacle name] connection management operations
-ACE_INLINE ::Components::Cookie_ptr
+::Components::Cookie_ptr
 [ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c
                                                                          ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -222,7 +222,7 @@ ACE_INLINE ::Components::Cookie_ptr
   return retv._retn ();
 }
 
-ACE_INLINE [uses type]_ptr
+[uses type]_ptr
 [ciao module name]::[component name]_Context::disconnect_[receptacle name] (::Components::Cookie_ptr ck
                                                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -556,8 +556,8 @@ CORBA::Object_ptr
   if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
     {
 ##  if [receptacle name] is a simplex receptacle ('uses')
-      [receptacle name]Connections_var retv =
-        new ::Components::ConnectionConnections (1);
+      ::Components::ConnectionDescriptions_var retv =
+        new ::Components::ConnectionDescriptions (1);
       retv->length (1);
 
       retv[0] = new OBV_Components::ConnectionDescription;
@@ -617,9 +617,9 @@ CORBA::Object_ptr
   CORBA::ULong i = 0;
   for (; i < names.length (); ++i)
     {
-      retv[i] = new OBV_ReceptacleDescription;
+      retv[i] = new ::OBV_Components::ReceptacleDescription;
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-      (else) if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
+      (else) if (ACE_OS_String::strcmp (names[i].in (), "[receptacle name]") == 0)
         {
           retv[i]->Name ((const char *) "[receptacle name]");
           retv[i]->type_id ((const char *) "[uses type repo id]");
@@ -784,6 +784,8 @@ void
   ACE_CHECK_RETURN (0);
 
   retv[i]->consumer (c.in ());
+
+  i++;
 ##end foreach [consumer name] with [eventtype]
 
   return retv._retn ();
@@ -837,6 +839,8 @@ void
   retv[i]->Name ("[emit name]");
   retv[i]->type_id ("[eventtype]Consumer repo id");
   retv[i]->consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
+
+  i++;
 ##end foreach [emitter name] with [eventtype]
 
   return retv._retn ();
@@ -862,7 +866,7 @@ void
         {
           retv[i]->Name ("[emit name]");
           retv[i]->type_id ("[eventtype]Consumer repo id");
-  retv[i]->consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
+          retv[i]->consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_.in ()));
         }
 ##end foreach [consumer name] with [eventtype]
       else
@@ -997,8 +1001,9 @@ CORBA::Object_ptr
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  [component name]_var ho = [component name]::_narrow (obj
-                                                       ACE_ENV_ARG_PARAMETER);
+  [component name]_var ho
+    = [component name]::_narrow (obj
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return ho._retn ();
@@ -1020,12 +1025,14 @@ CORBA::Object_ptr
   ACE_CHECK_RETURN (0);
 
   // Acquiring the home reference and pass it to the component servant
-  CORBA::Object_var hobj= this->container_->get_objref (this
-                                                        ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var hobj
+    = this->container_->get_objref (this
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  [home name]_var home = [home name]::_narrow (hobj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+  [home name]_var home
+    = [home name]::_narrow (hobj.in ()
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   [ciao module name]::[component name]_Servant *svt =

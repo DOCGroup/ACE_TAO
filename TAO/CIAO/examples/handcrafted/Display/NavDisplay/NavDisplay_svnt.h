@@ -15,13 +15,13 @@
 //
 // ===========================================================
 
-#ifndef CIAO_GLUE_SESSION_[idl-basename]_SVNT_H
-#define CIAO_GLUE_SESSION_[idl-basename]_SVNT_H
+#ifndef CIAO_GLUE_SESSION_NAVDISPLAY_SVNT_H
+#define CIAO_GLUE_SESSION_NAVDISPLAY_SVNT_H
 #include "ace/pre.h"
 
-#include "[idl-name]S.h"        // Source in the skeletons for component
+#include "NavDisplayS.h"        // Source in the skeletons for component
                                 // client-view equivalent interfaces
-#include "[idl-name]EC.h"       // Source in the executor mapping
+#include "NavDisplayEC.h"       // Source in the executor mapping
                                 // that component implementations use
 #include "ciao/Container_Base.h" //Source in the container interface definitions
 #include "ace/Active_Map_Manager_T.h"
@@ -36,92 +36,33 @@
 /// container glue code.
 /// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-##if component is defined withing a [module name]
-namespace CIAO_GLUE_[module_name]
-##else
-namespace CIAO_GLUE
-##endif
+namespace CIAO_GLUE_HUDisplay
 {
 
   //////////////////////////////////////////////////////////////////
-  // Facet Glue Code implementation
-  // @@ We are assuming that these facets are declared under the same
-  //    module as the component (thus, we are placing this glue code
-  //    here under the same namespace.  If they are not, we will
-  //    either be generating them in separate namespaces, or include
-  //    some other CIDL generated files to get the glue code
-  //    implementation.
-
-##foreach [facet type] in (all facet interface types in the original IDL)
-  class [SERVANT]_Export [facet type]_Servant :
-    : public virtual POA_[facet type], // full skeleton name here
-      public virtual PortableServer::RefCountServantBase
-  {
-  public:
-    // Constructor and destructor.
-    [facet type]_Servant (CCM_[facet type]_ptr executor,
-                          ::Components::CCMContext_ptr ctx);
-    ~[facet tyep]_Servant ();
-
-##  foreach [operation] in (all facet operations)
-    // Generate operation decls.
-##  end foreach [operation]
-
-    // get_component implementation.
-    virtual CORBA::Object_ptr
-    _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-  protected:
-    // Facet executor.
-    CCM_[facet type]_var executor_;
-
-    // Context object.
-    ::Components::CCMContext_var ctx_;
-  };
-##end foreach [facet type]
-
-
-  //////////////////////////////////////////////////////////////////
   // Component specific context implementation
-  class [SERVANT]_Export [component name]_Context :
-    public virtual CCM_[component name]_Context
+  class NAVDISPLAY_SVNT_Export NavDisplay_Context :
+    public virtual HUDisplay::CCM_NavDisplay_Context
   {
   public:
     // We will allow the the servant glue code we generate to access
     // our states.
-    friend class [component name]_Servant;
+    friend class NavDisplay_Servant;
 
     // Ctor.
-    [component name]_Context (::Components::CCMHome_ptr home,
-                              ::CIAO::Session_Container *c,
-                              [component name]_Servant *sv);
+    NavDisplay_Context (::Components::CCMHome_ptr home,
+                        ::CIAO::Session_Container *c,
+                        NavDisplay_Servant *sv);
 
     // Dtor.
-    virtual ~[component name]_Context ();
+    virtual ~NavDisplay_Context ();
 
     // Operations for [component name] event source, and
     // receptacles defined in CCM_[component name]_Context.
 
-##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-##  if [receptacle name] is a simplex receptacle ('uses')
-    [uses type]_ptr
-    get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    HUDisplay::position_ptr
+    get_connection_GPSLocation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
-    // [receptacle name]Connections typedef'ed as a sequence of
-    // struct [receptacle name]Connection.
-    [receptacle name]Connections *
-    get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-      ACE_THROW_SPEC ((CORBA::SystemException));
-##  endif [receptacle name]
-##end foreach [receptacle name] with [uses type]
-
-##foreach [event name] with [eventtype] in (list of all event sources) generate:
-    void push_[event name] ([eventtype]_ptr ev
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-##end foreach [event name] with [eventtype]
 
     // Operations for ::Components::CCMContext
     virtual ::Components::Principal_ptr
@@ -161,77 +102,21 @@ namespace CIAO_GLUE
     // We need to generate, in protected section, stuff that manage
     // connections and consumers of this component.
 
-##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-##  if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
     void
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_GPSLocation (HUDisplay::position_ptr c
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::AlreadyConnected,
                        ::Components::InvalidConnection));
 
-    [uses type]_ptr
-    disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    HUDisplay::position_ptr
+    disconnect_GPSLocation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::NoConnection));
 
     // Simplex [receptacle name] connection
-    [uses type]_var ciao_uses_[receptacle name]_;
-
-##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
-    // Multiplex [receptacle name] connection management operations
-    ::Components::Cookie_ptr
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::ExceedConnectionLimit,
-                       ::Components::InvalidConnection));
-
-    [uses type]_ptr
-    disconnect_[receptacle name] (::Components::Cookie_ptr ck
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::InvalidConnection));
-
-    // Multiplex [receptacle name] connections
-
-    ACE_Active_Map_Manager<[uses type]_var> ciao_muses_[receptacle name]_;
-##  endif [receptacle name]
-##end foreach [receptacle name] with [uses type]
-
-    // Operations for emits interfaces.
-##foreach [emit name] with [eventtype] in (list of all emitters) generate:
-    void
-    connect_[emit name] ([eventtype]Consumer_ptr c
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::AlreadyConnected));
-
-    [eventtype]Consumer_ptr
-    disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::NoConnection));
-
-    [eventtype]Consumer_var ciao_emits_[emit name]_consumer_;
-##end foreach [emit name] with [eventtype]
-
-    // Operations for publishes interfaces.
-##foreach [publish name] with [eventtype] in (list of all publishers) generate:
-      ::Components::Cookie_ptr
-      subscribe_[publish name] ([eventtype]Consumer_ptr c
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::ExceededConnectionLimit));
-
-      [eventtype]Consumer_ptr
-      unsubscribe_[publish name] (::Components::Cookie_ptr ck
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::InvalidConnection));
-
-    ACE_Active_Map_Manager<[eventtype]Consumer_var> ciao_publishes_[publish name]_map_;
-##end foreach [publish name] with [eventtype]
+    HUDisplay::position_var ciao_uses_GPSLocation_;
 
   protected:
     /// Cached component home reference.
@@ -241,102 +126,65 @@ namespace CIAO_GLUE
     ::CIAO::Session_Container *container_;
 
     /// Reference back to owner.
-    [component name]_Servant *servant_;
+    NavDisplay_Servant *servant_;
 
     /// @@ Cached component reference.
-    [component name]_var component_;
+    HUDisplay::NavDisplay_var component_;
 
   };
 
   //////////////////////////////////////////////////////////////////
   // Component Servant Glue code implementation
-  class [SERVANT]_Export [component name]_Servant
-    : public virtual POA_[component name], // full skeleton name here
+  class NAVDISPLAY_SVNT_Export NavDisplay_Servant
+    : public virtual POA_HUDisplay::NavDisplay, // full skeleton name here
       public virtual PortableServer::RefCountServantBase
   {
   public:
     // Ctor.
-    [component name]_Servant (CCM_[component name]_ptr executor,
-                              ::Components::CCMHome_ptr home,
-                              ::CIAO::Session_Container *c);
+    NavDisplay_Servant (HUDisplay::CCM_NavDisplay_ptr executor,
+                        ::Components::CCMHome_ptr home,
+                        ::CIAO::Session_Container *c);
 
     // Dtor.
-    ~[component name]_Servant (void);
-
-##foreach [operation] in all supported interfaces of own component and all inherited components and attribute accessors/mutators
-
-    // Generate the [operation] here.
-
-##end
+    ~NavDisplay_Servant (void);
 
     // Operations for provides interfaces.
-##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
-    virtual [facet type]_ptr
-    provide_[facet name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-##end foreach [facet name] with [facet type]
 
     // Operations for receptacles interfaces.
 
-##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-##  if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
     virtual void
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_GPSLocation (HUDisplay::position_ptr c
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::AlreadyConnected,
                        ::Components::InvalidConnection));
 
-    virtual [uses type]_ptr
-    disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual HUDisplay::position_ptr
+    disconnect_GPSLocation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::NoConnection));
 
-    virtual [uses type]_ptr
-    get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual HUDisplay::position_ptr
+    get_connection_GPSLocation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
-    // Multiplex [receptacle name] connection management operations
-    virtual ::Components::Cookie_ptr
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::ExceedConnectionLimit,
-                       ::Components::InvalidConnection));
-
-    virtual [uses type]_ptr
-    disconnect_[receptacle name] (::Components::Cookie_ptr ck
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::InvalidConnection));
-
-    virtual [receptacle name]Connections *
-    get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-##  endif [receptacle name]
-##end foreach [receptacle name] with [uses type]
 
     // Operations for consumers interfaces.
-##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
-
     // First we need to generate the event sink specific servant
-    class [SERVANT]_Export [eventtype]Consumer_[consumer name]_Servant
-      : public virtual POA_[eventtype]Consumer, // full skeleton name here
+    class NAVDISPLAY_SVNT_Export tickConsumer_Refresh_Servant
+      : public virtual POA_HUDisplay::tickConsumer, // full skeleton name here
         public virtual PortableServer::RefCountServantBase
     {
     public:
       // Constructor and destructor.
-      [event type]Consumer_[consumer name]_Servant (CCM_[component name]_ptr executor,
-                                                    CCM_[component name]_Context_ptr c);
+      tickConsumer_Refresh_Servant (HUDisplay::CCM_NavDisplay_ptr executor,
+                                    HUDisplay::CCM_NavDisplay_Context_ptr c);
 
-      ~[event type]Consumer_[consumer name]_Servant ();
+      ~tickConsumer_Refresh_Servant ();
 
-##  foreach [type] in ([eventtype] and all its parent eventtype, if any)
-      virtual void push_[type] ([type]_ptr evt
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      virtual void push_tick (HUDisplay::tick_ptr evt
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
-##  end [type]
 
       // Inherit from ::Compopnents::EventBConsumerBase
       virtual void push_event (::Components::EventBase_ptr ev
@@ -351,45 +199,19 @@ namespace CIAO_GLUE
 
     protected:
       // Executor
-      CCM_[component name]_var executor_;
+      HUDisplay::CCM_NavDisplay_var executor_;
 
       // Context object.
-      CCM_[component name]_Context_var ctx_;
+      HUDisplay::CCM_NavDisplay_Context_var ctx_;
     };
 
-    virtual [eventtype]Consumer_ptr
-    get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual HUDisplay::tickConsumer_ptr
+    get_consumer_Refresh (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-##end foreach [consumer name] with [eventtype]
 
     // Operations for emits interfaces.
-##foreach [emit name] with [eventtype] in (list of all emitters) generate:
-    virtual void
-    connect_[emit name] ([eventtype]Consumer_ptr c
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException
-                       ::Components::AlreadyConnected));
-
-    virtual [eventtype]Consumer_ptr
-    disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::NoConnection));
-##end foreach [emit name] with [eventtype]
 
     // Operations for publishes interfaces.
-##foreach [publish name] with [eventtype] in (list of all publishers) generate:
-    virtual ::Components::Cookie_ptr
-    subscribe_[publish name] ([eventtype]Consumer_ptr c
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::ExceededConnectionLimit));
-
-    virtual [eventtype]Consumer_ptr
-    unsubscribe_[publish name] (::Components::Cookie_ptr ck
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::InvalidConnection));
-##end foreach [publish name] with [eventtype]
 
     // Operations for Navigation interface
     virtual CORBA::Object_ptr
@@ -556,30 +378,23 @@ namespace CIAO_GLUE
     // CIAO specific operations.
 
     // Activate the object in the container_
-    [component name]_ptr
+    HUDisplay::NavDisplay_ptr
     _ciao_activate_component
     (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
     // My Executor.
-    CCM_[component name]_var executor_;
+    HUDisplay::CCM_NavDisplay_var executor_;
 
     // My Run-time Context.
-    [component name]_Context *context_;
+    NavDisplay_Context *context_;
 
     // Managing container.
     ::CIAO::Session_Container *container_;
 
     // Cached provided interfaces.
-##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
-    [facet type]_var provide_[facet name]_;
-##end foreach [facet name] with [facet type]
-
-##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
-    [eventtype]Consumer_var consumes_[consumer name]_;
-##end foreach [consumer name] with [eventtype]
-
+    HUDisplay::tickConsumer_var consumes_Refresh_;
   };
 
 
@@ -587,48 +402,21 @@ namespace CIAO_GLUE
   // Component Home Glue code implementation
 
   // Foreach component home
-  class [SERVANT]_Export [home name]_Servant :
-    public virtual POA_[home name], // full skeleton name here
+  class NAVDISPLAY_SVNT_Export NavDisplayHome_Servant :
+    public virtual POA_HUDisplay::NavDisplayHome, // full skeleton name here
     public virtual PortableServer::RefCountServantBase
   {
   public:
     // Ctor.
-    [home name]_Servant (CCM_[home name]_ptr exe,
-                         CIAO::Session_Container *c);
+    NavDisplayHome_Servant (HUDisplay::CCM_NavDisplayHome_ptr exe,
+                            CIAO::Session_Container *c);
 
     // Dtor.
-    ~[home name]_Servant (void);
-
-    // User defined and inherited operations
-##foreach [operation] in (all explicit operations in [home basename] including its parents)
-
-    // The operation decl here.
-
-## end foreach opeartion
+    ~NavDisplayHome_Servant (void);
 
     // Factory operations
-##foreach [factory name]  in (all factory operations in [home basename] including its parents)
-    // for factory operations inherit from parent home(s), they should return
-    // the corresponding component types their homes manage
-    virtual [component name]_ptr
-    [factory name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::CreateFailure,
-                       ....));
-##end foreach [factory name]
 
     // Finder operations
-##foreach [finder name]  in (all finder operations in [home basename] including its parents)
-    // for finder operations inherit from parent home(s), they should return
-    // the corresponding component types their homes manage
-    virtual [component name]_ptr
-    [finder name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::FinderFailure,
-                       ....));
-##end foreach [finder name]
-
-##  if [home name] is a keyless home
 
     // Operations for KeylessHome interface
     virtual ::Components::CCMObject_ptr
@@ -636,41 +424,8 @@ namespace CIAO_GLUE
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
-##  else [home basename] is keyed home with [key type]
-
-    // We do not support key'ed home at the moment but we might
-    // as well generate the mapping.
-    virtual [component name]_ptr create ([key type]_ptr key
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::CreationFailure,
-                       ::Components::DuplicateKeyValue,
-                       ::Components::InvalidKey));
-
-    virtual [component name]_ptr
-    find_by_primary_key ([key type]_ptr key
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::FinderFailure,
-                       ::Components::UnknownKeyValue,
-                       ::Components::InvalidKey));
-
-    virtual void remove ([key type]_ptr key
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::RemoveFailure,
-                       ::Components::UnknownKeyValue,
-                       ::Components::InvalidKey));
-
-    virtual [key type]_ptr
-    get_primary_key ([component name]_ptr comp
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-##  endif (keyed or keyless home)
-
     // Operations for Implicit Home interface
-    virtual [component name]_ptr
+    virtual HUDisplay::NavDisplay_ptr
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
@@ -691,29 +446,29 @@ namespace CIAO_GLUE
 
   protected:
     // Helper method for factory operations.
-    [component name]_ptr
+    HUDisplay::NavDisplay_ptr
     _ciao_create_helper (::Components::EnterpriseComponent_ptr c
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
     // My Executor.
-    CCM_[home name]_var executor_;
+    HUDisplay::CCM_NavDisplayHome_var executor_;
 
     // My Container
     CIAO::Session_Container *container_;
   };
 
-  extern "C" [SERVANT]_Export ::PortableServer::Servant
-  create[home name]_Servant (::Components::HomeExecutorBase_ptr p,
-                             CIAO::Session_Container *c
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  extern "C" NAVDISPLAY_SVNT_Export ::PortableServer::Servant
+  createNavDisplayHome_Servant (::Components::HomeExecutorBase_ptr p,
+                                CIAO::Session_Container *c
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
 
 #if defined (__ACE_INLINE__)
-# include "[idl-name]_svnt.inl"
+# include "NavDisplay_svnt.inl"
 #endif /* __ACE_INLINE__ */
 
 
 #include "ace/post.h"
-#endif /* CIAO_GLUE_SESSION_[idl-basename]_SVNT_H */
+#endif /* CIAO_GLUE_SESSION_NAVDISPLAY_SVNT_H */

@@ -102,7 +102,7 @@ module [module_name] {
 ##  if [component basename] inherits from [parent component name]
       CCM_[parent component name]_Executor
 ##  else
-      ::Components:EnterpriseComponent
+      ::Components::EnterpriseComponent
 ##  endif
 ##  foreach [interface name] in (all component supported interfaces) generate:
       , [interface name]
@@ -123,7 +123,7 @@ module [module_name] {
 ##  if [component basename] inherits from [parent component name]
       CCM_[parent component name]
 ##  else
-      ::Components:EnterpriseComponent
+      ::Components::EnterpriseComponent
 ##  endif
 ##  foreach [interface name] in (all component supported interfaces) generate:
       , [interface name]
@@ -156,7 +156,7 @@ module [module_name] {
 ##  if [component basename] inherits from [parent component name]
       CCM_[parent component name]_Context
 ##  else
-      ::Components:SessionContext
+      ::Components::SessionContext
 ##  endif
   {
 
@@ -189,7 +189,7 @@ module [module_name] {
 ##  if [home basename] inherits from [parent home name]
       CCM_[parent home name]Explicit
 ##  else
-      ::Components:HomeExecutorBase
+      ::Components::HomeExecutorBase
 ##  endif
 ##  foreach [interface name] in (all home supported interfaces) generate:
       , [interface name]
