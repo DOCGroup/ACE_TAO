@@ -68,8 +68,60 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       //  *os << parents_parent->full_name () << "::";
       *os << "POA_" <<parent->full_name () << "::";
     }
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
-      << "TAO_ServerRequest_Info_"<< node->flat_name () << " (const char *  operation," << be_nl
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+  *os<< "::"
+      << "TAO_ServerRequest_Info_"<< node->flat_name ();
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+  *os << " (const char *  operation," << be_nl
       << "IOP::ServiceContextList &service_context_list";             
   
   if (node->argument_count () > 0)
@@ -133,7 +185,33 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" <<parent->full_name () << "::";
     }
   
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name (); 
+    // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+  *os<< "::"
       << "arguments (CORBA::Environment &)"<< be_nl
       << "{" <<be_idt_nl 
       <<" // Generate the arg list on demand" << be_nl;
@@ -181,7 +259,33 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name (); 
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+  *os<< "::"
       << "exceptions (CORBA::Environment &)"<< be_nl
       << "{\n // Generate the exception list on demand" << be_nl;
   if (!node->exceptions ())
@@ -224,7 +328,33 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" <<parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
+    // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+  *os<< "::"
       << "result (CORBA::Environment &)"<< be_nl
       << "{\n // Generate the result on demand" << be_nl;
   bt = be_type::narrow_from_decl (node->return_type ());
@@ -284,7 +414,33 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
           *os << "POA_"<< parent->full_name () << "::";
         }
 
-      *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
+      *os << "TAO_ServerRequest_Info_"<<node->flat_name (); 
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+      *os<< "::"
           << "result (";
 
       ctx = *this->ctx_;
