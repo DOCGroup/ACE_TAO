@@ -37,7 +37,7 @@ main (int argc, char **argv)
 
   // Narrow the Object reference to a POA reference
   PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (obj, env);
+    PortableServer::POA::_narrow (obj.in (), env);
 
   if (env.exception () != 0)
     {
@@ -224,7 +224,7 @@ main (int argc, char **argv)
   // secondPOA.
 
   CORBA::String_var first_foo_ior = 
-    orb->object_to_string (first_foo, env);
+    orb->object_to_string (first_foo.in (), env);
 
   if (env.exception () != 0)
     {
@@ -233,7 +233,7 @@ main (int argc, char **argv)
     }
 
   CORBA::String_var second_foo_ior = 
-    orb->object_to_string (second_foo, env);
+    orb->object_to_string (second_foo.in (), env);
 
   if (env.exception () != 0)
     {

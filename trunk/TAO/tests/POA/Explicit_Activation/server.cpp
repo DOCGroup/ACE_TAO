@@ -99,8 +99,8 @@ main (int argc, char **argv)
   // Create two Objects of Class MyFooServant (defined in
   // ./../GenericServant/MyFooServant.h) Create one object at RootPOA
   // and the other at firstPOA.
-  MyFooServant first_foo_impl (root_poa, 27);
-  MyFooServant second_foo_impl (first_poa, 28);
+  MyFooServant first_foo_impl (root_poa.in(), 27);
+  MyFooServant second_foo_impl (first_poa.in(), 28);
 
   // Do "activate_object" to activate the first_foo_impl object.  It
   // returns ObjectId for that object.  Operation Used :
@@ -168,7 +168,7 @@ main (int argc, char **argv)
 
   // Stringyfy all the object references and print them out.
   CORBA::String_var first_ior =
-    orb->object_to_string (first_foo, env);
+    orb->object_to_string (first_foo.in(), env);
 
   if (env.exception () != 0)
     {
@@ -177,7 +177,7 @@ main (int argc, char **argv)
     }
 
   CORBA::String_var second_ior =
-    orb->object_to_string (second_foo, env);
+    orb->object_to_string (second_foo.in(), env);
 
   if (env.exception () != 0)
     {
@@ -186,7 +186,7 @@ main (int argc, char **argv)
     }
 
   CORBA::String_var third_ior =
-    orb->object_to_string (third_foo, env);
+    orb->object_to_string (third_foo.in(), env);
 
   if (env.exception () != 0)
     {
@@ -199,7 +199,7 @@ main (int argc, char **argv)
   cout << third_ior.in () << endl;
 
   // Activate thirdPOA using its ObjectID.
-  MyFooServant third_foo_impl (first_poa, 29);
+  MyFooServant third_foo_impl (first_poa.in(), 29);
   first_poa->activate_object_with_id (third_oid.in (),
                                       &third_foo_impl,
                                       env);

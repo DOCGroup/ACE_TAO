@@ -95,7 +95,7 @@ Cubit_Task::initialize_orb (void)
 			  1);
 
       this->root_poa_ =
-	PortableServer::POA::_narrow (poa_object, TAO_TRY_ENV);
+	PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->poa_manager_ =

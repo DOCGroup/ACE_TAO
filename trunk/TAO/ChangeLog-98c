@@ -1,5 +1,12 @@
 Thu Jan 29 14:59:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
+	* tests/POA/On_Demand_Activation/server.cpp: 
+	* tests/POA/Generic_Servant/MyFooServant.cpp: 
+	* tests/POA/Explicit_Activation/server.cpp: 
+	* tests/POA/Default_Servant/server.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
+ 	_var's passed as pointers need to use the .in() method.
+
 	* tests/Param_Test/run_test: Added a longer delay, changed port #,
  	and made all output be prefaced by either "SERVER: " or
  	"CLIENT(<type>): ".
