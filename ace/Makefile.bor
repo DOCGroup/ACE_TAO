@@ -122,6 +122,7 @@ OBJFILES = \
 	$(OBJDIR)\OS_Errno.obj \
 	$(OBJDIR)\OS_Log_Msg_Attributes.obj \
 	$(OBJDIR)\OS_Memory.obj \
+	$(OBJDIR)\OS_QoS.obj \
 	$(OBJDIR)\OS_String.obj \
 	$(OBJDIR)\OS_TLI.obj \
 	$(OBJDIR)\OS_Thread_Adapter.obj \
