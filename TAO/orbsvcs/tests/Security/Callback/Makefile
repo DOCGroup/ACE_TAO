@@ -81,7 +81,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client_i.o .obj/client_i.so .shobj/client_i.o .shobj/client_i.so: client_i.cpp \
+.obj/client_i.o .obj/client_i.o .obj/client_i.o .obj/client_i.o: client_i.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -295,7 +295,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   clientS_T.h clientS_T.i clientS_T.cpp clientS.i serverC.h serverC.i
 
-.obj/server_i.o .obj/server_i.so .shobj/server_i.o .shobj/server_i.so: server_i.cpp server_i.h serverS.h clientS.h clientC.h \
+.obj/server_i.o .obj/server_i.o .obj/server_i.o .obj/server_i.o: server_i.cpp server_i.h serverS.h clientS.h clientC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -509,7 +509,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   clientS_T.h clientS_T.i clientS_T.cpp clientS.i serverC.h serverC.i \
   serverS_T.h serverS_T.i serverS_T.cpp serverS.i
 
-.obj/clientS.o .obj/clientS.so .shobj/clientS.o .shobj/clientS.so: clientS.cpp clientS.h clientC.h \
+.obj/clientS.o .obj/clientS.o .obj/clientS.o .obj/clientS.o: clientS.cpp clientS.h clientC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -796,7 +796,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -856,7 +855,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/serverS.o .obj/serverS.so .shobj/serverS.o .shobj/serverS.so: serverS.cpp serverS.h clientS.h clientC.h \
+.obj/serverS.o .obj/serverS.o .obj/serverS.o .obj/serverS.o: serverS.cpp serverS.h clientS.h clientC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1144,7 +1143,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -1204,7 +1202,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/clientC.o .obj/clientC.so .shobj/clientC.o .shobj/clientC.so: clientC.cpp clientC.h \
+.obj/clientC.o .obj/clientC.o .obj/clientC.o .obj/clientC.o: clientC.cpp clientC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1400,7 +1398,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  clientC.i $(TAO_ROOT)/tao/Stub.h \
+  clientC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -1510,7 +1509,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/serverC.o .obj/serverC.so .shobj/serverC.o .shobj/serverC.so: serverC.cpp serverC.h \
+.obj/serverC.o .obj/serverC.o .obj/serverC.o .obj/serverC.o: serverC.cpp serverC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
