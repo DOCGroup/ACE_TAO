@@ -4459,6 +4459,10 @@ public:
   static int getopt (int argc,
                      char *const *argv,
                      const char *optstring);
+  static int string_to_argv (ASYS_TCHAR *buf,
+                             size_t &argc,
+                             ASYS_TCHAR **&argv,
+                             int substitute_env_args = 1);
   static long sysconf (int);
 
   // = A set of wrappers for condition variables.
@@ -5234,6 +5238,7 @@ public:
                               const char *t,
                               size_t len);
   static char *strdup (const char *s); // Uses malloc
+  static char *strenvdup (const char *str);
   static size_t strlen (const char *s);
   static char *strncpy (char *s,
                         const char *t,

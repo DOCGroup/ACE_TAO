@@ -33,7 +33,8 @@ class ACE_Export ACE_ARGV
   //     environment variable substitutions if necessary.
 public:
   // = Initialization and termination.
-  ACE_ARGV (const ASYS_TCHAR buf[], int substitute_env_args = 1);
+  ACE_ARGV (const ASYS_TCHAR buf[],
+            int substitute_env_args = 1);
   // Converts <buf> into an <argv>-style vector of strings.  If
   // <substitute_env_args> is enabled then we'll substitute the
   // environment variables for each $ENV encountered in the string.

@@ -10918,3 +10918,25 @@ ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
       }
 }
 #endif /* ACE_WIN32 */
+
+// Return a dynamically allocated duplicate of <str>, substituting the
+// environment variable if <str[0] == '$'>.  Note that the pointer is
+// allocated with <ACE_OS::malloc> and must be freed by
+// <ACE_OS::free>.
+
+char *
+ACE_OS::strenvdup (const char *str)
+{
+#if defined (ACE_HAS_WINCE)
+     // WinCE doesn't have environment variables so we just skip it.
+  return ACE_OS::strdup (str);
+#else
+  char *temp;
+
+  if (str[0] == '$'
+      && (temp = ACE_OS::getenv (&str[1])) != 0)
+    return ACE_OS::strdup (temp);
+  else
+    return ACE_OS::strdup (str);
+#endif /* ACE_HAS_WINCE */
+}
