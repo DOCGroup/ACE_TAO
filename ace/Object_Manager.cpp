@@ -54,6 +54,12 @@ void *ACE_Object_Manager::preallocated_object[
 void *ACE_Object_Manager::preallocated_array[
   ACE_Object_Manager::ACE_PREALLOCATED_ARRAYS] = { 0 };
 
+void
+ACE_Object_Manager_fini (void)
+{
+  ACE_Object_Manager::fini ();
+}
+
 // Handy macros for use by ACE_Object_Manager constructor to
 // preallocate or delete an object or array, either statically (in
 // global data) or dynamically (on the heap).
