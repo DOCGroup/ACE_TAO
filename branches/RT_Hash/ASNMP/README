@@ -1,0 +1,177 @@
+Fri Dec 18 09:43:35 CST 1998
+====================================================================
+ASNMP = ACE+SNMP++ Version 2.1
+By Michael R. MacFaden mrm@acm.org, mrm@yagosys.com
+====================================================================
+
+What is ASNMP ? ==> ACE+SNMP! aka Another SNMP API
+  HP's SNMP++ 2.5 freely available C++ SNMP class library 
+  has been adapted to the ACE 4.2 Framework. 
+
+What is Simple Network Management Protocol(SNMP)?
+  See the FAQ: 
+  http://www.snmp.com/FAQs/snmp-faq-part1.txt
+  http://www.snmp.com/FAQs/snmp-faq-part2.txt
+
+
+What was changed from HP version?
+  See src/ChangeLog file.
+
+Is HP SNMP++ compatible with ASNMP?
+  It is neither source nor binary compatible. About 10% of the API has changed.
+  There have been API changes to make the interface more orthogonal 
+  and to reduce implementation complexity such as consolidating constructors
+  with default formal values, and to remove some inconsistencies
+  with the HP interface as well as locking down valid() semantics, etc.
+
+What platforms have the test programs been verified on?
+  Solaris 2.4, 2.5.1 using SUN C++ 4.1,4.2 compiler. Linux/GCC 
+  fixes are now in as well. 
+
+Why use this version?
+  The SNMP++ version ships only for HP-UX and for Windows.
+  It is not very portable nor does it do a good job at checking
+  for out of memory exhaustion conditions (asn1.cpp). There is some great
+  code here. ACE needs an SNMP library to build NM type
+  communications applications. Hence ASNMP was born in my spare time. 
+
+How does ASNMP differ from SNMP?
+  Current version uses ACE OS Adaption layer.  All memory
+  allocation is now consistent, uses ACE_NEW(). 
+  Standard ACE Debugging (ACE_TRACE) has been inserted.
+  ASNMP has less global namespace pollution by moving all non-class 
+  functions into interface classes or made into static locals.
+
+  An agent inteface has been added (asnmp/sagent.h) so both agents
+  and managers can use this class library. A trivial agent 
+  exists in ASNMP/agent/
+
+  X11 GUI support removed from this version since this is
+  not the place to include GUI support in the new world of
+  multi-threaded apps.  
+
+  The async interface does not match the HP implementation.
+
+How to build this library
+  Set ACE_ROOT and platform_macros.GNU per ../INSTALL file.
+  create libasnmp.a, libasnmp.so and then run the tests
+
+Any Support for ASNMP?
+   As time permits from the mailing list.
+
+Where to ask questions?
+  Please use ace-users@cs.wustl.edu mailing list or mrm@acm.org
+
+NOTE: Please do not bother Eric Mellquist unless you are using 
+   the original HP version of this library.
+
+Where can I get the original HP SNMP++?
+   From ftp://rosegarden.external.hp.com:/pub/snmp++ 
+
+What version of SNMP is fully supported?
+  SNMP Version 1 (RFC 1155,1157, 1215)
+
+What about SNMP Version 2c?
+  V2c is defined in RFC 1901 - 1908 
+  These bits are added to v1 code in this library: GetBulk PDU, Counter64
+  These bits are missing Inform (RFC 1905)
+  RFC 1903 defined new datatypes using existing SMI via macros. 
+  These should be coded as if they were SMI datatypes to encapsulate
+  their behavior. V2c hasn't been deployed 
+
+What about SNMP Version 3?
+   It is looking good for V3, but so far, we're just watching.
+   http://www.ietf.org/html.charters/snmpv3-charter.html
+   A C implemenation is now available from UC Davis. 
+ 
+What copyrights/legal requirements are required when using this code?
+  See ./COPYRIGHT 
+
+Does this really work?
+  See tests/ directory  for the current test reports (purify/purecov/...).
+
+How does one Extend an SNMP Agent?
+  Extending an agent typically means updating the agent source or
+  using a dynamic link style API. RFC 2257 (AgentX) is the current design
+  for doing this in a standard way. This hasn't been well formalized yet
+  so extending an existing agent is still a vendor API thing. 
+
+  The agent provided here is a template. A mib compiler and agent
+  library typically provide better agent support. See the UC-Davis
+  SNMP software for an example Agent that is portable and can report
+  on many flavors of UNIX and Windows.
+
+Any Future Plans? 
+  The ASNMP library will be improved for performance and made to use 
+  higher level design patterns. Hopefully it will be used as a 
+  vehicle for grad students to learn something about network mgmt 
+  code work a related cousin of general distributed programming.
+
+
+Regards,
+Michael R. MacFaden
+Member of the Technical Staff
+Cabletron Systems, Inc.
+215 Moffet Park Drive
+Sunnyvale, CA 94089
+mrm@yagosys.com
+http://www.yagosys.com
+
+====================================================================
+SNMP++ For UNIX Source Code and Examples:
+====================================================================
+Included within this package can be found the source code and  
+examples for SNMP++. The following represents the directories which
+are included within the compressed tar file and their contents.
+
+For more details on the API , please refer to the API specification.
+
+This library is a complete implementation of SNMP++ and does not
+require other SNMP libraries to be present.  
+
+Required Tools:
+---------------------------------------------------------------------
+
+
+readme.txt ( this file)
+|
+|
+|------ src ( .cpp files and Makefile for building libraries )
+|
+|------ examples ( a variety of apps, .cpp and Makefile included )
+|
+|------ tests - unit test routines  
+
+
+src Directory Contents:
+--------------------------------------------------------------------
+Makefile             - make file for ACE/Solaris 2. build
+target.cpp           - Collection of attributes(address, timeout, etc) used
+                       to define a command session
+snmp.cpp             - A logical session between NM app and agent 
+pdu.cpp              - Pdu class source (vb list and API command)
+wpdu.cpp             - Adapter pattern based class between CMU and HP code
+transaction.cpp      - synchronous transaction clss  
+vb.cpp               - Variable Binding class source (oid + value)
+
+<< SMI datatypes used to get/set values in SNMPv1 agents >>
+
+address.cpp          - Address class source
+gauge.cpp            - Gauge32 class source
+integer.cpp          - Integer32 class source
+counter.cpp          - Counter32 class source
+ctr64.cpp            - Counter64 class source
+timetick.cpp         - TimeTicks class source
+octet.cpp            - Octet String class source
+oid.cpp              - Oid class source
+asn1.cpp             - ASN1 encoding and decoding code. CMU code.
+
+examples Directory Contents:
+---------------------------------------------------------------------
+Makefile             - make file for building console apps
+get.cpp          - source for SNMP get program
+next.cpp         - source for SNMP get Next program
+set.cpp          - source for SNMP set program
+trap.cpp         - source for SNMP trap send program
+walk.cpp         - source for SNMP walk program
+

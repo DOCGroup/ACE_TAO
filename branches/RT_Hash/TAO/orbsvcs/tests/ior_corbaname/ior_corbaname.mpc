@@ -1,0 +1,20 @@
+project: namingexe {
+  depends += CosNaming
+  libs    += TAO_CosNaming
+
+  Source_Files {
+    status_i.cpp
+    server.cpp
+  }
+}
+
+project(client): namingexe {
+  exename = client
+
+  Source_Files {
+    status_i.cpp
+    ior_corbaname_client_i.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,13 @@
+//
+// $Id$
+//
+
+interface Test
+{
+  void test_method ();
+  // Test method.
+
+  oneway void shutdown ();
+  // Shut down the ORB.
+
+};

@@ -1,0 +1,39 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO_PortableGroup
+//
+// = FILENAME
+//   mgm.pidl
+//
+// = DESCRIPTION
+//
+//   This file contains the multicast group manager interface from
+//   the MIOP specification.  It is currently unused.
+//
+// ================================================================
+
+
+#ifdef _MGM_idl
+#define _MGM_idl
+
+#include "PortableGroup.idl"
+
+module MGM {
+  // Property values
+  typedef long GroupCreationMode
+
+  const GroupCreationMode CREATE_ADDRESS_DEFERED = 0;
+  const GroupCreationMode CREATE_ADDRESS_GENERATED = 1;
+  const GroupCreationMode CREATE_ADDRESS_SUPPLIED = 2;
+
+  interface ObjectGroupFactory :
+    PortableGroup::GenericFactory,
+    PortableGroup::PropertyManager,
+    PortableGroup::ObjectGroupManager {}
+};
+
+#endif // _MGM_idl

@@ -1,0 +1,135 @@
+#
+# Creates output object and binary file directories
+#
+# Inputs:
+# ~~~~~~~
+# NAME - undecorated name of target
+# DEBUG - defined if building a debug library/executable
+# STATIC - defined if building a static library
+# UNICODE - defined if building with unicode enabled
+#
+# Outputs:
+# ~~~~~~~~
+# BINDIR - name of directory where binaries are placed
+# MAKE_BINDIR - command to be used for creating BINDIR
+# OBJDIR - name of directory where object fils are placed
+# MAKE_OBJDIR - command to be used for creating OBJDIR
+#
+
+!ifdef STATIC
+STATIC_DIR=Static
+!else
+STATIC_DIR=Dynamic
+!endif
+
+!ifdef DEBUG
+DEBUG_DIR=Debug
+!else
+DEBUG_DIR=Release
+!endif
+
+!ifdef PASCAL
+PASCAL_DIR=Pascal
+!else
+PASCAL_DIR=.
+!endif
+
+!ifdef UNICODE
+UNICODE_DIR=Unicode
+!else
+UNICODE_DIR=.
+!endif
+
+# By default binaries are built underneath the current build directory
+!ifndef BASE_BINDIR
+BASE_BINDIR=.
+!endif
+
+# By default object files are built underneath the current build directory
+!ifndef BASE_OBJDIR
+BASE_OBJDIR=.\obj
+!endif
+
+CONFIG_SUBDIR=$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
+
+!ifndef BINDIR
+BINDIR=$(BASE_BINDIR)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
+!endif
+
+!ifndef CORE_BINDIR
+CORE_BINDIR=$(ACE_ROOT)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
+!endif
+
+!ifdef MKDIR
+MAKE_BINDIR=$(MKDIR) "$(BINDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_BINDIR=if not exist "$(BINDIR)" mkdir "$(BINDIR)"
+!endif
+
+!ifndef OBJDIR
+OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
+!endif
+
+!ifdef MKDIR
+MAKE_OBJDIR=$(MKDIR) "$(OBJDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_OBJDIR=if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
+!endif
+
+!ifndef INSTALL_EXEDIR
+!ifndef STATIC
+!ifndef DEBUG
+!ifndef UNICODE
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin
+!else
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
+!endif
+!else
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
+!endif
+!else
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
+!endif
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_EXEDIR=$(MKDIR) "$(INSTALL_EXEDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_EXEDIR=if not exist "$(INSTALL_EXEDIR)" mkdir "$(INSTALL_EXEDIR)"
+!endif
+
+!ifndef INSTALL_DLLDIR
+INSTALL_DLLDIR=$(INSTALL_DIR)\bin
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_DLLDIR=$(MKDIR) "$(INSTALL_DLLDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_DLLDIR=if not exist "$(INSTALL_DLLDIR)" mkdir "$(INSTALL_DLLDIR)"
+!endif
+
+!ifndef INSTALL_LIBDIR
+INSTALL_LIBDIR=$(INSTALL_DIR)\lib
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_LIBDIR=$(MKDIR) "$(INSTALL_LIBDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_LIBDIR=if not exist "$(INSTALL_LIBDIR)" mkdir "$(INSTALL_LIBDIR)"
+!endif
+
+!ifndef INSTALL_INCDIR
+INSTALL_INCDIR=$(INSTALL_DIR)\include\$(INCDIR_NAME)
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_INCDIR=$(MKDIR) "$(INSTALL_INCDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_INCDIR=if not exist "$(INSTALL_INCDIR)" mkdir "$(INSTALL_INCDIR)"
+!endif

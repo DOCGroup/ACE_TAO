@@ -1,0 +1,19 @@
+# $Id$
+
+Description:
+
+This is a test for server applications that have client threads
+(threads making remote calls) starting before event loop threads
+(threads running the event loop).
+
+Expected output:
+
+The event loop threads should wait for the client threads that become
+leaders to give up leadership before continuing.
+
+How to run:
+
+You can use the run_test.pl script to run it or:
+
+$ server
+$ client

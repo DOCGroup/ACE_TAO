@@ -1,0 +1,3 @@
+project(Manipulation): messaging, corba_messaging {
+  exename = Manipulation
+}
