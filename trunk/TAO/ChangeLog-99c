@@ -1,3 +1,10 @@
+Fri Feb 19 23:12:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+	  Updated to the new request arg manipulation functions.
+	  Commented out cube_union for the present until compiled
+	  marshaling gets finished for unions.
+
 Fri Feb 19 22:53:19 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO/tao/Pluggable: Began to add support for CORBA operation
