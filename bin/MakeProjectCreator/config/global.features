@@ -14,6 +14,9 @@
 // This file is somewhat akin to the platform_macros.GNU file in that build
 // settings can be set here.
 
+// Enable these by default.
+acexml        = 1
+
 // By default we disable these.
 ssl           = 0
 qos           = 0

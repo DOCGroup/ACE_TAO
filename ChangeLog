@@ -1,3 +1,23 @@
+Sat Oct  9 23:08:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/acexml.mpb:
+
+	  Added a "requires += acexml" MPC project flag.  Allows
+	  generation of Automake conditionals in MPC generated Makefile.am
+	  files.
+
+	* bin/MakeProjectCreator/config/global.features:
+
+	  Enable support ACEXML by default.  This was previously the
+	  implicit default.  It must be now be explicit in order to
+	  correctly support features like the new "--with-acexml"
+	  configure script option described below.
+
+	* m4/ace.m4:
+
+	  Added new "--with-acexml" configure script option.  It allows a
+	  user to enable (the default) or disable support for ACEXML.
+
 Sat Oct  9 13:55:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
