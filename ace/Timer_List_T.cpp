@@ -202,7 +202,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 
 /// The shared scheduling functionality between schedule() and reschedule()
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (ACE_Timer_Node_T<TYPE>* n, 
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (ACE_Timer_Node_T<TYPE>* n,
                                                         const ACE_Time_Value& expire)
 {
   if (this->is_empty()) {
@@ -233,7 +233,7 @@ ACE_Timer_Node_T<TYPE>*
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::find_node(long timer_id) const
 {
   ACE_Timer_Node_T<TYPE>* n = this->get_first_i();
-  if (n == 0) 
+  if (n == 0)
     return 0;
 
   for (; n != this->head_; n = n->get_next()) {
@@ -245,8 +245,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::find_node(long timer_id) const
 }
 
 // Locate and update the inteval on the timer_id
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id, 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id,
                                                            const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_List_T::reset_interval");
@@ -294,7 +294,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type, int skip_cl
       if (n->get_type() == type) // Note: Typically Type is an ACE_Event_Handler*
       {
         ++num_canceled;
-        
+
         ACE_Timer_Node_T<TYPE>* tmp = n;
         n = n->get_next();
         int always_skip_close = 1; // todo : Is this correct?
