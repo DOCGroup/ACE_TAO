@@ -110,8 +110,10 @@ private:
   //@}
 
 private:
-  /// Head and tail of the list
+  /// Head of the list
   T *head_;
+
+  /// Tail of the list
   T *tail_;
 };
 
