@@ -1,3 +1,12 @@
+Wed Mar 17 10:05:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/GIOP: Replaced *IIOP_LITE* with *GIOP_LITE* since we've 
+	  renamed this.
+
+	* tao/GIOP.cpp (recv_request): Replaced the magic number 5
+	  with TAO_IIOP_LITE_HEADER_LEN.  Thanks to the ever vigilant
+	  Mark Boriak for reporting this.
+
 Wed Mar 17 08:39:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.3.13 released.
