@@ -1,3 +1,22 @@
+Mon Sep 15 12:08:38 1997    <irfan@TWOSTEP>
+
+	* ace/WFMO_Reactor.h: Removed non-Win32 version of the
+ 	  WFMO_Reactor. This is no longer required in the new scheme.
+
+	* ace/XtReactor: 
+
+	  Added remove_handler_i(const ACE_Handle_Set &,ACE_Reactor_Mask)
+ 	  to make the compiler happy.
+	  
+	  Also changed ACE_Reactor_Handle_Set to ACE_Select_Reactor_Handle_Set.
+	
+	* ace/Select_Reactor.cpp (ACE_Select_Reactor_Token): Added set/get
+ 	  select_reactor methods.
+
+	* ace/OS.h (ACE_SEH_TRY): Changed ACE_SEH_TRY from nothing to
+ 	  "if(1)" on non-Win32 platforms. This should stop some compilers
+ 	  from complaining about unreachable code.
+
 Mon Sep 15 11:37:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* include/makeinclude/platform_hpux.GNU: 
