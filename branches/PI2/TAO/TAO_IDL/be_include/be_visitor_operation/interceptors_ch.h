@@ -11,7 +11,7 @@
 //    interceptors_ch.h
 //
 // = DESCRIPTION
-//    Visitor for generating code for IDL operations for the smart proxy case
+//    Visitor for generating code for IDL operations for the interceptor case
 //    inside of the client stubs header
 //
 // = AUTHOR
@@ -26,7 +26,7 @@
 // Operation visitor for client header in the interceptor class
 // ************************************************************
 
-class be_visitor_operation_interceptors_ch : public be_visitor_scope
+class be_visitor_operation_interceptors_ch : public be_visitor_operation
 {
   //
   // = TITLE

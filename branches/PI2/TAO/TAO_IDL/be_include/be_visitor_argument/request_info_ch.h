@@ -48,6 +48,7 @@ public:
   virtual int visit_argument (be_argument *node);
   // visit the argument node
 
+
   // =visit all the nodes that can be the types for the argument
 
   virtual int visit_array (be_array *node);
