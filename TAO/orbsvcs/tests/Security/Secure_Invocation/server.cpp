@@ -95,22 +95,24 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Sanity check on SSLIOP profile equivalence.
-      {
-        Foo_i server_impl2 (orb.in (), security_current.in ());
-        Foo::Bar_var server2 =
-          server_impl2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      // Since the POA is reference counting the servants, this
+      // implementation must still exist when the POA is destroyed.
+      Foo_i server_impl2 (orb.in (), security_current.in ());
+      Foo::Bar_var server2 =
+        server_impl2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-        const CORBA::Boolean equivalent =
-          server->_is_equivalent (server2.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      const CORBA::Boolean equivalent =
+        server->_is_equivalent (server2.in ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-	// @@ A better thing would be to print out an error statement.
-        ACE_ASSERT (!equivalent);
-
-	ACE_UNUSED_ARG (equivalent);
-      }
+      if (equivalent)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR: SSLIOP profile equivalence "
+                      "check failed.\n"));
+        }
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);

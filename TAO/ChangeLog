@@ -1,9 +1,16 @@
+Thu Nov  4 13:14:24 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+
+          Moved a servant implementation object outside of a constrained
+          scope so that it is still around when the POA is destroyed.
+
 Thu Nov  4 12:35:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFR_Service_Utils.cpp:
-        
+
           Fixed potential memory leak in the Interface Repository which
-          happens when open() is called on a just-allocated 
+          happens when open() is called on a just-allocated
           ACE_Configuration pointer. If the call fails, the method
           was returning without deleting the pointer. Thanks to
           Gary Maxey <gary.maxey@hp.com> for reporting the problem.
@@ -11,7 +18,7 @@ Thu Nov  4 12:35:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Nov  4 12:09:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-        
+
           Fixed a bug in the creation of an abstract interface entry
           in the Interface Repository. This creation requires a list
           of parents, and the list must be a CORBA sequence of
@@ -25,11 +32,11 @@ Thu Nov  4 12:09:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov  3 06:14:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
 
-	  Removed PortableGroup_Simple_DSC.cpp from FT_ClientORB and
-	  FT_ServerORB projects, as it is already in the FTORB_Utils
-	  library that both depend on.
+          Removed PortableGroup_Simple_DSC.cpp from FT_ClientORB and
+          FT_ServerORB projects, as it is already in the FTORB_Utils
+          library that both depend on.
 
 Wed Nov  3 07:15:24 2004  Chad Elliott  <elliott_c@ociweb.com>
 
