@@ -1,3 +1,17 @@
+Thu Jul 15 22:14:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * ace/Cached_Connect_Strategy_T.cpp
+        * ace/Cached_Connect_Strategy_T.h
+        * ace/Strategies_T.cpp
+        * ace/Strategies_T.h
+
+	  Changed find()'s signature to help g++.
+
+        * tests/Cached_Accept_Conn_Test.cpp
+        * tests/Conn_Test.cpp
+
+	  Added template instantiations.
+
 Thu Jul 15 21:32:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: removed # -*- perl -*- on first
