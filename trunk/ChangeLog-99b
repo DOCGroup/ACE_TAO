@@ -1,8 +1,13 @@
+Tue Feb  2 19:28:46 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* docs/tutorials: ACE-ified the first 11 tutorials.  I hope 
+	  James still recognizes this stuff now ;-)
+
 Tue Feb  2 19:12:50 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/001/logger.h (class Logging_Handler): 
-	  Incorporated Pradeep's suggestion to get rid of the memmove()
-	  and use the recv() return value to drop in the null-termination.
+	  Incorporated Pradeep's suggestion to get rid of the memset() and
+ 	  use the recv() return value to drop in the null-termination.
 
 Tue Feb  2 14:19:30 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
