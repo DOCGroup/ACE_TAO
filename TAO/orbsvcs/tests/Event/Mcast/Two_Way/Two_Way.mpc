@@ -1,5 +1,5 @@
 project(*application): messaging, rteventexe, naming {
-  after  += ECMcastTests_Lib
+  after  += ECMcastTests_lib
   libs     += ECMcastTests
   includes += ../Common
   exename   = application
@@ -10,7 +10,7 @@ project(*application): messaging, rteventexe, naming {
 }
 
 project(*gateway-ec): messaging, rteventexe, naming {
-  after  += ECMcastTests_Lib
+  after  += ECMcastTests_lib
   libs     += ECMcastTests
   includes += ../Common
   exename   = gateway-ec
