@@ -1,3 +1,11 @@
+Thu Sep 16 07:47:09 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added a CUSTOM_TARGETS macro that will allow users to access
+          custom targets that can be generated with the use of the
+          'verbatim' clause in mpc files.
+
 Thu Sep 16 10:07:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * apps/Gateway/Peer/peer.mpc:
@@ -38,44 +46,44 @@ Thu Sep 16 07:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep 15 15:32:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added checks for fgetws and fputws.
+          Added checks for fgetws and fputws.
 
-	* ace/OS_NS_stdio.h:
-	* ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
 
-	  Added feature test macros ACE_LACKS_FGETWS and ACE_LACKS_FPUTWS
-	  and disable wide character versions of fgets and fputs if they
-	  are not present.  Thanks to Johnny Willemsen for reporting this
-	  bug.
+          Added feature test macros ACE_LACKS_FGETWS and ACE_LACKS_FPUTWS
+          and disable wide character versions of fgets and fputs if they
+          are not present.  Thanks to Johnny Willemsen for reporting this
+          bug.
 
 Wed Sep 15 15:17:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_string.h:
+        * ace/OS_NS_string.h:
 
-	  Changed preprocessor conditional for the declaration of the wide
-	  character version of strtok_r_emulation() to use ACE_WCHAR and
-	  ACE_LACKS_WCSTOK instead of ACE_HAS_REENTRANT_FUNCTIONS.  Thanks
-	  to Johnny Willemsen for reporting this bug.
+          Changed preprocessor conditional for the declaration of the wide
+          character version of strtok_r_emulation() to use ACE_WCHAR and
+          ACE_LACKS_WCSTOK instead of ACE_HAS_REENTRANT_FUNCTIONS.  Thanks
+          to Johnny Willemsen for reporting this bug.
 
 Wed Sep 15 11:41:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/ACE.cpp (set_handle_limit): Removed the
+        * ace/ACE.cpp (set_handle_limit): Removed the
 
-	  ACE_NOTREACHED (return 0);
+          ACE_NOTREACHED (return 0);
 
-	  and replaced it with
+          and replaced it with
 
-	  return 0;
+          return 0;
 
-	  Thanks to Martin Corino <mcorino@remedy.nl> for reporting this.
+          Thanks to Martin Corino <mcorino@remedy.nl> for reporting this.
 
 Wed Sep 15 10:46:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/Log_Msg.cpp:
           Uninitialized static int was assumed to be zero.  It usually
- 	  was.
+          was.
 
 Wed Sep 15 12:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -141,13 +149,13 @@ Mon Sep 13 19:09:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Mon Sep 13 20:33:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-  	* ace/Select_Reactor_Base.cpp: Changed the
+        * ace/Select_Reactor_Base.cpp: Changed the
           ACE_Select_Reactor_Handler_Repository::open() method so that it
- 	  uses the generalized ACE::set_handle_limit() method to not lower
- 	  the handles, which caused problems for applications that want to
- 	  use small reactor sizes but not limit the number of handles in
- 	  the process.  Thanks to Eider Oliveira <eider at oliveira dot
- 	  gmail at com> for suggesting this.
+          uses the generalized ACE::set_handle_limit() method to not lower
+          the handles, which caused problems for applications that want to
+          use small reactor sizes but not limit the number of handles in
+          the process.  Thanks to Eider Oliveira <eider at oliveira dot
+          gmail at com> for suggesting this.
 
         * ace/ACE.cpp,
           ace/ACE.h: Generalized ACE::set_handle_limit() so
@@ -299,7 +307,7 @@ Sat Sep 11 11:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Sep 10 22:54:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/MakeProjectCreator/config/ciao_server.mpb:
+        * bin/MakeProjectCreator/config/ciao_server.mpb:
         * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
 
           Added utils to the list of projects that are inherited.
