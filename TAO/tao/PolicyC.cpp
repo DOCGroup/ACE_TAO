@@ -1525,7 +1525,7 @@ void *CORBA::Policy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, Policy)::_narrow))
+      &CORBA_Policy::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
@@ -2118,7 +2118,7 @@ void *CORBA_PolicyManager::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, PolicyManager)::_narrow))
+      &CORBA_PolicyManager::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
@@ -2413,11 +2413,11 @@ void *CORBA_PolicyCurrent::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, PolicyCurrent)::_narrow))
+      &CORBA_PolicyCurrent::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, PolicyManager)::_narrow))
+      &CORBA_PolicyManager::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2429,7 +2429,7 @@ void *CORBA_PolicyCurrent::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, Current)::_narrow))
+      &CORBA_Current::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,

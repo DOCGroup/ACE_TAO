@@ -318,7 +318,7 @@ public:
   class CORBA_TAO_Policy_Remote_Proxy_Broker;
 
 class TAO_Export CORBA_Policy
-  : public virtual CORBA::Object,
+  : public virtual CORBA_Object,
     public virtual TAO_Encodable
   {
   public:
