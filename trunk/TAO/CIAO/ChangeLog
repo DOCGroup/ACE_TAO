@@ -1,3 +1,32 @@
+Mon Aug 23 01:07:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/StandardConfigurator_Impl.cpp:
+	* ciao/StandardConfigurator_Impl.cpp:
+
+	  Fixed unused variable warnings. 
+
+Sun Aug 22 21:28:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+	* DAnCE/ciao/Servant_Impl_Base.h:
+	* DAnCE/ciao/StandardConfigurator_Impl.cpp:
+	* DAnCE/ciao/StandardConfigurator_Impl.h:
+ 	* DAnCE/ciao/CCM_Core.mpc:
+
+          Added these files to the DAnCE builds. These were from the
+	  following change
+
+	  Tue Aug 17 14:29:00 2004  Jules White <jules@dre.vanderbilt.edu>
+	
+	* ciao/CCM_Core.mpc:
+	* ciao/Servant_Impl_Base.cpp:
+	* ciao/Servant_Impl_Base.h:
+	* ciao/StandardConfigurator_Impl.cpp:
+	* ciao/StandardConfigurator_Impl.h:
+
+	  Fixed compilation errors in builds where exceptions have been
+	  turned off. 
+	
 Sun Aug 22 22:11:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
