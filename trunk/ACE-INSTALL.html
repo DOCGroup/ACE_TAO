@@ -1306,7 +1306,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
 
 Below are instructions for building ACE with <A
 HREF="#borland">Borland C++Builder</A>, <A HREF="#msvc">Microsoft
-Visual C++</A>, <A HREF="#cygwin">Cygwin</A>, and <A HREF="#mingw">MinGw</A>. <P>
+Visual C++</A>, <A HREF="#mingw">MinGw</A>, and <A HREF="#cygwin">Cygwin</A>.<P>
 
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt
@@ -1642,7 +1642,7 @@ slashes.  If this occurs, the easiest way to fix it is to recreate it.</P>
 
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="mingw">Building and Installing ACE on Win32 with MinGW</A></H4>
+<H4><A NAME="mingw">Building and Installing ACE on Win32 with MinGW/ MSYS</A></H4>
 
 <p>
 If you are building for a machine without a network card, you may want
@@ -1658,71 +1658,33 @@ a look at the <A HREF="#g++">Compiling ACE with GNU g++</A> section.
 <p>
 You will need the MinGW build tools and libraries, downloable from
 <A HREF="http://www.mingw.org"><TT>http://www.mingw.org</TT></A>.
-For our build we required the following packages:
-<A NAME="mingwpacks">
-<blockquote>
-<B><TT>gcc, binutils, ld, libbfd, mingw-runtime, w32api</TT></B>.
-</blockquote>
 
-<p>
-You will also need GNU make for Win32 and the set of UNIX tools that
-the ACE UNIX build system uses (this include but is not limited to
-<TT><B>sh, rm, cp</B></TT>).
-For this purpose you can grab the
-<A HREF="http://cygwin.com/setup.exe">Cygwin</A>
-distribution from
-<A HREF="http://cygwin.com"><TT>http://cygwin.com</TT></A>.
-
-<p>
-Be careful, because Cygwin includes it's own version of the compiler
-and build tools, you will need to have the MinGW build tools before
-the Cygwin set on you PATH environment variable (more on this later).
-The steps we followed in the build are:
+<BR>
+For our build we require the packages
+<B><TT>MinGW</TT></B> and <B><TT>MSYS</TT></B>.
 
 <OL>
 
-  <LI> Install Cygwin (this can be easy downloading and running
-       <A HREF="http://cygwin.com/setup.exe"><tt>setup.exe</tt></A>
-       from the Cygwin site).
+  <LI> Install the MinGW tools into a common directory, say c:/mingw.
+      <BR><BR>
+
+  <LI> Install the MSYS tools into a common directory, say c:/msys.
        <BR><BR>
 
-  <LI> Install the MinGW tools. Download all the needed packages (see
-       <A HREF="#mingwpacks">above</A>) and
-       unpack them on the same base directory, say c:/mingw32.
-       If some of the packages are distributed on
-       <TT>.tar.gz</TT> format, you may need to use
-       the Cygwin version of the <TT><B>tar</B></TT> utility.
-       <BR><BR>
-
-  <LI> Open a Cygwin shell. Set your <TT>PATH</TT> environment variable so
+  <LI> Open a MSYS shell. Set your <TT>PATH</TT> environment variable so
        your MinGW's <TT>bin</TT> directory is first:
 
        <blockquote><code><pre>
-       % export PATH=//c/mingw32/bin:$PATH
+       % export PATH=/c/mingw/bin:$PATH
        </pre></code></blockquote>
-
-       <p>
-       Note Cygwin uses ``<TT>/</TT>'' as directory separator,
-       and ``<TT>//X</TT>'' as a notation for Win32 drive <TT>X</TT>.
-       Note also that you <EM>can't</EM> use ``<TT>c:/mingw32/bin</TT>''
-       because, for Cygwin,
-       ``<TT>:</TT>'' is path separator character, as in UNIX.
-       <BR><BR>
 
   <LI> Add an <TT>ACE_ROOT</TT> environment variable pointing to the
        root of your ACE wrappers source tree:
 
        <blockquote><code><pre>
-       % export ACE_ROOT=c:/work/mingw/ACE_wrappers
+       % export ACE_ROOT=/c/work/mingw/ACE_wrappers
        </pre></code></blockquote>
 
-       <p>
-       Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' Cygwin
-       notation as this is seen by MinGW's compiler and it doesn't
-       support that (it <EM>does</EM> support ``<TT>/</TT>'' as directory
-       separator however).
-
-       <p>
        From now on, we will refer to the root directory of the ACE
        source tree as <TT>$ACE_ROOT</TT>.
        <BR><BR>
@@ -1742,23 +1704,6 @@ The steps we followed in the build are:
        </pre></code></blockquote>
 
        before the <CODE>#include</CODE> line.
-
-       Also, if you don't have Winsock 2 (check the <TT>SYSTEM</TT>
-       and/or <TT>SYSTEM32</TT> subdirectories of the windows
-       instalation directory for <TT><B>ws2_32.dll</B></TT>), you
-       will need
-
-       <blockquote><code><pre>
-       #define ACE_HAS_WINSOCK2 0
-       </pre></code></blockquote>
-
-       before the <TT>#include</TT> line. On NT 4, Windows 98 and
-       later versions, you surely have Winsock 2. In Windows 95,
-       including OSR2, you may don't have it if it wasn't specially
-       installed. You may download it from the <A
-       HREF="http://www.microsoft.com">microsoft</A> site. This is
-       recommended as much ACE functionality depends on Winsock 2, and
-       ACE without Winsock 2 support is tested very infrequently.
        <BR><BR>
 
   <LI> Create a file called <TT>platform_macros.GNU</TT> in the
@@ -1772,6 +1717,7 @@ The steps we followed in the build are:
        actual directory, GNU make will take the value from the
        environment variable you defined previously.
 
+       <p>
        If you lack Winsock 2, add the line
 
        <blockquote><code><pre>
@@ -1781,21 +1727,20 @@ The steps we followed in the build are:
        before the previous one.
        <BR><BR>
 
-  <LI> On the Cygwin shell, change to the $ACE_ROOT/ace directory and
+  <LI> In the MSYS shell, change to the $ACE_ROOT/ace directory and
        run make:
 
        <blockquote><code><pre>
        % cd $ACE_ROOT/ace
        % make
        </pre></code></blockquote>
-
+       
        <p>
        This should create <TT>libACE.dll</TT> (the Win32 shared library) and
        <TT>libACE.dll.a</TT> (the Win32 import library for the DLL).
-       Note the name for the ACE DLL on MinGW follows the MinGW
-       convention, that resembles UNIX.
-       <BR><BR>
-
+       Note that the name for the ACE DLL follows the MinGW convention, which itself
+       resembles UNIX.
+     
        <p>
        If you want static libs also, you may run:
 
@@ -1803,22 +1748,13 @@ The steps we followed in the build are:
        % make static_libs=1
        </pre></code></blockquote>
 
-
   <LI> <A NAME="mingwrunpath">
        The same rules for Win32 search of DLLs apply for MinGW. If you
-       want to run some ACE programs from the Cygwin shell, you may
+       want to run some ACE programs from the MSYS shell, you may
        need to add the directory for <TT>libACE.dll</TT> to your PATH:
 
        <blockquote><code><pre>
-       # export PATH=//c/work/mingw/ACE_wrappers/ace:$PATH
-       </pre></code></blockquote>
-
-       If you are using MPC generated Makefiles, then the DLLs have been
-       placed in the lib directory instead of ace and thus your PATH
-       addition would need to look like this:
-
-       <blockquote><code><pre>
-       # export PATH=//c/work/mingw/ACE_wrappers/lib:$PATH
+       % export PATH=/c/work/mingw/ACE_wrappers/ace:$PATH
        </pre></code></blockquote>
 
 </OL>
