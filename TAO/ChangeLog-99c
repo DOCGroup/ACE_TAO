@@ -1,5 +1,8 @@
 Mon Apr 12 17:13:37 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Added the AVStreams_i_T.{h,cpp} and
+	  CosPropertyService_i_T.{h,cpp} to the project file.
+
 	* orbsvcs/tests/AVStreams/benchmark/AV_benchmark.dsw: 
 	* orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp: 
 	* orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp: 
