@@ -1,5 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoexe, naming, portableserver, wxwindows {
+project: namingexe, portableserver, wxwindows {
+  exename = wxNamingViewer
 }
