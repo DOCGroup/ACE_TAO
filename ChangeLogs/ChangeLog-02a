@@ -1,3 +1,10 @@
+Fri Dec  8 06:47:12 2000  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * tests/Makefile.bor:
+
+          Use variable called TARGET_NAME instead of NAME to
+          prevent clash with nightly build scripts.
+
 Thu Dec  7 13:16:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/IPC_SAP/SPIPE_SAP/server.cpp:
