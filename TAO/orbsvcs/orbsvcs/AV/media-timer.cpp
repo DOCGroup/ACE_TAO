@@ -63,12 +63,12 @@ MediaTimer::~MediaTimer()
  */
 ACE_UINT32 MediaTimer::media_ts()
 {
-        timeval tv;
-        ::gettimeofday(&tv, 0);
-        ACE_UINT32 u = tv.tv_usec;
-        u = (u << 3) + u; /* x 9 */
+  //timeval tv;
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_UINT32 u = tv.usec ();
+  u = (u << 3) + u; /* x 9 */
         /* sec * 90Khz + (usec * 90Khz) / 1e6 */
-        u = tv.tv_sec * 90000 + (u / 100);
+        u = tv.sec () * 90000 + (u / 100);
         return (u + offset_);
 }
 

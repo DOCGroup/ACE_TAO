@@ -82,9 +82,10 @@ ntptime (timeval t)
 ACE_INLINE ACE_UINT32 
 ntptime()
 {
-  struct timeval tv;
-        ::gettimeofday(&tv, 0);
-        return (ntptime(tv));
+  //
+ ACE_Time_Value tim_v = ACE_OS::gettimeofday();
+ //struct timeval tv = (timeval) tim_v;
+        return (ntptime ((timeval) tim_v));
 }
 
 ACE_INLINE timeval unixtime()

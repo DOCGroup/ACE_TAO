@@ -64,7 +64,7 @@ TAO_AV_UDP_MCast_Transport::~TAO_AV_UDP_MCast_Transport (void)
 }
 
 int
-TAO_AV_UDP_MCast_Transport::open (ACE_Addr */*address*/)
+TAO_AV_UDP_MCast_Transport::open (ACE_Addr * /*address*/)
 {
   return 0;
 }

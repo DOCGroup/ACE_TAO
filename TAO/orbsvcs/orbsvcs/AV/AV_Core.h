@@ -32,7 +32,7 @@ class TAO_FlowSpec_Entry;
 //forward declaration.
 class TAO_AV_Transport_Factory;
 
-class TAO_Export TAO_AV_Transport_Item
+class TAO_ORBSVCS_Export TAO_AV_Transport_Item
 {
 public:
   TAO_AV_Transport_Item (const ACE_CString &name);
@@ -59,7 +59,7 @@ private:
 
 class TAO_AV_Flow_Protocol_Factory;
 
-class TAO_Export TAO_AV_Flow_Protocol_Item
+class TAO_ORBSVCS_Export TAO_AV_Flow_Protocol_Item
 {
 public:
   TAO_AV_Flow_Protocol_Item (const ACE_CString &name);

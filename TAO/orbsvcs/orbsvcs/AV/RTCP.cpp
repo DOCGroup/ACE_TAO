@@ -554,11 +554,10 @@ TAO_AV_RTCP::handle_input (ACE_Message_Block *data,
 ACE_UINT32
 TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
 {
-  timeval tv;
-  ::gettimeofday(&tv, 0);
-  ACE_UINT32 srcid = ACE_UINT32 (tv.tv_sec + tv.tv_usec);
-  srcid += (ACE_UINT32)getuid();
-  srcid += (ACE_UINT32)getpid();
+  ACE_Time_Value tv = ACE_OS::gettimeofday ();
+  ACE_UINT32 srcid = ACE_UINT32 (tv.sec () + tv.usec ());
+  srcid += (ACE_UINT32)ACE_OS::getuid();
+  srcid += (ACE_UINT32)ACE_OS::getpid();
   srcid += addr;
   return (srcid);
 }
@@ -633,7 +632,7 @@ TAO_AV_RTCP_Object::handle_input (void)
 
 int
 TAO_AV_RTCP_Object::send_frame (ACE_Message_Block *frame,
-                                TAO_AV_frame_info */*frame_info*/)
+                                TAO_AV_frame_info * /*frame_info*/)
 {
   return this->transport_->send (frame);
 }
@@ -641,7 +640,7 @@ TAO_AV_RTCP_Object::send_frame (ACE_Message_Block *frame,
 int
 TAO_AV_RTCP_Object::send_frame (const iovec *iov,
                                int iovcnt,
-                                TAO_AV_frame_info */*frame_info*/)
+                                TAO_AV_frame_info * /*frame_info*/)
 {
   return this->transport_->send (iov,
                                  iovcnt);
@@ -768,7 +767,7 @@ TAO_AV_RTCP_Callback::handle_stop (void)
 }
 
 int
-TAO_AV_RTCP_Callback::handle_timeout (void */*arg*/)
+TAO_AV_RTCP_Callback::handle_timeout (void * /*arg*/)
 {
   // Here we do the send_report.
   TAO_AV_RTCP::send_report (0,
@@ -781,7 +780,7 @@ TAO_AV_RTCP_Callback::handle_timeout (void */*arg*/)
 
 void
 TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
-                                   void *&/*arg*/)
+                                   void *& /*arg*/)
 {
   // Here we do the RTCP timeout calculation.
   ACE_NEW (tv,
