@@ -914,6 +914,17 @@ IDL_GlobalData::pragma_prefixes (void)
 void 
 IDL_GlobalData::update_prefix (char *filename)
 {
+  UTL_String *fname = idl_global->filename ();
+
+  // We have to do this check because some preprocessors (gcc 3.2
+  // on RedHat Linux 7.1, for one) output the same filename
+  // multiple times for no apparent reason, and we don't want it
+  // to clear the prefix.
+  if (fname && ACE_OS::strcmp (fname->get_string (), filename) == 0)
+    {
+      return;
+    }
+
   ACE_CString tmp ("", 0, 0);
   ACE_CString fn (filename, 0, 0);
   (void) this->file_prefixes_.trybind (fn, tmp);
