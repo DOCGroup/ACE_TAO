@@ -146,13 +146,16 @@ TAO_PG_GenericFactory::create_object (
   if (factory_infos_count > 0
       && membership_style == PortableGroup::MEMB_INF_CTRL)
     {
-      this->populate_object_group (object_group.in (),
+      this->populate_object_group (fcid,
+                                   object_group.in (),
                                    oid.in (),
                                    type_id,
                                    *factory_infos
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
+
+
 
   // Allocate a new FactoryCreationId for use as an "out" parameter.
   PortableGroup::GenericFactory::FactoryCreationId * tmp = 0;
@@ -288,6 +291,7 @@ TAO_PG_GenericFactory::poa (PortableServer::POA_ptr p)
 
 void
 TAO_PG_GenericFactory::populate_object_group (
+  CORBA::ULong fcid, 
   PortableGroup::ObjectGroup_ptr object_group,
   const PortableServer::ObjectId & oid,
   const char * type_id,
@@ -382,7 +386,19 @@ TAO_PG_GenericFactory::populate_object_group (
     }
 
   if (this->factory_map_.bind (fcid, factory_set) != 0)
-    ACE_THROW ();
+    {
+      this->delete_object_i (factory_set,
+                             1 /* Ignore exceptions */
+                             ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      this->object_group_manager_.destroy_object_group (
+            oid
+            ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      ACE_THROW (PortableGroup::ObjectNotCreated ());
+    }
 }
 
 void
