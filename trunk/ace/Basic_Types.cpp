@@ -10,7 +10,7 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-#if defined (ACE_LACKS_LONGLONG_T)
+#if defined (ACE_LACKS_LONGLONG_T) && !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 # include "ace/Log_Msg.h"
 # include "ace/OS_NS_stdio.h"
 # include "ace/OS_NS_string.h"

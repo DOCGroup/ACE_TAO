@@ -2,7 +2,424 @@
 //
 // $Id$
 
-#if defined (ACE_LACKS_LONGLONG_T)
+# if !defined (ACE_LACKS_LONGLONG_T) && defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+
+// Implementation for ACE_U_LongLong when we have signed long long
+// but no unsigned long long.
+
+ACE_INLINE
+ACE_U_LongLong::ACE_U_LongLong (const long long value)
+  : data_ (value)
+{
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::hi (void) const
+{
+  return (data_ >> 32) & 0xFFFFFFFF;
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::lo (void) const
+{
+  return data_ & 0xFFFFFFFF;
+}
+
+ACE_INLINE void
+ACE_U_LongLong::hi (const ACE_UINT32 hi)
+{
+  data_ = hi;
+  data_ <<= 32;
+}
+
+ACE_INLINE void
+ACE_U_LongLong::lo (const ACE_UINT32 lo)
+{
+  data_ = lo;
+}
+
+ACE_INLINE long long
+ACE_U_LongLong::to_int64 (void) const
+{
+  return data_;
+}
+
+ACE_INLINE
+ACE_U_LongLong::~ACE_U_LongLong (void)
+{
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator== (const ACE_U_LongLong &n) const
+{
+  return data_  == n.data_;
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator== (const ACE_UINT32 n) const
+{
+  return data_  == n;
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator!= (const ACE_U_LongLong &n) const
+{
+  return ! (*this == n);
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator!= (const ACE_UINT32 n) const
+{
+  return ! (*this == n);
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator< (const ACE_U_LongLong &n) const
+{
+  if (data_ > 0)
+    if (n.data_ > 0)
+      return data_ < n.data_;
+    else
+      return true;
+  else
+    if (n.data_ > 0)
+      return false;
+    else
+      return data_ < n.data_;
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator< (const ACE_UINT32 n) const
+{
+  return operator< (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator<= (const ACE_U_LongLong &n) const
+{
+  if (data_ == n.data_) return true;
+
+  return data_ < n.data_;
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator<= (const ACE_UINT32 n) const
+{
+  return operator<= (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator> (const ACE_U_LongLong &n) const
+{
+  if (data_ > 0)
+    if (n.data_ > 0)
+      return data_ > n.data_;
+    else
+      return false;
+  else
+    if (n.data_ > 0)
+      return true;
+    else
+      return data_ > n.data_;
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator> (const ACE_UINT32 n) const
+{
+  return operator> (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator>= (const ACE_U_LongLong &n) const
+{
+  if (data_ == n.data_) return true;
+
+  return data_ > n.data_;  
+}
+
+ACE_INLINE bool
+ACE_U_LongLong::operator>= (const ACE_UINT32 n) const
+{
+  return operator>= (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE
+ACE_U_LongLong::ACE_U_LongLong (const ACE_U_LongLong &n)
+  : data_ (n.data_)
+{
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator= (const ACE_U_LongLong &n)
+{
+  data_ = n.data_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator= (const ACE_INT32 &rhs)
+{
+  if (rhs >= 0)
+    {
+      data_ = rhs;
+      data_ &= 0xFFFFFFFF;
+    }
+  else
+    {
+      // We do not handle the case where a negative 32 bit integer is
+      // assigned to this representation of a 64 bit unsigned integer.
+      // The "undefined behavior" behavior performed by this
+      // implementation is to simply set all bits to zero.
+      data_ = 0;
+    }
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator= (const ACE_UINT32 &rhs)
+{
+  data_ = rhs;
+
+  return *this;
+}
+
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator+ (const ACE_U_LongLong &n) const
+{
+  return data_ + n.data_;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator+ (const ACE_UINT32 n) const
+{
+  return operator+ (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator- (const ACE_U_LongLong &n) const
+{
+  return data_ - n.data_;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator- (const ACE_UINT32 n) const
+{
+  return operator- (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator<< (const u_int n) const
+{
+  return data_ << n;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator<<= (const u_int n)
+{
+  data_ <<= n;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator>> (const u_int n) const
+{
+  return data_ >> n;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator>>= (const u_int n)
+{
+  data_ >>= n;
+
+  return *this;
+}
+
+ACE_INLINE double
+ACE_U_LongLong::operator/ (const double n) const
+{
+  return data_ / n;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator+= (const ACE_U_LongLong &n)
+{
+  data_ += n.data_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator+= (const ACE_UINT32 n)
+{
+  return operator+= (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator* (const ACE_UINT32 n) const
+{
+  return data_ * n;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator*= (const ACE_UINT32 n)
+{
+  data_ *= n;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator-= (const ACE_U_LongLong &n)
+{
+  data_ -= n.data_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator-= (const ACE_UINT32 n)
+{
+  return operator-= (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator++ ()
+{
+  ++data_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator-- ()
+{
+  --data_;
+
+  return *this;
+}
+
+ACE_INLINE const ACE_U_LongLong
+ACE_U_LongLong::operator++ (int)
+{
+  // Post-increment operator should always be implemented in terms of
+  // the pre-increment operator to enforce consistent semantics.
+  ACE_U_LongLong temp (*this);
+  ++*this;
+  return temp;
+}
+
+ACE_INLINE const ACE_U_LongLong
+ACE_U_LongLong::operator-- (int)
+{
+  // Post-decrement operator should always be implemented in terms of
+  // the pre-decrement operator to enforce consistent semantics.
+  ACE_U_LongLong temp (*this);
+  --*this;
+  return temp;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator|= (const ACE_U_LongLong n)
+{
+  data_ |= n.data_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator|= (const ACE_UINT32 n)
+{
+  return operator|= (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator&= (const ACE_U_LongLong n)
+{
+  data_ &= n.data_;
+
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator&= (const ACE_UINT32 n)
+{
+  return operator&= (static_cast<const ACE_U_LongLong> (n));
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const ACE_UINT32 n) const
+{
+  return data_ / n;
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator% (const ACE_UINT32 n) const
+{
+  return data_ % n;
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator| (const ACE_INT32 n) const
+{
+  return data_ | n;
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator& (const ACE_INT32 n) const
+{
+  return data_ & n;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator* (const ACE_INT32 n) const
+{
+  return operator* ((ACE_UINT32) n);
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator*= (const ACE_INT32 n)
+{
+  return operator*= ((ACE_UINT32) n);
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const ACE_INT32 n) const
+{
+  return operator/ ((ACE_UINT32) n);
+}
+
+#if ACE_SIZEOF_INT == 4
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const u_long n) const
+{
+  return operator/ ((ACE_UINT32) n);
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const long n) const
+{
+  return operator/ ((ACE_UINT32) n);
+}
+
+#else  /* ACE_SIZEOF_INT != 4 */
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const u_int n) const
+{
+  return operator/ ((ACE_UINT32) n);
+}
+
+ACE_INLINE ACE_UINT32
+ACE_U_LongLong::operator/ (const int n) const
+{
+  return operator/ ((ACE_UINT32) n);
+}
+#endif
+
+#elif defined (ACE_LACKS_LONGLONG_T)
 
 ACE_INLINE
 ACE_U_LongLong::ACE_U_LongLong (const ACE_UINT32 lo, const ACE_UINT32 hi)
@@ -526,4 +943,4 @@ ACE_U_LongLong::operator/ (const int n) const
 }
 #endif /* ACE_SIZEOF_INT != 4 */
 
-#endif /* ACE_LACKS_LONGLONG_T */
+#endif /* ACE_LACKS_LONGLONG_T  || ACE_LACKS_UNSIGNEDLONGLONG_T */

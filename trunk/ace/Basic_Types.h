@@ -137,7 +137,9 @@
 
 // The number of bytes in a long long.
 # if !defined (ACE_SIZEOF_LONG_LONG)
-#   if defined (ACE_LACKS_LONGLONG_T)
+#   if defined(__TANDEM)
+#     define ACE_SIZEOF_LONG_LONG 8
+#   elif defined (ACE_LACKS_LONGLONG_T)
 #     define ACE_SIZEOF_LONG_LONG 8
 #   else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 #     if ACE_SIZEOF_LONG == 8
@@ -352,8 +354,8 @@ typedef ptrdiff_t ptr_arith_t;
   reinterpret_cast<PTR_TYPE> (static_cast<ptrdiff_t> (L))
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
-// If the platform lacks a long long, define one.
-# if defined (ACE_LACKS_LONGLONG_T)
+// If the platform lacks an unsigned long long, define one.
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 // Forward declaration for streams
 #   include "ace/iosfwd.h"
 
@@ -375,7 +377,11 @@ typedef ptrdiff_t ptr_arith_t;
   {
   public:
     // = Initialization and termination methods.
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+    ACE_U_LongLong (const long long value = 0x0);
+#else
     ACE_U_LongLong (const ACE_UINT32 lo = 0x0, const ACE_UINT32 hi = 0x0);
+#endif
     ACE_U_LongLong (const ACE_U_LongLong &);
     ACE_U_LongLong &operator= (const ACE_U_LongLong &);
     ACE_U_LongLong &operator= (const ACE_INT32 &);
@@ -463,7 +469,15 @@ typedef ptrdiff_t ptr_arith_t;
     void hi (const ACE_UINT32 hi);
     void lo (const ACE_UINT32 lo);
 
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+    long long to_int64 (void) const;
+#   endif
+
   private:
+
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+    long long data_;
+#else
     union
       {
         struct
@@ -525,6 +539,7 @@ typedef ptrdiff_t ptr_arith_t;
     ACE_U_LongLong ull_mult (ACE_U_LongLong a,
                              ACE_UINT32 b,
                              ACE_UINT32 *carry) const;
+#endif // ACE_LACKS_UNSIGNEDLONGLONG_T
   };
 
   typedef ACE_U_LongLong ACE_UINT64;
@@ -537,7 +552,7 @@ typedef ptrdiff_t ptr_arith_t;
 
 // Conversions from ACE_UINT64 to ACE_UINT32.  ACE_CU64_TO_CU32 should
 // be used on const ACE_UINT64's.
-# if defined (ACE_LACKS_LONGLONG_T)
+# if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 #   define ACE_U64_TO_U32(n) ((n).lo ())
 #   define ACE_CU64_TO_CU32(n) ((n).lo ())
 # else  /* ! ACE_LACKS_LONGLONG_T */
@@ -549,10 +564,10 @@ typedef ptrdiff_t ptr_arith_t;
 // 64-bit literals require special marking on some platforms.
 # if defined (ACE_LACKS_LONGLONG_T)
     // Can only specify 32-bit arguments.
-#   define ACE_UINT64_LITERAL(n) (ACE_U_LongLong (n))
+#   define ACE_UINT64_LITERAL(n) n ## UL
       // This one won't really work, but it'll keep
       // some compilers happy until we have better support
-#   define ACE_INT64_LITERAL(n) (ACE_U_LongLong (n))
+#   define ACE_INT64_LITERAL(n) n ## L
 # elif defined (ACE_WIN32)
 #  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #   define ACE_UINT64_LITERAL(n) n ## LL
@@ -564,6 +579,9 @@ typedef ptrdiff_t ptr_arith_t;
 #   define ACE_UINT64_LITERAL(n) n ## ui64
 #   define ACE_INT64_LITERAL(n) n ## i64
 #  endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+# elif defined (__TANDEM)
+#   define ACE_UINT64_LITERAL(n) n ## LL
+#   define ACE_INT64_LITERAL(n) n ## LL
 # else  /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 #   define ACE_UINT64_LITERAL(n) n ## ull
 #   define ACE_INT64_LITERAL(n) n ## ll
@@ -580,6 +598,8 @@ typedef ptrdiff_t ptr_arith_t;
 #if !defined (ACE_INT64_FORMAT_SPECIFIER)
 #  if ACE_SIZEOF_LONG == 8
 #    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
+#  elif defined(__TANDEM) && defined(_TNS_R_TARGET)
+#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
 #  else
 #    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lld")
 #  endif /* ACE_SIZEOF_LONG == 8 */

@@ -1,3 +1,37 @@
+Wed Mar 23 16:51:00 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * ace/README
+
+          Describe new macro ACE_LACKS_UNSIGNEDLONGLONG_T
+
+        * ace/Basic_Types.h
+
+          Slightly alter declaration of ACE_U_LongLong to handle the "has
+          long long but no unsigned long long" case.
+
+          Make use of ACE_LACKS_UNSIGNEDLONGLONG_T in a few places to
+          define other macros.
+
+        * ace/Basic_Types.cpp
+             Make use of ACE_LACKS_UNSIGNEDLONGLONG_T in existing #if
+
+        * ace/Basic_Types.inl
+
+          Alternate implementation for ACE_U_LongLong class.
+
+        * ace/Time_Value.inl
+
+          Add static_cast needed when using alternate implementation of
+          ACE_U_LongLong (when ACE_LACKS_UNSIGNEDLONGLONG_T is defined).
+
+        * ace/Log_Msg.cpp
+          Make use of ACE_LACKS_UNSIGNEDLONGLONG_T in existing #if
+
+        * ace/config-tandem-nsk-mips-v3.h
+
+          Define ACE_LACKS_UNSIGNEDLONGLONG_T
+
+        
 Wed Mar 23 10:11:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Time_Value.h:
