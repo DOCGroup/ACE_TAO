@@ -49,9 +49,9 @@ main (int argc, char *argv[])
       // Some useful variables for retrieving values from the scheduler.
       RtecScheduler::RT_Info *rt_info = 0;
       RtecScheduler::OS_Priority priority;
-      RtecScheduler::Preemption_Subpriority subpriority;
-      RtecScheduler::Preemption_Priority p_priority;
-      RtecScheduler::Dispatching_Type dispatching_type;
+      RtecScheduler::Preemption_Subpriority_t subpriority;
+      RtecScheduler::Preemption_Priority_t p_priority;
+      RtecScheduler::Dispatching_Type_t dispatching_type;
 
       for (int i = 0; i < infos_size; ++i)
         {
@@ -82,9 +82,9 @@ main (int argc, char *argv[])
           ACE_ASSERT (rt_info->period == 
             infos [i].period);
           ACE_ASSERT (rt_info->criticality == 
-            RtecScheduler::Criticality(infos [i].criticality));
+            ACE_static_cast (RtecScheduler::Criticality_t, infos [i].criticality));
           ACE_ASSERT (rt_info->importance == 
-            RtecScheduler::Importance(infos [i].importance));
+            ACE_static_cast (RtecScheduler::Importance_t, infos [i].importance));
           ACE_ASSERT (rt_info->quantum == 
             infos [i].quantum);
           ACE_ASSERT (rt_info->threads == 
@@ -96,20 +96,23 @@ main (int argc, char *argv[])
           ACE_ASSERT (rt_info->preemption_priority == 
             infos [i].preemption_priority);
           ACE_ASSERT (rt_info->info_type == 
-            RtecScheduler::Info_Type(infos [i].info_type));
+            ACE_static_cast (RtecScheduler::Info_Type_t, infos [i].info_type));
 
           // Make sure the values in the scheduler's internal RT_Info are OK.
           // Scheduler will generate messages if any values don't match.
           runtime_scheduler->set (infos [i].handle,
-                                  RtecScheduler::Criticality(infos [i].criticality),
+                                  ACE_static_cast (RtecScheduler::Criticality_t,
+                                                   infos [i].criticality),
                                   infos [i].worst_case_execution_time,
                                   infos [i].typical_execution_time,
                                   infos [i].cached_execution_time,
                                   infos [i].period,
-                                  RtecScheduler::Importance(infos [i].importance),
+                                  ACE_static_cast (RtecScheduler::Importance_t,
+                                                   infos [i].importance),
                                   infos [i].quantum,
                                   infos [i].threads,
-                                  RtecScheduler::Info_Type(infos [i].info_type),
+                                  ACE_static_cast (RtecScheduler::Info_Type_t,
+                                                   infos [i].info_type),
                                   TAO_TRY_ENV);
 
           // Make sure the correct priority values are returned.
