@@ -1,5 +1,10 @@
 Tue Jul 27 13:57:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h: KCC has
+	  the fix for the struct exception name conflict so we don't need
+	  to do it here.
+
 	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed broken custom build
 
 Tue Jul 27 14:28:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
