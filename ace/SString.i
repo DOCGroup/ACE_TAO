@@ -532,13 +532,19 @@ ACE_WString::rep (void) const
 ACE_INLINE const ACE_WSTRING_TYPE *
 ACE_WString::fast_rep (void) const
 {
-  return this->rep_;
+  if (this->rep_ == 0)
+    return &ACE_WString::NULL_WString_;
+  else
+    return this->rep_;
 }
 
 ACE_INLINE const ACE_WSTRING_TYPE *
 ACE_WString::c_str (void) const
 {
-  return this->rep_;
+  if (this->rep_ == 0)
+    return &ACE_WString::NULL_WString_;
+  else
+    return this->rep_;
 }
 
 // Comparison operator.
@@ -559,7 +565,7 @@ ACE_INLINE int
 ACE_WString::operator < (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator <");
-  return (this->len_ < s.len_)
+  return this->len_ < s.len_
           ? ACE_OS::memcmp ((const void *) this->rep_,
                             (const void *) s.rep_,
                             this->len_ * sizeof (ACE_WSTRING_TYPE)) <= 0
@@ -574,7 +580,7 @@ ACE_INLINE int
 ACE_WString::operator > (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator >");
-  return (this->len_ <= s.len_)
+  return this->len_ <= s.len_
           ? ACE_OS::memcmp ((const void *) this->rep_,
                             (const void *) s.rep_,
                             this->len_ * sizeof (ACE_WSTRING_TYPE)) > 0

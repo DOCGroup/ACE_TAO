@@ -226,6 +226,7 @@ EXIT_LABEL:
 ACE_ALLOC_HOOK_DEFINE(ACE_CString)
 
 char ACE_CString::NULL_CString_ = '\0';
+ACE_WSTRING_TYPE ACE_WString::NULL_WString_ = '\0';
 const int ACE_CString::npos = -1;
 const int ACE_SString::npos = -1;
 const int ACE_WString::npos = -1;
@@ -628,9 +629,6 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
-
-  this->len_ = 0;
-  this->check_allocate (1);
 }
 
 /* static */
@@ -711,6 +709,7 @@ ACE_WString::ACE_WString (const char *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
     buf_len_ (0),
+    len_ (0),
     rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -718,12 +717,7 @@ ACE_WString::ACE_WString (const char *s,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (s == 0)
-    {
-      this->len_ = 0;
-      this->check_allocate (1);
-    }
-  else
+  if (s != 0)
     {
       this->len_ = ACE_OS::strlen (s);
       this->check_allocate (this->len_ + 1);
@@ -744,6 +738,7 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
     buf_len_ (0),
+    len_ (0),
     rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -751,12 +746,7 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (s == 0)
-    {
-      this->len_ = 0;
-      this->check_allocate (1);
-    }
-  else
+  if (s != 0)
     {
       this->len_ = ACE_WString::strlen (s);
       this->check_allocate (this->len_ + 1);
@@ -794,6 +784,7 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
     buf_len_ (0),
+    len_ (0),
     rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -801,12 +792,7 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (s == 0)
-    {
-      this->len_ = 0;
-      this->check_allocate (1);
-    }
-  else
+  if (s != 0)
     {
       this->len_ = len;
       this->check_allocate (this->len_ + 1);
@@ -826,6 +812,7 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
     buf_len_ (0),
+    len_ (0),
     rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -833,12 +820,7 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (s == 0)
-    {
-      this->len_ = 0;
-      this->check_allocate (1);
-    }
-  else
+  if (s != 0)
     {
       this->len_ = len;
       this->check_allocate (this->len_ + 1);
@@ -1012,7 +994,9 @@ ACE_WString::operator += (const ACE_WSTRING_TYPE *s)
 ACE_WString::~ACE_WString (void)
 {
   ACE_TRACE ("ACE_WString::~ACE_WString");
-  this->allocator_->free (this->rep_);
+
+  if (this->buf_len_ != 0)
+    this->allocator_->free (this->rep_);
 }
 
 /* static */
@@ -1054,9 +1038,13 @@ ACE_WString::check_allocate (size_t len)
   // Check if the buffer is large enough
   while (tempbuflen <= len)
     if (tempbuflen == 0)
-      tempbuflen = 32;
+      tempbuflen = ACE_DEFAULT_GROWSIZE;
     else
+#if defined (ACE_GROW_LINEAR)
+      tempbuflen += ACE_DEFAULT_GROWSIZE;
+#else
       tempbuflen *= 2;
+#endif /* ACE_GROW_LINEAR */
 
   if (tempbuflen != this->buf_len_)
     {
