@@ -94,7 +94,7 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableServer__TAO_RequestProcessingPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -105,7 +105,7 @@ PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
 PortableServer::RequestProcessingPolicy::~RequestProcessingPolicy (void)
 {}
 
-void
+void 
 PortableServer::RequestProcessingPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestProcessingPolicy *_tao_tmp_pointer =
@@ -123,10 +123,10 @@ PortableServer::RequestProcessingPolicy::_narrow (
     {
       return RequestProcessingPolicy::_nil ();
     }
-
+  
   RequestProcessingPolicy_ptr proxy =
     dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref);
-
+  
   return RequestProcessingPolicy::_duplicate (proxy);
 }
 
@@ -140,10 +140,10 @@ PortableServer::RequestProcessingPolicy::_unchecked_narrow (
     {
       return RequestProcessingPolicy::_nil ();
     }
-
+  
   RequestProcessingPolicy_ptr proxy =
     dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref);
-
+  
   return RequestProcessingPolicy::_duplicate (proxy);
 }
 
@@ -154,7 +154,7 @@ PortableServer::RequestProcessingPolicy::_duplicate (RequestProcessingPolicy_ptr
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -216,7 +216,7 @@ PortableServer::RequestProcessingPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableServer::RequestProcessingPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableServer::RequestProcessingPolicy
@@ -233,12 +233,12 @@ PortableServer::RequestProcessingPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableServer::RequestProcessingPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableServer::RequestProcessingPolicy
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -37,22 +37,22 @@ static const CORBA::Long _oc_PortableServer_Current_NoContext[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f43),
-  ACE_NTOHL (0x75727265),
-  ACE_NTOHL (0x6e742f4e),
-  ACE_NTOHL (0x6f436f6e),
-  ACE_NTOHL (0x74657874),
-  ACE_NTOHL (0x3a322e33),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f43), 
+  ACE_NTOHL (0x75727265), 
+  ACE_NTOHL (0x6e742f4e), 
+  ACE_NTOHL (0x6f436f6e), 
+  ACE_NTOHL (0x74657874), 
+  ACE_NTOHL (0x3a322e33), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/Current/NoContext:2.3
     10,
-  ACE_NTOHL (0x4e6f436f),
-  ACE_NTOHL (0x6e746578),
+  ACE_NTOHL (0x4e6f436f), 
+  ACE_NTOHL (0x6e746578), 
   ACE_NTOHL (0x74000000),  // name = NoContext
   0, // member count
   };
@@ -75,18 +75,18 @@ static const CORBA::Long _oc_PortableServer_Current[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f43),
-  ACE_NTOHL (0x75727265),
-  ACE_NTOHL (0x6e743a32),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f43), 
+  ACE_NTOHL (0x75727265), 
+  ACE_NTOHL (0x6e743a32), 
   ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/Current:2.3
     8,
-  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x43757272), 
   ACE_NTOHL (0x656e7400),  // name = Current
   };
 
@@ -173,7 +173,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -245,8 +245,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -271,5 +269,4 @@ CORBA::Boolean operator>>= (
         PortableServer::Current \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

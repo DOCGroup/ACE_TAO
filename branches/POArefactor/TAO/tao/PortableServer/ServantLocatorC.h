@@ -47,24 +47,7 @@
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "tao/AnySeqC.h"
-#include "tao/BooleanSeqC.h"
-#include "tao/CharSeqC.h"
-#include "tao/DoubleSeqC.h"
-#include "tao/FloatSeqC.h"
-#include "tao/LongDoubleSeqC.h"
-#include "tao/LongSeqC.h"
-#include "tao/OctetSeqC.h"
-#include "tao/ShortSeqC.h"
-#include "tao/StringSeqC.h"
-#include "tao/ULongSeqC.h"
-#include "tao/UShortSeqC.h"
-#include "tao/WCharSeqC.h"
-#include "tao/WStringSeqC.h"
-#include "tao/LongLongSeqC.h"
-#include "tao/ULongLongSeqC.h"
-#include "tao/PolicyC.h"
-#include "tao/ServicesC.h"
+#include "tao/orb_typesC.h"
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "tao/PortableServer/ServantManagerC.h"
 
@@ -91,7 +74,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:63
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -99,7 +82,7 @@
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -109,22 +92,22 @@ namespace TAO
 
 namespace PortableServer
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR__VAR_OUT_CH_
-
+  
   class ServantLocator;
   typedef ServantLocator *ServantLocator_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServantLocator
       >
     ServantLocator_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServantLocator
@@ -132,13 +115,13 @@ namespace PortableServer
     ServantLocator_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR_CH_
-
+  
   class TAO_PortableServer_Export ServantLocator
     : public virtual ::PortableServer::ServantManager
   {
@@ -147,30 +130,30 @@ namespace PortableServer
 
     typedef ServantLocator_ptr _ptr_type;
     typedef ServantLocator_var _var_type;
-
+    
     // The static operations.
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
-
+    
     static ServantLocator_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServantLocator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServantLocator_ptr _nil (void)
     {
       return (ServantLocator_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::Servant preinvoke (
         const ::PortableServer::ObjectId & oid,
         ::PortableServer::POA_ptr adapter,
@@ -182,10 +165,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void postinvoke (
         const ::PortableServer::ObjectId & oid,
         ::PortableServer::POA_ptr adapter,
@@ -197,36 +180,36 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     ServantLocator (void);
-
+    
     virtual ~ServantLocator (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ServantLocator (const ServantLocator &);
-
+    
     void operator= (const ServantLocator &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServantLocator;
 
 // TAO_IDL - Generated from
@@ -243,7 +226,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ServantLocator>
   {

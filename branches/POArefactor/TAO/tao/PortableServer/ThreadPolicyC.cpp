@@ -94,7 +94,7 @@ TAO::Objref_Traits<PortableServer::ThreadPolicy>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableServer__TAO_ThreadPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -105,7 +105,7 @@ PortableServer::ThreadPolicy::ThreadPolicy (void)
 PortableServer::ThreadPolicy::~ThreadPolicy (void)
 {}
 
-void
+void 
 PortableServer::ThreadPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ThreadPolicy *_tao_tmp_pointer =
@@ -123,10 +123,10 @@ PortableServer::ThreadPolicy::_narrow (
     {
       return ThreadPolicy::_nil ();
     }
-
+  
   ThreadPolicy_ptr proxy =
     dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-
+  
   return ThreadPolicy::_duplicate (proxy);
 }
 
@@ -140,10 +140,10 @@ PortableServer::ThreadPolicy::_unchecked_narrow (
     {
       return ThreadPolicy::_nil ();
     }
-
+  
   ThreadPolicy_ptr proxy =
     dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-
+  
   return ThreadPolicy::_duplicate (proxy);
 }
 
@@ -154,7 +154,7 @@ PortableServer::ThreadPolicy::_duplicate (ThreadPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -216,7 +216,7 @@ PortableServer::ThreadPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableServer::ThreadPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableServer::ThreadPolicy
@@ -233,12 +233,12 @@ PortableServer::ThreadPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableServer::ThreadPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableServer::ThreadPolicy
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

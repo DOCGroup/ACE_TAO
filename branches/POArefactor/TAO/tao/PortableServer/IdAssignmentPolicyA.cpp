@@ -36,24 +36,24 @@ static const CORBA::Long _oc_PortableServer_IdAssignmentPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   50,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f49),
-  ACE_NTOHL (0x64417373),
-  ACE_NTOHL (0x69676e6d),
-  ACE_NTOHL (0x656e7450),
-  ACE_NTOHL (0x6f6c6963),
-  ACE_NTOHL (0x793a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f49), 
+  ACE_NTOHL (0x64417373), 
+  ACE_NTOHL (0x69676e6d), 
+  ACE_NTOHL (0x656e7450), 
+  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x793a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0
     19,
-  ACE_NTOHL (0x49644173),
-  ACE_NTOHL (0x7369676e),
-  ACE_NTOHL (0x6d656e74),
-  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x49644173), 
+  ACE_NTOHL (0x7369676e), 
+  ACE_NTOHL (0x6d656e74), 
+  ACE_NTOHL (0x506f6c69), 
   ACE_NTOHL (0x63790000),  // name = IdAssignmentPolicy
   };
 
@@ -140,8 +140,6 @@ operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -156,5 +154,4 @@ operator>>= (
         PortableServer::IdAssignmentPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

@@ -94,7 +94,7 @@ TAO::Objref_Traits<PortableServer::ServantLocator>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableServer__TAO_ServantLocator_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -105,7 +105,7 @@ PortableServer::ServantLocator::ServantLocator (void)
 PortableServer::ServantLocator::~ServantLocator (void)
 {}
 
-void
+void 
 PortableServer::ServantLocator::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantLocator *_tao_tmp_pointer =
@@ -123,10 +123,10 @@ PortableServer::ServantLocator::_narrow (
     {
       return ServantLocator::_nil ();
     }
-
+  
   ServantLocator_ptr proxy =
     dynamic_cast<ServantLocator_ptr> (_tao_objref);
-
+  
   return ServantLocator::_duplicate (proxy);
 }
 
@@ -140,10 +140,10 @@ PortableServer::ServantLocator::_unchecked_narrow (
     {
       return ServantLocator::_nil ();
     }
-
+  
   ServantLocator_ptr proxy =
     dynamic_cast<ServantLocator_ptr> (_tao_objref);
-
+  
   return ServantLocator::_duplicate (proxy);
 }
 
@@ -154,7 +154,7 @@ PortableServer::ServantLocator::_duplicate (ServantLocator_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -216,7 +216,7 @@ PortableServer::ServantLocator::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableServer::ServantLocator
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableServer::ServantLocator
@@ -233,12 +233,12 @@ PortableServer::ServantLocator::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableServer::ServantLocator
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableServer::ServantLocator
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -47,6 +47,7 @@
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
+#include "tao/PolicyC.h"
 #include "tao/PortableServer/PortableServerC.h"
 
 #if defined (TAO_EXPORT_MACRO)

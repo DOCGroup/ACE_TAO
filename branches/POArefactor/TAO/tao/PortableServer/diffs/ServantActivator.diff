@@ -1,5 +1,5 @@
---- orig/ServantActivatorC.h	2004-09-08 13:11:22.084696600 +0200
-+++ ServantActivatorC.h	2004-09-08 13:24:07.695591000 +0200
+--- orig/ServantActivatorC.h	2004-09-09 10:06:14.357219200 +0200
++++ ServantActivatorC.h	2004-09-09 10:06:16.480272000 +0200
 @@ -76,6 +76,8 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_root/root_ch.cpp:63
@@ -18,8 +18,8 @@
  // TAO_IDL - Generated from
  // be\be_codegen.cpp:964
  
---- orig/ServantActivatorC.cpp	2004-09-08 13:11:22.084696600 +0200
-+++ ServantActivatorC.cpp	2004-09-08 13:24:32.441173400 +0200
+--- orig/ServantActivatorC.cpp	2004-09-09 10:06:14.357219200 +0200
++++ ServantActivatorC.cpp	2004-09-09 10:06:16.480272000 +0200
 @@ -45,6 +45,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:64
@@ -35,8 +35,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ServantActivatorA.cpp	2004-09-08 13:11:22.084696600 +0200
-+++ ServantActivatorA.cpp	2004-09-08 13:24:58.668887000 +0200
+--- orig/ServantActivatorA.cpp	2004-09-09 10:06:14.357219200 +0200
++++ ServantActivatorA.cpp	2004-09-09 10:08:21.720358400 +0200
 @@ -32,6 +32,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:290
@@ -46,10 +46,9 @@
  static const CORBA::Long _oc_PortableServer_ServantActivator[] =
  {
      TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -156,3 +158,5 @@
+@@ -154,3 +156,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-\ No newline at end of file
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

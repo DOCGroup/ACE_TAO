@@ -94,7 +94,7 @@ TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableServer__TAO_ServantRetentionPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -105,7 +105,7 @@ PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
 PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void)
 {}
 
-void
+void 
 PortableServer::ServantRetentionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantRetentionPolicy *_tao_tmp_pointer =
@@ -123,10 +123,10 @@ PortableServer::ServantRetentionPolicy::_narrow (
     {
       return ServantRetentionPolicy::_nil ();
     }
-
+  
   ServantRetentionPolicy_ptr proxy =
     dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-
+  
   return ServantRetentionPolicy::_duplicate (proxy);
 }
 
@@ -140,10 +140,10 @@ PortableServer::ServantRetentionPolicy::_unchecked_narrow (
     {
       return ServantRetentionPolicy::_nil ();
     }
-
+  
   ServantRetentionPolicy_ptr proxy =
     dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-
+  
   return ServantRetentionPolicy::_duplicate (proxy);
 }
 
@@ -154,7 +154,7 @@ PortableServer::ServantRetentionPolicy::_duplicate (ServantRetentionPolicy_ptr o
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -216,7 +216,7 @@ PortableServer::ServantRetentionPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableServer::ServantRetentionPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableServer::ServantRetentionPolicy
@@ -233,12 +233,12 @@ PortableServer::ServantRetentionPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableServer::ServantRetentionPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableServer::ServantRetentionPolicy
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

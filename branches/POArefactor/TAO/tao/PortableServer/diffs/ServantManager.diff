@@ -1,5 +1,5 @@
---- orig/ServantManagerC.h	2004-09-08 13:11:22.665531800 +0200
-+++ ServantManagerC.h	2004-09-08 13:59:28.455093400 +0200
+--- orig/ServantManagerC.h	2004-09-09 10:06:14.767809600 +0200
++++ ServantManagerC.h	2004-09-09 10:06:16.590430400 +0200
 @@ -72,6 +72,8 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_root/root_ch.cpp:63
@@ -18,8 +18,8 @@
  // TAO_IDL - Generated from
  // be\be_codegen.cpp:964
  
---- orig/ServantManagerC.cpp	2004-09-08 13:11:22.665531800 +0200
-+++ ServantManagerC.cpp	2004-09-08 13:11:24.498167000 +0200
+--- orig/ServantManagerC.cpp	2004-09-09 10:06:14.767809600 +0200
++++ ServantManagerC.cpp	2004-09-09 10:06:16.600444800 +0200
 @@ -51,6 +51,7 @@
  {
  }
@@ -34,8 +34,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ServantManagerA.cpp	2004-09-08 13:11:22.665531800 +0200
-+++ ServantManagerA.cpp	2004-09-08 13:11:24.498167000 +0200
+--- orig/ServantManagerA.cpp	2004-09-09 10:06:14.767809600 +0200
++++ ServantManagerA.cpp	2004-09-09 10:08:51.463126400 +0200
 @@ -30,6 +30,8 @@
  #include "tao/Any_Impl_T.h"
  #include "tao/Any_Dual_Impl_T.h"
@@ -45,10 +45,9 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:290
  
-@@ -314,3 +316,5 @@
+@@ -312,3 +314,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-\ No newline at end of file
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

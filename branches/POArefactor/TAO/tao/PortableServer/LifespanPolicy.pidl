@@ -17,7 +17,8 @@
 #ifndef _PORTABLESERVER_LIFESPANPOLICY_IDL_
 #define _PORTABLESERVER_LIFESPANPOLICY_IDL_
 
-#include "tao/PortableServer/PortableServer.pidl"
+#include <tao/Policy.pidl>
+#include <tao/PortableServer/PortableServer.pidl>
 
 #pragma prefix "omg.org"
 

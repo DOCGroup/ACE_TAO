@@ -70,13 +70,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -86,22 +86,22 @@ namespace TAO
 
 namespace PortableServer
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_POAMANAGER__VAR_OUT_CH_)
 #define _PORTABLESERVER_POAMANAGER__VAR_OUT_CH_
-
+  
   class POAManager;
   typedef POAManager *POAManager_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         POAManager
       >
     POAManager_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         POAManager
@@ -109,58 +109,58 @@ namespace PortableServer
     POAManager_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_POAMANAGER_CH_)
 #define _PORTABLESERVER_POAMANAGER_CH_
-
+  
   class TAO_PortableServer_Export POAManager
     : public virtual CORBA::Object
   {
   public:
     typedef POAManager_ptr _ptr_type;
     typedef POAManager_var _var_type;
-
+    
     // The static operations.
     static POAManager_ptr _duplicate (POAManager_ptr obj);
-
+    
     static POAManager_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static POAManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static POAManager_ptr _nil (void)
     {
       return (POAManager_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
-
+    
     class TAO_PortableServer_Export AdapterInactive : public CORBA::UserException
     {
     public:
-
+      
       AdapterInactive (void);
       AdapterInactive (const AdapterInactive &);
       ~AdapterInactive (void);
 
       AdapterInactive &operator= (const AdapterInactive &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static AdapterInactive *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -172,28 +172,28 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_AdapterInactive;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_enum/enum_ch.cpp:57
-
+    
     enum State
     {
       HOLDING,
@@ -201,17 +201,17 @@ namespace PortableServer
       DISCARDING,
       INACTIVE
     };
-
+    
     typedef State &State_out;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_State;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void activate (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -219,10 +219,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POAManager::AdapterInactive
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual void hold_requests (
@@ -233,10 +233,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POAManager::AdapterInactive
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void discard_requests (
         ::CORBA::Boolean wait_for_completion
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -245,10 +245,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POAManager::AdapterInactive
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void deactivate (
         ::CORBA::Boolean etherealize_objects,
         ::CORBA::Boolean wait_for_completion
@@ -258,48 +258,48 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POAManager::AdapterInactive
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::POAManager::State get_state (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     POAManager (void);
-
+    
     virtual ~POAManager (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     POAManager (const POAManager &);
-
+    
     void operator= (const POAManager &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POAManager;
 
 // TAO_IDL - Generated from
@@ -316,7 +316,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POAManager>
   {

@@ -17,6 +17,7 @@
 #ifndef _PORTABLESERVER_IDUNIQUENESSPOLICY_IDL_
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY_IDL_
 
+#include <tao/Policy.pidl>
 #include <tao/PortableServer/PortableServer.pidl>
 
 #pragma prefix "omg.org"

@@ -94,7 +94,7 @@ TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableServer__TAO_ImplicitActivationPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -105,7 +105,7 @@ PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
 PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
 {}
 
-void
+void 
 PortableServer::ImplicitActivationPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ImplicitActivationPolicy *_tao_tmp_pointer =
@@ -123,10 +123,10 @@ PortableServer::ImplicitActivationPolicy::_narrow (
     {
       return ImplicitActivationPolicy::_nil ();
     }
-
+  
   ImplicitActivationPolicy_ptr proxy =
     dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-
+  
   return ImplicitActivationPolicy::_duplicate (proxy);
 }
 
@@ -140,10 +140,10 @@ PortableServer::ImplicitActivationPolicy::_unchecked_narrow (
     {
       return ImplicitActivationPolicy::_nil ();
     }
-
+  
   ImplicitActivationPolicy_ptr proxy =
     dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-
+  
   return ImplicitActivationPolicy::_duplicate (proxy);
 }
 
@@ -154,7 +154,7 @@ PortableServer::ImplicitActivationPolicy::_duplicate (ImplicitActivationPolicy_p
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -216,7 +216,7 @@ PortableServer::ImplicitActivationPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableServer::ImplicitActivationPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableServer::ImplicitActivationPolicy
@@ -233,12 +233,12 @@ PortableServer::ImplicitActivationPolicy::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableServer::ImplicitActivationPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableServer::ImplicitActivationPolicy
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -38,25 +38,25 @@ static const CORBA::Long _oc_PortableServer_POAManager_AdapterInactive[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   58,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f50),
-  ACE_NTOHL (0x4f414d61),
-  ACE_NTOHL (0x6e616765),
-  ACE_NTOHL (0x722f4164),
-  ACE_NTOHL (0x61707465),
-  ACE_NTOHL (0x72496e61),
-  ACE_NTOHL (0x63746976),
-  ACE_NTOHL (0x653a322e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f50), 
+  ACE_NTOHL (0x4f414d61), 
+  ACE_NTOHL (0x6e616765), 
+  ACE_NTOHL (0x722f4164), 
+  ACE_NTOHL (0x61707465), 
+  ACE_NTOHL (0x72496e61), 
+  ACE_NTOHL (0x63746976), 
+  ACE_NTOHL (0x653a322e), 
   ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/POAManager/AdapterInactive:2.3
     16,
-  ACE_NTOHL (0x41646170),
-  ACE_NTOHL (0x74657249),
-  ACE_NTOHL (0x6e616374),
+  ACE_NTOHL (0x41646170), 
+  ACE_NTOHL (0x74657249), 
+  ACE_NTOHL (0x6e616374), 
   ACE_NTOHL (0x69766500),  // name = AdapterInactive
   0, // member count
   };
@@ -79,35 +79,35 @@ static const CORBA::Long _oc_PortableServer_POAManager_State[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f50),
-  ACE_NTOHL (0x4f414d61),
-  ACE_NTOHL (0x6e616765),
-  ACE_NTOHL (0x722f5374),
-  ACE_NTOHL (0x6174653a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f50), 
+  ACE_NTOHL (0x4f414d61), 
+  ACE_NTOHL (0x6e616765), 
+  ACE_NTOHL (0x722f5374), 
+  ACE_NTOHL (0x6174653a), 
   ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POAManager/State:2.3
   6,
-  ACE_NTOHL (0x53746174),
+  ACE_NTOHL (0x53746174), 
   ACE_NTOHL (0x65000000),  // name = State
   4, // member count
   8,
-  ACE_NTOHL (0x484f4c44),
+  ACE_NTOHL (0x484f4c44), 
   ACE_NTOHL (0x494e4700),  // name = HOLDING
   7,
-  ACE_NTOHL (0x41435449),
+  ACE_NTOHL (0x41435449), 
   ACE_NTOHL (0x56450000),  // name = ACTIVE
   11,
-  ACE_NTOHL (0x44495343),
-  ACE_NTOHL (0x41524449),
+  ACE_NTOHL (0x44495343), 
+  ACE_NTOHL (0x41524449), 
   ACE_NTOHL (0x4e470000),  // name = DISCARDING
   9,
-  ACE_NTOHL (0x494e4143),
-  ACE_NTOHL (0x54495645),
+  ACE_NTOHL (0x494e4143), 
+  ACE_NTOHL (0x54495645), 
   ACE_NTOHL (0x0),  // name = INACTIVE
   };
 
@@ -129,20 +129,20 @@ static const CORBA::Long _oc_PortableServer_POAManager[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   42,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f50),
-  ACE_NTOHL (0x4f414d61),
-  ACE_NTOHL (0x6e616765),
-  ACE_NTOHL (0x723a322e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f50), 
+  ACE_NTOHL (0x4f414d61), 
+  ACE_NTOHL (0x6e616765), 
+  ACE_NTOHL (0x723a322e), 
   ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/POAManager:2.3
     11,
-  ACE_NTOHL (0x504f414d),
-  ACE_NTOHL (0x616e6167),
+  ACE_NTOHL (0x504f414d), 
+  ACE_NTOHL (0x616e6167), 
   ACE_NTOHL (0x65720000),  // name = POAManager
   };
 
@@ -229,7 +229,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -339,11 +339,9 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::extract (
         _tao_any,
         PortableServer::POAManager::_tc_State,
-        _tao_elem
+        _tao_elem 
       );
 }
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -379,5 +377,4 @@ CORBA::Boolean operator>>= (
         PortableServer::POAManager \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

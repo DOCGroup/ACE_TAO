@@ -50,27 +50,10 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
+#include "tao/orb_typesC.h"
 #include "tao/Policy_ForwardC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/PortableServer/PS_ForwardC.h"
-#include "tao/AnySeqC.h"
-#include "tao/BooleanSeqC.h"
-#include "tao/CharSeqC.h"
-#include "tao/DoubleSeqC.h"
-#include "tao/FloatSeqC.h"
-#include "tao/LongDoubleSeqC.h"
-#include "tao/LongSeqC.h"
-#include "tao/OctetSeqC.h"
-#include "tao/ShortSeqC.h"
-#include "tao/StringSeqC.h"
-#include "tao/ULongSeqC.h"
-#include "tao/UShortSeqC.h"
-#include "tao/WCharSeqC.h"
-#include "tao/WStringSeqC.h"
-#include "tao/LongLongSeqC.h"
-#include "tao/ULongLongSeqC.h"
-#include "tao/PolicyC.h"
-#include "tao/ServicesC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -95,13 +78,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -111,15 +94,15 @@ namespace TAO
 
 namespace PortableServer
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_PORTABLESERVER_POALIST_CH_)
 #define _PORTABLESERVER_POALIST_CH_
-
+  
   class POAList;
-
+  
   typedef
     TAO_MngSeq_Var_T<
         POAList,
@@ -129,7 +112,7 @@ namespace PortableServer
           >
       >
     POAList_var;
-
+  
   typedef
     TAO_MngSeq_Out_T<
         POAList,
@@ -140,7 +123,7 @@ namespace PortableServer
           >
       >
     POAList_out;
-
+  
   class TAO_PortableServer_Export POAList
     : public
         TAO_Unbounded_Object_Sequence<
@@ -154,92 +137,92 @@ namespace PortableServer
     POAList (
         CORBA::ULong max,
         CORBA::ULong length,
-        POA_ptr* buffer,
+        POA_ptr* buffer, 
         CORBA::Boolean release = 0
       );
     POAList (const POAList &);
     ~POAList (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef POAList_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POAList;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType THREAD_POLICY_ID = 16U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType LIFESPAN_POLICY_ID = 17U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType ID_UNIQUENESS_POLICY_ID = 18U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType ID_ASSIGNMENT_POLICY_ID = 19U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType IMPLICIT_ACTIVATION_POLICY_ID = 20U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID = 21U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID = 22U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
   };
-
+  
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ThreadPolicyValue &ThreadPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_THREADPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_THREADPOLICY__VAR_OUT_CH_
-
+  
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ThreadPolicy
       >
     ThreadPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ThreadPolicy
@@ -247,40 +230,40 @@ namespace PortableServer
     ThreadPolicy_out;
 
 #endif /* end #if !defined */
-
+  
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum LifespanPolicyValue
   {
     TRANSIENT,
     PERSISTENT
   };
-
+  
   typedef LifespanPolicyValue &LifespanPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_LifespanPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY__VAR_OUT_CH_
-
+  
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         LifespanPolicy
       >
     LifespanPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         LifespanPolicy
@@ -288,38 +271,38 @@ namespace PortableServer
     LifespanPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum IdUniquenessPolicyValue
   {
     UNIQUE_ID,
     MULTIPLE_ID
   };
-
+  
   typedef IdUniquenessPolicyValue &IdUniquenessPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdUniquenessPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY__VAR_OUT_CH_
-
+  
   class IdUniquenessPolicy;
   typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         IdUniquenessPolicy
       >
     IdUniquenessPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         IdUniquenessPolicy
@@ -327,38 +310,38 @@ namespace PortableServer
     IdUniquenessPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum IdAssignmentPolicyValue
   {
     USER_ID,
     SYSTEM_ID
   };
-
+  
   typedef IdAssignmentPolicyValue &IdAssignmentPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdAssignmentPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY__VAR_OUT_CH_
-
+  
   class IdAssignmentPolicy;
   typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         IdAssignmentPolicy
       >
     IdAssignmentPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         IdAssignmentPolicy
@@ -366,40 +349,40 @@ namespace PortableServer
     IdAssignmentPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum ImplicitActivationPolicyValue
   {
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION
   };
-
+  
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__VAR_OUT_CH_
-
+  
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ImplicitActivationPolicy
       >
     ImplicitActivationPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ImplicitActivationPolicy
@@ -407,42 +390,42 @@ namespace PortableServer
     ImplicitActivationPolicy_out;
 
 #endif /* end #if !defined */
-
+  
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum ServantRetentionPolicyValue
   {
     RETAIN,
     NON_RETAIN
   };
-
+  
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY__VAR_OUT_CH_
-
+  
   class ServantRetentionPolicy;
   typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServantRetentionPolicy
       >
     ServantRetentionPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServantRetentionPolicy
@@ -450,43 +433,43 @@ namespace PortableServer
     ServantRetentionPolicy_out;
 
 #endif /* end #if !defined */
-
+  
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum RequestProcessingPolicyValue
   {
     USE_ACTIVE_OBJECT_MAP_ONLY,
     USE_DEFAULT_SERVANT,
     USE_SERVANT_MANAGER
   };
-
+  
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef RequestProcessingPolicyValue &RequestProcessingPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__VAR_OUT_CH_
-
+  
   class RequestProcessingPolicy;
   typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         RequestProcessingPolicy
       >
     RequestProcessingPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         RequestProcessingPolicy
@@ -494,7 +477,7 @@ namespace PortableServer
     RequestProcessingPolicy_out;
 
 #endif /* end #if !defined */
-
+  
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   // TAO_IDL - Generated from
@@ -502,16 +485,16 @@ namespace PortableServer
 
 #if !defined (_PORTABLESERVER_POAMANAGER__VAR_OUT_CH_)
 #define _PORTABLESERVER_POAMANAGER__VAR_OUT_CH_
-
+  
   class POAManager;
   typedef POAManager *POAManager_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         POAManager
       >
     POAManager_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         POAManager
@@ -519,22 +502,22 @@ namespace PortableServer
     POAManager_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__VAR_OUT_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__VAR_OUT_CH_
-
+  
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         AdapterActivator
       >
     AdapterActivator_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         AdapterActivator
@@ -542,22 +525,22 @@ namespace PortableServer
     AdapterActivator_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER__VAR_OUT_CH_
-
+  
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServantManager
       >
     ServantManager_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServantManager
@@ -565,22 +548,22 @@ namespace PortableServer
     ServantManager_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:601
 
 #if !defined (_PORTABLESERVER_POA__VAR_OUT_CH_)
 #define _PORTABLESERVER_POA__VAR_OUT_CH_
-
+  
   class POA;
   typedef POA *POA_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         POA
       >
     POA_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         POA
@@ -588,58 +571,58 @@ namespace PortableServer
     POA_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_POA_CH_)
 #define _PORTABLESERVER_POA_CH_
-
+  
   class TAO_PortableServer_Export POA
     : public virtual CORBA::Object
   {
   public:
     typedef POA_ptr _ptr_type;
     typedef POA_var _var_type;
-
+    
     // The static operations.
     static POA_ptr _duplicate (POA_ptr obj);
-
+    
     static POA_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static POA_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static POA_ptr _nil (void)
     {
       return (POA_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_
-
+    
     class TAO_PortableServer_Export AdapterAlreadyExists : public CORBA::UserException
     {
     public:
-
+      
       AdapterAlreadyExists (void);
       AdapterAlreadyExists (const AdapterAlreadyExists &);
       ~AdapterAlreadyExists (void);
 
       AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static AdapterAlreadyExists *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -651,43 +634,43 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_
-
+    
     class TAO_PortableServer_Export AdapterNonExistent : public CORBA::UserException
     {
     public:
-
+      
       AdapterNonExistent (void);
       AdapterNonExistent (const AdapterNonExistent &);
       ~AdapterNonExistent (void);
 
       AdapterNonExistent &operator= (const AdapterNonExistent &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static AdapterNonExistent *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -699,44 +682,44 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_AdapterNonExistent;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY_CH_
-
+    
     class TAO_PortableServer_Export InvalidPolicy : public CORBA::UserException
     {
     public:
-
+      
       CORBA::UShort index;
       InvalidPolicy (void);
       InvalidPolicy (const InvalidPolicy &);
       ~InvalidPolicy (void);
 
       InvalidPolicy &operator= (const InvalidPolicy &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static InvalidPolicy *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -748,32 +731,32 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ctor.cpp:66
-
+      
       InvalidPolicy (
           CORBA::UShort _tao_index
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_InvalidPolicy;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
@@ -781,19 +764,19 @@ namespace PortableServer
 
 #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT_CH_
-
+    
     class TAO_PortableServer_Export NoServant : public CORBA::UserException
     {
     public:
-
+      
       NoServant (void);
       NoServant (const NoServant &);
       ~NoServant (void);
 
       NoServant &operator= (const NoServant &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static NoServant *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -805,25 +788,25 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_NoServant;
 
 #endif /* end #if !defined */
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
@@ -831,19 +814,19 @@ namespace PortableServer
 
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
-
+    
     class TAO_PortableServer_Export ObjectAlreadyActive : public CORBA::UserException
     {
     public:
-
+      
       ObjectAlreadyActive (void);
       ObjectAlreadyActive (const ObjectAlreadyActive &);
       ~ObjectAlreadyActive (void);
 
       ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static ObjectAlreadyActive *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -855,43 +838,43 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_
-
+    
     class TAO_PortableServer_Export ObjectNotActive : public CORBA::UserException
     {
     public:
-
+      
       ObjectNotActive (void);
       ObjectNotActive (const ObjectNotActive &);
       ~ObjectNotActive (void);
 
       ObjectNotActive &operator= (const ObjectNotActive &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static ObjectNotActive *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -903,43 +886,43 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_ObjectNotActive;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_
-
+    
     class TAO_PortableServer_Export ServantAlreadyActive : public CORBA::UserException
     {
     public:
-
+      
       ServantAlreadyActive (void);
       ServantAlreadyActive (const ServantAlreadyActive &);
       ~ServantAlreadyActive (void);
 
       ServantAlreadyActive &operator= (const ServantAlreadyActive &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static ServantAlreadyActive *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -951,43 +934,43 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_
-
+    
     class TAO_PortableServer_Export ServantNotActive : public CORBA::UserException
     {
     public:
-
+      
       ServantNotActive (void);
       ServantNotActive (const ServantNotActive &);
       ~ServantNotActive (void);
 
       ServantNotActive &operator= (const ServantNotActive &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static ServantNotActive *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -999,43 +982,43 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_ServantNotActive;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER_CH_
-
+    
     class TAO_PortableServer_Export WrongAdapter : public CORBA::UserException
     {
     public:
-
+      
       WrongAdapter (void);
       WrongAdapter (const WrongAdapter &);
       ~WrongAdapter (void);
 
       WrongAdapter &operator= (const WrongAdapter &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static WrongAdapter *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -1047,43 +1030,43 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_WrongAdapter;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY_CH_
-
+    
     class TAO_PortableServer_Export WrongPolicy : public CORBA::UserException
     {
     public:
-
+      
       WrongPolicy (void);
       WrongPolicy (const WrongPolicy &);
       ~WrongPolicy (void);
 
       WrongPolicy &operator= (const WrongPolicy &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static WrongPolicy *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -1095,28 +1078,28 @@ namespace PortableServer
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_WrongPolicy;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::POA_ptr create_POA (
         const char * adapter_name,
         ::PortableServer::POAManager_ptr a_POAManager,
@@ -1128,10 +1111,10 @@ namespace PortableServer
         ::PortableServer::POA::AdapterAlreadyExists,
         ::PortableServer::POA::InvalidPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::POA_ptr find_POA (
         const char * adapter_name,
         ::CORBA::Boolean activate_it
@@ -1141,10 +1124,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POA::AdapterNonExistent
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ::CORBA::Boolean etherealize_objects,
         ::CORBA::Boolean wait_for_completion
@@ -1153,10 +1136,10 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ThreadPolicy_ptr create_thread_policy (
@@ -1166,12 +1149,12 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::LifespanPolicy_ptr create_lifespan_policy (
         ::PortableServer::LifespanPolicyValue value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1179,10 +1162,10 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (
         ::PortableServer::IdUniquenessPolicyValue value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1190,10 +1173,10 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (
         ::PortableServer::IdAssignmentPolicyValue value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1201,10 +1184,10 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
@@ -1214,12 +1197,12 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (
@@ -1229,12 +1212,12 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (
@@ -1244,52 +1227,52 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * the_name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::POA_ptr the_parent (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::POAList * the_children (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::POAManager_ptr the_POAManager (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::AdapterActivator_ptr the_activator (
@@ -1298,10 +1281,10 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void the_activator (
         ::PortableServer::AdapterActivator_ptr the_activator
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1309,13 +1292,13 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::ServantManager_ptr get_servant_manager (
@@ -1325,10 +1308,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void set_servant_manager (
         ::PortableServer::ServantManager_ptr imgr
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1337,12 +1320,12 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ::PortableServer::Servant get_servant (
@@ -1353,10 +1336,10 @@ namespace PortableServer
         ::PortableServer::POA::NoServant,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void set_servant (
         ::PortableServer::Servant p_servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1365,12 +1348,12 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::ObjectId * activate_object (
         ::PortableServer::Servant p_servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1380,10 +1363,10 @@ namespace PortableServer
         ::PortableServer::POA::ServantAlreadyActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void activate_object_with_id (
         const ::PortableServer::ObjectId & id,
         ::PortableServer::Servant p_servant
@@ -1395,10 +1378,10 @@ namespace PortableServer
         ::PortableServer::POA::ObjectAlreadyActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void deactivate_object (
         const ::PortableServer::ObjectId & oid
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1408,10 +1391,10 @@ namespace PortableServer
         ::PortableServer::POA::ObjectNotActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr create_reference (
         const char * intf
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1420,10 +1403,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr create_reference_with_id (
         const ::PortableServer::ObjectId & oid,
         const char * intf
@@ -1433,10 +1416,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::ObjectId * servant_to_id (
         ::PortableServer::Servant p_servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1446,10 +1429,10 @@ namespace PortableServer
         ::PortableServer::POA::ServantNotActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr servant_to_reference (
         ::PortableServer::Servant p_servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1459,10 +1442,10 @@ namespace PortableServer
         ::PortableServer::POA::ServantNotActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::Servant reference_to_servant (
         ::CORBA::Object_ptr reference
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1473,10 +1456,10 @@ namespace PortableServer
         ::PortableServer::POA::WrongAdapter,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::ObjectId * reference_to_id (
         ::CORBA::Object_ptr reference
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1486,10 +1469,10 @@ namespace PortableServer
         ::PortableServer::POA::WrongAdapter,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::Servant id_to_servant (
         const ::PortableServer::ObjectId & oid
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1499,10 +1482,10 @@ namespace PortableServer
         ::PortableServer::POA::ObjectNotActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr id_to_reference (
         const ::PortableServer::ObjectId & oid
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1512,46 +1495,46 @@ namespace PortableServer
         ::PortableServer::POA::ObjectNotActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::OctetSeq * id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     POA (void);
-
+    
     virtual ~POA (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     POA (const POA &);
-
+    
     void operator= (const POA &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POA;
 
   // Hand crafted begin
@@ -1575,7 +1558,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POA__TRAITS_CH_)
 #define _PORTABLESERVER_POA__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POA>
   {
@@ -1598,7 +1581,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_THREADPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_THREADPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ThreadPolicy>
   {
@@ -1621,7 +1604,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::LifespanPolicy>
   {
@@ -1642,7 +1625,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::IdUniquenessPolicy>
   {
@@ -1663,7 +1646,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::IdAssignmentPolicy>
   {
@@ -1686,7 +1669,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ImplicitActivationPolicy>
   {
@@ -1711,7 +1694,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ServantRetentionPolicy>
   {
@@ -1736,7 +1719,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::RequestProcessingPolicy>
   {
@@ -1759,7 +1742,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POAManager>
   {
@@ -1780,7 +1763,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::AdapterActivator>
   {
@@ -1801,7 +1784,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ServantManager>
   {

@@ -35,35 +35,35 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f4f),
-  ACE_NTOHL (0x626a6563),
-  ACE_NTOHL (0x7449643a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f4f), 
+  ACE_NTOHL (0x626a6563), 
+  ACE_NTOHL (0x7449643a), 
   ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/ObjectId:2.3
     9,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744964),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744964), 
   ACE_NTOHL (0x0),  // name = ObjectId
     CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f63),
-    ACE_NTOHL (0x74657453),
-    ACE_NTOHL (0x65713a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f4f63), 
+    ACE_NTOHL (0x74657453), 
+    ACE_NTOHL (0x65713a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
         9,
-    ACE_NTOHL (0x4f637465),
-    ACE_NTOHL (0x74536571),
+    ACE_NTOHL (0x4f637465), 
+    ACE_NTOHL (0x74536571), 
     ACE_NTOHL (0x0),  // name = OctetSeq
         CORBA::tk_sequence, // typecode kind
     12, // encapsulation length
@@ -89,11 +89,8 @@ namespace PortableServer
     &_tc_TAO_tc_PortableServer_ObjectId;
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

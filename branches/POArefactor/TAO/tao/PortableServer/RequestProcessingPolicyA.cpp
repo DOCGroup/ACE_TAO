@@ -144,8 +144,6 @@ operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class

@@ -36,22 +36,22 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f4c),
-  ACE_NTOHL (0x69666573),
-  ACE_NTOHL (0x70616e50),
-  ACE_NTOHL (0x6f6c6963),
-  ACE_NTOHL (0x793a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f4c), 
+  ACE_NTOHL (0x69666573), 
+  ACE_NTOHL (0x70616e50), 
+  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x793a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableServer/LifespanPolicy:1.0
     15,
-  ACE_NTOHL (0x4c696665),
-  ACE_NTOHL (0x7370616e),
-  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x4c696665), 
+  ACE_NTOHL (0x7370616e), 
+  ACE_NTOHL (0x506f6c69), 
   ACE_NTOHL (0x63790000),  // name = LifespanPolicy
   };
 
@@ -138,8 +138,6 @@ operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -154,5 +152,4 @@ operator>>= (
         PortableServer::LifespanPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
