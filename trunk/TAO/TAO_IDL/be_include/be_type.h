@@ -116,9 +116,6 @@ protected:
   UTL_ScopedName *tc_name_;
   // Typecode name.
 
-  char *type_name_;
-  // Type name (this uses the ACE NESTED macro).
-
   char *nested_type_name_;
   // For the corresponding method.
 };
