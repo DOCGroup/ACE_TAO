@@ -1,3 +1,10 @@
+Sat Aug 29 14:11:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * etc/ACE-guidelines.html: added rule to not for a pointer
+          being 0 before deleting it.  It's always safe to delete a
+          0 pointer.  Thanks to James CE Johnson <jcej@lads.com> for
+          pointing this out.
+
 Fri Aug 28 23:29:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: Enhanced
