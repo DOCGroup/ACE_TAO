@@ -1,23 +1,29 @@
+Mon Aug 09 09:33:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: #define ECOMM (to ECONNABORTED) if it's not
+          already #defined.  This allows support on NT.  Thanks to
+          Andy for reporting this.
+
 Mon Aug  9 07:45:19 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Signal.h: Modified the behavior of the
- 	  ACE_Sig_Handler::dispatch() method so that on Win32 it'll
- 	  automagically re-register the signal handler after the
- 	  handler_signal() method returns with a non -1 value.  Thanks to
- 	  Andreas Geisler <andreas.geisler@erls.siemens.de> for suggesting
- 	  this.
+        * ace/Signal.h: Modified the behavior of the
+          ACE_Sig_Handler::dispatch() method so that on Win32 it'll
+          automagically re-register the signal handler after the
+          handler_signal() method returns with a non -1 value.  Thanks to
+          Andreas Geisler <andreas.geisler@erls.siemens.de> for suggesting
+          this.
 
-	* tests/Malloc_Test.cpp: Win32 didn't seem to like a 32k
-	  offset for the virtual address.  Let's try 64k instead.  Thanks
- 	  to Nanbor for reporting this.
-	
-	* tests/Malloc_Test.cpp: Changed the sense of the conditional
-	  compilation test from && !defined (ACE_WIN32) to || defined
- 	  (ACE_WIN32) so that this will run on Win32.  Thanks to 
-	  Nanbor for reporting this.  
+        * tests/Malloc_Test.cpp: Win32 didn't seem to like a 32k
+          offset for the virtual address.  Let's try 64k instead.  Thanks
+          to Nanbor for reporting this.
 
-	* ace/OS.i: Cleaned up the coding style for the sigset* 
-	  wrapper functions.
+        * tests/Malloc_Test.cpp: Changed the sense of the conditional
+          compilation test from && !defined (ACE_WIN32) to || defined
+          (ACE_WIN32) so that this will run on Win32.  Thanks to
+          Nanbor for reporting this.
+
+        * ace/OS.i: Cleaned up the coding style for the sigset*
+          wrapper functions.
 
 Sun Aug 08 21:19:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
