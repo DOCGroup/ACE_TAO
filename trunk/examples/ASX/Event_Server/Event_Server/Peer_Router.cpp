@@ -202,6 +202,8 @@ Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
   // If we're running as Active Objects just enqueue the message here.
   return this->putq (mb, tv);
 #else
+  ACE_UNUSED_ARG (tv);
+
   int result = 0;
 
   result = this->peer ().send_n (mb->rd_ptr (), 
