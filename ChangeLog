@@ -1,3 +1,10 @@
+Tue Nov 11 18:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Map_Manager_Test.cpp:
+
+	  Renamed the variable ENTRY to MAP_ENTRY since it was clashing
+	  with system headers.
+
 Tue Nov 11 18:02:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/TSS_T.cpp (ts_object): 
@@ -9,7 +16,7 @@ Tue Nov 11 18:02:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  The double checked locking optimization in ts_init () was the
 	  culprit. After grabbing the lock, if the check for null pointer
-	  fails, meaning it was aloready allocated, just return 0 instead
+	  fails, meaning it was already allocated, just return 0 instead
 	  of a -1. 
 
 Tue Nov 11 17:25:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
