@@ -601,12 +601,6 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       ptr_arith_t target =
         this->params_->_tao_target_alignment ();
 
-      // <target> can only have two values: either it is 0 o
-      // ACE_CDR::LONG_ALIGN, because the request payload always
-      // follows the request id.
-      if (target != 0 && target != ACE_CDR::LONG_ALIGN)
-        ACE_THROW (CORBA::MARSHAL ());
-
       ptr_arith_t current =
         ptr_arith_t(this->outgoing_->current ()->wr_ptr ())
         % ACE_CDR::MAX_ALIGNMENT;
@@ -629,7 +623,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
               pad = 4;
             }
         }
-      else
+      else if (target != ACE_CDR::LONG_ALIGN)
         {
           // The situation reverses, we want to generate adequate
           // padding to start the request id on a 4 byte boundary, two
@@ -647,6 +641,16 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
               pad = 4;
             }
         }
+      else if (target == ACE_CDR::MAX_ALIGNMENT)
+        {
+          pad = 0;
+        }
+      else
+        {
+          // <target> can only have the values above
+          ACE_THROW (CORBA::MARSHAL ());
+        }
+
       *this->outgoing_ << CORBA::ULong(TAO_SVC_CONTEXT_ALIGN);
       *this->outgoing_ << pad;
       for (CORBA::ULong j = 0; j != pad; ++j)
@@ -730,7 +734,7 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   int result = TAO_GIOP::send_message (transport,
                                        *this->outgoing_,
                                        this->orb_core_);
-     
+
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -741,5 +745,5 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
                       "TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n",
                       "TAO_GIOP_ServerRequest::send_no_exception_reply"));
         }
-    }                     
+    }
 }
