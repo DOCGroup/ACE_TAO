@@ -341,8 +341,8 @@ DRV_pre_proc(const char *myfile)
       idl_global->set_read_from_stdin(I_FALSE);
       idl_global->set_filename(new UTL_String (myfile));
       idl_global->set_main_filename(new UTL_String (myfile));
-      ACE_Auto_String_Free tmp (ACE_OS::strdup (DRV_stripped_name (myfile)));
-      idl_global->set_stripped_filename(new UTL_String (tmp.get ()));
+      ACE_Auto_String_Free tmp (ACE_OS::strdup (myfile));
+      idl_global->set_stripped_filename(new UTL_String (DRV_stripped_name (tmp.get ())));
       idl_global->set_real_filename(new UTL_String (tmp_ifile));
     }
 
