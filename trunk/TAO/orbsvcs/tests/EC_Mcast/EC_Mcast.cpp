@@ -291,6 +291,7 @@ ECM_Driver::run (int argc, char* argv[])
       if (this->schedule_file_ != 0)
         {
           RtecScheduler::RT_Info_Set_var infos;
+          RtecScheduler::Config_Info_Set_var configs;
 
 #if defined (__SUNPRO_CC)
           // Sun C++ 4.2 warns with the code below:
@@ -304,23 +305,25 @@ ECM_Driver::run (int argc, char* argv[])
           // not define instances of _out types.
 
           RtecScheduler::RT_Info_Set_out infos_out (infos);
+          RtecScheduler::Config_Info_Set_out configs_out (configs);
           ACE_Scheduler_Factory::server ()->compute_scheduling
             (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out, TAO_TRY_ENV);
+             infos_out, configs_out, TAO_TRY_ENV);
 #else  /* ! __SUNPRO_CC */
           ACE_Scheduler_Factory::server ()->compute_scheduling
             (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos.out (), TAO_TRY_ENV);
+             infos.out (), configs.out (), TAO_TRY_ENV);
 #endif /* ! __SUNPRO_CC */
 
           TAO_CHECK_ENV;
-          ACE_Scheduler_Factory::dump_schedule (infos.in (),
+          ACE_Scheduler_Factory::dump_schedule (infos.in (), 
+                                                configs.in (),
                                                 this->schedule_file_);
         }
     }
