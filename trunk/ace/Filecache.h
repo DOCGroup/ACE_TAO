@@ -21,6 +21,7 @@
 #include "ace/Mem_Map.h"
 #include "ace/Synch_T.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
 
 // = Forward declarations.
 class ACE_Filecache_Object;
@@ -136,11 +137,19 @@ private:
   // A dup()'d version of the one from this->file_.
 };
 
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 typedef ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>
         ACE_Filecache_Hash_Entry;
 
 typedef ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>
         ACE_Filecache_Hash;
+#else
+typedef ACE_Hash_Map_Entry<ACE_CString, ACE_Filecache_Object *>
+        ACE_Filecache_Hash_Entry;
+
+typedef ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>
+        ACE_Filecache_Hash;
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 class ACE_Export ACE_Filecache
   // = TITLE
