@@ -31,3 +31,21 @@ client [-k server_ior]
 
 Expected output:
 ----------------
+Client executable produces no output (unless there are errors).
+Server should produces the following (if there are no errors):
+
+$server
+Activated as <IOR:010000000d00000049444c3a546573743a312e300000000001000000000000
+00a6000000010102cd15000000636f727269646f2e63732e777573746c2e65647500cde304230000
+0014010f004e5354c5c9a539bd0105000100000001000000000000000100000001000000cd040000
+00000000000800000001cdcdcd004f4154010000001400000001cdcdcd0100010000000000090101
+0000000000004f41540400000001cd0000020000001a00000001cdcdcd01000000020041540a0000
+0001cdcdcd000000000000>
+
+Client priority: 0  Servant thread priority: 0
+Client priority: 1  Servant thread priority: 1
+Client priority: 2  Servant thread priority: 2
+Server ORB event loop finished
+Final priority of the servant thread = its initial priority
+
+
