@@ -7,7 +7,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-MAKEFILE = Makefile
+MAKEFILE = Makefile.RTEvent
 LIBNAME  = libTAO_RTEvent
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
@@ -38,6 +38,8 @@ IDL_SRCS += \
     RtecEventComm \
     RtecEventChannelAdmin \
     RtecUDPAdmin
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 CPP_SRCS += \
         Event/EC_Event_Channel \
         Event/EC_ConsumerAdmin \
@@ -80,9 +82,14 @@ CPP_SRCS += \
         Event/EC_Bitmask_Filter \
         Event/EC_Masked_Type_Filter \
         Event/EC_Prefix_Filter_Builder \
-        Event/EC_And_Filter \
-	\
+        Event/EC_And_Filter
+endif # ACE_HAS_GNUG_PRE_2_8
+
+CPP_SRCS += \
         Event_Utilities \
+        Event/EC_Gateway \
+        Event/EC_Gateway_UDP \
+        Event/EC_UDP_Admin \
         Event/BCU \
         Event/Dispatching_Modules \
         Event/Event_Channel \
@@ -92,9 +99,6 @@ CPP_SRCS += \
         Event/RT_Task \
         Event/ReactorTask \
         Event/Timer_Module \
-        Event/EC_Gateway \
-        Event/EC_Gateway_UDP \
-        Event/EC_UDP_Admin \
         Event/Module_Factory
 
 IDL_FILES = \
