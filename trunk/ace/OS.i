@@ -1371,7 +1371,7 @@ ACE_OS::memmove (void *t, const void *s, size_t len)
 ACE_INLINE void *
 ACE_OS::memset (void *s, int c, size_t len)
 {
-  ACE_TRACE ("ACE_OS::memset");
+  // ACE_TRACE ("ACE_OS::memset");
   return ::memset (s, c, len);
 }
 
@@ -2707,7 +2707,7 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 ACE_INLINE ACE_thread_t
 ACE_OS::thr_self (void)
 {
-  ACE_TRACE ("ACE_OS::thr_self");
+  // ACE_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
@@ -6990,7 +6990,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 ACE_INLINE int
 ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 {
-  ACE_TRACE ("ACE_OS::thr_getspecific");
+  // ACE_TRACE ("ACE_OS::thr_getspecific");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_TSS_EMULATION)
     ACE_KEY_INDEX (key_index, key);
