@@ -6,7 +6,7 @@
 #ifndef ACE_BENCHMARK_PERFORMANCE_H
 #define ACE_BENCHMARK_PERFORMANCE_H
 
-#include "../Benchmark_Base.h"
+#include "Synch_Lib/Benchmark_Base.h"
 
 #if defined (ACE_HAS_THREADS)
 
