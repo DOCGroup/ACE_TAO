@@ -833,8 +833,10 @@ protected:
 
   ACE_Lock &lock_;
 
-  /// @todo Move the Transient strategy
+public:
+  /// @todo Move the Transient strategy, temporarily public
   TAO::Portable_Server::Creation_Time creation_time_;
+protected:
 
   TAO_ORB_Core &orb_core_;
 

@@ -49,6 +49,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/Request_Processing_Strategy.h"
 #include "tao/PortableServer/Lifespan_Strategy.h"
 #include "tao/PortableServer/Id_Uniqueness_Strategy.h"
+#include "tao/PortableServer/Id_Assignment_Strategy.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 
 // auto_ptr class
@@ -1778,24 +1779,20 @@ TAO_POA::set_id (void)
       poa_name += sizeof (poa_name_length);
     }
 
-  // Calculate the space required for the timestamp and the persistent
+  // Get the space needed for the lifespan length
   // byte.
-  CORBA::ULong creation_time = this->persistent_key_type_length ();
-#if (POA_NO_TIMESTAMP == 0)
-  // Calculate the space required for the timestamp.
-  CORBA::ULong creation_time_length = TAO::Portable_Server::Creation_Time::creation_time_length ();
-  if (!this->active_policy_strategies_.lifespan_strategy()->persistent ())
-    {
-      creation_time += creation_time_length;
-    }
-#endif /* POA_NO_TIMESTAMP */
+  CORBA::ULong lifespan_key_length =
+    this->active_policy_strategies_.lifespan_strategy()->key_length ();
+
+  CORBA::ULong id_assignment_key_length =
+    this->active_policy_strategies_.id_assignment_strategy()->key_type_length ();
 
   // Calculate the space required for the POA id.
   CORBA::ULong buffer_size =
     prefix_size +
     this->root_key_type_length () +
-    this->system_id_key_type_length () +
-    creation_time +
+    id_assignment_key_length +
+    lifespan_key_length +
     poa_name;
 
   // Create the buffer for the POA id.
@@ -1816,24 +1813,11 @@ TAO_POA::set_id (void)
   buffer[starting_at] = (CORBA::Octet) this->root_key_type ();
   starting_at += this->root_key_type_length ();
 
-  // Copy the system id byte.
-  buffer[starting_at] = (CORBA::Octet) this->system_id_key_type ();
-  starting_at += this->system_id_key_type_length ();
+  // Add the id_assignment part
+  this->active_policy_strategies_.id_assignment_strategy()->create_key (buffer, starting_at);
 
-  // Copy the persistence byte.
-  buffer[starting_at] = (CORBA::Octet) this->persistent_key_type ();
-  starting_at += this->persistent_key_type_length ();
-
-#if (POA_NO_TIMESTAMP == 0)
-  // Then copy the timestamp for transient POAs.
-  if (!this->active_policy_strategies_.lifespan_strategy()->persistent ())
-    {
-      ACE_OS::memcpy (&buffer[starting_at],
-                      this->creation_time_.creation_time (),
-                      creation_time_length);
-      starting_at += creation_time_length;
-    }
-#endif /* POA_NO_TIMESTAMP */
+  // Add the lifespan part
+  this->active_policy_strategies_.lifespan_strategy()->create_key (buffer, starting_at);
 
   // Check if we need to added the length of the POA name.
   if (add_poa_name_length)

@@ -20,6 +20,7 @@
 #include "ace/Service_Config.h"
 
 #include "tao/Object_KeyC.h"
+#include "tao/OctetSeqC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -67,24 +68,22 @@ namespace TAO
       bool validate (TAO::ObjectKey_var& key);
 
       /**
-       * Returns the key type the says which specific policy we have
-       */
-      virtual char lifespan_key_type (void) = 0;
-
-      /**
        * Returns the length of the key type
        */
-      char lifespan_key_type_length (void)
-      {
-        return sizeof (char);
-      }
+      virtual CORBA::ULong key_length (void) const = 0;
+
+      CORBA::ULong key_type_length (void) const;
 
       /// Do we have set persistent or not,
       /// @todo this is a temporary method that has to be removed later
       virtual CORBA::Boolean persistent (void) const = 0;
 
-    private:
+      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) = 0;
+
+    protected:
       TAO_POA *poa_;
+
+      CORBA::OctetSeq id_;
     };
 
     class TAO_PortableServer_Export Transient_Lifespan_Strategy :
@@ -99,22 +98,16 @@ namespace TAO
       virtual
       void notify_shutdown ();
 
-      // @@ Johnny, why can;t use the enum's defined within
-      // PortableServer IDL? Wouldn't they make life much simpler?
-      // @bala, this if for the IOR setup/parsing, I can't find these charachters
-      // in the pidl file. In the POA it are static methods, seems that this
-      // normal methods doesn't work, because in some static functions these are
-      // used. This still needs some work, but I want to get those info out of
-      // the POA.
-      virtual char lifespan_key_type (void)
-      {
-        return 'T';
-      }
+      char key_type (void) const;
 
       virtual CORBA::Boolean persistent (void) const
       {
         return false;
       }
+
+      CORBA::ULong key_length (void) const;
+
+      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
 
     private:
       TAO::Portable_Server::Creation_Time creation_time_;
@@ -134,15 +127,16 @@ namespace TAO
       virtual
       void notify_shutdown ();
 
-      virtual char lifespan_key_type (void)
-      {
-        return 'P';
-      }
+      char key_type (void) const;
 
       virtual CORBA::Boolean persistent (void) const
       {
         return true;
       }
+
+      CORBA::ULong key_length (void) const;
+
+      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
 
     private:
       /// @name Implementation repository related methods

@@ -23,9 +23,19 @@ namespace TAO
     }
 
     char
-    Id_Assignment_Strategy::id_assignment_key_type_length (void) const
+    Id_Assignment_Strategy::key_type_length (void) const
     {
       return sizeof (char);
+    }
+
+    void
+    Id_Assignment_Strategy::create_key (
+      CORBA::Octet *buffer,
+      CORBA::ULong& starting_at)
+    {
+      // Copy the system id byte.
+      buffer[starting_at] = (CORBA::Octet) this->id_assignment_key_type ();
+      starting_at += this->key_type_length ();
     }
 
     //============================================================
@@ -39,6 +49,8 @@ namespace TAO
     {
       return 'U';
     }
+
+    //============================================================
 
     System_Id_Assignment_Strategy::~System_Id_Assignment_Strategy()
     {

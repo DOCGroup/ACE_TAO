@@ -17,6 +17,7 @@
 #include "portableserver_export.h"
 #include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -58,7 +59,9 @@ namespace TAO
       /**
        * Returns the length of the id_assignment type
        */
-      char id_assignment_key_type_length (void) const;
+      char key_type_length (void) const;
+
+      void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
     };
 
     class TAO_PortableServer_Export User_Id_Assignment_Strategy :
