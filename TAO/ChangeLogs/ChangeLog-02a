@@ -1,3 +1,21 @@
+Fri Jun 30 12:28:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	* tests/IDL_Test/included.idl:
+	* tests/IDL_Test/including.idl:
+
+	  Xavier MONTET <montet@cena.fr> sent in a bug report and
+	  example reporting a lookup error. I didn't find that
+	  (he may be using an older version of the IDL compiler),
+	  but I did a different problem. According to the spec, a
+	  type defined inside a scope which is itself defined 
+	  inside an interface or valuetype should be added to the
+	  list of types referenced in the interface's scope. This
+	  was being done even for types not defined but referenced
+	  inside the inner scope, leading to incorrect name clashes.
+	  Parts of the example idl files sent in were also added to
+	  IDL_Test.
+
 Fri Jun 30 07:49:51 2000  Anders Olsson <epkanol@s1.epk.ericsson.se>
 
         * utils/catior/catior.cpp (main): if catior was fed a file
