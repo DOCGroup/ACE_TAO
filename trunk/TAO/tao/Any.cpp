@@ -47,6 +47,23 @@ CORBA_Any::type (void) const
   return CORBA::TypeCode::_duplicate (this->type_);
 }
 
+// Will replace if the typecode arg is an
+// alias for the existing one - otherwise raises an exception.
+void
+CORBA_Any::type (CORBA::TypeCode_ptr tc,
+                 CORBA::Environment &env)
+{
+  if (this->type_->equivalent (tc, env))
+    {
+      CORBA::release (this->type_);
+      this->type_ = CORBA::TypeCode::_duplicate (tc);
+    }
+  else
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+    }
+}
+
 // TAO doesn't give any guarantees if the value returned by value can be cast
 // to the desired type. This is a deprecated routine and its use must be
 // avoided. Use the >>= operators.
@@ -190,9 +207,9 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
                     CORBA::Boolean any_owns_data,
                     CORBA::Environment &env)
 {
-  // decrement the refcount on the Message_Block we hold, it does not
+  // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
-  // message block (i.e. it is always cloned or duplicated.
+  // message block (i.e. it is always cloned or duplicated).
   ACE_Message_Block::release (this->cdr_);
 
   this->free_value (env);
@@ -217,6 +234,33 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   // retrieve the start of the message block chain and duplicate it
   this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
 }
+
+void
+CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
+                         const ACE_Message_Block *mb,
+                         CORBA::Boolean any_owns_data,
+                         CORBA::Environment &env)
+{
+  // Decrement the refcount on the Message_Block we hold, it does not
+  // matter if we own the data or not, because we always own the
+  // message block (i.e. it is always cloned or duplicated).
+  ACE_Message_Block::release (this->cdr_);
+  this->cdr_ = 0;
+
+  this->free_value (env);
+
+  // Duplicate tc and then release this->type_, just in case tc and
+  // type_ are the same thing.
+  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
+  CORBA::release (this->type_);
+  this->type_ = tmp;
+
+  this->any_owns_data_ = any_owns_data;
+  
+  this->cdr_ = mb->duplicate ();
+  // We can save the decode operation
+  // if there's no need to extract the object.
+ }
 
 // Free internal data.
 void
