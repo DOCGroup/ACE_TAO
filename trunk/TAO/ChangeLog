@@ -1,3 +1,9 @@
+Sun Aug 25 15:07:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+
+          Moved the placement of the generated "const" modifier.
+
 Sat Aug 24 22:47:22 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * examples/POA/Loader/Servant_Activator.cpp:

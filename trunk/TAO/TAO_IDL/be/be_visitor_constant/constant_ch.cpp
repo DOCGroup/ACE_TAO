@@ -58,6 +58,8 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   if (! node->is_nested ()
       || node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
+      *os << "const ";
+
       if (node->et () == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
@@ -67,8 +69,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
           *os << node->exprtype_to_string ();
         }
 
-      *os << " const "
-          << node->local_name () << " = "
+      *os << " " << node->local_name () << " = "
           << node->constant_value ();
     }
   // We are nested inside an interface or a valuetype.
