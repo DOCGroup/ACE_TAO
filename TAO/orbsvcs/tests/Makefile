@@ -28,7 +28,8 @@ DIRS  = Simple_Naming \
 	InterfaceRepo \
 	Trading \
 	AVStreams \
-	Notify
+	Notify \
+	Interoperable_Naming
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

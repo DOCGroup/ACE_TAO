@@ -92,10 +92,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -113,6 +109,10 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -283,6 +283,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -342,6 +344,9 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -378,8 +383,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -496,10 +499,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -523,6 +522,10 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -714,6 +717,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -775,6 +780,9 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -811,8 +819,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -918,10 +924,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -945,6 +947,10 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1136,6 +1142,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1197,6 +1205,9 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1233,8 +1244,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -1337,10 +1346,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -1364,6 +1369,10 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1555,6 +1564,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1616,6 +1627,9 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1652,8 +1666,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
