@@ -1,6 +1,7 @@
 Wed Feb 09 12:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/ami_test.idl,
+	  tests/AMI/ami_test_i.cpp,
 	  tests/AMI/simple_client.cpp: Made the exception handling
 	  test more descriptive.
 
