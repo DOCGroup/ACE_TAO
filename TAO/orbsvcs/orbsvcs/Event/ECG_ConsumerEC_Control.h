@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   ECG_ConsumerEventChannelControl.h
+ *  @file   ECG_ConsumerEC_Control.h
  *
  *  $Id$
  *
