@@ -332,20 +332,6 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 }
 
 
-int
-TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                             ACE_Time_Value *max_wait_time)
-{
-
-
-
-
-  return 0;
-}
-
-
-
-
 
 
 

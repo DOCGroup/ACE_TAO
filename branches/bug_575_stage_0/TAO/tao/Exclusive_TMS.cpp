@@ -43,10 +43,6 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   this->request_id_ = request_id;
   this->rd_ = rd;
 
-  // If there was a previous reply, cleanup its state first.
-  //  if (this->message_state_.message_size != 0)
-  // this->message_state_.reset (0);
-
   return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
                                                       rd);
 }

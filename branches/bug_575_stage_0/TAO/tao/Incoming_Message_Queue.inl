@@ -32,7 +32,7 @@ TAO_Incoming_Message_Queue::complete_message (void)
 
 
 
-TAO_Incoming_Message_Queue::TAO_Queued_Data *
+ACE_INLINE TAO_Incoming_Message_Queue::TAO_Queued_Data *
 TAO_Incoming_Message_Queue::get_node (void)
 {
   // @@TODO: Use the global pool for allocationg...
@@ -44,6 +44,7 @@ TAO_Incoming_Message_Queue::get_node (void)
   return qd;
 }
 
+ACE_INLINE
 TAO_Incoming_Message_Queue::TAO_Queued_Data::TAO_Queued_Data (void)
   : data_block_ (0),
     missing_data_ (0),

@@ -62,7 +62,7 @@ TAO_Incoming_Message_Queue::add_message (const ACE_Message_Block &block,
         }
 
       // Now do the copy of the missing data.
-      mb.copy (block.base (),
+      mb.copy (block.rd_ptr (),
                n);
 
       // Now that we have copied n bytes, let us decrease the
@@ -75,8 +75,7 @@ TAO_Incoming_Message_Queue::add_message (const ACE_Message_Block &block,
       // Create a data block of size of the incoming message
       // @@Bala: Hard coding??
       ACE_Data_Block *db =
-        this->orb_core_->data_block_for_message_block
-        (state.message_size () + 12);
+        this->orb_core_->data_block_for_message_block (state.message_size ());
 
       // Make a message block with the above data_block
       ACE_Message_Block mb (db);
@@ -104,7 +103,7 @@ TAO_Incoming_Message_Queue::add_message (const ACE_Message_Block &block,
       else
         qd->missing_data_ = state.message_size () - block.length ();
 
-      int retval = this->add_node (qd);
+      this->add_node (qd);
 
       // increment the size of the list
       ++this->size_;
