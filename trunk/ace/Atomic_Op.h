@@ -145,6 +145,9 @@ public:
   /// Atomically assign <rhs> to <value_>.
   void operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
 
+  /// Atomically assign <rhs> to <value_>.
+  void operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs);
+
 private:
   /// Type of synchronization mechanism.
   ACE_LOCK own_mutex_;
