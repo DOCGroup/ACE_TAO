@@ -1,3 +1,11 @@
+Sun Mar 23 13:25:39 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/High_Res_Timer.h: Set the constructor <scale_factor> back to
+	  1 by default.  Changed the non Win32 global_scale_factor_ to
+ 	  1000.  For <scale_factor> == 1, the constructor takes the
+ 	  global_scale_factor_.  This will still allow construction with
+ 	  no parameters on Solaris.
+
 Sat Mar 22 12:06:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: The include statement for config.h was too low.  Some
