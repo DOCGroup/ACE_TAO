@@ -1,3 +1,11 @@
+Wed Oct 29 15:03:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Invocation_Adapter.cpp (invoke_oneway):
+
+          Explicitly convert Messaging::SyncScope to octet before
+          assigning to TAO_Operation_Details::response_flags, as is
+          done in all other occurrences in TAO.
+
 Wed Oct 29 14:14:15 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Makefile: Added Kokyu subdirectory. 
