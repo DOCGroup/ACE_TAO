@@ -1,0 +1,14 @@
+workspace {
+ exclude {
+   build
+   TAO
+  }
+ ace
+ ACEXML
+ apps
+ tests
+ Kokyu
+ examples
+ netsvcs
+ websvcs
+}
