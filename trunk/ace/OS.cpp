@@ -1600,16 +1600,6 @@ ace_thread_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-  // Call TSS destructors.
-  ACE_OS::cleanup_tss (0 /* not main thread */);
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  // Close the thread's local TS storage.
-  ACE_TSS_Emulation::tss_close (ts_storage);
-#endif /* ACE_HAS_TSS_EMULATION */
-
   return status;
 }
 
