@@ -41,10 +41,13 @@ all:
 	./cout -v < $(srcdir)/c.gperf > c.out
 	-diff -b $(srcdir)/c.exp c.out
 	$(GPERF) -a -k1,4,'$$' $(srcdir)/ada.gperf > adainset.cpp
-# double '$$' is only there since make gets confused; programn wants only 1 '$'
 	$(CXX) $(CCFLAGS) -o aout adainset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	-diff -b $(srcdir)/ada-res.exp ada-res.out
+	$(GPERF) -a -k1,2,'$$' $(srcdir)/c++.gperf > c++inset.cpp
+	$(CXX) $(CCFLAGS) -o c++inset c++inset.cpp test.o $(LDFLAGS) $(VLDLIBS)
+	./c++out -v < $(srcdir)/c++.gperf > c++-res.out
+	-diff -b $(srcdir)/c++-res.exp c++-res.out
 	$(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.cpp
 	$(CXX) $(CCFLAGS) -o preout preinset.cpp test.o  $(LDFLAGS) $(VLDLIBS)
 	./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
@@ -58,6 +61,10 @@ all:
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
 	$(GPERF) -m -M -c -C -D -S1 -E -T -a -o -p < $(srcdir)/idl.gperf > iinset.cpp
+	$(CXX) $(CCFLAGS) -o iout iinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
+	./iout -v < $(srcdir)/idl.gperf > idl.out
+	-diff -b $(srcdir)/idl.exp idl.out
+	$(GPERF) -m -M -c -C -D -E -T -a -o -p < $(srcdir)/idl.gperf > iinset.cpp
 	$(CXX) $(CCFLAGS) -o iout iinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./iout -v < $(srcdir)/idl.gperf > idl.out
 	-diff -b $(srcdir)/idl.exp idl.out
