@@ -62,8 +62,6 @@ Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* orbsvcs/IFR_Service/NativeDef_i.h:
 	* orbsvcs/IFR_Service/OperationDef_i.cpp:
 	* orbsvcs/IFR_Service/OperationDef_i.h:
-	* orbsvcs/IFR_Service/Options.cpp:
-	* orbsvcs/IFR_Service/Options.h:
 	* orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
 	* orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
 	* orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
@@ -136,8 +134,11 @@ Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/Makefile:
 	* orbsvcs/IFR_Service/README:
+	* orbsvcs/IFR_Service/Options.cpp:
+	* orbsvcs/IFR_Service/Options.h:
 
-	  Self-explanatory.
+	  The usual Makefile and README files, plus a singleton class
+	  that handles the comman line options passed to the IFR service.
 
 	* orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
 	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
