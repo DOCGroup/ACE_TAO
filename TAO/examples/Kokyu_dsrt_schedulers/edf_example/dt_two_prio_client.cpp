@@ -361,7 +361,7 @@ main (int argc, char *argv[])
       int importance=0;
 
 /* For CV version worker1 should start before worker2, but for Direct version vice versa*/
-      Worker_c worker1 (orb.in (),
+/*      Worker_c worker1 (orb.in (),
                       current.in (),
                       scheduler,
                       importance,
@@ -375,7 +375,7 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR,
                       "(%t|%T) cannot activate worker thread.\n"));
         }
-
+*/
       Worker worker2 (orb.in (),
                       server.in (),
                       current.in (),
@@ -400,7 +400,7 @@ main (int argc, char *argv[])
         j++; 
       }
 */
-      worker1.wait ();
+//      worker1.wait ();
       worker2.wait ();
 
       /* MEASURE: Wait for worker thread done in main thread */

@@ -238,7 +238,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       int importance=0;
-      Worker_c worker1 (orb.in (),
+/*      Worker_c worker1 (orb.in (),
                       current.in (),
                       scheduler,
                       importance,
@@ -252,7 +252,7 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR,
                       "(%t|%T) cannot activate worker thread.\n"));
         }
-
+*/
       //      TAO_debug_level = 1;
       Worker worker (orb.in ());
 
@@ -275,7 +275,7 @@ main (int argc, char *argv[])
             }
         }
 
-      worker1.wait ();
+//      worker1.wait ();
 
       worker.wait ();
 
