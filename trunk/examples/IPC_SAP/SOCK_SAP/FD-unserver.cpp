@@ -3,6 +3,7 @@
 #include "ace/LSOCK_Acceptor.h"
 #include "ace/LSOCK_Stream.h"
 #include "ace/UNIX_Addr.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(SOCK_SAP, FD_unserver, "$Id$")
 

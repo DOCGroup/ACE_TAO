@@ -27,7 +27,8 @@ LIBFILES = \
         $(TAO_BIDIRGIOP_LIB)
 
 IDLFILES = \
-        $(IDLDIR)\Receiver.idl
+        $(IDLDIR)\Receiver.idl \
+        $(IDLDIR)\Sender.idl
 
 CPPDIR = .
 
@@ -40,3 +41,6 @@ IDLDIR = .
 #
 $(IDLDIR)\ReceiverS.cpp $(IDLDIR)\ReceiverC.cpp: $(IDLDIR)\Receiver.idl
 	$(TAO_IDL) $**
+
+$(IDLDIR)\SenderS.cpp $(IDLDIR)\SenderC.cpp: $(IDLDIR)\Sender.idl
+        $(TAO_IDL) $**
