@@ -30,6 +30,7 @@
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #   define ACE_USES_OLD_IOSTREAMS 1
+#   define ACE_HAS_THR_C_DEST
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 # define ACE_CAST_CONST const
