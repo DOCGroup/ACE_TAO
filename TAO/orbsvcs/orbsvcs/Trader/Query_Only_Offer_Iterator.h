@@ -17,11 +17,12 @@
 
 #ifndef TAO_QUERY_ONLY_OFFER_ITERATOR_H
 #define TAO_QUERY_ONLY_OFFER_ITERATOR_H
-    
-#include "Offer_Iterator.h"
-#include "stl.h"
 
-class TAO_ORBSVCS_Export TAO_Query_Only_Offer_Iterator : public TAO_Offer_Iterator
+#include "ace/Containers.h"
+#include "Offer_Iterator.h"
+
+class TAO_ORBSVCS_Export TAO_Query_Only_Offer_Iterator
+  : public TAO_Offer_Iterator
   // = TITLE
   //     An implementation of the CosTrading::OfferIterator IDL
   //     interface that takes advantage of the fact that the trader is
@@ -58,7 +59,7 @@ public:
   
 private:
   
-  deque <CosTrading::Offer *> offers_;
+  ACE_Unbounded_Queue <CosTrading::Offer *> offers_;
   // Structure that stores pointers to offers
   // to iterate over.
 };

@@ -18,7 +18,7 @@
 #ifndef TAO_DYNAMIC_PROPERTY_H
 #define TAO_DYNAMIC_PROPERTY_H
 
-#include "stl.h" 
+#include "Trader.h"
 #include "orbsvcs/CosTradingS.h"
 
 class TAO_DP_Evaluation_Handler
@@ -48,14 +48,12 @@ public:
 
   ~TAO_DP_Dispatcher (void);
   
-  void register_handler (const char* name,
+  int register_handler (const char* name,
 			 TAO_DP_Evaluation_Handler* handler,
 			 CORBA::Boolean release_on_delete = CORBA::B_FALSE);
   // Registers a handler with the Dynamic_Property
-  // demultiplexer. Returns a constructed dynamic property struct
-  // upon success, which the caller must then deallocate when
-  // finished, or 0 on failure (i.e., a property with the same name
-  // is already registered).
+  // demultiplexer. Returns 0 upon success or -1 on failure (i.e., a
+  // property with the same name is already registered).
   
   TAO_DP_Evaluation_Handler* remove_handler(const char* name);
   
@@ -73,14 +71,20 @@ public:
 			    const CORBA::Any& extra_info);
 private:
 
-  typedef map
+  struct Handler_Info
+  {
+    TAO_DP_Evaluation_Handler* handle_;
+    CORBA::Boolean free_on_delete_;
+  };
+  
+  typedef ACE_Hash_Map_Manager
     <
-    string,
-    pair <TAO_DP_Evaluation_Handler*, CORBA::Boolean>,
-    less<string>
-    > HANDLER_MAP;
-
-  HANDLER_MAP handlers_;
+    TAO_String_Hash_Key,
+    Handler_Info,
+    ACE_Null_Mutex
+    > Handler_Map;
+  
+  Handler_Map handlers_;
 
 };
 
