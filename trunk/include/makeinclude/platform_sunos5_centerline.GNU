@@ -2,6 +2,7 @@
 CC		= cc
 CXX		= CC -mt
 DLD		= $(CXX) -mt
+LD		= $(CXX) -mt
 LIBS		+= -lsocket -ldl -lnsl -lgen
 PIC		= -PIC
 #AR		= CC

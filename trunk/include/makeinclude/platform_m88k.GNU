@@ -5,6 +5,7 @@ CC		= gcc -w
 CXX             = gcc -w -I. -fno-strict-prototypes -D__INLINE__
 CXX		+= -D__m88k__
 DLD		= $(CXX) 
+LD		= $(CXX) 
 INCLDIRS	+= -I$(WRAPPER_ROOT) -I.
 INCLDIRS	+= -I/devel/rmm/v1.0/local/src/threads/include
 LDFLAGS		+= -L $(WRAPPER_ROOT)/ace -L ./

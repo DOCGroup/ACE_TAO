@@ -10,6 +10,7 @@
 CC              = gcc -w
 CXX		= gcc -w -I. -fno-strict-prototypes -D__ACE_INLINE__ -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
 DLD             = $(CXX)
+LD		= $(CXX) 
 LIBS            += -lpthreads -lstdc++
 PIC             = -fPIC
 AR              = ar

@@ -3,6 +3,7 @@ MAKE		= gmake
 CC		= gcc
 CXX		= g++
 DLD		= $(CXX)
+LD		= $(CXX) 
 LDFLAGS		+=
 LIBS		+= -ldl
 PIC		= -fpic

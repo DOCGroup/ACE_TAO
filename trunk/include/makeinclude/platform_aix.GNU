@@ -10,6 +10,7 @@
 CC	    = xlC
 CXX	    = xlC_r
 DLD	    = makeC++SharedLib
+LD	    = $(CXX)
 CPPFLAGS    += -qxcall -qtempinc
 SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
 ifdef SHLIB

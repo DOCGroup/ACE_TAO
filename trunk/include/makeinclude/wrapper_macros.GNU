@@ -21,6 +21,7 @@
 #	DCCFLAGS	C++ compilation flags for debugging
 #	DEFFLAGS	C++ preprocessor flag for defining symbols 
 #	DLD		Name of dynamic linker
+#	LD		Name of linker
 #	IDL		Name of the CORBA IDL compiler
 #	INSBIN		Binary (executable) installation directory
 #	INSINC		Include file installation directory
@@ -111,6 +112,6 @@ endif # debug
 
 COMPILE.c	=$(CC) $(CFLAGS) $(CPPFLAGS)  -c
 COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)  -c
-LINK.c		=$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) $(LIBS)
-LINK.cc		=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) 
+LINK.c		=$(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) $(LIBS)
+LINK.cc		=$(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) $(LDFLAGS) $(LDLIBS) $(LIBS)
 SOLINK.cc	=$(LINK_COMMAND) $(DLD) $(SOFLAGS)

@@ -2,6 +2,7 @@
 CC              = cc
 CXX             = CC
 DLD             = $(CXX)
+LD		= $(CXX)
 LIBS            += 
 INCLDIRS        = -I$(ORBIX_ROOT)/include
 AR              = CC

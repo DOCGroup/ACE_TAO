@@ -3,6 +3,7 @@
 CC              = cc
 CXX             = CC -mt -noex -pta
 DLD             = $(CXX) 
+LD		= $(CXX)
 LDFLAGS         += -R $(WRAPPER_ROOT)/ace 
 LIBS            += -lsocket -ldl -lnsl -lgen
 PIC             = -PIC

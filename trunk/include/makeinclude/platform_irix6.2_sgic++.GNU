@@ -9,16 +9,17 @@
 # in the pthread library overriding symbols in the C library (which is
 # OK), and added libpthread.so to the link phase.
 
-CC             = cc
-CXX            = CC
-DLD            = $(CXX)
-CPPFLAGS       += -ptused -prelink +pp -D_SGI_MP_SOURCE -woff 3203,3209,3161,3262,3665
-LDFLAGS        += -rpath "$(WRAPPER_ROOT)/ace" -Wl,-woff,85
-LIBS           += -lpthread
-PIC            = -KPIC
-AR             = ar
-ARFLAGS	       = r
-RANLIB	       = echo
-SOFLAGS	       = -shared $(CPPFLAGS) -all
-SOBUILD	       = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
-                 $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
+CC		= cc
+CXX		= CC
+DLD		= $(CXX)
+LD		= $(CXX) 
+CPPFLAGS	+= -ptused -prelink +pp -D_SGI_MP_SOURCE -woff 3203,3209,3161,3262,3665
+LDFLAGS		+= -rpath "$(WRAPPER_ROOT)/ace" -Wl,-woff,85
+LIBS		+= -lpthread
+PIC		= -KPIC
+AR		= ar
+ARFLAGS		= r
+RANLIB		= echo
+SOFLAGS		= -shared $(CPPFLAGS) -all
+SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
+		 $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o

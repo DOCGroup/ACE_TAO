@@ -3,6 +3,7 @@
 CC		= cxx -g -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository 
 CXX		= cxx -w0 -g -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository 
 DLD		= $(CXX)
+LD		= $(CXX)
 #LIBS		+= -lpthreads -lmach -lsys5 -lxti -ltli -lcxx -lexc -lc
 LIBS		+= -ltli -lc_r
 PIC		= 

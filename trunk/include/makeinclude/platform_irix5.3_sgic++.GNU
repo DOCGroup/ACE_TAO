@@ -7,6 +7,7 @@
 CC		= cc
 CXX		= CC
 DLD		= $(CXX)
+LD		= $(CXX) 
 CPPFLAGS        += -ptused -prelink +pp -woff 3203,3209,3161,3262,3665
 LDFLAGS		+= -rpath "$(WRAPPER_ROOT)/ace"
 LIBS		= 

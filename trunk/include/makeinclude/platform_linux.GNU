@@ -4,6 +4,7 @@
 CC              = gcc -w
 CXX		= gcc -w -I. -fno-strict-prototypes -D__ACE_INLINE__ 
 DLD             = $(CXX)
+LD		= $(CXX) 
 LIBS            = -lstdc++
 PIC             = -fPIC
 AR              = ar

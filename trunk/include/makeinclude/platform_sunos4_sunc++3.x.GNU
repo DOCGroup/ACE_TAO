@@ -2,6 +2,7 @@
 CC		= cc
 CXX		= CC
 DLD		= /bin/ld
+LD		= $(CXX)
 LIBS		+= 
 PIC		= -pic
 AR		= ar

@@ -2,6 +2,7 @@
 CC		= cc
 CXX		= CC -mt
 DLD		= $(CXX) -mt 
+LD		= $(CXX) -mt
 INCLDIRS	= -I$(ORBIX_ROOT)/include
 LDFLAGS		+= -L$(ORBIX_ROOT)/lib
 LIBS		+= -lITsrv -lsocket -ldl -lnsl -lgen
