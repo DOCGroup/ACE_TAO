@@ -18,7 +18,8 @@
 
 #include "testS.h"
 
-class Callback_i : public POA_Callback
+class Callback_i : public virtual POA_Callback,
+		   public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   A callback object to the "client"
@@ -44,7 +45,8 @@ private:
   // The orb
 };
 
-class Simple_Server_i : public POA_Simple_Server
+class Simple_Server_i : public virtual POA_Simple_Server,
+			public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Simpler Server implementation
