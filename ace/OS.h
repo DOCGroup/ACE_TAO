@@ -4204,6 +4204,11 @@ struct sigaction
 #   define ENOTSUP ENOSYS  /* Operation not supported. */
 # endif /* !ENOTSUP */
 
+# if !defined (ECOMM)
+    // Not the same, but ECONNABORTED is provided on NT.
+#   define ECOMM ECONNABORTED
+# endif /* ECOMM */
+
 # if !defined (WNOHANG)
 #   define WNOHANG 42
 # endif /* !WNOHANG */
