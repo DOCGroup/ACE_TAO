@@ -135,7 +135,7 @@ Worker_Thread::svc (void)
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->validate_connection (ACE_ENV_ARG_PARAMETER);
+      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i < iterations; i++)
