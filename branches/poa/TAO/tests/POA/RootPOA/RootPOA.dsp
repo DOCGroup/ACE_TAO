@@ -83,7 +83,7 @@ LINK32=link.exe
 # Name "RootPOA - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\rootpoa.cpp
+SOURCE=.\RootPOA.cpp
 # End Source File
 # End Target
 # End Project

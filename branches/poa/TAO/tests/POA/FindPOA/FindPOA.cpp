@@ -22,32 +22,39 @@ main (int argc, char **argv)
       return -1;
     }
   
-  // CORBA::PolicyList policies (2);
-  PortableServer::PolicyList policies (2);
-  policies.length (2);  
-  policies[0] = root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL, env);
-  policies[1] = root_poa->create_lifespan_policy (PortableServer::TRANSIENT, env);
-  
-  ACE_CString name = "firstPOA";
-  PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
-                                                            PortableServer::POAManager::_nil(), 
-                                                            policies,
-                                                            env);  
+  TAO_Adapter_Activator activator_impl;
+  PortableServer::AdapterActivator_var activator = activator_impl._this (env);
   if (env.exception () != 0)
     {
-      env.print_exception ("PortableServer::POA::create_POA");
+      env.print_exception ("TAO_Adapter_Activator::_this");
+      return -1;
+    }
+  
+  root_poa->the_activator (activator, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::the_activator");
+      return -1;
+    }
+  
+  ACE_CString name = "firstPOA";
+  PortableServer::POA_var first_poa = root_poa->find_POA (name.c_str (),
+                                                          CORBA::B_TRUE,
+                                                          env);  
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::find_POA");
       return -1;
     }
 
   name += TAO_POA::name_separator ();
   name += "secondPOA";
-  PortableServer::POA_var second_poa = root_poa->create_POA (name.c_str (),
-                                                             PortableServer::POAManager::_nil(), 
-                                                             policies,
-                                                             env);  
+  PortableServer::POA_var second_poa = root_poa->find_POA (name.c_str (),
+                                                           CORBA::B_TRUE,
+                                                           env);  
   if (env.exception () != 0)
     {
-      env.print_exception ("PortableServer::POA::create_POA");
+      env.print_exception ("PortableServer::POA::find_POA");
       return -1;
     }
 
@@ -57,26 +64,12 @@ main (int argc, char **argv)
   name += TAO_POA::name_separator ();
   name += "fifthPOA";
 
-  PortableServer::POA_var fifth_poa = root_poa->create_POA (name.c_str (),
-                                                            PortableServer::POAManager::_nil(), 
-                                                            policies,
-                                                            env);  
+  PortableServer::POA_var fifth_poa = root_poa->find_POA (name.c_str (),
+                                                          CORBA::B_TRUE,
+                                                          env);  
   if (env.exception () != 0)
     {
-      env.print_exception ("PortableServer::POA::create_POA");
-      return -1;
-    }
-
-  for (CORBA::ULong i = 0;
-       i < policies.length () && env.exception == 0;
-       ++i)
-    {
-      PortableServer::Policy_ptr policy = policies[i];
-      policy->destroy (env);
-    }  
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_POA");
+      env.print_exception ("PortableServer::POA::find_POA");
       return -1;
     }
 
