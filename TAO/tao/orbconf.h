@@ -396,6 +396,23 @@ enum MCAST_SERVICEID
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_RT_CORBA */
 
+// MINIMUM_POA_MAPS support is disabled by default if TAO is not
+// configured for minimum CORBA.  If TAO is configured for minimum
+// CORBA, then MINIMUM_POA_MAPS will be enabled by default.
+// To explicitly enable MINIMUM_POA_MAPS support uncomment the following
+// #define TAO_HAS_MINIMUM_POA_MAPS 1
+// To explicitly disable MINIMUM_POA_MAPS support uncomment the following
+// #define TAO_HAS_MINIMUM_POA_MAPS 0
+
+// Default MINIMUM_POA_MAPS settings
+#if !defined (TAO_HAS_MINIMUM_POA_MAPS)
+#  if defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_MINIMUM_POA_MAPS 1
+#  else
+#    define TAO_HAS_MINIMUM_POA_MAPS 0
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_MINIMUM_POA_MAPS */
+
 // CORBA_MESSAGING support is enabled by default if TAO is not
 // configured for minimum CORBA.  If TAO is configured for minimum
 // CORBA, then CORBA_MESSAGING will be disabled by default.

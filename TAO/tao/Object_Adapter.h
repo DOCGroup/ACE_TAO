@@ -391,6 +391,7 @@ protected:
     TAO_POA *> transient_poa_map;
   // Base class of the id map.
 
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Hash_Map_Manager_Ex_Adapter<
   poa_name,
     TAO_POA *,
@@ -398,12 +399,15 @@ protected:
     ACE_Equal_To<poa_name>,
     TAO_Incremental_Key_Generator> transient_poa_hash_map;
   // Id hash map.
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   poa_name,
     TAO_POA *,
     TAO_Incremental_Key_Generator> transient_poa_linear_map;
   // Id linear map.
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   typedef ACE_Active_Map_Manager_Adapter<
   poa_name,
@@ -424,11 +428,13 @@ protected:
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_hash_map;
   // Id hash map.
 
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   poa_name,
     TAO_POA *,
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_linear_map;
   // Id linear map.
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 public:
 
