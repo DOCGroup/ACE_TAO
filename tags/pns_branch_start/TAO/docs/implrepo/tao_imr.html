@@ -1,0 +1,290 @@
+<html>
+<!-- $Id$ -->
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Implementation Repository User's Guide</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<hr>
+
+<h2>tao_imr Usage</h2>
+
+<p>The usage of tao_imr is as follows:</p>
+
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] <a href="#commands">command</a>
+[command-arguments]</code></p>
+
+<p><i>ORB_options</i> is the ORB options to be given. This is where
+options like &quot;-ORBInitRef ImplRepoService=file://implrepo.ior&quot; would be placed. 
+<i>command </i>is one of the supported commands like add, remove, etc. <i>command-arguments</i>
+are dependent on the command used. For example, <i>add </i>will need a
+server name for registration, but list does not necessarily need any arguments.</p>
+
+<hr>
+
+<h3><a name="examples">Examples</a></h3>
+<p>There is a file in the current directory name <i>implrepo.ior</i> that
+contains the IOR of the Implementation Repository. The server executable
+is called <i>airplane.exe</i> and the POA name used by the object is <i>plane</i>.
+The server needs the -i option to use the IMR and the IOR of the IMR. So the
+command would be:</p>
+
+<p><code>tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior add plane -c &quot;airplane.exe
+-i file://implrepo.ior&quot;</code></p>
+
+<p><code>And if you want to later remove that server from the IMR:</code></p>
+
+<p><code>tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior remove plane</code></p>
+
+<p>Or if you wanted to update the entry to have a working directory of
+C:\airplane\.</p>
+
+<p><code>tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior update plane -w
+&quot;C:\airplane\&quot;</code></p>
+
+<hr>
+
+<h3><a name="commands">Commands</a></h3>
+
+<p><i>tao_imr</i> currently supports these commands:</p>
+
+<table border="1">
+  <tr>
+    <th>Command</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><a href="#activate">activate</a></td>
+    <td>Activates a server through the IMR</td>
+  </tr>
+  <tr>
+    <td><a href="#add">add</a></td>
+    <td>Adds a server to the server database in the IMR</td>
+  </tr>
+  <tr>
+    <td><a href="#autostart">add</a></td>
+    <td>Activates all servers that are marked AUTO_START</td>
+  </tr>
+  <tr>
+	<td><a href="#ior">ior</a></td>
+	<td>Creates a simple IOR for a registered server</td>
+  </tr>
+  <tr>
+    <td><a href="#list">list</a></td>
+    <td>Lists the details of one server or lists all the servers registered in
+      the IMR</td>
+  </tr>
+  <tr>
+    <td><a href="#remove">remove</a></td>
+    <td>Removes a server from the server database in the IMR</td>
+  </tr>
+  <tr>
+    <td><a href="#shutdown">shutdown</a></td>
+    <td>Shuts down a server through the IMR</td>
+  </tr>
+  <tr>
+    <td><a href="#update">update</a></td>
+    <td>Updates information for a server in the server database in the IMR</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="activate">activate</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] activate <i>name </i>[-h]</code></p>
+
+<p>Activate a server through the Implementation Repository. The <i>name</i> is
+the server (POA) name that is used to identify the server.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="add">add</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] add <i>name </i>[-h]
+[-c <i>command</i>] [-w <i>working_dir</i>] [-a NORMAL|MANUAL|PER_CLIENT]</code></p>
+
+<p>Creates a new server entry in the Implementation Repository. The <i>name</i>
+must be be the name of the POA that the object resides in.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+  <tr>
+    <td>-c <i>command</i></td>
+    <td>Adds the command line string used to restart this server</td>
+  </tr>
+  <tr>
+    <td>-w <i>working_dir</i></td>
+    <td>Adds the working directory that is used for the server</td>
+  </tr>
+  <tr>
+    <td>[-a NORMAL|MANUAL|PER_CLIENT|AUTO_START]</td>
+	<td>Specifies the type of activation.<br>
+	    NORMAL = normal activation (default)<br>
+		MANUAL = only can be started manually on the command line or with tao_imr<br>
+		PER_CLIENT = each client that contacts the ImplRepo will get its own activated server<br>
+		AUTO_START = activated when the IMR is started or when tao_imr autostart is used</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="auto_start">auto_start</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] auto_start [-h]</code></p>
+
+<p>Activates all servers with the activation mode of AUTO_START.  It will not start new
+copies if the server is already activated.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="ior">ior</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] ior <i>name</i> [-h] 
+[-f <i>filename</i>]</code></p>
+
+<p>Creates a simple IOR that can be used with the Implementation Repository. Please refer
+to the <a href="usersguide.html">User's Guide</a> for more information on when to use this
+command.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+  <tr>
+    <td>-f <i>filename</i></td>
+    <td>Outputs the IOR also to this file</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="list">list</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] list [<i>name</i>]<i>
+</i>[-h] [-v]</code></p>
+
+<p>Lists all or one of the server entries in the Implementation Repository. If a
+<i>name</i> is used, it will display verbose information about the server
+identified by its server (POA) name.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+  <tr>
+    <td>-v</td>
+    <td>When listing the list of servers (no <i>name</i> specified), display
+      verbose information for all servers.</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="remove">remove</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] add <i>name </i>[-h]</code></p>
+
+<p>Removes a server entry from the Implementation Repository. The <i>name</i> is
+the server (POA) name that is used to identify the server.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="shutdown">shutdown</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] shutdown <i>name </i>[-h]</code></p>
+
+<p>Shuts down a server through the Implementation Repository. The <i>name</i> is
+the server (POA) name that is used to identify the server.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3><a name="update">update</a></h3>
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] add <i>name </i>[-h]
+[-c <i>command</i>] [-w <i>working_dir</i>]</code></p>
+
+<p><code>Update a server entry in the Implementation Repository. </code>The <i>name</i>
+is the server (POA) name that is used to identify the server.</p>
+
+<table border="1">
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-h</td>
+    <td>Displays help for this command</td>
+  </tr>
+  <tr>
+    <td>-c <i>command</i></td>
+    <td>Changes the command line string used to restart this server</td>
+  </tr>
+  <tr>
+    <td>-w <i>working_dir</i></td>
+    <td>Changes the working directory that is used for the server</td>
+  </tr>
+</table>
+
+<hr>
+
+<p>Back to <a href="index.html">Implementation Repository</a></p>
+</body>
+</html>

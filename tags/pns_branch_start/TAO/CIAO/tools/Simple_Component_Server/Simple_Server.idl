@@ -1,0 +1,25 @@
+// $Id$
+
+#include "ciao/CCM_Component.idl"
+
+module CIAO
+{
+  /**
+   * @interface Simple_Server
+   *
+   * Control interface for Simple_Server
+   */
+  interface Simple_Server
+  {
+    /// Get the installed home interface.
+    Components::CCMHome get_home ();
+
+    /// Get the cached component instantiation.
+    /// This operation can only instantiate using KeylessCCMHome.
+    Components::CCMObject get_component ();
+
+    /// Shutdown the simple component server.
+    oneway void shutdown ();
+  };
+
+};
