@@ -1,5 +1,0 @@
-project {
-  after    += ACEXML_Parser ACEXML
-  libs     += ACEXML_Parser ACEXML
-  includes += $(ACE_ROOT)/ACEXML/common
-}
