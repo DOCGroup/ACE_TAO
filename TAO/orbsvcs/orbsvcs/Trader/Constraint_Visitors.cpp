@@ -495,7 +495,7 @@ visit_property (TAO_Property_Constraint* literal)
       ACE_TRY
         {
           value = this->prop_eval_.property_value (prop_index, ACE_TRY_ENV);
-          // ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -552,7 +552,7 @@ sequence_does_contain (CORBA::Any* sequence,
     {
       sequence_type =
         TAO_Sequence_Extracter_Base::sequence_type (type.in (), ACE_TRY_ENV);
-      // ACE_TRY_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -1056,7 +1056,7 @@ visit_in (TAO_Binary_Constraint* binary_in)
         {
           seq_type =
             TAO_Sequence_Extracter_Base::sequence_type (prop_type, ACE_TRY_ENV);
-          // ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
