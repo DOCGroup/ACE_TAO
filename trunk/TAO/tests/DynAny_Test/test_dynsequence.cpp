@@ -159,7 +159,8 @@ Test_DynSequence::run_test (void)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("test_dynsequence::run_test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "test_dynsequence::run_test");
       return -1;
     }
   ACE_ENDTRY;
