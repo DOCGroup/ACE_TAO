@@ -1,3 +1,10 @@
+Sun Jun  3 18:08:39 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp,
+	* ace/Configuration.cpp: Added ACE_ASSERTS to make sure that
+	  open() is called...  Thanks to Jerry Odenwelder
+ 	  <jerry.o@mindspring.com> for fixing this.
+
 Sat Jun  2 13:05:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Connector.cpp: Removed the ACE_Errno_Guard from the
