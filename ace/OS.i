@@ -1860,13 +1860,18 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   switch (type)
     {
     case USYNC_PROCESS:
-      m->proc_mutex_ = ::CreateMutex (ACE_OS::default_win32_security_attributes (sa), FALSE, name);
+      m->proc_mutex_ = ::CreateMutex (ACE_OS::default_win32_security_attributes (sa),
+                                      FALSE,
+                                      name);
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
         return 0;
     case USYNC_THREAD:
-      return ACE_OS::thread_mutex_init (&m->thr_mutex_, type, name, arg);
+      return ACE_OS::thread_mutex_init (&m->thr_mutex_,
+                                        type,
+                                        name,
+                                        arg);
     default:
       errno = EINVAL;
       return -1;
@@ -1877,8 +1882,10 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (sa);
-  return (::sm_create ((char *) name, 1, SM_LOCAL | SM_PRIOR, m) == 0) ? 0 : -1;
-
+  return ::sm_create ((char *) name,
+                      1,
+                      SM_LOCAL | SM_PRIOR,
+                      m) == 0 ? 0 : -1;
 # elif defined (VXWORKS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
