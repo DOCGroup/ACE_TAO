@@ -107,7 +107,7 @@ CORBA::PolicyType POA_CORBA_Policy_tie<T>::policy_type  (
   ))
 {
   return this->ptr_->policy_type (
-TAO_ENV_ARG_SINGLE_PARAMETER
+TAO_ENV_SINGLE_ARG_PARAMETER
   );
 }
 

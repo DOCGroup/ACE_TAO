@@ -1,3 +1,11 @@
+Mon Jan  7 10:27:43 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PortableServer/PolicyS_T.i:
+
+          Corrected an invalid ENV parameter macro name.  This was detected
+          as an error on HP-UX.  Thanks to Rob Martin <martin_r@ociweb.com>
+          for pointing this out.
+
 Sun Jan  6 13:18:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_operation_strategy.cpp:
