@@ -137,15 +137,16 @@ server (void *)
   for (;;) 
     {
       char buf[BUFSIZ];                                     
-      int result = 0;
       char t = 'a';
       
       handle_set.reset ();
       handle_set.set_bit (peer_acceptor.get_handle ());
       
-      if ((result = ACE_OS::select (int (peer_acceptor.get_handle ()) + 1,
-				    handle_set,
-				    0, 0, &tv)) == -1)
+      int result = ACE_OS::select (int (peer_acceptor.get_handle ()) + 1,
+				   handle_set,
+				   0, 0, &tv);
+
+      if (result == -1)
 	ACE_ERROR ((LM_ERROR, "%p\n", "select"));
       else if (result == 0)
 	{
@@ -154,7 +155,7 @@ server (void *)
 	}
 
       // Create a new ACE_SOCK_Stream endpoint (note automatic restart
-      // if errno == EINTR). 
+      // if errno == EINTR).
       
       while ((result = peer_acceptor.accept (new_stream, &cli_addr)) != -1)
 	{
@@ -196,7 +197,7 @@ server (void *)
 		  if (errno == EWOULDBLOCK)
 		    ACE_DEBUG ((LM_DEBUG, "no input available, going back to reading\n"));
 		  else
-		    ACE_ERROR ((LM_ERROR, "%p\n", "ACE::write"));
+		    ACE_ERROR ((LM_ERROR, "%p\n", "recv_n"));
 		}
 	      
 	      if (new_stream.send_n ("", 1) != 1)
@@ -213,7 +214,7 @@ server (void *)
 	  if (errno == EWOULDBLOCK)
 	    ACE_DEBUG ((LM_DEBUG, "no connections available, going back to accepting\n"));
 	  else
-	    ACE_ERROR ((LM_ERROR, "%p\n", "ACE::write"));
+	    ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
 	}
     }
   return 0;

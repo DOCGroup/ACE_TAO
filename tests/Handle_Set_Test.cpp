@@ -24,12 +24,12 @@
 
 #define IS_ODD(X) (((X) & 1) != 0)
 
-void
+static void
 run_test (int count)
 {
   int duplicates = 0;
-  int sets	 = 0;
-  int clears	 = 0;
+  int sets = 0;
+  int clears = 0;
 
   ACE_Handle_Set handle_set;
 
@@ -37,22 +37,22 @@ run_test (int count)
 
   for (int i = 0; i < count; i++)
     {
-      int i = int (ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
+      int j = int (ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
 
-      if (IS_ODD (i))
+      if (IS_ODD (j))
 	{
-	  if (handle_set.is_set ((ACE_HANDLE) i))
+	  if (handle_set.is_set ((ACE_HANDLE) j))
 	    duplicates++;
 
-	  handle_set.set_bit ((ACE_HANDLE) i);
+	  handle_set.set_bit ((ACE_HANDLE) j);
 	  sets++;
 	}
       else
 	{
-	  if (handle_set.is_set ((ACE_HANDLE) i))
+	  if (handle_set.is_set ((ACE_HANDLE) j))
 	    duplicates--;
 
-	  handle_set.clr_bit ((ACE_HANDLE) i);
+	  handle_set.clr_bit ((ACE_HANDLE) j);
 	  clears++;
 	}
     }

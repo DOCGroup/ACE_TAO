@@ -46,7 +46,7 @@ volatile static int shared_data;
 static ACE_RW_Mutex rw_mutex;     
 
 // Count of the number of readers and writers.
-ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers, current_writers;
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers, current_writers;
 
 // Explain usage and exit.
 static void 
@@ -58,6 +58,7 @@ print_usage_and_die (void)
 }
 
 // Parse the command-line arguments and set options.
+
 static void
 parse_args (int argc, char *argv[])
 {
@@ -167,14 +168,19 @@ writer (void *)
   return 0;
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#endif /* ACE_HAS_THREADS */
+
 // Spawn off threads.
 
-int main (int argc, char *argv[])
+int main (int, char *argv[])
 {
   ACE_START_TEST ("Reader_Writer_Test.cpp");
 
-  ACE_LOG_MSG->open (argv[0]);
-
+#if defined (ACE_HAS_THREADS)
   current_readers = 0; // Possibly already done
   current_writers = 0; // Possibly already done
 
@@ -194,20 +200,10 @@ int main (int argc, char *argv[])
   ACE_Service_Config::thr_mgr ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting main thread\n"));
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */
 

@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -22,12 +22,10 @@
 #include "ace/Log_Msg.h"
 #include "test_config.h"
 
-int
-main (int argc, char *argv[])
+static void
+test (void)
 {
-  ACE_START_TEST ("Mutex_Test.cpp");
-
-  char *name = argc == 1 ? "hello" : argv[1];
+  char *name = "hello";
 
   ACE_Process_Mutex pm (name);
 
@@ -42,6 +40,45 @@ main (int argc, char *argv[])
       ACE_ASSERT (pm.release () == 0);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released\n"));
     }
+}
+
+static void
+spawn (void)
+{
+#if !defined (ACE_WIN32)
+  switch (ACE_OS::fork ())
+    {
+    case -1:
+      ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
+      exit (-1);
+    case 0: 
+      test ();
+    default:
+      test ();
+    }
+#elif defined (ACE_HAS_THREADS)
+  if (thr_mgr.spawn (ACE_THR_FUNC (test),
+		     (void *) 0,
+		     THR_NEW_LWP | THR_DETACHED) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
+
+  if (thr_mgr.spawn (ACE_THR_FUNC (test),
+		     (void *) 0,
+		     THR_NEW_LWP | THR_DETACHED) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
+  thr_mgr.wait ();
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n%a", 1));
+#endif /* ACE_HAS_THREADS */	
+}
+
+int
+main (int, char *argv[])
+{
+  ACE_START_TEST ("Mutex_Test.cpp");
+
+  spawn ();
+
   ACE_END_TEST;
   return 0;
 }

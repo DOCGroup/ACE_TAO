@@ -125,14 +125,17 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
   return 0; 
 }
 
+#endif /* ACE_HAS_THREADS */
+
 // Spawn off one thread that copies stdin to stdout in order of the
 // size of each line.
 
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Priority_Buffer_Test.cpp");
 
+#if defined (ACE_HAS_THREADS)
   // Message queue.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
@@ -143,15 +146,9 @@ main (int argc, char *argv[])
 
   // Wait for producer and consumer threads to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
-
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */

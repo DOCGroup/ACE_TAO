@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -17,14 +17,14 @@
 //    Prashant Jain and Doug C. Schmidt
 // 
 // ============================================================================
+
 #include "ace/Log_Msg.h"
-
-#if defined (ACE_HAS_THREADS)
-
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "test_config.h"
+
+#if defined (ACE_HAS_THREADS)
 
 // Total number of iterations.
 static size_t n_iterations = 100;
@@ -61,28 +61,24 @@ worker (void *arg)
   return 0;
 }
 
+#endif /* ACE_HAS_THREADS */
+
 int
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Recursive_Mutex_Test.cpp");
 
+#if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon (argv[0]);
   ACE_Recursive_Thread_Mutex rm;
   ACE_Service_Config::thr_mgr ()->spawn_n (n_threads, 
 					   ACE_THR_FUNC (worker), 
 					   (void *) &rm);
-
   ACE_Service_Config::thr_mgr ()->wait ();
-
+#else
+  ACE_ERROR ((LM_ERROR, 
+	      "ACE doesn't support support process mutexes on this platform (yet)\n"));
+#endif /* ACE_WIN32 */
   ACE_END_TEST;
   return 0;
 }
-#else
-int 
-main (void)
-{
-  ACE_ERROR_RETURN ((LM_ERROR, 
-		     "ACE doesn't support support process mutexes on this platform (yet)\n"), 
-		    -1);
-}
-#endif /* ACE_WIN32 */

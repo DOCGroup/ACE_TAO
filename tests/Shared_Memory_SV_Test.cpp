@@ -60,7 +60,7 @@ server (void)
 }
 
 int
-main (int argc, char *argv [])
+main (int, char *argv [])
 {
   ACE_START_TEST ("Shared_Memory_SV_Test.cpp");
 
