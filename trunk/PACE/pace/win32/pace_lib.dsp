@@ -379,11 +379,19 @@ SOURCE=.\pthread.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthreadtypes.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\pwd.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\sched.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\schedtypes.h
 # End Source File
 # Begin Source File
 
