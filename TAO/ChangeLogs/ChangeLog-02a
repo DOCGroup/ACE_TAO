@@ -1,3 +1,10 @@
+Thu Mar 16 13:57:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/target_identifier.h (class TAO_Target_Specification): 
+	* tao/target_identifier.i: Fixed a warning from Digital Unix
+	  compiler (cxx). Thanks to Jeff Parsons <parsons@cs.wsutl.edu>
+	  for reporting this.
+
 Thu Mar 16 13:53:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_interface.cpp:
