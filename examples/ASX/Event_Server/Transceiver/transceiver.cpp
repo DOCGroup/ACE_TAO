@@ -32,7 +32,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'C':
-	role = c;
+	role = 'C';
 	break;
       case 'h':
 	host_name = get_opt.optarg;
@@ -41,11 +41,11 @@ parse_args (int argc, char *argv[])
 	port_number = ACE_OS::atoi (get_opt.optarg);
 	break;
       case 'S':
-	role = c;
+	role = 'S';
 	break;
       default:
 	ACE_ERROR ((LM_ERROR, 
-		    "usage: %n [-p portnum] [-h host_name]\n%a", 1));
+		    "usage: %n [-C] [-S] [-p portnum] [-h host_name]\n%a", 1));
 	/* NOTREACHED */
 	break;
       }

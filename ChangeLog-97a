@@ -1,9 +1,9 @@
-Thu May 15 23:34:30 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
-
-	* ace/Process_Manager.cpp (spawn_n): Changed
-	  ACE_Process_Manager::start_n to ACE_Process_Manager::spawn_n.
-
 Thu May 15 22:19:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Stream_Modules.cpp: Changed the logic for determining when
+ 	  to compile the Stream_Modules.cpp code.  Now, we compile it
+ 	  unless ACE_LACKS_STREAM_MODULES is defined (i.e., we're on HP/UX
+ 	  10.x using aCC).
 
 	* netsvcs/lib/Server_Logging_Handler.cpp (handle_input): Fixed
 	  a bug in handle_input() where we need to return the result, not 
@@ -64,6 +64,11 @@ Thu May 15 22:19:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  useful for situations where you need to avoid deadlock
  	  efficiently when <ACE_Event_Handlers> are used in multiple
  	  threads.  Thanks to Detlef for pointing out the utility of this.
+
+Thu May 15 23:34:30 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp (spawn_n): Changed
+	  ACE_Process_Manager::start_n to ACE_Process_Manager::spawn_n.
 
 Thu May 15 15:39:13 1997  Carlos O'Ryan  <coryan@charlie>
 
