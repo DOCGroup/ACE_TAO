@@ -240,7 +240,7 @@ oneway		return IDL_ONEWAY;
 	      	}
 L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"	{
 		  /* Skip the bookends */
-		  char *tmp = ace_yytext;
+		  char *tmp = ACE_OS::strdup (ace_yytext);
 		  tmp[strlen (tmp) - 1] = '\0';
 		  yylval.wsval = idl_wstring_escape_reader(tmp + 2);
 		  return IDL_WSTRING_LITERAL;
