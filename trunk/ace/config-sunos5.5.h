@@ -247,13 +247,13 @@
   // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 # define ACE_HAS_REENTRANT_FUNCTIONS
 
-# define ACE_HAS_PRIOCNTL
 # define ACE_NEEDS_LWP_PRIO_SET
 # define ACE_HAS_PTHREAD_SIGMASK
 # define ACE_HAS_THR_YIELD
 # define ACE_LACKS_PTHREAD_YIELD
-
 #endif /* _REENTRANT */
+
+# define ACE_HAS_PRIOCNTL
 
 // Platform supports ACE_TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
