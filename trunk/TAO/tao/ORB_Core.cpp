@@ -163,7 +163,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     tm_ (),
     tss_cleanup_funcs_ (),
     tss_resources_ (),
-    orb_resources_ (),
     has_shutdown_ (1),  // Start the ORB in a  "shutdown" state.  Only
                         // after CORBA::ORB_init() is called will the
                         // ORB no longer be shutdown.  This does not
