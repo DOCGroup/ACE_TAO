@@ -4,20 +4,6 @@
 #include "Time_Date_i.h"
 #include "ace/OS_NS_time.h"
 
-// Default constructor.
-
-Time_Date_i::Time_Date_i (void)
-{
-  //no-op
-}
-
-// Default destructor.
-
-Time_Date_i::~Time_Date_i (void)
-{
-  // no-op.
-}
-
 // Obtain the time and date in binary format.
 
 void
