@@ -35,7 +35,8 @@ Mon Oct 15 23:16:55 2001  Ossama Othman  <ossama@uci.edu>
 	  corrects a deadlock that occurred when activating an ACE_Task,
 	  in conjunction with the singleton instance of the
 	  ACE_Thread_Manager, during Service Object initialization.
-	  
+	  [Bug 1036]
+
 	* ace/Service_Config.i:
 
 	  Cosmetic update.
@@ -81,7 +82,7 @@ Mon Oct 15 23:16:55 2001  Ossama Othman  <ossama@uci.edu>
 	  reentrance/thread-safety when tracking error counts.
 
 	  (yy_push_buffer, yy_pop_buffer):
-	
+
 	  Pass a pointer to the buffer that will be "switched" in our out
 	  when processing nested service configurator directives those
 	  that are processed in parallel.
