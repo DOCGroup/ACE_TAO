@@ -37,6 +37,10 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+#if !defined (WNOHANG)
+#  define WNOHANG 0100
+#endif /* !WNOHANG */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
