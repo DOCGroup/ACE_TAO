@@ -390,9 +390,7 @@ main (int argc,
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj);
       
-      TAO_AV_CORE::instance ()->init (argc,
-                                      argv,
-                                      orb.in (),
+      TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
