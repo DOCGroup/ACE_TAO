@@ -15,6 +15,8 @@ ACE_RCSID(ace, Asynch_Connector, "$Id$")
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async I/O.
 
+#include "ace/Flag_Manip.h"
+#include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 
@@ -98,7 +100,8 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
 
   // set blocking mode 
   if (!error &&
-      ACE::clr_flags (result.connect_handle (), ACE_NONBLOCK) != 0)
+      ACE_Flag_Manip::clr_flags
+        (result.connect_handle (), ACE_NONBLOCK) != 0)
     {
       error = 1;
       ACE_ERROR ((LM_ERROR,
