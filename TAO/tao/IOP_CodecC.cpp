@@ -1285,102 +1285,9 @@ operator>>= (
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root.cpp:1703
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if 0
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;
-#endif /*if 0*/
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::OctetSeq>;
-
-#if 0
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::OctetSeq,
-        CORBA::OctetSeq_var,
-        CORBA::OctetSeq_out
-      >;
-#endif /*if 0*/
-
-#endif /* end #if !defined */
-
-#if 0
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::TCKind
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::exception_type
-      >;
-#endif /*if 0*/
-
-#if !defined (_IOP_CODEC__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_CODEC__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IOP::Codec>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        IOP::Codec_ptr,
-        IOP::Codec_var,
-        IOP::Codec_out,
-        TAO::Objref_Traits<IOP::Codec>
-      >;
-
-#endif /* end #if !defined */
-
-#if 0
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::InvalidTypeForEncoding
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::FormatMismatch
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::Codec::TypeMismatch
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        CORBA::sequence,
-        CORBA::sequence_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-#endif /*if 0*/
-
-  template class
-    TAO::Any_Impl_T<
-        IOP::Codec
-      >;
-
+  template class TAO::Objref_Traits<IOP::Codec>;
 
   template class
     TAO_Objref_Var_T<
@@ -1392,20 +1299,10 @@ operator>>= (
         IOP::Codec
       >;
 
-
-#if !defined (_IOP_ENCODING__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_ENCODING__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IOP::Encoding>;
-
-#if 0
   template class
-    TAO::Fixed_Size_Arg_Traits<
-        IOP::Encoding
+    TAO::Any_Impl_T<
+        IOP::Codec
       >;
-#endif /*if 0*/
-
-#endif /* end #if !defined */
 
   template class
     TAO_Fixed_Var_T<
@@ -1417,31 +1314,12 @@ operator>>= (
         IOP::Encoding
       >;
 
-
   template class
     TAO::Any_Dual_Impl_T<
         IOP::Encoding
       >;
 
-#if 0
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::CodecFactory::UnknownEncoding
-      >;
-#endif /*if 0*/
-
-#if 0
-  template class
-    TAO::Ret_Object_Argument_T<
-        IOP::Codec_ptr,
-        IOP::Codec_var
-      >;
-#endif /*if 0*/
-
-  template class
-    TAO::In_Fixed_Size_Argument_T<
-        IOP::Encoding
-      >;
+  template class TAO::Objref_Traits<IOP::CodecFactory>;
 
   template class
     TAO_Objref_Var_T<
@@ -1460,107 +1338,22 @@ operator>>= (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::OctetSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::OctetSeq, \
-        CORBA::OctetSeq_var, \
-        CORBA::OctetSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::TCKind \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::exception_type \
-      >
-
-#if !defined (_IOP_CODEC__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_CODEC__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IOP::Codec>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        IOP::Codec_ptr, \
-        IOP::Codec_var, \
-        IOP::Codec_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::InvalidTypeForEncoding \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::FormatMismatch \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::Codec::TypeMismatch \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
+# pragma instantiate TAO::Objref_Traits<IOP::Codec>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        IOP::Codec, \
-        TAO::Objref_Traits<IOP::Codec> \
+        IOP::Codec
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        IOP::Codec, \
-        TAO::Objref_Traits<IOP::Codec> \
+        IOP::Codec
       >
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         IOP::Codec \
       >
-
-#if !defined (_IOP_ENCODING__ARG_TRAITS_TMPLINST_CS_)
-#define _IOP_ENCODING__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IOP::Encoding>
-
-# pragma instantiate \
-    TAO::Fixed_Size_Arg_Traits< \
-        IOP::Encoding \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_Fixed_Var_T< \
@@ -1577,26 +1370,16 @@ operator>>= (
         IOP::Encoding \
       >
 
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::CodecFactory::UnknownEncoding \
-      >
-
-# pragma instantiate \
-    TAO::In_Fixed_Size_Argument_T< \
-        IOP::Encoding \
-      >
+# pragma instantiate TAO::Objref_Traits<IOP::CodecFactory>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        IOP::CodecFactory, \
-        TAO::Objref_Traits<IOP::CodecFactory> \
+        IOP::CodecFactory
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        IOP::CodecFactory, \
-        TAO::Objref_Traits<IOP::CodecFactory> \
+        IOP::CodecFactory
       >
 
 # pragma instantiate \

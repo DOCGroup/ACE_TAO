@@ -2264,44 +2264,6 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if 0
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::TCKind
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::exception_type
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::ParameterMode
-      >;
-#endif /*if 0*/
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::TaggedProfile
-      >;
-
-
   template class
     TAO_Var_Var_T<
         IOP::TaggedProfile
@@ -2318,16 +2280,10 @@ CORBA::Boolean operator>> (
         IOP::TaggedProfile_var
       >;
 
-
-#if !defined (_IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__SEQUENCE_CS_)
-#define _IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__SEQUENCE_CS_
-
   template class
-    TAO_Unbounded_Sequence<
+    TAO::Any_Dual_Impl_T<
         IOP::TaggedProfile
       >;
-
-#endif /* end #if !defined */
 
   template class
     TAO::Any_Dual_Impl_T<
@@ -2354,7 +2310,6 @@ CORBA::Boolean operator>> (
     TAO::Any_Dual_Impl_T<
         IOP::IOR
       >;
-
 
   template class
     TAO_Var_Var_T<
@@ -2396,14 +2351,15 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent
       >;
 
-#if !defined (_IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_)
-#define _IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_
+#if !defined (_IOP_MULTIPLECOMPONENTPROFILE__EXPLICIT_CS_)
+#define _IOP_MULTIPLECOMPONENTPROFILE__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
         IOP::TaggedComponent
       >;
-#endif /*#!if */
+
+#endif /* end #if !defined */
 
   template class
     TAO::Any_Dual_Impl_T<
@@ -2429,16 +2385,6 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent
       >;
 
-#if !defined (_IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_)
-#define _IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_
-
-  template class
-    TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Dual_Impl_T<
         IOP::TaggedComponentList
@@ -2462,15 +2408,6 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponentSeq_var,
         IOP::TaggedComponent
       >;
-
-#if !defined (_IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_)
-#define _IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_
-
-  template class
-    TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
-      >;
-#endif /* end #if !defined */
 
   template class
     TAO::Any_Dual_Impl_T<
@@ -2522,8 +2459,8 @@ CORBA::Boolean operator>> (
         IOP::ServiceContext
       >;
 
-#if !defined (_IOP_SERVICECONTEXTLIST_SEQUENCE_CS_)
-#define _IOP_SERVICECONTEXTLIST_SEQUENCE_CS_
+#if !defined (_IOP_SERVICECONTEXTLIST__EXPLICIT_CS_)
+#define _IOP_SERVICECONTEXTLIST__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -2538,36 +2475,6 @@ CORBA::Boolean operator>> (
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::TCKind \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::exception_type \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::ParameterMode \
-      >
 
 # pragma instantiate \
     TAO_Var_Var_T< \
@@ -2590,8 +2497,8 @@ CORBA::Boolean operator>> (
         IOP::TaggedProfile \
       >
 
-#if !defined (_IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__CS_)
-#define _IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__CS_
+#if !defined (_IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE___EXPLICIT_CS_)
+#define _IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE___EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -2666,8 +2573,8 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent \
       >
 
-#if !defined (_IOP_MULTIPLECOMPONENTPROFILE_CS_)
-#define _IOP_MULTIPLECOMPONENTPROFILE_CS_
+#if !defined (_IOP_MULTIPLECOMPONENTPROFILE__EXPLICIT_CS_)
+#define _IOP_MULTIPLECOMPONENTPROFILE__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -2700,8 +2607,8 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent \
       >
 
-#if !defined (_IOP_TAGGEDCOMPONENTLIST_CS_)
-#define _IOP_TAGGEDCOMPONENTLIST_CS_
+#if !defined (_IOP_TAGGEDCOMPONENTLIST__EXPLICIT_CS_)
+#define _IOP_TAGGEDCOMPONENTLIST__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -2734,8 +2641,8 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent \
       >
 
-#if !defined (_IOP_TAGGEDCOMPONENTSEQ_CS_)
-#define _IOP_TAGGEDCOMPONENTSEQ_CS_
+#if !defined (_IOP_TAGGEDCOMPONENTSEQ__EXPLICIT_CS_)
+#define _IOP_TAGGEDCOMPONENTSEQ__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -2794,8 +2701,8 @@ CORBA::Boolean operator>> (
         IOP::ServiceContext \
       >
 
-#if !defined (_IOP_SERVICECONTEXTLIST_CS_)
-#define _IOP_SERVICECONTEXTLIST_CS_
+#if !defined (_IOP_SERVICECONTEXTLIST__EXPLICIT_CS_)
+#define _IOP_SERVICECONTEXTLIST__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \

@@ -17,6 +17,7 @@
 //     Jeff Parsons <j.parsons@vanderbilt.edu>
 //
 // ============================================================================
+#include "ace/config-all.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
     defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -28,7 +29,7 @@
 #include "ValueFactory.h"
 #endif /*if ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA*/
 
-ACE_RCSID (tao,
+ACE_RCSID (Valuetype,
            Seq_Tmplinst,
            "$Id$")
 
