@@ -5,7 +5,8 @@ Mon Mar  3 13:27:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Fixed generation of array typedef to append "_var" to
           the element name if it is a typedef of CORBA::Object
           or of CORBA::Typecode. Thanks to Simon McQueen
-          <sm@prismtechnologies.com> for reporting the problem.
+          <sm@prismtechnologies.com> for reporting the problem. This
+          closes [BUGID:1458].
 
 Mon Mar  3 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
