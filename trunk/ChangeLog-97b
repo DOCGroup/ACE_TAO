@@ -1,3 +1,9 @@
+Mon Oct 20 22:23:42 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tests/Sigset_Ops_Test.cpp (main): It is not legal too for
+	  sigismember to return 0 if we pass an invalid signal to it.
+	  Thanks to Stephen Coy <stevec@magna.com.au> for fixing this.
+
 Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i: Fixed the implementation of ACE_OS::cond_timedwait()
