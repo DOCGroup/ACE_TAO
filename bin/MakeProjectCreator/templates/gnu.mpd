@@ -274,6 +274,20 @@ endif
 <%endif%>
 <%endif%>
 
+<%if(idl_files)%>
+<%if(exename)%>
+ifneq ($(BIN),)
+<%else%>
+<%if(sharedname)%>
+ifneq ($(SHLIB),)
+<%else%>
+ifneq ($(LIB),)
+<%endif%>
+<%endif%>
+all: idl_stubs
+endif
+
+<%endif%>
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -431,18 +445,6 @@ ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
 
 ifneq ($(ADDITIONAL_IDL_TARGETS),)
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
-endif
-
-<%if(exename)%>
-ifneq ($(BIN),)
-<%else%>
-<%if(sharedname)%>
-ifneq ($(SHLIB),)
-<%else%>
-ifneq ($(LIB),)
-<%endif%>
-<%endif%>
-all: idl_stubs
 endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
