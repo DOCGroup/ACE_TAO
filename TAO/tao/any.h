@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    any.h
 //
@@ -15,7 +15,7 @@
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
 //
 //     Remaining CORBA compliant functions added by Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_ANY_H)
@@ -32,7 +32,7 @@ class TAO_Export CORBA_Any : public TAO_IUnknown
 {
 public:
   // = Minor codes for exceptional returns
-  enum 
+  enum
   {
     UNINITIALIZED_type = 0xf000,
     VALUE_WITHOUT_TYPE,
@@ -58,7 +58,7 @@ public:
   // assignment operator
 
   // = NOTE: 94-9-14 has assignment operator plus many insertion, as specified
-  // below 
+  // below
 
   // =type safe insertion
 
@@ -153,7 +153,8 @@ public:
   void operator<<= (from_string);
   // insert a bounded string
 
-  // special types for extracting octets, chars, booleans, and bounded strings
+  // special types for extracting octets, chars, booleans, bounded strings, and
+  // object references
 
   struct to_boolean
   {
@@ -176,8 +177,14 @@ public:
   struct to_string
   {
     to_string (char *&s, CORBA::ULong b);
-    char *&ref_;
+    char *&val_;
     CORBA::ULong bound_;
+  };
+
+  struct to_object
+  {
+    to_object (CORBA::Object_ptr &obj);
+    CORBA::Object_ptr &ref_;
   };
 
   // extraction of the special types
@@ -185,6 +192,7 @@ public:
   CORBA::Boolean operator>>= (to_octet) const;
   CORBA::Boolean operator>>= (to_char) const;
   CORBA::Boolean operator>>= (to_string) const;
+  CORBA::Boolean operator>>= (to_object) const;
 
   // = ALLOCATION
   void *operator new (size_t, const void *p);
@@ -201,7 +209,7 @@ public:
   // replace the current typecode and data with the specified one - unsafe
 
   CORBA::TypeCode_ptr type (void) const;
-  // Return <type> of <Any>.
+  // Return TypeCode of the element stored in the Any
 
   const void *value (void) const;
   // Return <value> of <Any>.
@@ -213,7 +221,7 @@ public:
   TAO_HRESULT  QueryInterface (REFIID riid,
 				    void **ppv);
 
-  // = Conversion to/from COM Variant types: 
+  // = Conversion to/from COM Variant types:
 
   CORBA_Any (const TAO_VARIANT &src);
   // copy constructor,
@@ -251,7 +259,7 @@ private:
 
 class TAO_Export CORBA_Any_var
   // = TITLE
-  //   Provide for automatic storage deallocation on going out of scope. 
+  //   Provide for automatic storage deallocation on going out of scope.
 {
 public:
   CORBA_Any_var (void);
@@ -327,7 +335,7 @@ public:
 
   CORBA_Any *& ptr (void);
   // return underlying instance
-   
+
 private:
   CORBA_Any *&ptr_;
   // instance
@@ -337,5 +345,3 @@ private:
 };
 
 #endif /* TAO_ANY_H */
-
-
