@@ -90,7 +90,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
       {
         ACE_Log_Record lp;
 
-        length = ntohl (length);
+        // Need to use ACE_NTOHL to get around bug in egcs 2.91.6x
+        length = ACE_NTOHL (length);
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
         u_long count = ++this->request_count_;
