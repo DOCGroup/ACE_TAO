@@ -7,8 +7,7 @@
  *  $Id$
  *
  *   Header file for the TAO-specific Singleton implementation.
- *   Based entirely on tao/TAO_Singleton.*.
- *
+ *   Based entirely on ace/Singleton.*.
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
@@ -109,6 +108,12 @@ protected:
 
   /// Get pointer to the TAO TSS Singleton instance.
   static TAO_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+
+private:
+
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_TSS_Singleton<TYPE,ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Singleton (const TAO_TSS_Singleton<TYPE,ACE_LOCK> &))
+
 };
 
 #if defined (__ACE_INLINE__)

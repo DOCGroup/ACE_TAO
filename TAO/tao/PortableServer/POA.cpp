@@ -26,6 +26,7 @@
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
+#include "tao/Profile.h"
 #include "tao/debug.h"
 
 #include "Default_Acceptor_Filter.h"

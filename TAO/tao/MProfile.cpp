@@ -1,11 +1,14 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 #include "tao/MProfile.h"
-#include "tao/Pluggable.h"
 #include "tao/Environment.h"
+#include "tao/Profile.h"
 
-ACE_RCSID(tao, MProfile, "$Id$")
+ACE_RCSID (tao,
+           MProfile,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.i"
@@ -45,7 +48,7 @@ TAO_MProfile::set (CORBA::ULong sz)
 
       for (TAO_PHandle h = 0;
            h < this->size_;
-           h++)
+           ++h)
         if (this->pfiles_[h])
           {
             this->pfiles_[h]->_decr_refcnt ();
@@ -101,7 +104,7 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
 
   // Now reference all profiles.
 
-  for (TAO_PHandle h = 0; h < this->size_; h++)
+  for (TAO_PHandle h = 0; h < this->size_; ++h)
     {
       this->pfiles_[h] = mprofile.pfiles_[h];
       if (this->pfiles_[h] != 0)
@@ -109,6 +112,56 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
     }
 
   return 1;
+}
+
+// Not thread safe!
+ACE_INLINE int
+TAO_MProfile::grow (CORBA::ULong sz)
+{
+  if (sz <= this->size_)
+    return 0;
+
+  // get the additional space
+  TAO_Profile **new_pfiles, **old_pfiles;
+  ACE_NEW_RETURN (new_pfiles,
+                  TAO_Profile *[sz],
+                  -1);
+
+  old_pfiles = this->pfiles_;
+
+  // got it, now copy profiles
+  for (TAO_PHandle h = 0; h < this->size_; ++h)
+    {
+      new_pfiles[h] = old_pfiles[h];
+      old_pfiles[h] = 0;
+    }
+
+  this->pfiles_ = new_pfiles;
+  this->size_ = sz;
+  delete [] old_pfiles;
+
+  return 0;
+}
+
+ACE_INLINE int
+TAO_MProfile::add_profile (TAO_Profile *pfile)
+{
+  // skip by the used slots
+  if (last_ == size_) // full!
+    {
+      if (this->grow (this->size_ + 1) < 0)
+        return -1;
+    }
+
+  pfiles_[last_++] = pfile;
+
+  if (pfile && pfile->_incr_refcnt () == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Unable to increment reference ")
+                       ACE_TEXT ("count in add_profile!\n")),
+                      -1);
+
+  return last_ - 1;
 }
 
 int
@@ -126,7 +179,7 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
     }
 
   // copy over profiles
-  for (TAO_PHandle h = 0;h < pfiles->last_;h++)
+  for (TAO_PHandle h = 0; h < pfiles->last_; ++h)
     {
       if (this->add_profile (pfiles->pfiles_[h]) < 0)
         return -1;
@@ -150,8 +203,8 @@ int
 TAO_MProfile::remove_profile (const TAO_Profile *pfile)
 {
   TAO_PHandle h;
-  int found=0;
-  for (h = 0;h < this->last_;h++)
+  int found = 0;
+  for (h = 0; h < this->last_; ++h)
     {
       if (this->pfiles_[h]->is_equivalent (pfile))
         { // remove it!
@@ -160,7 +213,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
           old->_decr_refcnt ();
           // shift other profiles up one
           // note, if h == last_ - 1 then do nothing.
-          for (TAO_PHandle inner = h;inner < this->last_ - 1;inner++)
+          for (TAO_PHandle inner = h; inner < this->last_ - 1; ++inner)
             {
               this->pfiles_[inner] = this->pfiles_[inner + 1];
             }
@@ -201,7 +254,8 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 }
 
 CORBA::ULong
-TAO_MProfile::hash (CORBA::ULong max ACE_ENV_ARG_DECL)
+TAO_MProfile::hash (CORBA::ULong max
+                    ACE_ENV_ARG_DECL)
 {
   CORBA::ULong hashval = 0;
 
@@ -210,7 +264,8 @@ TAO_MProfile::hash (CORBA::ULong max ACE_ENV_ARG_DECL)
 
   for (TAO_PHandle h = 0; h < this->last_ ; ++h)
     {
-      hashval += pfiles_[h]->hash (max ACE_ENV_ARG_PARAMETER);
+      hashval += pfiles_[h]->hash (max
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -254,11 +309,10 @@ TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
   CORBA::PolicyList *ret_val = 0;
-  ACE_NEW_THROW_EX ( ret_val,
-                     CORBA::PolicyList (*this->policy_list_),
-                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                       CORBA::COMPLETED_NO)
-                     );
+  ACE_NEW_THROW_EX (ret_val,
+                    CORBA::PolicyList (*this->policy_list_),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
   return ret_val;

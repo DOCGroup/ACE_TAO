@@ -10,6 +10,7 @@
 #include "default_resource.h"
 #include "debug.h"
 #include "MProfile.h"
+#include "Profile.h"
 #include "Stub.h"
 #include "Leader_Follower.h"
 #include "Connector_Registry.h"

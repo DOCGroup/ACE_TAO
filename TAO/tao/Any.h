@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author  Copyright 1994-1995 by Sun Microsystems
- *  @author Inc.  and Aniruddha Gokhale.
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ *  @author  Aniruddha Gokhale
  */
 //=============================================================================
 

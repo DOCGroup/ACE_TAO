@@ -24,7 +24,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Profile.h"
+#include "tao/PolicyC.h"
+
+class TAO_Profile;
 
 typedef CORBA::ULong TAO_PHandle;
 
