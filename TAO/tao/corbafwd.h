@@ -28,16 +28,6 @@
 
 #include "ace/CDR_Base.h"
 
-// @@ Why is this here?  It should be moved to IOPC.h.
-//       -Ossama
-#if defined (HPUX)
-#  if defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition, see IOPC.h */
-#  undef IOR
-#  endif /* IOR */
-#endif /* HPUX */
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -45,6 +35,11 @@
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
 
+#if defined (HPUX) && defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition.  See IOP_IORC.h. */
+# undef IOR
+#endif /* HPUX && IOR */
 
 #if defined (_MSC_VER) || defined (__BORLANDC__)
 # ifdef   _DEBUG                  /* convert from VC++ convention ... */
