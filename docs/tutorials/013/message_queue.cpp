@@ -54,7 +54,7 @@ ACE_OS::sleep (ACE_Time_Value (1));
   // Ask our memory leak detector if things are OK
   if (MLD_COUNTER != 0)
   {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Memory Leak!\n"));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Memory Leak! (counter = %d)\n",MLD_COUNTER));
   }
 
   return (0);

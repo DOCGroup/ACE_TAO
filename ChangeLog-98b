@@ -1,3 +1,30 @@
+Sat Nov 14 23:15:58 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/tutorials/013/message_queue.cpp
+          docs/tutorials/013/block.cpp
+          docs/tutorials/013/block.h
+          docs/tutorials/013/combine.shar
+          docs/tutorials/013/*.html
+
+        Something changed between 4.5.x and 4.6 with the calling
+        order for ACE_Lock_Adapter<>::release() and ::destroy().
+
+        Specifically:  In the older release, the data block's
+        lock was being held across its destruction.  That required
+        some odd things to prevent the lock's deletion until it
+        was released.
+
+        In the new version, it appears that release() is called
+        on the lock before the data block's destructor is called.
+        Data_Block::Lock::destroy() can now simply 'delete this'
+        The funky destroy_ flag is no longer necessary.
+
+        Thanks to Bob McWhirter <bob@werken.com> for causing me
+        to look back on this and get it fixed.
+
+        I've also taken this opportunity to convert the tutorial
+        to the new style colorized HTML.
+
 Sat Nov 14 22:01:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release (diff): fixed logic that determines
