@@ -79,7 +79,7 @@ Server (void *arg)
   //
   handle_set.reset ();
   handle_set.set_bit (AcceptorSocket->get_handle ());
-  
+
   select_width = SELECT_WIDTH(int (AcceptorSocket->get_handle ()) + 1);
 
   result = ACE_OS::select(select_width,
@@ -123,7 +123,7 @@ Server (void *arg)
     }
 
     char byte = BYTE_MESG;
-    
+
     if (-1 == Stream.send_n (&byte, 1))
     {
       ACE_ERROR ((LM_ERROR,
@@ -143,7 +143,7 @@ Server (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("Association.abort")));
     }
-    
+
     //
     // Negative test: make sure that we cannot send on a closed association.
     //
@@ -155,7 +155,7 @@ Server (void *arg)
     }
 
   }
-                      
+
   //
   // Close server socket.
   //
@@ -318,7 +318,7 @@ spawn_test(bool ipv6_test)
                 ACE_TEXT ("(%P|%t) %p%a"),
                 ACE_TEXT ("thread create failed")));
   }
-                            
+
   if (-1 == ACE_Thread_Manager::instance ()->spawn
       (Client,
        ACE_reinterpret_cast(void *, &ServerAddr),
@@ -328,7 +328,7 @@ spawn_test(bool ipv6_test)
                 ACE_TEXT ("(%P|%t) %p%a"),
                 ACE_TEXT ("thread create failed")));
   }
-                            
+
   ACE_Thread_Manager::instance ()->wait ();
 #else /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
   ACE_ERROR ((LM_DEBUG,
@@ -356,9 +356,9 @@ int run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  
+
   ACE_START_TEST (ACE_TEXT ("SOCK_SEQPACK_SCTP_Test"));
-  
+
   //
   // Check whether host OS has SCTP support before starting this test.
   // If not, just pass because there is not a hope of testing
@@ -373,9 +373,9 @@ int run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT("SCTP not supported by ACE.\n")
               ACE_TEXT("This test will not do anything.\n")));
 #endif /* ! ACE_HAS_SCTP */
-  
+
   ACE_END_TEST;
-  
+
   return status;
 }
 
