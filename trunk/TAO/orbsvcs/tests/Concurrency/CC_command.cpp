@@ -104,7 +104,7 @@ int CC_Start_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -152,7 +152,7 @@ int CC_CreateLockSet_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -205,7 +205,7 @@ int CC_Lock_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -252,7 +252,7 @@ int CC_UnLock_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -300,7 +300,7 @@ int CC_TryLock_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -366,7 +366,7 @@ int CC_ChangeMode_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -409,7 +409,7 @@ int CC_Sleep_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -434,7 +434,7 @@ int CC_Repeat_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -459,7 +459,7 @@ int CC_Wait_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -494,7 +494,7 @@ CC_Excep_Cmd::execute(void)
     return 0; // CC_FAIL
 
   // If there is an exception check that it's the expected one
-  if(ACE_OS::strcmp(excep_->_id(), ex_)==0)
+  if(ACE_OS::strcmp(excep_->_rep_id (), ex_)==0)
     {
       delete excep_;
       excep_ = 0;
@@ -502,7 +502,7 @@ CC_Excep_Cmd::execute(void)
     }
   else
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -559,7 +559,7 @@ CC_Lookup_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_id());
+      printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL

@@ -171,7 +171,7 @@ main (int argc, char *argv[])
                   "last ORB was released with the following repository ID:\n"
                   "  %s\n"
                   "This exception was expected.  It is safe to ignore it.\n",
-                  exc._id ()));
+                  exc._rep_id ()));
     }
   ACE_CATCHANY
     {
