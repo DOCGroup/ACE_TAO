@@ -11,6 +11,7 @@ option
     link(libSearchPath, platformLibSearchPath),
     incl(searchPath, ".."),
     link(linkWithMultiThreadLib,yes),
+    link(exportAll),
     link(debug)
     {
         target type ( TargetType ) TargetName
