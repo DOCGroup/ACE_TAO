@@ -483,6 +483,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Message_Queue_Test_Ex"=.\Message_Queue_Test_Ex.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Naming_Test"=.\Naming_Test.dsp - Package Owner=<4>
 
 Package=<5>
