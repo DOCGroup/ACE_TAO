@@ -63,9 +63,9 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
       ACE_NEW (lock_, CC_Lock (mode));
       if (errno == ENOMEM) 
         {
-          env.clear ();
-          env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-          env.print_exception ("CC_Lock::lock ()");
+          _env.clear ();
+          _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+          _env.print_exception ("CC_Lock::lock ()");
         }
     }
   TAO_TRY 
