@@ -36,8 +36,8 @@ void
 ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
 {
   if (scale_factor_ > 0) {
-    tv.sec ((ACE_hrtime_t) ((this->end_ - this->start_) / 1000000L / scale_factor_));
-    tv.usec ((ACE_hrtime_t) ((this->end_ - this->start_) % 1000000L / scale_factor_));
+    tv.sec ((ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_ / 1000000L));
+    tv.usec ((ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_) % 1000000L);
   } else {
     tv.sec ((this->end_ - this->start_) / 1000000L);
     tv.usec ((this->end_ - this->start_) % 1000000L);
@@ -49,8 +49,8 @@ void
 ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 {
   if (scale_factor_ > 0) {
-    elapsed_time.tv_sec = (ACE_hrtime_t) ((this->end_ - this->start_) / (1000 * 1000 * 1000) / scale_factor_);
-    elapsed_time.tv_nsec = (ACE_hrtime_t) ((this->end_ - this->start_) % (1000 * 1000 * 1000) / scale_factor_);
+    elapsed_time.tv_sec = (ACE_hrtime_t) ((this->end_ - this->start_)  / scale_factor_) / (1000 * 1000 * 1000);
+    elapsed_time.tv_nsec = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_) % (1000 * 1000 * 1000);
   } else {
     elapsed_time.tv_sec = (this->end_ - this->start_) / (1000 * 1000 * 1000);
     elapsed_time.tv_nsec = (this->end_ - this->start_) % (1000 * 1000 * 1000);
@@ -62,8 +62,8 @@ void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
 {
   if (scale_factor_ > 0) {
-    tv.sec ((ACE_hrtime_t) (this->total_ / 1000000L / scale_factor_));
-    tv.usec ((ACE_hrtime_t) (this->total_ % 1000000L / scale_factor_));
+    tv.sec ((ACE_hrtime_t) (this->total_ / scale_factor_) / 1000000L);
+    tv.usec ((ACE_hrtime_t) (this->total_ / scale_factor_) % 1000000L);
   } else {
     tv.sec (this->total_ / 1000000L);
     tv.usec (this->total_ % 1000000L);
@@ -76,7 +76,7 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
   ACE_hrtime_t total;
   if (scale_factor_ > 0)
-    total = (ACE_hrtime_t) ((this->end_ - this->start_) /scale_factor_);
+    total = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_);
   else
     total = this->end_ - this->start_;
   ACE_hrtime_t total_secs  = total / (1000 * 1000 * 1000);
@@ -104,7 +104,7 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
   ACE_hrtime_t total_secs;
   if (scale_factor_ > 0)
-    total_secs = (ACE_hrtime_t) (this->total_ / (1000 * 1000 * 1000) / scale_factor_);
+    total_secs = (ACE_hrtime_t) (this->total_ / scale_factor_) / (1000 * 1000 * 1000);
   else
     total_secs = this->total_ / (1000 * 1000 * 1000);
   u_long extra_nsecs = this->total_ % (1000 * 1000 * 1000);
@@ -123,4 +123,24 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
 
   ACE_OS::write (handle, str, strlen (str));
   ACE_OS::write (handle, buf, strlen (buf));
+}
+
+int
+ACE_High_Res_Timer::get_env_global_scale_factor (const char *env)
+{
+  if (env != 0)
+    {
+      const char *env_value = ACE_OS::getenv (env);
+      if (env_value != 0)
+	{
+	  int value = ACE_OS::atoi (env_value);
+	  if (value > 0)
+	    {
+	      ACE_High_Res_Timer::global_scale_factor (value);
+	      return 0;
+	    }
+	}
+    }
+
+  return -1;
 }
