@@ -1,3 +1,11 @@
+Sun Jun 27 12:50:12 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/tests/Config_Handlers/HUDisplay/Deployment.xsd:
+        * DnC/tests/Config_Handlers/HUDisplay/XMI.xsd:
+
+          Checked in the schema files into the repository to assist
+          unit and integration testing.
+
 Sun Jun 27 12:20:23 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/tests/Config_Handlers/RobotAssembly/DeploymentPlan.cdp:
