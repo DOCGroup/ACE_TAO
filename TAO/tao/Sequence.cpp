@@ -657,7 +657,7 @@ TAO_Unbounded_Sequence (CORBA::ULong length,
   ,  mb_ (0)
 {
   // Get the message block flags.
-  ACE_Message_Block::Message_Flags flg = mb->flags ();
+  ACE_Message_Block::Message_Flags flg = mb->self_flags ();
 
   // If the DONT_DELETE flag is disabled just a duplicate would
   // help. If the DONT_DELETE flag is enabled a deep copy is needed as
