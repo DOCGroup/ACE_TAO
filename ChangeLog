@@ -1,3 +1,8 @@
+Tue Oct 14 17:13:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.cpp: Added patches to support PHARLAP.  Thanks 
+	  to Ira Burton <imburton@micron.com> for supplying these.
+
 Tue Oct 14 13:54:19 2003  Steve Huston  <shuston@riverace.com>
 	Picked up from ACE 5.3:
 	Wed Jun 11 17:18:39 2003  Steve Huston  <shuston@riverace.com>
