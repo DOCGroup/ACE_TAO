@@ -1,3 +1,15 @@
+Wed Jun 13 17:55:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Fixed a bad way to use the tail
+	  of the circular linked list. This is now replaced by the size of
+	  the linked list. This fixes quite a few errors.
+
+	* tao/Transport.cpp: On read () if we get errno === EWOULDBLOCK we
+	  were closing the connection prematurely. This is not right. We
+	  should only return a 0 to the reactor, so that it can call us
+	  back when there is data in the socket.
+
 Wed Jun 13 10:45:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp (process_reply_message): Fixed the

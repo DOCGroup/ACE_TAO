@@ -813,18 +813,19 @@ TAO_Transport::handle_input_i (ACE_HANDLE h,
   if (n == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("TAO (%P|%t) - read message failure \n")
-                  ACE_TEXT ("TAO (%P|%t) - handle_input () \n")));
+                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO - read message failure \n")
+                  ACE_TEXT ("TAO - handle_input () \n")));
     }
 
   // Error handling
   if (n == -1)
     {
-      // Close the connection
-      this->tms_->connection_closed ();
       if (errno == EWOULDBLOCK)
         return 0;
+
+      // Close the connection
+      this->tms_->connection_closed ();
 
       return -1;
     }
