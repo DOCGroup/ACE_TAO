@@ -4,6 +4,13 @@ Fri May 08 08:43:42 1998  Steve Huston  <shuston@riverace.com>
 	  definition of SOFLAGS.  Thanks to Kirill Rybaltchenko
 	  <Kirill.Rybaltchenko@cern.ch> for this fix.
 
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Added code for Win32 so that
+	  if a subscribe is done without specifying an interface, the mcast
+	  address is subscribed to on each non-loopback interface.  This works
+	  around a bug in NT's winsock in the presence of multiple IP
+	  interfaces.  Won't hurt 95 - will just run a bit slower than it
+	  otherwise would.
+
 Fri May  8 03:43:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,cpp}: Added yet one more member variable
