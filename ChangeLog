@@ -1,3 +1,21 @@
+Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Reorganized the config-win32*.h files
+	  to insulate the different compiler configurations from each
+	  other.  The changes are as follows:
+  
+          * Concatenated config-win32.h and config-win32-common.h to form the new 
+	    config-win32-common.h.
+
+	  * Moved MSVC-specific language defines from config-win32-common.h
+ 	    into config-win32-msvc.h
+
+	  * Updated the other compilers' files to add required language defines 
+	    originally in config-win32-common.h.
+  
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+ 	  contributing this.
+	
 Fri Jan 14 15:42:28 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.cpp (work_pending): Made the code more
