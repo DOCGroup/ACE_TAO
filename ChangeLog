@@ -1,3 +1,10 @@
+Sun Dec 31 14:12:08 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added TAO's "ForwardRequest" PortableInterceptor test to the
+	  list of tests to run.
+
 Sun Dec 31 13:59:02 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Refcounted_Auto_Ptr_Test.cpp: on DIGITAL_UNIX
@@ -51,8 +58,8 @@ Sat Dec 30 11:12:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
         * ace/Map_T.i:
         * ace/Message_Block_T.cpp: Added patches provided by J. Russell
           Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1. The patch
-          to confi-sunos-5.5.h has not been applaed as it breaks builds at
-          WashU on SunCC 5.0.
+          to config-sunos-5.5.h has not been applied as it breaks builds
+	  on SunCC 5.0.
 
 Fri Dec 29 17:08:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -193,6 +200,8 @@ Thu Dec 21 16:45:28 2000  Steve Huston  <shuston@riverace.com>
           removed to satisfy Win32 which now pays attention to that arg.
 
 Thu Dec 21 05:50:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+<<<<<<< ChangeLog
+=======
 
         * ace/Timer_Wheel_T.cpp (expire): Fixed a mistake where
           next_earliest_time should have been next_earliest.  Thanks to
@@ -210,7 +219,35 @@ Thu Dec 21 05:50:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
         * ace/Message_Block.h (ACE_Dynamic_Message_Strategy): Fixed a bunch
           of non-const accessor methods to be const.  Thanks to Johnny
           Willemsen <johnny.willemsen@meco.nl> for reporting this.
+>>>>>>> 4.1393
 
+<<<<<<< ChangeLog
+	* ace/Timer_Wheel_T.cpp (expire): Fixed a mistake where
+	  next_earliest_time should have been next_earliest.  Thanks to
+ 	  Keith Brown <kalbrown@ix.netcom.com> for reporting this.
+
+	* examples/IPC_SAP/SOCK_SAP/Makefile.bor: Reenable CPP-inserver-fancy.cpp
+	  now that it compiles!  Thanks to Johnny Willemsen
+ 	  <johnny.willemsen@meco.nl> for confirming this.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (handle_events): Added
+	  casts for (SOCKET) when using FD_SET to work around problems
+ 	  with Borland.  Thanks to Johnny Willemsen
+ 	  <johnny.willemsen@meco.nl> for reporting this.
+
+	* ace/Message_Block.h (ACE_Dynamic_Message_Strategy): Fixed a bunch
+	  of non-const accessor methods to be const.  Thanks to Johnny
+ 	  Willemsen <johnny.willemsen@meco.nl> for reporting this.
+
+	* examples/Naming/Makefile (BIN2): Added the test_open.cpp file
+	  to the Makefile.  Thanks to Johnny Willemsen
+ 	  <johnny.willemsen@meco.nl> for reporting this.
+
+	* docs/tutorials/016/page02.html: Clarify that signal() or
+	  broadcast() don't release the mutex.  Thanks to Mike Curtis
+ 	  <mccurry@my-deja.com> for pointing this out.
+
+=======
         * examples/Naming/Makefile (BIN2): Added the test_open.cpp file
           to the Makefile.  Thanks to Johnny Willemsen
           <johnny.willemsen@meco.nl> for reporting this.
@@ -219,6 +256,7 @@ Thu Dec 21 05:50:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           broadcast() don't release the mutex.  Thanks to Mike Curtis
           <mccurry@my-deja.com> for pointing this out.
 
+>>>>>>> 4.1393
 Wed Dec 20 19:44:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * examples/Reactor/WFMO_Reactor/test_abandoned.cpp,
