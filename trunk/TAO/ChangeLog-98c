@@ -20,6 +20,8 @@ Thu Oct 22 11:01:12 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Concurrency/lex.CC_command.cpp: forced CVS check-in
           to avoid out-of-date warnings during builds, after new checkouts.
 
+        * tao/orbconf.h: enable TAO_USE_EXCEPTIONS ifdef ACE_HAS_EXCEPTIONS.
+
 Thu Oct 22 11:26:34 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/include/fe_private.h:
