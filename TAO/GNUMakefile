@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       $Id$
 #
-#       Top-level Makefile for the TAO
+#       Top-level GNUMakefile for TAO.
 #----------------------------------------------------------------------------
 
 #### The "release" targets can be used to create the ACE+TAO kit.  By
@@ -29,7 +29,7 @@ DIRS    = tao \
 	  docs/tutorials/Quoter \
           CIAO
 
-CLONE   = Makefile \
+CLONE   = GNUMakefile \
           tao \
           TAO_IDL \
           tests \
@@ -66,7 +66,8 @@ reverseclean:
 CONTROLLED_FILES = TAO/COPYING* \
 	    	   TAO/ChangeLog* \
 	  	   TAO/LICENSE.sun \
-		   TAO/Makefile* \
+		   TAO/GNUMakefile \
+		   TAO/Makefile.am \
 		   TAO/PROBLEM-REPORT-FORM \
 		   TAO/README* \
 		   TAO/TAO-INSTALL.html \
