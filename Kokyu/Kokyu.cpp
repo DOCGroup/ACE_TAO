@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Dynamic_Service.h"
 #include "Kokyu.h"
 #include "Default_Dispatcher_Impl.h"
 
@@ -71,11 +72,17 @@ Dispatcher_Factory::
 create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 {
   DSRT_Dispatcher_Impl* tmp;
-  ACE_NEW_RETURN (tmp, DSRT_Dispatcher_Impl, (DSRT_Dispatcher*)0);
+  //ACE_NEW_RETURN (tmp, DSRT_Dispatcher_Impl, (DSRT_Dispatcher*)0);
+
+  DSRT_Dispatcher_Impl::init_svcs ();
+
+  tmp =
+    ACE_Dynamic_Service<DSRT_Dispatcher_Impl>::instance ("DSRT_Dispatcher_Impl");
+
   DSRT_Dispatcher* disp;
   ACE_NEW_RETURN (disp, DSRT_Dispatcher, (DSRT_Dispatcher*)0);
   disp->implementation (tmp);
-  tmp->init (config_info);
+  //  tmp->init (config_info);
   return disp;
 }
 
