@@ -185,7 +185,7 @@ Make_TAO_Dep_Lib::write_libdeps()
 
 //-----------------------------------------------------------------------------
 
-Library::Library (const ACE_TCHAR *name)
+Library::Library (const char *name)
   : name_(name),
     path_(),
     num_modules_(0),
@@ -214,7 +214,7 @@ Library::~Library ()
 }
 
 void
-Library::set_path (const ACE_TCHAR *p)
+Library::set_path (const char *p)
 {
   char abspath[1000];
   memset (abspath,0,1000);
@@ -249,7 +249,7 @@ Library::has_modules () const
 static int
 selector (const dirent *d)
 {
-  return ACE_OS::strstr (d->d_name, ".o") != 0;
+  return ACE_OS::strstr (d->d_name, ACE_TEXT (".o")) != 0;
 }
 
 static int
@@ -264,14 +264,15 @@ Library::load_modules ()
   ACE_CString subdir = path_ + "/.shobj";
 
   struct dirent **dent;
-  num_modules_ = ACE_OS::scandir(subdir.c_str(),
-                                        &dent,selector,comparator);
+  num_modules_ = ACE_OS::scandir(ACE_TEXT_CHAR_TO_TCHAR (subdir.c_str()),
+                                 &dent,selector,comparator);
 
   if (num_modules_ > 0) {
     modules_ = new Obj_Module * [num_modules_];
     for (int i = 0; i < num_modules_; i++) {
-      modules_[i] = new Obj_Module(dent[i]->d_name);
-      modules_[i]->add_source (ACE_CString(subdir + "/" + dent[i]->d_name).c_str());
+      ACE_CString ent_name (ACE_TEXT_ALWAYS_CHAR (dent[i]->d_name));
+      modules_[i] = new Obj_Module(ent_name);
+      modules_[i]->add_source (ACE_CString(subdir + "/" + ent_name).c_str());
       ACE_OS::free(dent[i]);
     };
   }
@@ -327,7 +328,7 @@ Library::write_export_list (int show_ref_counts)
 
   if (show_ref_counts) {
     ACE_DEBUG ((LM_DEBUG, "Making directory %s\n",rcpath.c_str()));
-    if (ACE_OS::mkdir(rcpath.c_str()) == -1)
+    if (ACE_OS::mkdir(ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str())) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "mkdir"));
   }
 

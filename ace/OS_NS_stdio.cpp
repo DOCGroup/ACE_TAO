@@ -78,7 +78,7 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
 
       // At this point, check if the file is Unicode or not.
       WORD first_two_bytes;
-      int numRead = ACE_OS::fread(&first_two_bytes, sizeof(WORD), 1, fp);
+      size_t numRead = ACE_OS::fread(&first_two_bytes, sizeof(WORD), 1, fp);
 
       if (numRead == 1)
         {
