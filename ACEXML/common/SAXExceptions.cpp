@@ -69,7 +69,7 @@ ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
 ACEXML_SAXException*
 ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
 {
-  if (ex->is_a ("ACEXML_SAXException"))
+  if (ex->is_a (ACE_TEXT ("ACEXML_SAXException")))
     return ACE_dynamic_cast (ACEXML_SAXException*, ex);
   return 0;
 }

@@ -67,5 +67,5 @@ ACEXML_Debug_DTD_Manager::getValidator (const ACEXML_Char *namespaceURI,
   ACE_UNUSED_ARG (localName);
   ACE_UNUSED_ARG (qName);
 
-  ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException ("getValidator()"), 0);
+  ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException (ACE_TEXT ("getValidator()")), 0);
 }
