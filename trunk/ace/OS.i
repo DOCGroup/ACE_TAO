@@ -4492,7 +4492,25 @@ ACE_OS::recvfrom (ACE_HANDLE handle, char *buf, int len,
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, (ACE_SOCKET_LEN) len, flags,
                                    (struct sockaddr_in *) addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#else
+#elif defined (ACE_WIN32)
+  int result = ::recvfrom ((ACE_SOCKET) handle, 
+                           buf, 
+                           (ACE_SOCKET_LEN) len, 
+                           flags,
+                           addr, 
+                           (ACE_SOCKET_LEN *) addrlen);
+  if (result == SOCKET_ERROR)
+    {
+      errno = ::WSAGetLastError ();
+      if (errno == WSAEMSGSIZE && 
+          ACE_BIT_ENABLED (flags, MSG_PEEK))
+        return len;
+      else
+        return -1;
+    }
+  else
+    return result;
+#else /* non Win32 and non PSOS */
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, (ACE_SOCKET_LEN) len, flags,
                                    addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
