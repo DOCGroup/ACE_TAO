@@ -1,3 +1,8 @@
+Mon Dec 22 22:42:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Added a few minor changes to Nanbor's Semaphore 
+	  emulation for WinCE.
+
 Mon Dec 22 11:39:19 1997    <irfan@PACHANGA>
 
 	* OS.i (event_timedwait): Added code to handle timeouts.  Thanks

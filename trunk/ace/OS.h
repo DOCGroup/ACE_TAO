@@ -1979,13 +1979,20 @@ typedef HANDLE ACE_event_t;
 typedef HANDLE ACE_sema_t;
 #else
 
-// Semaphore simulation for Windows CE.
-typedef struct
+class ACE_sema_t
 {
+  // = TITLE 
+  // Semaphore simulation for Windows CE.
+public:
   ACE_mutex_t lock_;
+  // Serializes access to <count_>.
+  
   ACE_event_t count_nonzero_;
-  u_int       count_;
-} ACE_sema_t;
+  // This event is signaled whenever the count becomes non-zero.
+
+  u_int count_;
+  // Current count of the semaphore.
+};
 
 #endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
