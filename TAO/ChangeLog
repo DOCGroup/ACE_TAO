@@ -1,3 +1,36 @@
+Thu Sep 26 13:11:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+
+	  Fixed a bug where a repository ID prefix set by 'typeprefix' was
+	  getting ignored in the repo IDs of scope members. Thanks to Ossama
+	  <ossama@doc.ece.uci.edu> for pointing our the bug.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+
+	  Added missing generated newlines.
+
+        * TAO_IDL/be/be_visitor_module/module_sh.cpp:
+
+	  Fixed indentation of generated code.
+
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+
+	  Replace a generated 'const' that had somehow gone missing.
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Cosmetic changes.
+
+	* orbsvcs/IFR_Service/ifr_visitor.cpp:
+	* orbsvcs/IFR_Service/ifr_visitor.h:
+
+	  Added empty methods visit_eventtype() and visit_eventtype_fwd() so
+	  the tao_ifr visitor classes can be instantiated.
+
 Thu Sep 26 09:30:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl:

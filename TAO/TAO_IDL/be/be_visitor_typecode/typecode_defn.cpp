@@ -283,8 +283,6 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  os->indent (); // start from current indentation level
-
   // Generate the typecode information here
   *os << "static const CORBA::Long _oc_";
 
@@ -292,7 +290,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   *os << node->flat_name ();
 
   *os << "[] =" << be_nl;
-  *os << "{" << be_idt << "\n";
+  *os << "{" << be_idt_nl;
 
   // Add the sizeof the enum tk_* and the encap length that we do not put into
   // this array but which will exist in the CDR buffer.
