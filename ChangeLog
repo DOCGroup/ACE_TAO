@@ -1,3 +1,12 @@
+Mon Mar 29 08:03:08 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified the rules to ensure that generated files are made before
+          attempting to build cpp files.  These rules will only be in effect
+          when they are needed (ie. generated files are anything but source
+          files).
+
 Mon Mar 29 09:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Acceptor.h:
@@ -22,74 +31,74 @@ Mon Mar 29 09:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Mar 29 00:20:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ace/Makefile.bor:
+        * ace/Makefile.bor:
 
-	  Added Functor_String.h to the faily builds on Borland.
+          Added Functor_String.h to the faily builds on Borland.
 
 Sun Mar 28 23:44:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Functor.h:
-	* ace/Functor_String.cpp:
-	* ace/Functor_String.h:
+        * ace/Functor.h:
+        * ace/Functor_String.cpp:
+        * ace/Functor_String.h:
 
-	  Removed inclusions of Functor_T.h. This is simply a brain dead
-	  way of doing things.
+          Removed inclusions of Functor_T.h. This is simply a brain dead
+          way of doing things.
 
-	* ace/Functor_T.h:
+        * ace/Functor_T.h:
 
-	  Include Functor.h and Functor_String.h so that we get the
-	  specializations first.
+          Include Functor.h and Functor_String.h so that we get the
+          specializations first.
 
-	* ace/Hash_Map_Manager_T.h:
-	* ace/RB_Tree.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/RB_Tree.h:
 
-	  Include Functor_T.h. They don't have any purpose in life to
-	  include the specializations.
+          Include Functor_T.h. They don't have any purpose in life to
+          include the specializations.
 
 Sun Mar 28 13:39:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Capabilities.h:
+        * ace/Capabilities.h:
 
-	  #included Functor_String.h to force compilers to use the
-	  specialization.
+          #included Functor_String.h to force compilers to use the
+          specialization.
 
-	* ace/ace_dll.dsp:
+        * ace/ace_dll.dsp:
 
-	  Added the new functor specializations into the project files.
+          Added the new functor specializations into the project files.
 
 Sun Mar 28 19:07:44 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/notifytest.mpb:
-	  Updated name of NotifyTests library name, it should have TAO_ to
-	  match my update of today in the NotifyTests lib MPC file. This way
-	  this library has exactly the same name as in none mpc builds.
+        * bin/MakeProjectCreator/config/notifytest.mpb:
+          Updated name of NotifyTests library name, it should have TAO_ to
+          match my update of today in the NotifyTests lib MPC file. This way
+          this library has exactly the same name as in none mpc builds.
 
 Sun Mar 28 12:16:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ACEXML/common/NamespaceSupport.i:
+        * ACEXML/common/NamespaceSupport.i:
 
-	  Removed functors that were there in this file.
+          Removed functors that were there in this file.
 
-	* ACEXML/common/XML_Types.h:
+        * ACEXML/common/XML_Types.h:
 
-	  Forcibly include Functor_String.h to get the functors for
-	  ACE_CString and ACE_WString.
+          Forcibly include Functor_String.h to get the functors for
+          ACE_CString and ACE_WString.
 
 Sun Mar 28 12:14:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Functor_String.cpp:
-	* ace/Functor_String.h:
-	* ace/Functor_String.inl:
+        * ace/Functor_String.cpp:
+        * ace/Functor_String.h:
+        * ace/Functor_String.inl:
 
-	  Functors for ACE_CString and ACE_WString. They have been placed
-	  in seperate files to avoid coupling the rest of ACE (which uses
-	  Functor.h) with strings that could lead to increased
-	  footprints.
+          Functors for ACE_CString and ACE_WString. They have been placed
+          in seperate files to avoid coupling the rest of ACE (which uses
+          Functor.h) with strings that could lead to increased
+          footprints.
 
-	* ace/Makefile.ace:
-	* ace/ace.mpc:
+        * ace/Makefile.ace:
+        * ace/ace.mpc:
 
-	  New files for building.
+          New files for building.
 
 Sun Mar 28 15:31:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -104,7 +113,7 @@ Sun Mar 28 14:57:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Mar 27 15:29:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tests/Multicast_Test_IPV6.cpp (leave): Replaced
+        * tests/Multicast_Test_IPV6.cpp (leave): Replaced
 
           size_t size = 0;
 
@@ -116,14 +125,14 @@ Sat Mar 27 15:29:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Mar 26 14:15:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/idl_compiler.mpt:
-	* bin/MakeProjectCreator/config/idl_compiler_win32.mpt:
-	* bin/MakeProjectCreator/config/notify.mpb:
-	* bin/MakeProjectCreator/config/qt-min.mpb:
-	* bin/MakeProjectCreator/config/qt-min_moc.mpb:
+        * bin/MakeProjectCreator/config/idl_compiler.mpt:
+        * bin/MakeProjectCreator/config/idl_compiler_win32.mpt:
+        * bin/MakeProjectCreator/config/notify.mpb:
+        * bin/MakeProjectCreator/config/qt-min.mpb:
+        * bin/MakeProjectCreator/config/qt-min_moc.mpb:
 
-	  While playing around with ARMS repository, I accidentally added
-	  these files back into the repo. Removing them once again.
+          While playing around with ARMS repository, I accidentally added
+          these files back into the repo. Removing them once again.
 
 Thu Mar 25 11:58:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 
