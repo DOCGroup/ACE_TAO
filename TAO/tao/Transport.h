@@ -174,6 +174,30 @@ protected:
  *      chunk of data in one shot. Data could trickle in byte by byte.
  *  (c) Single read gives multiple messages
  *
+ * We solve the problems as follows
+ *
+ *  (a) First do a read with the buffer on stack. Query the underlying
+ *      messaging object whether the message has any incomplete
+ *      portion. If so, we just grow the buffer for the missing size
+ *      and read the rest of the message. We free the handle and then
+ *      send the message to the higher layers of the ORB for
+ *      processing.
+ *
+ *   (b) If we block (ie. if we receive a EWOULDBLOCK) while trying to
+ *       do the above (ie. trying to read after growing the buffer
+ *       size) we put the message in a queue and return back to the
+ *       reactor. The reactor would call us back when the handle
+ *       becomes read ready.
+ *
+ *   (c) If we get multiple messages (possible if the client connected
+ *       to the server sends oneways or AMI requests), we parse and
+ *       split the messages. Every message is put in the queue. Once
+ *       the messages are queued, the thread picks up one message to
+ *       send to the higher layers of the ORB. Before doing that, if
+ *       it finds more messages, it sends a notify to the reactor
+ *       without resuming the handle. The next thread picks up a
+ *       message from the queue and processes that. Once the queue
+ *       is drained the last thread resumes the handle.
  *
  * <B>See Also:</B>
  *
@@ -688,9 +712,6 @@ public:
    */
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void* act);
-
-  // @@ Bala : Add documentation
-  //  int process_message (ACE_Message_Block &message_block) = 0;
 
 private:
   /// Send some of the data in the queue.
