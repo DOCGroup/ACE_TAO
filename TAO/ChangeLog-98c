@@ -1,3 +1,9 @@
+Sat Feb 14 22:39:46 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/clnt.cpp (init): Added negative test case
+ 	of name not found when calling the naming service' resolve()
+ 	method.
+
 Fri Feb 13 19:37:01 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/orbobj.cpp (resolve_name_service): Changed char buf[BUFSIZ]
