@@ -1,3 +1,9 @@
+Tue May 14 19:40:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Proactor_Test.cpp (initiate_write_stream): 
+	  Applied the Patch Johnny Willemsen sent to fix the test for the
+	  unicode builds.
+
 Tue May 14 19:14:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/TP_Reactor_Test.cpp (Connector):
