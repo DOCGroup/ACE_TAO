@@ -1,3 +1,8 @@
+Sun Aug 26 20:45:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp: Fixed a unused variable warning in
+	  Borland. 
+
 Sun Aug 26 08:13:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/test_config.h: Added a new ACE_CLOSE_TEST_LOG macro.  Thanks to
