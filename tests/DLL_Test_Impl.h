@@ -40,6 +40,12 @@ public:
 
   void say_next (void);
   // See the documentation in the base class
+
+  ACE_TCHAR *new_info (void);
+  // Uses ACE::strnew() to allocate the returned string.
+
+  ACE_TCHAR *malloc_info (void);
+  // Uses ACE_OS_Memory::malloc() to allocate the returned string.
 };
 
 #endif /* ACE_TESTS_DLL_TEST_IMPL_H */

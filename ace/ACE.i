@@ -310,35 +310,3 @@ ACE::debug (char c)
 {
   ACE::debug_ = c;
 }
-
-ASYS_INLINE char *
-ACE::strnew (const char *s)
-{
-  if (s == 0)
-    return 0;
-  char *t = 0;
-  ACE_NEW_RETURN (t, 
-                  char [::strlen (s) + 1],
-                  0);
-  if (t == 0)
-    return 0;
-  else
-    return ACE_OS::strcpy (t, s);
-}
-
-#if defined (ACE_HAS_WCHAR)
-ASYS_INLINE wchar_t *
-ACE::strnew (const wchar_t *s)
-{
-  if (s == 0)
-    return 0;
-  wchar_t *t = 0;
-  ACE_NEW_RETURN (t, 
-                  wchar_t[ACE_OS_String::strlen (s) + 1], 
-                  0);
-  if (t == 0)
-    return 0;
-  else
-    return ACE_OS::strcpy (t, s);
-}
-#endif /* ACE_HAS_WCHAR */

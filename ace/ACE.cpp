@@ -3366,6 +3366,52 @@ ACE::strend (const wchar_t *s)
 }
 #endif
 
+char *
+ACE::strnew (const char *s)
+{
+  if (s == 0)
+    return 0;
+  char *t = 0;
+  ACE_NEW_RETURN (t, 
+                  char [::strlen (s) + 1],
+                  0);
+  if (t == 0)
+    return 0;
+  else
+    return ACE_OS::strcpy (t, s);
+}
+
+#if defined (ACE_HAS_WCHAR)
+wchar_t *
+ACE::strnew (const wchar_t *s)
+{
+  if (s == 0)
+    return 0;
+  wchar_t *t = 0;
+  ACE_NEW_RETURN (t, 
+                  wchar_t[ACE_OS_String::strlen (s) + 1], 
+                  0);
+  if (t == 0)
+    return 0;
+  else
+    return ACE_OS::strcpy (t, s);
+}
+#endif /* ACE_HAS_WCHAR */
+
+void
+ACE::strdelete (char *s)
+{
+  delete [] s;
+}
+
+#if defined (ACE_HAS_WCHAR)
+void
+ACE::strdelete (wchar_t *s)
+{
+  delete [] s;
+}
+#endif /* ACE_HAS_WCHAR */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX))
 template class ACE_Auto_Array_Ptr<struct ifreq>;
 template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
