@@ -1,7 +1,5 @@
 ##  Process this file with automake to create Makefile.in
 
-includedir = @includedir@/tao
-
 ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
@@ -224,6 +222,7 @@ ORB_Core = \
   WCharSeqC.cpp \
   WStringSeqA.cpp \
   WStringSeqC.cpp \
+  Wait_On_LF_No_Upcall.cpp \
   Wait_On_Leader_Follower.cpp \
   Wait_On_Reactor.cpp \
   Wait_On_Read.cpp \
@@ -629,6 +628,7 @@ nobase_include_HEADERS = \
   WCharSeqS.h \
   WStringSeqC.h \
   WStringSeqS.h \
+  Wait_On_LF_No_Upcall.h \
   Wait_On_Leader_Follower.h \
   Wait_On_Reactor.h \
   Wait_On_Read.h \
@@ -949,7 +949,6 @@ nobase_include_HEADERS = \
 EXTRA_DIST = \
   tao.rc
 
-
 ## Makefile.BiDir_GIOP.am 
 
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
@@ -990,7 +989,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
-
 
 ## Makefile.Valuetype.am 
 
@@ -1044,7 +1042,6 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Valuetype/TAO_Valuetype.rc
 
-
 ## Makefile.ObjRefTemplate.am 
 
 lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
@@ -1075,7 +1072,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   ObjRefTemplate/TAO_ObjRefTemplate.rc
-
 
 ## Makefile.IORInterceptor.am 
 
@@ -1115,7 +1111,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   IORInterceptor/TAO_IORInterceptor.rc
-
 
 ## Makefile.PortableServer.am 
 
@@ -1245,7 +1240,6 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   PortableServer/TAO_PortableServer.rc
 
-
 ## Makefile.IFR_Client.am 
 
 lib_LTLIBRARIES += libTAO_IFR_Client.la
@@ -1295,7 +1289,6 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.rc
 
-
 ## Makefile.Domain.am 
 
 lib_LTLIBRARIES += libTAO_Domain.la
@@ -1332,7 +1325,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   Domain/TAO_Domain.rc
-
 
 ## Makefile.DynamicAny.am 
 
@@ -1382,7 +1374,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   DynamicAny/TAO_DynamicAny.rc
-
 
 ## Makefile.Messaging.am 
 
@@ -1461,12 +1452,11 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Messaging/TAO_Messaging.rc
 
-
 ## Makefile.DynamicInterface.am 
 
 if !BUILD_MINIMUM_CORBA
+
 lib_LTLIBRARIES += libTAO_DynamicInterface.la
-endif
 
 libTAO_DynamicInterface_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -1519,55 +1509,12 @@ nobase_include_HEADERS += \
   DynamicInterface/DII_Invocation.inl \
   DynamicInterface/ExceptionList.inl \
   DynamicInterface/Request.inl \
-  DynamicInterface/Server_Request.inl \
-  AnySeq.pidl \
-  BooleanSeq.pidl \
-  Bounds.pidl \
-  CONV_FRAME.pidl \
-  CORBA.pidl \
-  CharSeq.pidl \
-  Current.pidl \
-  Domain.pidl \
-  DoubleSeq.pidl \
-  Dynamic.pidl \
-  Dynamic_Parameter.pidl \
-  FloatSeq.pidl \
-  GIOP.pidl \
-  IIOP.pidl \
-  IIOP_Endpoints.pidl \
-  IOP.pidl \
-  IOP_Codec.pidl \
-  IOP_IOR.pidl \
-  InterfaceDef.pidl \
-  InvalidName.pidl \
-  LongDoubleSeq.pidl \
-  LongLongSeq.pidl \
-  LongSeq.pidl \
-  Messaging_PolicyValue.pidl \
-  Messaging_SyncScope.pidl \
-  ObjectIdList.pidl \
-  Object_Key.pidl \
-  OctetSeq.pidl \
-  PI_Forward.pidl \
-  Policy.pidl \
-  Policy_Forward.pidl \
-  Pollable.pidl \
-  PortableInterceptor.pidl \
-  Services.pidl \
-  ShortSeq.pidl \
-  StringSeq.pidl \
-  TAO.pidl \
-  TimeBase.pidl \
-  ULongLongSeq.pidl \
-  ULongSeq.pidl \
-  UShortSeq.pidl \
-  WCharSeq.pidl \
-  WStringSeq.pidl \
-  WrongTransaction.pidl
+  DynamicInterface/Server_Request.inl
+
+endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   DynamicInterface/TAO_DynamicInterface.rc
-
 
 ## Makefile.IORManipulation.am 
 
@@ -1603,7 +1550,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   IORManipulation/TAO_IORManip.rc
-
 
 ## Makefile.IORTable.am 
 
@@ -1641,12 +1587,11 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORTable/TAO_IORTable.rc
 
-
 ## Makefile.RTCORBA.am 
 
 if BUILD_RT_CORBA
+
 lib_LTLIBRARIES += libTAO_RTCORBA.la
-endif
 
 libTAO_RTCORBA_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -1748,15 +1693,16 @@ nobase_include_HEADERS += \
   RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBA_include.pidl
 
+endif BUILD_RT_CORBA
+
 EXTRA_DIST += \
   RTCORBA/TAO_RTCORBA.rc
-
 
 ## Makefile.RTPortableServer.am 
 
 if BUILD_RT_CORBA
+
 lib_LTLIBRARIES += libTAO_RTPortableServer.la
-endif
 
 libTAO_RTPortableServer_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -1804,17 +1750,17 @@ nobase_include_HEADERS += \
   RTPortableServer/RT_POA.i \
   RTPortableServer/RTPortableServer.pidl
 
+endif BUILD_RT_CORBA
+
 EXTRA_DIST += \
   RTPortableServer/TAO_RTPortableServer.rc
-
 
 ## Makefile.RTScheduler.am 
 
 if BUILD_RT_CORBA
 if BUILD_CORBA_MESSAGING
+
 lib_LTLIBRARIES += libTAO_RTScheduler.la
-endif
-endif
 
 libTAO_RTScheduler_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -1862,9 +1808,11 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler.pidl \
   RTScheduling/RTScheduler_include.pidl
 
+endif BUILD_CORBA_MESSAGING
+endif BUILD_RT_CORBA
+
 EXTRA_DIST += \
   RTScheduling/TAO_RTScheduler.rc
-
 
 ## Makefile.SmartProxies.am 
 
@@ -1894,7 +1842,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   SmartProxies/SmartProxies.rc
-
 
 ## Makefile.Strategies.am 
 
@@ -2021,7 +1968,6 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Strategies/TAO_Strategies.rc
 
-
 ## Makefile.TypeCodeFactory.am 
 
 lib_LTLIBRARIES += libTAO_TypeCodeFactory.la
@@ -2058,7 +2004,6 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   TypeCodeFactory/TypeCodeFactory.rc
-
 
 ## Makefile.Utils.am 
 
@@ -2101,7 +2046,6 @@ nobase_include_HEADERS += \
   Utils/utils_export.h \
   Utils/PolicyList_Destroyer.inl \
   Utils/Servant_Var.inl
-
 
 ## Clean up template repositories, etc.
 clean-local:
