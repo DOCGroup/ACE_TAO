@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Lock.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Lock.inl"
 #endif /* __ACE_INLINE__ */

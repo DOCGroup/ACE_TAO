@@ -9,6 +9,8 @@
  * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 
+#include "ace/RW_Mutex.h"
+
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)

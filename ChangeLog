@@ -1,3 +1,25 @@
+Mon Oct 20 16:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/create_ace_build.pl:
+          Don't exclude *.exp when linking since these are the expected
+          result files for apps/gperf/tests.
+
+        * tests/New_Fail_Test:
+          Added #ifdef around unused code to remove warnings>
+
+        * ace/Auto_Event.cpp:
+        * ace/Event.cpp:
+        * ace/Lock.cpp:
+        * ace/Manual_Event.cpp:
+        * ace/Mutex.cpp:
+        * ace/RW_Mutex.cpp:
+        * ace/RW_Thread_Mutex.cpp:
+        * ace/Thread_Semaphore.cpp:
+          Added #include of the associated headers that were missing.
+          This will be needed once these files are compiled seperately via
+          MPC.  Thanks to Barry Benowitz <b.benowitz@telesciences.com> for
+          motivating this.
+
 Sun Oct 19 21:25:59 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* performance-tests/SCTP/hist.cpp: Fixed fuzz errors. Include
