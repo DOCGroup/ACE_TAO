@@ -34,6 +34,7 @@
 =====================================================================*/
 
 #include "asnmp/snmp.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Get_Opt.h"
 
 // FUZZ: disable check_for_streams_include

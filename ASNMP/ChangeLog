@@ -1,3 +1,12 @@
+Thu Sep 30 10:54:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/get/get.cpp:
+	* examples/get/get_async.cpp:
+	* examples/next/next.cpp:
+	* examples/set/set.cpp:
+	* examples/trap/trap.cpp:
+	* examples/walk/walk.cpp: Added #include "ace/Argv_Type_Converter.h".
+
 Wed Sep 29 15:33:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* asnmp/sagent.cpp:
