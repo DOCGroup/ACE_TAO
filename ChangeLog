@@ -1,3 +1,12 @@
+Sat Jan 10 22:39:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/create_ace_build.pl:
+
+	  The following patch modifies the file so that it can handle
+	  multiple path elements in the  argument given to
+	  create_ace_build.pl. Thanks to  John Poplett
+	  <John_Poplett@3com.com> for providing the patches.
+
 Sat Jan 10 19:35:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/msvc_auto_compile.pl:
