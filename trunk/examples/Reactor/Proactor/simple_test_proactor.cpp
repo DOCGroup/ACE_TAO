@@ -23,7 +23,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Proactor, test_proactor, "$Id$")
+ACE_RCSID(Proactor, test_proactor, "simple_test_proactor.cpp,v 1.1 1999/05/18 22:15:30 alex Exp")
 
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -32,7 +32,6 @@ ACE_RCSID(Proactor, test_proactor, "$Id$")
 static char *file = "simple_test_proactor.cpp";
 static char *dump_file = "simple_output";
 static int initial_read_size = BUFSIZ;
-static int done = 0;
 
 class Simple_Tester : public ACE_Handler
 {
@@ -94,6 +93,8 @@ Simple_Tester::Simple_Tester (void)
 
 Simple_Tester::~Simple_Tester (void)
 {
+  ACE_OS::close (this->input_file_);
+  ACE_OS::close (this->dump_file_);
 }
 
 
@@ -169,7 +170,14 @@ Simple_Tester::handle_read_file (const ACE_Asynch_Read_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
+  // Watch out if you need to enable this... the ACE_Log_Record::MAXLOGMSGLEN
+  // value controls to max length of a log record, and a large output
+  // buffer may smash it.
+#if 0
+  ACE_DEBUG ((LM_DEBUG, "%s = %s\n",
+              "message_block",
+              result.message_block ().rd_ptr ()));
+#endif /* 0 */
 
   if (result.success ())
     {
@@ -202,9 +210,15 @@ Simple_Tester::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
-
-  done = 1;
+  // Watch out if you need to enable this... the ACE_Log_Record::MAXLOGMSGLEN
+  // value controls to max length of a log record, and a large output
+  // buffer may smash it.
+#if 0
+  ACE_DEBUG ((LM_DEBUG, "%s = %s\n",
+              "message_block",
+              result.message_block ().rd_ptr ()));
+#endif  /* 0 */
+  ACE_Proactor::end_event_loop ();
 }
 
 static int
@@ -246,15 +260,10 @@ main (int argc, char *argv[])
   
   int success = 1;
 
-  while (success != -1  && !done)
-    {
-      // dispatch events
-      success = ACE_Proactor::instance ()->handle_events ();
-      
-      if (success == 0)
-        sleep (5);
-    }
-  return 0;
+  // dispatch events
+  success = !(ACE_Proactor::run_event_loop () == -1);
+
+  return success ? 0 : 1;
 }
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
