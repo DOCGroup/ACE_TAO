@@ -148,9 +148,10 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                  "to <%s:%d>\n",
+                  "to <%s:%d> which should %s\n",
                   ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
-                  iiop_endpoint->port()));
+                  iiop_endpoint->port(),
+                  r->connected() ? ACE_TEXT("block") : ACE_TEXT("not block")));
     }
 
   // Get the right synch options
@@ -200,7 +201,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       // timeout
       if (!r->connected())
         {
-          // Wait for connection completion.
+          // Poll for connection completion.
           ACE_Time_Value zero(ACE_Time_Value::zero);
           result =
             this->active_connect_strategy_->wait (svc_handler,
@@ -209,12 +210,13 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
           if (TAO_debug_level > 2)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection"
-                          "wait done for handle[%d], result = %d\n",
+                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                          "non blocking wait done for handle[%d], result = %d\n",
                           svc_handler->get_handle (), result));
             }
 
           // When the wait returns -1, the transport is not connected, else it is
+// is this right??
           svc_handler->transport ()->is_connected(result != -1);
         }
       else
@@ -250,7 +252,9 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       // (a) and (b).  (c) is tricky since the connection is still
       // pending and may get completed by some other thread.  The
       // following code deals with (c).
-
+// move this to a separate method??, something like check_connection_closure()
+// can this then not be in the base, generic for all different connector types?
+// that can also be called then from tranport_connector::connect()
       // Check if the handler has been closed.
       int closed =
         svc_handler->is_closed ();

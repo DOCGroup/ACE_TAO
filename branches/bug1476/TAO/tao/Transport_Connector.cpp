@@ -271,6 +271,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               // If the wait strategy wants us to be registered with the reactor
               // then we do so. If registeration is required and it succeeds,
               // #REFCOUNT# becomes two.
+// ok??
               result = base_transport->wait_strategy ()->register_handler ();
 
               // Registration failures.

@@ -1,3 +1,11 @@
+Mon Jul  5 12:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+        * tao/Transport_Connector.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+          Added some documentation and added some question to some code parts
+          to be sure that we check this
+
 Fri Jul  2 11:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Adapter.{h,cpp}:
@@ -72,6 +80,10 @@ Tue Jun 20 10:10:10 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           message from the outside, use this method also internally.
           Added connected_ member and accessors to indicate whether this
           transport is connected or not
+
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+          We use the Profile_Transport_Resolver here, assume that we always
+          need to get a connected transport
 
 
 Initial comments

@@ -78,7 +78,7 @@ namespace TAO
           ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-// here we select a connection
+    // Select the endpoint
     es->select_endpoint (this,
                          max_time_val
                          ACE_ENV_ARG_PARAMETER);
