@@ -1,3 +1,8 @@
+Wed Jul 19 19:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Caching_Utility_T.cpp: Rectified a typo made in method
+	<clear_cache>.
+	
 Wed Jul 19 17:12:50 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* ace/OS.h
