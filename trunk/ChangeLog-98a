@@ -5,6 +5,10 @@ Mon Jan 26 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
           for reporting the problem with building shared libraries on
           g++/DU 4.0.
 
+        * ace/config-linux-common.h: moved ACE_LACKS_TCP_H so that it is
+          only seen on alphas (with glibc2).  Thanks to Edgar Villanueva
+          <edgarvil@ix.netcom.com> for reporting this.
+
         * performance-tests/Misc/childbirth_time.cpp (prof_native_thread,
           prof_ace_os_thread): changed type of local j to int to avoid
           signed/unsigned comparison.
