@@ -1,3 +1,9 @@
+Fri Oct 29 12:58:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/Options.html:
+	  Added documentation for two resource factory options
+	  -ORBPriorityMapping and -ORBSchedPolicy.
+
 Fri Oct 29 12:04:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.h:
