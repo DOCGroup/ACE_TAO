@@ -21,6 +21,7 @@ Pong_Send_Callback pong_callback;
 ACE_hrtime_t recv_base = 0;
 ACE_Throughput_Stats recv_latency;
 
+
 int
 parse_args (int argc, char *argv[])
 {
@@ -173,11 +174,11 @@ int main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      ACE_Time_Value tv (120, 0);
-      orb->run (tv, ACE_TRY_ENV);
+      ACE_Time_Value tv (60, 0);
+      //      orb->run (tv, ACE_TRY_ENV);
+      orb->run ();
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
@@ -185,8 +186,6 @@ int main (int argc, char *argv[])
 
       recv_latency.dump_results ("Receive", gsf);
 
-      // root_poa->destroy (1, 1, ACE_TRY_ENV);
-      // ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -217,6 +216,11 @@ Ping_Recv::get_callback (const char *,
   return 0;
 }
 
+Ping_Recv_Callback::Ping_Recv_Callback (void)
+  : count_ (0)
+{
+}
+
 int
 Ping_Recv_Callback::handle_stop (void)
 {
@@ -231,33 +235,40 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    TAO_AV_frame_info *,
                                    const ACE_Addr &)
 {
-  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame\n"));
+  this->count_++;
+ 
+  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame %d\n", this->count_));
 
-  for (const ACE_Message_Block *i = frame;
-       i != 0;
-       i = i->cont ())
+  if (this->count_ < 10)
     {
-      ACE_hrtime_t stamp;
-
-      if (i->length () < sizeof(stamp))
-        return 0;
-
-      ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
-
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      if (recv_base == 0)
-        {
-          recv_base = now;
-        }
-      else
-        {
+      for (const ACE_Message_Block *i = frame;
+	   i != 0;
+	   i = i->cont ())
+	{
+	  ACE_hrtime_t stamp;
+	  
+	  if (i->length () < sizeof(stamp))
+	    return 0;
+	  
+	  ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
+	  
+	  ACE_hrtime_t now = ACE_OS::gethrtime ();
+	  if (recv_base == 0)
+	    {
+	      recv_base = now;
+	    }
+	  else
+	    {
           recv_latency.sample (now - recv_base,
                                now - stamp);
-        }
-
-      if (respond == 1)
-        pong_callback.send_response (stamp);
+	    }
+	  
+	  if (respond == 1)
+	    pong_callback.send_response (stamp);
+	}
     }
+  else
+    TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
