@@ -183,7 +183,10 @@ IIOP_ServerRequest::set_result (const CORBA::Any &value,
   if (!this->params_ || this->retval_ || this->exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
-    this->retval_ = new CORBA::Any (value);
+    {
+      this->retval_ = new CORBA::Any;
+      this->retval_->replace (value.type (), value.value (), 1, env);
+    }
 }
 
 // Store the exception value.
@@ -196,8 +199,8 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
     {
-      env.clear ();
-      this->exception_ = new CORBA::Any (value);
+      this->exception_ = new CORBA::Any;
+      this->exception_->replace (value.type (), value.value (), 1, env);
     }
 }
 
@@ -255,6 +258,23 @@ IIOP_ServerRequest::marshal (CORBA::Environment &env,  // exception reporting
                              const TAO_Call_Data_Skel *info, // call description
                              ...)                       // ... any parameters
 {
+  CORBA::Environment env2;
+
+  // check if we are inside with an exception. This may have happened
+  // since the upcall could have set some exception
+  if (env.exception ())
+    {
+      CORBA::Any any (env.exception ()->_type (), env.exception ()); // don't
+                                                                     // own it
+      this->set_exception (any, env2);
+    }
+
+  // Setup a Reply message.
+  this->init_reply (env2);
+
+  if (env2.exception () || env.exception ()) // exception, nothing to do
+    return;
+
   // Now, put all "in" and "inout" parameters into the NVList.
   CORBA::ULong i;
   CORBA::ULong j;
@@ -284,11 +304,7 @@ IIOP_ServerRequest::marshal (CORBA::Environment &env,  // exception reporting
 
       j++;
     }
-
   va_end (param_vector);
-
-  // Setup a Reply message.
-  this->init_reply (env);
 
   // Normal reply.
   if (!env.exception ())
@@ -358,11 +374,10 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
       // Finish the GIOP Reply header, then marshal the exception.
       // XXX x->type () someday ...
 
-      //      if (this->ex_type_ == CORBA::SYSTEM_EXCEPTION)
-      if (1)
-        this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
-      else
+      if (CORBA::UserException::_narrow (x))
         this->outgoing_->put_ulong (TAO_GIOP_USER_EXCEPTION);
+      else
+        this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) this->outgoing_->encode (except_tc, x, 0, env);
     }
   else // Normal reply
