@@ -1,5 +1,8 @@
 Tue Mar 24 14:51:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* TAO_IDL/be/be_visitor_operation.cpp (visit_operation): Added a
+ 	  return statement.
+
 	* tao/IIOP_Object.cpp: Initialze
  	  TAO_Synchronous_Cancellation_Required::dont_care.
 	
