@@ -535,7 +535,7 @@ namespace ImplementationRepository
     
     static ServerInformationIterator_ptr _nil (void)
     {
-      return (ServerInformationIterator_ptr)0;
+      return static_cast<ServerInformationIterator_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -665,7 +665,7 @@ namespace ImplementationRepository
     
     static Administration_ptr _nil (void)
     {
-      return (Administration_ptr)0;
+      return static_cast<Administration_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);

@@ -694,7 +694,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:652
+// be\be_visitor_interface/interface_ss.cpp:646
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -1266,23 +1266,17 @@ CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator::_is_a (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (
+  return
+    (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:ImplementationRepository/ServerInformationIterator:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    );
 }
 
 void* POA_ImplementationRepository::ServerInformationIterator::_downcast (
@@ -1310,7 +1304,7 @@ const char* POA_ImplementationRepository::ServerInformationIterator::_interface_
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:588
+// be\be_visitor_interface/interface_ss.cpp:582
 
 void POA_ImplementationRepository::ServerInformationIterator::_dispatch (
     TAO_ServerRequest &req,
@@ -1325,7 +1319,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:530
+// be\be_visitor_interface/interface_ss.cpp:524
 
 ImplementationRepository::ServerInformationIterator *
 POA_ImplementationRepository::ServerInformationIterator::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -3044,7 +3038,7 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::disp
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:652
+// be\be_visitor_interface/interface_ss.cpp:646
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -4961,23 +4955,17 @@ CORBA::Boolean POA_ImplementationRepository::Administration::_is_a (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (
+  return
+    (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:ImplementationRepository/Administration:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    );
 }
 
 void* POA_ImplementationRepository::Administration::_downcast (
@@ -5005,7 +4993,7 @@ const char* POA_ImplementationRepository::Administration::_interface_repository_
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:588
+// be\be_visitor_interface/interface_ss.cpp:582
 
 void POA_ImplementationRepository::Administration::_dispatch (
     TAO_ServerRequest &req,
@@ -5020,7 +5008,7 @@ void POA_ImplementationRepository::Administration::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:530
+// be\be_visitor_interface/interface_ss.cpp:524
 
 ImplementationRepository::Administration *
 POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)

@@ -966,7 +966,7 @@ ImplementationRepository::ServerInformationIterator::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:ImplementationRepository/ServerInformationIterator:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1668,7 +1668,7 @@ ImplementationRepository::Administration::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:ImplementationRepository/Administration:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1707,15 +1707,8 @@ CORBA::Boolean operator<< (
     const ImplementationRepository::AlreadyRegistered &_tao_aggregate
   )
 {
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  // Marshal the repository ID.
+  return (strm << _tao_aggregate._rep_id ());
 }
 
 CORBA::Boolean operator>> (
@@ -1723,7 +1716,7 @@ CORBA::Boolean operator>> (
     ImplementationRepository::AlreadyRegistered&
   )
 {
-  return 1;
+  return true;
 }
 
 // TAO_IDL - Generated from
@@ -1738,20 +1731,13 @@ CORBA::Boolean operator<< (
   if (strm << _tao_aggregate._rep_id ())
     {
       // Now marshal the members (if any).
-      if (
+      return (
         (strm << _tao_aggregate.reason.in ())
-       )
-        {
-          return 1;
-        }
-      else
-        {
-          return 0;
-        }
+       );
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1761,16 +1747,9 @@ CORBA::Boolean operator>> (
   )
 {
   // Demarshal the members.
-  if (
+  return (
     (strm >> _tao_aggregate.reason.out ())
-  )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  );
 }
 
 // TAO_IDL - Generated from
@@ -1781,15 +1760,8 @@ CORBA::Boolean operator<< (
     const ImplementationRepository::NotFound &_tao_aggregate
   )
 {
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  // Marshal the repository ID.
+  return (strm << _tao_aggregate._rep_id ());
 }
 
 CORBA::Boolean operator>> (
@@ -1797,7 +1769,7 @@ CORBA::Boolean operator>> (
     ImplementationRepository::NotFound&
   )
 {
-  return 1;
+  return true;
 }
 
 // TAO_IDL - Generated from
@@ -1839,7 +1811,7 @@ CORBA::Boolean operator<< (
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -1849,7 +1821,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -1866,7 +1838,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -1875,11 +1847,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -1890,7 +1862,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_ImplementationRepository_EnvironmentList_CPP_ */
@@ -1989,7 +1961,7 @@ CORBA::Boolean operator<< (
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -1999,7 +1971,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -2016,7 +1988,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -2025,11 +1997,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -2040,7 +2012,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_CPP_ */
@@ -2064,9 +2036,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::ImplementationRepository::ServerInformationIterator RHS_SCOPED_NAME;
@@ -2100,9 +2072,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::ImplementationRepository::Administration RHS_SCOPED_NAME;
