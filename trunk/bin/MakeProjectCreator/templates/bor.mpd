@@ -143,6 +143,10 @@ realclean: customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>
 #
 # Override defaults in outputdir.bor
 #
+<%if(INSTALL_THIS_TARGET)%>
+INSTALL_THIS_TARGET = 1
+
+<%endif%>
 <%marker(macros)%>
 STATIC_DIR=.
 DEBUG_DIR=.
