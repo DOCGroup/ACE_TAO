@@ -1,3 +1,14 @@
+Wed Apr 16 01:32:31 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
+
+	  Include "ace/ACE.h" to pull in ACE::hash_pjw() method
+	  declaration.
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+
+	  Include "ace/SString.h" to pull complete ACE_CString type.
+
 Wed Apr 16 00:47:50 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.h:

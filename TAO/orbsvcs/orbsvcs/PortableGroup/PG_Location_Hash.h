@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/PortableGroupC.h"
+#include "ace/ACE.h"
 
 /**
  * @class TAO_PG_Location_Hash

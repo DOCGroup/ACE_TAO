@@ -29,6 +29,7 @@
 #include "portablegroup_export.h"
 
 #include "ace/Synch.h"
+#include "ace/SString.h"
 
 
 // TAO UIPMC_Profile concrete Profile definitions
