@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IIOP_SSL_Connect.h"
+#include "IIOP_SSL_Connection_Handler.h"
 #include "tao/IIOP_Acceptor.h"
 
 // TAO IIOP_SSL_Acceptor concrete call defination
@@ -38,17 +38,17 @@
  * since it uses a different a set of Acceptor strategies.  In
  * particular, it overrides the open_i() method to use the Acceptor
  * strategies tailored to use the SSL aware server connection handler.
- * See the TAO_IIOP_SSL_Server_Connection_Handler notes for details.
+ * See the TAO_IIOP_SSL_Connection_Handler notes for details.
  */
 class TAO_SSLIOP_Export TAO_IIOP_SSL_Acceptor
   : public TAO_IIOP_Acceptor
 {
 public:
 
-  typedef ACE_Strategy_Acceptor<TAO_IIOP_SSL_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_IIOP_SSL_Server_Connection_Handler> TAO_IIOP_SSL_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_IIOP_SSL_Server_Connection_Handler> TAO_IIOP_SSL_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_IIOP_SSL_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_ACCEPT_STRATEGY;
+  typedef ACE_Strategy_Acceptor<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_ACCEPT_STRATEGY;
 
   /// Constructor.
   TAO_IIOP_SSL_Acceptor (CORBA::Boolean flag = 0);

@@ -41,7 +41,7 @@ IDL_SRC = \
 
 FILES = \
   SSLIOP/IIOP_SSL_Acceptor \
-  SSLIOP/IIOP_SSL_Connect \
+  SSLIOP/IIOP_SSL_Connection_Handler \
   SSLIOP/IIOP_SSL_Connector \
   SSLIOP/SSLIOP_Current \
   SSLIOP/SSLIOP_Current_Impl \
@@ -53,7 +53,7 @@ FILES = \
   SSLIOP/SSLIOP_Transport \
   SSLIOP/SSLIOP_Connector \
   SSLIOP/SSLIOP_Acceptor \
-  SSLIOP/SSLIOP_Connect \
+  SSLIOP/SSLIOP_Connection_Handler \
   SSLIOP/ssl_endpoints
 
 LSRC    = $(addsuffix .cpp,$(FILES)) $(notdir $(IDL_SRC))
@@ -97,8 +97,9 @@ realclean: clean
 
 .obj/IIOP_SSL_Acceptor.o .obj/IIOP_SSL_Acceptor.so .shobj/IIOP_SSL_Acceptor.o .shobj/IIOP_SSL_Acceptor.so: SSLIOP/IIOP_SSL_Acceptor.cpp \
  SSLIOP/IIOP_SSL_Acceptor.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -107,7 +108,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- SSLIOP/IIOP_SSL_Connect.h \
+ SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -241,17 +242,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -329,6 +322,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -425,7 +420,7 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -460,7 +455,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.i \
@@ -474,10 +469,11 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i
 
-.obj/IIOP_SSL_Connect.o .obj/IIOP_SSL_Connect.so .shobj/IIOP_SSL_Connect.o .shobj/IIOP_SSL_Connect.so: SSLIOP/IIOP_SSL_Connect.cpp \
- SSLIOP/IIOP_SSL_Connect.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+.obj/IIOP_SSL_Connection_Handler.o .obj/IIOP_SSL_Connection_Handler.so .shobj/IIOP_SSL_Connection_Handler.o .shobj/IIOP_SSL_Connection_Handler.so: SSLIOP/IIOP_SSL_Connection_Handler.cpp \
+ SSLIOP/IIOP_SSL_Connection_Handler.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -619,17 +615,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -707,6 +695,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -803,7 +793,7 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -838,7 +828,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Current.inl \
  $(TAO_ROOT)/tao/Timeprobe.h \
@@ -846,8 +836,9 @@ realclean: clean
 
 .obj/IIOP_SSL_Connector.o .obj/IIOP_SSL_Connector.so .shobj/IIOP_SSL_Connector.o .shobj/IIOP_SSL_Connector.so: SSLIOP/IIOP_SSL_Connector.cpp \
  SSLIOP/IIOP_SSL_Connector.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -856,7 +847,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- SSLIOP/IIOP_SSL_Connect.h \
+ SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -990,17 +981,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -1078,6 +1061,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1174,7 +1159,7 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -1209,21 +1194,26 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(TAO_ROOT)/tao/Connector_Impl.h \
+ $(TAO_ROOT)/tao/Connector_Impl.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.cpp \
+ SSLIOP/SSLIOP_Endpoint.h SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i
 
 .obj/SSLIOP_Current.o .obj/SSLIOP_Current.so .shobj/SSLIOP_Current.o .shobj/SSLIOP_Current.so: SSLIOP/SSLIOP_Current.cpp SSLIOP/SSLIOP_Current.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1366,17 +1356,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -1454,6 +1436,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1554,8 +1538,9 @@ realclean: clean
 
 .obj/SSLIOP_Current_Impl.o .obj/SSLIOP_Current_Impl.so .shobj/SSLIOP_Current_Impl.o .shobj/SSLIOP_Current_Impl.so: SSLIOP/SSLIOP_Current_Impl.cpp \
  SSLIOP/SSLIOP_Current_Impl.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1697,17 +1682,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -1785,6 +1762,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1886,8 +1865,9 @@ realclean: clean
 .obj/SSLIOP_Invocation_Interceptor.o .obj/SSLIOP_Invocation_Interceptor.so .shobj/SSLIOP_Invocation_Interceptor.o .shobj/SSLIOP_Invocation_Interceptor.so: \
  SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
  SSLIOP/SSLIOP_Invocation_Interceptor.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2029,17 +2009,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -2117,6 +2089,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2216,8 +2190,9 @@ realclean: clean
 
 .obj/SSLIOP_ORBInitializer.o .obj/SSLIOP_ORBInitializer.so .shobj/SSLIOP_ORBInitializer.o .shobj/SSLIOP_ORBInitializer.so: SSLIOP/SSLIOP_ORBInitializer.cpp \
  SSLIOP/SSLIOP_ORBInitializer.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2379,14 +2354,6 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
  $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2462,6 +2429,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2549,8 +2518,9 @@ realclean: clean
  $(TAO_ROOT)/tao/ORBInitInfo.h
 
 .obj/SSLIOP_Factory.o .obj/SSLIOP_Factory.so .shobj/SSLIOP_Factory.o .shobj/SSLIOP_Factory.so: SSLIOP/SSLIOP_Factory.cpp SSLIOP/SSLIOP_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2669,7 +2639,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  SSLIOP/SSLIOP_Acceptor.h SSLIOP/IIOP_SSL_Acceptor.h \
- SSLIOP/IIOP_SSL_Connect.h \
+ SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
@@ -2714,17 +2684,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -2783,6 +2745,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2878,7 +2842,7 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -2913,7 +2877,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.i \
@@ -2926,21 +2890,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i \
- SSLIOP/SSLIOP_Connect.h \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
- SSLIOP/SSLIOP_Transport.h \
+ SSLIOP/SSLIOP_Connection_Handler.h SSLIOP/SSLIOP_Transport.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
  $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
  SSLIOP/SSLIOP_Connect.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.h \
@@ -2954,10 +2913,15 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.cpp \
+ $(TAO_ROOT)/tao/Connector_Impl.h \
+ $(TAO_ROOT)/tao/Connector_Impl.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.cpp \
  SSLIOP/SSLIOP_ORBInitializer.h
 
 .obj/SSLIOP_Profile.o .obj/SSLIOP_Profile.so .shobj/SSLIOP_Profile.o .shobj/SSLIOP_Profile.so: SSLIOP/SSLIOP_Profile.cpp SSLIOP/SSLIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3102,17 +3066,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -3190,6 +3146,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3296,8 +3254,9 @@ realclean: clean
  SSLIOP/SSLIOP_Profile.i SSLIOP/ssl_endpoints.h SSLIOP/ssl_endpoints.i
 
 .obj/SSLIOP_Endpoint.o .obj/SSLIOP_Endpoint.so .shobj/SSLIOP_Endpoint.o .shobj/SSLIOP_Endpoint.so: SSLIOP/SSLIOP_Endpoint.cpp SSLIOP/SSLIOP_Endpoint.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3441,17 +3400,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -3529,6 +3480,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3623,14 +3576,8 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- SSLIOP/SSLIOP_Endpoint.i SSLIOP/SSLIOP_Connect.h \
+ SSLIOP/SSLIOP_Endpoint.i SSLIOP/SSLIOP_Connection_Handler.h \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
  $(TAO_ROOT)/tao/Connection_Handler.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -3642,7 +3589,7 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -3665,24 +3612,27 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Transport.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
  $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
  SSLIOP/SSLIOP_Connect.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i
 
 .obj/SSLIOP_Transport.o .obj/SSLIOP_Transport.so .shobj/SSLIOP_Transport.o .shobj/SSLIOP_Transport.so: SSLIOP/SSLIOP_Transport.cpp \
- SSLIOP/SSLIOP_Transport.h \
- $(ACE_ROOT)/ace/pre.h \
+ SSLIOP/SSLIOP_Transport.h $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3692,8 +3642,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3730,11 +3680,15 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -3750,14 +3704,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
- $(ACE_ROOT)/ace/SSL/SSL_Export.h \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
- $(ACE_ROOT)/ace/SSL/SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
@@ -3766,6 +3712,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
@@ -3899,25 +3849,11 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- SSLIOP/SSLIOP_Connect.h \
+ SSLIOP/SSLIOP_Connection_Handler.h \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
- $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
  $(TAO_ROOT)/tao/Connection_Handler.h \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
@@ -3928,12 +3864,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current_Impl.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -3964,6 +3900,10 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -4071,13 +4011,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Sync_Strategies.h \
- $(TAO_ROOT)/tao/Sync_Strategies.i \
- $(TAO_ROOT)/tao/GIOP_Message_Connectors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Connectors.i
+ $(TAO_ROOT)/tao/Sync_Strategies.i
 
 .obj/SSLIOP_Connector.o .obj/SSLIOP_Connector.so .shobj/SSLIOP_Connector.o .shobj/SSLIOP_Connector.so: SSLIOP/SSLIOP_Connector.cpp \
- SSLIOP/SSLIOP_Connector.h \
- $(ACE_ROOT)/ace/pre.h \
+ SSLIOP/SSLIOP_Connector.h $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4087,9 +4026,9 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4126,14 +4065,15 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
- $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -4149,14 +4089,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
- $(ACE_ROOT)/ace/SSL/SSL_Export.h \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
- $(ACE_ROOT)/ace/SSL/SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
@@ -4165,10 +4097,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Connector.i \
  SSLIOP/IIOP_SSL_Connector.h SSLIOP/SSLIOP_Export.h \
- SSLIOP/IIOP_SSL_Connect.h \
+ SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -4254,17 +4193,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -4334,6 +4265,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4430,7 +4363,7 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -4452,21 +4385,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Connection_Handler.inl \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.cpp \
- SSLIOP/SSLIOP_Connect.h \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
- SSLIOP/SSLIOP_Transport.h SSLIOP/SSLIOP_Current_Impl.h \
- SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connect.i \
- SSLIOP/SSLIOP_Profile.h SSLIOP/SSLIOP_Endpoint.h \
- SSLIOP/SSLIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/Connector_Impl.h \
+ $(TAO_ROOT)/tao/Connector_Impl.inl \
+ $(TAO_ROOT)/tao/Connector_Impl.cpp \
+ SSLIOP/SSLIOP_Connection_Handler.h SSLIOP/SSLIOP_Transport.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
+ SSLIOP/SSLIOP_Connect.i SSLIOP/SSLIOP_Profile.h \
+ SSLIOP/SSLIOP_Endpoint.h SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
@@ -4478,6 +4409,8 @@ realclean: clean
 
 .obj/SSLIOP_Acceptor.o .obj/SSLIOP_Acceptor.so .shobj/SSLIOP_Acceptor.o .shobj/SSLIOP_Acceptor.so: SSLIOP/SSLIOP_Acceptor.cpp SSLIOP/SSLIOP_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4487,7 +4420,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  SSLIOP/IIOP_SSL_Acceptor.h SSLIOP/SSLIOP_Export.h \
- SSLIOP/IIOP_SSL_Connect.h \
+ SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -4621,17 +4554,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -4709,6 +4634,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4805,7 +4732,7 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -4840,7 +4767,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.i \
@@ -4853,21 +4780,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i \
- SSLIOP/SSLIOP_Connect.h \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
- SSLIOP/SSLIOP_Transport.h \
+ SSLIOP/SSLIOP_Connection_Handler.h SSLIOP/SSLIOP_Transport.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
  $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
  SSLIOP/SSLIOP_Connect.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.h \
@@ -4897,8 +4819,11 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i
 
-.obj/SSLIOP_Connect.o .obj/SSLIOP_Connect.so .shobj/SSLIOP_Connect.o .shobj/SSLIOP_Connect.so: SSLIOP/SSLIOP_Connect.cpp SSLIOP/SSLIOP_Connect.h \
+.obj/SSLIOP_Connection_Handler.o .obj/SSLIOP_Connection_Handler.so .shobj/SSLIOP_Connection_Handler.o .shobj/SSLIOP_Connection_Handler.so: SSLIOP/SSLIOP_Connection_Handler.cpp \
+ SSLIOP/SSLIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5007,43 +4932,6 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/Exception.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
- $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
  $(TAO_ROOT)/tao/Connection_Handler.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -5068,6 +4956,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
@@ -5078,7 +4968,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Connect.h \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
@@ -5129,27 +5019,48 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/operation_details.h \
- $(TAO_ROOT)/tao/target_specification.h \
- $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/tao/operation_details.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
- $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Transport.h SSLIOP/SSLIOP_Export.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
- $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
  $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  SSLIOP/SSLIOP_Current_Impl.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -5180,6 +5091,10 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -5284,10 +5199,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Messaging_Policy_i.h \
  $(TAO_ROOT)/tao/Messaging_Policy_i.i \
- $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
- $(TAO_ROOT)/tao/GIOP_Message_Lite.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i
 
@@ -5295,6 +5206,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5434,17 +5347,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -5522,6 +5427,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5625,6 +5532,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPS.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5734,8 +5643,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPS_T.h \
  $(TAO_ROOT)/tao/IOPS_T.i \
  $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- SecurityS.h \
+ $(TAO_ROOT)/tao/IOPS.i SecurityS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -5757,8 +5665,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -5778,14 +5685,6 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
  $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -5864,6 +5763,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5995,6 +5896,8 @@ realclean: clean
 .obj/SSLIOPC.o .obj/SSLIOPC.so .shobj/SSLIOPC.o .shobj/SSLIOPC.so: SSLIOPC.cpp SSLIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6134,17 +6037,9 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -6222,6 +6117,8 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
