@@ -21,6 +21,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Synch_Options.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 
 template<class SVC_HANDLER> 

@@ -1,3 +1,11 @@
+Mon Aug 17 11:25:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Strategies_T.h: 
+	  In some platforms we need to include "ace/Thread_Manager.h"
+	  because its definition is used in the inline methods of some 
+	  templates, and a few platform actually check the syntax of
+	  template code, even if the template is not used.
+
 Mon Aug 17 10:06:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp: replaced
