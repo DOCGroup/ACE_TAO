@@ -1007,6 +1007,10 @@ TAO_Stub::set_policy_overrides (
                                   this->orb_core_),
                   0);
   stub->policies_ = policy_manager.release ();
+
+  // Copy the servant ORB if it is present.
+  stub->servant_orb (this->servant_orb_var ().in ());
+
   return stub;
 }
 
