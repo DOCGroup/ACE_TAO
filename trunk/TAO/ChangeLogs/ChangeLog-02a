@@ -1,3 +1,14 @@
+Tue Oct 31 18:43:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Invocation.cpp:
+	* tao/Invocation.h:
+
+	  Added TAO_HAS_MINIMUM_CORBA == 0 guards around the
+	  declaration and definition of the version of invoke()
+	  that takes an ExceptionList. This version is used only
+	  by DII. Thanks to Priyanka for reporting this problem,
+	  which occurs in minimum CORBA builds.
+
 Tue Oct 31 17:55:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* rules.tao.GNU:
