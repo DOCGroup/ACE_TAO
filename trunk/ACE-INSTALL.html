@@ -579,7 +579,14 @@ The VxWorks platform_vxworks*.GNU files are set up so that shared
 libraries are not built on VxWorks.  Only static libraries,
 with .a extension, are built.  Therefore, it's not necessary
 to set the LD_LIBRARY_PATH environment variable on your host
-system when building for VxWorks targets.<P>
+system when building for VxWorks targets.  Please note, however,
+if you use TAO on VxWorks that you will need to set your LD_LIBRARY_PATH
+to find the TAO IDL compiler libraries (installed in the ace directory)
+on the host.<P>
+
+With g++, etc/ace_ld is used to munch object files and libraries to
+set up calls to static constructors and destructors.  etc/ace_ld requires
+perl on the host platform.<P>
 
 These non-default VxWorks kernel configuration <code>#defines</code>
 are required with ACE:<P>
