@@ -1,3 +1,16 @@
+Sun Apr 30 23:20:00 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * ace/SString.h:
+
+          SunCC 5 had problems with ACE_TString when it was typdefed,
+          but not when it was #defined.  
+
+        * ace/ace_wchar.h:
+
+          Noticed I was including tchar.h still, which is no longer
+          necessary since ACE's use of wchar_t is separate from 
+          tchar.h's.
+
 Sat Apr 29 20:02:39 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/autoconf_compile (BUILD_LIST):

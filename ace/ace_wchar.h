@@ -64,12 +64,6 @@ typedef char TCHAR;
 
 #endif /* ACE_ONLY_LATEST_AND_GREATEST */
 
-
-#if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
-# include /**/ <tchar.h>
-#endif /* ACE_HAS_WCHAR && ACE_WIN32 */
-
-
 #if defined (ACE_HAS_WCHAR)
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
