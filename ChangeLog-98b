@@ -1,3 +1,30 @@
+Mon Jun 01 16:19:52 1998  Steve Huston  <shuston@riverace.com>
+
+	* examples/Reactor/Dgram/Dgram.mdp, Dgram.mak:  Added these files
+	  to build the examples with MSVC 4.2.
+
+Mon Jun 01 16:16:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * Dump.{h,cpp}:
+        * Filecache.{h,cpp}:
+        * Malloc.{h,cpp}:
+        * Proactor.{h,cpp}:
+        * Reactor.{h,cpp}:
+        * Service_Repository.{h,cpp}:
+        * Singleton.{h,cpp}:
+        * Thread_Manager.{h,cpp}: Dave Butenhof pointed out the potential
+	  risk of getting corrupted (or incomplete) pointers in the first
+	  check of the Double-Checking pattern on MP machines which don't
+	  write pointers atomically.  To avoid this potential problem (MP
+	  machines are becoming more of a norm nowaday,) I added another
+	  flag into these singleton classes to indicate whether they get
+	  instantiated or not.  Since the flag always gets marked _after_
+	  the pointer initialization and we are double checking against
+	  the flag now, we avoid the problem without adding any
+	  overhead in accessing the singleton pointers.
+
+	  I haven't changed those in Object_Manager.* and CORBA_*.*.
+
 Mon Jun 01 13:01:14 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/Dgram/Dgram.cpp (run_test): Because of the
