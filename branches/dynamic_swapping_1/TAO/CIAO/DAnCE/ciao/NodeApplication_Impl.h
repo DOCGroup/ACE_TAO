@@ -23,6 +23,7 @@
 #include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
 #include "Container_Base.h"
+#include "Swapping_Container.h"
 #include "Deployment_CoreS.h"
 #include "Server_init.h"
 #include "CIAO_common.h"

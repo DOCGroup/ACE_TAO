@@ -191,6 +191,7 @@ CIAO::NodeApplication_Impl::install (
 
      for (CORBA::ULong i = 0; i < len; ++i)
        {
+
          home = this->install_home (impl_infos[i]
                                     ACE_ENV_ARG_PARAMETER);
          ACE_TRY_CHECK;
@@ -250,6 +251,7 @@ CIAO::NodeApplication_Impl::install (
 
                }
            }
+
        }
    }
   ACE_CATCHANY
@@ -392,9 +394,7 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Session_Container (this->orb_.in (),
-                                             0,
-                                             0),
+                    CIAO::Swapping_Container (this->orb_.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 
@@ -445,6 +445,7 @@ CIAO::NodeApplication_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   this->component_map_.unbind_all ();
+
   // To this point the servant should have been destroyed. However,
   // if someone is still making calls on the servant, terrible thing
   // will happen.
