@@ -1006,14 +1006,27 @@ Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
 Spivak</a> and <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
 <p>
 
-The CORBA <a href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">
-Naming Service</a> supports a hierarchical mapping between sequences
-of strings and object references.  The CORBA <A
-HREF="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">Interoperable
-Naming Service</A> defines a standard way for clients and servers to
-locate the Naming Service. It allows the ORB to be administratively
-configured for bootstrapping to services not set up with the orb at
-install time. <P>
+OMG defined CORBA Naming Service (spec <a
+href="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">here</a>) to
+provide a basic service location mechanism for CORBA systems.  Naming
+Service manages a hierarchy of name to object reference mappings.
+Servers register themselves with the Naming Service by providing their
+name and object reference.  Clients can then use the Naming Service to
+obtain an object reference for the service of interest based on its
+name.
+<p>
+
+More recently, CORBA Naming Service was subsumed/extended by the CORBA
+Interoperable Naming Service, a.k.a. INS (spec <A
+HREF="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">here</A>).  INS
+inherits all the functionality from the original Naming Service
+specification in addition to addressing some its shortcomings.  In
+particular, INS defines a standard way for clients and servers to
+locate the Naming Service itself.  It also allows the ORB to be
+administratively configured for bootstrapping to services not set up
+with the orb at install time. <a href="../INS.html">This page</a>
+provides a brief description of additional features INS provides, and
+how they are implemented in TAO.  <P>
 
 <p>Current status (as of 7th Apr 1999):
 <ul>
