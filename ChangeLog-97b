@@ -657,7 +657,7 @@ Tue Nov 11 23:44:17 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Tue Nov 11 21:26:36 1997  Douglas C. Schmidt  <schmidt@lindy.cs.wustl.edu>
 
         * platform_sunos5_sunc++.GNU, platform_irix6.x-sgic++.GNU, rules.local.GNU:
-        *** empty log message ***
+	  Added some minor fixes.
 
 Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
