@@ -365,11 +365,42 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
     }
   os->indent ();
-  *os << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
+  /* *os << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
       << "CORBA::NVList_var _tao_interceptor_args;" << be_nl
       << "if (_tao_vfr.valid ())" << be_idt_nl << "{" << be_idt_nl
       << "istub->orb_core ()->orb ()->create_list "
-      << "(0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n";
+      << "(0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n";*/
+
+  *os << "ClientRequest_Info_"<< node->flat_name () << "  ri (" << this->compute_operation_name (node) << ",\n"
+      << "_tao_call.service_info ()," << be_nl
+      << "(CORBA::Object_ptr) this";
+
+  // This necesary becos: (a) a comma is needed if there are arguments
+  // (b) not needed if exceptions enabled since thats done already (c)
+  // not needed if there are no args and exceptions is disabled.
+
+  os->indent ();
+  if (node->argument_count () > 0)
+    *os << ",\n";
+
+  // Generate the formal argument fields which are passed to the RequestInfo object
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+
+  if ((!visitor) || (bt->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for arglist failed\n"),
+                        -1);
+    }
+  delete visitor;
+  *os << ");\n";
+
+  /* 
   if (this->gen_check_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -378,7 +409,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                          "codegen for checking exception failed\n"),
                         -1);
 
-    }
+                        }*/
   os->decr_indent ();
   *os << "}\n" << be_uidt_nl;
 
@@ -405,7 +436,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
   // Invoke preinvoke interceptor
   *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
-      << "_tao_vfr.preinvoke (" << be_idt << be_idt_nl
+    /*      << "_tao_vfr.preinvoke (" << be_idt << be_idt_nl
       << "_tao_call.request_id ()," << be_nl;
 
   if (node->flags () == AST_Operation::OP_oneway)
@@ -417,7 +448,11 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << this->compute_operation_name (node) << ","
       << be_nl << "_tao_call.service_info ()," << be_nl
       << "_tao_interceptor_args.inout ()," << be_nl
-      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << "_tao_cookies,"*/
+
+      << " _tao_vfr.send_request ("<< be_idt << be_idt_nl
+      << "&ri,"<< be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl << ");\n" << be_uidt;
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -665,9 +700,32 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       *os << be_uidt;
     }
 
+
+  *os << "ClientRequest_Info_"<< node->flat_name () << "  ri_next (" << this->compute_operation_name (node) << ",\n"
+      << "_tao_call.service_info ()," << be_nl
+      << "(CORBA::Object_ptr) this," << be_nl;
+
+  // Generate the formal argument fields which are passed to the RequestInfo object
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+
+  if ((!visitor) || (bt->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for arglist failed\n"),
+                        -1);
+    }
+  delete visitor;
+  *os << ");\n";
+  
+  
   // Invoke postinvoke interceptor
-  *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
-      << "_tao_vfr.postinvoke (" << be_idt << be_idt_nl
+  *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl;
+    /*      << "_tao_vfr.postinvoke (" << be_idt << be_idt_nl
       << "_tao_call.request_id ()," << be_nl;
 
   if (node->flags () == AST_Operation::OP_oneway)
@@ -679,8 +737,12 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << this->compute_operation_name (node)
       << "," << be_nl << "_tao_call.service_info ()," << be_nl
       << "_tao_interceptor_args.inout ()," << be_nl
-      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl << ");\n" << be_uidt;
+      << "_tao_cookies," <<*/
+
+  *os << "_tao_vfr.receive_reply (" << be_idt_nl 
+      << "&ri_next," 
+      << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl << ");\n";
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -700,7 +762,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << be_uidt_nl << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_vfr.exception_occurred (" << be_idt << be_idt_nl
+    /*      << "_tao_vfr.exception_occurred (" << be_idt << be_idt_nl
       << "_tao_call.request_id ()," << be_nl;
 
   if (node->flags () == AST_Operation::OP_oneway)
@@ -713,7 +775,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << "," << be_nl // _tao_call.service_info (), "
       << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "ACE_RETHROW;" << be_uidt_nl
+      << "ACE_RETHROW;" << be_uidt_nl*/
       << "}" << be_uidt_nl
       << "ACE_ENDTRY;\n";
 

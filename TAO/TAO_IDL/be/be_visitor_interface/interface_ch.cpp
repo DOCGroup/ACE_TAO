@@ -45,6 +45,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
   long i;            // loop index
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor *visitor = 0;
 
   if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
                                                    // not imported
@@ -243,8 +245,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << be_uidt_nl;
       *os << "};\n\n";
 
-      be_visitor_context ctx (*this->ctx_);
-      be_visitor *visitor = 0;
+      ctx = *this->ctx_;
 
       // Don't support smart proxies for local interfaces.
       if (! node->is_local ())
@@ -266,7 +267,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
 
       os->gen_endif ();
-
       if (! node->is_local ())
         {
           // by using a visitor to declare and define the TypeCode, we
@@ -286,6 +286,25 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
             }
 
         }
+
+      be_visitor_context ctx (*this->ctx_);
+      be_visitor *visitor = 0;
+      // Interceptor related classes.
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "codegen for interceptor classes failed\n"),
+                                -1);
+        }
+      delete visitor;
+      visitor = 0;
+
+
       node->cli_hdr_gen (I_TRUE);
     } // if !cli_hdr_gen
 
