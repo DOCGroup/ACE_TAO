@@ -1,3 +1,29 @@
+Tue Sep 28 20:22:16 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_basic_string_sequence.hpp:
+	  Refactored implementation of string sequences to a class
+	  template.  The character type is the template parameter.
+
+	* tests/Sequence_Unit_Tests/string_traits.hpp:
+	  Fixed bug in the implementation of the string traits.  I used
+	  the wrong type, but it was not a problem until the wide-strings
+	  were tested.
+
+	* tests/Sequence_Unit_Tests/bounded_string_sequence.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	* tests/Sequence_Unit_Tests/bounded_wstring_sequence.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_wstring_sequence.hpp:
+	  Implemented wrappers for the parametric string classes.
+
+	* tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+	* tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	  Re-write the unit tests as templates so we can test both regular
+	  and wide-character strings in the same code.  The trick was to
+	  provide a helper class to encapsulate comparisons, sample
+	  strings, etc.
+
 Tue Sep 28 14:15:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:

@@ -9,6 +9,7 @@
  *
  * @author Carlos O'Ryan
  */
+#include "string_traits.hpp"
 
 #include "ace/OS_NS_string.h"
 
@@ -16,9 +17,100 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
+#include <sstream>
+
+template<typename charT>
+struct string_sequence_test_helpers
+{
+};
+
+template<>
+struct string_sequence_test_helpers<char>
+{
+  inline static char const * test_string()
+  {
+    return "In a hole in the ground there lived a Hobbit";
+  }
+
+  inline static char * allocate_test_string()
+  {
+    return TAO::details::string_traits<char,true>::duplicate(
+        test_string());
+  }
+
+  static bool compare_test_string(char const * value)
+  {
+    return ACE_OS::strcmp(test_string(), value) == 0;
+  }
+
+  inline static char * to_string(CORBA::ULong i)
+  {
+    std::ostringstream os;
+    os << i;
+    return TAO::details::string_traits<char,true>::duplicate(
+        os.str().c_str());
+  }
+
+  inline static bool compare(int i, char const * value)
+  {
+    std::ostringstream os;
+    os << i;
+    return ACE_OS::strcmp(os.str().c_str(), value) == 0;
+  }
+
+  inline static bool compare_empty(char const * value)
+  {
+    return ACE_OS::strcmp(value, "") == 0;
+  }
+};
+
+template<>
+struct string_sequence_test_helpers<CORBA::WChar>
+{
+  inline static CORBA::WChar const * test_string()
+  {
+    return L"In a hole in the ground there lived a Hobbit";
+  }
+
+  inline static CORBA::WChar * allocate_test_string()
+  {
+    return TAO::details::string_traits<CORBA::WChar,true>::duplicate(
+        test_string());
+  }
+
+  static bool compare_test_string(CORBA::WChar const * value)
+  {
+    return ACE_OS::strcmp(test_string(), value) == 0;
+  }
+
+  inline static CORBA::WChar * to_string(CORBA::ULong i)
+  {
+    std::wostringstream os;
+    os << i;
+    return TAO::details::string_traits<CORBA::WChar,true>::duplicate(
+        os.str().c_str());
+  }
+
+  inline static bool compare(int i, CORBA::WChar const * value)
+  {
+    std::wostringstream os;
+    os << i;
+    return ACE_OS::strcmp(os.str().c_str(), value) == 0;
+  }
+
+  inline static bool compare_empty(CORBA::WChar const * value)
+  {
+    return ACE_OS::strcmp(value, L"") == 0;
+  }
+};
+
+
+
 template<class tested_sequence>
 struct string_sequence_tester
 {
+  typedef typename tested_sequence::character_type character_type;
+  typedef string_sequence_test_helpers<character_type> helper;
   typedef typename tested_sequence::value_type value_type;
   typedef typename tested_sequence::const_value_type const_value_type;
   typedef typename tested_sequence::element_traits tested_element_traits;
@@ -71,8 +163,8 @@ struct string_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    char const * t = y[4];
-    BOOST_CHECK_MESSAGE(std::strcmp(t, "") == 0,
+    character_type const * t = y[4];
+    BOOST_CHECK_MESSAGE(helper::compare_empty(t),
         "Unexpected string value " << t);
   }
 
@@ -83,17 +175,17 @@ struct string_sequence_tester
 
     tested_sequence const & y = x;
 
-    char const * text = "text";
+    character_type const * text = helper::test_string();
     expected_calls d(tested_element_traits::duplicate_calls);
     x[4] = text;
     BOOST_CHECK_MESSAGE(d.expect(1), d);
 
-    char const * t = y[4];
+    character_type const * t = y[4];
 
-    BOOST_CHECK_MESSAGE(std::strcmp(text, x[4]) == 0,
+    BOOST_CHECK_MESSAGE(ACE_OS::strcmp(text, x[4]) == 0,
         "Mismatched values expected=" << text
         << ", got=" << x[4]);
-    BOOST_CHECK_MESSAGE(std::strcmp(text, y[4]) == 0,
+    BOOST_CHECK_MESSAGE(ACE_OS::strcmp(text, y[4]) == 0,
         "Mismatched values expected=" << text
         << ", got=" << y[4]);
     BOOST_CHECK(text != t);
@@ -105,8 +197,8 @@ struct string_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    char const * lhs = 0;
-    char const * rhs = 0;
+    character_type const * lhs = 0;
+    character_type const * rhs = 0;
     BOOST_CHECK_THROW(lhs = y[32], std::range_error);
     BOOST_CHECK_THROW(x[32] = rhs, std::range_error);
   }
@@ -117,8 +209,7 @@ struct string_sequence_tester
     a.length(16);
     for(CORBA::ULong i = 0; i != 16; ++i)
     {
-      std::ostringstream os; os << (i*i);
-      a[i] = os.str().c_str();
+      a[i] = helper::to_string(i);
     }
 
     expected_calls d(tested_element_traits::duplicate_calls);
@@ -147,7 +238,7 @@ struct string_sequence_tester
     value_type * buffer = tested_sequence::allocbuf(32);
     for(int i = 0; i != 32; ++i)
     {
-      buffer[i] = tested_element_traits::duplicate("Foo bar baz");
+      buffer[i] = helper::allocate_test_string();
     }
 
     expected_calls r(tested_element_traits::release_calls);
@@ -192,8 +283,7 @@ struct string_sequence_tester
     a.length(16);
     for(CORBA::ULong i = 0; i != 16; ++i)
     {
-      std::ostringstream os; os << (i*i);
-      a[i] = os.str().c_str();
+      a[i] = helper::to_string(i);
     }
 
     expected_calls d(tested_element_traits::duplicate_calls);
@@ -264,7 +354,7 @@ struct string_sequence_tester
 
       for(CORBA::ULong i = 0; i != 8; ++i)
       {
-        x[i] = tested_element_traits::duplicate("foo bar baz");
+        x[i] = helper::allocate_test_string();
       }
 
       expected_calls a(tested_allocation_traits::allocbuf_calls);
@@ -291,7 +381,7 @@ struct string_sequence_tester
 
       for(CORBA::ULong i = 0; i != 8; ++i)
       {
-        x[i] = tested_element_traits::duplicate("foo bar baz");
+        x[i] = helper::allocate_test_string();
       }
 
       expected_calls a(tested_allocation_traits::allocbuf_calls);
@@ -303,7 +393,7 @@ struct string_sequence_tester
         tested_sequence y; y.length(4);
         for(CORBA::ULong i = 0; i != 4; ++i)
         {
-          y[i] = tested_element_traits::duplicate("check");
+          y[i] = helper::allocate_test_string();
         }
         
         a.reset();
@@ -321,11 +411,8 @@ struct string_sequence_tester
         for(CORBA::ULong i = 0; i != 4; ++i)
         {
           BOOST_CHECK_MESSAGE(
-              ACE_OS::strcmp(
-                  const_cast<const_value_type>("check"),
-                  y[i]) == 0,
+              helper::compare_test_string(y[i]),
               "Mismatch in element " << i
-              << ", expected=" << const_cast<const_value_type>("check")
               << ", got=" << y[i]);
         }
       }
@@ -340,7 +427,7 @@ struct string_sequence_tester
     tested_sequence const & b = a;
 
     const_value_type const * buffer = b.get_buffer();
-    a[0] = const_value_type("abcd");
+    a[0] = helper::test_string();
 
     BOOST_CHECK_EQUAL(buffer, b.get_buffer());
     BOOST_CHECK_MESSAGE(ACE_OS::strcmp(a[0], buffer[0]) == 0,
