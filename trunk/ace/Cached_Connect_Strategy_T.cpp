@@ -228,13 +228,13 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
 {
   // Actively establish the connection.  This is a timed blocking
   // connect.
-  if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
-                                                   remote_addr,
-                                                   timeout,
-                                                   local_addr,
-                                                   reuse_addr,
-                                                   flags,
-                                                   perms) == -1)
+  if (this->new_connection (sh,
+                            remote_addr,
+                            timeout,
+                            local_addr,
+                            reuse_addr,
+                            flags,
+                            perms) == -1)
     {
       // If connect() failed because of timeouts, we have to reject
       // the connection entirely. This is necessary since currently
@@ -255,13 +255,13 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
             return -1;
 
           // Try connecting again.
-          if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
-                                                           remote_addr,
-                                                           timeout,
-                                                           local_addr,
-                                                           reuse_addr,
-                                                           flags,
-                                                           perms) == -1)
+          if (this->new_connection (sh,
+                                    remote_addr,
+                                    timeout,
+                                    local_addr,
+                                    reuse_addr,
+                                    flags,
+                                    perms) == -1)
             {
               if (errno == EWOULDBLOCK)
                 errno = ENOTSUP;
