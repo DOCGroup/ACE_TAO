@@ -45,7 +45,7 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Default number of clients/servers.
-static int n_servers = 1000;
+static int n_servers = 2000;
 static double purge_percentage = 20;
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -72,11 +72,14 @@ typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 typedef ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR> H_KEY;
 typedef ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR> C_KEYS;
 
-typedef ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>,\
+                                ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
         HASH_MAP;
-typedef ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, \
+                                 ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
         HASH_MAP_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>,\
+                                         ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
         HASH_MAP_REVERSE_ITERATOR;
 typedef ACE_Svc_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>
         CLEANUP_STRATEGY;
@@ -115,10 +118,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
                          ASYS_TEXT ("(%P|%t) %p\n"),
                          ASYS_TEXT ("send_n")),
                         -1);
-    else
-      ACE_DEBUG ((LM_DEBUG,
-                  "%c", c));
-
+ 
   // Svc_Handler is now idle, so mark it as such and let the cache
   // recycle it.
   svc_handler->idle (1);
@@ -136,7 +136,12 @@ server (ACCEPTOR *acceptor)
   int result = acceptor->accept (&svc_handler,
                                  &cli_addr);
   if (result == -1)
-    return -1;
+    {
+      if (errno == EMFILE)
+        return 1;
+
+      return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) client %s connected from %d\n"),
@@ -163,7 +168,7 @@ server (ACCEPTOR *acceptor)
 
   if (r_bytes == 0)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) reached end of input, connection closed by client\n")));
+                ASYS_TEXT ("(%P|%t) reached end of input, connection cached by client\n")));
   else if (r_bytes == -1)
     {
       if (errno == EWOULDBLOCK)
@@ -223,8 +228,11 @@ test_connection_management (void)
                                          &caching_connect_strategy,
                                          &activation_strategy);
 
-  // Set the purging percentage explicitly. By default it is 10%
-  CACHED_CONNECT_STRATEGY *connect_strategy =
+  // Set the purging percentage explicitly. By default it is 10%.
+  // Note: The purge_percent could have been set before itself but,
+  // the following has been done just to show how one would explicitly
+  // set the purge_percent at any moment.
+  CACHED_CONNECT_STRATEGY *connect_strategy = 
     ACE_dynamic_cast (CACHED_CONNECT_STRATEGY *,
                       strategy_connector.connect_strategy ());
 
@@ -262,7 +270,7 @@ test_connection_management (void)
       ACE_ASSERT (result != -1);
 
       result = server (&acceptor);
-      if (result == -1)
+      if (result == 1)
         {
           // Close connections which are cached by explicitly purging
           // the connection cache maintained by the connector.
@@ -271,7 +279,9 @@ test_connection_management (void)
           int retval = connect_strategy->purge_connections (purge_percentage);
           ACE_ASSERT (retval != -1);
         }
-    }
+
+      ACE_ASSERT (result != -1);
+    } 
 }
 
 int
