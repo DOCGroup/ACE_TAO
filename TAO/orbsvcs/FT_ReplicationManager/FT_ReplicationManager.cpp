@@ -44,6 +44,7 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   , fault_notifier_(FT::FaultNotifier::_nil())
   , fault_notifier_ior_(0)
   , fault_consumer_()
+  , quit_(0)
 {
   //@@Note: this->init() is not called here (in the constructor)
   // since it may throw an exception.  Throwing an exception in
@@ -255,8 +256,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 int TAO::FT_ReplicationManager::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
-  int quit = 0;  // never quit
-  return quit;
+  return this->quit_;
 }
 
 
@@ -281,6 +281,8 @@ int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
 
   result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  this->quit_ = 1;
 
   return result;
 }
@@ -444,7 +446,7 @@ void TAO::FT_ReplicationManager::shutdown_i (
   result = this->fini (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_PARAMETER);
+  // this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 //////////////////////////////////////////////////////

@@ -139,12 +139,13 @@ unlink $client_data;
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
 my($CONS) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n file://$notifier_ior -q -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior");
 my($REPLM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $replmgr_ior -f file://$notifier_ior");
+my($REPLM_CTRL) = new PerlACE::Process (".$build_directory/replmgr_controller", "-k file://$replmgr_ior -x");
 
 my($CL);
 if (simulated) {
@@ -154,35 +155,12 @@ if (simulated) {
   $CL = new PerlACE::Process (".$build_directory/ft_client", "-f  -f file://$replica1_iogr -c testscript");
 }
 
-print "TEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
-$REP1->Spawn ();
-
-print "TEST: waiting for replica 1's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replica1_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    exit 1;
-}
-
-print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
-$REP2->Spawn ();
-
-print "TEST: waiting for replica 2's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replica2_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
-    exit 1;
-}
-
 print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbose);
 $DET->Spawn ();
 
 print "TEST: waiting for detector's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$detector_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
     $DET->Kill (); $DET->TimedWait(1);
     exit 1;
 }
@@ -193,8 +171,6 @@ $NOT->Spawn ();
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$notifier_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
     $DET->Kill (); $DET->TimedWait(1);
     $NOT->Kill (); $NOT->TimedWait(1);
     exit 1;
@@ -206,11 +182,36 @@ $REPLM->Spawn ();
 print "TEST: waiting for Replication Manager's IOR file\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replmgr_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$replmgr_ior>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
     $DET->Kill (); $DET->TimedWait(1);
     $NOT->Kill (); $NOT->TimedWait(1);
     $REPLM->Kill (); $REPLM->TimedWait(1);
+    exit 1;
+}
+
+print "TEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
+$REP1->Spawn ();
+
+print "TEST: waiting for replica 1's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$replica1_ior>\n";
+    $DET->Kill (); $DET->TimedWait(1);
+    $NOT->Kill (); $NOT->TimedWait(1);
+    $REPLM->Kill (); $REPLM->TimedWait(1);
+    $REP1->Kill (); $REP1->TimedWait (1);
+    exit 1;
+}
+
+print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
+$REP2->Spawn ();
+
+print "TEST: waiting for replica 2's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$replica2_ior>\n";
+    $DET->Kill (); $DET->TimedWait(1);
+    $NOT->Kill (); $NOT->TimedWait(1);
+    $REPLM->Kill (); $REPLM->TimedWait(1);
+    $REP1->Kill (); $REP1->TimedWait (1);
+    $REP2->Kill (); $REP2->TimedWait (1);
     exit 1;
 }
 
@@ -220,12 +221,12 @@ $CONS->Spawn ();
 print "TEST: waiting for READY.FILE from fault consumer\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
     print STDERR "ERROR: cannot find file <$ready_file>\n";
-    $REP1->Kill (); $REP1->TimedWait (1);
-    $REP2->Kill (); $REP2->TimedWait (1);
     $DET->Kill (); $DET->TimedWait(1);
     $NOT->Kill (); $NOT->TimedWait(1);
-    $CONS->Kill (); $CONS->TimedWait(1);
     $REPLM->Kill (); $REPLM->TimedWait(1);
+    $REP1->Kill (); $REP1->TimedWait (1);
+    $REP2->Kill (); $REP2->TimedWait (1);
+    $CONS->Kill (); $CONS->TimedWait(1);
     exit 1;
 }
 
@@ -258,17 +259,31 @@ if ($detector != 0) {
     $status = 1;
 }
 
-print "\nTEST: wait for notifier to leave.\n" if ($verbose);
-$notifier = $NOT->WaitKill (20);
-if ($notifier != 0) {
-    print STDERR "ERROR: notifier returned $notifier\n";
-    $status = 1;
-}
-
 print "\nTEST: wait for fault consumer to leave.\n" if ($verbose);
 $consumer = $CONS->WaitKill (20);
 if ($consumer != 0) {
     print STDERR "ERROR: fault consumer returned $consumer\n";
+    $status = 1;
+}
+
+print "\nTEST: shutting down the replication manager.\n" if ($verbose);
+$controller = $REPLM_CTRL->SpawnWaitKill (300);
+if ($controller != 0) {
+    print STDERR "ERROR: replication manager controller returned $controller\n";
+    $status = 1;
+}
+
+print "\nTEST: wait for replication manager to leave.\n" if ($verbose);
+$rm = $REPLM->WaitKill (30);
+if ($rm != 0) {
+    print STDERR "ERROR: replication manager returned $rm\n";
+    $status = 1;
+}
+
+print "\nTEST: wait for notifier to leave.\n" if ($verbose);
+$notifier = $NOT->WaitKill (20);
+if ($notifier != 0) {
+    print STDERR "ERROR: notifier returned $notifier\n";
     $status = 1;
 }
 
