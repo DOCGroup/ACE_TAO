@@ -430,6 +430,10 @@ int main (int argc, char *argv [])
 
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
+  ACE_UNUSED_ARG (print_till_death);
+  ACE_UNUSED_ARG (order);
+  ACE_UNUSED_ARG (remove_files);
+  ACE_UNUSED_ARG (parse_args);
 #endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
 
   ACE_END_TEST;
