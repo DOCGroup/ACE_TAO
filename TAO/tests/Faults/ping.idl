@@ -2,13 +2,13 @@
 // $Id$
 //
 
-interface Ping
+interface PingObject
 {
   // = DESCRIPTION
   //   An interface to ping-pong between two objects, it is used to
   //   test a very interesting use-case reported by Andreas Geisler.
 
-  oneway void ping (in Ping callback);
+  oneway void ping (in PingObject callback);
   // The ping method, the server should respond by invoking <pong> on
   // the <callback> object
 
