@@ -666,12 +666,11 @@ Log_i::query_i (const char *constraint,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (rec_list);
 
+      // Transfer ownership to the POA.
+      PortableServer::ServantBase_var safe_iter_query = iter_query;
+
       // Activate it.
       iter_out = iter_query->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (rec_list);
-
-      // Give ownership to the POA.
-      this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (rec_list);
     }
 
@@ -691,14 +690,10 @@ Log_i::query (const char *grammar,
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  DsLogAdmin::RecordList* rec_list =
-    this->query_i (constraint,
-                   iter_out,
-                   this->max_rec_list_len_
-                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rec_list);
-
-  return rec_list;
+  return this->query_i (constraint,
+                        iter_out,
+                        this->max_rec_list_len_
+                        ACE_ENV_ARG_PARAMETER);
 }
 
 DsLogAdmin::RecordList*
@@ -725,19 +720,15 @@ Log_i::retrieve (DsLogAdmin::TimeT from_time,
   if (how_many >= 0)
     ACE_OS::sprintf (constraint, "time >= %s", uint64_formating);
   else
-  {
-    ACE_OS::sprintf (constraint, "time < %s", uint64_formating);
-     how_many = -(how_many);
-  }
+    {
+      ACE_OS::sprintf (constraint, "time < %s", uint64_formating);
+      how_many = -(how_many);
+    }
 
-  DsLogAdmin::RecordList* rec_list =
-    this->query_i (constraint,
-                   iter_out,
-                   how_many
-                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rec_list);
-
-  return rec_list;
+  return this->query_i (constraint,
+                        iter_out,
+                        how_many
+                        ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ULong

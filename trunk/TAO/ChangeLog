@@ -1,3 +1,25 @@
+Wed Oct  2 21:48:07 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
+
+	  Improved exception-safety, and thus a potential memory leak.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id): 
+
+	  Fixed incorrect code that used the auto_ptr<> template in an
+	  attempt to make the code exception-safe.  auto_ptr<> doesn't
+	  apply in this case since the object in question is reference
+	  counted.  Use a PortableServer::ServantBase_var instead to
+	  eventually transfer ownership to the POA.  This also cleans up
+	  an unnecessary, and non-exception-safe, call to the servant's
+	  _remove_ref() method.  This bug was made obvious by the change
+	  below where the servant's destructor was made protected.
+	  Protected destructors in reference counted classes are your
+	  friend!
+
+	  The above change obviates the need for explicit auto_ptr<>
+	  template instantiations.
+
 Wed Oct  2 21:40:31 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Test.idl:
