@@ -28,13 +28,15 @@ LIBS            += -ldl -lpthread
 ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
   LIBS += -lrt
 endif
+MATHLIB         = -lm
 OCFLAGS         += -O4
 PIC             =
 ARFLAGS         = rsuv
 # When libraries are archived, a hash index is automatically created
 # so there is no need for ranlib
 RANLIB          = @true
-SOFLAGS         = -shared $(ACELIB) cxx_repository/*.o
+SOFLAGS         = -shared $(ACELIB) \
+                  `test -f "cxx_repository/*.o" && echo 'cxx_repository/*.o'`
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
