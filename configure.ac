@@ -209,9 +209,6 @@ dnl Add --{enable,disable,with,without}-feature options.
 ACE_CONFIGURATION_OPTIONS
 ACE_COMPILATION_OPTIONS
 
-dnl Configure the TAO directory if it exists.
-dnl TAO_CONFIGURATION_OPTIONS
-
 # Autoconf's AC_OBJEXT and AC_EXEEXT macros only works for C compilers!
 # Libtool's setup macro calls AC_OBJEXT and AC_EXEEXT without setting
 # the test language to C.  We do it before any libtool setup macros are
@@ -3162,28 +3159,22 @@ case "$host_os" in
      ;;
 esac
 
-AC_CHECK_FUNC([access],
-  ,
-  [AC_DEFINE([ACE_LACKS_ACCESS])])
+ACE_CHECK_LACKS_FUNCS(access)
 
 dnl Temporarily select C as the test language to work around a bug in
 dnl some versions of Autoconf when C++ is selected as the test
 dnl language.
 AC_LANG_PUSH([C])
-AC_CHECK_FUNC([bsearch],
-  ,
-  [AC_DEFINE([ACE_LACKS_BSEARCH])])
+ACE_CHECK_LACKS_FUNCS(bsearch)
 AC_LANG_POP([C])
 
-AC_CHECK_FUNC([clock_gettime], [AC_DEFINE([ACE_HAS_CLOCK_GETTIME])],)
+ACE_CHECK_HAS_FUNCS(clock_gettime)
 
 dnl Temporarily select C as the test language to work around a bug in
 dnl some versions of Autoconf when C++ is selected as the test
 dnl language.
 AC_LANG_PUSH([C])
-AC_CHECK_FUNC([qsort],
-  ,
-  [AC_DEFINE([ACE_LACKS_QSORT])])
+ACE_CHECK_LACKS_FUNCS(qsort)
 AC_LANG_POP([C])
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
@@ -3192,17 +3183,7 @@ AC_CHECK_FUNCS([execv execvp execve],
   ,
   [AC_DEFINE([ACE_LACKS_EXEC])])
 
-AC_CHECK_FUNC([fgetwc],
-  ,
-  [AC_DEFINE([ACE_LACKS_FGETWC])])
-
-AC_CHECK_FUNC([fcntl],
-  ,
-  [AC_DEFINE([ACE_LACKS_FCNTL])])
-
-AC_CHECK_FUNC([fsync],
-  ,
-  [AC_DEFINE([ACE_LACKS_FSYNC])])
+ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
 
 AC_CHECK_FUNC([getmsg],
   [
@@ -3252,16 +3233,11 @@ main ()
 
 AC_CHECK_FUNC([gethostbyaddr],,)
 
-AC_CHECK_FUNC([gethostent],
-  ,
-  [AC_DEFINE([ACE_LACKS_GETHOSTENT])])
+ACE_CHECK_LACKS_FUNCS(gethostent)
 
-AC_CHECK_FUNC([getifaddrs],
-  [AC_DEFINE([ACE_HAS_GETIFADDRS])],)
+ACE_CHECK_HAS_FUNCS(getifaddrs)
 
-AC_CHECK_FUNC([difftime],
-  ,
-  [AC_DEFINE([ACE_LACKS_DIFFTIME])])
+ACE_CHECK_LACKS_FUNCS(difftime)
 
 dnl Check for 64 bit llseek() or lseek64()
 case "$host" in
@@ -3389,33 +3365,19 @@ AC_CHECK_FUNC([pread],
        ],,[AC_DEFINE([ACE_LACKS_PREAD_PROTOTYPE])])
     ],)],)
 
-AC_CHECK_FUNC([readv], , [AC_DEFINE([ACE_LACKS_READV])])
-
-AC_CHECK_FUNC([writev], , [AC_DEFINE([ACE_LACKS_WRITEV])])
+ACE_CHECK_LACKS_FUNCS(readv writev)
 
 AC_CHECK_FUNC([set_t_errno], [AC_DEFINE([ACE_HAS_SET_T_ERRNO])],)
 
-AC_CHECK_FUNC([sigsuspend],
-  [AC_DEFINE([ACE_HAS_SIGSUSPEND])],)
+ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 
-AC_CHECK_FUNC([sigtimedwait],
-  [AC_DEFINE([ACE_HAS_SIGTIMEDWAIT])],)
-
-AC_CHECK_FUNC([socketpair],
-  ,
-  [AC_DEFINE([ACE_LACKS_SOCKETPAIR])])
-
-AC_CHECK_FUNC([strcasecmp],
-  ,
-  [AC_DEFINE([ACE_LACKS_STRCASECMP])])
+ACE_CHECK_LACKS_FUNCS(socketpair strcasecmp)
 
 AC_CHECK_FUNC([strdup],
   ,
   [AC_DEFINE([ACE_HAS_STRDUP_EMULATION])])
 
-AC_CHECK_FUNC([strrchr],
-  ,
-  [AC_DEFINE([ACE_LACKS_STRRCHR])])
+ACE_CHECK_LACKS_FUNCS(strrchr)
 
 AC_CHECK_FUNC([strptime],
   [
@@ -3443,20 +3405,16 @@ AC_CHECK_FUNC([strptime],
    AC_DEFINE([ACE_LACKS_NATIVE_STRPTIME])
   ])
 
-AC_CHECK_FUNC([memchr],
-  [AC_DEFINE([ACE_HAS_MEMCHR])],)
+ACE_CHECK_HAS_FUNCS(memchr)
 
 if test "$ace_cv_type_wchar_t" = yes; then
   AC_CHECK_FUNC([wcslen],
     [AC_DEFINE([ACE_HAS_XPG4_MULTIBYTE_CHAR])],)
 fi
 
-AC_CHECK_FUNC([syscall],
-  ,
-  [AC_DEFINE([ACE_LACKS_SYSCALL])])
+ACE_CHECK_LACKS_FUNCS(syscall)
 
-AC_CHECK_FUNC([ualarm],
-  [AC_DEFINE([ACE_HAS_UALARM])],)
+ACE_CHECK_HAS_FUNCS(ualarm)
 
 AC_CHECK_FUNC([alarm],,)
 AC_CHECK_FUNC([signal],,)
@@ -3466,9 +3424,7 @@ if test "$ac_cv_func_alarm" != yes &&
   AC_DEFINE([ACE_LACKS_UNIX_SIGNALS])
 fi
 
-AC_CHECK_FUNC([fork],
-  ,
-  [AC_DEFINE([ACE_LACKS_FORK])])
+ACE_CHECK_LACKS_FUNCS(fork)
 
 AC_CHECK_FUNC([getrlimit],
   [
@@ -3487,31 +3443,11 @@ AC_CHECK_FUNC([sysinfo],
    fi
   ],)
 
-AC_CHECK_FUNC([strerror],
-  [AC_DEFINE([ACE_HAS_STRERROR])],)
+ACE_CHECK_HAS_FUNCS(strerror)
 
-AC_CHECK_FUNC([lstat],
-  ,
-  [AC_DEFINE([ACE_LACKS_LSTAT])])
+ACE_CHECK_LACKS_FUNCS(lstat readlink rename recvmsg sendmsg)
 
-AC_CHECK_FUNC([readlink],
-  ,
-  [AC_DEFINE([ACE_LACKS_READLINK])])
-
-AC_CHECK_FUNC([rename],
-  ,
-  [AC_DEFINE([ACE_LACKS_RENAME])])
-
-AC_CHECK_FUNC([recvmsg],
-  ,
-  [AC_DEFINE([ACE_LACKS_RECVMSG])])
-
-AC_CHECK_FUNC([sendmsg],
-  ,
-  [AC_DEFINE([ACE_LACKS_SENDMSG])])
-
-AC_CHECK_FUNC([getrusage],
-  [AC_DEFINE([ACE_HAS_GETRUSAGE])],)
+ACE_CHECK_HAS_FUNCS(getrusage)
 
 AC_CHECK_FUNC([getpgid],
   [
@@ -3538,9 +3474,7 @@ AC_CHECK_FUNC([getpgid],
    AC_DEFINE([ACE_LACKS_GETPGID])
   ])
 
-AC_CHECK_FUNC([getppid],
-  ,
-  AC_DEFINE([ACE_LACKS_GETPPID]))
+ACE_CHECK_LACKS_FUNCS(getppid)
 
 AC_CHECK_FUNC([setregid],
   [
@@ -3596,30 +3530,16 @@ AC_CHECK_FUNC([getpagesize],
   [AC_DEFINE([ACE_HAS_GETPAGESIZE])],
   [AC_DEFINE([ACE_PAGE_SIZE], [4096])])
 
-AC_CHECK_FUNC([msync],
-  ,
-  [AC_DEFINE([ACE_LACKS_MSYNC])])
-
-AC_CHECK_FUNC([mprotect],
-  ,
-  [AC_DEFINE([ACE_LACKS_MPROTECT])])
-
-AC_CHECK_FUNC([mkfifo],
-  ,
-  [AC_DEFINE([ACE_LACKS_MKFIFO])])
+ACE_CHECK_LACKS_FUNCS(msync mprotect mkfifo)
 
 dnl Temporarily select C as the test language to work around a bug in
 dnl some versions of Autoconf when C++ is selected as the test
 dnl language.
 AC_LANG_PUSH([C])
-AC_CHECK_FUNC([mktemp],
-  ,
-  [AC_DEFINE([ACE_LACKS_MKTEMP])])
+ACE_CHECK_LACKS_FUNCS(mktemp)
 AC_LANG_POP([C])
 
-AC_CHECK_FUNC([madvise],
-  ,
-  [AC_DEFINE([ACE_LACKS_MADVISE])])
+ACE_CHECK_LACKS_FUNCS(madvise)
 
 if test "$ac_cv_header_sys_priocntl_h" = yes; then
   AC_CHECK_FUNC([priocntl],
@@ -3649,87 +3569,9 @@ dnl Some platforms define priocntl as a macro!
 fi dnl test "$ac_cv_header_sys_priocntl_h" = yes
 
 dnl FIXME:  How do we check for a working sbrk()?  Do we need to?
-AC_CHECK_FUNC([sbrk],, [AC_DEFINE([ACE_LACKS_SBRK])])
+ACE_CHECK_LACKS_FUNCS(sbrk)
 
-AC_CHECK_FUNC([wcscat],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSCAT])])
-
-AC_CHECK_FUNC([wcschr],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSCHR])])
-
-AC_CHECK_FUNC([wcscmp],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSCMP])])
-
-AC_CHECK_FUNC([wcscpy],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSCPY])])
-
-AC_CHECK_FUNC([wcscspn],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSCSPN])])
-
-AC_CHECK_FUNC([wcsdup],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSDUP])])
-
-AC_CHECK_FUNC([wcsicmp],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSICMP])])
-
-AC_CHECK_FUNC([wcslen],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSLEN])])
-
-AC_CHECK_FUNC([wcsncat],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSNCAT])])
-
-AC_CHECK_FUNC([wcsncmp],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSNCMP])])
-
-AC_CHECK_FUNC([wcsncpy],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSNCPY])])
-
-AC_CHECK_FUNC([wcsnicmp],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSNICMP])])
-
-AC_CHECK_FUNC([wcspbrk],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSPBRK])])
-
-AC_CHECK_FUNC([wcsrchr],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSRCHR])])
-
-AC_CHECK_FUNC([wcsspn],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSSPN])])
-
-AC_CHECK_FUNC([wcsstr],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSSTR])])
-
-AC_CHECK_FUNC([wcstod],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSTOD])])
-
-AC_CHECK_FUNC([wcstok],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSTOK])])
-
-AC_CHECK_FUNC([wcstol],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSTOL])])
-
-AC_CHECK_FUNC([wcstoul],
-  ,
-  [AC_DEFINE([ACE_LACKS_WCSTOUL])])
+ACE_CHECK_LACKS_FUNCS(wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
 if test "$ac_cv_func_wcstok" = yes; then
 dnl The wcstok() function varies with standards. Check which one we have.
@@ -3823,47 +3665,12 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
            AC_MSG_RESULT([no])
           ])
 
-AC_CHECK_FUNC([snprintf],
-  [AC_DEFINE([ACE_HAS_SNPRINTF])],)
+ACE_CHECK_HAS_FUNCS(snprintf)
 
-AC_CHECK_FUNC([tempnam],
-  ,
-  [AC_DEFINE([ACE_LACKS_TEMPNAM])])
-
-AC_CHECK_FUNC([truncate],
-  ,
-  [AC_DEFINE([ACE_LACKS_TRUNCATE])])
+ACE_CHECK_LACKS_FUNCS(tempnam truncate)
 
 dnl Check for MIT pthreads APIs for timed send/recv operations
-AC_CHECK_FUNC([recv_timedwait],
-  [AC_DEFINE([ACE_HAS_RECV_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([recvfrom_timedwait],
-  [AC_DEFINE([ACE_HAS_RECVFROM_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([recvmsg_timedwait],
-  [AC_DEFINE([ACE_HAS_RECVMSG_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([send_timedwait],
-  [AC_DEFINE([ACE_HAS_SEND_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([sendto_timedwait],
-  [AC_DEFINE([ACE_HAS_SENDTO_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([sendmsg_timedwait],
-  [AC_DEFINE([ACE_HAS_SENDMSG_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([read_timedwait],
-  [AC_DEFINE([ACE_HAS_READ_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([readv_timedwait],
-  [AC_DEFINE([ACE_HAS_READV_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([write_timedwait],
-  [AC_DEFINE([ACE_HAS_WRITE_TIMEDWAIT])],)
-
-AC_CHECK_FUNC([writev_timedwait],
-  [AC_DEFINE([ACE_HAS_WRITEV_TIMEDWAIT])],)
+ACE_CHECK_HAS_FUNCS(read_timedwait readv_timedwait recv_timedwait recvfrom_timedwait recvmsg_timedwait send_timedwait sendmsg_timedwait sendto_timedwait write_timedwait writev_timedwait)
 
 dnl Save the cache for debugging purposes
 AC_CACHE_SAVE
@@ -4021,9 +3828,7 @@ dnl These functions have a double underscore "__" prepended to maintain
 dnl backwards compatibility with Pthread Draft 4 functions of the same
 dnl name.
 
-  AC_CHECK_FUNC([pthread_sigmask],
-    ,
-    [AC_DEFINE([ACE_LACKS_PTHREAD_SIGMASK])])
+  ACE_CHECK_LACKS_FUNCS(pthread_sigmask)
 
   AC_CHECK_FUNC([pthread_key_create],
     [AC_DEFINE([ACE_HAS_THREAD_SPECIFIC_STORAGE])],
@@ -4033,11 +3838,8 @@ dnl name.
        [AC_DEFINE(ACE_HAS_TSS_EMULATION)])
     ])
 
-  AC_CHECK_FUNC([pthread_condattr_setkind_np],
-    [AC_DEFINE([ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP])],)
-
-  AC_CHECK_FUNC([pthread_mutexattr_setkind_np],
-    [AC_DEFINE([ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP])],)
+  ACE_CHECK_HAS_FUNCS(pthread_condattr_setkind_np)
+  ACE_CHECK_HAS_FUNCS(pthread_mutexattr_setkind_np)
 
   AC_CHECK_FUNC([pthread_condattr_setpshared],
     ,
@@ -4073,13 +3875,8 @@ dnl name.
      AC_DEFINE([ACE_LACKS_PTHREAD_CANCEL])
     ])
 
-  AC_CHECK_FUNC([pthread_yield],
-    ,
-    [AC_DEFINE([ACE_LACKS_PTHREAD_YIELD])])
-
-  AC_CHECK_FUNC([pthread_thr_sigsetmask],
-    ,
-    [AC_DEFINE([ACE_LACKS_PTHREAD_THR_SIGSETMASK])])
+  ACE_CHECK_LACKS_FUNCS(pthread_yield)
+  ACE_CHECK_LACKS_FUNCS(pthread_thr_sigsetmask)
 
   AC_CHECK_FUNC([pthread_attr_setdetachstate],
     ,
@@ -4181,16 +3978,8 @@ dnl Check for Unix98 pthreads extensions
        ])
     ],,)
 
-  AC_CHECK_FUNC([pthread_continue],
-    [AC_DEFINE([ACE_HAS_PTHREAD_CONTINUE])],)
-  AC_CHECK_FUNC([pthread_continue_np],
-    [AC_DEFINE([ACE_HAS_PTHREAD_CONTINUE_NP])],)
-  AC_CHECK_FUNC([pthread_resume_np],
-    [AC_DEFINE([ACE_HAS_PTHREAD_RESUME_NP])],)
-  AC_CHECK_FUNC([pthread_suspend],
-    [AC_DEFINE([ACE_HAS_PTHREAD_SUSPEND])],)
-  AC_CHECK_FUNC([pthread_suspend_np],
-    [AC_DEFINE([ACE_HAS_PTHREAD_SUSPEND_NP])],)
+  ACE_CHECK_HAS_FUNCS(pthread_continue pthread_continue_np pthread_resume_np pthread_suspend pthread_suspend_np)
+
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
   AC_CHECK_FUNC([pthread_rwlock_rdlock],,)
@@ -4473,8 +4262,7 @@ dnl ACE will define a sigwait function if we lie and say we don't have
 dnl one.  Unfortunately, the ACE function may conflict with our
 dnl function, so we'll go ahead and turn this on, even if we are
 dnl ignoring threads.
-AC_CHECK_FUNC([sigwait],
-  [AC_DEFINE([ACE_HAS_SIGWAIT])],)
+ACE_CHECK_HAS_FUNCS(sigwait)
 
 
 dnl Check for reentrant functions
@@ -4560,9 +4348,8 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
   AC_CHECK_FUNC([getservbyname_r],,)
 fi dnl End checks for reentrant functions
 
-AC_CHECK_FUNC([readdir_r],
-  ,
-  [AC_DEFINE([ACE_LACKS_READDIR_R])])
+
+ACE_CHECK_LACKS_FUNCS(readdir_r)
 
 dnl Disabled until we figure out what to do with the comparator
 dnl function argument inconsistencies between different platforms.
@@ -4573,13 +4360,7 @@ dnl    int comparator (const dirent ** d1, const dirent ** d2)
 dnl
 dnl AC_CHECK_FUNC([scandir], [AC_DEFINE([ACE_HAS_SCANDIR])], [])
 
-AC_CHECK_FUNC([seekdir],
-  ,
-  [AC_DEFINE([ACE_LACKS_SEEKDIR])])
-
-AC_CHECK_FUNC([telldir],
-  ,
-  [AC_DEFINE([ACE_LACKS_TELLDIR])])
+ACE_CHECK_LACKS_FUNCS(seekdir telldir)
 
 
 dnl

@@ -273,18 +273,6 @@ AH_TEMPLATE([ACE_HAS_ONE_DEFINITION_RULE],
 
 AH_TEMPLATE([ACE_HAS_PRIOCNTL],[OS has priocntl (2)])
 
-dnl Platform has the MIT pthreads APIs for timed send/recv operations
-AH_TEMPLATE([ACE_HAS_RECV_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_RECVFROM_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_RECVMSG_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_SEND_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_SENDTO_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_SENDMSG_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_READ_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_READV_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_WRITE_TIMEDWAIT],[])
-AH_TEMPLATE([ACE_HAS_WRITEV_TIMEDWAIT],[])
-
 AH_TEMPLATE([ACE_HAS_RLIMIT_RESOURCE_ENUM],
 [Platform has enum instead of int for first argument to ::{get,set}rlimit ().
 The value of this macro is the enum definition, e.g.,
@@ -421,9 +409,6 @@ AH_TEMPLATE([ACE_HAS_CHARPTR_SOCKOPT],
 AH_TEMPLATE([ACE_HAS_CHARPTR_SPRINTF],
 [sprintf() returns char * rather than int (e.g., SunOS 4.x)])
 
-AH_TEMPLATE([ACE_HAS_CLOCK_GETTIME],
-[Platform supports POSIX 1.b clock_gettime()])
-
 AH_TEMPLATE([ACE_HAS_CONFLICTING_XTI_MACROS],
 [OS header files have some problems with XTI (HP/UX 11).])
 
@@ -451,9 +436,6 @@ AH_TEMPLATE([ACE_HAS_GETIFADDRS],
 AH_TEMPLATE([ACE_HAS_GETPAGESIZE],
 [Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must
 be defined, except on Win32).])
-
-AH_TEMPLATE([ACE_HAS_GETRUSAGE],
-[Platform supports the getrusage() system call.])
 
 AH_TEMPLATE([ACE_HAS_GETRUSAGE_PROTO],
 [Platform has a getrusage () prototype in sys/resource.h that
@@ -519,8 +501,6 @@ AH_TEMPLATE([ACE_HAS_LONG_MAP_FAILED],
 [Platform defines MAP_FAILED as a long constant.])
 
 AH_TEMPLATE([ACE_HAS_MALLOC_STATS], [Enabled malloc statistics collection.])
-
-AH_TEMPLATE([ACE_HAS_MEMCHR],[Use native implementation of memchr().])
 
 AH_TEMPLATE([ACE_USES_OLD_IOSTREAMS],
 [Some files, such as ace/streams.h, want to include new style C++
@@ -615,30 +595,9 @@ AH_TEMPLATE([ACE_HAS_PTHREADS_STD],[Platform supports POSIX.1c-1995 threads])
 AH_TEMPLATE([ACE_HAS_PTHREADS_UNIX98_EXT],
 [Platform has the UNIX98 extensions to Pthreads (rwlocks)])
 
-AH_TEMPLATE([ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP],
-[Platform has pthread_condattr_setkind_np().])
-
-AH_TEMPLATE([ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP],
-[Platform has pthread_mutexattr_setkind_np().])
-
 AH_TEMPLATE([ACE_HAS_PTHREAD_PROCESS_ENUM],
 [pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
    PTHREAD_PROCESS_SHARED values])
-
-AH_TEMPLATE([ACE_HAS_PTHREAD_SUSPEND],
-[Platform has pthread_suspend().])
-
-AH_TEMPLATE([ACE_HAS_PTHREAD_SUSPEND_NP],
-[Platform has pthread_suspend_np().])
-
-AH_TEMPLATE([ACE_HAS_PTHREAD_CONTINUE],
-[Platform has pthread_continue().])
-
-AH_TEMPLATE([ACE_HAS_PTHREAD_CONTINUE_NP],
-[Platform has pthread_continue_np().])
-
-AH_TEMPLATE([ACE_HAS_PTHREAD_RESUME_NP],
-[Platform has pthread_resume_np().])
 
 AH_TEMPLATE([ACE_HAS_PURIFY],[Purify'ing.  Defined on command line.])
 
@@ -678,9 +637,6 @@ AH_TEMPLATE([ACE_AUTO_PTR_LACKS_RESET],
 [Compiler/platform standard C++ auto_ptr implementation lacks
    reset() method])
 
-AH_TEMPLATE([ACE_LACKS_BSEARCH],
-[Compiler/platform lacks the standard C library bsearch() function])
-
 AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MACRO],
 [Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but does not define
    CMSG_DATA (cmsg) macro.])
@@ -691,21 +647,7 @@ AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MEMBER],
    (This may be 'unsigned char __cmsg_data[0]' on some platforms, in
    which case we need another macro.)])
 
-AH_TEMPLATE([ACE_LACKS_FGETWC],
-[Compiler/platform lacks the fgetwc() function])
-
-AH_TEMPLATE([ACE_LACKS_QSORT],
-[Compiler/platform lacks the standard C library qsort() function])
-
-AH_TEMPLATE([ACE_LACKS_FCNTL],[Platform lacks POSIX-style fcntl ()])
-
-AH_TEMPLATE([ACE_LACKS_FSYNC],[Platform lacks fsync()])
-
 AH_TEMPLATE([ACE_LACKS_READDIR_R],[Platform lacks readdir_r()])
-
-AH_TEMPLATE([ACE_LACKS_SEEKDIR],[Platform lacks seekdir()])
-
-AH_TEMPLATE([ACE_LACKS_TELLDIR],[Platform lacks telldir()])
 
 AH_TEMPLATE([ACE_LACKS_INLINE_FUNCTIONS],
 [Platform can't handle "inline" keyword correctly.])
@@ -748,13 +690,6 @@ AH_TEMPLATE([ACE_HAS_SIGNAL_OBJECT_AND_WAIT],
 [Platform supports the Win32 SignalObjectAndWait() function (WinNT
    4.0 and beyond).])
 
-AH_TEMPLATE([ACE_HAS_SIGSUSPEND],[Platform has the sigsuspend() system call])
-
-AH_TEMPLATE([ACE_HAS_SIGTIMEDWAIT],
-[Platform has the sigtimedwait() system call])
-
-AH_TEMPLATE([ACE_HAS_SIGWAIT],[Platform/compiler has the sigwait(2) prototype])
-
 AH_TEMPLATE([ACE_HAS_SIG_ATOMIC_T],
 [Compiler/platform defines the sig_atomic_t typedef])
 
@@ -765,8 +700,6 @@ AH_TEMPLATE([ACE_HAS_SIN_LEN],[Platform supports new BSD inet_addr len field.])
 
 AH_TEMPLATE([ACE_HAS_SIZET_SOCKET_LEN],
 [OS/compiler uses size_t * rather than int * for socket lengths])
-
-AH_TEMPLATE([ACE_HAS_SNPRINTF],[Platform offers snprintf().])
 
 AH_TEMPLATE([ACE_HAS_SOCKADDR_MSG_NAME],
 [Platform requires (struct sockaddr *) for msg_name field of
@@ -802,8 +735,6 @@ AH_TEMPLATE([ACE_HAS_STREAMS],[Platform supports STREAMS])
 AH_TEMPLATE([ACE_HAS_STREAM_PIPES],[Platform supports STREAM pipes])
 
 AH_TEMPLATE([ACE_LACKS_STROPTS_H],[Platform lacks stropts.h])
-
-AH_TEMPLATE([ACE_HAS_STRERROR],[Compiler/platform supports strerror()])
 
 AH_TEMPLATE([ACE_HAS_STRING_CLASS],
 [Platform/Compiler supports a String class (e.g., GNU or Win32).])
@@ -911,8 +842,6 @@ AH_TEMPLATE([ACE_HAS_TLI_PROTOTYPES],
 AH_TEMPLATE([ACE_HAS_TSS_EMULATION],
 [ACE provides TSS emulation.  See also ACE_DEFAULT_THREAD_KEYS.])
 
-AH_TEMPLATE([ACE_HAS_UALARM],[Platform supports ualarm()])
-
 AH_TEMPLATE([ACE_HAS_UCONTEXT_T],
 [Platform supports ucontext_t (which is used in the extended signal API).])
 
@@ -957,9 +886,6 @@ AH_TEMPLATE([ACE_HAS_XTI],
 [Platform has XTI (X/Open-standardized superset of TLI).  Implies
    ACE_HAS_TLI but uses a different header file.])
 
-AH_TEMPLATE([ACE_LACKS_ACCESS],
-[Platform lacks access() (e.g., VxWorks and Chorus)])
-
 AH_TEMPLATE([ACE_LACKS_ACE_IOSTREAM],
 [Platform can not build ace/IOStream{,_T}.cpp.  This does not
    necessarily mean that the platform does not support iostreams.])
@@ -998,8 +924,6 @@ AH_TEMPLATE([ACE_LACKS_CONST_STRBUF_PTR],
 AH_TEMPLATE([ACE_LACKS_CONST_TIMESPEC_PTR],
 [Platform forgot const in cond_timewait (e.g., HP/UX).])
 
-AH_TEMPLATE([ACE_LACKS_DIFFTIME],[Platform lacks difftime() implementation])
-
 AH_TEMPLATE([ACE_LACKS_EXEC],
 [Platform lacks the exec() family of system calls (e.g., Win32,
    VxWorks, Chorus)])
@@ -1009,19 +933,11 @@ AH_TEMPLATE([ACE_LACKS_FILELOCKS],[Platform lacks file locking mechanism])
 AH_TEMPLATE([ACE_LACKS_FLOATING_POINT],
 [Platform does not support floating point operations])
 
-AH_TEMPLATE([ACE_LACKS_FORK],
-[Platform lacks the fork() system call (e.g., Win32, VxWorks, Chorus)])
-
-AH_TEMPLATE([ACE_LACKS_GETHOSTENT],
-[Platform lacks gethostent()])
-
 AH_TEMPLATE([ACE_LACKS_GETOPT_PROTO],
 [Platform lacks the getopt() prototype (e.g., LynxOS)])
 
 AH_TEMPLATE([ACE_LACKS_GETPGID],
 [Platform lacks getpgid() call (e.g., Win32, Chorus, and FreeBSD).])
-
-AH_TEMPLATE([ACE_LACKS_GETPPID],[Platform lacks getppid() call.])
 
 AH_TEMPLATE([ACE_LACKS_SETREGID],[Platform lacks setregid() call.])
 
@@ -1039,13 +955,8 @@ AH_TEMPLATE([ACE_LACKS_LINEBUFFERED_STREAMBUF],
 AH_TEMPLATE([ACE_LACKS_LONGLONG_T],
 [Compiler/platform does not support the unsigned long long datatype.])
 
-AH_TEMPLATE([ACE_LACKS_LSTAT],[Platform lacks the lstat() function.])
-
 AH_TEMPLATE([ACE_LACKS_U_LONGLONG_T],
 [Platform does not have u_longlong_t typedef])
-
-AH_TEMPLATE([ACE_LACKS_MADVISE],
-[Platform lacks madvise() (e.g., Linux)])
 
 AH_TEMPLATE([ACE_LACKS_MALLOC_H],[Platform lacks malloc.h])
 
@@ -1058,9 +969,6 @@ AH_TEMPLATE([ACE_LACKS_STDINT_H],
 AH_TEMPLATE([ACE_LACKS_INTTYPES_H],
 [Platform lacks inittypes.h (e.g. Unixware)])
 
-AH_TEMPLATE([ACE_LACKS_MKFIFO],
-[Platform lacks mkfifo(), e.g. VxWorks, Chorus, pSoS, and WinNT.])
-
 AH_TEMPLATE([ACE_LACKS_MKTEMP],[ACE has no mktemp()])
 
 AH_TEMPLATE([ACE_LACKS_MMAP],
@@ -1069,19 +977,11 @@ AH_TEMPLATE([ACE_LACKS_MMAP],
 AH_TEMPLATE([ACE_LACKS_MODE_MASKS],
 [Platform/compiler doesn't have open() mode masks.])
 
-AH_TEMPLATE([ACE_LACKS_MPROTECT],
-[The platform doesn't have mprotect(2) (e.g., EPLX real time OS from CDC
-   (based on LYNX))])
-
 AH_TEMPLATE([ACE_LACKS_MSG_ACCRIGHTS],
 [Platform defines ACE_HAS_MSG, but lacks msg_accrights{len}.])
 
-AH_TEMPLATE([ACE_LACKS_MSYNC],[Platform lacks msync()])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_NETBSD_MSYNC],
 [Platform doesn't support "sync" third argument to msync (?)])
-
-AH_TEMPLATE([ACE_LACKS_TEMPNAM],[Platform doesn't support tempnam])
 
 AH_TEMPLATE([ACE_LACKS_MUTEXATTR_PSHARED],
 [Platform lacks pthread_mutexattr_setpshared().])
@@ -1127,30 +1027,13 @@ AH_TEMPLATE([ACE_LACKS_THREAD_STACK_ADDR],
 
 AH_TEMPLATE([ACE_LACKS_PTHREAD_CANCEL],[Platform lacks pthread_cancel()])
 
-AH_TEMPLATE([ACE_LACKS_PTHREAD_SIGMASK],[Platform lacks pthread_sigmask()])
-
-AH_TEMPLATE([ACE_LACKS_PTHREAD_THR_SIGSETMASK],
-[Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2)])
-
-AH_TEMPLATE([ACE_LACKS_PTHREAD_YIELD],
-[Platfrom lack pthread_yield() support.])
-
 AH_TEMPLATE([ACE_LACKS_PWD_FUNCTIONS],
 [Platform lacks, getpwnam(), etc.])
 
 AH_TEMPLATE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS],
 [Platform lacks getpwnam_r() methods (e.g., SGI 6.2).])
 
-AH_TEMPLATE([ACE_LACKS_READLINK],[Platform lacks the readlink() function.])
-
-AH_TEMPLATE([ACE_LACKS_RENAME],[Platform lacks the rename() function.])
-
-AH_TEMPLATE([ACE_LACKS_RECVMSG],[Platform lacks recvmsg()])
-
 AH_TEMPLATE([ACE_LACKS_RWLOCK_T],[Platform lacks readers/writer locks.])
-
-AH_TEMPLATE([ACE_LACKS_SBRK],
-[Platform lacks a working sbrk() (e.g., Win32 and VxWorks)])
 
 AH_TEMPLATE([ACE_LACKS_SEMBUF_T],
 [Platform lacks struct sembuf (e.g., Win32 and VxWorks)])
@@ -1170,9 +1053,6 @@ AH_TEMPLATE([ACE_LACKS_SIGNED_CHAR],
 AH_TEMPLATE([ACE_LACKS_SIGSET],
 [Platform lacks signal sets (e.g., Chorus and Win32)])
 
-AH_TEMPLATE([ACE_LACKS_STRRCHR],
-[Platform/compiler lacks strrchr () function.])
-
 AH_TEMPLATE([ACE_LACKS_STRUCT_DIR],
 [Platform lacks dirent structure.])
 
@@ -1188,8 +1068,6 @@ AH_TEMPLATE([ACE_LACKS_SYSV_MSQ_PROTOS],
 AH_TEMPLATE([ACE_LACKS_KEY_T],
 [Platform lacks key_t (e.g., Chorus, VxWorks, Win32)])
 
-AH_TEMPLATE([ACE_LACKS_SENDMSG],[Platform lacks sendmsg()])
-
 AH_TEMPLATE([ACE_LACKS_SI_ADDR],
 [Platform lacks the si_addr field of siginfo_t (e.g., VxWorks and
    HP/UX 10.x)])
@@ -1203,18 +1081,10 @@ AH_TEMPLATE([ACE_LACKS_SIGINFO_H],
 AH_TEMPLATE([ACE_LACKS_SOCKET_BUFSIZ],
 [Platform doesn't support SO_SNDBUF/SO_RCVBUF (used in TAO)])
 
-AH_TEMPLATE([ACE_LACKS_SOCKETPAIR],
-[Platform lacks the socketpair() call (e.g., SCO UNIX)])
-
 AH_TEMPLATE([ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES],
 [Compiler doesn't support static data member templates])
 
-AH_TEMPLATE([ACE_LACKS_STRCASECMP],
-[Compiler/platform lacks strcasecmp() (e.g., DG/UX, UNIXWARE, VXWORKS)])
-
 AH_TEMPLATE([ACE_LACKS_STRRECVFD],[Platform doesn't define struct strrecvfd.])
-
-AH_TEMPLATE([ACE_LACKS_SYSCALL],[Platform doesn't have syscall() prototype])
 
 AH_TEMPLATE([ACE_LACKS_SYS_SELECT_H],
 [Platform lacks <sys/select.h> header file])
@@ -1238,9 +1108,6 @@ AH_TEMPLATE([ACE_LACKS_TIMEDWAIT_PROTOTYPES],
 
 AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
 [Platform does not define timepec_t as a typedef for struct timespec.])
-
-AH_TEMPLATE([ACE_LACKS_TRUNCATE],
-[Platform doesn't have truncate() (e.g., vxworks)])
 
 AH_TEMPLATE([ACE_LACKS_GETPGID_PROTOTYPE],
 [Platform/compiler lacks the getpgid() prototype])
@@ -1295,68 +1162,8 @@ AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
 
 AH_TEMPLATE([ACE_LACKS_WCHAR_T],[Platform lacks wchar_t typedef])
 
-AH_TEMPLATE([ACE_LACKS_WCSCAT],
-[Platform lacks wcscat()])
-
-AH_TEMPLATE([ACE_LACKS_WCSCHR],
-[Platform lacks wcschr()])
-
-AH_TEMPLATE([ACE_LACKS_WCSCMP],
-[Platform lacks wcscmp()])
-
-AH_TEMPLATE([ACE_LACKS_WCSCPY],
-[Platform lacks wcscpy()])
-
-AH_TEMPLATE([ACE_LACKS_WCSCSPN],
-[Platform lacks wcscspn()])
-
-AH_TEMPLATE([ACE_LACKS_WCSDUP],
-[Platform lacks wcsdup()])
-
-AH_TEMPLATE([ACE_LACKS_WCSICMP],
-[Platform lacks wcsicmp()])
-
-AH_TEMPLATE([ACE_LACKS_WCSLEN],
-[Platform lacks wcslen()])
-
-AH_TEMPLATE([ACE_LACKS_WCSNCAT],
-[Platform lacks wcsncat()])
-
-AH_TEMPLATE([ACE_LACKS_WCSNCMP],
-[Platform lacks wcsncmp()])
-
-AH_TEMPLATE([ACE_LACKS_WCSNCPY],
-[Platform lacks wcsncpy()])
-
-AH_TEMPLATE([ACE_LACKS_WCSNICMP],
-[Platform lacks wcsnicmp()])
-
-AH_TEMPLATE([ACE_LACKS_WCSPBRK],
-[Platform lacks wcspbrk()])
-
-AH_TEMPLATE([ACE_LACKS_WCSRCHR],
-[Platform lacks wcsrchr()])
-
-AH_TEMPLATE([ACE_LACKS_WCSSPN],
-[Platform lacks wcsspn()])
-
-AH_TEMPLATE([ACE_LACKS_WCSSTR],
-[Platform lacks wcsstr()])
-
-AH_TEMPLATE([ACE_LACKS_WCSTOD],
-[Platform lacks wcstod()])
-
-AH_TEMPLATE([ACE_LACKS_WCSTOK],
-[Platform lacks wcstok()])
-
 AH_TEMPLATE([ACE_HAS_3_PARAM_WCSTOK],
 [Platform's wcstok() takes 3 arguments])
-
-AH_TEMPLATE([ACE_LACKS_WCSTOL],
-[Platform lacks wcstol()])
-
-AH_TEMPLATE([ACE_LACKS_WCSTOUL],
-[Platform lacks wcstoul()])
 
 AH_TEMPLATE([ACE_LACKS_WILDCARD_BIND],
 [The bind() call will not select the port if it's 0.])
@@ -1380,12 +1187,6 @@ AH_TEMPLATE([ACE_NEEDS_HUGE_THREAD_STACKSIZE],
 AH_TEMPLATE([ACE_NEEDS_LWP_PRIO_SET],
 [OS has LWPs, and when the priority of a bound thread is set, then
    the LWP priority must be set also.])
-
-AH_TEMPLATE([ACE_LACKS_READV],
-[Platform doesn't define readv, so use our own])
-
-AH_TEMPLATE([ACE_LACKS_WRITEV],
-[Platform doesn't define writev, so use our own])
 
 AH_TEMPLATE([ACE_NEEDS_REGEXPR_H],
 [Platform needs regexpr.h for regular expression support])
