@@ -1,3 +1,13 @@
+Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp: 
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
+	  The default constructor for unions is now generated on the .cpp
+	  file, this removes a warning in some versions of g++.
+
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp: 
+	  Fixed an indentation problem in the C.cpp file.
+
 Mon Aug 24 21:24:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (TAO_ORB_Core): Added code to clean up memory

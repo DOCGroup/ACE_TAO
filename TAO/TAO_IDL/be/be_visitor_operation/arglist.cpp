@@ -48,9 +48,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->incr_indent (0); // these are for pretty printing
-  os->incr_indent (0);
-  *os << " (\n";
+  *os << " (" << be_idt << be_idt << "\n";
 
   // all we do is hand over code generation to our scope
   if (this->visit_scope (node) == -1)
@@ -73,12 +71,12 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       *os << " = " << be_idt_nl
 	  << "CORBA::Environment::default_environment ()"
-	  << be_uidt << be_uidt_nl;
+	  << be_uidt;
       break;
     default:
       break;
     }
-  *os << " )";
+  *os << be_uidt_nl << " )";
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:

@@ -107,6 +107,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       // generate the copy constructor and the assignment operator here
       os->indent ();
+      *os << "// default constructor" << be_nl
+          << node->name () << "::" << node->local_name () << " (void)" << be_nl
+          << "  : TAO_Base_Union ()" << be_nl
+          << "{" << be_idt_nl
+          << "ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));" << be_nl
+          << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (const " <<
         node->name () << " &u)" << be_nl;
