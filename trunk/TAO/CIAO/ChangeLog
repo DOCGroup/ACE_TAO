@@ -1,3 +1,23 @@
+Mon Jul  5 08:27:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+
+	  Added requires += qt
+	
+	* examples/handcrafted/BasicSP_EC/EC/EC.mpc:
+	* examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
+	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService.mpc:
+
+	  They should not be compiled inour daily builds at all. They are
+	  not for that.
+	
+	* tests/RTCCM/DiffServ/Controller/Controller.mpc:
+	* tests/RTCCM/DiffServ/Receiver/Receiver.mpc:
+	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
+
+	  Change the library names. Else they clash with other things in
+	  the build system.
+
 Sun Jul  4 22:13:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
