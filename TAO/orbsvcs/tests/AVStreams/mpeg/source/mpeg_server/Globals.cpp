@@ -10,3 +10,4 @@ int Mpeg_Global::live_video = 0;  /* 0 - no,  1 - to open,  2 - opened */
 int Mpeg_Global::drift_ppm = 0;  /* clock drift in ppm */
 int Mpeg_Global::session_limit = SESSION_NUM;
 int Mpeg_Global::session_num = 0;
+int Mpeg_Global::rttag = 0;
