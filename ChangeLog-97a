@@ -6,6 +6,9 @@ Fri Jan 31 10:01:25 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Map_Manager.cpp (current_size, total_size): cast -1 to
 	  size_t to avoid warning about signed-to-unsigned conversion.
 
+	* ace/OS.h: moved hrtime_t typedef for ACE_WIN32 so it doesn't
+	  get defined twice.
+
 	* ace/OS.i (getservbyname): one last ACE_HAS_NONCONST_GETBY change:
 	  missed "lproto" to "proto".
 
