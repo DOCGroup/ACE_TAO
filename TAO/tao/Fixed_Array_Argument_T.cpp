@@ -23,6 +23,8 @@ TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::marshal (
   return cdr << this->x_;
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, typename S_slice, typename S_forany>
 void
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
@@ -32,6 +34,8 @@ TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_IN;
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
@@ -53,6 +57,8 @@ TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::demarshal (
   return cdr >> this->x_;
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, typename S_slice, typename S_forany>
 void
 TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
@@ -62,6 +68,8 @@ TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_INOUT;
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
@@ -74,6 +82,8 @@ TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::demarshal (
   return cdr >> this->x_;
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, typename S_slice, typename S_forany>
 void
 TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
@@ -83,6 +93,8 @@ TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_OUT;
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 // ============================================================
 
@@ -106,6 +118,8 @@ TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::demarshal (
   return cdr >> tmp;
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, 
          typename S_slice, 
          typename S_var, 
@@ -117,5 +131,7 @@ interceptor_result (CORBA::Any * any)
 {
   (*any) <<= S_forany (this->x_.ptr ());
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* TAO_FIXED_ARRAY_ARGUMENT_T_C */

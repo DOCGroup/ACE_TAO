@@ -65,6 +65,8 @@ namespace CORBA
   typedef TAO_Objref_Out_T<InterfaceDef> InterfaceDef_out;
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 ACE_TEMPLATE_SPECIALIZATION
 void
 TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::Parameter & p)
@@ -77,6 +79,8 @@ TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::
   adapter->interfacedef_any_insert (p.argument, this->x_);
   p.mode = CORBA::PARAM_IN;
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
