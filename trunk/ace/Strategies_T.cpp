@@ -375,6 +375,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
  int delete_lock)
   : lock_ (lock),
     delete_lock_ (delete_lock),
+    reverse_lock_ (0),
     creation_strategy_ (0),
     delete_creation_strategy_ (0),
     concurrency_strategy_ (0),
@@ -390,6 +391,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
 
       this->delete_lock_ = 1;
     }
+
+  ACE_NEW (this->reverse_lock_,
+           REVERSE_MUTEX (*this->lock_));
 
   if (this->open (cre_s, con_s, rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -646,6 +650,30 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
     }
 
   return 0;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::new_connection
+(SVC_HANDLER *&sh,
+ const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+ ACE_Time_Value *timeout,
+ const ACE_PEER_CONNECTOR_ADDR &local_addr,
+ int reuse_addr,
+ int flags,
+ int perms)
+{
+  // Yow, Reverse Guard!  Let go of the lock for the duration of the
+  // actual connect.  This will allow other threads to hack on the
+  // connection cache while this thread creates the new connection.
+  ACE_GUARD_RETURN (REVERSE_MUTEX, ace_mon, *this->reverse_lock_, -1);
+
+  return this->CONNECT_STRATEGY::connect_svc_handler (sh,
+                                                      remote_addr,
+                                                      timeout,
+                                                      local_addr,
+                                                      reuse_addr,
+                                                      flags,
+                                                      perms);
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
