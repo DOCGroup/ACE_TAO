@@ -1,8 +1,5 @@
 //$Id$
 
-#ifndef SPK_HANDLER_C
-#define SPK_HANDLER_C
-
 #include "SPK_Handler.h"
 #include "tao/Exception.h"
 #include "Utils.h"
@@ -42,5 +39,3 @@ process_SatisfierPropertyKind (DOMNodeIterator * iter,
                illegal <SatisfierPropertyKind> value found \n"));
   ACE_THROW (CORBA::INTERNAL ());
 }
-
-#endif /* SPK_HANDLER_C */

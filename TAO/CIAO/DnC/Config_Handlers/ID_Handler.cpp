@@ -1,8 +1,5 @@
 //$Id$
 
-#ifndef ID_HANDLER_C
-#define ID_HANDLER_C
-
 #include "ID_Handler.h"
 #include "tao/Exception.h"
 #include "Utils.h"
@@ -29,5 +26,3 @@ process_ImplementationDependency (DOMNodeIterator * iter,
   // Populate the structure
   ret_struct.requiredType = Utils::parse_string (iter);
 }
-
-#endif /* ID_HANDLER_C */
