@@ -53,6 +53,20 @@
 #  #define OBJECT_POSITION                 0x31	/* O     14.2.3 */
 #  #define SCAN                            0x1B	/* O     14.2.5 */
 #  #define SET_WINDOW                      0x24	/* M     14.2.6 */
+#
+# And this patch to /usr/include/netdb.h:
+# --- netdb.h.ORIGINAL	Sat Feb  8 09:57:36 1997
+# +++ netdb.h	Mon Dec  1 10:57:15 1997
+# @@ -95,6 +95,8 @@
+#  extern struct protoent	*getprotobyname	_AP((char *));
+#  extern struct protoent  *getprotobynumber _AP((int));
+#  extern struct protoent  *getprotoent	_AP((void));
+# +int sethostent _AP((int));
+# +int endhostent _AP((void));
+#
+#  /*
+#   * Error return codes from gethostbyname() and gethostbyaddr()
+
 
 debug = 1
 shared_libs =
@@ -60,8 +74,8 @@ static_libs = 1
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -mthreads -pipe -Wall -Wpointer-arith #### -Winline
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fno-strict-prototype
+CFLAGS          += -mthreads -pipe -ansi -Wall -Wpointer-arith -Winline
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
@@ -71,3 +85,7 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
 PRELIB          = @true
+
+To save much disk space, strip all executables.  Comment the
+following line out if you want to debug.
+POSTLINK        = ; strip $@
