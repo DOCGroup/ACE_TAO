@@ -1,6 +1,5 @@
 //$Id$
 #include "tao/GIOP_Message_Acceptors.h"
-#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/POA.h"
 
