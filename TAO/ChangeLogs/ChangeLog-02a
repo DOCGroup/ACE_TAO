@@ -1,3 +1,12 @@
+Wed Mar 14 16:17:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ec.mt.conf: Renamed the file as
+	  ec_mt.conf.  
+	* orbsvcs/tests/EC_Throughput/ec_mt.conf: New file
+	* orbsvcs/tests/EC_Throughput/run_test.pl: Invalidated a reference
+	  to a non-existent conf file in ec_mt_conf. Changed the name as
+	  ec_mt.conf. 
+
 Wed Mar 14 15:36:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Handler.h:
