@@ -283,7 +283,7 @@ ACE_Thread_Exit::cleanup (void *instance, void *)
 ACE_Thread_Exit *
 ACE_Thread_Exit::instance (void)
 {
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (ACE_HAS_FSU_PTHREADS)
+#if (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) && ! defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (ACE_HAS_FSU_PTHREADS)
   ACE_TRACE ("ACE_Thread_Exit::instance");
 
   // Determines if we were dynamically allocated.
@@ -311,7 +311,7 @@ ACE_Thread_Exit::instance (void)
   return ACE_TSS_GET (instance_, ACE_Thread_Exit);
 #else
   return 0;
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! ACE_HAS_PTHREAD_SIGMASK && ! ACE_HAS_FSU_PTHREADS */
+#endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ! ACE_HAS_PTHREAD_SIGMASK && ! ACE_HAS_FSU_PTHREADS */
 }
 
 // Grab hold of the Task * so that we can close() it in the
@@ -328,7 +328,7 @@ ACE_Thread_Exit::ACE_Thread_Exit (void)
 void
 ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
 {
-  ACE_TRACE ("ACE_Thread_Exit::set_task");
+  ACE_TRACE ("ACE_Thread_Exit::thr_mgr");
 
   if (tm != 0)
     this->thread_control_.insert (tm);
@@ -364,7 +364,7 @@ ACE_Thread_Exit::~ACE_Thread_Exit (void)
 //
 // The interaction with <ACE_Thread_Exit> and
 // <ace_thread_manager_adapter> works like this, with
-// ACE_HAS_THREAD_SPECIFIC_STORAGE:
+// ACE_HAS_THREAD_SPECIFIC_STORAGE or ACE_HAS_TSS_EMULATION:
 //
 // o Every thread in the <ACE_Thread_Manager> is run with
 //   <ace_thread_manager_adapter>.
@@ -391,13 +391,21 @@ ACE_Thread_Exit::~ACE_Thread_Exit (void)
 extern "C" void *
 ace_thread_manager_adapter (void *args)
 {
+#if defined (ACE_HAS_TSS_EMULATION)
+  // As early as we can in the execution of the new thread, allocate
+  // its local TS storage.  Allocate it on the stack, to save dynamic
+  // allocation/dealloction.
+  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
+  ACE_TSS_Emulation::tss_open (ts_storage);
+#endif /* ACE_HAS_TSS_EMULATION */
+
   ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
 
   // NOTE: this preprocessor directive should match the one in above 
   // ACE_Thread_Exit::instance ().  With the Xavier Pthreads package,
   // the exit_hook in TSS causes a seg fault.  So, this works around
   // that by creating exit_hook on the stack.
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (ACE_HAS_FSU_PTHEADS)
+#if (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) && ! defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (ACE_HAS_FSU_PTHEADS)
   // Obtain our thread-specific exit hook and make sure that it knows
   // how to clean us up!  Note that we never use this pointer directly
   // (it's stored in thread-specific storage), so it's ok to
@@ -411,15 +419,24 @@ ace_thread_manager_adapter (void *args)
   // So, threads shouldn't exit that way.  Instead, they should return
   // from <svc>.
   ACE_Thread_Exit exit_hook;
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! ACE_HAS_PTHREAD_SIGMASK && !ACE_HAS_FSU_PTHREADS */
+#endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ! ACE_HAS_PTHREAD_SIGMASK && !ACE_HAS_FSU_PTHREADS */
 
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
-  return exit_hook.status (status);
-  /* NOTREACHED */
+  // Set the exit hook status.
+  // ???? Can't do this if the exit_hook is in TSS, because it was
+  // deleted by the call to invoke.  Do we need it, anyways?
+  // exit_hook.status (status);
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  // Lastly, close the thread's local TS storage.
+  ACE_TSS_Emulation::tss_close (ts_storage);
+#endif /* ACE_HAS_TSS_EMULATION */
+
+  return status;
 }
 
 // Call the appropriate OS routine to spawn a thread.  Should *not* be
@@ -704,7 +721,7 @@ ACE_Thread_Manager::remove_thr (int i)
 #endif /* ACE_HAS_THREADS */
 }
 
-// Factory out some common behavior to simplify the following methods.
+// Factor out some common behavior to simplify the following methods.
 #define ACE_THR_OP(OP,STATE) \
   int result = OP (this->thr_table_[i].thr_handle_); \
   if (result != 0) { \
@@ -1073,7 +1090,9 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
   if (i != -1)
     {
       // Run all the exit hooks.
-      this->run_thread_exit_hooks (i);
+      // ???? This reads from unitialized memory, and doesn't seem
+      //      to be necessary?
+      // ???? this->run_thread_exit_hooks (i);
 
       // Remove thread descriptor from the table.
       this->remove_thr (i);
@@ -1106,8 +1125,10 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
 #if defined (ACE_HAS_THREADS)
   while (this->current_count_ > 0)
-    if (this->zero_cond_.wait (timeout) == -1)
-      return -1;
+    {
+      if (this->zero_cond_.wait (timeout) == -1)
+        return -1;
+    }
 #else
   ACE_UNUSED_ARG (timeout);
 #endif /* ACE_HAS_THREADS */
@@ -1384,6 +1405,7 @@ ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
     status_ (0)
 {
   ACE_TRACE ("ACE_Thread_Control::ACE_Thread_Control");
+
   if (this->tm_ != 0 && insert)
     {
       ACE_hthread_t t_id;
@@ -1397,6 +1419,7 @@ ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
 ACE_Thread_Control::~ACE_Thread_Control (void)
 {
   ACE_TRACE ("ACE_Thread_Control::~ACE_Thread_Control");
+
 #if defined (ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS) || defined (ACE_HAS_TSS_EMULATION)
   this->exit (this->status_, 0);
 #else
@@ -1425,15 +1448,17 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if (defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+#if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
   template class ACE_TSS<ACE_Dynamic>;
-#endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+  template class ACE_TSS<ACE_Thread_Exit>;
+#endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if (defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+#if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
   #pragma instantiate ACE_TSS<ACE_Dynamic>
-#endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+  #pragma instantiate ACE_TSS<ACE_Thread_Exit>
+#endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
