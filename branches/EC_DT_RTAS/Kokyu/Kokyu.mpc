@@ -4,8 +4,12 @@
 project(Kokyu) : acelib {
   sharedname  = Kokyu
   dynamicflags = KOKYU_BUILD_DLL
-  libpaths += $(DATASTREAM_ROOT)/lib
-  includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include
+  includes += $(ACE_ROOT)/Kokyu
+
+  specific(gnuace) {  
+    libpaths += $(DATASTREAM_ROOT)/lib
+    includes += $(DATASTREAM_ROOT)/include
+  }
 
   Source_Files {
     Dispatch_Deferrer.cpp
@@ -24,3 +28,5 @@ project(Kokyu) : acelib {
     DSRT_Sched_Queue_T.cpp    
   }
 }
+
+

@@ -10,9 +10,12 @@
 #include "Dispatch_Deferrer.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined(ACE_HAS_DSUI) 
 #include "kokyu_config.h"
 #include "kokyu_dsui_families.h"
 #include <dsui.h>
+#endif /* defined(ACE_HAS_DSUI) */
+
 ACE_RCSID(Kokyu, Dispatch_Deferrer, "$Id$")
 
 namespace Kokyu
@@ -56,7 +59,9 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
 
   //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
   //between release and enqueue into dispatch queue because of RG
+#if defined (ACE_HAS_DSUI)
   DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, NULL);
+#endif /* ACE_HAS_DSUI */
 
   //buffer until timer expires
   return this->rgq_.enqueue_deadline(qitem,&tv);
@@ -101,7 +106,9 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED_DEQUEUE Measure
       //time between release and enqueue into dispatch queue because
       //of RG
+#if defined (ACE_HAS_DSUI)
       DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, NULL);
+#endif /* ACE_HAS_DSUI */
 
       this->task_->enqueue(qitem);
 
