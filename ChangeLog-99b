@@ -1,3 +1,8 @@
+Thu Jul 22 16:55:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Stats.cpp:
+	  Fixed message that had a %s but no argument!
+
 Thu Jul 22 15:12:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Codeset_IBM1047.{h,cpp}: wrapped with #ifdef ACE_MVS
