@@ -1,11 +1,11 @@
-project(*client) : taoexe, portableserver, naming  {
+project(*client) : orbsvcsexe, portableserver, naming  {
   requires += exceptions
   source_files {
     client.cpp
   }
 }
 
-project(*server) : taoexe, portableserver, naming {
+project(*server) : orbsvcsexe, portableserver, naming {
   requires += exceptions
   source_files {
     server.cpp
