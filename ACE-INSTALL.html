@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><!-- $Id$ -->
   <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Building and Installing ACE and Its Auxiliary Libraries and Services</title>
-  
+
   <link rev="made" href="mailto:d.schmidt@vanderbilt.edu"></head>
 
 
@@ -50,7 +50,7 @@ report process</a>.<p>
 <p></p><hr><p>
 </p><h3><a name="platforms">Platforms, C++ Compilers, and Support</a></h3>
 
-<p>ACE has been ported to a large number of platfroms using many different 
+<p>ACE has been ported to a large number of platfroms using many different
 compilers over the years.  The <a href="http://www.dre.vanderbilt.edu/">DOC group</a>, <a href="http://www.riverace.com/">Riverace</a>, <a href="http://www.theaceorb.com/">OCI</a>, <a href="http://www.theaceorb.nl/">Remedy IT</a>, and members of the ACE
 user community have all contributed ports to make ACE the successful
 and far-reaching toolkit it is today.  Any UNIX/POSIX/Windows
@@ -108,8 +108,8 @@ document</a>.</p><p>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. Besides the standard DOC group platforms
-        we also support Borland C++ Builder 6, CBuilderX 1.0, MinGW, 
-        Cygwin, VxWorks 5.5, OpenVMS 7.3-2, Linux 64bit Alpha, Tru64, 
+        we also support Borland C++ Builder 6, CBuilderX 1.0, MinGW,
+        Cygwin, VxWorks 5.5, OpenVMS 7.3-2, Linux 64bit Alpha, Tru64,
         and HPUX 11i 32/64 bit.
     </td>
     <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
@@ -2358,8 +2358,8 @@ the Network Services.<p>
 <h3><a name="sslinstall">Building and Installing The ACE_SSL Library</a></h3>
 
 <p>The first step for all platforms is to build and install the
-<a href="http://www.openssl.org/">OpenSSL</a> distribution.  Then the
-ACE_SSL library must be built according to the instructions
+<a href="http://www.openssl.org/">OpenSSL</a> distribution.  The
+ACE_SSL library must then be built according to the instructions
 below.</p>
 <h3>Unix</h3>
 <ol>
@@ -2368,26 +2368,15 @@ below.</p>
       path (e.g.
       <font face="Courier New, Courier, mono">LD_LIBRARY_PATH</font>). If you
       installed OpenSSL into a set of directories unknown by the compiler,
-      then set the following variables in your
-      <font face="Courier New, Courier, mono">platform_macros.GNU</font>
-      file:
-    <p><table align="center" border="0" width="75%">
-      <tbody><tr>
-        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_CPPFLAGS</font></td>
-        <td>Platform preprocessor options for OpenSSL (e.g. -I...)</td>
-      </tr>
-      <tr>
-        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LDFLAGS</font></td>
-        <td>Platform linker options for OpenSSL (e.g. -L...)</td>
-      </tr>
-      <tr>
-        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LIBS</font></td>
-        <td>Platform libraries required with OpenSSL (e.g. -lssl -lcrypto)</td>
-      </tr>
-    </tbody></table>
-    <br>
-  
-  </p></li><li>Build ACE as described above. When building ACE, add
+      set the <code>SSL_ROOT</code> environment variable to point to the
+      top level directory of your OpenSSL distribution, i.e. the one
+      containing OpenSSL's <code>include</code> and <code>lib</code>
+      directories.</li>
+  <li>Add <code>ssl=1</code> to your MPC
+      <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
+      or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
+      support for building the ACE_SSL library to your GNUmakefiles.
+  <li>Build ACE as described above. When building ACE, add
       "<font face="Courier New, Courier, mono">ssl=1</font>"
       to your <font face="Courier New, Courier, mono">make</font>
       command line invocation, or add it to your
@@ -2399,14 +2388,14 @@ below.</p>
 </ol>
 <h3>Microsoft Visual Studio</h3>
 <ol>
-  <li>Set the OpenSSL include/header directory path under the
-      <b><i>Directories</i></b> tab - <i><b>Include Files</b></i> setting in
-      the <i><b>Tools-&gt;Options</b></i> dialog. A typical value would be
-      something like: <code>openssl-0.9.6\inc32</code></li>
-  <li>Set the OpenSSL library directory path under the
-      <b><i>Directories</i></b> tab - <i><b>Library Files</b></i> setting in
-      the <i><b>Tools-&gt;Options</b></i> dialog. A typical value would be
-      something like: <code>openssl-0.9.6\out32dll</code></li>
+  <li>Set the <code>SSL_ROOT</code> environment variable to the location
+      of the directory containing the OpenSSL <code>inc32</code> and
+      <code>out32dll</code> directories.
+  <li>Add <code>ssl=1</code> to your MPC
+      <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
+      or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
+      support for building the ACE_SSL library to your MSVC++
+      workspaces and projects.
   <li>Open the <code>ACE.dsw</code> workspace, and refer to the ACE build
       and installation instructions above for details on creating a
       <code>config.h</code> configuration header for this platform.  Once
@@ -2414,12 +2403,13 @@ below.</p>
       <code>ACE_SSL</code> project.</li>
 </ol>
 <h3>Borland C++</h3>
-<p>Support for building TAO's SSLIOP pluggable protocol with Borland C++
-   does exist. First get a patch for the Open SSL makefile from <a href="http://www.tenermerx.com/tao_bcb/index.html">
+<p>Support for building ACE's ACE_SSL library and TAO's SSLIOP
+   pluggable protocol with Borland C++ does exist. First get a patch for the Open SSL makefile from <a href="http://www.tenermerx.com/tao_bcb/index.html">
    http://www.tenermerx.com/tao_bcb/index.html</a>. Then build the OpenSSL
    library. When you use the DLL version of ACE+TAO you have to build a DLL
    version of OpenSSL. Then you must set the environment variable SSL_ROOT
-   to the location of your OpenSSL and then build ACE and TAO as normally.
+   to the location of your OpenSSL and then build ACE and TAO as you
+   would normally.
 </p>
 
 
@@ -2551,7 +2541,7 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 <li>In the "CVS Repository Exploring" perspective, navigate to the module containing ACE.</li>
 <li>Checkout the module using "Check Out As" and select the "project configured using the New Project Wizard" option.</li>
 <li>Select "Standard Make C++ Project" for the project type.</li>
-<li>Follow the steps outlined above, up to the point of running make, for building ACE on your platform. Use "path_to_your_eclipse_workspace"/"project_name" as your $ACE_ROOT. 
+<li>Follow the steps outlined above, up to the point of running make, for building ACE on your platform. Use "path_to_your_eclipse_workspace"/"project_name" as your $ACE_ROOT.
 <li>If you had to regenerate the makefiles using MPC, select the root folder for your poject and use the import wizard to add them to your project.</li>
 <li>Select the root folder for the project and use the "Create Make Target" wizard to setup the appropriate make command and options.</li>
 <li>Select the root folder and run "Build Make Target." This will build ACE.</li>
@@ -2572,7 +2562,7 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 <li>Select the root folder and run "Build Make Target." This will build ACE.</li>
 
 
-</ol> 
+</ol>
 </p>
 
 </p>
@@ -2853,13 +2843,13 @@ GNUmakefiles, and project files for building on various platforms will
 not be available. Users from anon cvs are expected to generate them
 using <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README">MPC </a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
-quickly. 
+quickly.
 
 <ul>
   <li> Please see <a href="#MPC"> instructions </a> above to  download
-  MPC from anon cvs repository <p>       
+  MPC from anon cvs repository <p>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
-  perl</a> installed, preferably perl 
+  perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use
   <a href="http://www.activestate.com/Products/ActivePerl/"> Active
   State Perl </a>. We use active state perl without problems. We have
@@ -2868,16 +2858,16 @@ quickly.
   </p></li><li>If you just want to build ACE and associated tests, examples,
   and associated utility libraries, we recommend that you do <p>
   <code> $ACE_ROOT/bin/mwc.pl ACE.mwc </code> </p><p>
-  
-  from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use  
+
+  from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use
 
   <code> $ACE_ROOT/bin/mwc.pl -type vc6 ACE.mwc </code> </p><p>
 
   to generate VC6 project and workspace files. Please use <code>-type
-  vc71</code> to generate VC71 project and solution files. 
+  vc71</code> to generate VC71 project and solution files.
 
   </p></li><li>If you want to build TAO+CIAO and its associated libraries
-  please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html"> TAO-INSTALL </a><a> and </a><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html"> CIAO-INSTALL </a> for details. 
+  please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html"> TAO-INSTALL </a><a> and </a><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html"> CIAO-INSTALL </a> for details.
 </li></ul>
 
 <hr><p>
@@ -2891,7 +2881,7 @@ home page.
 </p><p>
 <!--<EM>
 Visitor #
-from 
+from
 <EM><br> -->
 <i> Last modified 21:03:45 CDT 12 July 2004 </i>
 
