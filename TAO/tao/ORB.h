@@ -1,5 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -7,31 +6,30 @@
  *
  *  $Id$
  *
- *   Header file for CORBA's <ORB> type and type.
- *
+ *  Header file for CORBA's ORB type.
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author Douglas C. Schmidt <schmidt@uci.edu>
  */
 //=============================================================================
 
-
 #ifndef TAO_ORB_H
 #define TAO_ORB_H
+
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
-#include "tao/Services.h"
-#include "tao/CORBA_String.h"
+#include "Exception.h"
+#include "Services.h"
+#include "CORBA_String.h"
 
 // IRIX needs this for the throw specs
-#include "tao/PolicyC.h"
+#include "PolicyC.h"
 
 typedef enum
 {
@@ -41,7 +39,7 @@ typedef enum
   TAO_SERVICEID_INTERFACEREPOSERVICE
 } TAO_Service_ID;
 
-// = Forward declarations.
+/// Forward declarations.
 class TAO_MProfile;
 struct TAO_Dispatch_Context;
 class TAO_Client_Strategy_Factory;
@@ -219,20 +217,16 @@ public:
   /**
    * Instructs the ORB to initialize itself and run its event loop in
    * the current thread, not returning until the ORB has shut down.
-   * If an error occurs during initialization or a run-time this
-   * method will return -1.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
    */
   void run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   /**
    * Instructs the ORB to initialize itself and run its event loop in
    * the current thread, not returning until the ORB has shut down.
-   * If an error occurs during initialization or a run-time this
-   * method will return -1.  If no requests arrive at this thread
-   * before the <tv> "relative" timeout elapses we return to the
-   * caller with a value of 0 (this allows timeouts).  Otherwise, if
-   * we've returned since we've been asked to shut down the value of 1
-   * is returned.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
    */
   void run (ACE_Time_Value &tv,
             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -240,12 +234,8 @@ public:
   /**
    * Instructs the ORB to initialize itself and run its event loop in
    * the current thread, not returning until the ORB has shut down.
-   * If an error occurs during initialization or a run-time this
-   * method will return -1.  If <tv> is non-NULL, then if no requests
-   * arrive at this thread before the "relative" timeout elapses we
-   * return to the caller with a value of 0 (this allows timeouts).
-   * Otherwise, if we've returned since we've been asked to shut down
-   * the value of 1 is returned.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
    */
   void run (ACE_Time_Value *tv,
             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
