@@ -23,20 +23,20 @@ Session_Control::~Session_Control (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Session_Control::~Session_control, "
-                  " good, all sessions did finish\n"));
+                  "good, all sessions did finish\n"));
     }
   else if (session_count_ != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: (%P|%t) Session_Control::~Session_control, "
-                  " %d sessions did not finish\n",
+                  "%d sessions did not finish\n",
                   this->session_count_));
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: (%P|%t) Session_Control::~Session_control, "
-                  " some sessions failed\n"));
+                  "some sessions failed\n"));
     }
 }
 
