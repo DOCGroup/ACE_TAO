@@ -433,10 +433,11 @@ Thu Jul 22 07:12:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/PolicyC.cpp (_unchecked_narrow): added ACE_TRY_ENV
           argument declaration, because it's used with
-          TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.  Added
-          ACE_UNUSED_ARG (ACE_TRY_ENV) without those policies.
-          Thanks to Erik Johannes <ejohannes@oresis.com> for reporting
-          that compilation failed with TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.
+          TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.  Added ACE_UNUSED_ARG
+          (ACE_TRY_ENV) without those policies.  Thanks to Erik Johannes
+          <ejohannes@oresis.com> and David McCann
+          <david.mccann@alcatel.at> for reporting that compilation failed
+          with TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.
 
 Thu Jul 22 02:14:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
