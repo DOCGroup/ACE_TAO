@@ -688,9 +688,10 @@ CIAO::Partitioning_Handler::get_extension_info (ACEXML_Attributes *atts
           // Do nothing.  We don't handle this case.
         }
       else
-        ACEXML_THROW
+        ACEXML_THROW_RETURN
           (ACEXML_SAXException
-           ("Invalid attributes encounter while parsing \"extension\""));
+           ("Invalid attributes encounter while parsing \"extension\""),
+           INVALID_EXT);
     }
 
   return (ciao_ext == 0 ? INVALID_EXT : retv);

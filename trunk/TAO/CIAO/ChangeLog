@@ -1,3 +1,26 @@
+Thu Jan  1 20:05:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/Daemon_Impl.cpp:
+	* tools/Daemon/controller_i.cpp:
+	* tools/RTComponentServer/ComponentServer_Task.cpp:
+	* tools/RTComponentServer/RTConfig_Manager.cpp:
+	* tools/RTComponentServer/RTServer_Impl.cpp:
+	* tools/ServerActivator/ServerActivator.cpp:
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	* tools/Simple_Component_Server/Simple_Server_i.cpp:
+	* tools/Simple_Component_Server/sample_client.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
+	
+	  More fixes to remove compile errors when exceptions are set
+	  to 0. 
+
 Thu Jan  1 19:32:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/ComponentServer_Impl.cpp:
