@@ -51,6 +51,6 @@ PushConsumer_impl::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   PortableServer::ObjectId_var oid = current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object(oid ACE_ENV_ARG_PARAMETER);
-
+  poa->deactivate_object(oid.in ()
+                         ACE_ENV_ARG_PARAMETER);
 }

@@ -173,7 +173,7 @@ void TAO_FTEC_ProxyPushSupplier::resume_connection (ACE_ENV_SINGLE_ARG_DECL)
 
 void TAO_FTEC_ProxyPushSupplier::get_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat& state)
 {
-  state.object_id = this->object_id_;
+  state.object_id = this->object_id_.in ();
   state.suspended = this->is_suspended();
   if (this->is_connected()) {
     FtRtecEventChannelAdmin::ProxyPushSupplierConnectionInfo info;
