@@ -2,6 +2,10 @@
 
 #include "ace/Get_Opt.h"
 
+#if (ACE_NTRACE != 1)
+#include "ace/Trace.h"
+#endif /* (ACE_NTRACE != 1) */
+
 #include "JAWS/Server.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Concurrency.h"
@@ -107,6 +111,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
   db->io_handler (handler);
   db->task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
+  db->policy (policy);
 
   // The message block should contain an INET_Addr, and call the
   // io->accept (INET_Addr) method!
@@ -125,11 +130,15 @@ void
 JAWS_Server::parse_args (int argc, char *argv[])
 {
   int c;
+  int t = 1;
 
-  ACE_Get_Opt getopt (argc, argv, "p:c:d:n:m:f:");
+  ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:");
   while ((c = getopt ()) != -1)
     switch (c)
       {
+      case 't':
+        t = !t;
+        break;
       case 'p':
         this->port_ = ACE_OS::atoi (getopt.optarg);
         break;
@@ -158,6 +167,10 @@ JAWS_Server::parse_args (int argc, char *argv[])
           this->flags_ |= THR_DETACHED;
         break;
       }
+
+#if (ACE_NTRACE != 1)
+  t ? ACE_Trace::start_tracing () : ACE_Trace::stop_tracing ();
+#endif /* (ACE_NTRACE != 1) */
 
   if (this->port_ == 0) this->port_ = 5432;
   if (this->nthreads_ == 0) this->nthreads_ = 5;
