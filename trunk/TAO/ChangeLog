@@ -1,3 +1,9 @@
+Tue Dec  9 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (TAO): 
+
+	  Cosmetic changes.
+
 Tue Dec  9 07:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Bug_1482_Regression/test.mpc:
