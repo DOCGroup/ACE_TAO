@@ -1,3 +1,9 @@
+Mon Dec  1 17:49:43 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors/remote.cad:
+        * examples/Hello/descriptors/remote.dat:
+          Added these 2 files for the example to run on remote setting.
+
 Mon Dec  1 02:35:18 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/Hello/Sender/Sender.mpc:
