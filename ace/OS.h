@@ -235,6 +235,10 @@
 #define ACE_DEFAULT_FREE_LIST_INC 100
 #endif /* ACE_DEFAULT_FREE_LIST_INC */
 
+#if !defined (ACE_UNIQUE_NAME_LEN)
+#define ACE_UNIQUE_NAME_LEN
+#endif /* ACE_UNIQUE_NAME_LEN */
+
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 
