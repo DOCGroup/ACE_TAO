@@ -35,6 +35,7 @@
 
 #include "asnmp/snmp.h"
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 
 ACE_RCSID(set, set, "$Id$")
 
@@ -72,6 +73,7 @@ int main( int argc, char *argv[])
   return 1;
 }
 
+int
 set::valid() const 
 { 
  return valid_; 
