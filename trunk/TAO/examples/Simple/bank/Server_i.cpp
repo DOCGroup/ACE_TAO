@@ -65,25 +65,21 @@ Server_i::parse_args (void)
 int
 Server_i::init_naming_service (CORBA::Environment& env)
 {
-
-  CORBA::ORB_var orb;
-  PortableServer::POA_ptr child_poa;
-
-  orb = this->orb_manager_.orb ();
+  CORBA::ORB_var orb = this->orb_manager_.orb ();
   this->orb_manager_.init_child_poa (this->argc_,
 				     this->argv_,
 				     "my_child_poa",
 				     env);
-
-  child_poa = this->orb_manager_.child_poa ();
+  PortableServer::POA_ptr child_poa
+    = this->orb_manager_.child_poa ();
 
   int result = this->my_name_server_.init (orb.in (),
 					   child_poa);
   if (result == -1)
     {
-      ACE_DEBUG((LM_DEBUG,
-		 "Result=%d",
-		 result));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Result=%d",
+                  result));
       return result;
     }
 
