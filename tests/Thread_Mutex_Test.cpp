@@ -33,10 +33,54 @@ test (void *args)
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
     {
+      int result = 0;
+
+      // First attempt to acquire the mutex with a timeout to verify
+      // that mutex timeouts are working.
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) = trying timed acquire on "
+                            "iteration %d\n"),
+                  i));
+
+      ACE_Time_Value delta (1, 0);  // One second timeout
+      ACE_Time_Value timeout = ACE_OS::gettimeofday ();
+      timeout += delta;  // Must pass absolute time to acquire().
+
+      if (mutex->acquire (timeout) != 0)
+        {
+          if (errno == ETIMEDOUT)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) = mutex acquisition ")
+                          ACE_TEXT ("timed out\n")));
+            }
+          else if (errno == ENOTSUP)
+            {
+              ACE_DEBUG ((LM_INFO,
+                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("mutex timeouts")));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %p\n%a"),
+                          ACE_TEXT ("mutex timeout failed\n")));
+              return 0;
+            }
+        }
+      else
+        {
+          result = mutex->release ();
+          ACE_ASSERT (result == 0);
+        }
+
+      // Now try the standard mutex.
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
                   i));
-      int result = mutex->acquire ();
+      result = mutex->acquire ();
       ACE_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = acquired on iteration %d\n"),
