@@ -7304,6 +7304,22 @@ ACE_OS::filesize (ACE_HANDLE handle)
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE long
+ACE_OS::filesize (LPCTSTR filename)
+{
+  ACE_TRACE ("ACE_OS::filesize");
+
+  ACE_HANDLE h = ACE_OS::open (filename, O_RDONLY);
+  if (h != ACE_INVALID_HANDLE)
+    {
+      long size = ACE_OS::filesize (h);
+      ACE_OS::close (h);
+      return size;
+    }
+  else
+    return -1;
+}
+
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle,
                iovec *iov,
