@@ -15,7 +15,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-type <borland | em3 | ghs | gnu | make | nmake |
+              [-type <borland | em3 | ghs | gnuace | make | nmake |
                       va4 | vc6 | vc7>]
               [files]
 
@@ -55,7 +55,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
                        assignment.
        -type           Specifies the type of project file to generate.  This
                        option can be used multiple times to generate multiple
-                       types.  If -type is not used, it defaults to 'gnu'.
+                       types.  If -type is not used, it defaults to 'gnuace'.
 
 The default global input file
 (ACE_wrappers/bin/MakeProjectCreator/config/global.mpb) is used if -global
@@ -92,7 +92,7 @@ says process the mpc files, but do not generate the project files.
 
 The -type option can be used multiple times on the same command line to
 generate projects of different types per mpc file.  The default type is
-always gnu.  NOTE: The -ti option overrides the template input file for all
+always gnuace.  NOTE: The -ti option overrides the template input file for all
 types specified.
 
 
@@ -111,7 +111,7 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-type <borland | em3 | ghs | gnu | make | nmake |
+              [-type <borland | em3 | ghs | gnuace | make | nmake |
                       va4 | vc6 | vc7>]
               [files]
 
@@ -151,4 +151,4 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
                        assignment.
        -type           Specifies the type of project file to generate.  This
                        option can be used multiple times to generate multiple
-                       types.  If -type is not used, it defaults to 'gnu'.
+                       types.  If -type is not used, it defaults to 'gnuace'.
