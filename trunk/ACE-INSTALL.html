@@ -1289,6 +1289,17 @@ to run the tests and capture their output:<p>
   <li>Invoked the script &lt; run_tests.vxworks from this target shell.<p>
 </ol>
 
+<a href="mailto:Kirk.Davies@pobox.com">Kirk Davies</a> provided this
+approach for running the ACE tests on Tornado II:
+
+<ul>
+  <li>Under Tornado II, I set up the Target Server File System (TSFS), and
+    the test logs get written to the log subdirectory under that.<p>
+  <li>You have to set an environment variable before running the tests:
+<pre>
+putenv("ACE_TEST_DIR=/tgtsvr")
+</pre><p>
+</ul>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
 
