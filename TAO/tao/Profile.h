@@ -26,6 +26,8 @@
 
 #include "tao/Tagged_Components.h"
 
+#include "tao/PolicyC.h"
+
 class TAO_MProfile;
 
 class TAO_Export TAO_Profile
@@ -118,16 +120,20 @@ public:
   // return the reference to that. This method is necessary for GIOP
   // 1.2. 
   
-  virtual void set_policies(const CORBA::PolicyList *policy_list);
+  virtual void policies(CORBA::PolicyList *policy_list);
   // This method sets the "Policies" associated with this profile,
   // thispolicies are exported to the client by encapsulating those
   // into the IOR. The policies are shared by all the Profile 
   // (i.e. All profiles have the same policies)
   
-  virtual const CORBA::PolicyList  *get_policies();
+  virtual CORBA::PolicyList&  policies();
   // This methods gives the "Policies associated with the profile.
   // If no policy has been set for the current profile, then NULL
   // is returned.
+
+private:
+
+  void _create_policy_list (int length);
 
 private:
   TAO_MProfile *forward_to_i (void);
@@ -148,8 +154,8 @@ protected:
   // parsing the TAO_Tagged_Components, and this operation
   // is deferred until the policies are queried for the 
   // first time.
-
-  CORBA::PolicyList *policy_list_;
+ 
+  CORBA::PolicyList_var policy_list_;
 
 private:
   CORBA::ULong tag_;
