@@ -1,3 +1,16 @@
+Wed Apr 23 21:22:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * tests/Makefile:
+        * tests/Multihomed_INET_Addr_Test.dsp:
+        * tests/SOCK_SEQPACK_Association_Test.dsp:
+        * tests/tests.dsw:
+
+        Added Multihomed_INET_Addr dsp and to dsw.
+        Added SOCK_SEQPACK dsp and to dsw but not to test list.
+
 Wed Apr 23 15:31:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_Acceptor.cpp: Removed the use of len_ptr variable in
