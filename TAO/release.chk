@@ -8,7 +8,7 @@ Legend:
 	[ABCDEF] where
 
 	A = Solaris/CC
-	B = NT (MSVC++ 5.0)
+        B = NT (MSVC++ 5.0)
         C = Solaris/g++
         D = IRIX
         E = Linux/g++
@@ -22,12 +22,15 @@ Legend:
 
 
 [111x1 ]   libTAO and TAO_IDL compile.
-[110x0 ]   IDL_Cubit compiles
+[111x0 ]   IDL_Cubit compiles
         [1x1x0x] svr runs
         [1x1x1x] clnt runs
-[1 x x ] POA/FindPOA compiles
-[1 x x ] POA/NewPOA compiles
-[1 x x ] POA/RootPOA compiles
+[1 1 x ] POA/FindPOA compiles
+[1 1 x ] POA/NewPOA compiles
+[1 1 x ] POA/RootPOA compiles
+[  0   ] POA/Generic_Servant compiles
+[  0   ] POA/On_Demand_Activation compiles
+[  0   ] POA/Generic_Servant compiles
 [1x1x1x]   Param_Test compiles
         [xxxxxx] DII short
         [xxxxxx] DII ubstring
