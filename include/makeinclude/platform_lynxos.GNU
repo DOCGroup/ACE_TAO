@@ -3,6 +3,19 @@
 # LynxOS with g++.  Defaults to LynxOS Version 3.0.0.  For Version 2.5.0,
 # for example, add "VERSION=2.5.0" to your make invocation.
 
+#### NOTE:  It's best to create a file that includes this one, instead
+#### of symlinking it.  That way, you can easily override the default
+#### configuration.  For example, to configure for a PowerPC target, I
+#### use a include/makeinclude/platform_macros.GNU that contains the
+#### following lines (without comment markers):
+####
+####     LYNXTARGET = ppc
+####     include $(ACE_ROOT)/include/makeinclude/platform_lynxos.GNU
+####
+#### Similarly, the default VERSION and HOST_OS settings (see below)
+#### can be overridden for your particular platform.
+
+
 debug = 1
 shared_libs =
 static_libs = 1
