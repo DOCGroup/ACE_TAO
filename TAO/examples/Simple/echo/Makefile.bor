@@ -1,9 +1,0 @@
-
-#
-# Makefile for building the Echo example
-# 
-
-MAKEFILES = Echo_Client.bor Echo_Server.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
-
