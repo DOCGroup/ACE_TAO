@@ -5338,7 +5338,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 }
 
 ACE_INLINE int 
-ACE_OS::msgctl (int msqid, int cmd, msqid_ds *val)
+ACE_OS::msgctl (int msqid, int cmd, struct msqid_ds *val)
 {
   // ACE_TRACE ("ACE_OS::msgctl");
 #if defined (ACE_HAS_SYSV_IPC)
