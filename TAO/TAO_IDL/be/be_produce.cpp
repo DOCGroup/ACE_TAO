@@ -74,12 +74,30 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(be, be_produce, "$Id$")
 
+// Clean up before exit, whether successful or not.
+TAO_IDL_BE_Export void
+BE_cleanup (void)
+{
+  AST_Decl *d = idl_global->root ();
+  be_root *root = be_root::narrow_from_decl (d);
+
+  root->destroy ();
+  delete root;
+  root = 0;
+
+  idl_global->destroy ();
+  delete idl_global;
+  idl_global = 0;
+}
+
 // Abort this run of the BE.
 TAO_IDL_BE_Export void
 BE_abort (void)
 {
   ACE_ERROR ((LM_ERROR,
               "Fatal Error - Aborting\n"));
+
+  BE_cleanup ();
 
   ACE_OS::exit (1);
 }
@@ -289,14 +307,7 @@ BE_produce (void)
       delete visitor;
     }
 
-  // Start the cleanup process.
-  root->destroy ();
-  delete root;
-  root = 0;
-
-  // Some miscellaneous cleanup.
-  idl_global->destroy ();
-  delete idl_global;
-  idl_global = 0;
+  // Clean up.
+  BE_cleanup ();
 }
 
