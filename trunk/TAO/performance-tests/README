@@ -20,3 +20,6 @@ READMEs on how to run the following performance tests:
           Throughput tests for TAO, VisiBroker, and Orbix based on
           TTCP.
 
+        . RTCorba
+
+          Tests for various real-time features (RT CORBA spec & TAO-specific).
