@@ -81,7 +81,7 @@ TAO_EC_Kokyu_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info
   this->init_rt_info (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  qos_info.rt_info = this->rt_info_;
+  //qos_info.rt_info = this->rt_info_;
   switch (this->info_type_)
     {
     default:

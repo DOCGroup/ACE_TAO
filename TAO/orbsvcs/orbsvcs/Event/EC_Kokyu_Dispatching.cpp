@@ -70,6 +70,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
   // OK to assume exact correspondence betwen Config_Info and ConfigInfo?
   Kokyu::ConfigInfoSet kconfigs(configs->length());
   for(CORBA::ULong i=0; i<configs->length(); ++i) {
+        kconfigs[i].allocator_ = 0;
         kconfigs[i].preemption_priority_ = configs[i].preemption_priority;
         kconfigs[i].thread_priority_ = configs[i].thread_priority;
         switch (configs[i].dispatching_type) {
