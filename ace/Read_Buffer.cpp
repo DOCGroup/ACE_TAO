@@ -115,7 +115,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 	    c = replace;
 	}
 
-      buf[index++] = c;
+      buf[index++] = (char) c;
 
       // Substitutions must be made before checking for termination. 
       if (done)

@@ -74,7 +74,7 @@ ACE_SV_Semaphore_Complex::open (key_t k,
       do
 	{
 	  this->internal_id_ = ACE_OS::semget 
-	    (this->key_, 2 + nsems, perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
+	    (this->key_, (u_short) 2 + nsems, perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
 
 	  if (this->internal_id_ == -1)
 	    return -1; // permission problem or tables full 
