@@ -1,6 +1,7 @@
 // $Id$
 
 #include "sender.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
