@@ -575,7 +575,8 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("WARNING: extracting object from default ORB_Core\n")));
+                      "TAO (%P|%t) WARNING: extracting object from "
+                      "default ORB_Core\n"));
         }
     }
 
@@ -597,12 +598,13 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
       //    example, hostname lookup failed when binding the
       //    ACE_INET_Addr to the IIOP profile in being created.
 
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) Could not create all ")
-                  ACE_TEXT ("profiles.\n")
-                  ACE_TEXT ("This may be due to an address ")
-                  ACE_TEXT ("resolution problem (e.g. DNS).\n")));
-      return 0;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO (%P|%t) ERROR: Could not create all "
+                         "profiles while extracting object\n"
+                         "TAO (%P|%t) reference from the CDR stream.\n"
+                         "TAO (%P|%t) ERROR: This may be due to an address "
+                         "resolution problem (e.g. DNS).\n"),
+                        0);
     }
 
   // Ownership of type_hint is given to TAO_Stub
