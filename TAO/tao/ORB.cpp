@@ -931,8 +931,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->resolve_trading_service (timeout, ACE_TRY_ENV);
 
   else
-    return this->resolve_service (name, timeout, ACE_TRY_ENV);
-
+    ACE_THROW_RETURN (CORBA::ORB::InvalidName (), 0);
 
 }
 
