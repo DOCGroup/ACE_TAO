@@ -17,6 +17,8 @@ OBJFILES = \
 	$(OBJDIR)\Key_Adapters.obj \
 	$(OBJDIR)\MessagingS.obj \
 	$(OBJDIR)\Object_Adapter.obj \
+        $(OBJDIR)\ObjectReferenceFactory.obj \
+        $(OBJDIR)\ObjectReferenceTemplate.obj \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
 	$(OBJDIR)\ImplRepo_i.obj \
