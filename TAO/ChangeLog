@@ -1,3 +1,33 @@
+Mon Aug  9 17:43:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Utils/Servant_Var.inl:
+
+	  Include "tao/Exception.h" to pull CORBA::Exception declaration.
+	  Fixes a compile-time error regarding an incomplete
+	  CORBA::Exception type in a catch() statement.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
+
+	  Renamed TAO::SSLIOP::Credentials class to
+	  TAO::SSLIOP_Credentials, i.e. moved it one namespace level up.
+	  Brain damaged MSVC++ 6 cannot handle calling base class
+	  constructors of classes declared in a nested namespace inside a
+	  sub-class base member initializer.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+
+	  Updated these sources to refer to the renamed
+	  TAO::SSLIOP_Credentials class.
+
 Mon Aug  9 12:16:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BD_String_Argument_T.cpp:
