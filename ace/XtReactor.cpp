@@ -39,8 +39,10 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
   // we simply close and re-opened the notification handler in the
   // constructor of the XtReactor.
 
+#if defined (ACE_MT_SAFE)
   this->notify_handler_.close ();
   this->notify_handler_.open (this);
+#endif /* ACE_MT_SAFE */
 }
 
 ACE_XtReactor::~ACE_XtReactor (void)
@@ -158,7 +160,7 @@ int ACE_XtReactor::XtWaitForMultipleEvents (int width,
 		      temp_set.rd_mask_, 
 		      temp_set.wr_mask_, 
 		      temp_set.ex_mask_, 
-		      (ACE_Time_Value *) &ACE_TimeValue::zero) == -1)
+		      (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     return -1; // Bad file arguments...
 
   // Instead of waiting using select, just use the Xt mechanism to wait

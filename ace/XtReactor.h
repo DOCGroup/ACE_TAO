@@ -50,11 +50,11 @@ public:
   XtAppContext context (void);
 
   // Register timers/handles with Xt.
-  virtual int attach (ACE_HANDLE handle, 
-	              ACE_Event_Handler *handler,
-	              ACE_Reactor_Mask mask);
+  virtual int register_handler_i (ACE_HANDLE handle, 
+				  ACE_Event_Handler *handler,
+				  ACE_Reactor_Mask mask);
 
-  virtual int detach (ACE_HANDLE handle, ACE_Reactor_Mask mask);
+  virtual int remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask);
 
   virtual int schedule_timer (ACE_Event_Handler *handler, 
 		              const void *arg,
