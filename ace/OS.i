@@ -9320,7 +9320,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // Get the correct OS type.
 #if defined (ACE_HAS_WINCE) 
   const wchar_t *symbolname = sname;
-#elif defined (ACE_HAS_WIN32) && defined (ACE_USES_WCHAR)
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   char *symbolname = ACE_TEXT_ALWAYS_CHAR (sname);
 #elif defined (ACE_HAS_CHARPTR_DL)
   char *symbolname = ACE_const_cast (char *, sname);

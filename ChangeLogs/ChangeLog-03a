@@ -1,3 +1,11 @@
+Thu May 11 15:21:34 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i (dlsym):
+
+          I was checking for ACE_HAS_WIN32 instead of ACE_WIN32,
+          so this wasn't doing what it was supposed to with 
+          ACE_USES_WCHAR turned on.
+
 Thu May 11 02:04:58 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.h
