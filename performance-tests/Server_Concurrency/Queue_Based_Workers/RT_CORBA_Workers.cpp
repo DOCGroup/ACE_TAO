@@ -12,7 +12,7 @@
 static size_t number_of_messages = 1000;
 
 // The number of upcall threads
-static size_t number_of_workers = 4;
+static size_t number_of_workers = 2;
 
 // The size of the message
 static size_t message_size = 100;
