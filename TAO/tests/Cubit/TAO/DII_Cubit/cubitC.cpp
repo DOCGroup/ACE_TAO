@@ -167,7 +167,7 @@ Cubit::Cubit_cube_long (CORBA::Long l,
 
 static const CORBA::Long _oc_Cubit_Many [] = 
 {
-  1,          // byte order flag (TRICKY!)
+  MY_BYTE_SEX,          // byte order flag (TRICKY!)
       
   1, 0,       // empty string:  repository/type ID
   1, 0,       // empty string:  struct name
@@ -244,7 +244,7 @@ Cubit::Cubit_cube_struct (Cubit_Many &values,
 
 static const CORBA::Long _oc_Cubit_oneof [] = 
 {
-  1,          // byte order flag (TRICKY)
+  MY_BYTE_SEX,          // byte order flag (TRICKY)
   1, 0,       // omitted repository/type ID
   1, 0,       // omitted struct name, "oneof"
    
@@ -254,7 +254,7 @@ static const CORBA::Long _oc_Cubit_oneof [] =
   CORBA::tk_enum,    // CORBA::tk_enum
   72,         // encapsulation length
    
-  1,          // byte order flag (TRICKY)
+  MY_BYTE_SEX,          // byte order flag (TRICKY)
   1, 0,       // omitted repository/type ID
   1, 0,       // omitted enum name, "discrim"
   6,          // 5 elements in the enum
@@ -292,7 +292,7 @@ static const CORBA::Long _oc_Cubit_oneof [] =
   CORBA::tk_struct,  // CORBA::tk_struct
   60,         // encap length
    
-  1,          // byte order flag (TRICKY)
+  MY_BYTE_SEX,          // byte order flag (TRICKY)
   1, 0,       // omitted repository/type ID
   1, 0,       // omitted struct name, "Many"
   3,          // three struct members
