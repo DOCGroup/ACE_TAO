@@ -1,3 +1,13 @@
+Tue Dec 19 06:17:57 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+
+          Added missing source files.
+
+        * tao/DynamicInterface/Makefile.bor:
+
+          Fixed error in OBJFILES macro definition.
+
 Mon Dec 18 23:17:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/DomainS.h:
