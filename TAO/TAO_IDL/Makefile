@@ -273,6 +273,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -311,6 +314,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -349,6 +355,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -387,6 +396,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -437,7 +449,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -452,8 +463,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -486,6 +495,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -524,9 +536,6 @@ tags:
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Process.i \
  $(ACE_ROOT)/ace/Process_Manager.i
 .obj/drv_link.o .obj/drv_link.so .shobj/drv_link.o .shobj/drv_link.so: driver/drv_link.cpp include/idl.h \
@@ -545,6 +554,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -583,6 +595,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -621,9 +636,6 @@ tags:
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Process.i \
  $(ACE_ROOT)/ace/Process_Manager.i \
  $(ACE_ROOT)/ace/Env_Value_T.h \
@@ -645,6 +657,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -684,6 +699,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -723,6 +741,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -762,6 +783,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -801,6 +825,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -840,6 +867,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -879,6 +909,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -918,6 +951,9 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/idl.h include/intlmacros.h include/idl_narrow.h \
  include/idl_defines.h include/idl_fwd.h include/idl_bool.h \
@@ -957,6 +993,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -994,6 +1033,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1031,6 +1073,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1068,6 +1113,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1105,6 +1153,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1142,6 +1193,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1179,6 +1233,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1216,6 +1273,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1253,6 +1313,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1290,6 +1353,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1327,6 +1393,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1364,6 +1433,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1401,6 +1473,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1438,6 +1513,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1475,6 +1553,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1512,6 +1593,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1549,6 +1633,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1586,6 +1673,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1623,6 +1713,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1660,6 +1753,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1697,6 +1793,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1734,6 +1833,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1771,6 +1873,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1808,6 +1913,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1845,6 +1953,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1882,6 +1993,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1919,6 +2033,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1956,6 +2073,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1993,6 +2113,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2030,6 +2153,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2067,6 +2193,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2104,6 +2233,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2141,6 +2273,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2178,6 +2313,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2215,6 +2353,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2252,6 +2393,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2289,6 +2433,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2326,6 +2473,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2363,6 +2513,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2400,6 +2553,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2437,6 +2593,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2474,6 +2633,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2511,6 +2673,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2548,6 +2713,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2585,6 +2753,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2622,6 +2793,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2659,6 +2833,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2709,7 +2886,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -2724,8 +2900,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -2758,6 +2932,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2808,7 +2985,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -2823,8 +2999,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -2857,6 +3031,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2907,7 +3084,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -2922,8 +3098,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -2956,6 +3130,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3006,7 +3183,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3021,8 +3197,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3055,6 +3229,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3105,7 +3282,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3120,8 +3296,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3154,6 +3328,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3204,7 +3381,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3219,8 +3395,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3253,6 +3427,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3303,7 +3480,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3318,8 +3494,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3352,6 +3526,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3402,7 +3579,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3417,8 +3593,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3451,6 +3625,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3501,7 +3678,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3516,8 +3692,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3550,6 +3724,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3616,7 +3793,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3631,8 +3807,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3665,6 +3839,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3715,7 +3892,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3730,8 +3906,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3764,6 +3938,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3814,7 +3991,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3829,8 +4005,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3863,6 +4037,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3913,7 +4090,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -3928,8 +4104,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -3962,6 +4136,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4012,7 +4189,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4027,8 +4203,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4061,6 +4235,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4111,7 +4288,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4126,8 +4302,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4160,6 +4334,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4210,7 +4387,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4225,8 +4401,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4259,6 +4433,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4309,7 +4486,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4324,8 +4500,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4369,6 +4543,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4419,7 +4596,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4434,8 +4610,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4468,6 +4642,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4518,7 +4695,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4533,8 +4709,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4567,6 +4741,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4617,7 +4794,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4632,8 +4808,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4666,6 +4840,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4716,7 +4893,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4731,8 +4907,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4765,6 +4939,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4815,7 +4992,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4830,8 +5006,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4864,6 +5038,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4914,7 +5091,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -4929,8 +5105,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -4963,6 +5137,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5013,7 +5190,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5028,8 +5204,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5062,6 +5236,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5112,7 +5289,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5127,8 +5303,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5161,6 +5335,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5211,7 +5388,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5226,8 +5402,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5260,6 +5434,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5310,7 +5487,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5325,8 +5501,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5359,6 +5533,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5409,7 +5586,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5424,8 +5600,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5458,6 +5632,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5508,7 +5685,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5523,8 +5699,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5557,6 +5731,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5607,7 +5784,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5622,8 +5798,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5656,6 +5830,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5706,7 +5883,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5721,8 +5897,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5756,6 +5930,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5806,7 +5983,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5821,8 +5997,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5855,6 +6029,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5905,7 +6082,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -5920,8 +6096,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -5954,6 +6128,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6004,7 +6181,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6019,8 +6195,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6054,6 +6228,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6104,7 +6281,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6119,8 +6295,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6316,6 +6490,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6363,7 +6540,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6378,8 +6554,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6412,6 +6586,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6459,7 +6636,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6474,8 +6650,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6537,6 +6711,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6587,7 +6764,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6602,8 +6778,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6649,6 +6823,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6699,7 +6876,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6714,8 +6890,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6752,6 +6926,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6802,7 +6979,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6817,8 +6993,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6857,6 +7031,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6907,7 +7084,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -6922,8 +7098,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -6956,6 +7130,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7006,7 +7183,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7021,8 +7197,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7056,6 +7230,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7106,7 +7283,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7121,8 +7297,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7165,6 +7339,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7215,7 +7392,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7230,8 +7406,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7286,6 +7460,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7336,7 +7513,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7351,8 +7527,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7394,6 +7568,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7444,7 +7621,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7459,8 +7635,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7509,8 +7683,7 @@ tags:
  be/be_visitor_interface/cdr_op_ch.cpp \
  be/be_visitor_interface/cdr_op_cs.cpp
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -7525,6 +7698,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7575,7 +7751,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7590,8 +7765,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7632,6 +7805,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7682,7 +7858,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7697,8 +7872,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7739,6 +7912,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7789,7 +7965,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7804,8 +7979,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -7891,6 +8064,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7941,7 +8117,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -7956,8 +8131,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -8004,6 +8177,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8054,7 +8230,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8069,8 +8244,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -8104,6 +8277,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8154,7 +8330,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8169,8 +8344,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -8213,7 +8386,13 @@ tags:
  be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp \
  be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp \
  be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp \
- be/be_visitor_sequence/gen_object_manager_ch.cpp
+ be/be_visitor_sequence/gen_object_manager_ch.cpp \
+ be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp \
+ be/be_visitor_sequence/gen_bounded_sequence_ci.cpp \
+ be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp \
+ be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp \
+ be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp \
+ be/be_visitor_sequence/gen_object_manager_ci.cpp
 .obj/be_visitor_structure.o .obj/be_visitor_structure.so .shobj/be_visitor_structure.o .shobj/be_visitor_structure.so: be/be_visitor_structure.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8230,6 +8409,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8280,7 +8462,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8295,8 +8476,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -8347,6 +8526,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8397,7 +8579,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8412,8 +8593,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -8451,6 +8630,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8501,7 +8683,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8516,8 +8697,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -8567,6 +8746,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8617,7 +8799,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8632,8 +8813,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
@@ -8670,8 +8849,7 @@ tags:
  be/be_visitor_union/any_op_cs.cpp be/be_visitor_union/cdr_op_ch.cpp \
  be/be_visitor_union/cdr_op_cs.cpp
 .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.so .shobj/be_visitor_union_branch.o .shobj/be_visitor_union_branch.so: be/be_visitor_union_branch.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -8686,6 +8864,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8736,7 +8917,6 @@ tags:
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -8751,8 +8931,6 @@ tags:
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
