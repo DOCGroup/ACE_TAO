@@ -1,3 +1,61 @@
+Wed Mar 05 14:47:14 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,cpp},Makefile; also, renamed Scheduling_Params.* to
+	  Sched_Params.* and removed Thread_Priority.*:
+
+	  Major change in scheduling parameters interface:
+	  The key change is that there is no longer a special thread priority
+	  enum.	 Thread_Priority was changed to int, so applications can do
+	  whatever they want.  The ACE_Sched_Params class has some static
+	  functions to help do this portably.
+
+	  Here	are the changes from the ACE 4.1.3:
+
+	  1) ACE_Thread_Priority:  removed this class.
+
+	    It contained "priority class" and "thread priority".
+	    "Priority class" is platform-specific and doesn't
+	    need to be visible in ACE; it is subsumed by scheduling policy,
+	    see below.	"Thread priority" is replaced by the global
+	    ACE_Sched_Priority typedef in ace/OS.h, see next change.
+
+	  2) ace/OS.h:	added ACE_Sched_Priority typedef (to int)
+	     and ACE_SCOPE_THREAD.
+
+	  3) ace/OS.h:	added scheduling policy #defines:  ACE_SCHED_OTHER,
+	     ACE_SCHED_FIFO, and ACE_SCHED_RR.	There's an ACE_Sched_Params::
+	     Policy typedef that can take one of these values.
+
+	  4) ACE_Sched_Params:	added priority_min (), priority_max (),
+	     next_priority (), and previous_priority () functions.  All
+	     require an ACE_Sched_Params::Policy argument and take an
+	     optional scope argument (to support the distinct thread
+	     and process priorities on DEC UNIX).
+
+	     min_priority () and max_priority () have platform-specific
+	     and policy-specific values, and direction (the min value may
+	     be higher than the max value).  The increment and decrement
+	     operations allow applications to iterate over them, etc.,
+	     without explicitly specifying the direction of the priority
+	     (0 for high or low priority).
+
+	  5) The only way to apply ACE_Sched_Params is through
+	     ACE_OS::sched_params (const ACE_Sched_Params &).
+	     (This is not really a change, except for the name change from
+	     ACE_OS::set_sched_params ().
+
+	     It sets both policy and priority of current thread or
+	     process (depending on the scope in ACE_Sched_Params).
+	     Not all combinations of policy, priority, and scope are
+	     legal on all platforms.  Unfortunately, I see no way around
+	     this, because the intersection of legal ranges
+	     on our supported platforms is empty.  If an illegal request
+	     is made, ACE_OS::sched_params () sets errno to EINVAL and
+	     returns -1.
+
+	  6) added ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
+	     to set the current thread's priority, only.
+
 Wed Mar  5 14:36:59 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* SString.cpp: Fixed ACE*String initialization bugs. Thanks to
@@ -2536,4 +2594,3 @@ Wed Jan  1 00:10:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Happy new year!  Let's start a new ChangeLog to celebrate the
 	  new year.
-
