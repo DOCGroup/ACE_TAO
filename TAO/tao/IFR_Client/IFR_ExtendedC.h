@@ -23,12 +23,11 @@
 #define TAO_IDL_IFR_EXTENDEDC_H
 
 #include "ace/pre.h"
+#include "IFR_BasicC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "IFR_BasicC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -3766,8 +3765,6 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORB
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ValueBoxDef_ptr);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ValueBoxDef *&);
 
-#ifndef __ACE_INLINE__
-
 // **************************************************************
 // CDR operators for class moved from IFR_BaseC.h
 
@@ -3786,6 +3783,8 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ValueDefSeq_H_ */
 
 // **************************************************************
+
+#ifndef __ACE_INLINE__
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::FixedDef_ptr );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::FixedDef_ptr &);

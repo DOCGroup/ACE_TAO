@@ -28,7 +28,7 @@
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CI_
 
   ACE_INLINE CORBA::ValueDef **
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (CORBA::ULong nelems)
+ _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (CORBA::ULong nelems)
   {
     CORBA::ValueDef **buf = 0;
     
@@ -41,7 +41,7 @@
   }
   
   ACE_INLINE void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (CORBA::ValueDef **buffer)
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (CORBA::ValueDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -49,18 +49,18 @@
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (void)
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::ValueDef* *value,
     CORBA::Boolean release)
@@ -69,7 +69,7 @@
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -88,8 +88,8 @@
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -124,7 +124,7 @@
   }
   
   ACE_INLINE TAO_Object_Manager<CORBA::ValueDef,CORBA::ValueDef_var>
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -133,7 +133,7 @@
   }
   
   ACE_INLINE CORBA::ValueDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
+ _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::ValueDef **result = 0;
     if (orphan == 0)
@@ -167,7 +167,7 @@
   }
   
   ACE_INLINE const CORBA::ValueDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (void) const
+ _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ValueDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -778,7 +778,7 @@ CORBA_ValueMember_out::operator-> (void)
 
   // = Static operations.
   ACE_INLINE CORBA::ValueMember *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     CORBA::ValueMember *retval = 0;
@@ -786,25 +786,25 @@ CORBA_ValueMember_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::freebuf (CORBA::ValueMember *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::freebuf (CORBA::ValueMember *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::ValueMember *data,
     CORBA::Boolean release)
@@ -813,7 +813,7 @@ CORBA_ValueMember_out::operator-> (void)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs)
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -833,8 +833,8 @@ CORBA_ValueMember_out::operator-> (void)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -866,7 +866,7 @@ CORBA_ValueMember_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE CORBA::ValueMember &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -875,7 +875,7 @@ CORBA_ValueMember_out::operator-> (void)
   }
   
   ACE_INLINE const CORBA::ValueMember &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -886,7 +886,7 @@ CORBA_ValueMember_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE CORBA::ValueMember *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::ValueMember *result = 0;
     if (orphan == 0)
@@ -920,13 +920,13 @@ CORBA_ValueMember_out::operator-> (void)
   }
   
   ACE_INLINE const CORBA::ValueMember *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ValueMember * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::ValueMember *data,
   CORBA::Boolean release)
