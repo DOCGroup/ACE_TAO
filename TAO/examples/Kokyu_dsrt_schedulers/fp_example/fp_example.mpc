@@ -1,5 +1,5 @@
-project(fp_server): taoserver {
-
+project(fp_server): kokyu_dsrt_scheduler_server {
+  exename = fp_server
   includes += $(TAO_ROOT) \
              $(TAO_ROOT)/tao/RTScheduling \
              $(TAO_ROOT)/tao/RTCORBA   \
@@ -24,8 +24,8 @@ project(fp_server): taoserver {
   }
 }
 
-project(fp_client): taoclient {
-
+project(fp_client): kokyu_dsrt_scheduler_client {
+  exename = fp_client
   includes += $(TAO_ROOT)/tao/RTScheduling \
              $(TAO_ROOT)/tao/RTCORBA   \
              $(ACE_ROOT)/Kokyu \
