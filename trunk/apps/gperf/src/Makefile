@@ -6,8 +6,6 @@
 
 BIN     = gperf
 INSBIN  = $ACE_ROOT/bin/gperf
-LIB     = libGperf.a
-SHLIB   = libGperf.$(SOEXT)
 
 FILES   = Options \
           Iterator \
@@ -19,13 +17,10 @@ FILES   = Options \
           Vectors \
           Version
 
-LSRC    = $(addsuffix .cpp,$(FILES))
+SRC    = $(addsuffix .cpp,$(FILES))
+OBJ	= $(addsuffix .o,$(FILES))
 
-LDLIBS  = -lGperf
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
-BUILD   = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BUILD   = $(VBIN)
 
 INSTALL = $(VBIN:%=$(INSBIN)/%)
 
@@ -49,6 +44,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp Options.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -58,9 +56,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -84,7 +79,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  Options.h
-.obj/Gen_Perf.o .obj/Gen_Perf.so .shobj/Gen_Perf.o .shobj/Gen_Perf.so: Gen_Perf.cpp Gen_Perf.h \
+.obj/Gen_Perf.o .obj/Gen_Perf.so .shobj/Gen_Perf.o .shobj/Gen_Perf.so: Gen_Perf.cpp Gen_Perf.h Options.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -94,14 +92,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- Options.h Key_List.h List_Node.h Bool_Array.h Vectors.h
-.obj/Key_List.o .obj/Key_List.so .shobj/Key_List.o .shobj/Key_List.so: Key_List.cpp Key_List.h \
+ Key_List.h List_Node.h Vectors.h Bool_Array.h
+.obj/Key_List.o .obj/Key_List.so .shobj/Key_List.o .shobj/Key_List.so: Key_List.cpp Key_List.h Options.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -111,13 +109,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- Options.h List_Node.h \
+ List_Node.h Vectors.h \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -145,6 +140,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
@@ -158,7 +154,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Hash_Table.h Vectors.h
+ Hash_Table.h
 .obj/List_Node.o .obj/List_Node.so .shobj/List_Node.o .shobj/List_Node.so: List_Node.cpp List_Node.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \

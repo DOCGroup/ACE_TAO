@@ -21,8 +21,6 @@ You should have received a copy of the GNU General Public License
 along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111, USA.  */
 
-
-
 #include "Bool_Array.h"
 
 ACE_RCSID(src, Bool_Array, "$Id$")
@@ -36,9 +34,10 @@ Bool_Array::~Bool_Array (void)
   if (option[DEBUG])
     ACE_DEBUG ((LM_DEBUG,
                 "\ndumping boolean array information\n"
-                "size = %d\niteration number = %d\nend of array dump\n",
+                "size = %u\niteration number = %u\nend of array dump\n",
                 size_, 
                 generation_number_));
+  delete [] this->storage_array_;
 }
 
 Bool_Array::Bool_Array (void)
@@ -48,12 +47,15 @@ Bool_Array::Bool_Array (void)
 {
 }
 
-void
-Bool_Array::init (STORAGE_TYPE *buffer, STORAGE_TYPE s)
+int
+Bool_Array::open (u_long s)
 {
-  size_ = s;
-  generation_number_ = 1;
-  storage_array_ = buffer;
+  this->generation_number_ = 1;
+  this->size_ = s;
+
+  ACE_NEW_RETURN (storage_array_,
+                  u_long[s],
+                  -1);
 
   ACE_OS::memset (storage_array_,
                   0,
@@ -61,13 +63,14 @@ Bool_Array::init (STORAGE_TYPE *buffer, STORAGE_TYPE s)
 
   if (option[DEBUG])
     ACE_DEBUG ((LM_DEBUG,
-                "\nbool array size = %d, total bytes = %d\n",
+                "\nbool array size = %u, total bytes = %u\n",
                 size_,
                 size_ * (int) sizeof *storage_array_));
+  return 0;
 }
 
 int
-Bool_Array::find (int index)
+Bool_Array::find (u_long index)
 {
   if (storage_array_[index] == generation_number_)
     return 1;
@@ -87,11 +90,10 @@ Bool_Array::reset (void)
         ACE_DEBUG ((LM_DEBUG,
                     "(re-initializing bool_array)..."));
 
-      generation_number_ = 1;
+      this->generation_number_ = 1;
       ACE_OS::memset (storage_array_,
                       0,
                       size_ * sizeof *storage_array_);
-
       if (option[DEBUG])
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));

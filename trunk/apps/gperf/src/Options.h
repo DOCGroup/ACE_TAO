@@ -24,7 +24,6 @@ USA.  */
 #if !defined (OPTIONS_H)
 #define OPTIONS_H
 
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_GPERF)
@@ -92,73 +91,73 @@ public:
   Options (void);
   ~Options (void);
   int operator[] (Option_Type option);
-  void operator() (int argc, char *argv[]);
+  int parse_args (int argc, char *argv[]);
   void operator= (enum Option_Type);
   void operator!= (enum Option_Type);
   static void print_options (void);
-  static void set_asso_max (int r);
-  static int get_asso_max (void);
+  static void asso_max (int r);
+  static int asso_max (void);
   static void reset (void);
   static int get (void);
-  static int get_iterations (void);
-  static int get_max_keysig_size (void);
-  static void set_keysig_size (int);
-  static int get_jump (void);
+  static int iterations (void);
+  static int max_keysig_size (void);
+  static void keysig_size (int);
+  static int jump (void);
   static int initial_value (void);
-  static int get_total_switches (void);
-  static const char *get_function_name (void);
-  static const char *get_key_name (void);
-  static const char *get_class_name (void);
-  static const char *get_hash_name (void);
-  static const char *get_delimiter (void);
+  static int total_switches (void);
+  static const char *function_name (void);
+  static const char *key_name (void);
+  static const char *class_name (void);
+  static const char *hash_name (void);
+  static const char *delimiter (void);
 
 private:
-  static int option_word;
+  static int option_word_;
   // Holds the user-specified Options.
 
-  static int total_switches;
+  static int total_switches_;
   // Number of switch statements to generate.
 
-  static int total_keysig_size;
+  static int total_keysig_size_;
   // Total number of distinct key_positions.
 
-  static int size;
+  static int size_;
   // Range of the hash table.
 
-  static int key_pos;
+  static int key_pos_;
   // Tracks current key position for Iterator.
 
-  static int jump;
+  static int jump_;
   // Jump length when trying alternative values.
 
-  static int initial_asso_value;
+  static int initial_asso_value_;
   // Initial value for asso_values table.
 
-  static int argument_count;
-  // Records count of command-line arguments.
-
-  static int iterations;
+  static int iterations_;
   // Amount to iterate when a collision occurs.
 
-  static char **argument_vector;
+  static int argc_;
+  // Records count of command-line arguments.
+
+  static char **argv_;
   // Stores a pointer to command-line vector.
 
-  static const char *function_name;
+  static const char *function_name_;
   // Names used for generated lookup function.
 
-  static const char *key_name;
+  static const char *key_name_;
   // Name used for keyword key.
 
-  static const char *class_name;
+  static const char *class_name_;
   // Name used for generated C++ class.
 
-  static const char *hash_name;
+  static const char *hash_name_;
   // Name used for generated hash function.
 
-  static const char *delimiters;
+  static const char *delimiters_;
   // Separates keywords from other attributes.
 
-  static char key_positions[MAX_KEY_POS];
+  static char key_positions_[MAX_KEY_POS];
   // Contains user-specified key choices.
 
   static int key_sort (char *base, int len);

@@ -40,7 +40,8 @@ main (int argc, char *argv[])
   time_t clock;
 
   // Sets the Options.
-  option (argc, argv);
+  if (option.parse_args (argc, argv) == -1)
+    return 1;
 
   ACE_OS::time (&clock);
   tm = ACE_OS::localtime (&clock);
@@ -51,11 +52,11 @@ main (int argc, char *argv[])
                   tm->tm_sec);
 
   // Initializes the key word list.
-  Gen_Perf table;
+  Gen_Perf gperf;
 
   // Generates and prints the gperf hash table.  Don't use exit here,
   // it skips the destructors.
-  int status = table.generate ();
+  int status = gperf.run ();
 
   ACE_OS::time (&clock);
   tm = ACE_OS::localtime (&clock);

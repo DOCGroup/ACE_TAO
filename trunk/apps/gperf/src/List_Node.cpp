@@ -36,7 +36,7 @@ ACE_RCSID(src, List_Node, "$Id$")
 // Uses insertion sort since the set is probably quite small.
 
 inline void
-List_Node::set_sort (char *base, int len)
+List_Node::sort (char *base, int len)
 {
   int i, j;
 
@@ -75,8 +75,8 @@ List_Node::List_Node (char *k, int len)
     length (len),
     index (0)
 {
-  char *ptr = new char[(option[ALLCHARS] ? len : option.get_max_keysig_size ()) + 1];
-  keysig  = ptr;
+  char *ptr = new char[(option[ALLCHARS] ? len : option.max_keysig_size ()) + 1];
+  keysig = ptr;
   k[len] = '\0';             // Null terminate KEY to separate it from REST.
 
   // Lower case if STRCASECMP option is enabled.
@@ -88,20 +88,22 @@ List_Node::List_Node (char *k, int len)
   if (option[ALLCHARS])         // Use all the character position in the KEY.
     for (; *k; k++, ptr++)
       ++Vectors::occurrences[*ptr = *k];
-  else                          // Only use those character positions specified by the user.
+  else                          
     {
-      int i;
+      // Only use those character positions specified by the user.
+
+      option.reset (); 
 
       // Iterate thru the list of key_positions, initializing
       // occurrences table and keysig (via char * pointer ptr).
 
-      for (option.reset (); (i = option.get ()) != EOS; )
+      for (int i; (i = option.get ()) != EOS; )
         {
-          if (i == WORD_END)            // Special notation for last KEY position, i.e. '$'.
+          if (i == WORD_END) // Special notation for last KEY position, i.e. '$'.
             *ptr = key[len - 1];
-          else if (i <= len)    // Within range of KEY length, so we'll keep it.
+          else if (i <= len) // Within range of KEY length, so we'll keep it.
             *ptr = key[i - 1];
-          else                  // Out of range of KEY length, so we'll just skip it.
+          else // Out of range of KEY length, so we'll just skip it.
             continue;
           ++Vectors::occurrences[*ptr++];
         }
@@ -114,9 +116,17 @@ List_Node::List_Node (char *k, int len)
                     key,
                     1));
     }
-  *ptr = '\0';                  // Terminate this bastard....
-  // Sort the KEY_SET items alphabetically.
-  set_sort (keysig, ptr - keysig);
+  // Terminate this string.
+  *ptr = '\0'; 
+
+  // Sort the KEYSIG items alphabetically.
+  sort (keysig, ptr - keysig);
+}
+
+List_Node::~List_Node (void)
+{
+  delete [] this->key;
+  delete [] this->keysig;
 }
 
 #endif /* ACE_HAS_GPERF */

@@ -28,14 +28,17 @@ USA.  */
 
 #if defined (ACE_HAS_GPERF)
 
-static const int ALPHA_SIZE = 128;
-
 class Vectors
 {
   // = TITLE 
   //   Static class data members that are shared between several
   //   classes via inheritance.  
 public:
+  enum 
+  {
+    ALPHA_SIZE = 128
+  };
+
   static int occurrences[ALPHA_SIZE]; 
   // Counts occurrences of each key set character.
 
