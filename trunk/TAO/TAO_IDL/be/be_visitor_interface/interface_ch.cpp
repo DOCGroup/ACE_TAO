@@ -20,8 +20,8 @@
 
 #include "be_visitor_typecode/typecode_decl.h"
 
-ACE_RCSID (be_visitor_interface, 
-           interface_ch, 
+ACE_RCSID (be_visitor_interface,
+           interface_ch,
            "$Id$")
 
 // ******************************************************
@@ -94,7 +94,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_ch::"
                          "visit_interface - "
-                         "codegen for _out failed\n"), 
+                         "codegen for _out failed\n"),
                         -1);
     }
 
@@ -173,12 +173,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (has_concrete_parent == 0 && ! node->is_abstract ())
     {
       *os << "public virtual CORBA::Object";
-      
+
       if (nparents > 0)
         {
           *os << be_uidt;
         }
-        
+
       *os << be_uidt_nl;
     }
 
@@ -242,7 +242,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (node->is_abstract ())
     {
-      *os << "static foo_ptr _downcast (CORBA::AbstractBase_ptr abs);" 
+      *os << "static foo_ptr _downcast (CORBA::AbstractBase_ptr abs);"
           << be_nl << be_nl;
     }
 
@@ -261,7 +261,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_ch::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -308,7 +308,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "_;";
     }
 
-  *os << be_uidt_nl << be_nl 
+  *os << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl;
 
   if (! node->is_local () && ! node->is_abstract ())
@@ -332,7 +332,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << node->local_name () << " (void);" << be_nl;
 
       // Protected copy constructor for abstract interfaces.
-      *os << node->local_name () << " (const " 
+      *os << node->local_name () << " (const "
           << node->local_name () << " &);" << be_nl;
     }
 
@@ -362,7 +362,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
-  *os << be_uidt_nl << be_nl 
+  *os << be_uidt_nl << be_nl
       << "private:" << be_idt_nl;
 
   // Abstract interfaces have a *protected* copy constructor.
@@ -376,7 +376,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Generate the embedded RequestInfo classes per operation.
   // This is to be used by interceptors.
-  be_visitor *visitor = 0;
   be_visitor_context ctx (*this->ctx_);
 
   ctx = *this->ctx_;
@@ -451,7 +450,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
@@ -502,4 +501,3 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
 
   return 0;
 }
-

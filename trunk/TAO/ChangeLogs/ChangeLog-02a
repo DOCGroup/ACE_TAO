@@ -1,3 +1,39 @@
+Mon Jul  1 11:52:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.EXE:
+	* TAO_IDL/Makefile.FE:
+	  Update dependencies
+
+	* TAO_IDL/include/utl_err.h:
+	  Fixed #include, damn NT and the case-insensitive file system.
+
+	* TAO_IDL/include/utl_string.h:
+	* TAO_IDL/tao_idl.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/proxy_brokers_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/proxy_impls_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_si.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/fe/fe_init.cpp:
+	* TAO_IDL/fe/fe_lookup.cpp:
+	  Fixed warnings and a couple of minor errors.
+
 Mon Jul  1 09:31:20 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Makefile.EX:

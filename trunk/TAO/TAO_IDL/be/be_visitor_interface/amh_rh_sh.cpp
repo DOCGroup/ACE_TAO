@@ -11,8 +11,8 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_rh_ss, 
+ACE_RCSID (be_visitor_interface,
+           amh_rh_sh,
            "$Id$")
 
 be_visitor_amh_rh_interface_sh::be_visitor_amh_rh_interface_sh (

@@ -73,8 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_extern.h"
 #include "ace/Process.h"
 
-ACE_RCSID (driver, 
-           drv_args, 
+ACE_RCSID (driver,
+           drv_args,
            "$Id$")
 
 extern long DRV_nfiles;
@@ -102,7 +102,7 @@ DRV_prep_cpp_arg (char *s)
        farg != 0;
        farg = ACE_OS::strtok (0, ","))
     {
-      ACE_OS::strcat (newarg, 
+      ACE_OS::strcat (newarg,
                       farg);
     }
 
@@ -1432,4 +1432,3 @@ DRV_parse_args (long ac, char **av)
       idl_global->temp_dir (tmpdir);
     }
 }
-
