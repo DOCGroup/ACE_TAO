@@ -183,6 +183,8 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
                       ATMNSAP_ADDR_LEN);
     }
   else
+#else
+  ACE_UNUSED_ARG (sap);
 #endif /* ACE_HAS_FORE_ATM_XTI */
     {
       errno = EINVAL;
@@ -222,6 +224,8 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
 
   return 0;
 #else
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
   return -1;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
@@ -325,6 +329,8 @@ ACE_ATM_Addr::get_local_address (ACE_HANDLE fd,
                   ATMNSAP_ADDR_LEN);
   return 0;
 #else
+  ACE_UNUSED_ARG (fd);
+  ACE_UNUSED_ARG (addr);
   return -1;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
@@ -484,6 +490,10 @@ ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
 
   return buf;
 #else
+  ACE_UNUSED_ARG (fd);
+  ACE_UNUSED_ARG (qos_kb);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (optsize);
   return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
