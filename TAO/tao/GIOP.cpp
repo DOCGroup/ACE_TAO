@@ -470,7 +470,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   CDR::mb_align (&msg.start_);
 
-  size_t header_len = TAO_GIOP_HEADER_LEN;
+  ssize_t header_len = TAO_GIOP_HEADER_LEN;
   if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
     header_len = 5;
 
