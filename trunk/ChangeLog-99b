@@ -1,3 +1,9 @@
+Mon Jun 21 14:17:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Stats.h:
+	* ace/Stats.cpp:
+	  Added new class to keep latency and throughput statistics.
+
 Mon Jun 21 13:24:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_freebsd.GNU,platform_linux.GNU,

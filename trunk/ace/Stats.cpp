@@ -420,6 +420,198 @@ ACE_Stats::square_root (const ACE_UINT64 n,
     }
 }
 
+// ****************************************************************
+
+ACE_Throughput_Stats::ACE_Throughput_Stats (void)
+  :  samples_count_ (0),
+     latency_min_ (0),
+     latency_max_ (0),
+     latency_sum_ (0),
+     latency_sum2_ (0),
+     throughput_last_ (0),
+     throughput_sum_x_ (0),
+     throughput_sum_x2_ (0),
+     throughput_sum_y_ (0),
+     throughput_sum_y2_ (0),
+     throughput_sum_xy_ (0)
+{
+}
+
+void
+ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
+                              ACE_UINT64 latency)
+{
+  this->samples_count_++;
+
+  if (this->samples_count_ == 1)
+    {
+      this->latency_min_ = latency;
+      this->latency_max_ = latency;
+      this->latency_sum_ = latency;
+      this->latency_sum2_ = latency * latency;
+
+      this->throughput_last_   = throughput;
+#if 0
+      this->throughput_sum_y_  = this->samples_count_;
+      this->throughput_sum_y2_ = this->samples_count_ * this->samples_count_;
+      this->throughput_sum_x_  = throughput;
+      this->throughput_sum_x2_ = throughput * throughput;
+      this->throughput_sum_xy_ = throughput * this->samples_count_;
+
+      printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
+#endif /* 0 */
+
+      return;
+    }
+
+  if (this->latency_min_ > latency)
+    this->latency_min_ = latency;
+  if (this->latency_max_ < latency)
+    this->latency_max_ = latency;
+
+  this->latency_sum_  += latency;
+  this->latency_sum2_ += latency * latency;
+
+  this->throughput_last_ = throughput;
+
+#if 0
+  this->throughput_sum_y_  += this->samples_count_;
+  this->throughput_sum_y2_ += this->samples_count_ * this->samples_count_;
+  this->throughput_sum_x_  += throughput;
+  this->throughput_sum_x2_ += throughput * throughput;
+  this->throughput_sum_xy_ += throughput * this->samples_count_;
+
+  printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
+#endif /* 0 */
+}
+
+void
+ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
+{
+  if (rhs.samples_count_ == 0)
+    return;
+
+  if (this->samples_count_ == 0)
+    {
+      this->samples_count_ = rhs.samples_count_;
+
+      this->latency_min_  = rhs.latency_min_;
+      this->latency_max_  = rhs.latency_max_;
+      this->latency_sum_  = rhs.latency_sum_;
+      this->latency_sum2_ = rhs.latency_sum2_;
+
+      this->throughput_last_   = rhs.throughput_last_;
+#if 0
+      this->throughput_sum_x_  = rhs.throughput_sum_x_;
+      this->throughput_sum_x2_ = rhs.throughput_sum_x2_;
+      this->throughput_sum_y_  = rhs.throughput_sum_y_;
+      this->throughput_sum_y2_ = rhs.throughput_sum_y2_;
+      this->throughput_sum_xy_ = rhs.throughput_sum_xy_;
+#endif /* 0 */
+
+      return;
+    }
+
+  this->samples_count_ += rhs.samples_count_;
+
+  if (this->latency_min_ > rhs.latency_min_)
+    this->latency_min_ = rhs.latency_min_;
+  if (this->latency_max_ < rhs.latency_max_)
+    this->latency_max_ = rhs.latency_max_;
+
+  this->latency_sum_  += rhs.latency_sum_;
+  this->latency_sum2_ += rhs.latency_sum2_;
+
+  if (this->throughput_last_ < rhs.throughput_last_)
+    this->throughput_last_ = rhs.throughput_last_;
+
+#if 0
+  this->throughput_sum_x_  += rhs.throughput_sum_x_;
+  this->throughput_sum_x2_ += rhs.throughput_sum_x2_;
+  this->throughput_sum_y_  += rhs.throughput_sum_y_;
+  this->throughput_sum_y2_ += rhs.throughput_sum_y2_;
+  this->throughput_sum_xy_ += rhs.throughput_sum_xy_;
+#endif /* 0 */
+}
+
+void
+ACE_Throughput_Stats::dump_results (const char* msg,
+                                    ACE_UINT32 sf)
+{
+  if (this->samples_count_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%s : no data collected\n"));
+      return;
+    }
+
+  ACE_UINT64 latency_avg = this->latency_sum_ / this->samples_count_;
+  ACE_UINT64 latency_dev =
+    this->latency_sum2_ / this->samples_count_ - latency_avg * latency_avg;
+
+  double l_min = ACE_CU64_TO_CU32 (this->latency_min_) / sf;
+  double l_max = ACE_CU64_TO_CU32 (this->latency_max_) / sf;
+  double l_avg = ACE_CU64_TO_CU32 (latency_avg) / sf;
+  double l_dev = ACE_CU64_TO_CU32 (latency_dev) / (sf * sf);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%s latency: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2)\n",
+              msg, l_min, l_avg, l_max, l_dev));
+
+  double seconds =
+    ACE_CU64_TO_CU32 (this->throughput_last_ / sf);
+  seconds /= 1000000.0;
+  double t_avg = ACE_CU64_TO_CU32 (this->samples_count_) / seconds;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%s throughput: %.2f (events/second)\n",
+              msg, t_avg));
+
+#if 0
+  double t_sum_x =
+    ACE_CU64_TO_CU32 (this->throughput_sum_x_);// / sf);
+  //t_sum_x /= 1000000.0;
+  double t_sum_y =
+    ACE_CU64_TO_CU32 (this->throughput_sum_y_);
+  double t_sum_x2 =
+    ACE_CU64_TO_CU32 (this->throughput_sum_x2_);// / (sf*sf));
+  //t_sum_x2 /= 1000000.0;
+  //t_sum_x2 /= 1000000.0;
+  double t_sum_y2 =
+    ACE_CU64_TO_CU32 (this->throughput_sum_y2_);
+  double t_sum_xy =
+    ACE_CU64_TO_CU32 (this->throughput_sum_xy_);// / sf);
+  //t_sum_xy /= 1000000.0;
+  double t_avgx = t_sum_x / this->samples_count_;
+  double t_avgy = t_sum_y / this->samples_count_;
+
+  double t_a =
+    (this->samples_count_ * t_sum_xy - t_sum_x * t_sum_y)
+    / (this->samples_count_ * t_sum_x2 - t_sum_x * t_sum_x);
+  double t_b = (t_avgy - t_a * t_avgx);
+
+  t_a *= 1000000.0;
+
+  double d_r =
+    (t_sum_xy - t_avgx * t_sum_y - t_avgy * t_sum_x
+     + this->samples_count_ * t_avgx * t_avgy);
+  double n_r =
+    (t_sum_x2
+     - this->samples_count_ * t_avgx * t_avgx)
+    * (t_sum_y2
+       - this->samples_count_ * t_avgy * t_avgy);
+  double t_r = d_r * d_r / n_r;
+
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "%s throughput: %.2f/%.2f/%.2f/%.6f/%.2f (avg/a/b/r/elapsed)\n",
+  //              msg, t_avg, t_a, t_b, t_r, seconds));
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "%s        data: %.2f/%.2f/%.2f/%.6f/%.2f (x/x2/y/y2/xy)\n",
+  //              msg, t_sum_x, t_sum_x2, t_sum_y, t_sum_y2, t_sum_xy));
+#endif
+}
+
+// ****************************************************************
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node <ACE_INT32>;
 template class ACE_Unbounded_Queue <ACE_INT32>;
