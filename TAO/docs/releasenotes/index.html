@@ -1273,7 +1273,7 @@ multiple consumers and producers exchange events in this configuration.</li>
 </ul>
 <h3>
 Known bugs:</h3>
-<ul>
+<ul> 
 <li>
 CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:
 Once the tests are done, the control doesn't return to the shell,
@@ -1282,11 +1282,11 @@ you have to say CTRL-C to get back to the prompt.
 </ul>
 
 <hr WIDTH="100%">
-<h3><a NAME="log"></a>CORBA Telecom Log Service </h3>
+<h3><a NAME="log"></a>CORBA Telecom Log Service </h3> 
 
-<h4> Last updated: Sun Oct 17 14:35:11 CDT 1999 </h4>
-Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
-<p>The CORBA <a href="http://www.omg.org/cgi-bin/doc?telecom/98-12-04"> Telecom Log Service </a> prototype was released in TAO version 1.0.6.
+<h4> Last updated: Sat Feb 19 16:58:42 CDT 2000 </h4>
+Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Pathayapura</a>
+<p>The CORBA <a href="http://www.omg.org/cgi-bin/doc?telecom/99-05-01"> Telecom Log Service </a> prototype was released in TAO version 1.0.6.
 
 <br>
 <h3> Features supported in the first version:</h3>
@@ -1308,6 +1308,8 @@ Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
       The test <tt>$TAO_ROOT/orbsvcs/examples/Log/Client</tt> demonstrates
       a simple use of the Log Service.
       <br>
+      A thorough test <tt>$TAO_ROOT/orbsvcs/examples/Log/test/client</tt> tests
+      most of the features of the logging service. 
   </li>
   <li>
       The Query Language supported at present is "TCL".
@@ -1321,14 +1323,9 @@ Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <h3> Things to be done: </h3>
 <ul>
   <li>
-      Write a more complete test to thoroughly check all features of the Log Service.
-      <br>
-  </li>
-  <li>
       Implement a few remaining methods - <br>
-      For the <tt>Log</tt> interface:
-      setting the max. record life, log duration, weekly scheduling and copy.<br>
-      For the <tt>LogMgr</tt> interface:list_logs_by_id
+      For the <tt>Log</tt> interface: copy.<br>
+      For the <tt>LogMgr</tt> interface: list_logs_by_id
       <br>
   </li>
 </ul>
