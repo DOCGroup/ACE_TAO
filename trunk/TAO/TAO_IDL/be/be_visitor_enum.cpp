@@ -66,21 +66,22 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
       *os << "typedef " << node->local_name () << " &" << node->local_name ()
           << "_out;\n";
 
-      // Generate the typecode decl
-      if (node->is_nested ())
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      be_visitor *visitor;
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
         {
-          // we have a scoped name
-          os->indent ();
-          *os << "static CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_enum_ch::"
+                             "visit_enum - "
+                             "TypeCode declaration failed\n"
+                             ), -1);
         }
-      else
-        {
-          // we are in the ROOT scope
-          os->indent ();
-          *os << "extern CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
-        }
+
       node->cli_hdr_gen (I_TRUE);
     }
   return 0;
@@ -146,13 +147,22 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
       os->decr_indent ();
       *os << "};\n";
 
-      os->indent ();
-      *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
-          << " (CORBA::tk_enum, sizeof (_oc_" <<  node->flatname ()
-          << "), (char *) &_oc_" << node->flatname ()
-          << ", CORBA::B_FALSE);" << be_nl;
-      *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_"
-          <<  node->flatname () << ";\n\n";
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      be_visitor *visitor;
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_enum_cs::"
+                             "visit_enum - "
+                             "TypeCode definition failed\n"
+                             ), -1);
+        }
+
       node->cli_stub_gen (I_TRUE);
     }
   return 0;

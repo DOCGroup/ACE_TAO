@@ -57,7 +57,7 @@ CPPFLAGS += -D_REENTRANT -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VE
 YACC   = yacc
 LEX	= flex
 YFLAGS	= -t -d
-LFLAGS	= -t 
+LFLAGS	= -t
 
 # Create the parser and lexer
 y.tab.h y.tab.cpp: idl.yy
@@ -69,7 +69,7 @@ y.tab.h y.tab.cpp: idl.yy
 	    -e "s/YY/TAO_YY/g" < y.tab.h > /tmp/$@
 	@mv /tmp/$@ y.tab.h
 	@patch < y.tab.cpp.diff
-	@-$(RM) -f y.tab.cpp.orig y.tab.c 
+	@-$(RM) -f y.tab.cpp.orig y.tab.c
 
 lex.yy.cpp: idl.ll y.tab.h
 	$(LEX) $(LFLAGS) idl.ll > /tmp/$@

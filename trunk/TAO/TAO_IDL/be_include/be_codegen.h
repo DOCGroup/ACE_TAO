@@ -341,6 +341,10 @@ public:
     TAO_UNION_PRIVATE_SI,
     TAO_UNION_PRIVATE_SS,
 
+    // emitting code for typecodes
+    TAO_TYPECODE_DECL,
+    TAO_TYPECODE_DEFN,
+
     // Always must be last
     TAO_UNKNOWN
 

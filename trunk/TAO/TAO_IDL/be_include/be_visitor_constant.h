@@ -67,6 +67,13 @@ public:
   virtual int visit_constant (be_constant *node);
   // visit constant
 
+  // = special methods
+
+  virtual int gen_nested_namespace_begin (be_module *node);
+  // generate the nested namespace begins
+
+  virtual int gen_nested_namespace_end (be_module *node);
+  // generate the nested namespace ends
 };
 
 #endif // TAO_BE_VISITOR_CONSTANT_H

@@ -224,21 +224,22 @@ int be_visitor_union_ch::visit_union (be_union *node)
       os->decr_indent ();
       *os << "}; // " << node->name () << "\n\n";
 
-      // Generate the typecode decl
-      if (node->is_nested ())
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
         {
-          // we have a scoped name
-          os->indent ();
-          *os << "static CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_ch::"
+                             "visit_union - "
+                             "TypeCode declaration failed\n"
+                             ), -1);
         }
-      else
-        {
-          // we are in the ROOT scope
-          os->indent ();
-          *os << "extern CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
-        }
+
+
       os->gen_endif ();
 
       // generate the ifdefined macro for the _var type
@@ -549,12 +550,22 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->decr_indent ();
       *os << "};" << be_nl;
 
-      *os << "static CORBA::TypeCode _tc__tc_" << node->flatname () <<
-        " (CORBA::tk_union, sizeof (_oc_" <<  node->flatname () <<
-        "), (char *) &_oc_" << node->flatname () <<
-        ", CORBA::B_FALSE);" << be_nl;
-      *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_" <<
-        node->flatname () << ";\n\n";
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit_union - "
+                             "TypeCode definition failed\n"
+                             ), -1);
+        }
+
+
       node->cli_stub_gen (I_TRUE);
     }
   return 0;
