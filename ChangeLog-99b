@@ -1,3 +1,33 @@
+Sat Jul 10 13:16:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Malloc: Changed the type of pointer used by ACE_Name_Node
+	  from void * to char * so that we can integrate this cleanly with
+ 	  ACE_Based_Pointer<>, which will fail if we use void since we
+ 	  can't return from a "void" function!
+
+	* tests/Thread_Pool_Test.cpp (open): Fixed another somewhat bogus
+	  warning from EGCS related to initialization of loop variables.
+
+	* tests/New_Fail_Test.cpp (main): Make sure to initialize pointers
+	  so that EGCS doesn't complain.
+	
+	* tests/MT_Reactor_Timer_Test.cpp (main): Fixed a signed/unsigned
+	  mismatch.
+
+	* tests: Added appropriate header comments for all the *.h files.
+
+	* tests/Cache_Map_Manager_Test.cpp: Capitlized the hash_key
+	  class to be Hash_Key, which is standard ACE programming style.
+
+	* ace/Service_Config.cpp: Added yet another set of 
+	  changes to open_i() so that the -d option is handled
+ 	  appropriately.  Thanks to Jonathan Reis
+ 	  <reis@minniemouse.cemax.com> for this fix.
+
+	* ace/SOCK_Acceptor.h: Clarified the parameters for 
+	  ACE_SOCK_Acceptor's constructor and open() methods.  Thanks to
+ 	  Ron MacKenzie <ronm@SLAC.Stanford.EDU> for motivating this.
+
 Sat Jul 10 13:56:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MT_Reactor_Timer_Test.cpp (main): Fixed signed/unsigned
