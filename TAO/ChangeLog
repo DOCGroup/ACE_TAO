@@ -1,3 +1,8 @@
+Thu Mar 06 12:26:36 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+	  Added missing ACE_TYPENAME on line 34.
+
 Thu Mar  6 11:03:02 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
