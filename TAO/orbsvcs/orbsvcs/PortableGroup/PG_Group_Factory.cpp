@@ -197,6 +197,41 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
   return destroy_group (tc.object_group_id);
 }
 
+
+
+PortableGroup::ObjectGroups *
+TAO::PG_Group_Factory::groups_at_location (
+    const PortableGroup::Location & the_location
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ( (CORBA::SystemException))
+{
+  size_t upper_limit = this->group_map_.current_size ();
+  PortableGroup::ObjectGroups * result = 0;
+  ACE_NEW_THROW_EX (
+    result,
+    PortableGroup::ObjectGroups (upper_limit),
+    CORBA::NO_MEMORY());
+  ACE_CHECK_RETURN (0);
+
+  result->length(upper_limit);
+
+  size_t group_count = 0;
+  for (Group_Map_Iterator it = this->group_map_.begin ();
+    it != this->group_map_.end ();
+    ++it)
+  {
+    TAO::PG_Object_Group * group = (*it).int_id_;
+    if (group->has_member_at (the_location))
+    {
+      (*result)[group_count] = group->reference ();
+      ++group_count;
+    }
+  }
+  result->length (group_count);
+  return result;
+}
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class ACE_Hash_Map_Manager_Ex<
