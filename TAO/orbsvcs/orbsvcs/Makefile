@@ -46,7 +46,9 @@ IDL_SRCS= \
 	Null_MediaCtrl \
 	CosEventComm \
 	CosEventChannelAdmin \
-	sfp
+	sfp \
+	ImplRepo \
+	Ping
 
 IDL_FILES = \
 	$(addsuffix S, $(IDL_SRCS)) \
