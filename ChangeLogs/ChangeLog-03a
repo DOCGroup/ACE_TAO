@@ -1,3 +1,7 @@
+Sat Jan  5 14:57:36 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/OS_QoS.h: Fix comments, put in doxygen format.
+
 Sat Jan  5 08:59:41 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Future.cpp (get): Added an ACE_const_cast() to silence certain
