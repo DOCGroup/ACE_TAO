@@ -1129,9 +1129,27 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           // set of nodes referenced here
           if (treat_as_ref && d != NULL)
             {
-              add_to_referenced (d, 
-                                 I_FALSE,
-                                 0);
+              Identifier *id = 0;
+              AST_Decl::NodeType nt = d->node_type ();
+              if (nt == AST_Decl::NT_typedef)
+                {
+                  AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+                  nt = td->base_type ()->node_type ();
+                }
+
+              if (d->imported () == I_FALSE
+                  && nt != AST_Decl::NT_except)
+                {
+                  id = e->head ();
+                }
+
+              // We don't want to add a reference in some other scope.  
+              if (scope_offset == 0)
+                {
+                  add_to_referenced (d, 
+                                     I_FALSE,
+                                     id);
+                }
             }
 
           // OK, now return whatever we found
@@ -1196,7 +1214,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
         }
     }
   // Only insert if it is not there already
-  if (referenced(e, id))
+  if (referenced (e, id))
     {
       return;
     }
@@ -1409,10 +1427,24 @@ UTL_Scope::referenced (AST_Decl *e, Identifier *id)
 {
   long          i = pd_referenced_used;
   AST_Decl      **tmp = pd_referenced;
+  Identifier *member = 0;
+  Identifier *test = 0;
 
   for (; i > 0; i--, tmp++)
-    if (*tmp == e)      // Same node?
-      return I_TRUE;
+    {
+      if (*tmp == e)      // Same node?
+        return I_TRUE;
+      if ((*tmp)->node_type () == AST_Decl::NT_interface_fwd
+          && e->node_type () == AST_Decl::NT_interface)
+        {
+          member = (*tmp)->local_name ();
+          test = e->local_name ();
+          // If we're just defining a forward
+          // declared interface, no need to go any further.
+          if (member->compare (test) == I_TRUE)
+            return I_FALSE;
+        }
+    }
 
   // pd_referenced is a list of decls, and so there's no
   // way of telling how much of its scoped name was used
@@ -1427,12 +1459,15 @@ UTL_Scope::referenced (AST_Decl *e, Identifier *id)
 
       for (; j > 0; j--, name_tmp++)
         {
-          // If we are a module, there is no clash, and if we
+          // If we are a module, there is no clash, if we
           // are an interface, this is not the right place to
-          // catch a clash.
+          // catch a clash, and if it wasnt' defined in this
+          // scope, then it's a type name for something else
+          // that was, and it can appear any number of times
+          // in this scope without a clash.
           if (id->compare (*name_tmp) == I_TRUE
               && e->node_type () != AST_Decl::NT_module
-              && e->node_type () != AST_Decl::NT_interface)
+              && e->defined_in () == this)
             {
               idl_global->err ()->redef_error (id->get_string (),
                                                (*name_tmp)->get_string ());
