@@ -1,3 +1,16 @@
+Sun Nov 15 09:52:14 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/TypeCode.cpp:
+
+	  Added a default clause to a switch statement in the TypeCode
+	  constructor to prevent g++ warnings. Thanks to David Levine for
+	  pointing this out to me.
+
+	* TAO_IDL/ast/ast_module.cpp:
+
+	  Modifications to allow reopening of modules. Thanks to Hamish
+	  Friedlander (hamishf@usa.net) for providing this fix.
+
 Sat Nov 14 18:31:57 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
 	* performance-tests/Thruput/TAO/new_run_test: new perl version of

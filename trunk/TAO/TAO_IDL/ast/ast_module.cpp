@@ -154,10 +154,17 @@ AST_Module *AST_Module::fe_add_module(AST_Module *t)
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
     }
+    // if our platform supports namespaces, we allow reopening
+    // modules. However, if namespace support is not available, this is flagged
+    // as an error
+
+#ifndef ACE_HAS_USING_KEYWORD
     if (referenced(d)) {
       idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
       return NULL;
     }
+#endif /* ACE_HAS_USING_KEYWORD */
+
     if (t->has_ancestor(d)) {
       idl_global->err()->redefinition_in_scope(t, d);
       return NULL;
