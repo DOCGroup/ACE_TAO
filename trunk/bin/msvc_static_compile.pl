@@ -42,69 +42,10 @@ $build_core_only = 0;
 $Build_Cmd = "/BUILD";
 $use_custom_dir = 0;
 $useenv = '';
-
-# Find_dsp will search a directory for *.dsp files and return a list
-# of strings that include the project name and the configuration
-sub Find_dsp (@)
-{
-    my (@dir) = @_;
-    @array = ();
-    my @config_array = ();
-
-    # wanted is only used for the File::Find
-    sub wanted
-    {
-        $array[++$#array] = $File::Find::name if ($File::Find::name =~ /\.dsp$/i);
-    }
-
-    # get_config grabs the configurations out of a dsp file.
-    sub get_config ($)
-    {
-        my ($file) = @_;
-        my @configs = ();
-
-        print "Looking at $file\n" if ($verbose);
-
-        open (DSP, "< $file") || die $!;
-
-        while (<DSP>)
-        {
-            push @configs, $1 if (/# Name \"([^\"]+)\"/);
-        }
-
-        close (DSP);
-        return @configs;
-    }
-
-    unshift @dir, (\&wanted);
-
-    find @dir;
-
-    for ($i = 0; $i <= $#array; ++$i) {
-        my $filename = "$array[$i]";
-
-        $filename =~ s@/./@/@g;
-        $filename =~ s@/@\\@g;
-        my @dsp_configs = get_config ($array[$i]);
-
-        for ($j = 0; $j <= $#dsp_configs; ++$j) {
-          push @config_array, "$filename--$dsp_configs[$j]";
-        }
-    }
-
-    return @config_array;
-}
-
-
-# Build_Config takes in a string of the type "project--configuration" and
-# runs msdev to build it.
-sub Build_Config ($)
-{
-    my ($arg) = @_;
-    my ($project, $config) = split /--/, $arg;
-
-    return Build ($project, $config);
-}
+$vc7 = 0;
+$name_mod = '';
+$mod_name = 0;
+$proj_ext = '.dsp';
 
 # Build
 sub Build ($$)
@@ -124,11 +65,61 @@ sub Build ($$)
   }
 }
 
+# Build
+sub Build_VC7 ($$)
+{
+  my ($project, $config) = @_;
+
+  if ($debug == 1) {
+    print "$project\n";
+    return 0;
+  }
+  else {
+    print "Auto_compiling $project : $config\n";
+
+    print "Building $project $config\n" if $verbose;
+
+    return system ("devenv.com $project $Build_Cmd $config $useenv");
+  }
+}
+
+sub Find_Dsw (@)
+{
+    my (@dir) = @_;
+    @array = ();
+
+    sub wanted_dsw {
+        $array[++$#array] = 
+            $File::Find::name if ($File::Find::name =~ /\.dsw$/i);
+    }
+    
+    find (\&wanted_dsw, @dir);
+    
+    print "List of dsw's \n" if ($verbose == 1);
+    return @array;
+}
+
+sub Find_Sln (@)
+{
+    my (@dir) = @_;
+    @array = ();
+
+    sub wanted_sln {
+        $array[++$#array] = 
+            $File::Find::name if ($File::Find::name =~ /\.sln$/i);
+    }
+    
+    find (\&wanted_sln, @dir);
+    
+    print "List of sln's \n" if ($verbose == 1);
+    return @array;
+}
+
 # Only builds the core libraries.
 sub Build_Core ()
 {
     print STDERR "Building Core of ACE/TAO\n" if ($print_status == 1);
-    print "Building Core of ACE/TAO\n" if ($verbose == 1);
+    print "\nmsvc_static_compile: Building Core of ACE/TAO\n";
 
     print "Build \n" if ($verbose);
     print "Debug " if ($verbose) && ($Build_Debug);
@@ -146,53 +137,87 @@ sub Build_Core ()
         $config_list->load ($ACE_ROOT.$test_lst);
 
         foreach $test ($config_list->valid_entries ()) {
-            push (@core_list, $test);
+          if ($mod_name) {
+            @plist = split(/\//, $test);
+            $fname = pop @plist;
+	    $fname_mod = $name_mod;
+            $fname_mod =~ s/\*/$fname/;
+	    push @plist,($fname_mod);
+            push (@core_list, join('/', @plist) . $proj_ext);
           }
+          else {
+            push (@core_list, $test . $proj_ext);
+          }
+        }
       } 
 
 
-      foreach $c (@core_list) {
-          if ($Build_Debug) {
-              $Status = Build ($c, "ALL - Win32 Debug");
-              return if $Status != 0 && !$Ignore_errors;
+      if ( $vc7 ) {
+          foreach $c (@core_list) {
+              if ($Build_Debug) {
+                  $Status = Build_VC7 ($c, "debug");
+                  return if $Status != 0 && !$Ignore_errors;
+              }
+              if ($Build_Release) {
+                  $Status = Build_VC7 ($c, "release");
+                  return if $Status != 0 && !$Ignore_errors;
+              }
           }
-          if ($Build_Release) {
-              $Status = Build ($c, "ALL - Win32 Release");
-              return if $Status != 0 && !$Ignore_errors;
+      }
+      else {
+          foreach $c (@core_list) {
+              if ($Build_Debug) {
+                  $Status = Build ($c, "ALL - Win32 Debug");
+                  return if $Status != 0 && !$Ignore_errors;
+              }
+              if ($Build_Release) {
+                  $Status = Build ($c, "ALL - Win32 Release");
+                  return if $Status != 0 && !$Ignore_errors;
+              }
           }
-        }
+      }
     }
 }
 
 sub Build_All ()
 {
-    my @configurations = Find_dsp (@directories);
+    my @configurations = Find_Dsw (@directories);
 
-    print STDERR "First pass (libraries)\n" if ($print_status == 1);
-    print "\nmsvc_auto_compile: First Pass (libraries)\n";
-
-    foreach $c (@configurations) {
-        if ($Build_All
-            || ($Build_LIB && $Build_Debug && $c =~ /Win32 Debug/)
-            || ($Build_LIB && $Build_Release && $c =~ /Win32 Release/))
-        {
-            my $Status = 0;
-            $Status = Build_Config ($c)
-                if (($c =~ /Library/) || ($c =~ / DLL /) || ($c =~ / LIB /));
-            return if ($Status != 0 && !$Ignore_errors);
-        }
-    }
-
-
-    print STDERR "Second pass \n" if ($print_status == 1);
-    print "\nmsvc_auto_compile: Second Pass\n";
+    print STDERR "Building selected projects\n" if ($print_status == 1);
+    print "\nmsvc_static_compile: Building selected projects\n";
 
     $count = 0;
     foreach $c (@configurations) {
         print STDERR "Configuration ".$count++." of ".$#configurations."\n" if ($print_status == 1);
-        Build_Config ($c)
-        if (($Build_LIB && $Build_Debug && $c =~ /Win32 Debug/)
-           || ($Build_LIB && $Build_Release && $c =~ /Win32 Release/));
+        if ($Build_Debug) {
+            $Status = Build ($c, "ALL - Win32 Debug");
+            return if $Status != 0 && !$Ignore_errors;
+        }
+        if ($Build_Release) {
+            $Status = Build ($c, "ALL - Win32 Release");
+            return if $Status != 0 && !$Ignore_errors;
+        }
+    }
+}
+
+sub Build_All_VC7 ()
+{
+    my @configurations = Find_Sln (@directories);
+
+    print STDERR "Building selected projects\n" if ($print_status == 1);
+    print "\nmsvc_static_compile: Building selected projects\n";
+
+    $count = 0;
+    foreach $c (@configurations) {
+        print STDERR "Configuration ".$count++." of ".$#configurations."\n" if ($print_status == 1);
+        if ($Build_Debug) {
+            $Status = Build_VC7 ($c, "debug");
+            return if $Status != 0 && !$Ignore_errors;
+        }
+        if ($Build_Release) {
+            $Status = Build_VC7 ($c, "release");
+            return if $Status != 0 && !$Ignore_errors;
+        }
     }
 }
 
@@ -207,8 +232,19 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ($ARGV[0] =~ /^-d$/i) {       # debug
         $debug = 1;
     }
+    elsif ($ARGV[0] =~ '-vc7') {    # Use VC7 project and solution files.
+        print "Using VC7 files\n" if ( $verbose );
+        $vc7 = 1;
+        $proj_ext = '.vcproj';
+    }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
+    }
+    elsif ($ARGV[0] =~ '-name_modifier') {          # use MPC name_modifier for project
+        shift;
+        print "Setting name_modifier $ARGV[0]\n" if ( $verbose );
+        $name_mod = $ARGV[0];
+        $mod_name = 1;
     }
     elsif ($ARGV[0] =~ '-s') {          # status messages
         $print_status = 1;
@@ -270,6 +306,8 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-v         = Script verbose Mode\n";
         print "-s         = Print status messages to STDERR\n";
         print "-u         = Tell MSVC to use the environment\n";
+        print "-vc7       = Use MSVC 7 toolset\n";
+        print "-name_modifier <mod> = Use MPC name_modifier to match projects\n";
         print "\n";
         print "-CORE      = Build the Core libraries\n";
         print "-ACE       = Build ACE and its programs\n";
@@ -304,11 +342,16 @@ if ($#directories < 0) {
     @directories = ($ACE_ROOT);
 }
 
-print "msvc_auto_compile: Begin\n";
+print "msvc_static_compile: Begin\n";
 print STDERR "Beginning Core Build\n" if ($print_status == 1);
 Build_Core if (!$use_custom_dir || $build_core_only);
 print STDERR "Beginning Full Build\n" if ($print_status == 1);
-Build_All if !$build_core_only;
+if ( $vc7 ) {
+    Build_All_VC7 if !$build_core_only;
+}
+else {
+    Build_All if !$build_core_only;
+}
 
-print "msvc_auto_compile: End\n";
+print "msvc_static_compile: End\n";
 print STDERR "End\n" if ($print_status == 1);
