@@ -1,3 +1,9 @@
+Fri Dec 17 12:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/IO_SAP.cpp:
+          Just always build the code, the ACE_OS layer handles the not
+          supported issues on Win32 and VxWorks.
+
 Fri Dec 17 12:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.h:
