@@ -121,6 +121,8 @@ main (int argc, char *argv [])
               "(%P) shutting down server daemon\n"));
 
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR, "ACE_IOSTREAM not supported on this platform\n"));
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
   return 0;
