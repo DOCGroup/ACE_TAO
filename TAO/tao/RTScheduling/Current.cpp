@@ -3,6 +3,7 @@
 #include "tao/ORB_Core.h"
 #include "Distributable_Thread.h"
 #include "ace/Atomic_Op.h"
+//#include "ThreadAction.h"
 
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
@@ -519,8 +520,10 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   if (result == 0)
     {
       // Create new task for new DT.
-      DTTask *dttask = ACE_NEW_RETURN (dttask,
-				       DTTask (thread_manager_,
+      DTTask *dttask;
+	  
+	  ACE_NEW_RETURN (dttask,
+				       DTTask (//thread_manager_,
 					       this,
 					       start,
 					       data,
@@ -528,11 +531,13 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
 					       name,
 					       sched_param,
 					       implicit_sched_param,
-					       dt),
+					       dt.in ()),
 				       0);
       
       // Activate thread.
-      //long flags = THR_NEW_LWP | THR_JOINABLE;
+      long flags = THR_NEW_LWP | THR_JOINABLE;
+	  size_t stack [1];
+	  stack [0] = stack_size;
       dttask->activate (flags,
 			1,
 			0,//force_active
@@ -541,7 +546,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
 			0,//ACE_Task_Base
 			0,//thread_handles
 			0,//stack
-			stack_size//stack_size
+			stack//stack_size
 			);
     }
   return this->dt_;
@@ -551,7 +556,7 @@ DTTask::DTTask (//ACE_Thread_Manager* manager,
 		TAO_RTScheduler_Current_i* current,
 		RTScheduling::ThreadAction_ptr start,
 		CORBA::VoidData data,
-		IdType guid,
+		RTScheduling::Current::IdType guid,
 		const char* name,
 		CORBA::Policy_ptr sched_param,
 		CORBA::Policy_ptr implicit_sched_param,
@@ -594,23 +599,29 @@ DTTask::svc (void)
   tss->rtscheduler_current_impl_ = new_current;
   
   // Inform scheduler of new DT.
-  this->scheduler_->begin_new_scheduling_segment(this->guid_,
+  new_current->scheduler ()->begin_new_scheduling_segment(this->guid_,
 						 this->name_,
 						 this->sched_param_,
 						 this->implicit_sched_param_);
   
   // Invoke entry point into new DT.
-  this->start_->do (this->data_);
+  this->start_->_cxx_do (this->data_
+			 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   
   // Let the scheduler know that the DT is
   // terminating.
-  this->parent_->scheduler_->end_scheduling_segment (this->name_);
+  new_current->scheduler ()->end_scheduling_segment (this->guid_,
+						     this->name_);
+
 
   // Cleaup DT.
   new_current->cleanup_DT ();
 
   // Delete this support class.
   delete this;
+
+  return 0;
 }
 
 
@@ -722,3 +733,14 @@ TAO_RTScheduler_Current_i::delete_all_currents (void)
     }
 }
 
+TAO_ORB_Core* 
+TAO_RTScheduler_Current_i::orb (void)
+{
+  return this->orb_;
+}
+
+RTScheduling::Scheduler_ptr
+TAO_RTScheduler_Current_i::scheduler (void)
+{
+  return this->scheduler_._retn();
+}
