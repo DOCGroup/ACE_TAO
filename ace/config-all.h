@@ -532,6 +532,18 @@ typedef ACE_HANDLE ACE_SOCKET;
 
 typedef void *(*ACE_THR_FUNC)(void *);
 
+# if defined (VXWORKS)
+#   if defined (ghs)
+    // GreenHills 1.8.8 needs the stdarg.h #include before the #include of
+    // vxWorks.h.
+    // Also, be sure that these #includes come _after_ the key_t typedef, and
+    // before the #include of time.h.
+#     include /**/ <stdarg.h>
+#   endif /* ghs */
+
+#   include /**/ <vxWorks.h>
+# endif /* VXWORKS */
+
 extern "C"
 {
 # if defined (VXWORKS)
