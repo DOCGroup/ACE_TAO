@@ -5292,6 +5292,51 @@ endif # GHS
  POSIX_Asynch_IO.h \
  Asynch_IO_Impl.h \
  Asynch_IO_Impl.i \
+ Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Malloc_Base.h \
+ Map_Manager.h \
+ Map_Manager.i \
+ Map_Manager.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Memory_Pool.i \
+ Service_Config.h \
+ Service_Object.h \
+ Shared_Object.h \
+ Shared_Object.i \
+ Service_Object.i \
+ SString.h \
+ String_Base.h \
+ String_Base_Const.h \
+ String_Base.i \
+ String_Base.cpp \
+ Auto_Ptr.h \
+ Auto_Ptr.i \
+ Auto_Ptr.cpp \
+ SString.i \
+ Service_Config.i \
+ Svc_Conf_Tokens.h \
+ POSIX_Asynch_IO.i \
+ Asynch_Pseudo_Task.h \
  Select_Reactor.h \
  Select_Reactor_T.h \
  Select_Reactor_Base.h \
@@ -5301,22 +5346,9 @@ endif # GHS
  Select_Reactor_T.cpp \
  Timer_Heap.h \
  Timer_Heap_T.h \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Malloc_Base.h \
  Timer_Heap_T.cpp \
  Select_Reactor_T.i \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
  Task.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Service_Object.i \
  Thread_Manager.h \
  Containers.h \
  Containers.i \
@@ -5339,21 +5371,6 @@ endif # GHS
  Task_T.h \
  Message_Queue.h \
  Message_Block.h \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
- Malloc_Allocator.h \
- Malloc_Allocator.i \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Memory_Pool.i \
  Message_Block.i \
  Message_Block_T.h \
  Message_Block_T.i \
@@ -5372,7 +5389,6 @@ endif # GHS
  Module.cpp \
  Stream_Modules.h \
  Stream_Modules.cpp \
- POSIX_Asynch_IO.i \
  POSIX_Proactor.i
 
 .obj/WIN32_Proactor.o .obj/WIN32_Proactor.so .shobj/WIN32_Proactor.o .shobj/WIN32_Proactor.so: WIN32_Proactor.cpp \
@@ -5691,6 +5707,11 @@ endif # GHS
  Pipe.h \
  Pipe.i \
  POSIX_Asynch_IO.h \
+ Map_Manager.h \
+ Map_Manager.i \
+ Map_Manager.cpp \
+ POSIX_Asynch_IO.i \
+ Asynch_Pseudo_Task.h \
  Select_Reactor.h \
  Select_Reactor_T.h \
  Select_Reactor_Base.h \
@@ -5699,7 +5720,6 @@ endif # GHS
  Select_Reactor_Base.i \
  Select_Reactor_T.cpp \
  Select_Reactor_T.i \
- POSIX_Asynch_IO.i \
  POSIX_Proactor.i
 
 .obj/Reactor.o .obj/Reactor.so .shobj/Reactor.o .shobj/Reactor.so: Reactor.cpp \
@@ -6397,10 +6417,11 @@ endif # GHS
  OS.i \
  Asynch_IO_Impl.i
 
-.obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.so .shobj/POSIX_Asynch_IO.o .shobj/POSIX_Asynch_IO.so: POSIX_Asynch_IO.cpp \
- POSIX_Asynch_IO.h \
- config-all.h \
+.obj/Asynch_Pseudo_Task.o .obj/Asynch_Pseudo_Task.so .shobj/Asynch_Pseudo_Task.o .shobj/Asynch_Pseudo_Task.so: Asynch_Pseudo_Task.cpp \
+ Asynch_Pseudo_Task.h \
  pre.h \
+ OS.h \
+ config-all.h \
  config.h \
  config-linux.h \
  config-linux-common.h \
@@ -6408,7 +6429,6 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
- OS.h \
  OS_Dirent.h \
  OS_Export.h \
  OS_Errno.h \
@@ -6431,9 +6451,6 @@ endif # GHS
  streams.h \
  Trace.h \
  OS.i \
- Asynch_IO_Impl.h \
- Asynch_IO.h \
- Asynch_IO_Impl.i \
  Reactor.h \
  Handle_Set.h \
  Handle_Set.i \
@@ -6499,15 +6516,15 @@ endif # GHS
  Malloc_Base.h \
  Timer_Heap_T.cpp \
  Select_Reactor_T.i \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
  Task.h \
  Service_Object.h \
  Shared_Object.h \
  Shared_Object.i \
  Service_Object.i \
  Thread_Manager.h \
+ Unbounded_Queue.h \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -6561,22 +6578,204 @@ endif # GHS
  Module.i \
  Module.cpp \
  Stream_Modules.h \
- Stream_Modules.cpp \
+ Stream_Modules.cpp
+
+.obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.so .shobj/POSIX_Asynch_IO.o .shobj/POSIX_Asynch_IO.so: POSIX_Asynch_IO.cpp \
+ POSIX_Asynch_IO.h \
+ config-all.h \
+ pre.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ OS.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Dirent.inl \
+ OS_String.h \
+ Basic_Types.h \
+ ACE_export.h \
+ Basic_Types.i \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
+ Default_Constants.h \
+ Global_Macros.h \
+ Min_Max.h \
+ streams.h \
+ Trace.h \
+ OS.i \
+ Asynch_IO_Impl.h \
+ Asynch_IO.h \
+ Asynch_IO_Impl.i \
+ Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Malloc_Base.h \
+ Log_Msg.h \
+ Log_Priority.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Map_Manager.h \
+ Synch.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Map_Manager.i \
+ Map_Manager.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Memory_Pool.i \
+ Service_Config.h \
+ Service_Object.h \
+ Shared_Object.h \
+ Shared_Object.i \
+ Service_Object.i \
+ SString.h \
+ String_Base.h \
+ String_Base_Const.h \
+ String_Base.i \
+ String_Base.cpp \
+ Auto_Ptr.h \
+ Auto_Ptr.i \
+ Auto_Ptr.cpp \
+ SString.i \
+ Service_Config.i \
+ Reactor.h \
+ Handle_Set.h \
+ Handle_Set.i \
+ Timer_Queue.h \
+ Timer_Queue_T.h \
+ Test_and_Set.h \
+ Test_and_Set.i \
+ Test_and_Set.cpp \
+ Timer_Queue_T.i \
+ Timer_Queue_T.cpp \
+ Reactor.i \
+ Reactor_Impl.h \
+ Svc_Conf_Tokens.h \
  POSIX_Asynch_IO.i \
  Proactor.h \
+ Thread_Manager.h \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Containers_T.i \
+ Containers_T.cpp \
+ Singleton.h \
+ Singleton.i \
+ Singleton.cpp \
+ Object_Manager.h \
+ Object_Manager.i \
+ Managed_Object.h \
+ Managed_Object.i \
+ Managed_Object.cpp \
+ Thread_Manager.i \
  Timer_List.h \
  Timer_List_T.h \
  Timer_List_T.cpp \
+ Timer_Heap.h \
+ Timer_Heap_T.h \
+ Timer_Heap_T.cpp \
  Timer_Wheel.h \
  Timer_Wheel_T.h \
  Timer_Wheel_T.cpp \
  High_Res_Timer.h \
  High_Res_Timer.i \
  Proactor.i \
+ Message_Block.h \
+ Message_Block.i \
+ Message_Block_T.h \
+ Message_Block_T.i \
+ Message_Block_T.cpp \
  INET_Addr.h \
  Addr.h \
  Addr.i \
  INET_Addr.i \
+ Asynch_Pseudo_Task.h \
+ Select_Reactor.h \
+ Select_Reactor_T.h \
+ Select_Reactor_Base.h \
+ Token.h \
+ Token.i \
+ Pipe.h \
+ Pipe.i \
+ Select_Reactor_Base.i \
+ Select_Reactor_T.cpp \
+ Select_Reactor_T.i \
+ Task.h \
+ Task.i \
+ Task_T.h \
+ Message_Queue.h \
+ IO_Cntl_Msg.h \
+ Message_Queue_T.h \
+ Message_Queue_T.i \
+ Message_Queue_T.cpp \
+ Notification_Strategy.h \
+ Notification_Strategy.inl \
+ Message_Queue.i \
+ Task_T.i \
+ Task_T.cpp \
+ Module.h \
+ Module.i \
+ Module.cpp \
+ Stream_Modules.h \
+ Stream_Modules.cpp \
  POSIX_Proactor.h \
  Proactor_Impl.h \
  POSIX_Proactor.i
