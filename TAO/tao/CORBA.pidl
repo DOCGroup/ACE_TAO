@@ -1,6 +1,6 @@
 // $Id$
 
-// This will have all new definitions that will go in to CORBA from 
+// This will have all new definitions that will go in to CORBA from
 // now on.
 
 #pragma prefix "omg.org"
@@ -8,13 +8,15 @@
 module CORBA
 {
   typedef string  ORBid;
+  typedef string  Identifier;
+  typedef unsigned long Flags;
 
-  interface NamedValue
-    {
-      readonly attribute Identifier name;
-      readonly attribute any value;
-      readonly attribute Flags flags;
-    };
+  struct NamedValue
+  {
+    Identifier name;
+    any value;
+    Flags flags;
+  };
 
   enum exception_type
   {
@@ -23,26 +25,31 @@ module CORBA
     SYSTEM_EXCEPTION
   };
 
-  typedef sequence<Request_ptr> RequestSeq;
-  
-  typedef string ObjectId; 
+  interface Object;
+  interface Request;
+  interface NVList;
+  interface Exception;
+
+  typedef sequence<Request> RequestSeq;
+
+  typedef string ObjectId;
   typedef sequence <ObjectId> ObjectIdList;
 
-  typedef unsigned short ServiceType; 
-  typedef unsigned long ServiceOption; 
+  typedef unsigned short ServiceType;
+  typedef unsigned long ServiceOption;
   typedef unsigned long ServiceDetailType;
 
-  struct ServiceDetail 
-  { 
+  struct ServiceDetail
+  {
     ServiceDetailType service_detail_type;
-    sequence <octet> service_detail; 
-  }; 
-   
-   struct ServiceInformation 
-   { 
-     sequence <ServiceOption> service_options; 
-     sequence <ServiceDetail> service_details; 
-   };
+    sequence <octet> service_detail;
+  };
+
+  struct ServiceInformation
+  {
+    sequence <ServiceOption> service_options;
+    sequence <ServiceDetail> service_details;
+  };
 
 };
 

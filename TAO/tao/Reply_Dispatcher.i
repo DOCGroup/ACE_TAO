@@ -1,11 +1,5 @@
 // $Id$
 
-ACE_INLINE const IOP::ServiceContextList&
-TAO_Reply_Dispatcher::reply_service_info (void) const
-{
-  return this->reply_service_info_;
-}
-
 ACE_INLINE CORBA::ULong
 TAO_Synch_Reply_Dispatcher::reply_status (void) const
 {

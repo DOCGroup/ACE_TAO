@@ -56,6 +56,7 @@
 #include "tao/POA.h"
 
 // TAO specific files, avoid them as much as possible.
+#include "tao/Interceptor.h"
 #include "tao/Stub.h"
 #include "tao/params.h"
 #include "tao/ORB_Core.h"

@@ -102,7 +102,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_uidt << be_uidt_nl << "}" << be_uidt_nl;
 
       *os << node->full_name () << "_ptr retval = 0;" << be_nl
-          << "ACE_NEW_RETURN (retval, " << node->full_name () 
+          << "ACE_NEW_RETURN (retval, " << node->full_name ()
           << " (stub), 0);" << be_nl
           << "return retval;" <<  be_uidt_nl
           << "}" << be_nl << be_nl;
@@ -134,7 +134,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
           << "retval," << be_nl
           << node->full_coll_name (be_interface::DIRECT) << " ("
-          << "ACE_reinterpret_cast (" << node->full_name ()
+          << "ACE_reinterpret_cast (POA_" << node->full_name ()
           << "_ptr, servant), 0)," << be_nl
           << "0" << be_uidt_nl << ");" << be_uidt_nl
           << "return retval;" << be_uidt_nl;

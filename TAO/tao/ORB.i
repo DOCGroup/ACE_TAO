@@ -309,6 +309,56 @@ CORBA_ORB::orb_core (void) const
   return this->orb_core_;
 }
 
+#if defined (TAO_HAS_INTERCEPTORS)
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+CORBA_ORB::_register_client_interceptor
+  (PortableInterceptor::ClientRequestInterceptor_ptr ci,
+   CORBA_Environment &ACE_TRY_ENV)
+{
+  if (ci == 0 ||
+      ci->_is_a ("IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0"))
+      {
+        PortableInterceptor::ClientRequestInterceptor_var oci =
+          PortableInterceptor::ClientRequestInterceptor::_duplicate (this->client_interceptor_);
+        this->client_interceptor_ = ci;
+        return oci._retn ();
+      }
+  else
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
+}
+
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+CORBA_ORB::_register_server_interceptor
+  (PortableInterceptor::ServerRequestInterceptor_ptr si,
+   CORBA_Environment &ACE_TRY_ENV)
+{
+  if (si == 0 ||
+      si->_is_a ("IDL:TAO/PortableInterceptor/ServerRequestInterceptor:1.0"))
+      {
+        PortableInterceptor::ServerRequestInterceptor_var oci =
+          PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_);
+        this->server_interceptor_ = si;
+        return oci._retn ();
+      }
+  else
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
+}
+
+ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
+CORBA_ORB::_get_client_interceptor (CORBA_Environment &)
+{
+  return
+    PortableInterceptor::ClientRequestInterceptor::_duplicate (this->client_interceptor_);
+}
+
+ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
+CORBA_ORB::_get_server_interceptor (CORBA_Environment &)
+{
+  return
+    PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_);
+}
+#endif /* TAO_HAS_INTERCEPTORS */
+
 // ************************************************************
 // These are in CORBA namespace
 // ************************************************************

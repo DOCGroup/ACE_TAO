@@ -1,3 +1,147 @@
+Mon Aug 30 02:11:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	Merging the PI-current (Interceptors) branch to the main trunk.
+
+	* tests/Interceptors/Interceptors.dsw:
+	* tests/Interceptors/Makefile:
+	* tests/Interceptors/README:
+	* tests/Interceptors/client.cpp:
+	* tests/Interceptors/client.dsp:
+	* tests/Interceptors/interceptors.cpp:
+	* tests/Interceptors/interceptors.h:
+	* tests/Interceptors/run_test.pl:
+	* tests/Interceptors/server.cpp:
+	* tests/Interceptors/server.dsp:
+	* tests/Interceptors/test.idl:
+	* tests/Interceptors/test_i.cpp:
+	* tests/Interceptors/test_i.h: A "Silly" interceptor testing
+	  program.
+
+	* tao/Makefile:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Added new interceptor files.
+
+	* tao/Interceptor.pidl: TAO's tentative "portable" interceptor
+	  definitions.  Run this file thru TAO_IDL as:
+
+	  tao_idl -Gl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl
+
+	  gets us the following stub/skeleton files.  the InterceptorS_T.*
+	  and InterceptorS.i are removed (because they are useless empty
+	  files.)  The following describes what else needs to be changed
+	  for each file.
+
+	* tao/InterceptorC.cpp: Prefixed all include files with tao/.
+
+	* tao/InterceptorC.i: No change necessary.
+
+	* tao/InterceptorC.h: Removed incliding corba.h, CORBAC.h.  Added
+	  include files Any.h and Interceptor.h.  Prefixed all include
+	  files with tao/.
+
+	* tao/InterceptorS.cpp: Removed including inline file
+	  InterceptorS.i and prefixing tao/ to all include files.
+
+	* tao/InterceptorS.h: Removed include file CORBAC.h and IOPC.h.
+	  Prefixed all include files with tao/.  Added an include file
+	  Servant_Base.h.  Removed including the template file and the
+	  inline file.
+
+	* tao/Interceptor.h:
+	* tao/Interceptor.i: The interceptor wholesale file.  Including
+	  the (.h) file and you get everything you need to use the
+	  interceptor feature.  These two files probide inlined
+	  interceptor adapters that simplify tao_idl complexity.
+
+	* tao/Interceptor.cpp: This file provides the default no-op
+	  interceptor method.  The interceptors classes remain abstract
+	  but users are not required to overwrite the interception methods
+	  that are not of their interests.
+
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB.cpp: Added naive interceptor registration methods.  They
+	  are naive because they only allow one interceptor for
+	  client/server side interceptors.  We definitely need a more
+	  rebust interceptor registration mechanism.  However, it is not
+	  clear how the semantics of the future portable interceptor spec
+	  will be.
+
+	* tao/orbconf.h: If we are not building MinimumCORBA, we have
+	  interceptors.
+
+	* tao/corba.h: This file must include Interceptor.h for others to
+	  use the interceptors.
+
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i:
+	* tao/Reply_Dispatcher.cpp: There's no need for reply dispatcher
+	  to own it's own ServiceContextList object.  Instead, it holds a
+	  reference to the owning Invocation object and initialize the
+	  reference in its constructor.
+
+	* tao/POA.h: Removed a duplicated include file.
+
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	* tao/Invocation.cpp:
+	* tao/Server_Request.h:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i:
+	* tao/GIOP_Server_Request.cpp: There's really no need to
+	  differentiate the request service_info from the reply
+	  service_info.  Their lifetimes are not overlapped.
+
+	  (request_id):  Added the new method to fish out request_id
+	  information of a request.
+
+	* tao/CORBA.pidl: Added several definitions to make the file
+	  syntatically correct.  Also added stuff needed by the
+	  interceptors.
+
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.cpp: Added
+	  a new method to compute and cache the operation name.
+	  Interceptors need to refer to the name frequently.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Added server
+	  side interception points.
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Added client
+	  side interception points.
+
+Sun Aug 29 23:16:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The following are changes for supporting locality constraint
+	  objects
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Disallowed
+	  generating of CDR inserting/extrating operations for sequences
+	  when generating LC objects.
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec):
+	  Do not generate throw spec for locality constraint objects for
+	  now.  This may be overkilled, but as far as interceptors care,
+	  adding throw spec to interceptor methods doesn't make sense at
+	  all.  Who knows what kind of exceptions are going to be thrown
+	  from an interceptor?
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  (visit_interface): Servant names should always have "POA_"
+	  prefix.
+
+	* TAO_IDL/be/be_helper.cpp: Insert the $_I_d_$ field in all
+	  generate files so we can add them into cvs repository easily.
+
+	* TAO_IDL/be/be_codegen.cpp (start_client_stubs): When generating
+	  code for locality constraint objects, always include generated
+	  *S.h in the stub definition because these objects are always
+	  directly collocated and we don't depends on factory methods to
+	  create collocated stubs (i.e., we need to generate collocated
+	  stubs directly in _narrow.)
+
 Sun Aug 29 23:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/orbconf.h:
@@ -11,7 +155,7 @@ Sun Aug 29 23:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Using the TAO_USES_ROBUST_CONNECTION_MGMT macro made both the
 	  pre-connect-strategy tagged changes and the connection purging
 	  feature co-exist.
-	
+
 	* tao/Acceptor_Impl.{h,cpp}:
 	  The <accept> and <open> methods behave differently when the
 	  connection purging is "on" and "off". The
@@ -19,14 +163,14 @@ Sun Aug 29 23:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  not set.
 
 	* tao/Connector_Registry.{h,cpp}:
-	  The <purge_connections> method is eliminated when the feature is 
+	  The <purge_connections> method is eliminated when the feature is
 	  not used.
 
 	* tao/Pluggable.h:
-	  The pure virtual <purge_connections> method was appropriately 
+	  The pure virtual <purge_connections> method was appropriately
 	  not included in the class when the connection purging feature
 	  was not requested.
-	  
+
 Sun Aug 29 21:53:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Operation_Table.cpp: with ACE_HAS_GNU_REPO, added
