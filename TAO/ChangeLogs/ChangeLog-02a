@@ -1,3 +1,90 @@
+Fri Dec  1 16:24:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/AliasDef_i.cpp:
+	* orbsvcs/IFR_Service/AliasDef_i.h:
+	* orbsvcs/IFR_Service/ArrayDef_i.cpp:
+	* orbsvcs/IFR_Service/ArrayDef_i.h:
+	* orbsvcs/IFR_Service/AttributeDef_i.cpp:
+	* orbsvcs/IFR_Service/AttributeDef_i.h:
+	* orbsvcs/IFR_Service/ComponentDef_i.cpp:
+	* orbsvcs/IFR_Service/ComponentDef_i.h:
+	* orbsvcs/IFR_Service/ComponentRepository_i.cpp:
+	* orbsvcs/IFR_Service/ComponentRepository_i.h:
+	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
+	* orbsvcs/IFR_Service/ConstantDef_i.h:
+	* orbsvcs/IFR_Service/ConsumesDef_i.cpp:
+	* orbsvcs/IFR_Service/ConsumesDef_i.h:
+	* orbsvcs/IFR_Service/Contained_i.cpp:
+	* orbsvcs/IFR_Service/Contained_i.h:
+	* orbsvcs/IFR_Service/Container_i.cpp:
+	* orbsvcs/IFR_Service/Container_i.h:
+	* orbsvcs/IFR_Service/EmitsDef_i.cpp:
+	* orbsvcs/IFR_Service/EmitsDef_i.h:
+	* orbsvcs/IFR_Service/EnumDef_i.cpp:
+	* orbsvcs/IFR_Service/EnumDef_i.h:
+	* orbsvcs/IFR_Service/EventDef_i.cpp:
+	* orbsvcs/IFR_Service/EventDef_i.h:
+	* orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+	* orbsvcs/IFR_Service/ExceptionDef_i.h:
+	* orbsvcs/IFR_Service/FactoryDef_i.cpp:
+	* orbsvcs/IFR_Service/FactoryDef_i.h:
+	* orbsvcs/IFR_Service/FinderDef_i.cpp:
+	* orbsvcs/IFR_Service/FinderDef_i.h:
+	* orbsvcs/IFR_Service/FixedDef_i.cpp:
+	* orbsvcs/IFR_Service/FixedDef_i.h:
+	* orbsvcs/IFR_Service/HomeDef_i.cpp:
+	* orbsvcs/IFR_Service/HomeDef_i.h:
+	* orbsvcs/IFR_Service/IDLType_i.h:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.h:
+	* orbsvcs/IFR_Service/IRObject_i.h:
+	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+	* orbsvcs/IFR_Service/InterfaceDef_i.h:
+	* orbsvcs/IFR_Service/ModuleDef_i.cpp:
+	* orbsvcs/IFR_Service/ModuleDef_i.h:
+	* orbsvcs/IFR_Service/NativeDef_i.cpp:
+	* orbsvcs/IFR_Service/NativeDef_i.h:
+	* orbsvcs/IFR_Service/OperationDef_i.cpp:
+	* orbsvcs/IFR_Service/OperationDef_i.h:
+	* orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
+	* orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
+	* orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
+	* orbsvcs/IFR_Service/PrimitiveDef_i.h:
+	* orbsvcs/IFR_Service/ProvidesDef_i.cpp:
+	* orbsvcs/IFR_Service/ProvidesDef_i.h:
+	* orbsvcs/IFR_Service/PublishesDef_i.cpp:
+	* orbsvcs/IFR_Service/PublishesDef_i.h:
+	* orbsvcs/IFR_Service/Repository_i.cpp:
+	* orbsvcs/IFR_Service/Repository_i.h:
+	* orbsvcs/IFR_Service/SequenceDef_i.cpp:
+	* orbsvcs/IFR_Service/SequenceDef_i.h:
+	* orbsvcs/IFR_Service/Servant_Factory.cpp:
+	* orbsvcs/IFR_Service/Servant_Factory.h:
+	* orbsvcs/IFR_Service/StringDef_i.cpp:
+	* orbsvcs/IFR_Service/StringDef_i.h:
+	* orbsvcs/IFR_Service/StructDef_i.cpp:
+	* orbsvcs/IFR_Service/StructDef_i.h:
+	* orbsvcs/IFR_Service/TypedefDef_i.cpp:
+	* orbsvcs/IFR_Service/TypedefDef_i.h:
+	* orbsvcs/IFR_Service/UnionDef_i.cpp:
+	* orbsvcs/IFR_Service/UnionDef_i.h:
+	* orbsvcs/IFR_Service/UsesDef_i.cpp:
+	* orbsvcs/IFR_Service/UsesDef_i.h:
+	* orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
+	* orbsvcs/IFR_Service/ValueBoxDef_i.h:
+	* orbsvcs/IFR_Service/ValueDef_i.cpp:
+	* orbsvcs/IFR_Service/ValueDef_i.h:
+	* orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
+	* orbsvcs/IFR_Service/ValueMemberDef_i.h:
+	* orbsvcs/IFR_Service/WstringDef_i.cpp:
+	* orbsvcs/IFR_Service/WstringDef_i.h:
+	* orbsvcs/IFR_Service/tmplinst.cpp:
+
+	  Removed use of IR namespace in scoped names, and
+	  used flat names instead, in preparation for future move
+	  of IfR classes to the CORBA namespace, as dictated
+	  by CORBA 2.4.
+
 Fri Dec  1 15:37:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.i:
