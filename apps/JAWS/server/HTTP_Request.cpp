@@ -380,6 +380,8 @@ HTTP_Request::cgi (char *uri_string)
   this->cgi_env_ = 0;
   this->cgi_args_ = 0;
 
+  if (uri_string == 0 || ACE_OS::strlen (uri_string) == 0) return 0;
+
   // There are 2 cases where a file could be a CGI script
   //
   // (1) the file has a CGI extension.
