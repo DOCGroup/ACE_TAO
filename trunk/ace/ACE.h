@@ -35,7 +35,7 @@ class ACE_Message_Block;
  * @class ACE
  *
  * @brief Contains value added ACE methods that extend the behavior
- * of the UNIX and Win32 OS calls. 
+ * of the UNIX and Win32 OS calls.
  *
  * This class consolidates all these ACE static methods in a
  * single place in order to manage the namespace better.  These
@@ -408,10 +408,14 @@ public:
    * "hour:minute:second:microsecond."  The month, day, and year are
    * also stored in the beginning of the date_and_time array.  Returns
    * 0 if unsuccessful, else returns pointer to beginning of the
-   * "time" portion of <day_and_time>.
+   * "time" portion of <day_and_time>.  If
+   * <return_pointer_to_first_digit> is 0 then return a pointer to the
+   * space before the time, else return a pointer to the beginning of
+   * the time portion.
    */
   static ACE_TCHAR *timestamp (ACE_TCHAR date_and_time[],
-                               int time_len);
+                               int time_len,
+                               int return_pointer_to_first_digit = 0);
 
   /**
    * if <avoid_zombies> == 0 call <ACE_OS::fork> directly, else create

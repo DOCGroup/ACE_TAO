@@ -26,6 +26,9 @@
 #include "ace/Pipe.h"
 #include "ace/POSIX_Asynch_IO.h"
 
+#define ACE_AIO_MAX_SIZE     2048
+#define ACE_AIO_DEFAULT_SIZE 1024
+
 /**
  * @class ACE_POSIX_Proactor
  *
@@ -234,7 +237,7 @@ class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
 public:
   /// Constructor defines max number asynchronous operations
   /// which can be started at the same time
-  ACE_POSIX_AIOCB_Proactor (size_t nmaxop = 256) ; //ACE_RTSIG_MAX
+  ACE_POSIX_AIOCB_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
   virtual Proactor_Type  get_impl_type (void);
 
@@ -276,6 +279,19 @@ public:
 
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
+  /**
+  * This method should be called from  
+  * ACE_POSIX_Asynch_Operation::cancel()
+  * instead of usual ::aio_cancel.
+  * For all deferred AIO requests with handle "h"
+  * it removes its from the lists and notifies user.
+  * For all running AIO requests with handle "h"
+  * it calls ::aio_cancel. According to the POSIX standards
+  * we will receive ECANCELED  for all ::aio_canceled AIO requests
+  * later on return from ::aio_suspend
+  */
+  virtual int cancel_aio (ACE_HANDLE h);
+
 protected:
 
   /// Special constructor for ACE_SUN_Proactor
@@ -285,6 +301,15 @@ protected:
   /// built.
   void create_notify_manager (void);
   void delete_notify_manager (void);
+
+  /// Define the maximum number of asynchronous I/O requests
+  /// for the current OS
+  void check_max_aio_num (void) ;
+ 
+  /// To identify requests from Notify_Pipe_Manager
+  void set_notify_handle (ACE_HANDLE h);
+
+
 
   /**
    * Dispatch a single set of events.  If <milli_seconds> elapses
@@ -303,12 +328,20 @@ protected:
 
   virtual int register_and_start_aio (ACE_POSIX_Asynch_Result *result,
                                       int op);
-  virtual int start_aio (ACE_POSIX_Asynch_Result *result,
-                         int op);
+
+  /// Op code now is saved in ACE_POSIX_Asynch_Result
+  virtual int start_aio (ACE_POSIX_Asynch_Result *result);
+
+  /// Start deferred AIO if necessary
+  int start_deferred_aio();
+
+  /// Cancel running or deferred AIO
+  virtual int cancel_aiocb ( ACE_POSIX_Asynch_Result * result );
 
   /// Extract the results of aio.
   ACE_POSIX_Asynch_Result *find_completed_aio (int &error_status,
-                                               int &return_status);
+                                               int &return_status,
+                                               size_t &index );
 
   /// This class takes care of doing <accept> when we use
   /// AIO_CONTROL_BLOCKS strategy.
@@ -329,6 +362,18 @@ protected:
   /// Mutex to protect work with lists.
   ACE_Thread_Mutex mutex_;
 #endif /* ACE_MT_SAFE */
+
+  /// The purpose of this member is only to identify asynchronous request
+  /// from NotifyManager. We will reserve for it always slot 0
+  /// in the list of aiocb's to be sure that don't lose notifications. 
+ ACE_HANDLE notify_pipe_read_handle_ ;
+ 
+  /// number of ACE_POSIX_Asynch_Result's waiting for start
+  /// i.e. deferred AIOs
+  size_t num_deferred_aiocb_ ;
+
+  /// Number active,i.e. running requests
+  size_t num_started_aio_ ;
 };
 
 /**

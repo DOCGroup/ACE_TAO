@@ -64,11 +64,9 @@ public:
   /// Destructor.
   virtual ~ACE_SUN_Proactor (void);
 
-  // @@ Alex, this shouldn't be a magic number, i.e., it should be a
-  // constant, such as ACE_MAX_AIO_OPERATIONS.
   /// Constructor defines max number asynchronous operations that can
   /// be started at the same time.
-  ACE_SUN_Proactor (size_t max_aio_operations = 512);
+  ACE_SUN_Proactor (size_t max_aio_operations = ACE_AIO_DEFAULT_SIZE);
 
 protected:
   /**
@@ -96,12 +94,25 @@ protected:
   virtual int handle_events (void);
 
   /// From ACE_POSIX_AIOCB_Proactor.
-  virtual int start_aio (ACE_POSIX_Asynch_Result *result, int op);
+  virtual int start_aio (ACE_POSIX_Asynch_Result *result);
 
   /// Extract the results of aio.
   ACE_POSIX_Asynch_Result *find_completed_aio (aio_result_t *result,
                                                int &error_status,
                                                int &return_status);
+
+  /// From ACE_POSIX_AIOCB_Proactor.
+  /// Attempt to cancel running request
+  virtual int cancel_aiocb ( ACE_POSIX_Asynch_Result * result );
+
+  /// Specific Sun aiowait
+  int wait_for_start (ACE_Time_Value * abstime);
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  /// Condition variable .
+  /// used to wait the first AIO start
+  ACE_Condition<ACE_Thread_Mutex>  condition_;
+#endif /* ACE_MT_SAFE */
 };
 
 #if defined (__ACE_INLINE__)

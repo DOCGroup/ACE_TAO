@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 #include "ace/SUN_Proactor.h"
@@ -13,7 +14,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
-  : ACE_POSIX_AIOCB_Proactor (max_aio_operations , 0)
+  : ACE_POSIX_AIOCB_Proactor (max_aio_operations , 0),
+    condition_ (mutex_)
 {
   // To provide correct virtual calls.
   create_notify_manager ();
@@ -29,6 +31,8 @@ ACE_SUN_Proactor::~ACE_SUN_Proactor (void)
 int
 ACE_SUN_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
+  // Decrement <wait_time> with the amount of time spent in the method
+  ACE_Countdown_Time countdown (&wait_time);
   return this->handle_events (wait_time.msec ());
 }
 
@@ -38,31 +42,73 @@ ACE_SUN_Proactor::handle_events (void)
   return this->handle_events (ACE_INFINITE);
 }
 
+int ACE_SUN_Proactor::wait_for_start (ACE_Time_Value * abstime)
+{
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
+
+  if (num_started_aio_ != 0)  // double check
+    return 0;
+
+  return condition_.wait (abstime) ;
+
+#else
+
+  return 0;  // or -1 ???
+
+#endif /* ACE_MT_SAFE */
+}
+
 int
 ACE_SUN_Proactor::handle_events (u_long milli_seconds)
 {
   aio_result_t *result = 0;
 
   if (milli_seconds == ACE_INFINITE)
-    result = aiowait (0);
+    {
+      if (num_started_aio_ == 0)
+        wait_for_start (0);
+
+      result = aiowait (0);
+    }
   else
     {
       struct timeval timeout;
       timeout.tv_sec = milli_seconds / 1000;
       timeout.tv_usec = (milli_seconds - (timeout.tv_sec * 1000)) * 1000;
+
+      if (num_started_aio_ == 0)
+        {
+          ACE_Time_Value tv (timeout);
+
+          tv += ACE_OS::gettimeofday ();
+         
+          wait_for_start (&tv);
+        }
       result = aiowait (&timeout);
     }
 
-  if (ACE_reinterpret_cast (long, result) == -1)
-    // Check errno  for  EINVAL,EAGAIN,EINTR ??
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t)::%p\n",
-                       "ACE_SUN_Proactor::handle_events:"
-                       "aiowait failed"),
-                      0);
-   
-  if (ACE_reinterpret_cast (long, result) == -1)
+  if (ACE_reinterpret_cast (long, result) == 0)
     return 0; // timeout
+
+  if (ACE_reinterpret_cast (long, result) == -1)
+   {
+    // Check errno  for  EINVAL,EAGAIN,EINTR ??
+     switch (errno)
+       {
+       case EINTR :     // aiowait() was interrupted by a signal.
+       case EINVAL:     //There are no outstanding asynchronous I/O requests.
+         return 0;
+
+       default:         // EFAULT
+         ACE_ERROR_RETURN ((LM_ERROR,
+                       "%N:%l:(%P | %t)::%p \nNumAIO=%d\n",
+                       "ACE_SUN_Proactor::handle_events: aiowait failed",
+                        num_started_aio_),
+                      -1);
+       }
+   }
 
   int error_status = 0;
   int return_status = 0;
@@ -96,16 +142,17 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
   return_status= 0;
 
   //  we call find_completed_aio always with result != 0
-	
+        
   for (ai = 0; ai < aiocb_list_max_size_; ai++)
-    if (result == &aiocb_list_[ai]->aio_resultp)
+    if (aiocb_list_[ai] !=0 &&                 //check for non zero
+        result == &aiocb_list_[ai]->aio_resultp)
       break;
-
+  
   if (ai >= aiocb_list_max_size_)   // not found 
     return 0;
 
   error_status = result->aio_errno;
-  return_status= result->aio_return;	
+  return_status= result->aio_return;    
 
   if (error_status == -1)   // should never be
     {
@@ -114,27 +161,44 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
                   "ACE_SUN_Proactor::find_completed_aio:"
                   "<aio_errno> has failed\n"));
 
-      aiocb_list_[ai] = 0;
-      result_list_[ai] = 0;
-      aiocb_list_cur_size_--;
-			
-      return 0;
+      return_status = 0;  
+
+      // we should notify user, otherwise : 
+      // memory leak for result and "hanging" user
+      // what was before : 
+
+      // aiocb_list_[ai] = 0;
+      // result_list_[ai] = 0;
+      // aiocb_list_cur_size_--;
+      // return 0;
     }
 
-  if (error_status == EINPROGRESS) // should never be
-    return 0;   
-
-  if (error_status == ECANCELED)
-    return_status = 0;
-
-  if (return_status == -1) 
+  switch (error_status)
     {
-      // was ACE_ERROR_RETURN
-      ACE_ERROR ((LM_ERROR,   
-                  "%N:%l:(%P | %t)::%p\n",
-                  "ACE_SUN_Proactor::find_completed_aio:"
-                  "<aio_return> failed\n"));
-      return_status = 0; // zero bytes transferred
+    case EINPROGRESS :            // should never be
+    case AIO_INPROGRESS :         // according to SUN doc
+      return 0;   
+
+    case ECANCELED :              // canceled
+      return_status = 0;
+      break;
+
+    case 0 :                      // no error
+      if (return_status == -1)   // return_status should be >= 0
+        {
+          ACE_ERROR ((LM_ERROR,   
+                    "%N:%l:(%P | %t)::%p\n",
+                    "ACE_SUN_Proactor::find_completed_aio:"
+                    "<aio_return> failed\n"));
+
+          return_status = 0;      // zero bytes transferred
+        }
+      break;
+
+    default :                     // other errors
+      if (return_status == -1)  // normal status for I/O Error
+        return_status = 0;        // zero bytes transferred 
+      break;
     }
 
   ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
@@ -143,12 +207,22 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
   result_list_[ai] = 0;
   aiocb_list_cur_size_--;
 
+  num_started_aio_ --;
+
+  start_deferred_aio ();
+  //make attempt to start deferred AIO
+  //It is safe as we are protected by mutex_
+
   return asynch_result;
 }
 
+// start_aio has new return codes  
+// 0  successful start
+// 1  try later, OS queue overflow
+// -1 invalid request and other errors
+
 int
-ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
-                             int op)
+ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
 {
   ACE_TRACE ("ACE_SUN_Proactor::start_aio");
 
@@ -157,9 +231,9 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 
   // Start IO
 
-  switch (op)
+  switch (result->aio_lio_opcode)
     {
-    case 0 : 
+    case LIO_READ : 
       ptype = "read";
       ret_val = aioread (result->aio_fildes,
                         (char *) result->aio_buf,
@@ -169,7 +243,7 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
                         &result->aio_resultp);
       break;
 
-    case 1 :
+    case LIO_WRITE :
       ptype = "write"; 
       ret_val = aiowrite (result->aio_fildes,
                          (char *) result->aio_buf,
@@ -184,14 +258,62 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
       ret_val = -1;
       break;
     }
-	
-  if (ret_val == -1)
-    ACE_ERROR ((LM_ERROR,
+        
+  if (ret_val == 0)
+    {
+      num_started_aio_ ++ ;
+      if (num_started_aio_ == 1)  // wake up condition  
+        condition_.broadcast ();
+    }
+  else // if (ret_val == -1)
+    {
+      if (errno == EAGAIN)  //try later, it will be deferred AIO
+         ret_val = 1 ;
+      else
+         ACE_ERROR ((LM_ERROR,
                 "%N:%l:(%P | %t)::start_aio: aio%s %p\n",
                 ptype,
                 "queueing failed\n"));
+    }
+
   return ret_val;
 }
 
-#endif /* ACE_HAS_AIO_CALLS && sun */
+int
+ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
+{
+  ACE_UNUSED_ARG (result);
+  return 2 ; // not implemented
 
+// AL
+// I tried to implement the following code
+// But result was : aiocancel returned -1 with errno=ACCESS_DENIED
+// moreover, later this operation had been never finished
+// on aiowait . 
+// Is it Sun error ??
+//
+// So with SUN_Proactor there is only one way to cancel AIO
+// just close the file handle.
+//
+// 
+//  int rc = ::aiocancel (& result->aio_resultp);
+//  
+// Check the return value and return 0/1/2 appropriately.
+//  if (rc == 0)    //  AIO_CANCELED
+//    return 0;
+//
+//  ACE_ERROR_RETURN ((LM_ERROR,
+//                       "%N:%l:(%P | %t)::%p\n",
+//                       "cancel_aiocb:"
+//                       "Unexpected result from <aiocancel>"),
+//                      -1);
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Condition<ACE_Thread_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// These are only instantiated with ACE_HAS_THREADS.
+#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_AIO_CALLS && sun */
