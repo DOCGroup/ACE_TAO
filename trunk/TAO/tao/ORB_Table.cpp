@@ -31,6 +31,7 @@ TAO_ORB_Table::~TAO_ORB_Table (void)
       // Destroy the ORB_Core
       (*i).int_id_->_decr_refcnt ();
     }
+
   this->table_.close ();
 }
 
@@ -58,9 +59,9 @@ TAO_ORB_Table::bind (const char *orb_id,
       return -1;
     };
 
-  const char *id = CORBA::string_dup (orb_id);
+  CORBA::String_var id = CORBA::string_dup (orb_id);
 
-  int result = this->table_.bind (id, orb_core);
+  int result = this->table_.bind (id.in (), orb_core);
   if (result == 0)
     {
       // The ORB table now owns the ORB Core.  As such, the reference
@@ -70,6 +71,8 @@ TAO_ORB_Table::bind (const char *orb_id,
       // successfully added to the ORB table.
       if (this->first_orb_ == 0)
         this->first_orb_ = orb_core;
+
+      (void) id._retn ();  // ORB Table now owns the id.
     }
 
   return result;
