@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\IFR_Client"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -65,10 +65,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\IFR_Client"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD  /c
+LINK32=link.exe -lib
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -89,16 +89,36 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\IFR_BaseC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFR_Client_Adapter_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceC.cpp
+SOURCE=.\IFR_ComponentsC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\IFR_BaseC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicC.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\IFR_Client_Adapter_Impl.h
@@ -109,11 +129,11 @@ SOURCE=.\ifr_client_export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ifrfwd.h
+SOURCE=.\IFR_ComponentsC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceC.h
+SOURCE=.\IFR_ExtendedC.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -121,7 +141,19 @@ SOURCE=.\InterfaceC.h
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\InterfaceC.i
+SOURCE=.\IFR_BaseC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ComponentsC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedC.i
 # End Source File
 # End Group
 # End Target
