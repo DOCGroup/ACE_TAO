@@ -54,3 +54,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;     // Not reached.
 }
 // Listing 2
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
