@@ -9383,7 +9383,7 @@ ACE_OS::gmtime (const time_t *t)
 ACE_INLINE struct tm *
 ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 {
-  ACE_OS_TRACE ("ACE_OS::localtime_r");
+  ACE_OS_TRACE ("ACE_OS::gmtime_r");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_gmtime_r (t, res), pace_tm*, 0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS)

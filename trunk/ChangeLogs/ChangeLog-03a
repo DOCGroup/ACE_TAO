@@ -1,3 +1,9 @@
+Sun Dec  3 08:50:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS.i: Fixed a cut and paste error. This was from the BUG#
+	  734 in bugzilla. Thanks to Martin Krumpolec <krumpolec@pobox.sk>
+	  for reporting this.  
+
 Sat Dec  2 05:58:37 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/config-win32-borland.h:
