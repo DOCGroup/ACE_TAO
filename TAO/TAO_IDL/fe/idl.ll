@@ -159,7 +159,7 @@ native          return IDL_NATIVE;
 local           return IDL_LOCAL;
 abstract        return scan_obv_token (IDL_ABSTRACT);
 custom          return scan_obv_token (IDL_CUSTOM);
-init            return scan_obv_token (IDL_INIT);
+factory         return scan_obv_token (IDL_FACTORY);
 private         return scan_obv_token (IDL_PRIVATE);
 public          return scan_obv_token (IDL_PUBLIC);
 supports        return scan_obv_token (IDL_SUPPORTS);
