@@ -44,7 +44,7 @@ reverse_file (ACE_HANDLE file_handle,
   if (array[i] == '\0')
     array[i] = '\n';
 
-  while (--i >= 0)
+  while (i-- > 0)
     {
       if (array[i] == '\n')
         {

@@ -352,8 +352,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
       ACE_ASSERT (data != 0);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P) PARENT allocator at = %x, ")
-                  ACE_TEXT ("data allocated at %x\n"),
+                  ACE_TEXT ("(%P) PARENT allocator at = %@, ")
+                  ACE_TEXT ("data allocated at %@\n"),
                   myalloc,
                   data));
       myalloc->dump ();
@@ -362,13 +362,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
 
       ACE_Process p;
       pid_t pid = p.spawn (options);
-      ACE_ASSERT (pid != -1);
+      if (pid == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("spawn")), 1);
 
       parent (data);
 
       // Synchronize on the exit of the child.
       result = p.wait ();
-      ACE_ASSERT (result != -1);
+      if (result == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("wait")), 1);
       ACE_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_END_TEST;
@@ -385,8 +389,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
       ACE_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P) CHILD allocator at = %x, ")
-                  ACE_TEXT ("data allocated at %x\n"),
+                  ACE_TEXT ("(%P) CHILD allocator at = %@, ")
+                  ACE_TEXT ("data allocated at %@\n"),
                   myalloc,
                   data));
       myalloc->dump ();
