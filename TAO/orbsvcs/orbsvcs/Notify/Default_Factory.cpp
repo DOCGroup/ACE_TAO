@@ -237,14 +237,14 @@ template class TAO_ESF_Copy_On_Write<TAO_NS_ProxyConsumer, TAO_ESF_Proxy_List<TA
 template class TAO_ESF_Copy_On_Write<TAO_NS_ProxySupplier, TAO_ESF_Proxy_List<TAO_NS_ProxySupplier>, ACE_Unbounded_Set_Iterator<TAO_NS_ProxySupplier *>, ACE_SYNCH>;
 template class TAO_ESF_Copy_On_Write<TAO_NS_Admin, TAO_ESF_Proxy_List<TAO_NS_Admin>, ACE_Unbounded_Set_Iterator<TAO_NS_Admin *>, ACE_SYNCH>;
 
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_ProxySupplier>,ACE_Unbounded_Set_Iterator<TAO_NS_ProxySupplier*>,ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_EventChannel>,ACE_Unbounded_Set_Iterator<TAO_NS_EventChannel*>,ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Admin>,ACE_Unbounded_Set_Iterator<TAO_NS_Admin*>,ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_ProxyConsumer>,ACE_Unbounded_Set_Iterator<TAO_NS_ProxyConsumer*>,ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Consumer>,ACE_Unbounded_Set_Iterator<TAO_NS_Consumer*>,ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Supplier>,ACE_Unbounded_Set_Iterator<TAO_NS_Supplier*>,ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Peer>,ACE_Unbounded_Set_Iterator<TAO_NS_Peer*>,ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Proxy>,ACE_Unbounded_Set_Iterator<TAO_NS_Proxy*>,ACE_SYNCH>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_ProxySupplier>,ACE_Unbounded_Set_Iterator<TAO_NS_ProxySupplier*>,TAO_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_EventChannel>,ACE_Unbounded_Set_Iterator<TAO_NS_EventChannel*>,TAO_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Admin>,ACE_Unbounded_Set_Iterator<TAO_NS_Admin*>,TAO_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_ProxyConsumer>,ACE_Unbounded_Set_Iterator<TAO_NS_ProxyConsumer*>,TAO_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Consumer>,ACE_Unbounded_Set_Iterator<TAO_NS_Consumer*>,TAO_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Supplier>,ACE_Unbounded_Set_Iterator<TAO_NS_Supplier*>,TAO_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Peer>,ACE_Unbounded_Set_Iterator<TAO_NS_Peer*>,TAO_SYNCH_MUTEX>;
+template class TAO_ESF_Copy_On_Write_Read_Guard<TAO_ESF_Proxy_List<TAO_NS_Proxy>,ACE_Unbounded_Set_Iterator<TAO_NS_Proxy*>,TAO_SYNCH_MUTEX>;
 
 
 

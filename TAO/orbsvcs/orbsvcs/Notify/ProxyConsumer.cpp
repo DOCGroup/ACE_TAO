@@ -38,9 +38,9 @@ TAO_NS_ProxyConsumer::peer (void)
 }
 
 void
-TAO_NS_ProxyConsumer::init (TAO_NS_SupplierAdmin* supplier_admin ACE_ENV_SINGLE_ARG_DECL)
+TAO_NS_ProxyConsumer::init (TAO_NS_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Proxy::init (supplier_admin ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_NS_Proxy::init (supplier_admin ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_admin_ = supplier_admin;

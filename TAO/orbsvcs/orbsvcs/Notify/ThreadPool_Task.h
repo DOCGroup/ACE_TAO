@@ -24,7 +24,6 @@
 #include "ace/Reactor.h"
 #include "AdminProperties.h"
 #include "Worker_Task.h"
-#include "Destroy_Callback.h"
 
 class TAO_NS_Buffering_Strategy;
 class TAO_NS_Timer_Queue;
@@ -35,7 +34,7 @@ class TAO_NS_Timer_Queue;
  * @brief Implements a Thread Pool Worker Task.
  *
  */
-class TAO_Notify_Export TAO_NS_ThreadPool_Task : public TAO_NS_Worker_Task, ACE_Task<ACE_NULL_SYNCH>, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_ThreadPool_Task : public TAO_NS_Worker_Task, ACE_Task<ACE_NULL_SYNCH>
 {
   friend class TAO_NS_Method_Request_Shutdown;
 

@@ -233,7 +233,7 @@ TAO_NS_ETCL_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & id
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq *infoseq_ptr;
@@ -269,7 +269,7 @@ TAO_NS_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   size_t current_size = this->constraint_expr_list_.current_size ();
 
@@ -367,14 +367,14 @@ TAO_NS_ETCL_Filter::match (const CORBA::Any & /*filterable_data */
 
 CORBA::Boolean
 TAO_NS_ETCL_Filter::match_structured (const CosNotification::StructuredEvent & filterable_data
-                                 ACE_ENV_ARG_DECL_NOT_USED
+                                 ACE_ENV_ARG_DECL
                                  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // We want to return true if at least one constraint matches.
   CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);

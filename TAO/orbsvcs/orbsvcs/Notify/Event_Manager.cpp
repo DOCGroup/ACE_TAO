@@ -254,9 +254,9 @@ template class ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CS
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
 
-template class TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>;
-template class TAO_ESF_Shutdown_Proxy<TAO_NS_Admin>;
-template class TAO_ESF_Shutdown_Proxy<TAO_NS_Proxy>;
+//template class TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>;
+//template class TAO_ESF_Shutdown_Proxy<TAO_NS_Admin>;
+//template class TAO_ESF_Shutdown_Proxy<TAO_NS_Proxy>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

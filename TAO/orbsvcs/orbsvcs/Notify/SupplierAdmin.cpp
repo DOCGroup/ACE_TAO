@@ -17,6 +17,14 @@ ACE_RCSID(RT_Notify, TAO_NS_SupplierAdmin, "$Id$")
 #include "Seq_Worker_T.h"
 #include "Properties.h"
 
+typedef TAO_NS_Find_Worker_T<TAO_NS_Proxy
+                             , CosNotifyChannelAdmin::ProxyConsumer
+                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
+                             , CosNotifyChannelAdmin::ProxyNotFound>
+TAO_NS_ProxyConsumer_Find_Worker;
+
+typedef TAO_NS_Seq_Worker_T<TAO_NS_Proxy> TAO_NS_Proxy_Seq_Worker;
+
 TAO_NS_SupplierAdmin::TAO_NS_SupplierAdmin (void)
 {
 }
@@ -28,7 +36,8 @@ TAO_NS_SupplierAdmin::~TAO_NS_SupplierAdmin ()
 void
 TAO_NS_SupplierAdmin::init (TAO_NS_EventChannel *ec ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Admin::init (ec);
+  TAO_NS_Admin::init (ec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   const CosNotification::QoSProperties &default_sa_qos =
     TAO_NS_PROPERTIES::instance ()->default_supplier_admin_qos_properties ();
@@ -129,7 +138,7 @@ TAO_NS_SupplierAdmin::MyChannel (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  return this->ec_->_this (ACE_ENV_SINGLE_ARG_DECL);
+  return this->ec_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ::CosNotifyChannelAdmin::InterFilterGroupOperator
@@ -147,7 +156,7 @@ TAO_NS_SupplierAdmin::push_consumers (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  TAO_NS_Seq_Worker_T<TAO_NS_Proxy> seq_worker;
+  TAO_NS_Proxy_Seq_Worker seq_worker;
 
   return seq_worker.create (*this->proxy_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -159,10 +168,7 @@ TAO_NS_SupplierAdmin::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID proxy_i
                    , CosNotifyChannelAdmin::ProxyNotFound
                    ))
 {
-  TAO_NS_Find_Worker_T<TAO_NS_Proxy
-    , CosNotifyChannelAdmin::ProxyConsumer
-    , CosNotifyChannelAdmin::ProxyConsumer_ptr
-    , CosNotifyChannelAdmin::ProxyNotFound> find_worker;
+  TAO_NS_ProxyConsumer_Find_Worker find_worker;
 
   return find_worker.resolve (proxy_id, *this->proxy_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -289,12 +295,18 @@ TAO_NS_SupplierAdmin::obtain_notification_pull_consumer (CosNotifyChannelAdmin::
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_NS_Find_Worker_T<TAO_NS_Proxy>;
-template class TAO_NS_Find_Worker_T<TAO_NS_Proxy>;
+template class TAO_NS_Find_Worker_T<TAO_NS_Proxy
+                             , CosNotifyChannelAdmin::ProxyConsumer
+                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
+                             , CosNotifyChannelAdmin::ProxyNotFound>;
+template class TAO_NS_Seq_Worker_T<TAO_NS_Proxy>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_Proxy>
-#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_Proxy>
+#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_Proxy
+                             , CosNotifyChannelAdmin::ProxyConsumer
+                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
+                             , CosNotifyChannelAdmin::ProxyNotFound>
+#pragma instantiate TAO_NS_Seq_Worker_T<TAO_NS_Proxy>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

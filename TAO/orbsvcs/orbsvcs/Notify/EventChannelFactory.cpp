@@ -17,6 +17,14 @@ ACE_RCSID(RT_Notify, TAO_NS_EventChannelFactory, "$Id$")
 #include "Find_Worker_T.h"
 #include "Seq_Worker_T.h"
 
+typedef TAO_NS_Find_Worker_T<TAO_NS_EventChannel
+                             , CosNotifyChannelAdmin::EventChannel
+                             , CosNotifyChannelAdmin::EventChannel_ptr
+                             , CosNotifyChannelAdmin::ChannelNotFound>
+TAO_NS_EventChannel_Find_Worker;
+
+typedef TAO_NS_Seq_Worker_T<TAO_NS_EventChannel> TAO_NS_EventChannel_Seq_Worker;
+
 TAO_NS_EventChannelFactory::TAO_NS_EventChannelFactory (void)
   :ec_container_ (0)
 {
@@ -157,7 +165,7 @@ TAO_NS_EventChannelFactory::get_all_channels (ACE_ENV_SINGLE_ARG_DECL)
     CORBA::SystemException
   ))
 {
-  TAO_NS_Seq_Worker_T<TAO_NS_EventChannel> seq_worker;
+  TAO_NS_EventChannel_Seq_Worker seq_worker;
 
   return seq_worker.create (*this->ec_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -169,24 +177,29 @@ TAO_NS_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::ChannelID 
                    , CosNotifyChannelAdmin::ChannelNotFound
                    ))
 {
-  TAO_NS_Find_Worker_T<TAO_NS_EventChannel
-    , CosNotifyChannelAdmin::EventChannel
-    , CosNotifyChannelAdmin::EventChannel_ptr
-    , CosNotifyChannelAdmin::ChannelNotFound> find_worker;
+  TAO_NS_EventChannel_Find_Worker find_worker;
 
   return find_worker.resolve (id, *this->ec_container_ ACE_ENV_ARG_PARAMETER);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_NS_Find_Worker_T<TAO_NS_EventChannel>;
+template class TAO_NS_Find_Worker_T<TAO_NS_EventChannel
+                              , CosNotifyChannelAdmin::EventChannel
+                              , CosNotifyChannelAdmin::EventChannel_ptr
+                              , CosNotifyChannelAdmin::ChannelNotFound>;
 template class TAO_NS_Seq_Worker_T<TAO_NS_EventChannel>;
+
 template class TAO_NS_Container_T <TAO_NS_EventChannel>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_EventChannel>
+#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_EventChannel
+                              , CosNotifyChannelAdmin::EventChannel
+                              , CosNotifyChannelAdmin::EventChannel_ptr
+                              , CosNotifyChannelAdmin::ChannelNotFound>
 #pragma instantiate TAO_NS_Seq_Worker_T<TAO_NS_EventChannel>
+
+
 #pragma instantiate TAO_NS_Container_T <TAO_NS_EventChannel>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

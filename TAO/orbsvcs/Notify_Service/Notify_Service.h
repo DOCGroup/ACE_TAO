@@ -131,7 +131,7 @@ protected:
 #else
   CosNaming::NamingContextExt_var naming_;
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
-  
+
   // A naming context.
 
   Worker worker_;

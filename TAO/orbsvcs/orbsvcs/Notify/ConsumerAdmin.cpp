@@ -19,6 +19,14 @@ ACE_RCSID(RT_Notify, TAO_NS_ConsumerAdmin, "$Id$")
 #include "Find_Worker_T.h"
 #include "Seq_Worker_T.h"
 
+typedef TAO_NS_Find_Worker_T<TAO_NS_Proxy
+                             , CosNotifyChannelAdmin::ProxySupplier
+                             , CosNotifyChannelAdmin::ProxySupplier_ptr
+                             , CosNotifyChannelAdmin::ProxyNotFound>
+TAO_NS_ProxySupplier_Find_Worker;
+
+typedef TAO_NS_Seq_Worker_T<TAO_NS_Proxy> TAO_NS_Proxy_Seq_Worker;
+
 TAO_NS_ConsumerAdmin::TAO_NS_ConsumerAdmin (void)
 {
 }
@@ -131,7 +139,7 @@ TAO_NS_ConsumerAdmin::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  TAO_NS_Seq_Worker_T<TAO_NS_Proxy> seq_worker;
+  TAO_NS_Proxy_Seq_Worker seq_worker;
 
   return seq_worker.create (*this->proxy_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -143,10 +151,7 @@ TAO_NS_ConsumerAdmin::get_proxy_supplier (CosNotifyChannelAdmin::ProxyID proxy_i
                    , CosNotifyChannelAdmin::ProxyNotFound
                    ))
 {
-  TAO_NS_Find_Worker_T<TAO_NS_Proxy
-    , CosNotifyChannelAdmin::ProxySupplier
-    , CosNotifyChannelAdmin::ProxySupplier_ptr
-    , CosNotifyChannelAdmin::ProxyNotFound> find_worker;
+  TAO_NS_ProxySupplier_Find_Worker find_worker;
 
   return find_worker.resolve (proxy_id, *this->proxy_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -326,3 +331,19 @@ TAO_NS_ConsumerAdmin::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosEventChannelAdmin::ProxyPullSupplier::_nil ());
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_NS_Find_Worker_T<TAO_NS_Proxy
+                             , CosNotifyChannelAdmin::ProxySupplier
+                             , CosNotifyChannelAdmin::ProxySupplier_ptr
+                             , CosNotifyChannelAdmin::ProxyNotFound>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_Proxy
+                             , CosNotifyChannelAdmin::ProxySupplier
+                             , CosNotifyChannelAdmin::ProxySupplier_ptr
+                             , CosNotifyChannelAdmin::ProxyNotFound>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

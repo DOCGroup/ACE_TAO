@@ -19,21 +19,18 @@ extern "C" void handler (int signum)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  // ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  // Not handling signals. the shutdown code and event handler is maintained in case we want to address this in the future.
 
-  // Init factories.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("Failed to initialize the Notification Service.\n")),
-                      1);
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
+      if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_LIB_TEXT("Failed to initialize the Notification Service.\n")),
+                          1);
+
       notify_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -42,7 +39,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }
