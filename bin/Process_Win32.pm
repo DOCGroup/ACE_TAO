@@ -1,3 +1,4 @@
+# $id$
 package Process;
 
 use Win32::Process;
@@ -12,13 +13,15 @@ sub Create
   my $args = shift;
   my $self = [];
 
-  if ($newwindow eq "no")
+  my $console = 0;
+
+  if ($newwindow eq "yes")
   {
-    my $console = 0;
+    $console = CREATE_NEW_CONSOLE;
   }
   else
   {
-    my $console = CREATE_NEW_CONSOLE;
+    $console = 0;
   }
 
   Win32::Process::Create ($self->[0], $name, $name." ".$args, 0, 
