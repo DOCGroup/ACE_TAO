@@ -1,3 +1,12 @@
+Thu Mar 14 12:03:21 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo_i.cpp (~TAO_ClientRequestInfo_i):
+
+	  Make sure the TSC no longer considers the current RSC its peer
+	  since that RSC is destroyed when this ClienRequestInfo object is
+	  destroyed.  Thanks to Jeffrey Shaffer <jeffs@integ.com> for
+	  reporting the problem, and for confirming that this fix works.
+
 Thu Mar 14 13:50:59 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         Committing this change for Scott Harris <harris_s@ociweb.com>.
