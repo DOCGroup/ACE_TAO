@@ -149,11 +149,11 @@ PortableInterceptor::IORInterceptor::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/Interceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableInterceptor/IORInterceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
