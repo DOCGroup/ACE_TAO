@@ -1,3 +1,7 @@
+Thu Oct  4 10:14:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Donald Acton to the Hall of Fame.
+
 Thu Oct  4 06:39:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: Added ACE_LACKS_MKSTEMP as SunOS 5.5 does
