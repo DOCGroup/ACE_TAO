@@ -1,3 +1,8 @@
+Sun Jan 18 08:45:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Tests.bor:
+	  Fixed this makefile
+
 Sun Jan 18 00:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Max_Default_Port_Test_IPV6.cpp:
@@ -5,7 +10,6 @@ Sun Jan 18 00:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/SOCK_Test_IPv6.cpp:
 
 	  Fixed unused function warnings in the daily builds.
-
 
 Sat Jan 17 23:52:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
