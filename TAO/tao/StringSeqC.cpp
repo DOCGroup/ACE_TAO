@@ -94,7 +94,8 @@ static const CORBA::Long _oc_CORBA_StringSeq[] =
 
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_StringSeq), (char *) &_oc_CORBA_StringSeq, 0, sizeof (CORBA_StringSeq));
-CORBA::TypeCode_ptr _tc_CORBA_StringSeq = &_tc_TAO_tc_CORBA_StringSeq;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CORBA_StringSeq, &_tc_TAO_tc_CORBA_StringSeq)
 
 
 #if !defined (_CORBA_WSTRINGSEQ_CS_)
@@ -158,7 +159,9 @@ static const CORBA::Long _oc_CORBA_WStringSeq[] =
 
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_WStringSeq), (char *) &_oc_CORBA_WStringSeq, 0, sizeof (CORBA_WStringSeq));
-CORBA::TypeCode_ptr _tc_CORBA_WStringSeq = &_tc_TAO_tc_CORBA_WStringSeq;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CORBA_WStringSeq, &_tc_TAO_tc_CORBA_WStringSeq)
+
 void operator<<= (
     CORBA::Any &_tao_any,
     const CORBA_StringSeq &_tao_elem
