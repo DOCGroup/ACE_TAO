@@ -1,3 +1,15 @@
+Mon Nov  3 18:40:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added generation of include of ace/OS_NS_String.h if any
+          kind of interface is seen in the IDL file.
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Cosmetic changes to source code.
+
 Mon Nov  3 04:43:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Makefile:
