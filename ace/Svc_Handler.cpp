@@ -12,10 +12,6 @@
 #include "ace/Object_Manager.h"
 #include "ace/Strategies.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Svc_Handler.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Dynamic.h"
 
 ACE_RCSID(ace, Svc_Handler, "$Id$")
