@@ -1,6 +1,6 @@
 Fri Nov 06 22:41:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/Process.cpp (spawn): initialize local "result" to 0
+        * ace/Process.cpp (spawn): initialized local "result" to 0
           to avoid egcs warning about possible unitialized use.  Added
           const to loop index to avoid egcs warning about discarding
           const.
