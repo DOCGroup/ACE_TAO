@@ -186,14 +186,6 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
         ACE_THROW (CORBA::TRANSIENT ());
     }
 
-  // @@ Alex: we must check this, it seems that it would be cleaner if
-  //    the Transport's ORB_Core was initialized way in advance...
-
-  // @@ Done (Alex).
-
-  // Init the transport object with the orb core resource.
-  // this->transport_->orb_core (this->orb_core_);
-
   // Init the input message states in the transport object.
   // This is necessary for the round trip call only. But it is ok to
   // do this in all cases.
