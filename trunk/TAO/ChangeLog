@@ -1,3 +1,22 @@
+Mon Oct 13 15:29:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_client:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_server:
+        * examples/Kokyu_dsrt_schedulers/fp_example/fp_example.mpc:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_client:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_server:
+        * examples/Kokyu_dsrt_schedulers/mif_example/mif_example.mpc:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.muf_client:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.muf_server:
+        * examples/Kokyu_dsrt_schedulers/muf_example/muf_example.mpc:
+	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
+	* examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
+	  Removed explicit libraries and includes and used the base
+	  projects instead. I had done this to generate the .dsp files. 
+
+        * examples/Kokyu_dsrt_schedulers/utils.h: Modified #include
+	  "RTScheduler.h" to #include "tao/RTScheduling/RTScheduler.h".
+	
 Mon Oct 13 12:49:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp: 

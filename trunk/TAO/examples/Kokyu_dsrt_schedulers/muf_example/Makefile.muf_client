@@ -20,7 +20,7 @@ ifndef CIAO_ROOT
   CIAO_ROOT = $(TAO_ROOT)/CIAO
 endif
 
-TAO_IDL = ../../../../bin/tao_idl
+TAO_IDL = $(ACE_ROOT)/bin/tao_idl
 IDL_FILES = test
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
@@ -31,7 +31,7 @@ FILES = \
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-LDLIBS = -lTAO_RTScheduler -lTAO_Svc_Utils -lKokyu_DSRT_Schedulers -lKokyu -lTAO_RTCORBA -lTAO -lACE
+LDLIBS = -lKokyu_DSRT_Schedulers -lKokyu -lTAO_RTCORBA -lTAO -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -50,6 +50,7 @@ $(TEMPINCDIR):
 
 endif
 
+CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq ($(rt_corba),1)
 BIN    = $(BIN_UNCHECKED)
 else
@@ -74,7 +75,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I../../../tao/RTScheduling -I../../../tao/RTCORBA -I../../../examples/Kokyu_dsrt_schedulers -I../../../orbsvcs -I../../../../Kokyu -I../../.. -I../../../tao -I../../../..
+CPPFLAGS     += -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers -I$(ACE_ROOT)/Kokyu -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
     CPPFLAGS += -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
@@ -82,7 +83,7 @@ ifeq ($(static_libs),1)
 endif
 
 
-LDFLAGS      += -L../../../examples/Kokyu_dsrt_schedulers -L../../../tao/RTScheduling -L../../../tao/RTCORBA -L../../../orbsvcs/orbsvcs -L../../../../Kokyu -L../../../tao -L../../../../ace -L../../../../lib
+LDFLAGS      += -L$(ACE_ROOT)/lib
 
 TAO_IDLFLAGS += -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
 #----------------------------------------------------------------------------
@@ -92,8 +93,8 @@ require_warning:
 	@echo This project will not be built due to one of the following missing features:
 	@echo rt_corba
 
-../../../../lib:
-	-@mkdir -p "../../../../lib"
+$(ACE_ROOT)/lib:
+	-@mkdir -p "$(ACE_ROOT)/lib"
 
 
 ADDITIONAL_IDL_TARGETS =
