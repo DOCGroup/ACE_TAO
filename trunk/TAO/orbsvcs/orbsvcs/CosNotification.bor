@@ -98,9 +98,9 @@ OBJFILES = \
         $(OBJDIR)\Notify_Default_POA_Factory.obj \
         $(OBJDIR)\Notify_EventChannelFactory_i.obj \
         $(OBJDIR)\Method_Request_Updates.obj \
-        $(OBJDIR)\Timer_Queue \
-        $(OBJDIR)\Timer_Reactor \
-        $(OBJDIR)\Batch_Buffering_Strategy
+        $(OBJDIR)\Timer_Queue.obj \
+        $(OBJDIR)\Timer_Reactor.obj \
+        $(OBJDIR)\Batch_Buffering_Strategy.obj
 
 RESOURCE = $(OBJDIR)\CosNotification.res
 
