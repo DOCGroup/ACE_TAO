@@ -1,3 +1,12 @@
+Fri Aug 27 18:52:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
+
+	* ace/Arg_Shifter.h (is_or_contains_ignore_case): added method
+	  to facilitate CORBA spec in ORB_init.
+
+	* ace/Arg_Shifter.cpp (is_or_contains_ignore_case): implemented
+	  the method added. Part of a larger project to implement CORBA
+	  spec regarding -ORB parsing in ORB_init.
+
 Fri Aug 27 18:58:50 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/run_tests.lst: Reenabled the Process_Manager_Test since
