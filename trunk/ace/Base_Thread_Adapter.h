@@ -17,7 +17,7 @@
 #define ACE_BASE_THREAD_ADAPTER_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/OS_Log_Msg_Attributes.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -144,7 +144,7 @@ protected:
   // until <Thread_Manager> fills in all information in thread
   // descriptor.
 
-  void *log_msg_attributes_;
+  ACE_OS_Log_Msg_Attributes log_msg_attributes_;
   // The ACE_Log_Msg attributes.
 
   friend class ACE_Thread_Adapter_Has_Private_Destructor;

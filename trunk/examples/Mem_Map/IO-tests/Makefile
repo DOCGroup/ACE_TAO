@@ -48,6 +48,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -65,12 +66,24 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  IO_Test.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \

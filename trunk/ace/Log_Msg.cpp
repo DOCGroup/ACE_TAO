@@ -30,22 +30,9 @@
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-// IPC conduit between sender and client daemon.  This should be
-// included in the <ACE_Log_Msg> class, but due to "order of include"
-// problems it can't be...
-#if defined (ACE_HAS_STREAM_PIPES)
-# include "ace/SPIPE_Connector.h"
-typedef ACE_SPIPE_Stream ACE_LOG_MSG_IPC_STREAM;
-typedef ACE_SPIPE_Connector ACE_LOG_MSG_IPC_CONNECTOR;
-typedef ACE_SPIPE_Addr ACE_LOG_MSG_IPC_ADDR;
-#else
-# include "ace/SOCK_Connector.h"
-typedef ACE_SOCK_Stream ACE_LOG_MSG_IPC_STREAM;
-typedef ACE_SOCK_Connector ACE_LOG_MSG_IPC_CONNECTOR;
-typedef ACE_INET_Addr ACE_LOG_MSG_IPC_ADDR;
-#endif /* ACE_HAS_STREAM_PIPES */
-
 #include "ace/Log_Msg.h"
+#include "ace/Log_Msg_Callback.h"
+#include "ace/Log_Msg_IPC.h"
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
@@ -99,7 +86,7 @@ class ACE_Log_Msg_Manager
   //     For internal use by ACE, only!
 {
 public:
-  static ACE_LOG_MSG_IPC_STREAM *message_queue_;
+  static ACE_Log_Msg_Backend *ipc_backend_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static void close (void);
@@ -111,7 +98,7 @@ private:
 #endif /* ! ACE_MT_SAFE */
 };
 
-ACE_LOG_MSG_IPC_STREAM *ACE_Log_Msg_Manager::message_queue_ = 0;
+ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::ipc_backend_ = 0;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 ACE_Recursive_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
@@ -133,13 +120,13 @@ ACE_Log_Msg_Manager::get_lock (void)
     }
 
 
-  if (ACE_Log_Msg_Manager::message_queue_ == 0)
+  if (ACE_Log_Msg_Manager::ipc_backend_ == 0)
     {
       ACE_NO_HEAP_CHECK;
 
       // Allocate the ACE_Log_Msg IPC instance.
-      ACE_NEW_RETURN (ACE_Log_Msg_Manager::message_queue_,
-                      ACE_LOG_MSG_IPC_STREAM,
+      ACE_NEW_RETURN (ACE_Log_Msg_Manager::ipc_backend_,
+                      ACE_Log_Msg_IPC,
                       0);
     }
 
@@ -287,12 +274,12 @@ ACE_Log_Msg::instance (void)
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #else  /* ! ACE_MT_SAFE */
   // We don't have threads, we cannot call
-  // ACE_Log_Msg_Manager::get_lock () to initialize the message queue,
-  // so instead we do it here.
-  if (ACE_Log_Msg_Manager::message_queue_ == 0)
-    ACE_NEW_RETURN (ACE_Log_Msg_Manager::message_queue_,
-                    ACE_LOG_MSG_IPC_STREAM,
-                   0);
+  // ACE_Log_Msg_Manager::get_lock () to initialize the logger
+  // callback, so instead we do it here.
+  if (ACE_Log_Msg_Manager::ipc_backend_ == 0)
+    ACE_NEW_RETURN (ACE_Log_Msg_Manager::ipc_backend_,
+                    ACE_Log_Msg_IPC,
+                    0);
 
   // Singleton implementation.
   static ACE_Cleanup_Adapter<ACE_Log_Msg> *log_msg = 0;
@@ -518,11 +505,11 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   ++instance_count_;
 
   if (this->instance_count_ == 1)
-    ACE_Thread_Adapter::set_log_msg_hooks (ACE_Log_Msg_Attributes::init_hook,
-                                           ACE_Log_Msg_Attributes::inherit_hook,
-                                           ACE_Log_Msg::close,
-                                           ACE_Log_Msg::sync_hook,
-                                           ACE_Log_Msg::thr_desc_hook);
+    ACE_Base_Thread_Adapter::set_log_msg_hooks (ACE_Log_Msg::init_hook,
+                                                ACE_Log_Msg::inherit_hook,
+                                                ACE_Log_Msg::close,
+                                                ACE_Log_Msg::sync_hook,
+                                                ACE_Log_Msg::thr_desc_hook);
 
   this->conditional_values_.is_set_ = 0;
 }
@@ -559,9 +546,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 #     endif /* ACE_MT_SAFE */
 
       // Destroy the message queue instance.
-      ACE_Log_Msg_Manager::message_queue_->close ();
-      delete ACE_Log_Msg_Manager::message_queue_;
-      ACE_Log_Msg_Manager::message_queue_ = 0;
+      ACE_Log_Msg_Manager::ipc_backend_->close ();
 
       if (ACE_Log_Msg::program_name_)
         {
@@ -622,21 +607,11 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
   ACE_MT (ACE_Log_Msg_Manager::get_lock ());
 
   // Always close the current handle before doing anything else.
-  if (ACE_Log_Msg_Manager::message_queue_->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // If we don't do this, handles aren't reused on Win32 and the
-      // server eventually crashes!
-#if defined (ACE_WIN32)
-      ACE_INT32 dummy = ~0;
-      ACE_Log_Msg_Manager::message_queue_->send_n ((const void *) &dummy,
-                                                   sizeof (ACE_INT32));
-#endif /* ACE_WIN32 */
-      ACE_Log_Msg_Manager::message_queue_->close ();
-    }
+  ACE_Log_Msg_Manager::ipc_backend_->reset ();
 
   // Note that if we fail to open the message queue the default action
   // is to use stderr (set via static initialization in the
-  // ACE_Log_Msg.C file).
+  // Log_Msg.cpp file).
 
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
     {
@@ -644,9 +619,8 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
         status = -1;
       else
         {
-          ACE_LOG_MSG_IPC_CONNECTOR con;
-          status = con.connect (*ACE_Log_Msg_Manager::message_queue_,
-            ACE_LOG_MSG_IPC_ADDR (logger_key));
+          status =
+            ACE_Log_Msg_Manager::ipc_backend_->open (logger_key);
         }
 
       if (status == -1)
@@ -1389,29 +1363,8 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
           // Be sure that there is a message_queue_, with multiple threads.
           ACE_MT (ACE_Log_Msg_Manager::get_lock ());
 
-#if defined (ACE_HAS_STREAM_PIPES)
-          ACE_Str_Buf log_msg (ACE_static_cast (void *,
-                                                &log_record),
-                               ACE_static_cast (int,
-                                                log_record.length ()));
-
-          // Try to use the <putpmsg> API if possible in order to
-          // ensure correct message queueing according to priority.
           result =
-            ACE_Log_Msg_Manager::message_queue_->send
-            (ACE_reinterpret_cast (const ACE_Str_Buf *,
-                                   0),
-             &log_msg,
-             ACE_static_cast (int,
-                              log_record.priority ()),
-             MSG_BAND);
-#else
-          // We're running over sockets, so we'll need to indicate the
-          // number of bytes to send.
-          result =
-            ACE_Log_Msg_Manager::message_queue_->send_n ((void *) &log_record,
-                                                         log_record.length ());
-#endif /* ACE_HAS_STREAM_PIPES */
+            ACE_Log_Msg_Manager::ipc_backend_->log (log_record);
         }
       // Format the message and print it to stderr and/or ship it off
       // to the log_client daemon, and/or print it to the ostream.
@@ -1430,6 +1383,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
                           *this->msg_ostream ()
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
                           );
+
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::MSG_CALLBACK)
           && this->msg_callback () != 0)
@@ -1565,8 +1519,6 @@ ACE_Log_Msg::dump (void) const
 
   // Be sure that there is a message_queue_, with multiple threads.
   ACE_MT (ACE_Log_Msg_Manager::get_lock ());
-
-  ACE_Log_Msg_Manager::message_queue_->dump ();
 
   ACE_MT (ACE_Log_Msg_Manager::get_lock ()->dump ());
   // Synchronize output operations.
@@ -1809,10 +1761,6 @@ ACE_Log_Msg::getpid (void) const
   return ACE_Log_Msg::pid_;
 }
 
-ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
-{
-}
-
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
                                    const char *,
@@ -1833,65 +1781,27 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
 
 // ****************************************************************
 
-ACE_Log_Msg_Attributes::ACE_Log_Msg_Attributes (
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-     ACE_SEH_EXCEPT_HANDLER selector
-     , ACE_SEH_EXCEPT_HANDLER handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                          )
-  : ostream_ (0)
-  , priority_mask_ (0)
-  , tracing_enabled_ (0)
-  , restart_ (1)
-  , trace_depth_ (0)
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  , seh_except_selector_ (selector)
-  , seh_except_handler_ (handler)
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-{
-  if (ACE_Log_Msg::exists ())
-    {
-      ACE_Log_Msg *inherit_log = ACE_LOG_MSG;
-      this->ostream_ = inherit_log->msg_ostream ();
-      this->priority_mask_ = inherit_log->priority_mask ();
-      this->tracing_enabled_ = inherit_log->tracing_enabled ();
-      this->restart_ = inherit_log->restart ();
-      this->trace_depth_ = inherit_log->trace_depth ();
-    }
-}
-
-ACE_Log_Msg_Attributes::~ACE_Log_Msg_Attributes (void)
-{
-}
-
 void
-ACE_Log_Msg_Attributes::init_hook (void *&attr
+ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                                   , ACE_SEH_EXCEPT_HANDLER selector
-                                   , ACE_SEH_EXCEPT_HANDLER handler
+                        , ACE_SEH_EXCEPT_HANDLER selector
+                        , ACE_SEH_EXCEPT_HANDLER handler
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                                    )
 {
-  ACE_Log_Msg_Attributes *attributes;
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_NEW (attributes, ACE_Log_Msg_Attributes (selector, handler));
-# else
-  ACE_NEW (attributes, ACE_Log_Msg_Attributes);
+  attributes.seh_except_selector_ = selector;
+  attributes.handler_ = handler;
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-  attr = attributes;
-}
-
-void
-ACE_Log_Msg_Attributes::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
-                                      void *&attr)
-{
-  void *p_attr = attr;
-  ACE_Log_Msg_Attributes *attributes =
-    ACE_static_cast (ACE_Log_Msg_Attributes*, p_attr);
-
-  attributes->inherit_log_msg (thr_desc);
-  delete attributes;
-  attr = 0;
+  if (ACE_Log_Msg::exists ())
+    {
+      ACE_Log_Msg *inherit_log = ACE_LOG_MSG;
+      attributes.ostream_ = inherit_log->msg_ostream ();
+      attributes.priority_mask_ = inherit_log->priority_mask ();
+      attributes.tracing_enabled_ = inherit_log->tracing_enabled ();
+      attributes.restart_ = inherit_log->restart ();
+      attributes.trace_depth_ = inherit_log->trace_depth ();
+    }
 }
 
 #if defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  || \
@@ -1903,7 +1813,8 @@ static int ACE_PSOS_unique_file_id = 0;
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG) || ACE_HAS_MINIMAL_ACE_OS */
 
 void
-ACE_Log_Msg_Attributes::inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc)
+ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
+                           ACE_OS_Log_Msg_Attributes &attributes)
 {
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  && \
     !defined (ACE_HAS_MINIMAL_ACE_OS)
@@ -1916,21 +1827,21 @@ ACE_Log_Msg_Attributes::inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc)
   // been allocated off of the stack of the original thread, in which
   // case all hell would break loose...
 
-  if (this->ostream_)
+  if (attributes.ostream_)
     {
-      new_log->msg_ostream (this->ostream_);
-      new_log->priority_mask (this->priority_mask_);
+      new_log->msg_ostream (attributes.ostream_);
+      new_log->priority_mask (attributes.priority_mask_);
 
-      if (this->tracing_enabled_)
+      if (attributes.tracing_enabled_)
         new_log->start_tracing ();
 
-      new_log->restart (this->restart_);
-      new_log->trace_depth (this->trace_depth_);
+      new_log->restart (attributes.restart_);
+      new_log->trace_depth (attributes.trace_depth_);
     }
 
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  new_log->seh_except_selector (this->seh_except_selector_);
-  new_log->seh_except_handler (this->seh_except_handler_);
+  new_log->seh_except_selector (attributes.seh_except_selector_);
+  new_log->seh_except_handler (attributes.seh_except_handler_);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   // @@ Now the TSS Log_Msg has been created, cache my thread
@@ -1939,8 +1850,8 @@ ACE_Log_Msg_Attributes::inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc)
   if (thr_desc != 0)
     // This downcast is safe.  We do it to avoid having to #include
     // ace/Thread_Manager.h.
-    ACE_LOG_MSG->thr_desc (ACE_static_cast (ACE_Thread_Descriptor *,
-                                            thr_desc));
+    new_log->thr_desc (ACE_static_cast (ACE_Thread_Descriptor *,
+                                        thr_desc));
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
 

@@ -5,13 +5,13 @@
 // addresses each time it's used.  The actual backing store used by
 // <ACE_Malloc> is located in a memory-mapped file.
 
+#include "test_position_independent_malloc.h"
 #include "ace/PI_Malloc.h"
 #include "ace/Based_Pointer_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
-#include "test_position_independent_malloc.h"
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 

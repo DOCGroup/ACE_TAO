@@ -23,6 +23,7 @@
 #include "ace/streams.h"
 #include "ace/FILE_Connector.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg_Callback.h"
 #include "test_config.h"
 
 ACE_RCSID(tests, Log_Msg_Test, "$Id$")

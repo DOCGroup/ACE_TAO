@@ -98,12 +98,13 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -121,6 +122,8 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
  Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
  CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h \
@@ -133,6 +136,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -147,26 +151,39 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h \
- SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
- Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Protocol_Manager.o .obj/Protocol_Manager.so .shobj/Protocol_Manager.o .shobj/Protocol_Manager.so: Protocol_Manager.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -184,6 +201,8 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  Options.h global.h Protocol_Manager.h Search_Struct.h \
  Protocol_Record.h Drwho_Node.h
 
@@ -194,6 +213,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -217,6 +237,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -231,23 +252,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- Rwho_DB_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h Rwho_DB_Manager.h \
  $(ACE_ROOT)/ace/Dirent.h \
  $(ACE_ROOT)/ace/Dirent.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  Protocol_Record.h Drwho_Node.h
 
 .obj/Multicast_Manager.o .obj/Multicast_Manager.so .shobj/Multicast_Manager.o .shobj/Multicast_Manager.so: Multicast_Manager.cpp Multicast_Manager.h \
- global.h $(ACE_ROOT)/ace/OS.h \
+ global.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -265,12 +290,24 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Protocol_Record.o .obj/Protocol_Record.so .shobj/Protocol_Record.o .shobj/Protocol_Record.so: Protocol_Record.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -279,6 +316,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -298,7 +336,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -307,6 +347,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -325,12 +366,24 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  Multicast_Manager.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/File_Manager.o .obj/File_Manager.so .shobj/File_Manager.o .shobj/File_Manager.so: File_Manager.cpp File_Manager.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -339,6 +392,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -357,17 +411,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -392,6 +456,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -406,12 +471,14 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Hash_Table.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Binary_Search.o .obj/Binary_Search.so .shobj/Binary_Search.o .shobj/Binary_Search.so: Binary_Search.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -420,6 +487,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -434,12 +502,14 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Binary_Search.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Binary_Search.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Search_Struct.o .obj/Search_Struct.so .shobj/Search_Struct.o .shobj/Search_Struct.so: Search_Struct.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -448,6 +518,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -462,12 +533,14 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Search_Struct.h \
- Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Single_Lookup.o .obj/Single_Lookup.so .shobj/Single_Lookup.o .shobj/Single_Lookup.so: Single_Lookup.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -476,6 +549,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -490,14 +564,26 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Single_Lookup.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SML_Server.o .obj/SML_Server.so .shobj/SML_Server.o .shobj/SML_Server.so: SML_Server.cpp SML_Server.h SM_Server.h PM_Server.h \
  Protocol_Manager.h \
@@ -507,6 +593,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -521,9 +608,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- global.h Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
- Comm_Manager.h Select_Manager.h
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h global.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ CM_Server.h Comm_Manager.h Select_Manager.h
 
 .obj/SM_Server.o .obj/SM_Server.so .shobj/SM_Server.o .shobj/SM_Server.so: SM_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -532,6 +619,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -546,14 +634,16 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMS_All.h \
- PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMS_Flo.h PMS_Usr.h PMS_Ruser.h SM_Server.h CM_Server.h \
- Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMS_All.h PM_Server.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMS_Flo.h PMS_Usr.h PMS_Ruser.h \
+ SM_Server.h CM_Server.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/PMS_Usr.o .obj/PMS_Usr.so .shobj/PMS_Usr.o .shobj/PMS_Usr.so: PMS_Usr.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -562,6 +652,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -576,15 +667,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Server.h \
- Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMS_Usr.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Server.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_Usr.h PM_Server.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SL_Server.o .obj/SL_Server.so .shobj/SL_Server.o .shobj/SL_Server.so: SL_Server.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -593,6 +696,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -607,9 +711,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Server.h \
- Single_Lookup.h Options.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Server.h Single_Lookup.h Options.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h
 
 .obj/PMS_Flo.o .obj/PMS_Flo.so .shobj/PMS_Flo.o .shobj/PMS_Flo.so: PMS_Flo.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -618,6 +722,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -632,15 +737,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i BS_Server.h \
- Binary_Search.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMS_Flo.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ BS_Server.h Binary_Search.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_Flo.h PM_Server.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/PM_Server.o .obj/PM_Server.so .shobj/PM_Server.o .shobj/PM_Server.so: PM_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -649,6 +766,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -671,9 +789,21 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  Protocol_Record.h Drwho_Node.h PM_Server.h Protocol_Manager.h \
  Search_Struct.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i
 
 .obj/HT_Server.o .obj/HT_Server.so .shobj/HT_Server.o .shobj/HT_Server.so: HT_Server.cpp HT_Server.h Hash_Table.h Search_Struct.h \
@@ -684,6 +814,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -700,6 +831,16 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i
 
 .obj/BS_Server.o .obj/BS_Server.so .shobj/BS_Server.o .shobj/BS_Server.so: BS_Server.cpp BS_Server.h Binary_Search.h Search_Struct.h \
@@ -710,6 +851,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -733,6 +875,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -747,15 +890,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i HT_Server.h \
- Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_All.h \
- PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_All.h PM_Server.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/PMS_Ruser.o .obj/PMS_Ruser.so .shobj/PMS_Ruser.o .shobj/PMS_Ruser.so: PMS_Ruser.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -764,6 +919,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -778,15 +934,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i HT_Server.h \
- Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMS_Ruser.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_Ruser.h PM_Server.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SMR_Server.o .obj/SMR_Server.so .shobj/SMR_Server.o .shobj/SMR_Server.so: SMR_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -795,6 +963,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -809,14 +978,16 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h \
- SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
- Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/CM_Client.o .obj/CM_Client.so .shobj/CM_Client.o .shobj/CM_Client.so: CM_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -825,6 +996,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -844,7 +1016,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SM_Client.o .obj/SM_Client.so .shobj/SM_Client.o .shobj/SM_Client.so: SM_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -853,6 +1027,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -867,14 +1042,16 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h \
- PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h SM_Client.h CM_Client.h \
- Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
+ SM_Client.h CM_Client.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SMR_Client.o .obj/SMR_Client.so .shobj/SMR_Client.o .shobj/SMR_Client.so: SMR_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -883,6 +1060,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -897,14 +1075,16 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h \
- PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h \
- CM_Client.h Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
+ SMR_Client.h SM_Client.h CM_Client.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/PM_Client.o .obj/PM_Client.so .shobj/PM_Client.o .shobj/PM_Client.so: PM_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -913,6 +1093,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -927,14 +1108,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PM_Server.h \
- Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PM_Client.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PM_Client.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/HT_Client.o .obj/HT_Client.so .shobj/HT_Client.o .shobj/HT_Client.so: HT_Client.cpp HT_Client.h Hash_Table.h Search_Struct.h \
  Protocol_Record.h Drwho_Node.h global.h \
@@ -944,6 +1138,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -960,6 +1155,16 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i
 
 .obj/BS_Client.o .obj/BS_Client.so .shobj/BS_Client.o .shobj/BS_Client.so: BS_Client.cpp Options.h global.h \
@@ -969,6 +1174,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -983,21 +1189,32 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i File_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ File_Manager.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1024,6 +1241,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1038,15 +1256,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
  Drwho_Node.h PMC_All.h PM_Client.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/PMC_Flo.o .obj/PMC_Flo.so .shobj/PMC_Flo.o .shobj/PMC_Flo.so: PMC_Flo.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1055,6 +1285,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1069,15 +1300,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i BS_Client.h \
- Binary_Search.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMC_Flo.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ BS_Client.h Binary_Search.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMC_Flo.h PM_Client.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/PMC_Usr.o .obj/PMC_Usr.so .shobj/PMC_Usr.o .shobj/PMC_Usr.so: PMC_Usr.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1086,6 +1329,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1100,15 +1344,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Client.h \
- Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMC_Usr.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Client.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMC_Usr.h PM_Client.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SL_Client.o .obj/SL_Client.so .shobj/SL_Client.o .shobj/SL_Client.so: SL_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1117,6 +1373,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1131,8 +1388,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Client.h \
- Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Client.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h
 
 .obj/PMC_Ruser.o .obj/PMC_Ruser.so .shobj/PMC_Ruser.o .shobj/PMC_Ruser.so: PMC_Ruser.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1141,6 +1399,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1155,15 +1414,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
  Drwho_Node.h PMC_Ruser.h PM_Client.h Protocol_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SMR_Client.o .obj/SMR_Client.so .shobj/SMR_Client.o .shobj/SMR_Client.so: SMR_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1172,6 +1443,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1186,14 +1458,16 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h \
- PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h \
- CM_Client.h Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
+ SMR_Client.h SM_Client.h CM_Client.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SML_Client.o .obj/SML_Client.so .shobj/SML_Client.o .shobj/SML_Client.so: SML_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1202,6 +1476,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1216,10 +1491,11 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SML_Client.h \
- SM_Client.h PM_Client.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Client.h Comm_Manager.h \
- Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h
+ $(ACE_ROOT)/ace/OS.i \
+ SML_Client.h SM_Client.h PM_Client.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Client.h \
+ Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h PM_Server.h \
+ CM_Server.h
 
 .obj/CM_Server.o .obj/CM_Server.so .shobj/CM_Server.o .shobj/CM_Server.so: CM_Server.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1228,6 +1504,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1242,24 +1519,37 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h \
- CM_Server.h Comm_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h CM_Server.h Comm_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1277,6 +1567,8 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
  Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
  CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h \
@@ -1289,6 +1581,7 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1303,15 +1596,27 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h \
- SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
- Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
+ $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
+ $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.h \
+ $(ACE_ROOT)/ace/ACE_Lib_Find.i \
+ $(ACE_ROOT)/ace/ACE_Init.h \
+ $(ACE_ROOT)/ace/ACE_Init.i \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
+ $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

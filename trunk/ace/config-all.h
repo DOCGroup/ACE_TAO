@@ -519,13 +519,15 @@ typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 class ACE_OS_Thread_Descriptor;
-typedef void (*ACE_INIT_LOG_MSG_HOOK) (void*&
+class ACE_OS_Log_Msg_Attributes;
+typedef void (*ACE_INIT_LOG_MSG_HOOK) (ACE_OS_Log_Msg_Attributes &attr
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
                                        , ACE_SEH_EXCEPT_HANDLER selector
                                        , ACE_SEH_EXCEPT_HANDLER handler
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                                        );
-typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*, void*&);
+typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*,
+                                          ACE_OS_Log_Msg_Attributes &);
 
 typedef void (*ACE_CLOSE_LOG_MSG_HOOK) (void);
 
