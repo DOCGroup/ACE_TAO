@@ -21,6 +21,12 @@ Thu Sep 03 16:43:34 1998  David L. Levine  <levine@cs.wustl.edu>
         * examples/Threads/tss2.cpp: added explicit ACE_Guard <ACE_Token>
           instantiation.
 
+        * tests/Dynamic_Priority_Test.cpp (main): changed "not supported"
+          to "not available" in printout that indicates that the
+          test will be run in time-sharing class, instead of
+          a real-time class.  The test can still run in time-sharing
+          class.  Thanks to Ossama for reporting this.
+
 Thu Sep 03 16:14:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Synch.i (ACE_Process_Mutex::remove): Reset this->lock_ to 0
