@@ -266,6 +266,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_RegQueryValueEx                 ::RegQueryValueExW
 #define ACE_TEXT_RegSetValueEx                   ::RegSetValueExW
 #define ACE_TEXT_ReportEvent                     ::ReportEventW
+#define ACE_TEXT_SearchPath                      ::SearchPathW
 #define ACE_TEXT_StartService                    ::StartServiceW
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherW
 
@@ -311,6 +312,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_RegQueryValueEx                 ::RegQueryValueExA
 #define ACE_TEXT_RegSetValueEx                   ::RegSetValueExA
 #define ACE_TEXT_ReportEvent                     ::ReportEventA
+#define ACE_TEXT_SearchPath                      ::SearchPathA
 #define ACE_TEXT_StartService                    ::StartServiceA
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherA
 #endif /* ACE_USES_WCHAR */
