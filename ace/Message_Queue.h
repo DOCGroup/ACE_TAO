@@ -143,7 +143,7 @@ public:
    * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
    * call and WAS_ACTIVE if queue was active before the call.
    */
-  virtual int deactivate (void) = 0;
+  virtual int deactivate (int pulse = 0) = 0;
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
