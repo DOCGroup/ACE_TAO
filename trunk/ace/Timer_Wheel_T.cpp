@@ -533,7 +533,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE& type, int skip_c
                   ACE_Timer_Node_T<TYPE>* tmp = n;
                   n = n->get_next ();
 
-                  this->cancel_i (tmp, skip_close);
+                  this->cancel_i (tmp);
                 }
               else
                 {
@@ -618,7 +618,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
       if (act != 0)
         *act = n->get_act ();
 
-      this->cancel_i (n, skip_close);
+      this->cancel_i (n);
 
       if (recalc)
         this->recalc_earliest (last);
@@ -630,7 +630,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
 
 /// Shared subset of the two cancel() methods.
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
-ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel_i (ACE_Timer_Node_T<TYPE>* n, int skip_close)
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel_i (ACE_Timer_Node_T<TYPE>* n)
 {
   this->unlink (n);
   this->free_node (n);
