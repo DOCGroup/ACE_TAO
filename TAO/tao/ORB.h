@@ -184,13 +184,10 @@ class TAO_ServantBase;
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
-#if defined (ghs) && defined (CHORUS)
-  // This is non-compliant, but a nasty but with Green Hills C++68000 1.8.8
-  // forces us into it.  TAO/tests/POA/RootPOA/RootPOA reveals the problem.
-  typedef unsigned long CORBA_Boolean;
-#else  /* ! (ghs && CHORUS) */
-  typedef u_char CORBA_Boolean;
-#endif /* ! (ghs && CHORUS) */
+// This and the other CORBA IDL types below are
+// typedef'd to the corresponding CDR types
+// already defined in ACE.
+typedef CDR::Boolean CORBA_Boolean;
 
   typedef struct TAO_Leader_Follower_Info_Struct
     {
@@ -227,21 +224,24 @@ public:
   typedef Boolean &Boolean_out;
   // Out type for boolean.
 
-  typedef u_char Octet;
+// This and the other CORBA IDL types below are
+// typedef'd to the corresponding CDR types
+// already defined in ACE.
+  typedef CDR::Octet Octet;
   typedef Octet  &Octet_out;
   // Out type for octet.
 
-  typedef ACE_INT16 Short;
+  typedef CDR::Short Short;
   typedef Short &Short_out;
   // Out type for Short.
 
-  typedef ACE_UINT16 UShort;
+  typedef CDR::UShort UShort;
   typedef UShort &UShort_out;
   // Out type for UShort.
 
   // = CORBA "Long" (and its unsigned cousin) are 32 bits.
-  typedef ACE_INT32 Long;
-  typedef ACE_UINT32 ULong;
+  typedef CDR::Long Long;
+  typedef CDR::ULong ULong;
 
   // 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64
   // bit integers are "LongLong".
@@ -253,34 +253,8 @@ public:
 
   // = The following are IDL extensions, not yet standard.
 
-  typedef ACE_UINT64 ULongLong;
-# if defined (_MSC_VER) && _MSC_VER >= 900
-    typedef __int64 LongLong;
-# elif ACE_SIZEOF_LONG == 8
-    typedef long LongLong;
-# elif ACE_SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
-#   if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T)
-      // sun #defines u_longlong_t, maybe other platforms do also.
-      // Use it, at least with g++, so that its -pedantic doesn't
-      // complain about no ANSI C++ long long.
-      typedef longlong_t LongLong;
-#   else
-      // LynxOS 2.5.0 and Linux don't have u_longlong_t.
-      typedef long long LongLong;
-#   endif /* sun */
-# else  /* no native 64 bit integer type */
-
-    // If "long long" isn't native, programs can't use these data
-    // types in normal arithmetic expressions.  If any particular
-    // application can cope with the loss of range, it can define
-    // conversion operators itself.
-#   define NONNATIVE_LONGLONG
-#   if defined (ACE_BIG_ENDIAN)
-      struct LongLong { Long h, l; };
-#   else
-      struct LongLong { Long l, h; };
-#   endif /* ! ACE_BIG_ENDIAN */
-# endif /* no native 64 bit integer type */
+  typedef CDR::LongLong LongLong;
+  typedef CDR::ULongLong ULongLong;
 
   typedef LongLong &LongLong_out;
   // Out type for long long.
@@ -288,38 +262,10 @@ public:
   typedef ULongLong &ULongLong_out;
   // Out type for unsigned long long.
 
-# if ACE_SIZEOF_FLOAT == 4
-    typedef float Float;
-# else  /* ACE_SIZEOF_FLOAT != 4 */
-#   define TAO_NONNATIVE_FLOAT
-    struct Float
-    {
-#     if ACE_SIZEOF_INT == 4
-        // Use u_int to get word alignment.
-        u_int f;
-#     else  /* ACE_SIZEOF_INT != 4 */
-        // Applications will probably have trouble with this.
-        char f[4];
-#     endif /* ACE_SIZEOF_INT != 4 */
-    };
-# endif /* ACE_SIZEOF_FLOAT != 4 */
+  typedef CDR::Float Float;
   typedef Float &Float_out; // out type for float
 
-# if ACE_SIZEOF_DOUBLE == 8
-    typedef double Double;
-# else  /* ACE_SIZEOF_DOUBLE != 8 */
-#   define TAO_NONNATIVE_DOUBLE
-    struct Double
-    {
-#     if ACE_SIZEOF_LONG == 8
-        // Use u_long to get word alignment.
-        u_long f;
-#     else  /* ACE_SIZEOF_INT != 8 */
-        // Applications will probably have trouble with this.
-        char f[8];
-#     endif /* ACE_SIZEOF_INT != 8 */
-    };
-# endif /* ACE_SIZEOF_DOUBLE != 8 */
+  typedef CDR::Double Double;
   typedef Double &Double_out;
   // Out type for double.
 
@@ -328,23 +274,11 @@ public:
   // exponent (compared to "double").  This is an IDL extension, not
   // yet standard.
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
-  typedef long double LongDouble;
-#  else
-#    define NONNATIVE_LONGDOUBLE
-  struct TAO_Export LongDouble
-  {
-    char ld[16];
-    int operator== (LongDouble &rhs);
-    int operator!= (LongDouble &rhs);
-    // @@ also need other comparison operators.
-  };
-#  endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
-
+  typedef CDR::LongDouble LongDouble;
   typedef LongDouble &LongDouble_out;
   // Out type for long doubles.
 
-  typedef char Char;
+  typedef CDR::Char Char;
   typedef Char &Char_out;
   // Out type for char.
 
@@ -463,7 +397,7 @@ public:
   // WChar is an IDL extension, not yet standard.  We use 32 bits
   // because that's what many platforms use for their native wchar_t.
 
-  typedef ACE_OS::WChar WChar;
+  typedef CDR::WChar WChar;
   typedef WChar *WString;
 
   typedef WChar &WChar_out;

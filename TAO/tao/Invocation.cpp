@@ -61,7 +61,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (STUB_Object *data,
     my_request_id_ (0),
     out_stream_ (buffer, sizeof buffer, /* CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
-                 TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator ()),
     orb_core_ (orb_core)

@@ -165,41 +165,15 @@ public:
   // = Special types.
 
   // These are needed for insertion and extraction of booleans,
-  // octets, chars, and bounded strings.
+  // octets, chars, and bounded strings. CORBA spec requires 
+  // that they be here, we just typedef to the already-defined
+  // ACE_OutputCDR types.
 
-  struct TAO_Export from_boolean
-  {
-    from_boolean (CORBA::Boolean b);
-    CORBA::Boolean val_;
-  };
-
-  struct TAO_Export from_octet
-  {
-    from_octet (CORBA::Octet o);
-    CORBA::Octet val_;
-  };
-
-  struct TAO_Export from_char
-  {
-    from_char (CORBA::Char c);
-    CORBA::Char val_;
-  };
-
-  struct TAO_Export from_wchar
-  {
-    from_wchar (CORBA::WChar wc);
-    CORBA::WChar val_;
-  };
-
-  struct TAO_Export from_string
-  {
-    from_string (char* s,
-                 CORBA::ULong b,
-                 CORBA::Boolean nocopy = 0);
-    char *val_;
-    CORBA::ULong bound_;
-    CORBA::Boolean nocopy_;
-  };
+  typedef ACE_OutputCDR::from_boolean from_boolean;  
+  typedef ACE_OutputCDR::from_octet from_octet;
+  typedef ACE_OutputCDR::from_char from_char;
+  typedef ACE_OutputCDR::from_wchar from_wchar;
+  typedef ACE_OutputCDR::from_string from_string;
 
   void operator<<= (from_boolean);
   // insert a boolean
@@ -219,39 +193,15 @@ public:
   // = Special types.
 
   // These extract octets, chars, booleans, bounded strings, and
-  // object references
+  // object references. All these are defined in ACE_InputCDR.
 
-  struct TAO_Export to_boolean
-  {
-    to_boolean (CORBA::Boolean &b);
-    CORBA::Boolean &ref_;
-  };
+  typedef ACE_InputCDR::to_boolean to_boolean;
+  typedef ACE_InputCDR::to_char to_char;
+  typedef ACE_InputCDR::to_wchar to_wchar;
+  typedef ACE_InputCDR::to_octet to_octet;
+  typedef ACE_InputCDR::to_string to_string;
 
-  struct TAO_Export to_char
-  {
-    to_char (CORBA::Char &c);
-    CORBA::Char &ref_;
-  };
-
-  struct TAO_Export to_wchar
-  {
-    to_wchar (CORBA::WChar &wc);
-    CORBA::WChar &ref_;
-  };
-
-  struct TAO_Export to_octet
-  {
-    to_octet (CORBA::Octet &o);
-    CORBA::Octet &ref_;
-  };
-
-  struct TAO_Export to_string
-  {
-    to_string (char *&s, CORBA::ULong b);
-    char *&val_;
-    CORBA::ULong bound_;
-  };
-
+  // This one's not in ACE.
   struct TAO_Export to_object
   {
     to_object (CORBA::Object_ptr &obj);

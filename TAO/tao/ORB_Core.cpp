@@ -118,7 +118,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   ACE_CString host;
   CORBA::UShort port = defport;
   CORBA::Boolean use_ior = 1;
-  int cdr_tradeoff = TAO_DEFAULT_CDR_MEMCPY_TRADEOFF;
+  int cdr_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF;
 
   int iiop_lite = 0;
 

@@ -533,8 +533,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // allocator. It is better to use a message block than a on stack
   // buffer because we cannot minimize memory copies in that case.
   TAO_InputCDR input (this->orb_core_->create_input_cdr_data_block (CDR::DEFAULT_BUFSIZE),
-                      TAO_ENCAP_BYTE_ORDER,
-                      TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+                      TAO_ENCAP_BYTE_ORDER);
 
   char repbuf[CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
@@ -542,7 +541,6 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 #endif /* ACE_HAS_PURIFY */
   TAO_OutputCDR output (repbuf, sizeof(repbuf),
                         TAO_ENCAP_BYTE_ORDER,
-                        TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
                         this->orb_core_->output_cdr_buffer_allocator (),
                         this->orb_core_->output_cdr_buffer_allocator ());
 
