@@ -481,3 +481,15 @@ Video_Control_Fast_Backward_State::close (void)
 {
   return;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Video_Control_Play_State, ACE_Thread_Mutex>;
+template class ACE_Singleton<Video_Control_Fast_Forward_State, ACE_Thread_Mutex>;
+template class ACE_Singleton<Video_Control_Fast_Backward_State, ACE_Thread_Mutex>;
+template class ACE_Singleton<Video_Control_Waiting_State, ACE_Thread_Mutex>;
+#elif defined ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Video_Control_Fast_Backward_State, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Video_Control_Play_State, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Video_Control_Fast_Forward_State, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Video_Control_Waiting_State, ACE_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
