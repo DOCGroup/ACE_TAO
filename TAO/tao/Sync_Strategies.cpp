@@ -146,6 +146,7 @@ TAO_None_Sync_Strategy::dequeue_head (TAO_Transport_Buffering_Queue &buffering_q
 
   // @@ What to do here on failures?
   ACE_ASSERT (result != -1);
+  ACE_UNUSED_ARG (result);
 
   // Release the memory.
   message_block->release ();
