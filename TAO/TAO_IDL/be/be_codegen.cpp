@@ -427,14 +427,6 @@ TAO_CodeGen::start_server_header (const char *fname)
                                    server_hdr);
     }
 
-  // Include the Messaging files if AMI is enabled.
-  if (be_global->ami_call_back () == I_TRUE)
-    {
-      // Include Messaging skeleton file.
-      this->gen_standard_include (this->server_header_,
-                                  "tao/Messaging/MessagingS.h");
-    }
-
   // The server header should include the client header.
   *this->server_header_ << "\n#include \""
                         << be_global->be_get_client_hdr_fname (1)
@@ -451,17 +443,29 @@ TAO_CodeGen::start_server_header (const char *fname)
   // thing, because we need the definitions there, it also
   // registers the POA factory with the Service_Configurator, so
   // the ORB can automatically find it.
-  this->gen_standard_include (this->server_header_,
-                              "tao/Collocation_Proxy_Broker.h");
-  this->gen_standard_include (this->server_header_,
-                              "tao/PortableServer/PortableServer.h");
-  this->gen_standard_include (this->server_header_,
-                              "tao/PortableServer/Servant_Base.h");
-
-  if (be_global->gen_amh_classes ())
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.non_local_iface_seen_))
     {
+      // Include the Messaging files if AMI is enabled.
+      if (be_global->ami_call_back () == I_TRUE)
+        {
+          // Include Messaging skeleton file.
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Messaging/MessagingS.h");
+        }
+
       this->gen_standard_include (this->server_header_,
-                                  "tao/Messaging/AMH_Response_Handler.h");
+                                  "tao/Collocation_Proxy_Broker.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/PortableServer.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/Servant_Base.h");
+
+      if (be_global->gen_amh_classes ())
+        {
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Messaging/AMH_Response_Handler.h");
+        }
     }
 
   *this->server_header_ << be_nl << be_nl
