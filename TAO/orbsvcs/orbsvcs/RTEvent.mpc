@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
+project(RTEvent) : orbsvcslib, core, svc_utils, messaging {
   sharedname   = TAO_RTEvent
   idlflags    += -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h
   dynamicflags = TAO_RTEVENT_BUILD_DLL

@@ -26,7 +26,7 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
   }
 }
 
-project(FT_ClientORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, portablegroup, minimum_corba {
+project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
   sharedname   = TAO_FT_ClientORB
   dynamicflags = TAO_FT_CLIENTORB_BUILD_DLL
   tagchecks   += FT_ClientORB
@@ -50,7 +50,7 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, porta
   }
 }
 
-project(FT_ServerORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, portablegroup, minimum_corba {
+project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
   sharedname   = TAO_FT_ServerORB
   dynamicflags = TAO_FT_SERVERORB_BUILD_DLL
   tagchecks   += FT_ServerORB
