@@ -1,5 +1,10 @@
 Sun Oct 27 09:04:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * orbsvcs/orbsvcs/Notify/Event_Forwarder.idl:
+          Fixed fuzz build errors.
+
+Sun Oct 27 09:04:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
         * orbsvcs/orbsvcs/Notify/Property.h:
         * orbsvcs/orbsvcs/Notify/POA_Helper.h:
@@ -17,7 +22,7 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 
         Added Files:
         * orbsvcs/orbsvcs/NotifyExt.idl:
-	* orbsvcs/orbsvcs/Notify_Forwarder.idl:	
+	* orbsvcs/orbsvcs/Notify_Forwarder.idl:
         * orbsvcs/orbsvcs/Notify/Admin.cpp :
         * orbsvcs/orbsvcs/Notify/Admin.h :
         * orbsvcs/orbsvcs/Notify/Admin.inl:
