@@ -1,3 +1,8 @@
+Fri Jan  9 19:07:38 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.cpp (rbegin): Added more static cast to
+	  eliminate warning messages.
+
 Fri Jan  9 11:35:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/server_test.cpp:
@@ -5,7 +10,7 @@ Fri Jan  9 11:35:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  <9107@MN3.LAWSON.lawson.com> for reporting this.
 
 	* ace/Log_Msg.cpp (log): Changed abort_prog == 0 to abort_prog so
- 	  that STDERR would be printed correctly.  
+ 	  that STDERR would be printed correctly.
 
 	* ACE-categories: Added all the ACE files into the ACE-categories
  	  listing.  Thanks to Andres Kruse for motivating this.
