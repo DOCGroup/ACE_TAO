@@ -1200,7 +1200,17 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->protocol_factories_ = trf->get_protocol_factories ();
 
   // Now that we have a complete list of available protocols and their
-  // related factory objects, initialize the registries!
+  // related factory objects, set default policies and initialize the
+  // registries! 
+
+  // Set ORB-level policy defaults.
+  if (this->set_default_policies () != 0)
+    ACE_THROW_RETURN (CORBA::INITIALIZE (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      -1);
 
   // Initialize the connector registry and create a connector for each
   // configured protocol.
@@ -1217,15 +1227,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
     this->connector_registry ()->preconnect (
             this,
             this->orb_params ()->preconnects ());
-
-  // Set ORB-level policy defaults.
-  if (this->set_default_policies () != 0)
-    ACE_THROW_RETURN (CORBA::INITIALIZE (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      -1);
 
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
@@ -1908,10 +1909,12 @@ int
 TAO_ORB_Core::set_default_policies (void)
 {
 #if (TAO_HAS_RT_CORBA == 1)
+  // Set RTCORBA policy defaults.
+  // Set RTCORBA::ServerProtocolPolicy and
+  // RTCORBA::ClientProtocolPolicy defaults to include all protocols
+  // that were loaded into this ORB.
 
-  // Set RTCORBA::ServerProtocolPolicy default to include all
-  // protocols that were loaded.
-
+  // First, create a protocol list.
   TAO_ProtocolFactorySet *pfs = this->protocol_factories ();
 
   RTCORBA::ProtocolList protocols;
@@ -1971,11 +1974,20 @@ TAO_ORB_Core::set_default_policies (void)
         }
     }
 
+  // Set ServerProtocolPolicy.
   TAO_ServerProtocolPolicy *server_protocol_policy = 0;
   ACE_NEW_RETURN (server_protocol_policy,
                   TAO_ServerProtocolPolicy (protocols),
                   -1);
   this->default_policies_->server_protocol (server_protocol_policy);
+
+  // Set ClientProtocolPolicy.
+  TAO_ClientProtocolPolicy *client_protocol_policy = 0;
+  ACE_NEW_RETURN (client_protocol_policy,
+                  TAO_ClientProtocolPolicy (protocols),
+                  -1);
+  this->default_policies_->client_protocol (client_protocol_policy);
+  
 #endif /* TAO_HAS_RT_CORBA == 1 */
   return 0;
 }

@@ -137,7 +137,7 @@ public:
   // objects - no copying.
 
   void server_protocol (TAO_ServerProtocolPolicy *server_protocol);
-
+  void client_protocol (TAO_ClientProtocolPolicy *client_protocol);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

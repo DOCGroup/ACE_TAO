@@ -66,7 +66,11 @@ class TAO_Export TAO_IIOP_Connect_Creation_Strategy : public ACE_Creation_Strate
 public:
   TAO_IIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
                                       TAO_ORB_Core* orb_core = 0,
+                                      void *arg = 0,
                                       CORBA::Boolean flag = 0);
+  // Constructor. <arg> parameter is used to pass any special
+  // state/info to the service handler upon creation.  Currently used
+  // by IIOP and UIOP to pass protocol configuration properties.
 
   virtual int make_svc_handler (TAO_IIOP_Client_Connection_Handler *&sh);
   // Makes TAO_IIOP_Client_Connection_Handlers
@@ -75,6 +79,9 @@ private:
   TAO_ORB_Core* orb_core_;
   // The ORB
   
+  void *arg_;
+  // Some info/state to be passed to the service handler we create.
+
   CORBA::Boolean lite_flag_;
   // Are we using GIOP?
 };
@@ -128,6 +135,11 @@ protected:
   // strategy used for purging unused connections from the connection
   // cache.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
+
+protected:
+  int init_tcp_properties (void);
+  // Obtain tcp properties that must be used by this connector, i.e.,
+  // initialize <tcp_properties_>.
 
 public:
 
@@ -218,7 +230,9 @@ private:
   // from the connection cache.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
-
+  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
+  // TCP configuration properties to be used for all
+  // connections established by this connector.
 };
 
 #include "ace/post.h"

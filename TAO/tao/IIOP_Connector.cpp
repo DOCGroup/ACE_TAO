@@ -8,6 +8,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
+#include "tao/RT_Policy_i.h"
 
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
@@ -314,9 +315,11 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 TAO_IIOP_Connect_Creation_Strategy::
   TAO_IIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
                                       TAO_ORB_Core *orb_core,
+                                      void *arg,
                                       CORBA::Boolean flag)
     :  ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler> (t),
        orb_core_ (orb_core),
+       arg_ (arg),
        lite_flag_ (flag)
 {
 }
@@ -330,7 +333,8 @@ TAO_IIOP_Connect_Creation_Strategy::make_svc_handler
                     TAO_IIOP_Client_Connection_Handler
                     (this->orb_core_->thr_mgr (),
                      this->orb_core_,
-                     this->lite_flag_),
+                     this->lite_flag_,
+                     this->arg_),
                     -1);
   return 0;
 }
@@ -352,8 +356,7 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
     base_connector_ (),
     lite_flag_ (flag)
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-    ,
-    cached_connect_strategy_ (0),
+    , cached_connect_strategy_ (0),
     caching_strategy_ (0)
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 {
@@ -369,12 +372,16 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
+  if (this->init_tcp_properties () != 0)
+    return -1;
+
   TAO_IIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_Connect_Creation_Strategy
                   (this->orb_core_->thr_mgr (),
                    this->orb_core_,
+                   &(this->tcp_properties_),
                    this->lite_flag_),
                   -1);
 
@@ -754,4 +761,88 @@ char
 TAO_IIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_IIOP_Profile::object_key_delimiter_;
+}
+
+int
+TAO_IIOP_Connector::init_tcp_properties (void)
+{
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Connector protocol properties are obtained from ORB-level 
+  // RTCORBA::ClientProtocolProperties policy override.
+  // If the override doesn't exist or doesn't contain the
+  // properties, we use ORB default.
+  //
+  // Currently, we do not use Object-level and Current-level policy
+  // overrides for protocol configuration because connection
+  // lookup and caching are not done based on protocol
+  // properties.
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  // Check ORB-level override for tcp properties.
+  TAO_ClientProtocolPolicy *client_protocols =
+    this->orb_core_->policy_manager ()->client_protocol ();
+  CORBA::Object_var auto_release = client_protocols;
+  RTCORBA::TCPProtocolProperties_var tcp_properties =
+    RTCORBA::TCPProtocolProperties::_nil ();
+  
+    if (client_protocols != 0)
+    {
+      RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
+
+      for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+        if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+          {
+            tcp_properties =
+              RTCORBA::TCPProtocolProperties::_narrow
+            (protocols[j].transport_protocol_properties.in (),
+             ACE_TRY_ENV);
+            ACE_CHECK_RETURN (-1);
+            break;
+          }
+    }
+
+  if (CORBA::is_nil (tcp_properties.in ()))
+    {
+      // No tcp properties in ORB-level override.  Use ORB defaults.
+      // Orb defaults should never be null - they were initialized by
+      // the ORB_Core. 
+      client_protocols = this->orb_core_->default_client_protocol ();
+      auto_release = client_protocols;
+      RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
+      for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+        if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+          {
+            tcp_properties =
+              RTCORBA::TCPProtocolProperties::_narrow
+              (protocols[j].transport_protocol_properties.in (),
+               ACE_TRY_ENV);
+            ACE_CHECK_RETURN (-1);
+            break;
+          }
+    }
+
+  // Extract and locally store properties of interest.
+  this->tcp_properties_.send_buffer_size =
+    tcp_properties->send_buffer_size ();
+  this->tcp_properties_.recv_buffer_size =
+    tcp_properties->recv_buffer_size ();
+  this->tcp_properties_.no_delay =
+    tcp_properties->no_delay ();
+
+#else /* TAO_HAS_RT_CORBA == 1 */
+
+  // Without RTCORBA, protocol configuration properties come from ORB
+  // options. 
+  this->tcp_properties_.send_buffer_size =
+    this->orb_core_->orb_params ()->sock_sndbuf_size ();
+  this->tcp_properties_.recv_buffer_size =
+    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
+  this->tcp_properties_.no_delay =
+    this->orb_core_->orb_params ()->nodelay ();
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  return 0;
 }
