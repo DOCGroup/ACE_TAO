@@ -1,3 +1,6 @@
+//
+// $Id$
+//
 /*
 
 COPYRIGHT
@@ -490,8 +493,8 @@ be_change_idl_file_extension (String* idl_file,
       return 0;
     }
 
-  static char fname[MAXNAMELEN];
-  ACE_OS::memset (fname, 0, MAXNAMELEN);
+  static char fname[MAXPATHLEN];
+  ACE_OS::memset (fname, 0, MAXPATHLEN);
 
   const char* string = idl_file->get_string ();
 

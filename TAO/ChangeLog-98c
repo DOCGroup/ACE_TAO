@@ -1,3 +1,10 @@
+Tue Apr  7 16:22:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp: 
+	  Changed a buffer size from MAXNAMELEN to MAXPATHLEN, the former
+	  is very small in some systems, plus the fact is that a fullpath
+	  can be use in that buffer, so MAXPATHLEN is the right constant.
+
 Tue Apr 07 10:55:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/ss: generate port numbers based on
