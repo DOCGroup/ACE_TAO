@@ -22,11 +22,11 @@ TAO_Offer_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::POA_var poa =
     this->_default_POA (ACE_TRY_ENV);
   ACE_CHECK;
- 
+
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this, ACE_TRY_ENV);
   ACE_CHECK;
- 
+
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -99,7 +99,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
 
           CORBA::release (offer_iter);
         }
-      ACE_CATCHANY 
+      ACE_CATCHANY
         {
         }
       ACE_ENDTRY;
@@ -138,38 +138,30 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
       // Determine how many offers we should retrieve from this
       // iterator.
 
-      ACE_TRY
+      // Retrieve the set of offers.
+      any_left =
+        iter->next_n (offers_left,
+                      CosTrading::OfferSeq_out (out_offers.out ()),
+                      ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // If we've exhausted this iterator, destroy it.
+      if (any_left == 0)
         {
-          // @@ Irfan, can you please check this for exception design?
-
-          // Retrieve the set of offers.
-          any_left =
-            iter->next_n (offers_left,
-                          CosTrading::OfferSeq_out (out_offers.out ()),
-                          ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // If we've exhausted this iterator, destroy it.
-          if (any_left == 0)
-            {
-              iter->destroy (ACE_TRY_ENV);
-              CORBA::release (iter);
-            }
-          else
-            this->iters_.enqueue_head (iter);
-
-          // Merge it with the passed set.
-          offset = offers->length ();
-          offers->length (out_offers->length () + offset);
-          for (int j = out_offers->length () - 1; j >= 0; j--)
-            offers[j + offset] = out_offers[j];
-
-          offers_left -= out_offers->length ();
+          iter->destroy (ACE_TRY_ENV);
+          ACE_CHECK;
+          CORBA::release (iter);
         }
-      ACE_CATCHANY
-        {
-        }
-      ACE_ENDTRY;
+      else
+        this->iters_.enqueue_head (iter);
+
+      // Merge it with the passed set.
+      offset = offers->length ();
+      offers->length (out_offers->length () + offset);
+      for (int j = out_offers->length () - 1; j >= 0; j--)
+        offers[j + offset] = out_offers[j];
+
+      offers_left -= out_offers->length ();
     }
 
   // Determine if we have anything left to offer.
@@ -295,7 +287,7 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
 	      this->ids_.dequeue_head (offer_id);
 	      id_buf[i] = offer_id;
 	    }
-	
+
 	  // Place them into an OfferIdSeq.
 	  ACE_NEW_RETURN (_ids,
 			  CosTrading::OfferIdSeq (returnable_items,
