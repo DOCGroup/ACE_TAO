@@ -23,6 +23,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Basic_Types.h"
 #include "ace/SString.h"
 #include "ace/Functor_String.h"
 
