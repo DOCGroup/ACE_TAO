@@ -243,7 +243,8 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
   ACE_Node<T> *temp;
 
   ACE_NEW_MALLOC_RETURN (temp,
-                         (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                         ACE_static_cast(ACE_Node<T> *,
+                                         this->allocator_->malloc (sizeof (ACE_Node<T>))),
                          ACE_Node<T> (new_item, this->head_->next_),
                          -1);
   this->head_->next_ = temp;
@@ -838,8 +839,10 @@ ACE_Double_Linked_List<T>::copy_nodes (const ACE_Double_Linked_List<T> &c)
        !iter.done ();
        iter.advance ())
     {
-      T* temp = (T *) this->allocator_->malloc (sizeof (T));
-      new (temp) T (*iter.next ());
+      T* temp = 0;
+      ACE_NEW_MALLOC (temp,
+                      (T *)this->allocator_->malloc (sizeof (T)),
+                      T (*iter.next ()));
       this->insert_tail (temp);
     }
 }
@@ -1554,7 +1557,8 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
   // create a new node
   ACE_DNode<T> *temp;
   ACE_NEW_MALLOC_RETURN (temp,
-                         (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
+                         ACE_static_cast(ACE_DNode<T>*,
+                                         this->allocator_->malloc (sizeof (ACE_DNode<T>))),
                          ACE_DNode<T> (item),
                          -1);
   // obtain approximate location of the node
@@ -1741,7 +1745,8 @@ ACE_DLList<T>::insert_tail (T *new_item)
 {
   ACE_DLList_Node *temp1, *temp2;
   ACE_NEW_MALLOC_RETURN (temp1,
-                         (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
+                         ACE_static_cast(ACE_DLList_Node *,
+                                         this->allocator_->malloc (sizeof (ACE_DLList_Node))),
                          ACE_DLList_Node ((void *&)new_item),
                          0);
   temp2 = ACE_DLList_Base::insert_tail (temp1);
@@ -1752,8 +1757,7 @@ template <class T> T *
 ACE_DLList<T>::insert_head (T *new_item)
 {
   ACE_DLList_Node *temp1;
-  ACE_NEW_MALLOC_RETURN (
-                         temp1,
+  ACE_NEW_MALLOC_RETURN (temp1,
                          (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
                          ACE_DLList_Node ((void *&)new_item), 0);
   ACE_DLList_Node *temp2 =

@@ -9,7 +9,12 @@ template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
 ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong (void)
 {
   // Set initial object reference count to 1.
-  return new ACE_Bound_Ptr_Counter<ACE_LOCK> (1);
+
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Bound_Ptr_Counter<ACE_LOCK> (1),
+                  0);
+  return temp;
 }
 
 template <class ACE_LOCK> inline int
@@ -60,7 +65,12 @@ template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
 ACE_Bound_Ptr_Counter<ACE_LOCK>::create_weak (void)
 {
   // Set initial object reference count to 0.
-  return new ACE_Bound_Ptr_Counter<ACE_LOCK> ();
+
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Bound_Ptr_Counter<ACE_LOCK> (),
+                  0);
+  return temp;
 }
 
 template <class ACE_LOCK> inline void

@@ -17,7 +17,8 @@ DWORD ACE_CE_Errno::errno_key_ = 0xffffffff;
 void
 ACE_CE_Errno::init ()
 {
-  ACE_CE_Errno::instance_ = new ACE_CE_Errno ();
+  ACE_NEW (ACE_CE_Errno::instance_,
+           ACE_CE_Errno ());
   ACE_CE_Errno::errno_key_ = TlsAlloc ();
 }
 

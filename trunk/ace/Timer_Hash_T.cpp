@@ -206,12 +206,14 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (size_t tabl
                                                                      ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> (upcall_functor, freelist),
     size_ (0),
-    table_ (new BUCKET *[table_size]),
     table_size_ (table_size),
     table_functor_ (this),
     earliest_position_ (0)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
+
+  ACE_NEW (table_,
+           BUCKET *[table_size]));
 
   this->gettimeofday (ACE_OS::gettimeofday);
 
@@ -235,12 +237,15 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *up
                                                                      ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> (upcall_functor, freelist),
     size_ (0),
-    table_ (new BUCKET *[ACE_DEFAULT_TIMER_HASH_TABLE_SIZE]),
     table_size_ (ACE_DEFAULT_TIMER_HASH_TABLE_SIZE),
     table_functor_ (this),
     earliest_position_ (0)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
+
+  ACE_NEW (table_,
+           BUCKET *[ACE_DEFAULT_TIMER_HASH_TABLE_SIZE]);
+
 
   this->gettimeofday (ACE_OS::gettimeofday);
 

@@ -648,8 +648,8 @@ ACE_Message_Block::init_i (size_t size,
       // Allocate the <ACE_Data_Block> portion, which is reference
       // counted.
       ACE_NEW_MALLOC_RETURN (db,
-                             ACE_static_cast(ACE_Data_Block*,
-                                             data_block_allocator->malloc (sizeof (ACE_Data_Block))),
+                             ACE_static_cast(ACE_Data_Block *,
+                               data_block_allocator->malloc (sizeof (ACE_Data_Block))),
                              ACE_Data_Block (size,
                                              msg_type,
                                              msg_data,
@@ -954,8 +954,8 @@ ACE_Message_Block::duplicate (void) const
                   0);
   else // Otherwise, use the message_block_allocator passed in.
     ACE_NEW_MALLOC_RETURN (nb,
-                           ACE_reinterpret_cast(ACE_Message_Block*,
-                                                message_block_allocator_->malloc (sizeof (ACE_Message_Block))),
+                           ACE_static_cast(ACE_Message_Block*,
+                             message_block_allocator_->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (0, // size
                                               ACE_Message_Type (0), // type
                                               0, // cont
@@ -1043,7 +1043,7 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
 
   ACE_NEW_MALLOC_RETURN (nb,
                          ACE_static_cast(ACE_Data_Block*,
-                                         this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
+                           this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
                          ACE_Data_Block (this->max_size_, // size
                                          this->type_,     // type
                                          0,               // data
@@ -1075,23 +1075,25 @@ ACE_Message_Block::clone (Message_Flags mask) const
 
   if(message_block_allocator_ == 0)
     {
-      nb = new ACE_Message_Block (0, // size
-                                  ACE_Message_Type (0), // type
-                                  0, // cont
-                                  0, // data
-                                  0, // allocator
-                                  0, // locking strategy
-                                  0, // flags
-                                  this->priority_, // priority
-                                  ACE_EXECUTION_TIME, // execution time
-                                  ACE_DEADLINE_TIME, // absolute time to deadline
-                                // Get a pointer to a
-                                // "duplicated" <ACE_Data_Block>
-                                // (will simply increment the
-                                // reference count).
-                                db,
-                                db->data_block_allocator (),
-                                this->message_block_allocator_);
+      ACE_NEW_RETURN (nb,
+                      ACE_Message_Block (0, // size
+                                         ACE_Message_Type (0), // type
+                                         0, // cont
+                                         0, // data
+                                         0, // allocator
+                                         0, // locking strategy
+                                         0, // flags
+                                         this->priority_, // priority
+                                         ACE_EXECUTION_TIME, // execution time
+                                         ACE_DEADLINE_TIME, // absolute time to deadline
+                                         // Get a pointer to a
+                                         // "duplicated" <ACE_Data_Block>
+                                         // (will simply increment the
+                                         // reference count).
+                                         db,
+                                         db->data_block_allocator (),
+                                         this->message_block_allocator_),
+                      0);
     }
   else
     {

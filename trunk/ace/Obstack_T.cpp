@@ -95,17 +95,15 @@ ACE_Obstack_T<CHAR>::new_chunk (void)
 {
   ACE_TRACE ("ACE_Obstack_T<CHAR>::new_chunk");
 
-  char *temp;
+  ACE_Obchunk *temp;
 
-  ACE_ALLOCATOR_RETURN
-    (temp,
-     ACE_static_cast (char *,
-                      this->allocator_strategy_->malloc
-                        (sizeof (class ACE_Obchunk)
-                         + this->size_)),
-     0);
-
-  return new (temp) ACE_Obchunk (this->size_);
+  ACE_NEW_MALLOC_RETURN (temp,
+                         ACE_static_cast (ACE_Obchunk *,
+                           this->allocator_strategy_->malloc
+                             (sizeof (class ACE_Obchunk) + this->size_)),
+                         ACE_Obchunk (this->size_),
+                         0);
+  return temp;
 }
 
 template <class CHAR>

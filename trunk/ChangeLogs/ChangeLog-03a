@@ -1,3 +1,45 @@
+Sun Oct 28 13:15:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+  * ace/ACE.i
+  * ace/ATM_Stream.cpp
+  * ace/Activation_Queue.cpp
+  * ace/Bound_Ptr.i
+  * ace/Configuration.cpp
+  * ace/Configuration_Import_Export.cpp
+  * ace/Containers_T.cpp
+  * ace/Future.cpp
+  * ace/Handle_Gobbler.h
+  * ace/Local_Tokens.i
+  * ace/MEM_SAP.i
+  * ace/Map_T.i
+  * ace/Message_Block.cpp
+  * ace/OS_Errno.cpp
+  * ace/Object_Manager.cpp
+  * ace/Obstack_T.cpp
+  * ace/Refcounted_Auto_Ptr.i
+  * ace/Remote_Tokens.i
+  * ace/Strategies_T.cpp
+  * ace/Stream.cpp
+  * ace/Svc_Handler.cpp
+  * ace/Synch_T.cpp
+  * ace/TLI.cpp
+  * ace/Timer_Hash_T.cpp
+  * ace/Timer_Queue_T.cpp
+  * ace/Unbounded_Queue.cpp
+  * ace/Unbounded_Set.cpp
+
+    Changed almost all direct usages of operator new in ACE to use
+    ACE_NEW_RETURN (Exceptions is Dump_T.h). 
+    In one case in Stream.cpp the semantics changed slightly if 
+    operator new would have been overloaded, see the "@@ Michael"
+    comment.
+    
+    When new got used with placement most of the usages
+    got replaced with ACE_NEW_MALLOC_RETURN. In some cases as in 
+    Malloc_T.cpp, Map_Manager.cpp, PI_Malloc.i, Array_Base.cpp special
+    cases exist, where the macros would have incurred different semantics
+    and performance penalties.
+
 Fri Oct 26 07:37:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Quoter example will not run in

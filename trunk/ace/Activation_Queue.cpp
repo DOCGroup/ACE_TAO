@@ -81,7 +81,8 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
   // correctly.  Since we also pass <mr> note that no unnecessary
   // memory is actually allocated -- just the size field is set.
   ACE_NEW_MALLOC_RETURN (mb,
-                         (ACE_Message_Block *) this->allocator_->malloc (sizeof (ACE_Message_Block)),
+                         ACE_static_cast(ACE_Message_Block *,
+                                         this->allocator_->malloc (sizeof (ACE_Message_Block))),
                          ACE_Message_Block (sizeof (*mr),    // size
                                             ACE_Message_Block::MB_DATA, // type
                                             0,       // cont

@@ -300,7 +300,11 @@ ACE_TSS<TYPE>::operator TYPE *(void) const
 template <class TYPE> TYPE *
 ACE_TSS<TYPE>::make_TSS_TYPE (void) const
 {
-  return new TYPE;
+  TYPE *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  TYPE,
+                  0);
+  return temp;
 }
 
 template <class TYPE> void
