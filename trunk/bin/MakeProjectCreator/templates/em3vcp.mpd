@@ -99,7 +99,7 @@ LIB32=link.exe -lib
 <%if(pch_header)%>
 # Begin Source File
 
-SOURCE=".\<%pch_source%>"
+SOURCE="<%pch_source%>"
 # ADD CPP /Yc"<%pch_header%>"
 # End Source File
 <%endif%>
@@ -107,7 +107,7 @@ SOURCE=".\<%pch_source%>"
 <%foreach(source_files)%>
 # Begin Source File
 
-SOURCE=".\<%source_file%>"
+SOURCE="<%source_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -119,13 +119,13 @@ SOURCE=".\<%source_file%>"
 <%if(pch_header)%>
 # Begin Source File
 
-SOURCE=".\<%pch_header%>"
+SOURCE="<%pch_header%>"
 # End Source File
 <%endif%>
 <%foreach(header_files)%>
 # Begin Source File
 
-SOURCE=".\<%header_file%>"
+SOURCE="<%header_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -137,7 +137,7 @@ SOURCE=".\<%header_file%>"
 <%foreach(inline_files)%>
 # Begin Source File
 
-SOURCE=".\<%inline_file%>"
+SOURCE="<%inline_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -149,7 +149,7 @@ SOURCE=".\<%inline_file%>"
 <%foreach(template_files)%>
 # Begin Source File
 
-SOURCE=".\<%template_file%>"
+SOURCE="<%template_file%>"
 # PROP Exclude_From_Build 1
 # End Source File
 <%endfor%>
@@ -162,7 +162,7 @@ SOURCE=".\<%template_file%>"
 <%foreach(documentation_files)%>
 # Begin Source File
 
-SOURCE=".\<%documentation_file%>"
+SOURCE="<%documentation_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -174,7 +174,7 @@ SOURCE=".\<%documentation_file%>"
 <%foreach(resource_files)%>
 # Begin Source File
 
-SOURCE=".\<%resource_file%>"
+SOURCE="<%resource_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -186,7 +186,7 @@ SOURCE=".\<%resource_file%>"
 <%foreach(idl_files)%>
 # Begin Source File
 
-SOURCE=".\<%idl_file%>"
+SOURCE="<%idl_file%>"
 
 <%foreach(platform_longs)%>
 <%foreach(configurations)%>
@@ -194,7 +194,7 @@ SOURCE=".\<%idl_file%>"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking IDL Compiler on $(InputPath)
-InputPath=.\<%idl_file%>
+InputPath=<%idl_file%>
 InputName=<%basenoextension(idl_file)%>
 InputDir=<%dirname(idl_file)%>
 
@@ -238,7 +238,7 @@ BuildCmds= \
 <%if(custom_type->input_file->output_files)%>
 # Begin Source File
 
-SOURCE=".\<%custom_type->input_file%>"
+SOURCE="<%custom_type->input_file%>"
 
 <%foreach(platform_longs)%>
 <%foreach(configurations)%>
@@ -246,13 +246,13 @@ SOURCE=".\<%custom_type->input_file%>"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking <%custom_type->command%> on $(InputPath)
-InputPath=.\<%custom_type->input_file%>
+InputPath=<%custom_type->input_file%>
 InputName=<%basenoextension(custom_type->input_file)%>
 InputDir=<%dirname(custom_type->input_file)%>
 
 <%if(custom_type->output_option)%>
 <%foreach(custom_type->input_file->output_files)%>
-"<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%>.\<%custom_type->input_file->output_file%><%endif%>" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 <%if(custom_type->libpath)%>
    PATH=%PATH%;<%custom_type->libpath%>
 <%endif%>
@@ -267,7 +267,7 @@ BuildCmds= \
 	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $(InputPath)
 
 <%foreach(custom_type->input_file->output_files)%>
-"<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%>.\<%custom_type->input_file->output_file%><%endif%>" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 <%endfor%>

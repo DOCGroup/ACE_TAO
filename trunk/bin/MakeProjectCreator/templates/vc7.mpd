@@ -122,7 +122,7 @@
 			Filter="cpp;cxx;cc;C;c">
 <%if(pch_source)%>
 			<File
-				RelativePath=".\<%pch_source%>">
+				RelativePath="<%pch_source%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>">
@@ -135,7 +135,7 @@
 <%endif%>
 <%foreach(source_files)%>
 			<File
-				RelativePath=".\<%source_file%>">
+				RelativePath="<%source_file%>">
 			</File>
 <%endfor%>
 		</Filter>
@@ -147,12 +147,12 @@
 			Filter="h;hpp;hxx;hh">
 <%if(pch_header)%>
 			<File
-				 RelativePath=".\<%pch_header%>">
+				 RelativePath="<%pch_header%>">
 			</File>
 <%endif%>
 <%foreach(header_files)%>
 			<File
-				RelativePath=".\<%header_file%>">
+				RelativePath="<%header_file%>">
 			</File>
 <%endfor%>
 		</Filter>
@@ -163,7 +163,7 @@
 			Filter="idl">
 <%foreach(idl_files)%>
 			<File
-				RelativePath=".\<%idl_file%>">
+				RelativePath="<%idl_file%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>">
@@ -204,7 +204,7 @@
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
 			<File
-				RelativePath=".\<%custom_type->input_file%>">
+				RelativePath="<%custom_type->input_file%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>">
@@ -227,7 +227,7 @@
 			Filter="i;inl">
 <%foreach(inline_files)%>
 			<File
-				RelativePath=".\<%inline_file%>">
+				RelativePath="<%inline_file%>">
 			</File>
 <%endfor%>
 		</Filter>
@@ -238,7 +238,7 @@
 			Filter="">
 <%foreach(template_files)%>
 			<File
-				RelativePath=".\<%template_file%>">
+				RelativePath="<%template_file%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>"
@@ -257,7 +257,7 @@
 			Filter="">
 <%foreach(documentation_files)%>
 			<File
-				RelativePath=".\<%documentation_file%>">
+				RelativePath="<%documentation_file%>">
 			</File>
 <%endfor%>
 		</Filter>
@@ -268,7 +268,7 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe">
 <%foreach(resource_files)%>
 			<File
-				RelativePath=".\<%resource_file%>">
+				RelativePath="<%resource_file%>">
 			</File>
 <%endfor%>
 		</Filter>

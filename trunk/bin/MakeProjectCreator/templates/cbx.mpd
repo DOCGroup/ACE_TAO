@@ -167,7 +167,7 @@
   <node name="Source Files" type="Folder">
     <property category="unique" name="id"/>
 <%foreach(source_files)%>
-      <file path=".\<%source_file%>">
+      <file path="<%source_file%>">
         <property category="unique" name="id"/>
       </file>
 <%endfor%>
@@ -177,7 +177,7 @@
   <node name="Header files" type="Folder">
     <property category="unique" name="id"/>
 <%foreach(header_files)%>
-      <file path=".\<%header_file%>">
+      <file path="<%header_file%>">
         <property category="unique" name="id"/>
       </file>
 <%endfor%>
@@ -187,7 +187,7 @@
   <node name="Inline files" type="Folder">
     <property category="unique" name="id"/>
 <%foreach(inline_files)%>
-      <file path=".\<%inline_file%>">
+      <file path="<%inline_file%>">
         <property category="unique" name="id"/>
       </file>
 <%endfor%>
@@ -197,7 +197,7 @@
   <node name="IDL files" type="Folder">
     <property category="unique" name="id"/>
 <%foreach(idl_files)%>
-      <file path=".\<%idl_file%>">
+      <file path="<%idl_file%>">
         <property category="unique" name="id"/>
       </file>
 <%endfor%>
@@ -207,7 +207,7 @@
   <node name="Template files" type="Folder">
     <property category="unique" name="id"/>
 <%foreach(template_files)%>
-      <file path=".\<%template_file%>">
+      <file path="<%template_file%>">
         <property category="unique" name="id"/>
       </file>
 <%endfor%>
@@ -217,7 +217,7 @@
   <node name="Documentation files" type="Folder">
     <property category="unique" name="id"/>
 <%foreach(documentation_files)%>
-      <file path=".\<%documentation_file%>">
+      <file path="<%documentation_file%>">
         <property category="unique" name="id"/>
       </file>
 <%endfor%>
@@ -227,7 +227,7 @@
   <node name="Resource files" type="Folder">
     <property category="unique" name="id"/>
 <%foreach(resource_files)%>
-      <file path=".\<%resource_file%>">
+      <file path="<%resource_file%>">
         <property category="unique" name="id"/>
       </file>
 <%endfor%>
