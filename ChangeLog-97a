@@ -1,5 +1,10 @@
 Fri Feb 07 13:56:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/{OS.cpp,Thread_Priority.cpp}: added ACE_Thread_Priority
+	  support for Digital Unix.  Thanks to Thilo Kielmann
+	  <kielmann@informatik.uni-siegen.de> for figuring the priorities
+	  and priority classes out and for providing the code.
+
 	* ace/High_Res_Timer.{h,cpp},config-linux*.h,README:
 	  use struct timespec instead of timespec_t, because not all
 	  platforms have the timespec_t typedef.  Thanks to
@@ -12,6 +17,9 @@ Fri Feb 07 13:56:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/IPC_SAP/TLI_SAP/db-server.cpp: declare struct member as
 	  const char * instead of const char [] because it's not static and
 	  the struct doesn't have constructors.
+
+	* examples/Reactor/Multicast/server.cpp (Server_Events ctor):
+	  reordered initializers to match declaration order.
 
 Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
