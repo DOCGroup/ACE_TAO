@@ -26,14 +26,15 @@
 #include "ace/Get_Opt.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
 
-
-char *node_        = NULL;
-char *file_        = NULL;
-char *shared_file_ = NULL;
-char *object_      = NULL;
+const char *ior_output_file = "server.ior";
+char *node_        = 0;
+char *file_        = 0;
+char *shared_file_ = 0;
+char *object_      = 0;
 int num_threads_   = 5;
-int use_realtime_    = 1;
+int use_realtime_  = 1;
 
 // ORB Thread
 
@@ -105,13 +106,13 @@ parse_args (int argc, char *argv[])
 
         }
      }
-  if (node_ == NULL)
+  if (node_ == 0)
     node_ = ACE_OS::strdup("1");
-  if (file_ == NULL)
+  if (file_ == 0)
     file_ = ACE_OS::strdup("schedule.cfg");
-  if (shared_file_ == NULL)
+  if (shared_file_ == 0)
     shared_file_ = ACE_OS::strdup("Scheduling_Service_Shared_Memory");
-  if (object_ == NULL)
+  if (object_ == 0)
     object_ = ACE_OS::strdup("Server2");
 
   return 0;
@@ -199,9 +200,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       ACE_TRY_CHECK;
 
 
-      ofstream server_IOR_file ("server.ior");
-      server_IOR_file << testObject_IORString.in () << endl;
-
+      // If the ior_output_file exists, output the ior to it
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_output_file),
+                              1);
+      ACE_OS::fprintf (output_file, "%s", testObject_IORString.in ());
+      ACE_OS::fclose (output_file);
 
       if (use_realtime_)
         {
@@ -220,8 +227,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
           ACE_ENDTRY;
         }
 
-
-      /// Activate the manager and run the event loop
+      // Activate the manager and run the event loop
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // Need to set the main thread pthread scope and pthread policy to
