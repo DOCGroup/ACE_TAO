@@ -21,7 +21,19 @@ SUBDIRS = \
         tests \
         websvcs
 
+if BUILD_KOKYU
+SUBDIRS += Kokyu
+endif
+
+if BUILD_TAO
+SUBDIRS += TAO
+endif
+
+man_MANS = ace-config.1
+
+bin_scripts = ace-config
 
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
+AUTOMAKE_OPTIONS = foreign
 
