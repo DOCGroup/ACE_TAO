@@ -18,6 +18,7 @@ LFLAGS = \
 
 LIBFILES = \
 	TAO_RTScheduler$(LIB_DECORATOR).lib \
+	TAO_Messaging$(LIB_DECORATOR).lib \
 	TAO_RTPortableServer$(LIB_DECORATOR).lib \
 	TAO_RTCORBA$(LIB_DECORATOR).lib \
 	TAO_CosNaming$(LIB_DECORATOR).lib \
