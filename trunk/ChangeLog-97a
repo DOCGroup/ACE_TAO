@@ -1,3 +1,13 @@
+Wed Apr 30 14:17:34 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-vxworks*.h: added ACE_LACKS_PWD_FUNCTIONS.  Thanks
+	  to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for reporting
+	  this.
+
+	* ace/OS.i: cleaned up ACE_LACKS_PWD_FUNCTIONS comments a bit.
+
+	* ace/Array.{h,i}: added const operator [].
+
 Wed Apr 30 08:42:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Added a new generic Array class, which we'll use until
@@ -11,20 +21,20 @@ Wed Apr 30 08:42:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Wed Apr 30 07:44:36 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/IOStream.{h,cpp}: James CE Johnson <jcej@lads.com> updated
-	  the IOStream class, see comments in IOStream.h.
-
-	* examples/Logger/client/logging_app.cpp (main),
-	  performance-tests/Misc/test_naming.cpp (*): replaced sprintf
-	  with ACE_OS::sprintf.  Thanks to Thilo Kielmann
-	  <kielmann@informatik.uni-siegen.de> for reporting these.
-
 	* ace/config-osf1-4.0*.h: removed ACE_HAS_SIGWAIT.
 
 	* ace/OS.{h,i}: applied Thilo's patch for sigwait on Digital
 	  Unix 4.0, which defines sigwait as a macro.  Thanks to
 	  Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
 	  this and the above config file patches.
+
+	* ace/IOStream.{h,cpp}: James CE Johnson <jcej@lads.com> updated
+	  the IOStream class; see comments in IOStream.h.
+
+	* examples/Logger/client/logging_app.cpp (main),
+	  performance-tests/Misc/test_naming.cpp (*): replaced sprintf
+	  with ACE_OS::sprintf.  Thanks to Thilo Kielmann
+	  <kielmann@informatik.uni-siegen.de> for reporting these.
 
 Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
 
