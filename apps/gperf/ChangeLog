@@ -1,3 +1,9 @@
+Sun Jul 28 17:04:54 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* src/gperf.cpp (main): Only generate the timestamps if the
+	  DEBUGGING option ('-d') is enabled.  Thanks to Kier Schmitt
+ 	  <SchmittKC@kpt.nuwc.navy.mil> for this suggestion.
+
 Tue Feb 26 23:15:47 2002  Ossama Othman  <ossama@uci.edu>
 
 	* gperf.texi:
