@@ -1,44 +1,70 @@
 /* -*- C++ -*- */
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    gateway
+//
+// = FILENAME
+//    Options.h
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
+
 #if !defined (OPTIONS_H)
 #define OPTIONS_H
 
-#include "ace/OS.h"
+#include "Event.h"
 
-class Options
+class ACE_Svc_Export Options
   // = TITLE
-  //     Options Singleton for the peerd.
+  //     Options Singleton for a peerd.
 {
 public:
+  // = Options that can be enabled/disabled.
   enum
   {
-    // = Options that can be enabled/disabled.
     VERBOSE = 01,
-    ACCEPTOR = 02,
-    CONNECTOR = 04
+    SUPPLIER_ACCEPTOR = 02,
+    CONSUMER_ACCEPTOR = 04,
+    SUPPLIER_CONNECTOR = 010,
+    CONSUMER_CONNECTOR = 020
   };
 
   static Options *instance (void);
   // Return Singleton.
 
   void parse_args (int argc, char *argv[]);
-  // Parse the arguments.
+  // Parse the arguments and set the options.
 
   // = Accessor methods.
   int enabled (int option) const;
   // Determine if an option is enabled.
 
-  u_short acceptor_port (void) const;
+  u_short supplier_acceptor_port (void) const;
   // Our acceptor port number, i.e., the one that we passively listen
-  // on for connections to arrive from a gatewayd.
+  // on for connections to arrive from a gatewayd and create a
+  // Supplier.
 
-  u_short connector_port (void) const;
-  // Our connector port number, i.e., the one that we use to actively
-  // establish connections with a gatewayd.
+  u_short consumer_acceptor_port (void) const;
+  // Our acceptor port number, i.e., the one that we passively listen
+  // on for connections to arrive from a gatewayd and create a
+  // Consumer.
+
+  u_short supplier_connector_port (void) const;
+  // The connector port number, i.e., the one that we use to actively
+  // establish connections with a gatewayd and create a Supplier.
+
+  u_short consumer_connector_port (void) const;
+  // The connector port number, i.e., the one that we use to actively
+  // establish connections with a gatewayd and create a Consumer.
 
   const char *connector_host (void) const;
-  // Our connector port host, i.e., the host running the gatewayd.
+  // Our connector port host, i.e., the host running the gatewayd
+  // process.
 
   long timeout (void) const;
   // Duration between disconnects.
@@ -61,25 +87,35 @@ private:
   Options (void);
   // Ensure Singleton.
 
-  static Options *instance_;
-  // Singleton.
-
   void print_usage_and_die (void);
   // Explain usage and exit.
+
+  static Options *instance_;
+  // Singleton.
 
   u_long options_;
   // Flag to indicate if we want verbose diagnostics.
 
-  u_short acceptor_port_;
-  // Our acceptor port number, i.e., the one that we passively listen
-  // on for connections to arrive from a gatewayd.
+  u_short supplier_acceptor_port_;
+  // The acceptor port number, i.e., the one that we passively listen
+  // on for connections to arrive from a gatewayd and create a
+  // Supplier.
 
-  u_short connector_port_;
-  // Our connector port number, i.e., the one that we use to actively
-  // establish connections with a gatewayd.
+  u_short consumer_acceptor_port_;
+  // The acceptor port number, i.e., the one that we passively listen
+  // on for connections to arrive from a gatewayd and create a
+  // Consumer.
+
+  u_short supplier_connector_port_;
+  // The connector port number, i.e., the one that we use to actively
+  // establish connections with a gatewayd and create a Supplier.
+
+  u_short consumer_connector_port_;
+  // The connector port number, i.e., the one that we use to actively
+  // establish connections with a gatewayd and create a Consumer.
 
   char *connector_host_;
-  // Our connector host.
+  // Our connector host, i.e., where the gatewayd process is running.
 
   long timeout_;
   // The amount of time to wait before disconnecting from the Peerd.

@@ -2,7 +2,6 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "Event.h"
 #include "Peer.h"
 #include "Options.h"
 
@@ -72,6 +71,7 @@ Peer_Handler::xmit_stdin (void)
                       ACE_Message_Block (sizeof (Event)),
                       -1);
 
+      // Cast the message block payload into an <Event> pointer.
       Event *event = (Event *) mb->rd_ptr ();
 
       ssize_t n = ACE_OS::read (ACE_STDIN,
@@ -566,38 +566,39 @@ Peer_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Peer_Acceptor::open (void)
+Peer_Acceptor::open (u_short port)
 {
-  this->peer_handler_ = 0;
+  // This object only gets allocated once and is just recycled
+  // forever.
+  ACE_NEW_RETURN (peer_handler_, Peer_Handler, -1);
 
-  if (Options::instance ()->enabled (Options::ACCEPTOR))
-    {
-      // This object only gets allocated once and is just recycled
-      // forever.
-      ACE_NEW_RETURN (peer_handler_, Peer_Handler, -1);
+  this->addr_.set (port);
 
-      this->addr_.set (Options::instance ()->acceptor_port ());
+  ACE_DEBUG ((LM_DEBUG,
+              "opening acceptor at port %d\n",
+              port));
 
-      // Call down to the <Acceptor::open> method.
-      if (this->inherited::open (this->addr_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "open"),
-                          -1);
-      else if (this->acceptor ().get_local_addr (this->addr_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "get_local_addr"),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "listening at port %d\n",
-                    this->addr_.get_port_number ()));
-    }
+  // Call down to the <Acceptor::open> method.
+  if (this->inherited::open (this->addr_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
+                      -1);
+  else if (this->acceptor ().get_local_addr (this->addr_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "get_local_addr"),
+                      -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                "warning: not running in Acceptor mode\n"));
+                "accepting at port %d\n",
+                this->addr_.get_port_number ()));
   return 0;
+}
+
+Peer_Acceptor::Peer_Acceptor (void)
+  : peer_handler_ (0)
+{
 }
 
 int
@@ -623,34 +624,51 @@ Peer_Acceptor::make_svc_handler (Peer_Handler *&sh)
 }
 
 int
-Peer_Connector::open (void)
+Peer_Connector::open_connector (Peer_Handler *&peer_handler,
+                                u_short port)
 {
-  if (Options::instance ()->enabled (Options::CONNECTOR))
-    {
-      // This object only gets allocated once and is just recycled
-      // forever.
-      ACE_NEW_RETURN (peer_handler_,
-                      Peer_Handler,
+  // This object only gets allocated once and is just recycled
+  // forever.
+  ACE_NEW_RETURN (peer_handler,
+                  Peer_Handler,
+                  -1);
+
+  ACE_INET_Addr addr (port, 
+                      Options::instance ()->connector_host ());
+
+  ACE_DEBUG ((LM_DEBUG,
+              "connecting to %s:%d\n",
+              addr.get_host_name (),
+              addr.get_port_number ()));
+
+  if (this->connect (peer_handler, addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "connect"),
                       -1);
-
-      this->addr_.set (Options::instance ()->connector_port (),
-                       Options::instance ()->connector_host ());
-
-      if (this->connect (this->peer_handler_,
-                         this->addr_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "connect"),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "connected to %s:%d\n",
-                    this->addr_.get_host_name (),
-                    this->addr_.get_port_number ()));
-    }
   else
     ACE_DEBUG ((LM_DEBUG,
-                "not running in Connector mode\n"));
+                "connected to %s:%d\n",
+                addr.get_host_name (),
+                addr.get_port_number ()));
+  return 0;
+}
+
+int
+Peer_Connector::open (void)
+{
+  this->supplier_peer_handler_ = 0;
+  this->consumer_peer_handler_ = 0;
+
+  if (Options::instance ()->enabled (Options::SUPPLIER_CONNECTOR)
+      && this->open_connector (this->supplier_peer_handler_,
+                               Options::instance ()->supplier_connector_port ()) == -1)
+    return -1;
+
+  if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR)
+      && this->open_connector (this->consumer_peer_handler_,
+                               Options::instance ()->consumer_connector_port ()) == -1)
+    return -1;
 
   return 0;
 }
@@ -675,20 +693,27 @@ int
 Peer_Factory::info (char **strp, size_t length) const
 {
   char buf[BUFSIZ];
-  char addr_str[BUFSIZ];
+  char consumer_addr_str[BUFSIZ];
+  char supplier_addr_str[BUFSIZ];
 
   ACE_INET_Addr addr;
 
-  if (this->acceptor_.acceptor ().get_local_addr (addr) == -1)
+  if (this->consumer_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return -1;
-  else if (addr.addr_to_string (addr_str,
+  else if (addr.addr_to_string (consumer_addr_str,
+                                sizeof addr) == -1)
+    return -1;
+  else if (this->supplier_acceptor_.acceptor ().get_local_addr (addr) == -1)
+    return -1;
+  else if (addr.addr_to_string (supplier_addr_str,
                                 sizeof addr) == -1)
     return -1;
 
   ACE_OS::sprintf (buf,
-                   "%s\t %s/%s %s",
-                   "Gateway peer daemon",
-                   addr_str,
+                   "%s\t C:%s|S:%s/%s %s",
+                   "peerd",
+                   consumer_addr_str,
+                   supplier_addr_str,
                    "tcp",
                    "# Gateway traffic generator and data sink\n");
 
@@ -705,7 +730,9 @@ Peer_Factory::info (char **strp, size_t length) const
 int
 Peer_Factory::fini (void)
 {
-  return this->acceptor_.close ();
+  this->consumer_acceptor_.close ();
+  this->supplier_acceptor_.close ();
+  return 0;
 }
 
 // Hook called by the explicit dynamic linking facility to initialize
@@ -729,7 +756,16 @@ Peer_Factory::init (int argc, char *argv[])
                                                   this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 
-  if (this->acceptor_.open () == -1)
+  if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
+      && this->consumer_acceptor_.open 
+      (Options::instance ()->supplier_acceptor_port ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Acceptor::open"),
+                      -1);
+  else if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR)
+           && this->supplier_acceptor_.open
+           (Options::instance ()->consumer_acceptor_port ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "Acceptor::open"),
