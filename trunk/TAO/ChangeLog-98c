@@ -1,6 +1,11 @@
+Sun Oct 26 15:07:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/IDL_Cubit/README: Updated documentation on the server to
+ 	reflect current reality.
+
 Sun Oct 26 01:01:32 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-        * tao/orbobj.cpp: Redid the template specialization of Hash_Addr
+	* tao/orbobj.cpp: Redid the template specialization of Hash_Addr
  	to account for the new changes.
 
 Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
@@ -211,7 +216,7 @@ Sat Oct 25 17:45:17 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	choose to use the array approach to be compatile with "lex"
 	behavior.
 
-1997-10-25  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+Sat Oct 25 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp: Fixed proper tmp filename
 	creation.
