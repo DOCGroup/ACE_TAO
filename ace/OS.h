@@ -4892,33 +4892,61 @@ private:
   u_long callback_data_;
 };
 
+
 /// Helper for the ACE_OS::timezone() function
 /**
- * On some platforms timezone is a macro.  Defining ACE_OS::timezone()
- * becomes really hard, as there is no way to save the macro
- * definition using the pre-processor.
- * This inline function achieves the same effect, without namespace
- * pollution or performance penalties.
+ * We put all the timezone stuff that used to be in ACE_OS::timezone()
+ * here because on some platforms "timezone" is a macro.  Because of this,
+ * the name ACE_OS::timezone will cause errors.  So in order to use the
+ * macro as it is defined but also keep the name ACE_OS::timezone, we 
+ * use timezone first here in this inline function, and then undefine
+ * timezone.
  */
 inline long ace_timezone()
 {
-  return timezone;
+#if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) \
+    && !defined (CHORUS)
+# if defined (ACE_WIN32)
+  return _timezone;  // For Win32.
+# elif defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
+  long result = 0;
+  struct timeval time;
+  struct timezone zone;
+  ACE_UNUSED_ARG (result);
+  ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
+  return zone.tz_minuteswest * 60;
+# else  /* __Lynx__ || __FreeBSD__ ... */
+  return timezone ();
+# endif /* __Lynx__ || __FreeBSD__ ... */
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */
 }
 
+
+#if !defined (ACE_LACKS_DIFFTIME)
 /// Helper for the ACE_OS::difftime() function
 /**
- * On some platforms difftime() is a macro.  Defining ACE_OS::difftime()
- * becomes really hard, as there is no way to save the macro
- * definition using the pre-processor.
- * This inline function achieves the same effect, without namespace
- * pollution or performance penalties.
+ * We moved the difftime code that used to be in ACE_OS::difftime()
+ * here because on some platforms "difftime" is a macro.  Because of this,
+ * the name ACE_OS::difftime will cause errors.  So in order to use the
+ * macro as it is defined but also keep the name ACE_OS::difftime, we 
+ * use difftime first here in this inline function, and then undefine
+ * it.
  */
-#if !defined(ACE_PSOS) || defined(ACE_PSOS_HAS_TIME)
 inline double ace_difftime(time_t t1, time_t t0)
 {
+# if defined (ACE_HAS_PACE)
+  return ::pace_difftime (t1, t0);
+# elif defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+  // simulate difftime ; just subtracting ; ACE_PSOS case
+  return ((double)t1) - ((double)t0);
+# else
   return difftime (t1, t0);
+# endif /* ACE_HAS_PACE */
 }
-#endif /* !ACE_PSOS || ACE_PSOS_HAS_TIME */
+#endif /* !ACE_LACKS_DIFFTIME */
+
 
 /// Helper for the ACE_OS::cuserid() function
 /**
@@ -4927,6 +4955,12 @@ inline double ace_difftime(time_t t1, time_t t0)
  * definition using the pre-processor.
  * This inline function achieves the same effect, without namespace
  * pollution or performance penalties.
+ *
+ * @todo We maybe should move a lot of the code in ACE_OS::cuserid here so 
+ *       it is treated the same as the above ace_difftime and ace_timezone.
+ *       But since there is a good deal more code in ACE_OS::cuserid, we
+ *       probably need to move some of it off into some sort of emulation
+ *       function.  
  */
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) && !defined(ACE_WIN32)
 inline char *ace_cuserid(char *user)
