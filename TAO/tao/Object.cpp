@@ -448,6 +448,14 @@ _tao_start_again:
   ACE_NOTREACHED (return _tao_retval);
 }
 
+CORBA::ImplementationDef_ptr
+CORBA_Object::_get_implementation (CORBA::Environment &)
+{
+  return 0;
+}
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // ****************************************************************
 
 CORBA::Boolean
@@ -631,14 +639,6 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
 
   return cdr.good_bit ();
 }
-
-CORBA::ImplementationDef_ptr
-CORBA_Object::_get_implementation (CORBA::Environment &)
-{
-  return 0;
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
 
