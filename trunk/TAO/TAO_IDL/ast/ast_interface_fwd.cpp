@@ -143,5 +143,5 @@ AST_InterfaceFwd::set_full_definition(AST_Interface *nfd)
 /*
  * Narrowing methods 
  */
-IMPL_NARROW_METHODS1(AST_InterfaceFwd, AST_Type)
-IMPL_NARROW_FROM_DECL(AST_InterfaceFwd)
+IMPL_NARROW_METHODS1 (AST_InterfaceFwd, AST_Type)
+IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)
