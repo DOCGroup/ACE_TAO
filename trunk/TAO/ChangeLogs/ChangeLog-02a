@@ -1,3 +1,10 @@
+Fri Mar 30 14:55:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAOACE.dsw:
+	* tao/TAO.dsw
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP_Static.dsp:
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp: Added new files and modules.
+
 Fri Mar 30 14:33:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/*/Makefile:
@@ -14,12 +21,12 @@ Fri Mar 30 14:23:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Mar 30 14:08:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/*/Makefile: Updated dependencies
-	
+
 	* tests/BiDirectional/server.cpp:
 	* tests/BiDirectional/client.cpp:
 	* tests/BiDirectional_NestedUpcall/client.cpp:
 	* tests/BiDirectional_NestedUpcall/server.cpp: Added missing
-	  #includes.  
+	  #includes.
 
 Fri Mar 30 13:43:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -33,7 +40,7 @@ Fri Mar 30 13:43:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/BiDir_PolicyFactory.h:
 	* tao/BiDir_Policy_i.h:
 	* tao/BiDir_Policy_i.inl: Moved the files for BiDirecctional GIOP
-	  to a seperate library.  
+	  to a seperate library.
 
 	* tao/BiDir_Adapter.cpp:
 	* tao/BiDir_Adapter.h: The interface which is used by the ORB to
@@ -45,12 +52,12 @@ Fri Mar 30 13:43:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/ORB_Core.cpp
 	* tao/ORB_Core.h
 	* tao/ORB_Core.i: Added hooks to load the BiDirectional GIOP
-	  library.  
-	  
+	  library.
+
 	* tao/Makefile: Removed the BiDirectional GIOP files.
-	
+
 	* tao/*/Makefiles: Updated dependencies.
-	
+
 	* tao/PortableServer/POA.cpp: Removed parsing of the BiDirectional
 	  policy from here to the new library.
 
@@ -58,7 +65,7 @@ Fri Mar 30 13:43:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/BiDir_GIOP/BiDirGIOP.h:
 	* tao/BiDir_GIOP/BiDir_ORBInitializer.h:
 	* tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
-	* tao/BiDir_GIOP/BiDir_PolicyFactory.cpp  
+	* tao/BiDir_GIOP/BiDir_PolicyFactory.cpp
 	* tao/BiDir_GIOP/BiDirPolicy.pidl:
         * tao/BiDir_GIOP/BiDir_PolicyFactory.h:
 	* tao/BiDir_GIOP/BiDirPolicyC.cpp:

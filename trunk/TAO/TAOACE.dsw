@@ -342,6 +342,22 @@ Package=<4>
 
 ###############################################################################
 
+Project: "BiDirGIOP"=.\tao\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+
+###############################################################################
+
 Project: "DynamicInterface"=.\tao\DynamicInterface\TAO_DynamicInterface.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1007,4 +1023,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-
