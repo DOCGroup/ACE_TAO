@@ -914,7 +914,7 @@ sub create_kit () {
       }
 
       # Reset it again with autoconf files
-      $release_files =  $release_autoconf_files;
+      chomp ($release_files = `$make -f ACE_wrappers/Makefile show_autoconf_release_files`);
 
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .
