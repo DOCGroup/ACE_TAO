@@ -115,12 +115,9 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
               CosTrading::LinkName* trader_name =
                 CosTrading::TraderName::allocbuf (2);
 
-              if (this->verbose_)
-                {
-                  ACE_DEBUG ((LM_DEBUG, "First stop %s, destination %s.\n",
-                              ACE_static_cast (const char*, link_name_seq[0]),
-                              ACE_static_cast (const char*, link_name_seq2[i])));
-                }
+	      ACE_DEBUG ((LM_DEBUG, "*** Query through %s to destination %s.\n",
+			  ACE_static_cast (const char*, link_name_seq[0]),
+			  ACE_static_cast (const char*, link_name_seq2[i])));
               
               trader_name[0] = CORBA::string_dup (link_name_seq[0]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
@@ -179,10 +176,10 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
       
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
         {
+          ACE_DEBUG ((LM_DEBUG, "*** ------------------------------\n"));
           ACE_DEBUG ((LM_DEBUG, "*** Performing query for %s.\n", TT_Info::QUERIES[i][0]));
           ACE_DEBUG ((LM_DEBUG, "*** Query: %s\n", TT_Info::QUERIES[i][1]));
           ACE_DEBUG ((LM_DEBUG, "*** Preferences: %s\n", TT_Info::QUERIES[i][2]));
-          
           CosTrading::OfferSeq_ptr offer_seq_ptr = 0;
           CosTrading::OfferIterator_ptr offer_iterator_ptr = 0;
           CosTrading::PolicyNameSeq_ptr limits_applied_ptr = 0;
