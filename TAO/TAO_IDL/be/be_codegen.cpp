@@ -452,6 +452,8 @@ TAO_CodeGen::start_server_header (const char *fname)
       // registers the POA factory with the Service_Configurator, so
       // the ORB can automatically find it.
       this->gen_standard_include (this->server_header_,
+                                  "tao/Collocation_Proxy_Broker.h");
+      this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/PortableServer.h");
       this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/Servant_Base.h");

@@ -206,7 +206,7 @@ be_valuetype::gen_helper_header (char*,
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "TAO_NAMESPACE CORBA" << be_nl
+  *os << "namespace CORBA" << be_nl
       << "{"
       << be_idt_nl
       << "TAO_NAMESPACE_STORAGE_CLASS void add_ref ("
@@ -215,8 +215,7 @@ be_valuetype::gen_helper_header (char*,
       << this->full_name () << " *);";
 
   *os <<  be_uidt_nl
-      << "}" << be_nl
-      << "TAO_NAMESPACE_CLOSE";
+      << "}";
 
   return 0;
 }
@@ -237,7 +236,7 @@ be_valuetype::gen_helper_inline (char*,
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "#if defined (__ACE_INLINE__)" << be_nl << be_nl
-      << "TAO_NAMESPACE CORBA" << be_nl
+      << "namespace CORBA" << be_nl
       << "{"
       << be_idt_nl
       << "TAO_NAMESPACE_STORAGE_CLASS void add_ref ("
@@ -245,8 +244,7 @@ be_valuetype::gen_helper_inline (char*,
       << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref ("
       << this->full_name () << " *);"
       <<  be_uidt_nl
-      << "}" << be_nl
-      << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl
+      << "}" << be_nl << be_nl
       << "#endif /*__ACE_INLINE__*/";
 
   return 0;

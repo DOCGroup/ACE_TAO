@@ -51,5 +51,23 @@ be_visitor_root_ch::init (void)
   // Initialize the stream.
   this->ctx_->stream (tao_cg->client_header ());
 
+  // If this IDL file contains an interface declaration, generated a
+  // forward declaration of the proxy broker for a possible collocated call.
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.interface_seen_))
+    {
+      TAO_OutStream *os = this->ctx_->stream ();
+
+      *os << be_nl << be_nl 
+          << "// TAO_IDL - Generated from " << be_nl 
+          << "// " << __FILE__ << ":" << __LINE__;
+
+      *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
+          << "class Collocation_Proxy_Broker;" << be_uidt_nl
+          << "}";
+    }
+
   return 0;
 }
