@@ -5,12 +5,12 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Thread_Pools, server, "$Id$")
+ACE_RCSID(Thread_Pool, server, "$Id$")
 
 const char *ior_output_file = "ior";
 int ior_count = 1;
-CORBA::ULong static_threads = 3;
-CORBA::ULong dynamic_threads = 3;
+CORBA::ULong static_threads = 2;
+CORBA::ULong dynamic_threads = 2;
 long nap_time = 1000;
 
 int
