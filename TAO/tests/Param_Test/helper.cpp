@@ -30,25 +30,25 @@ Generator::~Generator (void)
 CORBA::Short
 Generator::gen_short (void)
 {
-  return (CORBA::Short) (::lrand48 () % TEST_BUFSIZE);
+  return (CORBA::Short) (ACE_OS::rand () % TEST_BUFSIZE);
 }
 
 CORBA::Long
 Generator::gen_long (void)
 {
-  return ::lrand48 () % TEST_BUFSIZE;
+  return ::ACE_OS::rand () % TEST_BUFSIZE;
 }
 
 char *
 Generator::gen_string (void)
 {
-  CORBA::ULong len = (CORBA::ULong) (::lrand48 () % TEST_BUFSIZE);
+  CORBA::ULong len = (CORBA::ULong) (::ACE_OS::rand () % TEST_BUFSIZE);
   char *buf = CORBA::string_alloc (len);
   CORBA::ULong i = 0;
 
   while (i < len)
     {
-      int c = lrand48 () % 128;
+      int c = ACE_OS::rand () % 128;
       if (isprint (c) && !isspace (c))
         {
           buf [i] = c;
@@ -62,13 +62,13 @@ Generator::gen_string (void)
 const Param_Test::Fixed_Struct
 Generator::gen_fixed_struct (void)
 {
-  this->fixed_struct_.l = lrand48 ();
-  this->fixed_struct_.c = lrand48 () % 128;
-  this->fixed_struct_.s = (CORBA::Short) lrand48 ();
-  this->fixed_struct_.o = lrand48 () % 128;
+  this->fixed_struct_.l = ACE_OS::rand ();
+  this->fixed_struct_.c = ACE_OS::rand () % 128;
+  this->fixed_struct_.s = (CORBA::Short) ACE_OS::rand ();
+  this->fixed_struct_.o = ACE_OS::rand () % 128;
   this->fixed_struct_.f = (CORBA::Float) drand48 ();
-  this->fixed_struct_.b = (CORBA::Boolean) lrand48 () % 2;
-  this->fixed_struct_.d = drand48 ();
+  this->fixed_struct_.b = (CORBA::Boolean) ACE_OS::rand () % 2;
+  this->fixed_struct_.d = (ACE_OS::rand () * 1.0);
   return this->fixed_struct_;
 }
 
