@@ -68,7 +68,6 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context *ctx)
       computed_scope_encap_len_ (0),
       tc_offset_ (0),
       index_ (-1)
-
 {
 }
 
@@ -263,6 +262,13 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
 int
 be_visitor_typecode_defn::visit_type (be_type *node)
 {
+  if (be_global->gen_anyop_files ())
+    {
+      // Switch streams, ctx will be reassigned when this
+      // pass is done.
+      this->ctx_->stream (tao_cg->anyop_source ());
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // reset the queue

@@ -2,14 +2,19 @@
 // $Id$
 
 project(*Server): messaging, taoexe, portableserver, minimum_corba {
+  idlflags += -GA
+
   Source_Files {
     param_test_i.cpp
+    param_testA.cpp
     server.cpp
   }
 }
 
 project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinterface {
   exename  = client
+
+  idlflags += -GA
 
   Source_Files {
     any.cpp
@@ -35,6 +40,7 @@ project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinter
     objref_struct.cpp
     options.cpp
     param_test_i.cpp
+    param_testA.cpp
     recursive_struct.cpp
     recursive_union.cpp
     results.cpp
@@ -58,8 +64,11 @@ project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinter
 }
 
 project(*Anyop): messaging, taoexe, portableserver, minimum_corba {
+  idlflags += -GA
+
   Source_Files {
     param_testC.cpp
+    param_testA.cpp
     anyop.cpp
   }
 }

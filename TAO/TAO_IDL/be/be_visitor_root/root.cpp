@@ -294,16 +294,11 @@ int be_visitor_root::visit_root (be_root *node)
 
           if (be_global->any_support ())
             {
-              if (be_global->gen_anyop_files ())
-                {
-                  // Switch streams, ctx will be reassigned when this
-                  // pass is done.
-                  ctx.stream (tao_cg->anyop_source ());
-                }
-
               be_visitor_root_any_op visitor (&ctx);
               status = node->accept (&visitor);
 
+              // Conditional switch to the *A.cpp stream is done
+              // in the visitor constructor.
               if (be_global->gen_anyop_files ())
                 {
                   (void) tao_cg->end_anyop_source ();
