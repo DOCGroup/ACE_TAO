@@ -68,7 +68,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -85,7 +85,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_CORBA_CURRENT__VAR_OUT_CH_)
 #define _CORBA_CURRENT__VAR_OUT_CH_
@@ -135,7 +135,7 @@ namespace CORBA
     
     static Current_ptr _nil (void)
     {
-      return (Current_ptr)0;
+      return static_cast<Current_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -213,7 +213,7 @@ TAO_Export void operator<<= (CORBA::Any &, CORBA::Current_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Current_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "CurrentC.inl"
