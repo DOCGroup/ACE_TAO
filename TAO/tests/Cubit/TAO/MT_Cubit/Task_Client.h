@@ -86,10 +86,8 @@ enum Cubit_Datatypes
   CB_LOW_PRIORITY_RATE = 10
 };
 
-//typedef ACE_Array<ACE_timer_t> JITTER_ARRAY;
-//typedef ACE_Array_Iterator<ACE_timer_t> JITTER_ARRAY_ITERATOR;
-
-typedef ACE_timer_t JITTER_ARRAY;
+typedef ACE_Unbounded_Set<ACE_timer_t> JITTER_ARRAY;
+typedef ACE_Unbounded_Set_Iterator<ACE_timer_t> JITTER_ARRAY_ITERATOR;
 
 class Task_State
 {
@@ -146,9 +144,6 @@ public:
   JITTER_ARRAY **global_jitter_array_;
   // This array stores the latency seen by each client for each
   // request, to be used later to compute jitter.
-
-  //  JITTER_ARRAY_ITERATOR **global_jitter_iterator_;
-  // Iterator for the jitter array.
 
   u_int *count_;
   // This array stores the call count of each thread.  They will not
@@ -348,9 +343,6 @@ private:
 
   JITTER_ARRAY *my_jitter_array_;
   // Array holding the jitter values for the latencies.
-
-  //  JITTER_ARRAY_ITERATOR my_jitter_iterator_;
-  //Iterator.
 
   MT_Cubit_Timer *timer_;
   // Timer using pccTimer for chorus and ACE_Timer for other platforms.
