@@ -82,9 +82,8 @@ AST_String::AST_String (void)
 
 AST_String::AST_String (AST_Expression *ms)
  : AST_Decl (AST_Decl::NT_string,
-                         new UTL_ScopedName (new Identifier ("string"),
-                                                               0),
-                         0,
+		         new UTL_ScopedName (new Identifier ("string"),
+					                       0),
              I_TRUE),
          pd_max_size (ms),
    pd_width (sizeof (char))
@@ -93,17 +92,18 @@ AST_String::AST_String (AST_Expression *ms)
 
 AST_String::AST_String (AST_Expression *ms,
                         long wide)
- : AST_Decl (wide == (long) sizeof (char)
-                ? AST_Decl::NT_string
-                : AST_Decl::NT_wstring,
-                         new UTL_ScopedName (wide == (long) sizeof (char)
-                                                                  ? new Identifier ("string")
-                                                                  : new Identifier ("wstring"),
-                                                               0),
-                         0,
-             I_TRUE),
-    pd_max_size (ms),
-    pd_width (wide)
+ : AST_Decl 
+   (
+     wide == (long) sizeof (char) ? AST_Decl::NT_string : AST_Decl::NT_wstring,
+		 new UTL_ScopedName 
+     (
+       new Identifier ((wide == (long) sizeof (char)) ? "string" : "wstring"),
+			 0
+     ),
+     I_TRUE
+   ),
+   pd_max_size (ms),
+   pd_width (wide)
 {
 }
 
