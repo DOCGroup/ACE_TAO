@@ -148,6 +148,30 @@ private:
  * This implementation of an unordered set uses a circular
  * linked list with a dummy node.  This implementation does not
  * allow duplicates, but it maintains FIFO ordering of insertions.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Circular linked list
+ *   - Duplicates allowed?
+ *       No
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       Linear
+ *   - Insert/replace speed
+ *       Linear
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       Yes
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator==
+ *
  */
 template <class T>
 class ACE_Unbounded_Set

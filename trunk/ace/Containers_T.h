@@ -48,6 +48,29 @@ class ACE_Allocator;
  * that is allocated dynamically.  The Stack interface
  * provides the standard constant time push, pop, and top
  * operations.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Dynamic array
+ *   - Duplicates allowed?
+ *       Yes
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       N/A
+ *   - Insert/replace speed
+ *       N/A
+ *   - Iterator still valid after change to container?
+ *       N/A
+ *   - Frees memory for removed elements?
+ *       No
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *
  */
 template <class T>
 class ACE_Bounded_Stack
@@ -156,6 +179,29 @@ private:
  *
  * This implementation of a Stack uses a fixed array
  * with the size fixed at instantiation time.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Fixed array
+ *   - Duplicates allowed?
+ *       Yes
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       N/A
+ *   - Insert/replace speed
+ *       N/A
+ *   - Iterator still valid after change to container?
+ *       N/A
+ *   - Frees memory for removed elements?
+ *       No
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Stack
@@ -300,6 +346,29 @@ private:
  * therefore, you should avoid the use of these methods since
  * they aren't really part of the ADT stack.  The stack is implemented
  * as a doubly linked list.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Double linked list
+ *   - Duplicates allowed?
+ *       No
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       Linear
+ *   - Insert/replace speed
+ *       Linear
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       Yes
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *
  */
 template <class T>
 class ACE_Unbounded_Stack
@@ -725,6 +794,29 @@ public:
  * If you need a double linked container class, use the DLList
  * class which is a container but delegates to the Double_Linked_List
  * class.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Double Linked List
+ *   - Duplicates allowed?
+ *       Yes
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       N/A
+ *   - Insert/replace speed
+ *       Linear
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       No
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *
  */
 template <class T>
 class ACE_Double_Linked_List
@@ -1203,6 +1295,30 @@ private:
  * This implementation of an unordered set uses a fixed array.
  * It does not allow duplicate members.  The set provides linear insertion/deletion
  * operations.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Fixed array
+ *   - Duplicates allowed?
+ *       No
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       Linear
+ *   - Insert/replace speed
+ *       Linear
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       No
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator==
+ *
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set
@@ -1371,6 +1487,30 @@ private:
  * invalidate iterators, but caution should be taken to ensure
  * expected behavior.  Once initialized, the object has a maximum size
  * which can only be increased by the assignment of another larger Bounded_Set.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Bounded array which can grow via assignment
+ *   - Duplicates allowed?
+ *       No
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       Linear
+ *   - Insert/replace speed
+ *       Linear
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       No
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator==
+ *
  */
 template <class T>
 class ACE_Bounded_Set
@@ -1564,6 +1704,33 @@ private:
  * operator semantics be defined for the parameterized type <T>, but
  * does not impose any restriction on how that ordering operator is
  * implemented.  The set is implemented as a linked list.
+ *
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Double linked list
+ *   - Duplicates allowed?
+ *       Yes
+ *   - Random access allowed?
+ *       No
+ *   - Search speed
+ *       Linear
+ *   - Insert/replace speed
+ *       Linear
+ *   - Iterator still valid after change to container?
+ *       Yes
+ *   - Frees memory for removed elements?
+ *       Yes
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator==
+ *       -# operator<
+ *
+ *
  */
 template <class T>
 class ACE_Ordered_MultiSet
