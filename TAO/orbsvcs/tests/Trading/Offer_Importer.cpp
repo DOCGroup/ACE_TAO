@@ -27,7 +27,7 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Federated Query.\n"));
 
-  TAO_Policy_Manager policies;
+  TAO_Policy_Creator policies;
   policies.exact_type_match (0);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
@@ -54,7 +54,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Directed Query.\n"));
 
-  TAO_Policy_Manager policies;
+  TAO_Policy_Creator policies;
   policies.exact_type_match (0);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
@@ -137,7 +137,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Offer_Importer::
-perform_queries_with_policies (const TAO_Policy_Manager& policies,
+perform_queries_with_policies (const TAO_Policy_Creator& policies,
                                CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
