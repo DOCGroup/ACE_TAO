@@ -21,6 +21,7 @@
 #define _GIOP_HH
 
 #include <ace/OS.h>
+#include <ace/SOCK_Stream.h>
 #if defined(__IIOP_BUILD)
 #  include	"orb.hh"
 #  include	"stub.hh"
@@ -269,6 +270,7 @@ class GIOP {				// namespace
     //
     // Close a connection, first sending GIOP::CloseConnection
     //
+    static void		close_connection (ACE_SOCK_Stream &fd, void *ctx);
     static void		close_connection (ACE_HANDLE &fd, void *ctx);
 
     //
@@ -287,37 +289,28 @@ class GIOP {				// namespace
     // indicate overal status (LocateStatusType) as well as an objref
     // in the case of OBJECT_FORWARD.  That objref is released.
     //
-    static void	incoming_message (
-		    ACE_HANDLE		&fd,
-		    LocateStatusType	check_forward (
-					    opaque		&key,
-					    CORBA_Object_ptr	&objref,
-					    void		*context
-					),
-		    void		handle_request (
-					    RequestHeader	&req,
-					    CDR			&request_body,
-					    CDR			*reply,
-					    void		*context,
-					    CORBA_Environment	&env
-					),
-		    void		*context,
-		    CORBA_Environment	&env
-		);
+  typedef LocateStatusType (*ForwardFunc)(opaque&,CORBA_Object_ptr&,void*);
+  typedef void (*RequestHandler)(RequestHeader&,CDR&,CDR*,void*,CORBA_Environment&);
 
-    static CORBA_Boolean	send_message (
-				    CDR			&stream,
-				    ACE_HANDLE		&connection
-				);
+  static void incoming_message(ACE_SOCK_Stream& peer,
+			       ForwardFunc check_forward,
+			       RequestHandler handle_request,
+			       void* context,
+			       CORBA_Environment& env);
+  static void incoming_message(ACE_HANDLE& fd,
+			       ForwardFunc check_forward,
+			       RequestHandler handle_request,
+			       void* context,
+			       CORBA_Environment& env);
+
+  static CORBA_Boolean send_message (CDR& stream, ACE_SOCK_Stream& peer);
+  static CORBA_Boolean send_message (CDR& stream, ACE_HANDLE& connection);
 
     //
     // Reads message, returns message type from header
     //
-    static MsgType		read_message (
-				    ACE_HANDLE		&connection,
-				    CDR			&msg,
-				    CORBA_Environment	&env
-				);
+  static MsgType read_message (ACE_SOCK_Stream& peer, CDR& msg, CORBA_Environment& env);
+  static MsgType read_message (ACE_HANDLE& connection, CDR& msg, CORBA_Environment& env);
 };
 
 #endif	// _GIOP_HH

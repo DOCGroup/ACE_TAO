@@ -82,9 +82,9 @@ tcp_oa_dispatcher (
   request_tsd = &req;
 #endif	// _POSIX_THREADS
 
-  TCP_OA::dispatch_context* helper;
+  Dispatch_Context* helper;
 
-  helper = (TCP_OA::dispatch_context*) context;
+  helper = (Dispatch_Context*) context;
   helper->skeleton (req.object_key, svr_req, helper->context, env);
 
   svr_req.release ();
@@ -190,10 +190,10 @@ tcp_oa_forwarder (
     void			*ctx
 )
 {
-    TCP_OA::dispatch_context	*helper;
+    Dispatch_Context	*helper;
     CORBA_Environment		env;
 
-    helper = (TCP_OA::dispatch_context *) ctx;
+    helper = (Dispatch_Context *) ctx;
     assert (helper->check_forward != 0);
     helper->check_forward (target_key, forward_reference, helper->context, env);
 
@@ -475,7 +475,7 @@ TCP_OA::get_client_principal (
 // Generic routine to handle a message.
 //
 void
-TCP_OA::handle_message (dispatch_context& ctx, CORBA_Environment& env)
+TCP_OA::handle_message (Dispatch_Context& ctx, CORBA_Environment& env)
 {
   GIOP::incoming_message (ctx.endpoint,
 			  ctx.check_forward ? tcp_oa_forwarder : 0,
@@ -510,8 +510,9 @@ void *
 TCP_OA::worker (void *arg)
 {
     CORBA_Environment		env;
-    dispatch_context		*context = (dispatch_context *)arg;
+    Dispatch_Context		*context = (Dispatch_Context *)arg;
 
+#if 0
     do {
 	dmsg1 ("worker starting on FD %d", context->endpoint->fd);
 	context->oa->handle_message (*context, env);
@@ -522,6 +523,7 @@ TCP_OA::worker (void *arg)
 	}
     } while (context->aggressive && context->endpoint != -1);
 
+#endif
     delete context;
     return 0;
 }
@@ -707,9 +709,9 @@ TCP_OA::get_request (
 	// connection resource too -- when this dispatch context gets
 	// destroyed, only then is the connection released.
 	//
-	dispatch_context		*ctx;
+	Dispatch_Context* ctx;
 
-	ctx = new dispatch_context;
+	ctx = new Dispatch_Context;
 	ctx->skeleton = handler;
 	ctx->check_forward = check_forward;
 	ctx->context = app_state;
@@ -754,7 +756,7 @@ TCP_OA::get_request (
     // Handle it in this thread.  We can do it without any need
     // to dynamically allocate memory.
     //
-    dispatch_context		ctx;
+    Dispatch_Context		ctx;
 
     ctx.skeleton = handler;
     ctx.check_forward = check_forward;

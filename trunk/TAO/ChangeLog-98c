@@ -1,3 +1,30 @@
+Thu Apr 10 11:49:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* giop.{hh,cpp}: Overloaded all methods dealing with connections
+ 	so that there are two, one taking a file descriptor as argument,
+ 	the other taking an ACE_SOCK_Stream.  Right now, the *_Stream
+ 	version simply forwards to the fd-based one.  I would have
+ 	preferred to get rid of the fd-based methods altogether, but we've
+ 	only converted the server runtime; the client is still using the
+ 	original sun code, which is effectively fd-based.  In the course
+ 	of doing this, I also simplified the decls for incoming_message by
+ 	creating typedefs for some of the function pointers passed as
+ 	args.
+
+	* orbconf.hh: Fixed the stupid auto-endian-ness detector
+ 	AGAIN...had my logic reversed!
+
+	* roa.cpp: Adjusted code in accordance with changes to tcpoa.hh.
+
+	* tcpoa.hh: Moved and renamed TCP_OA::dispatch_context to be
+ 	::Dispatch_Context, and changed its endpoint member to be an
+ 	ACE_SOCK_Stream.
+
+	* roa.hh: Fixed handle_input() to use the underlying peer() data
+ 	member for reading data, rather than using its argument.  This is
+ 	so that when a different thread handles each connection,
+ 	handle_input() can simply be called repeatedly by svc().
+
 Wed Apr  9 16:19:21 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tcpoa.cpp: Fixed a problem that G++ didn't notice regarding

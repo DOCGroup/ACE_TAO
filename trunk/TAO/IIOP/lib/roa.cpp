@@ -67,13 +67,13 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
   // to dynamically allocate memory.
   //
   CORBA_Environment env;
-  TCP_OA::dispatch_context ctx;
+  Dispatch_Context ctx;
 
   ctx.skeleton = ACE_ROA::upcall();
   ctx.context = ACE_ROA::context();
   ctx.check_forward = ACE_ROA::forwarder();
   ctx.oa = ACE_ROA::oa();
-  ctx.endpoint = fd;
+  ctx.endpoint = peer();
 
 #ifdef	_POSIX_THREADS
   ctx.aggressive = CORBA_B_FALSE;
