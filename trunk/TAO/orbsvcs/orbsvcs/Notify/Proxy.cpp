@@ -28,6 +28,17 @@ TAO_NS_Proxy::~TAO_NS_Proxy ()
 }
 
 void
+TAO_NS_Proxy::subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL)
+{
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
+  ACE_CHECK;
+
+  // copy
+  subscribed_types = this->subscribed_types_;
+}
+
+void
 TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL_NOT_USED)
 {
   TAO_NS_Method_Request_Updates request (added, removed, this);

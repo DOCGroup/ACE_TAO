@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/NotifyExtS.h"
 #include "Container_T.h"
 #include "Destroy_Callback.h"
 #include "Notify_Service.h"
@@ -41,7 +42,7 @@ class TAO_NS_EventChannel;
  */
 
 
-class TAO_Notify_Export TAO_NS_EventChannelFactory : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public TAO_NS_Container_T <TAO_NS_EventChannel, TAO_NS_EventChannelFactory, TAO_NS_Notify_Service>, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_EventChannelFactory : public virtual POA_NotifyExt::EventChannelFactory, public TAO_NS_Container_T <TAO_NS_EventChannel, TAO_NS_EventChannelFactory, TAO_NS_Notify_Service>, public TAO_NS_Destroy_Callback
 {
   friend class TAO_NS_Builder;
 
@@ -85,6 +86,12 @@ public:
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
+
+  /// = NotifyExt method
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   /// = CosNotifyChannelAdmin Methods
 

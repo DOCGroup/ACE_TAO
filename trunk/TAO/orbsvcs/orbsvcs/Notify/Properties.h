@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Singleton.h"
+#include "tao/TAO_Singleton.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotificationC.h"
@@ -35,7 +35,7 @@ class TAO_NS_Builder;
  */
 class TAO_Notify_Export TAO_NS_Properties
 {
-  friend class ACE_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX>;
+  friend class TAO_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX>;
 
 public:
   /// Constuctor
@@ -137,9 +137,9 @@ protected:
   CosNotification::QoSProperties pc_qos_;
 };
 
-typedef ACE_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX> TAO_NS_PROPERTIES;
+typedef TAO_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX> TAO_NS_PROPERTIES;
 
-TAO_NOTIFY_SINGLETON_DECLARE (ACE_Singleton, TAO_NS_Properties, TAO_SYNCH_MUTEX);
+TAO_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_NS_Properties, TAO_SYNCH_MUTEX);
 
 #if defined (__ACE_INLINE__)
 #include "Properties.inl"

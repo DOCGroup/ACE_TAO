@@ -46,6 +46,9 @@ protected:
 
   /// Parent
   PARENT* parent_;
+
+  /// Are we shutdown (i,e. scheduled for destroy).
+  int shutdown_;
 };
 
 #if defined (__ACE_INLINE__)

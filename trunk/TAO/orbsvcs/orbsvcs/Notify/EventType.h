@@ -67,7 +67,7 @@ public:
   // Get the type underneath us.
 
   /// Helper to print contents.
-  void dump (void);
+  void dump (void) const;
 
 protected:
   /// Init this object.
