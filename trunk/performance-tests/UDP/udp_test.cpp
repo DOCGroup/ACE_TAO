@@ -313,7 +313,7 @@ Client::run (void)
 #if defined (ACE_LACKS_FLOATING_POINT)
   sample_mean = sum / nsamples;
 #else  /* ! ACE_LACKS_FLOATING_POINT */
-  sample_mean = ((double)sum)/((double)nsamples);
+  sample_mean = ((double) ACE_U64_TO_U32 (sum)) / (double) nsamples;
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 
   if (logfile)
@@ -358,8 +358,8 @@ Client::run (void)
 #if ! defined (ACE_LACKS_FLOATING_POINT)
   for (i = 0; i < (ACE_INT32) nsamples; i++)
     {
-      std_dev += ((double)Samples[i] - sample_mean) *
-        ((double) Samples[i] - sample_mean);
+      std_dev += ((double) ACE_U64_TO_U32 (Samples[i]) - sample_mean) *
+        ((double) ACE_U64_TO_U32 (Samples[i]) - sample_mean);
       d = (int)((Samples[i] - min)/window);
 
       if (d < 0 || d > ndist)
@@ -374,7 +374,7 @@ Client::run (void)
       if (logfile)
         ACE_OS::fprintf (sampfp,
                          "%u\n",
-                         (ACE_UINT32) Samples[i]);
+                         ACE_U64_TO_U32 (Samples[i]));
     }
 #endif /* ACE_LACKS_FLOATING_POINT */
 
