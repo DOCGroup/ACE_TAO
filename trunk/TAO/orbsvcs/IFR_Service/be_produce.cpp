@@ -253,7 +253,7 @@ BE_produce (void)
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
-          if (root->ast_accept (&visitor) == -1)
+          if (visitor.visit_scope (root) == -1)
             {
               ACE_ERROR ((
                   LM_ERROR,

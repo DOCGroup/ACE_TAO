@@ -13,7 +13,7 @@ $status = 0;
 $ifr_iorfile= "if_repo.ior";
 $svr_iorfile = "iorfile";
 $test_idl = PerlACE::LocalFile ("test.idl");
-
+ 
 if ($^O eq "MSWin32") {
     $tao_ifr = "../../../../../bin/tao_ifr";
 }
@@ -35,7 +35,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
 $TAO_IFR = new PerlACE::Process ($tao_ifr);
 $IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service");
-$SV      = new PerlACE::Process ("server");
+$SV      = new PerlACE::Process ("server", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile");
 $CL      = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile"
                                  . " $lookup_by_name");
 $CL2     = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile -n");
@@ -60,7 +60,7 @@ if (PerlACE::waitforfile_timed ($svr_iorfile, 15) == -1) {
     exit 1;
 }
 
-$TAO_IFR->Arguments ($test_idl);
+$TAO_IFR->Arguments ("-ORBInitRef InterfaceRepository=file://$ifr_iorfile $test_idl");
 
 $tresult = $TAO_IFR->SpawnWaitKill (30);
 
@@ -76,7 +76,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$TAO_IFR->Arguments ("-r $test_idl");
+$TAO_IFR->Arguments ("-ORBInitRef InterfaceRepository=file://$ifr_iorfile -r $test_idl");
 
 $tresult = $TAO_IFR->SpawnWaitKill (30);
 
