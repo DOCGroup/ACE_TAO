@@ -79,7 +79,7 @@ extern "C"
 // Default number of <ACE_Event_Handler>s supported by
 // <ACE_Timer_Heap>.
 # if !defined (ACE_DEFAULT_TIMERS)
-#   define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
+#   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
 # endif /* ACE_DEFAULT_TIMERS */
 
   // for use by access()
