@@ -1,11 +1,13 @@
-// Server_Logging_Handler_T.cpp
+// $Id$
+// Server_Logging_Handler.cpp
 
-#if !defined (ACE_SERVER_LOGGING_HANDLER_T_C)
-#define ACE_SERVER_LOGGING_HANDLER_T_C
+#if !defined (ACE_SERVER_LOGGING_HANDLERT_C)
+#define ACE_SERVER_LOGGING_HANDLERT_C
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
 #include "Server_Logging_Handler_T.h"
+#include <string.h>
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Track number of requests.
@@ -16,8 +18,8 @@ COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LM
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR>
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::ACE_Server_Logging_Handler_T 
   (ACE_Thread_Manager *,
-  LMR const &receiver) :
-  receiver_ (receiver, ACE_CString (" ", 1))
+   LMR const& receiver) 
+    : receiver_ (receiver, ACE_CString (" ", 1))
 {
 }
 
@@ -111,6 +113,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::open
 
   ACE_DEBUG ((LM_DEBUG, "(%t) accepted connection from host %s on fd %d\n",
 	      client_addr.get_host_name (), this->peer ().get_handle ()));
+
   return 0;
 }
 
@@ -178,8 +181,8 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::parse_args (int argc, char *argv[])
 	  break;
 	default:
 	  ACE_ERROR_RETURN ((LM_ERROR, 
-			     "%n:\n[-p server-port]\n%a", 1),
-			    -1);
+			    "%n:\n[-p server-port]\n%a", 1),
+			   -1);
 	}
     }
 
@@ -190,24 +193,27 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::parse_args (int argc, char *argv[])
 template<class SLH, class LMR, class SS> int
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::make_svc_handler (SLH *&handler)
 {
-  ACE_NEW_RETURN (handler, SLH (ACE_Service_Config::thr_mgr (), this->receiver()), -1);
+  ACE_NEW_RETURN (handler, 
+		  SLH (ACE_Service_Config::thr_mgr (), this->receiver()), 
+		  -1);
   return 0;
 }
 
 template<class LMR> 
-ACE_Server_Logging_Handler<LMR>::ACE_Server_Logging_Handler (ACE_Thread_Manager *tm,
-							     LMR const &receiver) 
-  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LMR>(tm, receiver)
+ACE_Server_Logging_Handler<LMR>::ACE_Server_Logging_Handler (ACE_Thread_Manager * tm,
+							     LMR const& receiver) 
+  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LMR>(tm,
+										   receiver)
 {
 }
 
 template<class LMR> 
-ACE_Server_Logging_Handler<LMR>::ACE_Server_Logging_Handler(ACE_Thread_Manager *tm)
-  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LMR>(tm, LMR ())
+ACE_Server_Logging_Handler<LMR>::ACE_Server_Logging_Handler(ACE_Thread_Manager * tm) 
+  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LMR>(tm, LMR())
 {
 }
 
-template<class LMR> int
+template<class LMR>  int
 ACE_Server_Logging_Handler<LMR>::open (void *)
 {
   // call base class open_common
@@ -216,27 +222,26 @@ ACE_Server_Logging_Handler<LMR>::open (void *)
 
   // Register ourselves with the Reactor to enable subsequent
   // dispatching.
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  if (ACE_Service_Config::reactor ()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     return -1;
-  else
-    return 0;
+  return 0;
 }
 
 template<class LMR> 
-ACE_Thr_Server_Logging_Handler<LMR>::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *tm,
-								    LMR const &receiver) 
+ACE_Thr_Server_Logging_Handler<LMR>::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *tm, LMR const &receiver)
   : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LMR>(tm, receiver)
 {
 }
 
-template<class LMR> 
-ACE_Thr_Server_Logging_Handler<LMR>::ACE_Thr_Server_Logging_Handler(ACE_Thread_Manager *tm) 
+template<class LMR>
+ACE_Thr_Server_Logging_Handler<LMR>::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *tm)
   : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LMR>(tm, LMR ())
 {
 }
 
-template<class LMR> int
+template<class LMR> 
+int
 ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
 {
   // call base class open_common
@@ -246,10 +251,9 @@ ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
   // Spawn a new thread of control to handle logging records with the
   // client.  Note that this implicitly uses the
   // ACE_Service_Config::thr_mgr () to control all the threads.
-  else if (this->activate (THR_BOUND | THR_DETACHED) == -1)
+  if (this->activate (THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);    
-  else
-    return 0;
+  return 0;
 }
 
 // Process remote logging records. 
@@ -259,13 +263,11 @@ ACE_Thr_Server_Logging_Handler<LMR>::svc (void)
 {
   int result = 0;
 
-  // Loop until the client terminates the connection or an error
-  // occurs.
+  // Loop until the client terminates the connection or an error occurs.
 
   while ((result = this->handle_input ()) > 0)
     continue;
 
   return result;
 }
-#endif /* ACE_SERVER_LOGGING_HANDLER_T_C */
-
+#endif /* ACE_SERVER_LOGGING_HANDLER_TT_C */

@@ -253,8 +253,6 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
     }
   else
     return 0;
-  
-  return 0;
 }
 
 // Template Method that makes a SVC_HANDLER (using the appropriate
