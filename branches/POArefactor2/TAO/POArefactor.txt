@@ -1,3 +1,17 @@
+Sun Nov 28 11:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ORB_Manager.{h,cpp}:
+        * tao/Utils/ORB_Manager.{h,cpp}:
+          Moved from PortableServer to Utils library, just a helper class that
+          doesn't need to be in PortableServer
+
+        * tao/PortableServer/Object_Adapter.{h,i}:
+          Added enabled_locking accessor method and made the member protected
+          again.
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Use the enabled_locking method
+
 Fri Nov 26 08:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/On_Demand_Loading/Servant_Manager.h:
