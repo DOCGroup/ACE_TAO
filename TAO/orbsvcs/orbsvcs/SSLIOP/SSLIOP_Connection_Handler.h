@@ -62,7 +62,7 @@ public:
 
   //@{
   //** @name Connection Handler overloads
-  **/
+  */
   virtual int open_handler (void *);
   //@}
 
