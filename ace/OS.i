@@ -6334,19 +6334,17 @@ ACE_OS::inet_addr (const ACE_TCHAR *name)
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
+// For pSOS, this function is in OS.cpp
+#if !defined (ACE_PSOS)
 ACE_INLINE ACE_TCHAR *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_TRACE ("ACE_OS::inet_ntoa");
-#if defined (ACE_PSOS)
-  ACE_UNUSED_ARG (addr);
-  ACE_NOTSUP_RETURN (0);
-#else
   ACE_OSCALL_RETURN (ACE_TEXT_CHAR_TO_TCHAR (::inet_ntoa (addr)),
                                              ACE_TCHAR *,
-                                                                                         0);
-#endif /* defined (ACE_PSOS) */
+                     0);
 }
+#endif /* defined (ACE_PSOS) */
 
 ACE_INLINE int
 ACE_OS::inet_pton (int family, const ACE_TCHAR *strptr, void *addrptr)
