@@ -19,7 +19,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
  private:
   CORBA::ORB_var orb_;
   RTScheduling::Current_var current_;
-  RTScheduling::Current::IdType* guid_ [4];
+  RTScheduling::Current::IdType guid_ [4];
 };
 
 #endif /* THREAD_TASK_H */
