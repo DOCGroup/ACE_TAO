@@ -159,9 +159,6 @@ SnmpTarget& SnmpTarget::operator=(const SnmpTarget& lhs)
 
 int operator==(const SnmpTarget& lhs, const SnmpTarget& rhs)
 {
-  if (lhs == rhs)
-       return 1;
-
   if (lhs.timeout_ != rhs.timeout_)
      return 0;
 
