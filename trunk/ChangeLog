@@ -1,3 +1,9 @@
+Tue Jan  4 17:37:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE.h: Corrected t_rcv(), t_rcv_n_i() to be extern ACE_Export,
+	  not ACE_NAMESPACE_INLINE_FUNCTION - the bodies are defined in the
+	  .cpp file, and not inline.
+
 Tue Jan  4 17:22:14 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Signal.h:
