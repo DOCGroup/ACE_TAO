@@ -55,7 +55,7 @@ typedef void (*TAO_Collocated_Skeleton)(
   );
 
 /**
- * @class TAO_operation_db_entry
+ * @struct TAO_operation_db_entry
  *
  * @brief Define a table entry that holds an operation name and its
  * corresponding skeleton.  A table of such entries is used to
@@ -64,7 +64,7 @@ typedef void (*TAO_Collocated_Skeleton)(
 struct TAO_operation_db_entry
 {
   /// Operation name
-  char const * const opname;
+  char const * opname;
 
   /// Remote/thru-POA skeleton pointer
   TAO_Skeleton skel_ptr;
