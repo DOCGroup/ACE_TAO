@@ -546,9 +546,8 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
   if (this->protocol_proxy_)
     return this->protocol_proxy_->validate_connection (inconsistent_policies,
                                                        ACE_TRY_ENV);
-  else
 #endif /* TAO_HAS_MINIMUM_CORBA */
-    return 0;
+  return 0;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */

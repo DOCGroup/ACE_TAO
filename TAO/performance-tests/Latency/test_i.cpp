@@ -13,9 +13,9 @@ CORBA::ULongLong
 Test_i::test_method (CORBA::ULongLong stamp,
                      CORBA::Environment&) ACE_THROW_SPEC (())
 {
-  ACE_Time_Value tv (0, 0);
   for (int i = 0; i != this->workload_; ++i)
     {
+      ACE_Time_Value tv (0, 0);
       const int n = 37;
       ACE::is_prime (n, 2, n / 2);
       ACE_OS::sleep (tv);

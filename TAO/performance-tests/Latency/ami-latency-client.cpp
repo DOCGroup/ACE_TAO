@@ -11,26 +11,20 @@ ACE_RCSID(Latency, client, "$Id$")
 
 const char *ior = "file://test.ior";
 
-int niterations = 5;
-
-int sleep_flag = 0;
-
-ACE_hrtime_t latency_base;
+int remaining = 0;
 
 ACE_hrtime_t throughput_base;
-
 ACE_Throughput_Stats throughput_stats;
 // Global throughput statistics.
 
-ACE_Time_Value sleep_time (0, 10000);
-
-int done = 0;
-
+int period = -1;
+size_t niterations = 500;
+size_t burst = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:s");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:p:b:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -39,23 +33,23 @@ parse_args (int argc, char *argv[])
       case 'k':
         ior = get_opts.optarg;
         break;
-        // case 'n':
-        // nthreads = ACE_OS::atoi (get_opts.optarg);
-        // break;
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
         break;
-      case 's':
-        sleep_flag = 1;
+      case 'p':
+        period = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'b':
+        burst = ACE_OS::atoi (get_opts.optarg);
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
-                           // "-n <nthreads> "
                            "-i <niterations> "
-                           "-v "
+                           "-p <period (msecs)> "
+                           "-b <burst size> "
                            "\n",
                            argv [0]),
                           -1);
@@ -64,22 +58,28 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-class Handler : public POA_AMI_Test_Handler
+class Handler : public POA_AMI_TestHandler
 {
 public:
-  Handler (void) {};
+  Handler (void) {}
 
-  void test_method (CORBA::ULongLong stamp,
-                    CORBA::Environment&)
+  virtual void test_method (CORBA::ULongLong stamp,
+                            CORBA::Environment&)
     {
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       throughput_stats.sample (now - throughput_base,
                                now - stamp);
 
-      done = 1;
-    };
+      remaining--;
+    }
 
-  ~Handler (void) {};
+  virtual void test_method_excep (AMI_TestExceptionHolder *,
+                                  CORBA::Environment &)
+    {
+      // Ignore exceptions...
+    }
+
+  ~Handler (void) {}
 };
 
 class Client
@@ -95,9 +95,8 @@ public:
   // ctor
 
   void set (Test_ptr server,
-            int niterations,
             CORBA::ORB_ptr orb,
-            AMI_Test_Handler_ptr reply_handler);
+            AMI_TestHandler_ptr reply_handler);
   // Set the test attributes.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -107,19 +106,16 @@ public:
   // Accumulate the throughput statistics into <throughput>
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  int svc (void);
 
 private:
   Test_var server_;
   // The server.
 
-  int niterations_;
-  // The number of iterations on each client thread.
-
   CORBA::ORB_ptr orb_;
   // Cache the ORB pointer.
 
-  AMI_Test_Handler_ptr reply_handler_;
+  AMI_TestHandler_ptr reply_handler_;
   // ReplyHandler object.
 };
 
@@ -148,10 +144,6 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-      ACE_High_Res_Timer::calibrate ();
-      ACE_DEBUG ((LM_DEBUG, "done\n"));
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -177,7 +169,7 @@ main (int argc, char *argv[])
 
       // ReplyHandler object.
       Handler handler;
-      AMI_Test_Handler_var reply_handler = handler._this (ACE_TRY_ENV);
+      AMI_TestHandler_var reply_handler = handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Activate POA to handle the call back.
@@ -204,22 +196,21 @@ main (int argc, char *argv[])
 
       // Init the client object.
       client.set (server.in (),
-                  niterations,
-                  orb,
+                  orb.in (),
                   reply_handler.in ());
 
       // Start the test.
       client.svc ();
 
       ACE_Throughput_Stats throughput;
-      char buf[64];
 
+      ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       client.accumulate_into (throughput);
 
-      ACE_OS::sprintf (buf, "Single Threaded:AMI");
-      client.dump_stats (buf, gsf);
+      client.dump_stats ("AMI Single Threaded", gsf);
 
       throughput.dump_results ("Aggregated", gsf);
 
@@ -240,20 +231,17 @@ main (int argc, char *argv[])
 // ****************************************************************
 
 Client::Client (void)
-  : niterations_ (0),
-    orb_ (0),
+  : orb_ (0),
     reply_handler_ (0)
 {
 }
 
 void
 Client::set (Test_ptr server,
-             int niterations,
              CORBA::ORB_ptr orb,
-             AMI_Test_Handler_ptr reply_handler)
+             AMI_TestHandler_ptr reply_handler)
 {
   this->server_ = Test::_duplicate (server);
-  this->niterations_ = niterations;
   this->orb_ = orb;
   this->reply_handler_ = reply_handler;
 }
@@ -273,29 +261,30 @@ Client::svc (void)
       // Init global throughput base.
       throughput_base = ACE_OS::gethrtime ();
 
-      for (size_t i = 0; i < this->niterations_; ++i)
+      ACE_Time_Value tv (0, 10000);
+      for (size_t i = 0; i != niterations; ++i)
         {
-          // Get timestamp.
-          latency_base = ACE_OS::gethrtime ();
+          remaining = burst;
+          for (size_t j = 0; j != burst; ++j)
+            {
+              // Invoke asynchronous operation.
+              server_->sendc_test_method (this->reply_handler_,
+                                          ACE_OS::gethrtime (),
+                                          ACE_TRY_ENV);
+            }
 
-          // Invoke asynchronous operation.
-          server_->sendc_test_method (this->reply_handler_,
-                                      ACE_OS::gethrtime (),
-                                      ACE_TRY_ENV);
-
-          if (sleep_flag)
-            // Spend 10 msecs running the ORB.
-            this->orb_->run (sleep_time);
-          else
-            while (!done)
-              this->orb_->perform_work ();
-
+          while (remaining != 0)
+            this->orb_->perform_work (tv);
           ACE_TRY_CHECK;
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
 
-          done = 0;
+          if (period != -1)
+            {
+              ACE_Time_Value s (0, period * 1000);
+              ACE_OS::sleep (s);
+            }
         }
     }
   ACE_CATCHANY
