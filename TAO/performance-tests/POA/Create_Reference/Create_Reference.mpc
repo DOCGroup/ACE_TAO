@@ -1,3 +1,0 @@
-project: taoserver {
-  exename = create_reference
-}
