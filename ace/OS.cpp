@@ -244,39 +244,23 @@ const ACE_Time_Value ACE_Time_Value::max_time (LONG_MAX,
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
-#if defined (ACE_WIN32)
-// Static constant to remove time skew between FILETIME and POSIX
-// time.  POSIX and Win32 use different epochs (Jan. 1, 1970 v.s.
-// Jan. 1, 1601).  The following constant defines the difference
-// in 100ns ticks.
-//
-// In the beginning (Jan. 1, 1601), there was no time and no computer.
-// And Bill said: "Let there be time," and there was time....
-# if defined (ghs)
-const ACE_U_LongLong ACE_Time_Value::FILETIME_to_timval_skew =
-ACE_U_LongLong (0xd53e8000, 0x19db1de);
-# else
-const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
-ACE_INT64_LITERAL (0x19db1ded53e8000);
-# endif
-
 // Increment microseconds (the only reason this is here is to allow
 // the use of ACE_Atomic_Op with ACE_Time_Value).
 
 ACE_Time_Value
-ACE_Time_Value::operator +(int)
+ACE_Time_Value::operator ++ (int)
 {
   ACE_OS_TRACE ("ACE_Time_Value::operator++(int)");
-  usec (usec () 1);
+  usec (usec () + 1);
   normalize ();
   return *this;
 }
 
-ACE_Time_Value
-&ACE_Time_Value::operator +(void)
+ACE_Time_Value &
+ACE_Time_Value::operator ++ (void)
 {
   ACE_OS_TRACE ("ACE_Time_Value::operator++(void)");
-  usec (usec () 1);
+  usec (usec () + 1);
   normalize ();
   return *this;
 }
@@ -301,6 +285,22 @@ ACE_Time_Value::operator -- (void)
   normalize ();
   return *this;
 }
+
+#if defined (ACE_WIN32)
+// Static constant to remove time skew between FILETIME and POSIX
+// time.  POSIX and Win32 use different epochs (Jan. 1, 1970 v.s.
+// Jan. 1, 1601).  The following constant defines the difference
+// in 100ns ticks.
+//
+// In the beginning (Jan. 1, 1601), there was no time and no computer.
+// And Bill said: "Let there be time," and there was time....
+# if defined (ghs)
+const ACE_U_LongLong ACE_Time_Value::FILETIME_to_timval_skew =
+ACE_U_LongLong (0xd53e8000, 0x19db1de);
+# else
+const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
+ACE_INT64_LITERAL (0x19db1ded53e8000);
+# endif
 
 //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 
