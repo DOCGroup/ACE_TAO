@@ -1824,7 +1824,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
   if (sobj == 0)
     return TAO_SERVANT_NOT_FOUND;
 
-  // @@ What about forwarding.  Whith this approach we are never forwarded
+  // @@ What about forwarding.  With this approach we are never forwarded
   //    when we use collocation!
   const TAO_MProfile &mprofile = sobj->base_profiles ();
 

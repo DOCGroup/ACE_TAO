@@ -736,8 +736,7 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK;
-
-  }
+}
 
 int
 TAO_IIOP_Connector::check_prefix (const char *endpoint)
