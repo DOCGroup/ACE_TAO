@@ -74,6 +74,12 @@ ACE_Get_Opt::operator () (void)
 {
   ACE_TRACE ("ACE_Get_Opt::operator");
 
+  if (argv_ == 0)
+    {
+      // It can happen, e.g., on VxWorks.
+      return EOF;
+    }
+
   int opt; // Character checked for validity.
   char *oli; // Option letter index.
 
