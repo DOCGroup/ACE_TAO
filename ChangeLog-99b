@@ -1,3 +1,11 @@
+Fri Jul 23 00:07:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Cached_Conn_Test.cpp (cached_connect):
+	* tests/Cached_Accept_Conn_Test.cpp (cached_connect):
+
+	  Host of the remote address should be ACE_LOCALHOST instead of
+	  ACE_DEFAULT_SERVER_HOST.
+
 Thu Jul 22 23:23:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Handle_Gobbler.h (class ACE_Handle_Gobbler): Inlined
