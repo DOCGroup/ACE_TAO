@@ -1,54 +1,48 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    DLL_Test.h
-//
-// = DESCRIPTION
-//     This file has the class definitions needed for template generation in
-//     DLL_Test.cpp.  They have to be in a separate file so AIX xlC can
-//     find them at auto-instantiate time.
-//
-// = AUTHOR
-//     Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+// ================================================================
+/**
+ * @file DLL_Test.h
+ *
+ * $Id$
+ *
+ * @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+// ================================================================
 
 #ifndef ACE_TESTS_DLL_TEST_H
 #define ACE_TESTS_DLL_TEST_H
+
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Log_Msg.h"
-
+/**
+ * @class Hello
+ *
+ * @brief Define the interface used by the DLL_Test
+ */
 class Hello
 {
-  // = TITLE
-  //    The Hello class in the dynamically linkable library.
-  //
-  // = DESCRIPTION
-  //    This class is used in this example to show how a library can
-  //    be loaded on demand and its methods called on getting the
-  //    symbols from the library.
 public:
+  /// Destructor
+  virtual ~Hello (void) {}
 
+  /**
+   * @name Methods invoked by the test
+   *
+   * The test invokes two methods, a non-virtual method and a virtual
+   * method implemented in the shared library.
+   */
+  //@{
   void say_hello (void)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Hello\n")));
-    }
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Hello\n")));
+  }
 
-  void say_next (void)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("How are you?\n")));
-    }
+  virtual void say_next (void) = 0;
+  //@}
 };
 
-#endif /* ACE_TESTS_MAP_TEST_H */
+#endif /* ACE_TESTS_DLL_TEST_H */

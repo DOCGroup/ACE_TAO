@@ -1,3 +1,20 @@
+Sat Feb 24 09:45:18 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/run_test.lst:
+	  Disable the DLL_Test on KCC/Linux builds.  The test runs
+	  normally, but crashes on shutdown(), it appears as if the
+	  run-time system is invoking the destructors after the library is
+	  unloaded. 
+
+        * tests/Makefile:
+        * tests/Makefile.DLL_Test:
+        * tests/DLL_Test.h:
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test_Impl.h:
+        * tests/DLL_Test_Impl.cpp:
+          Cleanup code, and truly separate the shared library code to a
+          completely new separate file.
+
 Sat Feb 24 09:51:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
