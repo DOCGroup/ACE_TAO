@@ -1,3 +1,16 @@
+Thu Jun 13 21:26:49 2002  Steve Huston  <shuston@riverace.com>
+
+	* ace/Configuration_Import_Export.cpp (squish): Replaced use
+          of naked isspace() with ACE_OS_String::ace_isspace() to work
+          with wide chars also.
+
+Thu Jun 13 21:09:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Config_Test.cpp (run_tests): Added a test for importing
+          a previously-existing ini file and verifying its contents.
+
+        * tests/Config_Test_Import_1.ini: File for the above test.
+
 Thu Jun 13 19:05:57 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU:
