@@ -4,7 +4,8 @@ Wed Mar 19 16:06:32 1997  David L. Levine  <levine@cs.wustl.edu>
 	  #include of sys/socket.h with #undef/#define of __cplusplus.
 
 	* ace/config-aix-4.[12].x.h: added ACE_HAS_AIX_BROKEN_SOCKET_HEADER,
-	  ACE_HAS_PTHREAD_T, and ACE_LACKS_TCP_H.
+	  ACE_HAS_PTHREAD_T, ACE_LACKS_TCP_H, and ACE_LACKS_SETSCHED.
+	  Removed ACE_HAS_SVR4_DYNAMIC_LINKING and ACE_HAS_THREAD_SELF.
 
 	Thanks to Daniel Montalibet <daniel_montalibet@stortek.com> for
 	both of the above modifications.
