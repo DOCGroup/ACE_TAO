@@ -8,13 +8,14 @@ Sat Feb 24 22:58:42 2001  Darrell Brunsch <brunsch@uci.edu>
         * bin/msvc_auto_compile.pl:
         * TAO/TAOACE.dsw:
         * TAO/TAOACE_Static.dsw:
+        * Static_Performance.dsw:
 
           Removed references to gperf_lib.dsp
 
         * TAO/version_tests.dsw: (removed)
 
           This was still referring to orbsvcs.dsp, which shows that
-          it way out of date (and not used).  Zapped.
+          it is way out of date (and not used).  Zapped.
 
 Sat Feb 24 20:59:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
