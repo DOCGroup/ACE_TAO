@@ -1,3 +1,18 @@
+Mon Jan  6 17:12:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* performance-tests/Memory/Makefile: 
+	* performance-tests/Memory/IORsize/client.cpp:
+	* performance-tests/Memory/IORsize/server.cpp:
+	* performance-tests/Memory/IORsize/Memory_Growth.h:
+	* performance-tests/Memory/IORsize/Memory_Growth.cpp:
+	* performance-tests/Memory/IORsize/Foo_i.h:
+	* performance-tests/Memory/IORsize/Foo_i.cpp:
+	* performance-tests/Memory/IORsize/Makefile:
+	* performance-tests/Memory/IORsize/Test.idl: A simple, again a
+	  very simple test, to measure the memory consumed by the server
+	  for unmarshalling an IOR. This test will not be compiled in all
+	  the builds, but only in the builds where the scripts are run. 
+
 Sat Jan 04 12:15:39 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp:

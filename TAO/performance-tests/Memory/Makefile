@@ -10,7 +10,8 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Single_Threaded 
+DIRS  = Single_Threaded \
+	IORsize
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
