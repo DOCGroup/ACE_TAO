@@ -6,12 +6,11 @@
  *
  *  $Id$
  *
- *  @author David L. Levine
+ *  @author David L. Levine <levine@cs.wustl.edu>
  *  @author Matthias Kerkhoff
  *  @author and Per Andersson
  */
 //=============================================================================
-
 
 #ifndef ACE_OBJECT_MANAGER_H
 #define ACE_OBJECT_MANAGER_H
