@@ -637,8 +637,6 @@ int be_interface::gen_server_skeletons (void)
     "void * /* obj */, void * /*context*/, CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
-  *ss << "const CORBA::String type_id = \"" << this->repoID () <<
-    "\"; // repository ID" << nl;
   *ss << "CORBA::NVList_ptr nvlist;" << nl;
   *ss << "CORBA::NamedValue_ptr nv;" << nl;
   *ss << "CORBA::Any temp_value (CORBA::_tc_string);" << nl;

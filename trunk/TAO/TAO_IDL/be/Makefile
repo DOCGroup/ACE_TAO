@@ -103,7 +103,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -112,6 +112,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -153,6 +154,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -172,7 +175,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -181,6 +184,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -222,6 +226,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -241,7 +247,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -250,6 +256,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -291,6 +298,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -310,7 +319,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -319,6 +328,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -360,6 +370,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -379,7 +391,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -388,6 +400,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -429,6 +442,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -448,7 +463,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -457,6 +472,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -498,6 +514,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -517,7 +535,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -526,6 +544,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -567,6 +586,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -586,7 +607,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -595,6 +616,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -636,6 +658,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -655,7 +679,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -664,6 +688,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -705,6 +730,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -724,7 +751,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -733,6 +760,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -774,6 +802,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -793,7 +823,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -802,6 +832,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -843,6 +874,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -862,7 +895,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -871,6 +904,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -912,6 +946,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -931,7 +967,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -940,6 +976,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -981,6 +1018,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1000,7 +1039,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1009,6 +1048,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1050,6 +1090,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1069,7 +1111,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1078,6 +1120,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1119,6 +1162,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1138,7 +1183,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1147,6 +1192,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1188,6 +1234,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1207,7 +1255,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1216,6 +1264,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1257,6 +1306,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1276,7 +1327,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1285,6 +1336,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1326,6 +1378,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1345,7 +1399,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1354,6 +1408,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1395,6 +1450,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1414,7 +1471,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1423,6 +1480,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1464,6 +1522,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1483,7 +1543,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1492,6 +1552,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1533,6 +1594,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1552,7 +1615,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1561,6 +1624,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1602,6 +1666,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1621,7 +1687,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1630,6 +1696,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1671,6 +1738,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1690,7 +1759,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1699,6 +1768,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1740,6 +1810,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1759,7 +1831,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1768,6 +1840,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1809,6 +1882,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1828,7 +1903,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1837,6 +1912,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1878,6 +1954,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1897,7 +1975,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1906,6 +1984,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1947,6 +2026,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -1966,7 +2047,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1975,6 +2056,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2016,6 +2098,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2035,7 +2119,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2044,6 +2128,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2085,6 +2170,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2104,7 +2191,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2113,6 +2200,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2154,6 +2242,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2173,7 +2263,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2182,6 +2272,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2223,6 +2314,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2242,7 +2335,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2251,6 +2344,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2292,6 +2386,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2311,7 +2407,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2320,6 +2416,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2361,6 +2458,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2380,7 +2479,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2389,6 +2488,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2430,6 +2530,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2449,7 +2551,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2458,6 +2560,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2499,6 +2602,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2518,7 +2623,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2527,6 +2632,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2568,6 +2674,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2587,7 +2695,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2596,6 +2704,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2637,6 +2746,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2656,7 +2767,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2665,6 +2776,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2706,6 +2818,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2725,7 +2839,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2734,6 +2848,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2775,6 +2890,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2795,7 +2912,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2804,6 +2921,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2845,6 +2963,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2865,7 +2985,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2874,6 +2994,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2915,6 +3036,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
@@ -2934,7 +3057,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2943,6 +3066,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2984,6 +3108,8 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
  ../be_include/be_decl.h ../be_include/be_scope.h \
  ../be_include/be_generator.h ../be_include/be_type.h \
  ../be_include/be_predefined_type.h ../be_include/be_module.h \
