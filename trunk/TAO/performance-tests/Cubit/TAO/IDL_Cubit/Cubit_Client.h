@@ -25,7 +25,6 @@
 #include "ace/Profile_Timer.h"
 #include "tao/corba.h"
 #include "cubitC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
 
 class Cubit_Client
 {
@@ -50,9 +49,6 @@ public:
   // Initialize the client communication endpoint with server.
 
 private:
-  int init_naming_service (void);
-  // Function to initialize the naming service.
-
   int func (u_int i);
   // Simple function that returns the substraction of 117 from the
   // parameter.
@@ -142,19 +138,11 @@ private:
   ACE_HANDLE f_handle_;
   // File handle to read the IOR.
 
-  int use_naming_service_;
-  // Flag to tell client not to use Namingservice to find the cubit
-  // Factory.
-
   int only_void_;
   // Run only the cube_void() test.
 
   int only_oneway_;
   // Run only the cube_oneway() test.
-
-  TAO_Naming_Client my_name_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 };
 
 #endif /* _CUBIT_CLIENT_H */

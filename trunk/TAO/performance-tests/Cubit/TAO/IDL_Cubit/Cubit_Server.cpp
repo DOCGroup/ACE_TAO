@@ -5,15 +5,14 @@
 ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
 
 Cubit_Server::Cubit_Server (void)
-  : use_naming_service_ (1),
-    ior_output_file_ (0)
+  : ior_output_file_ (0)
 {
 }
 
 int
 Cubit_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "do:s");
+  ACE_Get_Opt get_opts (argc_, argv_, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -28,9 +27,6 @@ Cubit_Server::parse_args (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
-        break;
-      case 's': // Don't use the TAO Naming Service.
-        this->use_naming_service_=0;
         break;
       case '?':
       default:
@@ -92,50 +88,6 @@ Cubit_Server::init (int argc,
                        str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
-
-  if (this->use_naming_service_)
-    return this->init_naming_service (env);
-
-  return 0;
-}
-
-// Initialisation of Naming Service and register IDL_Cubit Context and
-// cubit_factory object.
-
-int
-Cubit_Server::init_naming_service (CORBA::Environment& env)
-{
-  int result;
-  CORBA::ORB_var orb;
-  PortableServer::POA_var child_poa;
-
-  orb = this->orb_manager_.orb ();
-  child_poa = this->orb_manager_.child_poa ();
-
-  result = this->my_name_server_.init (orb.in (),
-                                       child_poa.in ());
-  if (result < 0)
-    return result;
-  Cubit_Factory_var factory = this->factory_impl_->_this (env);
-  TAO_CHECK_ENV_RETURN (env,-1);
-
-  CosNaming::Name cubit_context_name (1);
-  cubit_context_name.length (1);
-  cubit_context_name[0].id = CORBA::string_dup ("IDL_Cubit");
-  this->cubit_context_ =
-    this->my_name_server_->bind_new_context (cubit_context_name,
-                                             env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-  //Register the cubit_factory name with the IDL_Cubit Naming
-  //Context...
-  CosNaming::Name factory_name (1);
-  factory_name.length (1);
-  factory_name[0].id = CORBA::string_dup ("cubit_factory");
-  this->cubit_context_->bind (factory_name,
-                              factory.in (),
-                              env);
-  TAO_CHECK_ENV_RETURN (env, -1);
 
   return 0;
 }

@@ -23,14 +23,11 @@ references.  This may be changed later, also.
 server:
 -------
 
-% server [-d] [-s] [-ORBhost <serverhost>] [-ORBport <portnum>]
+% server [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
            [-n <number-of-cubit-objects>] [-o <ior_output_file>]
 
 Options:
 -------
--s       Tells the server not to register the Cubit_Factory object
-         with the Naming Service.
-
 -d       Debug flag (It is additive more -d flags will increase
          the debugging level).
 
@@ -58,12 +55,11 @@ silently ignored.
 client:
 -------
 
-% client [-d] [-s] [-x] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations>
+% client [-d] [-x] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations>
 
 Options:
 -------
 -d      Debug flag
--s      Don't Use the Naming Service
 -x      Tells the server to shutdown.
 -f      Reads the cubit factory IOR from the file
 -k      Reads the cubit factory IOR from commandline
@@ -126,29 +122,6 @@ Factory received OK
 .
 .
 .
-
-Sample Run-Using Naming Service:
---------------------------------
-1. Start the server
-        %server -ORBport 19999
-
-2. Start the client
-        %client -ORBport 19998
-                if you don't want the server to shutdown.
-        %client -ORBport 19998  -x
-                if you want to shutdown the server after this request.
-
-3. If Multicast is not supported the naming service can be reached by
-the  following 2 methods.
-
-        a) use the -ORBnameserviceior flag to the client to give the
-        naming service ior outputted by the server.
-
-        b)set the ENVIRONMENT variable "NameService"
-
-        This might be helpful if more than one person is running the
-        Naming service in which case Multicast might cause confusion with some
-        other Naming Service trying to answer your call.
 
 Using JAVA to access the IDL Cubit test:
 ----------------------------------------
