@@ -1,3 +1,7 @@
+Fri Mar  9 06:48:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/Simple_util.cpp: Fixed a typo.
+
 Thu Mar  8 21:10:39 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IOPC.cpp (operator>>=):
