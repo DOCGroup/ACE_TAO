@@ -291,27 +291,9 @@ template class ACE_Hash_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, H_KEY,
 
 template class ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-//template class ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-// template class ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-// template class ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-// template class ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-
-// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>;
-// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>;
-// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>;
-// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>;
-
 template class ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
 template class ACE_Cache_Map_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
 template class ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
-
-#else
-
-template class ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>;
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 template class ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Cached_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
@@ -379,27 +361,9 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-// #pragma instantiate ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-// #pragma instantiate ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-// #pragma instantiate ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-// #pragma instantiate ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-
-// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>
-// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>
-// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>
-// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>
-
 #pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
 #pragma instantiate ACE_Cache_Map_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
 #pragma instantiate ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
-
-#else
-
-#pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 #pragma instantiate ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Cached_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
