@@ -31,6 +31,10 @@ Tue Mar 31 15:15:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Param_Test/tmplinst.cpp: 
 	  Added missing template instantiations.
 
+Tue Mar 31 11:10:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.h (String_out):  Added the infamous TAO_Export macro.
+
 Tue Mar 31 14:38:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/Sequence_T.i (replace): Make sure to cast this->buffer_
