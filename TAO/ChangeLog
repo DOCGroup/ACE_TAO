@@ -1,3 +1,9 @@
+Wed Apr 30 16:21:21 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+
+          Fixed output dir so stubs end up in the right place.
+
 Wed Apr 30 15:25:35 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * tao/TAO_Static.dsp:
