@@ -1,45 +1,53 @@
+Mon Jan 12 08:06:07 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Print out a warning if a verbatim clause is processed (depending
+          on the project type) and the marker is not found in the
+          corresponding project template.
+
 Mon Jan 12 01:38:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* apps/soreduce/Library.cpp:
+        * apps/soreduce/Library.cpp:
 
-	  Fixed a compile erros with VC 6 which cannot scope variables
-	  within for loops.
+          Fixed a compile erros with VC 6 which cannot scope variables
+          within for loops.
 
 Mon Jan 12 01:35:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/msvc_auto_compile.pl:
+        * bin/msvc_auto_compile.pl:
 
           Fixed the path ane the name of a couple of dsp files in the CORE
-	  builds. This should fix two problems with static builds.
+          builds. This should fix two problems with static builds.
 
 Sat Jan 10 22:39:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/create_ace_build.pl:
+        * bin/create_ace_build.pl:
 
-	  The following patch modifies the file so that it can handle
-	  multiple path elements in the  argument given to
-	  create_ace_build.pl. Thanks to  John Poplett
-	  <John_Poplett@3com.com> for providing the patches.
+          The following patch modifies the file so that it can handle
+          multiple path elements in the  argument given to
+          create_ace_build.pl. Thanks to  John Poplett
+          <John_Poplett@3com.com> for providing the patches.
 
 Sat Jan 10 19:35:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/msvc_auto_compile.pl:
+        * bin/msvc_auto_compile.pl:
 
-	  Added missing dsp files for compilation to the static lib
-	  builds. The failure of te static builds is due to something
-	  else, which wil be fixed shortly in the autobuilds.
+          Added missing dsp files for compilation to the static lib
+          builds. The failure of te static builds is due to something
+          else, which wil be fixed shortly in the autobuilds.
 
 Sat Jan 10 17:36:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
 
-	  Fixed warnings with Forte 8.
+          Fixed warnings with Forte 8.
 
 Sat Jan 10 17:11:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/vc6dsp.mpd:
         * bin/MakeProjectCreator/templates/vc7.mpd:
-        
+
           Added generation for custom build step dependency on the
           IDL or CIDL compiler executable. This enables the build to
           detect errors output by the (C)IDL compiler, and also will
@@ -48,53 +56,53 @@ Sat Jan 10 17:11:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sat Jan 10 16:14:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_sys_socket.inl (closesocket): On HP-UX, use
+        * ace/OS_NS_sys_socket.inl (closesocket): On HP-UX, use
           shutdown() before, and in addition to, close() to close a socket.
-	  The previous "fix" left the socket opened after shutdown().
+          The previous "fix" left the socket opened after shutdown().
 
-	* tests/Bug_1576_Regression_Test.cpp: Use ACE_DLL_SUFFIX to form the
-	  name of the bogus dll name instead of literal ".so". Prevents a
-	  run-time warning from platforms that use a different suffix, such
-	  as HP-UX.
+        * tests/Bug_1576_Regression_Test.cpp: Use ACE_DLL_SUFFIX to form the
+          name of the bogus dll name instead of literal ".so". Prevents a
+          run-time warning from platforms that use a different suffix, such
+          as HP-UX.
 
-	* tests/Makefile.am: Removed -module from the libTestOutput line
-	  so it actually links the library for use by other tests. Added
-	  TSS_Static_Test_SOURCES to have it build as well.
+        * tests/Makefile.am: Removed -module from the libTestOutput line
+          so it actually links the library for use by other tests. Added
+          TSS_Static_Test_SOURCES to have it build as well.
 
 Sat Jan 10 11:18:24 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-lite.h:
-	* ace/Sock_Connect.cpp: Added /**/ to #include to keep MSVC from
-	  complaining it can't find a file.
+        * ace/config-lite.h:
+        * ace/Sock_Connect.cpp: Added /**/ to #include to keep MSVC from
+          complaining it can't find a file.
 
-	* ace/Array_Base.cpp: The _MSC_VER check need not be done for CE
-	  compiler - it doesn't need the extra #include and doesn't have <new>.
+        * ace/Array_Base.cpp: The _MSC_VER check need not be done for CE
+          compiler - it doesn't need the extra #include and doesn't have <new>.
 
 Fri Jan  9 16:55:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Timers/Alarm.cpp:
-	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
-	* examples/APG/ThreadManagement/Signals.cpp:
-	* examples/APG/ThreadManagement/Signals2.cpp:
-	* examples/APG/Sockets/Server.cpp:
-	* examples/APG/Reactor/Timers.cpp: Added ACE_NOTREACHED to
-	  unreachable statements to kill compile warnings.
+        * examples/APG/Timers/Alarm.cpp:
+        * examples/APG/ThreadManagement/Coop_Cancel.cpp:
+        * examples/APG/ThreadManagement/Signals.cpp:
+        * examples/APG/ThreadManagement/Signals2.cpp:
+        * examples/APG/Sockets/Server.cpp:
+        * examples/APG/Reactor/Timers.cpp: Added ACE_NOTREACHED to
+          unreachable statements to kill compile warnings.
 
 Fri Jan  9 16:27:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Streams/Answerer.cpp: Removed unnecessary template
-	  instantiations.
+        * examples/APG/Streams/Answerer.cpp: Removed unnecessary template
+          instantiations.
 
-	* examples/APG/ThreadPools/Futures.cpp:
-	* examples/APG/ThreadPools/ThreadPool.cpp: Fixed memory leak. Thanks
-	  to Andy Harvey <agh@cisco.com> for reporting these.
+        * examples/APG/ThreadPools/Futures.cpp:
+        * examples/APG/ThreadPools/ThreadPool.cpp: Fixed memory leak. Thanks
+          to Andy Harvey <agh@cisco.com> for reporting these.
 
 Fri Jan  9 15:24:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
 
-	  Support for STLPort in ACE Makefile system. Thanks to
-	  John Poplett <John_Poplett@3com.com> for the patches.
+          Support for STLPort in ACE Makefile system. Thanks to
+          John Poplett <John_Poplett@3com.com> for the patches.
 
 Fri Jan  9 20:13:21 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 

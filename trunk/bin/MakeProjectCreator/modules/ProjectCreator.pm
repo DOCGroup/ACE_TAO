@@ -167,9 +167,10 @@ sub new {
   $self->{'dll_template_input'}    = undef;
   $self->{'flag_overrides'}        = {};
   $self->{'special_supplied'}      = {};
-  $self->{'verbatim'}              = {};
-  $self->{'type_specific_assign'}  = {};
   $self->{'pctype'}                = $self->extractType("$self");
+  $self->{'verbatim'}              = {};
+  $self->{'verbatim_accessed'}     = {$self->{'pctype'} => {}};
+  $self->{'type_specific_assign'}  = {};
   $self->{'defaulted'}             = {};
   $self->{'custom_types'}          = {};
   $self->{'parents_read'}          = {};
@@ -275,12 +276,25 @@ sub parse_line {
             ## End of project; Write out the file.
             ($status, $errorString) = $self->write_project();
 
+            ## Check for unused verbatim markers
+            foreach my $key (keys %{$self->{'verbatim'}}) {
+              if (defined $self->{'verbatim_accessed'}->{$key}) {
+                foreach my $ikey (keys %{$self->{'verbatim'}->{$key}}) {
+                  if (!defined $self->{'verbatim_accessed'}->{$key}->{$ikey}) {
+                    print "WARNING: Marker $ikey does not exist.\n";
+                  }
+                }
+              }
+            }
+
+            ## Reset all of the project specific data
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
               $self->{'defaulted'}->{$key} = 0;
             }
             $self->{'assign'}               = {};
             $self->{'verbatim'}             = {};
+            $self->{'verbatim_accessed'}    = {$self->{'pctype'} => {}};
             $self->{'special_supplied'}     = {};
             $self->{'type_specific_assign'} = {};
             $self->{'flag_overrides'}       = {};
@@ -2401,9 +2415,11 @@ sub get_verbatim {
       }
       if (defined $str) {
         $str .= $crlf;
+        $self->{'verbatim_accessed'}->{$self->{'pctype'}}->{$marker} = 1;
       }
     }
   }
+
   return $str;
 }
 
