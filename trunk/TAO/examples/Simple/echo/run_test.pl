@@ -1,11 +1,14 @@
-#$Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-use lib "../../../../bin";
+#$Id$
+# -*- perl -*-
+
+unshift @INC, '../../../../build/Sun_g++/bin';
 require ACEutils;
+#use lib "../../../../../bin";
+#require ACEutils;
 require Process;
 
 $iorfile = "echo.ior";
