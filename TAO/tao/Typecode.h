@@ -410,15 +410,10 @@ private:
                                      CORBA::Boolean equiv_only
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
-  /// test equality for typecodes of strings
+  /// test equality for typecodes of (w)strings
   CORBA::Boolean private_equal_string (CORBA::TypeCode_ptr tc,
                                        CORBA::Boolean equiv_only
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS) const;
-
-  /// test equality for typecodes of wide strings
-  CORBA::Boolean private_equal_wstring (CORBA::TypeCode_ptr tc,
-                                        CORBA::Boolean equiv_only
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS) const;
 
   /// test equality for typecodes of sequences
   CORBA::Boolean private_equal_sequence (CORBA::TypeCode_ptr tc,

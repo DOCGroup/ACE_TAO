@@ -281,6 +281,11 @@ private:
   CORBA::Boolean valid_disc_type (CORBA::TypeCode_ptr tc
                                   ACE_ENV_ARG_DECL);
 
+  /// Common code for allocating and doing the final assembly of a typecode.
+  CORBA::TypeCode_ptr assemble_tc (TAO_OutputCDR &cdr,
+                                   CORBA::TCKind kind
+                                   ACE_ENV_ARG_DECL);
+
   /// Prohibited
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);
   TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src);
