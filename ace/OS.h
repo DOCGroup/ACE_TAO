@@ -6529,18 +6529,19 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 # endif /* ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 # if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
-// Rename "main ()" on platforms that don't allow it to be called "main ()".
-// Also, create an ACE_Object_Manager static instance in "main ()".
-#   include "ace/Object_Manager.h"
 
+#   if !defined (ACE_HAS_MINIMAL_ACE_OS)
+#     include "ace/Object_Manager.h"
+#   endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+
+// Rename "main ()" on platforms that don't allow it to be called "main ()".
+
+// Also, create ACE_Object_Manager static instance(s) in "main ()".
 // ACE_MAIN_OBJECT_MANAGER defines the ACE_Object_Manager(s) that will
 // be instantiated on the stack of main ().  Note that it is only used
 // when compiling main ():  its value does not affect the contents of
 // ace/OS.o.
-#   if defined (ACE_HAS_MINIMAL_ACE_OS)
-#     define ACE_MAIN_OBJECT_MANAGER \
-        ACE_OS_Object_Manager ace_os_object_manager;
-#   else  /* ! ACE_HAS_MINIMAL_ACE_OS */
+#   if !defined (ACE_MAIN_OBJECT_MANAGER)
 #     define ACE_MAIN_OBJECT_MANAGER \
         ACE_OS_Object_Manager ace_os_object_manager; \
         ACE_Object_Manager ace_object_manager;
@@ -6589,12 +6590,12 @@ int \
 ace_main_i
 #   else
 #     define main \
-ace_main_i (int, char *[]);                      /* forward declaration */ \
+ace_main_i (int, ASYS_TCHAR *[]);                  /* forward declaration */ \
 int \
-ACE_MAIN (int argc, char *argv[])   /* user's entry point, e.g., "main" */ \
+ACE_MAIN (int argc, ASYS_TCHAR *argv[]) /* user's entry point, e.g., main */ \
 { \
   ACE_MAIN_OBJECT_MANAGER \
-  return ace_main_i (argc, argv);         /* what the user calls "main" */ \
+  return ace_main_i (argc, argv);           /* what the user calls "main" */ \
 } \
 int \
 ace_main_i
@@ -6603,19 +6604,6 @@ ace_main_i
 
 # if defined (ACE_HAS_WINCE)
 #   include "ace/Object_Manager.h"
-// We need to rename program entry name "main" with ace_ce_main here
-// so that we can call it from CE's bridge class.
-
-// I'll assume there'll only be DLL version of ACE on CE for now.
-#   define main \
-ace_main_i (int, ASYS_TCHAR *[]); /* forward declaration */ \
-int \
-ace_ce_main (int argc, ASYS_TCHAR *argv[])   /* user's entry point, e.g., "main" */ \
-{ \
-  return ace_main_i (argc, argv);         /* what the user calls "main" */ \
-} \
-int \
-ace_main_i
 
 class ACE_Export ACE_CE_Bridge
 {
