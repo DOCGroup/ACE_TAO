@@ -22,9 +22,8 @@ TAO_EC_Priority_Dispatching::activate (void)
   ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task*[this->ntasks_]);
 
   int priority =
-    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                    ACE_SCOPE_PROCESS);
-  // priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
   for (int i = 0; i < this->ntasks_; ++i)
     {
@@ -50,7 +49,7 @@ TAO_EC_Priority_Dispatching::shutdown (void)
 {
   if (this->tasks_ == 0)
     return;
- 
+
   for (int i = 0; i < this->ntasks_; ++i)
     this->tasks_[i]->putq (new TAO_EC_Shutdown_Command);
 
