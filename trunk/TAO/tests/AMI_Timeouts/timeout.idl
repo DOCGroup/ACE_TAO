@@ -19,7 +19,7 @@
 // ============================================================================
 
 
-interface Timeout {
+interface TimeoutObj {
 
   void sendTimeToWait (in long msec);
 
