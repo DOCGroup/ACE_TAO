@@ -189,15 +189,13 @@ HANDLE_THR_ACCEPTOR remote_thr_stream;
 ACE_Service_Object_Type rts (&remote_thr_stream, "Remote_Thr_Stream");
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-#if defined (ACE_HAS_TLI)
-template class ACE_Acceptor<CLI_STREAM, ACE_TLI_ACCEPTOR>;
-template class ACE_Accept_Strategy<CLI_STREAM, ACE_TLI_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<CLI_STREAM, ACE_TLI_ACCEPTOR>;
-template class ACE_Svc_Handler<ACE_TLI_STREAM, ACE_MT_SYNCH>;
-#endif /* ACE_HAS_TLI */
+template class ACE_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
+template class ACE_Accept_Strategy<CLI_STREAM, THR_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<CLI_STREAM>;
 template class ACE_Creation_Strategy<CLI_STREAM>;
 template class ACE_Scheduling_Strategy<CLI_STREAM>;
+template class ACE_Strategy_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
+template class ACE_Svc_Handler<THR_STREAM, ACE_MT_SYNCH>;
 template class ACE_Thread_Strategy<CLI_STREAM>;
 template class CLI_Stream <THR_STREAM>;
 template class Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
