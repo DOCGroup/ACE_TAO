@@ -88,6 +88,9 @@ Scheduler_Generic::Scheduler_Generic () :
   increasing_priority_ (-1),
   task_entries_ ()
 {
+  config_info_.preemption_priority = ACE_Scheduler_MAX_PREEMPTION_PRIORITY;
+  config_info_.thread_priority = minimum_priority_;
+  config_info_.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
 }
 
 
@@ -125,6 +128,22 @@ Scheduler_Generic::lookup_rt_info (handle_t handle,
 
   return ST_UNKNOWN_TASK;
 }
+
+Scheduler::status_t
+Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
+				       Config_Info* &config_info)
+{
+  if (priority == config_info_.preemption_priority)
+  {
+    config_info = &config_info_;
+    return SUCCEEDED;
+  }
+  else
+  {
+    return ST_UNKNOWN_PRIORITY;
+  }
+}
+  // Obtains a Config_Info based on its priority.
 
 
 Scheduler::status_t
@@ -193,6 +212,7 @@ Scheduler_Generic::init (const int minimum_priority,
   runtime_filename_ = runtime_filename;
   rt_info_filename_ = rt_info_filename;
   timeline_filename_ = timeline_filename;
+  config_info_.thread_priority = minimum_priority_;
 }
 
 

@@ -48,10 +48,12 @@ public:
   typedef RtecScheduler::OS_Priority OS_Priority;
   typedef RtecScheduler::Preemption_Subpriority Sub_Priority;
   typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Config_Info Config_Info;
   typedef RtecScheduler::Time Time;
   typedef RtecScheduler::Period Period;
   typedef RtecScheduler::Info_Type Info_Type;
   typedef RtecScheduler::Dependency_Type Dependency_Type;
+  typedef RtecScheduler::Dispatching_Type Dispatching_Type;
 
   typedef ACE_Map_Entry <ACE_CString, RT_Info *> Thread_Map_Entry;
   typedef ACE_Map_Manager <ACE_CString, RT_Info *, ACE_Null_Mutex>
@@ -69,6 +71,7 @@ public:
     , FAILED = -1
     , SUCCEEDED
     , ST_UNKNOWN_TASK
+    , ST_UNKNOWN_PRIORITY
     , ST_TASK_ALREADY_REGISTERED
     , ST_BAD_DEPENDENCIES_ON_TASK
     , ST_BAD_INTERNAL_POINTER
@@ -164,6 +167,10 @@ public:
   status_t lookup_rt_info (handle_t handle, RT_Info* &rtinfo);
   // Obtains an RT_Info based on its "handle".
 
+  status_t lookup_config_info (Preemption_Priority priority,
+				               Config_Info* &config_info);
+  // Obtains a Config_Info based on its priority.
+
   status_t schedule (void);
   // This sets up the data structures, invokes the internal scheduling method.
 
@@ -218,6 +225,11 @@ public:
   // accessors for the minimal and maximal dispatch entry id in the schedule
   u_long min_dispatch_id () const;
   u_long max_dispatch_id () const;
+
+  virtual int dispatch_configuration (const Preemption_Priority &p_priority,
+                                      OS_Priority& priority,
+                                      Dispatching_Type & d_type);
+  // provide the thread priority and queue type for the given priority level
 
 protected:
 
@@ -306,6 +318,9 @@ protected:
 
   ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_;
     // the set of dispatch entries
+
+  ACE_Unbounded_Set <Config_Info *> *config_info_entries_;
+  // Collection of dispatch configuration entries.
 
   ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_;
     // expanded set of dispatch entries (all dispatch entries produced by

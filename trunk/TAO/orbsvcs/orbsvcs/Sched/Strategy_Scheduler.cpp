@@ -85,6 +85,17 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
   dispatches[0]->OS_priority (current_OS_priority);
   dispatches[0]->priority (current_scheduler_priority);
 
+  // store the dispatch configuration for the highest priority level
+  Config_Info *config_ptr;
+  ACE_NEW_RETURN(config_ptr, Config_Info, ST_VIRTUAL_MEMORY_EXHAUSTED);
+  config_ptr->preemption_priority = current_scheduler_priority;
+  config_ptr->thread_priority = current_OS_priority;
+  config_ptr->dispatching_type = strategy_.dispatch_type (*(dispatches[0]));
+  if (config_info_entries_->insert (config_ptr) < 0)
+  {
+    return ST_VIRTUAL_MEMORY_EXHAUSTED;
+  }
+
   // traverse ordered dispatch entry array, assigning priority
   // (array is sorted from highest to lowest priority)
   for (u_int i = 1; i < count; ++i)
@@ -120,6 +131,16 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
             ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                  current_OS_priority,
                                                  ACE_SCOPE_PROCESS);
+        }
+
+        // store the dispatch configuration for the new priority level
+        ACE_NEW_RETURN(config_ptr, Config_Info, ST_VIRTUAL_MEMORY_EXHAUSTED);
+        config_ptr->preemption_priority = current_scheduler_priority;
+        config_ptr->thread_priority = current_OS_priority;
+        config_ptr->dispatching_type = strategy_.dispatch_type (*(dispatches[i]));
+        if (config_info_entries_->insert (config_ptr) < 0)
+        {
+          return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
 
                 break;
@@ -725,6 +746,17 @@ ACE_MUF_Scheduler_Strategy::minimum_critical_priority ()
 }
   // = returns minimum critical priority number
 
+
+ACE_DynScheduler::Dispatching_Type 
+ACE_MUF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+{
+  ACE_UNUSED_ARG (entry);
+  return RtecScheduler::LAXITY_DISPATCHING;
+}
+  // provide the dispatching queue type for the given dispatch entry
+
+
+
 /////////////////////////////////////////////////////////////////////////
 // class ACE_RMS_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
@@ -829,6 +861,16 @@ ACE_RMS_Scheduler_Strategy::minimum_critical_priority ()
   return minimum_critical_priority_;
 }
   // = returns minimum critical priority number
+
+
+ACE_DynScheduler::Dispatching_Type 
+ACE_RMS_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+{
+  ACE_UNUSED_ARG (entry);
+  return RtecScheduler::STATIC_DISPATCHING;
+}
+  // provide the dispatching queue type for the given dispatch entry
+
 
 /////////////////////////////////////////////////////////////////////////
 // class ACE_MLF_Scheduler_Strategy static data member initializations //
@@ -940,6 +982,14 @@ ACE_MLF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 }
   // comparison function to pass to qsort
 
+ACE_DynScheduler::Dispatching_Type 
+ACE_MLF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+{
+  ACE_UNUSED_ARG (entry);
+  return RtecScheduler::LAXITY_DISPATCHING;
+}
+  // provide the dispatching queue type for the given dispatch entry
+
 
 /////////////////////////////////////////////////////////////////////////
 // class ACE_EDF_Scheduler_Strategy static data member initializations //
@@ -1041,6 +1091,15 @@ ACE_EDF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
                       ** ACE_static_cast (Dispatch_Entry **, arg2));
 }
   // comparison function to pass to qsort
+
+ACE_DynScheduler::Dispatching_Type 
+ACE_EDF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+{
+  ACE_UNUSED_ARG (entry);
+  return RtecScheduler::DEADLINE_DISPATCHING;
+}
+  // provide the dispatching queue type for the given dispatch entry
+
 
 /////////////////////////////////////////////////////////////////////////////
 // class ACE_RMS_Dyn_Scheduler_Strategy static data member initializations //
@@ -1217,6 +1276,20 @@ ACE_RMS_Dyn_Scheduler_Strategy::minimum_critical_priority ()
 }
   // = returns 0 for minimum critical priority number
 
+ 
+ACE_DynScheduler::Dispatching_Type 
+ACE_RMS_Dyn_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+{
+  if (entry.task_entry ().rt_info ()->criticality >= RtecScheduler::HIGH_CRITICALITY)
+  {
+    return RtecScheduler::STATIC_DISPATCHING;
+  }
+  else
+  {
+    return RtecScheduler::LAXITY_DISPATCHING;
+  }
+}
+  // provide the dispatching queue type for the given dispatch entry
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

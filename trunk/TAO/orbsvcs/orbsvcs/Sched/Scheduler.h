@@ -47,7 +47,9 @@ public:
   typedef RtecScheduler::OS_Priority OS_Thread_Priority;
   typedef RtecScheduler::Preemption_Subpriority Sub_Priority;
   typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Config_Info Config_Info;
   typedef RtecScheduler::Time Time;
+  typedef enum RtecScheduler::Dispatching_Type Dispatching_Type;
 
   // Map some types to simplify re-use.
 
@@ -63,6 +65,7 @@ public:
     , FAILED = -1
     , SUCCEEDED
     , ST_UNKNOWN_TASK
+    , ST_UNKNOWN_PRIORITY
     , ST_TASK_ALREADY_REGISTERED
     , ST_VIRTUAL_MEMORY_EXHAUSTED
 
@@ -150,6 +153,12 @@ public:
 				   RT_Info* &rtinfo) = 0;
   // Obtains an RT_Info based on its "handle".
 
+  virtual status_t lookup_config_info (Preemption_Priority priority,
+				       Config_Info* &config_info) = 0;
+  // Obtains a Config_Info based on its priority.
+
+
+
   // = Computes the schedule.
   virtual status_t schedule (void) = 0;
   // This actually generates the files.
@@ -212,6 +221,12 @@ public:
 
   static void export(RT_Info*, FILE* file);
   static void export(RT_Info&, FILE* file);
+
+  virtual int dispatch_configuration (const Preemption_Priority &p_priority,
+                                      OS_Thread_Priority& priority,
+				      Dispatching_Type & d_type);
+  // provide the thread priority and queue type for the given priority level
+
 
 protected:
   ACE_Scheduler ();

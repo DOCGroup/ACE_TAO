@@ -138,6 +138,7 @@ ACE_DynScheduler::ACE_DynScheduler ()
   , thread_delineators_ (0)
   , ordered_thread_dispatch_entries_ (0)
   , dispatch_entries_ (0)
+  , config_info_entries_ (0)
   , expanded_dispatches_ (0)
   , ordered_dispatch_entries_ (0)
   , dispatch_entry_count_ (0)
@@ -429,6 +430,29 @@ void ACE_DynScheduler::export(RT_Info& info, FILE* file)
 }
 
 
+int 
+ACE_DynScheduler::dispatch_configuration (const Preemption_Priority & p_priority,
+                                          OS_Priority & priority,
+                                          Dispatching_Type & d_type)
+{
+  // look up the stored configuration info for the given priority level
+  Config_Info *config_info;
+  if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Config info for priority %lu could not be found\n", 
+                       p_priority),
+                      -1);
+  }
+
+  priority = config_info->thread_priority;
+  d_type = config_info->dispatching_type;
+
+  return 0;
+}
+  // provide the thread priority and queue type for the given priority level
+
+
 ACE_DynScheduler::status_t
 ACE_DynScheduler::lookup_rt_info (handle_t handle,
                                RT_Info*& rtinfo)
@@ -454,6 +478,37 @@ ACE_DynScheduler::lookup_rt_info (handle_t handle,
   return ST_UNKNOWN_TASK;
 }
   // obtains an RT_Info based on its "handle".
+
+ACE_DynScheduler::status_t 
+ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
+                                      Config_Info* &config_info)
+{
+  if (config_info_entries_ == 0)
+  {
+    return NOT_SCHEDULED;
+  }
+
+  if (priority < 0 || (size_t) priority > config_info_entries_->size ())
+  {
+    return ST_UNKNOWN_PRIORITY;
+  }
+
+  Config_Info** entry;
+  ACE_Unbounded_Set_Iterator <Config_Info *> i (*config_info_entries_);
+  while (i.next (entry) != 0)
+    {
+      i.advance ();
+      Config_Info* config_ptr = *entry;
+      if (config_ptr->preemption_priority == priority)
+        {
+          config_info = config_ptr;
+          return SUCCEEDED;
+        }
+    }
+
+  return ST_UNKNOWN_PRIORITY;
+}
+  // Obtains a Config_Info based on its priority.
 
 
 void
@@ -490,6 +545,23 @@ ACE_DynScheduler::reset ()
       delete dispatch_entries_;
       dispatch_entries_ = 0;
     }
+
+    if (config_info_entries_)
+    {
+      // free all the config info entries in the list, then the list itself
+      ACE_Unbounded_Set_Iterator <Config_Info *> iter (*config_info_entries_);
+      Config_Info **entry = 0;
+      for (iter.first (); ! iter.done (); iter.advance (), entry = 0)
+      {
+        if ((iter.next (entry) != 0) && (entry) && (*entry))
+        {
+          delete (*entry);
+        }
+      }
+      delete config_info_entries_;
+      config_info_entries_ = 0;
+    }
+
 
     if (expanded_dispatches_)
     {
@@ -822,6 +894,11 @@ ACE_DynScheduler::setup_task_entries (void)
   // allocate new unbounded set for pointers to dispatch entries
   ACE_NEW_RETURN (dispatch_entries_,
                   ACE_Unbounded_Set <Dispatch_Entry *>,
+                  ST_VIRTUAL_MEMORY_EXHAUSTED);
+
+  // allocate new unbounded set for pointers to config info entries
+  ACE_NEW_RETURN (config_info_entries_,
+                  ACE_Unbounded_Set <Config_Info *>,
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
 
 

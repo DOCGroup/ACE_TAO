@@ -122,7 +122,6 @@ module RtecScheduler
     // events generated from this RT_Info.
     OS_Priority priority;
 
-
     // For ordering RT_Info's with equal priority.
     Preemption_Subpriority preemption_subpriority;
 
@@ -138,6 +137,37 @@ module RtecScheduler
     unsigned long volatile_token;
   };
 
+  enum Dispatching_Type
+  // Defines the type of prioritization strategy
+  // to be used by a dispatching queue
+  {
+    STATIC_DISPATCHING,
+    DEADLINE_DISPATCHING,
+    LAXITY_DISPATCHING
+  };
+
+  struct Config_Info
+    // = TITLE
+    //   Describes configuration information for a dispatching queue
+    //
+    // = DESCRIPTION
+    // The CPU requirements and QoS for each
+    // "entity" implementing an application
+    // operation is described by the following
+    // information.
+  {
+    // preemption priority for messages dispatched by the queue
+    Preemption_Priority preemption_priority;
+
+    // OS priority of the dispatching thread associated with the queue
+    OS_Priority thread_priority;
+
+    // type of dispatching queue 
+    Dispatching_Type dispatching_type;
+  };
+
+  typedef sequence<Config_Info> Config_Info_Set;
+
   exception DUPLICATE_NAME {};
   // The application is trying to register the same task again.
 
@@ -152,6 +182,9 @@ module RtecScheduler
   exception INSUFFICIENT_THREAD_PRIORITY_LEVELS {};
   exception TASK_COUNT_MISMATCH {};
   // Problems while computing off-line scheduling.
+
+  exception UNKNOWN_PRIORITY_LEVEL {};
+  // Problems obtaining run-time dispatch queue info
 
   typedef sequence<RT_Info> RT_Info_Set;
 
@@ -234,7 +267,8 @@ module RtecScheduler
 
     void compute_scheduling (in long minimum_priority,
                              in long maximum_priority,
-                             out RT_Info_Set infos)
+                             out RT_Info_Set infos,
+                             out Config_Info_Set configs)
       raises (UTILIZATION_BOUND_EXCEEDED,
               INSUFFICIENT_THREAD_PRIORITY_LEVELS,
               TASK_COUNT_MISMATCH);
@@ -263,5 +297,31 @@ module RtecScheduler
     //    raises (UNKNOWN_TASK);
     // Returns the number of dependencies.
 
+    void dispatch_configuration (in Preemption_Priority p_priority,
+                                 out OS_Priority os_priority,
+                                 out Dispatching_Type d_type)
+      raises (UNKNOWN_PRIORITY_LEVEL, NOT_SCHEDULED);
+    // Returns the thread priority and dispatching type assigned
+    // to the dispatching priority level that was passed in.  This
+    // information is used to configure the queues through wich
+    // the scheduled operations are to be dispatched.
+    //
+    // If the schedule has not been computed:
+    //    raises (NOT_SCHEDULED);
+    //
+    // If the schedule has been computed, but the passed 
+    // priority level is outside those assigned:
+    //    raises (UNKNOWN_PRIORITY_LEVEL);
+
+
+    Preemption_Priority last_scheduled_priority ()
+      raises (NOT_SCHEDULED);
+    // Returns the last priority number assigned to an operation in the schedule.
+    // The number returned is one less than the total number of scheduled priorities.
+    // All scheduled priorities range from 0 to the number returned, inclusive. 
+    //
+    // If the schedule has not been computed:
+    //    raises (NOT_SCHEDULED);
   };
 };
+
