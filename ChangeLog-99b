@@ -1,3 +1,9 @@
+Sat Mar 13 12:14:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Shared_Memory_{MM,SV}.h: Clarified the relationship of
+	  these classes to the more powerful ACE_Malloc<> abstraction.
+	  Thanks to Ti Z <tiz@cisco.com> for suggesting this.
+
 Sat Mar 13 08:07:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/ platform_osf1_4.0.GNU: added suppression

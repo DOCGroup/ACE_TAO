@@ -29,6 +29,11 @@ class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 {
   // = TITLE
   //     Shared memory wrapper based on MMAP.
+  //
+  // = DESCRIPTION
+  //     This class provides a very simple-minded shared memory
+  //     manager.  For more a powerful memory allocator please see
+  //     <ACE_Malloc>.  
 public:
   // = Initialization and termination methods.
   ACE_Shared_Memory_MM (void);
