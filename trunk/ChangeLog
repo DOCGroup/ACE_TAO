@@ -1,3 +1,9 @@
+Fri Feb 25 12:55:37 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Link.h:
+	* protocols/ace/RMCast/Link.cpp: Overrode recv() from
+	Out_Element. This should clear warnings on BCB and HP C++.
+
 Fri Feb 25 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lite.h:

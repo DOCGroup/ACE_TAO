@@ -45,6 +45,10 @@ namespace ACE_RMCast
     recv_thunk (void* obj);
 
   private:
+    virtual void
+    recv (Message_ptr);
+
+  private:
     Address addr_, self_;
     ACE_SOCK_Dgram_Mcast rsock_;
     ACE_SOCK_Dgram ssock_;
