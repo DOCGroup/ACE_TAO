@@ -916,6 +916,22 @@ extern "C" pthread_t pthread_self (void);
 }
 #endif /* ACE_HAS_DCETHREADS */
 
+// There are a lot of threads-related macro definitions in the config files.
+// They came in at different times and from different places and platform
+// requirements as threads evolved.  They are probably not all needed - some
+// overlap or are otherwise confused.  This is an attempt to start
+// straightening them out.
+#if defined (ACE_HAS_PTHREADS_1003_DOT_1C)    /* POSIX.1C threads (pthreads) */
+// POSIX.1C threads implies pthread_sigmask()
+#ifndef ACE_HAS_PTHREAD_SIGMASK
+#define ACE_HAS_PTHREAD_SIGMASK
+#endif
+// ... and 2-parameter asctime_r and ctime_r
+#ifndef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#endif
+#endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
+
 #if (ACE_NTRACE == 1)
 #define ACE_TRACE(X)
 #else
@@ -1546,6 +1562,12 @@ struct cancel_state
 #include /**/ <sys/stat.h>
 #endif /*ACE_HAS_WINCE */
 
+#if defined (ACE_NEW_THROWS_EXCEPTIONS)
+// I know this works for HP aC++... if <stdexcept> is used, it introduces other
+// stuff that breaks things, like <memory>, which screws up auto_ptr.
+#include /**/ <new>
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+
 #if defined (ACE_HAS_THREADS)
 
 #  if defined (ACE_HAS_STHREADS)
@@ -2162,6 +2184,8 @@ protected:
 #endif /* ACE_HAS_THREADS */
 
 // Standard C Library includes
+// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
+# include /**/ <stdarg.h>
 #if !defined (ACE_HAS_WINCE)
 # include /**/ <assert.h>
 # include /**/ <stdio.h>
@@ -2170,8 +2194,6 @@ protected:
 # include /**/ <errno.h>
 #endif /* ACE_HAS_WINCE */
 # include /**/ <limits.h>
-// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
-# include /**/ <stdarg.h>
 # include /**/ <ctype.h>
 # include /**/ <string.h>
 # include /**/ <stdlib.h>
@@ -2230,12 +2252,12 @@ typedef const struct msghdr ACE_SENDMSG_TYPE;
 typedef u_int ACE_RANDR_TYPE;
 extern "C" int rand_r (ACE_RANDR_TYPE seed);
 #else
-# if defined (__hpux)
-// HP-UX's stdlib.h (long *) doesn't match that man page (u_int *)
+# if defined (HPUX_10)
+// HP-UX 10.x's stdlib.h (long *) doesn't match that man page (u_int *)
 typedef long *ACE_RANDR_TYPE;
 # else
 typedef u_int *ACE_RANDR_TYPE;
-# endif /* __hpux */
+# endif /* HPUX_10 */
 #endif /* ACE_HAS_BROKEN_RANDR */
 
 #if defined (ACE_HAS_UTIME)
@@ -2998,15 +3020,19 @@ extern int t_errno;
 #include /**/ <alloca.h>
 #endif /* ACE_HAS_ALLOCA_H */
 
-#if defined (ACE_HAS_TIUSER_H)
+#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
 #if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 extern "C" {
 #endif
+#if defined (ACE_HAS_TIUSER_H)
 #include /**/ <tiuser.h>
+#else
+#include /**/ <xti.h>
+#endif /* ACE_HAS_TIUSER_H */
 #if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 }
 #endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
-#endif /* ACE_HAS_TIUSER_H */
+#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
 
 /* Set the proper handle type for dynamically-loaded libraries. */
 /* Also define a default 'mode' for loading a library - the names and values */
@@ -4944,14 +4970,26 @@ private:
 // depending on whether ANSI/ISO exception handling semantics are
 // being used).
 
-#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+#if defined(ACE_NEW_THROWS_EXCEPTIONS)
+#  define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { try { POINTER = new CONSTRUCTOR; } \
+        catch (bad_alloc) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+
+#  define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { try { POINTER = new CONSTRUCTOR; } \
+        catch (bad_alloc) { errno = ENOMEM; return; } \
+   } while (0)
+#else
+#  define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
-#define ACE_NEW(POINTER,CONSTRUCTOR) \
+#  define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 // Some useful abstration for expressions involving
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*

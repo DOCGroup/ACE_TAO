@@ -2006,7 +2006,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                              O_CREAT,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
-      return (int) s->sema_ == -1 ? -1 : 0;
+      return (s->sema_ == (sem_t *)-1 ? -1 : 0);
     }
   else
 #endif /*ACE_LACKS_NAMED_POSIX_SEM */
@@ -5217,6 +5217,7 @@ ACE_OS::thr_yield (void)
   ::thr_yield ();
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_1003_DOT_1C)
+  // Note - this is a POSIX.4 function - not a POSIX.1C function...
   ::sched_yield ();
 #elif defined (ACE_HAS_FSU_PTHREADS) || defined (ACE_HAS_YIELD_VOID_PTR)
   ::pthread_yield (NULL);
