@@ -1,3 +1,8 @@
+Tue Aug 29 15:09:55 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* examples/Simple/time-date/Makefile: 
+	  Updated dependencies.
+
 Tue Aug 29 14:32:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Native_Exceptions/Makefile:
