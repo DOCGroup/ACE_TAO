@@ -1,3 +1,12 @@
+Thu Feb 24 10:34:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Object_SArgument_T.h:
+	* tao/Var_Size_SArgument_T.h:
+
+	  Neglected to remove these files during the skeleton-refactor
+	  branch merge.  Thanks to J.T. for pointing out they were still
+	  there.
+
 Thu Feb 24 18:14:23 2005  Olli Savia  <ops@iki.fi>
 
         * tests/RTCORBA/RTMutex/server.cpp:
