@@ -135,7 +135,7 @@ be_union::default_index (void)
 
 // generate the _var definition for ourself
 int
-be_union::gen_var_defn (void)
+be_union::gen_var_defn (char *)
 {
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
@@ -220,7 +220,7 @@ be_union::gen_var_defn (void)
 // implementation of the _var class. All of these get generated in the inline
 // file
 int
-be_union::gen_var_impl (void)
+be_union::gen_var_impl (char *, char *)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
@@ -445,7 +445,7 @@ be_union::gen_var_impl (void)
 
 // generate the _out definition
 int
-be_union::gen_out_defn (void)
+be_union::gen_out_defn (char *)
 {
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
@@ -503,7 +503,7 @@ be_union::gen_out_defn (void)
 }
 
 int
-be_union::gen_out_impl (void)
+be_union::gen_out_impl (char *, char *)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line

@@ -38,16 +38,18 @@ public:
   be_union(AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
 
-  virtual int gen_var_defn (void);
+  virtual int gen_var_defn (char *local_name = 0);
   // generate the _var class definition
 
-  virtual int gen_var_impl (void);
+  virtual int gen_var_impl (char *local_name = 0,
+                            char *full_name = 0);
   // generate the implementation for the _var class
 
-  virtual int gen_out_defn (void);
+  virtual int gen_out_defn (char *local_name = 0);
   // generate the _out class definition
 
-  virtual int gen_out_impl (void);
+  virtual int gen_out_impl (char *local_name = 0,
+                            char *full_name = 0);
   // generate the _out implementation
 
   virtual int member_count (void);
