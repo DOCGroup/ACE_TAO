@@ -1,3 +1,15 @@
+Fri Jun 28 09:50:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Added an allocator that could be used to
+	  allocate buffers used for storing messages within the
+	  transport. It is a bad idea to use the same allocators used for
+	  the CDR streams. 
+
+	* tao/Transport.cpp:
+	* tao/GIOP_Message_Base.cpp: Used the new allocators for the
+	  incoming message buffers.
+	
 Fri Jun 28 10:08:56 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/LongUpcalls/Manager.cpp:
