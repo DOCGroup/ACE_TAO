@@ -1,3 +1,9 @@
+Sun Feb 29 14:04:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Framework_Component_DLL_Export.h:
+          Added check for ACE_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Sun Feb 29 13:59:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Synch-Benchmarks/Synch_Lib/export_mac.h:
