@@ -1,3 +1,19 @@
+Thu Dec 25 23:06:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAOACE.dsw:
+ 	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
+	* orbsvcs/orbsvcs/FT_ClientORB.dsp:
+	* orbsvcs/orbsvcs/FT_ServerORB.dsp:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+
+	  Changes that needed to be done from the change "Thu Dec 25
+	  17:41:44 2003 Balachandran Natarajan
+	  <bala@dre.vanderbilt.edu>". Removed unnecessray dependancies
+	  that were added. We now include the stub from
+	  PortableGroup_Simple_DS.idl in every project with any export
+	  definitions. This was easier and far better than having multiple
+	  libraries. 
+
 Thu Dec 25 18:56:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FTORB.mpc:

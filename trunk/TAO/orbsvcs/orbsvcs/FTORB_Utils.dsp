@@ -45,7 +45,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\lib\TAO_FTORB_Utils.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 TAO_PortableServer.lib TAO_portableGroup.lib TAO_CosNaming.lib TAO_Messaging.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_IORManip.lib TAO.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\lib\TAO_FTORB_Utils.pdb" /machine:I386 /out:"..\..\..\bin\Release\\TAO_FTORB_Utils.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\IORManipulation" /version:1.3.5
+# ADD LINK32 TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_IORManip.lib TAO.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\lib\TAO_FTORB_Utils.pdb" /machine:I386 /out:"..\..\..\bin\Release\\TAO_FTORB_Utils.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /version:1.3.5
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "FTORB_Utils - Win32 Debug"
@@ -64,7 +64,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\lib\TAO_FTORB_Utils.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 TAO_PortableGroupd.lib TAO_CosNamingd.lib TAO_PortableServerd.lib TAO_Messagingd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Valuetyped.lib TAO_IORManipd.lib TAOd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\lib\TAO_FTORB_Utilsd.pdb" /debug /machine:I386 /out:"..\..\..\bin\TAO_FTORB_Utilsd.dll" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /version:1.3.5
+# ADD LINK32 TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Valuetyped.lib TAO_IORManipd.lib TAOd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\lib\TAO_FTORB_Utilsd.pdb" /debug /machine:I386 /out:"..\..\..\bin\TAO_FTORB_Utilsd.dll" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /version:1.3.5
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -87,6 +87,10 @@ SOURCE=".\FT_CORBA_ORBS.cpp"
 # Begin Source File
 
 SOURCE=".\FaultTolerance\FT_IOGR_Property.cpp"
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup_Simple_DSC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -112,6 +116,10 @@ SOURCE=".\FaultTolerance\FT_IOGR_Property.h"
 
 SOURCE=.\FaultTolerance\FT_ORB_Utils_export.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup_Simple_DSC.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -131,6 +139,10 @@ SOURCE=".\FT_CORBA_ORBS.i"
 # Begin Source File
 
 SOURCE=".\FaultTolerance\FT_IOGR_Property.inl"
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup_Simple_DSC.i
 # End Source File
 # End Group
 # Begin Group "Template Files"
@@ -188,9 +200,47 @@ InputPath=".\FT_CORBA_ORB.idl"
 InputName=FT_CORBA_ORB
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
+	..\..\..\bin\tao_idl.exe -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup_Simple_DS.idl
+
+!IF  "$(CFG)" == "FTORB_Utils - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "FTORB_Utils - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\PortableGroup_Simple_DS.idl
+InputName=PortableGroup_Simple_DS
+
+BuildCmds= \
+	..\..\..\bin\tao_idl.exe -o . -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
+
+"\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 ".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
