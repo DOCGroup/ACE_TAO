@@ -1,5 +1,10 @@
 Wed Mar 25 11:11:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * tao/ORB.h: use ACE_UINT32 instead of u_char for CORBA_Boolean
+          with Green Hills on Chorus, to work around a compiler bug.
+          The bug is revealed with accessing the root_poa, by
+          TAO/tests/POA/RootPOA/RootPOA.
+
         * tao/ORB.{h,cpp}: changed type of open_called_ and
           should_shutdown_ flags from CORBA::Boolean to u_int, because
           they're ACE_Atomic_Ops.  This allows CORBA::Boolean to be
