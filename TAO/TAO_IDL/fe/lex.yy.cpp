@@ -2539,10 +2539,10 @@ idl_parse_line_and_file(char *buf)
     r += 5;
 
   /* Find line number */
-  while (*r == ' ' || *r == '\t')
+  while (isspace (*r))
     r++;
   h = r;
-  for (; *r != '\0' && *r != ' ' && *r != '\t'; r++)
+  for (; isdigit (*r); r++)
     continue;
   *r++ = 0;
   idl_global->set_lineno(idl_atoui(h, 10));
