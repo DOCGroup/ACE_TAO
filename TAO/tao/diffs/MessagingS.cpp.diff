@@ -79,8 +79,8 @@
  }
  
  void POA_Messaging::ReplyHandler::_is_a_skel (
--    CORBA::ServerRequest &_tao_server_request, 
-+    CORBA::ServerRequest &_tao_server_request,
+-    TAO_ServerRequest &_tao_server_request, 
++    TAO_ServerRequest &_tao_server_request,
      void * _tao_object_reference,
      void * /* context */,
      CORBA::Environment &ACE_TRY_ENV
@@ -101,8 +101,8 @@
  }
  
  void POA_Messaging::ReplyHandler::_non_existent_skel (
--    CORBA::ServerRequest &_tao_server_request, 
-+    CORBA::ServerRequest &_tao_server_request,
+-    TAO_ServerRequest &_tao_server_request, 
++    TAO_ServerRequest &_tao_server_request,
      void * _tao_object_reference,
      void * /* context */,
      CORBA::Environment &ACE_TRY_ENV
