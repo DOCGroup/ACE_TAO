@@ -42,7 +42,7 @@ class IOR_corbaloc_Client_i
   int run (CORBA::Environment &ACE_TRY_ENV);
   // Execute the client example code.
 
-  int init (int argc, char **argv);
+  int init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
   // Initialize the client communication endpoint with the server.
 
  private:

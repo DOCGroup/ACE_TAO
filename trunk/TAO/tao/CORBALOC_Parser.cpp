@@ -31,7 +31,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
                                                 CORBA::ULong &addr_list_length,
                                                 CORBA::ULong
                                                 &count_addr,
-                                                CORBA::Environment &)
+                                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -45,14 +45,22 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
           ++count_addr;
         }
 
-      if (*i == '/')
+      if (*i == ':')
         {
           if (*(i+1) == '/')
             {
-              ++i;
-              ++addr_list_length;
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
+              
+              ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID |
+                            TAO_OMG_MINOR_BAD_PARAM_10,
+                                           CORBA::COMPLETED_NO));
             }
-          else if (*(i+1) != '/')
+        }
+
+      if (*i == '/')
+        {
+          if (*(i+1) != '/')
             {
               // Indication that the next characters are to be
               // assigned to key_string
@@ -65,7 +73,6 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
           ++addr_list_length;
         }
     }
-
 }
 
 void
@@ -79,9 +86,20 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
 {
 
   CORBA::String_var end_point;
-  const char protocol_prefix[] = "//";
+  const char protocol_prefix[] = ":";
+  const char protocol_suffix_append[] = "://";
   const char iiop_prefix[] = "iiop:";
   const char uiop_prefix[] = "uiop:";
+
+  // Copy the cloc_name_ptr to cloc_name_cstring.
+  ACE_CString cloc_name_cstring (cloc_name_ptr,
+                                 addr_list_length,
+                                 0,
+                                 1);
+
+  // pos_colon is the position of the ':' in the iiop_id
+  // <iiop_id> = ":" | <iiop_prot_token>":"
+  int pos_colon = cloc_name_cstring.find (':', 0);
 
   if (ACE_OS::strncmp (cloc_name_ptr,
                        protocol_prefix,
@@ -95,15 +113,21 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       end_point = CORBA::string_alloc (addr_list_length +
                                        sizeof (iiop_prefix) +
                                        1 + // For the seperator
+                                       2 +
                                        key_string.length ());
 
       // Copy the default <iiop:> prefix.
       ACE_OS::strcpy (end_point,
                       iiop_prefix);
 
-      // Append the endpoint that is being passed.
+      // Append the '//'
       ACE_OS::strcat (end_point,
-                      cloc_name_ptr);
+                      protocol_suffix_append);
+
+      ACE_CString host_name_port = cloc_name_cstring.substring (pos_colon+1,
+                                                                -1);
+      ACE_OS::strcat (end_point,
+                      host_name_port.c_str ());
 
     }
   else
@@ -116,8 +140,21 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
                                        1 + // For the seperator
                                        key_string.length ());
 
+      ACE_CString prot_name = cloc_name_cstring.substring (0,
+                                                           pos_colon);
+
+      // Append the endpoint that is being passed.
       ACE_OS::strcpy (end_point,
-                      cloc_name_ptr);
+                      prot_name.c_str ());;
+
+      ACE_OS::strcat (end_point,
+                      protocol_suffix_append);
+
+      ACE_CString host_name_port = cloc_name_cstring.substring (pos_colon+1,
+                                                                -1);
+
+      ACE_OS::strcat (end_point,
+                      host_name_port.c_str ());
 
     }
 
@@ -190,7 +227,6 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (CORBA::String_var end_point,
                                                    &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
   TAO_MProfile jth_mprofile;
   // = new TAO_MProfile;
 
@@ -203,12 +239,11 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (CORBA::String_var end_point,
   if (retv != 0)
     {
       ACE_THROW(CORBA::INV_OBJREF (
-                  CORBA_SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                  CORBA::COMPLETED_NO));
+                   CORBA_SystemException::_tao_minor_code (
+                      TAO_DEFAULT_MINOR_CODE,
+                      EINVAL),
+                   CORBA::COMPLETED_NO));
     }
-
 
   // Add this profile to the main mprofile.
   TAO_MProfile *jth_mprofile_ptr = &jth_mprofile;
@@ -220,14 +255,12 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (CORBA::String_var end_point,
       // The profle is not added. Either ways, go to the
       // next endpoint.
     }
-
 }
 
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   // Now make the TAO_Stub.
@@ -378,7 +411,6 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-
   return object;
 }
 
@@ -387,7 +419,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_CORBALOC_Parser),
                        ACE_Service_Type::DELETE_THIS |
-                                  ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_OBJ,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBALOC_Parser)
