@@ -159,6 +159,12 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>
    ACE_Atomic_Op_Ex <ACE_LOCK,TYPE> ::operator= (rhs);
 }
 
+template <class ACE_LOCK, class TYPE> ACE_INLINE void
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs)
+{
+   ACE_Atomic_Op_Ex <ACE_LOCK,TYPE> ::operator= (rhs);
+}
+
 // These specializations have been added to ACE_Atomic_Op_Ex to make the
 // implementation faster on Win32 that has OS support for doing this
 // quickly through methods like InterlockedIncrement and
