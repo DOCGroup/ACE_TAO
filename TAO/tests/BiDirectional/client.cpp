@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 ACE_RCSID(BiDirectional, client, "$Id$")
 
