@@ -1,3 +1,25 @@
+Mon Mar 11 12:17:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/compiler.bor:
+        * include/makeinclude/decorator.bor:
+        * include/makeinclude/make_flags.bor:
+        * include/makeinclude/outputdir.bor:
+          Added support for a real unicode build with BCB builder. A real
+          unicode build can for example be done with:
+          make -f makefile.bor -DUNICODE
+          Doing a real unicode build means that the defines ACE_USES_WCHAR,
+          UNICODE and _UNICODE are set, diffent BCB object files are used
+          to link with and the compiler gets the extra compiler option -WU.
+          The dll names have a 'u' added so that unicode dll's are separated
+          from the non-unicode dll's. Also the output files are build in a
+          separate subdirectory.
+
+        * ACE-INSTALL.html:
+          Explained the BCB make options that can be used with ACE
+
 Mon Mar 11 11:35:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Registry_Name_Space.cpp:

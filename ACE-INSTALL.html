@@ -170,7 +170,7 @@ supported by the DOC group, Riverace, or OCI. <P>
 
       We've also added some support for
       <A HREF="#mingw">GNU g++ with Mingw</A>,
-      Borland C++ Builder 4.0/5.0 and IBM's VisualAge C++ compiler.
+      Borland C++ Builder 4.0 and later, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
       to the ACE mailing list if you run into problems. <P>
@@ -1250,12 +1250,30 @@ create an
       <BR>
       <CODE>make -f Makefile.bor</CODE><BR>
       <BR>
-  <LI>You can build debug DLLs for ACE by setting the DEBUG environment
-variable
+  <LI>You can build several different versions of ACE by setting environment
+variables
       before you run make:<BR>
       <BR>
-      <CODE>set DEBUG=1<BR>
-      make -f Makefile.bor</CODE><BR>
+      Set the environment variable below to build a debug version of ACE<BR>
+      <CODE>set DEBUG=1</CODE><BR>
+      <BR>
+      Set the environment variable below to build a static version of ACE<BR>
+      <CODE>set STATIC=1</CODE><BR>
+      <BR>
+      Set the environment variable below to build a unicode version of ACE<BR>
+      <CODE>set UNICODE=1</CODE><BR>
+      <BR>
+      Set the environment variable below to build a version of ACE with Codeguard support. Should only be used when DEBUG is also set<BR>
+      <CODE>set CODEGUARD=1</CODE><BR>
+      <BR>
+      Set the environment variable below to build a version of ACE that is build against the VCL-compatible run-time library. This can only be used with BCB version 4<BR>
+      <CODE>set PASCAL=1</CODE><BR>
+      <BR>
+      You can then start the build with the command
+      <BR><CODE>make -f Makefile.bor</CODE><BR>
+      <BR>
+      You may also enable the options by passing them as command line options to make, for example:<BR>
+      <CODE>make -f Makefile.bor -DDEBUG -DPASCAL</CODE><BR>
       <BR>
   <LI>Optionally install the ACE header files, libraries and executables
 for use
