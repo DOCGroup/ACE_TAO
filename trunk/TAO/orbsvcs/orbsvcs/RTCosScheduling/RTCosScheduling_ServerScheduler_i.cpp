@@ -729,7 +729,7 @@ RTCosScheduling_ServerScheduler_i::resources(
           if (p)
               priority  = ACE_OS::atoi(p);
           if (priority == 0)
-              priority = RTCORBA::minPriority
+              priority = RTCORBA::minPriority;
           if (delimiter < name.length() && delimiter > 0)
             {
               resource_map->bind(name.substr(0, delimiter), priority);
