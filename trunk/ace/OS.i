@@ -6827,7 +6827,7 @@ ACE_INLINE struct passwd *
 ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
                     char *buffer, int buflen)
 {
-#if defined (ACE_HAS_PACE) || defined (_POSIX_C_SOURCE)
+#if defined (ACE_HAS_PACE) || defined (ACE_HAS_POSIX_GETPWNAM_R)
   struct passwd *result;
   int status;
 

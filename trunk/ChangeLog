@@ -1,6 +1,11 @@
 Sat Jun 23 06:19:39 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.i: Fixed the getpwdnam_r() wrapper so that it conforms to
+        * ace/OS.i: For some god knows why reason, _POSIX_C_SOURCE doesn't
+	  get us the right behavior for getpwnam_r() on some platforms...
+  	  Therefore, we'll need to define an ACE_HAS_POSIX_GETPWNAM_R
+ 	  macro instead -- grrr....  Thanks to Bala for pointing this out.
+	
+	* ace/OS.i: Fixed the getpwnam_r() wrapper so that it conforms to
 	  POSIX on platforms that support POSIX.  Thanks to
 	  Craig L. Ching <cching@mqsoftware.com> for reporting this.
 
