@@ -1,5 +1,0 @@
-struct Data
- {		
-   string name;
-   string obj_ref;
- };

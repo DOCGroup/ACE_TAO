@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dynamicany, portableserver {
-  after     += CosTrading 
-  libs      += TAO_CosTrading
-  tagchecks += Trader
-}
