@@ -203,12 +203,10 @@ Options::shared_client_test (u_short port,
                 remote_addr.get_host_name (),
                 remote_addr.get_port_number ()));
 
-  ACE_INT32 len = htonl (this->message_len ());
-
   // Allocate the transmit buffer.
   char *buf;
   ACE_NEW_RETURN (buf,
-                  char[len],
+                  char[this->message_len ()],
                   0);
 
   ACE_DEBUG ((LM_DEBUG,
