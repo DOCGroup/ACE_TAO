@@ -1,3 +1,91 @@
+Tue Jun 08 13:36:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Stub.{h,i} (servant_orb): Added data member servant_orb_ and
+	  its accessor and mutator.  This ORB_var stores the pointer of a
+	  collocated servant and is used to locate/query the servant/POA.
+
+Mon Jun 07 15:47:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html: Documented ORB options -ORBglobalcollocation
+	  and -ORBcollocationStrategy.
+
+	* tao/ORB_Core.{h,i,cpp}: Removed accessor/mutator
+	  using_collocation methods.  They have been replaced by
+	  optimize_collocation_objects.
+
+	  Added enum definition for collocation_strategy and
+	  get_collocation_strategy which is an accessor for ORB's
+	  collocation strategy.  TAO will support two strategies THRU_POA
+	  and DIRECT which should be self-explaining.  The default
+	  strategy will be THRU_POA because it is considered the safe
+	  thing to do.  Veteran users might consider using DIRECT
+	  collocation strategy if situation allows.  A third strategy
+	  "ORB_CONTROL" is the default value passed to
+	  Servant_Base::_create_collocated_objref.  This makes all servant
+	  to query the ORB to decide which collocation strategy to use.
+	  But we can also provide per-object collocation strategy in a
+	  later point of time.
+
+	  (init): Added a new option -ORBcollocationstrategy which takes
+	  two possible value "thru_poa" and "direct".  The defualt is, of
+	  course, "thru_poa".
+
+	* tao/Servant_Base.{h,cpp} (_create_collocated_objref): Added a
+	  factory method to strategize what collocated object
+	  implementation we want to use and also to decouple the stubs and
+	  skeletons code.
+
+	* tao/Exception.h: Reordered class member functions to put all TAO
+	  extensions at the end of the public section of each class.
+	  Added more comments.
+
+	* tao/Exception.{h,cpp} (_tao_print_exception): Renamed
+	  <print_exception> to _tao_print_exception to avoid clashing with
+	  user defined methods.
+	  (_tao_print_system_exception): Renamed <print_exception_tao_> to
+	  _tao_print_system_exception to avoid name clashing.
+	  (_tao_minor_code,_tao_errno): Rename <minor_code_tao_> and
+	  <errno_tao_> to _tao_minor_code and _tao_errno to avoid name
+	  clashing.
+
+	  Changed several uses of "new" to ACE_NEW_THROW_EX.
+
+	* tao/POA.cpp:
+	* tao/Invocation.cpp:
+	* tao/GIOP.cpp: Changed the use of minor_code_tao_ to
+	  _tao_minor_code.
+
+	* tao/TAO.{h,cpp}:
+	* tao/GIOP_Server_Request.cpp (marshal): Changed to use ACE_TRY
+	  macros and made sure the code is exception safe.
+
+	* tao/orbconf.h (TAO_NAMESPACE_INLINE_FUNCTION): Inline function
+	  within a namespace must be treated differently.  On most
+	  platform, using TAO_NAMESPACE_STORAGE_CLASS would work for
+	  functions within a namespace.  However, since the macro uses
+	  TAO_Export, which totally confuses MSVC to think that the
+	  symbols for these functions are to be exported while in fact,
+	  they are only inline functions and do not need any entry point
+	  at all.  The newly added macro (TAO_NAMESPACE_INLINE_FUNCTION)
+	  separates out this situation and simply uses the "inline"
+	  keyword.
+
+	* tao/Marshal.h: Added #include "tao/Principal.h" because
+	  Marshal.i uses inline functions in Principal.i.
+
+        * tao/Context.{i,cpp}:
+        * tao/Environment.{i,cpp}:
+        * tao/NVList.{i,cpp}:
+        * tao/ORB.{i,cpp}:
+        * tao/Object.{i,cpp}:
+        * tao/Principal.{i,cpp}:
+        * tao/ValueBase.{i,cpp}:
+        * tao/Request.{i,cpp}:
+        * tao/Server_Request.{i,cpp}:
+        * tao/Typecode.{i,cpp}:
+        * tao/corbafwd.{i,cpp}: Re-inlined string_alloc, string_free,
+	  is_nil and release methods.
+
 Tue Jun 08 14:39:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h,Exception.cpp: added minor code support for
