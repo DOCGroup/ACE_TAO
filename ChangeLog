@@ -1,3 +1,30 @@
+Mon Dec  8 16:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Added the ability to better determine whether apps/drwho must be build.
+        By setting rwho=0 into the default.features file that MPC uses no
+        makefiles are generated. For GNU make, just put rwho=0 into your
+        own platform_macros.GNU file or in the specific platform file.
+
+        * apps/drwho/drwho.mpc:
+          Added requires rwho and removed the usage of nobuild.
+
+        * apps/drwho/nobuild.mpb:
+          Removed this file from the repo, it is not needed anymore
+
+        * include/makeinclude/wrapper_macros.GNU:
+          When rwho is not set, set it to 1. This way, we can set in the specific
+          .GNU files rwho=0 when that environment doesn't support rwho.
+
+        * include/makeinclude/platform_chorus.GNU:
+        * include/makeinclude/platform_chorus4.x_g++.GNU:
+        * include/makeinclude/platform_chorus_ghs.GNU:
+        * include/makeinclude/platform_cygwin32.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+        * include/makeinclude/platform_vxworks5.x_diab.GNU:
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          Added rwho=0 because these environments don't have rwho.
+
 Mon Dec  8 09:14:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
