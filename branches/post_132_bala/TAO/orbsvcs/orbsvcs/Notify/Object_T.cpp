@@ -1,0 +1,47 @@
+// $Id$
+
+#ifndef TAO_NS_OBJECT_T_CPP
+#define TAO_NS_OBJECT_T_CPP
+
+#include "Object_T.h"
+#include "orbsvcs/ESF/ESF_RefCount_Guard.h"
+
+#if ! defined (__ACE_INLINE__)
+#include "Object_T.inl"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(RT_Notify, TAO_NS_Object, "$Id$")
+
+template <class TYPE, class PARENT>
+TAO_NS_Object_T<TYPE, PARENT>::TAO_NS_Object_T (void)
+  :parent_ (0)
+{
+}
+
+template <class TYPE, class PARENT>
+TAO_NS_Object_T<TYPE, PARENT>::~TAO_NS_Object_T ()
+{
+}
+
+template <class TYPE, class PARENT> void
+TAO_NS_Object_T<TYPE, PARENT>::destroy (TYPE *type ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Refcountable_Guard ref_guard(*this); // Protect this object from being destroyed in the middle of its shutdown sequence.
+
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
+    if (this->shutdown_ == 1)
+      return; // Another thread has already run shutdown.
+
+    this->shutdown_ = 1;
+  }
+
+  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (parent_)
+    parent_->remove (type ACE_ENV_ARG_PARAMETER);
+}
+
+#endif /* TAO_NS_OBJECT_T_CPP */
