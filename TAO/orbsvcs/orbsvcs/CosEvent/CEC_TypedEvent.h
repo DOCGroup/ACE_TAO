@@ -19,6 +19,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/NVList.h"
+#include "tao/CORBA_String.h"
+#include "tao/CORBA_methods.h"
 
 // ****************************************************************
 /**
