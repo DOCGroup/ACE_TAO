@@ -155,7 +155,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                  ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::make_connection - ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
@@ -169,7 +169,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
+                ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
 
   // Get the right synch options
@@ -193,8 +193,8 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // We always use a blocking connection so the connection is never
   // pending.
 
-  // Irrespective of success or failure, remove the extra #REFCOUNT#.
-  svc_handler->remove_reference ();
+  // Make sure that we always do a remove_reference
+  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
   // In case of errors.
   if (result == -1)
@@ -203,8 +203,8 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %N:%l, connection to ")
-                      ACE_TEXT ("<%s:%u> failed (%p)\n"),
+                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::make_connection, ")
+                      ACE_TEXT ("connection to <%s:%u> failed (%p)\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
                       shmiop_endpoint->port (),
                       ACE_TEXT ("errno")));
@@ -247,26 +247,24 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       return 0;
     }
 
-  // If the wait strategy wants us to be registered with the reactor
-  // then we do so. If registeration is required and it succeeds,
-  // #REFCOUNT# becomes two.
-  retval =  transport->wait_strategy ()->register_handler ();
-
-  // Registration failures.
-  if (retval != 0)
+  if (transport->is_connected () &&
+      transport->wait_strategy ()->register_handler () != 0)
     {
-      // Purge from the connection cache.
-      transport->purge_entry ();
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) transport->purge_entry ();
 
       // Close the handler.
-      svc_handler->close ();
+      (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
-                      "could not register the new connection in the reactor\n"));
-        }
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - SHMIOP_Connector [%d]::make_connection, "
+                    "could not register the transport "
+                    "in the reactor.\n",
+                    transport->id ()));
 
       return 0;
     }
@@ -361,5 +359,26 @@ TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   return shmiop_endpoint;
 }
+
+int
+TAO_SHMIOP_Connector::cancel_svc_handler (
+  TAO_Connection_Handler * svc_handler)
+{
+  TAO_SHMIOP_Connection_Handler* handler=
+    dynamic_cast<TAO_SHMIOP_Connection_Handler*>(svc_handler);
+
+  if (handler)
+    {
+      // Cancel from the connector
+      this->base_connector_.cancel (handler);
+
+      return 0;
+    }
+  else
+    {
+      return -1;
+    }
+}
+
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
