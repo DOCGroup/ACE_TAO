@@ -1,3 +1,7 @@
+Tue Dec 17 12:53:01 1997  Brian Mendel  <brian.r.mendel@boeing.com>
+
+        * tao/encode.cpp: Additional changes for wchar's
+
 Tue Dec 17 10:37:45 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/TAO.dsp: Removed obsolete files from the VC++ project.  
