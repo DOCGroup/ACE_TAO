@@ -11,19 +11,19 @@
 #----------------------------------------------------------------------------
 
 DIRS  = CDR \
-	IDL_Test \
+        IDL_Test \
         OctetSeq \
         InterOp-Naming \
         NestedUpcall \
         Multiple_Inheritance \
-	MT_Client \
-	MT_Server \
-	FL_Cube \
-	POA \
-	IORManipulation \
-	Connection_Purging \
-	ORB_init \
-	Smart_Proxies
+        MT_Client \
+        MT_Server \
+        FL_Cube \
+        POA \
+        IORManipulation \
+        Connection_Purging \
+        ORB_init \
+        Smart_Proxies
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -34,6 +34,7 @@ endif
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(minimum_corba),0)
 
@@ -42,7 +43,7 @@ ifeq ($(minimum_corba),0)
 
 # No NVList and Context in minimum CORBA
   DIRS += Param_Test \
-	  DSI_Gateway
+          DSI_Gateway
 
 # No Implicit activation in minimum CORBA
   DIRS += Faults
@@ -64,7 +65,6 @@ ifeq ($(corba_messaging),1)
 endif # corba_messaging
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU

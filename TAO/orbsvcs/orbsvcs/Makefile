@@ -21,6 +21,7 @@ ACE_SHLIBS = -lTAO -lACE
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
@@ -338,7 +339,6 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 BUILD += ORBSVCS_COMPONENTS
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
