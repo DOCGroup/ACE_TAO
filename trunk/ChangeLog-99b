@@ -1,3 +1,12 @@
+Thu Nov 11 01:54:55 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* ace/Log_Msg.h (msg_ostream):
+	* ace/Log_Msg.cpp (msg_ostream):
+	* ace/Log_Msg.cpp (~ACE_Log_Msg):
+
+	  Added a member to flag whether or not Log_Msg object
+	  assumes responsibility for destroying its ostream_*.
+
 Wed Nov 10 23:29:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Configuration.cpp:
@@ -6,7 +15,7 @@ Wed Nov 10 23:29:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * examples/Configuration/Configuration.dsw:
         * examples/Configuration/Test.dsp:
         * examples/Configuration/config_test.cpp:
-          Added the ACE Configuration class files.  Thanks to Chris 
+          Added the ACE Configuration class files.  Thanks to Chris
           Hafey <chafey@pacbell.net> for submitting them.
 
         * ace/ace_dll.dsp:
@@ -88,7 +97,7 @@ Wed Nov 10 10:55:34 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Tue Nov  9 17:50:01 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/config-hpux-10.x-hpc++.h: 
+	* ace/config-hpux-10.x-hpc++.h:
           Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE since it doesn't seem
           to be supported on aCC.
 
@@ -122,7 +131,7 @@ Tue Nov  9 10:11:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Mon Nov  8 09:41:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Svc_Handler.cpp: Removed the unused parameter `n'.  Thanks
-	  to David Levine for reporting this.	
+	  to David Levine for reporting this.
 
 Mon Nov  8 16:34:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -137,12 +146,12 @@ Mon Nov  8 16:34:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 		ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 
 Mon Nov  8 09:41:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-  
+
 	* ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_NEW
 	  for older versions of G++.  Thanks to David Levine for reporting
  	  this.
 
-	* ace/config-sunos5.5.h: Added a #define for 
+	* ace/config-sunos5.5.h: Added a #define for
 	  ACE_LACKS_PLACEMENT_OPERATOR_DELETE to handle problems with
  	  SunC++ 4.2.
 

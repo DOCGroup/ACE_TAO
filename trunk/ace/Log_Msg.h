@@ -278,7 +278,11 @@ public:
   //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
   //   on Windows CE.  There is no <iostream.h> support on CE.
 
-  void msg_ostream (ACE_OSTREAM_TYPE *);
+  void msg_ostream (ACE_OSTREAM_TYPE *, int delete_ostream = 0);
+  // delete_stream == 1, forces Log_Msg.h to delete the stream in
+  // its own ~dtor (assumes control of the stream)
+  // use only with proper ostream (eg: fstream), not (cout, cerr)
+
   ACE_OSTREAM_TYPE *msg_ostream (void) const;
   // Get the ostream that is used to print error messages.
 
@@ -445,6 +449,9 @@ private:
 
   int tracing_enabled_;
   // Are we allowing tracing in this thread?
+
+  int delete_ostream_;
+  // Are we deleting this ostream?
 
   ACE_Thread_Descriptor *thr_desc_;
   // If we're running in the context of an <ACE_Thread_Manager> this
