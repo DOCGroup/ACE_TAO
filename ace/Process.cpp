@@ -13,6 +13,20 @@
 
 ACE_RCSID (ace, Process, "$Id$")
 
+
+// This function acts as a signal handler for SIGCHLD. We don't really want
+// to do anything with the signal - it's just needed to interrupt a sleep.
+// See wait() for more info.
+#if !defined (ACE_WIN32)
+static void
+sigchld_nop (int, siginfo_t *, ucontext_t *)
+{
+  return;
+}
+#endif /* ACE_WIN32 */
+
+
+
 ACE_Process::ACE_Process (void)
   :
 #if !defined (ACE_WIN32)
@@ -345,34 +359,40 @@ ACE_Process::wait (const ACE_Time_Value &tv,
   if (tv == ACE_Time_Value::max_time)
     return this->wait (status);
 
-  ACE_Time_Value wait_until = ACE_OS::gettimeofday () + tv;
+  // Need to wait but limited to specified time.
+  // Force generation of SIGCHLD, even though we don't want to
+  // catch it - just need it to interrupt the sleep below.
+  // If this object has a reactor set, assume it was given at
+  // open(), and there's already a SIGCHLD action set, so no
+  // action is needed here.
+  ACE_Sig_Action old_action;
+  ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+  do_sigchld.register_action (SIGCHLD, &old_action);
 
-  for (;;)
+  pid_t pid;
+  ACE_Time_Value tmo (tv);       // Need one we can change
+  for (ACE_Countdown_Time time_left (&tmo); ; time_left.update ())
     {
-      int result = ACE_OS::waitpid (this->getpid (),
-                                    status,
-                                    WNOHANG);
-      if (result != 0)
-        return result;
+      pid = ACE_OS::waitpid (this->getpid (), status, WNOHANG);
+      if (pid > 0 || pid == ACE_INVALID_PID)
+        break;          // Got a child or an error - all done
 
-      ACE_Sig_Set alarm_or_child;
-
-      alarm_or_child.sig_add (SIGALRM);
-      alarm_or_child.sig_add (SIGCHLD);
-
-      ACE_Time_Value time_left = wait_until - ACE_OS::gettimeofday ();
-
-      // If ACE_OS::ualarm doesn't have sub-second resolution:
-      time_left += ACE_Time_Value (0, 500000);
-      time_left.usec (0);
-
-      if (time_left <= ACE_Time_Value::zero)
-        return 0; // timeout
-
-      ACE_OS::ualarm (time_left);
-      if (ACE_OS::sigwait (alarm_or_child) == -1)
-        return ACE_INVALID_PID;
+      // pid 0, nothing is ready yet, so wait.
+      // Do a sleep (only this thread sleeps) til something
+      // happens. This relies on SIGCHLD interrupting the sleep.
+      // If SIGCHLD isn't delivered, we'll need to do something
+      // with sigaction to force it.
+      if (-1 == ACE_OS::sleep (tmo) && errno == EINTR)
+        continue;
+      // Timed out
+      pid = 0;
+      break;
     }
+
+  // Restore the previous SIGCHLD action if it was changed.
+  old_action.register_action (SIGCHLD);
+
+  return pid;
 #endif /* ACE_WIN32 */
 }
 

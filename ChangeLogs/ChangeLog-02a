@@ -1,3 +1,26 @@
+Wed Jan 30 17:22:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (wait (const ACE_Time_Value&, ACE_exitcode *)):
+        * ace/Process_Manager.cpp (wait (pid_t, const ACE_Time_Value&,
+                                         ACE_exitcode *)):
+          The mechanism for waiting up to a specified time for a child
+          process to exit has been replaced. Replaces the fix from:
+          Fri Jan 25 19:58:41 2002  Steve Huston  <shuston@riverace.com>
+          and makes unnecessary any further work from:
+          Sat Jan 26 21:41:39 2002  Steve Huston  <shuston@riverace.com>
+
+          Both classes now do a timed wait for a child by doing an
+          ACE_OS::sleep, counting on being interrupted if a SIGCHLD
+          is delivered. In ACE_Process_Manager when a reactor hasn't
+          been specified, and always in ACE_Process, a temporary
+          SIGCHLD handler is installed for the duration of the wait.
+          This is necessary because the default SIGCHLD action on
+          POSIX (and holds true for most non-Win32) is SIG_IGN, and
+          SIGCHLD is not generated when a child process exits.
+          Therefore, a handler is installed to force the SIGCHLD.
+          It's not needed in ACE_Process_Manager when a reactor is in
+          place because the reactor already has a handler for SIGCHLD.
+
 Wed Jan 30 15:11:49 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_linux.GNU (CXX_VERSION):
