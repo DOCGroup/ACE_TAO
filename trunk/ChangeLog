@@ -1,3 +1,15 @@
+Mon May 19 15:14:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Test_Output.dsp:
+		  Changed output location for dll so that other projects can find it.
+
+        * tests/DLL_Test_Impl.dsp:
+        * tests/Framework_Component_DLL.dsp:
+        * tests/Service_Config_DLL.dsp:
+		  Removed dependency on Test_Output.dll which isn't needed and causes
+          build failures in the autobuilds since they don't honor the dependencies
+          in tests.dsw.
+
 Mon May 19 11:13:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SSL/Makefile.bor:
