@@ -492,6 +492,8 @@ public:
 
   virtual void *thread_pool (void) const;
 
+  CORBA::Policy *server_protocol (void);
+
 protected:
 
   const ACE_CString &name (void) const;
