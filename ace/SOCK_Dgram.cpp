@@ -145,7 +145,9 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                               ACE_reinterpret_cast (const sockaddr *,
                                                     local.get_addr ()),
                               local.get_size (),
-                              qos_params);
+                              qos_params) == ACE_INVALID_HANDLE
+      ? -1 
+      : 0;
 }
 
 // Here's the general-purpose open routine.
