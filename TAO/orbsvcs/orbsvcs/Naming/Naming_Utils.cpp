@@ -49,17 +49,9 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          int resolve_for_existing_naming_service,
                          LPCTSTR persistence_location)
 {
-  CORBA::Object_var naming_obj;
-
-  if (resolve_for_existing_naming_service)
-    naming_obj = orb->resolve_initial_references ("NameService",
-                                                  timeout);
-
-  if (CORBA::is_nil (naming_obj.in ()))
+  // Don't look for a Naming Service; become one.
+  if (!resolve_for_existing_naming_service)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nNameService not resolved, so we'll become a NameService\n"));
       return this->init_new_naming (orb,
                                     poa,
                                     persistence_location,
@@ -67,30 +59,56 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
     }
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nNameService found!\n"));
+      //
+      // Try to find an existing Naming Service.
+      //
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService",
+                                         timeout);
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      // No luck in finding an existing Naming Service.
+      if (CORBA::is_nil (naming_obj.in ()))
         {
-          this->naming_context_ =
-            CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nNameService not resolved, so we'll become a NameService\n"));
 
-          this->naming_service_ior_ =
-            orb->object_to_string (naming_obj.in (),
-                                   ACE_TRY_ENV);
-
-          ACE_TRY_CHECK;
+          // Become a Naming Service.
+          return this->init_new_naming (orb,
+                                        poa,
+                                        persistence_location,
+                                        context_size);
         }
-      ACE_CATCHANY
+      else
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
+          //
+          // Success in finding a Naming Service.
+          //
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nNameService found!\n"));
+
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              this->naming_context_ =
+                CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                                   ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              this->naming_service_ior_ =
+                orb->object_to_string (naming_obj.in (),
+                                       ACE_TRY_ENV);
+
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
+            }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN (-1);
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
     }
   return 0;
 }

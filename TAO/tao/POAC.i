@@ -3637,7 +3637,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer:
   if (strm << _tao_aggregate._id ())
   {
     // now marshal the members (if any)
-    if ((strm << _tao_aggregate.slot))
+    if ((strm << _tao_aggregate.index))
       return 1;
     else
       return 0;
@@ -3654,7 +3654,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::POA::I
       (_tao_aggregate._is_a (_tao_repoID)))
   {
     // now marshal the members
-    if ((strm >> _tao_aggregate.slot))
+    if ((strm >> _tao_aggregate.index))
       return 1;
     else
       return 0;
