@@ -1,3 +1,9 @@
+Tue Dec 23 21:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * netsvcs/lib/Makefile.bor:
+        * netsvcs/servers/Makefile.bor:
+          Added $Id to fix fuzz errors.
+
 Tue Dec 23 20:35:40 UTC 2003 Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-freebsd.h:
