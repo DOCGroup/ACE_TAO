@@ -365,24 +365,6 @@ ACE_OS::gethostbyname (const char *name)
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
-#if defined (VXWORKS)
-// not inline because it has the static char array
-char *
-ACE_OS::inet_ntoa (const struct in_addr addr)
-{
-  // ACE_TRACE ("ACE_OS::inet_ntoa");
-
-  // the following storage is not thread-specific!
-  static char buf[32];
-  // assumes that addr is already in network byte order
-  ACE_OS::sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
-                   addr.s_addr / (256*256) & 255,
-                   addr.s_addr / 256 & 255,
-                   addr.s_addr & 255);
-  return buf;
-}
-#endif /* VXWORKS */
-
 void
 ACE_OS::ace_flock_t::dump (void) const
 {
