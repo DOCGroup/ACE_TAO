@@ -1,3 +1,10 @@
+Mon Oct 30 16:34:33 2000  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* include/makeinclude/platform_vxworks5.x_g++.GNU:
+ 	
+	More exceptions/fast/rtti canonicalization fixes.  Thanks again,
+ 	Carlos.
+
 Mon Oct 30 11:56:13 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile.am:
