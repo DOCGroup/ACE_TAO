@@ -394,10 +394,10 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
       break;
     case AST_PredefinedType::PT_any:
       *os << "void " << ub->local_name () << " ("
-          << bt->nested_type_name (bu) << ");" << be_nl;
-      *os << "const " << bt->nested_type_name (bu) << " "
+          << bt->nested_type_name (bu) << " &);" << be_nl;
+      *os << "const " << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " (void) const;" << be_nl << be_nl;
-      *os << bt->nested_type_name (bu) << " "
+      *os << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " (void);" << be_nl << be_nl;
       break;
     case AST_PredefinedType::PT_void:

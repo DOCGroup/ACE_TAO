@@ -583,6 +583,10 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
     {
       *os << "_ptr";
     }
+  else if (pt == AST_PredefinedType::PT_any)
+    {
+      *os << " &";
+    }
 
   *os << " val)" << be_nl
       << "{" << be_idt_nl;
@@ -597,11 +601,8 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
       break;
     case AST_PredefinedType::PT_any:
-      *os << "ACE_NEW (" << be_idt << be_idt_nl
-          << "this->" << bu->field_pd_prefix () << ub->local_name ()
-          << bu->field_pd_postfix () << "," << be_nl
-          << bt->name () << " (val)" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+      *os << "this->" << bu->field_pd_prefix () << ub->local_name ()
+          << bu->field_pd_postfix () << " = val;" << be_uidt_nl;
 
       break;
     case AST_PredefinedType::PT_void:
@@ -615,7 +616,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       break;
   }
 
-  *os << "}" << be_nl;
+  *os << "}" << be_nl << be_nl;
 
   switch (node->pt ())
   {
@@ -639,7 +640,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_any:
       *os << "// Retrieve the member." << be_nl
-          << this->pre_op () << "const " << bt->name () << be_nl;
+          << this->pre_op () << "const " << bt->name () << " &" << be_nl;
 
       this->op_name (bu,
                      os);
@@ -647,14 +648,14 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       *os << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
-          << "return *this->"
+          << "return this->"
           << bu->field_pd_prefix () << ub->local_name () 
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
-          << "}" << be_nl;
+          << "}" << be_nl << be_nl;
 
       *os << "// Retrieve the member" << be_nl
-          << this->pre_op () << bt->name () << be_nl;
+          << this->pre_op () << bt->name () << " &" << be_nl;
 
       this->op_name (bu,
                      os);
@@ -662,7 +663,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       *os << "::" << ub->local_name ()
           << " (void)" << be_nl
           << "{" << be_idt_nl
-          << "return *this->"
+          << "return this->"
           << bu->field_pd_prefix () << ub->local_name () 
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
