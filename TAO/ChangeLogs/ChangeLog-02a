@@ -1,3 +1,9 @@
+Thu Aug 10 18:39:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          NativeCosEvent was built but not added to the
+          ORBSVCS_COMPONENTS file.
+
 Thu Aug 10 17:45:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/releasenotes/ec.html:
