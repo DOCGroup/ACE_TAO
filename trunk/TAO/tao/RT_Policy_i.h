@@ -231,9 +231,6 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
-  // @@ Angelo, please use dot at the end of all your comments.
-  // Marina DONE.
-
 protected:
 
   friend class TAO_Policy_Factory;
@@ -241,13 +238,6 @@ protected:
   // This constructor is used by TAO_Policy_Factory when decoding
   // policies from tagged components in an IOR.
 
-  // @@ Angelo, please look at how I changed a copy of the comment for
-  // default constructor above in PriorityModelPolicy implementation
-  // class.  Reword and clarify the comment above or just paste the
-  // modified version from PriorityModelPolicy.
-  // Apply the same fix to other classes.
-
-  // @@ Marina DONE.
 private:
 
   RTCORBA::PriorityBands priority_bands_;
@@ -289,12 +279,6 @@ public:
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
-
-
-  // @@ Angelo, the ServerProtocolPolicy is not client-exposed, the
-  // ClientProtocolPolicy is.
-
-  // Marina DONE.
 
 private:
 
@@ -453,8 +437,6 @@ private:
   CORBA::Boolean no_delay_;
 };
 
-// @@ Angelo, please use words, i.e., Protocol instead of Proto
-// below.  You are only saving 3 chars but adding confusion.
 class  TAO_Protocol_Properties_Factory;
 
 class TAO_Export TAO_GIOP_Properties :

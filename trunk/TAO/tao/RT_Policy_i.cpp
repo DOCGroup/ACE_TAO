@@ -95,11 +95,6 @@ TAO_PriorityModelPolicy::_tao_decode (TAO_InputCDR &in_cdr)
   if (b  && (in_cdr >> server_priority_))
     return 1;
 
-  // @@ Angelo, why do we need the following 2 lines?  If the decoding
-  // failed, we just indicate that with the return value.
-
-  // @@ Marina I put this two line because in this way
-  // we leave the internal state consistent and known.
   priority_model_ = RTCORBA::SERVER_DECLARED;
   server_priority_ = 0;
 
@@ -404,6 +399,9 @@ TAO_TCP_Properties::_tao_encode (TAO_OutputCDR & out_cdr)
       and (out_cdr.write_boolean (dont_route_))
       and (out_cdr.write_boolean (no_delay_)))
   */
+
+  // @@ Angelo, I sent you an e-mail explaining C++ short-circuiting
+  // feature in operator AND and why the above works.  Please fix.
 }
 
 CORBA::Boolean
@@ -548,9 +546,6 @@ TAO_ClientProtocolPolicy::destroy (CORBA::Environment &)
 {
 }
 
-// @@ Angelo, use void if the method has no argument.  Don't use extra lines.
-// @@ Marina DONE.
-
 TAO_GIOP_Properties::TAO_GIOP_Properties (void)
 {
 }
@@ -628,6 +623,7 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 }
   */
 
+// @@ Angelo, see above ...
 
 CORBA::Boolean
 TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
@@ -642,6 +638,11 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
     {
       IOP::ProfileId id;
       is_read_ok = in_cdr >> id;
+
+      // @@ Angelo, the code below looks buggy.  For example, I don't
+      // see where transport properties are created: you are calling
+      // create_orb_protocol_property twice.  Please review this
+      // whole method carefully to make sure it's correct.
 
       protocol_properties =
         TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
@@ -662,6 +663,11 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
           // But also if I am right we could receive ORB specific protocol
           // Properties that we need to skip.
 
+          // @@ Angelo, how does the factory handles memory allocation
+          // problem?  by returning 0, so you still need to check for
+          // it here...  Furthermore, if 0 is returned, and you are
+          // trying to invoke a method on it here, you are busted...
+
           protocols_[i].orb_protocol_properties = protocol_properties;
 
           if (is_read_ok && (protocols_[i].orb_protocol_properties.ptr () == 0))
@@ -677,6 +683,7 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 
   return is_read_ok;
 }
-
+// @@ Angelo, please include protocol policy in your Exposed_Policies
+// test to make sure the above works!
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

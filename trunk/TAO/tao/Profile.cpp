@@ -19,60 +19,37 @@ TAO_Profile::~TAO_Profile (void)
 {
 }
 
-
-// @@ Angelo, You need ACE_UNUSED_ARG to avoid warnings about unused argument
-// when files are
-// compiled with TAO_HAS_CORBA_MESSAGING = 0
-
-// Marina DONE.
-
 void
 TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  // @@ Angelo, can we do something about ACE_ASSERT here? Assert is
-  // evil.
-
-  // @@ Marina Assert should be used to detect Buggy client. If this method
-  // will ever receive a policy_list which is null the assertion will detect
-  // the "Broken Contract" and the programmer will find out immediatly
-  // that the caller is doing something wrong!
-
   ACE_ASSERT (policy_list != 0);
-
-  // @@ Angelo, address memory management: every profile takes
-  // ownership of the same copy and will try to destroy.
-
-  // @@ Marina DONE.
 
   Messaging::PolicyValue *pv_ptr;
   Messaging::PolicyValueSeq policy_value_seq;
 
-  // @@ Angelo, please use underscore for parameter names.
-  // @@ Marina DONE.
-  
   TAO_OutputCDR out_CDR;
-  
+
   CORBA::ULong length;
   CORBA::Octet *buf = 0;
-  
+
   policy_value_seq.length (policy_list->length ());
-  
+
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
   for (size_t i = 0; i < policy_list->length (); i++)
     {
       ACE_NEW (pv_ptr, Messaging::PolicyValue);
       pv_ptr->ptype = (*policy_list)[i]->policy_type ();
-      
+
       (*policy_list)[i]->_tao_encode (out_CDR);
-      
+
       length = out_CDR.total_length ();
       pv_ptr->pvalue.length (length);
-      
+
       buf = pv_ptr->pvalue.get_buffer ();
-      
+
       // Copy the CDR buffer data into the sequence<octect> buffer.
 
       for (const ACE_Message_Block *iterator = out_CDR.begin ();
@@ -88,10 +65,10 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
-      
+
       out_CDR.reset ();
     }
-  
+
   // Now we have to embedd the Messaging::PolicyValueSeq into
   // a TaggedComponent.
 
@@ -127,10 +104,10 @@ CORBA::PolicyList&
 TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  
+
   CORBA::PolicyList *policies = stub_->base_profiles ().policy_list ();
-  if (!are_policies_parsed_ 
-      && (policies->length () == 0)) 
+  if (!are_policies_parsed_
+      && (policies->length () == 0))
       // None has already parsed the policies.
     {
       IOP::TaggedComponent tagged_component;
@@ -143,7 +120,6 @@ TAO_Profile::policies (void)
           const CORBA::Octet *buf =
             tagged_component.component_data.get_buffer ();
 
-          // use underscores.
           TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
                               tagged_component.component_data.length ());
 
@@ -169,10 +145,10 @@ TAO_Profile::policies (void)
               if (policy != 0)
                 {
                   buf = policy_value_seq[i].pvalue.get_buffer ();
-                  
+
                   TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
                                        policy_value_seq[i].pvalue.length ());
-                  
+
                   policy->_tao_decode (in_CDR);
                   (*policies)[i] = policy;
                 }
@@ -180,20 +156,20 @@ TAO_Profile::policies (void)
                 {
                   // This case should occure when in the IOR are embedded
                   // policies that TAO doesn't support, so as specified
-                  // by the RT-CORBA spec. ptc/99-05-03 we just ignore 
+                  // by the RT-CORBA spec. ptc/99-05-03 we just ignore
                   // this un-understood policies.
                 }
             }
         }
-      else 
+      else
         {
-          
+          // @@ Marina, what should happen here?
         }
-      
+
     }
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
-  
+
   return *(stub_->base_profiles ().policy_list ());
 }
 
