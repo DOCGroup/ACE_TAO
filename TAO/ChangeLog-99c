@@ -1,3 +1,7 @@
+Mon Mar 01 14:20:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.3.7 released.
+
 Mon Mar 01 08:28:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.cpp: removed ACE_Guard<ACE_SYNCH_MUTEX>
