@@ -66,5 +66,4 @@ public:
 // Include the templates here.
 #include "ace/Functor_T.h"
 
-
 #endif /* ACE_FUNCTOR_H */
