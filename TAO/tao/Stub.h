@@ -229,12 +229,13 @@ public:
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void do_dynamic_call (const char *opname,
-                                CORBA::Boolean is_roundtrip,
-                                CORBA::NVList_ptr args,
-                                CORBA::NamedValue_ptr result,
-                                CORBA::Flags flags,
-                                CORBA::ExceptionList &exceptions,
-                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                        CORBA::Boolean is_roundtrip,
+                        CORBA::NVList_ptr args,
+                        CORBA::NamedValue_ptr result,
+                        CORBA::Flags flags,
+                        CORBA::ExceptionList &exceptions,
+                        CORBA_Environment &TAO_IN_ENV =
+                              CORBA::default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
   // stub-oriented one, but the data is represented somewhat

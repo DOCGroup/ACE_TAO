@@ -32,21 +32,18 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (void)
 {
 }
 
-TAO_Transport *
+int
 TAO_IIOP_Connector::connect (TAO_Profile *profile,
-                             CORBA::Environment &env)
+                             TAO_Transport *& transport)
 {
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
-    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
-                          env,
-                          0);
+    return -1;
+
   TAO_IIOP_Profile *iiop_profile =
     ACE_dynamic_cast (TAO_IIOP_Profile *, profile);
 
   if (iiop_profile == 0)
-    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
-                          env,
-                          0);
+    return -1;
 
 // Establish the connection and get back a <Client_Connection_Handler>.
 // @@ We do not have the ORB core
@@ -80,6 +77,11 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
   const ACE_INET_Addr &oa = iiop_profile->object_addr ();
 
   TAO_Client_Connection_Handler* result;
+
+  // the connect call will set the hint () stored in the Profile
+  // object; but we obtain the transport in the <result>
+  // variable. Other threads may modify the hint, but we are not
+  // affected.
   if (this->base_connector_.connect (iiop_profile->hint (),
                                      result,
                                      oa) == -1)
@@ -92,20 +94,22 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
                     profile->addr_to_string (),
                     "errno"));
 
-      TAO_THROW_ENV_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO),
-                            env,
-                            0);
+      return -1;
     }
 
-  // the connect call will set the hint () stored in the Profile
-  // object.
+  transport = result->transport ();
 
-  return result->transport ();
+  return 0;
 }
 
 int
-TAO_IIOP_Connector::open(TAO_Resource_Factory *trf, ACE_Reactor *reactor)
+TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
+                          ACE_Reactor *reactor)
 {
+  // @ Fred: why not just
+  //
+  // return this->base_connector_.open (....); ????
+  //
   if (this->base_connector_.open (reactor,
                                   trf->get_null_creation_strategy (),
                                   trf->get_cached_connect_strategy (),

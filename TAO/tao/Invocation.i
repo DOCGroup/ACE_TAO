@@ -32,14 +32,15 @@ TAO_GIOP_Twoway_Invocation (STUB_Object *data,
 
 ACE_INLINE void
 TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Invocation::start (1, TAO_GIOP::Request, ACE_TRY_ENV);
 }
 
 ACE_INLINE void
 TAO_GIOP_Twoway_Invocation::get_value (CORBA::TypeCode_ptr tc,
-                                void *value,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                       void *value,
+                                       CORBA::Environment &ACE_TRY_ENV)
 {
   (void) this->inp_stream_.decode (tc, value, 0, ACE_TRY_ENV);
 }
@@ -63,12 +64,14 @@ TAO_GIOP_Oneway_Invocation (STUB_Object *data,
 
 ACE_INLINE void
 TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Invocation::start (0, TAO_GIOP::Request, ACE_TRY_ENV);
 }
 
-ACE_INLINE TAO_GIOP_ReplyStatusType
+ACE_INLINE int
 TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO_GIOP_Invocation::invoke (0, ACE_TRY_ENV);
 }
@@ -86,6 +89,7 @@ TAO_GIOP_Locate_Request_Invocation (STUB_Object *data,
 
 ACE_INLINE void
 TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Invocation::start (1, TAO_GIOP::LocateRequest, ACE_TRY_ENV);
 }
