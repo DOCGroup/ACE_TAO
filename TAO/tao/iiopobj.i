@@ -2,11 +2,13 @@ ACE_INLINE
 IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
   : major (maj),
     minor (min)
-{}
+{
+}
 
 ACE_INLINE
 IIOP::Profile::Profile (void)
-{}
+{
+}
 
 ACE_INLINE
 IIOP::Profile::~Profile (void)
@@ -19,19 +21,19 @@ ACE_INLINE void
 IIOP::Profile::set_object_addr (void)
 {
   if (this->host)
-    object_addr_.set (this->port, this->host);
+    this->object_addr_.set (this->port, this->host);
 }
 
 ACE_INLINE ACE_INET_Addr &
 IIOP::Profile::get_object_addr (void)
 {
-  return object_addr_;
+  return this->object_addr_;
 }
 
 ACE_INLINE
 IIOP_Object::~IIOP_Object (void)
 {
-  assert (refcount_ == 0);
+  assert (this->refcount_ == 0);
   delete this->fwd_profile_;
 }
 
@@ -41,7 +43,8 @@ IIOP_Object::IIOP_Object (char *repository_id)
     base (this),
     refcount_ (1),
     fwd_profile_ (0)
-{}
+{
+}
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id,
