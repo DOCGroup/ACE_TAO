@@ -20,7 +20,9 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
-class TAO_ORBSVCS_Export ACE_Reconfig_Scheduler : public POA_RtecScheduler::Scheduler
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
+class TAO_ORBSVCS_Export ACE_Reconfig_Scheduler : 
+  public POA_RtecScheduler::Scheduler
 {
   // = TITLE
   //   A servant for RtecScheduler::Scheduler that can be initialized 
@@ -37,16 +39,28 @@ class TAO_ORBSVCS_Export ACE_Reconfig_Scheduler : public POA_RtecScheduler::Sche
   //   both schedule configuration and run-time phases of operation.
   //
 public:
+
+  ACE_Reconfig_Scheduler ();
+  // Default constructor.
+
   ACE_Reconfig_Scheduler (int config_count,
-                         ACE_Scheduler_Factory::POD_Config_Info config_info[],
-                         int entry_count,
-                         ACE_Scheduler_Factory::POD_RT_Info rt_info[],
-                         int dependency_count,
-                         ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
-                         int is_stable);
+                          ACE_Scheduler_Factory::POD_Config_Info config_info[],
+                          int entry_count,
+                          ACE_Scheduler_Factory::POD_RT_Info rt_info[],
+                          int dependency_count,
+                          ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
+                          int is_stable);
   // Constructor. Initialize the scheduler from the POD_Config_Info, POD_RT_Info, 
   // and POD_Dependency arrays, plus stability flag.
 
+  int init (int config_count,
+            ACE_Scheduler_Factory::POD_Config_Info config_info[],
+            int entry_count,
+            ACE_Scheduler_Factory::POD_RT_Info rt_info[],
+            int dependency_count,
+            ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
+            int is_stable);
+  // Initializes the scheduler with the passed information.
 
   virtual RtecScheduler::handle_t create (const char * entry_point,
                                           CORBA::Environment &_env)
@@ -148,23 +162,43 @@ public:
 
 private:
 
-  int config_count_;
-  // The number of elements in the config array.
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t, 
+                                  RtecScheduler::RT_Info*, 
+                                  ACE_Hash<RtecScheduler::handle_t>, 
+                                  ACE_Equal_To<RtecScheduler::handle_t>, 
+                                  ACE_LOCK> RT_INFO_MAP;
+  // Type of map used for O(1) lookup of RT_Infos by their handles.
 
-  ACE_Scheduler_Factory::POD_Config_Info* config_info_;
-  // The array of precomputed queue configuration structures.
+  typedef ACE_RB_Tree<char *,
+                      RtecScheduler::RT_Info*,
+                      ACE_Less_Than<char *>, 
+                      ACE_LOCK> RT_INFO_TREE;
+  // Type of tree used for O(log n) lookup of RT_Infos by their names.
 
-  int entry_count_;
-  // The number of elements in the RT_Info array.
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::Preemption_Priority_t,
+                                  RtecScheduler::Config_Info*,
+                                  ACE_Hash<RtecScheduler::Preemption_Priority_t>,
+                                  ACE_Equal_To<RtecScheduler::Preemption_Priority_t>,
+                                  ACE_LOCK> CONFIG_INFO_MAP;
+  // Type of map used for O(1) lookup of Config_Infos by their priorities.
 
-  ACE_Scheduler_Factory::POD_RT_Info* rt_info_;
-  // The array of precomputed RT_Info structures.
+  RECONFIG_SCHED_STRATEGY sched_strategy_;
+  // Scheduling strategy for the reconfig scheduler.
 
-  int dependency_count_;
-  // The number of elements in the Dependency_Info array.
+  CONFIG_INFO_MAP config_info_map_;
+  // Map for O(1) lookup of Config_Infos by priority level.
 
-  ACE_Scheduler_Factory::POD_Dependency_Info dependency_info_;
-  // The array of precomputed dependency information.
+  int config_info_count_;
+  // The number of elements in the config map.
+
+  RT_INFO_MAP rt_info_map_;
+  // Map for O(1) lookup of RT_Infos by handle.
+
+  RT_INFO_TREE rt_info_tree_;
+  // Map for O(1) lookup of RT_Infos by handle.
+
+  int rt_info_count_;
+  // The number of elements in the config map.
 
   int is_stable_;
   // Flag indicating whether a stable schedule has been computed
