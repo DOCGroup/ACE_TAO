@@ -390,11 +390,6 @@ typedef int key_t;
 ///////////////////////////////////////////
 
 
-#if defined (ACE_HAS_RENAMED_MAIN)
-// Rename "main ()" to "ace_main ()".
-#define main ace_main
-#endif /* ACE_HAS_RENAMED_MAIN */
-
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
 #else
@@ -4024,6 +4019,28 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #if !defined (ACE_DEFAULT_MUTEX_A)
 #define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
 #endif /* ACE_DEFAULT_MUTEX_A */
+
+#if !defined (ACE_MAIN)
+#define ACE_MAIN main
+#endif /* ! ACE_MAIN */
+
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+// Rename "main ()" on platforms that don't allow it to be called "main ()".
+// Also, create an ACE_Object_Manager static instance in "main ()".
+#include "ace/Object_Manager.h"
+
+#define main \
+ace_internal_main (int, char *[]);               /* forward declaration */ \
+int \
+ACE_MAIN (int argc, char *argv[])       /* user's entry point, \
+                                                         e.g., ace_main */ \
+{ \
+  ACE_Object_Manager ace_object_manager;        /* has program lifetime */ \
+  return ace_internal_main (argc, argv);  /* what the user calls "main" */ \
+} \
+int \
+ace_internal_main
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (UNICODE)
 
