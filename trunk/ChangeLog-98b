@@ -5,7 +5,7 @@ Tue Nov 10 10:09:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: removed ACE_HAS_VERBOSE_NOTSUP #define.
           Thanks to Margherita Vittone Wiersma <vittone@fndaub.fnal.gov> and
-          Ramiro_Penataro_Blanco <penataro@ll.iac.es> for complaining
+          Ramiro Penataro Blanco <penataro@ll.iac.es> for complaining
           about it.
 
 Mon Nov  9 23:27:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
