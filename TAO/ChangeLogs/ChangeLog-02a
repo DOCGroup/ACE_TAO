@@ -1,14 +1,19 @@
+Mon Sep 18 10:37:26 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+          More interceptor fine tuning
+
 Mon Sep 18 09:55:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/Makefile (DIRS):
+        * orbsvcs/Makefile (DIRS):
 
-	  Added the `LoadBalancer' directory to the list of directories to
-	  build.
+          Added the `LoadBalancer' directory to the list of directories to
+          build.
 
-	* orbsvcs/LoadBalancer/Makefile:
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/LoadBalancer/Makefile:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Sep 18 09:29:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
