@@ -397,9 +397,17 @@ TAO_DynCommon::insert_string (const char * value,
   else
     {
       CORBA::TypeCode_var unaliased_tc = 
-        this->check_type_and_unalias (CORBA::_tc_string,
-                                      ACE_TRY_ENV);
+        TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                        ACE_TRY_ENV);
       ACE_CHECK;
+
+      CORBA::TCKind kind = unaliased_tc->kind (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (kind != CORBA::tk_string)
+        {
+          ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+        }
 
       CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
       ACE_CHECK;
@@ -1098,21 +1106,32 @@ TAO_DynCommon::get_string (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      // @@@ (JP) Someday try to find a way to avoid checking for
-      // type code equivalence twice without risking a throw of
-      // BadKind.
       CORBA::TypeCode_var unaliased_tc = 
-        this->check_type_and_unalias (CORBA::_tc_string,
-                                      ACE_TRY_ENV);
+        TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                        ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = unaliased_tc->kind (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind != CORBA::tk_string)
+        {
+          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
+                            0);
+        }
 
       char *retval = 0;
 
       CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       
-      (void) (this->any_ >>= CORBA::Any::to_string (retval,
-                                                    bound));
+      // We will have caught a type mismatch above, so if this fails,
+      // it must be for some other reason.
+      if ((this->any_ >>= CORBA::Any::to_string (retval, bound)) == 0)
+        {
+          ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
+                            0);
+        }
           
       return CORBA::string_dup (retval);
     }
