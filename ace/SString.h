@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SSTRING_H
 #define ACE_SSTRING_H
 #include "ace/pre.h"
@@ -50,7 +49,6 @@ class ACE_Allocator;
  */
 class ACE_Export ACE_CString
 {
-
 public:
   /// No position constant
   static const int npos;
@@ -300,11 +298,17 @@ public:
   /// Concat operator (does copy memory).
   ACE_WString &operator += (const ACE_WString &);
 
+  /// Concat operator (does copy memory)
+  ACE_WString &operator += (const ACE_WSTRING_TYPE *);
+
   /// Returns a hash value for this string.
   u_long hash (void) const;
 
   /// Return the length of the string.
   size_t length (void) const;
+
+  /// Return the size of the buffer.
+  size_t buffer_size(void) const;
 
   /// Gets a copy of the underlying pointer.
   ACE_WSTRING_TYPE *rep (void) const;
@@ -369,19 +373,29 @@ public:
 
   /// Traditional style strstr
   static const ACE_WSTRING_TYPE *strstr (const ACE_WSTRING_TYPE *s1,
-                                       const ACE_WSTRING_TYPE *s2);
+                                         const ACE_WSTRING_TYPE *s2);
 
   /**
    * This method is designed for high-performance. Please use with
    * care ;-) If the current size of the string is less than <len>,
-   * the string is resized to the new length. The data is is zero'd
+   * the string is resized to the new length. The data is zero'd
    * out after this operation.
    */
   void resize (size_t len);
 
 private:
+  /**
+   * This method checks the size of the buffer. If the size of the
+   * buffer is not large enough the buffer will be resized. All new
+   * allocated space is zero'd out after this operation.
+   */
+  void check_allocate (size_t len);
+
   /// Pointer to a memory allocator.
   ACE_Allocator *allocator_;
+
+  /// Size of the buffer of the ACE_WString
+  size_t buf_len_;
 
   /// Length of the ACE_WString.
   size_t len_;
@@ -575,14 +589,14 @@ public:
    * <B>Example:</B>
    * \verbatim
      ACE_Tokenizer tok ("William/Joseph/Hagins");
-     tok.delimiter ('/');
+    tok.delimiter ('/');
      for (char *p = tok.next (); p; p = tok.next ())
-       cout << p << endl;
+      cout << p << endl;
     \endverbatim
    *
    * This will print out:
    * \verbatim
-      William/Joseph/Hagins
+     William/Joseph/Hagins
       Joseph/Hagins
       Hagins \endverbatim
    */
@@ -606,7 +620,7 @@ public:
        William
        Joseph
        Hagins \endverbatim
-   */
+ */
   int delimiter_replace (ACE_TCHAR d, ACE_TCHAR replacement);
 
   /**
@@ -668,6 +682,7 @@ protected:
    */
   int is_preserve_designator (ACE_TCHAR start, ACE_TCHAR &stop, int &strip);
 
+private:
   ACE_TCHAR *buffer_;
   int index_;
 

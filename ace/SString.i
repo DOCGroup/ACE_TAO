@@ -316,7 +316,8 @@ ACE_INLINE ACE_WString
 operator+ (const ACE_WString &s,
            const ACE_WString &t)
 {
-  ACE_WString temp (s);
+  ACE_WString temp (s.length() + t.length());
+  temp = s;
   temp += t;
   return temp;
 }
@@ -479,10 +480,8 @@ ACE_SString::rfind (char c, int pos) const
     pos = this->len_;
 
   for (int i = pos - 1; i >= 0; i--)
-    {
-      if (this->rep_[i] == c)
-        return i;
-    }
+    if (this->rep_[i] == c)
+      return i;
 
   return ACE_SString::npos;
 }
@@ -499,8 +498,6 @@ ACE_SString::length (void) const
   ACE_TRACE ("ACE_SString::length");
   return this->len_;
 }
-
-
 
 ACE_INLINE ACE_WString
 ACE_WString::substr (size_t offset,
@@ -563,12 +560,12 @@ ACE_WString::operator < (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator <");
   return (this->len_ < s.len_)
-          ? (ACE_OS::memcmp ((const void *) this->rep_,
-                             (const void *) s.rep_,
-                             this->len_ * sizeof (ACE_WSTRING_TYPE)) <= 0)
-          : (ACE_OS::memcmp ((const void *) this->rep_,
-                             (const void *) s.rep_,
-                             s.len_ * sizeof (ACE_WSTRING_TYPE)) < 0);
+          ? ACE_OS::memcmp ((const void *) this->rep_,
+                            (const void *) s.rep_,
+                            this->len_ * sizeof (ACE_WSTRING_TYPE)) <= 0
+          : ACE_OS::memcmp ((const void *) this->rep_,
+                            (const void *) s.rep_,
+                            s.len_ * sizeof (ACE_WSTRING_TYPE)) < 0;
 }
 
 // Greater than comparison operator.
@@ -578,14 +575,13 @@ ACE_WString::operator > (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator >");
   return (this->len_ <= s.len_)
-          ? (ACE_OS::memcmp ((const void *) this->rep_,
-                             (const void *) s.rep_,
-                             this->len_ * sizeof (ACE_WSTRING_TYPE)) > 0)
-          : (ACE_OS::memcmp ((const void *) this->rep_,
-                             (const void *) s.rep_,
-                             s.len_ * sizeof (ACE_WSTRING_TYPE)) >= 0);
+          ? ACE_OS::memcmp ((const void *) this->rep_,
+                            (const void *) s.rep_,
+                            this->len_ * sizeof (ACE_WSTRING_TYPE)) > 0
+          : ACE_OS::memcmp ((const void *) this->rep_,
+                            (const void *) s.rep_,
+                            s.len_ * sizeof (ACE_WSTRING_TYPE)) >= 0;
 }
-
 
 // Comparison operator.
 
@@ -680,6 +676,13 @@ ACE_WString::length (void) const
 {
   ACE_TRACE ("ACE_WString::length");
   return this->len_;
+}
+
+ACE_INLINE size_t
+ACE_WString::buffer_size(void) const
+{
+   ACE_TRACE ("ACE_WString::buffer_size");
+   return this->buf_len_;
 }
 
 ACE_INLINE u_long
