@@ -111,7 +111,7 @@ public:
         if (!cdr.read_ulong (length)) {
           head->release (); rec->release (); break;
         }
-        if (length > rec->length ()) {
+        if (length > cdr.length ()) {
           head->release (); rec->release (); break;
         }
 
