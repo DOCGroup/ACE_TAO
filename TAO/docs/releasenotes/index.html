@@ -494,7 +494,7 @@ The service configurator is now used to load protocol factories.
             have a similar syntax:
 
 <blockquote><code>
-&lt;uiop&gt; = "uiop://"[&lt;addr_list&gt;]["|"&lt;key_string&gt;]<br>
+&lt;uioploc&gt; = "uioploc://"[&lt;addr_list&gt;]["|"&lt;key_string&gt;]<br>
 &lt;addr_list&gt;= [&lt;address&gt; ","]* &lt;address&gt;<br>
 &lt;address&gt; = [&lt;version&gt; &lt;rendezvous point&gt;]<br>
 &lt;rendezvous point&gt; = Valid Filesystem Path<br>
@@ -513,7 +513,8 @@ The service configurator is now used to load protocol factories.
             where the rendezvous point ends and where the key
             string begins since both may contain forward
             slashes in them.
-
+</li>
+<P><li>
             The <i>rendezvous point</i> for <code>uiop</code> is
             any valid path and filename that the ORB has permission to
             read and write to.  However, UIOP rendezvous points have
@@ -532,9 +533,9 @@ The service configurator is now used to load protocol factories.
 
                   If an endpoint is longer than what the platform
                   supports then it will be truncated so that it fits,
-                  and a warning will be issued.<P>
+                  and a warning will be issued.
                 </li>
-                <li>
+                <P><li>
                   Avoid using <em>relative</em> paths in your UIOP endpoints.
                   If possible, use <b><em>absolute</em></b> paths
                   instead.  Imagine that the server is given an
@@ -549,13 +550,13 @@ The service configurator is now used to load protocol factories.
                   rendezvous point, was not found. On the other
                   hand, if an absolute path was used, the client
                   would know exactly where to find the rendezvous
-                  point.<P>
-
+                  point.
+                  <P>
                   It is up to the user to make sure that a given UIOP
                   endpoint is accessible by both the server and
-                  the client.<P>
+                  the client.
                 </li>
-                <li>
+                <P><li>
                   It is important to be consistent in the use of
                   absolute paths and relative paths for rendezvous
                   points.  The two types of paths should not be used 
