@@ -43,7 +43,7 @@ TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr orb,
 
 #else
   ACE_UNUSED_ARG (orb);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
   return CORBA::Object::_nil ();
 #endif /* TAO_HAS_RT_CORBA == 1 */
 }
@@ -72,7 +72,7 @@ TAO_RT_ORB_Loader::set_objects (TAO_ORB_Core *orb_core,
 
 #else
   ACE_UNUSED_ARG (orb_core);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
