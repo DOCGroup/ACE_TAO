@@ -339,6 +339,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
     ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
                 TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_,
                                                                     TAO_TRY_ENV)));
+    TAO_CHECK_ENV;
     stream_endpoint = this->stream_endpoint_b_;
     vdev = this->vdev_;
   }
