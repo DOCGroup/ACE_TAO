@@ -1,30 +1,38 @@
+Tue Dec 29 22:53:08 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_tests.pl:
+          removed # at beginning of first line of script.  Thanks
+          to Nanbor and Andy for reporting that they couldn't
+          run it, because they use tcsh and set their LD_LIBRARY_PATH
+          after sourcing their .[t]cshrc.
+
 1998-12-29  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
-	  For the "in" operator, the trader now uses Dynamic Anys to
-	  access the values of service offer sequences rather than
-	  the deprecated Any::value method. Thanks to Nanbor
-	  <nanbor@cs.wustl.edu> for noticing this use of the deprecated
-	  method.
+        * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+          For the "in" operator, the trader now uses Dynamic Anys to
+          access the values of service offer sequences rather than
+          the deprecated Any::value method. Thanks to Nanbor
+          <nanbor@cs.wustl.edu> for noticing this use of the deprecated
+          method.
 
 Tue Dec 29 14:29:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/try_macros.h: 
-	  Changed the definition of the TAO_TRY_ENV macro from __env to
-	  _tao_try_environment.
+        * tao/try_macros.h:
+          Changed the definition of the TAO_TRY_ENV macro from __env to
+          _tao_try_environment.
 
-	* tao/decode.cpp: 
-	  Removed another __ in a variable name.
+        * tao/decode.cpp:
+          Removed another __ in a variable name.
 
-	* tao/ORB.cpp: 
-	* tao/DynAnyC.cpp: 
-	* tao/Object_KeyC.cpp: 
-	* tao/POAC.cpp: 
-	  Changed _tc__tc for _tc_TAO_tc
+        * tao/ORB.cpp:
+        * tao/DynAnyC.cpp:
+        * tao/Object_KeyC.cpp:
+        * tao/POAC.cpp:
+          Changed _tc__tc for _tc_TAO_tc
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Removed explicit use of __env.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Removed explicit use of __env.
 
 Tue Dec 29 15:18:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -32,52 +40,52 @@ Tue Dec 29 15:18:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Dec 29 14:40:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/README: Added changes to the
-	  README so as to make it clear that the level of granualarity in
-	  this example is at the object level, i.e. every object is
-	  associated with an dll which is loaded on demand.
-	 
+        * examples/POA/On_Demand_Loading/README: Added changes to the
+          README so as to make it clear that the level of granualarity in
+          this example is at the object level, i.e. every object is
+          associated with an dll which is loaded on demand.
+
 Tue Dec 29 14:32:06 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.45 released.
 
 Tue Dec 29 13:16:08 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
 
-	  We were generating variables with names that had two consecutive
-	  underscores ('_'). However, as per the C++ standard, variables
-	  with __ are reserved for the compiler. This happened with the
-	  typecode variables with prefix _tc__tc. We now generate
-	  _tc_TAO_tc. Thanks to Jonathan Biggar <jon@floorboard.com> for
-	  noticing this.
+          We were generating variables with names that had two consecutive
+          underscores ('_'). However, as per the C++ standard, variables
+          with __ are reserved for the compiler. This happened with the
+          typecode variables with prefix _tc__tc. We now generate
+          _tc_TAO_tc. Thanks to Jonathan Biggar <jon@floorboard.com> for
+          noticing this.
 
 Mon Dec 28 16:44:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP: Fixed "used before it was
- 	  declared inline" problem.  Also, made opertor== and opertor!=
- 	  class methods.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP: Fixed "used before it was
+          declared inline" problem.  Also, made opertor== and opertor!=
+          class methods.
 
 Mon Dec 28 13:13:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Simple/time/Server_i.cpp (parse_args): Fixed an
- 	  incorrect return value.  Thanks to Barry Hoggard
- 	  <hoggardb@panix.com> for reporting this.
+        * examples/Simple/time/Server_i.cpp (parse_args): Fixed an
+          incorrect return value.  Thanks to Barry Hoggard
+          <hoggardb@panix.com> for reporting this.
 
 Mon Dec 28 11:49:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* */Makefile: 
-	  Updated dependencies.
+        * */Makefile:
+          Updated dependencies.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	  Fixed egcs 1.1.1 warning, thanks to David for reporting this
-	  one.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Fixed egcs 1.1.1 warning, thanks to David for reporting this
+          one.
 
-	* tao/ORB.h: 
-	  Removed _tc_alias and _tc_except from the list of TypeCode
-	  constants, thanks to Jerry De Master <jdemaste@ipdinc.com> for
-	  reporting this problem.
+        * tao/ORB.h:
+          Removed _tc_alias and _tc_except from the list of TypeCode
+          constants, thanks to Jerry De Master <jdemaste@ipdinc.com> for
+          reporting this problem.
 
 Mon Dec 28 10:07:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
