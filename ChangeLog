@@ -1,3 +1,9 @@
+Fri Feb 11 17:59:50 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+
+	  Fix typo in pkgconfigdatadir definition.
+
 Fri Feb 11 18:11:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Dev_Poll_Reactor.{h inl cpp}:

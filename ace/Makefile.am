@@ -9,7 +9,7 @@
 ## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
 
 includedir = @includedir@/ace
-pkgconfigdatadir = @libdir@/prefix
+pkgconfigdatadir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
