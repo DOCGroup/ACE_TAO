@@ -1,3 +1,11 @@
+Wed Dec  3 16:05:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/UNKNOWN_Exception/UNKNOWN_Exception_Client.bor:
+	* tests/UNKNOWN_Exception/UNKNOWN_Exception_Server.bor:
+	* tests/Timeout/client.bor:
+	* tests/Timeout/server.bor:
+	  Added missing Id tag
+
 Wed Dec  3 09:41:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp:
