@@ -586,8 +586,7 @@ ACE_Static_Function_Node::symbol (void)
 	  ace_yyerrno++;
 
 	  ACE_ERROR ((LM_ERROR,
-		      "no static service registered for function %s\n
-",
+		      "no static service registered for function %s\n",
 		      this->function_name_));
 	}
     }
