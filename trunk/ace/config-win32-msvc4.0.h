@@ -89,6 +89,7 @@
 #else
 #if !defined (_WINSOCKAPI_)
 #include /**/ <winsock.h>	// will also include windows.h, if not present
+
 #if defined (_MSC_VER)
 #pragma comment(lib, "wsock32.lib")
 #endif /* _MSC_VER */
