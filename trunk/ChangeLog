@@ -1,3 +1,11 @@
+Tue Jul 31 10:22:38 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Makefile:
+
+	  Only build the Service_Config_Test if shared libraries are
+	  enabled, since it attempts to dynamically load a shared
+	  library.
+
 Tue Jul 31 10:16:31 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Dump.h: Clarified the use of ACE_NDEBUG for turning this
