@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:398
+// be/be_codegen.cpp:398
 
-#ifndef _TAO_IDL_ORIG_SERVEROBJECTS_H_
-#define _TAO_IDL_ORIG_SERVEROBJECTS_H_
+#ifndef _TAO_IDL_SERVEROBJECTS_H_
+#define _TAO_IDL_SERVEROBJECTS_H_
 
 #include /**/ "ace/pre.h"
 
@@ -53,14 +53,14 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_sh.cpp:49
+// be/be_visitor_module/module_sh.cpp:49
 
 namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_sh.cpp:87
+  // be/be_visitor_interface/interface_sh.cpp:87
   
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
@@ -129,7 +129,7 @@ namespace POA_ImplementationRepository
     virtual const char* _interface_repository_id (void) const;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // be/be_visitor_operation/operation_sh.cpp:45
     
     virtual void ping (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -146,7 +146,7 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_sh.cpp:45
+    // be/be_visitor_operation/operation_sh.cpp:45
     
     virtual void shutdown (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -168,7 +168,7 @@ namespace POA_ImplementationRepository
   //
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
   class TAO_IMR_Client_Export _TAO_ServerObject_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
@@ -209,7 +209,7 @@ namespace POA_ImplementationRepository
   
   
   // TAO_IDL - Generated from 
-  // be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
+  // be/be_visitor_interface/direct_proxy_impl_sh.cpp:31
   
   ///////////////////////////////////////////////////////////////////////
   //                    Direct  Impl. Declaration
@@ -223,7 +223,7 @@ namespace POA_ImplementationRepository
     virtual ~_TAO_ServerObject_Direct_Proxy_Impl (void) {}
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // be/be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     ping (
@@ -237,7 +237,7 @@ namespace POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // be/be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     shutdown (
@@ -258,12 +258,12 @@ namespace POA_ImplementationRepository
   
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_sh.cpp:80
+// be/be_visitor_module/module_sh.cpp:80
 
 } // module ImplementationRepository
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1005
+// be/be_codegen.cpp:1005
 
 
 #if defined (__ACE_INLINE__)
