@@ -11,6 +11,7 @@
 
 #include "orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_UDP_Sender.inl"
