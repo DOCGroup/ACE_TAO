@@ -55,10 +55,5 @@ TAO_ClientRequestInfo::forward_reference (
   // handled by the TAO_GIOP_Invocation object so that its profiles
   // can be added to the list of forward profiles.
 
-  if (exc.permanent)
-    this->reply_status_ =
-      PortableInterceptor::LOCATION_FORWARD_PERMANENT;
-  else
-    this->reply_status_ = 
-      PortableInterceptor::LOCATION_FORWARD;
+  this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
 }

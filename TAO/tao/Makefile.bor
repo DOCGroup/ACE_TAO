@@ -34,10 +34,13 @@ OBJFILES = \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\Cache_Entries.obj \
 	$(OBJDIR)\CDR.obj \
+	$(OBJDIR)\CDR_Encaps_Codec.obj \
 	$(OBJDIR)\Cleanup_Func_Registry.obj \
 	$(OBJDIR)\Client_Priority_Policy.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\ClientRequestInfo.obj \
+	$(OBJDIR)\CodecFactory.obj \
+	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
 	$(OBJDIR)\Connection_Cache_Manager.obj \
 	$(OBJDIR)\Connection_Descriptor_Interface.obj \
 	$(OBJDIR)\Connection_handler.obj \

@@ -1991,10 +1991,51 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
                        *ACE_Static_Object_Lock::instance ()));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
+
+  // Invoke Interceptor::destroy() on all registered interceptors.
+  this->destroy_interceptors (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
+{
+  size_t len = 0;
+
+#if TAO_HAS_INTERCEPTORS == 1
+  TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
+    this->client_request_interceptors_.interceptors ();
+
+  len = client_interceptors.size ();
+  for (size_t i = 0; i < len; ++i)
+    {
+      client_interceptors[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+  TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
+    this->server_request_interceptors_.interceptors ();
+
+  len = server_interceptors.size ();
+  for (size_t j = 0; j < len; ++j)
+    {
+      server_interceptors[j]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+  TAO_IORInterceptor_List::TYPE &ior_interceptors =
+    this->ior_interceptors_.interceptors ();
+
+  len = ior_interceptors.size ();
+  for (size_t k = 0; k < len; ++k)
+    {
+      ior_interceptors[k]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 // Set up listening endpoints.
-
 int
 TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2213,7 +2254,7 @@ TAO_ORB_Core::resolve_rir (const char *name,
   return CORBA::Object::_nil ();
 }
 
-CORBA_ORB_ObjectIdList_ptr
+CORBA::ORB::ObjectIdList_ptr
 TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
 {
   // Unsupported initial services should NOT be included in the below list!
@@ -2225,16 +2266,18 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
     sizeof (initial_services) / sizeof (initial_services[0]);
 
   const size_t total_size =
-    initial_services_size + this->init_ref_map_.current_size ();
+    initial_services_size
+    + this->init_ref_map_.current_size ();
+//     + this->object_ref_table_.current_size ();
 
-  CORBA_ORB_ObjectIdList_ptr tmp = 0;
+  CORBA::ORB::ObjectIdList_ptr tmp = 0;
 
   ACE_NEW_THROW_EX (tmp,
                     CORBA_ORB_ObjectIdList (total_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  CORBA_ORB_ObjectIdList_var list = tmp;
+  CORBA::ORB::ObjectIdList_var list = tmp;
   list->length (total_size);
 
   CORBA::ULong index = 0;
@@ -2246,12 +2289,23 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
 
   // Now iterate over the initial references created by the user and
   // add them to the sequence.
-  InitRefMap::iterator end  = this->init_ref_map_.end ();
 
-  for (InitRefMap::iterator i =this-> init_ref_map_.begin ();
-       i != end;
-       ++i, ++index)
-    list[index] = (*i).int_id_.c_str ();
+//   // References registered via
+//   // ORBInitInfo::register_initial_reference().
+//   TAO_Object_Ref_Table::Iterator end = this->object_ref_table_.end ();
+
+//   for (TAO_Object_Ref_Table::Iterator i = this-> object_ref_table_.begin ();
+//        i != end;
+//        ++i, ++index)
+//     list[index] = (*i).int_id_;
+
+  // References registered via INS.
+  InitRefMap::iterator end = this->init_ref_map_.end ();
+
+  for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
+       j != end;
+       ++j, ++index)
+    list[index] = (*j).int_id_.c_str ();
 
   return list._retn ();
 }
