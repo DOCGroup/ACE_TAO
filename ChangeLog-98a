@@ -23,12 +23,25 @@ Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
           CXX 6.0.  Thanks to Torbjorn Lindgren <tl@funcom.com> for
           the patch.
 
+        * ace/OS.i (thr_kill): removed ACE_ADAPT_RETVAL because
+          ::taskNameToID returns the task ID, not success/fail.
+          Thanks to Richard Keizer <RICHARD.L.KEIZER@cdev.com> for
+          diagnosing the problem and providing the fix.
+
+        * tests/run_tests.vxworks: enabled Thread_Manager_Test now
+          that it succeeds.  Thanks to Richard Keizer
+          <RICHARD.L.KEIZER@cdev.com> for the above fix.
+
+        * ace/OS.cpp (thr_create), ace/Thread_Manager.cpp (kill_thr):
+          on VxWorks, use strncmp instead of strcmp to check for allocated
+          thread ID.
+
 Thu Jan 22 16:34:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
  	  bug in the example where the global Singleton Reactor was being
  	  used rather than the object's Reactor.  Thanks to Peter Gross
- 	  <pag@kokako.probita.com> for reporting this.  
+ 	  <pag@kokako.probita.com> for reporting this.
 
 Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
 
