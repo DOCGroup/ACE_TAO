@@ -123,46 +123,32 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
     {
       *os << be_idt_nl << throw_spec_open;
       *os << be_idt_nl << "CORBA::SystemException";
-    }
 
-  if (node->exceptions ())
-    {
-      int i = 0;
-
-      // Initialize an iterator to iterate thru the exception list.
-      for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
-           !ei.is_done ();
-           ei.next ())
+      if (node->exceptions ())
         {
-          be_exception *excp =
-            be_exception::narrow_from_decl (ei.item ());
-
-          if (excp == 0)
+          // Initialize an iterator to iterate thru the exception list.
+          for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+               !ei.is_done ();
+               ei.next ())
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_operation"
-                                 "gen_throw_spec - "
-                                 "bad exception node\n"),
-                                -1);
+              be_exception *excp =
+                be_exception::narrow_from_decl (ei.item ());
 
-            }
+              if (excp == 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_operation"
+                                     "gen_throw_spec - "
+                                     "bad exception node\n"),
+                                    -1);
 
-          if (i != 0 || (iface != 0 && !iface->is_valuetype ()))
-            {
+                }
+
               *os << be_nl << ", ";
-            }
-
-          if (iface != 0 && !iface->is_valuetype ())
-            {
               *os << excp->name ();
-	    }
-          ++i;
+            }
         }
-    }
 
-  // Check if this is IF and it's not VT.
-  if (iface != 0 && !iface->is_valuetype ())
-    {
       *os << be_uidt_nl << throw_spec_close << be_uidt;
     }
 
