@@ -119,7 +119,7 @@ TAO_NS_ConsumerAdmin::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 
   seq->length (this->proxy_id_list_.size ());
 
-  TAO_NS_Object_Id_Seq::CONST_ITERATOR iter (this->proxy_id_list_);
+  TAO_NS_EventChannelFactory::TAO_NS_Object_Id_Seq::CONST_ITERATOR iter (this->proxy_id_list_);
 
   TAO_NS_Object_Id* object_id;
 
