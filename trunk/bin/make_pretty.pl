@@ -119,7 +119,7 @@ sub is_warning ()
 
     # Look for warnings
     return 1 if (/warning/i
-                 /info: /i
+                 || /info: /i
                  || /^make.*\*\*\*/);
 
     if (/^.*\.h: /
