@@ -76,6 +76,7 @@
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 0
 # define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+# define ACE_LACKS_SWAB
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_BORLAND_COMMON_H */
