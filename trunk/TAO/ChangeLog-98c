@@ -1,8 +1,9 @@
 Mon Jan 26 21:29:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/compat/objbase.h: don't define NOERROR on DIGITAL_UNIX.
+        * tao/compat/objbase.h: don't #define NOERROR on DIGITAL_UNIX,
+          or on any other platform that already has it #defined.
           Thanks to Oliver Kellogg <Oliver.Kellogg@vs.dasa.de> for
-          sending the patch.
+          reporting this.
 
         * tao/corbacom.h: use ACE_INT32, etc., for defining Long, etc.
 
