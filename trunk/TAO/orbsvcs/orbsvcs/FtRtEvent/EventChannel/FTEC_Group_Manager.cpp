@@ -107,9 +107,9 @@ void TAO_FTEC_Group_Manager::create_group (
     Fault_Detector::instance()->my_location());
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
-  GroupInfoPublisherBase::Info_ptr info =
+  GroupInfoPublisherBase::Info_ptr info ( 
     publisher->setup_info(impl_->info_list, impl_->my_position
-                    ACE_ENV_ARG_PARAMETER);
+                    ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
 
   publisher->update_info(info);
@@ -166,9 +166,9 @@ void TAO_FTEC_Group_Manager::add_member (
   new_impl->info_list[pos] = info;
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
-  GroupInfoPublisherBase::Info_ptr group_info =
+  GroupInfoPublisherBase::Info_ptr group_info ( 
     publisher->setup_info(new_impl->info_list, new_impl->my_position
-                    ACE_ENV_ARG_PARAMETER);
+                    ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
 
   int last_one = (impl_->my_position == impl_->info_list.length()-1);
@@ -192,10 +192,10 @@ void TAO_FTEC_Group_Manager::add_member (
       /// group_info = publisher->set_info(..) should be enough.
       /// However, GCC 2.96 is not happy with that.
 
-      GroupInfoPublisherBase::Info_ptr group_info1 =
+      GroupInfoPublisherBase::Info_ptr group_info1 ( 
         publisher->setup_info(new_impl->info_list,
                               new_impl->my_position
-      ACE_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;
       ACE_AUTO_PTR_RESET(group_info, group_info1.release(), GroupInfoPublisherBase::Info);
 
@@ -283,9 +283,9 @@ void TAO_FTEC_Group_Manager::remove_member (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
 
-  GroupInfoPublisherBase::Info_ptr info =
+  GroupInfoPublisherBase::Info_ptr info ( 
     publisher->setup_info(impl_->info_list, impl_->my_position
-                    ACE_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
   publisher->update_info(info);
 
