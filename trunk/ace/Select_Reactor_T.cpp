@@ -202,11 +202,7 @@ ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T
 {
   ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
 
-#if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
-  ACE_UNUSED_ARG (s_queue);
-#else
   this->queueing_strategy (s_queue);
-#endif
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX>
@@ -215,11 +211,7 @@ ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T
 {
   ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
 
-#if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
-  ACE_UNUSED_ARG (s_queue);
-#else
   this->queueing_strategy (s_queue);
-#endif
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX>
