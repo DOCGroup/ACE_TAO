@@ -672,7 +672,7 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_transmit_file (void)
 }
 
 int
-ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
+ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
 {
   int result_suspend = 0;
 

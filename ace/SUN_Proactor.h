@@ -68,13 +68,23 @@ public:
   virtual ~ACE_SUN_Proactor (void);
   // Destructor.
   
-  // @@ Alex, this shouldn't be a magic number, i.e., it should
-  // be a constant, such as ACE_MAX_AIO_OPERATIONS.
+  // @@ Alex, this shouldn't be a magic number, i.e., it should be a
+  // constant, such as ACE_MAX_AIO_OPERATIONS.
   ACE_SUN_Proactor (size_t max_aio_operations = 512);
-  // Constructor defines max number asynchronous operations that
-  // can be started at the same time.
+  // Constructor defines max number asynchronous operations that can
+  // be started at the same time.
+
 protected:
-  virtual int handle_events (u_long milli_seconds);
+  virtual int handle_events (ACE_Time_Value &wait_time);
+  // Dispatch a single set of events.  If <wait_time> elapses before
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly.
+
+  virtual int handle_events (unsigned long milli_seconds);
+  // Dispatch a single set of events.  If <milli_seconds> elapses
+  // before any events occur, return 0. Return 1 if a completion is
+  // dispatched. Return -1 on errors.
  
   virtual int start_aio (ACE_POSIX_Asynch_Result *result, int op);
   // From ACE_POSIX_AIOCB_Proactor.
