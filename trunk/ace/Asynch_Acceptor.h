@@ -80,10 +80,39 @@ public:
   //
   // Default implemenation always validates the remote address.
 
+  virtual int should_reissue_accept (void);
+  // Template method for deciding whether to reissue accept.  
+  //
+  // Default implemenation always returns this->reissue_accept_.
+  
+  //
+  // These are low level tweaking methods
+  //
+
+  virtual int pass_addresses (void) const;
+  virtual void pass_addresses (int new_value);
+  // Set and get flag that indicates if parsing and passing of
+  // addresses to the service_handler is necessary.
+
+  virtual int validate_new_connection (void) const;
+  virtual void validate_new_connection (int new_value);
+  // Set and get flag that indicates if address validation is
+  // required.
+  
+  virtual int reissue_accept (void) const;
+  virtual void reissue_accept (int new_value);
+  // Set and get flag that indicates if a new accept should be
+  // reissued when a accept completes.
+
+  virtual int bytes_to_read (void) const;
+  virtual void bytes_to_read (int new_value);
+  // Set and get bytes to be read with the <accept> call.
+
   static size_t address_size (void);
   // This is required by the AcceptEx call.
 
 protected:
+
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
   // This is called when an outstanding accept completes. 
 
@@ -100,9 +129,6 @@ protected:
   // Subclasses must overwrite this method if a new handler creation
   // strategy is required.
   
-  int bytes_to_read (void) const;
-  // Bytes to be read with the <accept> call.
-
 private:
   ACE_HANDLE listen_handle_;
   // Handle used to listen for new connections.
