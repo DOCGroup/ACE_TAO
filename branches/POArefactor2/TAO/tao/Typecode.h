@@ -51,6 +51,12 @@ namespace TAO
 
 namespace CORBA
 {
+   class TypeCode;
+   typedef TypeCode *TypeCode_ptr;
+
+   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
+   typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
+
   /**
    * @class TypeCode
    *
@@ -629,6 +635,15 @@ namespace TAO
     CORBA::TypeCode_ptr tc_concrete_base_type_;
   };
 }  // End TAO namespace
+
+// Workaround for a Visual Studio .NET bug where this class is not
+// properly imported by an application if typedef'd or subclassed,
+// resulting in 'multiply defined' link errors. The export macro
+// here forces an explicit import by the application. Please see
+// http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+  template class TAO_Export TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 // --------------------------------------------------------------
 

@@ -71,30 +71,6 @@
 
 namespace CORBA
 {
-
-  // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
-
-#if !defined (_CORBA_TYPECODE__VAR_OUT_CH_)
-#define _CORBA_TYPECODE__VAR_OUT_CH_
-
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
-
-  typedef
-    TAO_Objref_Var_T<
-        TypeCode
-      >
-    TypeCode_var;
-
-  typedef
-    TAO_Objref_Out_T<
-        TypeCode
-      >
-    TypeCode_out;
-
-#endif /* end #if !defined */
-
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
 
@@ -164,15 +140,6 @@ namespace TAO
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TCKind &);
-
-// Workaround for a Visual Studio .NET bug where this class is not
-// properly imported by an application if typedef'd or subclassed,
-// resulting in 'multiply defined' link errors. The export macro
-// here forces an explicit import by the application. Please see
-// http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-  template class TAO_Export TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:958
