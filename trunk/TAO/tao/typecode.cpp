@@ -2333,8 +2333,12 @@ CORBA::TypeCode::traverse (const void *value1,
 
         stream.setup_encapsulation (buffer_, (size_t) length_);
 
-        return struct_traverse (&stream, value1, value2,
-                                visit, context, env);
+        return TAO_IIOP_Interpreter::struct_traverse (&stream,
+                                                      value1,
+                                                      value2,
+                                                      visit,
+                                                      context,
+                                                      env);
       }
 
     case CORBA::tk_union:
@@ -2345,8 +2349,12 @@ CORBA::TypeCode::traverse (const void *value1,
 
         stream.setup_encapsulation (buffer_, (size_t) length_);
 
-        return union_traverse (&stream, value1, value2,
-                               visit, context, env);
+        return TAO_IIOP_Interpreter::union_traverse (&stream,
+                                                     value1,
+                                                     value2,
+                                                     visit,
+                                                     context,
+                                                     env);
       }
 
       // Sequences are just arrays with bound determined at runtime,
@@ -2431,10 +2439,11 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
     }
   env.clear ();
 
-  if (TAO_IIOP_Interpreter::table_[kind_].calc == 0)
+  if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
     {
       private_state_->tc_size_known_ = CORBA::B_TRUE;
-      private_state_->tc_size_ = TAO_IIOP_Interpreter::table_[kind_].size;
+      private_state_->tc_size_ =
+        TAO_IIOP_Interpreter::table_[kind_].size_;
       return private_state_->tc_size_;
     }
 
@@ -2444,7 +2453,8 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
   stream.setup_encapsulation (buffer_, (size_t) length_);
 
   private_state_->tc_size_known_ = CORBA::B_TRUE;
-  private_state_->tc_size_ = TAO_IIOP_Interpreter::table_[kind_].calc (&stream, alignment, env);
+  private_state_->tc_size_ =
+    TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream, alignment, env);
   return private_state_->tc_size_;
 }
 
@@ -2462,10 +2472,11 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
     }
   env.clear ();
 
-  if (TAO_IIOP_Interpreter::table_[kind_].calc == 0)
+  if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
     {
         private_state_->tc_alignment_known_ = CORBA::B_TRUE;
-        private_state_->tc_alignment_ = TAO_IIOP_Interpreter::table_[kind_].alignment;
+        private_state_->tc_alignment_ =
+          TAO_IIOP_Interpreter::table_[kind_].alignment_;
         return private_state_->tc_alignment_;
     }
 
