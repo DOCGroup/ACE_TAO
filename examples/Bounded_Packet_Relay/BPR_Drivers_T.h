@@ -29,7 +29,7 @@
 #if !defined (_BPR_DRIVERS_T_H_)
 #define _BPR_DRIVERS_T_H_
 
-// forward declarations
+// Forward declarations.
 class Input_Device_Wrapper_Base;
 class Output_Device_Wrapper_Base;
 
@@ -61,95 +61,6 @@ private:
 
   ACTION action_;
   // Method that is going to be invoked.
-};
-
-template <ACE_SYNCH_DECL>
-class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
-{
-  // = TITLE
-  //     This class defines a packet relay abstraction for a
-  //     transmission bounded external commands to start and end the
-  //     transmission.  The transmission may be bounded by the number
-  //     of packets to send, the dration of the transmission, or any
-  //     other factors.
-  //
-  // = DESCRIPTION
-  //     The relay abstraction implemented by this class registers a
-  //     callback command with an input device wrapper, and relays
-  //     input to an output device at a pace specified in the start
-  //     transmission call.
-public:
-  typedef int (Bounded_Packet_Relay<ACE_SYNCH_USE>::*ACTION) (void *);
-  // Command entry point type definition.
-
-  // = Initialization method
-
-  Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
-                        Input_Device_Wrapper_Base *input_wrapper,
-                        Output_Device_Wrapper_Base *output_wrapper);
-  // Constructor.
-
-  virtual ~Bounded_Packet_Relay (void);
-  // Destructor.
-
-  int send_input (void);
-  // Requests output be sent to output device.
-
-  int start_transmission (u_long packet_count,
-                          u_long arrival_period,
-                          u_long logging_level);
-  // Requests a transmission be started.
-
-  int end_transmission (Transmission_Status status);
-  // Requests a transmission be ended.
-
-  int report_statistics (void);
-  // Requests a report of statistics from the last transmission.
-
-  // = Command Accessible Entry Points.
-
-  int receive_input (void *);
-  // Public entry point to which to push input.
-
-private:
-  // = Concurrency Management.
-
-  ACE_Thread_Manager * input_task_mgr_;
-  // Thread manager for the input device task.
-
-  Input_Device_Wrapper_Base * input_wrapper_;
-  // Pointer to the input device wrapper.
-
-  Output_Device_Wrapper_Base * output_wrapper_;
-  // Pointer to the output device wrapper.
-
-  ACE_Message_Queue<ACE_SYNCH_USE> queue_;
-  // Queue used to buffer input messages.
-
-  ACE_SYNCH_MUTEX_T transmission_lock_;
-  // Lock for thread-safe synchronization 
-  // of transmission startup and termination.
-
-  // = Transmission Statistics
-
-  const char * status_msg (void);
-  // Returns string corresponding to current status.
-
-  u_long transmission_number_;
-  // Number of transmissions sent.
-
-  u_long packets_sent_;
-  // Count of packets sent in the most recent transmission.
-
-  Transmission_Status status_;
-  // Status of the current or most recent transmission.
-
-  ACE_Time_Value transmission_start_;
-  // Start time of the most recent transmission.
-
-  ACE_Time_Value transmission_end_;
-  // Ending time of the most recent transmission.
-
 };
 
 template <class TQ>
