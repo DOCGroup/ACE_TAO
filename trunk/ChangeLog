@@ -1,3 +1,18 @@
+Sun Jun  2 15:34:41 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/DLL.cpp:
+
+	  Test for null dll_name_ before calling open() in the copy ctor, since
+	  open would flag it as an error.  Improved error messages.
+
+	* ace/DLL_Manager.{h,cpp}:
+	* ace/Framework_Component.cpp:
+
+	  Changed ACE_DLL_Manager to use ACE_Unmanaged_Singleton so that it can be 
+	  explicitely closed by ACE_Framework_Repository after ACE_Service_Config
+	  is closed.  Improved error messages.  Thanks to Steve Huston for finding
+	  this.
+
 Sun Jun  2 09:03:06 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Select_Reactor_Base.cpp: Delete temp buffers
