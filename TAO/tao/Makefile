@@ -221,6 +221,7 @@ ORB_CORE_FILES = \
   Base_Connection_Property \
   Connection_Cache_Manager \
   Cleanup_Func_Registry \
+  Connection_Descriptor_Interface \
   IORInfo \
   Object_Ref_Table
 
