@@ -1,3 +1,11 @@
+Sat Feb  9 15:17:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/make_release: Changed the path of gv as a new version of GV
+	  was installed on deuce.doc. The old version had less colors and
+	  it started mapping them to a smaller range. The graphs looked
+	  very ugly. The new version fixes the problem and hence a change
+	  in path.
+	
 Fri Feb  8 22:56:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Fixed a warning in TRU 64 builds.
