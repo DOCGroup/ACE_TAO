@@ -303,14 +303,14 @@ public:
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1);
-  // Cancel all Event_Handlers that match the address of
+  // Cancel all <Event_Handler>s that match the address of
   // <event_handler>.  Returns number of handlers cancelled.
 
   virtual int cancel_timer (long timer_id,
                             const void **arg = 0,
                             int dont_call_handle_close = 1);
-  // Cancel the single Event_Handler that matches the <timer_id> value
-  // (which was returned from the schedule method).  If arg is
+  // Cancel the single <Event_Handler> that matches the <timer_id>
+  // value, which was returned from the schedule method.  If arg is
   // non-NULL then it will be set to point to the ``magic cookie''
   // argument passed in when the Event_Handler was registered.  This
   // makes it possible to free up the memory and avoid memory leaks.
