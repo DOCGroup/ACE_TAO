@@ -62,8 +62,4 @@ typedef unsigned long long uint64_t;
 #undef ACE_HAS_LIMITED_SELECT
 #endif /* ACE_HAS_LIMITED_SELECT */
 
-#if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS=64)
-#undef ACE_HAS_PROC_FS
-#endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS=64) */
-
 #endif /* ACE_CONFIG_H */
