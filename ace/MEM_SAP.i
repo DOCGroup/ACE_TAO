@@ -3,6 +3,33 @@
 
 // MEM_SAP.i
 
+
+ASYS_INLINE
+ACE_MEM_SAP_Node::ACE_MEM_SAP_Node (size_t cap)
+  : capacity_ (cap),
+    size_ (0),
+    next_ (0)
+{
+}
+
+ASYS_INLINE size_t
+ACE_MEM_SAP_Node::size (void) const
+{
+  return this->size_;
+}
+
+ASYS_INLINE size_t
+ACE_MEM_SAP_Node::capacity (void) const
+{
+  return this->capacity_;
+}
+
+ASYS_INLINE void *
+ACE_MEM_SAP_Node::data (void)
+{
+  return  this + 1;
+}
+
 ASYS_INLINE
 ACE_MEM_SAP::~ACE_MEM_SAP (void)
 {
@@ -11,81 +38,30 @@ ACE_MEM_SAP::~ACE_MEM_SAP (void)
 }
 
 
-ASYS_INLINE void *
+ASYS_INLINE ACE_MEM_SAP_Node *
 ACE_MEM_SAP::acquire_buffer (const ssize_t size)
 {
   ACE_TRACE ("ACE_MEM_SAP::acquire_buffer");
   if (this->shm_malloc_ == 0)
     return 0;                  // not initialized.
 
-  size_t *lptr = ACE_static_cast (size_t *,
-                                  this->shm_malloc_->malloc (sizeof (size_t) + size));
+  ACE_MEM_SAP_Node *buf =
+    ACE_reinterpret_cast (ACE_MEM_SAP_Node *,
+                          this->shm_malloc_->malloc (sizeof (ACE_MEM_SAP_Node)
+                                                     + size));
+  if (buf != 0)
+    return new (buf) ACE_MEM_SAP_Node (size);
 
-  *lptr = size;
-  ++lptr;
-
-  return lptr;
+  return 0;
 }
 
 ASYS_INLINE int
-ACE_MEM_SAP::release_buffer (void *buf)
+ACE_MEM_SAP::release_buffer (ACE_MEM_SAP_Node *buf)
 {
   ACE_TRACE ("ACE_MEM_SAP::release_buffer");
   if (this->shm_malloc_ == 0)
     return -1;                  // not initialized.
 
-  size_t *lptr = ACE_static_cast (size_t *, buf);
-
-  --lptr;
-  this->shm_malloc_->free (lptr);
+  this->shm_malloc_->free (buf);
   return 0;
-}
-
-ASYS_INLINE off_t
-ACE_MEM_SAP::set_buf_len (void *buf, size_t n)
-{
-  ACE_TRACE ("ACE_MEM_SAP::set_buf_len");
-  if (this->shm_malloc_ == 0)
-    return -1;
-
-  size_t *lptr = ACE_static_cast (size_t *, buf);
-  --lptr;
-
-  if (*lptr >= n)
-    *lptr = n;
-
-  return ((char *) lptr - (char *) this->shm_malloc_->base_addr ());
-}
-
-ASYS_INLINE ssize_t
-ACE_MEM_SAP::get_buf_len (const off_t off, void *&buf)
-{
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_TRACE ("ACE_MEM_SAP::get_buf_len");
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-
-  if (this->shm_malloc_ == 0)
-    return -1;
-
-  ssize_t retv = 0;
-
-  ACE_SEH_TRY
-    {
-      size_t *lptr = (size_t*) ((char *) this->shm_malloc_->base_addr () + off);
-      buf = lptr + 1;
-      retv = *lptr;
-    }
-  ACE_SEH_EXCEPT (this->shm_malloc_->memory_pool ().seh_selector (GetExceptionInformation ()))
-    {
-    }
-
-  return retv;
-}
-
-ASYS_INLINE int
-ACE_MEM_SAP::remove (void)
-{
-  ACE_TRACE ("ACE_MEM_SAP::remove");
-
-  return close_shm_malloc (1);
 }

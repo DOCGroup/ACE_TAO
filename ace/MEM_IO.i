@@ -3,10 +3,78 @@
 
 // MEM_IO.i
 
+ASYS_INLINE
+ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
+{
+}
+
+ASYS_INLINE
+ACE_MT_MEM_IO::ACE_MT_MEM_IO ()
+{
+  this->recv_channel_.sema_ = 0;
+  this->recv_channel_.lock_ = 0;
+  this->send_channel_.sema_ = 0;
+  this->send_channel_.lock_ = 0;
+}
+
+ASYS_INLINE
+ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (void)
+  : mq_ (0),
+    malloc_ (0)
+{
+}
+
+ASYS_INLINE
+ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (MQ_Struct *mq)
+  : mq_ (mq),
+    malloc_ (0)
+{
+}
+
+ASYS_INLINE int
+ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
+                                   ACE_MEM_SAP::MALLOC_TYPE *malloc)
+{
+  if (this->mq_ != 0)
+    return -1;
+
+  this->mq_ = mq;
+  this->malloc_ = malloc;
+  return 0;
+}
+
+ASYS_INLINE ssize_t
+ACE_Reactive_MEM_IO::get_buf_len (const off_t off, ACE_MEM_SAP_Node *&buf)
+{
+#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  ACE_TRACE ("ACE_Reactive_MEM_IO::get_buf_len");
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+
+  if (this->shm_malloc_ == 0)
+    return -1;
+
+  ssize_t retv = 0;
+
+  ACE_SEH_TRY
+    {
+      buf = ACE_reinterpret_cast (ACE_MEM_SAP_Node *,
+                                  (ACE_static_cast(char *,
+                                                   this->shm_malloc_->base_addr ())
+                                   + off));
+      retv = buf->size ();
+    }
+  ACE_SEH_EXCEPT (this->shm_malloc_->memory_pool ().seh_selector (GetExceptionInformation ()))
+    {
+    }
+
+  return retv;
+}
+
 // Send an n byte message to the connected socket.
 ASYS_INLINE
 ACE_MEM_IO::ACE_MEM_IO (void)
-  : recv_buffer_ (0),
+  : deliver_strategy_ (0),
+    recv_buffer_ (0),
     buf_size_ (0),
     cur_offset_ (0)
 {
@@ -18,76 +86,64 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
 
+  if (this->deliver_strategy_ == 0)
+    return -1;
+
   // This method can only be called when <buf_size_> == <cur_offset_>.
   ACE_ASSERT (this->buf_size_ == this->cur_offset_);
 
   // We have done using the previous buffer, return it to malloc.
   if (this->recv_buffer_ != 0)
-    this->release_buffer (this->recv_buffer_);
+    this->deliver_strategy_->release_buffer (this->recv_buffer_);
 
   this->cur_offset_ = 0;
-  off_t new_offset = 0;
-  int retv = ACE::recv (this->get_handle (),
-                        (char *) &new_offset,
-                        sizeof (off_t),
-                        flag,
-                        timeout);
+  int retv = 0;
 
-  if (retv == 0)
-    return 0;
-  else if (retv != sizeof (off_t))
-    {
-      //  Nothing available or we are really screwed.
-      this->buf_size_ = 0;
-      this->recv_buffer_ = 0;
-      return -1;
-    }
+  if ((retv = this->deliver_strategy_->recv_buf (this->recv_buffer_,
+                                                 flag,
+                                                 timeout)) > 0)
+    this->buf_size_ = retv;
   else
-      this->buf_size_ = this->get_buf_len (new_offset,
-                                           this->recv_buffer_);
-  return this->buf_size_;
+    this->buf_size_ = 0;
+
+  return retv;
 }
 
 ASYS_INLINE
 ACE_MEM_IO::~ACE_MEM_IO (void)
 {
-  // ACE_TRACE ("ACE_MEM_IO::~ACE_MEM_IO");
+  delete this->deliver_strategy_;
 }
 
 ASYS_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf,
-                   size_t len,
-                   int flags,
-                   const ACE_Time_Value *timeout)
+                  size_t len,
+                  int flags,
+                  const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::send");
-  void *sbuf = this->acquire_buffer (len);
+  if (this->deliver_strategy_ == 0)
+    return 0;
+
+  ACE_MEM_SAP_Node *sbuf = this->deliver_strategy_->acquire_buffer (len);
   if (sbuf == 0)
     return -1;                  // Memory buffer not initialized.
-  ACE_OS::memcpy (sbuf, buf, len);
-  off_t offset = this->set_buf_len (sbuf, len); // <set_buf_len> also calculate
-                                              // the offset.
+  ACE_OS::memcpy (sbuf->data (), buf, len);
 
-  // Send the offset value over the socket.
-  if (ACE::send (this->get_handle (),
-                 (const char *) &offset,
-                 sizeof (offset),
-                 flags,
-                 timeout) != sizeof (offset))
-    {
-      // unsucessful send, release the memory in the shared-memory.
-      this->release_buffer (sbuf);
+  ///
 
-      return -1;
-    }
-  return len;
+  sbuf->size_ = len;
+
+  return this->deliver_strategy_->send_buf (sbuf,
+                                            flags,
+                                            timeout);
 }
 
 ASYS_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf,
-                   size_t len,
-                   int flags,
-                   const ACE_Time_Value *timeout)
+                  size_t len,
+                  int flags,
+                  const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
 
@@ -108,7 +164,7 @@ ACE_MEM_IO::recv (void *buf,
       size_t length = (len > buf_len ? buf_len : len);
 
       ACE_OS::memcpy ((char *) buf + count,
-                      (char *) this->recv_buffer_ + this->cur_offset_,
+                      (char *) this->recv_buffer_->data () + this->cur_offset_,
                       length);
       this->cur_offset_ += length;
 //        len -= length;
@@ -155,8 +211,8 @@ ACE_MEM_IO::recv (void *buf, size_t n)
 
 ASYS_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf,
-                   size_t len,
-                   const ACE_Time_Value *timeout)
+                  size_t len,
+                  const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
   return this->recv (buf, len, 0, timeout);
@@ -164,8 +220,8 @@ ACE_MEM_IO::recv (void *buf,
 
 ASYS_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf,
-                   size_t len,
-                   const ACE_Time_Value *timeout)
+                  size_t len,
+                  const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::send");
   return this->send (buf, len, 0, timeout);

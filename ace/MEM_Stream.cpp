@@ -21,6 +21,8 @@ ACE_MEM_Stream::dump (void) const
 int
 ACE_MEM_Stream::close (void)
 {
+  this->send ((char *)0, 0);
+
 #if defined (ACE_WIN32)
   // We need the following call to make things work correctly on
   // Win32, which requires use to do a <close_writer> before doing the

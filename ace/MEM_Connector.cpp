@@ -24,7 +24,8 @@ ACE_MEM_Connector::dump (void) const
 }
 
 ACE_MEM_Connector::ACE_MEM_Connector (void)
-  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0)
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+    preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Connector::ACE_MEM_Connector");
 }
@@ -38,7 +39,8 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
                                       int flags,
                                       int perms,
                                       int protocol)
-  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0)
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+    preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Connector::ACE_MEM_Connector");
   // This is necessary due to the weird inheritance relationships of
@@ -83,9 +85,13 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                                    timeout, local_sap,
                                    reuse_addr, flags, perms,
                                    PF_INET, protocol) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("ACE_MEM_Connector::connect error connecting to socket\n")),
+                      -1);
+
 
   ACE_HANDLE new_handle = temp_stream.get_handle ();
+  new_stream.disable (ACE_NONBLOCK);
   new_stream.set_handle (new_handle);
   // Do not close the handle.
 
@@ -93,15 +99,39 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_TCHAR buf[MAXPATHLEN];
 
   // @@ Need to handle timeout here.
+  ACE_INT16 server_strategy = ACE_MEM_IO::Reactive;
+  // Receive the signaling strategy theserver support.
+  if (ACE::recv (new_handle, &server_strategy,
+                 sizeof (ACE_INT16)) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("ACE_MEM_Connector::connect error receiving strategy\n")),
+                      -1);
+
+    // If either side don't support MT, we will not use it.
+  if (! (this->preferred_strategy_ == ACE_MEM_IO::MT &&
+         server_strategy == ACE_MEM_IO::MT))
+    server_strategy = ACE_MEM_IO::Reactive;
+
+  if (ACE::send (new_handle, &server_strategy,
+                 sizeof (ACE_INT16)) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("ACE_MEM_Connector::connect error sending strategy\n")),
+                      -1);
+
   ACE_INT16 buf_len;
   // Byte-order is not a problem for this read.
   if (ACE::recv (new_handle, &buf_len, sizeof (buf_len)) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("ACE_MEM_Connector::connect error receiving shm filename length\n")),
+                      -1);
 
   if (ACE::recv (new_handle, buf, buf_len) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("ACE_MEM_Connector::connect error receiving shm filename.\n")),
+                      -1);
 
-  if (new_stream.create_shm_malloc (buf, &this->malloc_options_) == -1)
+  if (new_stream.init (buf, ACE_static_cast (ACE_MEM_IO::Signal_Strategy, server_strategy),
+                       &this->malloc_options_) == -1)
     return -1;
 
   return 0;

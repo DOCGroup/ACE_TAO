@@ -38,24 +38,34 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
 static int opt_wfmo_reactor = 1;
 static int opt_select_reactor = 1;
+static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
 
-u_short Echo_Handler::waiting_ = NO_OF_CONNECTION;
+ACE_Atomic_Op <ACE_Thread_Mutex, u_short> Echo_Handler::waiting_ = NO_OF_CONNECTION;
 u_short Echo_Handler::connection_count_ = 0;
 
 typedef ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> ACCEPTOR;
+typedef ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> S_ACCEPTOR;
 
-//  int
-//  Echo_Handler::open (void *)
-//  {
-//    // @@ Nanbor, this method doesn't anything?
-//    return 0;
-//  }
+int
+Echo_Handler::open (void *)
+{
+  // @@ Nanbor, this method doesn't anything?
+  return 0;
+}
 
-Echo_Handler::Echo_Handler ()
-  : connection_ (++Echo_Handler::connection_count_)
+Echo_Handler::Echo_Handler (ACE_Thread_Manager *thr_mgr)
+  : ACE_Svc_Handler<ACE_MEM_STREAM, ACE_MT_SYNCH> (thr_mgr),
+    connection_ (++Echo_Handler::connection_count_)
 {
   ACE_OS::sprintf (this->name_, ACE_TEXT ("Connection %d --> "),
                    this->connection_);
+}
+
+void
+Echo_Handler::reset_handler (void)
+{
+  Echo_Handler::waiting_ = NO_OF_CONNECTION;
+  Echo_Handler::connection_count_ = 0;
 }
 
 int
@@ -88,10 +98,16 @@ Echo_Handler::handle_input (ACE_HANDLE)
 
 int
 Echo_Handler::handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask)
+                            ACE_Reactor_Mask mask)
 {
   // Reduce count.
   this->waiting_--;
+
+#if 1
+  if (client_strategy != ACE_MEM_IO::Reactive)
+    this->reactor ()->remove_handler (this,
+                                      mask | ACE_Event_Handler::DONT_CALL);
+#endif /* tests */
 
   // If no connections are open.
   if (this->waiting_ == 0)
@@ -102,8 +118,17 @@ Echo_Handler::handle_close (ACE_HANDLE,
               this->connection_));
 
   // Shutdown
-  this->peer ().remove ();
+  this->peer ().close ();
+  this->peer ().fini (1);
   this->destroy ();
+  return 0;
+}
+
+int
+Echo_Handler::svc (void)
+{
+  while (this->handle_input (this->get_handle ()) >= 0)
+    ;
   return 0;
 }
 
@@ -113,7 +138,10 @@ connect_client (void *arg)
   u_short sport =  (*ACE_reinterpret_cast (u_short *, arg));
   ACE_MEM_Addr to_server (sport);
   ACE_MEM_Connector connector;
+  connector.preferred_strategy (client_strategy);
   ACE_MEM_Stream stream;
+
+  //  connector.preferred_strategy (ACE_MEM_IO::MT);
 
   if (connector.connect (stream, to_server.get_remote_addr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -166,21 +194,22 @@ create_reactor (void)
   ACE_Reactor::instance (reactor);
 }
 
-int
-main (int, ACE_TCHAR *[])
+int test_reactive (ACE_MEM_Addr &server_addr)
 {
-  ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
+  ACE_DEBUG ((LM_DEBUG, "Testing Reactive MEM_Stream\n\n"));
 
-  create_reactor ();
-
-  unsigned short port = 0;
-  ACE_MEM_Addr server_addr (port);
-
-  ACCEPTOR acceptor;
-  acceptor.acceptor ().mmap_prefix (ACE_TEXT ("MEM_Acceptor_"));
-  if (acceptor.open (server_addr) == -1)
+  ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR> accept_strategy;
+  ACE_Creation_Strategy<Echo_Handler> create_strategy;
+  ACE_Reactive_Strategy<Echo_Handler> reactive_strategy (ACE_Reactor::instance ());
+  S_ACCEPTOR acceptor;
+  if (acceptor.open (server_addr,
+                     ACE_Reactor::instance (),
+                     &create_strategy,
+                     &accept_strategy,
+                     &reactive_strategy) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
+  acceptor.acceptor ().mmap_prefix (ACE_TEXT ("MEM_Acceptor_"));
 
   ACE_MEM_Addr local_addr;
   if (acceptor.acceptor ().get_local_addr (local_addr) == -1)
@@ -215,6 +244,87 @@ main (int, ACE_TCHAR *[])
                          ACE_TEXT ("MEM_Acceptor::close\n")),
                         1);
     }
+  return 0;
+}
+
+int test_multithreaded (ACE_MEM_Addr &server_addr)
+{
+  ACE_DEBUG ((LM_DEBUG, "Testing Multithreaded MEM_Stream\n\n"));
+
+  Echo_Handler::reset_handler ();
+
+  client_strategy = ACE_MEM_IO::MT;
+  ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR> accept_strategy;
+  ACE_Creation_Strategy<Echo_Handler> create_strategy;
+  ACE_Thread_Strategy<Echo_Handler> thr_strategy;
+  S_ACCEPTOR acceptor;
+
+
+  if (acceptor.open (server_addr,
+                     ACE_Reactor::instance (),
+                     &create_strategy,
+                     &accept_strategy,
+                     &thr_strategy) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
+
+  acceptor.acceptor ().malloc_options ().minimum_bytes_ = 1024 * 1024 ;
+  acceptor.acceptor ().mmap_prefix (ACE_TEXT ("MEM_Acceptor_"));
+  acceptor.acceptor ().preferred_strategy (ACE_MEM_IO::MT);
+
+  ACE_MEM_Addr local_addr;
+  if (acceptor.acceptor ().get_local_addr (local_addr) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
+                        1);
+    }
+
+  u_short sport = local_addr.get_port_number ();
+
+  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_CONNECTION,
+                                            connect_client,
+                                            &sport);
+  ACE_Time_Value tv(60, 0);
+  ACE_Reactor::instance ()->run_event_loop (tv);
+
+  if (tv == ACE_Time_Value::zero)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("Reactor::run_event_loop timeout\n")),
+                        1);
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
+
+  ACE_Thread_Manager::instance ()->wait ();
+
+  if (acceptor.close () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::close\n")),
+                        1);
+    }
+  return 0;
+}
+
+int
+main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
+
+  create_reactor ();
+
+  unsigned short port = 0;
+  ACE_MEM_Addr server_addr (port);
+
+  test_reactive (server_addr);
+
+  ACE_Reactor::instance ()->reset_event_loop ();
+
+  test_multithreaded (server_addr);
+
+  // Now testing
 
   ACE_END_TEST;
   return 0;
@@ -223,9 +333,25 @@ main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>;
 template class ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
+template class ACE_Atomic_Op<ACE_Thread_Mutex, u_short>;
+template class ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>;
+template class ACE_Creation_Strategy<Echo_Handler>;
+template class ACE_Reactive_Strategy<Echo_Handler>;
+template class ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<Echo_Handler>;
+template class ACE_Scheduling_Strategy<Echo_Handler>;
+template class ACE_Thread_Strategy<Echo_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>
 #pragma instantiate ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, u_short>
+#pragma instantiate ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<Echo_Handler>
+#pragma instantiate ACE_Reactive_Strategy<Echo_Handler>
+#pragma instantiate ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
+#pragma instantiate ACE_Concurrency_Strategy<Echo_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<Echo_Handler>
+#pragma instantiate ACE_Thread_Strategy<Echo_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
