@@ -222,7 +222,9 @@ Cubit_Task::create_servants (void)
                               2);
 
           this->orb_manager_.activate_under_child_poa 
-            (buffer, this->servants_[i], TAO_TRY_ENV);
+            (buffer,
+             this->servants_[i],
+             TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           // Stringify the objref we'll be implementing, and print it
@@ -238,7 +240,8 @@ Cubit_Task::create_servants (void)
                                           TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          this->servants_iors_[i] = ACE_OS::strdup (str.in ());
+          this->servants_iors_[i] =
+            ACE_OS::strdup (str.in ());
 
           // Register the servant with the Naming Context....
           CosNaming::Name cubit_name (1);

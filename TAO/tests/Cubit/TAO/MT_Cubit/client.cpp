@@ -92,6 +92,9 @@ int
 Client_i::init (int argc, char *argv[])
 {
 #if defined (ACE_HAS_THREADS)
+  // @@ Naga, can you please abstract this stuff out into the
+  // Global.{h,cpp} class since I think it's rather messy?
+
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
 #if defined (__Lynx__)
@@ -152,14 +155,16 @@ Client_i::init (int argc, char *argv[])
           ACE_OS::atoi (this->argv_[i+1]);
     }
 #if defined (CHORUS)
+  // @@ Naga, can you please abstract this out into a macro or
+  // something in Global.h, like you did for the VxWorks VME driver?
   // start the pccTimer for Chorus ClassiX.
   int pTime;
 
   // Initialize the PCC timer Chip
   pccTimerInit ();
 
-  if(pccTimer(PCC2_TIMER1_START,
-              &pTime) != K_OK)
+  if (pccTimer (PCC2_TIMER1_START,
+                &pTime) != K_OK)
     ACE_DEBUG ((LM_DEBUG,
                 "pccTimer has a pending benchmark\n"));
 #endif /* CHORUS */
@@ -264,6 +269,7 @@ Client_i::output_latency (void)
         this->ts_->global_jitter_array_ [j]->begin ();
       u_int i = 0;
       ACE_timer_t *latency = 0;
+
       for (iterator.first ();
            (i < (j == 0 
                  ? this->ts_->high_priority_loop_count_ 
@@ -324,6 +330,8 @@ Client_i::calc_util_time (void)
   this->util_task_duration_ = timer.get_elapsed ();
 #else
   for (u_int i = 0;
+       // @@ Naga, can you please "abstract" out this magic number and
+       // replace it with a symbolic constant?
        i < 10000;
        i++)
     this->util_thread_->computation ();
@@ -355,15 +363,16 @@ Client_i::activate_high_client (void)
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
-  if (this->high_priority_client_->activate (THR_BOUND | ACE_SCHED_FIFO,
-                                             1,
-                                             0,
-                                             this->high_priority_,
-                                             -1,
-                                             0,
-                                             0,
-                                             0,
-					     (ACE_thread_t *) &this->task_id_) == -1)
+  if (this->high_priority_client_->activate 
+      (THR_BOUND | ACE_SCHED_FIFO,
+       1,
+       0,
+       this->high_priority_,
+       -1,
+       0,
+       0,
+       0,
+       (ACE_thread_t *) &this->task_id_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
@@ -424,12 +433,12 @@ Client_i::activate_low_client (void)
           (THR_BOUND | ACE_SCHED_FIFO,
            1,
            0,
-           this->low_priority_,    // These are constructor defaults.
-           -1,          //  int grp_id = -1,
-           0,           //  ACE_Task_Base *task = 0,
-           0,           //  ACE_hthread_t thread_handles[] = 0,
-           0,           //  void *stack[] = 0,
-           0,           //  size_t stack_size[] = 0,
+           this->low_priority_, // These are constructor defaults.
+           -1,                  // int grp_id = -1,
+           0,                   // ACE_Task_Base *task = 0,
+           0,                   // ACE_hthread_t thread_handles[] = 0,
+           0,                   // void *stack[] = 0,
+           0,                   // size_t stack_size[] = 0,
            (ACE_thread_t *) &this->task_id_) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p; priority is %d\n",
@@ -559,10 +568,10 @@ Client_i::print_latency_stats (void)
       ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                   "High priority client latency : %f msec, jitter: %f msec\n"
                   "Low priority client latency : %f msec, jitter: %f msec\n",
-                  this->high_priority_client_->get_high_priority_latency ()/ACE_ONE_SECOND_IN_MSECS,
-                  this->high_priority_client_->get_high_priority_jitter ()/ACE_ONE_SECOND_IN_MSECS,
-                  this->low_priority_client_[0]->get_low_priority_latency ()/ACE_ONE_SECOND_IN_MSECS,
-                  this->low_priority_client_[0]->get_low_priority_jitter ()/ACE_ONE_SECOND_IN_MSECS));
+                  this->high_priority_client_->get_high_priority_latency () / ACE_ONE_SECOND_IN_MSECS,
+                  this->high_priority_client_->get_high_priority_jitter () / ACE_ONE_SECOND_IN_MSECS,
+                  this->low_priority_client_[0]->get_low_priority_latency () / ACE_ONE_SECOND_IN_MSECS,
+                  this->low_priority_client_[0]->get_low_priority_jitter () / ACE_ONE_SECOND_IN_MSECS));
       // output_latency ();
 #endif /* !VXWORKS && !CHORUS */
     }
@@ -657,22 +666,27 @@ Client_i::start_servant (void)
               this->high_priority_));
 
   // Make the high priority task an active object.
-   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
-                                     1,
-                                     0,
-                                     this->high_priority_) == -1)
+   if (high_priority_task->activate 
+       (THR_BOUND | ACE_SCHED_FIFO,
+        1,
+        0,
+        this->high_priority_) == -1)
      ACE_ERROR ((LM_ERROR,
                  "(%P|%t) %p\n"
                  "\thigh_priority_task->activate failed"));
 
-   //   ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
+
+   // @@ Naga, can you please add a comment documenting what's going
+   // on here?
    while (!GLOBALS::instance ()->ready_)
      GLOBALS::instance ()->ready_cnd_.wait ();
-   //   ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
-   // wait for all the threads.
+
    GLOBALS::instance ()->barrier_->wait ();
-   this->ts_->one_ior_ = high_priority_task->get_servant_ior (0);
+
+   this->ts_->one_ior_ =
+     high_priority_task->get_servant_ior (0);
+
    return 0;
 }
 
@@ -702,39 +716,46 @@ Client_i::do_priority_inversion_test (void)
   if (result < 0)
     return result;
 
-  //  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, this->ts_->ready_mtx_,-1));
-  // wait on the condition variable until the high priority thread wakes us up.
+
+  // Wait on the condition variable until the high priority thread
+  // wakes us up.
   while (!this->ts_->ready_)
     this->ts_->ready_cnd_.wait ();
-  //  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
-  // create and activate the low priority clients.
+
   result = this->activate_low_client ();
+
   if (result < 0)
     return result;
-  // activate the utilization thread if necessary.
+
+  // Activate the utilization thread if necessary.
   result = this->activate_util_thread ();
   if (result < 0)
     return result;
+
   // Wait for all the client threads to be initialized before going
   // any further.
   this->ts_->barrier_->wait ();
+
   STOP_QUANTIFY;
   CLEAR_QUANTIFY;
-  // collect the context switch data.
+
+  // Collect the context switch data.
   this->get_context_switches ();
+
   // Wait for all the client threads to exit (except the utilization
   // thread).
   this->client_thread_manager_.wait ();
+
   STOP_QUANTIFY;
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) >>>>>>> ending test on %D\n"));
 
   this->timer_.stop ();
   this->timer_.elapsed_time (this->delta_);
 
-  // Signal the utilization thread to finish with its work..  only
-  // if utilization test was specified.  See description of this
-  // variable in header file.
+  // Signal the utilization thread to finish with its work..  only if
+  // utilization test was specified.  See description of this variable
+  // in header file.
   if (this->ts_->use_utilization_test_ == 1)
     {
       this->util_thread_->done_ = 1;
@@ -767,6 +788,7 @@ Client_i::do_thread_per_rate_test (void)
                         CB_1HZ_CONSUMER);
   ACE_Sched_Priority priority;
 
+  // @@ Naga, shouldn't this be abstracted into the Globals.* file?
 #if defined (VXWORKS)
   priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
@@ -775,6 +797,7 @@ Client_i::do_thread_per_rate_test (void)
 #else  /* ! VXWORKS */
   priority = ACE_THR_PRI_FIFO_DEF + 25;
 #endif /* ! ACE_WIN32 */
+
   ACE_DEBUG ((LM_DEBUG,
               "Creating 20 Hz client with priority %d\n",
               priority));
@@ -793,7 +816,8 @@ Client_i::do_thread_per_rate_test (void)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, this->ts_->ready_mtx_,-1));
 
-  // wait on the condition variable until the high priority thread wakes us up.
+  // Wait on the condition variable until the high priority thread
+  // wakes us up.
   while (!this->ts_->ready_)
     this->ts_->ready_cnd_.wait ();
 
@@ -879,10 +903,9 @@ int
 main (int argc, char *argv[])
 {
 #endif /* VXWORKS */
-  int result;
   Client_i client;
 
-  result = client.init (argc,argv);
+  int result = client.init (argc,argv);
 
   if (result < 0)
     return result;

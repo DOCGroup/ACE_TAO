@@ -10,7 +10,8 @@
 //    Timer.h
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan and Nagarajan Surendran.
+//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan and Nagarajan
+//    Surendran. 
 //
 // ============================================================================
 
