@@ -16,8 +16,9 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <Xm/Xm.h>
 #include "Stopwatch_display.h"
+#include <Xm/Xm.h>
+
 
 class Timer_imp
 {

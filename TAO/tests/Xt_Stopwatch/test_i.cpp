@@ -18,18 +18,21 @@ Stopwatch_imp::Stopwatch_imp (CORBA::ORB_ptr orb, Timer_imp *timer)
 
 void
 Stopwatch_imp::start (CORBA::Environment&)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->timer_->start ();
 }
 
 void
 Stopwatch_imp::stop (CORBA::Environment&)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->timer_->stop ();
 }
 
 void
 Stopwatch_imp::shutdown (CORBA::Environment&)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

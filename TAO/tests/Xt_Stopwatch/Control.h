@@ -15,12 +15,13 @@
 
 #ifndef CONTROL_H
 #define CONTROL_H
+#include "Client.h"
 #include <Xm/Xm.h>
 #include <Xm/PushB.h>
 #include <Xm/Label.h>
 #include <Xm/RowColumn.h>
 #include <Xm/Frame.h>
-#include "Client.h"
+
 
 class Control  
 {
