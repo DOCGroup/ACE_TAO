@@ -232,6 +232,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i server_loggerd.h
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ server_loggerd.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

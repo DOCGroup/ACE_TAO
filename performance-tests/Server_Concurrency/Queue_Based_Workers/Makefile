@@ -35,7 +35,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/workers.o .obj/workers.so .shobj/workers.o .shobj/workers.so: workers.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/workers.o .obj/workers.so .shobj/workers.o .shobj/workers.so: workers.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -212,6 +213,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Sched_Params.i \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Profile_Timer.i ../Latency_Stats.h
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ ../Latency_Stats.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

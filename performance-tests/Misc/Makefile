@@ -443,7 +443,8 @@ endif # ! Other
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/preempt.o .obj/preempt.o .obj/preempt.o .obj/preempt.o: preempt.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/preempt.o .obj/preempt.o .obj/preempt.o .obj/preempt.o: preempt.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -617,7 +618,8 @@ endif # ! Other
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/test_mutex.o .obj/test_mutex.o .obj/test_mutex.o .obj/test_mutex.o: test_mutex.cpp $(ACE_ROOT)/ace/Log_Msg.h \
+.obj/test_mutex.o .obj/test_mutex.o .obj/test_mutex.o .obj/test_mutex.o: test_mutex.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -732,9 +734,11 @@ endif # ! Other
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp test_singleton.h
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ test_singleton.h
 
-.obj/test_naming.o .obj/test_naming.o .obj/test_naming.o .obj/test_naming.o: test_naming.cpp $(ACE_ROOT)/ace/SString.h \
+.obj/test_naming.o .obj/test_naming.o .obj/test_naming.o .obj/test_naming.o: test_naming.cpp \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \

@@ -46,7 +46,8 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_upipe.o .obj/test_upipe.so .shobj/test_upipe.o .shobj/test_upipe.so: test_upipe.cpp $(ACE_ROOT)/ace/Acceptor.h \
+.obj/test_upipe.o .obj/test_upipe.so .shobj/test_upipe.o .shobj/test_upipe.so: test_upipe.cpp \
+ $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -247,7 +248,8 @@ endif
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
  $(ACE_ROOT)/ace/UPIPE_Acceptor.i \
  $(ACE_ROOT)/ace/UPIPE_Connector.h \
- $(ACE_ROOT)/ace/UPIPE_Connector.i test_upipe.h
+ $(ACE_ROOT)/ace/UPIPE_Connector.i \
+ test_upipe.h
 
 .obj/Connection_Handler.o .obj/Connection_Handler.so .shobj/Connection_Handler.o .shobj/Connection_Handler.so: Connection_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -439,6 +441,7 @@ endif
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i Connection_Handler.h
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ Connection_Handler.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

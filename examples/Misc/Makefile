@@ -58,7 +58,8 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_dump.o .obj/test_dump.so .shobj/test_dump.o .shobj/test_dump.so: test_dump.cpp $(ACE_ROOT)/ace/Dump.h \
+.obj/test_dump.o .obj/test_dump.so .shobj/test_dump.o .shobj/test_dump.so: test_dump.cpp \
+ $(ACE_ROOT)/ace/Dump.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -114,7 +115,8 @@ endif
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Dump_T.h \
- $(ACE_ROOT)/ace/Dump_T.cpp test_dump.h \
+ $(ACE_ROOT)/ace/Dump_T.cpp \
+ test_dump.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
@@ -340,7 +342,8 @@ endif
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Read_Buffer.i
 
-.obj/test_set.o .obj/test_set.so .shobj/test_set.o .shobj/test_set.so: test_set.cpp $(ACE_ROOT)/ace/Containers.h \
+.obj/test_set.o .obj/test_set.so .shobj/test_set.o .shobj/test_set.so: test_set.cpp \
+ $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -447,7 +450,8 @@ endif
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/test_trace.o .obj/test_trace.so .shobj/test_trace.o .shobj/test_trace.so: test_trace.cpp $(ACE_ROOT)/ace/Signal.h \
+.obj/test_trace.o .obj/test_trace.so .shobj/test_trace.o .shobj/test_trace.so: test_trace.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \

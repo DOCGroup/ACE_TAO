@@ -243,7 +243,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Connector.cpp CPP-connector.cpp
+ $(ACE_ROOT)/ace/Connector.cpp \
+ CPP-connector.cpp
 
 .obj/CPP-acceptor.o .obj/CPP-acceptor.so .shobj/CPP-acceptor.o .shobj/CPP-acceptor.so: CPP-acceptor.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -336,7 +337,8 @@ endif
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h CPP-acceptor.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ CPP-acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
@@ -420,7 +422,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Acceptor.cpp CPP-acceptor.cpp
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ CPP-acceptor.cpp
 
 .obj/test_sock_connector.o .obj/test_sock_connector.so .shobj/test_sock_connector.o .shobj/test_sock_connector.so: test_sock_connector.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
@@ -596,7 +599,8 @@ endif
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Process_Mutex.h \
  $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i CPP-connector.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ CPP-connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -615,7 +619,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Connector.cpp CPP-connector.cpp
+ $(ACE_ROOT)/ace/Connector.cpp \
+ CPP-connector.cpp
 
 .obj/test_sock_acceptor.o .obj/test_sock_acceptor.so .shobj/test_sock_acceptor.o .shobj/test_sock_acceptor.so: test_sock_acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
@@ -668,7 +673,8 @@ endif
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i CPP-acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ CPP-acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -807,7 +813,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Acceptor.cpp CPP-acceptor.cpp
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ CPP-acceptor.cpp
 
 .obj/test_lsock_connector.o .obj/test_lsock_connector.so .shobj/test_lsock_connector.o .shobj/test_lsock_connector.so: test_lsock_connector.cpp \
  $(ACE_ROOT)/ace/LSOCK_Connector.h \
@@ -874,7 +881,8 @@ endif
  $(ACE_ROOT)/ace/LSOCK.h \
  $(ACE_ROOT)/ace/LSOCK.i \
  $(ACE_ROOT)/ace/LSOCK_Stream.i \
- $(ACE_ROOT)/ace/LSOCK_Connector.i CPP-connector.h \
+ $(ACE_ROOT)/ace/LSOCK_Connector.i \
+ CPP-connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1010,7 +1018,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Connector.cpp CPP-connector.cpp
+ $(ACE_ROOT)/ace/Connector.cpp \
+ CPP-connector.cpp
 
 .obj/test_lsock_acceptor.o .obj/test_lsock_acceptor.so .shobj/test_lsock_acceptor.o .shobj/test_lsock_acceptor.so: test_lsock_acceptor.cpp \
  $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
@@ -1076,7 +1085,8 @@ endif
  $(ACE_ROOT)/ace/LSOCK_Stream.h \
  $(ACE_ROOT)/ace/LSOCK.h \
  $(ACE_ROOT)/ace/LSOCK.i \
- $(ACE_ROOT)/ace/LSOCK_Stream.i CPP-acceptor.h \
+ $(ACE_ROOT)/ace/LSOCK_Stream.i \
+ CPP-acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -1209,7 +1219,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Acceptor.cpp CPP-acceptor.cpp
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ CPP-acceptor.cpp
 
 .obj/test_tli_connector.o .obj/test_tli_connector.so .shobj/test_tli_connector.o .shobj/test_tli_connector.so: test_tli_connector.cpp \
  $(ACE_ROOT)/ace/TLI_Connector.h \
@@ -1263,7 +1274,8 @@ endif
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- CPP-connector.h $(ACE_ROOT)/ace/Service_Config.h \
+ CPP-connector.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -1398,7 +1410,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Connector.cpp CPP-connector.cpp
+ $(ACE_ROOT)/ace/Connector.cpp \
+ CPP-connector.cpp
 
 .obj/test_tli_acceptor.o .obj/test_tli_acceptor.so .shobj/test_tli_acceptor.o .shobj/test_tli_acceptor.so: test_tli_acceptor.cpp \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
@@ -1446,7 +1459,8 @@ endif
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/INET_Addr.i CPP-acceptor.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ CPP-acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -1585,7 +1599,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Acceptor.cpp CPP-acceptor.cpp
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ CPP-acceptor.cpp
 
 .obj/test_spipe_connector.o .obj/test_spipe_connector.so .shobj/test_spipe_connector.o .shobj/test_spipe_connector.so: test_spipe_connector.cpp \
  $(ACE_ROOT)/ace/SPIPE_Connector.h \
@@ -1638,7 +1653,8 @@ endif
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/SPIPE.i \
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
- $(ACE_ROOT)/ace/SPIPE_Connector.i CPP-connector.h \
+ $(ACE_ROOT)/ace/SPIPE_Connector.i \
+ CPP-connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1777,7 +1793,8 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Connector.cpp CPP-connector.cpp
+ $(ACE_ROOT)/ace/Connector.cpp \
+ CPP-connector.cpp
 
 .obj/test_spipe_acceptor.o .obj/test_spipe_acceptor.so .shobj/test_spipe_acceptor.o .shobj/test_spipe_acceptor.so: test_spipe_acceptor.cpp \
  $(ACE_ROOT)/ace/SPIPE_Acceptor.h \
@@ -1829,7 +1846,8 @@ endif
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/SPIPE.i \
- $(ACE_ROOT)/ace/SPIPE_Stream.i CPP-acceptor.h \
+ $(ACE_ROOT)/ace/SPIPE_Stream.i \
+ CPP-acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -1965,6 +1983,7 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Acceptor.cpp CPP-acceptor.cpp
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ CPP-acceptor.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
