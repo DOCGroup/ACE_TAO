@@ -192,7 +192,7 @@ Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 
       exception_message = "While binding factory";
       quoterNameContext->bind (quoterFactoryContextName,
-                               quoter_factory_var,
+                               quoter_factory_var.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

@@ -208,7 +208,7 @@ TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];
   ACE_OS::sprintf (poa_id,
-                   "%s_%ld",
+                   "%s_%d",
                    this->poa_id_.c_str (),
                    this->counter_++);
 
@@ -321,7 +321,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       // Register with the POA.
       char poa_id[BUFSIZ];
       ACE_OS::sprintf (poa_id,
-                       "%s_%ld",
+                       "%s_%d",
                        this->poa_id_.c_str (),
                        this->counter_++);
       PortableServer::ObjectId_var id =

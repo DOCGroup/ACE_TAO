@@ -77,7 +77,7 @@ Consumer_Handler::init (int argc,
                           -1);
 
       // Subscribe ourselves with the notifier's broker.
-      this->notifier_->subscribe (this->receiver_,
+      this->notifier_->subscribe (this->receiver_.in (),
 				  filtering_criteria,
 				  ACE_TRY_ENV);
     }
@@ -164,14 +164,14 @@ Consumer_Handler::reactor(void)
   return TAO_ORB_Core_instance ()->reactor ();
 }
 
-Event_Comm::Consumer *
+Event_Comm::Consumer_ptr
 Consumer_Handler::receiver (void)
 {
-  return this->receiver_;
+  return this->receiver_.in ();
 }
 
-Event_Comm::Notifier *
+Event_Comm::Notifier_ptr
 Consumer_Handler::notifier (void)
 {
-  return this->notifier_;
+  return this->notifier_.in ();
 }
