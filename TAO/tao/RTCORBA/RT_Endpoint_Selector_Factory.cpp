@@ -27,8 +27,8 @@ RT_Endpoint_Selector_Factory::RT_Endpoint_Selector_Factory (void)
   ACE_NEW (this->bands_protocol_selector_,
            TAO_Bands_Protocol_Selector);
 
-  ACE_NEW (this->default_endpoint_selector_,
-           TAO_Default_Endpoint_Selector);
+  ACE_NEW (this->rt_default_endpoint_selector_,
+           TAO_RT_Default_Endpoint_Selector);
 }
 
 RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory (void)
@@ -38,7 +38,7 @@ RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory (void)
   delete this->protocol_endpoint_selector_;
   delete this->priority_protocol_selector_;
   delete this->bands_protocol_selector_;
-  delete this->default_endpoint_selector_;
+  delete this->rt_default_endpoint_selector_;
 }
 
 TAO_Invocation_Endpoint_Selector *
@@ -57,8 +57,8 @@ RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation,
 
       ACE_THROW_RETURN (CORBA::INTERNAL (
                            CORBA_SystemException::_tao_minor_code (
-                                                                   TAO_DEFAULT_MINOR_CODE,
-                                                                   EINVAL),
+                              TAO_DEFAULT_MINOR_CODE,
+                              EINVAL),
                            CORBA::COMPLETED_NO),
                         0);
     }
@@ -97,7 +97,7 @@ RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation,
         }
 
       if (client_protocol_policy.ptr () == 0)
-        return this->default_endpoint_selector_;
+        return this->rt_default_endpoint_selector_;
       else
         return this->protocol_endpoint_selector_;
     }
@@ -135,7 +135,7 @@ RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation,
     {
       // CASE 5: SERVER_DECLARED priority model, no bands.
       if (client_protocol_policy.ptr () == 0)
-        return this->default_endpoint_selector_;
+        return this->rt_default_endpoint_selector_;
       else
         return this->protocol_endpoint_selector_;
     }
@@ -183,4 +183,3 @@ ACE_STATIC_SVC_DEFINE (RT_Endpoint_Selector_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
-

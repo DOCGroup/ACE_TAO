@@ -4,7 +4,7 @@ and skeleton + implementation from the main program.
 
 After building the example, you'll get:
 
-        Coll_Test_Stubs.{dll,so}: This library contains stub implementations.
+        Collocation_Test_Stubs.{dll,so}: This library contains stub implementations.
 
         Diamond.{dll,so}: This library contains the implementation Diamond object.
 

@@ -20,7 +20,8 @@
 #include "tao/MProfile.h"
 #include "tao/debug.h"
 #include "tao/PortableInterceptor.h"
-#include "tao/POA_Extension_Initializer.h"
+#include "tao/Thread_Lane_Resources_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
@@ -123,6 +124,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     non_servant_upcall_in_progress_ (0),
     non_servant_upcall_thread_ (ACE_OS::NULL_thread),
     root_ (0),
+    default_validator_ (orb_core),
     default_poa_policies_ ()
 {
   TAO_Object_Adapter::set_transient_poa_name_size (creation_parameters);
@@ -553,15 +555,6 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
                                ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Call the POA Extension initializers so that they can register their hooks.
-  TAO_POA_Extension_Initializer *extensions =
-      this->orb_core_.poa_extension_initializer ();
-  if (extensions != 0)
-    {
-      extensions->register_hooks (*this, ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
   // If a POA extension hasn't changed the servant dispatcher, initialize the
   // default one.
   if (this->servant_dispatcher_ == 0)
@@ -578,18 +571,15 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 
   PortableServer::POAManager_var safe_poa_manager = poa_manager;
 
-#if 0
-  TAO_POA_Policy_Set root_poa_policies (this->default_poa_policies ());
+  // This makes sure that the default resources are open when the Root
+  // POA is created.
+  this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  if (policies == 0)
-    {
-      // RootPOA policies defined in spec
-      root_poa_policies.implicit_activation (
-           PortableServer::IMPLICIT_ACTIVATION);
+  // Set the default Server Protocol Policy.
+  this->set_default_server_protocol_policy (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      policies = &root_poa_policies;
-    }
-#else
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -598,25 +588,30 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // takes a const reference and makes its own copy of the
   // policy.  (Otherwise, we'd have to allocate the policy
   // on the heap.)
-  TAO_Implicit_Activation_Policy implicit_activation_policy (
-                                      PortableServer::IMPLICIT_ACTIVATION);
+  TAO_Implicit_Activation_Policy
+    implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
+
   policies.merge_policy (&implicit_activation_policy,
                          ACE_TRY_ENV);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#endif /* 0 */
+  // Merge policies from the ORB level.
+  this->validator ().merge_policies (policies.policies (),
+                                     ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
-  this->root_ = this->servant_dispatcher_->create_POA (root_poa_name,
-                                                       *poa_manager,
-                                                       policies,
-                                                       0,
-                                                       this->lock (),
-                                                       this->thread_lock (),
-                                                       this->orb_core_,
-                                                       this,
-                                                       ACE_TRY_ENV);
+  this->root_ =
+    this->servant_dispatcher_->create_POA (root_poa_name,
+                                           *poa_manager,
+                                           policies,
+                                           0,
+                                           this->lock (),
+                                           this->thread_lock (),
+                                           this->orb_core_,
+                                           this,
+                                           ACE_TRY_ENV);
   ACE_CHECK;
 
   // The Object_Adapter will keep a reference to the Root POA so that
@@ -630,6 +625,23 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   (void) safe_poa_manager._retn ();
 }
 
+void
+TAO_Object_Adapter::set_default_server_protocol_policy (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Thread_Lane_Resources &default_lane_resources =
+    this->orb_core_.thread_lane_resources_manager ().default_lane_resources ();
+
+  TAO_Acceptor_Registry &acceptor_registry =
+    default_lane_resources.acceptor_registry ();
+
+  TAO_Protocols_Hooks *protocols_hooks =
+    this->orb_core_.get_protocols_hooks (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  protocols_hooks->set_default_server_protocol_policy (acceptor_registry,
+                                                       ACE_TRY_ENV);
+  ACE_CHECK;
+}
 
 void
 TAO_Object_Adapter::close (int wait_for_completion,
@@ -1255,6 +1267,37 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
 
   // After this point, <this->servant_> is ready for dispatching.
   return TAO_Adapter::DS_OK;
+}
+
+TAO_POA *
+TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO_ObjectKey &key,
+                                                CORBA::Environment &ACE_TRY_ENV)
+{
+  // Acquire the object adapter lock first.
+  int result = this->object_adapter_->lock ().acquire ();
+  if (result == -1)
+    // Locking error.
+    ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                      0);
+
+  // We have acquired the object adapater lock.  Record this for later
+  // use.
+  this->state_ = OBJECT_ADAPTER_LOCK_ACQUIRED;
+
+  // Check if a non-servant upcall is in progress.  If a non-servant
+  // upcall is in progress, wait for it to complete.  Unless of
+  // course, the thread making the non-servant upcall is this thread.
+  this->object_adapter_->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Locate the POA.
+  this->object_adapter_->locate_poa (key,
+                                     this->system_id_,
+                                     this->poa_,
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  return this->poa_;
 }
 
 TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()

@@ -74,23 +74,26 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor (void)
 //       interfaces over which we can receive requests.  Thus a profile
 //       must be made for each one.
 int
-TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile &mprofile,
-                                      CORBA::Boolean share_profile)
+TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+                                     TAO_MProfile &mprofile,
+                                     CORBA::Short priority)
 {
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
-  if (share_profile == 1)
-    return this->create_shared_profile (object_key,
-                                        mprofile);
+  if (priority == TAO_INVALID_PRIORITY)
+    return this->create_new_profile (object_key,
+                                     mprofile,
+                                     priority);
   else
-    return this->create_profile (object_key,
-                                 mprofile);
+    return this->create_shared_profile (object_key,
+                                        mprofile,
+                                        priority);
 }
 
 int
-TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
-                                     TAO_MProfile &mprofile)
+TAO_SHMIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
+                                         TAO_MProfile &mprofile,
+                                         CORBA::Short priority)
 {
   // @@ we only make one for now
   int count = mprofile.profile_count ();
@@ -107,8 +110,7 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
                                       this->version_,
                                       this->orb_core_),
                   -1);
-
-  pfile->endpoint ()->priority (this->priority_);
+  pfile->endpoint ()->priority (priority);
 
   if (mprofile.give_profile (pfile) == -1)
     {
@@ -139,7 +141,8 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
 
 int
 TAO_SHMIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
-                                            TAO_MProfile &mprofile)
+                                            TAO_MProfile &mprofile,
+                                            CORBA::Short priority)
 {
   TAO_Profile *pfile = 0;
   TAO_SHMIOP_Profile *shmiop_profile = 0;
@@ -160,7 +163,9 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
     {
       // If <mprofile> doesn't contain SHMIOP_Profile, we need to create
       // one.
-      return create_profile (object_key, mprofile);
+      return create_new_profile (object_key,
+                                 mprofile,
+                                 priority);
     }
   else
     {
@@ -172,7 +177,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
                                            this->address_.get_port_number (),
                                            this->address_.get_remote_addr ()),
                       -1);
-      endpoint->priority (this->priority_);
+      endpoint->priority (priority);
       shmiop_profile->add_endpoint (endpoint);
 
       return 0;
@@ -201,6 +206,7 @@ TAO_SHMIOP_Acceptor::close (void)
 
 int
 TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                           ACE_Reactor *reactor,
                            int major,
                            int minor,
                            const char *port,
@@ -221,11 +227,13 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (port)
     this->address_.set (port);
 
-  return this->open_i (orb_core);
+  return this->open_i (orb_core,
+                       reactor);
 }
 
 int
 TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                   ACE_Reactor *reactor,
                                    int major,
                                    int minor,
                                    const char *options)
@@ -246,7 +254,8 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   this->host_ = this->address_.get_host_name ();
 
-  return this->open_i (orb_core);
+  return this->open_i (orb_core,
+                       reactor);
 }
 
 int
@@ -260,7 +269,8 @@ TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix,
 }
 
 int
-TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
+TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
+                             ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
@@ -281,7 +291,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
   // We only accept connection on localhost.
   //  ACE_INET_Addr local_addr (addr.get_port_number (), ACE_TEXT ("localhost"));
   if (this->base_acceptor_.open (this->address_,
-                                 this->orb_core_->reactor (this),
+                                 reactor,
                                  this->creation_strategy_,
                                  this->accept_strategy_,
                                  this->concurrency_strategy_) == -1)
@@ -362,7 +372,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - v%d.%d\n"),
                     major,
                     minor));
       }
@@ -480,22 +490,11 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
           if (name == "priority")
             {
-              CORBA::Short corba_priority =
-                ACE_static_cast (CORBA::Short,
-                                 ACE_OS::atoi (value.c_str ()));
-
-              if (corba_priority >= 0
-                  /* && corba_priority < 32768 */)
-                // priority_ and corba_priority will always be less
-                // than 32768 since CORBA::Short is a signed 16 bit
-                // integer.
-                this->priority_ = corba_priority;
-              else
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint ")
-                                   ACE_TEXT ("priority: <%s>\n"),
-                                   value.c_str ()),
-                                  -1);
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
+                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                                 value.c_str ()),
+                                -1);
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,

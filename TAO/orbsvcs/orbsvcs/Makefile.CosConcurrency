@@ -127,7 +127,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Log_Record.i \
-  CosConcurrencyControlC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -259,8 +259,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Concurrency/concurrency_export.h \
-  CosConcurrencyControlC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Concurrency/concurrency_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
   Concurrency/concurrency_export.h
 
 .obj/CC_LockSet.o .obj/CC_LockSet.so .shobj/CC_LockSet.o .shobj/CC_LockSet.so: Concurrency/CC_LockSet.cpp Concurrency/CC_LockSet.h \
@@ -320,8 +320,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Log_Record.i \
   $(ACE_ROOT)/ace/Token.h \
   $(ACE_ROOT)/ace/Token.i \
-  CosConcurrencyControlS.h \
-  CosConcurrencyControlC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -453,8 +453,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Concurrency/concurrency_export.h \
-  CosConcurrencyControlC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Concurrency/concurrency_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -466,17 +466,17 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  CosConcurrencyControlS_T.h \
-  CosConcurrencyControlS_T.i \
-  CosConcurrencyControlS_T.cpp \
-  CosConcurrencyControlS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.cpp \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.i \
   Concurrency/concurrency_export.h
 
 .obj/CC_LockSetFactory.o .obj/CC_LockSetFactory.so .shobj/CC_LockSetFactory.o .shobj/CC_LockSetFactory.so: Concurrency/CC_LockSetFactory.cpp \
   Concurrency/CC_LockSetFactory.h \
   $(ACE_ROOT)/ace/pre.h \
-  CosConcurrencyControlS.h \
-  CosConcurrencyControlC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -661,8 +661,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Concurrency/concurrency_export.h \
-  CosConcurrencyControlC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Concurrency/concurrency_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -674,10 +674,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  CosConcurrencyControlS_T.h \
-  CosConcurrencyControlS_T.i \
-  CosConcurrencyControlS_T.cpp \
-  CosConcurrencyControlS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.cpp \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.i \
   Concurrency/concurrency_export.h Concurrency/CC_LockSet.h \
   $(ACE_ROOT)/ace/Token.h \
   $(ACE_ROOT)/ace/Token.i
@@ -693,7 +693,7 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  CosConcurrencyControlC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -869,10 +869,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  Concurrency/concurrency_export.h \
-  CosConcurrencyControlC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Concurrency/concurrency_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
   Concurrency/Concurrency_Utils.h Concurrency/CC_LockSetFactory.h \
-  CosConcurrencyControlS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -884,10 +884,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  CosConcurrencyControlS_T.h \
-  CosConcurrencyControlS_T.i \
-  CosConcurrencyControlS_T.cpp \
-  CosConcurrencyControlS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.cpp \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.i \
   Concurrency/concurrency_export.h
 
 .obj/CosConcurrencyControlS.o .obj/CosConcurrencyControlS.so .shobj/CosConcurrencyControlS.o .shobj/CosConcurrencyControlS.so: CosConcurrencyControlS.cpp \

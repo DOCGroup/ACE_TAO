@@ -19,7 +19,7 @@ LDLIBS = -lCollocation_Test_Stub \
          -lTAO_PortableServer \
          -lTAO
 
-SRC = Coll_Tester.cpp
+SRC = Collocation_Tester.cpp
 
 BIN = Collocation
 
@@ -44,8 +44,8 @@ include $(TAO_ROOT)/taoconfig.mk
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Coll_Tester.o .obj/Coll_Tester.so .shobj/Coll_Tester.o .shobj/Coll_Tester.so: Coll_Tester.cpp Coll_Tester.h Diamond_i.h DiamondS.h \
-  DiamondC.h \
+.obj/Collocation_Tester.o .obj/Collocation_Tester.so .shobj/Collocation_Tester.o .shobj/Collocation_Tester.so: Collocation_Tester.cpp Collocation_Tester.h \
+  Diamond_i.h DiamondS.h DiamondC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \

@@ -804,7 +804,9 @@ realclean: clean
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
   $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl \
-  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl
+  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
   $(TAO_ROOT)/tao/corba.h \

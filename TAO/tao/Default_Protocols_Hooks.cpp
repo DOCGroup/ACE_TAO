@@ -24,31 +24,28 @@ TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *,
 }
 
 int
-TAO_Default_Protocols_Hooks::call_client_protocols_hook (
-                                int &,
-                                int &,
-                                int &,
-                                const char *)
+TAO_Default_Protocols_Hooks::call_client_protocols_hook (int &,
+                                                         int &,
+                                                         int &,
+                                                         const char *)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::call_server_protocols_hook (
-                                int &,
-                                int &,
-                                int &,
-                                const char *)
+TAO_Default_Protocols_Hooks::call_server_protocols_hook (int &,
+                                                         int &,
+                                                         int &,
+                                                         const char *)
 {
   return 0;
 }
 
 void
-TAO_Default_Protocols_Hooks::add_rt_service_context_hook (
-                                TAO_Service_Context &,
-                                CORBA::Policy *,
-                                CORBA::Short &,
-                                CORBA::Environment &)
+TAO_Default_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &,
+                                                          CORBA::Policy *,
+                                                          CORBA::Short &,
+                                                          CORBA::Environment &)
 {
 }
 
@@ -106,6 +103,13 @@ TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short,
 
 int
 TAO_Default_Protocols_Hooks::set_default_policies (CORBA::Environment &)
+{
+  return 0;
+}
+
+int
+TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &,
+                                                                 CORBA::Environment &)
 {
   return 0;
 }

@@ -449,6 +449,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
   $(TAO_ROOT)/tao/Connector_Registry.h \
   $(TAO_ROOT)/tao/Connector_Registry.i \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -2912,6 +2914,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
   $(TAO_ROOT)/tao/Connector_Registry.h \
   $(TAO_ROOT)/tao/Connector_Registry.i \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -3926,6 +3930,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
   $(TAO_ROOT)/tao/Connector_Registry.h \
   $(TAO_ROOT)/tao/Connector_Registry.i \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -4372,6 +4378,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
   $(TAO_ROOT)/tao/Invocation.i \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -4727,6 +4735,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
   $(TAO_ROOT)/tao/Connector_Registry.h \
   $(TAO_ROOT)/tao/Connector_Registry.i \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -5150,7 +5160,9 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging_Policy_i.i \
   $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
   $(TAO_ROOT)/tao/Resume_Handle.h \
-  $(TAO_ROOT)/tao/Resume_Handle.inl
+  $(TAO_ROOT)/tao/Resume_Handle.inl \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+  $(TAO_ROOT)/tao/Thread_Lane_Resources.i
 
 .obj/ssl_endpoints.o .obj/ssl_endpoints.so .shobj/ssl_endpoints.o .shobj/ssl_endpoints.so: SSLIOP/ssl_endpoints.cpp SSLIOP/ssl_endpoints.h \
   $(ACE_ROOT)/ace/pre.h \

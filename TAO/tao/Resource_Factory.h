@@ -29,7 +29,6 @@
 
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
-class TAO_Reactor_Registry;
 
 class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
@@ -124,10 +123,6 @@ public:
   /// @@ Backwards compatibility, return 1 if the ORB core should use
   ///    Locked_Data_Blocks
   virtual int use_locked_data_blocks (void) const;
-
-  /// Create the reactor holder, an strategy to control the number of
-  /// reactors in the ORB
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
 
   /// Return an <ACE_Reactor> to be utilized.
   virtual ACE_Reactor *get_reactor (void);

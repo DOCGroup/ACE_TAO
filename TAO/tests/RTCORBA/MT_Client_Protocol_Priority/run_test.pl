@@ -20,25 +20,22 @@ if ($ARGV[0] eq '-q') {
 $iorfile = PerlACE::LocalFile ("test.ior");
 $data_file = PerlACE::LocalFile ("test_run.data");
 
+$debug_level = 1;
 $iterations = 50;
 $priority1 = 65;
 $priority2 = 70;
-$priority3 = 75;
 
 if ($^O eq "MSWin32") {
-    $priority1 = 6;
+    $priority1 = 2;
     $priority2 = 1;
-    $priority3 = 5;
 }
 elsif ($^O eq "dec_osf") {
     $priority1 = 20;
     $priority2 = 25;
-    $priority3 = 30;
 }
 elsif ($^O eq "hpux") {
     $priority1 = 17;
     $priority2 = 22;
-    $priority3 = 29;
 }
 
 # Clean up leftovers from previous runs.
@@ -48,13 +45,8 @@ unlink $data_file;
 $server_conf = PerlACE::LocalFile ("server.conf");
 
 $server_args =
-    "-o $iorfile -ORBdebuglevel 1 -ORBsvcconf $server_conf "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority1 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority2 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority3 "
-    ."-ORBendpoint shmiop://0/priority=$priority1 "
-    ."-ORBendpoint shmiop://0/priority=$priority2 "
-    ."-ORBendpoint shmiop://0/priority=$priority3 ";
+    "-o $iorfile -ORBdebuglevel $debug_level -ORBsvcconf $server_conf "
+    ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
 
 $client_args =
     "-o file://$iorfile  "
@@ -125,11 +117,11 @@ if ($errors > 0) {
         else {
             print STDERR "ERROR: Could not open $data_file\n";
         }
-        unlink $data_file;
     }
 }
 
 unlink $iorfile;
+unlink $data_file;
 
 # Clean up shmiop files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");

@@ -10,7 +10,6 @@
 #include "SHMIOP_Factory.h"
 #include "DIOP_Factory.h"
 
-#include "Reactor_Per_Priority.h"
 #include "LFU_Connection_Purging_Strategy.h"
 #include "FIFO_Connection_Purging_Strategy.h"
 #include "NULL_Connection_Purging_Strategy.h"
@@ -18,7 +17,6 @@
 #include "LF_Strategy_Null.h"
 
 #include "tao/debug.h"
-#include "tao/Single_Reactor.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
 #include "tao/LF_Strategy_Complete.h"
 #include "tao/Leader_Follower.h"
@@ -58,9 +56,8 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 }
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
-  :reactor_registry_type_ (TAO_SINGLE_REACTOR),
-   reactor_type_ (TAO_REACTOR_TP),
-   cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
+  : reactor_type_ (TAO_REACTOR_TP),
+    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
 {
   // Constructor
 }
@@ -108,23 +105,12 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
       if (ACE_OS::strcasecmp (argv[curarg],
                               "-ORBReactorRegistry") == 0)
         {
-
           curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
-
-              if (ACE_OS::strcasecmp (name,
-                                      "single") == 0)
-                this->reactor_registry_type_ = TAO_SINGLE_REACTOR;
-              else if (ACE_OS::strcasecmp (name,
-                                           "per-priority") == 0)
-                this->reactor_registry_type_ = TAO_REACTOR_PER_PRIORITY;
-              else
-                this->report_option_value_error ("-ORBReactorRegistry", name);
-            }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO_Advanced_Resource_Factory::init - ")
+                             ACE_TEXT ("-ORBReactorRegistry no longer supported\n")),
+                            -1);
         }
-
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    "-ORBReactorLock") == 0)
         {
@@ -142,7 +128,6 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
                 this->reactor_type_= TAO_REACTOR_SELECT_MT;
             }
         }
-
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    "-ORBReactorType") == 0)
         {
@@ -508,31 +493,7 @@ TAO_Advanced_Resource_Factory::get_protocol_factories (void)
   return &protocol_factories_;
 }
 
-TAO_Reactor_Registry *
-TAO_Advanced_Resource_Factory::get_reactor_registry (void)
-{
-  TAO_Reactor_Registry *reactor_registry = 0;
-  switch (this->reactor_registry_type_)
-    {
-    default:
-    case TAO_SINGLE_REACTOR:
-      ACE_NEW_RETURN (reactor_registry,
-                      TAO_Single_Reactor,
-                      0);
-      break;
-
-    case TAO_REACTOR_PER_PRIORITY:
-      ACE_NEW_RETURN (reactor_registry,
-                      TAO_Reactor_Per_Priority,
-                      0);
-      break;
-
-    }
-
-  return reactor_registry;
-}
-
-ACE_Reactor_Impl*
+ACE_Reactor_Impl *
 TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 {
   ACE_Reactor_Impl *impl = 0;

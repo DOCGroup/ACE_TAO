@@ -24,6 +24,8 @@ $dot_path = '/usr/local/bin';
              'ace_qos');
 @TAO_DOCS = ('tao'
              ,'tao_portableserver'
+             ,'tao_rtportableserver'
+             ,'tao_rtcorba'
              ,'tao_dynamicany'
              ,'tao_dynamicinterface'
              ,'tao_iormanip'

@@ -2,8 +2,8 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "../check_supported_priorities.cpp"
 
 const char *ior1 = "file://test1.ior";
 const char *ior2 = "file://test2.ior";
@@ -80,23 +80,12 @@ check_policy (Test_ptr server,
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
-      // First check that we have sufficient priority range to run the
-      // test, i.e., more than 1 priority level.
-      int max_priority =
-        ACE_Sched_Params::priority_max (ACE_SCHED_OTHER);
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
-
-      if (max_priority == min_priority)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Not enough priority levels on this platform"
-                      "to run the test, aborting\n"));
-          return 0;
-        }
-
       // Initialize the ORB, resolve references and parse arguments.
 
       // ORB.
@@ -171,4 +160,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

@@ -5,9 +5,10 @@
 NAME = TAO_RTCORBA
 
 OBJFILES = \
+	$(OBJDIR)\Continuous_Priority_Mapping.obj \
 	$(OBJDIR)\Direct_Priority_Mapping.obj \
 	$(OBJDIR)\Linear_Priority_Mapping.obj \
-	$(OBJDIR)\Pool_Per_Endpoint.obj \
+	$(OBJDIR)\RT_Thread_Lane_Resources_Manager.obj \
 	$(OBJDIR)\Priority_Mapping.obj \
 	$(OBJDIR)\Priority_Mapping_Manager.obj \
 	$(OBJDIR)\Private_Transport_Descriptor.obj \

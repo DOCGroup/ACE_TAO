@@ -60,7 +60,8 @@ public:
 
 protected:
 
-  virtual int open_i (const ACE_INET_Addr &addr);
+  virtual int open_i (const ACE_INET_Addr &addr,
+                      ACE_Reactor *reactor);
   // Implement the common part of the open*() methods.  This method is
   // virtual to allow a derived class implementation to be invoked
   // instead.

@@ -68,6 +68,7 @@
 #endif /* _MSC_VER */
 
 class TAO_Acceptor_Filter;
+class TAO_Acceptor_Registry;
 class TAO_Temporary_Creation_Time;
 
 class TAO_Creation_Time
@@ -137,9 +138,10 @@ public:
   friend class TAO_Object_Adapter::Non_Servant_Upcall;
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
+  friend class TAO_RT_Collocation_Resolver;
 
   typedef ACE_CString String;
-  
+
   /**
    * This method is used to downcast safely an instance of PortableServer::POA
    * to an instance of TAO_POA when RTTI is not enabled.
@@ -389,6 +391,8 @@ public:
   /// Accessor for the current thread policy of this POA.
   PortableServer::ThreadPolicyValue thread_policy (void) const;
 
+  virtual void *thread_pool (void) const;
+
 protected:
 
   const ACE_CString &name (void) const;
@@ -486,6 +490,13 @@ protected:
                                    CORBA::Short priority,
                                    CORBA_Environment &ACE_TRY_ENV);
   // Like key_to_stub() but assume that the ORB is not shutting down.
+
+  TAO_Stub *create_stub_object (const TAO_ObjectKey &object_key,
+                                const char *type_id,
+                                CORBA::PolicyList *policy_list,
+                                TAO_Acceptor_Filter *filter,
+                                TAO_Acceptor_Registry &acceptor_registry,
+                                CORBA::Environment &ACE_TRY_ENV);
 
   int is_servant_in_map (PortableServer::Servant servant);
 

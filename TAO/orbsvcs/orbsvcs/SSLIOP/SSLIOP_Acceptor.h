@@ -62,18 +62,20 @@ public:
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile);
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority);
 
   // Rather than creating a separate profile for each endpoint, this
   // version of <create_mprofile> method adds all endpoints to a
@@ -83,7 +85,9 @@ public:
   virtual int is_collocated (const TAO_Endpoint* endpoint);
 
 private:
-  int ssliop_open_i (TAO_ORB_Core *orb_core, const ACE_INET_Addr& addr);
+  int ssliop_open_i (TAO_ORB_Core *orb_core,
+                     const ACE_INET_Addr& addr,
+                     ACE_Reactor *reactor);
   // Implement the common part of the open*() methods.
 
   int parse_options (const char *options);
@@ -98,13 +102,15 @@ private:
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profiles (const TAO_ObjectKey &object_key,
-                           TAO_MProfile &mprofile);
+  int create_new_profile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile,
+                          CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
   int create_shared_profile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile);
+                             TAO_MProfile &mprofile,
+                             CORBA::Short priority);
 
 private:
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;

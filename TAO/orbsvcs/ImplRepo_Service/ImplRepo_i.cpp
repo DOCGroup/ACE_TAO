@@ -9,6 +9,7 @@
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/ORB_Core.h"
 #include "tao/MProfile.h"
 
@@ -292,7 +293,7 @@ ImplRepo_i::start_server_i (const char *server,
       // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
       // the way unix does, so in order to avoid having the child process
       // hold the listen socket open, we force the child to inherit no
-      // handles. This includes stdin, stdout, logs, etc. 
+      // handles. This includes stdin, stdout, logs, etc.
 
       for (size_t i = 0; i < environment.length(); ++i)
         proc_opts.setenv (environment[i].name.in (), environment[i].value.in ());
@@ -690,7 +691,8 @@ ImplRepo_i::server_is_running (const char *server,
       ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), new_location);
     }
 
-  TAO_Acceptor_Registry *registry = orb->orb_core ()->acceptor_registry ();
+  TAO_Acceptor_Registry &registry =
+    orb->orb_core ()->lane_resources ().acceptor_registry ();
 
   TAO_MProfile mp;
   TAO_ObjectKey objkey;
@@ -699,7 +701,19 @@ ImplRepo_i::server_is_running (const char *server,
   // matter what the server has.
   TAO_Default_Acceptor_Filter filter;
 
-  registry->make_mprofile (objkey, mp, &filter);
+  // Allocate space for storing the profiles.  There can never be more
+  // profiles than there are endpoints.  In some cases, there can be
+  // fewer profiles than endpoints.
+  size_t pfile_count =
+    registry.endpoint_count ();
+  mp.set (pfile_count);
+
+  // Leave it to the filter to decide which acceptors/in which order
+  // go into the mprofile.
+  filter.fill_profile (objkey,
+                       mp,
+                       registry.begin (),
+                       registry.end ());
 
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
@@ -1126,7 +1140,7 @@ ImplRepo_i::~ImplRepo_i (void)
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
 
   // Register event handler for the ior multicast.
-  if (this->ior_multicast_ 
+  if (this->ior_multicast_
       && reactor->remove_handler (this->ior_multicast_,
                                   ACE_Event_Handler::READ_MASK) == -1)
     if (OPTIONS::instance ()->debug () > 0)

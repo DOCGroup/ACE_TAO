@@ -10,17 +10,23 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Banded_Connections \
+DIRS  = \
+	Banded_Connections \
 	Client_Propagated \
 	Client_Protocol \
+	Collocation \
+	Destroy_Thread_Pool \
 	Explicit_Binding \
+	Linear_Priority \
+	MT_Client_Protocol_Priority \
+	ORB_init \
+	Persistent_IOR \
+	Policy_Combinations \
+	Private_Connection \
+        RTMutex \
 	Server_Declared \
         Server_Protocol \
-	Private_Connection \
-	Thread_Pool \
-	MT_Client_Protocol_Priority \
-        RTMutex \
-	ORB_init
+	Thread_Pool
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -42,8 +42,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-RT_TAO_SRVR_LIBS := -lTAO_Strategies  $(RT_TAO_SRVR_LIBS)
-RT_TAO_CLNT_LIBS := -lTAO_Strategies  $(RT_TAO_CLNT_LIBS)
+RT_TAO_SRVR_LIBS := -lTAO_Strategies $(RT_TAO_SRVR_LIBS)
+RT_TAO_CLNT_LIBS := -lTAO_Strategies $(RT_TAO_CLNT_LIBS)
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -265,19 +265,12 @@ realclean: clean
   testS_T.h testS_T.i testS_T.cpp testS.i \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
-  $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
-  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.i \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
-  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
-  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
-  $(TAO_ROOT)/tao/default_resource.h \
+  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/Policy_Manager.h \
+  $(TAO_ROOT)/tao/Policy_Set.h \
+  $(TAO_ROOT)/tao/Policy_Set.i \
+  $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Policy_Manager.i \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -286,6 +279,14 @@ realclean: clean
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/Protocol_Factory.h \
+  $(TAO_ROOT)/tao/params.h \
+  $(TAO_ROOT)/tao/params.i \
+  $(TAO_ROOT)/tao/Adapter.h \
+  $(TAO_ROOT)/tao/Adapter.i \
+  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -301,21 +302,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(TAO_ROOT)/tao/default_resource.i \
-  $(TAO_ROOT)/tao/ORB_Core.h \
-  $(TAO_ROOT)/tao/Policy_Manager.h \
-  $(TAO_ROOT)/tao/Policy_Set.h \
-  $(TAO_ROOT)/tao/Policy_Set.i \
-  $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/Policy_Manager.i \
-  $(TAO_ROOT)/tao/params.h \
-  $(TAO_ROOT)/tao/params.i \
-  $(TAO_ROOT)/tao/Adapter.h \
-  $(TAO_ROOT)/tao/Adapter.i \
-  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(ACE_ROOT)/ace/Map_Manager.h \
-  $(ACE_ROOT)/ace/Map_Manager.i \
-  $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(TAO_ROOT)/tao/Parser_Registry.h \
   $(TAO_ROOT)/tao/Parser_Registry.i \
   $(TAO_ROOT)/tao/Service_Callbacks.h \
@@ -351,6 +337,20 @@ realclean: clean
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
+  $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.i \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
+  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
+  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+  $(TAO_ROOT)/tao/default_resource.h \
+  $(TAO_ROOT)/tao/default_resource.i \
   $(TAO_ROOT)/tao/Strategies/advanced_resource.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp testC.h \
@@ -541,6 +541,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   testC.i $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
+  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
   $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
@@ -617,11 +621,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
-  $(TAO_ROOT)/tao/Strategies/advanced_resource.i \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
-  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.i
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
   $(TAO_ROOT)/tao/corba.h \

@@ -42,9 +42,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-RT_TAO_SRVR_LIBS := -lTAO_Strategies $(RT_TAO_SRVR_LIBS)
-RT_TAO_CLNT_LIBS := -lTAO_Strategies $(RT_TAO_CLNT_LIBS)
-
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
@@ -271,120 +268,13 @@ realclean: clean
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/RTCORBA/Pool_Per_Endpoint.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Thread_Manager.h \
-  $(ACE_ROOT)/ace/Containers.h \
-  $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Containers_T.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i \
-  $(ACE_ROOT)/ace/Task_T.h \
-  $(ACE_ROOT)/ace/Message_Queue.h \
-  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.i \
-  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
-  $(ACE_ROOT)/ace/Strategies.h \
-  $(ACE_ROOT)/ace/Strategies_T.h \
-  $(ACE_ROOT)/ace/Service_Config.h \
-  $(ACE_ROOT)/ace/Service_Config.i \
-  $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
-  $(ACE_ROOT)/ace/Timer_Queue.h \
-  $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
-  $(ACE_ROOT)/ace/Timer_Queue_T.i \
-  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
-  $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Synch_Options.h \
-  $(ACE_ROOT)/ace/Synch_Options.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
-  $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
-  $(ACE_ROOT)/ace/Functor_T.i \
-  $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  $(ACE_ROOT)/ace/Strategies_T.i \
-  $(ACE_ROOT)/ace/Strategies_T.cpp \
-  $(ACE_ROOT)/ace/Service_Repository.h \
-  $(ACE_ROOT)/ace/Service_Types.h \
-  $(ACE_ROOT)/ace/Service_Types.i \
-  $(ACE_ROOT)/ace/Service_Repository.i \
-  $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/Process_Mutex.h \
-  $(ACE_ROOT)/ace/Process_Mutex.inl \
-  $(ACE_ROOT)/ace/WFMO_Reactor.i \
-  $(ACE_ROOT)/ace/Strategies.i \
-  $(ACE_ROOT)/ace/Message_Queue.i \
-  $(ACE_ROOT)/ace/Task_T.i \
-  $(ACE_ROOT)/ace/Task_T.cpp \
-  $(ACE_ROOT)/ace/Module.h \
-  $(ACE_ROOT)/ace/Module.i \
-  $(ACE_ROOT)/ace/Module.cpp \
-  $(ACE_ROOT)/ace/Stream_Modules.h \
-  $(ACE_ROOT)/ace/Stream_Modules.cpp \
-  $(TAO_ROOT)/tao/RTCORBA/Pool_Per_Endpoint.i \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
   $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
-  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
-  $(TAO_ROOT)/tao/default_resource.h \
-  $(TAO_ROOT)/tao/Resource_Factory.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
-  $(TAO_ROOT)/tao/Pluggable.i \
-  $(TAO_ROOT)/tao/Protocol_Factory.h \
-  $(TAO_ROOT)/tao/default_resource.i \
-  $(TAO_ROOT)/tao/ORB_Core.h \
-  $(TAO_ROOT)/tao/Policy_Manager.h \
-  $(TAO_ROOT)/tao/Policy_Set.h \
-  $(TAO_ROOT)/tao/Policy_Set.i \
-  $(TAO_ROOT)/tao/debug.h \
-  $(TAO_ROOT)/tao/Policy_Manager.i \
-  $(TAO_ROOT)/tao/params.h \
-  $(TAO_ROOT)/tao/params.i \
-  $(TAO_ROOT)/tao/Adapter.h \
-  $(TAO_ROOT)/tao/Adapter.i \
-  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(ACE_ROOT)/ace/Map_Manager.h \
-  $(ACE_ROOT)/ace/Map_Manager.i \
-  $(ACE_ROOT)/ace/Map_Manager.cpp \
-  $(TAO_ROOT)/tao/Parser_Registry.h \
-  $(TAO_ROOT)/tao/Parser_Registry.i \
-  $(TAO_ROOT)/tao/Service_Callbacks.h \
-  $(TAO_ROOT)/tao/Service_Callbacks.i \
-  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
-  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
-  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
-  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
-  $(TAO_ROOT)/tao/Object_Ref_Table.h \
-  $(TAO_ROOT)/tao/Interceptor_List.h \
-  $(TAO_ROOT)/tao/Interceptor_List.inl \
-  $(TAO_ROOT)/tao/Protocols_Hooks.h \
-  $(TAO_ROOT)/tao/ORB_Core.i \
-  $(TAO_ROOT)/tao/Strategies/advanced_resource.i
+  ../check_supported_priorities.cpp \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp testC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -574,12 +464,13 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   testC.i $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
-  $(ACE_ROOT)/ace/Sched_Params.h \
-  $(ACE_ROOT)/ace/Sched_Params.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  ../check_supported_priorities.cpp \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
   $(TAO_ROOT)/tao/corba.h \
