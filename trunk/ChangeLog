@@ -1,3 +1,55 @@
+Mon Nov 27 09:56:09 2000  Ossama Othman  <ossama@uci.edu>
+
+	The following updates are based on feedback from David Channon
+	<djc@uq.net.au>.  Thanks David!
+
+	* docs/tutorials/003/client.cpp:
+	* docs/tutorials/003/page01.html:
+	* docs/tutorials/004/client.cpp:
+	* docs/tutorials/004/page01.html:
+	* docs/tutorials/008/broadcast_client.cpp:
+	* docs/tutorials/008/directed_client.cpp:
+	* docs/tutorials/008/page02.html:
+	* docs/tutorials/008/page03.html:
+	* docs/tutorials/008/page04.html:
+	* docs/tutorials/008/server.cpp:
+	* docs/tutorials/009/broadcast_client.cpp:
+	* docs/tutorials/009/directed_client.cpp:
+	* docs/tutorials/009/page02.html:
+	* docs/tutorials/009/page03.html:
+	* docs/tutorials/009/page04.html:
+	* docs/tutorials/009/server.cpp:
+	* docs/tutorials/019/client.cpp:
+	* docs/tutorials/019/client2.cpp:
+	* docs/tutorials/019/page02.html:
+	* docs/tutorials/019/page03.html:
+	* docs/tutorials/019/page04.html:
+	* docs/tutorials/019/page05.html:
+	* docs/tutorials/019/server.cpp:
+	* docs/tutorials/019/server2.cpp:
+	* docs/tutorials/019/shmem.cpp:
+	* docs/tutorials/020/client.cpp:
+	* docs/tutorials/020/client2.cpp:
+	* docs/tutorials/020/mmap.cpp:
+	* docs/tutorials/020/page02.html:
+	* docs/tutorials/020/page03.html:
+	* docs/tutorials/020/page04.html:
+	* docs/tutorials/020/page05.html:
+	* docs/tutorials/020/server.cpp:
+	* docs/tutorials/020/server2.cpp:
+
+	  Include "ace/Log_Msg.h" to pull in the ACE_{DEBUG,ERROR}
+	  macros.  The examples code in the HTML files was also updated.
+
+	* docs/tutorials/011/message_queue.cpp:
+	* docs/tutorials/011/page02.html:
+
+	  Removed unnecessary line of code that NULL terminated a string.
+	  It didn't serve any purpose since the string is already
+	  terminated.  If it wasn't terminated then that point in the code
+	  would never have been reached since the code prior to it assumes
+	  that the string is NULL terminated.
+
 Mon Nov 27 11:58:43 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/run_test.pl: on platforms other than Win32, simply
