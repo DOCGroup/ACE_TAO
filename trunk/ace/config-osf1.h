@@ -5,8 +5,8 @@
 // Digital UNIX V4.0a and later platforms.  It relies on
 // config-osf1-4.0.h, and adds deltas for newer platforms.
 
-#ifndef ACE_CONFIG_OSF1_H
-#define ACE_CONFIG_OSF1_H
+#ifndef ACE_CONFIG_TRU64_H
+#define ACE_CONFIG_TRU64_H
 
 #if defined (DIGITAL_UNIX)
 #  include "ace/config-osf1-4.0.h"
@@ -18,4 +18,4 @@
 #  include "ace/config-osf1-3.2.h"
 #endif /* ! DIGITAL_UNIX */
 
-#endif /* ACE_CONFIG_OSF1_H */
+#endif /* ACE_CONFIG_TRU64_H */

@@ -2,7 +2,7 @@
 // $Id$
 
 // NOTE:  if you are using Digital UNIX V4.0f or later, you must
-// use config-osf1.h instead of directly using this config file.
+// use config-tru64.h instead of directly using this config file.
 
 // The following configuration file is designed to work for the
 // Digital UNIX V4.0a through V4.0d with either the GNU g++, DEC
