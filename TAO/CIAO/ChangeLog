@@ -1,3 +1,33 @@
+Sat Oct  9 23:43:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Plan_Handler.cpp:
+
+	  Fixed a compilation error in Borland builds. 
+	
+	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED.mpc:
+	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc:
+	* DAnCE/examples/BasicSP/EC/EC.mpc:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+	* examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+	* examples/OEP/BasicSP/EC/EC.mpc:
+	* examples/OEP/Display/GPS/GPS.mpc:
+	* examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+	* examples/OEP/Display/RateGen/RateGen.mpc:
+	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+
+	  Added missing libraries. They have been wrong for a very long
+	  time. Thanks to Borland builds for catching these. I am sure
+	  there are a few more and I will allow one more build to catch
+	  them. 
+
+	* examples/OEP/Display/RateGen/RateGen_exec.cpp:
+	* examples/OEP/Display/RateGen/RateGen_exec.h:
+
+	  Fixed warnings due to hidden virtual functions.
+
+	
 Sat Oct  9 14:29:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:
