@@ -156,27 +156,27 @@ ACE_Handle_Set::bitpos (u_long bit)
 
 // Synchronize the underlying FD_SET with the MAX_FD and the SIZE.
 
-#if defined(ACE_USE_SHIFT_FOR_EFFICIENCY)
+#if defined (ACE_USE_SHIFT_FOR_EFFICIENCY)
 // These don't work because shifting right 3 bits is not the same as
 // dividing by 3, e.g., dividing by 8 requires shifting right 3 bits.
 // In order to do the shift, we need to calculate the number of bits
 // at some point.
-#define ACE_DIV_BY_WORDSIZE(x) ( (x) >> (ACE_Handle_Set::WORDSIZE) )
-#define ACE_MULT_BY_WORDSIZE(x) ( (x) << (ACE_Handle_Set::WORDSIZE) )
+#define ACE_DIV_BY_WORDSIZE(x) ((x) >> (ACE_Handle_Set::WORDSIZE))
+#define ACE_MULT_BY_WORDSIZE(x) ((x) << (ACE_Handle_Set::WORDSIZE))
 #else
-#define ACE_DIV_BY_WORDSIZE(x) ( (x) / (ACE_Handle_Set::WORDSIZE) )
-#define ACE_MULT_BY_WORDSIZE(x) ( (x) * (ACE_Handle_Set::WORDSIZE) )
-#endif /* ACE_USE_SHIFT_FOR_DIVIDE */
+#define ACE_DIV_BY_WORDSIZE(x) ((x) / (ACE_Handle_Set::WORDSIZE))
+#define ACE_MULT_BY_WORDSIZE(x) ((x) * (ACE_Handle_Set::WORDSIZE))
+#endif /* ACE_USE_SHIFT_FOR_EFFICIENCY */
 
 void
 ACE_Handle_Set::sync (ACE_HANDLE max)
 {
   ACE_TRACE ("ACE_Handle_Set::sync");
 #if !defined (ACE_WIN32)
-  fd_mask * maskp = (fd_mask *)(this->mask_.fds_bits);
+  fd_mask *maskp = (fd_mask *)(this->mask_.fds_bits);
   this->size_ = 0;
 
-  for (int i = ACE_DIV_BY_WORDSIZE(max - 1);
+  for (int i = ACE_DIV_BY_WORDSIZE (max - 1);
        i >= 0; 
        i--)
     this->size_ += ACE_Handle_Set::count_bits (maskp[i]);
@@ -261,15 +261,16 @@ ACE_Handle_Set_Iterator::operator () (void)
   // No sense searching further than the max_handle_ + 1;
   ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
-  // HP-UX 11 plays some games with the fd_mask type - fd_mask is defined
-  // as an int_32t, but the fds_bits is an array of longs.  This makes
-  // plainly indexing through the array by hand tricky, since the FD_*
-  // macros treat the array as int32_t.  So the bits are in the right place
-  // for int32_t, even though the array is long.  This, they say, is to
-  // preserve the same in-memory layout for 32-bit and 64-bit processes.
-  // So, we play the same game as the FD_* macros to get the bits right.
-  // On all other systems, this amounts to practically a NOP, since this
-  // is what would have been done anyway, without all this type jazz.
+  // HP-UX 11 plays some games with the fd_mask type - fd_mask is
+  // defined as an int_32t, but the fds_bits is an array of longs.
+  // This makes plainly indexing through the array by hand tricky,
+  // since the FD_* macros treat the array as int32_t.  So the bits
+  // are in the right place for int32_t, even though the array is
+  // long.  This, they say, is to preserve the same in-memory layout
+  // for 32-bit and 64-bit processes.  So, we play the same game as
+  // the FD_* macros to get the bits right.  On all other systems,
+  // this amounts to practically a NOP, since this is what would have
+  // been done anyway, without all this type jazz.
   fd_mask * maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
 
   if (this->handle_index_ >= maxhandlep1)
@@ -403,15 +404,18 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
 #elif defined (ACE_HAS_BIG_FD_SET)
     oldlsb_ (0),
     word_max_ (hs.max_handle_ == ACE_INVALID_HANDLE 
-	       ? 0 : ((ACE_DIV_BY_WORDSIZE(hs.max_handle_)) + 1))
+	       ? 0 
+               : ((ACE_DIV_BY_WORDSIZE (hs.max_handle_)) + 1))
 #endif /* ACE_HAS_BIG_FD_SET */
 {
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
-#if !defined(ACE_WIN32) && !defined(ACE_HAS_BIG_FD_SET)
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
+  ACE_HANDLE maxhandlep1 =
+    this->handles_.max_handle_ + 1;
 
-  fd_mask * maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask *maskp =
+    (fd_mask *)(this->handles_.mask_.fds_bits);
 
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.
@@ -434,7 +438,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
 	   && this->handle_index_ < maxhandlep1;
 	 this->handle_index_++)
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
-#elif !defined(ACE_WIN32) && defined(ACE_HAS_BIG_FD_SET)
+#elif !defined (ACE_WIN32) && defined (ACE_HAS_BIG_FD_SET)
     if (this->word_max_==0) 
       {
 	this->word_num_ = -1;
@@ -442,7 +446,8 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
       }
     else
       {
-	this->word_num_ = ACE_DIV_BY_WORDSIZE(this->handles_.min_handle_) - 1;
+	this->word_num_ =
+          ACE_DIV_BY_WORDSIZE (this->handles_.min_handle_) - 1;
 	this->word_val_ = 0;
       }
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */

@@ -14,7 +14,7 @@
 //      the test.
 //
 // = AUTHOR
-//    Prashant Jain
+//    Prashant Jain <pjain@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -69,29 +69,26 @@ test_duplicates (size_t count)
 }
 
 // This is the vector of handles to test.  These numbers are chosen to
-// test for boundaries conditions.
+// test for boundaries conditions.  Note that if
+// <ACE_DEFAULT_SELECT_REACTOR_SIZE> is less than any of these
+// <HANDLE> values, the logic in <test_boundaries> will simply ignore
+// these values.
 static ACE_HANDLE handle_vector[] =
 {
   (ACE_HANDLE) 0,
   (ACE_HANDLE) 1,
   (ACE_HANDLE) 31,
-#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 32
   (ACE_HANDLE) 32,
   (ACE_HANDLE) 63,
-#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 64
   (ACE_HANDLE) 64,
   (ACE_HANDLE) 65,
   (ACE_HANDLE) 127,
-#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 128
   (ACE_HANDLE) 128,
   (ACE_HANDLE) 129,
   (ACE_HANDLE) 254,
-#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE > 255
   (ACE_HANDLE) 255,
-#endif /* ACE_DEFAULT_REACTOR_SIZE > 255 */
-#endif /* ACE_DEFAULT_REACTOR_SIZE > 128 */
-#endif /* ACE_DEFAULT_REACTOR_SIZE > 64 */
-#endif /* ACE_DEFAULT_REACTOR_SIZE > 32 */
+  (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE - 1,
+  (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE,
   ACE_INVALID_HANDLE
 };
 
@@ -104,36 +101,49 @@ test_boundaries (void)
 
   // First test an empty set.
 
-  ACE_Handle_Set_Iterator i1 (handle_set);
-
-  while ((handle = i1 ()) != ACE_INVALID_HANDLE)
+  for (ACE_Handle_Set_Iterator i1 (handle_set);
+       (handle = i1 ()) != ACE_INVALID_HANDLE;
+       )
     {
 #if defined (ACE_PSOS_DIAB)
-      // workaround for some compiler confusion with strings in assertions
+      // Workaround for some compiler confusion with strings in
+      // assertions.
       const int SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS = 1;
       ACE_ASSERT (0 == SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS);
 #else /* ! defined (ACE_PSOS_DIAB) */
-      ACE_ASSERT (0 == ASYS_TEXT ("this shouldn't get called since ")
+      ACE_ASSERT (0 == 
+                  ASYS_TEXT ("this shouldn't get called since ")
                   ASYS_TEXT ("the set is empty!\n"));
 #endif /* defined (ACE_PSOS_DIAB) */
     }
 
-  // Insert the vector of HANDLEs into the set.
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("ACE_DEFAULT_SELECT_REACTOR_SIZE %d\n"),
+              ACE_DEFAULT_SELECT_REACTOR_SIZE));
+
+  // Insert the vector of <ACE_HANDLE>s into the set.
 
   for (int i = 0;
        handle_vector[i] != ACE_INVALID_HANDLE;
        i++)
     {
-      handle_set.set_bit (handle_vector[i]);
-      set.insert (handle_vector[i]);
+      if (handle_vector[i] < ACE_DEFAULT_SELECT_REACTOR_SIZE)
+        {
+          handle_set.set_bit (handle_vector[i]);
+          set.insert (handle_vector[i]);
+        }
     }
 
   int count = 0;
 
-  ACE_Handle_Set_Iterator i2 (handle_set);
-  while ((handle = i2 ()) != ACE_INVALID_HANDLE)
+  for (ACE_Handle_Set_Iterator i2 (handle_set);
+       (handle = i2 ()) != ACE_INVALID_HANDLE;
+       )
     {
-      int done = set.remove(handle);
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("obtained handle %d\n"),
+                  handle));
+      int done = set.remove (handle);
       ACE_ASSERT (done == 0);
       count++;
     }
@@ -202,16 +212,22 @@ main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Handle_Set_Test"));
 
-  int count = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_Handle_Set::MAXSIZE;
+  int count = argc > 1 
+    ? ACE_OS::atoi (argv[1]) 
+    : ACE_Handle_Set::MAXSIZE;
   size_t max_handles =
-    argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_Handle_Set::MAXSIZE;
+    argc > 2 
+    ? ACE_OS::atoi (argv[2]) 
+    : ACE_Handle_Set::MAXSIZE;
   size_t max_iterations =
-    argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_MAX_ITERATIONS;
+    argc > 3 
+    ? ACE_OS::atoi (argv[3]) 
+    : ACE_MAX_ITERATIONS;
 
   test_duplicates (count);
   test_boundaries ();
-  test_performance (max_handles, max_iterations);
-
+  test_performance (max_handles,
+                    max_iterations);
   ACE_END_TEST;
   return 0;
 }

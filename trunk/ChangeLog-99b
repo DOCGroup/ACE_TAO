@@ -1,3 +1,16 @@
+Sun Sep 19 10:39:30 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ACE/Handle_Set.h: Updated the documentation to point out that it's
+	  the *caller's* responsibility to ensure handles aren't
+ 	  added/cleared from the set if their values are larger than
+ 	  ACE_DEFAULT_SELECT_REACTOR_SIZE.  This behavior is necessary to
+ 	  ensure efficiency.
+  
+	* tests/Handle_Set_Test.cpp (test_boundaries): Fixed the test so 
+	  that it will correctly ignore any handle values >=
+ 	  ACE_DEFAULT_SELECT_REACTOR_SIZE.  Thanks to David Levine for
+ 	  reporting this.  This fixes [BUGID:315].
+
 Sat Sep 18 18:49:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/config-win32-borland.h:
