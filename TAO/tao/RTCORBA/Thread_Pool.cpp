@@ -297,8 +297,7 @@ TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
 
   long flags =
     default_flags |
-    orb_core.orb_params ()->scope_policy () |
-    orb_core.orb_params ()->sched_policy ();
+    orb_core.orb_params ()->thread_creation_flags ();
 
   // Activate the threads.
   int result =
@@ -822,8 +821,13 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
 
   // Throw exception in case of errors.
   if (result != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      result);
+    ACE_THROW_RETURN (
+      CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE,
+          errno),
+        CORBA::COMPLETED_NO),
+      result);
 
   // Bind thread to internal table.
   result =

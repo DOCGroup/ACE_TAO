@@ -3,6 +3,7 @@
 
 #include "ace/High_Res_Timer.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "Activity.h"
 #include "Task_Stats.h"
@@ -25,29 +26,28 @@ Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *prio
                        this->task_priority_),
                       -1);
 
-  long flags = THR_NEW_LWP | THR_JOINABLE;
-
-  flags |=
-    ACTIVITY::instance()->scope_policy () |
-    ACTIVITY::instance()->sched_policy ();
+  long flags =
+    THR_NEW_LWP |
+    THR_JOINABLE |
+    ACTIVITY::instance()->orb ()->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Become an active object.
-  if (this->ACE_Task <ACE_SYNCH>::activate (flags,
-                                            1,
-                                            0,
-                                            native_priority) == -1)
-       {
-         if (ACE_OS::last_error () == EPERM)
-           ACE_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                             -1);
-         else
-           ACE_DEBUG ((LM_ERROR,
-                       ACE_TEXT ("(%t) task activation at priority %d failed, ")
-                        ACE_TEXT ("exiting!\n%a"),
-                       native_priority,
-                       -1));
-       }
+  if (this->activate (flags,
+                      1,
+                      0,
+                      native_priority) == -1)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                          -1);
+      else
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("(%t) task activation at priority %d failed, ")
+                    ACE_TEXT ("exiting!\n%a"),
+                    native_priority,
+                    -1));
+    }
   return 0;
 }
 
@@ -120,7 +120,7 @@ Thread_Task::svc (void)
           elapsed_microseconds*=1000; // convert to uSec on Win32
 #endif /* ACE_WIN32 */
 
-      // did we miss any deadlines?
+          // did we miss any deadlines?
 
           int missed =
             elapsed_microseconds > period_ ? elapsed_microseconds/period_ : 0;

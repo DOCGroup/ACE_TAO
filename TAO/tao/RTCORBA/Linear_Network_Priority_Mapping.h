@@ -9,7 +9,7 @@
 //   Linear_Network_Priority_Mapping.h
 //
 // = DESCRIPTION
-//   Declares the Linear_Network_Priority_Mapping interface, 
+//   Declares the Linear_Network_Priority_Mapping interface,
 //
 // = AUTHOR
 //   Yamuna Krishnamurthy (yamuna@oomworks.com)
@@ -50,7 +50,7 @@ public:
 
   virtual CORBA::Boolean
       to_network (RTCORBA::Priority corba_priority,
-                 RTCORBA::NetworkPriority &network_priority);
+                  RTCORBA::NetworkPriority &network_priority);
   virtual CORBA::Boolean
       to_CORBA (RTCORBA::NetworkPriority network_priority,
                 RTCORBA::Priority &corba_priority);

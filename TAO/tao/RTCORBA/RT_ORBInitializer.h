@@ -44,19 +44,20 @@ class TAO_RTCORBA_Export TAO_RT_ORBInitializer :
 public:
   /// Priority mapping types
   enum
-  {
-    TAO_PRIORITY_MAPPING_CONTINUOUS,
-    TAO_PRIORITY_MAPPING_LINEAR,
-    TAO_PRIORITY_MAPPING_DIRECT
-  };
+    {
+      TAO_PRIORITY_MAPPING_CONTINUOUS,
+      TAO_PRIORITY_MAPPING_LINEAR,
+      TAO_PRIORITY_MAPPING_DIRECT
+    };
 
   enum
-  {
-    TAO_NETWORK_PRIORITY_MAPPING_LINEAR
-  };
+    {
+      TAO_NETWORK_PRIORITY_MAPPING_LINEAR
+    };
 
   TAO_RT_ORBInitializer (int priority_mapping_type,
-			 int network_priority_mapping_type,
+                         int network_priority_mapping_type,
+                         int ace_sched_policy,
                          long sched_policy,
                          long scope_policy);
 
@@ -72,8 +73,8 @@ private:
 
   /// Register RTCORBA policy factories.
   void register_policy_factories (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL);
+                                  PortableInterceptor::ORBInitInfo_ptr info
+                                  ACE_ENV_ARG_DECL);
 
 private:
 
@@ -88,21 +89,34 @@ private:
   /// Network Priority mapping type.
   int network_priority_mapping_type_;
 
-  /** Scheduling policy.  This value is passed to ACE_OS::thr_setprio().
-    * For POSIX pthreads, it maps directly to the pthread_setschedparam() policy
-    * parameter.  Legal values are ACE_SCHED_RR, ACE_SCHED_FIFO,
-    * ACE_SCHED_OTHER, ACE_SCHED_*, etc.
-    */
+  /// Scheduling policy.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBSchedPolicy option.  This value is typically used by
+   * functions like ACE_OS::thr_setprio() and
+   * ACE_Sched_Params::priority_min(). Legal values are ACE_SCHED_RR,
+   * ACE_SCHED_FIFO, and ACE_SCHED_OTHER.
+   */
+  int ace_sched_policy_;
+
+  /// Scheduling policy flag.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBSchedPolicy option.  This value is typically used by ACE
+   * thread creation functions. Legal values are THR_SCHED_RR,
+   * THR_SCHED_FIFO, and THR_SCHED_DEFAULT.
+   */
   long sched_policy_;
 
-  /** Scheduling policy flags.  This value is passed as part of the
-    * flags argument to ACE_Task_Base::activate().  Legal values are
-    * THR_SCHED_RR, THR_SCHED_FIFO, THR_SCHED_DEFAULT, etc.
-    */
-  long sched_policy_flags_;
-
-  /// Scope policy.
+  /// Scheduling scope flag.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBScopePolicy option.  This value is typically used by ACE
+   * thread creation functions. Legal values are THR_SCOPE_SYSTEM and
+   * THR_SCOPE_PROCESS.
+   */
   long scope_policy_;
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

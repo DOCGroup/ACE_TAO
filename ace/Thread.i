@@ -10,11 +10,11 @@
 ACE_INLINE int
 ACE_Thread::keycreate (ACE_thread_key_t *keyp,
 #if defined (ACE_HAS_THR_C_DEST)
-		       ACE_THR_C_DEST destructor,
+                       ACE_THR_C_DEST destructor,
 #else
-		       ACE_THR_DEST destructor,
+                       ACE_THR_DEST destructor,
 #endif /* ACE_HAS_THR_C_DEST */
-		       void *inst)
+                       void *inst)
 {
   // ACE_TRACE ("ACE_Thread::keycreate");
   return ACE_OS::thr_keycreate (keyp, destructor, inst);
@@ -72,25 +72,25 @@ ACE_Thread::yield (void)
 
 ACE_INLINE int
 ACE_Thread::spawn (ACE_THR_FUNC func,
-		   void *arg,
-		   long flags,
-		   ACE_thread_t *t_id,
-		   ACE_hthread_t *t_handle,
-		   long priority,
-		   void *thr_stack,
-		   size_t thr_stack_size,
+                   void *arg,
+                   long flags,
+                   ACE_thread_t *t_id,
+                   ACE_hthread_t *t_handle,
+                   long priority,
+                   void *thr_stack,
+                   size_t thr_stack_size,
                    ACE_Thread_Adapter *thread_adapter)
 {
   ACE_TRACE ("ACE_Thread::spawn");
 
   return ACE_OS::thr_create (func,
-			     arg,
-			     flags,
-			     t_id,
-			     t_handle,
-			     priority,
-			     thr_stack,
-			     thr_stack_size,
+                             arg,
+                             flags,
+                             t_id,
+                             t_handle,
+                             priority,
+                             thr_stack,
+                             thr_stack_size,
                              thread_adapter);
 }
 
@@ -117,8 +117,8 @@ ACE_Thread::kill (ACE_thread_t t_id, int signum)
 
 ACE_INLINE int
 ACE_Thread::join (ACE_thread_t wait_for,
-		  ACE_thread_t *departed,
-		  ACE_THR_FUNC_RETURN *status)
+                  ACE_thread_t *departed,
+                  ACE_THR_FUNC_RETURN *status)
 {
   ACE_TRACE ("ACE_Thread::join");
   return ACE_OS::thr_join (wait_for, departed, status);
@@ -126,7 +126,7 @@ ACE_Thread::join (ACE_thread_t wait_for,
 
 ACE_INLINE int
 ACE_Thread::join (ACE_hthread_t wait_for,
-		  ACE_THR_FUNC_RETURN *status)
+                  ACE_THR_FUNC_RETURN *status)
 {
   ACE_TRACE ("ACE_Thread::join");
   return ACE_OS::thr_join (wait_for, status);
@@ -148,8 +148,8 @@ ACE_Thread::setconcurrency (int new_level)
 
 ACE_INLINE int
 ACE_Thread::sigsetmask (int how,
-			const sigset_t *sigset,
-			sigset_t *osigset)
+                        const sigset_t *sigset,
+                        sigset_t *osigset)
 {
   ACE_TRACE ("ACE_Thread::sigsetmask");
   return ACE_OS::thr_sigsetmask (how, sigset, osigset);
@@ -175,7 +175,7 @@ ACE_Thread::disablecancel (struct cancel_state *old_state)
 
 ACE_INLINE int
 ACE_Thread::enablecancel (struct cancel_state *old_state,
-			  int flag)
+                          int flag)
 {
   ACE_TRACE ("ACE_Thread::enablecancel");
   int old_cstate = 0;
@@ -203,7 +203,7 @@ ACE_Thread::enablecancel (struct cancel_state *old_state,
 
 ACE_INLINE int
 ACE_Thread::setcancelstate (struct cancel_state &new_state,
-			    struct cancel_state *old_state)
+                            struct cancel_state *old_state)
 {
   ACE_TRACE ("ACE_Thread::setcancelstate");
   int old_cstate = 0;
@@ -211,17 +211,17 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
 
   if (new_state.cancelstate != 0
       && ACE_OS::thr_setcancelstate (new_state.cancelstate,
-				     &old_cstate) != 0)
+                                     &old_cstate) != 0)
     return -1;
 
   if (new_state.canceltype != 0
       && ACE_OS::thr_setcanceltype (new_state.canceltype,
-				    &old_ctype) != 0)
+                                    &old_ctype) != 0)
     {
       int o_cstate;
 
       ACE_OS::thr_setcancelstate (old_cstate,
-				  &o_cstate);
+                                  &o_cstate);
       return -1;
     }
 
@@ -258,15 +258,22 @@ ACE_Thread::self (ACE_hthread_t &t_id)
 }
 
 ACE_INLINE int
-ACE_Thread::getprio (ACE_hthread_t t_id, int &prio)
+ACE_Thread::getprio (ACE_hthread_t id, int &priority)
 {
   ACE_TRACE ("ACE_Thread::getprio");
-  return ACE_OS::thr_getprio (t_id, prio);
+  return ACE_OS::thr_getprio (id, priority);
 }
 
 ACE_INLINE int
-ACE_Thread::setprio (ACE_hthread_t t_id, int prio)
+ACE_Thread::getprio (ACE_hthread_t id, int &priority, int &policy)
+{
+  ACE_TRACE ("ACE_Thread::getprio");
+  return ACE_OS::thr_getprio (id, priority, policy);
+}
+
+ACE_INLINE int
+ACE_Thread::setprio (ACE_hthread_t id, int priority, int policy)
 {
   ACE_TRACE ("ACE_Thread::setprio");
-  return ACE_OS::thr_setprio (t_id, prio);
+  return ACE_OS::thr_setprio (id, priority, policy);
 }

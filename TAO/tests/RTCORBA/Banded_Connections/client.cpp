@@ -2,7 +2,9 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/ORB_Core.h"
 #include "../check_supported_priorities.cpp"
 
 // Default IOR files.
@@ -101,34 +103,35 @@ invocation_exception_test (Test_ptr obj,
   ACE_CHECK;
 }
 
+class Task : public ACE_Task_Base
+{
+public:
+
+  Task (ACE_Thread_Manager &thread_manager,
+        CORBA::ORB_ptr orb);
+
+  int svc (void);
+
+  CORBA::ORB_var orb_;
+
+};
+
+Task::Task (ACE_Thread_Manager &thread_manager,
+            CORBA::ORB_ptr orb)
+  : ACE_Task_Base (&thread_manager),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
 int
-main (int argc, char *argv[])
+Task::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // Initialize ORB.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Parse arguments.
-      int result =
-        parse_args (argc,
-                    argv);
-      if (result != 0)
-        return result;
-
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in ());
-
       // Get the RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
@@ -138,8 +141,8 @@ main (int argc, char *argv[])
 
       // Get the RTCurrent.
       object =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
@@ -149,8 +152,8 @@ main (int argc, char *argv[])
 
       // Test object 1 (with CLIENT_PROPAGATED priority model).
       object =
-        orb->string_to_object (ior1
-                               ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior1
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_var client_propagated_obj =
@@ -158,8 +161,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Test object 2 (with SERVER_DECLARED priority model).
-      object = orb->string_to_object (ior2
-                                      ACE_ENV_ARG_PARAMETER);
+      object = this->orb_->string_to_object (ior2
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_var server_declared_obj =
@@ -302,8 +305,67 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-       "Unexpected exception in Banded_Connections test client:");
-      return 1;
+                           "Unexpected exception in Banded_Connections test client:");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  ACE_TRY_NEW_ENV
+    {
+      // Initialize ORB.
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Parse arguments.
+      int result =
+        parse_args (argc,
+                    argv);
+      if (result != 0)
+        return result;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in ());
+
+      // Thread Manager for managing task.
+      ACE_Thread_Manager thread_manager;
+
+      // Create task.
+      Task task (thread_manager,
+                 orb.in ());
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      // Activate task.
+      result =
+        task.activate (flags);
+      ACE_ASSERT (result != -1);
+      ACE_UNUSED_ARG (result);
+
+      // Wait for task to exit.
+      result =
+        thread_manager.wait ();
+      ACE_ASSERT (result != -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Unexpected exception in Banded_Connections test client:");
+      return -1;
     }
   ACE_ENDTRY;
 

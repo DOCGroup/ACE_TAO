@@ -1,3 +1,18 @@
+Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\OS:
+
+	  - thr_setprio(): Streamlined code to only call
+	  pthread_getschedparam() when <policy> is -1.
+
+	  - thr_getprio(): Added a new function so that the user can
+	  retrieve scheduling policy information in addition to the
+	  priority of a thread. This makes the thr_getprio() function
+	  consistent with the changes to thr_setprio().
+
+	* ace\Thread: Made changes to the thr_setprio() and thr_getprio()
+	  functions to make them similar to the ACE_OS functions.
+
 Wed Apr 16 11:34:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/auto_run_tests.pl: Fixed a typo.

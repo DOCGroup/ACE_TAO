@@ -2,6 +2,8 @@
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
+#include "ace/Task.h"
+#include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
@@ -41,7 +43,7 @@ Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARA
 
 void
 Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
@@ -89,43 +91,50 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
     return 0;
 }
 
-int
-main (int argc, char *argv[])
+class Task : public ACE_Task_Base
 {
- ACE_TRY_NEW_ENV
+public:
+
+  Task (ACE_Thread_Manager &thread_manager,
+        CORBA::ORB_ptr orb);
+
+  int svc (void);
+
+  CORBA::ORB_var orb_;
+
+};
+
+Task::Task (ACE_Thread_Manager &thread_manager,
+            CORBA::ORB_ptr orb)
+  : ACE_Task_Base (&thread_manager),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
+int
+Task::svc (void)
+{
+  ACE_TRY_NEW_ENV
     {
-      // ORB.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Parse arguments.
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
-
       // RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
-        return 1;
+        return -1;
 
       // RootPOA.
       object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
-        return 1;
+        return -1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
@@ -149,7 +158,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Create object.
-      Test_i server_impl (orb.in ());
+      Test_i server_impl (this->orb_.in ());
 
       PortableServer::ObjectId_var id =
         child_poa->activate_object (&server_impl ACE_ENV_ARG_PARAMETER);
@@ -162,7 +171,7 @@ main (int argc, char *argv[])
 
       // Print Object IOR.
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n\n", ior.in ()));
@@ -174,7 +183,7 @@ main (int argc, char *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
-                              1);
+                              -1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
@@ -184,7 +193,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Start ORB event loop.
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
@@ -192,8 +201,73 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      "Unexpected exception caught in MT_Client_Protocol_Priority test server:");
-      return 1;
+                           "Unexpected exception caught in MT_Client_Protocol_Priority test server:");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  ACE_TRY_NEW_ENV
+    {
+      // ORB.
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Parse arguments.
+      if (parse_args (argc, argv) != 0)
+        return -1;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
+
+      // Thread Manager for managing task.
+      ACE_Thread_Manager thread_manager;
+
+      // Create task.
+      Task task (thread_manager,
+                 orb.in ());
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      // Activate task.
+      int result =
+        task.activate (flags);
+      if (result == -1)
+        {
+          if (errno == EPERM)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot create thread with scheduling policy %s\n"
+                                 "because the user does not have the appropriate privileges, terminating program....\n"
+                                 "Check svc.conf options and/or run as root\n",
+                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                2);
+            }
+          else
+            // Unexpected error.
+            ACE_ASSERT (0);
+        }
+
+      // Wait for task to exit.
+      result =
+        thread_manager.wait ();
+      ACE_ASSERT (result != -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      return -1;
     }
   ACE_ENDTRY;
 

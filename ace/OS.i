@@ -6472,18 +6472,19 @@ ACE_OS::thr_getconcurrency (void)
 }
 
 ACE_INLINE int
-ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
+ACE_OS::thr_getprio (ACE_hthread_t id, int &priority, int &policy)
 {
   ACE_OS_TRACE ("ACE_OS::thr_getprio");
+  ACE_UNUSED_ARG (policy);
 #if defined (ACE_HAS_THREADS)
 # if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
-  result = ::pthread_getprio (thr_id);
+  result = ::pthread_getprio (id);
   if (result != -1)
     {
-      prio = result;
+      priority = result;
       return 0;
     }
   else
@@ -6491,9 +6492,9 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 #   elif defined (ACE_HAS_PTHREADS_DRAFT6)
 
   pthread_attr_t  attr;
-  if (pthread_getschedattr (thr_id, &attr) == 0)
+  if (pthread_getschedattr (id, &attr) == 0)
     {
-      prio = pthread_attr_getprio(&attr);
+      priority = pthread_attr_getprio(&attr);
       return 0;
     }
   return -1;
@@ -6501,37 +6502,44 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 
   struct sched_param param;
   int result;
-  int policy = 0;
 
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param),
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (id, &policy, &param),
                                 result), int,
               -1, result);
-  prio = param.sched_priority;
+  priority = param.sched_priority;
   return result;
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (id, &priority), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
-  prio = ::GetThreadPriority (thr_id);
-  if (prio == THREAD_PRIORITY_ERROR_RETURN)
+  priority = ::GetThreadPriority (id);
+  if (priority == THREAD_PRIORITY_ERROR_RETURN)
     ACE_FAIL_RETURN (-1);
   else
     return 0;
 # elif defined (ACE_PSOS)
   // passing a 0 in the second argument does not alter task priority, third arg gets existing one
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_setpri (thr_id, 0, (u_long *) &prio), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_setpri (id, 0, (u_long *) &priority), ace_result_), int, -1);
 # elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (::taskPriorityGet (thr_id, &prio), int, -1);
+  ACE_OSCALL_RETURN (::taskPriorityGet (id, &priority), int, -1);
 # else
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (prio);
+  ACE_UNUSED_ARG (id);
+  ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_STHREADS */
 #else
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (prio);
+  ACE_UNUSED_ARG (id);
+  ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::thr_getprio (ACE_hthread_t id, int &priority)
+{
+  ACE_OS_TRACE ("ACE_OS::thr_getprio");
+  int policy = 0;
+  return ACE_OS::thr_getprio (id, priority, policy);
 }
 
 #if defined (ACE_HAS_TSS_EMULATION)
@@ -7280,72 +7288,71 @@ ACE_OS::thr_setconcurrency (int hint)
 }
 
 ACE_INLINE int
-ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio, int thr_policy)
+ACE_OS::thr_setprio (ACE_hthread_t id, int priority, int policy)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setprio");
-  ACE_UNUSED_ARG(thr_policy);
+  ACE_UNUSED_ARG (policy);
 #if defined (ACE_HAS_THREADS)
 # if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
-  result = ::pthread_setprio(thr_id, prio);
+  result = ::pthread_setprio (id, priority);
   return (result == -1 ? -1 : 0);
 #   elif defined (ACE_HAS_PTHREADS_DRAFT6)
   pthread_attr_t  attr;
-  if (pthread_getschedattr (thr_id, &attr) == -1)
+  if (pthread_getschedattr (id, &attr) == -1)
     return -1;
-  if (pthread_attr_setprio (attr, prio) == -1)
+  if (pthread_attr_setprio (attr, priority) == -1)
     return -1;
-  return pthread_setschedattr (thr_id, attr);
+  return pthread_setschedattr (id, attr);
 #   else
-  struct sched_param param;
-  int policy = 0;
   int result;
+  struct sched_param param;
+  memset ((void *) &param, 0, sizeof param);
 
-  ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), result);
-  if (result != 0)
-    result = -1;
+  // If <policy> is -1, we don't want to use it for
+  // pthread_setschedparam().  Instead, obtain policy from
+  // pthread_getschedparam().
+  if (policy == -1)
+    {
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (id, &policy, &param),
+                                    result),
+                  int, -1, result);
+      if (result == -1)
+        return result;
+    }
 
-  if (result == -1)
-    return result; // error in pthread_getschedparam
+  param.sched_priority = priority;
 
-  /* if thr_policy is -1, we don't want to use it for pthread_setschedparam().
-     Instead, use policy which was obtained from pthread_getschedparam() */
-  if (thr_policy == -1)
-    thr_policy = policy;
-
-  param.sched_priority = prio;
-  ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, thr_policy, &param), result);
-  if (result != 0)
-    result = -1;
-
-  return result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (id, policy, &param),
+                                       ace_result_),
+                     int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (id, priority),
                                        ace_result_),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (id, priority),
                                           ace_result_),
                         int, -1);
 # elif defined (ACE_PSOS)
-  u_long oldprio;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_setpri (thr_id, prio, &oldprio),
+  u_long oldpriority;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_setpri (id, priority, &oldpriority),
                                        ace_result_),
                      int, -1);
 # elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (::taskPrioritySet (thr_id, prio), int, -1);
+  ACE_OSCALL_RETURN (::taskPrioritySet (id, priority), int, -1);
 # else
   // For example, platforms that support Pthreads but LACK_SETSCHED.
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (prio);
+  ACE_UNUSED_ARG (id);
+  ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_STHREADS */
 #else
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (prio);
+  ACE_UNUSED_ARG (id);
+  ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }

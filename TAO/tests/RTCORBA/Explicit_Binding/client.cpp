@@ -5,7 +5,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "../check_supported_priorities.cpp"
 
 const char *ior = "file://test.ior";
 
@@ -60,11 +59,7 @@ main (int argc, char *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
-        return 1;
-
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
+        return -1;
 
       // RTORB.
       CORBA::Object_var object =
@@ -74,7 +69,7 @@ main (int argc, char *argv[])
                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
-        return 1;
+        return -1;
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent"
@@ -85,7 +80,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
-        return 1;
+        return -1;
 
       // Test object.
       object = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
@@ -93,7 +88,7 @@ main (int argc, char *argv[])
       Test_var server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server.in (), "server") == -1)
-        return 1;
+        return -1;
 
       // Test 1: Check that <validate_connection> establishes an
       // appropriate connection for the current set of effective
@@ -130,8 +125,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (!status)
-      ACE_DEBUG ((LM_DEBUG,
-                  "ERROR: <validate_connection> returned FALSE\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "ERROR: <validate_connection> returned FALSE\n"));
 
       // Test 2: Check that connection established with
       // <validate_connection> is used for subsequent invocations.
@@ -168,25 +163,25 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (status)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("<validate_connection> returned TRUE\n")));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("<validate_connection> returned TRUE\n")));
 
       //
       // This portion of code has been temporarily disabled.
       //
-  /*
+      /*
+        if (pols.ptr () != 0
+        && pols->length () == 1
+        && pols[0u]->policy_type () == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
+        ACE_DEBUG ((LM_DEBUG,
+        "Inconsistent policies contain "
+        "ClientProtocolPolicy, as expected.\n"));
+        else
+        ACE_DEBUG ((LM_DEBUG,
+        "ERROR: Inconsistent policies do not "
+        "contain what's expected.\n"));
+      */
 
-      if (pols.ptr () != 0
-          && pols->length () == 1
-          && pols[0u]->policy_type () == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Inconsistent policies contain "
-                    "ClientProtocolPolicy, as expected.\n"));
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "ERROR: Inconsistent policies do not "
-                    "contain what's expected.\n"));
-  */
       // Testing over.  Shut down Server ORB.
       protocols[0].protocol_type = TAO_TAG_SHMEM_PROFILE;
       policy_list[0] =
@@ -198,7 +193,7 @@ main (int argc, char *argv[])
                                             CORBA::SET_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Testing over - shutting down\n"));
       ACE_OS::sleep (2);
@@ -210,11 +205,10 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      "Unexpected exception caught in Explicit_Binding test client:");
-      return 1;
+                           "Unexpected exception caught in Explicit_Binding test client:");
+      return -1;
     }
   ACE_ENDTRY;
 
   return 0;
 }
-

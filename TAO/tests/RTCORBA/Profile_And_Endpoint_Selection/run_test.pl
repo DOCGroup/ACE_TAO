@@ -130,7 +130,6 @@ sub check_supported_priorities
   $process = shift;
   $returnVal = $process->TimedWait (1);
   if ($returnVal == 2) {
-    print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
     # Mark as no longer running to avoid errors on exit.
     $process->{RUNNING} = 0;
     exit 0;

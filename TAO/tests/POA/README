@@ -76,3 +76,8 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 This program tests that multiple calls to the Servant
                 Locator can take place simultaneously.
 
+        . Nested_Non_Servant_Upcalls
+
+                This program tests that nested non-servant upcalls are
+                handled correctly.
+

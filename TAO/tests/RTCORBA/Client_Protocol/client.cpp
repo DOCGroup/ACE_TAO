@@ -70,7 +70,7 @@ exception_test (Test_ptr server,
     {
       server->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-     }
+    }
   ACE_CATCH (CORBA::INV_POLICY, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -99,7 +99,7 @@ main (int argc, char *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
-        return 1;
+        return -1;
 
       // RTORB.
       CORBA::Object_var object =
@@ -109,7 +109,7 @@ main (int argc, char *argv[])
                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
-        return 1;
+        return -1;
 
       // PolicyManager.
       object = orb->resolve_initial_references ("ORBPolicyManager"
@@ -120,7 +120,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       if (check_for_nil (policy_manager.in (), "PolicyManager")
           == -1)
-        return 1;
+        return -1;
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent"
@@ -131,7 +131,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
-        return 1;
+        return -1;
 
       // Test object 1 (ClientProtocolPolicy set on server).
       object = orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
@@ -139,7 +139,7 @@ main (int argc, char *argv[])
       Test_var server1 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server1.in (), "server1") == -1)
-        return 1;
+        return -1;
 
       // Test object 2 (no client-exposed ClientProtocolPolicy).
       object = orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
@@ -147,7 +147,7 @@ main (int argc, char *argv[])
       Test_var server2 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server2.in (), "server2") == -1)
-        return 1;
+        return -1;
 
       // Do testing.
 
@@ -259,8 +259,8 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      "Unexpected exception caught in ClientProtocolPolicy test client:");
-      return 1;
+                           "Unexpected exception caught in ClientProtocolPolicy test client:");
+      return -1;
     }
   ACE_ENDTRY;
 

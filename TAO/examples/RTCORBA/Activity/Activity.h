@@ -57,8 +57,6 @@ public:
   /// = Accessors
   CORBA::ORB_ptr orb (void);
   RTCORBA::Current_ptr current (void);
-  long scope_policy (void);
-  long sched_policy (void);
   void builder (Builder* builder);
 
   /// Returns priority if server declared model else -1
@@ -72,9 +70,6 @@ public:
   void job_ended (Job_i* ended_job);
 
   protected:
-  /// Init sched mode.
-  int init_sched (void);
-
   /// = Activation methods.
   /// Activate the POA's
   void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL);
@@ -96,11 +91,6 @@ public:
 
   /// The Builder object.
   Builder* builder_;
-
-  /// = Policies
-  long thr_sched_policy_;
-  long thr_scope_policy_;
-  ACE_Sched_Params::Policy sched_policy_;
 
   /// ACE_Barrier to synch. tasks.
   ACE_Barrier* barrier_;

@@ -51,9 +51,11 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
 
+  CORBA::ORB_var orb =
+    TAO_NS_PROPERTIES::instance()->orb ();
+
   flags |=
-    TAO_NS_PROPERTIES::instance()->scope_policy () |
-    TAO_NS_PROPERTIES::instance()->sched_policy ();
+    orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Increment the count on this object by the number of threads using it.
   {

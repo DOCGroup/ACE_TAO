@@ -42,10 +42,10 @@ Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAM
 
 void
 Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
-             "(%P|%t) Shutting down \n"));
+              "(%P|%t) Shutting down \n"));
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
@@ -162,7 +162,7 @@ main (int argc, char *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
-        return 1;
+        return -1;
 
       // RTORB.
       CORBA::Object_var object =
@@ -172,7 +172,7 @@ main (int argc, char *argv[])
                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
-        return 1;
+        return -1;
 
       // RootPOA.
       object =
@@ -182,7 +182,7 @@ main (int argc, char *argv[])
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
-        return 1;
+        return -1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
@@ -224,7 +224,7 @@ main (int argc, char *argv[])
                               ior_output_file1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
-        return 1;
+        return -1;
 
       // Create object 2.
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
@@ -232,7 +232,7 @@ main (int argc, char *argv[])
                               ior_output_file2 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
-        return 1;
+        return -1;
 
       // Run ORB Event loop.
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -246,8 +246,8 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      "Unexpected exception caught in ClientProtocolPolicy: test server");
-      return 1;
+                           "Unexpected exception caught in ClientProtocolPolicy: test server");
+      return -1;
     }
   ACE_ENDTRY;
 

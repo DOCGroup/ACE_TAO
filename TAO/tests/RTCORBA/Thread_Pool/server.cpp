@@ -2,6 +2,8 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
+#include "tao/ORB_Core.h"
+#include "ace/Task.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
@@ -105,8 +107,8 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   // Implicit_activation policy.
   policies[0] =
     root_poa->create_implicit_activation_policy
-      (PortableServer::IMPLICIT_ACTIVATION
-       ACE_ENV_ARG_PARAMETER);
+    (PortableServer::IMPLICIT_ACTIVATION
+     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Thread pool policy.
@@ -158,25 +160,34 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   return result;
 }
 
+class Task : public ACE_Task_Base
+{
+public:
+
+  Task (ACE_Thread_Manager &thread_manager,
+        CORBA::ORB_ptr orb);
+
+  int svc (void);
+
+  CORBA::ORB_var orb_;
+
+};
+
+Task::Task (ACE_Thread_Manager &thread_manager,
+            CORBA::ORB_ptr orb)
+  : ACE_Task_Base (&thread_manager),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
 int
-main (int argc, char *argv[])
+Task::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
-
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
@@ -189,8 +200,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
@@ -199,8 +210,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
@@ -212,20 +223,15 @@ main (int argc, char *argv[])
         current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
-
-      test_i servant (orb.in (),
+      test_i servant (this->orb_.in (),
                       root_poa.in (),
                       nap_time);
       test_var test =
         servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      result =
-        write_ior_to_file (orb.in (),
+      int result =
+        write_ior_to_file (this->orb_.in (),
                            test.in ()
                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -258,16 +264,12 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Boolean allow_borrowing = 0;
-      RTCORBA::ThreadpoolLanes lanes (2);
-      lanes.length (2);
+      RTCORBA::ThreadpoolLanes lanes (1);
+      lanes.length (1);
 
       lanes[0].lane_priority = default_thread_priority;
       lanes[0].static_threads = static_threads;
       lanes[0].dynamic_threads = dynamic_threads;
-
-      lanes[1].lane_priority = default_thread_priority;
-      lanes[1].static_threads = static_threads * 2;
-      lanes[1].dynamic_threads = dynamic_threads * 2;
 
       RTCORBA::ThreadpoolId threadpool_id_2 =
         rt_orb->create_threadpool_with_lanes (stacksize,
@@ -289,7 +291,7 @@ main (int argc, char *argv[])
                                          "first_poa",
                                          poa_manager.in (),
                                          root_poa.in (),
-                                         orb.in (),
+                                         this->orb_.in (),
                                          rt_orb.in ()
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -301,24 +303,92 @@ main (int argc, char *argv[])
                                          "second_poa",
                                          poa_manager.in (),
                                          root_poa.in (),
-                                         orb.in (),
+                                         this->orb_.in (),
                                          rt_orb.in ()
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
-      return 1;
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      int result =
+        parse_args (argc, argv);
+      if (result != 0)
+        return result;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
+
+      // Thread Manager for managing task.
+      ACE_Thread_Manager thread_manager;
+
+      // Create task.
+      Task task (thread_manager,
+                 orb.in ());
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      // Activate task.
+      result =
+        task.activate (flags);
+      if (result == -1)
+        {
+          if (errno == EPERM)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot create thread with scheduling policy %s\n"
+                                 "because the user does not have the appropriate privileges, terminating program....\n"
+                                 "Check svc.conf options and/or run as root\n",
+                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                2);
+            }
+          else
+            // Unexpected error.
+            ACE_ASSERT (0);
+        }
+
+      // Wait for task to exit.
+      result =
+        thread_manager.wait ();
+      ACE_ASSERT (result != -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      return -1;
     }
   ACE_ENDTRY;
 

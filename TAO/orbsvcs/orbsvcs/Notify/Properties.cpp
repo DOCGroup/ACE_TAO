@@ -13,8 +13,6 @@ ACE_RCSID (Notify, TAO_NS_Properties, "$Id$")
 TAO_NS_Properties::TAO_NS_Properties (void)
   : factory_ (0)
   , builder_ (0)
-  , thr_sched_policy_ (THR_SCHED_DEFAULT)
-  , thr_scope_policy_ (THR_SCOPE_PROCESS)
   , asynch_updates_ (0)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.

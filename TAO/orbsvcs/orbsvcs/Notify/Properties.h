@@ -57,12 +57,6 @@ public:
   PortableServer::POA_ptr default_poa (void);
   void default_poa (PortableServer::POA_ptr default_poa);
 
-  long scope_policy (void);
-  void scope_policy (long scope_policy);
-
-  long sched_policy (void);
-  void sched_policy (long sched_policy);
-
   CORBA::Boolean asynch_updates (void);
   void asynch_updates (CORBA::Boolean asynch_updates);
 
@@ -108,12 +102,6 @@ protected:
 
   // POA
   PortableServer::POA_var default_poa_;
-
-  /// Sched policy
-  long thr_sched_policy_;
-
-  /// Scope policy
-  long thr_scope_policy_;
 
   /// True if send asynch updates.
   CORBA::Boolean asynch_updates_;

@@ -15,13 +15,8 @@ unlink $iorfile1;
 unlink $iorfile2;
 $status = 0;
 
-# CORBA priorities 65, 70 and 75 are for the SCHED_OTHER class on
-# Solaris.  May need to use different values for other platforms
-# depending on their native priorities scheme, i.e., based on the
-# available range.
-
 $server_args =
-    "-p $iorfile1 -o $iorfile2 -a 65 -b 75";
+    "-p $iorfile1 -o $iorfile2 -a 45 -b 55";
 
 print STDERR "Value is " . $^O;
 
@@ -53,7 +48,6 @@ if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1)
     $server = $SV->TimedWait (1);
     if ($server == 2) 
     {
-        print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
         exit $status;

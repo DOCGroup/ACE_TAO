@@ -5863,8 +5863,6 @@ public:
                          size_t stacksize = 0,
                          ACE_Base_Thread_Adapter *thread_adapter = 0);
 
-  static int thr_getprio (ACE_hthread_t thr_id,
-                          int &prio);
   static int thr_join (ACE_hthread_t waiter_id,
                        ACE_THR_FUNC_RETURN *status);
   static int thr_join (ACE_thread_t waiter_id,
@@ -5874,8 +5872,14 @@ public:
                        int signum);
   static ACE_thread_t thr_self (void);
   static void thr_self (ACE_hthread_t &);
-  static int thr_setprio (ACE_hthread_t thr_id,
-                          int prio, int thr_policy=-1);
+  static int thr_getprio (ACE_hthread_t id,
+                          int &priority);
+  static int thr_getprio (ACE_hthread_t id,
+                          int &priority,
+                          int &policy);
+  static int thr_setprio (ACE_hthread_t id,
+                          int priority,
+                          int policy = -1);
   static int thr_setprio (const ACE_Sched_Priority prio);
   static int thr_suspend (ACE_hthread_t target_thread);
   static int thr_cancel (ACE_thread_t t_id);

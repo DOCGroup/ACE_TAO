@@ -640,6 +640,7 @@ public:
 
     TAO_Object_Adapter &object_adapter_;
     TAO_POA &poa_;
+    Non_Servant_Upcall *previous_;
   };
 
   friend class Non_Servant_Upcall;
@@ -842,6 +843,9 @@ private:
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
   Non_Servant_Upcall *non_servant_upcall_in_progress_;
+
+  /// Current nesting level of non_servant_upcalls.
+  unsigned int non_servant_upcall_nesting_level_;
 
   /// Id of thread making the non-servant upcall.
   ACE_thread_t non_servant_upcall_thread_;
