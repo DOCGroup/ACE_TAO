@@ -28,7 +28,6 @@
 #include "ace/Basic_Types.h" // to get ACE_WCHAR_T,
                             // should be in os_stddef.h or not used like this.
 #include "ace/ACE_export.h"
-#include "ace/ACE.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -184,7 +183,7 @@ namespace ACE_OS {
 #endif /* ACE_HAS_WCHAR */
 
   /// Returns a system error message.
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   char *strerror (int errnum);
 
 #if defined (ACE_LACKS_STRERROR)
