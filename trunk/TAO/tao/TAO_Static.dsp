@@ -591,6 +591,10 @@ SOURCE=.\ObjectIdListC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectKey_Table.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.cpp
 # End Source File
 # Begin Source File
@@ -712,6 +716,10 @@ SOURCE=.\Reactive_Connect_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\Reactive_Flushing_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcounted_ObjectKey.cpp
 # End Source File
 # Begin Source File
 
@@ -1519,6 +1527,10 @@ SOURCE=.\ObjectIdListC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectKey_Table.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Objref_VarOut_T.h
 # End Source File
 # Begin Source File
@@ -1656,6 +1668,10 @@ SOURCE=.\Reactive_Connect_Strategy.h
 # Begin Source File
 
 SOURCE=.\Reactive_Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcounted_ObjectKey.h
 # End Source File
 # Begin Source File
 
@@ -2312,6 +2328,10 @@ SOURCE=.\Profile.i
 # Begin Source File
 
 SOURCE=.\Pseudo_VarOut_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcounted_ObjectKey.inl
 # End Source File
 # Begin Source File
 

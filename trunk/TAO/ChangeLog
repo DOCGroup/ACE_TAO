@@ -1,3 +1,9 @@
+Sun May 11 11:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Added new files into the following projects
+	  for the MSVC builds.
+
 Sun May 11 11:37:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Makefile.bor: Added new files for the borland builds.
