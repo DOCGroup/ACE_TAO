@@ -20,15 +20,17 @@
 #ifndef TAO_SHMIOP_ACCEPTOR_H
 #define TAO_SHMIOP_ACCEPTOR_H
 
-#include "tao/Pluggable.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
+#include "tao/Pluggable.h"
 #include "tao/SHMIOP_Connect.h"
 #include "tao/Acceptor_Impl.h"
-
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
 
@@ -111,5 +113,7 @@ private:
 #if defined(__ACE_INLINE__)
 #include "tao/SHMIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #endif  /* TAO_SHMIOP_ACCEPTOR_H */

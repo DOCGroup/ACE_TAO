@@ -1,9 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
-
 #include "tao/SHMIOP_Profile.h"
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/SHMIOP_Connect.h"
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
@@ -469,3 +470,5 @@ TAO_SHMIOP_Profile::encode (TAO_OutputCDR &stream) const
 
   return 1;
 }
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

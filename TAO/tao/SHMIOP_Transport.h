@@ -20,12 +20,15 @@
 #ifndef TAO_SHMIOP_TRANSPORT_H
 #define TAO_SHMIOP_TRANSPORT_H
 
-#include "tao/Pluggable.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
+#include "tao/Pluggable.h"
 #include "tao/GIOP.h"
 
 // Forward decls.
@@ -162,5 +165,7 @@ public:
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
 };
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #endif  /* TAO_SHMIOP_TRANSPORT_H */

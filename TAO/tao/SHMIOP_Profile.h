@@ -20,12 +20,15 @@
 #ifndef TAO_SHMIOP_PROFILE_H
 #define TAO_SHMIOP_PROFILE_H
 
-#include "tao/Profile.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
+#include "tao/Profile.h"
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
 #include "tao/GIOP.h"
@@ -180,5 +183,7 @@ private:
 #if defined (__ACE_INLINE__)
 # include "tao/SHMIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #endif  /* TAO_SHMIOP_PROFILE_H */

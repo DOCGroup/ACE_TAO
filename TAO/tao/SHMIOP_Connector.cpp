@@ -2,6 +2,9 @@
 // $Id$
 
 #include "tao/SHMIOP_Connector.h"
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/SHMIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/debug.h"
@@ -714,3 +717,5 @@ TAO_SHMIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_SHMIOP_Profile::object_key_delimiter;
 }
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

@@ -2,6 +2,9 @@
 // $Id$
 
 #include "tao/SHMIOP_Transport.h"
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/SHMIOP_Connect.h"
 #include "tao/SHMIOP_Profile.h"
 #include "tao/Timeprobe.h"
@@ -394,3 +397,5 @@ TAO_SHMIOP_Transport::send_request (TAO_Stub *,
 {
   return -1;
 }
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
+#include "tao/SHMIOP_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Single_Reactor.h"
@@ -422,7 +423,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         }
 #endif /* TAO_HAS_UIOP */
 
-#if defined (TAO_HAS_SHMIOP)
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SHMIOP_Factory");
 
@@ -459,7 +460,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) Loaded default protocol <SHMIOP_Factory>\n"));
         }
-#endif /* TAO_HAS_SHMIOP */
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
       return 0;
     }
 

@@ -2,6 +2,9 @@
 // $Id$
 
 #include "tao/SHMIOP_Acceptor.h"
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/SHMIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
@@ -388,3 +391,5 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

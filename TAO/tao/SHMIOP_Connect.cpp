@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/SHMIOP_Connect.h"
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -504,3 +507,5 @@ TAO_SHMIOP_Client_Connection_Handler::handle_cleanup (void)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
