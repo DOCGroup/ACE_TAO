@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for OS
-// platforms running AIX 4.1.x using the IBM C++ compiler.
+// platforms running AIX 4.1.x using the IBM C++ compiler or g++.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -13,8 +13,8 @@
 // Grab appropriate settings for compiler in use
 #ifdef __GNUG__
 # include "ace/config-g++-common.h"
-# define ACE_HAS_DIRENT
 #else
+# define ACE_HAS_EXCEPTIONS
 // Compiler supports the ssize_t typedef.
 # define ACE_HAS_SSIZE_T
 # define ACE_TEMPLATES_REQUIRE_PRAGMA
@@ -22,9 +22,11 @@
 
 // Use BSD 4.4 socket definitions
 #define _BSD 44
-#define ACE_HAS_EXCEPTIONS
+
+
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
+#define ACE_HAS_DIRENT
 
 #define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
 #define ACE_HAS_AIX_HI_RES_TIMER
