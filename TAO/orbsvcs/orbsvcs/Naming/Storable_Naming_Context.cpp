@@ -1,6 +1,8 @@
 #include "Storable_Naming_Context.h"
 #include "Bindings_Iterator_T.h"
 
+#include <tao/debug.h>
+
 // The following #pragma is needed to disable a warning that occurs
 // in MSVC 6 due to the overly long debugging symbols generated for
 // the ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_...> > template
@@ -17,19 +19,126 @@
 
 const char * TAO_Storable_Naming_Context::root_name_;
 ACE_UINT32 TAO_Storable_Naming_Context::gcounter_;
-TAO_Storable_Base * TAO_Storable_Naming_Context::gfl_;
+ACE_Auto_Ptr<TAO_Storable_Base> TAO_Storable_Naming_Context::gfl_;
 int TAO_Storable_Naming_Context::redundant_;
 
 ACE_RCSID (Naming,
            Storable_Naming_Context,
            "$Id$")
 
+TAO_Storable_IntId::TAO_Storable_IntId (void)
+  : ref_ (""),
+    type_ (CosNaming::nobject)
+{
+}
+
+TAO_Storable_IntId::TAO_Storable_IntId (const char * ior,
+                                            CosNaming::BindingType type)
+  : ref_ (ior),
+    type_ (type)
+{
+}
+
+TAO_Storable_IntId::TAO_Storable_IntId (const TAO_Storable_IntId &rhs)
+{
+  ref_ = rhs.ref_;
+  type_ = rhs.type_;
+}
+
+TAO_Storable_IntId::~TAO_Storable_IntId (void)
+{
+}
+
+void
+TAO_Storable_IntId::operator= (const TAO_Storable_IntId &rhs)
+{
+  // check for self assignment.
+  if (&rhs == this)
+    return;
+
+  type_ = rhs.type_;
+  ref_ = rhs.ref_;
+}
+
+TAO_Storable_ExtId::TAO_Storable_ExtId (void)
+  : id_ (""),
+    kind_ ("")
+{
+}
+
+TAO_Storable_ExtId::TAO_Storable_ExtId (const char *id,
+                                            const char *kind)
+  : id_ (id)
+  , kind_ (kind)
+{
+}
+
+TAO_Storable_ExtId::TAO_Storable_ExtId (const TAO_Storable_ExtId &rhs)
+{
+  id_ = rhs.id_;
+  kind_ = rhs.kind_;
+}
+
+TAO_Storable_ExtId::~TAO_Storable_ExtId (void)
+{
+}
+
+void
+TAO_Storable_ExtId::operator= (const TAO_Storable_ExtId &rhs)
+{
+  // Check for self assignment.
+  if (&rhs == this)
+    return;
+
+  id_ = rhs.id_;
+  kind_ = rhs.kind_;
+}
+
+int
+TAO_Storable_ExtId::operator== (const TAO_Storable_ExtId &rhs) const
+{
+  return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) == 0)
+    && (ACE_OS::strcmp (kind_.in(), rhs.kind_.in()) == 0);
+}
+
+int
+TAO_Storable_ExtId::operator!= (const TAO_Storable_ExtId &rhs) const
+{
+  return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) != 0)
+    || (ACE_OS::strcmp (kind_.in(), rhs.kind_.in()) != 0);
+}
+
+u_long
+TAO_Storable_ExtId::hash (void) const
+{
+  // @CJC I wager this could be optimized a bit better, but I'm not
+  // sure how much it's called.  At the very least, we could allocate
+  // just one ACE_CString, and copy id_ and kind_ into that, rather than
+  // taking a double-hit on allocations.
+  ACE_CString temp (id_.in());
+  temp += kind_.in();
+
+  return temp.hash ();
+}
+
+const char *
+TAO_Storable_ExtId::id (void)
+{
+  return id_.in();
+}
+
+const char *
+TAO_Storable_ExtId::kind (void)
+{
+  return kind_.in();
+}
+
 int
 TAO_Storable_Bindings_Map::unbind (const char *id,
                                    const char *kind)
 {
   ACE_TRACE("unbind");
-  TAO_Persistent_ExtId name (id, kind);
+  TAO_Storable_ExtId name (id, kind);
   return this->map_.unbind (name);
 }
 
@@ -60,8 +169,8 @@ TAO_Storable_Bindings_Map::find (const char *id,
                                  CosNaming::BindingType &type)
 {
   ACE_TRACE("find");
-  TAO_Persistent_ExtId name (id, kind);
-  TAO_Persistent_IntId entry;
+  TAO_Storable_ExtId name (id, kind);
+  TAO_Storable_IntId entry;
 
   if (this->map_.find (name,
                        entry) != 0)
@@ -71,7 +180,7 @@ TAO_Storable_Bindings_Map::find (const char *id,
   else
     {
       ACE_DECLARE_NEW_CORBA_ENV;
-      obj = orb_->string_to_object (entry.ref_ ACE_ENV_ARG_PARAMETER);
+      obj = orb_->string_to_object (entry.ref_.in() ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       type = entry.type_;
 
@@ -121,9 +230,10 @@ TAO_Storable_Bindings_Map::shared_bind (const char * id,
                                         int rebind)
 {
   ACE_TRACE("shared_bind");
-  TAO_Persistent_ExtId new_name (CORBA::string_dup(id), CORBA::string_dup(kind));
-  TAO_Persistent_IntId new_entry (orb_->object_to_string(obj), type);
-  TAO_Persistent_IntId old_entry;
+  TAO_Storable_ExtId new_name (id, kind);
+  CORBA::String_var ior = orb_->object_to_string(obj);
+  TAO_Storable_IntId new_entry (ior.in(), type);
+  TAO_Storable_IntId old_entry;
 
   if (rebind == 0)
     {
@@ -158,12 +268,12 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
   if( storable_context_->current_size() == 0 )
     return;
 
-  ACE_Hash_Map_Iterator<TAO_Persistent_ExtId,TAO_Persistent_IntId,
+  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
                         ACE_Null_Mutex> it = storable_context_->map().begin();
-  ACE_Hash_Map_Iterator<TAO_Persistent_ExtId,TAO_Persistent_IntId,
+  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
                         ACE_Null_Mutex> itend = storable_context_->map().end();
 
-  ACE_Hash_Map_Entry<TAO_Persistent_ExtId,TAO_Persistent_IntId> ent = *it;
+  ACE_Hash_Map_Entry<TAO_Storable_ExtId,TAO_Storable_IntId> ent = *it;
 
   while (!(it == itend))
   {
@@ -192,11 +302,11 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
     ACE_CString name;
     if (bt == CosNaming::nobject)
       {
-        name.set((*it).int_id_.ref_);
+        name.set((*it).int_id_.ref_.in());
       }
     else
       {
-        CORBA::Object_var obj = orb_->string_to_object((*it).int_id_.ref_);
+        CORBA::Object_var obj = orb_->string_to_object((*it).int_id_.ref_.in());
         PortableServer::ObjectId_var oid = poa_->reference_to_id(obj.in());
         CORBA::String_var nm = PortableServer::ObjectId_to_string(oid.in());
         const char *newname = nm.in();
@@ -220,7 +330,7 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
 
   // create the new bindings map
   ACE_NEW_THROW_EX (bindings_map,
-                    TAO_Storable_Bindings_Map (hash_table_size_,orb_),
+                    TAO_Storable_Bindings_Map (hash_table_size_,orb_.in()),
                     CORBA::NO_MEMORY ());
 
   // get the data for this bindings map from the file
@@ -301,7 +411,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
   file_name += context->name_;
 
   // Create the stream
-  fl_ = context->factory_->create_stream(file_name, mode);
+  fl_ = context->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
   if (TAO_Storable_Naming_Context::redundant_)
   {
     if (fl_->open() != 0)
@@ -356,6 +466,11 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
       ACE_CHECK;
     }
   }
+  else
+    {
+      // Need to insure that fl_ gets deleted
+      delete fl_;
+    }
 }
 
 void
@@ -418,14 +533,31 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
 TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
 {
   ACE_TRACE("~TAO_Storable_Naming_Context");
-  // build the file name
-  ACE_CString file_name(persistence_directory_);
-  file_name += "/";
-  file_name += name_;
-  // and delete the file
-  TAO_Storable_Base * fl = factory_->create_stream(file_name, "w");
-  fl->remove();
 
+  // If we're in the DTOR as a result of the destroy() operation,
+  // then we go ahead and delete the file.  Otherwise, we leave the
+  // file around because they need to be there for persistence.
+  if (this->destroyed_)
+    {
+      // Make sure we delete the associated stream
+      ACE_CString file_name (this->persistence_directory_);
+      file_name += "/";
+      file_name += this->name_;
+
+      // Now delete the file
+      ACE_Auto_Ptr<TAO_Storable_Base>
+        fl (
+          this->factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
+                                        ACE_TEXT("r"))
+          );
+      if (fl.get())
+        {
+          if (TAO_debug_level > 5)
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %s\n",
+                        file_name.fast_rep()));
+          fl->remove ();
+        }
+    }
 }
 
 CosNaming::NamingContext_ptr
@@ -539,7 +671,7 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
     // acquire a lock on the file that holds our counter
     if (gfl_->open() != 0)
       {
-        delete gfl_;
+        delete gfl_.release();
         ACE_THROW_RETURN(CORBA::PERSIST_STORE(),
                          CosNaming::NamingContext::_nil ());
       }
@@ -547,7 +679,7 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
          ACE_THROW_RETURN (CORBA::INTERNAL(),
                            CosNaming::NamingContext::_nil ());
     // get the counter from disk
-    *gfl_ >> global;
+    *gfl_.get() >> global;
     gcounter_ = global.counter();
     // use it to generate a new name
   }
@@ -558,7 +690,7 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
                    gcounter_++);
   // then save it back on disk
   global.counter(gcounter_);
-  *gfl_ << global;
+  *gfl_.get() << global;
   if(redundant_)
   {
     // and release our lock
@@ -571,19 +703,19 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
   // Create a new context.
   TAO_Storable_Naming_Context *new_context = 0;
   CosNaming::NamingContext_var result =
-    make_new_context (this->orb_,
+    make_new_context (this->orb_.in (),
                       this->poa_.in (),
                       poa_id,
                       this->storable_context_->total_size (),
                       this->factory_,
-                      this->persistence_directory_.c_str (),
+                      ACE_TEXT_CHAR_TO_TCHAR (this->persistence_directory_.c_str ()),
                       &new_context
                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   // Since this is a new context, make an empty map in it
   ACE_NEW_THROW_EX (new_context->storable_context_,
-                    TAO_Storable_Bindings_Map (hash_table_size_,orb_),
+                    TAO_Storable_Bindings_Map (hash_table_size_,orb_.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
   new_context->context_ = new_context->storable_context_;
@@ -1224,11 +1356,11 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
-  typedef ACE_Hash_Map_Manager<TAO_Persistent_ExtId,
-                               TAO_Persistent_IntId,
+  typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
+                               TAO_Storable_IntId,
                                ACE_Null_Mutex>::ITERATOR ITER_DEF;
-  typedef ACE_Hash_Map_Manager<TAO_Persistent_ExtId,
-                               TAO_Persistent_IntId,
+  typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
+                               TAO_Storable_IntId,
                                ACE_Null_Mutex>::ENTRY ENTRY_DEF;
 
   // Typedef to the type of BindingIterator servant for ease of use.
@@ -1346,10 +1478,10 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   // Now does this already exist on disk?
-  ACE_CString file_name(persistence_directory);
-  file_name += "/";
-  file_name += poa_id;
-  TAO_Storable_Base * fl = factory->create_stream(file_name, "r");
+  ACE_TString file_name(persistence_directory);
+  file_name += ACE_TEXT("/");
+  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id);
+  ACE_Auto_Ptr<TAO_Storable_Base> fl (factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("r")));
   if (fl->exists())
   {
     // Load the map from disk
@@ -1370,20 +1502,20 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   }
 
   // build the global file name
-  file_name += "_global";
+  file_name += ACE_TEXT("_global");
 
   // Create the stream for the counter used to uniquely creat context names
-  gfl_ = factory->create_stream(file_name, "crw");
+  gfl_.reset(factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("crw")));
   if (gfl_->open() != 0)
     {
-      delete gfl_;
+      delete gfl_.release();
       ACE_THROW_RETURN(CORBA::PERSIST_STORE(),
                        CosNaming::NamingContext::_nil ());
     }
 
   // get the counter from disk
   TAO_NS_Persistence_Global global;
-  *gfl_ >> global;
+  *gfl_.get() >> global;
   gcounter_ = global.counter();
   if(redundant_) gfl_->close();
 
@@ -1396,7 +1528,29 @@ template class ACE_Unbounded_List_Iterator<ACE_CString>;
 template class ACE_Unbounded_List<ACE_CString>;
 template class ACE_NS_Node<ACE_CString>;
 template class ACE_Auto_Basic_Ptr<TAO_Storable_Naming_Context>;
+template class ACE_Hash_Map_Manager<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
+template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex > >;
+template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> >;
+template class ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> > >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex> >
+#pragma instantiate TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> >
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> > >
 #pragma instantiate ACE_Unbounded_List_Iterator<ACE_CString>
 #pragma instantiate ACE_Unbounded_List<ACE_CString>
 #pragma instantiate ACE_NS_Node<ACE_CString>

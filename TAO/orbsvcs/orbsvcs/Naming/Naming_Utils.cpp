@@ -37,6 +37,7 @@ TAO_Naming_Server::TAO_Naming_Server (void)
     multicast_ (0),
     use_storable_context_ (0),
     use_servant_activator_ (0),
+    servant_activator_ (0),
     use_redundancy_(0),
     round_trip_timeout_ (0),
     use_round_trip_timeout_ (0)
@@ -66,6 +67,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     multicast_ (0),
     use_storable_context_ (use_storable_context),
     use_servant_activator_ (0),
+    servant_activator_ (0),
     use_redundancy_(0),
     round_trip_timeout_ (0),
     use_round_trip_timeout_ (0)
@@ -392,7 +394,7 @@ TAO_Naming_Server::init_with_orb (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Service::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
       return -1;
     }
   ACE_ENDTRY;
@@ -441,8 +443,12 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // In lieu of a fully implemented service configurator version
           // of this Reader and Writer, let's just take something off the
           // command line for now.
-          TAO_Naming_Service_Persistence_Factory *persFactory = 0;
-          ACE_NEW_RETURN(persFactory, TAO_NS_FlatFileFactory, -1);
+	  TAO_Naming_Service_Persistence_Factory* pf = 0;
+          ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
+          auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
+	  // This instance will either get deleted after recreate all or,
+	  // in the case of a servant activator's use, on destruction of the
+	  // activator.
 
           // Was a location specified?
           if (persistence_location == 0)
@@ -461,14 +467,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 #if (TAO_HAS_MINIMUM_POA == 0)
           if (this->use_servant_activator_)
             {
-              TAO_Storable_Naming_Context_Activator *servant_activator;
-              ACE_NEW_THROW_EX (servant_activator,
+              ACE_NEW_THROW_EX (this->servant_activator_,
                                 TAO_Storable_Naming_Context_Activator (orb,
-                                                                       persFactory,
+                                                                       persFactory.get(),
                                                                        persistence_location,
                                                                        context_size),
                                 CORBA::NO_MEMORY ());
-              this->ns_poa_->set_servant_manager(servant_activator);
+              this->ns_poa_->set_servant_manager(this->servant_activator_);
             }
 #endif /* TAO_HAS_MINIMUM_POA */
 
@@ -478,11 +483,14 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                        TAO_ROOT_NAMING_CONTEXT,
                                                        context_size,
                                                        0,
-                                                       persFactory,
+                                                       persFactory.get(),
                                                        persistence_location,
                                                        use_redundancy_
                                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+	  if (this->use_servant_activator_)
+	    persFactory.release();
         }
       else if (persistence_location != 0)
         //
@@ -560,17 +568,15 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // Install ior multicast handler.
           //
           // Get reactor instance from TAO.
-          ACE_Reactor *reactor =
-            TAO_ORB_Core_instance ()->reactor ();
+          ACE_Reactor *reactor = orb->orb_core()->reactor ();
 
           // See if the -ORBMulticastDiscoveryEndpoint option was specified.
-          ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()
-                           ->mcast_discovery_endpoint ());
+          ACE_CString mde (orb->orb_core ()->orb_params ()->mcast_discovery_endpoint ());
 
           // First, see if the user has given us a multicast port number
           // on the command-line;
           u_short port =
-            TAO_ORB_Core_instance ()->orb_params ()->service_port (NAMESERVICE);
+            orb->orb_core ()->orb_params ()->service_port (NAMESERVICE);
 
           if (port == 0)
             {
@@ -700,6 +706,17 @@ TAO_Naming_Server::fini (void)
       // Ignore
     }
   ACE_ENDTRY;
+
+
+  if (this->ior_multicast_ != 0)
+    {
+      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
+         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+      delete this->ior_multicast_;
+    }
+
+  delete this->context_index_;
+
   return 0;
 }
 
@@ -717,14 +734,10 @@ TAO_Naming_Server::operator-> (void) const
 
 TAO_Naming_Server::~TAO_Naming_Server (void)
 {
-  if (this->ior_multicast_ != 0)
-    {
-      TAO_ORB_Core_instance ()->reactor ()->remove_handler
-        (this->ior_multicast_,
-         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
-      delete this->ior_multicast_;
-    }
-  delete context_index_;
+#if (TAO_HAS_MINIMUM_POA == 0)
+  if (this->use_servant_activator_)
+    delete this->servant_activator_;
+#endif /* TAO_HAS_MINIMUM_POA */
 }
 
 
