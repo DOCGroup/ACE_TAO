@@ -1956,12 +1956,14 @@ void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (())
 {
-  size_t len = 0;   // The length of the interceptor array.
-  size_t ilen = 0;  // The incremental length of the interceptor array.
+
 
   ACE_TRY
     {
 #if TAO_HAS_INTERCEPTORS == 1
+      size_t len = 0;   // The length of the interceptor array.
+      size_t ilen = 0;  // The incremental length of the interceptor array.
+
       TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
         this->client_request_interceptors_.interceptors ();
 
@@ -2014,7 +2016,8 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
       if (this->ior_interceptor_adapter_ != 0)
         {
-          this->ior_interceptor_adapter_->destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+          this->ior_interceptor_adapter_->destroy_interceptors (
+              ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
 
