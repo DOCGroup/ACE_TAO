@@ -62,6 +62,9 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
   // visit eventtype
 
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit eventtype_fwd
+
 private:
   // Utility methods to handle the corresponding IDL declarations.
   int gen_provides (be_component *node);

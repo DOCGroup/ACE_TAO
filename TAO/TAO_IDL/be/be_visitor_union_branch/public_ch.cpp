@@ -425,6 +425,13 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
       *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
           << " (void) const;";
       break;
+    case AST_PredefinedType::PT_value:
+      *os << be_nl << be_nl 
+          << "void " << ub->local_name () << " ("
+          << bt->nested_type_name (bu, " *") << ");" << be_nl;
+      *os << bt->nested_type_name (bu, " *") << " " << ub->local_name ()
+          << " (void) const;";
+      break;
     case AST_PredefinedType::PT_any:
       *os << be_nl << be_nl 
           << "void " << ub->local_name () << " (const "

@@ -701,6 +701,11 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
           << bt->name ()
           << "_ptr";
     }
+  else if (pt == AST_PredefinedType::PT_value)
+    {
+      *os << bt->name ()
+          << " *";
+    }
   else if (pt == AST_PredefinedType::PT_any)
     {
       *os << "const "
@@ -755,6 +760,12 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << bt->name () << "::_duplicate (val);" << be_uidt_nl;
 
         break;
+      case AST_PredefinedType::PT_value:
+        *os << "CORBA::add_ref (val);" << be_nl
+            << "this->u_." << ub->local_name () 
+            << "_ = val;" << be_uidt_nl;
+
+        break;
       case AST_PredefinedType::PT_any:
         *os << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name ()
@@ -795,6 +806,19 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       *os << "// Retrieve the member." << be_nl
           << "ACE_INLINE" << be_nl
           << bt->name () << "_ptr" << be_nl
+          << bu->name () << "::" << ub->local_name ()
+          << " (void) const" << be_nl
+          << "{" << be_idt_nl;
+      *os << "return this->u_." << ub->local_name ()
+          << "_;" << be_uidt_nl;
+      *os << "}";
+
+      break;
+    case AST_PredefinedType::PT_value:
+      // Get method.
+      *os << "// Retrieve the member." << be_nl
+          << "ACE_INLINE" << be_nl
+          << bt->name () << " *" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl;

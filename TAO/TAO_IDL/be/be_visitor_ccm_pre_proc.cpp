@@ -21,6 +21,7 @@
 #include "be_typedef.h"
 #include "be_component.h"
 #include "be_eventtype.h"
+#include "be_eventtype_fwd.h"
 #include "be_home.h"
 #include "be_extern.h"
 #include "ast_generator.h"
@@ -250,6 +251,11 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
 int
 be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
 {
+  if (node->ccm_pre_proc_gen ())
+    {
+      return 0;
+    }
+    
   if (this->create_event_consumer (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -259,7 +265,17 @@ be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
                         -1);
     }
 
+  node->ccm_pre_proc_gen (I_TRUE);
   return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  be_eventtype *fd = 
+    be_eventtype::narrow_from_decl (node->full_definition ());
+    
+  return this->visit_eventtype (fd);
 }
 
 // ****************************************************************
