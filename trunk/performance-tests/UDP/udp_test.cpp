@@ -600,7 +600,7 @@ main (int argc, char *argv[])
                               1);
           break;
         case 'f':
-          ACE_OS::strcpy (datafile, optarg);
+          ACE_OS::strcpy (datafile, getopt.optarg);
           logfile = 1;
           break;
         case 'v':
