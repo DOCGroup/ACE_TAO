@@ -49,30 +49,50 @@ namespace CCF
       //
       //
       template <typename T>
-      struct TypedefDecl : virtual TypedefDeclBase, Traverser
+      struct TypedefDecl : virtual TypedefDeclBase
       {
         typedef
         SyntaxTree::StrictPtr<T>
         NodePtr;
 
         TypedefDecl ()
+            : thunk_ (this, typedef_decl)
         {
-          disp_.map (typeid (T), this);
-        }
-
-        virtual bool
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          //@@ gcc bug
-          traverse (typedef_decl, n->template dynamic_type<T> ());
-          return true;
+          disp_.map (typeid (T), &thunk_);
         }
 
         virtual void
         traverse (SyntaxTree::TypedefDeclPtr const& td, NodePtr const& n)
         {
-          delegate (n);
+          delegate (td);
         }
+
+      private:
+
+        template <typename X>
+        struct TypedefDeclThunk : Traverser
+        {
+          TypedefDeclThunk (TypedefDecl<X>* t,
+                            SyntaxTree::TypedefDeclPtr const& d)
+              : t_ (t),
+                d_ (d)
+          {
+          }
+
+          virtual bool
+          traverse (SyntaxTree::NodePtr const& n)
+          {
+            //@@ gcc bug
+            t_->traverse (d_, n->template dynamic_type<X> ());
+            return true;
+          }
+
+        private:
+          TypedefDecl<X>* t_;
+          SyntaxTree::TypedefDeclPtr const& d_;
+        };
+
+        TypedefDeclThunk<T> thunk_;
       };
     }
   }
