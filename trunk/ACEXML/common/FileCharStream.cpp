@@ -33,8 +33,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
 
   this->size_ = statbuf.st_size;
   this->filename_ = ACE::strnew (name);
-  if (this->determine_encoding() == -1)
-    return -1;
+  this->determine_encoding();
   return 0;
 }
 
@@ -48,6 +47,10 @@ ACEXML_FileCharStream::determine_encoding (void)
     retval = this->getchar_i(input[i]);
   if (i < 4)
     return -1;
+
+  // Rewind the stream
+  this->rewind();
+
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (!temp)
     return -1;
@@ -59,8 +62,6 @@ ACEXML_FileCharStream::determine_encoding (void)
       this->encoding_ = ACE::strnew (temp);
       ACE_DEBUG ((LM_DEBUG, "File's encoding is %s\n", this->encoding_));
     }
-  // Rewind the stream
-  this->rewind();
   // Move over the byte-order-mark if present.
   char ch;
   for (int j = 0; j < 2; ++j)
