@@ -14,6 +14,22 @@ Mon Sep 22 07:11:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.{h,i} (ACE_U_LongLong): added operator!=, and made args
 	  const to ctor, operator/, hi, and lo member functions.
 
+	* ace/Managed_Object.[hi]: renamed ACE_Managed_Cleanup to
+	  ACE_Cleanup_Adapter because it doesn't implicitly register
+	  itself with the ACE_Object_Manager.
+
+	* ace/ACE.cpp: moved ACE_Object_Manager_Destroyer to
+	  Object_Manager.cpp because the ACE_Object_Manager should
+	  always be linked into executables now, even if libACE is
+	  statically linked.
+
+	* ace/Filecache.{h,cpp},Signal.{h,cpp} preallocate locks for
+	  Filecache and Signal in ACE_Object_Manager.
+
+	* ace/Object_Manager.{h,cpp}: 1) renamed ACE_Managed_Cleanup to
+	  ACE_Cleanup_Adapter.  2) Moved ACE_Object_Manager_Destroyer from
+	  ACE.cpp to Object_Manager.cpp. 3) Added Filecache and Signal locks.
+
 Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Object_Manager.{h,cpp},Managed_Object.*,
