@@ -126,6 +126,8 @@ static void get2 (void)
 
 int main (void)
 {
+  ACE_START_TEST (ASYS_TEXT ("Cache_Manager_Test"));
+
   JXH_String_Table_Manager
   = String_Table_Proxy::Cache_Manager_Singleton::instance ();
   JXH_String_Table_Manager->open (0, 0, 2, 5, 1, 0, 1, 0);
@@ -144,6 +146,8 @@ int main (void)
 
   get1 ();
   get2 ();
+
+  ACE_END_TEST;
 
   return 0;
 }
