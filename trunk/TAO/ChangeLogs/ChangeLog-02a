@@ -1,3 +1,10 @@
+Sat Apr 27 18:09:01 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tao/LF_Connect_Strategy.h: 
+	* tao/Connect_Strategy.h:
+	* tao/Blocked_Connect_Strategy.h:
+	* tao/Reactive_Connect_Strategy.h: Fixed fuzz errors.
+
 Sat Apr 27 18:04:47 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:

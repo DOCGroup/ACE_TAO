@@ -72,5 +72,5 @@ protected:
 };
 
 
-
+#include "ace/post.h"
 #endif /*TAO_CONNECT_STRATEGY_H*/
