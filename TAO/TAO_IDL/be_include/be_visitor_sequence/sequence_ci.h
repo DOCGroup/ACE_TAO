@@ -60,6 +60,9 @@ public:
   virtual int gen_bounded_str_sequence (be_sequence *node);
   // generate a instance of the bounded string sequence
 
+  virtual int gen_bounded_wstr_sequence (be_sequence *node);
+  // generate a instance of the bounded wstring sequence
+
   virtual int instantiate_sequence (be_sequence *node);
   // determine which sequence to instantiate
 
