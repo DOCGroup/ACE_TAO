@@ -1,3 +1,18 @@
+Thu Nov  4 12:09:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        
+          Fixed a bug in the creation of an abstract interface entry
+          in the Interface Repository. This creation requires a list
+          of parents, and the list must be a CORBA sequence of
+          AbstractInterfaceDef. All other interface entries need a
+          sequence of InterfaceDef parents. So a separate sequence
+          was declared for the purpose in the IFR loader, but the
+          wrong one was getting updated with the abstract interface's
+          parent info in the AST. When the correct (but uninitialized)
+          sequence was passed in the IFR call, a BAD_PARAM exception
+          resulted.
+
 Wed Nov  3 06:14:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/FTORB.mpc:
