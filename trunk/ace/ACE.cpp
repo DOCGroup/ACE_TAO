@@ -851,6 +851,27 @@ ACE::ldopen (const ASYS_TCHAR *filename,
     return ACE_OS::fopen (buf, type);
 }
 
+ACE_HANDLE
+ACE::open_temp_file (char* name, int mode, int perm)
+{
+#if defined (ACE_WIN32)
+  return ACE_OS::open (name,
+		       mode | FILE_FLAG_DELETE_ON_CLOSE);
+#else
+  // Open it. 
+  ACE_HANDLE handle = ACE_OS::open (name, mode, perm);
+  if (handle == -1)
+    return -1;
+
+  // Unlink it. 
+  if (ACE_OS::unlink (name) == -1)
+    return -1;
+  
+  // Return the handle. 
+  return handle;
+#endif /* ACE_WIN32 */
+}
+
 const char *
 ACE::basename (const char *pathname, char delim)
 {

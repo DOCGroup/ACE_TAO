@@ -201,9 +201,11 @@ private:
   void gen_perfect_hash_instance ();
   // Create an instance of this perfect hash table.
 
+#if 0
   void cleanup_gperf_temp_file ();
   // Delete the stream and filename for this temp file and also remove
   // the temperary gperf's input file from the disk.
+#endif /* 0 */
 
   char *full_skel_name_;
   // Fully scoped skeleton name.
