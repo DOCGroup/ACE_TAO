@@ -33,10 +33,9 @@ class ACE_Export ACE_Event_Handler
   //     I/O, timer, and signal events.
   //
   // = DESCRIPTION
-  //       Derived classes read/write input/output on an I/O
-  //       descriptor, handle an exception raised on an I/O
-  //       descriptor, handle a timer's expiration, or handle a
-  //       signal.
+  //       Subclasses read/write input/output on an I/O descriptor,
+  //       handle an exception raised on an I/O descriptor, handle a
+  //       timer's expiration, or handle a signal.
 {
 public:
   enum 
@@ -62,14 +61,15 @@ public:
   virtual ~ACE_Event_Handler (void);
   // Destructor is virtual to enable proper cleanup.
 
-  // = The following methods must be supplied by subclasses in order
-  // to specialize the behavior of an Event_Handler.
   virtual ACE_HANDLE  get_handle (void) const;
   // Get the I/O handle.
   virtual void set_handle (ACE_HANDLE);
   // Set the I/O handle.
 
-  // = Priority runs from MIN_PRIORITY (which is the "lowest priority") to MAX_PRIORITY (which is the "highest priority").
+  // = Get/set priority 
+
+  // Priorities run from MIN_PRIORITY (which is the "lowest priority")
+  // to MAX_PRIORITY (which is the "highest priority").
   virtual int priority (void) const;
   // Get the priority of the Event_Handler.
   virtual void priority (int priority);
@@ -97,7 +97,9 @@ public:
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
 
-  // = <ACE_Proactor> callbacks.  These are Win32 specific.  An
+  // = ACE_Proactor callbacks.  
+
+  // At the moment, these methods are Win32 specific.  An
   // Event_Handler can be given to a Proactor with a {RECV,SEND}_MASK.
   // The Proactor calls back <get_message> and <get_handle> to perform
   // the correct operations (send/recv).  When the send/recv is

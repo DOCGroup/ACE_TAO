@@ -492,6 +492,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 			   siginfo->si_addr), -1);
     }
 #endif /* ACE_HAS_SIGINFO_T && !defined (ACE_LACKS_SI_ADDR) */
+
   this->commit_backing_store_name (this->round_up (ACE_DEFAULT_SEGMENT_SIZE), 
 				   offset);
   return 0;
@@ -597,6 +598,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
       st[0].key_ = this->base_shm_key_;
       st[0].shmid_ = shmid;
+
       st[0].used_ = 1;
 
       for (counter = 1; // Skip over the first entry...

@@ -1,3 +1,23 @@
+Tue Jan 14 00:18:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_Heap: Implemented the spiffy new timer cancellation
+ 	  algorithm that requires only O(log N) time to remove a timer
+ 	  from the ACE_Timer_Heap.  This is about 50 to 100 times faster
+ 	  than using the ACE_Timer_List implementation.
+
+Mon Jan 13 17:57:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Synch: Added lock() accessor methods to both
+ 	  ACE_Process_Semaphore and ACE_Process_Mutex.  Thanks to Hamutal
+ 	  Yanay <Hamutal_Yanay@mail.icomverse.com> for suggesting this.
+
+	* ace/config-mvs.h: Added a #define for ACE_HAS_GETPAGESIZE.
+	  Thanks to Chuck Gehr for this information.
+
+	* ace/LSOCK_Stream.h: Added a new typedef for PEER_ADDR that is
+ 	  associated with ACE_UNIX_Addr.  Thanks to Mark Rabotnikov
+ 	  <mark@usp.elscintcorp.co.il> for suggesting this.
+
 Mon Jan 13 22:24:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: Added #undefs of sigemptyset and sigfillset on Linux
@@ -6,12 +26,6 @@ Mon Jan 13 22:24:09 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE user for pointing this out.
 
 	* tests/tests_config.h: Dropped ACE_MAX_ITERATIONS back to 10.
-
-Mon Jan 13 00:17:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/LSOCK_Stream.h: Added a new typedef for PEER_ADDR that is
- 	  associated with ACE_UNIX_Addr.  Thanks to Mark Rabotnikov
- 	  <mark@usp.elscintcorp.co.il> for suggesting this.
 
 Sun Jan 12 16:59:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

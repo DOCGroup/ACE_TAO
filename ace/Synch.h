@@ -271,6 +271,11 @@ public:
   // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
   // interface consistent with the other synchronization APIs.
 
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+  const ACE_sema_t &lock (void) const;
+  // Return the underlying lock.
+#endif /* ACE_WIN32 */
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -450,6 +455,11 @@ public:
 
   int tryacquire_write (void);
   // Conditionally acquire a lock (i.e., won't block).
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+  const ACE_mutex_t &lock (void) const;
+  // Return the underlying mutex.
+#endif /* ACE_WIN32 */
 
   void dump (void) const;
   // Dump the state of an object.

@@ -4,6 +4,9 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// Platform supports getpagesize() call.
+#define ACE_HAS_GETPAGESIZE
+
 // The following #defines are hacks to get around things
 // that seem to be missing or different in MVS land
 #define MAXPATHLEN 1024          /* sys/param.h not on MVS */
