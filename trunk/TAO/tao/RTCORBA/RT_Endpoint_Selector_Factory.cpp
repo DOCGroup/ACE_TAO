@@ -24,7 +24,7 @@ RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory (void)
 }
 
 TAO_Invocation_Endpoint_Selector *
-RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation
+RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *
                                             ACE_ENV_ARG_DECL_NOT_USED)
 {
   return this->rt_invocation_endpoint_selector_;
