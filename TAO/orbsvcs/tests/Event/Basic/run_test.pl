@@ -116,4 +116,13 @@ if ($T->TimedWait (120) == -1) {
   $T->Kill (); $T->TimedWait (1);
 }
 
+print STDERR "\n\nComplex filter\n";
+$T = Process::Create ($prefix . "Complex".$EXE_EXT,
+                     " -ORBSvcConf svc.complex.conf");
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
+
 exit $status;

@@ -1,3 +1,45 @@
+Wed Feb  9 14:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          New filter builder, it parses the ConsumerQOS structure assuming
+          that the filters are in prefix notation, i.e. each conjunction,
+          disjunction or logical_and filter indicates how many children it
+          has.
+          This notation is more consistent and allow us to easily express
+          complex filters like: (type == 5 && source != 10) or
+          ((type == 5 && source != 10) || !(type == 2 && source == 8))
+
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
+          New filter, it only accepts an event if all its children
+          do. Unlikely the conjunction filter that waits for all the
+          children to accept at least one event.
+
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+          Add support for the prefix notation.
+
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+          Fixed some comments.
+
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Complex.cpp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Basic/svc.complex.conf:
+          Add new test to check that complex filters can be defined using
+          the prefix notation.
+
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          Use the ConsumerQoS_Factory with support for the prefix
+          notation.
+
 Wed Feb  9 13:48:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:

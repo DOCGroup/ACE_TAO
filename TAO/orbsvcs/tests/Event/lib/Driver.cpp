@@ -571,7 +571,7 @@ EC_Driver::build_consumer_qos (
   shutdown_event_type = type_start + this->consumer_type_count_;
 
   ACE_ConsumerQOS_Factory qos_factory;
-  qos_factory.start_disjunction_group ();
+  qos_factory.start_disjunction_group (1 + this->consumer_type_count_);
   qos_factory.insert_type (shutdown_event_type, rt_info);
 
   for (int j = 0; j != this->consumer_type_count_; ++j)
