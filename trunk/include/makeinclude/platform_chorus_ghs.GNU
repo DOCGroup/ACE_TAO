@@ -41,7 +41,7 @@ CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -X445 -fprecise \
           -I$(MVME_INCL)/CC
 CCFLAGS += $(CFLAGS) --mkctors --multibyte_chars --no_rtti --wchar_t_keyword \
            -tnone
-DCFLAGS += -g
+DCFLAGS += -g -G
 DLD     = $(CXX)
 LD      = $(CXX)
 LDFLAGS = --no_auto_instantiation \
