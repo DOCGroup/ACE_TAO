@@ -19,6 +19,11 @@
 #define TAO_SEQUENCE_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Managed_Types.h"
 
 class CORBA_Object;

@@ -19,6 +19,11 @@
 #define TAO_IDL_POAC_H
 
 #include "tao/PolicyC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/CurrentC.h"
 #include "tao/Exception.h"
 #include "tao/Environment.h"

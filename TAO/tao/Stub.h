@@ -32,6 +32,11 @@
 #define TAO_STUB_H
 
 #include "tao/Pluggable.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
 

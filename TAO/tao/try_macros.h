@@ -37,6 +37,11 @@
 #define TAO_TRY_MACROS_H
 
 #include "tao/orbconf.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/CORBA_macros.h"
 
 #if defined (TAO_HAS_EXCEPTIONS)

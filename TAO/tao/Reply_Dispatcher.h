@@ -21,6 +21,11 @@
 #define TAO_REPLY_DISPATCHER_H
 
 #include "tao/GIOP.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/MessagingC.h"
 
 // Forward Declarations.

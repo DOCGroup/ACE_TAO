@@ -18,6 +18,11 @@
 #define TAO_DEFAULT_CLIENT_H
 
 #include "tao/Client_Strategy_Factory.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Config.h"
 
 class TAO_Export TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory

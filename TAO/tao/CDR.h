@@ -45,6 +45,11 @@
 #define TAO_CDR_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Typecode.h"
 
 class TAO_ORB_Core;

@@ -19,6 +19,11 @@
 #define TAO_IDL_POAS_H
 
 #include "tao/POAC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Servant_Base.h"
 #include "tao/POA_CORBA.h"
 

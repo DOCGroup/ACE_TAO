@@ -19,6 +19,10 @@
 
 #include "tao/orbconf.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/DynUnion_i_T.h"
@@ -236,7 +240,7 @@ private:
 
   class Char_extractor : public DU_Extractor_base
   {
-  public: 
+  public:
     CORBA::Boolean check_match (const CORBA_Any &inside_any,
                                 const CORBA_Any &outside_any);
   private:

@@ -22,6 +22,11 @@
 #define TAO_GIOP_SERVER_REQUEST_H
 
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Server_Request.h"
 #include "tao/Principal.h"
 

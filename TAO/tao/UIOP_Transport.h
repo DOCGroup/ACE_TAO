@@ -22,6 +22,11 @@
 #define TAO_UIOP_TRANSPORT_H
 
 #include "tao/Pluggable.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/GIOP.h"
 
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)

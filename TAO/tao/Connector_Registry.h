@@ -21,6 +21,11 @@
 #define TAO_CONNECTOR_REGISTRY_H
 
 #include "tao/Pluggable.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
 #include "tao/params.h"
@@ -101,7 +106,7 @@ public:
 private:
   int preprocess_preconnects (TAO_ORB_Core *orb_core,
                               TAO_PreconnectSet &preconnects);
-  // Put the preconnects in a form that makes it simple for protocol 
+  // Put the preconnects in a form that makes it simple for protocol
   // implementers to parse.
 
 private:

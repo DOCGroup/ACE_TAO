@@ -19,6 +19,10 @@
 
 #include "tao/corbafwd.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward decls.
 
 class TAO_Active_Object_Map_Impl;
@@ -39,7 +43,7 @@ typedef ACE_Unbounded_Set_Iterator<ACE_CString> TAO_EndpointSetIterator;
 // @@ Using an ACE_Unbounded_Queue to contain the preconnects may not
 //    be the best container to use.  However, it will only be used
 //    during client side initialization.  Also, a template
-//    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists 
+//    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists
 //    in ACE so we do not have to worry about increasing TAO's
 //    footprint by using this container.
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_PreconnectSet;

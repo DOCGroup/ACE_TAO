@@ -18,6 +18,11 @@
 #define TAO_VALUEBASE_H
 
 #include "ace/OS.h"           /* for ptr_arith_t */
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corbafwd.h"
 
 #ifdef TAO_HAS_VALUETYPE
