@@ -42,7 +42,7 @@ PLATFORM_GL_LDFLAGS =-L/usr/X11R6/lib
 
 PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
 PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
-PLATFORM_GTK_LDFLAGS=
+PLATFORM_GTK_LDFLAGS =
 
 PLATFORM_WX_CPPFLAGS= $(shell wx-config --cflags) $(PLATFORM_GTK_CPPFLAGS)
 PLATFORM_WX_LIBS    = $(shell wx-config --libs)   $(PLATFORM_GTK_LIBS)
@@ -50,6 +50,20 @@ PLATFORM_WX_LDFLAGS =
 
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
+
+
+ifeq ($(ssl),1)
+  # Some Linux OpenSSL installations compile in Kerberos support.  Add
+  # the Kerberos include path to preprocessor include path.
+  #
+  # We should probably also add the Kerberos libraries to
+  # PLATFORM_SSL_LIBS but we can't be sure if they are needed without
+  # a more sophisticated check.  This will only be a problem when
+  # statically linking the OpenSSL library.  The majority of
+  # installations use shared OpenSSL libraries so we should be okay,
+  # at least until we migrate to Autoconf.
+  PLATFORM_SSL_CPPFLAGS += -I/usr/kerberos/include
+endif # threads
 
 ifeq ($(insure),1)
 CC  = insure
