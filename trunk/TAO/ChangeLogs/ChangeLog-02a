@@ -1,3 +1,7 @@
+Sun Apr 14 20:17:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Invocation.cpp: Fixed a compile error. Improper merge :(
+
 Sun Apr 14 20:08:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Pluggable.{h,cpp,i}: Removed from the repo.
