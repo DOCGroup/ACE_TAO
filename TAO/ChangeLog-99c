@@ -1,3 +1,10 @@
+Fri Dec  3 14:20:17 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/default_resource.cpp (init_protocol_factories):
+
+	  Added missing argument in call to ACE_ERROR.  Thanks to Chris
+	  Hafey for reporting this.
+
 Fri Dec  3 13:26:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
