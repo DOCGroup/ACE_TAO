@@ -49,8 +49,9 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 			 int argc, 
                          char **argv)
 {
-  // Parse command line arguments to determine if this name server
-  // instance is part of a naming tree, under the default name server.
+  // Parse command-line arguments to determine if this name server
+  // instance is part of a naming tree that resides under the default
+  // name server.
   ACE_Arg_Shifter args (argc, argv);
 
   while (args.is_anything_left ())
