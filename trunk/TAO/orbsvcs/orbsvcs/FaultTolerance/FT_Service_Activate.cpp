@@ -25,7 +25,6 @@ TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
 
   this->orb_core_ = orb_core;
 
-  cout << "We are getting init " <<endl;
   TAO_FT_Service_Callbacks *ft_service_callback = 0;
 
   // Construct service callback object
