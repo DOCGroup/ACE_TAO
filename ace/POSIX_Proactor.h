@@ -60,7 +60,7 @@ public:
   // Close down the Proactor.
 
   virtual int register_handle (ACE_HANDLE handle,
-			       const void *completion_key);
+                   const void *completion_key);
   // This function is a no-op function for Unix systems. Returns 0.
   
   virtual int post_completion (ACE_POSIX_Asynch_Result *result) = 0;
@@ -165,10 +165,10 @@ protected:
   // Constructor.
 
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-				  u_long bytes_transferred,
-				  int success,
-				  const void *completion_key,
-				  u_long error);
+                  u_long bytes_transferred,
+                  int success,
+                  const void *completion_key,
+                  u_long error);
   // Protect against structured exceptions caused by user code when
   // dispatching handles. The <completion_key> is not very useful
   // compared to <AST> that can be associated each asynchronous
@@ -256,14 +256,14 @@ protected:
   // dispatched. Return -1 on errors.
 
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-				  u_long bytes_transferred,
-				  int success,
-				  const void *completion_key,
-				  u_long error);
+                  u_long bytes_transferred,
+                  int success,
+                  const void *completion_key,
+                  u_long error);
   // We will call the base class's application_specific_code from
   // here.
   
-  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
+  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result, int operation);
   // If the ptr is o, just check whether there is any slot free and
   // return 0 if yes, else return -1. If a valid ptr is passed, keep it
   // in a free slot.
@@ -288,6 +288,9 @@ protected:
 
   size_t aiocb_list_cur_size_;
   // To maintain the current size of the array (list).
+
+  ACE_Thread_Mutex mtx_AIOCB_;
+  // To make AIOCB proactor thread safe.
 };
 
 class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_Proactor
