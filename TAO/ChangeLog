@@ -1,3 +1,9 @@
+Mon Dec 23 22:48:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties.h:
+	* orbsvcs/tests/Notify/Basic/AdminProperties.cpp: Fixed compile
+	  errors in g++ builds that were caused by improper signatures. 
+
 Mon Dec 23 22:33:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	A slight redesign of the changes applied to fix BUG 1276. The
