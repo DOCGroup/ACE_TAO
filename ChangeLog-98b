@@ -1,9 +1,16 @@
+Tue Dec 22 22:34:32 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: added GreenHills compiler support.
+
+        * ace/OS.h: don't use hrtime_t for ACE_hrtime_t if
+          ACE_LACKS_LONGLONG_T.
+
 Mon Dec 21 16:06:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Shared_Memory_MM.i: Changed the remove() method to call
- 	  ACE_Mem_Map::remove() rather than ACE_Mem_Map::unmap() so the
- 	  code is consistent with the documentation.  Thanks to James
- 	  Johnson for reporting this.
+        * ace/Shared_Memory_MM.i: Changed the remove() method to call
+          ACE_Mem_Map::remove() rather than ACE_Mem_Map::unmap() so the
+          code is consistent with the documentation.  Thanks to James
+          Johnson for reporting this.
 
 Mon Dec 21 13:55:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
