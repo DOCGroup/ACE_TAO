@@ -260,6 +260,10 @@ composite_list ()
 
       if [ $BASE_OBJ_FLAG -eq 1 ]; then
          BASE_OBJ="${DIR}${i##.*/}"
+         # strip off lib numbers
+         if [ "$BASE_OBJ" != "${BASE_OBJ%.so.*}" ]; then
+           BASE_OBJ=${BASE_OBJ%.so.*}.so
+         fi
          BASE_OBJ_FLAG=0
       elif [ "$i" = "-o" ]; then
         # found our base object, set flag so we can grab the next one
@@ -345,12 +349,29 @@ create_images ()
 
 }
 
+create_index_page ()
+{
+  local TITLE="Compilation metrics for ACE+TAO"
+
+  echo "<html>"
+  echo "<head><title>$TITLE</title></head>"
+  echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
+  echo "<br><center>$TITLE</center><br><hr>"
+  echo '<ul>'
+  echo '<li><a href="ace.html">ACE</a>'
+  echo '<li><a href="tao.html">TAO</a>'
+  echo '</ul>'
+  echo '</body></html>'
+}
+
 create_page ()
 {
+  # always strip off "TAO___"
   local BASE=$1
-  shift
+  local BASE_NAME=${BASE#TAO___}
+  #shift
   #local OBJECTS=$2
-  local TITLE="Compilation metrics for ${BASE//___//}"
+  local TITLE="Compilation metrics for ${BASE_NAME//___//}"
 
   # header
   echo "<html>"
@@ -363,23 +384,40 @@ create_page ()
     echo 'width="640" height="480"></P></DIV><HR>'
   fi
 
-  #echo "$OBJECTS<br>"
-  # now list all the interal object (if more than one)
-  if [ -n "$2" ]; then
-    echo "<ul>"
-    for i in $@; do
-      if [ -e ".metrics/${i}.html" ]; then
-        echo "<li><a href=\"$i.html\">${i//___//}</a>"
-      elif [ -e ".metrics/images/${i}.png" ]; then
-        echo "<li><a href=\"images/$i.png\">${i//___//}</a>"
-      fi    
-    done # for
-    echo '</ul>'
-  fi
-
+  echo "<ul>"
+  #for i in $@; do
+  while read i; do
+    if [ -e ".metrics/${i}.html" ]; then
+      # strip off "TAO___" if it exists
+      NAME=${i#TAO___}
+      echo "<li><a href=\"$i.html\">${NAME//___//}</a>"
+    elif [ -e ".metrics/images/${i}.png" ]; then
+      # since you'll only have images if it's a composite, strip off the
+      # path for the name
+      echo "<li><a href=\"images/$i.png\">${i##*___}</a>"
+    fi    
+  done # for
+  echo '</ul>'
+  
   # footer
   echo '</body></html>'
 
+}
+
+sort_list ()
+{
+  # sort the dependency files
+  if [ -e .metrics/tmp_list ]; then
+    rm .metrics/tmp_list
+  fi
+
+  touch .metrics/tmp_list
+  for i in $@; do
+    echo "$i" >> .metrics/tmp_list
+    #echo $i
+  done
+     
+  sort .metrics/tmp_list
 }
 
 create_html ()
@@ -388,20 +426,33 @@ create_html ()
 
   local DEST=$1
   local ALL_BASE=""
+  local ACE_OBJS=""
+  local TAO_OBJS=""
 
   while read base colon files; do
     #echo "$base"
     # create individual page for app/lib
     #echo "creating $base.html with $files"
-    create_page $base $files > .metrics/$base.html
+    
+    sort_list $files | create_page $base > .metrics/$base.html
     cp .metrics/$base.html $DEST/$base.html
-    ALL_BASE="$ALL_BASE $base"
+    if [ "$base" != "${base#TAO}" ]; then
+      TAO_OBJS="$TAO_OBJS $base"
+    else
+      ACE_OBJS="$ACE_OBJS $base"
+    fi
+    ALL_OBJS="$ALL_BASE $base"
   done
 
   # create main page
-  #echo "createing index.html with $ALL_BASE"
-  create_page "ACE+TAO" $ALL_BASE > .metrics/index.html
+  create_index_page > .metrics/index.html
   cp .metrics/index.html $DEST/index.html
+  
+  sort_list $ACE_OBJS | create_page "ACE" > .metrics/ace.html
+  cp .metrics/ace.html $DEST/ace.html
+
+  sort_list $TAO_OBJS | create_page "TAO" > .metrics/tao.html
+  cp .metrics/tao.html $DEST/tao.html
 
 }
 

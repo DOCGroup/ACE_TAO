@@ -1,3 +1,21 @@
+Mon Apr 14 18:35:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+        
+        * bin/generate_compile_stats.sh:
+        
+          Improved the html presentation by:
+        
+           - dividing ACE and TAO into two seperate pages.
+           - stripping off version numbers from libraries.
+           - stripping off the path from dependent objects (was 
+             redundant and made it hard to read).
+           - sorting dependent object lists.
+           - stripping off the TAO/ part of the path for TAO object
+             since this was also redundant.
+           - always listing dependent objects even if there was only
+             one.
+        
+          Thanks to Bala for his suggestions.
+
 Mon Apr 14 18:28:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.lib.GNU:
