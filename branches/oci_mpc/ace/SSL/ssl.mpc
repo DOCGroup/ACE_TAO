@@ -1,4 +1,5 @@
 project : acelib {
+  ssl        = 1
   depends    = ace
   sharedname = ACE_SSL
   dllflags   = ACE_SSL_BUILD

@@ -3,7 +3,8 @@ project: messaging {
   idlflags += -GC
 
   Source_Files {
-    ami_test_i.cpp
+    timeout_i.cpp
+    timeout_client.cpp
     server.cpp
   }  
 }
@@ -14,16 +15,9 @@ project(client): messaging {
   idlflags += -GC
 
   Source_Files {
+    timeout_i.cpp
+    timeout_client.cpp
     client.cpp
   }  
 }
 
-project(simple_client): messaging {
-  exename   = simple_client
-  idlflags -= -Sc
-  idlflags += -GC
-
-  Source_Files {
-    simple_client.cpp
-  }  
-}

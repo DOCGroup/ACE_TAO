@@ -1,0 +1,3 @@
+project(Single Threaded POA): server {
+  exename = Single_Threaded_POA
+}  

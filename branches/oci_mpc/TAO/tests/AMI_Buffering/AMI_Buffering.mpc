@@ -3,27 +3,30 @@ project: messaging {
   idlflags += -GC
 
   Source_Files {
-    ami_test_i.cpp
+    AMI_Buffering.cpp
     server.cpp
   }  
 }
  
 project(client): messaging {
-  exename   = client
   idlflags -= -Sc
   idlflags += -GC
+  exename   = client
 
   Source_Files {
+    Client_Task.cpp
+    Reply_Handler.cpp
     client.cpp
   }  
 }
 
-project(simple_client): messaging {
-  exename   = simple_client
+project(admin): messaging {
   idlflags -= -Sc
   idlflags += -GC
+  exename   = admin
 
   Source_Files {
-    simple_client.cpp
+    AMI_Buffering_Admin.cpp
+    admin.cpp
   }  
 }

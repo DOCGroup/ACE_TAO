@@ -1,0 +1,30 @@
+project: server {
+  depends += CosNaming
+  libs    += TAO_CosNaming
+
+  Source_Files {
+    status_i.cpp
+    server.cpp
+  }
+}
+
+project(client): server {
+  depends += CosNaming
+  libs    += TAO_CosNaming
+  exename  = client
+
+  Source_Files {
+    ior_corbaloc_client_i.cpp
+    client.cpp
+  }
+}
+
+project(corbaname client): server {
+  exename = corbaname_client
+
+  Source_Files {
+    status_i.cpp
+    corbaname_client.cpp
+  }
+}
+

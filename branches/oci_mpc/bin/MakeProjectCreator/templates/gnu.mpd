@@ -101,6 +101,8 @@ TAO_IDLFLAGS += <%idlflags%>
 #----------------------------------------------------------------------------
 <%if(idl_files)%>
 
+all: idl_stubs
+
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
 <%if(exename)%>

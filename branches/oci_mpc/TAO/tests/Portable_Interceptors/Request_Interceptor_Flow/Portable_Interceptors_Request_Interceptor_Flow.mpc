@@ -1,0 +1,20 @@
+project: server {
+  Source_Files {
+    test_i.cpp
+    Server_ORBInitializer.cpp
+    Server_Request_Interceptor.cpp
+    Request_Interceptor.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  Source_Files {
+    testC.cpp
+    Client_ORBInitializer.cpp
+    Client_Request_Interceptor.cpp
+    Request_Interceptor.cpp
+    client.cpp
+  }
+}
+
