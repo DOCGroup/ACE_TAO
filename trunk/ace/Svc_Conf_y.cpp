@@ -1428,7 +1428,7 @@ ace_yyreturn:
 // messages.
 
 void
-ace_yyerror (int ace_yyerrno, int ace_yylineno, const ACE_TCHAR *s)
+ace_yyerror (int ace_yyerrno, int ace_yylineno, const char *s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (ace_yyerrno);
