@@ -259,8 +259,9 @@ TAO_ORB_Manager::deactivate_under_child_poa (const char *id,
                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  PortableServer::ObjectId_var object_id = this->child_poa_->reference_to_id (object.in (),
-                                                                              ACE_TRY_ENV);
+  PortableServer::ObjectId_var object_id =
+    this->child_poa_->reference_to_id (object.in (),
+                                       ACE_TRY_ENV);
   ACE_CHECK;
 
   this->child_poa_->deactivate_object (object_id.in (),
@@ -276,7 +277,10 @@ TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV,
   this->poa_manager_->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (this->orb_->run (tv) == -1)
+  int status = this->orb_->run (tv, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_ORB_Manager %p\n",
                        "run"),
@@ -291,7 +295,10 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv,
   this->poa_manager_->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (this->orb_->run (tv) == -1)
+  int status = this->orb_->run (tv, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_ORB_Manager %p\n",
                        "run"),
@@ -305,7 +312,10 @@ TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV)
   this->poa_manager_->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (this->orb_->run () == -1)
+  int status = this->orb_->run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_ORB_Manager %p\n",
                        "run"),
