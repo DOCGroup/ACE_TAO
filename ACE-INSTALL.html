@@ -428,16 +428,12 @@ make: *** [libACE.so] Error 8
       HREF="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</A>&gt
       has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.<P>
 
-  <LI><B><a name="LynxOS">LynxOS</a></B> <P>
+  <LI><B><a name="LynxOS">LynxOS</a></B><P>
 
-      ACE builds and runs properly on LynxOS 3.0.0 for Intel targets.
+      ACE builds and runs properly on LynxOS 3.0.0 for Intel and 
+      PowerPC targets.
       ACE's Naming_Test fails; it is disabled in <a
       href="tests/run_tests.sh"><code>ACE_wrappers/tests/run_tests.sh</code></a>.<p>
-
-      ACE builds cleanly on LynxOS 3.0.0 for PowerPC targets.  For the
-      most part, it runs properly.  But, there appears to be a problem
-      with registering signal handlers.  So, some of the ACE tests seg
-      fault when attempting to do that.<p>
 
       If you run out of memory on LynxOS, these might help:<p>
       
