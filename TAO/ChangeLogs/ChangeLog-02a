@@ -1,3 +1,25 @@
+Sat Nov 10 15:31:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* docs/Options.html :
+	  Added documentation about mcast parser and the new format of
+	  ORBMulticastDiscoveryEndpoint.
+
+	* tao/ORB_Core.cpp
+	  Modified the format of the value that is passed to the
+	  -ORBMulticastDiscoveryEndpoint ORB option. One can also pass the
+	  the name of the network interface that they want the multicast
+	  service to be running on. The MulticastDiscoveryEndpoint can be
+	  in the format mcast_address:port@nic_name. Backward
+	  compatibility is also preserved. So, in case you dont need to
+	  choose the nic, you could use the previous format of
+	  mcast_address:port also. All this is specified in the comments.
+	
+	* orbsvcs/orbsvcs/IOR_Multicast.h : 
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp : 
+	  Added support so that if a nic name has also been in the
+	  mcast_addr that is passed to TAO_IOR_Multicast::init method, 
+	  the nic name is also passed to the subscribe call.
+	  	
 Sat Nov 10 08:58:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
