@@ -103,9 +103,18 @@ ld < Reader_Writer_Test
 write 2, "Reader_Writer_Test ", 19
 ace_main; unld "Reader_Writer_Test"
 
+#### Sometimes hangs
+#### ld < Priority_Reactor_Test
+#### write 2, "Priority_Reactor_Test ", 22
+#### ace_main; unld "Priority_Reactor_Test"
+
 ld < SOCK_Test
 write 2, "SOCK_Test ", 10
 ace_main; unld "SOCK_Test"
+
+ld < MT_SOCK_Test
+write 2, "MT_SOCK_Test ", 13
+ace_main; unld "MT_SOCK_Test"
 
 ld < Conn_Test
 write 2, "Conn_Test ", 10
