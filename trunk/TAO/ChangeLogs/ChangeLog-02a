@@ -1,3 +1,11 @@
+Thu Feb 15 10:47:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+
+          Minor change to code that creates an octet sequence _var to avoid
+          warnings in the Debian builds when compiling generated code for
+          the AMI test.
+
 Thu Feb 15 06:02:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one): 
