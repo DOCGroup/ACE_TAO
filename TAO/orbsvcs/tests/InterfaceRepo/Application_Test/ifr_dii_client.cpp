@@ -4,8 +4,8 @@
 #include "ifr_dii_client.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Application_Test, 
-           ifr_dii_client, 
+ACE_RCSID (Application_Test,
+           ifr_dii_client,
            "$Id$")
 
 IFR_DII_Client::IFR_DII_Client (void)
@@ -63,12 +63,12 @@ int
 IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result = 0;
-  
+
   if (this->lookup_by_name_)
     {
       result = this->lookup_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-    
+
       if (result == -1)
         {
           return -1;
@@ -78,11 +78,11 @@ IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
     {
       result = this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-      
+
       if (result == -1)
         {
           return (-1);
-        }  
+        }
     }
 
   this->get_operation_def (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -126,7 +126,7 @@ IFR_DII_Client::parse_args (int argc,
   return 0;
 }
 
-int 
+int
 IFR_DII_Client::find_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->target_def_ =
@@ -340,20 +340,35 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::NVList_ptr args = this->req_->arguments ();
 
       const char *artist = 0;
+
+# if (defined (_MSC_VER) && (_MSC_VER < 1310))
+      ACE_ASSERT ((*args->item (0)->value () >>= artist) == 1);
+# else
       ACE_ASSERT ((*args->item (0)->value () >>= artist) == true);
-      
+# endif  /* _MSC_VER <= 1310 */
+
       ACE_ASSERT (ACE_OS::strcmp (artist, "the Beatles") == 0);
 
       const char *title = 0;
+
+# if (defined (_MSC_VER) && (_MSC_VER < 1310))
+      ACE_ASSERT ((*args->item (1)->value () >>= title) == 1);
+# else
       ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
-      
+# endif  /* _MSC_VER <= 1310 */
+
       const char *correct = "Sgt. Pepper's Lonely Hearts Club Band";
       ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
       ACE_UNUSED_ARG (correct);
 
       CORBA::Float price = 0.0f;
+
+# if (defined (_MSC_VER) && (_MSC_VER < 1310))
+      ACE_ASSERT ((*args->item (2)->value () >>= price) == 1);
+# else
       ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
-      
+# endif  /* _MSC_VER <= 1310 */
+
       ACE_ASSERT (price == 13.49f);
 
       if (this->debug_)
@@ -375,7 +390,7 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::Boolean ret_status =
         (this->req_->return_value () >>= CORBA::Any::to_boolean (in_stock));
       ACE_UNUSED_ARG (ret_status);
-        
+
       ACE_ASSERT (ret_status == 1);
       ACE_ASSERT (in_stock == 1);
 
