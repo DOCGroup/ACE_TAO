@@ -32,7 +32,7 @@
 
 #include <openssl/ssl.h>
 
-#include "SSL_Export.h"
+#include "ace/SSL/SSL_Export.h"
 
 #ifdef ACE_HAS_THREADS
 extern "C"
@@ -232,7 +232,7 @@ private:
 };
 
 #if defined(__ACE_INLINE__)
-#include "SSL_Context.i"
+#include "ace/SSL/SSL_Context.i"
 #endif /* __ACE_INLINE__ */
 
 #endif	/* ACE_HAS_SSL */

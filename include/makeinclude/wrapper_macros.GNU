@@ -43,6 +43,7 @@
 #  fl_reactor       Build the FlReactor.
 #  tk_reactor       Build the TkReactor.
 #  qt_reactor       Build the QtReactor.
+#  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
 #
 #  Usually, users do not need to be concerned with make targets.
@@ -98,6 +99,9 @@
 #  PLATFORM_XT_CPPFLAGS   Platform CPP options for X11 (some require -I...)
 #  PLATFORM_XT_LDFLAGS    Platform LD options for X11 (some require -L...)
 #  PLATFORM_XT_LIBS       Platform libraries require with X11
+#  PLATFORM_SSL_CPPFLAGS   Platform CPP options for OpenSSL (may need -I...)
+#  PLATFORM_SSL_LDFLAGS    Platform LD options for OpenSSL (may need -L...)
+#  PLATFORM_SSL_LIBS       Platform libraries required with OpenSSL
 #  PLATFORM_RAPI_CPPFLAGS   Platform CPP options for RAPI
 #  PLATFORM_RAPI_LDFLAGS    Platform LD options for RAPI
 #  PLATFORM_RAPI_LIBS       Platform libraries required with RAPI
@@ -377,6 +381,15 @@ ifneq ($(ace_with_x11),)
   LDFLAGS += $(PLATFORM_X11_LDFLAGS)
 endif # ace_with_x11
 
+ifeq ($(ssl),0)
+  override ssl =
+endif # ssl
+
+ifneq ($(ssl),)
+  CPPFLAGS += -DACE_HAS_SSL $(PLATFORM_SSL_CPPFLAGS)
+  LIBS += $(PLATFORM_SSL_LIBS)
+  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
+endif # ssl
 
 ifeq ($(exceptions),)
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)

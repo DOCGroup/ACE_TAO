@@ -2,7 +2,7 @@
 // $Id$
 
 
-#include "SSL_SOCK_Connector.h"
+#include "ace/SSL/SSL_SOCK_Connector.h"
 
 #if defined (ACE_HAS_SSL)
 
@@ -11,7 +11,7 @@
 #include <openssl/err.h>
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Connector.i"
+#include "ace/SSL/SSL_SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 

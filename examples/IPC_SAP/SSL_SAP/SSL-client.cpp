@@ -13,7 +13,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Synch.h"
 
-#include "SSL_SOCK_Connector.h"
+#include "ace/SSL/SSL_SOCK_Connector.h"
 
 #include "SSL-client.h"
 
