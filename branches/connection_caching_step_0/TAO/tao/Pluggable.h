@@ -398,15 +398,6 @@ protected:
   TAO_ORB_Core *orb_core (void);
   // Return the TAO_ORB_Core pointer
 
-  int find_handler (TAO_Base_Connection_Property *prop,
-                    TAO_Connection_Handler *&handler);
-  // Check the Connection Cache to check whether the connection exists
-  // in the Cache.
-
-  int add_handler (TAO_Base_Connection_Property *prop,
-                   TAO_Connection_Handler *handler);
-  // Add the handler to cache
-
 private:
 
   CORBA::ULong tag_;

@@ -184,7 +184,8 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
   TAO_Connection_Handler *conn_handler = 0;
 
   // Check the Cache first for connections
-  if (this->find_handler (prop, conn_handler) == 0)
+  if (this->orb_core ()->connection_cache ().find_handler (prop,
+                                                           conn_handler) == 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -244,14 +245,16 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                           __LINE__,
                           iiop_endpoint->host (),
                           iiop_endpoint->port (),
-                      "errno"));
+                          "errno"));
             }
           return -1;
         }
 
       // Add the handler to Cache
-      int retval = this->add_handler (prop,
-                                      svc_handler);
+      int retval =
+        this->orb_core ()->connection_cache ().cache_handler (prop,
+                                                              svc_handler);
+
 
       if (retval != 0 && TAO_debug_level > 0)
         {
