@@ -572,6 +572,9 @@ public:
 
     /// The implementation class.
     ACE_Asynch_Read_File_Result_Impl *implementation_;
+
+  private:
+    ACE_UNIMPLEMENTED_FUNC (void operator= (Result &));
   };
 };
 
@@ -686,6 +689,9 @@ public:
 
     /// The implementation class.
     ACE_Asynch_Write_File_Result_Impl *implementation_;
+
+  private:
+    ACE_UNIMPLEMENTED_FUNC (void operator= (Result &));
   };
 };
 
