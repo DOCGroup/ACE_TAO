@@ -632,6 +632,8 @@ ACE::round_to_pagesize (off_t len)
       SYSTEM_INFO sys_info;
       ::GetSystemInfo (&sys_info);
       ACE::pagesize_ = (size_t) sys_info.dwPageSize;
+#elif defined (_SC_PAGESIZE)
+      ACE::pagesize_ = (size_t) ::sysconf (_SC_PAGESIZE);
 #elif defined (ACE_HAS_GETPAGESIZE)
       ACE::pagesize_ = (size_t) ::getpagesize ();
 #else

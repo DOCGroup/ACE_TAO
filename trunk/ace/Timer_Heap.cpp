@@ -1,3 +1,7 @@
+// Timer_Heap.cpp
+// $Id$
+
+#define ACE_BUILD_DLL
 #include "ace/Timer_Heap.h"
 
 ACE_Timer_Heap_Iterator::ACE_Timer_Heap_Iterator (ACE_Timer_Heap &heap)

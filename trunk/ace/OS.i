@@ -4597,12 +4597,6 @@ ACE_OS::exit (int status)
 {
   // ACE_TRACE ("ACE_OS::exit");
 #if defined (ACE_WIN32)
-  // In WIN32 when the process exits through an exit() call, some
-  // process resources (I think file handles) are freed before the
-  // static variable destructors are called. This results in an
-  // application error when tracing is enabled. Calling
-  // ACE_LOG_MSG->stop_tracing() before the exit() does the job.
-  ACE_LOG_MSG->stop_tracing ();
   ::ExitProcess ((UINT) status);
 #else
   ::exit (status);
