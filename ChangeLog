@@ -1,3 +1,9 @@
+Tue Feb 06 19:03:35 2001  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: For C++ 5, make sure
+          to add CFLAGS into CCFLAGS, even if no other options are added. Else
+          things get built without -mt.
+
 Tue Feb 06 18:37:41 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Thread_Mutex_Test.cpp: Changed wording of the message for

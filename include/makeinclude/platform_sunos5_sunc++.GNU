@@ -93,13 +93,15 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
   #### CC 5.0.
   inline = 0
 
+  CCFLAGS += $(CFLAGS)
+
   #### If compat=4 is desired, set up for that. There are syntactic diffs
   #### in the compatibility modes, but here all we need to be concerned with
   #### is turning on -compat=4, and not trying to enable the new libraries.
   #### RTTI may work, but has not been tested. To try it, cut/paste the
   #### rtti conditions from the 4.2 section, above.
   ifeq ($(compat4),1)
-    CCFLAGS += -compat=4 $(CFLAGS) -DACE_LACKS_RTTI -instances=explicit
+    CCFLAGS += -compat=4 -DACE_LACKS_RTTI -instances=explicit
   endif # compat4 requested
 endif # CC 5.0 or later
 endif # ! 4.2
