@@ -4074,6 +4074,9 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_UNUSED_ARG (how);
 
   ACE_NOTSUP_RETURN (-1);  
+#elif defined (ACE_HAS_SIGTHREADMASK)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigthreadmask (how, nsm, osm),
+                                       ace_result_), int, -1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_sigsetmask (how, nsm, osm), 
 				       ace_result_),

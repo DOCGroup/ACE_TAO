@@ -2552,6 +2552,15 @@ struct ACE_Export ACE_Str_Buf : public strbuf
   // Constructor.
 };
 
+enum ACE_Singleton_Strategy
+  // = TITLE
+  //     Select whether the <ACE_Singleton> creates the Singleton on
+  //     the heap or in thread-specific storage.
+{
+  ACE_SINGLETON_HEAP,
+  ACE_SINGLETON_TSS
+};
+
 class ACE_Export ACE_OS
   // = TITLE
   //     This class defines an operating system independent
