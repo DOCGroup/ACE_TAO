@@ -1,3 +1,8 @@
+Wed Apr 18 09:44:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Leader_Follwer.h: Added TAO_Export macros. Looks to me that
+	  this should take care of link errors on Win32.
+
 Wed Apr 18 08:49:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/RTCORBA/Thread_Pool/server.cpp (main): 
