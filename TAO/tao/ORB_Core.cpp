@@ -312,21 +312,27 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   int std_profile_components = 0;
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
+  // Copy command line parameter not to use original.
+  ACE_Argv_Type_Converter command_line (argc, argv);
+
+  ACE_Arg_Shifter arg_shifter (command_line.get_argc (),
+                               command_line.get_TCHAR_argv ());
+
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    monitor,
+                    this->lock_,
+                    -1);
+
   // Pick up the value of the use_implrepo_ flag from an environment variable
   // called "TAO_USE_IMR". Do it here so that it can be overridden by
   // the "-ORBUseIMR" command line argument.
   //
-  char* use_IMR_env_var_value = ACE_OS::getenv  ("TAO_USE_IMR") ;
+  char* const use_IMR_env_var_value = ACE_OS::getenv  ("TAO_USE_IMR") ;
   if  (use_IMR_env_var_value != 0)
     {
       this->use_implrepo_ = ACE_OS::atoi  (use_IMR_env_var_value) ;
     }
 
-  // Copy command line parameter not to use original.
-  ACE_Argv_Type_Converter command_line(argc, argv);
-
-  ACE_Arg_Shifter arg_shifter (command_line.get_argc(),
-                               command_line.get_TCHAR_argv());
 
   while (arg_shifter.is_anything_left ())
     {
@@ -1185,7 +1191,7 @@ TAO_ORB_Core::fini (void)
   if (this->thread_lane_resources_manager_ != 0)
     this->thread_lane_resources_manager_->finalize ();
 
-  (void) TAO_Internal::close_services ();
+  (void) TAO::ORB::close_services ();
 
   // Destroy the object_key table
   this->object_key_table_.destroy ();
@@ -1682,16 +1688,14 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
   // but we are stuck in platforms without exceptions!
   CORBA::Object_ptr x;
   {
-    // @@ Ossama: maybe we need another lock for the table, to
-    //    reduce contention on the Static_Object_Lock below, if so
-    //    then we need to use that lock in the ORB_init() function.
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
-                              *ACE_Static_Object_Lock::instance (),
-                              0));
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->lock_,
+                      CORBA::Object::_nil ());
 
-    TAO_ORB_Table *table = TAO_ORB_Table::instance ();
-    const TAO_ORB_Table::Iterator end = table->end ();
-    for (TAO_ORB_Table::Iterator i = table->begin (); i != end; ++i)
+    TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
+    const TAO::ORB_Table::Iterator end = table->end ();
+    for (TAO::ORB_Table::Iterator i = table->begin (); i != end; ++i)
       {
         TAO_ORB_Core *other_core = (*i).int_id_;
 
@@ -1727,20 +1731,21 @@ TAO_ORB_Core::initialize_object (TAO_Stub *stub,
     // @@ Ossama: maybe we need another lock for the table, to
     //    reduce contention on the Static_Object_Lock below, if so
     //    then we need to use that lock in the ORB_init() function.
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
-                              *ACE_Static_Object_Lock::instance (),
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                              guard,
+                              this->lock_,
                               0));
 
-    TAO_ORB_Table *table = TAO_ORB_Table::instance ();
-    TAO_ORB_Table::Iterator end = table->end ();
-    for (TAO_ORB_Table::Iterator i = table->begin (); i != end; ++i)
+    TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
+    TAO::ORB_Table::Iterator const end = table->end ();
+    for (TAO::ORB_Table::Iterator i = table->begin (); i != end; ++i)
       {
-        TAO_ORB_Core *other_core = (*i).int_id_;
+        TAO_ORB_Core * const other_core = (*i).int_id_;
 
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
           {
-            TAO_Adapter_Registry *ar =
+            TAO_Adapter_Registry * const ar =
               other_core->adapter_registry ();
 
             return ar->initialize_collocated_object (stub,
@@ -2008,11 +2013,7 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
   // Now remove it from the ORB table so that it's ORBid may be
   // reused.
-  {
-    ACE_MT (ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, guard,
-                       *ACE_Static_Object_Lock::instance ()));
-    TAO_ORB_Table::instance ()->unbind (this->orbid_);
-  }
+  TAO::ORB_Table::instance ()->unbind (this->orbid_);
 }
 
 void
@@ -2829,7 +2830,7 @@ TAO_ORB_Core_instance (void)
 {
   // @@ This is a slight violation of layering, we should use
   //    TAO_ORB_Core_instance(), but that breaks during startup.
-  TAO_ORB_Table *orb_table = TAO_ORB_Table::instance ();
+  TAO::ORB_Table * const orb_table = TAO::ORB_Table::instance ();
   if (orb_table->first_orb () == 0)
     {
       ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
@@ -2913,16 +2914,16 @@ TAO_ORB_Core::init_ref_map ()
 }
 
 void
-TAO_ORB_Core::set_default (const char *orb_id)
+TAO_ORB_Core::set_default (const char * orb_id)
 {
-  TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+  TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
   table->set_default (orb_id);
 }
 
 void
-TAO_ORB_Core::not_default (const char *orb_id)
+TAO_ORB_Core::not_default (const char * orb_id)
 {
-  TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+  TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
   table->not_default (orb_id);
 }
 

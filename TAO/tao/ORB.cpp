@@ -59,8 +59,11 @@ static const char ior_prefix[] = "IOR:";
 
 // = Static initialization.
 
-// Count of the number of ORBs.
-int CORBA::ORB::orb_init_count_ = 0;
+namespace
+{
+  // Count of the number of ORBs.
+  int orb_init_count = 0;
+}
 
 // ****************************************************************
 
@@ -1284,19 +1287,19 @@ CORBA::ORB::check_shutdown (ACE_ENV_SINGLE_ARG_DECL)
 // ****************************************************************
 
 void
-CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
+TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
 {
   // This method should be invoked atomically.  It is the caller's
   // responsibility to ensure that this condition is satisfied.
 
   // Prevent multiple initializations.
-  if (CORBA::ORB::orb_init_count_ != 0)
+  if (orb_init_count != 0)
     {
       return;
     }
   else
     {
-      ++CORBA::ORB::orb_init_count_;
+      ++orb_init_count;
     }
 
   // initialize the system TypeCodes
@@ -1437,10 +1440,12 @@ CORBA::ORB_init (int &argc,
       return CORBA::ORB::_nil ();
     }
 
+  CORBA::Environment & env (TAO_default_environment ());
+
   return CORBA::ORB_init (argc,
                           argv,
                           orb_name,
-                          TAO_default_environment ());
+                          env);
 }
 
 CORBA::ORB_ptr
@@ -1453,25 +1458,28 @@ CORBA::ORB_init (int &argc,
   ACE_UNUSED_ARG(ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
   // Use this string variable to hold the orbid
-  ACE_CString orbid_string = orbid;
+  ACE_CString orbid_string (orbid);
 
   // Copy command line parameter not to use original.
   ACE_Argv_Type_Converter command_line(argc, argv);
 
-  // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
-  // from being called within a static object CTOR.
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
-                            *ACE_Static_Object_Lock::instance (),
-                            CORBA::ORB::_nil ()));
+  {
+    // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
+    // from being called within a static object CTOR.
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                              guard,
+                              *ACE_Static_Object_Lock::instance (),
+                              CORBA::ORB::_nil ()));
 
-  // Make sure TAO's singleton manager is initialized.
-  if (TAO_Singleton_Manager::instance ()->init () == -1)
-    {
-      return CORBA::ORB::_nil ();
-    }
+    // Make sure TAO's singleton manager is initialized.
+    if (TAO_Singleton_Manager::instance ()->init () == -1)
+      {
+        return CORBA::ORB::_nil ();
+      }
 
-  CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+    TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  }
 
   // Make sure the following is done after the global ORB
   // initialization since we need to have exceptions initialized.
@@ -1539,17 +1547,23 @@ CORBA::ORB_init (int &argc,
     }
 
   // Get ORB Core
-  TAO_ORB_Core *oc =
-    TAO_ORB_Table::instance ()->find (orbid_string.c_str ());
+  TAO_ORB_Core_Auto_Ptr oc (
+    TAO::ORB_Table::instance ()->find (orbid_string.c_str ()));
 
-  // The ORB was initialized already, just return that one!
-  if (oc != 0)
+  // The ORB was already initialized.  Just return that one.
+  if (oc.get () != 0)
     {
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                                guard,
+                                *ACE_Static_Object_Lock::instance (),
+                                CORBA::ORB::_nil ()));
+
       if (oc->has_shutdown ())
         {
           // As defined by the CORBA 2.3 specification, throw a
-          // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
-          // has shutdown by the time an ORB function is called.
+          // CORBA::BAD_INV_ORDER exception with minor code 4 if the
+          // ORB has shutdown by the time an ORB function is
+          // called.
 
           // @@ Does the BAD_INV_ORDER exception apply here?
           //       -Ossama
@@ -1561,28 +1575,31 @@ CORBA::ORB_init (int &argc,
 
       return CORBA::ORB::_duplicate (oc->orb ());
     }
+  else
+    {
+      // An ORB corresponding to the desired ORBid doesn't exist so create
+      // a new one.
+      TAO_ORB_Core * tmp;
+      ACE_NEW_THROW_EX (tmp,
+                        TAO_ORB_Core (orbid_string.c_str ()),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (0,
+                                                                   ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
-  // An ORB corresponding to the desired ORBid doesn't exist so create
-  // a new one.
-  ACE_NEW_THROW_EX (oc,
-                    TAO_ORB_Core (orbid_string.c_str ()),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-
-  // The ORB table increases the reference count on the ORB Core so do
-  // not release it here.  Allow the TAO_ORB_Core_Auto_Ptr do decrease
-  // the reference on the ORB Core when it goes out of scope.
-  TAO_ORB_Core_Auto_Ptr safe_oc (oc);
+      // The ORB table increases the reference count on the ORB Core
+      // so do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr
+      // do decrease the reference on the ORB Core when it goes out of
+      // scope.
+      oc.reset (tmp);
+    }
 
   // Initialize the Service Configurator.  This must occur before the
   // ORBInitializer::pre_init() method is invoked on each registered
   // ORB initializer.
-  int result = TAO_Internal::open_services (command_line.get_argc (),
-                                            command_line.get_TCHAR_argv ());
+  int result = TAO::ORB::open_services (command_line.get_argc (),
+                                        command_line.get_TCHAR_argv ());
 
   // Check for errors returned from <TAO_Internal::open_services>.
   if (result != 0 && errno != ENOENT)
@@ -1600,9 +1617,9 @@ CORBA::ORB_init (int &argc,
     }
 
   // Run the registered ORB initializers, and initialize the ORB_Core.
-  TAO_ORBInitInfo *orb_init_info_temp;
+  TAO_ORBInitInfo * orb_init_info_temp;
   ACE_NEW_THROW_EX (orb_init_info_temp,
-                    TAO_ORBInitInfo (safe_oc.get (),
+                    TAO_ORBInitInfo (oc.get (),
                                      command_line.get_argc(),
                                      command_line.get_ASCII_argv()),
                     CORBA::NO_MEMORY (
@@ -1619,14 +1636,14 @@ CORBA::ORB_init (int &argc,
 
   // Call the ORBInitializer::pre_init() on each registered ORB
   // initializer.
-  TAO_ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+  TAO::ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in ()
+                                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Initialize the ORB Core instance.
-  result = safe_oc->init (command_line.get_argc(),
-                          command_line.get_ASCII_argv()
-                          ACE_ENV_ARG_PARAMETER);
+  result = oc->init (command_line.get_argc(),
+                     command_line.get_ASCII_argv()
+                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Check for errors and return nil pseudo-reference on error.
@@ -1640,8 +1657,8 @@ CORBA::ORB_init (int &argc,
 
   // Call the ORBInitializer::post_init() on each registered ORB
   // initializer.
-  TAO_ORBInitializer_Registry::instance ()->post_init (orb_init_info.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+  TAO::ORBInitializer_Registry::instance ()->post_init (orb_init_info.in ()
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1661,8 +1678,8 @@ CORBA::ORB_init (int &argc,
     }
 
   // Before returning remember to store the ORB into the table...
-  if (TAO_ORB_Table::instance ()->bind (orbid_string.c_str (),
-                                        safe_oc.get ()) != 0)
+  if (TAO::ORB_Table::instance ()->bind (orbid_string.c_str (),
+                                         oc.get ()) != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (0,
                                        CORBA::COMPLETED_NO),
                       CORBA::ORB::_nil ());
