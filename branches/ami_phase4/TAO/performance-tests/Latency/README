@@ -21,3 +21,18 @@ How to run:
 
 $ server -ORBSvcConf server.conf -n 2
 $ client -ORBSvcConf client.conf -n 4 -i 1000
+
+$ st-client -i 1000 -k file://ior_file -ORBdebuglevel 0 \ 
+        -ORBSvcConf client-st-exclusive.conf
+
+$ ami-latency-client -k file://ior_file -i 1000 \
+        -ORBSvcConf client-st-muxed.conf
+
+AMI Throughput Test:
+==================
+$ server -o ior_file -ORBEndpoint iiop://localhost:port \
+        -ORBSvcConf server.conf
+
+$ ami-throughput-client -s -k file://ior_file -i 1000 \
+                -ORBSvcConf client-st-muxed.conf \
+                -ORBPreconnect iiop://localhost:port
