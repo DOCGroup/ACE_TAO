@@ -1,3 +1,9 @@
+Tue Feb 06 18:37:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/Thread_Mutex_Test.cpp: Changed wording of the message for
+          "timed acquire" not supported so as not to trip the error catcher
+          in run_tests.pl.
+
 Tue Feb 06 17:55:28 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/Proactor/post_completions.cpp: Allow this to
