@@ -1,0 +1,34 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: POA Default Servant Client - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "c:\temp\RSPAE6.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "..\..\.." /I "..\..\..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fo"Debug/" /Fd"Debug/" /FD /c 
+"C:\StentorSoft\ACE_wrappers\TAO\tests\POA\MT_Client\client.cpp"
+]
+Creating command line "cl.exe @c:\temp\RSPAE6.tmp" 
+Creating temporary file "c:\temp\RSPAE7.tmp" with contents
+[
+TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /subsystem:console /incremental:yes /pdb:"client.pdb" /debug /machine:I386 /out:"client.exe" /pdbtype:sept /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" 
+.\Debug\client.obj
+.\Debug\FileC.obj
+.\Debug\FileS.obj
+]
+Creating command line "link.exe @c:\temp\RSPAE7.tmp"
+<h3>Output Window</h3>
+Compiling...
+client.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+client.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
