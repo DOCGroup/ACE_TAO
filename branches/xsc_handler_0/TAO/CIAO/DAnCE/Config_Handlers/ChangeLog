@@ -1,4 +1,17 @@
+Wed Sep 22 12:29:52 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * Any_Handler.h:
+  * Any_Handler.cpp:
+  * ADD_Handler.h:
+  * ADD_Handler.cpp:
+  * RDD_Handler.h:
+  * RDD_Handler.cpp:
+  
+    Added a class to handle ImplementationDependency. Changed ADD_Handler
+    to use RDD_Handler for ResourceDeploymentDependencies. 
+    
 Wed Sep 22 10:47:02 2004  Jules White <jules@dre.vanderbilt.edu>
+
   * Any_Handler.h:
   * Any_Handler.cpp:
   

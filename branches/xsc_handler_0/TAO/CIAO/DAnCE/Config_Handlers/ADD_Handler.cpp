@@ -5,6 +5,9 @@
 #include "ADD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
+#include "Prop_Handler.h"
+#include "Req_Handler.h"
+#include "RDD_Handler.h"
 
 
 
@@ -49,12 +52,42 @@ namespace CIAO
            item (desc.begin_location ());
            item != desc.end_location ();
            ++item)
-       {	 
-         toconfig.location.length (
-           toconfig.location.length () + 1);
-         toconfig.location[toconfig.location.length () - 1] =
-           CORBA::string_dup (item->c_str ());
-       }
+        {	 
+           toconfig.location.length (
+             toconfig.location.length () + 1);
+           toconfig.location[toconfig.location.length () - 1] =
+             CORBA::string_dup (item->c_str ());
+        }
+      
+      if (desc.execParameter_p ())
+        {
+	 			  Prop_Handler handler;
+          toconfig.execParameter.length (
+            toconfig.execParameter.length () + 1);
+          handler.get_Property (
+            toconfig.execParameter[toconfig.execParameter.length () - 1],
+            desc.execParameter ());
+        }
+      
+      if (desc.deployRequirement_p ())
+        {
+	 			  Req_Handler handler;
+          toconfig.deployRequirement.length (
+            toconfig.deployRequirement.length () + 1);
+          handler.get_Requirement (
+            toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
+            desc.deployRequirement ());
+        }
+      
+      if (desc.deployedResource_p ())
+        {
+	 			  RDD_Handler handler;
+          toconfig.deployedResource.length (
+            toconfig.deployedResource.length () + 1);
+          handler.get_ResourceDeploymentDescription (
+            toconfig.deployedResource[toconfig.deployedResource.length () - 1],
+            desc.deployedResource ());
+        }
 
       
     }
