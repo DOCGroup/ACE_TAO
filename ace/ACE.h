@@ -444,9 +444,29 @@ public:
   // <ACE_OS::free>
 #endif /* ACE_HAS_WINCE */
 
-  static char *strecpy (char *s, const char *t);
-  // Copies <t> to <s>, returning a pointer to the end of the copied
-  // region (rather than the beginning, a la <strcpy>.
+  static char *strecpy (char *des, const char *src);
+  // Copies <src> to <des>, returning a pointer to the end of the
+  // copied region, rather than the beginning, as <strcpy> does.
+
+  static const char *strend (const char *);
+  // Returns a pointer to the "end" of the string, i.e., the character
+  // past the '\0'.
+
+  static char *strnew (const char *s);
+  // This method is just like <strdup>, except that it uses <operator
+  // new> rather than <malloc>.
+
+  static wchar_t *strnew (const wchar_t *s); 
+  // This method is just like <strdup>, except that it uses <operator
+  // new> rather than <malloc>.
+
+  static char *strndup (const char *str, size_t n);
+  // Create a fresh new copy of <str>, up to <n> chars long.  Uses
+  // <ACE_OS::malloc> to allocate the new string.
+
+  static char *strnnew (const char *str, size_t n);
+  // Create a fresh new copy of <str>, up to <n> chars long.  Uses
+  // <ACE_OS::malloc> to allocate the new string.
 
   static char *strsplit_r (char *s,
                            const char *token,

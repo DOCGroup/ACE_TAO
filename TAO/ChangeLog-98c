@@ -1,3 +1,11 @@
+Sun Sep  6 23:06:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/be/be_decl.cpp,
+	  TAO_IDL/util/utl_global.cpp,
+	  orbsvcs/tests/ImplRepo/ir_implrepo_impl.cpp:
+	  Replaced all uses of ACE_OS::strnew() with ACE::strnew() to
+	  reflect the new changes.
+
 Sun Sep  6 17:57:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Simple/time/Client_i.cpp: Changed the use of exceptions in

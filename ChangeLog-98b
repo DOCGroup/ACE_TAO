@@ -1,5 +1,11 @@
 Sun Sep  6 15:49:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/ACE: Added several new helper string functions, which were
+ 	  mined from the drwho program.
+
+	* ace/OS: Moved strnew() into class ACE, which is where it
+ 	  belongs...
+
 	* ace/Containers: Merged the ACE_Array class entirely into the
  	  Containers files, which is more consistent with the general
  	  design of ACE.  Also, removed ace/Array.i and Array.cpp since
