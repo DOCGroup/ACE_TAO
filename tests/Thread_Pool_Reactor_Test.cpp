@@ -129,14 +129,14 @@ int
 Acceptor_Handler::handle_input (ACE_HANDLE fd)
 {
   ASYS_TCHAR buffer[BUFSIZ];
-  int result = this->peer ().recv (buffer, BUFSIZ * sizeof (ASYS_TCHAR));
+  ASYS_TCHAR len = 0;
+  int result = this->peer ().recv (&len, sizeof (ASYS_TCHAR));
 
-  if (result > 0)
+  if (result > 0 && this->peer ().recv_n (buffer, len) == len)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) Acceptor_Handler::handle_input (fd = %x)\n"),
                   fd));
-      buffer[result] = '\0';
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) handle_input: input is %s\n"),
                   buffer));
@@ -187,13 +187,14 @@ svr_worker (void *)
 }
 
 void *
-cli_worker (void *)
+cli_worker (void *arg)
 {
   // Client thread function.
   ACE_INET_Addr addr (rendezvous);
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
   ACE_Time_Value delay (0, req_delay);
+  size_t len = * (ASYS_TCHAR*) arg;
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {
@@ -205,15 +206,13 @@ cli_worker (void *)
           continue;
         }
 
-      ASYS_TCHAR *buf = ASYS_TEXT ("Message from Connection worker\n");
-
       for (size_t j = 0; j < cli_req_no; j++)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("(%t) conn_worker stream handle = %x\n"),
                       stream.get_handle ()));
-          stream.send_n (buf,
-                         (ACE_OS::strlen (buf) + 1) * sizeof (ASYS_TCHAR));
+          stream.send_n (arg,
+                         len + sizeof (ASYS_TCHAR));
           ACE_OS::sleep (delay);
         }
 
@@ -227,12 +226,16 @@ void *
 worker (void *)
 {
   ACE_OS::sleep (3);
+  ASYS_TCHAR *msg = ASYS_TEXT ("Message from Connection worker\n");
+  ASYS_TCHAR buf [BUFSIZ];
+  buf[0] = (ACE_OS::strlen (msg) + 1) * sizeof (ASYS_TCHAR);
+  ACE_OS::strcpy (&buf[1], msg);
 
   ACE_INET_Addr addr (rendezvous);
 
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
-                                                      &addr);
+                                                      buf);
   ACE_ASSERT (grp != -1);
 
   ACE_Thread_Manager::instance ()->wait_grp (grp);
@@ -248,12 +251,12 @@ worker (void *)
                 ASYS_TEXT ("%p Error while connecting\n"),
                 ASYS_TEXT ("connect")));
 
-  char *buf = "shutdown";
+  char *sbuf = "\011shutdown";
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("shutdown stream handle = %x\n"),
               stream.get_handle ()));
 
-  stream.send_n (buf, ACE_OS::strlen (buf) + 1);
+  stream.send_n (sbuf, ACE_OS::strlen (sbuf) + 1);
   stream.close ();
 
   return 0;
