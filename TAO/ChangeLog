@@ -1,3 +1,8 @@
+Thu Aug 29 06:04:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Sync_Strategies.h:
+          Fixed doxygen command.
+
 Wed Aug 28 16:50:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Svc_Utils.dsp:
@@ -10,7 +15,7 @@ Wed Aug 28 16:27:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
 
           Changed a check to look for a different error return
-          value, to correspond with recent changes to 
+          value, to correspond with recent changes to
           ACE_Configuration.
 
 Wed Aug 28 14:55:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -20,7 +25,7 @@ Wed Aug 28 14:55:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
 
           Took away the checks for 'local' that guarded generation
-          of CDR and Any operators. I thought these had been 
+          of CDR and Any operators. I thought these had been
           removed before, but somehow they crept back in. Thanks
           to Irfan <irfan@oomworks.com> for pointing it out.
 
@@ -32,7 +37,7 @@ Wed Aug 28 14:55:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
 
           Fixed a signed/unsigned comparison warning that popped
-          up because of a change in ACE.          
+          up because of a change in ACE.
 
 Wed Aug 28 06:06:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -1,7 +1,18 @@
 Thu Aug 29 05:53:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/post_completions.cpp:
-          Fixed compile error
+          Fixed compile error.
+
+        * ace/OS_Dirent.h:
+        * ace/OS_Errno.cpp:
+        * ace/Time_Value.h:
+        * ace/Time_Value.inl:
+          Made method signature the same in definition and implementation.
+
+        * ace/TkReactor.cpp:
+        * ace/TkReactor.h:
+          Made method argument names the same as in the base so that doxygen
+          can generate the documentation.
 
 Wed Aug 28 23:30:31 2002  Steve Huston  <shuston@riverace.com>
 
