@@ -109,6 +109,7 @@ ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
         Event/EC_Timeout_Generator \
         Event/EC_Reactive_Timeout_Generator \
 	Event/EC_Priority_Dispatching \
+	Event/EC_MT_Dispatching \
 	Event/EC_Dispatching_Task \
 	Event/EC_Sched_Filter \
 	Event/EC_Sched_Filter_Builder \

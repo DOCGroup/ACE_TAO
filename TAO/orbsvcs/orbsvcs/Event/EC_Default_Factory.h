@@ -133,6 +133,13 @@ private:
   int consumer_admin_lock_;
   int supplier_admin_lock_;
   // Several flags to control the kind of object created.
+
+  int dispatching_threads_;
+  int dispatching_threads_flags_;
+  int dispatching_threads_priority_;
+  int dispatching_threads_force_active_;
+  // The MT dispatching priority has several arguments that could be
+  // controlled here...
 };
 
 #if defined (__ACE_INLINE__)
