@@ -136,7 +136,6 @@ template class ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Mutex>;
 template class ACE_Guard<ACE_RW_Mutex>;
-template class ACE_TSS<ACE_Dynamic>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>
 #pragma instantiate ACE_Acceptor<Supplier_Handler, ACE_UPIPE_ACCEPTOR>
@@ -149,7 +148,6 @@ template class ACE_TSS<ACE_Dynamic>;
 #pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
 #pragma instantiate ACE_Guard<ACE_RW_Mutex>
-#pragma instantiate ACE_TSS<ACE_Dynamic>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
