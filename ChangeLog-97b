@@ -1,3 +1,27 @@
+Tue Nov 04 23:11:41 1997    <nw1@COYOTE>
+
+	* ace/Thread_Manager.h: Added an ACE_Unbounded_Queue to
+	  collect threads that need to be removed.  We can no longer
+ 	  remove thread descriptors directly from <thr_list_> because that
+ 	  would clobber the integrity of the double-linked list.  Changed
+ 	  the data type of <terminated_thr_queue_> from
+ 	  ACE_Unbounded_Queue<ACE_Thread_Descriptor> to
+ 	  ACE_Unbounded_Queue<ACE_Descriptor*> to reduce the codes
+ 	  generated.
+
+	* ace/Thread_Manager.cpp:  Reordered several thread operations so they
+	  won't remove thread descriptor directly while traversing the
+	  <thr_list_>.  Removed #ifdef <VXWORKS> from template
+	  instantiation section because now VxWorks needs it too.
+
+	* ace/Container.{h,cpp}:  Added more check on validities of passed in
+	  node to ACE_Double_Linked_List::remove_element.  Also changed
+	  the function to reset a node's <prev_> and <next_> to prevent
+	  double removal of a node, which messes up the list structure.
+
+	* ace/ace.dsp:  Excluded Acceptor.cpp from make explicitly.
+	  Moving this file to "template file folder" was not enough.
+
 Tue Nov  4 18:03:51 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/config-sco*.h: Added #define ACE_DEFAULT_CLOSE_ALL_FILES 0
