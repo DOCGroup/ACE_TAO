@@ -1,3 +1,8 @@
+2003-11-07  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* ace/config-win32-msvc.h:
+	Added QT_DLL definition.
+
 Fri Nov  7 21:09:01 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Makefile.ace:
