@@ -256,3 +256,4 @@ ACE_Reactor::dump (void) const
 
   implementation_->dump ();
 }
+

@@ -1178,14 +1178,26 @@ ACE_WFMO_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
   return 0;
 }
 
+ACE_Timer_Queue *
+ACE_WFMO_Reactor::timer_queue (void) const
+{
+  return this->timer_queue_;
+}
+
 int
-ACE_WFMO_Reactor::set_timer_queue (ACE_Timer_Queue *timer_queue)
+ACE_WFMO_Reactor::timer_queue (ACE_Timer_Queue *tq)
 {
   if (this->timer_queue_ != 0 && this->delete_timer_queue_ != 0)
     delete this->timer_queue_;
-  this->timer_queue_ = timer_queue;
+  this->timer_queue_ = tq;
   this->delete_timer_queue_ = 0;
   return 0;
+}
+
+int
+ACE_WFMO_Reactor::set_timer_queue (ACE_Timer_Queue *tq)
+{
+  return this->timer_queue (tq);
 }
 
 int

@@ -121,9 +121,22 @@ ACE_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 }
 
 ACE_INLINE int
-ACE_Reactor::set_timer_queue (ACE_Timer_Queue *timer_queue)
+ACE_Reactor::timer_queue (ACE_Timer_Queue *tq)
 {
-  return this->implementation ()->set_timer_queue (timer_queue);
+  return this->implementation ()->timer_queue (tq);
+}
+
+ACE_INLINE int
+ACE_Reactor::set_timer_queue (ACE_Timer_Queue *tq)
+{
+  return this->timer_queue (tq);
+}
+
+ACE_INLINE ACE_Timer_Queue *
+ACE_Reactor::timer_queue (void) const
+{
+  ACE_Reactor_Impl *impl = this->implementation_;
+  return impl->timer_queue ();
 }
 
 ACE_INLINE int

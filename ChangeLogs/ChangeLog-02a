@@ -1,3 +1,17 @@
+Tue Jun 20 07:37:18 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Select_Reactor_T.h,
+  	* ace/Select_Reactor_T.cpp,
+  	* ace/Reactor.h,
+    	* ace/Reactor.i,
+    	* ace/Reactor_Impl.h,
+	* ace/WFMO_Reactor.h,
+  	* ace/WFMO_Reactor.cpp:
+	  Added a new method to access the Reactor's timer queue.  Also
+ 	  renamed the accessors timer_queue(ACE_Timer_Queue *) and
+ 	  ACE_Timer_Queue *timer_queue() to be more consistent with ACE
+ 	  naming conventions.  Thanks to Jody Hagins for reporting this.
+
 Tue Jun 20 02:06:15 2000  Craig Rodrigues <crodrigu@bbn.com>
 
         * include/makeinclude/platform_sunos5_g++.GNU
