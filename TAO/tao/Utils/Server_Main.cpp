@@ -91,7 +91,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
             orb->perform_work(work_tv ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
             quit = servant.idle (result ACE_ENV_ARG_PARAMETER);
-	    ACE_TRY_CHECK;
+            ACE_TRY_CHECK;
           }
           servant.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
