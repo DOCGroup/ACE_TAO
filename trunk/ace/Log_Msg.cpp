@@ -869,9 +869,13 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   //   this would have on that.
                   // -Steve Huston, 19-Aug-97
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"), thread_self());
+#elif defined (DIGITAL_UNIX)
+		  ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
+				   pthread_getselfseq_np());
 #else
                   ACE_hthread_t t_id;
                   ACE_Thread::self (t_id);
+
 #  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
 		  // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
 		  // more meaningful, readable, thread ID.  This will match
@@ -881,6 +885,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 #  else
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"), t_id);
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
+
 #endif /* ACE_WIN32 */
                   break;
                 case 's':
