@@ -10,8 +10,9 @@ Fri Oct 15 19:25:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Make sure TAO_ORB_Core pointer is not zero prior to calling
 	  reset_hint() in profile.  The hint in the profile relies on
-	  state stored in the ORB core.	  Removed unnecessary zero pointer
-	  check prior to deletion.  [Bug 360]
+	  state stored in the ORB core.  [Bug 360]
+
+	  Removed unnecessary zero pointer check prior to deletion.
 
 	* tao/Stub.i:
 
