@@ -3,9 +3,6 @@
 // Exception macros
 #include "tao/poa_macros.h"
 
-// Timeprobes class
-#include "tao/Timeprobe.h"
-
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA_Policies::thread (void) const
 {
@@ -493,20 +490,6 @@ TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
   ACE_UNUSED_ARG (env);
 
   this->adapter_activator_ = PortableServer::AdapterActivator::_duplicate (adapter_activator);
-}
-
-ACE_INLINE void
-TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
-                           CORBA::ServerRequest &req,
-                           void *context,
-                           CORBA::Environment &env)
-{
-  ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
-
-  // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_READ_GUARD (ACE_Lock, monitor, this->lock (), env);
-
-  this->dispatch_servant_i (key, req, context, env);
 }
 
 ACE_INLINE const TAO_Creation_Time &
