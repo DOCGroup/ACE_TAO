@@ -43,8 +43,9 @@ Clerk_i::read_ior (const char *filename)
 
   ACE_Read_Buffer ior_buffer (f_handle);
 
-  char *data = ior_buffer.read ();
+  char *data = ior_buffer.read (EOF,'\n','\n');
   char *str = data;
+
   int result = 0;
 
   if (data == 0)
@@ -53,10 +54,9 @@ Clerk_i::read_ior (const char *filename)
                       -1);
   TAO_TRY
     {
-      // @@ Vishal, can you try to use ACE_OS::strtok() to do this?
-      for (int nreplaced = ior_buffer.replaced ();
-           nreplaced != 0;
-           nreplaced--)
+      for (str = ACE_OS::strtok (data,"\n");
+           str != 0 ;
+           str = ACE_OS::strtok (0,"\n"))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "iors -> |%s|\n",
@@ -67,19 +67,13 @@ Clerk_i::read_ior (const char *filename)
 					  TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          // @@ Vishal, please check if this can be simplified to
-          // str += ACE_OS::strlen (str) + 1;
-          str = str + ACE_OS::strlen (str) + 1;
-
           // Return if the server reference is nil.
           if (CORBA::is_nil (objref.in ()))
             {
               ACE_ERROR ((LM_ERROR,
                           "IOR for the server is Null\n"));
-
               result = -1;
               break;
-              // clean up before returning.
             }
 
           CosTime::TimeService_ptr server =
@@ -95,7 +89,6 @@ Clerk_i::read_ior (const char *filename)
       TAO_TRY_ENV.print_exception ("Exception");
     }
   TAO_ENDTRY;
-
 
   ACE_OS::close (f_handle);
   ior_buffer.alloc ()->free (data);
