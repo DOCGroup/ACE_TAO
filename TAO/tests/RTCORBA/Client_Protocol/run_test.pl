@@ -15,17 +15,17 @@ $iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
 
 ACE::checkForTarget($cwd);
 
-print STDERR "********** RTCORBA Client Protocol Policy Unit Test\n\n";
+print STDERR "\n********** RTCORBA Client Protocol Policy Unit Test\n\n";
 
 unlink $iorfile1;
 unlink $iorfile2;
 
 # Arguments are platform-dependent (UIOP not available on Windows).
 $server_args =
-    "-s $iorfile1 -c $iorfile2 -p 1413566208 "
+    "-s $iorfile1 -c $iorfile2 -p 1413566208 -ORBdebuglevel 3"
     ."-ORBendpoint iiop:// -ORBendpoint shmiop:// -ORBEndpoint uiop://";
 $client_args =
-    "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 1";
+    "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210";
 
 if ($^O eq "MSWin32")
 {
@@ -33,7 +33,7 @@ $server_args =
     "-s $iorfile1 -c $iorfile2 -p 1413566210 "
     ."-ORBendpoint iiop:// -ORBendpoint shmiop://";
 $client_args =
-    "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 1";
+    "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 3";
 }
 
 # Start server.
