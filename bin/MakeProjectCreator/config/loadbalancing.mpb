@@ -2,4 +2,5 @@ project : messaging, naming, portablegroup {
   libs     += TAO_CosLoadBalancing
   after    += CosLoadBalancing
   comps    += CosLoadBalancing
+  requires += CosLoadBalancing
 }
