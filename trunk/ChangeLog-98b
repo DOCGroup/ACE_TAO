@@ -1,16 +1,20 @@
+Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * README: expanded mention of BUG-REPORT-FORM.
+
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Collection_Test.cpp: Added new test for ACE collections.
+        * tests/Collection_Test.cpp: Added new test for ACE collections.
 
-	* ace/Map_Manager.cpp (operator*): 
-	* ace/Containers_T.cpp (operator*): 
-	* ace/SPIPE_Acceptor.cpp (create_new_instance): 
+        * ace/Map_Manager.cpp (operator*):
+        * ace/Containers_T.cpp (operator*):
+        * ace/SPIPE_Acceptor.cpp (create_new_instance):
 
-	  Fixed ACE_ASSERT usage.
+          Fixed ACE_ASSERT usage.
 
-	* ace/config-vxworks5.x.h: Added ACE_LACKS_FSYNC.
+        * ace/config-vxworks5.x.h: Added ACE_LACKS_FSYNC.
 
-	* ace/OS.i (fsync): Added ACE_NOTSUP_RETURN (-1).
+        * ace/OS.i (fsync): Added ACE_NOTSUP_RETURN (-1).
 
 Tue Dec 08 21:39:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
