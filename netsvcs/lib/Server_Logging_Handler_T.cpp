@@ -153,12 +153,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 
 template<class SLH, class LMR, class SST>
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::ACE_Server_Logging_Acceptor_T (void)
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
-  : receiver_ (LMR (), SST ())
-#else
-  : receiver_ (LMR ()),
-    schedule_strategy_ (SST ())
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
 {
 }
 
