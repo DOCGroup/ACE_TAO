@@ -73,6 +73,11 @@ private:
 
 private:
 
+  void deactivate (CORBA::Environment &ACE_TRY_ENV);
+  // Deactivate this Callback servant.
+
+private:
+
   ACE_FILE_Addr file_;
   // The Addr corresponding to the retrieved file.
 

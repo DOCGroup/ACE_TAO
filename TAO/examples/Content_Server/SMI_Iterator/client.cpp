@@ -59,7 +59,7 @@ main (int argc, char *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Nil reference to ")
-                             ACE_TEXT ("Name Service\n")), 
+                             ACE_TEXT ("Name Service\n")),
                             -1);
         }
 
@@ -273,12 +273,10 @@ int external_viewer (const char *content_type,
 }
 
 int
-spawn_viewer (const char * content_type,
-              const char * filename)
+spawn_viewer (const char *content_type,
+              const char *filename)
 {
-  // It is highly unlikey, a mime type will ever be larger than 80
-  // bytes.
-  char viewer[80];
+  char viewer[BUFSIZ];
 
   if (::external_viewer (content_type,
                          viewer,

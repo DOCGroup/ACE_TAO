@@ -11,7 +11,7 @@
 ACE_RCSID(AMI_Iterator, Iterator_Handler, "$Id$")
 
 Iterator_Handler::Iterator_Handler (void)
-  : file_ ((const ACE_FILE_Addr &) ACE_Addr::sap_any),
+  : file_ (ACE_sap_any_cast (const ACE_FILE_Addr &)),
     file_io_ (),
     contents_ (),
     metadata_ (),
@@ -97,7 +97,7 @@ Iterator_Handler::run (int *request_count,
       this->request_count_ = request_count;
   else
     // @@ Application code shouldn't throw system exceptions.
-    ACE_THROW (CORBA::BAD_PARAM ());  
+    ACE_THROW (CORBA::BAD_PARAM ());
   // Initialize the Content Iterator
   this->initialize_content_iterator (pathname,
                                      factory,
@@ -116,7 +116,7 @@ Iterator_Handler::run (int *request_count,
 }
 
 void
-Iterator_Handler::initialize_content_iterator 
+Iterator_Handler::initialize_content_iterator
   (const char *pathname,
    Web_Server::Iterator_Factory_ptr factory,
    CORBA::Environment &ACE_TRY_ENV)
@@ -227,7 +227,7 @@ Iterator_Handler::get_viewer (char *viewer,
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unsupported MIME type: <%s>\n",
+                       ACE_TEXT ("Unsupported MIME type: <%s>\n"),
                        content_type),
                       -1);
 
@@ -237,9 +237,7 @@ Iterator_Handler::get_viewer (char *viewer,
 int
 Iterator_Handler::spawn_viewer (void)
 {
-  // It is highly unlikey, a mime type will ever be larger than 80
-  // bytes.
-  char viewer[80];
+  char viewer[BUFSIZ];
 
   if (this->get_viewer (viewer,
                         sizeof viewer) != 0)
@@ -272,7 +270,7 @@ Iterator_Handler::spawn_viewer (void)
     default:
       // Parent
       ACE_DEBUG ((LM_INFO,
-                  "Spawned viewer <%s> with PID <%d>.\n",
+                  ACE_TEXT ("Spawned viewer <%s> with PID <%d>.\n"),
                   viewer,
                   result));
       break;

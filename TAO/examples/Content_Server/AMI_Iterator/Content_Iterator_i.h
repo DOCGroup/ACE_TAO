@@ -74,10 +74,6 @@ private:
   CORBA::ULong chunk_index_;
   // The number of the current chunk of data being sent.  (Used only
   // for debugging purposes.)
-
-  int initialized_;
-  // Flag that denotes that the Content Iterator has not been
-  // initialized.
 };
 
 #endif  /* CONTENT_ITERATOR_I_H */
