@@ -36,7 +36,13 @@ Sender::Sender (void)
     input_file_ (0),
     protocol_ ("UDP"),
     frame_rate_ (30.0),
-    mb_ (BUFSIZ)
+    mb_ (1000),
+    address_ (0),
+    peer_address_ (0),
+    local_sec_addrs_ (0),
+    peer_sec_addrs_ (0),    
+    num_local_sec_addrs_ (0),
+    num_peer_sec_addrs_ (0)    
 {
 }
 
@@ -53,7 +59,7 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:p:r:d");
+  ACE_Get_Opt opts (argc, argv, "f:p:r:dl:a:");
 
   int c;
   while ((c= opts ()) != -1)
@@ -72,7 +78,41 @@ Sender::parse_args (int argc,
         case 'd':
           TAO_debug_level++;
           break;
-        default:
+        case 'l':
+	  {
+	    TAO_Tokenizer addr_token (opts.opt_arg (), ',');
+	    this->address_ = CORBA::string_dup (addr_token [0]);
+	    num_local_sec_addrs_ = addr_token.num_tokens () - 1;
+	    if (num_local_sec_addrs_ != 0)
+	      ACE_NEW_RETURN (local_sec_addrs_, char* [num_local_sec_addrs_], -1);
+	    for (int j = 1; j <= num_local_sec_addrs_; j++)
+	      {
+		ACE_DEBUG ((LM_DEBUG,
+			    "adding addresses to sequence %s\n",
+			    addr_token [j]));
+		
+		local_sec_addrs_ [j-1] =  CORBA::string_dup (addr_token [j]);
+	      }
+	  }
+	  break;
+        case 'a':
+	  {
+	    TAO_Tokenizer addr_token (opts.opt_arg (), ',');
+	    this->peer_address_ = CORBA::string_dup (addr_token [0]);
+	    num_peer_sec_addrs_ = addr_token.num_tokens () - 1;
+	    if (num_peer_sec_addrs_ != 0)
+	      ACE_NEW_RETURN (peer_sec_addrs_, char* [num_peer_sec_addrs_], -1);
+	    for (int j = 1; j <= num_peer_sec_addrs_; j++)
+	      {
+		ACE_DEBUG ((LM_DEBUG,
+			    "adding addresses to sequence %s\n",
+			    addr_token [j]));
+		
+		peer_sec_addrs_ [j-1] =  CORBA::string_dup (addr_token [j]);
+	      }
+	  }
+	  break;
+	default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
           return -1;
         }
@@ -161,12 +201,19 @@ Sender::init (int argc,
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
   // Set the address of the ftp client.
+  ACE_INET_Addr addr;
   char buf [BUFSIZ];
-  ACE_OS::hostname (buf,
-		    BUFSIZ);
-  ACE_INET_Addr addr ("5000",
-		      buf);
-
+      
+  if (address_ != 0)
+    addr.set (address_);
+  else
+    {
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      addr.set (8000,
+		buf);
+    }
+  
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry entry ("Data_Receiver",
                                     "IN",
@@ -175,11 +222,22 @@ Sender::init (int argc,
                                     this->protocol_.c_str (),
                                     &addr);
 
-  ACE_OS::hostname (buf,
-		    BUFSIZ);
-  ACE_INET_Addr peer_addr ("5050",
-			   buf);
+  ACE_INET_Addr peer_addr;
+  if (peer_address_ != 0)
+    peer_addr.set (peer_address_);
+  else
+    {
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      peer_addr.set (8050,
+		     buf);
+    }
+
   entry.set_peer_addr (&peer_addr);
+
+  entry.set_local_sec_addr (local_sec_addrs_, num_local_sec_addrs_);
+  
+  entry.set_peer_sec_addr (peer_sec_addrs_, num_peer_sec_addrs_);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);
@@ -244,6 +302,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
       // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
 
+      char buf [BUFSIZ];
       // Continue to send data till the file is read to the end.
       while (1)
         {
@@ -312,7 +371,8 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 
           // Send frame.
           int result =
-            this->protocol_object_->send_frame (&this->mb_);
+            this->protocol_object_->send_frame (buf, 1000);
+	  //            this->protocol_object_->send_frame (&this->mb_);
 
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
