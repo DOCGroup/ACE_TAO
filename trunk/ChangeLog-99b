@@ -1,3 +1,9 @@
+Tue Jul  6 10:17:19 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/ace_flags.bor: Removed an extraneous
+	  "\orbsvcs".  Thanks to Eugene Surovegin (surovegin@softlab.ru)
+ 	  for reporting this.
+
 Tue Jul 06 10:17:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: use mhmail instead of mailx on Suns.
