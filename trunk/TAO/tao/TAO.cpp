@@ -164,7 +164,15 @@ void
 TAO_ORB_Manager::deactivate (const char *id,
                              CORBA_Environment &ACE_TRY_ENV)
 {
-  PortableServer::ObjectId_var object_id = PortableServer::string_to_ObjectId (id);
+  CORBA::Object_var object =
+    this->orb_->string_to_object (id,
+                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var object_id = this->poa_->reference_to_id (object.in (),
+                                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->poa_->deactivate_object (object_id.in (),
                                  ACE_TRY_ENV);
 }
@@ -208,7 +216,15 @@ void
 TAO_ORB_Manager::deactivate_under_child_poa (const char *id,
                                              CORBA_Environment &ACE_TRY_ENV)
 {
-  PortableServer::ObjectId_var object_id = PortableServer::string_to_ObjectId (id);
+  CORBA::Object_var object =
+    this->orb_->string_to_object (id,
+                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var object_id = this->child_poa_->reference_to_id (object.in (),
+                                                                              ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->child_poa_->deactivate_object (object_id.in (),
                                        ACE_TRY_ENV);
 }

@@ -1,12 +1,22 @@
+Fri Apr 30 02:05:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
+	  (Cubit_Factory_i): Make sure to deactivate the cubit servant (in
+	  addition to cubit factory servant) from the POA.
+
+	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): The
+	  code was incorrect in assuming that the <id> parameter is the
+	  object id; it is actually the ior. Anyway, it should work now.
+
 Fri Apr 30 01:56:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h;
 	* tao/Request.{h,cpp}:
 	* tao/ORB.{h,cpp}:
-	  Added the RequestSeq class, inherited from 
+	  Added the RequestSeq class, inherited from
 	  TAO_Unbounded_Sequence. Used as an arg in the
 	  (no-op) new ORB functions send_multiple_requests_oneway()
-	  and send_multiple_requests_deferred(), although the 
+	  and send_multiple_requests_deferred(), although the
 	  RequestSeq class itself is fully functional, should any
 	  of this ever really get implemented.
 
@@ -24,7 +34,7 @@ Fri Apr 30 01:56:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Apr 30 00:40:44 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Server_Manager.h: 
+	* examples/POA/On_Demand_Loading/Server_Manager.h:
         * examples/POA/On_Demand_Loading/Servant_Activator.h:
         * examples/POA/On_Demand_Loading/Servant_Loader.h:
 	  Changed TAO_TRY to ACE_TRY macros.
@@ -34,17 +44,17 @@ Fri Apr 30 00:40:44 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Added ACE_NEW_DECLARE_CORBA_ENV instead of ACE_TRY_NEW_ENV
 	  and also changed the CORBA::OBJECT_NOT_EXIST() exception
 	  to fit the current api.
-	* examples/POA/Loader/Server_Manager.h: 
+	* examples/POA/Loader/Server_Manager.h:
         * examples/POA/Loader/Servant_Activator.h:
         * examples/POA/Loader/Servant_Loader.h:
 	  Changed TAO_TRY to ACE_TRY macros.
-	* examples/POA/Loader/Server_Manager.cpp: 
+	* examples/POA/Loader/Server_Manager.cpp:
         * examples/POA/Loader/Servant_Activator.cpp:
-        * examples/POA/Loader/Servant_Loader.cpp: 
+        * examples/POA/Loader/Servant_Loader.cpp:
 	  Added ACE_NEW_DECLARE_CORBA_ENV instead of ACE_TRY_NEW_ENV
 	  and also changed the CORBA::OBJECT_NOT_EXIST() exception
 	  to fit the current api.
-	
+
 Thu Apr 29 22:12:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp:
