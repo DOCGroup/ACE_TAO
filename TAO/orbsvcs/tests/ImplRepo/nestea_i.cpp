@@ -2,15 +2,22 @@
 
 #include "nestea_i.h"
 #include "tao/corba.h"
+#include "ace/FILE_Connector.h"
+
+const size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 is 8589934591 + NUL is 11 characters
 
 ACE_RCSID(ImplRepo, nestea_i, "$Id$")
 
 // Constructor
 
-Nestea_i::Nestea_i (int shutdown)
+Nestea_i::Nestea_i (const char *filename, int shutdown)
 : shutdown_ (shutdown),
   cans_ (0)
 {
+  this->data_filename_ = ACE::strnew (filename);
+  
+  // @@ This should probably be called from somewhere else
+  this->load_data ();
 }
 
 
@@ -18,7 +25,7 @@ Nestea_i::Nestea_i (int shutdown)
 
 Nestea_i::~Nestea_i (void)
 {
-  // Nothing
+  delete this->data_filename_;
 }
 
 
@@ -33,10 +40,12 @@ Nestea_i::drink (CORBA::Long cans,
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::drink %d cans\n", cans));
 
+  this->cans_ += cans;
+
   if (this->shutdown_ != 0)
     TAO_ORB_Core_instance ()->orb ()->shutdown ();
 
-  this->cans_ += cans;
+  this->save_data ();
 }
 
 
@@ -51,14 +60,16 @@ Nestea_i::crush (CORBA::Long cans,
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::crush %d cans\n", cans));
 
-  if (this->shutdown_ != 0)
-    TAO_ORB_Core_instance ()->orb ()->shutdown ();
-
   this->cans_ -= cans;
   
   // Don't go below 0.
   if (this->cans_ < 0) 
     this->cans_ = 0;
+
+  if (this->shutdown_ != 0)
+    TAO_ORB_Core_instance ()->orb ()->shutdown ();
+
+  this->save_data ();
 }
 
 
@@ -101,4 +112,43 @@ Nestea_i::get_praise (CORBA::Environment &ACE_TRY_ENV)
     return CORBA::string_dup ("Well, it is a start. Drink more Nestea!");
   else
     return CORBA::string_dup ("No cans, no praise.");
+}
+
+
+// Saves bookshelf data to a file.
+
+int 
+Nestea_i::save_data (void)
+{
+  ACE_FILE_IO file;
+  ACE_FILE_Addr filename (this->data_filename_);
+  ACE_FILE_Connector tempfile (file, filename);
+
+  char str[MAX_UINT32_STR_LEN];
+
+  ACE_OS::sprintf (str, "%d", this->cans_);
+
+  return file.send_n (str, ACE_OS::strlen (str) + 1);
+}
+
+
+// Loads bookshelf data from a file.
+
+int 
+Nestea_i::load_data (void)
+{
+  ACE_FILE_IO file;
+  ACE_FILE_Addr filename ("nestea.dat");
+  ACE_FILE_Connector tempfile (file, filename);
+
+  char str[12];
+
+  int len = file.recv (str, ACE_OS::strlen (str) + 1);
+  str[len] = 0;
+
+  if (len > 0)
+    this->cans_ = ACE_OS::atoi (str);
+  else
+    this->cans_ = 0;
+  return 0;
 }
