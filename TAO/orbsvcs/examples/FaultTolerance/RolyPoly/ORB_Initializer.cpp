@@ -33,15 +33,21 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor;
 
-  ACE_NEW_THROW_EX (interceptor,
-                    ReplicaController (orb.in ()),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
+  {
+    PortableInterceptor::ServerRequestInterceptor *tmp_interceptor = 0;
+
+    ACE_NEW_THROW_EX (interceptor,
+                      ReplicaController (orb.in ()),
+                      CORBA::NO_MEMORY (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  ACE_CHECK;
+    ACE_CHECK;
+
+    interceptor = tmp_interceptor;
+  }
 
   info->add_server_request_interceptor (interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
