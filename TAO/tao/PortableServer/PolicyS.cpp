@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:631
 
 #ifndef _TAO_IDL_ORIG_POLICYS_CPP_
@@ -64,7 +64,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "PolicyS.i"
+#include "PolicyS.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -76,7 +76,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_SS_)
 #define _CORBA_POLICY__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<CORBA::Policy>
     : public
