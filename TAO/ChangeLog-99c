@@ -1,3 +1,14 @@
+Fri Feb 05 03:41:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/RT_Task.h: 
+	* orbsvcs/orbsvcs/Event/ReactorTask.h: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
+	  MSVC++ gets really confused by a default argument of the form
+	  Module::Foo::_nil ()
+
 Fri Feb  5 02:34:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
