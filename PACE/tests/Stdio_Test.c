@@ -27,7 +27,6 @@ const char * mode = "w+";
 const char * string1 = "line 1\n";
 const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
-const int SLEEPTIME = 20;
 
 #if PACE_LYNXOS != 0x300
 int
@@ -102,7 +101,7 @@ main (int argc, char **argv)
   /* uncomment this line to pause the program to test the size
    * of the exe Cntr-Alt-Del and then look at the task manager to
    *  find the size
-  pace_sleep (SLEEPTIME);
+  pace_sleep (20);
    */
 
   PACE_UNUSED_ARG (argc);

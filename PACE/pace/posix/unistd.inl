@@ -222,7 +222,7 @@ pace_getlogin ()
 }
 #endif /* PACE_HAS_POSIX_UGR_UOF */
 
-#if (PACE_HAS_POSIX_UG_UOF)
+#if (PACE_HAS_POSIX_UGR_UOF)
 PACE_INLINE
 int
 pace_getlogin_r (char * name, size_t namesize)
