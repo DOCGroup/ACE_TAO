@@ -1,15 +1,20 @@
+Wed Jun 23 21:27:45 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: removed space from "resource requirements"
+          tag to avoid problems with web browers.
+
 Wed Jun 23 20:18:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/WFMO_Reactor: Added a no-op work_pending() 
-	  implementation until we figure out how to implement this.
+        * ace/WFMO_Reactor: Added a no-op work_pending()
+          implementation until we figure out how to implement this.
 
-	* ace/Reactor_Impl.h,
-	* ace/Reactor.{cpp,h},
-	* ace/Select_Reactor_T.{h,cpp}: Added a work_pending() method 
-	  that just checks if there are I/O events "ready" for
- 	  dispatching, but doesn't actually dispatch event handlers.  This
- 	  is needed for TAO's work_pending() API.  Thanks to Irfan for
- 	  suggesting this.
+        * ace/Reactor_Impl.h,
+        * ace/Reactor.{cpp,h},
+        * ace/Select_Reactor_T.{h,cpp}: Added a work_pending() method
+          that just checks if there are I/O events "ready" for
+          dispatching, but doesn't actually dispatch event handlers.  This
+          is needed for TAO's work_pending() API.  Thanks to Irfan for
+          suggesting this.
 
 Wed Jun 23 15:27:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
