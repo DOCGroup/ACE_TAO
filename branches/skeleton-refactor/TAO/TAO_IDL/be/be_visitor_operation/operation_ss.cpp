@@ -215,7 +215,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                                      return_type,
                                      os);
 
-  *os << ">::ret_val _tao_retval;";
+  *os << ">::ret_val retval;";
 
   // Declare the argument helper classes.
   this->gen_skel_body_arglist (node, os);

@@ -1,6 +1,6 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 // ============================================================================
 //
@@ -100,7 +100,6 @@ public:
   // helper that generates code for raising an exception within
   // interceptor's try block
 
-protected:
   void gen_stub_body_arglist (be_operation *node,
                               TAO_OutStream *os,
                               idl_bool ami = I_FALSE);

@@ -223,11 +223,33 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // @@ Can't automatically generate _interface skeleton code as
-  //    easily as we do for _is_a and _non_existent above due to the
-  //    IFR_Client_Adapter loading in the implementation.  *sigh*
+  // @@ Can't fully automate generation of _interface() skeleton code
+  //    as easily as we do for _is_a() and _non_existent() above due
+  //    to the non-boilerplate IFR_Client_Adapter loading in the
+  //    implementation.  *sigh*
   //
   // Generate code for the _interface skeleton.
+//   {
+//     Identifier rt_name (ACE_OS::strdup (" CORBA::InterfaceDef"));
+//     UTL_ScopedName rt_scoped_name (&rt_name, 0);
+
+//     be_type rt (AST_Decl::NT_interface, &rt_scoped_name);
+//     // @@ Cheat a little by placing a space before the operation name
+//     //    to prevent the IDL compiler from interpreting the leading
+//     //    underscore as an IDL escape.
+//     Identifier op_name (ACE_OS::strdup (" _get_interface"));
+//     UTL_ScopedName scoped_name (&op_name, 0);
+//     be_operation get_interface (&rt,
+//                                 AST_Operation::OP_noflags,
+//                                 &scoped_name,
+//                                 node->is_local (),
+//                                 node->is_abstract ());
+//     get_interface.set_defined_in (node);
+
+//     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
+//     upcall_command_visitor.visit_operation (&get_interface);
+//   }
+
   *os << be_nl << be_nl
       << "void " << full_skel_name
       << "::_interface_skel (" << be_idt << be_idt_nl
@@ -273,47 +295,107 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+
+  // @@ Can't fully automate generation of _component() skeleton code
+  //    as easily as we do for _is_a() and _non_existent() above due
+  //    to naming conventions that differ from IDL based methods .
+  //    *sigh*
+  //
   // Generate code for the _component skeleton.
-  *os << "void " << full_skel_name
-      << "::_component_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest & server_request, " << be_nl
-      << "void * servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_uidt_nl;
-  *os << "{" << be_idt_nl;
-  *os << full_skel_name << " * const impl =" << be_idt_nl
-      << "static_cast<" << full_skel_name
-      << " *> (_tao_object_reference);" << be_uidt_nl << be_nl;
+  {
+    *os << "void " << full_skel_name
+        << "::_component_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest & server_request, " << be_nl
+        << "void * servant_upcall" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ")" << be_uidt_nl;
+    *os << "{" << be_idt_nl;
 
-  *os << "CORBA::Object_var retval =" << be_idt_nl
-      << "_tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);"
-      << be_uidt_nl;
-  *os << "ACE_CHECK;" << be_nl << be_nl;
 
-  *os << "server_request.init_reply ();" << be_nl;
-  *os << "TAO_OutputCDR & out = *server_request.outgoing ();"
-      << be_nl << be_nl;
+    be_predefined_type rt (AST_PredefinedType::PT_object, 0);
+    // @@ Cheat a little by placing a space before the operation name
+    //    to prevent the IDL compiler from interpreting the leading
+    //    underscore as an IDL escape.
 
-  *os << "if (!(out << retval.in ()))" << be_idt_nl
-      << "{" << be_idt_nl;
+    // Yes, _get_component()
+    Identifier op_name (ACE_OS::strdup (" _get_component"));
+    UTL_ScopedName scoped_name (&op_name, 0);
+    be_operation get_component (&rt,
+                                AST_Operation::OP_noflags,
+                                &scoped_name,
+                                node->is_local (),
+                                node->is_abstract ());
+    get_component.set_defined_in (node);
 
-  if (be_global->use_raw_throw ())
-    {
-      *os << "throw CORBA::MARSHAL ();";
-    }
-  else
-    {
-      *os << "ACE_THROW (CORBA::MARSHAL ());";
-    }
+    be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
+    upcall_command_visitor.visit_operation (&get_component);
 
-  *os << be_uidt_nl
-      << "}" << be_uidt;
+    // Generate exception list.
+    be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
+    exception_list.visit_operation (&get_component);
 
-  this->generate_send_reply (os);
+    be_visitor_operation_ss operation_visitor (this->ctx_);
 
-  *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
+    *os << "TAO::SArg_Traits< ";
+  
+    operation_visitor.gen_arg_template_param_name (node,
+                                                   &rt,
+                                                   os);
 
+    *os << ">::ret_val retval;";
+
+    *os << be_nl << be_nl
+        << "TAO::Argument * const args[] =" << be_idt_nl
+        << "{" << be_idt_nl
+        << "&retval"
+        << be_uidt_nl
+        << "};" << be_uidt_nl << be_nl;
+
+    *os << "static size_t const nargs = 1;" << be_nl << be_nl;
+
+    // Get the right object implementation.
+    *os << node->full_skel_name () << " * const impl =" << be_idt_nl
+        << "static_cast<" << be_idt_nl
+        << node->full_skel_name () << " *> (" << be_idt_nl
+        << "static_cast<TAO_Object_Adapter::Servant_Upcall *> (" << be_idt_nl
+        << "servant_upcall)->servant ()" << be_uidt_nl
+        << ");" << be_uidt << be_uidt << be_uidt_nl << be_nl;
+
+    // Upcall_Command instantiation.
+    *os << be_nl
+        << "Upcall_Command command (" << be_idt_nl
+        << "impl";
+
+    if (!get_component.void_return_type ()
+        || get_component.argument_count () > 0)
+      {
+        // server_request.operations_details () will be non-zero in the
+        // thru-POA collocation case.  Use them if available.
+        *os << "," << be_nl
+            << "server_request.operations_details ()" << be_nl
+            << "? server_request.operations_details ()->args ()" << be_nl
+            << ": args";
+      }
+
+    *os << ");" << be_uidt_nl << be_nl;
+
+
+    *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
+        << "upcall_wrapper.upcall (server_request" << be_nl
+        << "                       , args" << be_nl
+        << "                       , nargs" << be_nl
+        << "                       , command" << be_nl
+        << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+        << "                       , servant_upcall" << be_nl
+        << "                       , exceptions" << be_nl
+        << "                       , nexceptions"
+        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
+        << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
+        << "ACE_CHECK;" << be_nl;
+
+    *os << be_uidt_nl
+        << "}" << be_nl << be_nl;
+  }
   // Generate code for the _is_a override.
 
   *os << "CORBA::Boolean " << full_skel_name
