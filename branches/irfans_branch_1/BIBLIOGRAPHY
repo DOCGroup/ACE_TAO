@@ -1,0 +1,752 @@
+The following articles document and describe various aspects of the
+object-oriented network programming components and the underlying
+design patterns included in ACE, TAO, and JAWS.  A complete list of
+publications is available at
+
+http://www.cs.wustl.edu/~schmidt/resume.html
+
+========================================
+
+@article{Schmidt:97r,
+	AUTHOR = {Douglas C. Schmidt and Chris Cleeland},
+	TITLE = "{Applying Patterns to Develop Extensible and Maintainable ORB Middleware}",
+	JOURNAL = "Communications of the ACM (Special Issue on
+	Software Maintenance)", 
+	EDITORS={W. Tsai},
+	VOLUME = 40,
+	NUMBER = 12,
+	YEAR = 1997,
+	MONTH = "December"
+}
+
+@article{Schmidt:97q,
+	AUTHOR = {Douglas C. Schmidt and David L. Levine and Sumedh Mungee},
+	TITLE = "{The Design and Performance of Real-Time Object Request Brokers}",
+	JOURNAL = "Computer Communications",
+	YEAR = 1997,
+}
+
+@incollection{Schmidt:97n,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Applying Design Patterns and Frameworks to Develop 
+	Object-Oriented Communication Software}",
+	BOOKTITLE = "Handbook of Programming Languages",
+	EDITOR="Peter Salus",
+	PUBLISHER = "MacMillan Computer Publishing",
+	YEAR = 1997
+}
+
+@inproceedings{Schmidt:97m,
+	AUTHOR = "Douglas C. Schmidt and Tim Harrison and Nat Pryce",
+        TITLE = "{Thread-Specific Storage -- An Object Behavioral
+	Pattern for Accessing per-Thread State Efficiently}",  
+	BOOKTITLE = "Submitted to the $4^{th}$ Pattern
+	Languages of Programming Conference", 
+	LOCATION="Allerton Park, IL",
+	YEAR = 1997,
+	MONTH = "September",
+}
+
+@inproceedings{Schmidt:97l,
+        AUTHOR = "Tim Harrison and Irfan Pyrarli and Douglas C. Schmidt and Thomas Jordan",
+        TITLE = "{Proactor -- An Object Behavioral Pattern for
+                  Dispatching Asynchronous Event Handlers}", 
+        BOOKTITLE="The $4^{th}$ Pattern Languages of Programming Conference",
+	YEAR = 1997,
+	MONTH = "September",
+        ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:97k,
+        AUTHOR = "James Hu and Irfan Pyrarli and Douglas C. Schmidt",
+        TITLE = "{Measuring the Impact of Event Dispatching and Concurrency Models on Web 
+	Server Performance Over High-speed Networks}",
+        BOOKTITLE="Proceedings of the $2^{nd}$ Global Internet Conference",
+	ORGANIZATION={IEEE},
+	YEAR = 1997,
+	MONTH = "November",
+        ABSTRACT = "",
+}
+
+@inproceedings{Schmidt:97j,
+         AUTHOR = "Aniruddha Gokhale and Douglas C. Schmidt",
+         TITLE = "{Evaluating the Performance of Demultiplexing Strategies for Real-time CORBA}",
+         BOOKTITLE="Proceedings of GLOBECOM '97",
+         ADDRESS={Phoenix, AZ},
+         ORGANIZATION="IEEE",
+         YEAR = 1997,
+         MONTH = "November",
+         ABSTRACT = ""
+} 
+
+@inproceedings{Schmidt:97i,
+        AUTHOR = "Timothy H. Harrison and David L. Levine and Douglas C. Schmidt",
+        TITLE = "{The Design and Performance of a Real-time CORBA Event Service}",
+        BOOKTITLE="Proceedings of OOPSLA '97",
+        ADDRESS={Atlanta, GA},
+        ORGANIZATION="ACM",
+        YEAR = 1997,
+        MONTH = "October",
+        ABSTRACT = "",
+}
+
+@inproceedings{Schmidt:97g,
+        AUTHOR = "James Hu and Sumedh Mungee and Douglas C. Schmidt",
+        TITLE = "{Principles for Developing and Measuring
+	   	  High-performance Web Servers over ATM}",
+        BOOKTITLE="Submitted to INFOCOM '97 (Washington University Technical Report \#WUCS-97-10)",
+	YEAR = 1997,
+	MONTH = "February",
+        ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:97f,
+        AUTHOR = "Aniruddha Gokhale and Douglas C. Schmidt",
+        TITLE = "{Principles for Optimizing CORBA Internet
+		  Inter-ORB Protocol Performance}",
+        BOOKTITLE="Submitted to the Hawaiian International Conference on System Sciences (Washington University Technical Report \#WUCS-97-10)",
+	YEAR = 1998,
+	MONTH = "January",
+        ABSTRACT = ""
+}
+
+@incollection{Schmidt:97e,
+	AUTHOR = "Chris Cleeland and Tim Harrison and Douglas C. Schmidt",
+        TITLE = "{External Polymorphism -- An
+	Object Structural Pattern for Transparently Extending Concrete
+	Data Types}", 
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+}
+
+@incollection{Schmidt:97d,
+	AUTHOR = "Douglas C. Schmidt and Tim Harrison",
+        TITLE = "{Double-Checked Locking -- An Object Behavioral
+	Pattern for Initializing and Accessing Thread-safe Objects
+	Efficiently}", 
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+}
+
+@incollection{Schmidt:97c,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Acceptor and Connector:
+	Design Patterns for Initializing Communication Services}",
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+	ANNOTE = http://www.cs.wustl.edu/~schmidt/,
+}
+
+@inproceedings{Schmidt:97b,
+	AUTHOR = "Prashant Jain and Douglas C. Schmidt",
+        TITLE = "{Service Configurator: 
+	A Pattern for Dynamic Configuration of Services}",
+	BOOKTITLE="Proceedings of the $3^{rd}$ Conference on
+	Object-Oriented Technologies and Systems",  
+	PUBLISHER = "USENIX",
+	LOCATION="Portland, OR",
+	YEAR = 1997,
+	MONTH = "June",
+}
+
+@incollection{Schmidt:97a,
+	AUTHOR = "Irfan Pyarali and Timothy H. Harrison and Douglas C. Schmidt",
+        TITLE = "{Asynchronous Completion Token: an Object Behavioral Pattern for
+	Efficient Asynchronous Event Handling}",
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+}
+
+@article{Schmidt:96v,
+        AUTHOR = "Prashant Jain and Douglas Schmidt",
+        TITLE = "{Experiences Converting a C++ Communication Software
+	Framework to Java}",  
+        JOURNAL = "C++ Report",
+        YEAR = 1997,
+        VOLUME = 9,
+        NUMBER = 1,
+        MONTH = "January",
+        ABSTRACT = ""
+}
+
+@incollection{Schmidt:96n,
+	AUTHOR = "Irfan Pyarali and Timothy H. Harrison and Douglas C. Schmidt",
+	TITLE="{Design and Performance of an Object-Oriented Framework
+	for High-Performance Electronic Medical Imaging}",
+	BOOKTITLE="USENIX Computing Systems",
+	PUBLISHER="MIT Press",
+	YEAR = 1996,
+	MONTH = "November/December",
+	EDITOR={Douglas C. Schmidt},
+	ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:96g,
+        AUTHOR = "Aniruddha Gokhale and Douglas C. Schmidt",
+        TITLE = "{Performance of the CORBA Dynamic Invocation Interface and 
+	Internet Inter-ORB Protocol over High-Speed ATM Networks}",
+        BOOKTITLE="Proceedings of GLOBECOM '96",
+        ADDRESS={London, England},
+        ORGANIZATION="IEEE",
+        YEAR = 1996,
+        MONTH = "November",
+        ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:96f,
+        AUTHOR = "Aniruddha Gokhale and Douglas C. Schmidt",
+        TITLE = "{Measuring the Performance of Communication Middleware on
+	High-Speed Networks}",
+        BOOKTITLE="Proceedings of SIGCOMM '96",
+        ADDRESS={Stanford, CA},
+        ORGANIZATION="ACM",
+        YEAR = 1996,
+        MONTH = "August",
+        ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:96e,
+	AUTHOR = "Irfan Pyarali and Timothy H. Harrison and Douglas C. Schmidt",
+	TITLE="{Design and Performance of an Object-Oriented Framework
+	for High-Performance Electronic Medical Imaging}",
+	BOOKTITLE="Proceedings of the $2^{nd}$ Conference on
+	Object-Oriented Technologies and Systems", 
+	ADDRESS={Toronto, Canada},
+	ORGANIZATION="USENIX",
+	YEAR = 1996,
+	MONTH = "June",
+	ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:96d,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{A Family of Design Patterns For Flexibly
+	Configuring Network Services in Distributed Systems}",  
+	BOOKTITLE = "International Conference on Configurable
+	Distributed Systems",  
+	LOCATION="Annapolis, Maryland",
+	YEAR = 1996,
+	MONTH = "May 6--8",
+}
+
+@inproceedings{Schmidt:96c,
+	AUTHOR = "Tim Harrison and Douglas C. Schmidt",
+        TITLE = "{Thread-Specific Storage -- An Object Behavioral
+	Pattern for Accessing per-Thread State Efficiently}",  
+	BOOKTITLE = "Submitted to the $3^{rd}$ Pattern Languages of Programming
+	Conference", 
+	LOCATION="Allerton Park, Illinois",
+	YEAR = 1996,
+	MONTH = "September",
+	ABSTRACT = "http://www.cs.wustl.edu/~schmidt/TSS-pattern.ps.gz"
+}
+
+@inproceedings{Schmidt:96b,
+	AUTHOR = "R. Greg Lavender and Douglas C. Schmidt",
+        TITLE = "{Active Object: an Object Behavioral Pattern for
+	Concurrent Programming}",
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="James O. Coplien and John Vlissides and Norm Kerth",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1996,
+}
+
+@inproceedings{Schmidt:96a,
+	AUTHOR = "Douglas C. Schmidt and Charles D. Cranor",
+        TITLE = "{Half-Sync/Half-Async: an Architectural Pattern for
+	Efficient and Well-structured Concurrent I/O}",
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="James O. Coplien and John Vlissides and Norm Kerth",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1996,
+}
+
+@article{Schmidt:95p,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Connector: a Design Pattern for Actively
+	Initializing Network Services}",
+	JOURNAL = "C++ Report",
+	YEAR = 1996,
+	VOLUME = 8,
+	NUMBER = 1,
+	MONTH = "January"
+}
+
+@inproceedings{Schmidt:95o,
+	AUTHOR = "Douglas C. Schmidt and Timothy H. Harrison and Irfan Pyarali",
+        TITLE = "{Experience Developing an Object-Oriented Framework
+	for High-Performance Electronic Medical Imaging using CORBA
+	and C++}", 
+	BOOKTITLE = "Proceedings of the ``Software Technology Applied to Imaging and Multimedia
+	Applications mini-conference'' at the Symposium on Electronic
+	Imaging in the International Symposia Photonics West",
+	ORGANIZATION={SPIE},
+	LOCATION="San Jose, CA",
+	YEAR = 1996,
+	MONTH = "January"
+}
+
+@article{Schmidt:95m,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Design Patterns for Initializing Network Services:
+	Introducing the Acceptor and Connector Patterns}", 
+	JOURNAL = "C++ Report",
+	YEAR = 1995,
+	VOLUME = 7,
+	NUMBER = 9,
+	MONTH = "November/December"
+}
+
+@inproceedings{Schmidt:95k,
+	AUTHOR = "Tim Harrison and Douglas C. Schmidt",
+        TITLE = "{Thread-Specific Storage: A Pattern for Reducing Locking Overhead in Concurrent Programs}",
+	BOOKTITLE = "OOPSLA Workshop on Design Patterns for Concurrent, Parallel, and Distributed Systems",
+	ORGANIZATION={ACM},
+	LOCATION="Austin, TX",
+	YEAR = 1995,
+	MONTH = "October"
+}
+
+@article{Schmidt:95j,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Experience Using Design Patterns to Develop 
+	Reuseable Object-Oriented Communication Software}",
+	BOOKTITLE = "Communications of the ACM (Special Issue on
+	Object-Oriented Experiences)", 
+	VOLUME = 38,
+	NUMBER = 10,
+	YEAR = 1995,
+	MONTH = "October"
+}
+
+@inproceedings{Schmidt:95h,
+	AUTHOR = "Douglas C. Schmidt and Charles D. Cranor",
+        TITLE = "{Half-Sync/Half-Async: an Architectural Pattern for
+	Efficient and Well-structured Concurrent I/O}",
+	BOOKTITLE = "Proceedings of the $2^{nd}$ Annual Conference on
+	the Pattern Languages of Programs",  
+	ADDRESS={Monticello, Illinois},
+        PAGES="1--10",
+	YEAR = 1995,
+	MONTH = "September"
+}
+
+@inproceedings{Schmidt:95i,
+	AUTHOR = "R. Greg Lavender and Douglas C. Schmidt",
+        TITLE = "{Active Object: an Object Behavioral Pattern for
+	Concurrent Programming}",
+	BOOKTITLE = "Proceedings of the $2^{nd}$
+	Annual Conference on the Pattern Languages of Programs",
+	ADDRESS={Monticello, Illinois},
+        PAGES="1--7",
+	YEAR = 1995,
+	MONTH = "September"
+}
+
+@article{Schmidt:95g,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE="{A Family of Design Patterns for
+	Application-level Gateways}",
+	JOURNAL="The Theory and Practice of
+	Object Systems (Special Issue on Patterns and Pattern Languages)",
+	EDITOR={Stephen P. Berczuk},
+	PUBLISHER="Wiley and Sons",
+	YEAR = 1996,
+	VOLUME = 2,
+	NUMBER = 1,
+	ABSTRACT = ""
+}
+
+@book{Schmidt:95f,
+	TITLE = "{Pattern Languages of Program Design}",
+	EDITOR="James O. Coplien and Douglas C. Schmidt",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1995,
+}
+
+@inproceedings{Schmidt:95e,
+	AUTHOR = "Douglas C. Schmidt and Tim Harrison and Ehab Al-Shaer",
+	TITLE="{Object-Oriented Components for High-speed Network Programming}",
+	BOOKTITLE="Proceedings of the Conference on Object-Oriented Technologies",  
+	ADDRESS={Monterey, CA},
+	ORGANIZATION="USENIX",
+	YEAR = 1995,
+	MONTH = "June",
+}
+
+@inproceedings{Schmidt:95d,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE="{Acceptor and Connector: Design Patterns for Active and Passive Establishment
+	of Network Connections}", 
+	BOOKTITLE=" Workshop on Pattern Languages of Object-Oriented
+	Programs at ECOOP '95",
+	MONTH={August},
+	YEAR=1995,
+	ADDRESS={Aarhus, Denmark},
+	ABSTRACT = ""
+}
+
+@article{Schmidt:95c,
+	AUTHOR = "Douglas C. Schmidt and Paul Stephenson",
+	TITLE="{Using Design Patterns to Evolve System Software from
+	UNIX to Windows NT}",  
+	JOURNAL = "C++ Report",
+	YEAR = 1995,
+	VOLUME = 7,
+	NUMBER = 3,
+	MONTH = "March/April",
+	ABSTRACT = "This is a different version of the ECOOP paper that
+	           goes into a lot more gory details about how the
+		   Reactor and Acceptor patterns were implemented 
+		   on Windows NT and UNIX."
+}
+
+@inproceedings{Schmidt:95b,
+	AUTHOR = "Douglas C. Schmidt and Paul Stephenson",
+	TITLE="{Experiences Using Design Patterns to
+	Evolve System Software Across Diverse OS Platforms}",
+	BOOKTITLE="Proceedings of the $9^{th}$ European Conference on
+	Object-Oriented Programming",  
+	ADDRESS={Aarhus, Denmark},
+	MONTH={August},
+	YEAR=1995
+}
+
+@incollection{Schmidt:95a,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Reactor: An Object Behavioral Pattern for Concurrent
+	Event Demultiplexing and Event Handler Dispatching}",
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="James O. Coplien and Douglas C. Schmidt",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1995,
+	MONTH = "June"
+	ABSTRACT = "This is a polished up version of the PLoP paper"
+}
+
+@inproceedings{Schmidt:94l,
+	AUTHOR = "Douglas C. Schmidt and Paul Stephenson",
+	TITLE="{Achieving Reuse Through Design Patterns}",
+	BOOKTITLE="Proceedings of the Third C++ World Conference",
+	ORGANIZATION="SIGS",
+	ADDRESS={Austin, Texas},
+	MONTH=Nov,
+	YEAR=1994
+}
+
+@inproceedings{Schmidt:94i,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Reactor: An Object Behavioral Pattern for Concurrent
+	Event Demultiplexing and Dispatching}",
+	BOOKTITLE = "Proceedings of the $1^{st}$ Annual Conference on the 
+        Pattern Languages of Programs (PLoP)",
+	ADDRESS={Monticello, Illinois},
+	YEAR = 1994,
+	MONTH = "August"
+}
+
+@inproceedings{Schmidt:94j,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE="{The ADAPTIVE Communication Environment:
+	An Object-Oriented Network Programming Toolkit for Developing
+	Communication Software}",
+	BOOKTITLE="Proceedings of the $12^{th}$ Annual Sun Users Group
+	Conference",
+	ORGANIZATION="SUG",
+	ADDRESS={San Francisco, CA},
+	PAGES="214-225",
+	MONTH={June},
+	YEAR=1994,
+}
+
+@article{Schmidt:94g,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE = "{Transparently Parameterizing Synchronization into a
+	Concurrent Distributed Application}",
+	JOURNAL = "C++ Report",
+	YEAR = 1994,
+	VOLUME = July/August,
+	NUMBER = 6,
+	MONTH = "March/April",
+}
+
+@article{Schmidt:94d,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE = "{A Domain Analysis of Network Daemon Design Dimensions}",
+	JOURNAL = "C++ Report",
+	YEAR = 1994,
+	VOLUME = 6,
+	NUMBER = 3,
+	MONTH = "March/April",
+}
+
+@inproceedings{Schmidt:94a,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{ASX: an Object-Oriented Framework for Developing
+	Distributed Applications}",
+        BOOKTITLE = "Proceedings of the $6^{th}$ USENIX C++ Technical Conference",
+	ORGANIZATION="USENIX",
+	ADDRESS={Cambridge, Massachusetts},
+        MONTH = "April",
+        YEAR = {1994}
+}
+
+@inproceedings{Schmidt:93i,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+	TITLE="{The Service Configurator Framework: An Extensible
+	Architecture for Dynamically Configuring Concurrent, Multi-Service 
+	Network Daemons}",
+	BOOKTITLE="The Proceedings of the Second International Workshop on
+	Configurable Distributed Systems", 
+	ORGANIZATION="IEEE",
+	ADDRESS={Pittsburgh, PA},
+	MONTH=mar,
+	YEAR=1994,
+}
+
+@inproceedings{Schmidt:93k,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE="{The ADAPTIVE Communication Environment:
+	Object-Oriented Network Programming Components for Developing
+	Client/Server Applications}",
+	BOOKTITLE="Proceedings of the $11^{th}$ Annual Sun Users Group Conference",
+	ORGANIZATION="SUG",
+	ADDRESS={San Jose, CA},
+	MONTH=Dec,
+	YEAR=1993,
+}
+
+@inproceedings{Schmidt:93j,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE="{Object-Oriented Techniques for Developing Extensible
+	Network Servers}", 
+	BOOKTITLE="Proceedings of the Second C++ World Conference",
+	ORGANIZATION="SIGS",
+	ADDRESS={Dallas, Texas},
+	MONTH=Oct,
+	YEAR=1993,
+}
+
+@inproceedings{Schmidt:93h,
+	AUTHOR = "Douglas C. Schmidt and Paul Stephenson",
+	TITLE="{An Object-Oriented Framework for Developing
+	Network Server Daemons}",
+	BOOKTITLE="Proceedings of the Second C++ World Conference",
+	ORGANIZATION="SIGS",
+	ADDRESS={Dallas, Texas},
+	MONTH=Oct,
+	YEAR=1993,
+}
+
+@article{Schmidt:93c,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE = "{The Object-Oriented Design and Implementation of the
+	Reactor: A C++ Wrapper for UNIX I/O Multiplexing (Part 2 of 2)}",
+	JOURNAL = "C++ Report",
+	YEAR = 1993,
+	MONTH = "September/October",
+	ABSTRACT = ""
+}
+
+@article{Schmidt:93b,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE = "{The Reactor: An Object-Oriented Interface for
+	Event-Driven UNIX I/O Multiplexing (Part 1 of 2)}",
+	JOURNAL = "C++ Report",
+	YEAR = 1993,
+	MONTH = "February",
+	ABSTRACT = ""
+}
+
+@article{Schmidt:92e,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE = "{IPC_SAP: An Object-Oriented Interface to
+	Interprocess Communication Services}",
+	JOURNAL = "C++ Report",
+	YEAR = 1992,
+	MONTH = "November/December",
+	ABSTRACT = ""
+}
+
+@article{Schmidt:92d,
+	AUTHOR = "Douglas C. Schmidt",
+	TITLE = "{Systems Programming with C++ Wrappers: Encapsulating
+	Interprocess Communication Services with Object-Oriented Interfaces}",
+	JOURNAL = "C++ Report",
+	YEAR = 1992,
+	MONTH = "September/October",
+	ABSTRACT = ""
+}
+
+----------------------------------------
+In addition, here are some articles that discuss various aspects of
+the ADAPTIVE project.
+
+@inproceedings{Schmidt:94r,
+	AUTHOR = {Douglas C. Schmidt},
+	TITLE = "{High-Performance Event Filtering for Dynamic Multi-point Applications}",
+	BOOKTITLE= "$1^{st}$ Workshop on High Performance Protocol
+	Architectures (HIPPARCH)",
+        MONTH={December},
+	YEAR = {1994},
+        ADDRESS={Sophia Antipolis, France},
+	ORGANIZATION = {INRIA}
+}
+
+@inproceedings{Schmidt:94p,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+	TITLE = "Measuring the Performance of Parallel Message-based 
+	Process Architectures," 
+	BOOKTITLE = "{\em Proceedings of the INFOCOM Conference on Computer Communications}",
+	ORGANIZATION= "IEEE", 
+	ADDRESS="Boston, MA",
+	MONTH = "April",
+	YEAR = {1995}
+}
+
+@article{Schmidt:94k,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+        TITLE = "{An Object-Oriented Framework for Dynamically
+	Configuring Extensible Distributed Communication Systems}",
+	JOURNAL = "IEE Distributed Systems Engineering Journal
+	(Special Issue on Configurable Distributed Systems)",
+	YEAR = 1994,
+	MONTH = "December"
+}
+
+@inproceedings{Schmidt:94e,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Experiences with an Object-Oriented Architecture for
+	Developing Extensible Network Management Software}",
+        BOOKTITLE = "Globecom Conference",
+	ORGANIZATION="IEEE",
+	ADDRESS={San Francisco, CA},
+        MONTH = "November",
+        YEAR = {1994}
+}
+
+@inproceedings{Schmidt:94h,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+        TITLE = "{Measuring the Impact of Alternative Parallel Process
+	Architectures on Communication Subsystem Performance}",
+	BOOKTITLE = "Proceedings of the $4^{th}$ International Workshop
+	on Protocols for High-Speed Networks",
+	ORGANIZATION="IFIP",
+	ADDRESS={Vancouver, British Columbia},
+	YEAR = 1994,
+	MONTH = "August"
+}
+
+@inproceedings{Schmidt:94b,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+        TITLE = "{The ADAPTIVE Service eXecutive: an Object-Oriented
+	Architecture for Configuring Concurrent Distributed Applications}",
+        BOOKTITLE = "The proceedings of the $8^{th}$ International Working
+	Conference on Upper Layer Protocols, Architectures, and
+	Applications", 
+	ORGANIZATION="IFIP",
+	ADDRESS={Barcelona, Spain},
+        MONTH = "June",
+        YEAR = {1994}
+}
+
+@inproceedings{Schmidt:93g,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+	TITLE="{A Framework for Developing and Experimenting with
+	Parallel Process Architectures to Support High-Performance
+	Transport Systems}",
+	ORGANIZATION="IEEE",
+	BOOKTITLE="Proceedings of the Second Workshop on the
+	Architecture and Implementation of High Performance
+	Communication Subsystems",
+	ADDRESS={Williamsburg, Virgina},
+	MONTH={September},
+	YEAR=1993,
+}
+
+@inproceedings{Schmidt:93f,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+	TITLE = "{ADAPTIVE: A Framework for Experimenting with
+	High-Performance Transport System Process Architectures}",
+	BOOKTITLE="{Proceedings of the $2^{\rm nd}$ International
+	Conference on Computer Communication Networks}", 
+	ORGANIZATION="ISCA",
+	ADDRESS={San Diego, California},
+	YEAR=1993,
+	MONTH=jun,
+	PAGES="",
+	ABSTRACT=""
+}
+
+@article{Schmidt:93a,
+	AUTHOR = "Douglas C. Schmidt and Donald F. Box and Tatsuya Suda",
+	TITLE = "{ADAPTIVE: A Dynamically Assembled Protocol
+	Transformation, Integration, and eValuation Environment}",
+	JOURNAL="Journal of Concurrency: Practice and
+	Experience",
+	YEAR = 1993,
+	MONTH=jun,
+	ABSTRACT = ""
+}
+
+@inproceedings{Box:93a,
+	AUTHOR="Donald F. Box and Douglas C. Schmidt and Tatsuya Suda",
+	TITLE="{ADAPTIVE: An Object-Oriented Framework for Flexible
+	and Adaptive Communication Protocols}",
+	BOOKTITLE="{Proceedings of the 4$^{th}$ IFIP Conference on High
+	Performance Networking}", 
+	ORGANIZATION="IFIP",
+	ADDRESS="Liege, Belgium",
+	YEAR=1993,
+	ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:92f,
+	AUTHOR = "Douglas C. Schmidt", 
+	TITLE = "{Hosting the ADAPTIVE System in the {\em
+	x}-Kernel and System V STREAMS}",
+	BOOKTITLE = "Proceedings of the {\em x}-kernel Workshop",
+	MONTH = {November},
+	ADDRESS = {Tucson, Arizona},
+	YEAR = 1992,
+}
+
+@inproceedings{Schmidt:92c,
+	AUTHOR = "Douglas C. Schmidt and Donald F. Box and Tatsuya
+	Suda", 
+	TITLE = "{ADAPTIVE: A Flexible and Adaptive Transport System
+	Architecture to Support Lightweight Protocols for Multimedia
+	Applications on High-Speed Networks}",
+	BOOKTITLE = "Proceedings of the First Symposium on High Performance
+	Distributed Computing", 
+	MONTH = {September},
+	ORGANIZATION = {IEEE},
+	ADDRESS = {Syracuse, New York},
+	YEAR = 1992,
+}
+
+@article{Schmidt:92a,
+	AUTHOR = "Douglas C. Schmidt and Tatsuya Suda",
+	TITLE = "{Transport System Architecture Services for
+	High-Speed Communications Systems}",
+	JOURNAL="IEEE Journal on Selected Areas in Communication",
+	MONTH=may,
+	YEAR = 1993,
+}
+

@@ -1,0 +1,14 @@
+The subdirectories in this directory provide a number of benchmarks
+that use ACE features to determine performance of various concurrency
+and communication mechanisms.
+
+	. Synch-Benchmarks -- Implements a number of benchmarks
+	  that test the performance of various synchronization
+	  mechanisms.
+
+	. TTCP -- Implements several variants of the TTCP benchmarking
+	  test for TCP and UCP using C sockets, ACE C++ wrappers, and 
+	  several versions of CORBA (Orbix and ORBeline).
+
+	. Misc -- Miscellaneous tests, e.g., Double-Checked Locking,
+	  context switching, mutexes, naming, etc.

@@ -1,0 +1,37 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/except.hh
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+extern const IID IID_CORBA_Exceptio  1    15      13     1     0   0.1   0.0
+extern const IID IID_CORBA_UserExce  16   16       0     0     0            
+extern const IID IID_CORBA_SystemEx  17   17       0     0     0            
+class _EXPCLASS CORBA_Exception:pub  19   52       3    25     2 ? 8.3   0.7
+;                                    52   52       0     0     0            
+typedef CORBA_Exception*CORBA_Excep  53   53       0     0     0            
+class _EXPCLASS CORBA_UserException  55   65       5     5     0   1.0   0.0
+;                                    65   65       0     0     0            
+enum CORBA_CompletionStatus{};       67   75       7     1     0   0.1   0.0
+class _EXPCLASS CORBA_SystemExcepti  77   99       2    16     2 ? 8.0   1.0
+;                                    99   99       0     0     0            
+extern CORBA_TypeCode_ptr _tc_CORBA  102  117      6     4     0   0.7   0.0
+line 117: syntax error at "}" missing Eof
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                44   112     6   2.5   0.1
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

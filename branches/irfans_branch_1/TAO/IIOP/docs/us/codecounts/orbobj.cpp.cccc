@@ -1,0 +1,41 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/orbobj.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+extern void __TC_init_table();       1    28      10     1     0   0.1   0.0
+extern void __TC_init_standard_exce  29   29       0     0     0            
+static pthread_mutex_t refcnt_lock=  32   32       0     0     0            
+CORBA_ORB::CORBA_ORB(){}             41   47       3     3     0   1.0   0.0
+CORBA_ORB::~CORBA_ORB(){}            49   52       0     3     0 ! ***      
+void CORBA_release(){}               54   64       3     7     1   2.3   0.3
+CORBA_ORB_ptr CORBA_ORB::_duplicate  66   72       0     6     2 ! *** ! ***
+CORBA_ORB_ptr CORBA_ORB::_nil(){}    74   81       3     4     1   1.3   0.3
+CORBA_Boolean CORBA_is_nil(){}       83   87       0     4     1 ! *** ! ***
+DEFINE_GUID(IID_CORBA_ORB,0xa201e4c  90   96       4     2     0   0.5   0.0
+DEFINE_GUID(IID_STUB_Object,0xa201e  99   101      1     1     0   1.0   0.0
+ULONG __stdcall CORBA_ORB::AddRef()  105  114      0     6     1 ! *** ! ***
+ULONG __stdcall CORBA_ORB::Release(  116  135      0    11     3 ! *** ! ***
+static CORBA_ORB_ptr the_orb;        138  145      7     0     0   0.0   0.0
+CORBA_ORB_ptr CORBA_ORB_init(int&,c  147  290     59    60 !  23   1.0   0.4
+void CORBA_ORB::create_list(){}      292  308      0    14     1 ! *** ! ***
+CORBA_ORB_ptr _orb(){}               311  322      7     4     1   0.6   0.1
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                97   143    34   1.5   0.4
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+
