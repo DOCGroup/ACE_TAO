@@ -171,7 +171,7 @@ main (int argc, char *argv[])
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (obj.in ()))
+      if (CORBA::is_nil (obj.in ()) || CORBA::is_nil (root_nc.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Naming Service not found"),
                           -1);
