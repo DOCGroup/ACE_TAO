@@ -715,8 +715,9 @@ the STL fixes.
       before the #include statement in ACE_ROOT\ace\config.h.<BR>
       <br>
   <li>If ACE will be used with MFC programs, also add the following to
-      your <code>config.h</code> file.  Notice that ACE will use
-      CWinThread to spawn new threads if this is defined.<br>
+      your <code>config.h</code> file.  Notice that if you want to
+      spawn a new thread with CWinThread, make sure you spawn the
+      thread with THR_USE_AFX flag set.<br> 
       <br>
       <code>#define ACE_HAS_MFC 1</code><br>
       <br>
