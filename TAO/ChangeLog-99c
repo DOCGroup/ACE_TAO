@@ -1,12 +1,17 @@
+Mon May 10 16:46:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO-INSTALL.html (href): Added a link to Barry Hoggard's CORBA
+	  page which contains TAO specific information.
+
 Mon May 10 15:02:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Exception.h: 
+	* tao/Exception.h:
 	* tao/Exception.cpp:
 	* tao/corbafwd.h: Added new exceptions in TAO_SYSTEM_EXCEPTIONS
 	viz.TRANSACTION_REQUIRED, TRANSACTION_ROLLEDBACK &
 	INVALID_TRANSACTION. These are part of the spec, v2.2, section
 	3.5.3, page 3-39. We had not implemented this and it was flagged
-	of by the branding test suite. 
+	of by the branding test suite.
 
 Mon May 10 12:47:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
