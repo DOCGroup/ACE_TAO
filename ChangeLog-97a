@@ -1,3 +1,21 @@
+Fri Jan 24 09:01:50 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Connection/misc/Connection_Handler.cpp: added
+	  specialization of ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+	  so that subproject will build with g++ without optimization.
+
+	* apps/Gateway/Gateway/Proxy_Handler.cpp: added specializations
+	  of ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH> and
+	  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+	  so that subproject will build with g++ without optimization.
+
+	* tests/Reactor_Exceptions_Test.cpp (main): added ACE_UNUSED_ARG
+	  for argc and argv when ACE_HAS_EXCEPTIONS is not defined.
+
+	* performance-tests/Misc/test_mutex.cpp: made destructor of
+	  Thread_Mutex_Derived virtual because the class has other virtual
+	  functions.
+
 Thu Jan 23 11:51:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-g++.h: commented out ACE_HAS_EXCEPTIONS because
