@@ -1,6 +1,11 @@
+Wed Dec 10 12:56:47 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+          Added #include of OS_NS_sys_select.h to get ACE_OS::select
+
 Wed Dec 10 12:50:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * examples/IPC_SAP/SSL_SAP/SSL-client.hexamples/IPC_SAP/SSL_SAP/SSL-client.h:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.h:
           Fixed casing of include
 
 Wed Dec 10 10:20:48 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
