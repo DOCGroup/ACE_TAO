@@ -34,11 +34,6 @@
 #include "tao/IOPC.h"
 #include "tao/PollableC.h"
 
-#if (TAO_HAS_SMART_PROXIES == 1)
-#include "tao/Smart_Proxies.h"
-#include "tao/TAO_Singleton.h"
-#endif /*TAO_HAS_SMART_PROXIES == 1*/
-
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -2565,7 +2560,7 @@ class TAO_Export ReplyHandler : public virtual CORBA_Object
     ReplyHandler (int collocated = 0);
 
   protected:
-    virtual void setup_collocation (int collocated);
+    virtual void _tao_setup_collocation (int collocated);
 
      ReplyHandler (
                   TAO_Stub *objref,
@@ -2674,76 +2669,6 @@ class TAO_Export ReplyHandler : public virtual CORBA_Object
   //
   //              End Remote Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-
-#if (TAO_HAS_SMART_PROXIES == 1)
-class TAO_Export TAO_Messaging_ReplyHandler_Default_Proxy_Factory
-  {
-  public:
-
-    TAO_Messaging_ReplyHandler_Default_Proxy_Factory (int register_proxy_factory = 1);
-
-    virtual ~TAO_Messaging_ReplyHandler_Default_Proxy_Factory (void);
-
-    virtual ReplyHandler_ptr create_proxy (
-        ReplyHandler_ptr proxy,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-};
-
-
-class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
-  {
-  public:
-
-    friend class TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-
-    int register_proxy_factory (
-        TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    int unregister_proxy_factory (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    ReplyHandler_ptr create_proxy (
-        ReplyHandler_ptr proxy,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-  protected:
-    TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void);
-    ~TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void);
-    TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter &operator= (
-        const TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter &
-      );
-    TAO_Messaging_ReplyHandler_Default_Proxy_Factory *proxy_factory_;
-    int delete_proxy_factory_;
-    ACE_SYNCH_RECURSIVE_MUTEX lock_;
-
-  };
-
-  typedef TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
-
-  class TAO_Export TAO_Messaging_ReplyHandler_Smart_Proxy_Base
-    : public virtual ReplyHandler,
-      public virtual TAO_Smart_Proxy_Base
-  {
-  public:
-    TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void);
-    ~TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void);
-    virtual TAO_Stub *_stubobj (void) const;
-    protected:
-    ::Messaging::ReplyHandler_ptr get_proxy (void);
-    ::Messaging::ReplyHandler_var proxy_;
-  };
-
-#endif /* TAO_HAS_SMART_PROXIES */
-
 
 #endif /* end #if !defined */
 
