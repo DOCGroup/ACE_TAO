@@ -20,9 +20,10 @@
 // Constructor.  Create all the quoter factories.
 
 Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num)
-  : quoter_num_ (num),
-    next_quoter_ (0),
-    my_quoters_ (0)
+  : my_quoters_ (0),
+    quoter_num_ (num),
+    next_quoter_ (0)
+    
 {
   ACE_NEW(this->my_quoters_, Quoter_Impl *[num]);
   
