@@ -4,7 +4,7 @@ Mon May  6 15:53:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	  Added include of ace/Global_Macros.h.
 
-	* tao/Thread_Lan_Resources.h:
+	* tao/Thread_Lane_Resources.h:
 
 	  Added include of ace/Synch_T.h.
 

@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-//#include "ace/Global_Macros.h"
+#include "ace/Trace.h"
 
 // Clean up the array (e.g., delete dynamically allocated memory).
 
