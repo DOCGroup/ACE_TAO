@@ -4,6 +4,9 @@ Sat Apr 25 11:55:01 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 	comments.(<class T>, the parameter for this class should have 
 	T* next_ and T* prev_ fields in it.
 
+	* ace/Containers.h (class ACE_Double_Linked_List): Corrected the
+	documentation for the insert_head and insert_tail functions.
+
 Fri Apr 24 22:36:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Service_Config.cpp (process_directive): added
