@@ -1,7 +1,0 @@
-project : taolib, core {
-  sharedname  = TAO_RTCORBA
-  libs       += TAO
-  dllflags    = TAO_RTCORBA_BUILD_DLL
-  libout      = ..
-  include_dir = tao/RTCORBA
-}
