@@ -43,11 +43,6 @@ extern "C" {
 #define PACE_PTHREAD_SCOPE_PROCESS PTHREAD_SCOPE_PROCESS
 #define PACE_PTHREAD_SCOPE_SYSTEM PTHREAD_SCOPE_SYSTEM
 
-#ifndef PACE_SCHED_PARAM
-#define PACE_SCHED_PARAM
-  typedef struct sched_param pace_sched_param;
-#endif /* PACE_SCHED_PARAM */
-
 #if defined (PACE_HAS_CPLUSPLUS)
 
 # ifndef PACE_ATFORK_PF
