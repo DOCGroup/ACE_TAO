@@ -80,6 +80,11 @@ namespace TAO
 
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) = 0;
 
+      /// Validate whether this matches the set lifespan strategy
+      virtual
+      bool validate (CORBA::Boolean is_persistent,
+                     TAO::Portable_Server::Temporary_Creation_Time creation_time) const = 0;
+
     protected:
       TAO_POA *poa_;
 
@@ -90,6 +95,8 @@ namespace TAO
        public virtual Lifespan_Strategy
     {
     public:
+      Transient_Lifespan_Strategy (void);
+
       virtual ~Transient_Lifespan_Strategy (void);
 
       virtual
@@ -108,6 +115,10 @@ namespace TAO
       CORBA::ULong key_length (void) const;
 
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
+
+      virtual
+      bool validate (CORBA::Boolean is_persistent,
+                     TAO::Portable_Server::Temporary_Creation_Time creation_time) const;
 
     private:
       TAO::Portable_Server::Creation_Time creation_time_;
@@ -137,6 +148,10 @@ namespace TAO
       CORBA::ULong key_length (void) const;
 
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
+
+      virtual
+      bool validate (CORBA::Boolean is_persistent,
+                     TAO::Portable_Server::Temporary_Creation_Time creation_time) const;
 
     private:
       /// @name Implementation repository related methods

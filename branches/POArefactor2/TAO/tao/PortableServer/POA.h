@@ -30,8 +30,6 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 
-#include "Creation_Time.h"
-
 // Object Adapter
 #include "Object_Adapter.h"
 
@@ -86,6 +84,7 @@ namespace TAO
     class POA_Current_Impl;
     class Unique_Id_Uniqueness_Strategy;
     class Retain_Servant_Retention_Strategy;
+    class Temporary_Creation_Time;
   }
 }
 
@@ -746,19 +745,13 @@ protected:
 
   TAO::ORT_Adapter_Factory *ORT_adapter_factory (void);
 
-  const TAO::Portable_Server::Creation_Time &creation_time (void);
-
   CORBA::Boolean persistent (void);
-
-  char persistent_key_type (void);
 
   static char persistent_key_char (void);
 
   static char transient_key_char (void);
 
   static CORBA::ULong persistent_key_type_length (void);
-
-  char system_id_key_type (void);
 
   static char system_id_key_char (void);
 
@@ -832,11 +825,6 @@ protected:
   CHILDREN children_;
 
   ACE_Lock &lock_;
-
-public:
-  /// @todo Move the Transient strategy, temporarily public
-  TAO::Portable_Server::Creation_Time creation_time_;
-protected:
 
   TAO_ORB_Core &orb_core_;
 

@@ -75,12 +75,6 @@ TAO_POA::get_obj_ref_factory (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-ACE_INLINE const TAO::Portable_Server::Creation_Time &
-TAO_POA::creation_time (void)
-{
-  return this->creation_time_;
-}
-
 ACE_INLINE CORBA::Boolean
 TAO_POA::system_id (void)
 {
@@ -150,15 +144,6 @@ TAO_POA::transient_key_char (void)
   return 'T';
 }
 
-ACE_INLINE char
-TAO_POA::persistent_key_type (void)
-{
-  if (this->persistent ())
-    return TAO_POA::persistent_key_char ();
-  else
-    return TAO_POA::transient_key_char ();
-}
-
 ACE_INLINE CORBA::ULong
 TAO_POA::persistent_key_type_length (void)
 {
@@ -175,15 +160,6 @@ ACE_INLINE char
 TAO_POA::user_id_key_char (void)
 {
   return 'U';
-}
-
-ACE_INLINE char
-TAO_POA::system_id_key_type (void)
-{
-  if (this->system_id ())
-    return TAO_POA::system_id_key_char ();
-  else
-    return TAO_POA::user_id_key_char ();
 }
 
 ACE_INLINE CORBA::ULong

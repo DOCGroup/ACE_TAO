@@ -21,6 +21,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/ImplRepo_i.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
+#include "ace/OS_NS_sys_time.h"
 
 namespace TAO
 {
@@ -41,6 +42,11 @@ namespace TAO
       poa_ = poa;
     }
 
+    Transient_Lifespan_Strategy::Transient_Lifespan_Strategy () :
+      creation_time_ (ACE_OS::gettimeofday ())
+    {
+    }
+
     Transient_Lifespan_Strategy::~Transient_Lifespan_Strategy ()
     {
     }
@@ -54,6 +60,24 @@ namespace TAO
     Transient_Lifespan_Strategy::notify_shutdown ()
     {
     }
+
+    bool
+    Transient_Lifespan_Strategy::validate (
+      CORBA::Boolean is_persistent,
+      TAO::Portable_Server::Temporary_Creation_Time creation_time) const
+    {
+      return (!is_persistent && this->creation_time_ == creation_time);
+    }
+
+    bool
+    Persistent_Lifespan_Strategy::validate (
+      CORBA::Boolean is_persistent,
+      TAO::Portable_Server::Temporary_Creation_Time creation_time) const
+    {
+      ACE_UNUSED_ARG (creation_time);
+      return is_persistent;
+    }
+
 
     CORBA::ULong
     Transient_Lifespan_Strategy::key_length (void) const
@@ -80,7 +104,7 @@ namespace TAO
       #if (POA_NO_TIMESTAMP == 0)
         // Then copy the timestamp for transient POAs.
         ACE_OS::memcpy (&buffer[starting_at],
-                        this->poa_->creation_time_.creation_time (),
+                        this->creation_time_.creation_time (),
                        TAO::Portable_Server::Creation_Time::creation_time_length ());
         starting_at += TAO::Portable_Server::Creation_Time::creation_time_length ();
       #endif /* POA_NO_TIMESTAMP */

@@ -1,3 +1,21 @@
+Thu Nov  4 10:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+        * tao/PortableServer/Lifespan_Strategy.{h,cpp}:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Moved validating the lifespan part of an object key from the POA to
+          the Lifespan strategy. This way the creation_time is not needed
+          anymore in the POA and the also removed some helper methods that are
+          now not needed anymore.
+
+Thu Nov  4 09:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/Lifespan_Strategy.{h,cpp}:
+        * tao/PortableServer/Id_Assignment_Strategy.{h,cpp}:
+          Moved some parts of the POA::set_id() method to the strategies and
+          call the new create_key methods on the strategies
+
 Wed Nov  3 11:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.h:
