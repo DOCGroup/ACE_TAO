@@ -1,3 +1,24 @@
+Fri Nov 15 18:29:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp (next_member):
+	  (_tao_next_member):
+
+	  Refactored random member selection code into a TAO-specific
+	  static method.  This is possible since this random load
+	  balancing strategy implementation is stateless.  This allows
+	  other strategies to reuse the random member selection code with
+	  instantiating the TAO_LB_Random class.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (next_member):
+
+          No loads have been reported for any of the locations the object
+	  group members reside at.  If no loads have been reported to the
+	  LoadManager, adaptive load balancing decisions cannot be made.
+	  Fall back on a non-adaptive strategy, such as the Random load
+	  balancing strategy, instead.  The Random load balancing strategy
+	  is used since it is very lightweight and stateless.
+
 Fri Nov 15 15:26:29 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.cpp:
@@ -57,17 +78,17 @@ Fri Nov 15 14:51:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Queued_Message.cpp:
 	* tao/Queued_Message.h: Added an extra default argument to the
 	  constructor that indicates whether the class is heap allocated
-	  or not.  
-	
+	  or not.
+
 	* tao/Transport.cpp: Changed the places where the
 	  Asynch_Queued_Message was allocated on the heap to pass the
 	  right value for the flag that indicates the status of creation
-	  of the class. 
+	  of the class.
 
 	  Thanks to Chad Elliott for pinting out that if the
 	  Asynch_Queued_Message was allocated on the heap, it may not get
 	  destroyed if TAO_Asynch_Queued_Message::destroy () was
-	  called. 
+	  called.
 
 Fri Nov 15 20:52:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -350,7 +371,7 @@ Tue Nov 12 13:25:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Tue Nov 12 13:13:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/TAO.dsp: 
+	* tao/TAO.dsp:
 	* tao/TAO_Static.dsp: Added the new files.
 
 Tue Nov 12 12:54:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
@@ -359,24 +380,24 @@ Tue Nov 12 12:54:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Tue Nov 12 12:47:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	Fix for [BUG 1020]. Please see details of the bug at 
-	
+	Fix for [BUG 1020]. Please see details of the bug at
+
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1020
 
         Please see the discussions in the above URL for details on
-        the motivations for these changes. A very brief summary of the 
+        the motivations for these changes. A very brief summary of the
         changes alone are mentioned.
-	
+
 	* tao/Transport.cpp(close_connection_shared): Wait on the
           leader follower if the handle is registered with the
-          reactor. 
+          reactor.
 
         * tao/LF_Event.h:
         * tao/LF_Event.cpp:
         * tao/LF_Event.inl: Made the class TAO_LF_Event as an abstract
           base class. This helps us to strategize the type of
           behaviour required in different concrete classes which can
-          in turn be used by other portions of the ORB to wait on LF. 
+          in turn be used by other portions of the ORB to wait on LF.
 
 	* tao/LF_Invocation_Event.h:
 	* tao/LF_Invocation_Event.cpp:
@@ -387,29 +408,29 @@ Tue Nov 12 12:47:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/LF_CH_Event.h:
 	* tao/LF_CH_Event.cpp: Concrete implementation of a LF_Event
 	  class, where the state transitions of the connection handler are
-	  consolidated. 
+	  consolidated.
 
 	* tao/Queued_Message.h:
 	* tao/Synch_Reply_Dispatcher.h: They now inherit from
 	  TAO_LF_Invocation_Event class.
 
 	* tao/Connection_Handler.h: This class inherits now from the
-	  TAO_LF_CH_Event class. 
+	  TAO_LF_CH_Event class.
 
-	* tao/Makefile.bor: 
+	* tao/Makefile.bor:
 	* tao/Makefile.tao: Added the new files to the list of compilable
-	  files. 
+	  files.
 
 Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
 	* orbsvcs/examples/Log/Notify/Makefile:
 	  Updated dependencies.
-	
+
 	* orbsvcs/examples/Log/Notify/Notify_Consumer.h:
-	  Removed the include of 
+	  Removed the include of
 	  orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h, which no longer exists.
-	  
+
 Tue Nov 12 11:15:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Connector.cpp:
@@ -418,11 +439,11 @@ Tue Nov 12 11:15:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Added an assert
 	  statement after decrementing the reference count. Point taken
-	  from "Pragmatic Programmer". 
+	  from "Pragmatic Programmer".
 
 Tue Nov 12 11:08:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Connection_Handler.h: Commented out the following calls 
+	* tao/Connection_Handler.h: Commented out the following calls
 	  incr_pending_upcalls (), decr_pending_upcalls () and
 	  pending_upcalls (), since there was no implementation and they
 	  were not at all used.
@@ -434,7 +455,7 @@ Tue Nov 12 10:17:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
         * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
 	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
 
-	  Removed the include of 
+	  Removed the include of
 	  orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h, which no longer exists.
 
 Tue Nov 12 13:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>

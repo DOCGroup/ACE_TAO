@@ -2,8 +2,10 @@
 
 #include "LB_LeastLoaded.h"
 #include "LB_LoadMap.h"
+#include "LB_Random.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
 #include "tao/debug.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_LeastLoaded,
@@ -187,9 +189,20 @@ TAO_LB_LeastLoaded::next_member (
     }
   else
     {
-      // This should never occur.
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::Object::_nil ());
+      // No loads have been reported for any of the locations the
+      // object group members reside at.  If no loads have been
+      // reported to the LoadManager, adaptive load balancing
+      // decisions cannot be made.  Fall back on a non-adaptive
+      // strategy, such as the Random load balancing strategy,
+      // instead.
+      //
+      // @note The Random load balancing strategy is used since it is
+      //       very lightweight and stateless.
+
+      return TAO_LB_Random::_tao_next_member (object_group,
+                                              load_manager,
+                                              locations.in ()
+                                              ACE_ENV_ARG_PARAMETER);
     }
 }
 
