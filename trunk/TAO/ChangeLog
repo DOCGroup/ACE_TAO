@@ -20,8 +20,8 @@ Sat Aug 14 20:21:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Sat Aug 14 18:17:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
-        
-          In the traversal of the inheritance graph for components, changed 
+
+          In the traversal of the inheritance graph for components, changed
           the algorithm so that CCMObject is processed before the base
           component, if any. This move ensures that, in the generated
           copy constructor in the skeleton class of the equivalent interface,
