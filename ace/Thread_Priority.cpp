@@ -76,6 +76,10 @@ ACE_Thread_Priority::decrement ()
 }
 
 
+// convert (priority_class_,default_thread_priority_) -> 
+//              (os_priority_class_, os_default_thread_priority_)
+// using whatever mapping is appropriate.
+
 #if defined (ACE_HAS_STHREADS)
 #include <sys/priocntl.h>
 #include <sys/rtpriocntl.h>
@@ -315,6 +319,71 @@ ACE_Thread_Priority::convert_to_os_priority (void)
     // The user specified a thread priority outside the enum range, so
     // use it without modification.
     os_default_thread_priority_ = default_thread_priority_;
+
+  return 0;
+}
+
+
+#elif defined(LINUX) \
+   && defined(ACE_HAS_PTHREADS) // not sure 
+/* mapping of
+      ACE_Thread_Priority::                    to        POSIX 1003.1c
+   Priority_Class             Thread_Priority      class      THREAD_PRIORITY_
+   ==============             ===============      =====      ================
+   ACE_LOW_PRIORITY_CLASS         0 .. 6           OTHER          0
+   ACE_NORMAL_PRIORITY_CLASS      0 .. 6           OTHER          0
+   ACE_HIGH_PRIORITY_CLASS        0 .. 6           RR             1..7
+   ACE_REALTIME_PRIORITY_CLASS    0 .. 6           FIFO           21..27
+ */
+
+long
+ACE_Thread_Priority::convert_to_os_priority (void)
+{
+  switch (priority_class_)
+  {
+    case ACE_LOW_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_OTHER;
+      break;
+    case ACE_NORMAL_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_OTHER;
+      break;
+    case ACE_HIGH_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_RR;
+      break;
+    case ACE_REALTIME_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_FIFO;
+      break;
+  }
+
+  if (ACE_PRIORITY_MIN <= default_thread_priority_
+      && default_thread_priority_ <= ACE_PRIORITY_MAX)
+    {
+      switch (priority_class_)
+      {
+        case ACE_LOW_PRIORITY_CLASS :
+          os_default_thread_priority_ = 0;
+          break;
+        case ACE_NORMAL_PRIORITY_CLASS :
+          os_default_thread_priority_ = 0;
+          break;
+        case ACE_HIGH_PRIORITY_CLASS :
+          os_default_thread_priority_ = default_thread_priority_ + 1;
+          break;
+        case ACE_REALTIME_PRIORITY_CLASS :
+          os_default_thread_priority_ = default_thread_priority_ + 21;
+          break;
+      }
+    }
+  else
+    {
+      // The user specified a thread priority outside the enum range,
+      // so use it without modification UNLESS the class is
+      // SCHED_OTHER, in which case the only valid value is zero, or
+      // unless it's < 1, in which case it's rounded up to 1.
+      os_default_thread_priority_ = 
+	(os_priority_class_ == SCHED_OTHER) ? 0 : 
+	(default_thread_priority_ < 1) ? 1 : default_thread_priority_;
+    }
 
   return 0;
 }
