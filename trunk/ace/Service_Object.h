@@ -153,13 +153,13 @@ class ACE_Export ACE_Service_Object_Ptr
 {
 public:
   // = Initialization and termination methods.
-  /// Acquire ownership of the <so>.
+  /// Acquire ownership of the @a so.
   ACE_Service_Object_Ptr (ACE_Service_Object *so);
 
-  /// Release the held <ACE_Service_Object> by calling its <fini> hook.
+  /// Release the held ACE_Service_Object by calling its <fini> hook.
   ~ACE_Service_Object_Ptr (void);
 
-  /// Smart pointer to access the underlying <ACE_Service_Object>.
+  /// Smart pointer to access the underlying ACE_Service_Object.
   ACE_Service_Object *operator-> ();
 
 private:
