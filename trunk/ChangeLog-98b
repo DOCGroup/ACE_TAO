@@ -9,6 +9,17 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
           config.  Thanks to Peter Nordlund <petern@nada.kth.se> for
           recommending this.
 
+        * ace/config-aix-4.1.x.h,config-dgux-4.11-epc.h,config-dgux-4.x-ghs.h,
+          config-irix5.2.h,config-irix5.3-g++.h,config-irix5.3-sgic++.h,
+          config-m88k.h,config-tandem.h,config-osf1-3.2.h,
+          config-sunos5.4-centerline-2.x.h,config-sunos5.4-g++.h,
+          config-sunos5.4-sunc++-4.x-orbix.h,config-sunos5.4-sunc++-4.x.h,
+          config-sunos5.5.h,config-unixware-2.01-g++.h,
+          config-unixware-2.1.2-g++.h,config-irix6.x-common.h:
+          removed ACE_HAS_SVR4_TIME because it is no longer used.
+          Thanks to Peter Nordlund <petern@nada.kth.se> for
+          reporting this.
+
         * tests/MT_Reactor_Timer_Test.cpp (handle_exception,
           handle_timeout): added ACE_UNUSED_ARG's.
 
