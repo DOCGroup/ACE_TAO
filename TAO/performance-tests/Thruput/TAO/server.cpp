@@ -91,7 +91,7 @@ main (int argc, char **argv)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to initialize the POA.\n"),
                       -1);
-  
+
   root_poa = PortableServer::POA::_narrow (obj_var.in (), env);
 
   if (env.exception () != 0)
@@ -110,7 +110,7 @@ main (int argc, char **argv)
     }
 
   CORBA::PolicyList policies (2);
-  policies.length (2);  
+  policies.length (2);
   policies[0] =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID,
                                            env);
@@ -124,7 +124,7 @@ main (int argc, char **argv)
     root_poa->create_POA ("RootPOA_is_BAD",
                           poa_manager.in (),
                           policies,
-                          env);  
+                          env);
 
   if (env.exception () != 0)
     {
@@ -164,7 +164,7 @@ main (int argc, char **argv)
   // create an instance of an object implementing the "ttcp" interface
   my_ttcp = new ttcp_sequence_i; // this is its name
 
-  PortableServer::ObjectId_var id = 
+  PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId ("TTCP_IIOP_test");
   good_poa->activate_object_with_id (id.in (),
                                      my_ttcp,
@@ -176,7 +176,7 @@ main (int argc, char **argv)
     }
 
   obj_var = good_poa->id_to_reference (id.in (), env);
- 
+
   if (env.exception () != 0)
     {
       env.print_exception ("id_to_reference");
@@ -201,15 +201,15 @@ main (int argc, char **argv)
           env.print_exception ("object_to_string");
           return 1;
         }
-       
+
       ACE_DEBUG ((LM_DEBUG, "stringified obj reference = %s\n", str));
     }
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
   // gather profile data
   quantify_clear_data();
   quantify_start_recording_data();
-#endif
+#endif /* ACE_HAS_QUANTIFY */
 
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.

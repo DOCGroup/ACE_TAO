@@ -32,11 +32,11 @@ ttcp_sequence_i::stop_timer (CORBA::Environment &IT_env)
         // reset
         this->nbytes_ = 0;
         numCalls = 0;
-#if defined (USE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
     quantify_stop_recording_data();
     ACE_Service_Config::end_reactor_event_loop();
     ACE_OS::fprintf (stderr, "*********** just before exiting\n");
-#endif
+#endif /* ACE_HAS_QUANTIFY */
 #if defined (ACE_HAS_PURIFY)
     ACE_Service_Config::end_reactor_event_loop();
     ACE_OS::fprintf (stderr, "*********** just before exiting\n");
