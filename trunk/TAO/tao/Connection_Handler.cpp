@@ -294,6 +294,12 @@ TAO_Connection_Handler::handle_input_eh (
   // Let the transport know that it is used
   (void) this->transport ()->update_transport ();
 
+  // Grab the transport id now and use the cached value for printing
+  // since the  transport could dissappear by the time the thread
+  // returns.
+  int t_id =
+    this->transport ()->id ();
+
 
   // Increase the reference count on the upcall that have passed us.
   //
@@ -307,10 +313,11 @@ TAO_Connection_Handler::handle_input_eh (
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d\n",
-                  this->transport ()->id (), handle, h, refcount));
+                  t_id, handle, h, refcount));
     }
 
-  TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   eh->get_handle ());
 
   int return_value = 0;
 
@@ -338,7 +345,7 @@ TAO_Connection_Handler::handle_input_eh (
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d, retval = %d\n",
-                  this->transport()->id (), handle, h, refcount, return_value));
+                  t_id, handle, h, refcount, return_value));
     }
 
   if (return_value == -1 || refcount == 0)
