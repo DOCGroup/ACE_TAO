@@ -1634,6 +1634,7 @@ TAO_MCastConfigIf::in_flowSpec (const AVStreams::flowSpec& flow_spec, const char
 // ----------------------------------------------------------------------
 
 TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint (void)
+  : protocol_object_set_ (0)
 {
 }
 
@@ -1687,6 +1688,9 @@ TAO_Base_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &)
 CORBA::Boolean
 TAO_Base_StreamEndPoint::handle_postconnect (AVStreams::flowSpec &)
 {
+
+  while (!this->is_protocol_object_set ())
+    TAO_AV_CORE::instance ()->orb ()->perform_work ();
   return 1;
 }
 
@@ -1703,6 +1707,19 @@ TAO_Base_StreamEndPoint::set_protocol_object (const char * /*flowname*/,
                                               TAO_AV_Protocol_Object * /*sfp_object*/)
 {
   return -1;
+}
+
+void
+TAO_Base_StreamEndPoint::protocol_object_set (void)
+{
+  this->protocol_object_set_ = 1;
+}
+
+
+int
+TAO_Base_StreamEndPoint::is_protocol_object_set (void)
+{
+  return this->protocol_object_set_;
 }
 
 int
@@ -2120,8 +2137,8 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
 
   vdev_any.in() >>= vdev;
   CORBA::Any_var mc_any = vdev->get_property_value ("Related_MediaCtrl"
-                                         ACE_ENV_ARG_PARAMETER);
-
+						    ACE_ENV_ARG_PARAMETER);
+  
   // The Related_MediaCtrl property was inserted as a CORBA::Object, so we
   // must extract it as the same type.
   CORBA::Object_var obj;
