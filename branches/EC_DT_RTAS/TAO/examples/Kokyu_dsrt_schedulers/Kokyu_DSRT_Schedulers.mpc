@@ -17,6 +17,12 @@ project(Kokyu_DSRT_EDF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   }
   
   Header_Files {
+<<<<<<< Kokyu_DSRT_Schedulers.mpc
+      Kokyu_dsrt_schedulers_export.h
+      MIF_SchedulingC.h
+      MUF_SchedulingC.h
+      FP_SchedulingC.h	
+=======
       Kokyu_dsrt_schedulers_export.h
   }
 }
@@ -75,5 +81,6 @@ project(Kokyu_DSRT_MIF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   
   Header_Files {
       Kokyu_dsrt_schedulers_export.h
+>>>>>>> 1.6.2.6
   }
 }
