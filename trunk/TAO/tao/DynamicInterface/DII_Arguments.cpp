@@ -36,6 +36,7 @@ namespace TAO
         return 0;
       }
     ACE_ENDTRY;
+    ACE_CHECK_RETURN (false);
 
     this->byte_order_ = cdr.byte_order ();
 
@@ -65,6 +66,7 @@ namespace TAO
         return 0;
       }
     ACE_ENDTRY;
+    ACE_CHECK_RETURN (false);
 
     return 1;
   }
@@ -94,35 +96,40 @@ namespace TAO
         return 0;
       }
     ACE_ENDTRY;
+    ACE_CHECK_RETURN (false);
 
     return 1;
   }
 
   void
-  NVList_Argument::interceptor_paramlist (Dynamic::ParameterList *list)
+  NVList_Argument::interceptor_paramlist (Dynamic::ParameterList *lst)
   {
     const CORBA::ULong len = this->x_->count ();
-    list->length (len);
+    lst->length (len);
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        (*list)[i].argument <<= *this->x_->item (i)->value ();
+        if (!this->x_->item (i)->value ())
+          return;
+
+        (*lst)[i].argument.replace (
+          this->x_->item (i)->value ()->impl ());
 
         switch (this->x_->item (i)->flags ())
           {
           case CORBA::ARG_IN:
             {
-              (*list)[i].mode = CORBA::PARAM_IN;
+              (*lst)[i].mode = CORBA::PARAM_IN;
               break;
             }
           case CORBA::ARG_INOUT:
             {
-              (*list)[i].mode = CORBA::PARAM_INOUT;
+              (*lst)[i].mode = CORBA::PARAM_INOUT;
               break;
             }
           case CORBA::ARG_OUT:
             {
-              (*list)[i].mode = CORBA::PARAM_OUT;
+              (*lst)[i].mode = CORBA::PARAM_OUT;
               break;
             }
           default:
