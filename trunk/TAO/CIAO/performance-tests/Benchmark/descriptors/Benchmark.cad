@@ -1,0 +1,34 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+<!DOCTYPE componentassembly SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/componentassembly.dtd">
+
+<componentassembly id="Single-process Basic assembly">
+  <componentfiles>
+    <componentfile id="com-RoundTrip">
+      <fileinarchive name="RoundTrip.csd"/>
+    </componentfile>
+  </componentfiles>
+
+  <partitioning>
+
+  <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
+      <homeplacement id="a_RoundTripHome">
+        <componentfileref idref="com-RoundTrip"/>
+        <componentinstantiation id="a_RoundTrip">
+          <registercomponent>
+            <!-- writeiortofile is a non-standard CIAO extension.  -->
+            <writeiortofile name="test.ior"/>
+          </registercomponent>
+        </componentinstantiation>
+      </homeplacement>
+
+  </partitioning>
+
+	<!--
+  <connections>
+  </connections>
+	-->
+
+</componentassembly>
