@@ -19,6 +19,9 @@ Fri Feb 26 21:03:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  the enum was generated i.e. for enums defined inside a module
 	  Foo it was using "value1" instead of "Foo::value1".
 
+	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
+	  Fixed Timeprobe use.
+
 Fri Feb 26 18:29:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Time/implrepo.conf

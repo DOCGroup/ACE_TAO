@@ -60,13 +60,22 @@ TAO_EC_Null_SupplierFiltering::push (const RtecEventComm::EventSet& event,
   TAO_EC_ConsumerAdmin::SupplierSetIterator end =
     consumer_admin->end ();
 
-  TAO_EC_QOS_Info qos_info;
-  for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
-         consumer_admin->begin ();
-       i != end;
-       ++i)
+  for (CORBA::ULong j = 0; j < event.length (); ++j)
     {
-      (*i)->filter (event, qos_info, ACE_TRY_ENV);
-      ACE_CHECK;
+      const RtecEventComm::Event& e = event[j];
+      RtecEventComm::Event* buffer = 
+        ACE_const_cast(RtecEventComm::Event*, &e);
+      RtecEventComm::EventSet single_event (1, 1, buffer, 0);
+
+      for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
+             consumer_admin->begin ();
+           i != end;
+           ++i)
+        {
+          TAO_EC_QOS_Info qos_info;
+
+          (*i)->filter (single_event, qos_info, ACE_TRY_ENV);
+          ACE_CHECK;
+        }
     }
 }
