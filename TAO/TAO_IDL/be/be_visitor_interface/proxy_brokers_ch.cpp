@@ -2,8 +2,8 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           proxy_brokers_ch, 
+ACE_RCSID (be_visitor_interface,
+           proxy_brokers_ch,
            "$Id$")
 
 be_visitor_interface_proxy_brokers_ch::be_visitor_interface_proxy_brokers_ch (
@@ -36,7 +36,6 @@ be_visitor_interface_proxy_brokers_ch::visit_interface (be_interface *node)
       << "// a call by call basis." << be_nl << be_nl;
 
   // Code Generation for the proxy brokers base class.
-  be_visitor *visitor = 0;
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_BROKER_CH);
   be_visitor_interface_base_proxy_broker_ch bpb_visitor (&ctx);

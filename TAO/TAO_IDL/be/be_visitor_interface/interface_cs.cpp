@@ -20,8 +20,8 @@
 
 #include "be_visitor_typecode/typecode_defn.h"
 
-ACE_RCSID (be_visitor_interface, 
-           interface_cs, 
+ACE_RCSID (be_visitor_interface,
+           interface_cs,
            "$Id$")
 
 // ************************************************************
@@ -298,7 +298,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
     }
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
@@ -405,20 +405,20 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->is_abstract ())
     {
       *os << node->full_name () << "_ptr" << be_nl
-          << node->full_name () 
+          << node->full_name ()
           << "::_downcast (CORBA::AbstractBase_ptr abs)" << be_nl
           << "{" << be_idt_nl
           << "if (CORBA::is_nil (abs))" << be_idt_nl
           << "{" << be_idt_nl
           << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
-          << "return (" << node->local_name () 
+          << "return (" << node->local_name ()
           << "_ptr) abs->_tao_obv_narrow ((ptr_arith_t) &_downcast);"
           << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       *os << "void *" << be_nl
-          << node->full_name () 
+          << node->full_name ()
           << "::_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
           << "{" << be_idt_nl
           << "if (type_id == (ptr_arith_t) &_downcast)" << be_idt_nl
@@ -458,8 +458,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       *os << "if (" << be_idt << be_idt_nl;
 
-      int status = 
-        node->traverse_inheritance_graph (be_interface::is_a_helper, 
+      int status =
+        node->traverse_inheritance_graph (be_interface::is_a_helper,
                                           os);
 
       if (status == -1)
@@ -528,7 +528,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "if ";
 
   if (node->traverse_inheritance_graph (
-          be_interface::queryinterface_helper, 
+          be_interface::queryinterface_helper,
           os
         ) == -1)
     {
@@ -539,7 +539,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "(type == ACE_reinterpret_cast (" 
+  *os << "(type == ACE_reinterpret_cast ("
       << be_idt << be_idt << be_idt << be_idt << be_idt << be_idt_nl
       << " ptr_arith_t," << be_nl;
 
@@ -551,7 +551,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << " &CORBA::Object";
     }
-    
+
   *os << "::_tao_class_id)" << be_uidt_nl
       << " )" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
@@ -559,7 +559,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
       << "void *," << be_nl
       << "ACE_static_cast (";
-      
+
   if (node->is_abstract ())
     {
       *os << "CORBA::AbstractBase_ptr";
@@ -568,7 +568,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << "CORBA::Object_ptr";
     }
-    
+
   *os << ", this)" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
@@ -604,7 +604,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       if (! node->is_local ())
         {
           be_visitor_context ctx (*this->ctx_);
-          be_visitor *visitor = 0;
 
           ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS);
           be_visitor_interface_smart_proxy_cs isp_visitor (&ctx);
@@ -639,7 +638,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
@@ -748,7 +747,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
           << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
           << "_Factory_function_pointer != 0" << be_uidt_nl << ")"
           << be_nl << "{"
-          << be_idt_nl 
+          << be_idt_nl
           << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
           << "default_proxy," << be_nl
           << "::" <<  bt->name ()
@@ -853,7 +852,7 @@ be_visitor_interface_cs::gen_abstract_unchecked_narrow (be_interface *node,
 
   *os << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << "default_proxy = " << bt->name () << "::_downcast (obj);" 
+      << "default_proxy = " << bt->name () << "::_downcast (obj);"
       << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
@@ -861,4 +860,3 @@ be_visitor_interface_cs::gen_abstract_unchecked_narrow (be_interface *node,
 
   *os << "}" << be_nl << be_nl;
 }
-

@@ -67,7 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_ERR_UTL_ERR_HH
 #define _UTL_ERR_UTL_ERR_HH
 
-#include "AST_Expression.h"
+#include "ast_expression.h"
 #include "idl_global.h"
 #include "utl_scoped_name.h"
 

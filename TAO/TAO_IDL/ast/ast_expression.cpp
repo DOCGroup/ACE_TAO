@@ -75,8 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "nr_extern.h"
 
-ACE_RCSID (ast, 
-           ast_expression, 
+ACE_RCSID (ast,
+           ast_expression,
            "$Id$")
 
 // Helper function to fill out the details of where this expression
@@ -1553,8 +1553,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 
 // Integer literals may not be assigned to floating point constants,
 // and vice versa.
-static idl_bool 
-incompatible_types (AST_Expression::ExprType t1, 
+static idl_bool
+incompatible_types (AST_Expression::ExprType t1,
                     AST_Expression::ExprType t2)
 {
   switch (t1)
@@ -1592,7 +1592,7 @@ incompatible_types (AST_Expression::ExprType t1,
           return 0;
         default:
           return 1;
-      }  
+      }
     case AST_Expression::EV_char:
     case AST_Expression::EV_wchar:
     case AST_Expression::EV_string:
@@ -1651,7 +1651,7 @@ eval_kind(AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 // its sub-expressions.
 // Operations supported: '+', '-', '*', '/'
 AST_Expression::AST_ExprValue *
-AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
+AST_Expression::eval_bin_op (AST_Expression::EvalKind /* ek */)
 {
   AST_ExprValue *retval = 0;
 
@@ -2040,7 +2040,7 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
                                   AST_Decl *d)
 {
   if (d != 0)
-    { 
+    {
       AST_Decl *enum_val =
         idl_global->scopes ().top_non_null ()->lookup_by_name (this->pd_n,
                                                                1);

@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           arglist, 
+ACE_RCSID (be_visitor_valuetype,
+           arglist,
            "$Id$")
 
 // ************************************************************
@@ -41,19 +41,19 @@ be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist (void)
 {
 }
 
-int 
+int
 be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 {
   UTL_Scope *scope = node->defined_in ();
   be_interface *iface = be_interface::narrow_from_scope (scope);
-  
+
   int is_an_amh_exception_holder = 0;
 
   if (iface != 0)
     {
       const char *amh_underbar = "AMH_";
       const char *node_name = iface->local_name ();
-      
+
       if( amh_underbar[0] == node_name[0] &&
           amh_underbar[1] == node_name[1] &&
           amh_underbar[2] == node_name[2] &&
@@ -97,10 +97,6 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     {
       // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
       // whether the operation node has parameters.
-      const char *env_decl = (node->argument_count () > 0 
-                                ? " ACE_ENV_ARG_DECL" 
-                                : "ACE_ENV_SINGLE_ARG_DECL");
-
       if (!amh_valuetype)
         {
           switch (this->ctx_->state ())
@@ -146,7 +142,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       /***********************************************************/
       if (is_amh_exception_holder (node))
         {
-          *os << "{ this->exception->_raise (); }" 
+          *os << "{ this->exception->_raise (); }"
               << be_uidt_nl;
         }
       /***********************************************************/
@@ -286,7 +282,7 @@ be_visitor_obv_operation_arglist::post_process (be_decl *bd)
         {
           *os << "";
         }
- 
+
       break;
     default:
       break;

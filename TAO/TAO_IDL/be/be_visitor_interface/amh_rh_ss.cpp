@@ -11,8 +11,8 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_rh_ss, 
+ACE_RCSID (be_visitor_interface,
+           amh_rh_ss,
            "$Id$")
 
 be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (
@@ -65,12 +65,12 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
     }
 
   ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
-  rh_skel_class_name += node->local_name (); 
+  rh_skel_class_name += node->local_name ();
 
   *os << be_nl << "// TAO_IDL - Generated from "
       << __FILE__ << ":" << __LINE__ << be_nl;
 
-  *os << rh_skel_full_scope_name.c_str() 
+  *os << rh_skel_full_scope_name.c_str()
       << "::" << be_nl
       << "  " << rh_skel_class_name.c_str()
       << " (TAO_ServerRequest &sr)" << be_nl
@@ -82,7 +82,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   *os << be_nl << "// TAO_IDL - Generated from "
       << __FILE__ << ":" << __LINE__ << be_nl;
 
-  *os << rh_skel_full_scope_name.c_str() 
+  *os << rh_skel_full_scope_name.c_str()
       << "::" << be_nl
       << "  ~" << rh_skel_class_name.c_str()
       << " (void)" << be_nl;

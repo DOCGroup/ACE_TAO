@@ -20,8 +20,8 @@
 
 #include "nr_extern.h"
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_ss, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_ss,
            "$Id$")
 
 
@@ -68,8 +68,6 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   ACE_CString flat_name_holder =
     this->generate_flat_name (node);
-
-  const char *flat_name = flat_name_holder.c_str ();
 
   *os << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
@@ -161,7 +159,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << "CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl
-      << "return "; 
+      << "return ";
 
   if (concrete->is_nested ())
     {

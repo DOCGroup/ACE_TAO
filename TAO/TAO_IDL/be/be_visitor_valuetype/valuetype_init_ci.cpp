@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_init_ci, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_init_ci,
            "$Id$")
 
 be_visitor_valuetype_init_ci::be_visitor_valuetype_init_ci (
@@ -36,7 +36,7 @@ be_visitor_valuetype_init_ci::~be_visitor_valuetype_init_ci (void)
 }
 
 int
-be_visitor_valuetype_init_ci::visit_valuetype (be_valuetype *node)
+be_visitor_valuetype_init_ci::visit_valuetype (be_valuetype *)
 {
   return 0;
 }
