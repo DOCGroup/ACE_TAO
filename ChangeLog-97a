@@ -3,6 +3,12 @@ Tue May 13 21:32:12 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Process.cpp (~ACE_Process_Options): delete
 	  command_line_buf_ was missing the [].
 
+	* examples/Threads/process_manager.cpp (main): avoid compiler
+	  warning due to implicit creation of temporary by explicitly
+	  creating an ACE_Process_Options instance.  It gets passed to
+	  ACE_Process_Manager::spawn (ACE_Process_Options &), which
+	  takes a non-const reference.
+
 Tue May 13 18:08:32 1997    <irfan@TWOSTEP>
 
 	* examples/ASX/UPIPE_Event_Server: Made enough fixes for this to
