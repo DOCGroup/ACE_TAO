@@ -1,3 +1,11 @@
+Wed Sep  3 11:53:53 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Added a dependency to all source files upon any generated files
+          (be it idl or custom build).
+
 Wed Sep  3 09:44:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
