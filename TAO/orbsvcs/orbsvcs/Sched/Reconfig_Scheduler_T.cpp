@@ -144,7 +144,11 @@ init (int config_count,
       ACE_CHECK_RETURN (-1);
 
       // Make sure the new config info is cleaned up if we exit abruptly.
-      new_config_info_ptr.reset (new_config_info);
+      if (new_config_info != new_config_info_ptr.get ())
+        {
+          new_config_info_ptr.release ();
+          new_config_info_ptr = new_config_info;
+        }
 
       result = config_info_map_.bind (config_info [config_info_count_].preemption_priority,
                                       new_config_info);
@@ -1365,7 +1369,11 @@ assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
           ACE_CHECK;
 
           // Make sure the new config info is cleaned up if we exit abruptly.
-          new_config_info_ptr.reset (new_config_info);
+          if (new_config_info != new_config_info_ptr.get ())
+            {
+              new_config_info_ptr.release ();
+              new_config_info_ptr = new_config_info;
+            }
 
           // Have the strategy fill in the new config info for that
           // priority level, using the representative scheduling entry.
