@@ -1,7 +1,22 @@
 // $Id$
 
-// Main driver program for the Gateway.  This file is completely
-// generic code due to the ACE Service Configurator framework!
+// ============================================================================
+//
+// = LIBRARY
+//    gateway
+//
+// = FILENAME
+//    peerd.h
+//
+// = DESCRIPTION
+//    Driver for the gateway daemon (gatewayd).  Note that this is
+//    completely generic code due to the Service Configurator
+//    framework!
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
 #include "ace/Service_Config.h"
 #include "Gateway.h"
