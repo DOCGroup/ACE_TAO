@@ -65,37 +65,17 @@ class Task : public ACE_Task_Base
 public:
 
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb,
-        RTCORBA::RTORB_ptr rt_orb,
-        RTCORBA::Current_ptr rt_current,
-        RTCORBA::Priority low_priority,
-        RTCORBA::Priority high_priority);
+        CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
-  RTCORBA::RTORB_var rt_orb_;
-
-  RTCORBA::Current_var rt_current_;
-
-  RTCORBA::Priority low_priority_;
-
-  RTCORBA::Priority high_priority_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb,
-            RTCORBA::RTORB_ptr rt_orb,
-            RTCORBA::Current_ptr rt_current,
-            RTCORBA::Priority low_priority,
-            RTCORBA::Priority high_priority)
+            CORBA::ORB_ptr orb)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    rt_orb_ (RTCORBA::RTORB::_duplicate (rt_orb)),
-    rt_current_ (RTCORBA::Current::_duplicate (rt_current)),
-    low_priority_ (low_priority),
-    high_priority_ (high_priority)
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -112,20 +92,50 @@ Task::svc (void)
         test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      object =
+        this->orb_->resolve_initial_references ("RTORB"
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      RTCORBA::RTORB_var rt_orb =
+        RTCORBA::RTORB::_narrow (object.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      object =
+        this->orb_->resolve_initial_references ("RTCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Current_var rt_current =
+        RTCORBA::Current::_narrow (object.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Priority default_thread_priority =
+        rt_current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Priority low_priority =
+        default_thread_priority;
+
+      RTCORBA::Priority high_priority =
+        default_thread_priority + 1;
+
       if (make_banded_invocations)
         {
           RTCORBA::PriorityBands bands;
           bands.length (2);
-          bands[0].low = this->low_priority_;
-          bands[0].high = this->low_priority_;
-          bands[1].low = this->high_priority_;
-          bands[1].high = this->high_priority_;
+          bands[0].low = low_priority;
+          bands[0].high = low_priority;
+          bands[1].low = high_priority;
+          bands[1].high = high_priority;
 
           CORBA::PolicyList policies;
           policies.length (1);
           policies[0] =
-            this->rt_orb_->create_priority_banded_connection_policy (bands
-                                                                     ACE_ENV_ARG_PARAMETER);
+            rt_orb->create_priority_banded_connection_policy (bands
+                                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           object =
@@ -139,8 +149,8 @@ Task::svc (void)
           ACE_TRY_CHECK;
         }
 
-      this->rt_current_->the_priority (this->low_priority_
-                                       ACE_ENV_SINGLE_ARG_PARAMETER);
+      rt_current->the_priority (low_priority
+                                ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test->initialize (iterations * 2
@@ -158,8 +168,8 @@ Task::svc (void)
           ACE_TRY_CHECK;
         }
 
-      this->rt_current_->the_priority (this->high_priority_
-                                       ACE_ENV_SINGLE_ARG_PARAMETER);
+      rt_current->the_priority (high_priority
+                                ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (i = 0; i != iterations; ++i)
@@ -196,46 +206,12 @@ main (int argc, char *argv[])
       if (result != 0)
         return result;
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      object =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RTCORBA::Current_var rt_current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RTCORBA::Priority default_thread_priority =
-        rt_current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RTCORBA::Priority low_priority =
-        default_thread_priority;
-
-      RTCORBA::Priority high_priority =
-        default_thread_priority + 1;
-
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
 
       // Create task.
       Task task (thread_manager,
-                 orb.in (),
-                 rt_orb.in (),
-                 rt_current.in (),
-                 low_priority,
-                 high_priority);
+                 orb.in ());
 
       // Task activation flags.
       long flags =
