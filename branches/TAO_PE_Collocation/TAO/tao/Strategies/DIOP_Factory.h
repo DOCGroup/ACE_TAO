@@ -62,7 +62,11 @@ public:
    */
   //@{
   virtual TAO_Acceptor  *make_acceptor (void);
+
+#if !defined (TAO_HAS_COLLOCATION)
   virtual TAO_Connector *make_connector  (void);
+#endif
+
   virtual int requires_explicit_endpoint (void) const;
   //@}
 

@@ -28,6 +28,7 @@
 #include "ace/Acceptor.h"
 
 #include "tao/Wait_Strategy.h"
+
 #include "tao/Connection_Handler.h"
 #include "DIOP_Transport.h"
 #include "ace/SOCK_Dgram.h"
@@ -51,13 +52,14 @@ class TAO_Pluggable_Messaging;
 class TAO_Strategies_Export TAO_DIOP_Connection_Handler :
   public TAO_DIOP_SVC_HANDLER,
   public TAO_Connection_Handler
+
 {
 
 public:
 
   TAO_DIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. 
+  /// Constructor.
   TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                CORBA::Boolean flag);
 
@@ -129,7 +131,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  
+
 protected:
 
   //@{

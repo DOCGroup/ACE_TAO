@@ -10,7 +10,7 @@
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/Transport_Cache_Manager.h"
+//#include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
@@ -48,18 +48,20 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
+  /*
   TAO_DIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
            TAO_DIOP_Transport(this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
+  */
 }
 
 
 TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 {
-  delete this->transport ();
+  //delete this->transport ();
   this->udp_socket_.close ();
 }
 
@@ -115,6 +117,7 @@ TAO_DIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_DIOP_Connection_Handler::open (void*)
 {
+  /*
   // Currently, the DIOP properties are not used.  This code is here
   // for consistency with other protocols.
   TAO_DIOP_Protocol_Properties protocol_properties;
@@ -171,11 +174,15 @@ TAO_DIOP_Connection_Handler::open (void*)
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
   return 0;
+  */
+
+  return 0;
 }
 
 int
 TAO_DIOP_Connection_Handler::open_server (void)
 {
+  /*
   this->udp_socket_.open (this->local_addr_);
   if( TAO_debug_level > 5)
   {
@@ -189,6 +196,8 @@ TAO_DIOP_Connection_Handler::open_server (void)
 
   this->transport ()->id ((size_t) this->get_handle ());
 
+  return 0;
+  */
   return 0;
 }
 
