@@ -468,6 +468,12 @@ be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
 }
 
 int
+be_visitor_valuetype_field_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
 be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
@@ -534,6 +540,12 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
   *os << "}";
 
   return 0;
+}
+
+int
+be_visitor_valuetype_field_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
 }
 
 int

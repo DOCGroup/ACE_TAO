@@ -42,3 +42,10 @@ be_visitor_valuetype_si::visit_valuetype (be_valuetype *)
   // Nothing needed for now, but the visitor is here just in case.
   return 0;
 }
+
+int
+be_visitor_valuetype_si::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+

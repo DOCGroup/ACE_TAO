@@ -116,6 +116,12 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
+int
+be_visitor_valuetype_cdr_op_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
 // @@@ (JP) The following three methods are a hack to get CDR
 // operators generated for anonymous array and sequence
 // valuetype members. This should be done like it is in structs,

@@ -151,6 +151,12 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 }
 
 int
+be_visitor_valuetype_init_ch::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
 be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
 {
 

@@ -39,7 +39,7 @@ public:
   ~be_visitor_valuetype_cs (void);
 
   virtual int visit_valuetype (be_valuetype *node);
-  // Set the right context and make a visitor.l
+  virtual int visit_eventtype (be_eventtype *node);
 
   virtual int visit_operation (be_operation *node);
   // Called only by AMH exceptions.

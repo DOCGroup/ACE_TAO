@@ -88,10 +88,7 @@ public:
       TAO_VALUETYPE_OBV_CH,                 // OBV_ class
       TAO_VALUETYPE_OBV_CI,
       TAO_VALUETYPE_OBV_CS,
-
-      TAO_EVENTTYPE_OBV_CH,
-      TAO_EVENTTYPE_OBV_CS,
-
+      
       // Emitting code for the module,
       TAO_MODULE_OBV_CH,                    // for OBV_ (cmp. POA_ namespace)
       TAO_MODULE_OBV_CI,

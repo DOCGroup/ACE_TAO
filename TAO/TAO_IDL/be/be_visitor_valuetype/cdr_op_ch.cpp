@@ -91,3 +91,11 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }
+
+int
+be_visitor_valuetype_cdr_op_ch::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+
