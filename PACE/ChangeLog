@@ -5,11 +5,27 @@ Mon Jul 17 14:00:35 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 	  Changed #if (PACE_WIN32 != 0) to #if (PACE_WIN32) to be
 	  more consistent.
 
+Mon Jul 17 13:57:05 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/posix/mman.inl (pace_shm_open):
+	* pace/win32/mman.inl (pace_shm_open):
+	* pace/sys/mman.h (pace_shm_open):
+
+	  Return value changed to PACE_HANDLE.
+
+	* pace/win32/mman.h:
+
+	  Added some sorely needed constant macro definitions.
+
+	* pace/config/utility.h:
+
+	  Removed #define PACE_POSIX_ERROR_INT_RETVAL -1
+
 Mon Jul 17 13:31:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:
 
-	  Added #define PACE_POSIX_ERROR_RETVAL -1
+	  Added #define PACE_POSIX_ERROR_INT_RETVAL -1
 
 Mon Jul 17 13:07:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 

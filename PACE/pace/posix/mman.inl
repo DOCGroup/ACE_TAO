@@ -96,7 +96,7 @@ pace_munmap (void * addr, pace_size_t len)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
-int
+PACE_HANDLE
 pace_shm_open (const char * name,
                int oflag,
                pace_mode_t mode)
