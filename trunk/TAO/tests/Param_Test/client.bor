@@ -49,6 +49,7 @@ OBJFILES = \
 	$(OBJDIR)\var_array.obj \
 	$(OBJDIR)\var_struct.obj \
 	$(OBJDIR)\recursive_struct.obj \
+ 	$(OBJDIR)\recursive_union.obj \
 	$(OBJDIR)\except.obj \
 	$(OBJDIR)\big_union.obj \
 	$(OBJDIR)\multdim_array.obj \

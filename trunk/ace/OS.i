@@ -11775,7 +11775,7 @@ ACE_OS::stat (const wchar_t *file, struct stat *stp)
       stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
     }
   return 0;
-#   elif defined (__BORLANDC__)
+#   elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540)
   ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
 #   else
   ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);

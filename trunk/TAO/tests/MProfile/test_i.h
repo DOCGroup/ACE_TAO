@@ -36,7 +36,7 @@ public:
 
   // = The Simple_Server methods.
   void remote_call (CORBA::Environment &);
-  
+    ACE_THROW_SPEC ((CORBA::SystemException));  
 
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -48,9 +48,5 @@ private:
   CORBA::ORB_var orb_;
   PortableServer::POA_ptr poa_;
 };
-
-#if defined(__ACE_INLINE__)
-#include "test_i.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_MT_CLIENT_TEST_I_H */

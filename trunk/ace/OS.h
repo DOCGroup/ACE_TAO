@@ -655,7 +655,7 @@ typedef long      id_t;
 #     define ACE_NON_BLOCKING_BUG_DELAY 35000
 #   endif /* ACE_NON_BLOCKING_BUG_DELAY */
 
-#   if defined (_DEBUG) && !defined (ACE_HAS_WINCE)
+#   if defined (_DEBUG) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
 class ACE_Export ACE_No_Heap_Check
 {
 public:
@@ -3377,12 +3377,15 @@ PAGE_NOCACHE  */
 #     include /**/ <fcntl.h>
 #     define _chdir chdir
 #     define _ftime ftime
+#     undef _access
 #     define _access access
-#     define _getcwd getcwd
+#     if (__BORLANDC__ <= 0x540)
+#       define _getcwd getcwd
+#       define _stat stat
+#     endif
 #     define _isatty isatty
 #     define _umask umask
 #     define _fstat fstat
-#     define _stat stat
 #     define _stricmp stricmp
 #     define _strnicmp strnicmp
 
@@ -7898,7 +7901,7 @@ private:
   do \
     RESULT = (TYPE) X; \
   while (0)
-#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
+#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x550)
 #   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_; \
@@ -7917,7 +7920,7 @@ private:
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
   } while (0)
-#   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x540) */
+#   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x550) */
 #   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     RESULT = (TYPE) X; \

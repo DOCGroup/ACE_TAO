@@ -1,5 +1,32 @@
 Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+        * Added the following changes for Borland C++Builder 4:
+
+          ace/OS.cpp: Removed processor architecture "hack" since
+	  Borland C++Builder 4 supports the required structure definition,
+	  and earlier versions are no longer supported.
+ 
+	  ace/OS.h: Do not define the ACE_No_Heap_Check class when
+	  building with Borland C++Builder.
+
+	  ace/OS.h, OS.i, config-win32-borland.h: Updated compiler version
+	  numbers for macro definitions.
+
+	  ace/Thread_Manager.h: ACE_Thread_Descriptor_Base class needs to
+	  be exported when building a DLL.
+
+	  include/makeinclude/build_dll.bor, build_exe.bor, build_lib.bor:
+	  Added makefile target for "clean".
+
+	  include/makeinclude/compiler.bor: Added -D_DEBUG compiler flag
+	  when building debug configuration.
+
+	  include/makeinclude/outputdir.bor: Allow object directory to be
+ 	  overridden.
+	
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+ 	  contributing these.
+	
 	* ace/OS.i: Minor reformatting.
 
 	* ace/SOCK_Dgram_Mcast: Updated the implementation comments related to
