@@ -10924,7 +10924,7 @@ ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
 // allocated with <ACE_OS::malloc> and must be freed by
 // <ACE_OS::free>.
 
-char *
+ACE_INLINE char *
 ACE_OS::strenvdup (const char *str)
 {
 #if defined (ACE_HAS_WINCE)
