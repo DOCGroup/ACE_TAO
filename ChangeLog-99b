@@ -1,3 +1,10 @@
+Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>  
+
+        * ace/IOStream_T.{cpp|h|i}: Those last changes break
+				(at least) examples/IOStream/server.  I'm backing them
+				out and restoring the 4.6.25 versions of these files
+				until Chris can get back to me about what's going on.
+
 Wed Mar 03 19:08:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Map_T.h (ACE_Map): Further degraded my code to make it
