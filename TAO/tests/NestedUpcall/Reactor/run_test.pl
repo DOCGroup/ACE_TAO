@@ -8,12 +8,12 @@ unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
 
-$SV = Process::Create ("server".$Process::EXE_EXT, 
+$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT, 
 		       " -ORBobjrefstyle url");
 
 sleep ($ACE::sleeptime);
 
-$status  = system ("client".$Process::EXE_EXT.
+$status  = system ($EXEPREFIX."client".$Process::EXE_EXT.
 		   " -x ");
 
 $SV->Wait ();
