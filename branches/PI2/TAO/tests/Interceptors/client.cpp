@@ -38,10 +38,14 @@ void
 run_test (Test_Interceptors::Visual_ptr server,
           CORBA::Environment &ACE_TRY_ENV)
 {
+
   server->normal (10, ACE_TRY_ENV);
   ACE_CHECK;
 
+  cout << "normal done"<<endl;
   server->nothing (ACE_TRY_ENV);
+  
+  cout<< "nothing done"<<endl;
   ACE_CHECK;
 
   ACE_TRY
@@ -102,7 +106,7 @@ main (int argc, char *argv[])
                              ior),
                             1);
         }
-
+      
       run_test (server.in (), ACE_TRY_ENV);
 
       server->shutdown (ACE_TRY_ENV);
