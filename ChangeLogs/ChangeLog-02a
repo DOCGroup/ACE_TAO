@@ -1,3 +1,16 @@
+Mon Feb 26 12:27:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+
+          Added method to reset the byte order in class OuputCDR.
+          This will be used by a gateway to set the byte order
+          of a reply to a reqest it has handled to one different
+          than the gateway's own byte order, if necessary. It
+          should be called while the stream is still empty, that
+          is, before any part of the reply, including the header,
+          has been marshaled.
+
 Mon Feb 26 12:07:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Memory_Pool.cpp: Moved the copying of MMAP flags up before
