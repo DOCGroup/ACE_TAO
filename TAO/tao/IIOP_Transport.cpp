@@ -106,6 +106,61 @@ TAO_IIOP_Transport::idle (void)
 }
 
 
+ssize_t
+TAO_IIOP_Transport::send (TAO_Stub *stub,
+                          int two_way,
+                          const ACE_Message_Block *message_block,
+                          const ACE_Time_Value *max_wait_time)
+{
+  if (stub == 0 || two_way)
+    {
+      return this->send (message_block,
+                         max_wait_time);
+    }
+  else
+    {
+      TAO_Sync_Strategy &sync_strategy = stub->sync_strategy ();
+
+      return sync_strategy.send (*this,
+                                 *stub,
+                                 message_block,
+                                 max_wait_time);
+    }
+}
+
+
+ssize_t
+TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
+                          const ACE_Time_Value *max_wait_time,
+                          size_t *bytes_transferred)
+{
+  return ACE::send_n (this->handle (),
+                      message_block,
+                      max_wait_time,
+                      bytes_transferred);
+}
+
+ssize_t
+TAO_IIOP_Transport::send (const u_char *buf,
+                          size_t len,
+                          const ACE_Time_Value *max_wait_time)
+{
+  return this->service_handler ()->peer ().send_n (buf,
+                                                   len,
+                                                   max_wait_time);
+}
+
+ssize_t
+TAO_IIOP_Transport::recv (char *buf,
+                          size_t len,
+                          const ACE_Time_Value *max_wait_time)
+{
+  return this->service_handler ()->peer ().recv_n (buf,
+                                                   len,
+                                                   max_wait_time);
+}
+
+
 // Return 0, when the reply is not read fully, 1 if it is read fully.
 // @@ This code should go in the TAO_Transport class is repeated for
 //    each transport!!

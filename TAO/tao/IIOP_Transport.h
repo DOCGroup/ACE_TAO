@@ -75,6 +75,28 @@ public:
 
   virtual int idle (void);
 
+  /// Write the complete Message_Block chain to the connection.
+  virtual ssize_t send (TAO_Stub *stub,
+                        int two_way,
+                        const ACE_Message_Block *mblk,
+                        const ACE_Time_Value *s = 0);
+
+  virtual ssize_t send (const ACE_Message_Block *mblk,
+                        const ACE_Time_Value *s = 0,
+                        size_t *bytes_transferred = 0);
+
+
+  /// Write the contents of the buffer of length len to the
+  /// connection.
+  virtual ssize_t send (const u_char *buf,
+                        size_t len,
+                        const ACE_Time_Value *s = 0);
+
+  /// Read len bytes from into buf.
+  virtual ssize_t recv (char *buf,
+                        size_t len,
+                        const ACE_Time_Value *s = 0);
+
   /// Do I need this -- Bala??
   virtual int handle_client_input (int block = 0,
                                    ACE_Time_Value *max_time_value = 0);

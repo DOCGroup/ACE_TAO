@@ -97,11 +97,11 @@ public:
   virtual ssize_t send (TAO_Stub *stub,
                         int two_way,
                         const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
+                        const ACE_Time_Value *s = 0) = 0;
 
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
-                        size_t *bytes_transferred = 0);
+                        size_t *bytes_transferred = 0) = 0;
 
   // Write the complete Message_Block chain to the connection.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
@@ -110,12 +110,12 @@ public:
 
   virtual ssize_t send (const u_char *buf,
                         size_t len,
-                        const ACE_Time_Value *s = 0);
+                        const ACE_Time_Value *s = 0) = 0;
   // Write the contents of the buffer of length len to the connection.
 
   virtual ssize_t recv (char *buf,
                         size_t len,
-                        const ACE_Time_Value *s = 0);
+                        const ACE_Time_Value *s = 0) = 0;
   // Read len bytes from into buf.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
