@@ -1,5 +1,9 @@
 Sat Oct 17 13:41:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* test/Future_Test.cpp: Added more comments so that the structure
+ 	  and participants in the Active Object pattern would be more
+ 	  obvious.
+
 	* ace/Message_Block: Added a priority parameter, which defaults to
  	  0, to one of the constructor for ACE_Message_Block so that it
  	  simplifies the new Method_Request semantics.
