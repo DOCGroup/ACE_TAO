@@ -24,14 +24,6 @@
 
 #include "tao/corba.h"
 
-#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-extern "C"
-{
-  u_int wslen (const CORBA::WChar *);
-  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
-}
-#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
 extern CORBA::TypeCode TC_opaque;
 
 // Encode instances of arbitrary data types based only on typecode.
@@ -1328,11 +1320,7 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       if (env.exception () == 0)
         {
           // get the actual length of the string
-#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-          CORBA::ULong len = wslen ((CORBA::WChar *) str);
-#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-          CORBA::ULong len = ACE_OS::strlen (str);
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+          CORBA::ULong len = ACE_WString::wstrlen ((CORBA::WChar *) str);
 
           // if it is an unbounded string or if the length is less than the
           // bounds for an unbounded string

@@ -18,14 +18,6 @@ const int TAO_POA::max_space_required_for_ulong = 24;
 // This is the maximum space require to convert the ulong into a string
 const int TAO_Creation_Time::max_space_required_for_two_ulong_to_hex = 8 * 2;
 
-#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-extern "C"
-{
-  u_int wslen (const CORBA::WChar *);
-  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
-}
-#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
                                       PortableServer::POA_ptr poa)
   : value_ (value),
@@ -2924,11 +2916,7 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *string)
   // We DO NOT include the zero terminator, as this is simply an
   // artifact of the way strings are stored in C.
   //
-#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-  CORBA::ULong string_length = wslen (string);
-#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-  CORBA::ULong string_length = ACE_OS::strlen (string);
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  CORBA::ULong string_length = ACE_WString::wstrlen (string);
 
   size_t buffer_size = string_length * sizeof (CORBA::WChar);
 
