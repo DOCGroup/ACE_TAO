@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_STDLIB_H
-#define PACE_STDLIB_H
+#ifndef PACE_STDLIB_H_INDIRECT
+#define PACE_STDLIB_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/stdlib.h"
+# include "pace/posix/stdlib.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/stdlib.h"
+# include "pace/vxworks/stdlib.h"
 #elif defined (PACE_WIN32)
-# include "win32/stdlib.h"
+# include "pace/win32/stdlib.h"
 #endif
 
-#endif /* PACE_STDLIB_H */
+#endif /* PACE_STDLIB_H_INDIRECT */

@@ -13,15 +13,15 @@
  *
  * =========================================================================== */
 
-#ifndef PACE_LOCALE_H
-#define PACE_LOCALE_H
+#ifndef PACE_LOCALE_H_INDIRECT
+#define PACE_LOCALE_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/locale.h"
+# include "pace/posix/locale.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/locale.h"
+# include "pace/vxworks/locale.h"
 #elif defined (PACE_WIN32)
-# include "win32/locale.h"
+# include "pace/win32/locale.h"
 #endif
 
-#endif /* PACE_LOCALE_H */
+#endif /* PACE_LOCALE_H_INDIRECT */

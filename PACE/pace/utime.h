@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_UTIME_H
-#define PACE_UTIME_H
+#ifndef PACE_UTIME_H_INDIRECT
+#define PACE_UTIME_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/utime.h"
+# include "pace/posix/utime.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/utime.h"
+# include "pace/vxworks/utime.h"
 #elif defined (PACE_WIN32)
-# include "win32/utime.h"
+# include "pace/win32/utime.h"
 #endif
 
-#endif /* PACE_UTIME_H */
+#endif /* PACE_UTIME_H_INDIRECT */

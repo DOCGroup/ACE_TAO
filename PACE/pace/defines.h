@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_DEFINES_H
-#define PACE_DEFINES_H
+#ifndef PACE_DEFINES_H_INDIRECT
+#define PACE_DEFINES_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/defines.h"
+# include "pace/posix/defines.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/defines.h"
+# include "pace/vxworks/defines.h"
 #elif defined (PACE_WIN32)
-# include "win32/defines.h"
+# include "pace/win32/defines.h"
 #endif
 
-#endif /* PACE_DEFINES_H */
+#endif /* PACE_DEFINES_H_INDIRECT */

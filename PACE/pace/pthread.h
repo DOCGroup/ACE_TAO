@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_PTHREAD_H
-#define PACE_PTHREAD_H
+#ifndef PACE_PTHREAD_H_INDIRECT
+#define PACE_PTHREAD_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/pthread.h"
+# include "pace/posix/pthread.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/pthread.h"
+# include "pace/vxworks/pthread.h"
 #elif defined (PACE_WIN32)
-# include "win32/pthread.h"
+# include "pace/win32/pthread.h"
 #endif
 
-#endif /* PACE_PTHREAD_H */
+#endif /* PACE_PTHREAD_H_INDIRECT */

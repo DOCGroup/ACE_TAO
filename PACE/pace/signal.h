@@ -13,15 +13,15 @@
  *
  * ============================================================================= */
 
-#ifndef PACE_SIGNAL_H
-#define PACE_SIGNAL_H
+#ifndef PACE_SIGNAL_H_INDIRECT
+#define PACE_SIGNAL_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/signal.h"
+# include "pace/posix/signal.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/signal.h"
+# include "pace/vxworks/signal.h"
 #elif defined (PACE_WIN32)
-# include "win32/signal.h"
+# include "pace/win32/signal.h"
 #endif
 
-#endif /* PACE_SIGNAL_H */
+#endif /* PACE_SIGNAL_H_INDIRECT */

@@ -13,18 +13,18 @@
  *
  * =========================================================================== */
 
-#ifndef PACE_ASSERT_H
-#define PACE_ASSERT_H
+#ifndef PACE_ASSERT_H_INDIRECT
+#define PACE_ASSERT_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/assert.h"
+# include "pace/posix/assert.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/assert.h"
+# include "pace/vxworks/assert.h"
 #elif defined (PACE_WIN32)
-# include "win32/assert.h"
+# include "pace/win32/assert.h"
 #endif
 
-#endif /* PACE_ASSERT_H */
+#endif /* PACE_ASSERT_H_INDIRECT */
 
 
 

@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_PWD_H
-#define PACE_PWD_H
+#ifndef PACE_PWD_H_INDIRECT
+#define PACE_PWD_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/pwd.h"
+# include "pace/posix/pwd.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/pwd.h"
+# include "pace/vxworks/pwd.h"
 #elif defined (PACE_WIN32)
-# include "win32/pwd.h"
+# include "pace/win32/pwd.h"
 #endif
 
-#endif /* PACE_PWD_H */
+#endif /* PACE_PWD_H_INDIRECT */

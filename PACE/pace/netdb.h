@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_NETDB_H
-#define PACE_NETDB_H
+#ifndef PACE_NETDB_H_INDIRECT
+#define PACE_NETDB_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/netdb.h"
+# include "pace/posix/netdb.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/netdb.h"
+# include "pace/vxworks/netdb.h"
 #elif defined (PACE_WIN32)
-# include "win32/netdb.h"
+# include "pace/win32/netdb.h"
 #endif
 
-#endif /* PACE_NETDB_H */
+#endif /* PACE_NETDB_H_INDIRECT */

@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_TIMES_H
-#define PACE_SYS_TIMES_H
+#ifndef PACE_SYS_TIMES_H_INDIRECT
+#define PACE_SYS_TIMES_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/times.h"
+# include "pace/posix/times.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/times.h"
+# include "pace/vxworks/times.h"
 #elif defined (PACE_WIN32)
-# include "win32/times.h"
+# include "pace/win32/times.h"
 #endif
 
-#endif /* PACE_SYS_TIMES_H */
+#endif /* PACE_SYS_TIMES_H_INDIRECT */
