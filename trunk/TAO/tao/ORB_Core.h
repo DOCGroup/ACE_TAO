@@ -75,6 +75,8 @@ class TAO_Priority_Endpoint_Selector;
 class TAO_Protocol_Endpoint_Selector;
 class TAO_Priority_Protocol_Selector;
 class TAO_Client_Priority_Policy_Selector;
+class TAO_Message_State_Factory;
+class TAO_ServerRequest;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -663,6 +665,18 @@ public:
   // Raise a transient failure exception if a service is not loaded, else
   // delegate to the service to see what the service has to do for
   // this case.
+
+  void services_log_msg_rcv (TAO_Message_State_Factory &state);
+  // Hook for logging of messages by the Logging & Recovery service
+  // of an FT service
+
+  void services_log_msg_pre_upcall (TAO_ServerRequest &req);
+  // Hook for logging of messages by the Logging & Recovery service of
+  // an FT service
+
+  void services_log_msg_post_upcall (TAO_ServerRequest &req);
+  // Hook for logging of messages by the Logging & Recovery service of
+  // an FT service
 
 #if TAO_HAS_INTERCEPTORS == 1
 

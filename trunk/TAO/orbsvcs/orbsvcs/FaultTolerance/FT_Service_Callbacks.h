@@ -96,6 +96,17 @@ public:
   // Check whether we need to raise an exception or go for a
   // reinvocaton.
 
+  virtual void service_log_msg_rcv (
+      TAO_Message_State_Factory &state);
+  // Log the message. The message state  is the message on the server
+  // after it has been received in the GIOP layer
+
+  virtual void service_log_msg_pre_upcall (
+      TAO_ServerRequest &req);
+
+  virtual void service_log_msg_post_upcall (
+      TAO_ServerRequest &req);
+
 private:
 
   void request_service_context (TAO_Stub *&stub,

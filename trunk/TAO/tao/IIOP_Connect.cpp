@@ -305,6 +305,10 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (ms.cdr),
                           this->orb_core ());
 
+  // Send the message state for the service layer like FT to log the
+  // messages
+  this->orb_core ()->services_log_msg_rcv (ms);
+
   // Reset the message state.
   this->transport_.message_state_.reset (0);
   result =
@@ -525,9 +529,8 @@ TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
       this->reactor ()->cancel_timer (this);
     }
 
-  // Now do the decerment of the ref count
+  // Now do the decrement of the ref count
   this->decr_ref_count ();
-
 
   return 0;
 }

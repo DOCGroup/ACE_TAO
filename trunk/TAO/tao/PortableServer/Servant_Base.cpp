@@ -69,7 +69,7 @@ TAO_ServantBase::_default_POA (CORBA::Environment &ACE_TRY_ENV)
     TAO_ORB_Core_instance ()->root_poa (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-  return PortableServer::POA::_narrow (object.in (), 
+  return PortableServer::POA::_narrow (object.in (),
                                        ACE_TRY_ENV);
 }
 
@@ -121,7 +121,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 
   CORBA::ORB_ptr servant_orb = 0;
 
-  if (poa_current_impl != 0 
+  if (poa_current_impl != 0
       && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;
@@ -218,6 +218,9 @@ void TAO_ServantBase::synchronous_upcall_dispatch (
 
   ACE_TRY
   {
+    // Log the message state to FT_Service Logging facility
+    req.orb_core ()->services_log_msg_pre_upcall (req);
+
     // Invoke the skeleton, it will demarshal the arguments,
     // invoke the right operation on the skeleton class (<derived_this>).
     // and marshal any results
@@ -226,6 +229,9 @@ void TAO_ServantBase::synchronous_upcall_dispatch (
 
     // It is our job to send the already marshaled reply, but only
     // send if it is expected and it has not already been sent
+
+    // Log the message state to FT_Service Logging facility
+    req.orb_core ()->services_log_msg_post_upcall (req);
 
     // We send the reply only if it is NOT a SYNC_WITH_SERVER, a
     // response is expected and if the reply is not deferred.
