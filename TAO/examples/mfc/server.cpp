@@ -2,15 +2,12 @@
 
 // server.cpp : Defines the class behaviors for the application.
 
-// Demospecific includes
-#include "tao\corba.h"
-#include "w32_test_impl.h"
-#include "ace\Thread_Manager.h"
-
-// Demospecific includes end!
-
 #include "stdafx.h"
 #include "server.h"
+
+// Demospecific includes
+#include "w32_test_impl.h"
+// Demospecific includes end!
 
 #include "MainFrm.h"
 #include "serverDoc.h"
