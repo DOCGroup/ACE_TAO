@@ -28,7 +28,7 @@
 
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
-
+#include "ace/Null_Mutex.h"
 
 
 /// Forward declarations.

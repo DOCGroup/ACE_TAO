@@ -1,3 +1,27 @@
+Sat Aug 30 16:50:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+          Added #include ace/Null_Mutex.h needed due to recent subsetting.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+          Added #include ace/Reverse_Lock_T.h needed due to recent
+          subsetting.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+          Added #include ace/SString.h needed due to recent subsetting.
+
+        * tao/PredefinedType_Seq_Tmplinst.cpp:
+          Added #include tao/Object.h when
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION is defined and needed
+          due to recent subsetting.
+
+        * tao/Typecode.cpp:
+          Added #include tao/Sequence_T.h when
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION is defined and needed
+          due to recent subsetting.
+
 Fri Aug 29 17:00:00 2003  Justin Michel <michel_j@ociweb.com>
 
         * orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:

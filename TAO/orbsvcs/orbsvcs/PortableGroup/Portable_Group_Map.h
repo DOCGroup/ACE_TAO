@@ -23,7 +23,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/Object_KeyC.h"
-
+#include "ace/Null_Mutex.h"
 
 class TAO_ServerRequest;
 

@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
-
+#include "ace/Reverse_Lock_T.h"
 
 ACE_RCSID (PortableGroup,
            PG_ObjectGroupManager,
