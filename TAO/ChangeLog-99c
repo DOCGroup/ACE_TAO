@@ -187,8 +187,9 @@ Mon Sep 20 08:39:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  via the -ORB commandline options.  Thanks to John Masiyowski
  	  <jmasiyowski@fallschurch.esys.com> for suggesting this.
 
-	* tao/params: Added support for nodelay() so that we can set
- 	  TCP_NODELAY via the ORB options.  Thanks to John Masiyowski
+	* tao/params:
+	* tao/IIOP_Connect.cpp: Added support for nodelay() so that we can
+	  set TCP_NODELAY via the ORB options.  Thanks to John Masiyowski
  	  <jmasiyowski@fallschurch.esys.com> for suggesting this.
 	
 	* tao/params.cpp (TAO_ORB_Parameters): Initialized some fields
