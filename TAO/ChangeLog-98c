@@ -1,3 +1,9 @@
+MOn Oct 20 10:14:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* Improved version of the TAO IDL compiler. The executable has
+	been renamed to tao_idl. There are a number of improvements as
+	well as shortcomings. These are explained in the releasenotes. 
+
 Mon Oct 20 16:30:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/tao_internals.cpp (fake_service_entries_i): Based the
