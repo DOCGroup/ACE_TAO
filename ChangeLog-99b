@@ -1,3 +1,9 @@
+Fri Jun  4 09:02:35 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* ace/POSIX_Asynch_IO.cpp: Fixed a syntax error. There were two
+	consecutive commas in the ACE_DEBUG statement which were causing
+	syntax errors while compiling.
+
 Fri Jun  4 00:28:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/POSIX_Asynch_IO.cpp: Fixed the Linux egcs warning. 
