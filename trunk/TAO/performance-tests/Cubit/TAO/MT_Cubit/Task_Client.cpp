@@ -125,10 +125,10 @@ Task_State::Task_State (int argc, char **argv)
       thread_count_ = 1;
       datatype_ = CB_OCTET;
     }
-  
+
   if (use_utilization_test_ == 1)
     {
-      thread_count_ = 1;      
+      thread_count_ = 1;
     }
 
   // allocate the array of character pointers.
@@ -143,12 +143,12 @@ Task_State::Task_State (int argc, char **argv)
       int j = 0;
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
-	{
-	  j = ACE_OS::strlen (buf);
-	  buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
-	  iors_[i] = ACE_OS::strdup (buf);
-	  i++;
-	}
+        {
+          j = ACE_OS::strlen (buf);
+          buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
+          iors_[i] = ACE_OS::strdup (buf);
+          i++;
+        }
 
       ACE_OS::fclose (ior_file);
     }
@@ -160,23 +160,23 @@ Task_State::Task_State (int argc, char **argv)
   if (thread_per_rate_ == 0)
     {
       if (use_utilization_test_ == 1)
-	// If we are to use the utilization test, include it in the
-	// barrier count.  See description of this variable in header
-	// file.
-	{
-	  ACE_NEW (barrier_,
-		   ACE_Barrier (thread_count_ + 2));
-	}
+        // If we are to use the utilization test, include it in the
+        // barrier count.  See description of this variable in header
+        // file.
+        {
+          ACE_NEW (barrier_,
+                   ACE_Barrier (thread_count_ + 2));
+        }
       else
-	{
-	  ACE_NEW (barrier_,
-		   ACE_Barrier (thread_count_ + 1));
-	}
+        {
+          ACE_NEW (barrier_,
+                   ACE_Barrier (thread_count_ + 1));
+        }
     }
   else
     {
       ACE_NEW (barrier_,
-	       ACE_Barrier (thread_count_));
+               ACE_Barrier (thread_count_));
     }
 
   ACE_NEW (semaphore_,
@@ -200,7 +200,7 @@ void
 Client::put_latency (double *jitter,
                      double latency,
                      u_int thread_id,
-		     u_int count)
+                     u_int count)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
 
@@ -298,12 +298,12 @@ Client::get_low_priority_jitter (void)
     {
       number_of_samples += ts_->count_[j];
       for (u_int i = 0; i < ts_->count_[j] / ts_->granularity_; i ++)
-	{
-	  double difference =
-	    ts_->global_jitter_array_[j][i] - average;
-	  jitter += difference * difference;
-	  stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
-	}
+        {
+          double difference =
+            ts_->global_jitter_array_[j][i] - average;
+          jitter += difference * difference;
+          stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
+        }
     }
 
   ACE_OS::fprintf (stderr, "low priority jitter:\n");
@@ -331,7 +331,7 @@ Client::get_jitter (u_int id)
   for (u_int i = 0; i < ts_->count_[id] / ts_->granularity_; i ++)
     {
       double difference =
-	ts_->global_jitter_array_[id][i] - average;
+        ts_->global_jitter_array_[id][i] - average;
       jitter += difference * difference;
       stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [id][i] * 1000 + 0.5));
     }
@@ -430,33 +430,33 @@ Client::svc (void)
           frequency = CB_20HZ_CONSUMER_RATE;
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n", 
-		      CB_20HZ_CONSUMER_RATE,
-		      this->id_));
+                      "my id is %u.\n",
+                      CB_20HZ_CONSUMER_RATE,
+                      this->id_));
           break;
         case CB_10HZ_CONSUMER:
           frequency = CB_10HZ_CONSUMER_RATE;
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n", 
-		      CB_10HZ_CONSUMER_RATE,
-		      this->id_));
+                      "my id is %u.\n",
+                      CB_10HZ_CONSUMER_RATE,
+                      this->id_));
           break;
         case CB_5HZ_CONSUMER:
           frequency = CB_5HZ_CONSUMER_RATE;
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n", 
-		      CB_5HZ_CONSUMER_RATE,
-		      this->id_));
+                      "my id is %u.\n",
+                      CB_5HZ_CONSUMER_RATE,
+                      this->id_));
           break;
         case CB_1HZ_CONSUMER:
           frequency = CB_1HZ_CONSUMER_RATE;
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n", 
-		      CB_1HZ_CONSUMER_RATE,
-		      this->id_));
+                      "my id is %u.\n",
+                      CB_1HZ_CONSUMER_RATE,
+                      this->id_));
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID!!!!\n", this->id_));
@@ -523,24 +523,24 @@ Client::svc (void)
           }
 
         if (naming_success == CORBA::B_FALSE)
-	  {	      
-	    char *my_ior = ts_->iors_[this->id_];
+          {
+            char *my_ior = ts_->iors_[this->id_];
 
-	    // if we are running the "1 to n" test make sure all low
-	    // priority clients use only 1 low priority servant.
-	    if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
-	      my_ior = ts_->iors_[1];
+            // if we are running the "1 to n" test make sure all low
+            // priority clients use only 1 low priority servant.
+            if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
+              my_ior = ts_->iors_[1];
 
-	    if (my_ior == 0)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-				 "Must specify valid factory ior key with -k option,"
-				 " naming service, or ior filename\n"),
-				-1);
+            if (my_ior == 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Must specify valid factory ior key with -k option,"
+                                 " naming service, or ior filename\n"),
+                                -1);
 
-	    objref = orb->string_to_object (my_ior,
-					    TAO_TRY_ENV);
-	    TAO_CHECK_ENV;
-	  }
+            objref = orb->string_to_object (my_ior,
+                                            TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+          }
 
         if (CORBA::is_nil (objref.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -642,7 +642,7 @@ Client::run_tests (Cubit_ptr cb,
                     -1);
   else
     ACE_NEW_RETURN (my_jitter_array,
-                    double [loop_count/ts_->granularity_*15], 
+                    double [loop_count/ts_->granularity_*15],
                     -1);
 
   double latency = 0;
@@ -663,37 +663,37 @@ Client::run_tests (Cubit_ptr cb,
 
   // Make the calls in a loop.
 
-  for (i = 0; 
+  for (i = 0;
        // keep running for loop count, OR
-       i < loop_count || 
-	 // keep running if we are the highest priority thread and at
-	 // least another lower client thread is running, OR
-	 (id_ == 0 && ts_->thread_count_ > 1) ||
-	 // keep running if test is thread_per_rate and we're not the
-	 // lowest frequency thread.
-	 (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1)) ||
-	 // continous loop if we are running the utilization test
-	 (ts_->use_utilization_test_ == 1) ||
-	 // continous loop if we are running the SERVER utilization test
-	 (ts_->run_server_utilization_test_ == 1); 
+       i < loop_count ||
+         // keep running if we are the highest priority thread and at
+         // least another lower client thread is running, OR
+         (id_ == 0 && ts_->thread_count_ > 1) ||
+         // keep running if test is thread_per_rate and we're not the
+         // lowest frequency thread.
+         (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1)) ||
+         // continous loop if we are running the utilization test
+         (ts_->use_utilization_test_ == 1) ||
+         // continous loop if we are running the SERVER utilization test
+         (ts_->run_server_utilization_test_ == 1);
        i++)
     {
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
 
       // start timing a call
-      if ( (i % ts_->granularity_) == 0 && 
-	   (ts_->use_utilization_test_ == 0) &&
-	   (ts_->run_server_utilization_test_ == 0)
-	   )
+      if ( (i % ts_->granularity_) == 0 &&
+           (ts_->use_utilization_test_ == 0) &&
+           (ts_->run_server_utilization_test_ == 0)
+           )
         {
-	  // delay a sufficient amount of time to be able to enforce
-	  // the calling frequency (i.e., 20Hz, 10Hz, 5Hz, 1Hz).
-	  ACE_Time_Value tv (0,
-			     (u_long) ((sleep_time - delta) < 0
-				       ? 0
-				       : (sleep_time - delta)));
-	  ACE_OS::sleep (tv);
+          // delay a sufficient amount of time to be able to enforce
+          // the calling frequency (i.e., 20Hz, 10Hz, 5Hz, 1Hz).
+          ACE_Time_Value tv (0,
+                             (u_long) ((sleep_time - delta) < 0
+                                       ? 0
+                                       : (sleep_time - delta)));
+          ACE_OS::sleep (tv);
 
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
@@ -893,10 +893,10 @@ Client::run_tests (Cubit_ptr cb,
         }
 
       // stop the timer
-      if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) && 
-	   (ts_->use_utilization_test_ == 0) &&
-	   (ts_->run_server_utilization_test_ == 0)
-	   )
+      if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) &&
+           (ts_->use_utilization_test_ == 0) &&
+           (ts_->run_server_utilization_test_ == 0)
+           )
         {
 #if defined (CHORUS)
           pstopTime = pccTime1Get();
@@ -924,74 +924,75 @@ Client::run_tests (Cubit_ptr cb,
           // Store the time in secs.
 
 #if defined (VXWORKS)
-	  // @@ David, these comments are to temporarily fix what
-	  // seems a bug in the ACE_Long_Long class that is used to
-	  // calc the elapsed time.  It seems that subtraction of two
-	  // ACE_Long_Long are not done correctly when the least
-	  // significant value has wrapped around.  For example to
-	  // subtract these values: 00ff1001:00000001 minus
-	  // 00ff1000:ffffffff would give a huge number, instead of
-	  // giving 2.
+          // @@ David, these comments are to temporarily fix what
+          // seems a bug in the ACE_Long_Long class that is used to
+          // calc the elapsed time.  It seems that subtraction of two
+          // ACE_Long_Long are not done correctly when the least
+          // significant value has wrapped around.  For example to
+          // subtract these values: 00ff1001:00000001 minus
+          // 00ff1000:ffffffff would give a huge number, instead of
+          // giving 2.
 
-	  // This is only occuring in VxWorks.
-	  // I'll leave these here to debug it later.
-	  double tmp = (double)delta_t.sec ();
-	  double tmp2 = (double)delta_t.usec ();
-	  if (tmp > 100000) 
-	    { 
-	      tmp = 0.0; 
-	      tmp2 = 2000.0; 
-	      fprintf (stderr, "tmp > 100000!, delta_t.usec ()=%u\n", delta_t.usec ());
-	    }
-	  
-	  real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
-#else	  	  
-	  real_time = ((double) delta_t.sec () + 
-		       (double) delta_t.usec () / (double) ACE_ONE_SECOND_IN_USECS);
-#endif /* VXWORKS */  
-	  
+          // This is only occuring in VxWorks.
+          // I'll leave these here to debug it later.
+          double tmp = (double)delta_t.sec ();
+          double tmp2 = (double)delta_t.usec ();
+          if (tmp > 100000)
+            {
+              tmp = 0.0;
+              tmp2 = 2000.0;
+              ACE_OS::fprintf (stderr, "tmp > 100000!, delta_t.usec ()=%ld\n",
+                               delta_t.usec ());
+            }
+
+          real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
+#else
+          real_time = ((double) delta_t.sec () +
+                       (double) delta_t.usec () / (double) ACE_ONE_SECOND_IN_USECS);
+#endif /* VXWORKS */
+
           real_time /= ts_->granularity_;
-	  
+
           delta = ((0.4 * fabs (real_time * ACE_ONE_SECOND_IN_USECS)) + (0.6 * delta)); // pow(10,6)
           latency += (real_time * ts_->granularity_);
-	  my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS; 
+          my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS;
 #endif /* !ACE_LACKS_FLOATING_POINT */
         } // END OF IF   :
-          //       if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) && 
-          // 	   (ts_->use_utilization_test_ == 0) &&
-          // 	   (ts_->run_server_utilization_test_ == 0)
-          // 	   )
+          //       if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) &&
+          //       (ts_->use_utilization_test_ == 0) &&
+          //       (ts_->run_server_utilization_test_ == 0)
+          //       )
 
       if ( ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1) )
-	{
-	  if (ts_->semaphore_->tryacquire () != -1)
-	      break;
-	}
-      else       
-	// if We are the high priority client.
-	// if tryacquire() succeeded then a client must have done a
-	// release () on it, thus we decrement the client counter.
-	if (id_ == 0 && ts_->thread_count_ > 1)
-	  {
-	    if (ts_->semaphore_->tryacquire () != -1)
-	      {
-		low_priority_client_count --;
-		// if all clients are done then break out of loop.
-		if (low_priority_client_count <= 0)
-		  break;
-	      }
-	  }
-	  
-      if (ts_->use_utilization_test_ == 1 || 
-	  ts_->run_server_utilization_test_ == 1)
-	{
-	  countdown.update ();
-	  if (max_wait_time == ACE_Time_Value::zero)
-	    {
-	      ts_->loop_count_ = call_count;
-	      break;
-	    }
-	}
+        {
+          if (ts_->semaphore_->tryacquire () != -1)
+              break;
+        }
+      else
+        // if We are the high priority client.
+        // if tryacquire() succeeded then a client must have done a
+        // release () on it, thus we decrement the client counter.
+        if (id_ == 0 && ts_->thread_count_ > 1)
+          {
+            if (ts_->semaphore_->tryacquire () != -1)
+              {
+                low_priority_client_count --;
+                // if all clients are done then break out of loop.
+                if (low_priority_client_count <= 0)
+                  break;
+              }
+          }
+
+      if (ts_->use_utilization_test_ == 1 ||
+          ts_->run_server_utilization_test_ == 1)
+        {
+          countdown.update ();
+          if (max_wait_time == ACE_Time_Value::zero)
+            {
+              ts_->loop_count_ = call_count;
+              break;
+            }
+        }
 
     } /* end of for () */
 
@@ -1000,7 +1001,7 @@ Client::run_tests (Cubit_ptr cb,
 
   // perform latency stats onlt if we are not running the utilization
   // tests.
-  if (call_count > 0 && 
+  if (call_count > 0 &&
       (ts_->use_utilization_test_ == 0) &&
       (ts_->run_server_utilization_test_ == 0)
       )
@@ -1025,7 +1026,7 @@ Client::run_tests (Cubit_ptr cb,
               this->put_latency (my_jitter_array,
                                  latency,
                                  thread_id,
-				 call_count);
+                                 call_count);
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
@@ -1036,7 +1037,7 @@ Client::run_tests (Cubit_ptr cb,
               this->put_latency (my_jitter_array,
                                  latency * ACE_ONE_SECOND_IN_MSECS,
                                  thread_id,
-				 call_count);
+                                 call_count);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
           else
@@ -1045,7 +1046,7 @@ Client::run_tests (Cubit_ptr cb,
               this->put_latency (my_jitter_array,
                                  0,
                                  thread_id,
-				 call_count);
+                                 call_count);
 
               ACE_DEBUG ((LM_DEBUG,
                           "*** Warning: Latency, %f, is less than or equal to zero."
