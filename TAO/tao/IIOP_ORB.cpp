@@ -18,7 +18,6 @@
 ACE_RCSID(tao, IIOP_ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
-static const char iiop_prefix [] = "iiop:";
 
 // Objref stringification.
 
@@ -81,49 +80,17 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // The "internet" ORB uses readable URL style objrefs, as used
       // in the World Wide Web.
       //
-      // NOTE: the version ID in the string is ugly but we can't
-      // realistically eliminate it by any "assume 1.0" strategy...
-      // Similarly with the port, because there's no single IIOP port
-      // to which we could default.
-
-      static const char digits [] = "0123456789";
-
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
       // ORB that's configured differently.
-      // IIOP_Object *iiopobj = 
-      //   ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
+      // @@ Is this true??!! FRED
 
       if (obj->_stubobj () == 0)
-        return CORBA::string_copy ((CORBA::String) iiop_prefix);
+        return CORBA::string_copy ((CORBA::String) TAO_IIOP_Profile::prefix ());
+        // @@ This should be some sort of default prefix, not hardcoded to IIOP!! FRED
 
-      TAO_IIOP_Profile *iiop_profile =
-            ACE_dynamic_cast (TAO_IIOP_Profile *, obj->_stubobj ()->profile_in_use ());
-
-      CORBA::String_var key;
-      TAO_POA::encode_sequence_to_string (key.inout(),
-                                          iiop_profile->object_key ());
-
-      u_int buflen = (ACE_OS::strlen (iiop_prefix) +
-                      1 /* major # */ + 1 /* minor # */ +
-                      2 /* double-slash separator */ +
-                      ACE_OS::strlen (iiop_profile->host_) +
-                      1 /* colon separator */ +
-                      5 /* port number */ +
-                      1 /* slash separator */ +
-                      ACE_OS::strlen (key) +
-                      1 /* zero terminator */);
-      CORBA::String buf = CORBA::string_alloc (buflen);
-
-      ACE_OS::sprintf (buf,
-                       "%s%c.%c//%s:%d/%s",
-                       iiop_prefix,
-                       digits [iiop_profile->version ()->major],
-                       digits [iiop_profile->version ()->minor],
-                       // @@ UGLY!
-                       iiop_profile->host_,
-                       iiop_profile->port_,
-                       key.in ());
+      CORBA::String buf = 
+                obj->_stubobj ()->profile_in_use ()->to_string (env);
       return buf;
     }
 }
@@ -203,12 +170,18 @@ iiop_string_to_object (const char *string,
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
 
-  // Now make the IIOP_Object ...
-  IIOP_Object *data;
-    ACE_NEW_RETURN (data, IIOP_Object ((char *) 0), CORBA::Object::_nil ());
+  TAO_IIOP_Profile *pfile = new TAO_IIOP_Profile (string, env);
+  // pfile refcount == 1
 
-  // init address info in profile
-  data->profile_in_use ()->parse_string (string, env);
+  // Now make the STUB_Object ...
+  STUB_Object *data;
+    ACE_NEW_RETURN (data, 
+                    STUB_Object ((char *) 0, pfile), 
+                    CORBA::Object::_nil ());
+  // pfile refcount == 2
+
+  pfile->_decr_refcnt ();
+  // pfile refcount == 1
 
   // Create the CORBA level proxy.
   TAO_ServantBase *servant =
@@ -225,7 +198,8 @@ iiop_string_to_object (const char *string,
 }
 
 // Destringify arbitrary objrefs.
-
+// called from resolve_name_service () with an IOR
+//             multicast_to_service () with and
 CORBA::Object_ptr
 IIOP_ORB::string_to_object (const char *str,
                             CORBA::Environment &env)
@@ -235,18 +209,15 @@ IIOP_ORB::string_to_object (const char *str,
   CORBA::Object_ptr obj = 0;
 
   // Use the prefix code to choose which destringify algorithm to use.
-  if (str != 0)
-    {
-      if (ACE_OS::strncmp (str,
-                           iiop_prefix,
-                           sizeof iiop_prefix - 1) == 0)
-        obj = iiop_string_to_object (str + sizeof iiop_prefix - 1, env);
+  if (ACE_OS::strncmp (str,
+                       TAO_IIOP_Profile::prefix (),
+                       sizeof TAO_IIOP_Profile::prefix () - 1) == 0)
+    obj = iiop_string_to_object (str + sizeof TAO_IIOP_Profile::prefix () - 1, env);
 
-      else if (ACE_OS::strncmp (str,
-                                ior_prefix,
-                                sizeof ior_prefix - 1) == 0)
-        obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
-    }
+  else if (ACE_OS::strncmp (str,
+                            ior_prefix,
+                            sizeof ior_prefix - 1) == 0)
+    obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
 
   // Return the object
   return obj;
@@ -259,15 +230,12 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 
   if (this->optimize_collocation_objects_ && sobj != 0)
     {
-      IIOP_Object *iiopobj = 
-              ACE_dynamic_cast (IIOP_Object*, sobj);
 
-      TAO_IIOP_Profile *iiop_profile =
-              ACE_dynamic_cast (TAO_IIOP_Profile *, sobj->profile_in_use ());
-      
-      // Make sure users passed in an IIOP_Object otherwise, we don't
-      // know what to do next.
-      if (iiopobj == 0)
+      TAO_Profile *pfile = sobj->profile_in_use ();
+
+      // Make sure users passed in a valid STUB_Object otherwise, 
+      // we don't know what to do next.
+      if (pfile == 0)
         {
 #if 0
           ACE_ERROR ((LM_ERROR,
@@ -279,28 +247,27 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
         }
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  "IIOP_ORB: checking collocation for <%s:%d>\n",
-                  iiop_profile->object_addr ().get_host_name(),
-                  iiop_profile->object_addr ().get_port_number()));
+                  "IIOP_ORB: checking collocation for <%s>\n",
+                  pfile->addr_to_string ()));
 #endif
 
       CORBA::Environment env;
-      TAO_ObjectKey_var objkey = iiop_profile->_key (env);
+      TAO_ObjectKey_var objkey = pfile->_key (env);
 
       if (env.exception ())
         {
 #if 0
           ACE_DEBUG ((LM_DEBUG,
-                      "IIOP_ORB: cannot find key for <%s:%d>\n",
-                      iiop_profile->object_addr ().get_host_name (),
-                      iiop_profile->object_addr ().get_port_number ()));
+                      "IIOP_ORB: cannot find key for <%s>\n",
+                      pfile->addr_to_string ()));
 #endif
           return 0;
         }
 
       // Check if the object requested is a collocated object.
+      // @@ FRED - can we make this more generic!!
       TAO_POA *poa = TAO_ORB_Core_instance ()->
-        get_collocated_poa (iiop_profile->object_addr());
+        get_collocated_poa (pfile->object_addr());
 
       if (poa != 0)
         {
@@ -310,18 +277,16 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
             {
 #if 0
               ACE_DEBUG ((LM_DEBUG,
-                          "IIOP_ORB: cannot find servant for <%s:%d>\n",
-                          iiop_profile->object_addr ().get_host_name (),
-                          iiop_profile->object_addr().get_port_number()));
+                          "IIOP_ORB: cannot find servant for <%s>\n",
+                          pfile->addr_to_string ()));
 #endif
               return 0;
             }
 
 #if 0
           ACE_DEBUG ((LM_DEBUG,
-                      "IIOP_ORB: object at <%s:%d> is collocated\n",
-                      iiop_profile->object_addr().get_host_name(),
-                      iiop_profile->object_addr().get_port_number()));
+                      "IIOP_ORB: object at <%s> is collocated\n",
+                      pfile->addr_to_string ()));
 #endif
           return servant;
         }

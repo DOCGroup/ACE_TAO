@@ -15,14 +15,21 @@
 
 #include "tao/corba.h"
 
+static const char *prefix_ = "iiop:";
+
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const char *object_key)
-  : host_(0),
-    port_(0),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(DEF_IIOP_MAJOR, DEF_IIOP_MINOR), 
+  : host_ (0),
+    port_ (0),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    object_key_ (),
     object_addr_ (addr),
-    hint_(0)
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -36,13 +43,17 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const TAO_ObjectKey& object_key)
-  : host_(0),
-    port_(0),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(DEF_IIOP_MAJOR, DEF_IIOP_MINOR), 
+  : host_ (0),
+    port_ (0),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_(0)
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -51,12 +62,17 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const Version& version,
                                     const char *object_key)
-  : host_(0),
-    port_(0),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(version), 
+  : host_ (0),
+    port_ (0),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (version),
+    object_key_ (),
     object_addr_ (addr),
-    hint_(0)
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -71,13 +87,17 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const Version& version,
                                     const TAO_ObjectKey& object_key)
-  : host_(0),
-    port_(0),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(version),
+  : host_ (0),
+    port_ (0),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_(0)
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -86,13 +106,17 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const TAO_ObjectKey& object_key)
-  : host_(0),
-    port_(port),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(DEF_IIOP_MAJOR, DEF_IIOP_MINOR), 
-    object_key_(object_key),
-    object_addr_(port, host),
-    hint_(0)
+  : host_ (0),
+    port_ (port),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    object_key_ (object_key),
+    object_addr_ (port, host),
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
 
   if (host)
@@ -109,13 +133,17 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const Version& version,
                                     const TAO_ObjectKey& object_key)
-  : host_(0),
-    port_(port),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(version),
-    object_key_(object_key),
-    object_addr_(port, host),
-    hint_(0)
+  : host_ (0),
+    port_ (port),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    object_key_ (object_key),
+    object_addr_ (port, host),
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
 
   ACE_NEW (this->host_,
@@ -133,7 +161,10 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
     version_(pfile->version_),
     object_key_(pfile->object_key_),
     object_addr_(pfile->object_addr_),
-    hint_(0)
+    hint_(0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
   
   ACE_NEW (this->host_,
@@ -151,7 +182,10 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
     version_(pfile.version_),
     object_key_(pfile.object_key_),
     object_addr_(pfile.object_addr_),
-    hint_(0)
+    hint_(0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
   
   ACE_NEW (this->host_,
@@ -162,20 +196,48 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const Version &version)
-  : host_(0),
-    port_(0),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(version),
-    hint_(0)
+  : host_ (0),
+    port_ (0),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (version),
+    object_key_ (),
+    object_addr_ (),
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
 }
 
+TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string, CORBA::Environment &env)
+  : host_ (0),
+    port_ (0),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    object_key_ (),
+    object_addr_ (),
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
+{
+  parse_string (string, env);
+}
+
 TAO_IIOP_Profile::TAO_IIOP_Profile (void)
-  : host_(0),
-    port_(0),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    version_(DEF_IIOP_MAJOR, DEF_IIOP_MINOR), 
-    hint_(0)
+  : host_ (0),
+    port_ (0),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    object_key_ (),
+    object_addr_ (),
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
 {
 }
 
@@ -212,8 +274,16 @@ TAO_IIOP_Profile::set (const ACE_INET_Addr& addr)
 
 TAO_IIOP_Profile:: ~TAO_IIOP_Profile ()
 {
+  assert (this->refcount_ == 0);
+
   delete [] this->host_;
   this->host_ = 0;
+
+  if (fwd_profiles_)
+  {
+    delete fwd_profiles_;
+  }
+  
 }
 
 CORBA::ULong
@@ -302,7 +372,7 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
   // @@ This is a hack. This code was moved from encode.cpp
   //    but it is not clear to me what is going on.  So I have
   //    passed a reference to continue_decoding into this method
-  //    continue_decoding is used in IIOP_Object::decode ()
+  //    continue_decoding is used in STUB_Object::decode ()
   continue_decoding = cdr.decode (TC_opaque,
                                   &this->object_key_,
                                   0,
@@ -393,11 +463,6 @@ TAO_IIOP_Profile::parse_string (const char *string,
   return 1;
 }
 
-
-
-
-  
-  
 //  TAO_InputCDR cdr (body.get_buffer (), body.length (), body[0]);
 //
 // @@ 
@@ -445,16 +510,18 @@ TAO_IIOP_Profile::is_equivalent (TAO_Profile *other_profile,
 {
   env.clear ();
 
-  TAO_IIOP_Profile *iiop_profile =
+  if (other_profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
+    return 0;
+
+  TAO_IIOP_Profile *op =
                    ACE_dynamic_cast (TAO_IIOP_Profile *, other_profile);
 
-  ACE_ASSERT (iiop_profile->object_key_.length () < UINT_MAX);
+  ACE_ASSERT (op->object_key_.length () < UINT_MAX);
 
-  return (  this->tag_ == iiop_profile->tag_
-         && this->object_key_ == iiop_profile->object_key_
-         && this->port_ == iiop_profile->port_
-         && ACE_OS::strcmp (this->host_, iiop_profile->host_) == 0
-         && this->version () == iiop_profile->version ());
+  return (  (this->port_       == op->port_)
+         && (this->object_key_ == op->object_key_)
+         && (ACE_OS::strcmp (this->host_, op->host_) == 0)
+         && (this->version ()  == op->version ()));
 }
 
 CORBA::ULong
@@ -481,17 +548,20 @@ TAO_IIOP_Profile::hash (CORBA::ULong max,
   return hashval % max;
 }
 
-ACE_INET_Addr&
-TAO_IIOP_Profile::object_addr (const ACE_INET_Addr *addr)
+ACE_Addr&
+TAO_IIOP_Profile::object_addr (const ACE_Addr *addr)
 {
-  if (addr != 0)
-    this->object_addr_ = *addr;
+  const ACE_INET_Addr *inet_addr =
+    ACE_dynamic_cast (const ACE_INET_Addr *, addr);
+
+  if (inet_addr != 0)
+    this->object_addr_ = *inet_addr;
   else if (this->host_)
     this->object_addr_.set (this->port_, this->host_);
   return this->object_addr_;
 }
 
-ACE_INET_Addr&
+ACE_Addr&
 TAO_IIOP_Profile::object_addr (void)
 {
   return this->object_addr_;
@@ -607,6 +677,158 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
   return *this;
 }
 
-// TAO_IIOP_Profile::decode (TAO_InputCDR &str)
-// {
-//   
+// Memory managment
+
+CORBA::ULong
+TAO_IIOP_Profile::_incr_refcnt (void)
+{
+  // OK, think I got it.  When this object is created (guard) the
+  // lock is automatically acquired (refcount_lock_).  Then when
+  // we leave this method the destructir for guard is called which
+  // releases the lock!
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+
+  return this->refcount_++;
+}
+
+CORBA::ULong
+TAO_IIOP_Profile::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  // refcount is 0, so delete us!
+  // delete will call our ~ destructor which in turn deletes stuff.
+  delete this;
+  return 0;
+}
+
+
+void 
+TAO_IIOP_Profile::fwd_profiles (TAO_MProfile *mprofiles)
+{
+  // we assume ownership of the profile list!!
+  if (fwd_profiles_)
+    delete this->fwd_profiles_;
+
+  this->fwd_profiles_ = new TAO_MProfile (mprofiles);
+
+}
+
+TAO_MProfile *
+TAO_IIOP_Profile::fwd_profiles (void)
+{
+  return this->fwd_profiles_;
+}
+
+TAO_MProfile *
+TAO_IIOP_Profile::get_fwd_profiles (void)
+{
+  return new TAO_MProfile (this->fwd_profiles_);
+}
+
+CORBA::String
+TAO_IIOP_Profile::to_string (CORBA::Environment &env)
+{
+
+  CORBA::String_var key;
+  TAO_POA::encode_sequence_to_string (key.inout(),
+                                      this->object_key ());
+
+  u_int buflen = (ACE_OS::strlen (::prefix_) +
+                  1 /* major # */ + 1 /* minor # */ +
+                  2 /* double-slash separator */ +
+                  ACE_OS::strlen (this->host_) +
+                  1 /* colon separator */ +
+                  5 /* port number */ +
+                  1 /* slash separator */ +
+                  ACE_OS::strlen (key) +
+                  1 /* zero terminator */);
+
+  CORBA::String buf = CORBA::string_alloc (buflen);
+
+  static const char digits [] = "0123456789";
+
+  ACE_OS::sprintf (buf,
+                   "%s%c.%c//%s:%d/%s",
+                   ::prefix_,
+                   digits [this->version_.major],
+                   digits [this->version_.minor],
+                   this->host_,
+                   this->port_,
+                   key.in ());
+  return buf;
+}
+
+const char *
+TAO_IIOP_Profile::prefix ()
+{
+  return ::prefix_;
+}
+
+CORBA::TypeCode::traverse_status 
+TAO_IIOP_Profile::encode (TAO_OutputCDR *&stream,
+                          CORBA::Environment &env)
+{
+  // UNSIGNED LONG, tag for this protocol profile;
+  stream->write_ulong (TAO_IOP_TAG_INTERNET_IOP);
+
+  // UNSIGNED LONG, number of succeeding bytes in the
+  // encapsulation.  We don't actually need to make the
+  // encapsulation, as nothing needs stronger alignment than
+  // this longword; it guarantees the rest is aligned for us.
+  u_int hostlen;
+
+  hostlen = ACE_OS::strlen ((char *) this->host_);
+  CORBA::ULong encap_len =
+    1                              // byte order
+    + 1                            // version major
+    + 1                            // version minor
+    + 1                            // pad byte
+    + 4                            // sizeof (strlen)
+    + hostlen + 1                  // strlen + null
+    + (~hostlen & 01)              // optional pad byte
+    + 2                            // port
+    + ( hostlen & 02)              // optional pad short
+    + 4                            // sizeof (key length)
+    + this->object_key_.length (); // key length.
+  stream->write_ulong (encap_len);
+
+#if 0
+  size_t current_len = stream->length ();
+#endif
+
+  // CHAR describing byte order, starting the encapsulation
+  stream->write_octet (TAO_ENCAP_BYTE_ORDER);
+
+  // IIOP::Version, two characters (version 1.0) padding
+  stream->write_char (this->version_.major);
+  stream->write_char (this->version_.minor);
+
+  // STRING hostname from profile
+  stream->encode (CORBA::_tc_string, &this->host_, 0, env);
+
+  // UNSIGNED SHORT port number
+  stream->write_ushort (this->port_);
+
+  // OCTET SEQUENCE for object key
+  stream->encode (TC_opaque, &this->object_key_, 0, env);
+
+#if 0
+      // This is good for debugging the computation of the key
+  // length.
+  size_t final_len = stream->length ();
+  ACE_DEBUG ((LM_DEBUG, "ObjRef::encode: "
+              "stored_len = %d, "
+              "real_len = %d\n",
+              encap_len,
+              final_len - current_len));
+#endif /* 0 */
+
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+}
+

@@ -16,6 +16,7 @@
 #ifndef TAO_PLUGGABLE_H
 #  define TAO_PLUGGABLE_H
 
+class TAO_MProfile;
 class TAO_Resource_Factory;
 class ACE_Reactor;
 
@@ -69,6 +70,11 @@ public:
   virtual int parse_string (const char *string, CORBA::Environment &env) = 0;
   // Parse the CDR encapsulation in <body>...
 
+  virtual CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
+                                                   CORBA::Environment &env) = 0;
+
+  virtual CORBA::String to_string (CORBA::Environment &env) = 0;
+
   virtual const TAO_opaque& body (void) const = 0;
   // The body, an octet sequence that represent the marshaled
   // profile... 
@@ -77,6 +83,9 @@ public:
   virtual const TAO_ObjectKey &object_key (void) const = 0;
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by this object (not given to the caller).
+
+  virtual ACE_Addr &object_addr (const ACE_Addr *addr) = 0;
+  virtual ACE_Addr &object_addr (void) = 0;
 
   virtual TAO_Transport *transport(void) = 0;
   virtual TAO_Profile *_nil (void) = 0;
@@ -91,9 +100,22 @@ public:
   // this methoid is used with a connection has been reset requiring the
   // hint to be cleaned up and reset to NULL.
 
+  virtual void fwd_profiles (TAO_MProfile *mprofiles) = 0;
+  // object will assume ownership for this object!!
+
+  virtual TAO_MProfile *fwd_profiles (void) = 0;
+  // this object keeps ownership of this object
+
+  virtual TAO_MProfile *get_fwd_profiles (void) = 0;
+  // copy of MProfile, user must delete.
+
+  virtual CORBA::ULong _incr_refcnt (void) = 0;
+  virtual CORBA::ULong _decr_refcnt (void) = 0;
+
+protected:
   virtual ~TAO_Profile (void);
   // If you have a virtual method you need a virtual dtor.
-  
+
 };
 
 struct Version {
@@ -158,6 +180,8 @@ public:
 
 }; 
 
+// How does user add new Protocols?
+// Registry needs to decide which profiles are added to profile list.
 class TAO_Export TAO_Connector_Registry
 {
 public:
