@@ -1,3 +1,14 @@
+Tue Mar 20 01:33:24 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+	* ace/SSL/SSL_SOCK_Stream.i (send, close):
+
+	  Wrap the underlying OpenSSL calls in a do-while(SSL_pending())
+	  loop.  I decided to wrap the SSL_write() calls just in case.
+	  This should fix the last of the non-blocking IO issues in ACE's
+	  SSL wrappers.  [Bug 393]
+
 Tue Mar 20 00:40:43 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.i (recv):
