@@ -434,11 +434,6 @@ TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object (void)
 int
 TAO_AV_RTCP_Object::destroy (void)
 {
-  TAO_AV_UDP_Transport *my_transport = ACE_dynamic_cast (TAO_AV_UDP_Transport*,
-                                                         this->transport_);
-
-  my_transport->handler ()->cancel_timer ();
-
   this->callback_->handle_destroy ();
   delete this;
   
@@ -523,6 +518,8 @@ TAO_AV_RTCP_Callback::handle_start (void)
 int
 TAO_AV_RTCP_Callback::handle_stop (void)
 {
+  return this->send_report(1);
+
   return 0;
 }
 
@@ -769,7 +766,6 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 TAO_AV_RTCP_Callback::handle_destroy (void)
 {
-  return this->send_report(1);
 }
 
 int
