@@ -47,8 +47,8 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = ace
-FILE_PATTERNS         = *.cpp *.h *.i *.inl
+INPUT                 = docs ace
+FILE_PATTERNS         = *.h *.cpp *.inl *.i *.txt
 RECURSIVE             = NO
 EXCLUDE               = ace/config.h
 EXCLUDE_PATTERNS      = config-*.h
