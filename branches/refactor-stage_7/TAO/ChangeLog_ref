@@ -1,3 +1,24 @@
+Fri Oct 17 21:30:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Collocated_Invocation.cpp:
+	* tao/Collocated_Invocation.h: Changed the constructor to take in
+	  TAO_Stub which needs to be passed up to its base class. 
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: Added an argument to get_timeout
+	  (). Clients need to send the stub pointer to get the timeout
+	  values. 
+
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Base.inl: Cached the stub object in this class. 
+
+	* tao/Remote_Invocation.cpp: Passed the stub object up to the
+	  parent. 
+
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp: Changes forced due
+	  to the above changes.
+
 Thu Oct 16 17:38:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.inl: New file added to hold the

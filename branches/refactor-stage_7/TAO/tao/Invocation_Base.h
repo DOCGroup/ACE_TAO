@@ -122,6 +122,7 @@ namespace TAO
      */
     Invocation_Base (CORBA::Object_ptr otarget,
                      CORBA::Object_ptr target,
+                     TAO_Stub *stub,
                      TAO_Operation_Details &op,
                      bool response_expected);
 
@@ -155,6 +156,8 @@ namespace TAO
 
     /// Cache the ORB_Core
     TAO_ORB_Core *orb_core_;
+
+    TAO_Stub *stub_;
     //@}
 
     /// Operations invoked by the

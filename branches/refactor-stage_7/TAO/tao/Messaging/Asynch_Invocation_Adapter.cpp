@@ -105,7 +105,8 @@ namespace TAO
         // AMI Timeout Handling Begin
         ACE_Time_Value tmp;
 
-        if (this->get_timeout (tmp))
+        if (this->get_timeout (r.stub (),
+                               tmp))
           {
             this->rd_->schedule_timer (op.request_id (),
                                        *max_wait_time);

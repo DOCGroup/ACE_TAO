@@ -19,10 +19,9 @@ ACE_RCSID (tao,
 
 namespace TAO
 {
-
-
   Invocation_Base::Invocation_Base (CORBA::Object_ptr ot,
                                     CORBA::Object_ptr t,
+                                    TAO_Stub *stub,
                                     TAO_Operation_Details &details,
                                     bool response_expected)
     : details_ (details)
@@ -30,7 +29,8 @@ namespace TAO
     , response_expected_ (response_expected)
     , otarget_ (ot)
     , target_ (t)
-    , orb_core_ (t->_stubobj ()->orb_core ())
+    , orb_core_ (stub->orb_core ())
+    , stub_ (stub)
 #if TAO_HAS_INTERCEPTORS == 1
     , adapter_ (orb_core_->client_request_interceptors (),
                 this)
