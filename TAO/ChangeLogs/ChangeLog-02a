@@ -1,3 +1,9 @@
+Thu Jan 25 18:41:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+
+          Corrected typo.
+
 Thu Jan 25 10:40:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/RtEC/MCast/MCast.h:
