@@ -965,7 +965,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported,
                      AVStreams::noSuchFlow,
-                     streamOpFailed));
+                     AVStreams::streamOpFailed));
   // Not supported in the light profile, raises notsupported
 
   virtual ~TAO_MMDevice (void);
