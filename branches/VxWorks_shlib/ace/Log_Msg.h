@@ -491,6 +491,14 @@ private:
   static u_long default_priority_mask_;
   // Priority mask to use for each new instance
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  static int key_created_;
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
+     defined (ACE_HAS_TSS_EMULATION)
+  static ACE_thread_key_t log_msg_tss_key_;
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
+#endif /* ACE_MT_SAFE */
+
   static void close (void);
   // For cleanup, at program termination.
 

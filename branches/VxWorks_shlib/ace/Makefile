@@ -42,6 +42,8 @@ UTILS_FILES = \
 LOGGING_FILES = \
   Dump \
   Log_Msg \
+  Log_Msg_Manager \
+  Log_Msg_s \
   Log_Record \
   Trace
 THREADS_FILES = \
