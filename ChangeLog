@@ -1,3 +1,10 @@
+Thu Dec 16 14:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Flag_Manip.cpp:
+          Instead of checking for ACE_WIN32 or VXWORKS or ACE_LACKS_FCNTL,
+          only check for ACE_LACKS_FCNTL, win32 and VxWorks have this define
+          already set
+
 Thu Dec 16 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lite.h:
