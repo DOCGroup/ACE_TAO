@@ -354,7 +354,7 @@ ACE_RMCast_IO_UDP::send_ack (ACE_RMCast::Ack &ack,
   char header[16];
   header[0] = ACE_RMCast::MT_ACK;
 
-  ACE_UINT32 tmp = ACE_HTONL (ack.highest_in_sequence);
+  ACE_UINT32 tmp = ACE_HTONL (ack.next_expected);
   ACE_OS::memcpy (header + 1,
                   &tmp, sizeof(ACE_UINT32));
   tmp = ACE_HTONL (ack.highest_received);

@@ -233,16 +233,19 @@ public:
    *
    * This message is used to provide feedback information to senders.
    * It contains two sequence numbers:
-   * - highest_in_sequence: is the sequence number of the last message
-   *   received without any lost messages before it
-   * - highest_received: is the sequence number of the last_message
-   *   successfully received, there may be some messages lost before it
+   * - \param next_expected: is the sequence number of the next message
+   *   expected, i.e. (next_expected-1) is the last message received
+   *   without any losses before it.
+   * - \param highest_received: is the highest sequence number among
+   *   all the messages successfully received.
+   * In other words, all messages lost (if any) are in the range:
+   * [next_expected,highest_received)
    *
    * <CODE>
    * +---------+----------------------+<BR>
    * | 8 bits  | MT_ACK               |<BR>
    * +---------+----------------------+<BR>
-   * | 32 bits | highest_in_sequence  |<BR>
+   * | 32 bits | next_expected        |<BR>
    * +---------+----------------------+<BR>
    * | 32 bits | highest_received     |<BR>
    * +---------+----------------------+<BR>
@@ -251,7 +254,7 @@ public:
   struct Ack
   {
     //! The last message received without any losses before it.
-    ACE_UINT32 highest_in_sequence;
+    ACE_UINT32 next_expected;
 
     //! The last message successfully received
     ACE_UINT32 highest_received;
