@@ -16,7 +16,7 @@
 #define ACE_HAS_UNION_WAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
@@ -25,7 +25,7 @@
 #define ACE_HAS_SYSCALL_H
 
 // Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA 
+#define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
@@ -82,6 +82,8 @@
 // #define ACE_HAS_TLI
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
+
+#define ACE_LACKS_U_LONGLONG_T
 
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)

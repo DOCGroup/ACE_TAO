@@ -131,14 +131,14 @@
 #      endif
        typedef unsigned long long ACE_UINT64;
 #    else
-     // ACE_SIZEOF_LONG_LONG is not yet known, but the platform doesn't
-     // claim ACE_LACKS_LONGLONG_T, so assume it has 8-byte long longs.
+       // ACE_SIZEOF_LONG_LONG is not yet known, but the platform doesn't
+       // claim ACE_LACKS_LONGLONG_T, so assume it has 8-byte long longs.
 #      define ACE_SIZEOF_LONG_LONG 8
-#      if defined (sun)
+#      if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T)
          // sun #defines u_longlong_t, maybe other platforms do also.
          // Use it, at least with g++, so that its -pedantic doesn't
          // complain about no ANSI C++ long long.
-           typedef u_longlong_t ACE_UINT64;
+         typedef u_longlong_t ACE_UINT64;
 #      else
          // LynxOS 2.5.0 and Linux don't have u_longlong_t.
          typedef unsigned long long ACE_UINT64;
