@@ -39,6 +39,15 @@ private:
   CORBA::Double price_;
 };
 </PRE>
+    <P>In a server, CORBA objects and functions are implemented and
+      represented by programming language functions and data. These 
+      programming entities that implement and represent CORBA objects 
+      are called <I>servants</I>. <I>Object Adapters</I> link the world of 
+      CORBA objects to the world of programming language servants. They 
+      provide services for creation of CORBA objects and their object 
+      references and for dispatching requests to the appropriate
+      servants. 
+    </P>
     <P>Notice the name of the base class, TAO implements the CORBA 2.2
       specification, that includes the Portable Object Adapter (hence
       the POA prefix).  This new Object Adapter fixes many problems
@@ -54,6 +63,8 @@ private:
       file names can be controlled through IDL compiler options in
       most cases.
     </P>
+    <P>A server application may contain multiple POA instances. But, all 
+      these server applications have atleast one POA called the <I>RootPOA</I>.
     <P>We have to implement the operations and attributes:
     </P>
 <PRE>
@@ -165,7 +176,7 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
     throw (Quoter::Invalid_Stock_Symbol)
 {
   if (strcmp (symbol, "RHAT") == 0) {
-    return this->rhat_._this ();
+    return this->rhat_._this();
   } else if (strcmp (symbol, "MSFT") == 0) {
     return this->msft_._this ();
   }
@@ -177,7 +188,9 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
       the client-side stubs and server-side skeletons are not related
       through inheritance, you must either explicitly activate the
       servant (your implementation object) or use <CODE>_this()</CODE> to
-      activate it with its default POA.  We will discuss more about
+      activate it with its default POA.  <CODE>_this()</CODE> creates and 
+      registers a CORBA object under the RootPOA, and returns the created 
+      object reference for the ne wobject. We will discuss more about
       explicit and implicit activation later, but at this point it is
       important to remove any thoughts about converting pointers to
       servants to object references or vice-versa, it just does not
@@ -336,7 +349,7 @@ $ client file://ior_file MSFT RHAT
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sun Nov 28 18:47:07 CST 1999
+Last modified: Thu Feb 17 16:05:23 PST 2000
 <!-- hhmts end -->
   </body>
 </html>
