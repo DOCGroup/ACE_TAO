@@ -66,32 +66,6 @@ handle_signal (int signum)
       return -1;
       /* NOTREACHED */
 
-    case SIGCHLD:
-      for (;;)
-        {
-          int child_exit_status;
-
-          // This method simply "reaps" the exit status of the child
-          // without blocking.  Note that it also decrements the count
-          // of waiting children by one.
-          pid_t pid = ACE_OS::wait (-1,
-                                    &child_exit_status,
-                                    WNOHANG);
-          // Check to see if there are anymore children to reap.
-          if (pid == -1) 
-            break;
-
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%P|%t) reaped child pid %d with exit status %d\n"),
-                      pid,
-                      child_exit_status));
-        }
-
-      // Shutdown and bail out.
-      shut_down = 1;
-      return -1;
-      /* NOTREACHED */
-
     case SIGHUP:
       {
         // Shutdown the child.
@@ -103,9 +77,7 @@ handle_signal (int signum)
                                    SIGTERM);
         ACE_ASSERT (result != -1);
 
-        // Continue looping on <sigwait> until the child process
-        // exits.
-        return 0;
+        return -1;
       }
       /* NOTREACHED */
     case -1:
@@ -130,11 +102,6 @@ synchronous_signal_handler (void *)
 {
   ACE_Sig_Set sigset;
 
-  // Register ourselves as a "dummy" signal handler so that this
-  // processes' disposition isn't SIG_IGN (which is the default).
-  ACE_Sig_Action sa ((ACE_SignalHandler) synchronous_signal_handler, SIGCHLD);
-  ACE_UNUSED_ARG (sa);
-
   // Register signal handlers.
   if (child)
     {
@@ -143,15 +110,21 @@ synchronous_signal_handler (void *)
     }
   else
     {
-      sigset.sig_add (SIGCHLD);
       sigset.sig_add (SIGHUP);
     }
 
   for (;;)
-    // Block waiting for SIGINT, SIGCHLD, SIGTERM, or SIGHUP,
-    // depending on whether we're the parent or child process.
-    if (handle_signal (ACE_OS::sigwait (sigset)) == -1)
-      break;
+    {
+      // Block waiting for SIGINT, SIGTERM, or SIGHUP, depending on
+      // whether we're the parent or child process.
+      if (handle_signal (ACE_OS::sigwait (sigset)) == -1)
+        break;
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) handled signal\n")));
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) parent handler done\n")));
 
   return 0;
 }
@@ -299,6 +272,7 @@ worker_parent (void *)
 
   // Perform a <wait> until our child process has exited.
   
+#if 0
   while (shut_down == 0)
     {
       // Wait for a signal to arrive.
@@ -309,9 +283,12 @@ worker_parent (void *)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) got signal!\n")));
     }
+#else
+  pm.wait ();
+#endif /* */ 
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) parent done\n")));
+              ASYS_TEXT ("(%P|%t) parent worker done\n")));
   return 0;
 }
 
