@@ -68,8 +68,8 @@ protected:
   /// Set the length of the underlying interceptor array.
   virtual void length (size_t);
 
-  /// Return the interceptor in array element <index>.
-  virtual PortableInterceptor::Interceptor_ptr interceptor (size_t);
+  /// Return the interceptor in array element @a index.
+  virtual PortableInterceptor::Interceptor_ptr interceptor (size_t index);
 
 private:
 
