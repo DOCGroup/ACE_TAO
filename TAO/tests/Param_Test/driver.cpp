@@ -171,7 +171,7 @@ Driver::run (void)
         delete client;
       }
       break;
-	case Options::TEST_BOUNDED_STRING_SEQUENCE:
+    case Options::TEST_BOUNDED_STRING_SEQUENCE:
       {
         Param_Test_Client<Test_Bounded_String_Sequence> *client = new
           Param_Test_Client<Test_Bounded_String_Sequence> (this->orb_.in (),
@@ -214,8 +214,8 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Struct_Sequence> *client = new
           Param_Test_Client<Test_Struct_Sequence> (this->orb_.in (),
-                                                 this->objref_.in(),
-                                                 new Test_Struct_Sequence);
+                                                   this->objref_.in(),
+                                                   new Test_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -227,8 +227,8 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Bounded_Struct_Sequence> *client = new
           Param_Test_Client<Test_Bounded_Struct_Sequence> (this->orb_.in (),
-												           this->objref_.in(),
-														   new Test_Bounded_Struct_Sequence);
+                                                           this->objref_.in(),
+                                                           new Test_Bounded_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -275,12 +275,12 @@ Driver::run (void)
         delete client;
       }
       break;
-	case Options::TEST_OBJREF_SEQUENCE:
-		{
-		  Param_Test_Client<Test_ObjRef_Sequence> *client = new
-		    Param_Test_Client<Test_ObjRef_Sequence> (this->orb_.in (),
-													 this->objref_.in(),
-													 new Test_ObjRef_Sequence);
+    case Options::TEST_OBJREF_SEQUENCE:
+      {
+        Param_Test_Client<Test_ObjRef_Sequence> *client = new
+          Param_Test_Client<Test_ObjRef_Sequence> (this->orb_.in (),
+                                                   this->objref_.in(),
+                                                   new Test_ObjRef_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -301,7 +301,7 @@ Driver::run (void)
         delete client;
       }
       break;
-	case Options::TEST_SHORTSEQ:
+    case Options::TEST_SHORTSEQ:
       {
         Param_Test_Client<Test_Short_Sequence> *client = new
           Param_Test_Client<Test_Short_Sequence> (this->orb_.in (),
@@ -314,12 +314,12 @@ Driver::run (void)
         delete client;
       }
       break;
-  	case Options::TEST_BOUNDED_SHORTSEQ:
+    case Options::TEST_BOUNDED_SHORTSEQ:
       {
         Param_Test_Client<Test_Bounded_Short_Sequence> *client = new
           Param_Test_Client<Test_Bounded_Short_Sequence> (this->orb_.in (),
                                                           this->objref_.in(),
-	                                                      new Test_Bounded_Short_Sequence);
+                                                          new Test_Bounded_Short_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -327,7 +327,7 @@ Driver::run (void)
         delete client;
       }
       break;
-	case Options::TEST_LONGSEQ:
+    case Options::TEST_LONGSEQ:
       {
         Param_Test_Client<Test_Long_Sequence> *client = new
           Param_Test_Client<Test_Long_Sequence> (this->orb_.in (),
@@ -340,12 +340,38 @@ Driver::run (void)
         delete client;
       }
       break;
-  	case Options::TEST_BOUNDED_LONGSEQ:
+    case Options::TEST_BOUNDED_LONGSEQ:
       {
         Param_Test_Client<Test_Bounded_Long_Sequence> *client = new
           Param_Test_Client<Test_Bounded_Long_Sequence> (this->orb_.in (),
                                                          this->objref_.in(),
-	                                                     new Test_Bounded_Long_Sequence);
+                                                         new Test_Bounded_Long_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_FIXED_ARRAY:
+      {
+        Param_Test_Client<Test_Fixed_Array> *client = new
+          Param_Test_Client<Test_Fixed_Array> (this->orb_.in (),
+                                               this->objref_.in(),
+                                               new Test_Fixed_Array);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_VAR_ARRAY:
+      {
+        Param_Test_Client<Test_Var_Array> *client = new
+          Param_Test_Client<Test_Var_Array> (this->orb_.in (),
+                                             this->objref_.in(),
+                                             new Test_Var_Array);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -394,6 +420,8 @@ template class Param_Test_Client<Test_Short_Sequence>;
 template class Param_Test_Client<Test_Bounded_Short_Sequence>;
 template class Param_Test_Client<Test_Long_Sequence>;
 template class Param_Test_Client<Test_Bounded_Long_Sequence>;
+template class Param_Test_Client<Test_Fixed_Array>;
+template class Param_Test_Client<Test_Var_Array>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
@@ -414,4 +442,6 @@ template class Param_Test_Client<Test_Bounded_Long_Sequence>;
 #pragma instantiate Param_Test_Client<Test_Bounded_Short_Sequence>
 #pragma instantiate Param_Test_Client<Test_Long_Sequence>
 #pragma instantiate Param_Test_Client<Test_Bounded_Long_Sequence>
+#pragma instantiate Param_Test_Client<Test_Fixed_Array>
+#pragma instantiate Param_Test_Client<Test_Var_Array>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
