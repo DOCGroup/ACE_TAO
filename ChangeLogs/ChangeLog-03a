@@ -1,3 +1,7 @@
+Sun Jun 17 21:26:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Message_Block.i: Fixed Fuzz errors.
+
 Sat Jun 17 17:33:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Base.cpp (grow): Cleared the DONT_DELETE flag of the
