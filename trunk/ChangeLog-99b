@@ -1,3 +1,10 @@
+Tue May 18 13:30:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/rules.nested.GNU: FOR is not an excutable on
+	  Win32, therefore, we must bring in the command processor in to
+	  use FOR.  Thanks to David Hooker <DHooker@uniview.net> for
+	  reporting the bug.
+
 Tue May 18 11:46:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/FILE_Connector.h: Changed the default perms from 0 to
