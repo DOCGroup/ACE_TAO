@@ -107,7 +107,7 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
                                 global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (this->end_ - this->start_) / global_scale_factor_ / 1;
+  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor_);
 
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
@@ -151,7 +151,7 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
                                 global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (this->end_ - this->start_) / global_scale_factor_ / 1;
+  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor_);
 
   // Total nanoseconds in a single 64-bit value.
   nanoseconds = useconds * 1000 + nseconds;
