@@ -25,7 +25,7 @@ interface Initiator {
 
 interface Object_A {
 
-  void foo (in Initiator initiator);
+  void foo (in Initiator theInitiator);
   
   oneway void finish ();
 
@@ -33,6 +33,6 @@ interface Object_A {
 
 interface Object_B {
 
-  void foo (in Object_A object_A);
+  void foo (in Object_A theObject_A);
 
 };

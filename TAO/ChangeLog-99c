@@ -1,3 +1,15 @@
+Thu Sep  3 01:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp
+	  tests/NestedUpcall/Triangle_Test/Object_A_i.h
+	  tests/NestedUpcall/Triangle_Test/Object_B_i.cpp
+	  tests/NestedUpcall/Triangle_Test/Object_B_i.h
+	  tests/NestedUpcall/Triangle_Test/Triangle_Test.idl:
+	  According to the changes in the IDL compiler, which
+	  made it conforming to the CORBA spec, some minor
+	  bugs were fixed. These were that identifier
+	  spellings only differed in case.
+
 Thu Sep  2 22:14:59 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
 	* example/simple/chat/Broadcaster.idl:
