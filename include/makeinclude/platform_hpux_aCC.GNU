@@ -129,10 +129,10 @@ ifeq ($(word 2,$(HPVERS_WORDS)), 10)
 SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/$(@F)
 else
 ifeq ($(buildbits),32)
-SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/$(@F)
+SOFLAGS		+= -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib
 endif
 ifeq ($(buildbits),64)
-SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/pa20_64/$(@F)
+SOFLAGS		+= -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib/pa20_64
 endif
 endif
 
