@@ -1,6 +1,7 @@
 Wed Apr 12 15:15:15 2000  David L. Levine  <levine@cs.wustl.edu>
 
-        * orbsvcs/tests/Concurrency/lex.CC_command.cpp (ACE_CC_YY_DECL):
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp (ACE_CC_YY_DECL),
+          lex.CC_command.cpp.diff:
           added initializations of ace_cc_yy_cp and ace_cc_yy_bp to 0,
           so that g++ doesn't complain about possible unitialized uses.
           Thanks to Vishal for reporting this.
