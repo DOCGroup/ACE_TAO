@@ -324,9 +324,9 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
       // safe to steal it (further the EC will release the buffer, but
       // in another thread!). Other ORBs may do different things and
       // this may not work!
-      RtecEventComm::EventSet& copy = 
+      RtecEventComm::EventSet& copy =
         ACE_const_cast (RtecEventComm::EventSet&, event);
-      
+
       this->time_stamp (copy);
       this->supplier_module_->push (this, copy, _env);
     }
@@ -579,10 +579,10 @@ ACE_EventChannel::destroy (CORBA::Environment &)
 
   // Set a 100ns timer.
   if (this->timer_module ()->schedule_timer (0, // no rt-info
-					     act,
-					     ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
-					     100, // 10 usec delta
-					     0) == -1) // no interval
+                                             act,
+                                             ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
+                                             100, // 10 usec delta
+                                             0) == -1) // no interval
     {
       ACE_ERROR ((LM_ERROR, "%p queue_request failed.\n", "ACE_ES_Consumer_Module"));
       delete sc;
@@ -1107,7 +1107,7 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
       CORBA::Boolean dont_update = sc->consumer ()->qos ().is_gateway;
 
       // Deactivate the consumer proxy
-      PortableServer::POA_var poa = 
+      PortableServer::POA_var poa =
         sc->consumer ()->_default_POA (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       PortableServer::ObjectId_var id =
@@ -1176,7 +1176,7 @@ ACE_ES_Consumer_Module::shutdown (void)
         // @@ Cannnot use CORBA::release (*proxy), since it is a
         // servant.
         // Deactivate the proxy...
-        PortableServer::POA_var poa = 
+        PortableServer::POA_var poa =
           (*proxy)->_default_POA (env);
         TAO_CHECK_ENV_RETURN_VOID (env);
         PortableServer::ObjectId_var id =
@@ -1184,7 +1184,7 @@ ACE_ES_Consumer_Module::shutdown (void)
         TAO_CHECK_ENV_RETURN_VOID (env);
         poa->deactivate_object (id.in (), env);
         TAO_CHECK_ENV_RETURN_VOID (env);
-          
+
         // Remove the consumer from our list.
         {
           ACE_ES_GUARD ace_mon (lock_);
@@ -1247,10 +1247,10 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   TimeBase::TimeT ns100;
   ORBSVCS_Time::hrtime_to_TimeT (ns100, 100);
   if (this->channel_->schedule_timer (0, // no rt_info
-				      act,
-				      ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
-				      ns100,
-				      ORBSVCS_Time::zero) == -1)
+                                      act,
+                                      ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
+                                      ns100,
+                                      ORBSVCS_Time::zero) == -1)
     {
       ACE_ERROR ((LM_ERROR, "%p queue_request failed.\n", "ACE_ES_Consumer_Module"));
       delete sc;
@@ -1489,9 +1489,9 @@ ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consum
   // Register the timer.
   int id =
     this->channel_->schedule_timer (consumer->dependency ()->rt_info,
-				    consumer,
-				    consumer->preemption_priority (),
-				    delay, interval);
+                                    consumer,
+                                    consumer->preemption_priority (),
+                                    delay, interval);
 
   // Store the timer id for canceling.
   consumer->timer_id (id);
@@ -1510,8 +1510,8 @@ ACE_ES_Correlation_Module::cancel_timeout (ACE_ES_Consumer_Rep_Timeout *consumer
   // Cancel the timer from the Priority Timer.
   ACE_Command_Base *act;
   this->channel_->cancel_timer (consumer->preemption_priority (),
-				consumer->timer_id (),
-				act);
+                                consumer->timer_id (),
+                                act);
 
   ACE_ASSERT (consumer == act);
 
@@ -1541,10 +1541,10 @@ ACE_ES_Correlation_Module::reschedule_timeout (ACE_ES_Consumer_Rep_Timeout *cons
 
       // Register the timer.
       int id =
-	this->channel_->schedule_timer (0, // Do not pass an RT_Info.
-					consumer,
-					consumer->preemption_priority (),
-					delay, interval);
+        this->channel_->schedule_timer (0, // Do not pass an RT_Info.
+                                        consumer,
+                                        consumer->preemption_priority (),
+                                        delay, interval);
 
       // Store the timer id for canceling.
       consumer->timer_id (id);
@@ -2545,7 +2545,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
                            "push_source.\n"), -1);
 
       for (ACE_ES_Subscription_Info::Subscriber_Set_Iterator iter =
-	     disconnect_list.begin (),
+             disconnect_list.begin (),
              disconnect_list_end = disconnect_list.end ();
            iter != disconnect_list_end;
            iter++)
@@ -3065,7 +3065,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
   CORBA::Boolean need_update = 0;
   {
     TAO_GUARD_THROW (ACE_SYNCH_MUTEX,  ace_mon, this->lock_, _env,
-		     RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+                     RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
     if (all_suppliers_.remove (supplier) == -1)
       TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR());
@@ -3074,8 +3074,8 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 
     if (this->all_suppliers_.size () <= 0)
       {
-	// ACE_DEBUG ((LM_DEBUG, "EC (%t) No more suppliers connected.\n"));
-	channel_->report_disconnect_i (ACE_EventChannel::SUPPLIER);
+        // ACE_DEBUG ((LM_DEBUG, "EC (%t) No more suppliers connected.\n"));
+        channel_->report_disconnect_i (ACE_EventChannel::SUPPLIER);
       }
 
     need_update = (supplier->qos ().is_gateway == 0);
@@ -3147,7 +3147,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 {
   // Steal the events from the EventSet and put them into a reference
   // counted event set.
-  TAO_EC_Event_Set* event = 
+  TAO_EC_Event_Set* event =
     TAO_EC_Event_Set::_create (event_set);
 
   if (event == 0)
@@ -3300,6 +3300,7 @@ template class auto_ptr<ACE_Push_Supplier_Proxy>;
 template class auto_ptr<ACE_Push_Consumer_Proxy>;
 
 template class ACE_Array<TAO_EC_Event>;
+template class ACE_Array_Base<TAO_EC_Event>;
 template class ACE_Array_Iterator<TAO_EC_Event>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -3336,6 +3337,7 @@ template class ACE_Array_Iterator<TAO_EC_Event>;
 #pragma instantiate auto_ptr<ACE_Push_Consumer_Proxy>
 
 #pragma instantiate ACE_Array<TAO_EC_Event>
+#pragma instantiate ACE_Array_Base<TAO_EC_Event>
 #pragma instantiate ACE_Array_Iterator<TAO_EC_Event>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
