@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "002"=.\Simple\receiver.dsp - Package Owner=<4>
+Project: "Simple_receiver"=".\Simple\receiver.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,79 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "003"=.\Simple\sender.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Global:
-
-Package=<5>
-{{{
-}}}
-
-Package=<3>
-{{{
-}}}
-
-###############################################################################
-
-Project: "002"=.\Change_Sender_TSpec\receiver.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "003"=.\Change_Sender_TSpec\sender.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Global:
-
-Package=<5>
-{{{
-}}}
-
-Package=<3>
-{{{
-}}}
-
-###############################################################################
-
-Project: "002"=.\Change_Receiver_FlowSpec\receiver.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "003"=.\Change_Receiver_FlowSpec\sender.dsp - Package Owner=<4>
+Project: "Simple_sender"=".\Simple\sender.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
