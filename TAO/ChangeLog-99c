@@ -1,3 +1,15 @@
+Fri Jun 18 11:32:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object_Adapter.h (prepare_for_upcall): Added default
+	  environment argument value so it would work fine with IDL
+	  generated code when using native exception support.
+
+	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp
+	  (visit_operation): Fixed native exception support.
+
+	* TAO_IDL/be/be_visitor_interface/collocated_ss.cpp
+	  (visit_interface): Some Cosmetic changes.
+
 Fri Jun 18 11:19:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
