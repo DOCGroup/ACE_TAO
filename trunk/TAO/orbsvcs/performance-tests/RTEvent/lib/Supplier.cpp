@@ -7,6 +7,7 @@
  */
 
 #include "Supplier.h"
+#include "Implicit_Deactivator.h"
 
 ACE_RCSID(TAO_PERF_RTEC, Supplier, "$Id$")
 
@@ -66,20 +67,16 @@ Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
     proxy = this->proxy_consumer_._retn ();
   }
 
+  Implicit_Deactivator deactivator (this
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_TRY
     {
       proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY {} ACE_ENDTRY;
-
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  PortableServer::ObjectId_var id = poa->servant_to_id (this
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void

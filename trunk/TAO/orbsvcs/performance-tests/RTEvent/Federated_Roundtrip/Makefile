@@ -187,8 +187,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -198,6 +196,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
@@ -206,7 +205,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp \
   ../lib/Servant_var.inl ../lib/Servant_var.cpp ../lib/RIR_Narrow.h \
-  ../lib/RIR_Narrow.cpp ../lib/RTEC_Initializer.h \
+  ../lib/RIR_Narrow.cpp ../lib/RTServer_Setup.h ../lib/RTClient_Setup.h \
+  ../lib/RTCORBA_Setup.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -232,23 +232,13 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  ../lib/RTServer_Setup.h ../lib/RTCORBA_Setup.h \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
-  ../lib/RTCORBA_Setup.inl ../lib/RTPOA_Setup.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
-  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/PriorityBand_Setup.h \
+  ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -262,16 +252,17 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
-  ../lib/SyncScope_Setup.inl ../lib/RTServer_Setup.inl \
-  ../lib/Loopback_Pair.h ../lib/Loopback_Supplier.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS_T.h \
-  $(TAO_ROOT)/tao/TimeBaseS_T.i \
-  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+  ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
+  ../lib/RTPOA_Setup.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
+  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl ../lib/Control.h \
+  ../lib/Federated_TestS.h ../lib/Federated_TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -300,8 +291,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  ../lib/Federated_TestC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -312,54 +303,19 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
-  ../lib/Loopback_Consumer.h ../lib/Loopback_Pair.inl \
-  ../lib/Auto_Disconnect.h ../lib/Auto_Disconnect.inl \
-  ../lib/Auto_Disconnect.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
+  ../lib/Federated_TestS_T.h ../lib/Federated_TestS_T.i \
+  ../lib/Federated_TestS_T.cpp ../lib/Federated_TestS.i \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
+  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+  $(TAO_ROOT)/tao/default_resource.h \
+  $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.h \
+  $(TAO_ROOT)/tao/Pluggable.h \
+  $(TAO_ROOT)/tao/Pluggable.i \
+  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -375,14 +331,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.i \
-  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
-  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
-  $(TAO_ROOT)/tao/default_resource.h \
-  $(TAO_ROOT)/tao/Resource_Factory.h \
-  $(TAO_ROOT)/tao/Pluggable.h \
-  $(TAO_ROOT)/tao/Pluggable.i \
-  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(TAO_ROOT)/tao/default_resource.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -567,8 +515,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
-  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -578,6 +524,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
@@ -586,7 +533,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp \
   ../lib/Servant_var.inl ../lib/Servant_var.cpp ../lib/RIR_Narrow.h \
-  ../lib/RIR_Narrow.cpp ../lib/RTServer_Setup.h ../lib/RTCORBA_Setup.h \
+  ../lib/RIR_Narrow.cpp ../lib/RTServer_Setup.h ../lib/RTClient_Setup.h \
+  ../lib/RTCORBA_Setup.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -618,15 +566,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
-  ../lib/RTCORBA_Setup.inl ../lib/RTPOA_Setup.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
-  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/PriorityBand_Setup.h \
+  ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -640,7 +580,16 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
-  ../lib/SyncScope_Setup.inl ../lib/RTServer_Setup.inl ../lib/Send_Task.h \
+  ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
+  ../lib/RTPOA_Setup.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
+  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl ../lib/Send_Task.h \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -756,11 +705,13 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   ../lib/Task_Activator.inl ../lib/Task_Activator.cpp \
   ../lib/ORB_Task_Activator.inl ../lib/Auto_Disconnect.h \
+  ../lib/Auto_Functor.h ../lib/Auto_Functor.inl ../lib/Auto_Functor.cpp \
   ../lib/Auto_Disconnect.inl ../lib/Auto_Disconnect.cpp \
   ../lib/Low_Priority_Setup.h ../lib/Send_Task_Stopper.h \
   ../lib/Send_Task_Stopper.inl ../lib/Low_Priority_Setup.cpp \
   $(ACE_ROOT)/ace/Basic_Stats.h \
   $(ACE_ROOT)/ace/Basic_Stats.inl \
+  ../lib/EC_Destroyer.h ../lib/EC_Destroyer.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \

@@ -1,3 +1,109 @@
+Fri Mar  8 19:01:33 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/Makefile:
+	  Disable RTEvent directory on nightly builds.
+
+	* orbsvcs/performance-tests/RTEvent/Makefile:
+	  Add RTCORBA_Baseline to build list.
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile:
+	  Update dependencies.
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+	  Completed implementation of federated test based on the
+	  Federated_Test.idl interface.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile:
+	  Update dependencies.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+	  Use RTClient_Setup, no need to configure a POA for this client.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+	  Use new RTServer_Setup helper method to fetch the correct POA in
+	  a single line of code.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/generate_cmp.sh:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/generate_histo.sh:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/generate_percentiles.sh:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/run.sh:
+	  Add scripts required to run the test, first use 'run.sh' you may
+	  need to be root or set client & server setuid, then use
+	  generate_percentiles.sh to obtain the min, avg, 99, 99.9 and
+	  99.99 percentiles.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
+	  Update dependencies.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp:
+	  New template to automatically call an operation in its
+	  destructor.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.cpp:
+	  Re-implement based on 'Auto_Functor'
+
+	* orbsvcs/performance-tests/RTEvent/lib/Implicit_Deactivator.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Implicit_Deactivator.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Implicit_Deactivator.cpp:
+	  New helper class to automatically deactivate an implicitly
+	  activated servant.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Consumer.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Supplier.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Supplier.cpp:
+	  Use Implicit_Deactivator.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+	  Re-factor client-only code into a separate class.
+	  Made RTServer_Setup::poa() return the "right" POA for RT-CORBA
+	  as well as for non-RT-CORBA configurations.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/Federated_Test.idl:
+	  Add IDL interfaces to run federated tests.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Control.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+	  Add implementation of the Federated_Test::Control interface.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback.cpp:
+	  Add implementation of the Federated_Test::Loopback interface.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Peer_Base.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Peer_Base.cpp:
+	  Add partial implementation of the Federated_Test::Peer
+	  interface.  Each test needs to specialize one operation.
+
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.h:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.cpp:
+	  Add functor to shutdown the ORB automatically, use in
+	  conjunction with Auto_Functor.
+
+	* orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/RTPOA_Setup.cpp:
+	  Cosmetic fixes.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.cpp:
+	  Add functor to call shutdown() operation, use in conjunction
+	  with Auto_Functor.
+
 Fri Mar  8 09:44:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Advanced/ch_3/Makefile (LDLIBS):
@@ -38,11 +144,11 @@ Fri Mar  8 09:22:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Forward declare TAO_Profile to fix a compile-time error.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: 
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
 
 	  Include "tao/Profile.h" to pull in TAO_Profile class
 	  declaration.  Necessitated by the inter-header dependency
@@ -159,7 +265,7 @@ Thu Mar  7 17:34:26 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/realtime.conf:
 	  Add svc conf file for real-time CORBA configurations.
-	
+
 	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.dispatching_rtcorba.conf:
 	  Configure the priority mapping in the svc conf file, memory
 	  management is easier that way.
@@ -240,7 +346,7 @@ Thu Mar  7 13:03:50 2002  Chad Elliott  <elliott_c@ociweb.com>
           changes.
 
 Wed Mar  6 21:55:11 2002  Ossama Othman  <ossama@uci.edu>
-	
+
 	* tao/Object.cpp (_remove_ref):
 
 	  Fixed a race condition, and an extraneous lock used upon object

@@ -70,7 +70,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -216,7 +216,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Swap.inl \
   $(ACE_ROOT)/ace/Swap.cpp \
   ../lib/Servant_var.inl ../lib/Servant_var.cpp ../lib/RIR_Narrow.h \
-  ../lib/RIR_Narrow.cpp ../lib/RTServer_Setup.h ../lib/RTCORBA_Setup.h \
+  ../lib/RIR_Narrow.cpp ../lib/RTServer_Setup.h ../lib/RTClient_Setup.h \
+  ../lib/RTCORBA_Setup.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -248,15 +249,7 @@ realclean: clean
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
-  ../lib/RTCORBA_Setup.inl ../lib/RTPOA_Setup.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
-  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/PriorityBand_Setup.h \
+  ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -270,9 +263,17 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
-  ../lib/SyncScope_Setup.inl ../lib/RTServer_Setup.inl Roundtrip.h \
-  TestS.h TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl \
+  ../lib/RTPOA_Setup.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
+  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl Roundtrip.h TestS.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -395,7 +396,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -537,7 +538,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   ../lib/ORB_Holder.inl ../lib/RIR_Narrow.h ../lib/RIR_Narrow.cpp \
-  ../lib/RTServer_Setup.h ../lib/RTCORBA_Setup.h \
+  ../lib/RTClient_Setup.h ../lib/RTCORBA_Setup.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -569,15 +570,7 @@ realclean: clean
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
-  ../lib/RTCORBA_Setup.inl ../lib/RTPOA_Setup.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
-  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/PriorityBand_Setup.h \
+  ../lib/RTCORBA_Setup.inl ../lib/PriorityBand_Setup.h \
   ../lib/PriorityBand_Setup.inl ../lib/SyncScope_Setup.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -591,7 +584,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
-  ../lib/SyncScope_Setup.inl ../lib/RTServer_Setup.inl ../lib/Send_Task.h \
+  ../lib/SyncScope_Setup.inl ../lib/RTClient_Setup.inl ../lib/Send_Task.h \
   ../lib/Servant_var.h \
   $(ACE_ROOT)/ace/Swap.h \
   $(ACE_ROOT)/ace/Swap.inl \
@@ -636,6 +629,9 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -704,13 +700,15 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   ../lib/Low_Priority_Setup.h ../lib/Auto_Disconnect.h \
+  ../lib/Auto_Functor.h ../lib/Auto_Functor.inl ../lib/Auto_Functor.cpp \
   ../lib/Auto_Disconnect.inl ../lib/Auto_Disconnect.cpp \
   ../lib/Send_Task_Stopper.h ../lib/Task_Activator.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   ../lib/Task_Activator.inl ../lib/Task_Activator.cpp \
   ../lib/Send_Task_Stopper.inl ../lib/Low_Priority_Setup.cpp \
   $(ACE_ROOT)/ace/Basic_Stats.h \
-  $(ACE_ROOT)/ace/Basic_Stats.inl \
+  $(ACE_ROOT)/ace/Basic_Stats.inl TestC.h \
+  TestC.i \
   $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
@@ -773,6 +771,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/Strategies/advanced_resource.i \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
+  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
@@ -782,7 +784,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stats.h \
   $(ACE_ROOT)/ace/Stats.i
 
-.obj/Roundtrip.o .obj/Roundtrip.o .obj/Roundtrip.o .obj/Roundtrip.o: Roundtrip.cpp Roundtrip.h \
+.obj/Roundtrip.o .obj/Roundtrip.so .shobj/Roundtrip.o .shobj/Roundtrip.so: Roundtrip.cpp Roundtrip.h \
   $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
@@ -979,7 +981,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/TestC.o .obj/TestC.o .obj/TestC.o .obj/TestC.o: TestC.cpp TestC.h \
+.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1284,7 +1286,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/TestS.o .obj/TestS.o .obj/TestS.o .obj/TestS.o: TestS.cpp TestS.h TestC.h \
+.obj/TestS.o .obj/TestS.so .shobj/TestS.o .shobj/TestS.so: TestS.cpp TestS.h TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \

@@ -23,30 +23,31 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
                                 const RT_Class &rt_class,
                                 int nthreads
                                 ACE_ENV_ARG_DECL)
-  : syncscope_setup_ (orb
-                      ACE_ENV_ARG_PARAMETER)
+  : RTClient_Setup (use_rt_corba,
+                    orb,
+                    rt_class,
+                    nthreads
+                    ACE_ENV_ARG_DECL)
 {
   ACE_CHECK;
 
   if (use_rt_corba)
     {
-      this->rtcorba_setup_ =
-        auto_ptr<RTCORBA_Setup> (new RTCORBA_Setup (orb,
-                                                    rt_class,
-                                                    nthreads
-                                                    ACE_ENV_ARG_PARAMETER));
-      ACE_CHECK;
-
       this->rtpoa_setup_ =
         auto_ptr<RTPOA_Setup> (new RTPOA_Setup (orb,
-                                                *this->rtcorba_setup_
+                                                *this->rtcorba_setup ()
                                                 ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;
 
-      this->priorityband_setup_ =
-        auto_ptr<PriorityBand_Setup> (new PriorityBand_Setup (orb,
-                                                              *this->rtcorba_setup_
-                                                              ACE_ENV_ARG_PARAMETER));
+      this->poa_ =
+        this->rtpoa_setup_->poa ();
+    }
+  else
+    {
+      this->poa_ =
+        RIR_Narrow<RTPortableServer::POA>::resolve (orb,
+                                                    "RootPOA"
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

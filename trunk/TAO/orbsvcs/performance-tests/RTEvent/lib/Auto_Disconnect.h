@@ -8,7 +8,19 @@
 #ifndef TAO_PERF_RTEC_AUTO_DISCONNECT_H
 #define TAO_PERF_RTEC_AUTO_DISCONNECT_H
 
-#include "ace/config-all.h"
+#include "Auto_Functor.h"
+
+/**
+ * @class Disconnect
+ *
+ * @brief Helper functor to call the disconnect() method of a class.
+ */
+template<class Client>
+class Disconnect
+{
+public:
+  void operator() (Client *client ACE_ENV_ARG_DECL);
+};
 
 /**
  * @class Auto_Disconnect
@@ -17,7 +29,7 @@
  *        RTEC client.
  */
 template<class Client>
-class Auto_Disconnect
+class Auto_Disconnect : public Auto_Functor<Client,Disconnect<Client> >
 {
 public:
   /// Constructor
@@ -26,19 +38,8 @@ public:
    */
   ACE_EXPLICIT Auto_Disconnect (Client *s = 0);
 
-  /// Destructor
-  ~Auto_Disconnect (void);
-
-  /// Assingment operator
+  /// Assignment operator
   Auto_Disconnect<Client>& operator= (Client *client);
-
-  /// Release the client, i.e. the destructor does not call any
-  /// methods.
-  void release (void);
-
-private:
-  /// The client
-  Client *client_;
 };
 
 #if defined(__ACE_INLINE__)
