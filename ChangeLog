@@ -1,3 +1,9 @@
+Sun Aug 25 12:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao.doxygen:
+          Added TAO_NAMESPACE to the list of macro's that must be expanded
+          when generating doxygen documentation.
+
 Sat Aug 24 22:47:22 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * include/makeinclude/ace_flags.bor:
