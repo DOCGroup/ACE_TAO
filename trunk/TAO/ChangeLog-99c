@@ -1,3 +1,12 @@
+Thu Oct  7 14:54:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/Logging_Service/Logging_Service.h:
+	* orbsvcs/Logging_Service/Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Makefile:
+	  Added the Telecom Log Service's front end files.
+	* orbsvcs/orbsvcs/Makefile:
+	  Added a "Log" section for the Log Service.
+
 Thu Oct  7 13:14:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Any.h:
@@ -31,7 +40,7 @@ Thu Oct  7 13:14:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  arguments into Anys, by moving the code into the Any class, and
 	  out of Stub, NVList, Request and other places it was spread
 	  over.
-	  I also fixed a couple of latent bugs with the implementations of 
+	  I also fixed a couple of latent bugs with the implementations of
 	  Any demarshaling.
 
 	* tests/DSI_Gateway/test_dsi.cpp:
