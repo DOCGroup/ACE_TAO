@@ -155,7 +155,7 @@ CORBA::ORB_init (int &argc,
   // initialization routines to be called multiple times?!
   TAO_IIOP_Interpreter::init_table ();
   TAO_Marshal::initialize ();
-  TAO_Exception::init_standard_exceptions (env);
+  TAO_Exceptions::init_standard_exceptions (env);
 
   if (env.exception () != 0)
     return 0;

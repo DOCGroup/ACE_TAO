@@ -16,9 +16,9 @@
 #endif /* __ACE_INLINE__ */
 
 // Static initializers.
-CORBA::TypeCode_ptr TAO_Exception::sys_exceptions[NUM_SYS_EXCEPTIONS];
+CORBA::TypeCode_ptr TAO_Exceptions::sys_exceptions[TAO_Exceptions::NUM_SYS_EXCEPTIONS];
 
-CORBA::ExceptionList TAO_Exception::system_exceptions;
+CORBA::ExceptionList TAO_Exceptions::system_exceptions;
 
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : type_ (tc),
@@ -168,7 +168,7 @@ CORBA_SystemException::_narrow (CORBA_Exception* exception)
 // then overwritten.
 
 void
-TAO_Exception::make_standard_typecode (CORBA::TypeCode_ptr tcp,
+TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
                                        const char *name,
                                        char *buffer,
                                        size_t buflen,
@@ -246,13 +246,13 @@ TAO_Exception::make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
-  sys_exceptions [TAO_Exception::system_exceptions.length++] =
+  sys_exceptions [TAO_Exceptions::system_exceptions.length++] =
     new (tcp) CORBA::TypeCode (CORBA::tk_except,
                                stream.length (),
                                stream.buffer (),
                                CORBA::B_FALSE);
 
-  assert (tcp->length_ <= TC_BUFLEN);
+  assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);
   return;
 }
 
@@ -296,27 +296,27 @@ TAO_Exception::make_standard_typecode (CORBA::TypeCode_ptr tcp,
 // it works that way in most systems.
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-    static CORBA::Long tc_buf_ ## name [TC_BUFLEN / sizeof (long)]; \
+    static CORBA::Long tc_buf_ ## name [TAO_Exceptions::TC_BUFLEN / sizeof (long)]; \
     static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except); \
     CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
 void
-TAO_Exception::init_standard_exceptions (CORBA::Environment &env)
+TAO_Exceptions::init_standard_exceptions (CORBA::Environment &env)
 {
   // Initialize the list of system exceptions, used when
   // unmarshaling.
-  TAO_Exception::system_exceptions.length = 0;
-  TAO_Exception::system_exceptions.maximum = 
-    TAO_Exception::NUM_SYS_EXCEPTIONS;
-  TAO_Exception::system_exceptions.buffer = 
-    &TAO_Exception::sys_exceptions [0];
+  TAO_Exceptions::system_exceptions.length = 0;
+  TAO_Exceptions::system_exceptions.maximum = 
+    TAO_Exceptions::NUM_SYS_EXCEPTIONS;
+  TAO_Exceptions::system_exceptions.buffer = 
+    &TAO_Exceptions::sys_exceptions [0];
 
   // Initialize the typecodes.
 #define TAO_SYSTEM_EXCEPTION(name) \
   if (env.exception () == 0) \
-    TAO_Exception::make_standard_typecode (&tc_std_ ## name, #name, \
+    TAO_Exceptions::make_standard_typecode (&tc_std_ ## name, #name, \
                                            (char *) tc_buf_ ## name, \
                                            sizeof tc_buf_ ## name, env);
   STANDARD_EXCEPTION_LIST

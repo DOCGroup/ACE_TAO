@@ -190,7 +190,7 @@ private:
   CORBA_Environment &operator = (const CORBA_Environment &src);
 };
 
-class TAO_Export TAO_Exception
+class TAO_Export TAO_Exceptions
 {
   // = TITLE
   //   This class is a namespace for exception-related static data and

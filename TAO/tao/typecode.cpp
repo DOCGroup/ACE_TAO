@@ -1886,7 +1886,6 @@ CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
                                                         overall_align,
                                                         discrim_size,
                                                         env);
-
   if (env. exception () == 0)
     {
       this->private_state_->tc_discrim_pad_size_known_ = CORBA::B_TRUE;
