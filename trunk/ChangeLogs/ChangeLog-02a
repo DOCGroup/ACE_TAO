@@ -1,3 +1,8 @@
+Sun Feb  3 08:05:12 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/TP_Reactor_Test.dsp (RSC): 
+	  Regenerated the file in MSVC++. 
+
 Sun Feb  3 11:16:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/TP_Reactor_Test.cpp:
