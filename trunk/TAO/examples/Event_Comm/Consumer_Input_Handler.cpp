@@ -100,7 +100,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
   if (n > 0)
     {
       // Null terminate the buffer, replacing the '\n' with '\0'.
-      if (buf[n - 1] == '\n' || buf[n - 1] == EOF)
+      if (buf[n - 1] == '\n')
 	buf[n - 1] = '\0';
       else
 	buf[n] = '\0';

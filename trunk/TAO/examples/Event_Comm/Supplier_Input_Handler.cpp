@@ -67,17 +67,17 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
   if (ACE_OS::fgets (buf,
 		     sizeof buf - 1,
                      stdin) == 0)
-    {      
+    {
       ACE_DEBUG ((LM_DEBUG,
                   "shutting down Supplier_Input_Handler\n"));
-      return 0; 
+      return 0;
     }
   else
     {
       size_t n = ACE_OS::strlen (buf);
 
       // Null terminate the buffer, replacing the '\n' with '\0'.
-      if (buf[n - 1] == '\n' || buf[n - 1] == EOF)
+      if (buf[n - 1] == '\n')
 	buf[n - 1] = '\0';
       else
 	buf[n] = '\0';
@@ -86,7 +86,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 		  buf));
     }
 
-  
+
 
   if (ACE_OS::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.
@@ -95,7 +95,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
     {
       Event_Comm::Notifier *notifier = this->notifier_->notifier ();
       ACE_ASSERT (notifier != 0);
-      
+
       // Use the notifier to notify Consumers.
       ACE_TRY_NEW_ENV
         {
