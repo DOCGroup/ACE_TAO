@@ -1527,6 +1527,12 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_EXPLICIT
 # endif /* ! ACE_HAS_EXPLICIT_KEYWORD */
 
+# if defined (ACE_HAS_MUTABLE_KEYWORD)
+#   define ACE_MUTABLE mutable
+# else  /* ! ACE_HAS_MUTABLE_KEYWORD */
+#   define ACE_MUTABLE
+# endif /* ! ACE_HAS_MUTABLE_KEYWORD */
+
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
 // arguments... ;-(.  Luckily, using the C++ preprocessor I can hide
