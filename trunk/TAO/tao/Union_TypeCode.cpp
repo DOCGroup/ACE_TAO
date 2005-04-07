@@ -420,7 +420,7 @@ TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
                      RefCountPolicy>::discriminator_type_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return
     CORBA::TypeCode::_duplicate (
