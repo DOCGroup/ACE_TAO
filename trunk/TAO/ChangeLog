@@ -1,5 +1,10 @@
 Wed Apr  6 17:01:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* tao/Alias_TypeCode.cpp (content_type_i):
+
+	  Uncommented code that was inadvertently left uncommented when it
+	  shouldn't have been.
+
 	* tao/TypeCode_Base_Attributes.h:
 
 	  Removed unnecessary #include directive.
