@@ -19,9 +19,15 @@
 
 #include "tao/TypeCode.h"
 #include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/debug.h"
 
-ACE_RCSID(CDR, tc, "$Id$")
+#include "ace/Log_Msg.h"
+
+
+ACE_RCSID (CDR,
+           tc,
+           "$Id$")
 
 // In this version of TAO typecodes are based on CDR, we have to
 // verify that CDR offers the services needed for Typecode...
