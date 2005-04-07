@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CORBA_String.h"
+#include "ace/config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
