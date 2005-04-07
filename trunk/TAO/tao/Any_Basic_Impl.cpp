@@ -21,14 +21,32 @@ namespace TAO
     : Any_Impl (0, tc),
       kind_ (CORBA::tk_null)
   {
-    if (!CORBA::is_nil (tc))
+    if (CORBA::is_nil (tc))
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
-        this->kind_ = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        return;
       }
-
-    CORBA::TCKind const tckind = static_cast<CORBA::TCKind> (this->kind_);
+      
+    ACE_DECLARE_NEW_CORBA_ENV;
+    CORBA::TCKind tckind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    
+    if (tckind == CORBA::tk_alias)
+      {
+        CORBA::TypeCode_var contained =
+          CORBA::TypeCode::_duplicate (tc);
+        
+        while (tckind == CORBA::tk_alias)
+          {
+            contained =
+              contained->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK;
+            
+            tckind = contained->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK;
+          }
+      }
+      
+    this->kind_ = tckind;
 
     switch (tckind)
     {
