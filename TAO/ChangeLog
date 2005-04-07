@@ -1,3 +1,21 @@
+Thu Apr  7 13:08:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+	  (visit_valuetype):
+
+	  Do not continue if the visitor is being called recursively.
+	  Addresses an infinite recursion run-time problem.
+
+	  (visit_members):
+
+	  Fixed off-by-one error that prevented a comma from being placed
+	  between field array elements.
+
+	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
+
+	  Added new "in_recursion_" member that is used to keep track of
+	  recursion.
+
 Thu Apr  7 12:44:38 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp:
