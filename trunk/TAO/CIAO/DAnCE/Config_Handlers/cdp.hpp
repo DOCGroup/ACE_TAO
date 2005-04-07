@@ -73,6 +73,7 @@ namespace CIAO
       // realizes
       // 
       public:
+      bool realizes_p () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription& realizes ();
       void realizes (::CIAO::Config_Handlers::ComponentInterfaceDescription const& );
