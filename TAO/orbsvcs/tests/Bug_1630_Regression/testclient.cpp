@@ -143,7 +143,7 @@ int main (int argc, char* argv[])
          failed = 1 ;
       };
 
-      CORBA::Boolan const eq_char =
+      CORBA::Boolean const eq_char =
         nv->value()->type()->equal (CORBA::_tc_char
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -166,7 +166,7 @@ int main (int argc, char* argv[])
          failed = 1 ;
       };
 
-      CORBA::Boolan const eq_long =
+      CORBA::Boolean const eq_long =
         nv->value()->type()->equal (CORBA::_tc_long
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -189,7 +189,7 @@ int main (int argc, char* argv[])
          failed = 1 ;
       };
 
-      CORBA::Boolan const eq_short =
+      CORBA::Boolean const eq_short =
         nv->value()->type()->equal (CORBA::_tc_short
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
