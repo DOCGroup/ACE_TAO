@@ -25,6 +25,9 @@ TAO::be_visitor_value_typecode::be_visitor_value_typecode (
 int
 TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 {
+  if (!node->is_defined ())
+    return this->gen_forward_declared_typecode (node);
+
   TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl
@@ -165,7 +168,8 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
       if (!d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_value_typecode::gen_member_typecodes - "
+                             "(%N:%l) be_visitor_value_typecode::"
+                             "gen_member_typecodes - "
                              "bad node in this scope\n"),
                             0);
         }
@@ -178,20 +182,11 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
           continue;
         }
 
-      be_interface * const intf =
-        be_interface::narrow_from_decl (field->field_type ());
-
-      if (intf && intf->is_defined ())
-        {
-          // Only generate TypeCodes for interfaces and valuetypes if
-          // they are forward declared.
-          continue;
-        }
-
       be_type * const member_type =
         be_type::narrow_from_decl (field->field_type ());
 
-      member_type->accept (this);
+      if (this->is_typecode_generation_required (member_type))
+        member_type->accept (this);
     }
 
   return 0;

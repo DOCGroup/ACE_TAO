@@ -22,6 +22,9 @@ TAO::be_visitor_objref_typecode::be_visitor_objref_typecode (
 int
 TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
 {
+  if (!node->is_defined ())
+    return this->gen_forward_declared_typecode (node);
+
   static char const abstract_interface[] = "abstract_interface";
   static char const component[]          = "component";
   static char const home[]               = "home";
