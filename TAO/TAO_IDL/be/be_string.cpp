@@ -25,8 +25,8 @@
 #include "utl_identifier.h"
 #include "global_extern.h"
 
-ACE_RCSID (be, 
-           be_string, 
+ACE_RCSID (be,
+           be_string,
            "$Id$")
 
 be_string::be_string (void)

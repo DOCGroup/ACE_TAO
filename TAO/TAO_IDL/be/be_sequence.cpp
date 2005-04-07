@@ -135,7 +135,7 @@ be_sequence::be_sequence (AST_Expression *v,
 
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = 
+      AST_PredefinedType *pdt =
         AST_PredefinedType::narrow_from_decl (pbt ? pbt : t);
 
       switch (pdt->pt ())
