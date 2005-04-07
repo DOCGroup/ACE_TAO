@@ -192,7 +192,8 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
                       "type = 0 \n"));
           return;
         }
-      const char * id = type->id ();
+      const char * id = type->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
