@@ -1,3 +1,18 @@
+Thu Apr 07 14:49:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/examples/Hello/descriptors/basicNodeDaemon.pl
+	* DAnCE/examples/Hello/descriptors/runNodeDaemons.pl
+
+	  Removed the first file and added the second file since
+	  the name of the first file doens't make any sense. These
+	  two files are the same.
+
+	* DAnCE/examples/BasicSP/descriptors/flattern_deploymentplan.cdp
+	* DAnCE/examples/BasicSP/descriptors/flattened_deploymentplan.cdp
+
+	  Removed the first file and added the second file since
+	  the name of the first file contained a typo.
+
 Wed Apr 06 11:12:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/descriptors/flattern_deploymentplan.cdp
