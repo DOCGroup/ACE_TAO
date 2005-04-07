@@ -257,6 +257,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Descriptor_Interface.cpp
     Transport_Mux_Strategy.cpp
     Transport_Timer.cpp
+    True_RefCount_Policy.cpp
     TSS_Resources.cpp
     TypeCode.cpp
     Typecode_typesC.cpp
@@ -595,6 +596,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport.h
     Transport_Mux_Strategy.h
     Transport_Timer.h
+    True_RefCount_Policy.h
     TSS_Resources.h
     TypeCode_Constants.h
     TypeCode_Case.h
