@@ -13,6 +13,27 @@ Thu Apr 07 14:49:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  Removed the first file and added the second file since
 	  the name of the first file contained a typo.
 
+	* DAnCE/examples/Hello/descriptor/Modified_Deployment.xsd
+
+	  Changed the <deploymentPlan> tag to allow zero <realizes>
+	  tag in the XML.
+
+	* DAnCE/Config_Handlers/DP_Handler.cpp
+	* DAnCE/Config_Handlers/cdp.cpp
+	* DAnCE/Config_Handlers/cdp.hpp
+
+	  Modified handlers to accomodate the above change.
+
+	* DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
+
+	  Added this file in, which is a flattened deployment plan for
+	  for the Hello example. I will come back to remove the <realizes>
+	  tag some time later since it is useless.
+
+	* DAnCE/examples/Hello/step-by-step.html
+
+	  Bring the documentation page up to date.
+
 Wed Apr 06 11:12:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/descriptors/flattern_deploymentplan.cdp
