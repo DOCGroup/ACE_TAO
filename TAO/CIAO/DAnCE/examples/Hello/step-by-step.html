@@ -17,9 +17,8 @@
 <hr>
 <b>Note:</b>
 <li><a href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> tools are not used in this tutorial.</li>
-<li>This is only a <em>GENERAL</em> way of building up a CIAO application. The user could always change the process in his own way. For example: the IDL file content, the project structure etc.</li>
-<li>To download the code please refer to the CVS repository at <code>$CIAO_ROOT/DAnCE/examples/Hello</code>.</li>
-<li>If you just want to try the example you could jump to the <em>Make</em> then the <em>Run</em> section.</li>
+<li>This is only a <em>GENERAL</em> way of building up a CIAO application and deploying it with DAnCE. The user could always change the process in his own way. For example: the IDL file content, the project structure etc.</li>
+<li>To download the code of this example please refer to the CVS repository at <code>$CIAO_ROOT/DAnCE/examples/Hello</code>.</li>
 <hr>
 
 <h2>Example Description</h2>
@@ -45,7 +44,7 @@ This Hello example is contructed in the following ways:
 <li>1. Use: <br>
 <ul>
 <code>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Sender <br>
-      $$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Receiver
+      $CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Receiver
 </code><br></ul>
 Note:
 <ul>
@@ -88,50 +87,27 @@ Now we can step forward to build the assembly. Here we are going to build the si
 <br>
 <br>
 
-<li> You need to create a bunch of XML descriptors which are explained as below: 
+<li> You need to create an XML descriptor file to describe your <em>deployment plan</em> which are explained as below: 
 <br><br>
 
 <dl>
-  <dt> Component Interface Descriptor (.ccd) </dt>
-  <dd> Describes the interface, ports, &amp; properties of one component </dd>
-
-  <dt> Implementation Artifact Descriptor (.iad) </dt>
-  <dd> Describes the implementation artifacts (e.g., DLLs, OS, etc.) of one 
-  component. </dd>
-
-  <dt> Component Package Descriptor (.cpd) </dt>
-  <dd> Describes multiple alternative implementations of one component. </dd>
-
-  <dt> Package Configuration Descriptor (.pcd) </dt>
-  <dd> Describes a configuration of a component package </dd>
-
-  <dt> Top-level Package Descriptor (package.tpd) </dt>
-  <dd> Describes the top-level component package in a package (.cpk) </dd>
-
-  <dt> Component Implementation Descriptor (.cid) </dt>
-  <dd> Describes a specific implementation of a component interface
-  Implementation can be either monolithic- or assembly-based
-  Contains subcomponent instantiations in case of assembly based
-  implementations
-  Contains interconnection information between components </dd>
-
-  <dt> Component Packages (.cpk) </dt>
-  <dd> A component package can contain a single component
-  A component package can also contain an assembly </dd>
+  <dt> Deployment Plan Descriptor (.cdp) </dt>
+  <dd> In this file, you need to declaratively specify how the component assembly is constructed. Specificly, you need to specify the component types, component instances, component connections and implementation artifact descriptions. </dd>
 </dl>
 <br>
-<li> Please make sure that the Deployment.xsd and XMI.xsd files are in the Hello/descriptors directory.
+<li> Please make sure that the Modified_Deployment.xsd and XMI.xsd files are in the Hello/descriptors directory.
+The former file could be found in $CIAO_ROOT/docs/schema directory.
 <br>
 <br>
-<li> Create the <em>.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager (Node_Daemon)</code> 
+<li> Create the <em>NodeManagerMap.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager (Node_Daemon)</code> 
      where it is running. Please refer to the existing <code>NodeManagerMap.dat</code> for details, 
      as you can see, we only specify 2 <code>NodeManagers</code>, which means these two components 
      will be installed in the different <code>NodeApplication</code> server. Please refer to the
-     <em>DeploymentPlan.cdp</em> file to see how a deployer could specify the mapping between components and nodes.</li>
+     <em>flattened_deploymentplan.cdp</em> file to see how a deployer could specify the mapping between components and nodes.</li>
 
 <br>
 <br>
-Note: Creating all the descriptors is a tedious and error-prone job, you can download <a href="http://www.dre.vanderbilt.edu/cosmic"> CoSMIC</a> to assist you in this step.
+Note: Creating the deployment plan descriptor is a tedious and error-prone job, you can download <a href="http://www.dre.vanderbilt.edu/cosmic"> CoSMIC</a> to assist you in this step.
 </li>
 
 <hr>
@@ -140,7 +116,7 @@ Finally you are ready to test the application you have made.
 <br><br>
 
 <UL>
-  <LI> Go into the <em> descriptors </em> directory Start NodeManagers (NodeDameon) by running <code> basicNodeDaemon.pl </code>
+  <LI> Go into the <em> descriptors </em> directory Start NodeManagers (NodeDameon) by running <code> runNodeDaemons.pl </code>
   
   <LI> Start the execution manager:
   <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
@@ -152,10 +128,12 @@ Finally you are ready to test the application you have made.
   </ul>
 
   <LI> Start the executor:
-  <code> $CIAO_ROOT/DAnCE/RepositoryManager/executor -p package.tpd -d DeploymentPlan.cdp -k file://EM.ior </code>
+  <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p -p flattened_deploymentplan.cdp -k file://EM.ior </code>
   
-  <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/DAnCE/examples/Hello/Sender/starter to start the application.
-       Please make sure that the component IOR file for the EC (<code>EC.ior</code>) component is present when you run this client.
+  After this, components should be deployed successfully. 
+  
+  <LI> You can go into the <em> $CIAO_ROOT/DAnCE/examples/Hello/descriptor </em> directory and run the <code>$CIAO_ROOT/DAnCE/examples/Hello/Sender/starter</code> to start the application.
+       Please make sure that the component IOR file for the Sender component (<code>Sender.ior</code>) is present when you run this client.
 
   <BR/>
   </LI>
