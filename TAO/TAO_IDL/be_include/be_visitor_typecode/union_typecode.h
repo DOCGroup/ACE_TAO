@@ -51,6 +51,12 @@ namespace TAO
     /// Generate union branch related TypeCode code.
     int visit_cases (be_union * node);
 
+  private:
+
+    /// @c true if a union TypeCode is already being generated using
+    /// this visitor.
+    bool in_recursion_;
+
   };
 
 }

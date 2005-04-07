@@ -16,12 +16,27 @@
 TAO::be_visitor_union_typecode::be_visitor_union_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
+  , in_recursion_ (false)
 {
 }
 
 int
 TAO::be_visitor_union_typecode::visit_union (be_union * node)
 {
+  if (this->in_recursion_)
+    {
+      // Nothing to do yet.
+
+      /**
+       * @todo Merge recursive union TypeCode generation code.
+       */
+      return 0;
+    }
+  else
+    {
+      this->in_recursion_ = true;
+    }
+
   TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl
@@ -61,6 +76,8 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     << node->nfields () << ", "
     << node->default_index () << ");" << be_uidt_nl
     << be_uidt_nl;
+
+  // this->in_recursion_ = false;
 
   return
     this->gen_typecode_ptr (be_type::narrow_from_decl (node));

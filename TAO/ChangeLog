@@ -1,3 +1,12 @@
+Wed Apr  6 20:15:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+
+	  Interim fix until recursive union TypeCode code is merged.  Set
+	  a sentinel variable to prevent infinite recursion when
+	  generating TypeCodes for the members of a recursive union.
+
 Wed Apr  6 19:42:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (visit_array):
