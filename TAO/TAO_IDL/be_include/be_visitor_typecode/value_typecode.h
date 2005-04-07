@@ -51,6 +51,12 @@ namespace TAO
     /// Generate valuetype field related TypeCode code.
     int visit_members (be_valuetype * node);
 
+  private:
+
+    /// @c true if a {value,event}type TypeCode is already being
+    /// generated using this visitor.
+    bool in_recursion_;
+
   };
 
 }

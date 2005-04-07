@@ -19,6 +19,7 @@
 TAO::be_visitor_value_typecode::be_visitor_value_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
+  , in_recursion_ (false)
 {
 }
 
@@ -27,6 +28,20 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 {
   if (!node->is_defined ())
     return this->gen_forward_declared_typecode (node);
+
+  if (this->in_recursion_)
+    {
+      // Nothing to do yet.
+
+      /**
+       * @todo Merge recursive union TypeCode generation code.
+       */
+      return 0;
+    }
+  else
+    {
+      this->in_recursion_ = true;
+    }
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -205,14 +220,15 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
-       si.next(), ++i)
+       si.next())
     {
       AST_Decl * const d = si.item ();
 
       if (!d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_value_typecode::visit_members - "
+                             "(%N:%l) be_visitor_value_typecode::"
+                             "visit_members - "
                              "bad node in this scope\n"), 0);
         }
 
@@ -250,7 +266,8 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
 
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_value_typecode::visit_members - "
+                             "(%N:%l) be_visitor_value_typecode::"
+                             "visit_members - "
                              "Unknown valuetype member visibility: %d.\n",
                              vis),
                             -1);
@@ -258,11 +275,12 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
 
       os << " }";
 
-
       if (i < count - 1)
         os << ",";
 
       os << be_nl;
+
+      ++i;
     }
 
   return 0;
