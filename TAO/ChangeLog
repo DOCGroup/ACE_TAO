@@ -1,3 +1,10 @@
+Wed Apr  6 18:25:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (visit_array):
+
+	  Work around MSVC++ 6's lack of for-scope variable support by
+	  using different index variable names in other for-loops.
+
 Wed Apr  6 17:14:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/tao.mpc:
