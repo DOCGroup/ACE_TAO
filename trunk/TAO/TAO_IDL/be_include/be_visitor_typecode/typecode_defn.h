@@ -75,7 +75,7 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface
 
-//   virtual int visit_component (be_component *node);
+  virtual int visit_component (be_component *node);
   // visit component
 
 //   virtual int visit_predefined_type (be_predefined_type *node);
@@ -85,12 +85,12 @@ public:
   // visit a sequence
 
   virtual int visit_string (be_string *node);
+  // visit a string
+
+  virtual int visit_structure (be_structure *node);
   // visit a structure
 
-//   virtual int visit_structure (be_structure *node);
-  // visit a structure
-
-//   virtual int visit_union (be_union *node);
+  virtual int visit_union (be_union *node);
   // visit a union
 
   virtual int visit_valuetype (be_valuetype * node);
@@ -283,6 +283,16 @@ protected:
    * (e.g. alias, sequence, etc).
    */
   int gen_base_typecode_name (be_type * base);
+
+  /// Generate a TypeCode forward declaration.
+  int gen_forward_declared_typecode (be_type * node);
+
+  /// Should a TypeCode be generated for the given type?
+  /**
+   * This method is meant for use by TypeCode visitors that may need
+   * to generate a TypeCode for its members or content type.
+   */
+  bool is_typecode_generation_required (be_type * node);
 
 private:
 

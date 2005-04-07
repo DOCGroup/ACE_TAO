@@ -406,3 +406,33 @@ CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_BadKind =
 CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_Bounds =
   &TAO::TypeCode::tc_Bounds;
 
+// =========================================================
+
+// Traits specializations for CORBA::TypeCode.
+namespace TAO
+{
+  CORBA::TypeCode_ptr
+  Objref_Traits<CORBA::TypeCode>::duplicate (CORBA::TypeCode_ptr p)
+  {
+    return CORBA::TypeCode::_duplicate (p);
+  }
+
+  void
+  Objref_Traits<CORBA::TypeCode>::release (CORBA::TypeCode_ptr p)
+  {
+    CORBA::release (p);
+  }
+
+  CORBA::TypeCode_ptr
+  Objref_Traits<CORBA::TypeCode>::nil (void)
+  {
+    return CORBA::TypeCode::_nil ();
+  }
+
+  CORBA::Boolean
+  Objref_Traits<CORBA::TypeCode>::marshal (CORBA::TypeCode_ptr p,
+                                           TAO_OutputCDR & cdr)
+  {
+    return cdr << p;
+  }
+}
