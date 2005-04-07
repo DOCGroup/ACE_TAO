@@ -555,7 +555,8 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   unsigned long const ndims = node->n_dims ();
   for (unsigned long i = 0; i < ndims; ++i)
     {
-      os << "TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>"
+      os << "TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *," << be_nl
+         << "                        TAO::Null_RefCount_Policy>"
          << be_idt_nl
          << node->flat_name ();
 
