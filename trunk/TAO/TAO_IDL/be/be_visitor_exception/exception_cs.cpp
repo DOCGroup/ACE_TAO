@@ -154,10 +154,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "return dynamic_cast<" << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
-  
+
   // Const downcast method.
   *os << "const " << node->name () << " *" << be_nl;
-  *os << node->name () << "::_downcast (CORBA::Exception const *_tao_excp)" 
+  *os << node->name () << "::_downcast (CORBA::Exception const *_tao_excp)"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<const " << node->local_name ()
