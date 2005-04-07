@@ -1,3 +1,9 @@
+Wed Apr  6 19:42:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (visit_array):
+
+	  Updated to use revised concrete TypeCode interfaces.
+
 Wed Apr  6 19:37:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/CDR/tc.cpp:
