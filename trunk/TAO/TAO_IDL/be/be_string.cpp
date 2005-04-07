@@ -109,7 +109,7 @@ be_string::compute_tc_name (void)
 //       char bound[30] = { 0 };
 
 //       ACE_OS::sprintf (bound,
-//                        "_%u",
+//                        "_%lu",
 //                        this->max_size ()->ev ()->u.ulval);
 
       ACE_CString local_tc_name =
