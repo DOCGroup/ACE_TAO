@@ -339,11 +339,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     {
       ctx = *this->ctx_;
       // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      TAO::be_visitor_struct_typecode visitor (
-        &ctx,
-        true /* An exception TypeCode */);
+      TAO::be_visitor_struct_typecode visitor (&ctx);
 
-      if (visitor.visit_structure (node) == -1)
+      if (visitor.visit_exception (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cs::"

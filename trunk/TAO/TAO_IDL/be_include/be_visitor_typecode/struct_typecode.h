@@ -31,8 +31,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    be_visitor_struct_typecode (be_visitor_context * ctx,
-                                bool is_exception);
+    be_visitor_struct_typecode (be_visitor_context * ctx);
 
     /// Visit a structure.
     /**
@@ -42,9 +41,26 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_structure (AST_Structure * node);
+    virtual int visit_structure (be_structure * node);
+
+    /// Visit an exception.
+    /**
+     * @todo The legacy method name "@c visit_exception()" is
+     *       redundant since it is obvious from the argument what kind
+     *       of TypeCode is being visited.  It will be changed once
+     *       the rest of the legacy method names and their call sites
+     *       are updated accordingly.
+     */
+    virtual int visit_exception (be_exception * node);
 
   private:
+
+    /// Underlying structure/exception visitor code.
+    /**
+     * @note Structure/exception TypeCode generation really starts in
+     *       this method.
+     */
+    int visit (AST_Structure * node, bool is_exception);
 
     /// Generate structure field TypeCode declarations, if necessary.
     int gen_member_typecodes (AST_Structure * node);
@@ -54,8 +70,13 @@ namespace TAO
 
   private:
 
-    /// Does the TypeCode refer to a CORBA exception?
-    bool const is_exception_;
+    /// @c true if a struct TypeCode is already being generated using
+    /// this visitor.
+    /**
+     * @note Only applies for struct TypeCodes.  Exceptions cannot be
+     *       recursive.
+     */
+    bool in_recursion_;
 
   };
 
