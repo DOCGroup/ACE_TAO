@@ -30,7 +30,7 @@ namespace ACE
    *
    * Specialize this trait template if cloning through copy
    * construction is not sufficient.  For example, to avoid slicing
-   * when copying an object throug a base class pointer, one can
+   * when copying an object through a base class pointer, one can
    * implement a virtual "clone" method that can be used to
    * polymorphically invoke the appropriate cloning operation(s).
    * That virtual method would then be invoked by the @c VP_traits\<\>
@@ -93,6 +93,7 @@ namespace ACE
     /// Assignment operator.
     Value_Ptr & operator= (Value_Ptr const & other)
     {
+      // Strongly exception-safe.
       Value_Ptr temp (other);
       this->swap (temp);
       return *this;
@@ -112,6 +113,7 @@ namespace ACE
     template <typename U>
     Value_Ptr & operator= (Value_Ptr<U> const & other)
     {
+      // Strongly exception-safe.
       Value_Ptr temp (other);
       this->swap (temp);
       return *this;
