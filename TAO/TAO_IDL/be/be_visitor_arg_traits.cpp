@@ -112,8 +112,8 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
   if (node->seen_in_operation ())
     {
       TAO_OutStream *os = this->ctx_->stream ();
-      idl_bool stub = (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS);
-      BE_GlobalData *b = be_global;
+//       idl_bool stub = (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS);
+//       BE_GlobalData *b = be_global;
 
       std::string guard_suffix =
         std::string (this->S_) + std::string ("arg_traits");
