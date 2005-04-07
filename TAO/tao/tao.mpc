@@ -599,7 +599,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TypeCode_Constants.h
     TypeCode_Case.h
     TypeCode_Default_Case.h
-    TypeCode_Enumerator.h
     TypeCode_Non_Default_Case.h
     TypeCode_Struct_Field.h
     TypeCode_Value_Field.h
