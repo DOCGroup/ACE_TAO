@@ -474,6 +474,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     MProfile.h
     Muxed_TMS.h
     New_Leader_Generator.h
+    Null_RefCount_Policy.h
     NVList.h
     Object_Argument_T.h
     Object.h
