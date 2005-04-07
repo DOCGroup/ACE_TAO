@@ -19,9 +19,9 @@ Thu Apr  7 12:44:38 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Thu Apr  7 09:25:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Basic_Impl.cpp:
-        
+
           Added code in the constructor to strip away the aliases
-          (if any) of the typecode argument before getting and 
+          (if any) of the typecode argument before getting and
           storing the typecode kind. The original typecode itself
           is still stored in the Any_Impl base class member as
           before. This new behavior solves problems encountered
@@ -31,38 +31,38 @@ Thu Apr  7 09:25:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           <torsten.kuepper@nokia.com> for their discovery,
           comments, and suggested fixes for this bug. This fix
           closes [BUGID:2076] and [BUGID:2080].
-          
+
         * tao/Any_Unknown_IDL_Type.cpp (_tao_decode):
-        
-          Fixed memory leak caused by an extra copy of an 
+
+          Fixed memory leak caused by an extra copy of an
           ACE_Message_Block. Thanks to Bruce MacDonald <no@more.spam>
           for reporting and tracking down the leak.
-          
+
         * TAO_IDL/be/be_codegen.cpp:
-        
-          Fixed the IDL compiler's include-generating logic to 
+
+          Fixed the IDL compiler's include-generating logic to
           generate an include of SystemException.h when a valuetype
           factory appears in the IDL file, even if there are no
           other operations declared. Thanks to Gary Duzan <gduzan@bbn.com>
           for reporting and tracking down the problem.
-          
+
         * tests/IDL_Test/valuetype.idl:
-        
+
           New file containing a test case for the above problem.
           Thanks to GaryDuzan <gduzan@bbn.com> for sending it in.
-          
+
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
         * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
-        
+
           Changed the logic of inline constant generation to uninline
           (generate declaration and value assignment in separate files)
           (w)string constants declared in some scope other than global
           or module, since at least some compilers have a problem with
           the resultiong C++ code. Thanks to Gary Duzan <gduzan@bbn.com>
           for reporting the problem.
-          
+
         * tests/IDL_Test/constants.idl:
-        
+
           Added test cases for the above problem. Use cases covered are
           string constants in interfaces and valuetypes.
 
