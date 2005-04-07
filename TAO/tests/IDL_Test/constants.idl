@@ -72,17 +72,36 @@ const unsigned long drink = 1000000000 << 2;
 
 // An enum of one type cannot be assigned to an constant of another
 // enum type, but it's ok if one is a typedef of the other.
-module m_a {
+module m_a 
+{
    enum enum_a { value_1, value_2, value_3, value_4, value_5 };
 };
 
-module m_b {
+module m_b 
+{
    typedef m_a::enum_a enum_b;
 };
 
-module problems {
-
+module problems 
+{
    const m_b::enum_b bconst = m_a::value_2;
+};
+
+// In a class, string constants cannot be declared inline, but 
+// arithmetic types can be.
+module ClassConstants
+{
+  interface Iface
+  {
+    const long iface_long = 55;
+    const string iface_str = "iface_str";
+  };
+  
+  valuetype Vt
+  {
+    const double vt_long = 66.66;
+    const string vt_str = "vt_str";
+  };
 };
 
 
