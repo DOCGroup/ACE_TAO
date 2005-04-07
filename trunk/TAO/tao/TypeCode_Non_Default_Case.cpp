@@ -90,7 +90,9 @@ TAO::TypeCode::Non_Default_Case<DiscriminatorType,
                                 TypeCodeType>::marshal_label (
   TAO_OutputCDR & cdr) const
 {
-  return (cdr << this->label_);
+  return
+    (cdr <<
+     TAO::TypeCode::Case_Traits<DiscriminatorType>::any_from (this->label_));
 }
 
 template <typename DiscriminatorType,
