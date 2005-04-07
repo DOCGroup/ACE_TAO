@@ -17,15 +17,48 @@
 
 
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
-  be_visitor_context * ctx,
-  bool is_exception)
-  : be_visitor_typecode_defn (ctx),
-    is_exception_ (is_exception)
+  be_visitor_context * ctx)
+  : be_visitor_typecode_defn (ctx)
+  , in_recursion_ (false)
 {
 }
 
 int
-TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
+TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
+{
+  if (this->in_recursion_)
+    {
+      // Nothing to do yet.
+
+      /**
+       * @todo Merge recursive struct TypeCode generation code.
+       */
+      return 0;
+    }
+  else
+    {
+      this->in_recursion_ = true;
+    }
+
+  static bool const is_exception = false;
+
+  return this->visit (node, is_exception);
+}
+
+int
+TAO::be_visitor_struct_typecode::visit_exception (be_exception * node)
+{
+  // No need to check for recursion since exceptions are never
+  // recursive.
+
+  static bool const is_exception = true;
+
+  return this->visit (node, is_exception);
+}
+
+int
+TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
+                                        bool is_exception)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -75,7 +108,7 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
     << "                             TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-    << "CORBA::tk_" << (this->is_exception_ ? "except" : "struct") << ","
+    << "CORBA::tk_" << (is_exception ? "except" : "struct") << ","
     << be_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
