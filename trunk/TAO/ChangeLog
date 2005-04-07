@@ -1,3 +1,9 @@
+Thu Apr  7 14:20:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/RTScheduling/Request_Interceptor.cpp (receive_exception):
+
+	  Corrected emulated exception usage.
+
 Thu Apr  7 13:26:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Union_TypeCode.cpp (get_compact_typecode_i):
