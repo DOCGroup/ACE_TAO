@@ -603,9 +603,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
         {
           // Only generate the array dimension sizes for the inner
           // dimensions, not the outermost (leftmost) one.
-          for (unsigned long j = inner_ndims; j < ndims; ++j)
+          for (unsigned long k = inner_ndims; k < ndims; ++k)
             {
-              os << "_" << node->dims ()[j]->ev ()->u.ulval;
+              os << "_" << node->dims ()[k]->ev ()->u.ulval;
             }
         }
 
@@ -613,9 +613,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
          << be_idt_nl
          << "&" << node->flat_name ();
 
-      for (unsigned long j = inner_ndims; j < ndims; ++j)
+      for (unsigned long n = inner_ndims; n < ndims; ++n)
         {
-          os << "_" << node->dims ()[j]->ev ()->u.ulval;
+          os << "_" << node->dims ()[n]->ev ()->u.ulval;
         }
 
       os << ";" << be_uidt_nl << be_nl;
