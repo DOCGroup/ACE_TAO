@@ -269,6 +269,7 @@ libTAO_la_SOURCES = \
   Transport_Descriptor_Interface.cpp \
   Transport_Mux_Strategy.cpp \
   Transport_Timer.cpp \
+  True_RefCount_Policy.cpp \
   TypeCode.cpp \
   TypeCodeFactory_Adapter.cpp \
   TypeCode_Constants.cpp \
@@ -619,6 +620,7 @@ nobase_include_HEADERS = \
   NVList.h \
   NVList.i \
   New_Leader_Generator.h \
+  Null_RefCount_Policy.h \
   ORB.h \
   ORB.i \
   ORBInitInfo.h \
@@ -820,6 +822,7 @@ nobase_include_HEADERS = \
   Transport_Descriptor_Interface.inl \
   Transport_Mux_Strategy.h \
   Transport_Timer.h \
+  True_RefCount_Policy.h \
   True_RefCount_Policy.inl \
   TypeCode.h \
   TypeCode.inl \
