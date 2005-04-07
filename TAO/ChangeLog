@@ -1,3 +1,21 @@
+Thu Apr  7 12:44:38 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+
+	  Fixed/improved support for TypeCodes of forward declared types,
+	  and member TypeCode generation.
+
+	* tao/TypeCode.cpp:
+
+	  Added missing TAO::Objref_Traits<> template specializations that
+	  were lost during the typecode-rewrite branch merge.  Fixes
+	  "unresolved symbol" link-time errors.
+
 Thu Apr  7 09:25:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Basic_Impl.cpp:
@@ -52,7 +70,7 @@ Thu Apr  7 07:07:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
 
-	  Fix tipos.
+	  Fix typos.
 
 Thu Apr  7 00:05:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 

@@ -520,6 +520,89 @@ be_visitor_typecode_defn::gen_base_typecode_name (be_type * base)
 }
 
 int
+be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
+{
+  TAO_OutStream & os = *this->ctx_->stream ();
+
+  // Generate an extern TypeCode declaration to make sure TypeCodes
+  // that refer to the corresponding TypeCode for the forward declared
+  // interface have a valid reference to it.
+
+  // Is our enclosing scope a module? We need this check because for
+  // platforms that support namespaces, the typecode must be declared
+  // extern.
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      be_module * const module =
+        be_module::narrow_from_scope (node->defined_in ());
+
+      if (!module || (this->gen_nested_namespace_begin (module) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::"
+                             "gen_forward_declared_typecode - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+
+      os << "extern ::CORBA::TypeCode_ptr const _tc_"
+         << node->local_name () << ";";
+
+      if (this->gen_nested_namespace_end (module) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::"
+                             "gen_forward_declared_typecode - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+    }
+  else
+    {
+      // outermost scope.
+      os << "extern ::CORBA::TypeCode_ptr const "
+         << node->tc_name () << ";" << be_uidt_nl;
+    }
+
+  return 0;
+}
+
+bool
+be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
+{
+  AST_Decl::NodeType const nt = node->node_type ();
+
+  if (nt == AST_Decl::NT_interface)
+    {
+      // interfaces, valuetypes, eventtypes and components
+
+      be_interface * const intf =
+        be_interface::narrow_from_decl (node);
+
+      if (intf && intf->is_defined ())
+        {
+          return false;
+        }
+    }
+  else if (nt == AST_Decl::NT_struct
+           || nt == AST_Decl::NT_union)
+    {
+      // structures and unions
+
+      AST_Structure * const st =
+        AST_Structure::narrow_from_decl (node);
+
+      if (st && st->is_defined ())
+        {
+          return false;
+        }
+    }
+
+  return true;
+}
+
+int
 be_visitor_typecode_defn::visit_array (be_array *node)
 {
   be_type * const base = be_type::narrow_from_decl (node->base_type ());
@@ -784,101 +867,19 @@ be_visitor_typecode_defn::visit_interface (be_interface * node)
   if (node->is_defined ())
     return 0;
 
-  TAO_OutStream & os = *this->ctx_->stream ();
-
-  // Generate an extern TypeCode declaration to make sure TypeCodes
-  // that refer to the corresponding TypeCode for the forward declared
-  // interface have a valid reference to it.
-
-  // Is our enclosing scope a module? We need this check because for
-  // platforms that support namespaces, the typecode must be declared
-  // extern.
-  if (node->is_nested () &&
-      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    {
-      be_module * const module =
-        be_module::narrow_from_scope (node->defined_in ());
-
-      if (!module || (this->gen_nested_namespace_begin (module) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_interface - "
-                             "Error parsing nested name\n"),
-                            -1);
-        }
-
-      os << "extern ::CORBA::TypeCode_ptr const _tc_"
-         << node->local_name () << ";";
-
-      if (this->gen_nested_namespace_end (module) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_interface - "
-                             "Error parsing nested name\n"),
-                            -1);
-        }
-    }
-  else
-    {
-      // outermost scope.
-      os << "extern ::CORBA::TypeCode_ptr const "
-         << node->tc_name () << ";" << be_uidt_nl;
-    }
-
-  return 0;
+  return this->gen_forward_declared_typecode (node);
 }
 
-// int
-// be_visitor_typecode_defn::visit_component (be_component *node)
-// {
-//   return this->visit_interface (node);
-// }
+int
+be_visitor_typecode_defn::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
 
 int
 be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd * node)
 {
-  TAO_OutStream & os = *this->ctx_->stream ();
-
-  // Generate an extern TypeCode declaration to make sure TypeCodes
-  // that refer to the corresponding TypeCode for the forward declared
-  // interface have a valid reference to it.
-
-  // Is our enclosing scope a module? We need this check because for
-  // platforms that support namespaces, the typecode must be declared
-  // extern.
-  if (node->is_nested () &&
-      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    {
-      be_module * const module =
-        be_module::narrow_from_scope (node->defined_in ());
-
-      if (!module || (this->gen_nested_namespace_begin (module) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_interface_fwd - "
-                             "Error parsing nested name\n"),
-                            -1);
-        }
-
-      os << "extern ::CORBA::TypeCode_ptr const _tc_"
-         << node->local_name () << ";";
-
-      if (this->gen_nested_namespace_end (module) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_interface_fwd - "
-                             "Error parsing nested name\n"),
-                            -1);
-        }
-    }
-  else
-    {
-      // outermost scope.
-      os << "extern ::CORBA::TypeCode_ptr const "
-         << node->tc_name () << ";" << be_uidt;
-    }
-
-  return 0;
+  return this->gen_forward_declared_typecode (node);
 }
 
 // int
@@ -1043,37 +1044,16 @@ be_visitor_typecode_defn::visit_string (be_string * node)
   return 0; // this->gen_typecode_ptr (node);
 }
 
-// int
-// be_visitor_typecode_defn::visit_structure (be_structure *node)
-// {
-//   switch (this->ctx_->sub_state ())
-//     {
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-//       return this->visit_type (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-//       return this->gen_typecode (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-//       return this->gen_encapsulation (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-//       this->computed_tc_size_ = this->compute_tc_size (node);
-//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-//       this->computed_encap_len_ = this->compute_encap_length (node);
-//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
-//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-// //       return this->visit_members (node);
-//     default:
-//       // error
-//       break;
-//     }
+int
+be_visitor_typecode_defn::visit_structure (be_structure * node)
+{
+  // Only handle forward declared structures here.  Defined structures
+  // have their own TypeCode visitor.
+  if (node->is_defined ())
+    return 0;
 
-//   ACE_ERROR_RETURN ((LM_ERROR,
-//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-//                      ACE_TEXT ("visit - bad sub state ")
-//                      ACE_TEXT ("in visitor context\n")),
-//                     -1);
-// }
+  return this->gen_forward_declared_typecode (node);
+}
 
 // int
 // be_visitor_typecode_defn::visit_typedef (be_typedef *node)
@@ -1104,37 +1084,16 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 //                     -1);
 // }
 
-// int
-// be_visitor_typecode_defn::visit_union (be_union *node)
-// {
-//   switch (this->ctx_->sub_state ())
-//     {
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-//       return this->visit_type (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-//       return this->gen_typecode (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-//       return this->gen_encapsulation (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-//       this->computed_tc_size_ = this->compute_tc_size (node);
-//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-//       this->computed_encap_len_ = this->compute_encap_length (node);
-//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
-//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-// //       return this->visit_members (node);
-//     default:
-//       // error
-//       break;
-//     }
+int
+be_visitor_typecode_defn::visit_union (be_union *node)
+{
+  // Only handle forward declared unions here.  Defined unions
+  // have their own TypeCode visitor.
+  if (node->is_defined ())
+    return 0;
 
-//   ACE_ERROR_RETURN ((LM_ERROR,
-//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-//                      ACE_TEXT ("visit - bad sub state ")
-//                      ACE_TEXT ("in visitor context\n")),
-//                     -1);
-// }
+  return this->gen_forward_declared_typecode (node);
+}
 
 int
 be_visitor_typecode_defn::visit_valuetype (be_valuetype * node)
@@ -1144,48 +1103,7 @@ be_visitor_typecode_defn::visit_valuetype (be_valuetype * node)
   if (node->is_defined ())
     return 0;
 
-  TAO_OutStream & os = *this->ctx_->stream ();
-
-  // Generate an extern TypeCode declaration to make sure TypeCodes
-  // that refer to the corresponding TypeCode for the forward declared
-  // interface have a valid reference to it.
-
-  // Is our enclosing scope a module? We need this check because for
-  // platforms that support namespaces, the typecode must be declared
-  // extern.
-  if (node->is_nested () &&
-      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    {
-      be_module * const module =
-        be_module::narrow_from_scope (node->defined_in ());
-
-      if (!module || (this->gen_nested_namespace_begin (module) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_valuetype - "
-                             "Error parsing nested name\n"),
-                            -1);
-        }
-
-      os << "extern ::CORBA::TypeCode_ptr const _tc_"
-         << node->local_name () << ";";
-
-      if (this->gen_nested_namespace_end (module) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_valuetype - "
-                             "Error parsing nested name\n"),
-                            -1);
-        }
-    }
-  else
-    {
-      // outermost scope.
-      os << "extern ::CORBA::TypeCode_ptr const "
-         << node->tc_name () << ";" << be_uidt_nl;
-    }
-
-  return 0;
+  return this->gen_forward_declared_typecode (node);
 }
 
 int

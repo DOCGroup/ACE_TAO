@@ -23,6 +23,9 @@ TAO::be_visitor_union_typecode::be_visitor_union_typecode (
 int
 TAO::be_visitor_union_typecode::visit_union (be_union * node)
 {
+  if (!node->is_defined ())
+    return this->gen_forward_declared_typecode (node);
+
   if (this->in_recursion_)
     {
       // Nothing to do yet.
@@ -94,20 +97,11 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
     {
       node->field (member_ptr, i);
 
-      be_interface * const intf =
-        be_interface::narrow_from_decl ((*member_ptr)->field_type ());
-
-      if (intf && intf->is_defined ())
-        {
-          // Only generate TypeCodes for interfaces and valuetypes if
-          // they are forward declared.
-          continue;
-        }
-
       be_type * const member_type =
         be_type::narrow_from_decl ((*member_ptr)->field_type ());
 
-      member_type->accept (this);
+      if (this->is_typecode_generation_required (member_type))
+        member_type->accept (this);
     }
 
   return 0;
