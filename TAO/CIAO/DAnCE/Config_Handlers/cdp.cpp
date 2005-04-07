@@ -217,6 +217,12 @@ namespace CIAO
 
     // DeploymentPlan
     // 
+    bool DeploymentPlan::
+    realizes_p () const
+    {
+      return realizes_.get () != 0;
+    }
+
     ::CIAO::Config_Handlers::ComponentInterfaceDescription const& DeploymentPlan::
     realizes () const
     {
