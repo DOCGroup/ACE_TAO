@@ -27,6 +27,14 @@ namespace ACE
    *
    * The @c Value_Ptr template class delegates some operations to this
    * template traits structure.
+   *
+   * Specialize this trait template if cloning through copy
+   * construction is not sufficient.  For example, to avoid slicing
+   * when copying an object throug a base class pointer, one can
+   * implement a virtual "clone" method that can be used to
+   * polymorphically invoke the appropriate cloning operation(s).
+   * That virtual method would then be invoked by the @c VP_traits\<\>
+   * specialization.
    */
   template <typename T>
   struct VP_traits
