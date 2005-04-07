@@ -57,6 +57,8 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   AST_Decl::NodeType nt = AST_Decl::NT_pre_defined;
   AST_Decl *tdef = node->constant_value ()->get_tdef ();
   AST_Decl::NodeType bnt = AST_Decl::NT_pre_defined;
+  AST_Expression::ExprType etype = node->et ();
+  AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
 
   if (tdef != 0)
     {
@@ -71,7 +73,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
     {
       *os << "const ";
 
-      if (node->et () == AST_Expression::EV_enum)
+      if (etype == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
         }
@@ -89,8 +91,6 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // We are nested inside an interface or a valuetype.
   else 
     {
-      AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
-
       if (snt != AST_Decl::NT_module)
         {
           *os << "static ";
@@ -102,7 +102,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
       *os << "const ";
 
-      if (node->et () == AST_Expression::EV_enum)
+      if (etype == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
         }
@@ -125,16 +125,22 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       *os << " " << node->local_name ();
     }
 
+  // If this is true, can't generate inline constants.
+  bool string_in_class = (snt != AST_Decl::NT_root 
+                          && snt != AST_Decl::NT_module 
+                          && (etype == AST_Expression::EV_string
+                              || etype == AST_Expression::EV_wstring));
+
   // (JP) Workaround for VC6's broken handling of inline constants
   // until the day comes when we no longer support it. This won't
   // work for cross-compiling - hopefully the whole issue will soon
   // be moot.
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
   if (!node->is_nested ()
-      || (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
-          && be_global->gen_inline_constants ()))
+      || (snt == AST_Decl::NT_module && be_global->gen_inline_constants ()))
 #else
-  if (!node->is_nested () || be_global->gen_inline_constants ())
+  if (!node->is_nested () 
+      || (be_global->gen_inline_constants () && !string_in_class))
 #endif
     {
       *os << " = " << node->constant_value ();

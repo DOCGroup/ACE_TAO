@@ -1362,7 +1362,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                               "tao/ORB.h");
 
   this->gen_cond_file_include (
-      idl_global->operation_seen_,
+      idl_global->operation_seen_ || idl_global->valuefactory_seen_,
       "tao/SystemException.h",
       this->client_header_
     );

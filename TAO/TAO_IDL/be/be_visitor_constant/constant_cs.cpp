@@ -48,6 +48,15 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
       return 0;
     }
     
+  AST_Expression::ExprType etype = node->et ();
+  AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
+
+  // If this is true, can't generate inline constants.
+  bool string_in_class = (snt != AST_Decl::NT_root 
+                          && snt != AST_Decl::NT_module 
+                          && (etype == AST_Expression::EV_string
+                              || etype == AST_Expression::EV_wstring));
+
   // (JP) Workaround for VC6's broken handling of inline constants
   // until the day comes when we no longer support it. This won't
   // work for cross-compiling - hopefully the whole issue will soon
@@ -55,10 +64,11 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 
   // Was the constant value already assigned in *C.h?
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
-  if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
+  if (snt == AST_Decl::NT_module
       && be_global->gen_inline_constants ())
 #else
-  if (be_global->gen_inline_constants () || !node->is_nested ())
+  if (!node->is_nested () 
+      || (be_global->gen_inline_constants () && !string_in_class))
 #endif
     {
       return 0;

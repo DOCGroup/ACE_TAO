@@ -134,11 +134,9 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
   // space in the message block.
   size_t size = end - begin;
 
-  ACE_Message_Block *new_mb = 0;
-  ACE_NEW (new_mb,
-           ACE_Message_Block (size + 2 * ACE_CDR::MAX_ALIGNMENT));
+  ACE_Message_Block new_mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
 
-  ACE_CDR::mb_align (new_mb);
+  ACE_CDR::mb_align (&new_mb);
   ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
 
   if (offset < 0)
@@ -146,14 +144,14 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
       offset += ACE_CDR::MAX_ALIGNMENT;
     }
 
-  new_mb->rd_ptr (offset);
-  new_mb->wr_ptr (offset + size);
+  new_mb.rd_ptr (offset);
+  new_mb.wr_ptr (offset + size);
 
-  ACE_OS::memcpy (new_mb->rd_ptr (),
+  ACE_OS::memcpy (new_mb.rd_ptr (),
                   begin,
                   size);
 
-  this->cdr_.reset (new_mb, cdr.byte_order ());
+  this->cdr_.reset (&new_mb, cdr.byte_order ());
   this->cdr_.char_translator (cdr.char_translator ());
   this->cdr_.wchar_translator (cdr.wchar_translator ());
 }
