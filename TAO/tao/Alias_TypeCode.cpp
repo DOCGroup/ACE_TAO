@@ -231,9 +231,9 @@ TAO::TypeCode::Alias<StringType,
                      RefCountPolicy>::content_type_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return 0;
-//     CORBA::TypeCode::_duplicate (
-//       Traits<StringType>::get_typecode (this->content_type_));
+  return
+     CORBA::TypeCode::_duplicate (
+       Traits<StringType>::get_typecode (this->content_type_));
 }
 
 #endif  /*  TAO_ALIAS_TYPECODE_CPP */
