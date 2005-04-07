@@ -546,6 +546,12 @@ be_visitor_typecode_defn::visit_array (be_array *node)
                         -1);
     }
 
+  // Multiple definition guards.
+  // @todo Can we automate duplicate detection within the IDL compiler
+  //       itself?
+  os << "\n#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
+
   // namespace begin
   os << "namespace TAO" << be_nl
      << "{" << be_idt_nl
@@ -626,6 +632,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   os << be_uidt_nl
      << "}" << be_uidt_nl
      << "}" << be_nl << be_nl;
+
+  os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
+     << be_nl;
 
   return 0; // this->gen_typecode_ptr (node);
 
@@ -930,6 +939,12 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
                         -1);
     }
 
+  // Multiple definition guards.
+  // @todo Can we automate duplicate detection within the IDL compiler
+  //       itself?
+  os << "\n#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
+
   // namespace begin
   os << "namespace TAO" << be_nl
      << "{" << be_idt_nl
@@ -967,6 +982,9 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   os << be_uidt_nl
      << "}" << be_uidt_nl
      << "}" << be_nl << be_nl;
+
+  os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
+     << be_nl;
 
   return 0; // this->gen_typecode_ptr (node);
 }

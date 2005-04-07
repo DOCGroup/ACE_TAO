@@ -1,3 +1,11 @@
+Wed Apr  6 20:41:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Generate duplicate definition guards around sequence and array
+	  TypeCode declarations since they are potentially anonymous
+	  types.
+
 Wed Apr  6 20:15:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
