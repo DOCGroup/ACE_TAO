@@ -1,3 +1,25 @@
+Wed Apr  6 23:33:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/Server_Request.cpp (set_exception):
+
+	  Fixed emulated exception usage.
+
+	  OMG defined exception minor codes must be logically ORed with
+	  the CORBA::OMGVMCID constant.  Updated exception "throw"
+	  expression accordingly.
+
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
+	  (visit_special):
+
+	  Fixed emulated exception usage.
+
+Wed Apr  6 23:26:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Union_TypeCode.cpp (discriminator_type_i):
+
+	  Fixed unused argument warning in emulated exception-enabled
+	  builds.
+
 Wed Apr  6 21:04:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.cpp:

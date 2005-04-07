@@ -137,11 +137,15 @@ CORBA::ServerRequest::set_exception (const CORBA::Any &value
 {
   CORBA::TypeCode_var tc = value.type ();
 
+  CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   // set_exception() can be called at any time, but the Any arg MUST
   // contain an exception.
-  if (tc->kind () != CORBA::tk_except)
+  if (kind != CORBA::tk_except)
     {
-      ACE_THROW (CORBA::BAD_PARAM (21, CORBA::COMPLETED_MAYBE));
+      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 21,
+                                   CORBA::COMPLETED_MAYBE));
     }
 
   ACE_NEW_THROW_EX (this->exception_,

@@ -586,7 +586,9 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
   ACE_TRY
     {
       CORBA::TypeCode_var tc = this->current_value_->type ();
-      tc = TAO_DynAnyFactory::strip_alias (tc.in () ACE_ENV_ARG_PARAMETER);
+      tc = TAO_DynAnyFactory::strip_alias (tc.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       switch (special->type ())
         {
@@ -594,7 +596,10 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
           {
             CORBA::ULong length;
 
-            switch (tc->kind ())
+            CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            switch (kind)
               {
               case CORBA::tk_sequence:
                 {
