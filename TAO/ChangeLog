@@ -1,3 +1,20 @@
+Thu Apr  7 00:05:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+
+	  Interim fix until recursive struct TypeCode code is merged.  Set
+	  a sentinel variable to prevent infinite recursion when
+	  generating TypeCodes for the members of a recursive struct.
+
+	  Fixed warnings related to hiding the base class
+	  "visit_structure" virtual function.
+
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+
+	  Updated to use new struct/exception TypeCode visitor interface.
+
 Wed Apr  6 23:33:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Union_TypeCode.cpp (discriminator_type_i):
