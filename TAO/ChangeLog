@@ -71,12 +71,8 @@ Wed Apr  6 14:03:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/TypeCode_Non_Default_Case.cpp:
 	* tao/TypeCode_Non_Default_Case.h:
 	* tao/TypeCode_Non_Default_Case.inl:
-	* tao/TypeCode_Struct_Field.cpp:
 	* tao/TypeCode_Struct_Field.h:
-	* tao/TypeCode_Struct_Field.inl:
-	* tao/TypeCode_Value_Field.cpp:
 	* tao/TypeCode_Value_Field.h:
-	* tao/TypeCode_Value_Field.inl:
 	* tao/Union_TypeCode.cpp:
 	* tao/Union_TypeCode.h:
 	* tao/Union_TypeCode.inl:
@@ -190,6 +186,13 @@ Wed Apr  6 14:03:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Removed these files.  There is no need to declare a structure
 	  containing a single string member in this case.  Just use a
 	  string directly.
+
+	* tao/TypeCode_Struct_Field.cpp:
+	* tao/TypeCode_Struct_Field.inl:
+	* tao/TypeCode_Value_Field.inl:
+	* tao/TypeCode_Value_Field.cpp:
+
+	  Removed.  The revised interfaces makes them unnecessary.
 
 	* tao/TypeCode_Traits.h:
 
