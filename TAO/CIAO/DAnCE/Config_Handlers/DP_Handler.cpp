@@ -62,34 +62,34 @@ namespace CIAO
 
       // Read in the label, if present, since minoccurs = 0
       if (this->dp_.label_p ())
-	{
-	  this->idl_dp_->label =
-	    CORBA::string_dup (this->dp_.label ().c_str ());
-	}
+	      {
+	        this->idl_dp_->label =
+	          CORBA::string_dup (this->dp_.label ().c_str ());
+	      }
 
       // Read in the UUID, if present
       if (this->dp_.UUID_p ())
-	{
-	  this->idl_dp_->UUID =
-	    CORBA::string_dup (this->dp_.UUID ().c_str ());
-	}
+	      {
+	        this->idl_dp_->UUID =
+	          CORBA::string_dup (this->dp_.UUID ().c_str ());
+	      }
 
 
       // Similar thing for dependsOn
       for (DeploymentPlan::dependsOn_const_iterator dstart = this->dp_.begin_dependsOn ();
-	   dstart != this->dp_.end_dependsOn ();
-	   ++dstart)
-	{
-	  CORBA::ULong len =
-	    this->idl_dp_->dependsOn.length ();
+	         dstart != this->dp_.end_dependsOn ();
+	         ++dstart)
+	    {
+	      CORBA::ULong len =
+	        this->idl_dp_->dependsOn.length ();
 
-	  this->idl_dp_->dependsOn.length (len + 1);
+	      this->idl_dp_->dependsOn.length (len + 1);
 
-	  ID_Handler::get_ImplementationDependency (
-             this->idl_dp_->dependsOn [len],
-             *dstart);
+	      ID_Handler::get_ImplementationDependency (
+                this->idl_dp_->dependsOn [len],
+                *dstart);
 
-	}
+	    }
 
       /* @@ Not needed at this time...
 
@@ -109,18 +109,22 @@ namespace CIAO
 	}
       */
 
-      this->retval_ =
-        CCD_Handler::component_interface_descr (
-          this->dp_.realizes (),
-          this->idl_dp_->realizes);
+      // Read in the realizes, if present
+      if (this->dp_.realizes_p ())
+      {
+        this->retval_ =
+          CCD_Handler::component_interface_descr (
+            this->dp_.realizes (),
+            this->idl_dp_->realizes);
 
-      if (!this->retval_)
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) DP_Handler: "
-                      "Error parting Component Interface Descriptor."));
-          return false;
-        }
+        if (!this->retval_)
+          {
+            ACE_DEBUG ((LM_ERROR,
+                        "(%P|%t) DP_Handler: "
+                        "Error parting Component Interface Descriptor."));
+            return false;
+          }
+      }
 
 
       this->retval_ =
