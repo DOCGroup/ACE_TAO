@@ -1078,7 +1078,7 @@ TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Implemen
 TAO_IMR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
+// be\be_codegen.cpp:955
 
 #if defined (__ACE_INLINE__)
 #include "ImplRepoC.inl"

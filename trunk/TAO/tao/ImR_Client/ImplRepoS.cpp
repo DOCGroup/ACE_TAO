@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:595
+// be\be_codegen.cpp:599
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOS_CPP_
 #define _TAO_IDL_ORIG_IMPLREPOS_CPP_
@@ -71,10 +71,6 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "ImplRepoS.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
 
@@ -86,7 +82,7 @@ namespace TAO
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__SARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export SArg_Traits<ImplementationRepository::ServerObject>
+  class  SArg_Traits<ImplementationRepository::ServerObject>
     : public
         Object_SArg_Traits_T<
             ImplementationRepository::ServerObject_ptr,
@@ -99,13 +95,13 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:743
+  // be\be_visitor_arg_traits.cpp:751
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__SARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export SArg_Traits<ImplementationRepository::StartupOptions>
+  class SArg_Traits<ImplementationRepository::StartupOptions>
     : public
         Var_Size_SArg_Traits_T<
             ImplementationRepository::StartupOptions,
@@ -118,13 +114,13 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:743
+  // be\be_visitor_arg_traits.cpp:751
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__SARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export SArg_Traits<ImplementationRepository::ServerInformation>
+  class SArg_Traits<ImplementationRepository::ServerInformation>
     : public
         Var_Size_SArg_Traits_T<
             ImplementationRepository::ServerInformation,
@@ -137,13 +133,13 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:492
+  // be\be_visitor_arg_traits.cpp:496
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__SARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export SArg_Traits<ImplementationRepository::ServerInformationList>
+  class SArg_Traits<ImplementationRepository::ServerInformationList>
     : public
         Var_Size_SArg_Traits_T<
             ImplementationRepository::ServerInformationList,
@@ -159,7 +155,7 @@ namespace TAO
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__SARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export SArg_Traits<ImplementationRepository::ServerInformationIterator>
+  class  SArg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
         Object_SArg_Traits_T<
             ImplementationRepository::ServerInformationIterator_ptr,
@@ -184,7 +180,7 @@ namespace TAO
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerObject>
+  class  Arg_Traits<ImplementationRepository::ServerObject>
     : public
         Object_Arg_Traits_T<
             ImplementationRepository::ServerObject_ptr,
@@ -198,13 +194,13 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:743
+  // be\be_visitor_arg_traits.cpp:751
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::StartupOptions>
+  class Arg_Traits<ImplementationRepository::StartupOptions>
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::StartupOptions,
@@ -217,13 +213,13 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:743
+  // be\be_visitor_arg_traits.cpp:751
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerInformation>
+  class Arg_Traits<ImplementationRepository::ServerInformation>
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformation,
@@ -236,13 +232,13 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:492
+  // be\be_visitor_arg_traits.cpp:496
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerInformationList>
+  class Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformationList,
@@ -258,7 +254,7 @@ namespace TAO
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_SS_
   
   template<>
-  class TAO_IMR_Client_Export Arg_Traits<ImplementationRepository::ServerInformationIterator>
+  class  Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
         Object_Arg_Traits_T<
             ImplementationRepository::ServerInformationIterator_ptr,
@@ -287,7 +283,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ACE\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -1151,7 +1147,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ACE\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
