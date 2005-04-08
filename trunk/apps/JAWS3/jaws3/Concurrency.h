@@ -34,7 +34,7 @@ public:
 #include "jaws3/Concurrency_T.h"
 
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class JAWS_Export JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 {
 public:
