@@ -384,8 +384,12 @@ namespace TAO
         break;
 #if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
+  #if !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
         *static_cast<CORBA::ULongLong *> (dest) = src->u_.ull;
         break;
+  #else
+        *static_cast<CORBA::LongLong *> (dest) = src->u_.ull;
+  #endif
 #endif
       case CORBA::tk_longdouble:
         *static_cast<CORBA::LongDouble *> (dest) = src->u_.ld;
