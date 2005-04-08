@@ -1,3 +1,18 @@
+Fri Apr  8 09:13:10 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        
+          Added to the checks for inlining generated constants recently
+          committed in
+          
+          Thu Apr  7 09:25:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          to include float, double and longdouble, which are also
+          apparently not allowed, by some compilers at least, to be
+          assigned values in the header file, if the constant declaration
+          appears inside a class.
+
 Fri Apr  8 15:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RTPortableServer.pidl:
@@ -207,7 +222,7 @@ Thu Apr  7 09:25:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/IDL_Test/valuetype.idl:
 
           New file containing a test case for the above problem.
-          Thanks to GaryDuzan <gduzan@bbn.com> for sending it in.
+          Thanks to Gary Duzan <gduzan@bbn.com> for sending it in.
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
         * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
