@@ -59,7 +59,7 @@
 typedef CORBA::Object_var COS_SCHEDULING_OBJECT_NAME_KEY;
 typedef ACE_CString COS_SCHEDULING_OBJECT_NAME_VALUE;
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_RTCosScheduling_Export ACE_Equal_To< COS_SCHEDULING_OBJECT_NAME_KEY >
 {
   public:
