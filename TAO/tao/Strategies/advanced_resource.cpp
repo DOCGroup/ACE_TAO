@@ -658,7 +658,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
       break;
 
     case TAO_REACTOR_MSGWFMO:
-#if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
       break;
