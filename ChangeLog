@@ -1,3 +1,13 @@
+Fri Apr  8 12:15:00 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * ace/Basic_Types.h
+
+          If ACE_LACKS_UNSIGNEDLONGLONG_T do not typedef ACE_UINT64 as
+          unsigned long long.
+
+          Add define for ACE_UINT64_DBLCAST_ADAPTER when
+          ACE_LACKS_UNSIGNEDLONGLONG_T.
+
 Fri Apr  8 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS3/jaws3/Concurrency.h:

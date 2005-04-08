@@ -255,7 +255,7 @@
   typedef uint64_t		ACE_UINT64;
 #elif ACE_SIZEOF_LONG == 8
   typedef unsigned long		ACE_UINT64;
-#elif !defined (ACE_LACKS_LONGLONG_T) && ACE_SIZEOF_LONG_LONG == 8
+#elif !(defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)) && ACE_SIZEOF_LONG_LONG == 8
   typedef unsigned long	long	ACE_UINT64;
 #endif /* defined (ACE_UINT64_TYPE) */
 
@@ -703,6 +703,8 @@ typedef ptrdiff_t ptr_arith_t;
 # if defined (ACE_LACKS_LONGLONG_T)
    // Only use the low 32 bits.
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_U64_TO_U32 (n)
+# elif defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+#   define ACE_UINT64_DBLCAST_ADAPTER(n) ((n).to_int64 ())
 # elif defined (ACE_WIN32)
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) static_cast<__int64> (n)
 # else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
