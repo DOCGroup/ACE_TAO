@@ -56,13 +56,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_IORTable_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_IORTable_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -71,17 +64,6 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
-
-// TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:62
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
@@ -467,11 +449,7 @@ TAO_IORTable_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IORTable::
 TAO_IORTable_Export CORBA::Boolean operator>> (TAO_InputCDR &, IORTable::NotFound &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
-
-#if defined (__ACE_INLINE__)
-#include "IORTableC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

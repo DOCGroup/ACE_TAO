@@ -32,23 +32,12 @@
 #include "PortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
-
-#if !defined (__ACE_INLINE__)
-#include "PortableServerC.inl"
-#endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
@@ -60,7 +49,7 @@ namespace TAO
 #define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_
   
   template<>
-  class TAO_PortableServer_Export Arg_Traits<PortableServer::AdapterActivator>
+  class  Arg_Traits<PortableServer::AdapterActivator>
     : public
         Object_Arg_Traits_T<
             PortableServer::AdapterActivator_ptr,

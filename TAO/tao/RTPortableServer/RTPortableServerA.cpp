@@ -36,7 +36,7 @@
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -63,7 +63,7 @@ TAO::Any_Impl_T<RTPortableServer::POA>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
