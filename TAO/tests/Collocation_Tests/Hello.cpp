@@ -21,7 +21,12 @@ Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
 
-  if (ACE_Thread::self () == this->thr_id_)
+  // Use portable thread IDs
+  ACE_Thread_ID self_ID;
+  ACE_Thread_ID this_ID;
+  this_ID.id(this->thr_id_);
+
+  if (self_ID == this_ID)
     {
       if (this->orb_->orb_core ()->optimize_collocation_objects () &&
           this->orb_->orb_core ()->use_global_collocation ())
