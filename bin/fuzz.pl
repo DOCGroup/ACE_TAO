@@ -501,9 +501,6 @@ sub check_for_empty_inline_files ()
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-              if (m/TAO and the TAO IDL Compiler have been developed by/) {# skip IDL generated files
-                $idl_generated = 1;
-                last;}
               next if /^[:blank:]*$/; # skip empty lines
               next if /^[:blank:]*\/\//; # skip C++ comments
               $found_non_empty_line = 1;
