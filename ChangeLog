@@ -1,3 +1,16 @@
+Fri Apr  8 12:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.cpp:
+        * ace/README:
+          When ACE_DONT_INIT_WINSOCK is set we don't initialize the winsock
+          library
+
+        * ace/config-pharlab.h:
+          Added ACE_LACKS_IP_ADD_MEMBERSHIP.
+
+          Thanks to David Hauck <davidh at netacquire dot com> for supplying
+          these changes
+
 Fri Apr  8 12:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
