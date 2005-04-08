@@ -1183,6 +1183,14 @@ ACE_LACKS_DEPRECATED_MACROS             When this define is set, macros which
                                         are deprecated are not defined. Usefull
                                         to check whether deprecated macros are
                                         not used anymore.
+ 
+ACE_DONT_INIT_WINSOCK                   This definition defines whether or not
+                                        to explicitly initialize Winsock during
+                                        ACE::init() (i.e., whether WSAStartup()
+                                        is called). Some Win32 platforms have
+                                        dependent characteristics between
+                                        ACE initialization and
+                                        network initialization.
 
 ----------------------------------------
 

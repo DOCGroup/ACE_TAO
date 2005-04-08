@@ -99,7 +99,7 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
 int
 ACE_OS::socket_init (int version_high, int version_low)
 {
-# if defined (ACE_WIN32)
+# if defined (ACE_WIN32) && !defined(ACE_DONT_INIT_WINSOCK)
   if (ACE_OS::socket_initialized_ == 0)
     {
       WORD version_requested = MAKEWORD (version_high, version_low);
