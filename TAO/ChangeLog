@@ -1,3 +1,14 @@
+Thu Apr  7 21:27:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp
+	  (is_executed_request):
+	* orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp (value_i):
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	  (define_property):
+	* tao/Fixed_TypeCode.cpp (equivalent_i):
+
+	  Fixed emulated exception macro usage.
+
 Thu Apr  7 14:20:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/RTScheduling/Request_Interceptor.cpp (receive_exception):
