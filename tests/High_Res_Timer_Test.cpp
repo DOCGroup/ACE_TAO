@@ -58,11 +58,11 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
   ACE_hrtime_t hr_difference = (microinterval > nanointerval  ?
                                 microinterval - nanointerval  :
                                 nanointerval - microinterval    );
-  const u_int difference = ACE_U64_TO_U32 (hr_difference);
+  const u_int difference = ACE_HRTIME_CONVERSION (hr_difference);
   if (nanointerval == 0)
     nanointerval = 1;      // Prevent divide-by-zero
   const u_int promille_difference = difference * 1000 /
-                                            ACE_U64_TO_U32(nanointerval);
+                                          ACE_HRTIME_CONVERSION(nanointerval);
 
   if ((promille_difference < threshold) || (difference < 1500))
     return 0;
@@ -70,8 +70,8 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("The microseconds * 1000 of %u differs from ")
                        ACE_TEXT ("the nanoseconds of %u by %u promille\n"),
-                       ACE_U64_TO_U32 (microinterval),
-                       ACE_U64_TO_U32 (nanointerval),
+                       ACE_HRTIME_CONVERSION (microinterval),
+                       ACE_HRTIME_CONVERSION (nanointerval),
                        promille_difference),
                       1);
 }
@@ -156,15 +156,15 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ACE_Time_Value usec: %u, ACE_HR nsec: %u\n"),
                       measured.sec () * 1000000 + measured.usec (),
-                      ACE_U64_TO_U32 (nanoseconds)));
+                      ACE_HRTIME_CONVERSION (nanoseconds)));
           // This gives problems -> should be fixed
           errors += check_micro_nano (measured.sec () * 1000000 +
                                       measured.usec (),
                                       nanoseconds);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ACE_High_Res_Timer usec: %u, nsec: %u\n"),
-                      ACE_U64_TO_U32 (microseconds),
-                      ACE_U64_TO_U32 (nanoseconds)));
+                      ACE_HRTIME_CONVERSION (microseconds),
+                      ACE_HRTIME_CONVERSION (nanoseconds)));
           // Now check the ACE_High_Res_Timer-calculated values against
           // each other.
           errors += check_micro_nano (microseconds, nanoseconds);

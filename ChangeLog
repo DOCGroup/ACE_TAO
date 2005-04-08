@@ -1,3 +1,16 @@
+Fri Apr  8 16:39:00 2005  Gary Maxey <gary.maxey@hp.com>
+
+	* ace/Stats.cpp
+
+	  In dump_throughput() handle cast to double when 
+	  ACE_LACKS_UNSIGNEDLONGLONG_T.
+
+	* tests/High_Res_Timer_Test.cpp
+
+          Use ACE_HRTIME_CONVERSION instead of ACE_U64_TO_U32 for 
+          platform independence.
+	  
+
 Fri Apr  8 12:15:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * ace/Basic_Types.h
