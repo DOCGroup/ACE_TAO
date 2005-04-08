@@ -28,7 +28,7 @@
 //   2. Generate the code. The command used to generate code from this
 //   IDL file is:
 //
-//     tao_idl -o orig -Sc -Ge 1 -GT -I../.. \
+//     tao_idl -o orig -Sc -Ge 1 -GT -I../.. -Sci \
 //          -Wb,export_macro=TAO_TypeCodeFactory_Export \
 //          -Wb,export_include=typecodefactory_export.h \
 //          -Wb,pre_include="ace/pre.h" \
@@ -40,14 +40,12 @@
 //   4. Patch the generated files, using
 //
 //      patch < diffs/TypeCodeFactoryC.h.diff
-//      patch < diffs/TypeCodeFactoryC.i.diff
 //      patch < diffs/TypeCodeFactoryC.cpp.diff
 //
 //   If this fails for some reason, the files must be patched
 //   by hand, and the diff files regenerated with
 //
 //      diff -wbu orig/TypeCodeFactoryC.h TypeCodeFactoryC.h > diffs/TypeCodeFactoryC.h.diff
-//      diff -wbu orig/TypeCodeFactoryC.i TypeCodeFactoryC.i > diffs/TypeCodeFactoryC.i.diff
 //      diff -wbu orig/TypeCodeFactoryC.cpp TypeCodeFactoryC.cpp > diffs/TypeCodeFactoryC.cpp.diff
 //
 //   5. Restore TypeCodeFactory.pidl.

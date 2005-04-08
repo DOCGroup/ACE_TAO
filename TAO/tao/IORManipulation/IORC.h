@@ -68,17 +68,6 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:62
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
@@ -131,7 +120,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EmptyProfileList;
+  extern TAO_IORManip_Export ::CORBA::TypeCode_ptr const _tc_EmptyProfileList;
 
 #endif /* end #if !defined */
   
@@ -181,7 +170,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_NotFound;
+  extern TAO_IORManip_Export ::CORBA::TypeCode_ptr const _tc_NotFound;
 
 #endif /* end #if !defined */
   
@@ -231,7 +220,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Duplicate;
+  extern TAO_IORManip_Export ::CORBA::TypeCode_ptr const _tc_Duplicate;
 
 #endif /* end #if !defined */
   
@@ -281,7 +270,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Invalid_IOR;
+  extern TAO_IORManip_Export ::CORBA::TypeCode_ptr const _tc_Invalid_IOR;
 
 #endif /* end #if !defined */
   
@@ -331,7 +320,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_MultiProfileList;
+  extern TAO_IORManip_Export ::CORBA::TypeCode_ptr const _tc_MultiProfileList;
 
 #endif /* end #if !defined */
   
@@ -483,7 +472,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Property;
+  extern TAO_IORManip_Export ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Property;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -766,7 +755,7 @@ namespace TAO_IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Manipulation;
+  extern TAO_IORManip_Export ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Manipulation;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -916,11 +905,7 @@ TAO_IORManip_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_IOP::M
 TAO_IORManip_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::MultiProfileList &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
-
-#if defined (__ACE_INLINE__)
-#include "IORC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

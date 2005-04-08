@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:398
+// be\be_codegen.cpp:391
 
 #ifndef _TAO_IDL_ORIG_POLICYS_H_
 #define _TAO_IDL_ORIG_POLICYS_H_
@@ -61,12 +61,6 @@
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_PortableServer_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
@@ -199,25 +193,25 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   //               Strategized Proxy Broker Declaration
   //
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-  
+
   class TAO_PortableServer_Export _TAO_Policy_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_Policy_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_Policy_Strategized_Proxy_Broker (void);
-    
+
     TAO::Collocation_Strategy
     get_strategy (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     void
     dispatch (
         CORBA::Object_ptr obj,
@@ -230,34 +224,34 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::Exception));
-    
+
     static _TAO_Policy_Strategized_Proxy_Broker *
     the_TAO_Policy_Strategized_Proxy_Broker (void);
   };
-  
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
-  
-  // TAO_IDL - Generated from 
+
+
+
+  // TAO_IDL - Generated from
   // be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
-  
+
   ///////////////////////////////////////////////////////////////////////
   //                    Direct  Impl. Declaration
   //
-  
+
   class TAO_PortableServer_Export _TAO_Policy_Direct_Proxy_Impl
   {
   public:
     _TAO_Policy_Direct_Proxy_Impl (void);
-    
+
     virtual ~_TAO_Policy_Direct_Proxy_Impl (void) {}
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
+
     static void
     _get_policy_type (
         TAO_Abstract_ServantBase *servant,
@@ -268,10 +262,10 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
+
     static void
     copy (
         TAO_Abstract_ServantBase *servant,
@@ -282,10 +276,10 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
+
     static void
     destroy (
         TAO_Abstract_ServantBase *servant,
@@ -297,26 +291,23 @@ namespace POA_CORBA
         CORBA::SystemException
       ));
   };
-  
+
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
 
-// TAO_IDL - Generated from 
-// be\be_codegen.cpp:1005
+// TAO_IDL - Generated from
+// be\be_codegen.cpp:995
 
 #include "PolicyS_T.h"
 
-#if defined (__ACE_INLINE__)
-#include "PolicyS.inl"
-#endif /* defined INLINE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
