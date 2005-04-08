@@ -322,8 +322,8 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   if (be_global->tc_support ())
     {
-      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      be_visitor_typecode_defn tc_visitor (&ctx);
+      //       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
+      TAO::be_visitor_objref_typecode tc_visitor (&ctx);
 
       if (node->accept (&tc_visitor) == -1)
         {
