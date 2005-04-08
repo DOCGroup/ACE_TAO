@@ -37,7 +37,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:70
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_PolicyValue[] =
   {
@@ -66,18 +66,21 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:914
+// be\be_visitor_typecode/typecode_defn.cpp:925
 
+
+#ifndef _TAO_TYPECODE_Messaging_PolicyValueSeq_GUARD
+#define _TAO_TYPECODE_Messaging_PolicyValueSeq_GUARD
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       Messaging_PolicyValueSeq_0 (
         CORBA::tk_sequence,
@@ -90,6 +93,8 @@ namespace TAO
   }
 }
 
+
+#endif /* _TAO_TYPECODE_Messaging_PolicyValueSeq_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
                             CORBA::tk_alias,
@@ -108,7 +113,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -166,7 +171,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

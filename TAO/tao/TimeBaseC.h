@@ -206,11 +206,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::IntervalT
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
-
-#if defined (__ACE_INLINE__)
-#include "TimeBaseC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

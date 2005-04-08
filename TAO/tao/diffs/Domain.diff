@@ -1,5 +1,5 @@
---- orig/DomainC.cpp	2005-02-18 11:42:40.695684800 +0100
-+++ DomainC.cpp	2005-02-18 12:09:59.000000000 +0100
+--- orig/DomainC.cpp	2005-04-08 10:17:39.095897600 +0200
++++ DomainC.cpp	2005-04-08 10:33:24.000000000 +0200
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -21,7 +21,7 @@
  #endif /* __BORLANDC__ */
 @@ -50,6 +54,44 @@
  // TAO_IDL - Generated from
- // be\be_visitor_arg_traits.cpp:66
+ // be\be_visitor_arg_traits.cpp:69
  
 +// TAO specific stuff.
 +namespace CORBA
@@ -64,8 +64,8 @@
  // Arg traits specializations.
  namespace TAO
  {
---- orig/DomainC.h	2005-02-18 11:42:40.695684800 +0100
-+++ DomainC.h	2005-02-18 12:09:59.000000000 +0100
+--- orig/DomainC.h	2005-04-08 10:17:39.095897600 +0200
++++ DomainC.h	2005-04-08 10:33:24.000000000 +0200
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //

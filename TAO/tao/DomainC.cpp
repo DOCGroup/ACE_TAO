@@ -100,7 +100,7 @@ namespace TAO
 #define _CORBA_POLICY__ARG_TRAITS_CS_
   
   template<>
-  class TAO_Export Arg_Traits<CORBA::Policy>
+  class  Arg_Traits<CORBA::Policy>
     : public
         Object_Arg_Traits_T<
             CORBA::Policy_ptr,
@@ -117,7 +117,7 @@ namespace TAO
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
   
   template<>
-  class TAO_Export Arg_Traits<CORBA::InterfaceDef>
+  class  Arg_Traits<CORBA::InterfaceDef>
     : public
         Object_Arg_Traits_T<
             CORBA::InterfaceDef_ptr,
