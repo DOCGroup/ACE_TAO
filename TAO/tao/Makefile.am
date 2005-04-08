@@ -672,7 +672,6 @@ nobase_include_HEADERS = \
   Pollable.pidl \
   PollableC.h \
   PollableS.h \
-  PollableS_T.h \
   PortableInterceptor.h \
   PortableInterceptor.pidl \
   PortableInterceptorC.h \
@@ -758,7 +757,6 @@ nobase_include_HEADERS = \
   TAO.pidl \
   TAOC.h \
   TAOS.h \
-  TAOS_T.h \
   TAO_Export.h \
   TAO_Internal.h \
   TAO_Server_Request.h \
@@ -780,7 +778,6 @@ nobase_include_HEADERS = \
   TimeBase.pidl \
   TimeBaseC.h \
   TimeBaseS.h \
-  TimeBaseS_T.h \
   Timeprobe.h \
   Transport.h \
   Transport.inl \
