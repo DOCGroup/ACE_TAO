@@ -1,3 +1,16 @@
+Fri Apr  8 09:22:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	  (define_property):
+
+	  Fixed initialization of a variable that crosses case labels by
+	  placing it within a local block.
+
+	* tao/TypeCodeFactory/Factory_Map.cpp (tc_enum_factory):
+	  (tc_union_factory):
+
+	  Fixed unused argument warnings.
+
 Fri Apr  8 07:49:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
@@ -13,10 +26,10 @@ Fri Apr  8 09:13:10 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
         * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
-        
+
           Added to the checks for inlining generated constants recently
           committed in
-          
+
           Thu Apr  7 09:25:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           to include float, double and longdouble, which are also
