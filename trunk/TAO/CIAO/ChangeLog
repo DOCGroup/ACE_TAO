@@ -1,3 +1,14 @@
+Fri Apr  8 14:30:52 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/Config_Handlers/cdp.cpp
+	* DAnCE/Config_Handlers/cdp.hpp
+
+	Regenerated handlers to reflect schema changes.
+	
+	* docs/schema/cdp.xsd
+
+	Updated schema to allow 0 on the realizes element.
+	
 Fri Apr  8 13:33:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
