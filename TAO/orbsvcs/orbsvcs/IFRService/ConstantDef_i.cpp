@@ -267,12 +267,12 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
 
   ACE_Message_Block *mb = 0;
   TAO::Any_Impl *impl = value.impl ();
-  
+
   if (impl->encoded ())
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       mb = unk->_tao_get_cdr ().steal_contents ();
     }
   else
