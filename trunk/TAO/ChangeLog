@@ -1,3 +1,14 @@
+Fri Apr  8 07:49:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerate.
+
+	* tao/tao.mpc:
+
+	  Remove PollableS_T.h, TAOS_T.h, TimeBaseS_T.h from list of
+	  header files.
+
 Fri Apr  8 09:13:10 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
