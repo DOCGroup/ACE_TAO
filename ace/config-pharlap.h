@@ -4,8 +4,8 @@
 // This configuration file is for use with the PharLap Realtime ETS Kernel.
 // It has been tested with PharLap TNT Embedded ToolSuite version 9.1.
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_PHARLAP_H
+#define ACE_CONFIG_PHARLAP_H
 #include /**/ "ace/pre.h"
 
 #define ACE_HAS_PHARLAP
@@ -54,7 +54,8 @@
 #include /**/ <embkern.h>
 #if defined (ACE_HAS_PHARLAP_RT)
 # include /**/ <embtcpip.h>
+#define ACE_LACKS_IP_ADD_MEMBERSHIP
 #endif /* ACE_HAS_PHARLAP_RT */
 
 #include /**/ "ace/post.h"
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_PHARLAP_H */
