@@ -229,23 +229,20 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 }
 
 bool
-TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind kind,
+TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
                                         TAO_InputCDR & /* cdr */,
                                         CORBA::TypeCode_ptr & /* tc */)
 {
-  ACE_ASSERT (kind == CORBA::tk_union);
   ACE_ASSERT (0);   // @@ Temporarily unimplemented.
 
   return false;  // @@ Temporarily unimplemented.
 }
 
 bool
-TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind kind,
+TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
                                        TAO_InputCDR & cdr,
                                        CORBA::TypeCode_ptr & tc)
 {
-  ACE_ASSERT (kind == CORBA::tk_enum);
-
   CORBA::Boolean byte_order;
 
   // The remainder of a tk_enum TypeCode is encoded in a CDR

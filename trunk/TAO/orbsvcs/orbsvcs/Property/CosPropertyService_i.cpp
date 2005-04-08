@@ -512,14 +512,16 @@ TAO_PropertySet::define_property (const char *property_name,
 
       mapped_tc = entry_ptr->int_id_.pvalue_.type ();
 
-      CORBA::Boolean const equal_tc =
-        mapped_tc.in ()->equal (arg_tc.in ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      {
+        CORBA::Boolean const equal_tc =
+          mapped_tc.in ()->equal (arg_tc.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
 
-      // If type is not the same, raise exception.
-      if (!equal_tc)
-        ACE_THROW (CosPropertyService::ConflictingProperty());
+        // If type is not the same, raise exception.
+        if (!equal_tc)
+          ACE_THROW (CosPropertyService::ConflictingProperty());
+      }
 
       // If mode is read only, raise exception.
       if ((entry_ptr->int_id_.pmode_ == CosPropertyService::read_only) ||
