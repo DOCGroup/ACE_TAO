@@ -522,7 +522,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Policy_Validator.h
     PollableC.h
     PollableS.h
-    PollableS_T.h
     PortableInterceptorC.h
     PortableInterceptor.h
     PortableInterceptorS.h
@@ -580,7 +579,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TAOS.h
     TAO_Singleton.h
     TAO_Singleton_Manager.h
-    TAOS_T.h
     target_specification.h
     TC_Constants_Forward.h
     Thread_Lane_Resources.h
@@ -588,7 +586,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Thread_Per_Connection_Handler.h
     TimeBaseC.h
     TimeBaseS.h
-    TimeBaseS_T.h
     Timeprobe.h
     Transport_Acceptor.h
     Transport_Cache_Manager.h
