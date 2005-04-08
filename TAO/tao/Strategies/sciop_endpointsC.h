@@ -181,11 +181,7 @@ TAO_Strategies_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_TAO_SCIOPEndpointSequence_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
-
-#if defined (__ACE_INLINE__)
-#include "sciop_endpointsC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
