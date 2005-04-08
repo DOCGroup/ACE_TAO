@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:554
+// be\be_codegen.cpp:536
 
 #ifndef _TAO_IDL_ORIG_POLICYS_T_H_
 #define _TAO_IDL_ORIG_POLICYS_T_H_
@@ -127,7 +127,7 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1102
+// be\be_codegen.cpp:1096
 
 #if defined (__ACE_INLINE__)
 #include "PolicyS_T.inl"

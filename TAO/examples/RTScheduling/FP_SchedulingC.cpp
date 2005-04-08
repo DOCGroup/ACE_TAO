@@ -44,10 +44,6 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "FP_SchedulingC.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
 
@@ -99,7 +95,7 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::SegmentSchedulingParameterPolic
 FP_Scheduling::SegmentSchedulingParameterPolicy::~SegmentSchedulingParameterPolicy (void)
 {}
 
-void 
+void
 FP_Scheduling::SegmentSchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SegmentSchedulingParameterPolicy *_tao_tmp_pointer =
@@ -117,10 +113,10 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (
     {
       return SegmentSchedulingParameterPolicy::_nil ();
     }
-  
+
   SegmentSchedulingParameterPolicy_ptr proxy =
     dynamic_cast<SegmentSchedulingParameterPolicy_ptr> (_tao_objref);
-  
+
   return SegmentSchedulingParameterPolicy::_duplicate (proxy);
 }
 
@@ -134,10 +130,10 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_unchecked_narrow (
     {
       return SegmentSchedulingParameterPolicy::_nil ();
     }
-  
+
   SegmentSchedulingParameterPolicy_ptr proxy =
     dynamic_cast<SegmentSchedulingParameterPolicy_ptr> (_tao_objref);
-  
+
   return SegmentSchedulingParameterPolicy::_duplicate (proxy);
 }
 
@@ -148,7 +144,7 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (SegmentSchedulingPa
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

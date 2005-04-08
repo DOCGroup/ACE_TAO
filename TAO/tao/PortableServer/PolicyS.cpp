@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:595
+// be\be_codegen.cpp:599
 
 #ifndef _TAO_IDL_ORIG_POLICYS_CPP_
 #define _TAO_IDL_ORIG_POLICYS_CPP_
@@ -67,10 +67,6 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "PolicyS.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
 
@@ -82,7 +78,7 @@ namespace TAO
 #define _CORBA_POLICY__SARG_TRAITS_SS_
   
   template<>
-  class TAO_PortableServer_Export SArg_Traits<CORBA::Policy>
+  class  SArg_Traits<CORBA::Policy>
     : public
         Object_SArg_Traits_T<
             CORBA::Policy_ptr,
@@ -107,7 +103,7 @@ namespace TAO
 #define _CORBA_POLICY__ARG_TRAITS_SS_
   
   template<>
-  class TAO_PortableServer_Export Arg_Traits<CORBA::Policy>
+  class  Arg_Traits<CORBA::Policy>
     : public
         Object_Arg_Traits_T<
             CORBA::Policy_ptr,
@@ -136,7 +132,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ACE\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_Policy_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
