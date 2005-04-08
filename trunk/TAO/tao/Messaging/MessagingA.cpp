@@ -36,7 +36,7 @@
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/value_typecode.cpp:32
+// be\be_visitor_typecode/value_typecode.cpp:50
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_ExceptionHolder[] =
   {
@@ -69,7 +69,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:73
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_objref,
@@ -87,7 +87,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -143,7 +143,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean

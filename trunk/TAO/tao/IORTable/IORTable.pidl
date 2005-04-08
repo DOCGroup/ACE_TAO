@@ -9,11 +9,11 @@
  * @brief Pre-compiled IDL source for the IORTable module.
  *
  * This file was used to generate the code in
- * IORTable{C,S,S_T}.{h,i,cpp}
+ * IORTable{C}.{h,cpp}
  *
  *   The command used to generate code from this file is:
  *
- *     tao_idl -o orig -Ge 1 -Sa -St -GT \
+ *     tao_idl -o orig -Ge 1 -Sa -St -GT -Sci \
  *          -Wb,export_macro=TAO_IORTable_Export \
  *          -Wb,export_include=iortable_export.h \
  *          -Wb,pre_include="ace/pre.h" \

@@ -7,12 +7,12 @@
  *  $Id$
  *
  * This file was used to generate the code in
- * Messaging_SyncScope_Policy{C,S}.{h,i,cpp}
+ * Messaging_SyncScope_Policy{C}.{h,cpp}
  *
  * The command used to generate code from this file is:
  *
  *   tao_idl
- *        -o orig -Gp -Gd -Ge 1 -GT -Sc -GA
+ *        -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Sci
  *        -Wb,export_macro=TAO_Messaging_Export
  *        -Wb,export_include=messaging_export.h
  *        -Wb,pre_include="ace/pre.h"
