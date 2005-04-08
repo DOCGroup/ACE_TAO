@@ -18,6 +18,8 @@ ACE_RCSID (tao,
 #include "Struct_TypeCode.h"
 #include "Null_RefCount_Policy.h"
 
+#include "debug.h"
+
 #include "ace/OS_NS_string.h"
 
 
@@ -310,6 +312,12 @@ operator>> (TAO_InputCDR & cdr,
 
   if (adapter == 0)
     {
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%N:%l - Unable to load TypeCodeFactory_Adapter\n"));
+        }
+
       ACE_THROW_RETURN (CORBA::INTERNAL (),
                         false);
     }
