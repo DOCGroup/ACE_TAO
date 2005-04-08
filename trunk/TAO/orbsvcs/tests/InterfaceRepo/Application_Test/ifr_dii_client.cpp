@@ -339,7 +339,10 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::TypeCode_var tc = this->req_->return_value ().type ();
 
-  if (tc->kind () == CORBA::tk_boolean)
+  CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_boolean)
     {
       CORBA::NVList_ptr args = this->req_->arguments ();
 

@@ -1,3 +1,10 @@
+Fri Apr  8 09:27:43 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp
+	  (invoke_and_display):
+
+	  Another emulated exception macro usage fix.
+
 Fri Apr  8 09:22:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
