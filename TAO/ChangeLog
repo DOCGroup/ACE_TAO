@@ -1,3 +1,49 @@
+Fri Apr  8 12:32:00 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tao/Any_Basic_Impl.cpp
+	
+          In Any_Basic_Impl::assign_value handle unsigned long long
+	  when ACE_LACKS_UNSIGNEDLONGLONG_T.
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+
+          Add checks for ACE_LACKS_UNSIGNEDLONGLONG_T
+
+        * TAO_IDL/include/idl_uns_long.h
+	
+          Defines idl_uns_long typedef based on machine capabilities
+
+        * TAO_IDL/include/ast_expression.h
+	
+          Defines union elements for AST_ExprValue based on machine
+	  capabilities
+
+        * TAO_IDL/be/be_sunsoft.cpp
+	
+          Use ACE_INT64_FORMAT_SPECIFIER in long long print statement
+	  for platform independence.  (Defined in ace/Basic_Types.h).
+
+        * TAO_IDL/ast/ast_expression.cpp
+	
+          Replace expressions such as:
+             if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_INT16_MAX)
+          with
+             if ((ev->u.ullval & ACE_INT16_MAX) != ev->u.ullval)
+          which has the same effect but does not use a cast.
+          The cast won't work when ACE_CDR::ULongLong is not a primitive type.
+
+          Remove casts in expressions such as
+             ev->u.ullval = (ACE_CDR::ULongLong) ev->u.sval;
+          because it doesn't work when ACE_CDR::ULongLong is
+          not a primitive type.
+
+          Check ACE_LACKS_ULONGLONG_T and use ACE_INT64_MAX
+          instead of ACE_UINT64_MAX.
+
+          Remove statement:
+             if (ev->u.ullval > ACE_UINT64_MAX)
+          Since that situation is impossible.
+
 Fri Apr  8 09:27:43 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp

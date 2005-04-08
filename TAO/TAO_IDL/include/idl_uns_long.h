@@ -10,7 +10,11 @@
 
 #include "ace/Basic_Types.h"
 
-#if defined (ACE_LACKS_LONGLONG_T)
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+  // Platform has "long long" but no unsigned long long.  Use a long long
+  // for the container.
+  typedef long long idl_uns_long;
+#elif defined (ACE_LACKS_LONGLONG_T)
   typedef unsigned long idl_uns_long;
 #else
   typedef ACE_UINT64    idl_uns_long;
