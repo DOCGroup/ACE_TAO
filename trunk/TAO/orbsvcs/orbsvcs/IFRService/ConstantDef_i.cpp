@@ -255,7 +255,12 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
 
   CORBA::TypeCode_var val_tc = value.type ();
 
-  if (!my_tc.in ()->equal (val_tc.in ()))
+  CORBA::Boolean const equal_tc =
+    my_tc.in ()->equal (val_tc.in ()
+                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (!equal_tc)
     {
       return;
     }

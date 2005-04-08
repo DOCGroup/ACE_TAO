@@ -86,7 +86,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
   // called, we can also call it to determine equivalence of
   // tk_fixed TypeCodes.
   return this->equal_i (tc
-                        ACE_ENV_SINGLE_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
 }
 
 template <class RefCountPolicy>

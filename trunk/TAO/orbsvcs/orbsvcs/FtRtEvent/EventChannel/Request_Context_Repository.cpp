@@ -158,7 +158,9 @@ bool Request_Context_Repository::is_executed_request()
     CORBA::Any_var any = get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
     CORBA::TypeCode_var type = any->type();
-    return type->kind() != CORBA::tk_null;
+    CORBA::TCKind const kind = type->kind(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    return kind != CORBA::tk_null;
   }
   ACE_CATCHALL {
   }
