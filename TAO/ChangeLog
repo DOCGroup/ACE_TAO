@@ -1,3 +1,15 @@
+Fri Apr  8 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * docs/compiler.html:
+          Added options -Sci and -Ssi to the TAO_IDL compiler to suppress the
+          generation of the client/server inline files. The includes of that
+          file are also suppressed. With this option we can easily zap
+          empty generated inline files from the repo.
+
 Thu Apr  7 22:36:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_component/component_cs.cpp
