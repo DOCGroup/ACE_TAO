@@ -356,7 +356,7 @@ protected:
 // Forward declaration
 template <class ELEMENT_TYPE> class TAO_Element_Equal;
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<CORBA::Short>
 {
 public:
@@ -366,7 +366,7 @@ public:
                    CORBA::Short element) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<CORBA::UShort>
 {
 public:
@@ -376,7 +376,7 @@ public:
                    CORBA::UShort element) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<CORBA::Long>
 {
 public:
@@ -386,7 +386,7 @@ public:
                    CORBA::Long element) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<CORBA::ULong>
 {
 public:
@@ -397,7 +397,7 @@ public:
 
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<CORBA::Float>
 {
 public:
@@ -407,7 +407,7 @@ public:
                    CORBA::Float element) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<CORBA::Double>
 {
 public:
@@ -417,7 +417,7 @@ public:
                    CORBA::Double element) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<CORBA::Boolean>
 {
 public:
@@ -427,7 +427,7 @@ public:
                    CORBA::Boolean element) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class TAO_Element_Equal<const char*>
 {
 public:
