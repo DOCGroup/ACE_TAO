@@ -357,7 +357,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
   CORBA::ULong const len = members.length ();
 
   ACE_Array_Base<CORBA::String_var> enumerators (len);
-  
+
   for (CORBA::ULong index = 0; index < len; ++index)
     {
       ACE_CString ext_id (members[index]);
@@ -1037,7 +1037,7 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
                     typecode_type (kind, tmp, bound),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (tc);
-                           
+
   return tc;
 }
 
