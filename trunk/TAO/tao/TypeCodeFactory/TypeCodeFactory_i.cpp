@@ -1587,20 +1587,16 @@ TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
   CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (kind == CORBA::tk_enum
-      || kind == CORBA::tk_ulong
-      || kind == CORBA::tk_long
-      || kind == CORBA::tk_ushort
-      || kind == CORBA::tk_short
-      || kind == CORBA::tk_char
-      || kind == CORBA::tk_boolean
-      || kind == CORBA::tk_longlong
-      || kind == CORBA::tk_ulonglong)
-    {
-      return 1;
-    }
-
-  return 0;
+  return
+    (kind == CORBA::tk_enum
+     || kind == CORBA::tk_ulong
+     || kind == CORBA::tk_long
+     || kind == CORBA::tk_ushort
+     || kind == CORBA::tk_short
+     || kind == CORBA::tk_char
+     || kind == CORBA::tk_boolean
+     || kind == CORBA::tk_longlong
+     || kind == CORBA::tk_ulonglong);
 }
 
 // CORBA::TypeCode_ptr
