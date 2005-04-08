@@ -197,11 +197,7 @@ TAO_Export void operator<<= (CORBA::Any &, CORBA::Current_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Current_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
-
-#if defined (__ACE_INLINE__)
-#include "CurrentC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

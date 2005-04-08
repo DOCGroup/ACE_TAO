@@ -36,10 +36,6 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "CONV_FRAMEC.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
 
@@ -103,7 +99,7 @@ void CONV_FRAME::CodeSetIdSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 CONV_FRAME::CodeSetComponent::_tao_any_destructor (
@@ -116,7 +112,7 @@ CONV_FRAME::CodeSetComponent::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
@@ -129,7 +125,7 @@ CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 CONV_FRAME::CodeSetContext::_tao_any_destructor (

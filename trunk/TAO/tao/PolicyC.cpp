@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:302
+// be\be_codegen.cpp:291
 
 
 #include "PolicyC.h"
@@ -34,11 +34,6 @@
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
@@ -62,7 +57,7 @@ namespace TAO
 #define _CORBA_POLICY__ARG_TRAITS_CS_
   
   template<>
-  class TAO_Export Arg_Traits<CORBA::Policy>
+  class  Arg_Traits<CORBA::Policy>
     : public
         Object_Arg_Traits_T<
             CORBA::Policy_ptr,
