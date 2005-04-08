@@ -1,3 +1,25 @@
+Fri Apr  8 01:00:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/Factory_Map.cpp:
+	* tao/TypeCodeFactory/Factory_Map.h:
+	* tao/TypeCodeFactory/Objref_TypeCode_Factory.h:
+
+	  New files containing TypeCode factory functions used when
+	  extracting TypeCodes from CDR streams.
+
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp
+	  (extract_typecode):
+
+	  Invoke appropriate TypeCode factory function in factory map
+	  array.  This re-enables extraction of TypeCodes from CDR
+	  streams.  However, applications that do this directly or
+	  indirectly, such as when extracting Anys, must now link the
+	  TAO_TypeCodeFactory library to their application.
+	  
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+	  Cosmetic tweaks.
+
 Fri Apr  8 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

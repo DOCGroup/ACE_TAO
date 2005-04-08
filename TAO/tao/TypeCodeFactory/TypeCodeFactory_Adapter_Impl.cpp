@@ -2,11 +2,15 @@
 
 #include "TypeCodeFactory_Adapter_Impl.h"
 #include "TypeCodeFactory_i.h"
+#include "Factory_Map.h"
+
 #include "tao/ORB_Core.h"
+
 
 ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_Adapter_Impl,
            "$Id$")
+
 
 TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl (void)
 {
@@ -336,16 +340,13 @@ TAO_TypeCodeFactory_Adapter_Impl::create_event_tc (
 
 bool
 TAO_TypeCodeFactory_Adapter_Impl::extract_typecode (TAO_InputCDR & cdr,
-                                                    CORBA::TypeCode_ptr & /* tc */)
+                                                    CORBA::TypeCode_ptr & tc)
 {
   CORBA::TCKind kind;
   if (!(cdr >> kind) || kind >= CORBA::TAO_TC_KIND_COUNT)
     return false;
 
-  // return TAO::TypeCodeFactory::factory_map[kind] (cdr, tc);
-
-  ACE_ASSERT (0);  // @@ Temporarily unimplemented.
-  return false;
+  return TAO::TypeCodeFactory::factory_map[kind] (kind, cdr, tc);
 }
 
 CORBA::TypeCode_ptr
