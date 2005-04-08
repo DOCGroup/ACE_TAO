@@ -130,7 +130,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       CORBA_ServiceOptionSeq_0 (
         CORBA::tk_sequence,
@@ -206,7 +206,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       CORBA_ServiceDetailSeq_0 (
         CORBA::tk_sequence,

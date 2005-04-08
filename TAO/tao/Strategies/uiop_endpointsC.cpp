@@ -139,7 +139,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       TAO_UIOPEndpointSequence_0 (
         CORBA::tk_sequence,
