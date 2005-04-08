@@ -36,6 +36,10 @@
 
 #include "ace/config-all.h"
 
+#ifndef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
+#error "You should not include RTPortableServerC.h directly, use RTPortableServer.h"
+#endif /* !TAO_RT_PORTABLESERVER_SAFE_INCLUDE */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -69,22 +73,22 @@
 
 namespace RTPortableServer
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_RTPORTABLESERVER_POA__VAR_OUT_CH_)
 #define _RTPORTABLESERVER_POA__VAR_OUT_CH_
-  
+
   class POA;
   typedef POA *POA_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         POA
       >
     POA_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         POA
@@ -92,45 +96,45 @@ namespace RTPortableServer
     POA_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTPORTABLESERVER_POA_CH_)
 #define _RTPORTABLESERVER_POA_CH_
-  
+
   class TAO_RTPortableServer_Export POA
     : public virtual ::PortableServer::POA
   {
   public:
     typedef POA_ptr _ptr_type;
     typedef POA_var _var_type;
-    
+
     // The static operations.
     static POA_ptr _duplicate (POA_ptr obj);
-    
+
     static void _tao_release (POA_ptr obj);
-    
+
     static POA_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POA_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POA_ptr _nil (void)
     {
       return static_cast<POA_ptr> (0);
     }
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual CORBA::Object_ptr create_reference_with_priority (
         const char * intf,
         ::RTCORBA::Priority priority
@@ -140,10 +144,10 @@ namespace RTPortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual CORBA::Object_ptr create_reference_with_id_and_priority (
         const ::PortableServer::ObjectId & oid,
         const char * intf,
@@ -154,10 +158,10 @@ namespace RTPortableServer
         CORBA::SystemException,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::PortableServer::ObjectId * activate_object_with_priority (
         ::PortableServer::Servant p_servant,
         ::RTCORBA::Priority priority
@@ -168,10 +172,10 @@ namespace RTPortableServer
         ::PortableServer::POA::ServantAlreadyActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void activate_object_with_id_and_priority (
         const ::PortableServer::ObjectId & oid,
         ::PortableServer::Servant p_servant,
@@ -184,18 +188,18 @@ namespace RTPortableServer
         ::PortableServer::POA::ObjectAlreadyActive,
         ::PortableServer::POA::WrongPolicy
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     POA (void);

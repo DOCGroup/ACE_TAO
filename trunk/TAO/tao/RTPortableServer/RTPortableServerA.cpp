@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "RTPortableServerC.h"
+#include "RTPortableServer.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
@@ -44,7 +44,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTPortableServer_POA (
     "IDL:omg.org/RTPortableServer/POA:1.0",
     "POA");
-  
+
 namespace RTPortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POA =
@@ -136,4 +136,4 @@ operator>>= (
         RTPortableServer::POA \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
