@@ -10,11 +10,11 @@
 // = DESCRIPTION
 //   Some new data types included for GIOP 1.2
 //   This file was used to generate the code in
-//   GIOP*.* The command used to generate code
+//   RTScheduler*.* The command used to generate code
 //   is:
 //
 //     tao_idl
-//        -o orig -GA -Sa -Gp -Gd -Ge 1 -GT
+//        -o orig -GA -Sa -Gp -Gd -Ge 1 -GT -Sci
 //          -Wb,export_macro=TAO_RTScheduler_Export
 //          -Wb,export_include="rtscheduler_export.h"
 //          -Wb,pre_include="ace/pre.h"

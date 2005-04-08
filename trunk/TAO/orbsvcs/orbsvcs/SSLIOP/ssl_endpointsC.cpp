@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:291
+// be\be_codegen.cpp:291
 
 
 #include "ssl_endpointsC.h"
@@ -41,12 +41,8 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "ssl_endpointsC.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_SSLENDPOINTSEQUENCE_CS_)
 #define _TAO_SSLENDPOINTSEQUENCE_CS_
@@ -99,12 +95,12 @@ TAO_SSLEndpointSequence::~TAO_SSLEndpointSequence (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:924
+// be\be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_TAO_SSLEndpointSequence_GUARD
@@ -113,7 +109,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       TAO_SSLEndpointSequence_0 (
         CORBA::tk_sequence,
@@ -141,7 +137,7 @@ static TAO::TypeCode::Alias<char const *,
   &_tao_tc_TAO_SSLEndpointSequence;
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:96
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_TAO_SSLEndpointSequence_CPP_
 #define _TAO_CDR_OP_TAO_SSLEndpointSequence_CPP_
