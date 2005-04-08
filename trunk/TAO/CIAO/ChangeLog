@@ -1,3 +1,10 @@
+Fri Apr  8 13:33:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Added backend support for attribute exceptions.
+
 Thu Apr 07 14:49:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/Hello/descriptors/basicNodeDaemon.pl
