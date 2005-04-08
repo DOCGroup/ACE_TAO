@@ -952,7 +952,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
      << "namespace TypeCode" << be_nl
      << "{" << be_idt_nl;
 
-  os << "TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *," << be_nl
+  os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *," << be_nl
      << "                        TAO::Null_RefCount_Policy>"
      << be_idt_nl
      << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
