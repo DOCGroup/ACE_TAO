@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_FIXEDDEF___CI_)
 #define _CORBA_FIXEDDEF___CI_
@@ -63,7 +63,7 @@ CORBA::FixedDef::FixedDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEMEMBERDEF___CI_)
 #define _CORBA_VALUEMEMBERDEF___CI_
@@ -99,7 +99,7 @@ CORBA::ValueMemberDef::ValueMemberDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEDEF___CI_)
 #define _CORBA_VALUEDEF___CI_
@@ -135,7 +135,7 @@ CORBA::ValueDef::ValueDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_EXTVALUEDEF___CI_)
 #define _CORBA_EXTVALUEDEF___CI_
@@ -171,7 +171,7 @@ CORBA::ExtValueDef::ExtValueDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEBOXDEF___CI_)
 #define _CORBA_VALUEBOXDEF___CI_
