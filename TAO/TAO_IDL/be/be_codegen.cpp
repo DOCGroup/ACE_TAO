@@ -300,13 +300,17 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                        << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
                        << "#endif /* __BORLANDC__ */";
 
-  // Generate the code that includes the inline file if not included in the
-  // header file.
-  *this->client_stubs_ << "\n\n#if !defined (__ACE_INLINE__)";
-  *this->client_stubs_ << "\n#include \""
-                       << be_global->be_get_client_inline_fname (1)
-                       << "\"";
-  *this->client_stubs_ << "\n#endif /* !defined INLINE */";
+  // Only when we generate a client inline file generate the include
+  if (be_global->gen_client_inline ())
+    {
+      // Generate the code that includes the inline file if not included in the
+      // header file.
+      *this->client_stubs_ << "\n\n#if !defined (__ACE_INLINE__)";
+      *this->client_stubs_ << "\n#include \""
+                           << be_global->be_get_client_inline_fname (1)
+                           << "\"";
+      *this->client_stubs_ << "\n#endif /* !defined INLINE */";
+    }
 
   return 0;
 }
@@ -624,13 +628,17 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
                            << "#pragma option -w-rvl -w-rch -w-ccc -w-aus\n"
                            << "#endif /* __BORLANDC__ */";
 
-   // Generate the code that includes the inline file if not included in the
-  // header file.
-  *this->server_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)\n";
-  *this->server_skeletons_ << "#include \""
-                           << be_global->be_get_server_inline_fname (1)
-                           << "\"\n";
-  *this->server_skeletons_ << "#endif /* !defined INLINE */";
+  // Only when we generate a server inline file generate the include
+  if (be_global->gen_server_inline ())
+    {
+      // Generate the code that includes the inline file if not included in the
+      // header file.
+      *this->server_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)\n";
+      *this->server_skeletons_ << "#include \""
+                               << be_global->be_get_server_inline_fname (1)
+                               << "\"\n";
+      *this->server_skeletons_ << "#endif /* !defined INLINE */";
+    }
 
   return 0;
 }
@@ -946,12 +954,16 @@ TAO_CodeGen::end_client_header (void)
   *this->client_header_ << be_nl << be_nl << "// TAO_IDL - Generated from"
                         << be_nl << "// " << __FILE__ << ":" << __LINE__;
 
-  // Insert the code to include the inline file.
-  *this->client_header_ << "\n\n#if defined (__ACE_INLINE__)\n";
-  *this->client_header_ << "#include \""
-                        << be_global->be_get_client_inline_fname (1)
-                        << "\"\n";
-  *this->client_header_ << "#endif /* defined INLINE */";
+  // Only when we generate a client inline file generate the include
+  if (be_global->gen_client_inline ())
+    {
+      // Insert the code to include the inline file.
+      *this->client_header_ << "\n\n#if defined (__ACE_INLINE__)\n";
+      *this->client_header_ << "#include \""
+                            << be_global->be_get_client_inline_fname (1)
+                            << "\"\n";
+      *this->client_header_ << "#endif /* defined INLINE */";
+    }
 
   *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(pop)\n"
@@ -991,12 +1003,16 @@ TAO_CodeGen::end_server_header (void)
                             << "\"\n";
     }
 
-  // Insert the code to include the inline file.
-  *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
-  *this->server_header_ << "#include \""
-                        << be_global->be_get_server_inline_fname (1)
-                        << "\"\n";
-  *this->server_header_ << "#endif /* defined INLINE */";
+  // Only when we generate a server inline file generate the include
+  if (be_global->gen_server_inline ())
+    {
+      // Insert the code to include the inline file.
+      *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
+      *this->server_header_ << "#include \""
+                            << be_global->be_get_server_inline_fname (1)
+                            << "\"\n";
+      *this->server_header_ << "#endif /* defined INLINE */";
+    }
 
   *this->server_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(pop)\n"

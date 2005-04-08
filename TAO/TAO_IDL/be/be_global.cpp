@@ -86,7 +86,9 @@ BE_GlobalData::BE_GlobalData (void)
     ccmobject_ (0),
     gen_anyop_files_ (I_FALSE),
     do_ccm_preproc_ (I_TRUE),
-    gen_skel_files_ (I_TRUE)
+    gen_skel_files_ (I_TRUE),
+    gen_client_inline_ (I_TRUE),
+    gen_server_inline_ (I_TRUE)
 {
 }
 
@@ -1037,6 +1039,30 @@ BE_GlobalData::gen_skel_files (idl_bool val)
   this->gen_skel_files_ = val;
 }
 
+idl_bool
+BE_GlobalData::gen_client_inline (void) const
+{
+  return this->gen_client_inline_;
+}
+
+void
+BE_GlobalData::gen_client_inline (idl_bool val)
+{
+  this->gen_client_inline_ = val;
+}
+
+idl_bool
+BE_GlobalData::gen_server_inline (void) const
+{
+  return this->gen_server_inline_;
+}
+
+void
+BE_GlobalData::gen_server_inline (idl_bool val)
+{
+  this->gen_server_inline_ = val;
+}
+
 ACE_CString
 BE_GlobalData::spawn_options (void)
 {
@@ -1525,8 +1551,16 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'c')
           {
-            // suppress generating tie classes and files
-            be_global->gen_tie_classes (0);
+            if (av[i][3] == 'i')
+              {
+                // no client inline
+                be_global->gen_client_inline (I_FALSE);
+              }
+            else
+              {
+                // suppress generating tie classes and files
+                be_global->gen_tie_classes (0);
+              }
           }
         else if (av[i][2] == 'm')
           {
@@ -1537,6 +1571,22 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // disable skeleton file generation.
             be_global->gen_skel_files (I_FALSE);
+          }
+        else if (av[i][2] == 's')
+          {
+            if (av[i][3] == 'i')
+              {
+                // no client inline
+                be_global->gen_server_inline (I_FALSE);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                    av[i]
+                  ));
+              }
           }
         else
           {
@@ -1904,6 +1954,21 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Sm\t\t\tdisable IDL3 equivalent IDL preprocessing")
       ACE_TEXT (" (enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -SS\t\t\tsuppress generating skeleton implementation")
+      ACE_TEXT ("  and inline file (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sci\t\t\tsuppress generating client inline file")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Ssi\t\t\tsuppress generating server inline file")
+      ACE_TEXT (" (disabled by default)\n")
     ));
 }
 
