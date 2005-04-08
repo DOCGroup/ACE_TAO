@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:617
+// be\be_codegen.cpp:599
 
 #ifndef _TAO_IDL_ORIG_DOMAINS_CPP_
 #define _TAO_IDL_ORIG_DOMAINS_CPP_
@@ -83,7 +83,7 @@ namespace TAO
 #define _CORBA_POLICY__SARG_TRAITS_SS_
   
   template<>
-  class TAO_Domain_Export SArg_Traits<CORBA::Policy>
+  class  SArg_Traits<CORBA::Policy>
     : public
         Object_SArg_Traits_T<
             CORBA::Policy_ptr,
@@ -99,7 +99,7 @@ namespace TAO
 #define _CORBA_INTERFACEDEF__SARG_TRAITS_SS_
   
   template<>
-  class TAO_Domain_Export SArg_Traits<CORBA::InterfaceDef>
+  class  SArg_Traits<CORBA::InterfaceDef>
     : public
         Object_SArg_Traits_T<
             CORBA::InterfaceDef_ptr,
@@ -124,7 +124,7 @@ namespace TAO
 #define _CORBA_POLICY__ARG_TRAITS_SS_
   
   template<>
-  class TAO_Domain_Export Arg_Traits<CORBA::Policy>
+  class  Arg_Traits<CORBA::Policy>
     : public
         Object_Arg_Traits_T<
             CORBA::Policy_ptr,
@@ -141,7 +141,7 @@ namespace TAO
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_SS_
   
   template<>
-  class TAO_Domain_Export Arg_Traits<CORBA::InterfaceDef>
+  class  Arg_Traits<CORBA::InterfaceDef>
     : public
         Object_Arg_Traits_T<
             CORBA::InterfaceDef_ptr,
@@ -170,7 +170,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_DomainManager_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ACE\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_DomainManager_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_DomainManager_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -357,10 +357,7 @@ CORBA__TAO_DomainManager_Proxy_Broker_Factory_Initializer (size_t)
 static int
 CORBA__TAO_DomainManager_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   CORBA__TAO_DomainManager_Proxy_Broker_Factory_Initializer (
-      reinterpret_cast<
-          size_t> (
-          CORBA__TAO_DomainManager_Proxy_Broker_Factory_Initializer
-        )
+      reinterpret_cast<size_t> (CORBA__TAO_DomainManager_Proxy_Broker_Factory_Initializer)
     );
 
 
@@ -387,9 +384,8 @@ POA_CORBA::_TAO_DomainManager_Direct_Proxy_Impl::get_domain_policy (
   ))
 {
   ((TAO::Arg_Traits< CORBA::Policy>::ret_val *) args[0])->arg () =
-    dynamic_cast<
-        POA_CORBA::DomainManager_ptr> (
-        servant)
+    dynamic_cast<POA_CORBA::DomainManager_ptr>
+      (servant)
     ->get_domain_policy (
           ((TAO::Arg_Traits< ::CORBA::PolicyType>::in_arg_val *) args[1])->arg ()
           ACE_ENV_ARG_PARAMETER
@@ -930,7 +926,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ACE\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -1122,10 +1118,7 @@ CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_Initializer (size_t)
 static int
 CORBA__TAO_ConstructionPolicy_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_Initializer (
-      reinterpret_cast<
-          size_t> (
-          CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_Initializer
-        )
+      reinterpret_cast<size_t> (CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_Initializer)
     );
 
 
@@ -1151,9 +1144,8 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::make_domain_manager (
     CORBA::SystemException
   ))
 {
-  dynamic_cast<
-      POA_CORBA::ConstructionPolicy_ptr> (
-      servant)
+  dynamic_cast<POA_CORBA::ConstructionPolicy_ptr>
+    (servant)
   ->make_domain_manager (
         ((TAO::Arg_Traits< CORBA::InterfaceDef>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val *) args[2])->arg ()

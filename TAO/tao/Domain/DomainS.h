@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:398
+// be\be_codegen.cpp:391
 
 #ifndef _TAO_IDL_ORIG_DOMAINS_H_
 #define _TAO_IDL_ORIG_DOMAINS_H_
@@ -60,12 +60,6 @@
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_Domain_Export
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Domain_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
@@ -485,7 +479,7 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1005
+// be\be_codegen.cpp:995
 
 #include "DomainS_T.h"
 
