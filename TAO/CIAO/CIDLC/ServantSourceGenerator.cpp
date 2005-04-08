@@ -428,26 +428,129 @@ namespace
     std::set<Interface*> interfaces_;
   };
 
-  // Generates operations associated with attributes.
-  // @@@ (JP) Need to support exceptions.
+  // Generates the set operation of a ReadWriteAttribute.
   template <typename T>
-  struct AttributeEmitter : Traversal::ReadWriteAttribute,
+  struct WriteAttributeEmitter : Traversal::ReadWriteAttribute,
+                                 EmitterBase
+  {
+    WriteAttributeEmitter (Context& c, T& scope, bool swapping)
+      : EmitterBase (c),
+        scope_ (scope),
+        write_type_name_emitter_ (c.os ()),
+        type_name_emitter_ (c.os ()),
+        swapping_ (swapping)
+    {
+      write_belongs_.node_traverser (write_type_name_emitter_);
+      
+      edge_traverser (set_raises_);      
+      set_raises_.node_traverser (type_name_emitter_);
+    }
+    
+    virtual void
+    gen_swapping_set ()
+    {
+      os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+         << "ACE_CHECK;" << endl;
+    }
+    
+    virtual void
+    pre (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << "void" << endl;
+    }
+    
+    virtual void
+    name (SemanticGraph::ReadWriteAttribute& a)
+    {
+      os << scope_.name () << "_Servant::" << a.name () << " (" << endl;
+ 
+      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
+      
+      os << " " << a.name () << endl
+         << STRS[ENV_SRC] << ")" << endl;
+    }
+    
+    virtual void
+    get_raises (SemanticGraph::ReadWriteAttribute&)
+    {
+    }
+    
+    virtual void
+    set_raises_none (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << STRS[EXCP_SNGL];
+    }
+    
+    virtual void
+    set_raises_pre (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl;
+    }
+    
+    virtual void
+    set_raises_post (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << "))" << endl;
+    }
+    
+    virtual void
+    post (SemanticGraph::ReadWriteAttribute& a)
+    {
+      os << "{";
+    
+      if (swapping_)
+      {
+        this->gen_swapping_set ();
+      }
+               
+      os << "this->executor_->" << a.name () << " (" << endl
+         << a.name () << endl
+         << STRS[ENV_ARG] << ");" << endl
+         << "}";
+    }
+
+    virtual void
+    comma (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << "," << endl;
+    }
+    
+  protected:
+    T& scope_;
+    Traversal::Belongs write_belongs_;
+
+  private:
+    INArgTypeNameEmitter write_type_name_emitter_;
+    TypeNameEmitter type_name_emitter_;
+    Traversal::SetRaises set_raises_;
+    bool swapping_;
+  };
+
+  // Generates operations associated with attributes.
+  template <typename T>
+  struct AttributeEmitter : Traversal::ReadAttribute,
+                            Traversal::ReadWriteAttribute,
                             EmitterBase
   {
     AttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
         scope_ (scope),
-        write_type_name_emitter_ (c.os ()),
         read_type_name_emitter_ (c.os ()),
+        type_name_emitter_ (c.os ()),
         ace_check_return_emitter_ (c.os ())
     {
-      write_belongs_.node_traverser (write_type_name_emitter_);
       read_belongs_.node_traverser (read_type_name_emitter_);
       ace_check_return_belongs_.node_traverser (ace_check_return_emitter_);
+      
+      edge_traverser (get_raises_);      
+      get_raises_.node_traverser (type_name_emitter_);
     }
     
-    // Overridden by facet attribute emitter to do nothing.
-    
+    // ReadWriteAttribute
+    //
+
+    // Overridden by facet attribute emitter.    
     virtual void
     gen_swapping_get (SemanticGraph::ReadWriteAttribute& a)
     {
@@ -458,36 +561,60 @@ namespace
       os << endl;
     }
     
+    // Overridden by facet attribute emitter.    
     virtual void
-    gen_swapping_set ()
+    gen_write_operation (SemanticGraph::ReadWriteAttribute& a,
+                         bool swapping)
     {
-      os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK;" << endl;
+      WriteAttributeEmitter<T> write_attribute_emitter (ctx,
+                                                        scope_,
+                                                        swapping);
+      write_attribute_emitter.traverse (a);
+    }
+    
+    virtual void
+    pre (SemanticGraph::ReadWriteAttribute& a)
+    {
+      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
+
+      os << endl;
     }
 
     virtual void
     name (SemanticGraph::ReadWriteAttribute& a)
     {
-      os << scope_.name () << "_Servant::" << a.name ();
+      os << scope_.name () << "_Servant::" << a.name () << " (" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl;
+    }
+    
+    virtual void
+    get_raises_none (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << STRS[EXCP_SNGL] << endl;
+    }
+    
+    virtual void
+    get_raises_pre (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl;
+    }
+    
+    virtual void
+    get_raises_post (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << "))" << endl;
+    }
+    
+    virtual void
+    set_raises (SemanticGraph::ReadWriteAttribute&)
+    {
     }
 
     virtual void
-    traverse (SemanticGraph::ReadWriteAttribute& a)
+    post (SemanticGraph::ReadWriteAttribute& a)
     {
-      // Does nothing here, overridden for facet attributes.
-      this->pre (a);
-
-      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
-
-      os << endl;
-
-      // Overridden for facet attributes.
-      this->name (a);
-
-      os << " (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{";
+      os << "{";
          
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
@@ -501,44 +628,102 @@ namespace
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}";
 
-      // Does nothing here, overridden for facet attributes.
-      this->pre (a);
+      this->gen_write_operation (a, swapping);
+    }
 
-      os << "void" << endl;
+    virtual void
+    comma (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << "," << endl;
+    }
+    
+    // ReadAttribute
+    //
 
-      // Overridden for facet attributes.
-      this->name (a);
+    // Overridden by facet attribute emitter to do nothing.    
+    virtual void
+    gen_swapping_get (SemanticGraph::ReadAttribute& a)
+    {
+      os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");";
 
-       os << " (" << endl;
+      Traversal::ReadAttribute::belongs (a, ace_check_return_belongs_);
+      
+      os << endl;
+    }
 
-      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
+    virtual void
+    pre (SemanticGraph::ReadAttribute& a)
+    {
+      Traversal::ReadAttribute::belongs (a, read_belongs_);
 
-      os << " " << a.name () << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{";
+      os << endl;
+    }
+
+    virtual void
+    name (SemanticGraph::ReadAttribute& a)
+    {
+      os << scope_.name () << "_Servant::" << a.name () << " (" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl;
+    }
+    
+    virtual void
+    get_raises_none (SemanticGraph::ReadAttribute&)
+    {
+      os << STRS[EXCP_SNGL] << endl;
+    }
+    
+    virtual void
+    get_raises_pre (SemanticGraph::ReadAttribute&)
+    {
+      os << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl;
+    }
+    
+    virtual void
+    get_raises_post (SemanticGraph::ReadAttribute&)
+    {
+      os << "))" << endl;
+    }
+    
+    virtual void
+    set_raises (SemanticGraph::ReadAttribute&)
+    {
+    }
+
+    virtual void
+    post (SemanticGraph::ReadAttribute& a)
+    {
+      os << "{";
          
+      string swap_option = ctx.cl ().get_value ("custom-container", "");
+      bool swapping = (swap_option == "upgradeable");
+      
       if (swapping)
       {
-        this->gen_swapping_set ();
+        this->gen_swapping_get (a);
       }
                
-      os << "this->executor_->" << a.name () << " (" << endl
-         << a.name () << endl
-         << STRS[ENV_ARG] << ");" << endl
+      os << "return this->executor_->" << a.name () << " (" << endl
+         << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}";
+    }
+
+    virtual void
+    comma (SemanticGraph::ReadAttribute&)
+    {
+      os << "," << endl;
     }
 
   protected:
     T& scope_;
 
   private:
-    INArgTypeNameEmitter write_type_name_emitter_;
     ReturnTypeNameEmitter read_type_name_emitter_;
+    TypeNameEmitter type_name_emitter_;
     AceCheckReturnEmitter ace_check_return_emitter_;
-    Traversal::Belongs write_belongs_;
     Traversal::Belongs read_belongs_;
     Traversal::Belongs ace_check_return_belongs_;
+    Traversal::GetRaises get_raises_;
   };
 
   // Generates operations associated with readonly attributes.
@@ -653,6 +838,36 @@ namespace
            << scope_.name () << "_Servant_T<T>::" << o.name ();
       }
     };
+    
+    struct FacetWriteAttributeEmitter
+      : WriteAttributeEmitter<SemanticGraph::Interface>
+    {
+      // Since swapping does not affect facets, we can just pass 'false'
+      // to the base class constructor, and not override gen_swapping_set().
+      FacetWriteAttributeEmitter (Context& c, SemanticGraph::Interface& i)
+        : WriteAttributeEmitter<SemanticGraph::Interface> (c, i, false)
+      {}
+    
+      virtual void
+      pre (SemanticGraph::ReadWriteAttribute& a)
+      {
+        os << "template <typename T>" << endl;
+        
+        WriteAttributeEmitter<SemanticGraph::Interface>::pre (a);
+      }
+
+      virtual void
+      name (SemanticGraph::ReadWriteAttribute& a)
+      {
+        os << scope_.name () << "_Servant_T<T>::"
+           << a.name () << " (" << endl;
+   
+        Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
+        
+        os << " " << a.name () << endl
+           << STRS[ENV_SRC] << ")" << endl;
+      }
+    };
 
     struct FacetAttributeEmitter
       : AttributeEmitter<SemanticGraph::Interface>
@@ -662,57 +877,62 @@ namespace
         : AttributeEmitter<SemanticGraph::Interface> (c, i)
       {}
       
-      // No-op overrides because we don't want to generate any swapping
-      // code for facets.
+      // ReadWriteAttribute
+      //
       
+      // No-op override because we don't want to generate any swapping
+      // code for facets.      
       virtual void gen_swapping_get (SemanticGraph::ReadWriteAttribute&)
-      {
-      }
-      
-      virtual void gen_swapping_set ()
       {
       }
 
       virtual void
-      pre (SemanticGraph::ReadWriteAttribute&)
+      gen_write_operation (SemanticGraph::ReadWriteAttribute& a,
+                           bool /* swapping */)
+      {
+        FacetWriteAttributeEmitter write_attribute_emitter (ctx, scope_);
+        write_attribute_emitter.traverse (a);
+      }
+    
+      virtual void
+      pre (SemanticGraph::ReadWriteAttribute& a)
       {
         os << "template <typename T>" << endl;
+        
+        AttributeEmitter<SemanticGraph::Interface>::pre (a);
       }
 
       virtual void
       name (SemanticGraph::ReadWriteAttribute& a)
       {
-        os << scope_.name () << "_Servant_T<T>::" << a.name ();
+        os << scope_.name () << "_Servant_T<T>::"
+           << a.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl;
       }
-    };
 
-    struct FacetReadOnlyAttributeEmitter
-      : ReadOnlyAttributeEmitter<SemanticGraph::Interface>
-    {
-      FacetReadOnlyAttributeEmitter (Context& c,
-                                     SemanticGraph::Interface& i)
-        : ReadOnlyAttributeEmitter<SemanticGraph::Interface> (c, i)
-      {}
+      // ReadAttribute
+      //
       
-      // Overridden from ReadOnlyAttributeEmitter to do nothing,
-      // since we don't want to generate swapping-related code
-      // facet attributes.
-      
-      virtual void
-      gen_swapping_get (SemanticGraph::ReadAttribute&)
+      // No-op override because we don't want to generate any swapping
+      // code for facets.      
+      virtual void gen_swapping_get (SemanticGraph::ReadAttribute&)
       {
       }
-
+    
       virtual void
-      pre (SemanticGraph::ReadAttribute&)
+      pre (SemanticGraph::ReadAttribute& a)
       {
         os << "template <typename T>" << endl;
+        
+        AttributeEmitter<SemanticGraph::Interface>::pre (a);
       }
 
       virtual void
       name (SemanticGraph::ReadAttribute& a)
       {
-        os << scope_.name () << "_Servant_T<T>::" << a.name ();
+        os << scope_.name () << "_Servant_T<T>::"
+           << a.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl;
       }
     };
 
@@ -754,9 +974,7 @@ namespace
         interface_emitter.edge_traverser (inherits_);
 
         FacetAttributeEmitter attribute_emitter (ctx, i);
-        FacetReadOnlyAttributeEmitter read_only_attribute_emitter (ctx, i);
         defines_.node_traverser (attribute_emitter);
-        defines_.node_traverser (read_only_attribute_emitter);
 
         FacetOperationEmitter operation_emitter (ctx, i);
         defines_.node_traverser (operation_emitter);
@@ -3324,11 +3542,7 @@ namespace
         interface_emitter.edge_traverser (interface_inherits);
 
         AttributeEmitter<SemanticGraph::Component> attribute_emitter (ctx, t);
-        ReadOnlyAttributeEmitter<
-            SemanticGraph::Component
-          > read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
-        defines.node_traverser (read_only_attribute_emitter);
 
         OperationEmitter<SemanticGraph::Component> operation_emitter (ctx, t);
         defines.node_traverser (operation_emitter);
@@ -3382,11 +3596,7 @@ namespace
         component_emitter.edge_traverser (defines);
 
         AttributeEmitter<SemanticGraph::Component> attribute_emitter (ctx, t);
-        ReadOnlyAttributeEmitter<
-            SemanticGraph::Component
-          > read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
-        defines.node_traverser (read_only_attribute_emitter);
 
         component_emitter.traverse (t);
       }
@@ -3854,11 +4064,7 @@ namespace
         interface_emitter.edge_traverser (interface_inherits);
 
         AttributeEmitter<SemanticGraph::Home> attribute_emitter (ctx, t);
-        ReadOnlyAttributeEmitter<
-            SemanticGraph::Home
-          > read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
-        defines.node_traverser (read_only_attribute_emitter);
 
         OperationEmitter<SemanticGraph::Home> operation_emitter (ctx, t);
         defines.node_traverser (operation_emitter);
@@ -3966,11 +4172,7 @@ namespace
         home_emitter.edge_traverser (defines);
 
         AttributeEmitter<SemanticGraph::Home> attribute_emitter (ctx, t);
-        ReadOnlyAttributeEmitter<
-            SemanticGraph::Home
-          > read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
-        defines.node_traverser (read_only_attribute_emitter);
 
         home_emitter.traverse (t);
       }
