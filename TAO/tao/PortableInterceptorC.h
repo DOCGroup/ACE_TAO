@@ -93,47 +93,47 @@ namespace Dynamic
 
 namespace PortableInterceptor
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState HOLDING = 0;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState ACTIVE = 1;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState DISCARDING = 2;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState INACTIVE = 3;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState NON_EXISTENT = 4;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR__VAR_OUT_CH_
-
+  
   class Interceptor;
   typedef Interceptor *Interceptor_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         Interceptor
       >
     Interceptor_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Interceptor
@@ -141,73 +141,73 @@ namespace PortableInterceptor
     Interceptor_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR_CH_
-
+  
   class TAO_Export Interceptor
     : public virtual CORBA::Object
   {
   public:
     typedef Interceptor_ptr _ptr_type;
     typedef Interceptor_var _var_type;
-
+    
     // The static operations.
     static Interceptor_ptr _duplicate (Interceptor_ptr obj);
-
+    
     static void _tao_release (Interceptor_ptr obj);
-
+    
     static Interceptor_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Interceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Interceptor_ptr _nil (void)
     {
       return static_cast<Interceptor_ptr> (0);
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     Interceptor (void);

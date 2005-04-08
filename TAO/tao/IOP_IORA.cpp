@@ -100,7 +100,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       IOP_TaggedProfileSeq_0 (
         CORBA::tk_sequence,
@@ -225,7 +225,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       IOP_MultipleComponentProfile_0 (
         CORBA::tk_sequence,
@@ -272,7 +272,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       IOP_TaggedComponentList_0 (
         CORBA::tk_sequence,
@@ -319,7 +319,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       IOP_TaggedComponentSeq_0 (
         CORBA::tk_sequence,
@@ -415,7 +415,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       IOP_ServiceContextList_0 (
         CORBA::tk_sequence,
