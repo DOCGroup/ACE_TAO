@@ -1,3 +1,8 @@
+Fri Apr  8 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS3/jaws3/Concurrency.h:
+          Use template<>
+
 Fri Apr  8 12:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.cpp:
