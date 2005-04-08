@@ -49,11 +49,11 @@ namespace ACE
    * @brief Smart pointer implementation designed for use as a class
    *        member.
    *
-   * Using a @c std::auto_ptr\<\> as class member is sometimes
+   * Using a @c std::auto_ptr\<\> as a class member is sometimes
    * problematic since ownership of memory is transferred when copying
    * such members.  This @c Value_Ptr class is explicitly designed to
    * avoid such problems by performing copies of the underlying object
-   * rather than transfer ownership.  This for example, allows it to
+   * rather than transfer ownership.  This, for example, allows it to
    * be readily used as a member in classes placed inside STL
    * containers.
    *
