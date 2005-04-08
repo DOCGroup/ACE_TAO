@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:302
+// be\be_codegen.cpp:291
 
 
 #include "ServicesC.h"
@@ -36,10 +36,6 @@
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
-
-#if !defined (__ACE_INLINE__)
-#include "ServicesC.inl"
-#endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
@@ -104,7 +100,7 @@ void CORBA::ServiceOptionSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 CORBA::ServiceDetail::_tao_any_destructor (
@@ -170,7 +166,7 @@ void CORBA::ServiceDetailSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 CORBA::ServiceInformation::_tao_any_destructor (

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:291
+// be\be_codegen.cpp:291
 
 
 #include "PI_ForwardC.h"
@@ -41,12 +41,8 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "PI_ForwardC.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -75,7 +71,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -95,7 +91,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -115,7 +111,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -135,7 +131,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -155,7 +151,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -175,7 +171,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1528
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

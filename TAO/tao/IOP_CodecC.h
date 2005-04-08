@@ -59,13 +59,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -74,17 +67,6 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
-
-// TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:62
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
@@ -379,7 +361,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Codec;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_Codec;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
@@ -390,7 +372,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EncodingFormat;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_EncodingFormat;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -428,7 +410,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Encoding;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_Encoding;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -579,7 +561,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_CodecFactory;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_CodecFactory;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -697,11 +679,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::Encoding &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::Encoding &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:969
-
-#if defined (__ACE_INLINE__)
-#include "IOP_CodecC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

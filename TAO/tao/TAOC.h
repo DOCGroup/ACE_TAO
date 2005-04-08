@@ -327,11 +327,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO::BufferingConst
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::BufferingConstraint &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
-
-#if defined (__ACE_INLINE__)
-#include "TAOC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

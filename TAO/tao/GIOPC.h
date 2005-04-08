@@ -311,7 +311,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::TargetAddress
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
+// be\be_codegen.cpp:955
 
 #if defined (__ACE_INLINE__)
 #include "GIOPC.inl"

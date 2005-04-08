@@ -37,10 +37,6 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "IOP_IORC.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
 
@@ -51,7 +47,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 IOP::TaggedProfile::_tao_any_destructor (
@@ -117,7 +113,7 @@ void IOP::TaggedProfileSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 IOP::IOR::_tao_any_destructor (
@@ -130,7 +126,7 @@ IOP::IOR::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 IOP::TaggedComponent::_tao_any_destructor (
@@ -302,7 +298,7 @@ void IOP::TaggedComponentSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:68
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 IOP::ServiceContext::_tao_any_destructor (
