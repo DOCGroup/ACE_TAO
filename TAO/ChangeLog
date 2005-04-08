@@ -1,3 +1,19 @@
+Fri Apr  8 15:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RTPortableServer.pidl:
+        * tao/RTPortableServer/RTPortableServer_include.pidl:
+        * tao/RTPortableServer/RTPortableServer_includeC.h:
+        * tao/RTPortableServer/RTPortableServer_includeS.h:
+        * tao/RTPortableServer/RTPortableServerC.{h,cpp}:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+          Fixed bugzilla bug 2073. User of the RTPortableServer library
+          should include the RTPortableServer.h file, not RTPortableServerC.h
+          file. If they now do this, they get a compile error.
+
+        * tao/RTPortableServer/diffs/RTPortableServer.diff:
+        * tao/RTPortableServer/diffs/RTPortableServer_include.diff:
+          New diff files
+
 Fri Apr  8 14:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
