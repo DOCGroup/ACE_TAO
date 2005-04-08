@@ -20,7 +20,7 @@
  * The command used to generate code from this file is:
  *
  * tao_idl \
- *  -o orig -Gp -Gd -Ge 1 -Sa -Sc -St -GT -I../.. \
+ *  -o orig -Gp -Sci -Gd -Ge 1 -Sa -Sc -St -GT -I../.. \
  *          -Wb,export_macro=TAO_DynamicAny_Export \
  *          -Wb,export_include=dynamicany_export.h \
  *          -Wb,pre_include="ace/pre.h" \
@@ -37,7 +37,7 @@
  *
  * Note: The diffs are generated using:
  *
- *   for i in DynamicAnyC.{h,i,cpp}; do
+ *   for i in DynamicAnyC.{h,cpp}; do
  *     diff -wbu orig/$i $i > diffs/DynamicAny.diff
  *   done
  *
