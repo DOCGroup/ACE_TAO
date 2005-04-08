@@ -187,7 +187,7 @@ main (int argc, char *argv[])
       ACE_hrtime_t usecs = tv.sec ();
       usecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
       usecs += tv.usec ();
-      double average = ACE_U64_TO_U32(usecs) / repeat;
+      double average = ACE_HRTIME_CONVERSION(usecs) / repeat;
 
       if (!quiet)
         ACE_OS::printf ("AVE: %d %f\n",

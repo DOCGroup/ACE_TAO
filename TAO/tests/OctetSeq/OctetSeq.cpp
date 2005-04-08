@@ -137,8 +137,8 @@ run (char* buf, size_t bufsize,
       rusecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
       rusecs += rtv.usec ();
 
-      double write_average = ACE_U64_TO_U32(wusecs) / m;
-      double read_average = ACE_U64_TO_U32(rusecs) / m;
+      double write_average = ACE_HRTIME_CONVERSION(wusecs) / m;
+      double read_average = ACE_HRTIME_CONVERSION(rusecs) / m;
 
       count++;
       sum_read += read_average;
