@@ -58,11 +58,11 @@ TAO/orbsvcs/orbsvcs/CosNotification_Persist
 TAO/orbsvcs/orbsvcs/DsLogAdmin
 TAO/orbsvcs/orbsvcs/DsEventLogAdmin
 TAO/orbsvcs/orbsvcs/DsNotifyLogAdmin
+TAO/orbsvcs/orbsvcs/PortableGroup
 TAO/orbsvcs/orbsvcs/FTORB_Utils
 TAO/orbsvcs/orbsvcs/FT_ClientORB
 TAO/orbsvcs/orbsvcs/FT_ServerORB
 TAO/orbsvcs/orbsvcs/FtRtEvent
-TAO/orbsvcs/orbsvcs/PortableGroup
 TAO/orbsvcs/orbsvcs/FaultTolerance
 TAO/orbsvcs/orbsvcs/CosLoadBalancing
 TAO/orbsvcs/orbsvcs/IFRService
