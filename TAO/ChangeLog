@@ -1,3 +1,8 @@
+Fri Apr  8 09:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Generate :: before CORBA::Typecode
+
 Fri Apr  8 01:00:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory/Factory_Map.cpp:
@@ -15,7 +20,7 @@ Fri Apr  8 01:00:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  streams.  However, applications that do this directly or
 	  indirectly, such as when extracting Anys, must now link the
 	  TAO_TypeCodeFactory library to their application.
-	  
+
 	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 
 	  Cosmetic tweaks.
