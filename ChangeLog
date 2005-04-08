@@ -1,3 +1,10 @@
+Fri Apr  8 07:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          The TAO_IDL compiler now has the option to suppress generation
+          the inline files, so we now don't allow any empty inline files
+          in the repo, also not generated ones
+
 Wed Apr  6 23:13:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Value_Ptr.h:
