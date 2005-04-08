@@ -19,12 +19,10 @@ namespace CIAO
     // 
 
     DeploymentPlan::
-    DeploymentPlan (::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__)
+    DeploymentPlan ()
     : 
-    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (realizes__)),
     regulator__ ()
     {
-      realizes_->container (this);
     }
 
     DeploymentPlan::
@@ -33,12 +31,12 @@ namespace CIAO
     ::XSCRT::Type (), 
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
-    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_)),
+    realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
     regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
-      realizes_->container (this);
+      if (realizes_.get ()) realizes_->container (this);
       implementation_.reserve (s.implementation_.size ());
       {
         for (implementation_const_iterator i (s.implementation_.begin ());
@@ -91,7 +89,8 @@ namespace CIAO
       if (s.UUID_.get ()) UUID (*(s.UUID_));
       else UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
-      realizes (s.realizes ());
+      if (s.realizes_.get ()) realizes (*(s.realizes_));
+      else realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (0);
 
       implementation_.clear ();
       implementation_.reserve (s.implementation_.size ());
@@ -238,7 +237,16 @@ namespace CIAO
     void DeploymentPlan::
     realizes (::CIAO::Config_Handlers::ComponentInterfaceDescription const& e)
     {
-      *realizes_ = e;
+      if (realizes_.get ())
+      {
+        *realizes_ = e;
+      }
+
+      else
+      {
+        realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
+        realizes_->container (this);
+      }
     }
 
     // DeploymentPlan
@@ -582,8 +590,8 @@ namespace CIAO
 
         else if (n == "realizes")
         {
-          realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
-          realizes_->container (this);
+          ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
+          realizes (t);
         }
 
         else if (n == "implementation")
