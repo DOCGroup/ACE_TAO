@@ -73,8 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_extern.h"
 #include "global_extern.h"
 
-ACE_RCSID (be, 
-           be_produce, 
+ACE_RCSID (be,
+           be_produce,
            "$Id$")
 
 // Clean up before exit, whether successful or not.
@@ -207,19 +207,22 @@ BE_produce (void)
 
   // (2) Generate client inline and
   // set the context information.
-  ctx.reset ();
-  ctx.state (TAO_CodeGen::TAO_ROOT_CI);
-
-  // Create a visitor.
-  be_visitor_root_ci root_ci_visitor (&ctx);
-
-  // Generate code for the client inline file.
-  if (root->accept (&root_ci_visitor) == -1)
+  if (be_global->gen_client_inline ())
     {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "client inline for Root failed\n"));
-      BE_abort ();
+      ctx.reset ();
+      ctx.state (TAO_CodeGen::TAO_ROOT_CI);
+
+      // Create a visitor.
+      be_visitor_root_ci root_ci_visitor (&ctx);
+
+      // Generate code for the client inline file.
+      if (root->accept (&root_ci_visitor) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_produce - "
+                      "client inline for Root failed\n"));
+          BE_abort ();
+        }
     }
 
   // (3) Generate client stubs.
@@ -238,7 +241,7 @@ BE_produce (void)
       BE_abort ();
     }
 
-    // (4) Generate server header.
+  // (4) Generate server header.
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
 
@@ -253,28 +256,31 @@ BE_produce (void)
                   "server header for Root failed\n"));
       BE_abort ();
     }
-   
-  // If skeleton file generation is suppressed, we're done.  
+
+  // If skeleton file generation is suppressed, we're done.
   if (!be_global->gen_skel_files ())
     {
         BE_cleanup ();
         return;
     }
 
-  // (5) Generate server inline.
-  ctx.reset ();
-  ctx.state (TAO_CodeGen::TAO_ROOT_SI);
-
-  // Create a visitor.
-  be_visitor_root_si root_si_visitor (&ctx);
-
-  // Generate code for the server inline file.
-  if (root->accept (&root_si_visitor) == -1)
+  if (be_global->gen_server_inline ())
     {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "server inline for Root failed\n"));
-      BE_abort ();
+      // (5) Generate server inline.
+      ctx.reset ();
+      ctx.state (TAO_CodeGen::TAO_ROOT_SI);
+
+      // Create a visitor.
+      be_visitor_root_si root_si_visitor (&ctx);
+
+      // Generate code for the server inline file.
+      if (root->accept (&root_si_visitor) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_produce - "
+                      "server inline for Root failed\n"));
+          BE_abort ();
+        }
     }
 
   // (6) Generate server skeletons
