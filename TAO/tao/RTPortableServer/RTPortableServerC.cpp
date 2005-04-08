@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "RTPortableServerC.h"
+#include "RTPortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
@@ -89,7 +89,7 @@ RTPortableServer::POA::POA (void)
 RTPortableServer::POA::~POA (void)
 {}
 
-void 
+void
 RTPortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
@@ -107,10 +107,10 @@ RTPortableServer::POA::_narrow (
     {
       return POA::_nil ();
     }
-  
+
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-  
+
   return POA::_duplicate (proxy);
 }
 
@@ -124,10 +124,10 @@ RTPortableServer::POA::_unchecked_narrow (
     {
       return POA::_nil ();
     }
-  
+
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-  
+
   return POA::_duplicate (proxy);
 }
 
@@ -138,7 +138,7 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
