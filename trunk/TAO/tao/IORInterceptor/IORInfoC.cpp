@@ -38,10 +38,6 @@
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
-#if !defined (__ACE_INLINE__)
-#include "IORInfoC.inl"
-#endif /* !defined INLINE */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
 
@@ -53,7 +49,7 @@ namespace TAO
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_
   
   template<>
-  class TAO_IORInterceptor_Export Arg_Traits<PortableInterceptor::ObjectReferenceFactory>
+  class Arg_Traits<PortableInterceptor::ObjectReferenceFactory>
     : public
         Object_Arg_Traits_T<
             PortableInterceptor::ObjectReferenceFactory *,
