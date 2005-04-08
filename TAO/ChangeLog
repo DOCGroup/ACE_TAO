@@ -1,3 +1,15 @@
+Fri Apr  8 01:58:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+	  (visit_sequence):
+
+	  Place a space between the generated opening template argument
+	  list bracket '<' and the global scope qualifier "::", i.e.:
+	  "Sequence< ::CORBA::TypeCode_ptr ...>", not
+	  "Sequence<::CORBA::TypeCode_ptr ...>".  "<::" is a tri-graph and
+	  is not permitted to begin a template argument list.  Fixes g++
+	  build errors.
+
 Fri Apr  8 01:45:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp
