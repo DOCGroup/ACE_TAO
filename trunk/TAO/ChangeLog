@@ -1,3 +1,15 @@
+Fri Apr  8 09:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/advanced_resource.cpp:
+          Fixed pharlab issue
+
+        * tao/*.pidl:
+        * tao/*C.{h,cpp,inl}:
+        * tao/*S.{h,cpp,inl}:
+          Use the new -Sci and -Ssi option to suppress generating the
+          C.inl/S.inl file and removed them from the repo by regenerating
+          all files.
+
 Fri Apr  8 09:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
