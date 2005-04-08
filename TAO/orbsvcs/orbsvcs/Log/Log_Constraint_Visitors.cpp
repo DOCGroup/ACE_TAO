@@ -28,7 +28,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   CORBA::Any* value;
   ACE_NEW (value, CORBA::Any);
 
-#if defined (ACE_LACKS_LONGLONG_T)
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
   *value <<= ACE_U64_TO_U32 (this->rec_.id);
 #else
   *value <<= static_cast<ACE_UINT32> ((this->rec_.id));
@@ -42,7 +42,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   CORBA::Any* value2;
   ACE_NEW (value2, CORBA::Any);
 
-#if defined (ACE_LACKS_LONGLONG_T)
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
   *value2 <<= ACE_U64_TO_U32 (this->rec_.time)
 #else
   *value2 <<= static_cast<ACE_UINT32> ((this->rec_.time));

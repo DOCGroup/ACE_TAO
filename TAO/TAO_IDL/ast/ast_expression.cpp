@@ -457,7 +457,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_INT16_MAX)
+          if ((ev->u.ullval & ACE_INT16_MAX) != ev->u.ullval)
             {
                     return 0;
             }
@@ -568,7 +568,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_UINT16_MAX)
+          if ((ev->u.ullval & ACE_UINT16_MAX) != ev->u.ullval)
             {
                     return 0;
             }
@@ -667,7 +667,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_INT32_MAX)
+          if ((ev->u.ullval & ACE_INT32_MAX) != ev->u.ullval)
             {
                     return 0;
             }
@@ -767,7 +767,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_UINT32_MAX)
+          if ((ev->u.ullval & ACE_UINT32_MAX) != ev->u.ullval)
             {
                     return 0;
             }
@@ -918,11 +918,11 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
                     return 0;
             }
 
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.sval;
+          ev->u.ullval =  ev->u.sval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_ushort:
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.usval;
+          ev->u.ullval = ev->u.usval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_long:
@@ -931,11 +931,11 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
                     return 0;
             }
 
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.lval;
+          ev->u.ullval = ev->u.lval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_ulong:
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.ulval;
+          ev->u.ullval = ev->u.ulval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_longlong:
@@ -950,27 +950,43 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ulonglong:
           return ev;
         case AST_Expression::EV_bool:
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.bval;
+          ev->u.ullval = ev->u.bval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_float:
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+          if (ev->u.fval < 0.0
+              || ev->u.fval > (float) ACE_INT64_MAX)
+            {
+                    return 0;
+            }
+#else
           if (ev->u.fval < 0.0
               || ev->u.fval > (float) ACE_UINT64_MAX)
             {
                     return 0;
             }
+#endif
 
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.fval;
+          ev->u.ullval = ev->u.fval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_double:
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+          if (ev->u.dval < 0.0
+              || ev->u.dval > (double) ACE_INT64_MAX)
+            {
+                    return 0;
+            }
+#else
           if (ev->u.dval < 0.0
               || ev->u.dval > (double) ACE_UINT64_MAX)
             {
                     return 0;
             }
+#endif
 
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.dval;
+          ev->u.ullval = ev->u.dval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_char:
@@ -979,15 +995,15 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
                     return 0;
             }
 
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.cval;
+          ev->u.ullval = ev->u.cval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_wchar:
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.wcval;
+          ev->u.ullval = ev->u.wcval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_octet:
-          ev->u.ullval = (ACE_CDR::ULongLong) ev->u.oval;
+          ev->u.ullval = ev->u.oval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_longdouble:
@@ -1104,14 +1120,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          // Some compilers don't implement unsigned 64-bit to float conversions,
-          // so we are stuck with the signed 64-bit max value.
-          if (ev->u.ullval > ACE_UINT64_MAX
-              || (ACE_CDR::LongLong) ev->u.ullval > ACE_FLT_MAX)
-            {
-              return 0;
-            }
-
           ev->u.fval = (float) ((ACE_CDR::LongLong) ev->u.ullval);
           ev->et = AST_Expression::EV_float;
           return ev;
@@ -1287,7 +1295,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
        case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_CHAR_MAX)
+          if (( ev->u.ullval & ACE_CHAR_MAX) != ev->u.ullval)
             {
                     return 0;
             }
@@ -1403,7 +1411,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_WCHAR_MAX)
+          if ((ev->u.ullval & ACE_WCHAR_MAX) != ev->u.ullval )
             {
                     return 0;
             }
@@ -1520,7 +1528,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_OCTET_MAX)
+          if ((ev->u.ullval & ACE_OCTET_MAX) != ev->u.ullval)
             {
                     return 0;
             }
