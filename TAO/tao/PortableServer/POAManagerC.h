@@ -342,11 +342,7 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAMan
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POAManager::State &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
-
-#if defined (__ACE_INLINE__)
-#include "POAManagerC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
