@@ -1,3 +1,10 @@
+Fri Apr  8 01:45:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp
+	  (create_dii_request):
+
+	  Fixed emulated exception macro usage.
+
 Fri Apr  8 09:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/advanced_resource.cpp:

@@ -283,10 +283,14 @@ IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
   // more of it.
   for (CORBA::ULong i = 0; i < length; ++i)
     {
+      CORBA::TCKind const kind =
+        params[i].type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
       switch (params[i].mode)
       {
         case CORBA::PARAM_IN:
-          if (params[i].type->kind () == CORBA::tk_string
+          if (kind == CORBA::tk_string
               && ACE_OS::strcmp (params[i].name.in (), "artist") == 0)
             {
               // The servant will match the substring 'Beatles'.
@@ -295,7 +299,7 @@ IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
 
           break;
         case CORBA::PARAM_INOUT:
-          if (params[i].type->kind () == CORBA::tk_string
+          if (kind == CORBA::tk_string
               && ACE_OS::strcmp (params[i].name.in (), "title") == 0)
             {
               // This isn't the exact title, but the servant will find the
@@ -306,7 +310,7 @@ IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
           break;
         case CORBA::PARAM_OUT:
           {
-            if (params[i].type->kind () == CORBA::tk_float
+            if (kind == CORBA::tk_float
                 && ACE_OS::strcmp (params[i].name.in (), "price") == 0)
               {
                 CORBA::Float tmp = -1.0f;
