@@ -45,6 +45,9 @@ namespace TAO
   {
   public:
 
+    /// Destructor.
+    virtual ~Upcall_Command (void) {}
+
     /// Execute the upcall.
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
 

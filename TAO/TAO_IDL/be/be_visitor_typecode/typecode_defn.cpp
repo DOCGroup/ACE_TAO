@@ -4038,11 +4038,11 @@ be_visitor_typecode_defn::queue_lookup (
 
 void
 be_visitor_typecode_defn::
-queue_reset (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue)
+queue_reset (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> & queue)
 {
   while (!queue.is_empty ())
     {
-      be_visitor_typecode_defn::QNode *qnode;
+      be_visitor_typecode_defn::QNode * qnode = 0;
       (void) queue.dequeue_head (qnode);
       delete qnode;
     }

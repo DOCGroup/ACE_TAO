@@ -418,7 +418,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
   CORBA::ULong enum_v;
   CORBA::Char char_v;
   CORBA::WChar wchar_v;
-  CORBA::Boolean boolean_v;
+  CORBA::Boolean boolean_v = false;
 
   switch (kind)
     {
