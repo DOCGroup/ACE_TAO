@@ -1,3 +1,9 @@
+Sat Apr  9 10:04:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Thread_Hook.h (~ACE_Thread_Hook):
+
+	  Fixed "undefined reference" link-time error.
+
 Fri Apr  8 23:24:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/RB_Tree.cpp (remove_i):
