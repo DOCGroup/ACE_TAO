@@ -1,3 +1,10 @@
+Fri Apr  8 22:00:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp
+	  (enum_test):
+
+	  Corrected emulated exception usage.
+
 Fri Apr  8 16:44:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
