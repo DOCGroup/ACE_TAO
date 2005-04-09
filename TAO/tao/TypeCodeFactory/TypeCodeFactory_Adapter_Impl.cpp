@@ -346,7 +346,50 @@ TAO_TypeCodeFactory_Adapter_Impl::extract_typecode (TAO_InputCDR & cdr,
   if (!(cdr >> kind) || kind >= CORBA::TAO_TC_KIND_COUNT)
     return false;
 
-  return TAO::TypeCodeFactory::factory_map[kind] (kind, cdr, tc);
+  using namespace TAO::TypeCodeFactory;
+
+  static factory const factory_map[] =
+    {
+      tc_null_factory,
+      tc_void_factory,
+      tc_short_factory,
+      tc_long_factory,
+      tc_ushort_factory,
+      tc_ulong_factory,
+      tc_float_factory,
+      tc_double_factory,
+      tc_boolean_factory,
+      tc_char_factory,
+      tc_octet_factory,
+      tc_any_factory,
+      tc_TypeCode_factory,
+      tc_Principal_factory,
+      tc_objref_factory,
+      tc_struct_factory,
+      tc_union_factory,
+      tc_enum_factory,
+      tc_string_factory,
+      tc_sequence_factory,
+      tc_array_factory,
+      tc_alias_factory,
+      tc_except_factory,
+      tc_longlong_factory,
+      tc_ulonglong_factory,
+      tc_longdouble_factory,
+      tc_wchar_factory,
+      tc_wstring_factory,
+      tc_fixed_factory,
+      tc_value_factory,
+      tc_value_box_factory,
+      tc_native_factory,
+      tc_abstract_interface_factory,
+      tc_local_interface_factory,
+      tc_component_factory,
+      tc_home_factory,
+      tc_event_factory
+    };
+
+  return factory_map[kind] (kind, cdr, tc);
 }
 
 CORBA::TypeCode_ptr
