@@ -154,7 +154,13 @@ void FT_TestReplica_i::suicide(const char * note)
 //static
 const char * FT_TestReplica_i::repository_id()
 {
-  return FT_TEST::_tc_TestReplica->id();
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  const char * id =
+    FT_TEST::_tc_TestReplica->id(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return id;
 }
 
 int
