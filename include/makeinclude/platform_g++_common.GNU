@@ -16,22 +16,26 @@ CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 # version of the compiler.
 #
 ifndef templates
-  ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
-    templates = automatic
+  ifeq (4.,$(findstring 4.,$(CXX_VERSION)))
+    templates=automatic
   else
-    ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
+    ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
       templates = automatic
     else
-      ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
+      ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
         templates = automatic
       else
-        ifeq (2.9-gnupro, $(findstring 2.9-gnupro, $(CXX_VERSION)))
+        ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
           templates = automatic
         else
-          ifeq (egcs, $(findstring egcs, $(CXX_VERSION)))
-            templates = explicit
+          ifeq (2.9-gnupro, $(findstring 2.9-gnupro, $(CXX_VERSION)))
+            templates = automatic
           else
-            templates = explicit
+            ifeq (egcs, $(findstring egcs, $(CXX_VERSION)))
+              templates = explicit
+            else
+              templates = explicit
+            endif
           endif
         endif
       endif

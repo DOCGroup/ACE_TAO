@@ -1,3 +1,10 @@
+Fri Apr  8 22:28:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_g++_common.GNU (templates):
+
+	  Set templates variable to "automatic" if using g++ 4.x.  Thanks
+	  to John Michael Zorko for pointing out the problem.
+
 Fri Apr  8 16:39:00 2005  Gary Maxey <gary.maxey@hp.com>
 
 	* ace/Stats.cpp
