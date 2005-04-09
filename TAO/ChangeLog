@@ -1,3 +1,9 @@
+Fri Apr  8 23:46:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp (repository_id):
+
+	  Fixed emulated exception usage.
+
 Fri Apr  8 23:36:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp (coerce_value):
