@@ -36,7 +36,8 @@ class ACE_Export ACE_Thread_Hook
 public:
 
   /// Destructor.
-  virtual ~ACE_Thread_Hook (void);
+  virtual ~ACE_Thread_Hook (void) {}
+
   /**
    * This method can be overridden in a subclass to customize this
    * pre-function call "hook" invocation that can perform
