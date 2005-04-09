@@ -535,7 +535,9 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "my_enum") == 0);
 
-  CORBA::ULong count = td->type->member_count ();
+  CORBA::ULong count =
+    td->type->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   if (this->debug_)
     {
