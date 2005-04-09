@@ -1,3 +1,9 @@
+Sat Apr  9 10:07:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/DynAny_Test/test_dynunion.cpp (run_test):
+
+	  Fixed typo.
+
 Sat Apr  9 00:23:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Allocator.h (~TAO_Allocator):
