@@ -135,7 +135,7 @@ test_create_object_before_POA_reactivation(
 
   CORBA::Object_var object =
     persistent_poa->create_reference_with_id (oid.in (),
-                                              id,
+                                              id
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

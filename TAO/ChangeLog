@@ -1,5 +1,7 @@
 Sat Apr  9 10:07:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* tests/Bug_1535_Regression/bug_1535_regression.cpp
+	  (test_create_object_before_POA_reactivation):
 	* tests/DynAny_Test/test_dynunion.cpp (run_test):
 
 	  Fixed typo.
