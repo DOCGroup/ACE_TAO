@@ -1,3 +1,23 @@
+Sat Apr  9 00:23:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Allocator.h (~TAO_Allocator):
+
+	  Added virtual destructor.  Fixes "contains virtual functions but
+	  non-virtual destructor" g++ 4.0 (CVS snapshot) warning.
+
+	* tao/TypeCodeFactory/Factory_Map.h (factory_map):
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp
+	  (extract_typecode):
+
+	  Moved TypeCode factory function map to extract_typecode()
+	  method.  Addresses unused variable warnings exhibited by a G++
+	  4.0 CVS snapshot.
+
+	* tao/Valuetype/ValueFactory_Map.cpp (rebind, unbind):
+
+	  Initialize variables.  Addresses "variables may be used
+	  unitialized" g++ 4.0 (CVS snapshot) warnings.
+
 Sat Apr  9 00:02:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp

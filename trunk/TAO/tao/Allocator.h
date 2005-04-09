@@ -31,9 +31,12 @@ namespace TAO
   template <typename handler_type>
   class TAO_Allocator
   {
-    public:
-      virtual handler_type *allocate () = 0;
-      virtual void release (handler_type *ptr) = 0;
+  public:
+
+    virtual ~TAO_Allocator (void) {}
+
+    virtual handler_type *allocate () = 0;
+    virtual void release (handler_type *ptr) = 0;
   };
 }
 
