@@ -960,15 +960,18 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
             {
                     return 0;
             }
+
+          ev->u.ullval = static_cast<ACE_UINT32> (ev->u.fval);
 #else
           if (ev->u.fval < 0.0
               || ev->u.fval > (float) ACE_UINT64_MAX)
             {
                     return 0;
             }
+
+          ev->u.ullval = static_cast<ACE_UINT64> (ev->u.fval);
 #endif
 
-          ev->u.ullval = ev->u.fval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_double:
@@ -978,15 +981,18 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
             {
                     return 0;
             }
+
+          ev->u.ullval = static_cast<ACE_UINT32> (ev->u.dval);
 #else
           if (ev->u.dval < 0.0
               || ev->u.dval > (double) ACE_UINT64_MAX)
             {
                     return 0;
             }
+
+          ev->u.ullval = static_cast<ACE_UINT64> (ev->u.dval);
 #endif
 
-          ev->u.ullval = ev->u.dval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_char:
@@ -1748,7 +1754,7 @@ AST_Expression::eval_bin_op (void)
     {
       return 0;
     }
-    
+
   this->pd_v1->set_ev (this->pd_v1->coerce (EV_double));
 
   if (this->pd_v1->ev () == 0)
@@ -2284,7 +2290,7 @@ AST_Expression::eval_internal (AST_Expression::EvalKind ek)
       return eval_kind (this->pd_ev,
                         ek);
     }
-    
+
   if (ek == EK_bool || ek == EK_octet)
     {
       // Operators may be used only with integer or floating point types.
@@ -2847,4 +2853,3 @@ AST_Expression::set_n (UTL_ScopedName *new_n)
 {
   this->pd_n = new_n;
 }
-

@@ -84,6 +84,9 @@ class AST_EventTypeFwd;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
+
+  virtual ~AST_Generator (void) {}
+
   // Operations.
 
   // Create a node representing a predefined type.

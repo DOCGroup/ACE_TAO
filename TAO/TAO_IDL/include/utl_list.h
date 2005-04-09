@@ -121,7 +121,10 @@ private:
 class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
+
   UTL_ListActiveIterator (UTL_List *s);
+
+  virtual ~UTL_ListActiveIterator (void) {}
 
   // Get next list.
   virtual void next (void);

@@ -283,7 +283,7 @@ CORBA::NVList::item (CORBA::ULong n
                         CORBA::NamedValue::_nil ());
     }
 
-  CORBA::NamedValue_ptr *nv;
+  CORBA::NamedValue_ptr *nv = 0;
 
   this->values_.get (nv, n);
   return *nv;
