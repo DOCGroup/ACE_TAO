@@ -232,8 +232,6 @@ Test_DynUnion::run_test (void)
       ACE_ENDTRY;
       ACE_TRY_CHECK;
 
-      if (equal_tc)
-
       if (!CORBA::is_nil (s_out3.in ()))
         {
           CORBA::Boolean const equal_tc =
