@@ -1088,7 +1088,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].name) == 0);
     }
 
-  CORBA::Contained::Description_var desc = 
+  CORBA::Contained::Description_var desc =
     svar->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -1259,7 +1259,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   ACE_ASSERT (length == 2);
-  
+
   contents = svar->contents (CORBA::dk_all,
                              0
                              ACE_ENV_ARG_PARAMETER);
@@ -1337,7 +1337,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
       // Can't use ACE_ASSERT here because we don't know the order
       // of the results of the search.
     }
-    
+
   CORBA::Container::DescriptionSeq_var cont_desc =
     this->repo_->describe_contents (CORBA::dk_all,
                                     0,
@@ -1632,7 +1632,7 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
 
       TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
       CORBA::ULong val;
-      
+
       TAO::Any_Impl *impl = label->impl ();
       TAO_OutputCDR out;
       impl->marshal_value (out);
@@ -1857,7 +1857,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::StructMemberSeq_var out_members =
     exvar->members (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   length = out_members->length ();
   int cmp_result = 0;
 
@@ -2059,11 +2059,11 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ASSERT (length == 2);
 
   CORBA::TypeDescription *td;
-  
+
   for (i = 0; i < length; ++i)
     {
       CORBA::DefinitionKind kind = cont_desc[i].kind;
-      
+
       if (kind == CORBA::dk_Exception)
         {
           cont_desc[i].value >>= ed;
@@ -2884,7 +2884,7 @@ Admin_Client::move_test (ACE_ENV_SINGLE_ARG_DECL)
   e_members[0] = CORBA::string_dup ("TEN");
   e_members[1] = CORBA::string_dup ("ELEVEN");
 
-  CORBA::EnumDef_var e_var2 = 
+  CORBA::EnumDef_var e_var2 =
     this->repo_->create_enum ("IDL:i_enum:1.0",
                               "i_enum",
                               "1.0",
@@ -2898,7 +2898,7 @@ Admin_Client::move_test (ACE_ENV_SINGLE_ARG_DECL)
   const char *s_names[] = {"s_string", "s_enum"};
 
   s_members[0].name = s_names[0];
-  s_members[0].type_def = 
+  s_members[0].type_def =
     this->repo_->get_primitive (CORBA::pk_string
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -3189,7 +3189,7 @@ Admin_Client::move_test (ACE_ENV_SINGLE_ARG_DECL)
                       i,
                       str.in ()));
         }
-        
+
       cmp_result =
         ACE_OS::strcmp (str.in (), (scoped + u_names[i]).c_str ());
 
@@ -3233,7 +3233,7 @@ Admin_Client::move_test (ACE_ENV_SINGLE_ARG_DECL)
                       i,
                       str.in ()));
         }
-        
+
       cmp_result =
         ACE_OS::strncmp (str.in (), base, ACE_OS::strlen (base));
 
@@ -3419,7 +3419,7 @@ Admin_Client::module_test (ACE_ENV_SINGLE_ARG_DECL)
           str.in ()
         ));
     }
-    
+
   int cmp_result =
     ACE_OS::strcmp (str.in (), "::outer::middle::inner::iface::op");
 
@@ -3440,7 +3440,7 @@ Admin_Client::module_test (ACE_ENV_SINGLE_ARG_DECL)
           str.in ()
         ));
     }
-    
+
   cmp_result =
     ACE_OS::strcmp (str.in (), "::outer::middle::inner::iface::op");
 
@@ -3479,7 +3479,7 @@ Admin_Client::module_test (ACE_ENV_SINGLE_ARG_DECL)
               str.in ()
             ));
         }
-        
+
       cmp_result =
         ACE_OS::strcmp (str.in (), "::outer::middle::inner::iface::op");
 
