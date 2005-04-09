@@ -10,14 +10,14 @@ Fri Apr  8 16:44:00 2005  Gary Maxey <gary.maxey@hp.com>
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
 
 	  Add missing semicolon
-	
+
 Fri Apr  8 13:15:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tests/CDR/allocator.cpp
         * tests/CDR/growth.cpp
         * tests/OctetSeq/OctetSeq.cpp
 
-          Use ACE_HRTIME_CONVERSION instead of ACE_U64_TO_U32 for 
+          Use ACE_HRTIME_CONVERSION instead of ACE_U64_TO_U32 for
           platform independence.
 
         * tests/Collocation_Tests/Hello.cpp
@@ -25,13 +25,13 @@ Fri Apr  8 13:15:00 2005  Gary Maxey <gary.maxey@hp.com>
           Use portable thread IDs
 
         * tests/Queued_Message_Test/Queued_Message_Test.cpp
-        
+
           Add conditional code for platform
-        
+
 Fri Apr  8 12:32:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tao/Any_Basic_Impl.cpp
-        
+
           In Any_Basic_Impl::assign_value handle unsigned long long
           when ACE_LACKS_UNSIGNEDLONGLONG_T.
 
@@ -40,21 +40,21 @@ Fri Apr  8 12:32:00 2005  Gary Maxey <gary.maxey@hp.com>
           Add checks for ACE_LACKS_UNSIGNEDLONGLONG_T
 
         * TAO_IDL/include/idl_uns_long.h
-        
+
           Defines idl_uns_long typedef based on machine capabilities
 
         * TAO_IDL/include/ast_expression.h
-        
+
           Defines union elements for AST_ExprValue based on machine
           capabilities
 
         * TAO_IDL/be/be_sunsoft.cpp
-        
+
           Use ACE_INT64_FORMAT_SPECIFIER in long long print statement
           for platform independence.  (Defined in ace/Basic_Types.h).
 
         * TAO_IDL/ast/ast_expression.cpp
-        
+
           Replace expressions such as:
              if (ev->u.ullval > (ACE_CDR::ULongLong) ACE_INT16_MAX)
           with
