@@ -846,11 +846,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (const EXT_ID &k, 
       i = z->item ();
       return -1 == this->remove_i (z) ? -1 : 1;
     }
-  else
-  {
-    // No matching node was found: return 0.
-    return 0;
-  }
+
+  // No matching node was found: return 0.
+  return 0;
 }
 
 /// Recursive function to dump the state of an object.
