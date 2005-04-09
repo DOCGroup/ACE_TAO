@@ -10,7 +10,7 @@ Fri Apr  8 22:42:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/Thread_Hook.h (~ACE_Thread_Hook):
 
 	  Added virtual destructors.  Fixes "contains virtual functions
-	  but no virtual destructor" g++ 4.0 (CVS snapshot) warnings.
+	  but non-virtual destructor" g++ 4.0 (CVS snapshot) warnings.
 
 Fri Apr  8 22:28:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
