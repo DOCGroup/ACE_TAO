@@ -1787,7 +1787,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
   while ((item = this->terminated_thr_list_.delete_head ()) != 0)
     {
       term_thr_list_copy.insert_tail (item);
-    }                
+    }
 #endif /* VXWORKS */
     // Release the guard, giving other threads a chance to run.
   }
