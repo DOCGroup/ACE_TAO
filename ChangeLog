@@ -1,3 +1,9 @@
+Fri Apr  8 23:24:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/RB_Tree.cpp (remove_i):
+
+	  Fixed "control reaches end of non-void function" warning.
+
 Fri Apr  8 22:42:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Capabilities.cpp (getval, resetcaps):
@@ -6,6 +12,7 @@ Fri Apr  8 22:42:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Initialize variables.  Addresses "variables may be used
 	  unitialized" g++ 4.0 (CVS snapshot) warnings.
 
+	* ace/Connector.h (~ACE_Connector_Base):
 	* ace/Reactor_Timer_Interface.h (~ACE_Reactor_Timer_Interface):
 	* ace/Thread_Hook.h (~ACE_Thread_Hook):
 

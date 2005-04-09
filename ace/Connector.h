@@ -39,6 +39,8 @@ class ACE_Connector_Base
 {
 public:
 
+  virtual ~ACE_Connector_Base (void) {}
+
   /// Initialize the Svc_Handler.
   virtual void initialize_svc_handler (ACE_HANDLE handle,
                                        SVC_HANDLER *svc_handler) = 0;
