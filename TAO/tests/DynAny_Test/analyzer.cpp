@@ -55,15 +55,22 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = da->type();
 
+  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   // strip aliases
-  while( tc->kind() == CORBA::tk_alias )
+  while (kind == CORBA::tk_alias)
     {
-      tc = tc->content_type();
+      tc = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 
-  switch( tc->kind() )
+  switch (kind)
    {
-     case CORBA::tk_struct :
+     case CORBA::tk_struct:
       {
         DynamicAny::DynStruct_var ds
           = DynamicAny::DynStruct::_narrow(da ACE_ENV_ARG_PARAMETER);
@@ -154,7 +161,12 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
                        "ARRAY\n"));
 
           level_++;
-          for( unsigned int i = 0 ; i < tc->length() ; i++ )
+
+          CORBA::ULong const len =
+            tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
+          for( unsigned int i = 0 ; i < len; ++i)
             {
               tab(level_);
 
@@ -254,9 +266,16 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
      case CORBA::tk_TypeCode:
        {
          tab(level_);
-         if (debug_) \
-           ACE_DEBUG ((LM_DEBUG,
-                       "  Value (TypeCode) = %d\n" , da->get_typecode()->kind()));
+         if (debug_)
+           {
+             CORBA::TCKind const kind =
+               da->get_typecode ()->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+             ACE_CHECK;
+
+             ACE_DEBUG ((LM_DEBUG,
+                         "  Value (TypeCode) = %d\n",
+                         static_cast<int> (kind)));
+           }
        }
        break;
 
@@ -264,8 +283,15 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
        {
          tab(level_);
          if (debug_)
-           ACE_DEBUG ((LM_DEBUG,
-                      "  unhandled typecode = %d\n", (int) tc->kind()));
+           {
+             CORBA::TCKind const kind =
+               tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+             ACE_CHECK;
+
+             ACE_DEBUG ((LM_DEBUG,
+                         "  unhandled typecode = %d\n",
+                         static_cast<int> (kind)));
+           }
        }
        break;
    }

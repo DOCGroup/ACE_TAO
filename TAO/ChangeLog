@@ -1,3 +1,19 @@
+Sat Apr  9 00:02:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp
+	  (copy):
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp (copy):
+
+	  Added missing semi-colon.
+
+	* tests/Bug_1535_Regression/bug_1535_regression.cpp
+	  (test_create_object_before_servant_reactivation):
+	  (test_create_object_before_POA_reactivation):
+	* tests/DynAny_Test/analyzer.cpp (analyze): 
+	* tests/DynAny_Test/test_dynunion.cpp (run_test):
+
+	  Fixed emulated exception usage.
+
 Fri Apr  8 23:46:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp (repository_id):
