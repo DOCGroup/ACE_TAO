@@ -55,7 +55,7 @@ Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  copy->importance (this->importance_ ACE_ENV_ARG_PARAMETER)
+  copy->importance (this->importance_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return copy;
