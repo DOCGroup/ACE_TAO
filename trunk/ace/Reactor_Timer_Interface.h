@@ -32,6 +32,8 @@ class ACE_Export ACE_Reactor_Timer_Interface
 {
 public:
 
+  virtual ~ACE_Reactor_Timer_Interface (void) {}
+
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,

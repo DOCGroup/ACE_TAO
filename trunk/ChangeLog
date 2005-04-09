@@ -1,3 +1,17 @@
+Fri Apr  8 22:42:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Capabilities.cpp (getval, resetcaps):
+	* ace/Thread_Manager.cpp (ACE_EXECUTE_OP):
+
+	  Initialize variables.  Addresses "variables may be used
+	  unitialized" g++ 4.0 (CVS snapshot) warnings.
+
+	* ace/Reactor_Timer_Interface.h (~ACE_Reactor_Timer_Interface):
+	* ace/Thread_Hook.h (~ACE_Thread_Hook):
+
+	  Added virtual destructors.  Fixes "contains virtual functions
+	  but no virtual destructor" g++ 4.0 (CVS snapshot) warnings.
+
 Fri Apr  8 22:28:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_g++_common.GNU (templates):
