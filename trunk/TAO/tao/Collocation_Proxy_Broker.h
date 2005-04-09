@@ -46,6 +46,8 @@ namespace TAO
 
   public:
 
+    virtual ~Collocation_Proxy_Broker (void) {}
+
     virtual Collocation_Strategy get_strategy (CORBA::Object_ptr obj
                                                ACE_ENV_ARG_DECL) = 0;
 

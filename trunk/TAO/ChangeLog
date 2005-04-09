@@ -1,3 +1,33 @@
+Fri Apr  8 23:36:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp (coerce_value):
+
+	  Explicitly cast floating point values to ACE_UINT64 (or
+	  ACE_UINT32 when ACE_LACKS_USIGNEDLONGLONG_T is defined) when
+	  assigning to an ACE_UINT64 value.  Fixes g++ conversion
+	  warnings.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (queue_reset):
+	* tao/NVList.cpp (item):
+	* tao/append.cpp (append):
+	* tao/skip.cpp (skip):
+
+	  Initialize variables.  Addresses "variables may be used
+	  unitialized" g++ 4.0 (CVS snapshot) warnings.
+
+	* TAO_IDL/include/ast_decl.h (~COMMON_Base):
+	* TAO_IDL/include/ast_generator.h (~AST_Generator):
+	* TAO_IDL/include/utl_list.h (~UTL_ListActiveIterator):
+	* tao/Collocation_Proxy_Broker.h (~Collocation_Proxy_Broker):
+	* tao/GIOP_Message_Generator_Parser.h
+	  (~TAO_GIOP_Message_Generator_Parser):
+	* tao/New_Leader_Generator.h (~TAO_New_Leader_Generator):
+	* tao/PortableServer/Upcall_Command.h (~Upcall_Command):
+
+	  Added these virtual destructors.  Fixes "contains virtual
+	  functions but non-virtual destructor" g++ 4.0 (CVS snapshot)
+	  warnings.
+
 Fri Apr  8 22:00:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp

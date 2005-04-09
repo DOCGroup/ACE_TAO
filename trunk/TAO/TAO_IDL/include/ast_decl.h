@@ -98,6 +98,8 @@ public:
   COMMON_Base (idl_bool local = I_FALSE,
                idl_bool abstract = I_FALSE);
 
+  virtual ~COMMON_Base (void) {}
+
   virtual idl_bool is_local (void);
   virtual idl_bool is_abstract (void);
 
