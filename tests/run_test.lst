@@ -71,6 +71,7 @@ Map_Manager_Test
 Map_Test
 Max_Default_Port_Test: !ST
 Mem_Map_Test: !chorus !Unicos !VxWorks
+Memcpy_Test
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus
