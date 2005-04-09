@@ -1,3 +1,17 @@
+Sat Apr  9 17:00:37 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
+
+	* tests/Memcpy_Test.cpp:
+
+	  Added a test to test the speed of memcpy () for data sizes less
+	  than 16 bytes. This test checks to see if loop unrolling is
+	  faster than memcpy for these data sizes.
+
+	* tests/run_test.lst:
+	* tests/tests.mpc:
+
+	  Updated the run list file to run this test and created a
+	  corresponding entry to build this test.
+
 Sat Apr  9 10:04:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Thread_Hook.h (~ACE_Thread_Hook):
