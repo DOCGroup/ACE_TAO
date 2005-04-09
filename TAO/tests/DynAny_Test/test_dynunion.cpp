@@ -122,7 +122,12 @@ Test_DynUnion::run_test (void)
       CORBA::TypeCode_var s_out1 = fa1->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (s_out1.in ()->equal (data.m_typecode1))
+      CORBA::Boolean const equal_tc1 =
+        s_out1->equal (data.m_typecode1
+                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (equal_tc1)
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
@@ -163,10 +168,16 @@ Test_DynUnion::run_test (void)
       ftc1->seek (1
                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::TypeCode_var s_out2 = ftc1->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var s_out2 =
+        ftc1->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (s_out2.in ()->equal (data.m_typecode1))
+      CORBA::Boolean const equal_tc2 =
+        s_out2->equal (data.m_typecode1
+                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (equal_tc2)
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
@@ -221,11 +232,24 @@ Test_DynUnion::run_test (void)
       ACE_ENDTRY;
       ACE_TRY_CHECK;
 
-      if ( ! CORBA::is_nil (s_out3.in ()) &&
-           s_out3.in ()->equal (data.m_typecode1))
+      if (equal_tc)
+
+      if (!CORBA::is_nil (s_out3.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
+          CORBA::Boolean const equal_tc =
+            s_out3->equal (data.m_typecode1
+                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (equal_tc)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "++ OK ++\n"));
+            }
+          else
+            {
+              ++this->error_count_;
+            }
         }
       else
         {
@@ -268,9 +292,14 @@ Test_DynUnion::run_test (void)
       CORBA::TypeCode_var tc3 = dp3->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      CORBA::Boolean const equal_tc3 =
+        data.m_typecode1->equal (tc3.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (!ACE_OS::strcmp (m_nm.in (), "tc")
           && tk == CORBA::tk_TypeCode
-          && data.m_typecode1->equal (tc3.in ()))
+          && equal_tc3)
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
