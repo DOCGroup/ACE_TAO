@@ -154,6 +154,13 @@ project(Cache Map Manager Test) : acetest {
   }
 }
 
+project(Mem Copy Test) : acetest {
+  exename = Memcpy_Test
+  Source_Files {
+    Memcpy_Test.cpp
+  }
+}
+
 project(Cached Accept Conn Test) : acetest {
   exename = Cached_Accept_Conn_Test
   Source_Files {
