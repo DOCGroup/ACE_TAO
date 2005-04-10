@@ -34,7 +34,7 @@ Sun Apr 10 02:10:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Removed "#pragma once" preprocessor directive from this
 	  implementation source file.  "#pragma once" is only meant for
-	  use in sources that are include by others.
+	  use in sources that are included by others.
 
 Sat Apr  9 21:05:23 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
