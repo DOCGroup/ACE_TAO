@@ -1,3 +1,11 @@
+Sun Apr 10 15:05:35 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tests/tests.mpc:
+        * tests/Memcpy_Test.cpp:
+
+          Changed the name of the test to ensure that it is same as the
+          log file created.
+
 Sun Apr 10 03:02:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/config-g++-common.h:

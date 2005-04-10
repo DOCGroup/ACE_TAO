@@ -154,7 +154,7 @@ project(Cache Map Manager Test) : acetest {
   }
 }
 
-project(Mem Copy Test) : acetest {
+project(Memcpy_Test) : acetest {
   exename = Memcpy_Test
   Source_Files {
     Memcpy_Test.cpp
