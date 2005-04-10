@@ -50,18 +50,18 @@ namespace { enum { ITERATIONS = 1000000 } ; }
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Memcopy Performance Test"));
+  ACE_START_TEST (ACE_TEXT ("Memcpy_Test"));
 
   //ACE_Time_Value start, now ;
   struct timeval start, now;
 
   for( int i = ITERATIONS ; i > 0 ; --i) {
-    testit( 0) ;
+    testit(0) ;
   }
 
   start = ACE_OS::gettimeofday () ;
   for( int i = ITERATIONS ; i > 0 ; --i) {
-    testit( 0) ;
+    testit(0) ;
   }
 
   now = ACE_OS::gettimeofday() ;
@@ -75,15 +75,17 @@ run_main (int, ACE_TCHAR *[])
 
   start = ACE_OS::gettimeofday () ;
   for( int i = ITERATIONS ; i > 0 ; --i) {
-    testit( 1) ;
+    testit(1) ;
   }
   now = ACE_OS::gettimeofday() ;
 
   double slow = 1000000 * (now.tv_sec-start.tv_sec) + now.tv_usec - start.tv_usec ;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%f uSec per iteration for fast version.\n"),
+              ACE_TEXT ("%f uSec per iteration for slow version.\n"),
               slow / ITERATIONS
             )) ;
+
+  ACE_END_TEST;
 
   return 0 ;
 }
