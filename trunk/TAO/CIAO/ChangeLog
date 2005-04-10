@@ -1,3 +1,10 @@
+Sat Apr 09 17:15:23 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+  * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+  
+    Changed the after clause to point to the XSC_Config_Handlers
+    instad of the old config handlers.
+    
 Sat Apr 09 23:59:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp
