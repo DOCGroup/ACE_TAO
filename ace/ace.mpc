@@ -45,6 +45,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Capabilities.cpp
     CDR_Base.cpp
     CDR_Stream.cpp
+    CDR_Size.cpp
     Cleanup.cpp
     Codeset_IBM1047.cpp
     Codeset_Registry.cpp

@@ -175,8 +175,6 @@ namespace ACE_RMCast
 
       Address addr;
 
-      //@@ CDR-specific.
-      //
       // Block for up to timeout time waiting for an incomming message.
       //
       for (;;)

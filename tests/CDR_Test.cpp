@@ -22,6 +22,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/CDR_Stream.h"
+#include "ace/CDR_Size.h"
 #include "ace/SString.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdlib.h"
@@ -77,6 +78,7 @@ short_stream (void)
 
   // Build an output stream
   ACE_OutputCDR os;
+  ACE_SizeCDR ss;
 
   // Basic types for output
   ACE_CDR::Char ch = 'A';
@@ -99,8 +101,8 @@ short_stream (void)
   ACE_CDR::Double d_array[3] = { -123.456789, 0.0, 123.456789 };
 
   ACE_OutputCDR::from_char fc (ch);
-  os << fc;
   ACE_OutputCDR::from_wchar fwc (wch);
+  os << fc;
   os << fwc;
   os << str;
   os << wstr;
@@ -114,6 +116,29 @@ short_stream (void)
   os.write_long_array (l_array, 3);
   os.write_float_array (f_array, 3);
   os.write_double_array (d_array, 3);
+
+  // Do the same for size stream.
+  ss << fc;
+  ss << fwc;
+  ss << str;
+  ss << wstr;
+  ss << s;
+  ss << us;
+  ss << l;
+  ss << ul;
+  ss << f;
+  ss << d;
+  ss.write_short_array (s_array, 3);
+  ss.write_long_array (l_array, 3);
+  ss.write_float_array (f_array, 3);
+  ss.write_double_array (d_array, 3);
+
+  // Check the size.
+  if (ss.total_length () != os.total_length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("representation length does not match")),
+                      1);
 
   const ACE_Message_Block *out_mb = os.begin ();
   size_t len = out_mb->length ();
