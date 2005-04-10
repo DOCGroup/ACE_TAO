@@ -54,6 +54,7 @@ libACE_la_SOURCES = \
   Basic_Types.cpp \
   CDR_Base.cpp \
   CDR_Stream.cpp \
+  CDR_Size.cpp \
   Capabilities.cpp \
   Cleanup.cpp \
   Codecs.cpp \
@@ -398,6 +399,8 @@ nobase_include_HEADERS = \
   CDR_Base.inl \
   CDR_Stream.h \
   CDR_Stream.inl \
+  CDR_Size.h \
+  CDR_Size.inl \
   CORBA_macros.h \
   Cache_Map_Manager_T.cpp \
   Cache_Map_Manager_T.h \
