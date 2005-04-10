@@ -1,3 +1,11 @@
+Sun Apr 10 02:26:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/fe/fe_global.cpp:
+
+	  Removed export macros from forward declarations.  They aren't
+	  necessary, and cause the forthcoming g++ 4.0 to issue an error
+	  when enabling visibility attribute support.
+
 Sat Apr  9 21:19:51 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/ior_corbaloc/run_test.pl:
