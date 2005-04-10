@@ -1,7 +1,6 @@
 //$Id$
 
-#include "ace/Time_Value.h"
-#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_sys_time.h"
 #include "test_config.h"
 
 void*
