@@ -1,3 +1,13 @@
+Sat Apr  9 21:19:51 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/ior_corbaloc/run_test.pl:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
+
+          Fixed support for default object key when using either corbaloc:
+          or corbaname: urls. Added a case to the ior_corbaloc example
+          to cover the case of defaulted RIR corbanames.
+
 Sat Apr  9 10:07:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Bug_1535_Regression/bug_1535_regression.cpp

@@ -81,8 +81,6 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
 
   ACE_TRY
     {
-      char rir_prot [] = "rir:";
-
       // The position of the seperator between the obj_addr and key
       // string
       CORBA::ULong pos_seperator = 0;
@@ -96,26 +94,12 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
         corbaname_str.substring (pos_seperator + 1,
                                  -1);
 
-      // Make it in a form understandable by <corbaloc> scheme
+      // Prepare a suitable corbaloc string for the name service.
+      // CORBALOC assumes "NameService" for the object key if none
+      // is provided, so just pass everything between "corbaname:"
+      // and "#" as the address
       ACE_CString corbaloc_addr ("corbaloc:", 0, 1);
-
-      if (ACE_OS::strncmp (corbaname,
-                           rir_prot,
-                           sizeof (rir_prot)) != 0)
-        {
-          // Implies that <iiop:> protocol is to be used.
-          // So .. we need to get the host address where an object of
-          // type NamingContext can be found.
-          // Get the obj_addr
-          ACE_CString obj_addr = corbaname_str.substring (0,
-                                                          pos_seperator);
-
-          corbaloc_addr += obj_addr;
-
-        }
-
-      ACE_CString name_service ("/NameService", 0, 1);
-      corbaloc_addr += name_service;
+      corbaloc_addr += corbaname_str.substring (0, pos_seperator);
 
       // Obtain a reference to the naming context
       CORBA::Object_var name_context =

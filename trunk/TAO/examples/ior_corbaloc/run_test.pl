@@ -115,7 +115,8 @@ print STDERR "\n======= Running corbaname: tests\n";
                     "corbaname::$TARGETHOSTNAME:$ns_orb_port[0]#$SR_NAME[0]",
 
                     "corbaname::$TARGETHOSTNAME#$SR_NAME[1]",
-                    "corbaname::$TARGETHOSTNAME:$ns_orb_port[1]#$SR_NAME[1]");
+                    "corbaname::$TARGETHOSTNAME:$ns_orb_port[1]#$SR_NAME[1]",
+                    "corbaname:rir:#$SR_NAME[1] -orbinitref NameService=file://$iorfile[1]");
 
 foreach $o ( @corbaname_tests ){
   print STDERR "\n$test_number:  $o\n";

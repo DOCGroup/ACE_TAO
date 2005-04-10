@@ -25,7 +25,7 @@ TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
 
 static const char prefix[] = "corbaloc:";
 static const size_t prefix_len = sizeof prefix - 1;
-static const char rir_token[] = "rir:/"; // includes key separator
+static const char rir_token[] = "rir:";
 static const size_t rir_token_len = sizeof rir_token - 1;
 static const char iiop_token[] = "iiop:";
 static const char iiop_token_len = sizeof iiop_token - 1;
@@ -78,6 +78,9 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
   // Pass the key string as an argument to resolve_initial_references.
   // NameService is the default if an empty key string is supplied.
   const char *objkey = ior + rir_token_len;
+  if (*objkey == '/') // there is an explicit object key, which may
+                      // validly be null.
+    objkey++;
 
   CORBA::Object_var rir_obj =
     orb->resolve_initial_references (*objkey == '\0' ? "NameService" :
