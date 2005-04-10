@@ -1,3 +1,11 @@
+Sat Apr  9 21:05:23 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+
+          Changed the construction of a request header to use
+          get_host_addr() rather than get_host_name() to deal with remote
+          peers that do not have resolvable hostnames.
+
 Sat Apr  9 17:00:37 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
 
 	* tests/Memcpy_Test.cpp:

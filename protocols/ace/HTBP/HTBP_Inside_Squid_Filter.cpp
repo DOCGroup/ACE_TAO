@@ -48,8 +48,13 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
   tempId = ch->request_count();
   while (tempId /= 10) rid_size++;
 
-  if (session->peer_addr().get_host_name(remote_host,
-                                         sizeof remote_host) == -1)
+  // This test was originally get_host_name() == -1, but this is 
+  // problematic if the address doesn't resolve to a name. I think
+  // that it should be configurable, or maybe the hostname needs to
+  // be carried independent of the address to work with hosts that may
+  // have dynamic IP addresses. For now that isn't a problem.
+  if (session->peer_addr().get_host_addr(remote_host,
+                                         sizeof remote_host) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("HTBP::Inside_Squid_Filter:could not get ")
                        ACE_TEXT("peer_addr hostname\n")),
