@@ -1,3 +1,25 @@
+Sun Apr 10 03:02:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-g++-common.h:
+
+	  Do not define "ACE_LACKS_PRAGMA_ONCE" for g++ 4.x.  G++ 4.x
+	  supports the "#pragma once" preprocessor directive.
+
+	  Define the DLL export macros to the appropriate g++ 4.x
+	  visibility attribute.
+
+	* include/makeinclude/platform_g++_common.GNU (CCFLAGS):
+
+	  Added "-fvisibility=hidden -fvisibility-inlines-hidden" to the
+	  compiler flags when using g++ 4.x.  Doing so, in conjunction,
+	  with the export macro changes described above, allows ACE-based
+	  shared libraries to take full advantage of G++ 4.0's visibility
+	  attribute support, resulting in substantially improved shared
+	  libraries (or DSOs in alternative speak).  Some shared
+	  library-specific improvements include substantially reduced
+	  library footprint, improved application start-up times, and
+	  improved performance.
+
 Sun Apr 10 02:17:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SSL/SSL_Asynch_Stream.h:
