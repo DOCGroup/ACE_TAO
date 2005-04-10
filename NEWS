@@ -19,6 +19,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
   ACE logging.  Formerly any TSS objects created by these threads would
   be leaked.
 
+. Added support GNU G++ 4.0.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.3 and ACE-5.4.4
 ====================================================
 
