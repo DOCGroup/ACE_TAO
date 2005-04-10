@@ -56,15 +56,23 @@
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
-// // GNU g++ 3.4.x implements "#pragma once".
-// #if (__GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 4)) && !defined (ACE_LACKS_PRAGMA_ONCE)
-// // We define it with a -D with make depend.
-// # define ACE_LACKS_PRAGMA_ONCE
-// #endif /* ! ACE_LACKS_PRAGMA_ONCE */
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
+// GNU g++ >= 4.x implements "#pragma once".
+#if (__GNUC__ < 4) && !defined (ACE_LACKS_PRAGMA_ONCE)
+// We define it with a -D with make depend.
 # define ACE_LACKS_PRAGMA_ONCE
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
+
+// Take advantage of G++ (>= 4.x) visibility attributes to generate
+// improved shared library binaries.
+#if (__GNUC__ > 3)
+# define ACE_HAS_CUSTOM_EXPORT_MACROS
+# define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
+# define ACE_Proper_Import_Flag
+# define ACE_EXPORT_SINGLETON_DECLARATION(T)
+# define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+# define ACE_IMPORT_SINGLETON_DECLARATION(T)
+# define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#endif  /* __GNU__ > 3 */
 
 #if defined (ACE_HAS_GNU_REPO)
   // -frepo causes unresolved symbols of basic_string left- and

@@ -115,3 +115,9 @@ ifeq ($(shared_libs), 1)
     endif # GNU ld
   endif # static_libs_only
 endif # shared_libs
+
+# Take advantage of G++ (>= 4.x) visibility attributes to generate
+# improved shared library binaries.
+ifeq (4.,$(findstring 4.,$(CXX_VERSION)))
+CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+endif # $(CXX_VERSION) == 4.x
