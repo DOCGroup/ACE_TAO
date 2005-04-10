@@ -11,6 +11,8 @@
 #include "ace/Hash_Map_Manager.h"
 
 #include "ace/CDR_Stream.h"
+#include "ace/CDR_Size.h"
+
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 
@@ -47,6 +49,7 @@ namespace ACE_RMCast
   //
 
   typedef ACE_OutputCDR ostream;
+  typedef ACE_SizeCDR sstream;
   typedef ACE_InputCDR istream;
 
   struct Profile;
@@ -105,13 +108,13 @@ namespace ACE_RMCast
     }
 
   protected:
-    Profile (u16 id, u16 size, u16 boundary)
-        : header_ (id, size), boundary_ (boundary)
+    Profile (u16 id)
+        : header_ (id, 0)
     {
     }
 
-    Profile (Header const& h, u16 boundary)
-        : header_ (h), boundary_ (boundary)
+    Profile (Header const& h)
+        : header_ (h)
     {
     }
   public:
@@ -127,12 +130,6 @@ namespace ACE_RMCast
       return header_.size ();
     }
 
-    u16
-    boundary () const
-    {
-      return boundary_;
-    }
-
   protected:
     void
     size (u16 s)
@@ -140,17 +137,33 @@ namespace ACE_RMCast
       header_.size (s);
     }
 
+    u16
+    calculate_size ()
+    {
+      sstream ss;
+
+      serialize_body (ss);
+
+      return static_cast<u16> (ss.total_length ());
+    }
+
   public:
     virtual void
     serialize_body (ostream&) const = 0;
+
+    virtual void
+    serialize_body (sstream&) const = 0;
 
     friend
     ostream&
     operator<< (ostream& os, Profile const& p);
 
+    friend
+    sstream&
+    operator<< (sstream& ss, Profile const& p);
+
   private:
     Header header_;
-    u16 boundary_;
   };
 
   inline
@@ -164,6 +177,16 @@ namespace ACE_RMCast
   }
 
   inline
+  sstream&
+  operator<< (sstream& ss, Profile::Header const& hdr)
+  {
+    ss << hdr.id ();
+    ss << hdr.size ();
+
+    return ss;
+  }
+
+  inline
   ostream&
   operator<< (ostream& os, Profile const& p)
   {
@@ -171,6 +194,16 @@ namespace ACE_RMCast
     p.serialize_body (os);
 
     return os;
+  }
+
+  inline
+  sstream&
+  operator<< (sstream& ss, Profile const& p)
+  {
+    ss << p.header_;
+    p.serialize_body (ss);
+
+    return ss;
   }
 
   //
@@ -232,20 +265,18 @@ namespace ACE_RMCast
     size_t
     size () const
     {
-      size_t s (4); // 4 is for size (u32)
+      sstream ss;
+
+      u32 s;
+
+      ss << s;
 
       for (Profiles::const_iterator i (profiles_); !i.done (); i.advance ())
       {
-        //@@ This is so broken: in CDR the padding depends on
-        //   what comes after.
-        //
-        s += s % 2; // Padding to the boundary of 2.
-        s += 4;     // Profile header: u16 + u16
-        s += s % (*i).int_id_->boundary (); // Padding to the b. of profile body.
-        s += (*i).int_id_->size (); // Profile body.
+        ss << *((*i).int_id_);
       }
 
-      return s;
+      return ss.total_length ();
     }
 
     friend
@@ -271,14 +302,7 @@ namespace ACE_RMCast
     Profiles profiles_;
   };
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
-  // Borland C++ Builder 6 and earlier don't handle default template
-  // arguments correctly.  Provide an explicit template argument.
   typedef ACE_Vector<Message_ptr, ACE_VECTOR_DEFAULT_SIZE> Messages;
-#else
-  typedef ACE_Vector<Message_ptr> Messages;
-#endif  /* __BORLANDC__ <= 0x570 */
-
 
   //
   //
@@ -295,7 +319,7 @@ namespace ACE_RMCast
 
   public:
     From (Header const& h, istream& is)
-        : Profile (h, 4)
+        : Profile (h)
     {
       u32 addr;
       u16 port;
@@ -306,11 +330,10 @@ namespace ACE_RMCast
       address_ = Address (port, addr);
     }
 
-    // 6 is CDR-specific.
-    //
     From (Address const& addr)
-        : Profile (id, 6, 4), address_ (addr)
+        : Profile (id), address_ (addr)
     {
+      size (calculate_size ());
     }
 
   public:
@@ -329,6 +352,16 @@ namespace ACE_RMCast
 
       os << addr;
       os << port;
+    }
+
+    virtual void
+    serialize_body (sstream& ss) const
+    {
+      u32 addr;
+      u16 port;
+
+      ss << addr;
+      ss << port;
     }
 
   private:
@@ -351,7 +384,7 @@ namespace ACE_RMCast
 
   public:
     To (Header const& h, istream& is)
-        : Profile (h, 4)
+        : Profile (h)
     {
       u32 addr;
       u16 port;
@@ -362,11 +395,10 @@ namespace ACE_RMCast
       address_ = Address (port, addr);
     }
 
-    // 6 is CDR-specific.
-    //
     To (Address const& addr)
-        : Profile (id, 6, 4), address_ (addr)
+        : Profile (id), address_ (addr)
     {
+      size (calculate_size ());
     }
 
   public:
@@ -385,6 +417,16 @@ namespace ACE_RMCast
 
       os << addr;
       os << port;
+    }
+
+    virtual void
+    serialize_body (sstream& ss) const
+    {
+      u32 addr;
+      u16 port;
+
+      ss << addr;
+      ss << port;
     }
 
   private:
@@ -406,24 +448,25 @@ namespace ACE_RMCast
 
   public:
     Data (Header const& h, istream& is)
-        : Profile (h, 1), buf_ (0), size_ (h.size ())
+        : Profile (h), buf_ (0), size_ (h.size ())
     {
       if (size_)
       {
         buf_ = reinterpret_cast<char*> (operator new (size_));
         is.read_char_array (buf_, size_);
       }
-
     }
 
     Data (void const* buf, size_t s)
-        : Profile (id, s, 1), buf_ (0), size_ (s)
+        : Profile (id), buf_ (0), size_ (s)
     {
       if (size_)
       {
         buf_ = reinterpret_cast<char*> (operator new (size_));
         ACE_OS::memcpy (buf_, buf, size_);
       }
+
+      Profile::size (calculate_size ());
     }
 
   public:
@@ -446,6 +489,12 @@ namespace ACE_RMCast
       os.write_char_array (buf_, size_);
     }
 
+    virtual void
+    serialize_body (sstream& ss) const
+    {
+      ss.write_char_array (buf_, size_);
+    }
+
   private:
     char* buf_;
     size_t size_;
@@ -466,16 +515,15 @@ namespace ACE_RMCast
 
   public:
     SN (Header const& h, istream& is)
-        : Profile (h, 8)
+        : Profile (h)
     {
       is >> n_;
     }
 
-    // 8 is CDR-specific.
-    //
     SN (u64 n)
-        : Profile (id, 8, 8), n_ (n)
+        : Profile (id), n_ (n)
     {
+      size (calculate_size ());
     }
 
   public:
@@ -490,6 +538,12 @@ namespace ACE_RMCast
     serialize_body (ostream& os) const
     {
       os << n_;
+    }
+
+    virtual void
+    serialize_body (sstream& ss) const
+    {
+      ss << n_;
     }
 
   private:
@@ -512,44 +566,47 @@ namespace ACE_RMCast
 
     static u16 const id;
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
-  // Borland C++ Builder 6 and earlier don't handle default template
-  // arguments correctly.  Provide an explicit template argument.
     typedef ACE_Vector<u64, ACE_VECTOR_DEFAULT_SIZE> SerialNumbers;
-#else
-    typedef ACE_Vector<u64> SerialNumbers;
-#endif  /* __BORLANDC__ <= 0x570 */
-
     typedef SerialNumbers::Iterator iterator;
 
     NAK (Header const& h, istream& is)
-        : Profile (h, 8)
+        : Profile (h)
     {
-      //@@ All the numbers are CDR-specific.
+      u64 sn;
+      u32 addr;
+      u16 port;
+
+      sstream ss;
+
+      ss << sn;
+      size_t sn_size (ss.total_length ());
+
+      ss.reset ();
+
+      ss << addr;
+      ss << port;
+
+      size_t addr_size (ss.total_length ());
+
+      // num_of_sns = (size - addr_size) / sn_size
       //
-      //   8 = u32 + u16 + 2(padding to u64)
-      //
-      for (long i (0); i < ((h.size () - 8) / 8); ++i)
+      for (unsigned long i (0); i < ((h.size () - addr_size) / sn_size); ++i)
       {
-        u64 sn;
         is >> sn;
         sns_.push_back (sn);
       }
 
-      u32 addr;
-      u16 port;
-
-      is >> port;
       is >> addr;
+      is >> port;
+
 
       address_ = Address (port, addr);
     }
 
-    // 8 is CDR-specific.
-    //
     NAK (Address const& src)
-        : Profile (id, 8, 8), address_ (src)
+        : Profile (id), address_ (src)
     {
+      size (calculate_size ());
     }
 
   public:
@@ -557,7 +614,7 @@ namespace ACE_RMCast
     add (u64 sn)
     {
       sns_.push_back (sn);
-      size (size () + 8); //@@ 8 is CDR-specific
+      size (calculate_size ());
     }
 
   public:
@@ -607,8 +664,29 @@ namespace ACE_RMCast
       u32 addr (address_.get_ip_address ());
       u16 port (address_.get_port_number ());
 
-      os << port;
       os << addr;
+      os << port;
+    }
+
+    virtual void
+    serialize_body (sstream& ss) const
+    {
+      NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
+
+      // Stone age iteration.
+      //
+      for (iterator i (this_.begin ()); !i.done (); i.advance ())
+      {
+        u64 sn;
+        ss << sn;
+      }
+
+
+      u32 addr;
+      u16 port;
+
+      ss << addr;
+      ss << port;
     }
 
   private:
@@ -631,28 +709,38 @@ namespace ACE_RMCast
 
   public:
     NRTM (Header const& h, istream& is)
-        : Profile (h, 8), map_ (10)
+        : Profile (h), map_ (10)
     {
-      //@@ 16 is CDR-specific.
-      //
-      //   16 = u32 + u16 + 2(padding to u64) + u64
-      for (u16 i (0); i < (h.size () / 16); ++i)
-      {
-        u32 addr;
-        u16 port;
-        u64 sn;
+      u32 addr;
+      u16 port;
+      u64 sn;
 
+      sstream ss;
+
+      ss << sn;
+      ss << addr;
+      ss << port;
+
+      size_t block_size (ss.total_length ());
+
+
+      // num_of_blocks = size / block_size
+      //
+      for (u16 i (0); i < (h.size () / block_size); ++i)
+      {
         is >> sn;
-        is >> port;
         is >> addr;
+        is >> port;
+
 
         map_.bind (Address (port, addr), sn);
       }
     }
 
     NRTM ()
-        : Profile (id, 0, 8), map_ (10)
+        : Profile (id), map_ (10)
     {
+      size (calculate_size ());
     }
 
   public:
@@ -661,7 +749,7 @@ namespace ACE_RMCast
     {
       map_.bind (addr, sn);
 
-      size (size () + 16); //@@ 16 is CDR-specific.
+      size (calculate_size ());
     }
 
     u64
@@ -691,8 +779,23 @@ namespace ACE_RMCast
         u64 sn ((*i).int_id_);
 
         os << sn;
-        os << port;
         os << addr;
+        os << port;
+      }
+    }
+
+    virtual void
+    serialize_body (sstream& ss) const
+    {
+      for (Map::const_iterator i (map_), e (map_, 1); i != e; ++i)
+      {
+        u32 addr;
+        u16 port;
+        u64 sn;
+
+        ss << sn;
+        ss << addr;
+        ss << port;
       }
     }
 
@@ -720,6 +823,5 @@ operator<< (std::ostream& os, RMCast::Address const& a)
   return os << buf;
 }
 */
-
 
 #endif  // ACE_RMCAST_PROTOCOL_H
