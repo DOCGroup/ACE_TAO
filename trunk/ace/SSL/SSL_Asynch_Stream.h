@@ -39,8 +39,8 @@ extern "C"
 /// Forward declarations
 class ACE_SSL_Asynch_Stream;
 class ACE_SSL_Asynch_Result;
-class ACE_SSL_Export ACE_SSL_Asynch_Read_Stream_Result;
-class ACE_SSL_Export ACE_SSL_Asynch_Write_Stream_Result;
+class ACE_SSL_Asynch_Read_Stream_Result;
+class ACE_SSL_Asynch_Write_Stream_Result;
 
 
 /**
