@@ -34,10 +34,23 @@ CIAO::Deployment_Configuration::init (const char *filename)
 
   char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
 
+  ACE_Hash_Map_Manager_Ex<ACE_CString,
+                          int,
+                          ACE_Hash<ACE_CString>,
+                          ACE_Equal_To<ACE_CString>,
+                          ACE_Null_Mutex> check_ior_duplication;
+
   int first = 1;
 
   while (fscanf (inf, "%s %s", destination, ior ) != EOF)
     {
+      if (check_ior_duplication.bind (ior, 0) == 1) // duplication found
+        {
+          ACE_DEBUG ((LM_ERROR, "(%P|%t) IOR of NodeManagers should be unique, "
+                                "check your node manager map file.\n")); 
+          return -1; // indicate "init" failed.
+        }
+
       this->deployment_info_.bind (destination, ior);
 
       if (first)
