@@ -1,3 +1,13 @@
+Sat Apr 09 23:59:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp
+
+	  Fixed a bug where duplicated CORBALOC specified in the 
+	  NodeManagerMap could cause undetected exception. This fix
+	  will allow such duplication IOR error to be detected explicitly
+	  and error message will be printed out. Thanks Steve Baker
+	  <Steven_D_Baker@raytheon.com> for report this bug.
+
 Fri Apr  8 14:30:52 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/Config_Handlers/cdp.cpp
