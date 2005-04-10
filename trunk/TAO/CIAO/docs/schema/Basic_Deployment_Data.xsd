@@ -216,8 +216,8 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="source" type="xsd:string" maxOccurs="unbounded"/>
       <xsd:element name="artifact" type="xsd:IDREF" maxOccurs="unbounded"/> <!-- ArtifactDeploymentDescription -->
-      <xsd:element name="execParameter" type="Deployment:Property" maxOccurs="unbounded"/>
-      <xsd:element name="deployRequirement" type="Deployment:Requirement" maxOccurs="unbounded"/>
+      <xsd:element name="execParameter" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="deployRequirement" type="Deployment:Requirement" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>

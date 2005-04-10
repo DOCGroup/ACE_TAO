@@ -1,9 +1,17 @@
+Sat Apr 09 18:35:23 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd
+        * docs/schema/ccd.xsd
+        
+          Updated schemas to reflect changes made to Modified_Deployment
+          in conformance to the spec.
+
 Sat Apr 09 17:15:23 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
-  * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
   
-    Changed the after clause to point to the XSC_Config_Handlers
-    instad of the old config handlers.
+          Changed the after clause to point to the XSC_Config_Handlers
+          instad of the old config handlers.
     
 Sat Apr 09 23:59:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
