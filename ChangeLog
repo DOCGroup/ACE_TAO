@@ -1,3 +1,11 @@
+Sun Apr 10 02:17:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/SSL_Asynch_Stream.h:
+
+	  Removed export macros from forward declarations.  They aren't
+	  necessary, and cause the forthcoming g++ 4.0 to issue an error
+	  when enabling visibility attribute support.
+
 Sun Apr 10 02:10:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Copy_Disabled.cpp:
