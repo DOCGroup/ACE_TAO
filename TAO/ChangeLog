@@ -1,3 +1,11 @@
+Sun Apr 10 11:10:07 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        
+          Added include of ace/Log_Msg.h. Thanks to Steve Huston
+          <shuston@riverace.com> for reporting that this include is
+          needed for Solaris.
+
 Sun Apr 10 02:26:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/fe/fe_global.cpp:
