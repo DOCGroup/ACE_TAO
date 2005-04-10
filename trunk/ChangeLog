@@ -1,3 +1,10 @@
+Sun Apr 10 15:36:58 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tests/Memcpy_Test.cpp:
+
+          Fixed wrong include file to fix compilation errors on Windows
+          box.
+
 Sun Apr 10 15:05:35 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tests/tests.mpc:
