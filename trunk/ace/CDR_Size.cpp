@@ -225,7 +225,7 @@ ACE_SizeCDR::write_boolean_array (const ACE_CDR::Boolean* x,
 void
 ACE_SizeCDR::adjust (size_t size)
 {
-  return adjust (size, size);
+  adjust (size, size);
 }
 
 void

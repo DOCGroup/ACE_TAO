@@ -1,3 +1,9 @@
+Mon Apr 11 00:00:42 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* ace/CDR_Size.cpp:
+
+	  Removed unnecessary return statement.
+
 Sun Apr 10 15:36:58 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tests/Memcpy_Test.cpp:
@@ -12,6 +18,31 @@ Sun Apr 10 15:05:35 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
           Changed the name of the test to ensure that it is same as the
           log file created.
+
+Sun Apr 10 13:25:26 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* ace/CDR_Size.h:
+	* ace/CDR_Size.cpp:
+	* ace/CDR_Size.inl:
+
+	  Added new ACE_SizeCDR. It is a CDR stream similar to
+	  ACE_OutputCDR but instead of serializing anything
+	  ACE_SizeCDR calculates the size of the resulting
+	  representation.
+
+	* ace/ace.mpc:
+	* ace/Makefile.am:
+
+	  Added new files.
+
+	* tests/CDR_Test.cpp:
+
+	  Added test for ACE_SizeCDR.
+
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Protocol.h:
+
+	  Ported to use ACE_SizeCDR.
 
 Sun Apr 10 03:02:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
