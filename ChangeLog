@@ -1,5 +1,12 @@
 Mon Apr 11 12:17:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* ace/config-lite.h:
+
+	  Make sure DSO/DLL symbol related export macros other than
+	  ACE_Proper_Export_Flag are defined if not previously defined in
+	  the ACE_HAS_CUSTOM_EXPORT_MACROS case.  Simplifies configuration
+	  for compilers that only need ACE_Proper_Export_Flag.
+
 	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
 	* m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
 
