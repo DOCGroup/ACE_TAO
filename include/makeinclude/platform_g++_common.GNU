@@ -11,12 +11,13 @@ else
 endif
 
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
+GXX_4_OR_BETTER := $(shell major_version=`echo $(CXX_VERSION) | sed -e 's/\..*$$//'`; if test "$$major_version" -gt 3; then echo 1; else echo 0; fi)
 
 # If no option has been specified, try to enable templates based on the
 # version of the compiler.
 #
 ifndef templates
-  ifeq (4.,$(findstring 4.,$(CXX_VERSION)))
+  ifeq ($(GXX_4_OR_BETTER),1)
     templates=automatic
   else
     ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
@@ -118,6 +119,6 @@ endif # shared_libs
 
 # Take advantage of G++ (>= 4.x) visibility attributes to generate
 # improved shared library binaries.
-ifeq (4.,$(findstring 4.,$(CXX_VERSION)))
-CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
-endif # $(CXX_VERSION) == 4.x
+ifeq ($(GXX_4_OR_BETTER), 1)
+  CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+endif # GXX_4_OR_BETTER == 1
