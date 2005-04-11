@@ -1,3 +1,9 @@
+Mon Apr 11 11:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+	  Added new "C" function 'vx_execae' for VxWorks builds.
+	  Used to run VxWorks tasks (tests) in a more controlled, synchronous way.
+
 Mon Apr 11 11:27:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-g++-common.h:
