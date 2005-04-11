@@ -37,14 +37,26 @@ dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
 
  AC_REQUIRE([ACE_COMPILATION_OPTIONS])
 
+ ACE_GXX_MAJOR_VERSION=0
+
  if test "$GXX" = yes; then
-   case `$CXX --version` in
-     2.9* | 3*)
+   ACE_GXX_MAJOR_VERSION=`$CXX -dumpversion | sed -e 's/\..*$//'`
+
+dnl @todo Clean up / consolidate these conditionals
+
+   if test "$ACE_GXX_MAJOR_VERSION -ge 3"; then
        if test "$ace_user_enable_exceptions" != yes; then
          ACE_CXXFLAGS="$ACE_CXXFLAGS -fcheck-new"
        fi
-       ;;
-   esac
+   else
+     case `$CXX --version` in
+       2.9*)
+         if test "$ace_user_enable_exceptions" != yes; then
+           ACE_CXXFLAGS="$ACE_CXXFLAGS -fcheck-new"
+         fi
+         ;;
+     esac
+   fi
  fi
 
  dnl Compiler Flag Key
@@ -358,6 +370,26 @@ dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
  dnl Additional flags
  if test "$GXX" = yes; then
    ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
+
+   dnl Take advantage of visibility attributes when using g++ 4.0 or
+   dnl better.
+   if test "$ACE_GXX_MAJOR_VERSION" -ge 4; then
+     AC_MSG_NOTICE([enabling GNU G++ visibility attribute support])
+     ACE_GXX_VISIBILITY_FLAGS="-fvisibility=hidden -fvisibility-inlines-hidden"
+     ACE_CXXFLAGS="$ACE_CXXFLAGS $ACE_GXX_VISIBILITY_FLAGS"
+     AC_DEFINE([ACE_HAS_CUSTOM_EXPORT_MACROS])
+     AC_DEFINE([ACE_Proper_Export_Flag],
+               [__attribute__ ((visibility("default")))])
+   else
+     case `$CXX --version` in
+       2.9*)
+         if test "$ace_user_enable_exceptions" != yes; then
+           ACE_CXXFLAGS="$ACE_CXXFLAGS -fcheck-new"
+         fi
+         ;;
+     esac
+   fi
+
 dnl    if test "$ace_user_enable_repo" = no; then
 dnl      ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
 dnl    fi
