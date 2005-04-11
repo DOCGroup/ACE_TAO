@@ -116,10 +116,10 @@
                                         dlopen/dlsym args, rather than
                                         const char *.*/
 #define ACE_HAS_CLOCK_GETTIME 1
-                                        /*Platform supports POSIX 1.b
+                                        /*Platform supports POSIX.1b
                                         clock_gettime ()*/
 #define ACE_HAS_CLOCK_SETTIME 1
-                                        /*Platform supports POSIX 1.b
+                                        /*Platform supports POSIX.1b
                                         clock_settime ()*/
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES 1
                                         /*Prototypes for both signal()
