@@ -205,6 +205,7 @@
 
 // ACE_HAS_CLOCK_GETTIME requires linking with -lposix4.
 #define ACE_HAS_CLOCK_GETTIME
+#define ACE_HAS_CLOCK_SETTIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS

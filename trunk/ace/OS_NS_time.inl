@@ -77,6 +77,18 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
+ACE_INLINE int
+ACE_OS::clock_settime (clockid_t clockid, const struct timespec *ts)
+{
+#if defined (ACE_HAS_CLOCK_SETTIME)
+  ACE_OSCALL_RETURN (::clock_settime (clockid, ts), int, -1);
+#else
+  ACE_UNUSED_ARG (clockid);
+  ACE_UNUSED_ARG (ts);
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
 // Magic number declaration and definition for ctime and ctime_r ()
 static const int ctime_buf_size = 26;
 

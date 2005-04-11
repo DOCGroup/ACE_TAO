@@ -73,6 +73,7 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
+#define ACE_HAS_CLOCK_SETTIME
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
