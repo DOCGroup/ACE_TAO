@@ -433,9 +433,9 @@ be_valuetype::gen_helper_header (char*,
   *os << "namespace CORBA" << be_nl
       << "{"
       << be_idt_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref ("
+      << "extern " << be_global->stub_export_macro () << " void add_ref ("
       << this->full_name () << " *);" << be_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref ("
+      << "extern " << be_global->stub_export_macro () << " void remove_ref ("
       << this->full_name () << " *);";
 
   *os <<  be_uidt_nl
@@ -463,9 +463,9 @@ be_valuetype::gen_helper_inline (char*,
       << "namespace CORBA" << be_nl
       << "{"
       << be_idt_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref ("
+      << "extern " << be_global->stub_export_macro () << " void add_ref ("
       << this->full_name () << " *);" << be_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref ("
+      << "extern " << be_global->stub_export_macro () << " void remove_ref ("
       << this->full_name () << " *);"
       <<  be_uidt_nl
       << "}" << be_nl << be_nl
