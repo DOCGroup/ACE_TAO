@@ -153,7 +153,7 @@ namespace CIAO
         tk_local_interface_l,
         tk_component_l,
         tk_home_l,
-        tk_event_l,
+        tk_event_l
       };
 
 
@@ -532,7 +532,7 @@ namespace CIAO
         Minimum_l,
         Maximum_l,
         Attribute_l,
-        Selection_l,
+        Selection_l
       };
 
 
@@ -1045,7 +1045,7 @@ namespace CIAO
         InstanceUsesResource_l,
         ResourceUsesInstance_l,
         PortUsesResource_l,
-        ResourceUsesPort_l,
+        ResourceUsesPort_l
       };
 
 
@@ -1253,7 +1253,7 @@ namespace CIAO
         MultiplexReceptacle_l,
         EventEmitter_l,
         EventPublisher_l,
-        EventConsumer_l,
+        EventConsumer_l
       };
 
 
