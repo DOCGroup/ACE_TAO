@@ -1,3 +1,10 @@
+Mon Apr 11 11:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcounted_Auto_Ptr.h:
+          Removed explicit for the constructor which I added recently. I causes
+          problems for user apps that use the implicit conversion. This class
+          has more problems which need to be resolved.
+
 Mon Apr 11 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/netinet/os_in.h:
