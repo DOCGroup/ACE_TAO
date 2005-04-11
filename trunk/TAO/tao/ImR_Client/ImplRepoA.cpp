@@ -160,7 +160,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       ImplementationRepository_EnvironmentList_0 (
         CORBA::tk_sequence,
@@ -299,7 +299,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       ImplementationRepository_ServerInformationList_0 (
         CORBA::tk_sequence,
@@ -1049,119 +1049,3 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::AlreadyRegistered
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::CannotActivate
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::NotFound
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::EnvironmentVariable
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::EnvironmentList
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        ImplementationRepository::ActivationMode
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::StartupOptions
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::ServerInformation
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::ServerInformationList
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        ImplementationRepository::ServerInformationIterator
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        ImplementationRepository::Administration
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::AlreadyRegistered \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::CannotActivate \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::NotFound \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::EnvironmentVariable \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::EnvironmentList \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        ImplementationRepository::ActivationMode \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::StartupOptions \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::ServerInformation \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::ServerInformationList \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        ImplementationRepository::ServerInformationIterator \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        ImplementationRepository::Administration \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
