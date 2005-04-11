@@ -1,3 +1,16 @@
+Mon Apr 11 12:58:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/Process_Win32.pm:
+	  Changes to improve/add support for VxWorks tests.
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+	  New Process class with support for running VxWorks tests on remote targets.
+
+	* tests/run_test.pl:
+	  Changed to utilize the new ProcessVX class.
+
 Mon Apr 11 11:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
