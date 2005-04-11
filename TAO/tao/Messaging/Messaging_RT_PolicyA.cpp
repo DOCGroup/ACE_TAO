@@ -140,19 +140,3 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Impl_T<
-        Messaging::RelativeRoundtripTimeoutPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        Messaging::RelativeRoundtripTimeoutPolicy \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

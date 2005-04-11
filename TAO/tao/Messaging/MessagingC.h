@@ -402,7 +402,7 @@ namespace OBV_Messaging
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO
@@ -462,8 +462,8 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 
 namespace CORBA
 {
-  TAO_NAMESPACE_STORAGE_CLASS void add_ref (Messaging::ExceptionHolder *);
-  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Messaging::ExceptionHolder *);
+  extern TAO_Messaging_Export void add_ref (Messaging::ExceptionHolder *);
+  extern TAO_Messaging_Export void remove_ref (Messaging::ExceptionHolder *);
 }
 
 // TAO_IDL - Generated from
