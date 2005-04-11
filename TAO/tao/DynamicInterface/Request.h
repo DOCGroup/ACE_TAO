@@ -173,6 +173,11 @@ namespace CORBA
     /// Accessor for the input stream containing the exception.
     ACE_CString &raw_user_exception (void);
 
+
+    /// Proprietary method to check whether a response has been 
+    /// received. 
+    CORBA::Boolean response_received (void);
+
     // Useful for template programming.
     typedef CORBA::Request_ptr _ptr_type;
     typedef CORBA::Request_var _var_type;

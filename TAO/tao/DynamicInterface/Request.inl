@@ -185,3 +185,14 @@ CORBA::Request::raw_user_exception (void)
 {
   return this->raw_user_exception_;
 }
+
+ACE_INLINE CORBA::Boolean
+CORBA::Request::response_received (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+		    ace_mon,
+		    this->lock_,
+		    0);
+
+  return this->response_received_;
+}
