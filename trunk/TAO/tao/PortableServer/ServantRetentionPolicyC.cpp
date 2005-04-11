@@ -90,7 +90,7 @@ PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
 PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void)
 {}
 
-void 
+void
 PortableServer::ServantRetentionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantRetentionPolicy *_tao_tmp_pointer =
@@ -108,10 +108,10 @@ PortableServer::ServantRetentionPolicy::_narrow (
     {
       return ServantRetentionPolicy::_nil ();
     }
-  
+
   ServantRetentionPolicy_ptr proxy =
     dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-  
+
   return ServantRetentionPolicy::_duplicate (proxy);
 }
 
@@ -125,10 +125,10 @@ PortableServer::ServantRetentionPolicy::_unchecked_narrow (
     {
       return ServantRetentionPolicy::_nil ();
     }
-  
+
   ServantRetentionPolicy_ptr proxy =
     dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-  
+
   return ServantRetentionPolicy::_duplicate (proxy);
 }
 
@@ -139,7 +139,7 @@ PortableServer::ServantRetentionPolicy::_duplicate (ServantRetentionPolicy_ptr o
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -205,52 +205,13 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ServantRetention
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ServantRetentionPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ServantRetentionPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ServantRetentionPolicy
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ServantRetentionPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ServantRetentionPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ServantRetentionPolicy
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ServantRetentionPolicy
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

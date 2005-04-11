@@ -46,7 +46,7 @@ static char const * const _tao_enumerators_PortableServer_RequestProcessingPolic
     "USE_ACTIVE_OBJECT_MAP_ONLY",
     "USE_DEFAULT_SERVANT",
     "USE_SERVANT_MANAGER"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -57,7 +57,7 @@ static TAO::TypeCode::Enum<char const *,
     "RequestProcessingPolicyValue",
     _tao_enumerators_PortableServer_RequestProcessingPolicyValue,
     3);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_RequestProcessingPolicyValue =
@@ -75,7 +75,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_PortableServer_RequestProcessingPolicy (
     "IDL:omg.org/PortableServer/RequestProcessingPolicy:2.3",
     "RequestProcessingPolicy");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_RequestProcessingPolicy =
@@ -108,7 +108,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::RequestProcessingPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_RequestProcessingPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -180,31 +180,5 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        PortableServer::RequestProcessingPolicyValue
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        PortableServer::RequestProcessingPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        PortableServer::RequestProcessingPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableServer::RequestProcessingPolicy \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

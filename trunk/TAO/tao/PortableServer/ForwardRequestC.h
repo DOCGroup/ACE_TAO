@@ -66,31 +66,31 @@
 
 namespace PortableServer
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST_CH_
-
+  
   class TAO_PortableServer_Export ForwardRequest : public CORBA::UserException
   {
   public:
-
+    
     CORBA::Object_var forward_reference;
     ForwardRequest (void);
     ForwardRequest (const ForwardRequest &);
     ~ForwardRequest (void);
 
     ForwardRequest &operator= (const ForwardRequest &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static ForwardRequest *_downcast (CORBA::Exception *);
     static const ForwardRequest *_downcast (CORBA::Exception const *);
-
+    
     static CORBA::Exception *_alloc (void);
-
+    
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -99,28 +99,28 @@ namespace PortableServer
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ctor.cpp:66
-
+    
     ForwardRequest (
         const CORBA::Object_ptr  _tao_forward_reference
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
-
+    
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ForwardRequest;
 
 #endif /* end #if !defined */
@@ -131,7 +131,7 @@ namespace PortableServer
 } // module PortableServer
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO

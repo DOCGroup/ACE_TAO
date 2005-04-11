@@ -45,7 +45,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_PortableServer_ServantActivator (
     "IDL:omg.org/PortableServer/ServantActivator:2.3",
     "ServantActivator");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantActivator =
@@ -122,21 +122,5 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Impl_T<
-        PortableServer::ServantActivator
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableServer::ServantActivator \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
