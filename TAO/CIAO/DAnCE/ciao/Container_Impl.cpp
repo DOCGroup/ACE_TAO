@@ -271,7 +271,7 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
                    Components::RemoveFailure))
 {
   // Remove all components first.
-  this->remove_components (ACE_ENV_ARG_PARAMETER);
+  this->remove_components (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Even if above operation failed we should still remove homes.
