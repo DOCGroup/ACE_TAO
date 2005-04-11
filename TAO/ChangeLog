@@ -1,3 +1,9 @@
+Mon Apr 11 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_valuetype.cpp:
+          Instead of TAO_NAMESPACE_STORAGE_CLASS generate extern with the
+          stub export macro
+
 Mon Apr 11 09:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
