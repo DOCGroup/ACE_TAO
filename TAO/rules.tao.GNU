@@ -32,8 +32,8 @@ ifeq (,$(findstring -I$(TAO_ROOT),$(INCLDIRS)))
 endif
 
 ifeq ($(templates),explicit)
-  default:
-        echo "ERROR: Explicit templates are not possible to be used with TAO"
+  default: 
+	echo "ERROR: Explicit templates are not possible to be used with TAO"
 endif # templates
 
 
