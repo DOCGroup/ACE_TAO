@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplication): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc {
+project(NodeApplication): ciao_deployment_stub, typecodefactory, ciao_deployment_svnt, ciao_server_dnc {
   exename   = NodeApplication
 
     IDL_Files {
