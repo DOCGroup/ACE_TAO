@@ -388,7 +388,7 @@ TAO_Naming_Server::init_with_orb (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init_with_orb");
       return -1;
     }
   ACE_ENDTRY;
@@ -397,7 +397,7 @@ TAO_Naming_Server::init_with_orb (int argc,
   if (this->ior_file_name_ != 0)
     {
       FILE *iorf = ACE_OS::fopen (this->ior_file_name_, ACE_LIB_TEXT("w"));
-      if (iorf == 0) 
+      if (iorf == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
 			     ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
@@ -667,7 +667,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init_new_naming");
       return -1;
     }
   ACE_ENDTRY;

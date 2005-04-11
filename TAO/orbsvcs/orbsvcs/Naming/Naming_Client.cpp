@@ -43,7 +43,7 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Client::init");
       return -1;
     }
   ACE_ENDTRY;
