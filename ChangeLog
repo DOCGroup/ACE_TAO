@@ -1,3 +1,11 @@
+Mon Apr 11 12:17:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+	* m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
+
+	  Enable g++ visibility attribute support when using g++ 4.0 or
+	  better.
+
 Mon Apr 11 11:50:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/README:
