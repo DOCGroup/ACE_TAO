@@ -1,3 +1,10 @@
+Mon Apr 11 09:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          When we print out that we caught an exception make clear in which
+          method we caught it.
+
 Mon Apr 11 09:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueBase.h:
