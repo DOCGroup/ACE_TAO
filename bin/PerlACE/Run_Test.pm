@@ -4,10 +4,15 @@
 # startup ARGV processing that is used by all tests.
 
 use PerlACE::Process;
+use PerlACE::ProcessVX;
 use PerlACE::ConfigList;
 
 package PerlACE;
+use File::Spec;
 use Cwd;
+
+my $config = new PerlACE::ConfigList;
+$PerlACE::VxWorks_Test = $config->check_config("VxWorks");
 
 # Figure out the svc.conf extension
 $svcconf_ext = $ENV{"ACE_RUNTEST_SVCCONF_EXT"};
@@ -16,7 +21,7 @@ if (!defined $svcconf_ext) {
 }
 
 # Default timeout.  NSCORBA needs more time for process start up.
-$wait_interval_for_process_creation = ($^O eq "nonstop_kernel") ? 10 : 5;
+$wait_interval_for_process_creation = ($^O eq "nonstop_kernel") ? 10 : ($PerlACE::VxWorks_Test ? 60 : 5);
 
 # Turn on autoflush
 $| = 1;
@@ -38,6 +43,13 @@ sub LocalFile ($)
     return $newfile;
 }
 
+sub VX_HostFile($)
+{
+    my $file = shift;
+    $file = File::Spec->rel2abs ($file);
+    $file = File::Spec->abs2rel ($file, $ENV{"ACE_ROOT"});
+    return $ENV{"HOST_ROOT"}."/".$file;
+}
 
 # Returns a unique id, uid for unix, last digit of IP for NT
 sub uniqueid
@@ -77,7 +89,7 @@ sub waitforfile_timed
 {
   my $file = shift;
   my $maxtime = shift;
-  $maxtime *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+  $maxtime *= ($PerlACE::VxWorks_Test ? $PerlACE::ProcessVX::WAIT_DELAY_FACTOR : $PerlACE::Process::WAIT_DELAY_FACTOR);
 
   while ($maxtime-- != 0) {
     if (-e $file && -s $file) {
@@ -127,6 +139,11 @@ sub generate_test_file
   close(INPUT);
 
   return $file;
+}
+
+sub is_vxworks_test()
+{
+    return $PerlACE::VxWorks_Test;
 }
 
 $sleeptime = 5;
