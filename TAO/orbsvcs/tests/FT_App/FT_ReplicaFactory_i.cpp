@@ -421,9 +421,13 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
          location_
          ));
 
+      char const * replica_repository_id =
+        FT_TEST::_tc_TestReplica->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
       this->factory_registry_->register_factory(
         roleName,
-        FT_TEST::_tc_TestReplica->id(),
+        replica_repository_id,
         info
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
