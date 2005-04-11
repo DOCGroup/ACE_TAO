@@ -1,3 +1,12 @@
+Mon Apr 11 11:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.tao.GNU:
+          When templates is set to explicit print out an error that explicit
+          templates are not usable anymore with TAO.
+
+        * TAO-INSTALL.html:
+          Document that explicit templates are not usable anymore for TAO
+
 Mon Apr 11 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_valuetype.cpp:
