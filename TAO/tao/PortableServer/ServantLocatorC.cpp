@@ -91,7 +91,7 @@ PortableServer::ServantLocator::ServantLocator (void)
 PortableServer::ServantLocator::~ServantLocator (void)
 {}
 
-void 
+void
 PortableServer::ServantLocator::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantLocator *_tao_tmp_pointer =
@@ -109,10 +109,10 @@ PortableServer::ServantLocator::_narrow (
     {
       return ServantLocator::_nil ();
     }
-  
+
   ServantLocator_ptr proxy =
     dynamic_cast<ServantLocator_ptr> (_tao_objref);
-  
+
   return ServantLocator::_duplicate (proxy);
 }
 
@@ -126,10 +126,10 @@ PortableServer::ServantLocator::_unchecked_narrow (
     {
       return ServantLocator::_nil ();
     }
-  
+
   ServantLocator_ptr proxy =
     dynamic_cast<ServantLocator_ptr> (_tao_objref);
-  
+
   return ServantLocator::_duplicate (proxy);
 }
 
@@ -140,7 +140,7 @@ PortableServer::ServantLocator::_duplicate (ServantLocator_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -193,44 +193,5 @@ PortableServer::ServantLocator::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ServantLocator
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ServantLocator
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ServantLocator
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ServantLocator \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ServantLocator
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ServantLocator
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -91,7 +91,7 @@ PortableServer::ServantActivator::ServantActivator (void)
 PortableServer::ServantActivator::~ServantActivator (void)
 {}
 
-void 
+void
 PortableServer::ServantActivator::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantActivator *_tao_tmp_pointer =
@@ -109,10 +109,10 @@ PortableServer::ServantActivator::_narrow (
     {
       return ServantActivator::_nil ();
     }
-  
+
   ServantActivator_ptr proxy =
     dynamic_cast<ServantActivator_ptr> (_tao_objref);
-  
+
   return ServantActivator::_duplicate (proxy);
 }
 
@@ -126,10 +126,10 @@ PortableServer::ServantActivator::_unchecked_narrow (
     {
       return ServantActivator::_nil ();
     }
-  
+
   ServantActivator_ptr proxy =
     dynamic_cast<ServantActivator_ptr> (_tao_objref);
-  
+
   return ServantActivator::_duplicate (proxy);
 }
 
@@ -140,7 +140,7 @@ PortableServer::ServantActivator::_duplicate (ServantActivator_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -193,44 +193,5 @@ PortableServer::ServantActivator::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ServantActivator
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ServantActivator
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ServantActivator
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ServantActivator \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ServantActivator
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ServantActivator
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

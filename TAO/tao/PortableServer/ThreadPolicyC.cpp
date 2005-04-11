@@ -90,7 +90,7 @@ PortableServer::ThreadPolicy::ThreadPolicy (void)
 PortableServer::ThreadPolicy::~ThreadPolicy (void)
 {}
 
-void 
+void
 PortableServer::ThreadPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ThreadPolicy *_tao_tmp_pointer =
@@ -108,10 +108,10 @@ PortableServer::ThreadPolicy::_narrow (
     {
       return ThreadPolicy::_nil ();
     }
-  
+
   ThreadPolicy_ptr proxy =
     dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-  
+
   return ThreadPolicy::_duplicate (proxy);
 }
 
@@ -125,10 +125,10 @@ PortableServer::ThreadPolicy::_unchecked_narrow (
     {
       return ThreadPolicy::_nil ();
     }
-  
+
   ThreadPolicy_ptr proxy =
     dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-  
+
   return ThreadPolicy::_duplicate (proxy);
 }
 
@@ -139,7 +139,7 @@ PortableServer::ThreadPolicy::_duplicate (ThreadPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -205,52 +205,13 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ThreadPolicyValu
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ThreadPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ThreadPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ThreadPolicy
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ThreadPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ThreadPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ThreadPolicy
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ThreadPolicy
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
