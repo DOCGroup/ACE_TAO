@@ -42,7 +42,7 @@ dnl       The generated Emacs "Local Variables" block will not contain
 dnl       those characters.  They are merely interpreted by M4 as two
 dnl       concatenated text blocks.  This is necessary to prevent
 dnl       Emacs from inadvertently applying the "Local Variables"
-dnl       block to be placed in the generated "config.h" header to
+dnl       block being placed in the generated "config.h" header to
 dnl       this Autoconf/M4 file.
 AH_BOTTOM([
 
@@ -1125,6 +1125,21 @@ AH_TEMPLATE([ACE_USES_ASM_SYMBOL_IN_DLSYM],
 
 AH_TEMPLATE([ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB],
 [Platform has its standard C++ library in the namespace std.])
+
+dnl DSO/DLL export macros.
+AH_TEMPLATE([ACE_HAS_CUSTOM_EXPORT_MACROS],
+[Platform defines custom DSO/DLL symbol export macros.])
+
+AH_TEMPLATE([ACE_Proper_Export_Flag],
+[Flag that denotes the symbol should be exported from the DSO/DLL.])
+
+AH_TEMPLATE([ACE_Proper_Import_Flag],
+[Flag that denotes the symbol should be imported from the DSO/DLL.])
+
+dnl ACE_EXPORT_SINGLETON_DECLARATION(T)
+dnl ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+dnl ACE_IMPORT_SINGLETON_DECLARATION(T)
+dnl ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 
 AH_TEMPLATE([HAVE_RESTARTABLE_SYSCALLS],[])
 
