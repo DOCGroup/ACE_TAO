@@ -54,7 +54,7 @@ extern "C" pid_t getpgid (pid_t);
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_SETKIND_NP
 
-// Platform supports POSIX 1.b clock_gettime ()
+// Platform supports POSIX.1b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
 

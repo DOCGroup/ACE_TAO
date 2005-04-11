@@ -1,3 +1,13 @@
+Mon Apr 11 11:50:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/README:
+	* ace/config-hpux-10.x.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-openvms.h:
+	* ace/config-osf1-3.2.h:
+
+	  Fix typo: POSIX 1.b -> POSIX.1b.
+
 Mon Apr 11 11:39:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_time.h:
