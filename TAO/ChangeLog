@@ -1,3 +1,8 @@
+Mon Apr 11 09:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+          Subscribe before set_sock_opt
+
 Mon Apr 11 09:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
