@@ -13,8 +13,8 @@ CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
 }
 
 CORBA::Long
-CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //@@TODO initialize this NodeApplication properties
   return 0;
@@ -22,22 +22,25 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Long
 CIAO::NodeApplication_Impl::create_all_containers (
-  const ::Deployment::NodeImplementationInfo & node_impl_info
-  ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    const ::Deployment::NodeImplementationInfo & node_impl_info
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create all the containers here based on the input node_impl_info.
   const CORBA::ULong len = node_impl_info.length ();
+  
   for (CORBA::ULong i = 0; i < len; ++i)
-  {
-    // The factory method <create_container> will intialize the container
-    // servant with properties, so we don't need to call <init> on the
-    // container object reference.
-    // Also, the factory method will add the container object reference
-    // to the set for us.
-    ::Deployment::Container_var cref =
-      this->create_container (node_impl_info[i].container_config);
-  }
+    {
+      // The factory method <create_container> will intialize the container
+      // servant with properties, so we don't need to call <init> on the
+      // container object reference.
+      // Also, the factory method will add the container object reference
+      // to the set for us.
+      ::Deployment::Container_var cref =
+        this->create_container (node_impl_info[i].container_config);
+    }
+  
   return 0;
 }
 
@@ -184,10 +187,10 @@ CIAO::NodeApplication_Impl::install (
                         CORBA::NO_MEMORY ());
       ACE_TRY_CHECK;
 
-      retv->length (0);
+      retv->length (0UL);
 
       // Call create_all_containers to create all the necessary containers..
-      this->create_all_containers (node_impl_info);
+      (void) this->create_all_containers (node_impl_info);
 
       // For each container, invoke <install> operation, this will return
       // the ComponentInfo for components installed in each container.
@@ -247,7 +250,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong i = 0; i < set_size; ++i)
     {
       this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
     }
 
   // Remove all containers
@@ -332,7 +335,9 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->container_set_.object_in_set (cref) == 0)
-    ACE_THROW (Components::RemoveFailure());
+    {
+      ACE_THROW (Components::RemoveFailure());
+    }
 
   cref->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -350,13 +355,16 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
   // Should we remove the server still, even if the previous call failed.
 
   if (this->container_set_.remove (cref) == -1)
-    ACE_THROW (::Components::RemoveFailure ());
+    {
+      ACE_THROW (::Components::RemoveFailure ());
+    }
+    
   ACE_DEBUG ((LM_DEBUG, "LEAVING: NodeApplication_Impl::remove_container()\n"));
 }
 
 // Get containers
 ::Deployment::Containers *
-CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;

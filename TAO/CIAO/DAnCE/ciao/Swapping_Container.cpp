@@ -115,16 +115,14 @@ namespace CIAO
   void
   Swapping_Container::add_servant_map
     (PortableServer::ObjectId &oid,
-     Dynamic_Component_Servant_Base* servant
-     ACE_ENV_ARG_DECL)
+     Dynamic_Component_Servant_Base* servant)
   {
     this->dsa_->add_servant_map (oid, servant);
   }
 
   void
   Swapping_Container::delete_servant_map
-    (PortableServer::ObjectId &oid
-     ACE_ENV_ARG_DECL)
+    (PortableServer::ObjectId &oid)
   {
     this->dsa_->delete_servant_map (oid);
   }
