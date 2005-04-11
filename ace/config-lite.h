@@ -234,7 +234,30 @@
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T)
 #  define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-#endif /* ACE_HAS_CUSTOM_EXPORT_MACROS */
+#else
+// An export macro should at the very least have been defined.
+
+#  ifndef ACE_Proper_Import_Flag
+#    define ACE_Proper_Import_Flag
+#  endif  /* !ACE_Proper_Import_Flag */
+
+#  ifndef ACE_EXPORT_SINGLETON_DECLARATION
+#    define ACE_EXPORT_SINGLETON_DECLARATION(T)
+#  endif  /* !ACE_EXPORT_SINGLETON_DECLARATION */
+
+#  ifndef ACE_IMPORT_SINGLETON_DECLARATION
+#    define ACE_IMPORT_SINGLETON_DECLARATION(T)
+#  endif  /* !ACE_IMPORT_SINGLETON_DECLARATION */
+
+#  ifndef ACE_EXPORT_SINGLETON_DECLARE
+#    define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#  endif  /* !ACE_EXPORT_SINGLETON_DECLARE */
+
+#  ifndef ACE_IMPORT_SINGLETON_DECLARE
+#    define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#  endif  /* !ACE_IMPORT_SINGLETON_DECLARE */
+
+#endif /* !ACE_HAS_CUSTOM_EXPORT_MACROS */
 
 // This is a whim of mine -- that instead of annotating a class with
 // ACE_Export in its declaration, we make the declaration near the TOP
