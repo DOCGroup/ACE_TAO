@@ -285,9 +285,9 @@ ACE_HAS_CHARPTR_SOCKOPT                 OS/platform uses char * for
 ACE_HAS_CHARPTR_SPRINTF                 sprintf() returns char *
                                         rather than int (e.g., SunOS
                                         4.x)
-ACE_HAS_CLOCK_GETTIME                   Platform supports POSIX 1.b
+ACE_HAS_CLOCK_GETTIME                   Platform supports POSIX.1b
                                         clock_gettime ()
-ACE_HAS_CLOCK_SETTIME                   Platform supports POSIX 1.b
+ACE_HAS_CLOCK_SETTIME                   Platform supports POSIX.1b
                                         clock_settime ()
 ACE_HAS_CONFLICTING_XTI_MACROS          OS's XTI header file defines some
                                         TCP-related macros that netinet/tcp.h

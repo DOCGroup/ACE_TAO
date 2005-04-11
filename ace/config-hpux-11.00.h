@@ -248,7 +248,7 @@
 // But doesn't have a prototype for syscall()
 #define ACE_LACKS_SYSCALL
 
-// Platform supports POSIX 1.b clock_gettime ()
+// Platform supports POSIX.1b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
 
