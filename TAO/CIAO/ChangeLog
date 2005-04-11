@@ -1,9 +1,19 @@
+Mon Apr 11 17:56:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+
+          Added typecodefactory to the list of project files.
+
 Mon Apr 11 13:43:47 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
 
 	Corrected the ExecutionManager narrow operation.
-	
+
 Mon Apr 11 08:29:50 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ciao/Container_Impl.cpp:
@@ -13,67 +23,67 @@ Mon Apr 11 08:29:50 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * DAnCE/ciao/NodeApplication_Impl.h:
         * DAnCE/ciao/Swapping_Container.cpp:
         * DAnCE/ciao/Swapping_Container.h:
-        
+
           Fixed various glitches with environment variables, unused variables,
           and ACE_TRY macros.
 
 Mon Apr 11 07:12:54 CDT 2005  Will Otte <wotte@dre.vanderbit.edu>
-	
+
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
 
 	Fixed a compile error.
-	
+
 Sun Apr 10 18:44:22 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
 	* DAnCE/Config_Handlers/ccd.cpp
 	* DAnCE/Config_Handlers/ccd.hpp
 
 	Regenerated the handlers to reflect the changes in the previous
-	commit. 
-	
+	commit.
+
 Sat Apr 09 18:35:23 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd
         * docs/schema/ccd.xsd
-        
+
           Updated schemas to reflect changes made to Modified_Deployment
           in conformance to the spec.
 
 Sat Apr 09 17:15:23 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
-  
+
           Changed the after clause to point to the XSC_Config_Handlers
           instad of the old config handlers.
-    
+
 Sat Apr 09 23:59:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp
 
-	  Fixed a bug where duplicated CORBALOC specified in the 
+	  Fixed a bug where duplicated CORBALOC specified in the
 	  NodeManagerMap could cause undetected exception. This fix
 	  will allow such duplication IOR error to be detected explicitly
 	  and error message will be printed out. Thanks Steve Baker
 	  <Steven_D_Baker@raytheon.com> for report this bug.
 
 Fri Apr  8 14:30:52 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/Config_Handlers/cdp.cpp
 	* DAnCE/Config_Handlers/cdp.hpp
 
 	Regenerated handlers to reflect schema changes.
-	
+
 	* docs/schema/cdp.xsd
 
 	Updated schema to allow 0 on the realizes element.
-	
+
 Fri Apr  8 13:33:24 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Added backend support for attribute exceptions.
 
 Thu Apr 07 14:49:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
@@ -116,7 +126,7 @@ Wed Apr 06 11:12:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/descriptors/flattern_deploymentplan.cdp
 
-	  Cleaned this a little bit. Removed most <SupportedType> and 
+	  Cleaned this a little bit. Removed most <SupportedType> and
 	  <port> tags from the <realizes> tag.
 
 Wed Apr 06 10:30:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
@@ -142,7 +152,7 @@ Wed Apr 06 10:30:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  Fixed this file, which contains a invalid connection, i.e.,
 	  connecting a EventPublisher to a SimplexReceptacle. The root
 	  of this problem is that "data_read" is a Facet instead of
-	  a EventPublisher. 
+	  a EventPublisher.
 
 Tue Apr 05 19:29:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -162,15 +172,15 @@ Tue Apr 05 19:29:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 Tue Apr  5 14:37:16 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/Any_Handler.cpp
-        
+
         Updated Gary's fix to work in Borland 6.
-        
+
 Tue Apr  5 14:13:10 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/Config_Handlers/Any_Handler.cpp
 
 	Incorporated a fix to the Any handler from Gary Duzan.
-	
+
 Tue Apr  5 11:34:32 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
@@ -194,18 +204,18 @@ Tue Apr  5 11:34:32 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/toplevel.cpp
 	* DAnCE/Config_Handlers/toplevel.hpp
 	* DAnCE/Config_Handlers/XMLSchema/Types.hpp
-	
+
 	New version of the generated XSC handlers fixing the following problems:
 	  - Use ACE_TCHAR instead of char as the character type
 	  - Export macros for the generated classes.
 	  - Borland 6 support
 	  - Misc VC6 warnings.
-	  
+
 Sun Apr  3 23:52:50 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* examples/BasicSP/descriptors/flattern_deploymentplan.cdp
 
-	Fixed a mistake in the descriptor.	
+	Fixed a mistake in the descriptor.
 
 Sun Apr  3 18:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
