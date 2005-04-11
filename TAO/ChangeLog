@@ -1,3 +1,13 @@
+Mon Apr 11 15:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/*.pidl:
+          Updated regeneration instructions to not list -GT
+
+        * tao/ImR_Client/*C.{h,cpp,inl}:
+        * tao/ImR_Client/*S.{h,cpp}:
+        * tao/ImR_Client/*A.cpp:
+          Regenerated but now not generation explicit template instantiations
+
 Mon Apr 11 11:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
