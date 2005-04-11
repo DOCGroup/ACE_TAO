@@ -1,0 +1,55 @@
+/**
+ * @file InvalidName.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the CORBA::InvalidName
+ * exception.
+ *
+ * This file is used to generate parts of the code in ORB.{h,i,cpp},
+ * using the following command:
+ *
+ *   tao_idl
+ *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *        -Wb,export_macro=TAO_Export
+ *        -Wb,export_include=TAO_Export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h"
+ *        InvalidName.pidl
+ *
+ * and then:
+ *
+ * patch < diffs/InvalidName.diff
+ *
+ * The code left in InvalidNameC.{h,i,cpp} must then be inserted into
+ * the ORB.{h,i,cpp} files.  This sucks, but it is a direct result of
+ * the way the spec is defined, the ORB 'pseudo-interface' cannot be
+ * automatically generated, but it is better to automatically generate
+ * the exception, otherwise they are always out of date when compared
+ * to the rest of ACE+TAO.
+ *
+ */
+#ifndef TAO_CORBA_INVALIDNAME_PIDL
+#define TAO_CORBA_INVALIDNAME_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  local interface ORB
+  {
+    /**
+     * @exception InvalidName
+     *
+     * @brief UserException for resolve_initial_references()
+     *
+     * This exception is thrown if an 'invalid name' is passed to
+     * the CORBA::ORB::resolve_initial_references() operation.
+     */
+    exception InvalidName {};
+  };
+};
+
+#pragma prefix ""
+
+#endif /* TAO_CORBA_INVALIDNAME_PIDL */
