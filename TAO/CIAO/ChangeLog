@@ -1,3 +1,9 @@
+Mon Apr 11 07:12:54 CDT 2005  Will Otte <wotte@dre.vanderbit.edu>
+	
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+
+	Fixed a compile error.
+	
 Sun Apr 10 18:44:22 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
