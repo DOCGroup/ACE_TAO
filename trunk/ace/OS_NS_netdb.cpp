@@ -11,6 +11,9 @@ ACE_RCSID(ace, OS_NS_netdb, "$Id$")
 
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_unistd.h"
+#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
+#include "ace/OS_NS_stdio.h"
+#endif
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_sys_socket.h"
 
@@ -194,58 +197,89 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   ACE_OS_TRACE ("ACE_OS::getmacaddress");
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
-  /** Define a structure for use with the netbios routine */
-  struct ADAPTERSTAT
-  {
-    ADAPTER_STATUS adapt;
-    NAME_BUFFER    NameBuff [30];
-  };
-
-  NCB         ncb;
-  LANA_ENUM   lenum;
-  unsigned char result;
-
-  ACE_OS::memset (&ncb, 0, sizeof(ncb));
-  ncb.ncb_command = NCBENUM;
-  ncb.ncb_buffer  = reinterpret_cast<unsigned char*> (&lenum);
-  ncb.ncb_length  = sizeof(lenum);
-
-  result = Netbios (&ncb);
-
-  for(int i = 0; i < lenum.length; i++)
+# if !defined (ACE_HAS_PHARLAP)
+    /** Define a structure for use with the netbios routine */
+    struct ADAPTERSTAT
     {
-      ACE_OS::memset (&ncb, 0, sizeof(ncb));
-      ncb.ncb_command  = NCBRESET;
-      ncb.ncb_lana_num = lenum.lana [i];
+      ADAPTER_STATUS adapt;
+      NAME_BUFFER    NameBuff [30];
+    };
 
-      /** Reset the netbios */
-      result = Netbios (&ncb);
+    NCB         ncb;
+    LANA_ENUM   lenum;
+    unsigned char result;
 
-      if (ncb.ncb_retcode != NRC_GOODRET)
-	{
-	  return -1;
-	}
+    ACE_OS::memset (&ncb, 0, sizeof(ncb));
+    ncb.ncb_command = NCBENUM;
+    ncb.ncb_buffer  = reinterpret_cast<unsigned char*> (&lenum);
+    ncb.ncb_length  = sizeof(lenum);
 
-      ADAPTERSTAT adapter;
-      ACE_OS::memset (&ncb, 0, sizeof (ncb));
-      ACE_OS::strcpy (reinterpret_cast<char*> (ncb.ncb_callname), "*");
-      ncb.ncb_command     = NCBASTAT;
-      ncb.ncb_lana_num    = lenum.lana[i];
-      ncb.ncb_buffer      = reinterpret_cast<unsigned char*> (&adapter);
-      ncb.ncb_length      = sizeof (adapter);
+    result = Netbios (&ncb);
 
-      result = Netbios (&ncb);
+    for(int i = 0; i < lenum.length; i++)
+      {
+        ACE_OS::memset (&ncb, 0, sizeof(ncb));
+        ncb.ncb_command  = NCBRESET;
+        ncb.ncb_lana_num = lenum.lana [i];
 
-      if (result == 0)
-	{
-	  ACE_OS::memcpy (node->node,
-			  adapter.adapt.adapter_address,
-			  6);
-	  return 0;
-	}
-    }
-  return 0;
+        /** Reset the netbios */
+        result = Netbios (&ncb);
+
+        if (ncb.ncb_retcode != NRC_GOODRET)
+        {
+          return -1;
+        }
+
+        ADAPTERSTAT adapter;
+        ACE_OS::memset (&ncb, 0, sizeof (ncb));
+        ACE_OS::strcpy (reinterpret_cast<char*> (ncb.ncb_callname), "*");
+        ncb.ncb_command     = NCBASTAT;
+        ncb.ncb_lana_num    = lenum.lana[i];
+        ncb.ncb_buffer      = reinterpret_cast<unsigned char*> (&adapter);
+        ncb.ncb_length      = sizeof (adapter);
+
+        result = Netbios (&ncb);
+
+        if (result == 0)
+        {
+          ACE_OS::memcpy (node->node,
+              adapter.adapt.adapter_address,
+              6);
+          return 0;
+        }
+      }
+    return 0;
+# else
+#   if defined (ACE_HAS_PHARLAP_RT)
+      DEVHANDLE ip_dev = (DEVHANDLE)0;
+      EK_TCPIPCFG *devp;
+      size_t i;
+      ACE_TCHAR dev_name[16];
+
+      for (i = 0; i < 10; i++)
+        {
+          // Ethernet.
+          ACE_OS::sprintf (dev_name,
+                           "ether%d",
+                           i);
+          ip_dev = EtsTCPGetDeviceHandle (dev_name);
+          if (ip_dev != 0)
+            break;
+        }
+      if (ip_dev == 0)
+        return -1;
+      devp = EtsTCPGetDeviceCfg (ip_dev);
+      if (devp == 0)
+        return -1;
+      ACE_OS::memcpy (node->node,
+            &devp->EthernetAddress[0],
+            6);
+      return 0;
+#   else
+      ACE_UNUSED_ARG (node);
+      ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_PHARLAP_RT */
+# endif /* ACE_HAS_PHARLAP */
 #elif defined (sun)
 
   /** obtain the local host name */
