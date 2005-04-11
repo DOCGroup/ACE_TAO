@@ -174,7 +174,7 @@ namespace CORBA
 }  // End CORBA namespace
 
 /**
- * @class TAO_OBV_GIOP_Flags
+ * @namespace TAO_OBV_GIOP_Flags
  *
  * @brief TAO_OBV_GIOP_Flags
  *
