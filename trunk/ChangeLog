@@ -1,3 +1,16 @@
+Mon Apr 11 10:27:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_g++_common.GNU:
+
+	  Fixed ambiguities when determining whether g++ 4.0 or better is
+	  being used.
+
+	* include/makeinclude/platform_linux.GNU (CXX):
+
+	  Do not set CXX variable to "g++" if it has been previously set.
+	  Addresses problem where g++ version was not retrieved from the
+	  g++ compiler set by the user.
+
 Mon Apr 11 15:56:55 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Protocol.h:
@@ -12,7 +25,8 @@ Mon Apr 11 12:58:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
         * bin/PerlACE/ProcessVX_Win32.pm:
-	  New Process class with support for running VxWorks tests on remote targets.
+	  New Process class with support for running VxWorks tests on
+	  remote targets.
 
 	* tests/run_test.pl:
 	  Changed to utilize the new ProcessVX class.
@@ -21,13 +35,14 @@ Mon Apr 11 11:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
 	  Added new "C" function 'vx_execae' for VxWorks builds.
-	  Used to run VxWorks tasks (tests) in a more controlled, synchronous way.
+	  Used to run VxWorks tasks (tests) in a more controlled,
+	  synchronous way.
 
 Mon Apr 11 11:27:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-g++-common.h:
-          Defined ACE_LACKS_MEMBER_TEMPLATES for GCC < 3.0 as a solution for recent
-          template compile errors from TypeCode refactoring.
+          Defined ACE_LACKS_MEMBER_TEMPLATES for GCC < 3.0 as a solution
+	  for recent template compile errors from TypeCode refactoring.
 
 Mon Apr 11 11:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

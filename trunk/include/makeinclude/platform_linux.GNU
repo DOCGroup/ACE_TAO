@@ -80,8 +80,8 @@ ifeq ($(insure),1)
   CC  = insure
   CXX = insure
 else
-  CC  = gcc
-  CXX = g++
+  CC  ?= gcc
+  CXX ?= g++
 endif
 
 # fix this
