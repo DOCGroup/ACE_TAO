@@ -196,29 +196,3 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Impl_T<
-        Messaging::ExceptionHolder
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        Messaging::ReplyHandler
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        Messaging::ExceptionHolder \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        Messaging::ReplyHandler \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
