@@ -22,9 +22,6 @@ use FileHandle;
 
 $config_list = new PerlACE::ConfigList;
 
-$set_vx_defgw = 1;
-$do_vx_init = 1;
-
 ################################################################################
 
 sub check_for_more_configs ()
@@ -161,71 +158,15 @@ sub run_vxworks_command ($)
 
     unlink <log/$program*.log>;
     unlink "core";
-    unlink "run_test.vxs";
 
-    my $P;
-
-    my $WINDSH = $ENV{"ACE_RUN_WINDSH"};
-    if (!defined $WINDSH) {
-        $WINDSH = $ENV{"WIND_BASE"} . "\\host\\" . $ENV{"WIND_HOST_TYPE"} . "\\bin\\windsh";
-    }
+    my $P = new PerlACE::ProcessVX ($program);
 
     ## check module existence
-    if (! -e $program . ".out") {
-        print STDERR "Error: " . $program . ".out" .
+    if (! -e $P->Executable ()) {
+        print STDERR "Error: " . $P->Executable() .
                      " does not exist\n";
         return;
     }
-
-	## initialize VxWorks kernel (reboot!) if starting first test
-    if ($do_vx_init) {
-        ## reboot VxWorks kernel to cleanup
-        $P = new PerlACE::Process ($WINDSH, "-e \"shParse {reboot}; shParse{exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"});
-        $P->SpawnWaitKill (60);
-		$set_vx_defgw = 1;
-		$do_vx_init = 0;
-    }
-
-
-    my $oh = new FileHandle();
-    if (!open($oh, ">run_test.vxs")) {
-        print STDERR "ERROR: Unable to write to run_test.vxs\n";
-        return;
-    }
-
-    print $oh "?\n" .
-              "proc aceRunTest {fname} {\n" .
-              "  shParse \"ld 1,0,\\\"\$fname\\\"\"\n" .
-              "  set procId [shParse { taskSpawn 0,100,0x0008,64000,ace_main }]\n" .
-              "  while { [shParse \"taskIdFigure \$procId\"] != -1 } {\n" .
-              "    shParse { taskDelay (13 * sysClkRateGet ()) }\n" .
-              "  }\n" .
-              "  shParse \"unld \\\"\$fname\\\"\"\n" .
-              "}\n" .
-              "?\n";
-
-	if ( defined $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} && $set_vx_defgw ) {
-      print $oh "\n" .
-                "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)\n";
-	  $set_vx_defgw = 0;
-	}
-
-    print $oh "\n" .
-              "cd \"" . $ENV{"ACE_ROOT"} . "/tests\"\n" .
-              "\@cd \"" . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/tests\"\n" .
-              "putenv(\"TMPDIR=" . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/tests\")\n";
-
-    output_vxworks_commands ($oh, $program);
-
-    print $oh "\n" .
-              "exit\n";
-
-    close($oh);
-
-    $P = new PerlACE::Process ($WINDSH, "-s run_test.vxs " . $ENV{"ACE_RUN_VX_TGTSVR"});
-    $P->IgnoreExeSubDir(1);
-
-    ### Try to run the VxWorks shell
 
     print "auto_run_tests: tests/$program\n";
     my $start_time = time();
@@ -234,17 +175,13 @@ sub run_vxworks_command ($)
 
     ### Check for problems
 
-    if ($status == -1 || $config_list->check_config ('VX_TGT_REBOOT')) {
-        if ($status == -1) {
-            print STDERR "Error: $program FAILED (time out)\n";
-            $P->Kill ();
-            $P->TimedWait (1);
-		}
-        ## reboot VxWorks kernel to cleanup leftover module
-        $P = new PerlACE::Process ($WINDSH, "-e \"shParse {reboot}; shParse{exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"});
-        $P->SpawnWaitKill (60);
-		sleep(90);
-		$set_vx_defgw = 1;
+    if ($status == -1) {
+        print STDERR "Error: $program FAILED (time out)\n";
+        $P->Kill ();
+        $P->TimedWait (1);
+    }
+    elsif ($status != 0) {
+        print STDERR "Error: $program FAILED with exit status $status\n";
     }
 
     print "\nauto_run_tests_finished: test/$program Time:$time"."s Result:$status\n";
@@ -260,12 +197,14 @@ sub output_vxworks_commands
   my($program) = shift;
   my($length)  = length($program) + 2;
 
-  if ($config_list->check_config ('CHECK_RESOURCES')) {
+  if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
     print $oh "memShow();\n";
   }
 
   print $oh "write(2, \"\\n$program\\n\", $length);\n" .
-            "?aceRunTest {$program.out}\n"
+            "ld 1,0, \"" . $program . ".out\"\n" .
+            "vx_execae ace_main\n" .
+            "unld \"" . $program . ".out\"\n";
 }
 
 ################################################################################
@@ -496,7 +435,7 @@ if (!getopts ('dhtvo:') || $opt_h) {
     print "    -h         Display this help\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
     print "    -v         Generate commands for VxWorks\n";
-    print "    -o         Put VxWorks commands in output file\n";
+    print "    -o         Put VxWorks commands in <output file>\n";
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
@@ -557,25 +496,11 @@ if (defined $opt_v && defined $opt_o) {
             "# The output logs can be checked from a Unix host:\n" .
             "#    % ./run_tests.check log/*.log\n\n";
 
-  print $oh "?\n" .
-            "proc aceRunTest {fname} {\n" .
-            "  shParse \"ld 1,0,\\\"\$fname\\\"\"\n" .
-            "  set procId [shParse { taskSpawn 0,100,0x0008,64000,ace_main }]\n" .
-            "  while { [shParse \"taskIdFigure \$procId\"] != -1 } {\n" .
-            "    shParse { taskDelay (13 * sysClkRateGet ()) }\n" .
-            "  }\n" .
-            "  shParse \"unld \\\"\$fname\\\"\"\n" .
-            "}\n" .
-            "?\n";
-
   foreach $test (@tests) {
     output_vxworks_commands ($oh, $test);
   }
 }
 else {
-  $set_vx_defgw = 1;
-  $do_vx_init = 1;
-
   foreach $test (@tests) {
     if (defined $opt_d) {
       print "Would run test $test now\n";

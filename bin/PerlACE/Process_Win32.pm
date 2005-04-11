@@ -1,5 +1,7 @@
 # $Id$
 
+use PerlACE::Run_Test;
+
 package PerlACE::Process;
 
 use strict;
@@ -102,14 +104,18 @@ sub Executable
 
     my $executable = $self->{EXECUTABLE};
 
+    if (PerlACE::is_vxworks_test()) {
+        $executable = PerlACE::VX_HostFile ($executable);
+    }
+    
     if ($self->{IGNOREEXESUBDIR} == 0) {
-      $executable = PerlACE::Process::Normalize_Executable_Name ($executable);
+        $executable = PerlACE::Process::Normalize_Executable_Name ($executable);
     }
     else {
-      $executable = $executable.".EXE";
-      $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
+        $executable = $executable.".EXE";
+        $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     }
-
+    
     return $executable;
 }
 
