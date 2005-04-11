@@ -1,3 +1,9 @@
+Mon Apr 11 10:38:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp (init):
+
+	  Fixed emulated exception related compile-time error.
+
 Mon Apr 11 10:23:08 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/DynamicInterface/Request.h (response_received):
