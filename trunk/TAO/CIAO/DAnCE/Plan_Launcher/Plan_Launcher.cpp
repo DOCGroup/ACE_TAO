@@ -6,6 +6,8 @@
 #include "ciao/CIAO_common.h"
 #include <iostream>
 
+#include "ExecutionManager/ExecutionManagerC.h"
+
 namespace CIAO
 {
   namespace Plan_Launcher
@@ -125,8 +127,8 @@ namespace CIAO
               ACE_TRY_CHECK;
             }
 
-          ::Deployment::ExecutionManager_var exec_mgr =
-              ::Deployment::ExecutionManager::_narrow (
+          ::CIAO::ExecutionManagerDaemon_var exec_mgr =
+              ::CIAO::ExecutionManagerDaemon::_narrow (
                 obj.in ()
                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -143,16 +145,16 @@ namespace CIAO
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
                         " Manager ref \n"));
-
+          
           CIAO::Config_Handlers::XML_File_Intf intf (package_url);
-
+          
           ::Deployment::DeploymentPlan_var plan =
               intf.get_plan ();
-
+          
           ::Deployment::DomainApplicationManager_var dapp_mgr =
               exec_mgr->preparePlan (plan,
                                      1);
-
+          
           if (CORBA::is_nil (dapp_mgr.in ()))
             {
               ACE_DEBUG ((LM_DEBUG,
