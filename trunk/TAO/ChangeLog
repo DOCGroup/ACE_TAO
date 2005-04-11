@@ -1,7 +1,12 @@
+Mon Apr 11 09:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/ValueBase.h:
+          Doxygen improvement
+
 Sun Apr 10 11:10:07 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp:
-        
+
           Added include of ace/Log_Msg.h. Thanks to Steve Huston
  	  <shuston@riverace.com> and Mark Wilson <mwil at lle dot
  	  rochester dot edu> for reporting that this include is needed for
