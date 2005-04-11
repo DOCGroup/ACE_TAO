@@ -1,3 +1,9 @@
+Mon Apr 11 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/netinet/os_in.h:
+          Define IP_MULTICAST_LOOP when it is not defined yet. Fixes problems
+          with Pharlab.
+
 Mon Apr 11 09:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_netdb.cpp (getmacaddress):
