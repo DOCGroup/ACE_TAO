@@ -118,11 +118,15 @@ extern "C"
 
 # if !defined (IP_MULTICAST_IF)
 #   define IP_MULTICAST_IF 0
-#endif /* IP_MULTICAST_IF */
+# endif /* IP_MULTICAST_IF */
 
 # if !defined (IP_MULTICAST_TTL)
 #   define IP_MULTICAST_TTL 1
-#endif /* IP_MULTICAST_TTL */
+# endif /* IP_MULTICAST_TTL */
+
+# if !defined (IP_MULTICAST_LOOP)
+#   define IP_MULTICAST_LOOP 2
+# endif /* IP_MULTICAST_LOOP */
 
 # if !defined (IP_MAX_MEMBERSHIPS)
 #   define IP_MAX_MEMBERSHIPS 0
