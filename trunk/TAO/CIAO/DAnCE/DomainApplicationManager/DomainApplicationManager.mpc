@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (DomainApplicationManager): ciao_deployment_svnt {
+project (DomainApplicationManager): ciao_deployment_svnt, typecodefactory {
   after += Config_Handlers Node_Daemon                           
 
   sharedname = DomainApplicationManager
