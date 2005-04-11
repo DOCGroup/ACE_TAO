@@ -1,3 +1,35 @@
+Mon Apr 11 11:39:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_time.h:
+	* ace/OS_NS_time.inl:
+
+	  Add ACE_OS::clock_settime().
+	
+	* ace/config-chorus.h:
+	* ace/config-cygwin32.h:
+	* ace/config-hpux-10.x.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-integritySCA.h:
+	* ace/config-linux-common.h:
+	* ace/config-lynxos.h:
+	* ace/config-netbsd.h:
+	* ace/config-openvms.h:
+	* ace/config-osf1-3.2.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-qnx-neutrino.h:
+	* ace/config-qnx-rtp-62x.h:
+	* ace/config-qnx-rtp-pre62x.h:
+	* ace/config-rtems.h:
+	* ace/config-sunos5.5.h:
+	* ace/config-vxworks5.x.h:
+
+	  Define ACE_HAS_CLOCK_SETTIME in every canned config-* header
+	  that defines ACE_HAS_CLOCK_GETTIME.
+	
+	* ace/README:
+
+	  Document new feature test macro ACE_HAS_CLOCK_SETTIME.
+
 Mon Apr 11 10:27:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_g++_common.GNU:

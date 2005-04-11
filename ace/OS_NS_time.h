@@ -263,6 +263,10 @@ namespace ACE_OS {
                      struct timespec *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  int clock_settime (clockid_t,
+		     const struct timespec *);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_TCHAR *ctime (const time_t *t);
 
 #if defined (ACE_HAS_WINCE) && !defined (_DEBUG)

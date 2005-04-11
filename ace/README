@@ -287,6 +287,8 @@ ACE_HAS_CHARPTR_SPRINTF                 sprintf() returns char *
                                         4.x)
 ACE_HAS_CLOCK_GETTIME                   Platform supports POSIX 1.b
                                         clock_gettime ()
+ACE_HAS_CLOCK_SETTIME                   Platform supports POSIX 1.b
+                                        clock_settime ()
 ACE_HAS_CONFLICTING_XTI_MACROS          OS's XTI header file defines some
                                         TCP-related macros that netinet/tcp.h
                                         also defines, but they conflict

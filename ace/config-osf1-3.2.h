@@ -56,6 +56,7 @@ extern "C" pid_t getpgid (pid_t);
 
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
+#define ACE_HAS_CLOCK_SETTIME
 
 // Platform defines MAP_FAILED as a long constant.
 #define ACE_HAS_LONG_MAP_FAILED

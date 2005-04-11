@@ -32,6 +32,7 @@
 #if defined (__USE_POSIX199309)
 #  if !defined (ACE_HAS_CLOCK_GETTIME)
 #    define ACE_HAS_CLOCK_GETTIME
+#    define ACE_HAS_CLOCK_SETTIME
 #  endif
 #endif
 
