@@ -1,3 +1,16 @@
+Mon Apr 11 08:29:50 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Container_Impl.cpp:
+        * DAnCE/ciao/Dynamic_Component_Activator.cpp:
+        * DAnCE/ciao/Dynamic_Component_Activator.h:
+        * DAnCE/ciao/NodeApplication_Impl.cpp:
+        * DAnCE/ciao/NodeApplication_Impl.h:
+        * DAnCE/ciao/Swapping_Container.cpp:
+        * DAnCE/ciao/Swapping_Container.h:
+        
+          Fixed various glitches with environment variables, unused variables,
+          and ACE_TRY macros.
+
 Mon Apr 11 07:12:54 CDT 2005  Will Otte <wotte@dre.vanderbit.edu>
 	
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
