@@ -1,3 +1,20 @@
+Mon Apr 11 15:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Commit on behalf of Chris Cleeland, improved documentation of
+          -ORBClientConnectionHandler and -ORBWaitStrategy
+
+        * tao/PortableServer/*.pidl:
+          Updated regeneration instructions to not list -GT
+
+        * tao/PortableServer/*C.{h,cpp,inl}:
+        * tao/PortableServer/*S.{h,cpp}:
+        * tao/PortableServer/*A.cpp:
+          Regenerated but now not generation explicit template instantiations
+
+        * tao/PortableServer/diffs/*:
+          Updated
+
 Mon Apr 11 15:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/*.pidl:
