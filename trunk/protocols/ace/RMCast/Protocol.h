@@ -726,7 +726,7 @@ namespace ACE_RMCast
 
       // num_of_blocks = size / block_size
       //
-      for (u16 i (0); i < (h.size () / block_size); ++i)
+      for (size_t i (0); i < (h.size () / block_size); ++i)
       {
         is >> sn;
         is >> addr;

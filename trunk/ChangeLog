@@ -1,3 +1,9 @@
+Mon Apr 11 15:56:55 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Protocol.h:
+
+	  Moved things around a bit in hope it will help BCB6.
+
 Mon Apr 11 12:58:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:
