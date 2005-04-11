@@ -90,7 +90,7 @@ PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
 PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
 {}
 
-void 
+void
 PortableServer::ImplicitActivationPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ImplicitActivationPolicy *_tao_tmp_pointer =
@@ -108,10 +108,10 @@ PortableServer::ImplicitActivationPolicy::_narrow (
     {
       return ImplicitActivationPolicy::_nil ();
     }
-  
+
   ImplicitActivationPolicy_ptr proxy =
     dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-  
+
   return ImplicitActivationPolicy::_duplicate (proxy);
 }
 
@@ -125,10 +125,10 @@ PortableServer::ImplicitActivationPolicy::_unchecked_narrow (
     {
       return ImplicitActivationPolicy::_nil ();
     }
-  
+
   ImplicitActivationPolicy_ptr proxy =
     dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-  
+
   return ImplicitActivationPolicy::_duplicate (proxy);
 }
 
@@ -139,7 +139,7 @@ PortableServer::ImplicitActivationPolicy::_duplicate (ImplicitActivationPolicy_p
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -205,52 +205,13 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ImplicitActivati
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ImplicitActivationPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        PortableServer::ImplicitActivationPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        PortableServer::ImplicitActivationPolicy
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        PortableServer::ImplicitActivationPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        PortableServer::ImplicitActivationPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        PortableServer::ImplicitActivationPolicy
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        PortableServer::ImplicitActivationPolicy
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

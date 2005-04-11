@@ -45,7 +45,7 @@ static char const * const _tao_enumerators_PortableServer_ImplicitActivationPoli
   {
     "IMPLICIT_ACTIVATION",
     "NO_IMPLICIT_ACTIVATION"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -56,7 +56,7 @@ static TAO::TypeCode::Enum<char const *,
     "ImplicitActivationPolicyValue",
     _tao_enumerators_PortableServer_ImplicitActivationPolicyValue,
     2);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicyValue =
@@ -74,7 +74,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_PortableServer_ImplicitActivationPolicy (
     "IDL:omg.org/PortableServer/ImplicitActivationPolicy:2.3",
     "ImplicitActivationPolicy");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicy =
@@ -107,7 +107,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ImplicitActivationPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ImplicitActivationPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -179,31 +179,5 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        PortableServer::ImplicitActivationPolicyValue
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        PortableServer::ImplicitActivationPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        PortableServer::ImplicitActivationPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableServer::ImplicitActivationPolicy \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

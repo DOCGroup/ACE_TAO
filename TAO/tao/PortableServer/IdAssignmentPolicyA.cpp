@@ -177,29 +177,3 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        PortableServer::IdAssignmentPolicyValue
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        PortableServer::IdAssignmentPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        PortableServer::IdAssignmentPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableServer::IdAssignmentPolicy \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

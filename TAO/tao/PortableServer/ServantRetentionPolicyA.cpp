@@ -45,7 +45,7 @@ static char const * const _tao_enumerators_PortableServer_ServantRetentionPolicy
   {
     "RETAIN",
     "NON_RETAIN"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -56,7 +56,7 @@ static TAO::TypeCode::Enum<char const *,
     "ServantRetentionPolicyValue",
     _tao_enumerators_PortableServer_ServantRetentionPolicyValue,
     2);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicyValue =
@@ -74,7 +74,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_PortableServer_ServantRetentionPolicy (
     "IDL:omg.org/PortableServer/ServantRetentionPolicy:2.3",
     "ServantRetentionPolicy");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicy =
@@ -107,7 +107,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ServantRetentionPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ServantRetentionPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -180,30 +180,4 @@ operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        PortableServer::ServantRetentionPolicyValue
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        PortableServer::ServantRetentionPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        PortableServer::ServantRetentionPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableServer::ServantRetentionPolicy \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

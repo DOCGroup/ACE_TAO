@@ -45,7 +45,7 @@ static char const * const _tao_enumerators_PortableServer_ThreadPolicyValue[] =
   {
     "ORB_CTRL_MODEL",
     "SINGLE_THREAD_MODEL"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -56,7 +56,7 @@ static TAO::TypeCode::Enum<char const *,
     "ThreadPolicyValue",
     _tao_enumerators_PortableServer_ThreadPolicyValue,
     2);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadPolicyValue =
@@ -74,7 +74,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_PortableServer_ThreadPolicy (
     "IDL:omg.org/PortableServer/ThreadPolicy:2.3",
     "ThreadPolicy");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadPolicy =
@@ -107,7 +107,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ThreadPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ThreadPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -179,31 +179,5 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        PortableServer::ThreadPolicyValue
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        PortableServer::ThreadPolicy
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        PortableServer::ThreadPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableServer::ThreadPolicy \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

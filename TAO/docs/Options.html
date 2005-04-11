@@ -1286,7 +1286,8 @@ allowed when no forwarding is used or only a single threaded client. </td>
         <code>-ORBWaitStrategy</code> <em>MT / ST / RW / MT_NOUPCALL
         </em>
 </td>
-        <td><a name="-ORBClientConnectionHandler"></a><em>ST</em> means
+        <td><em>Please note that these two options are synonymous and can be used interchangeably.</em>
+	<p><a name="-ORBClientConnectionHandler"></a><em>ST</em> means
 use the single-threaded client connection handler, i.e., the leader
 follower model will not be used. However, <em>ST</em> does support
 nested upcalls and handling of new requests while waiting for the reply
@@ -1307,7 +1308,7 @@ one way calls. This strategy can also be used in an application that is
 both a client and a server if the server side is handled by a separate
 thread and the client threads are "pure" clients. </p>
 <p>
-        <CODE>MT_NOUPCALL</CODE> means use a client connection handler that
+        <CODE>MT_NOUPCALL</CODE> <b>(EXPERIMENTAL!)</b> means use a client connection handler that
         participates in the leader-follower model like MT, but, like
         RW, does not allow handling of nested upcalls within the
         waiting thread.  Note that with this strategy it is possible
