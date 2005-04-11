@@ -30,6 +30,10 @@
 # define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 #endif /* __GNUC__ >= 3.4 */
 
+#if (__GNUC__ < 3)
+# define ACE_LACKS_MEMBER_TEMPLATES
+#endif /* __GNUC__ < 3 */
+
 // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
 // is not defined with -fno-exceptions, the ACE default for g++.
 // ACE_HAS_EXCEPTIONS is defined in
