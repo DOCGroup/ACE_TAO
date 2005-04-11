@@ -3964,6 +3964,60 @@ spaef (FUNCPTR entry, ...)
   // Return the return value of the invoked ace_main routine.
   return ret;
 }
+
+// This global function can be used from the VxWorks shell to pass
+// arguments to and run a main () function (i.e. ace_main).
+//
+// usage: -> vx_execae ace_main, "arg1 arg2 \"arg3 with spaces\"", [prio, [opt, [stacksz]]]
+//
+// All arguments must be within double quotes, even numbers.
+// This routine spawns the main () function in a separate task and waits till the
+// task has finished.
+static int _vx_call_rc = 0;
+
+static int
+_vx_call_entry(FUNCPTR entry, int argc, char* argv[])
+{
+    _vx_call_rc = entry (argc, argv);
+    return _vx_call_rc;
+}
+
+int
+vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
+{
+  static const int MAX_ARGS    = 128;
+  static char* argv[MAX_ARGS]  = { "ace_main", 0 };
+  int argc = 1;
+
+  // Peel off arguments to run_main () and put into argv.
+
+  if (arg)
+    add_to_argv(argc, argv, MAX_ARGS, arg);
+
+  // fill unused argv slots with 0 to get rid of leftovers
+  // from previous invocations
+  for (int i = argc; i < MAX_ARGS; ++i)
+    argv[i] = 0;
+
+  // The hard-coded options are what ::sp () uses, except for the
+  // larger stack size (instead of ::sp ()'s 20000).
+  const int ret = ::taskSpawn (argv[0],    // task name
+                               prio==0 ? 100 : prio,        // task priority
+                               opt==0 ? VX_FP_TASK : opt, // task options
+                               stacksz==0 ? ACE_NEEDS_HUGE_THREAD_STACKSIZE : stacksz, // stack size
+                               (FUNCPTR)_vx_call_entry, // entrypoint caller
+                               (int)entry,              // entry point
+                               argc,                    // first argument to main ()
+                               (int) argv,              // second argument to main ()
+                               0, 0, 0, 0, 0, 0, 0);
+
+  while( ret > 0 && ::taskIdVerify (ret) != ERROR )
+    ::taskDelay (3 * ::sysClkRateGet ());
+
+  // ::taskSpawn () returns the taskID on success: return _vx_call_rc instead if
+  // successful
+  return ret > 0 ? _vx_call_rc : 255;
+}
 #endif /* VXWORKS */
 
 #if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
