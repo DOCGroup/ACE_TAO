@@ -22,7 +22,7 @@ Mon Apr 11 11:39:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* ace/OS_NS_time.inl:
 
 	  Add ACE_OS::clock_settime().
-	
+
 	* ace/config-chorus.h:
 	* ace/config-cygwin32.h:
 	* ace/config-hpux-10.x.h:
@@ -43,7 +43,7 @@ Mon Apr 11 11:39:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	  Define ACE_HAS_CLOCK_SETTIME in every canned config-* header
 	  that defines ACE_HAS_CLOCK_GETTIME.
-	
+
 	* ace/README:
 
 	  Document new feature test macro ACE_HAS_CLOCK_SETTIME.
