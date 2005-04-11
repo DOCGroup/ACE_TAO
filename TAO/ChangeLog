@@ -1,3 +1,8 @@
+Mon Apr 11 10:03:45 2005  Ciju John  <john_c@ociweb.com>
+
+        * tao/Transport.cpp (dump_iov):
+          Fixed bus error. Problem due to interpretting integer as a string.
+
 Mon Apr 11 15:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
