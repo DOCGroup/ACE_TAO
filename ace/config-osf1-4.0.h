@@ -87,7 +87,6 @@
 # define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #endif /* ACE_MT_SAFE != 0 */
 # define ACE_LACKS_T_ERRNO
-# define ACE_POLL_IS_BROKEN
 # if !defined (DIGITAL_UNIX)
 #   define DIGITAL_UNIX 0x400
 # endif /* ! DIGITAL_UNIX */
