@@ -1,3 +1,8 @@
+Tue Apr 12 13:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitInfo.h:
+          Improved doxygen
+
 Tue Apr 12 11:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Service_Callbacks.h:
