@@ -3600,54 +3600,6 @@ AC_CHECK_FUNC([bind],
      ],,[AC_DEFINE([ACE_LACKS_WILDCARD_BIND])])
   ],)
 
-AC_CHECK_FUNC([poll],
-  [
-   ACE_CACHE_CHECK([if poll is broken],
-     [ace_cv_poll_is_broken],
-     [
-      AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <poll.h>
-#include <time.h>
-
-#ifdef ACE_LACKS_SYSTIME_H
-# include <sys/time.h>
-#endif
-
-         int main () {
-
-         int timeout = 2000; /* 2000 milliseconds */
-         int timeout_arg = timeout;
-                      /* poll() modifies timeout argument on some platforms */
-
-         int result = 0;
-
-         time_t *t = 0;
-
-         time_t time1 = time(t);
-
-         result = poll(0, 0, timeout_arg);
-
-         time_t time2 = time(t);
-         time_t diff = time2 - time1;
-
-         /* If (diff * 1000) < timeout then poll() is broken! */
-         if (result >= 0)
-           return (((diff * 1000) < timeout) ? 1 : 0);
-         else
-           return 1; /* We had a problem with poll() so we don't
-                        know what really happened. */
-         }
-        ]])],[
-         ace_cv_poll_is_broken=no
-        ],[
-         ace_cv_poll_is_broken=yes
-        ],[
-         dnl action if cross-compiling
-         ace_cv_poll_is_broken=no
-        ])
-     ],[AC_DEFINE([ACE_POLL_IS_BROKEN])],)
-  ],)
-
 case "$host" in
   *linux*)
     dnl Linux Event Poll
