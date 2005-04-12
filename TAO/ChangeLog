@@ -1,3 +1,9 @@
+Tue Apr 12 03:58:55 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/DynamicInterface/Request.inl:
+
+	  Fixed an error in the emulation exception builds.
+
 Tue Apr 12 09:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/*.pidl:
