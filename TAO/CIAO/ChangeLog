@@ -1,3 +1,12 @@
+Tus Apr 12 16:04:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/Old_Config_Handlers/IAD_Handler.cpp
+
+	  Modified to ignore the <dependsOn> tag, since this might 
+	  cause a problem where multiple _svnt or multiple _exec
+	  libraries to be specified as implArtifacts of a component
+	  type.
+
 Tue Apr 12 14:35:58 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* CIAO-INSTALL.html
