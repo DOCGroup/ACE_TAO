@@ -171,8 +171,7 @@ TAO_LB_ServerRequestInterceptor::send_other (
         ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (status == PortableInterceptor::LOCATION_FORWARD
-          || status == PortableInterceptor::LOCATION_FORWARD_PERMANENT)
+      if (status == PortableInterceptor::LOCATION_FORWARD)
         ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("TAO_LB_ServerRequestInterceptor -- ")
                     ACE_TEXT ("LOCATION FORWARDED\n")));

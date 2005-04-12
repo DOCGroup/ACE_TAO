@@ -127,15 +127,14 @@ namespace TAO
     /**
      * Statuses can be @c PortableInterceptor::SUCCESSFUL,
      * @c SYSTEM_EXCEPTION, @c USER_EXCEPTION, @c LOCATION_FORWARD,
-     * @c LOCATION_FORWARD_PERMANENT, @c TRANSPORT_RETRY.
+     * @c TRANSPORT_RETRY, @c UNKNOWN..
      */
     virtual PortableInterceptor::ReplyStatus reply_status (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// If the reply status is
-    /// @c PortableInterceptor::LOCATION_FORWARD or
-    /// @c PortableInterceptor::LOCATION_FORWARD_PERMANENT, return the
+    /// @c PortableInterceptor::LOCATION_FORWARD return the
     /// object reference to which the request was forwarded.
     virtual CORBA::Object_ptr forward_reference (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)

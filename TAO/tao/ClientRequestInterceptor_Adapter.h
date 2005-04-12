@@ -7,8 +7,7 @@
  *  $Id$
  *
  *   This file an adapter class to simplify the support of
- *   interceptors. This file is a modified form of
- *   ClientInterceptor_Adapter.h
+ *   interceptors.
  *
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>

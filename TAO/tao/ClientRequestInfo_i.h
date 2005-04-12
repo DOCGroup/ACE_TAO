@@ -110,15 +110,13 @@ public:
 
   /// Return the reply status for the current request.  Statuses can
   /// be PortableInterceptor::SUCCESSFUL, SYSTEM_EXCEPTION,
-  /// USER_EXCEPTION, LOCATION_FORWARD, LOCATION_FORWARD_PERMANENT,
-  /// TRANSPORT_RETRY.
+  /// USER_EXCEPTION, LOCATION_FORWARD, TRANSPORT_RETRY, UNKNOWN
   PortableInterceptor::ReplyStatus reply_status (
       ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// If the reply status is PortableInterceptor::LOCATION_FORWARD or
-  /// PortableInterceptor::LOCATION_FORWARD_PERMANENT, return the
-  /// object reference to which the request was forwarded.
+  /// If the reply status is PortableInterceptor::LOCATION_FORWARD
+  /// return the object reference to which the request was forwarded.
   CORBA::Object_ptr forward_reference (
       ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
