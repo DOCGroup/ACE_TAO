@@ -88,9 +88,9 @@ public:
   /*!
     "complete" == the GIOP message at the tail is not missing any data (it may be a complete GIOP Fragment, though)
 
-    \return -1 queue is empty
-    \return 0  tail is not "complete"
-    \return 1  tail is "complete"
+    \retval -1 queue is empty
+    \retval 0  tail is not "complete"
+    \retval 1  tail is "complete"
   */
   int is_tail_complete (void);
 
@@ -101,9 +101,9 @@ public:
     the fragments have been received, parsed, and placed into the
     queue
 
-    \return -1 if queue is empty
-    \return 0  if head is not "complete"
-    \return 1  if head is "complete"
+    \retval -1 if queue is empty
+    \retval 0  if head is not "complete"
+    \retval 1  if head is "complete"
    */
   int is_head_complete (void);
   //@}
