@@ -1,3 +1,9 @@
+Tue Apr 12 16:44:19 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Protocol.h:
+
+	  Got rid of the "might be used uninitialized" warnings.
+
 Tue Apr 12 09:17:34 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tests/Memcpy_Test.cpp:
