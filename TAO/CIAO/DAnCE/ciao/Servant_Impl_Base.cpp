@@ -60,7 +60,7 @@ namespace CIAO
 
   void
   Servant_Impl_Base::remove (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
@@ -69,7 +69,7 @@ namespace CIAO
 
     Components::FacetDescriptions_var facets =
       this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    ACE_CHECK;
 
     const CORBA::ULong facet_len = facets->length ();
     CORBA::ULong i = 0;
@@ -83,9 +83,9 @@ namespace CIAO
 
       CIAO::Servant_Activator *sa =
         this->container_->ports_servant_activator ();
-      sa->update_port_activator (oid);
+      sa->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
 
-      this->container_->deactivate_facet (oid);
+      this->container_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
     }
 
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
