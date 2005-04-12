@@ -26,7 +26,7 @@
   // LynxOS 3.1.0 or greater need ipc_1c.h to be included before net/if.h
   // to avoid macro conflict.
 # define ACE_NEEDS_IPC_1C_H
-#endif /* _POSIX_VERSION */
+#endif /* ACE_LYNXOS_MAJOR */
 
 #if defined (__x86__)
 # define ACE_HAS_PENTIUM
