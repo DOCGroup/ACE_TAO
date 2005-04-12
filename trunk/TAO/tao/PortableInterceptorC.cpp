@@ -210,7 +210,6 @@ PortableInterceptor::ForwardRequest::ForwardRequest (const ::PortableInterceptor
       )
 {
   this->forward = CORBA::Object::_duplicate (_tao_excp.forward.in ());
-  this->permanent = _tao_excp.permanent;
 }
 
 PortableInterceptor::ForwardRequest&
@@ -218,7 +217,6 @@ PortableInterceptor::ForwardRequest::operator= (const ::PortableInterceptor::For
 {
   this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   this->forward = CORBA::Object::_duplicate (_tao_excp.forward.in ());
-  this->permanent = _tao_excp.permanent;
   return *this;
 }
 
@@ -297,8 +295,7 @@ void PortableInterceptor::ForwardRequest::_tao_decode (
 // be\be_visitor_exception/exception_ctor.cpp:66
 
 PortableInterceptor::ForwardRequest::ForwardRequest (
-    const CORBA::Object_ptr  _tao_forward,
-    CORBA::Boolean _tao_permanent
+    const CORBA::Object_ptr  _tao_forward
   )
   : CORBA::UserException (
         "IDL:omg.org/PortableInterceptor/ForwardRequest:1.0",
@@ -306,7 +303,6 @@ PortableInterceptor::ForwardRequest::ForwardRequest (
       )
 {
   this->forward = CORBA::Object::_duplicate (_tao_forward);
-  this->permanent = _tao_permanent;
 }
 
 // TAO extension - the virtual _type method.
@@ -1942,8 +1938,7 @@ CORBA::Boolean operator<< (
     {
       // Now marshal the members (if any).
       return (
-        (strm << _tao_aggregate.forward.in ()) &&
-        (strm << CORBA::Any::from_boolean (_tao_aggregate.permanent))
+        (strm << _tao_aggregate.forward.in ())
        );
     }
   else
@@ -1959,8 +1954,7 @@ CORBA::Boolean operator>> (
 {
   // Demarshal the members.
   return (
-    (strm >> _tao_aggregate.forward.out ()) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.permanent))
+    (strm >> _tao_aggregate.forward.out ())
   );
 }
 
