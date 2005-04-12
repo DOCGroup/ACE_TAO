@@ -35,7 +35,7 @@ public:
 
 private:
   ImR_Activator_i service_;
-  Options opts_;
+  Activator_Options opts_;
   ACE_Auto_Ptr<ImR_Activator_ORB_Runner> runner_;
 
 private:

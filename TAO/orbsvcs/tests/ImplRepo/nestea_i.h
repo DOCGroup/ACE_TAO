@@ -39,7 +39,7 @@ class Nestea_i: public POA_Nestea_Bookshelf
 {
 public:
   /// Constructor
-  Nestea_i (const char *filename = "nestea.dat");
+  Nestea_i (CORBA::ORB_ptr orb, const char *filename = "nestea.dat");
 
   /// Destructor
   virtual ~Nestea_i (void);
@@ -62,6 +62,8 @@ public:
   virtual char *get_praise (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void shutdown(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 private:
   /// Saves bookshelf data to a file.
   int save_data (void);
@@ -74,6 +76,8 @@ private:
 
   /// Number of cans in the bookshelf.
   ACE_UINT32 cans_;
+
+  CORBA::ORB_var orb_;
 };
 
 #endif /* NESTEA_I_H */

@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!DOCTYPE ImplementationRepository/>
 <ImplementationRepository>
 	<Servers name="test" activator="MYHOST" command_line="mysrv" working_dir="mydir" activation_mode="NORMAL" start_limit="1" partial_ior="" ior="">
 	</Servers>

@@ -83,6 +83,8 @@ public:
   /// Returns information related to startup.
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
+  bool has_activator(const ACE_CString& name);
+
   /// Removes the server from the Repository.
   int remove_server (const ACE_CString& name);
   /// Removes the activator from the Repository.

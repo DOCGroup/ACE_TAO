@@ -6,7 +6,7 @@
 #include "Activator_NT_Service.h"
 
 int
-run_standalone (Options& opts)
+run_standalone (Activator_Options& opts)
 {
   ImR_Activator_i server;
 
@@ -79,16 +79,16 @@ run_service (void)
  * these commands.
  */
 static int
-run_service_command (Options& opts)
+run_service_command (Activator_Options& opts)
 {
-  if (opts.service_command() == Options::SC_NONE) 
+  if (opts.service_command() == Activator_Options::SC_NONE)
     return 0;
 
 #if defined (ACE_WIN32)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
 
-  if (opts.service_command() == Options::SC_INSTALL ||
-    opts.service_command() == Options::SC_INSTALL_NO_LOCATOR)
+  if (opts.service_command() == Activator_Options::SC_INSTALL ||
+    opts.service_command() == Activator_Options::SC_INSTALL_NO_LOCATOR)
     {
       const DWORD MAX_PATH_LENGTH = 4096;
       char pathname[MAX_PATH_LENGTH]; 
@@ -103,9 +103,9 @@ run_service_command (Options& opts)
       // Append the command used for running the implrepo as a service
       ACE_OS::strcat (pathname, ACE_TEXT (" -s"));
       int ret = -1;
-      if (opts.service_command() == Options::SC_INSTALL) 
+      if (opts.service_command() == Activator_Options::SC_INSTALL)
       {
-        const char* DEPENDS_ON = "TAOIMRLocator"; // Must match Locator_NT_Service.h
+        const char* DEPENDS_ON = "TAOImR"; // Must match Locator_NT_Service.h
 
         ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
                                             SERVICE_ERROR_NORMAL,
@@ -130,7 +130,7 @@ run_service_command (Options& opts)
       if (ret == 0) 
         return 1;
     }
-  else if (opts.service_command() == Options::SC_REMOVE)
+  else if (opts.service_command() == Activator_Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
       ACE_DEBUG ((LM_DEBUG, "ImR Activator: Service removed.\n"));
@@ -155,7 +155,7 @@ run_service_command (Options& opts)
 int
 main (int argc, char *argv[])
 {
-  Options opts;
+  Activator_Options opts;
 
   int result = opts.init (argc, argv);
   if (result < 0)

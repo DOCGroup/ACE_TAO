@@ -16,6 +16,8 @@ const char NESTEA_DATA_FILENAME[] = "nestea.dat";
 // The server name of the Nestea Server
 const char SERVER_NAME[] = "nestea_server";
 
+const int SELF_DESTRUCT_SECS = 8; // Must coordinate with run_test.pl
+
 Nestea_Server_i::Nestea_Server_i (const char * /*filename*/)
   : server_impl_ (0),
     ior_output_file_ (0)
@@ -167,7 +169,7 @@ Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       ACE_TRY_CHECK;
 
       ACE_NEW_RETURN (this->server_impl_,
-                      Nestea_i (NESTEA_DATA_FILENAME),
+                      Nestea_i (orb_.in(), NESTEA_DATA_FILENAME),
                       -1);
 
       PortableServer::ObjectId_var server_id =
@@ -179,14 +181,10 @@ Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       ACE_TRY_CHECK;
 
       CORBA::Object_var server_obj =
-        this->nestea_poa_->id_to_reference (server_id.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+        this->nestea_poa_->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // Create an IOR from the server object.
       CORBA::String_var server_str =
-        this->orb_->object_to_string (server_obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
@@ -235,8 +233,9 @@ Nestea_Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_Time_Value tv(SELF_DESTRUCT_SECS);
+
+      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
     }
   ACE_CATCHANY
     {
