@@ -10,6 +10,7 @@
 #include "Utils.h"
 #include "Process_Element.h"
 #include <iostream>
+#include <string>
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
@@ -49,12 +50,16 @@ void IAD_Handler::process_ImplementationArtifactDescription
             node_name, "deployRequirement", iad.deployRequirement,
             &Requirement_Handler::process_Requirement,
             this->id_map_));
+      else if (iad.dependsOn.length () == 0)
+        ;
+      /*
       else if
         (process_sequence_remote<Deployment::NamedImplementationArtifact, 
                                  NIA_Handler>
            (this->doc_, this->iter_, node,
             node_name, "dependsOn", iad.dependsOn,
             &NIA_Handler::process_NamedImplementationArtifact, this->id_map_));
+      */
       else if
         (process_sequence_common<Deployment::Property>
            (this->doc_, this->iter_, node,
