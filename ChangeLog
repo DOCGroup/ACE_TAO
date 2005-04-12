@@ -1,3 +1,8 @@
+Tue Apr 12 13:11:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+	  Enhanced functionality for controlling kernel reboot.
+
 Tue Apr 12 07:53:39 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tests/Memcpy_Test.cpp:
