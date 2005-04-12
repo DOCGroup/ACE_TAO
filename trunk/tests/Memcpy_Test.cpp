@@ -27,7 +27,7 @@ smemcpy( void* dest, const void* src, const size_t n)
     case  2: to[  1] = from[  1] ;
     case  1: to[  0] = from[  0] ;
     case  0: return dest ;
-    default: return memcpy( dest, src, n) ;
+    default: return ACE_OS::memcpy( dest, src, n) ;
   }
 }
 
@@ -39,7 +39,7 @@ testit( int type)
 
   switch( type) {
     case 0: smemcpy( (void*)buffer, (void*)" THIS IS A TEST", size) ; break ;
-    case 1:  memcpy( (void*)buffer, (void*)" THIS IS A TEST", size) ; break ;
+    case 1:  ACE_OS::memcpy( (void*)buffer, (void*)" THIS IS A TEST", size) ; break ;
   }
 
 }
