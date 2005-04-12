@@ -267,7 +267,7 @@ namespace ACE_RMCast
     {
       sstream ss;
 
-      u32 s;
+      u32 s (0);
 
       ss << s;
 
@@ -357,8 +357,8 @@ namespace ACE_RMCast
     virtual void
     serialize_body (sstream& ss) const
     {
-      u32 addr;
-      u16 port;
+      u32 addr (0);
+      u16 port (0);
 
       ss << addr;
       ss << port;
@@ -422,8 +422,8 @@ namespace ACE_RMCast
     virtual void
     serialize_body (sstream& ss) const
     {
-      u32 addr;
-      u16 port;
+      u32 addr (0);
+      u16 port (0);
 
       ss << addr;
       ss << port;
@@ -572,9 +572,9 @@ namespace ACE_RMCast
     NAK (Header const& h, istream& is)
         : Profile (h)
     {
-      u64 sn;
-      u32 addr;
-      u16 port;
+      u64 sn (0);
+      u32 addr (0);
+      u16 port (0);
 
       sstream ss;
 
@@ -677,13 +677,13 @@ namespace ACE_RMCast
       //
       for (iterator i (this_.begin ()); !i.done (); i.advance ())
       {
-        u64 sn;
+        u64 sn (0);
         ss << sn;
       }
 
 
-      u32 addr;
-      u16 port;
+      u32 addr (0);
+      u16 port (0);
 
       ss << addr;
       ss << port;
@@ -711,9 +711,9 @@ namespace ACE_RMCast
     NRTM (Header const& h, istream& is)
         : Profile (h), map_ (10)
     {
-      u32 addr;
-      u16 port;
-      u64 sn;
+      u32 addr (0);
+      u16 port (0);
+      u64 sn (0);
 
       sstream ss;
 
@@ -789,9 +789,9 @@ namespace ACE_RMCast
     {
       for (Map::const_iterator i (map_), e (map_, 1); i != e; ++i)
       {
-        u32 addr;
-        u16 port;
-        u64 sn;
+        u32 addr (0);
+        u16 port (0);
+        u64 sn (0);
 
         ss << sn;
         ss << addr;
