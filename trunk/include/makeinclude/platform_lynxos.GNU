@@ -1,6 +1,6 @@
 # $Id$
 #
-# LynxOS with g++.  Defaults to LynxOS Version 3.0.0.  For Version 3.1.0,
+# LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 3.1.0,
 # for example, add "VERSION=3.1.0" to your make invocation.
 
 #### NOTE:  It's best to create a file that includes this one, instead
@@ -25,7 +25,7 @@ else
   #### before running "make".
 
   ifeq (,$(VERSION))
-    export VERSION=3.0.0
+    export VERSION=4.0.0
   endif # VERSION
 
   ifeq (,$(LYNXTARGET))
