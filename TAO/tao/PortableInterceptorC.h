@@ -320,17 +320,12 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
   
-  const PortableInterceptor::ReplyStatus LOCATION_FORWARD_PERMANENT = 4;
+  const PortableInterceptor::ReplyStatus TRANSPORT_RETRY = 4;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
   
-  const PortableInterceptor::ReplyStatus TRANSPORT_RETRY = 5;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
-  
-  const PortableInterceptor::ReplyStatus UNKNOWN = 6;
+  const PortableInterceptor::ReplyStatus UNKNOWN = 5;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379

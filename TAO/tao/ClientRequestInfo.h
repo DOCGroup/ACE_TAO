@@ -119,15 +119,14 @@ public:
   /**
    * Statuses can be PortableInterceptor::SUCCESSFUL,
    * SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD,
-   * LOCATION_FORWARD_PERMANENT, TRANSPORT_RETRY, UNKNOWN.
+   * TRANSPORT_RETRY, UNKNOWN.
    */
   virtual PortableInterceptor::ReplyStatus reply_status (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// If the reply status is PortableInterceptor::LOCATION_FORWARD or
-  /// PortableInterceptor::LOCATION_FORWARD_PERMANENT, return the
-  /// object reference to which the request was forwarded.
+  /// return the object reference to which the request was forwarded.
   virtual CORBA::Object_ptr forward_reference (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
