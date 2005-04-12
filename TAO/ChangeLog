@@ -1,3 +1,9 @@
+Tue Apr 12 15:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+          Removed not needed c-style cast and explicit initialise some
+          pointers with 0
+
 Tue Apr 12 15:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Queue.h:

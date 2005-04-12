@@ -1151,7 +1151,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   // Check ORBInitRef options.
   ACE_CString ior;
-  ACE_CString object_id ((const char *) name);
+  ACE_CString object_id (name);
 
   // Is the service name in the IOR Table.
   if (this->orb_core_->init_ref_map ()->find (object_id, ior) == 0)
@@ -1575,7 +1575,7 @@ CORBA::ORB_init (int &argc,
     {
       // An ORB corresponding to the desired ORBid doesn't exist so create
       // a new one.
-      TAO_ORB_Core * tmp;
+      TAO_ORB_Core * tmp = 0;
       ACE_NEW_THROW_EX (tmp,
                         TAO_ORB_Core (orbid_string.c_str ()),
                         CORBA::NO_MEMORY (
@@ -1613,7 +1613,7 @@ CORBA::ORB_init (int &argc,
     }
 
   // Run the registered ORB initializers, and initialize the ORB_Core.
-  TAO_ORBInitInfo * orb_init_info_temp;
+  TAO_ORBInitInfo * orb_init_info_temp = 0;
   ACE_NEW_THROW_EX (orb_init_info_temp,
                     TAO_ORBInitInfo (oc.get (),
                                      command_line.get_argc(),
