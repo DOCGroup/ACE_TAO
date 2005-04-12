@@ -29,22 +29,13 @@
 #include "LocalObject.h"
 
 #if defined(_MSC_VER)
-
 # pragma warning(push)
-
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
 # pragma warning(disable:4250)
-
-// This disables a "may need dll-interface" warning from MSVC.  It's
-// being too paranoid in this case, too.
 # pragma warning(disable:4251)
-
 #endif /* _MSC_VER */
 
 /// Forward declarations.
 class TAO_ORB_Core;
-class TAO_ServerRequest;
 
 namespace TAO
 {
@@ -233,7 +224,6 @@ namespace TAO
 
   };
 }
-
 
 #if defined (__ACE_INLINE__)
 # include "PICurrent.inl"

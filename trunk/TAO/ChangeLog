@@ -1,3 +1,8 @@
+Tue Apr 12 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PICurrent.h:
+          Removed not needed forward declaration of TAO_ServerRequest
+
 Tue Apr 12 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyPersistent.cpp:
