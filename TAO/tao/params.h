@@ -56,7 +56,8 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
  *
  * @brief Parameters that are specific to the ORB.  These parameters can
  * be for the client, the server, or for both.
- * = NOTE
+ *
+ * @note
  * Some of the functions have inline definitions in the class header
  * below.  Please do not move them back to the .i file.
  * cygnus-2.7.2-960126, distributed with Tornado 1.0.1, can't deal
