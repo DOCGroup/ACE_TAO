@@ -1,3 +1,18 @@
+Tue Apr 12 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.{h,cpp}:
+        * tao/ClientRequestInfo.h:
+        * tao/ClientRequestInfo_i.h:
+        * tao/PortableServer/ServerRequestInfo.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp:
+          Removed LOCATION_FORWARD_PERMANENT. It is not in the spec anymore
+          and we had already comments saying it should be removed.
+
+        * tao/ClientRequestInterceptor_Adapter.h:
+          Documentation fix
+
 Tue Apr 12 14:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/params.h:
