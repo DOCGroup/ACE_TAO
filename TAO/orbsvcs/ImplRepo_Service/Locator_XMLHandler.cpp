@@ -95,13 +95,3 @@ Locator_XMLHandler::EnvVar::operator!=(const EnvVar& rhs) const
   return ! (rhs == *this);
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<Locator_XMLHandler::EnvVar>;
-template class ACE_Array<Locator_XMLHandler::EnvVar>;
-template class ACE_Vector<Locator_XMLHandler::EnvVar>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<Locator_XMLHandler::EnvVar>
-#pragma instantiate ACE_Array<Locator_XMLHandler::EnvVar>
-#pragma instantiate ACE_Vector<Locator_XMLHandler::EnvVar>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

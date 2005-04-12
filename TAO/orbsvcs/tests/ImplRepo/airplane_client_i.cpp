@@ -133,9 +133,7 @@ Airplane_Client_i::init (int argc, char **argv)
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid server key <%s>\n",
-                           this->server_key_),
-                          -1);
+          "Error: invalid server key <%s>\n", this->server_key_), -1);
     }
   ACE_CATCHANY
     {

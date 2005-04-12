@@ -59,6 +59,8 @@ private:
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
+
+  bool shutdown_server_;
 };
 
 #endif /* NESTEA_CLIENT_I_H */

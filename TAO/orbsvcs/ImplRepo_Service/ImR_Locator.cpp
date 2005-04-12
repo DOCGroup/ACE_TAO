@@ -106,7 +106,7 @@ run_service_command (Options& opts)
                                            SERVICE_ERROR_NORMAL,
                                            pathname);
       if (ret != -1) {
-        ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service installed.\n"));
+        ACE_DEBUG ((LM_DEBUG, "ImR: Service installed.\n"));
         opts.save_registry_options();
       } else {
         ACE_ERROR((LM_ERROR, "Error: Failed to install service. error:%d\n", errno));
@@ -117,7 +117,7 @@ run_service_command (Options& opts)
   else if (opts.service_command() == Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
-      ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service removed.\n"));
+      ACE_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
       if (ret == 0) 
         return 1; // If successfull, then we don't want to continue.
     }

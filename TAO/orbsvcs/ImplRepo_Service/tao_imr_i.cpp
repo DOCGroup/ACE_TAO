@@ -61,11 +61,11 @@ TAO_IMR_i::init (int argc, char **argv)
 
     if (CORBA::is_nil (obj.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "Unable to resolve the ImR Locator.\n"));
+      ACE_ERROR ((LM_ERROR, "Unable to resolve the ImR.\n"));
       return -1;
     }
 
-    exception_message = "While narrowing ImR Locator";
+    exception_message = "While narrowing ImR";
 
     this->imr_ =
       ImplementationRepository::Administration::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
@@ -73,7 +73,7 @@ TAO_IMR_i::init (int argc, char **argv)
 
     if (CORBA::is_nil (imr_.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "Unable to narrow the ImR Locator.\n"));
+      ACE_ERROR ((LM_ERROR, "Unable to narrow the ImR.\n"));
       return -1;
     }
 
@@ -194,17 +194,28 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   // Print out information
   ACE_DEBUG ((LM_DEBUG, "Server <%s>\n", info.server.in ()));
 
+  const char * locked_out = "";
+
+  int limit = info.startup.start_limit;
+  if (info.startup.start_limit < 0)
+  {
+    limit = -limit;
+    locked_out = "  Locked Out\n";
+  }
+
   ACE_DEBUG ((LM_DEBUG,
     "  Activator: %s\n"
     "  Command Line: %s\n"
     "  Working Directory: %s\n"
     "  Activation Mode: %s\n"
-    "  Number of retries: %d\n",
+    "  Number of retries: %d\n"
+    "%s",
     info.startup.activator.in (),
     info.startup.command_line.in (),
     info.startup.working_directory.in (),
     act,
-    info.startup.start_limit - 1));
+    limit - 1,
+    locked_out));
   for (CORBA::ULong i = 0; i < info.startup.environment.length (); ++i)
     ACE_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s \n",
     info.startup.environment[i].name.in (),
@@ -372,7 +383,7 @@ TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
         this->activation_ = ImplementationRepository::AUTO_START;
       else
         ACE_ERROR_RETURN ((LM_ERROR,
-        "Unknown Activation Mode <%s>!\n",
+        "Unknown Activation Mode <%s>.\n",
         get_opts.opt_arg ()),
         -1);
       break;
@@ -438,9 +449,9 @@ TAO_IMR_Op_IOR::print_usage (void)
     "the InterOperable Naming Service.  Please see the documentation for\n"
     "more information on which server configurations work with this command.\n"
     "\n"
-    "Usage: tao_imr [options] ior <name> [command-arguments]\n"
+    "Usage: tao_imr [options] ior <object_key> [command-arguments]\n"
     "  where [options] are ORB options\n"
-    "  where <name> is the POA name of the server\n"
+    "  where <object_key> matches the simple key bound in the server IORTable.\n"
     "  where [command-arguments] can be\n"
     "    -f filename   filename to output the IOR to\n"
     "    -h            Displays this\n"));
@@ -697,7 +708,7 @@ TAO_IMR_Op_Update::parse (int argc, ACE_TCHAR **argv)
         this->activation_ = ImplementationRepository::AUTO_START;
       else
         ACE_ERROR_RETURN ((LM_ERROR,
-        "Unknown Activation Mode <%s>!\n",
+        "Unknown Activation Mode <%s>.\n",
         get_opts.opt_arg ()),
         -1);
       break;
@@ -753,7 +764,7 @@ TAO_IMR_Op_Activate::run (void)
   }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
   {
-    ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
+    ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
     return TAO_IMR_Op::NOT_FOUND;
   }
   ACE_CATCH (PortableServer::ForwardRequest, ex)
@@ -812,7 +823,7 @@ TAO_IMR_Op_Add::run (void)
   ACE_CATCH (ImplementationRepository::NotFound, ex)
   {
     ACE_ERROR ((LM_ERROR,
-      "Could not register server <%s>. Activator <%s> not found!\n",
+      "Could not register server <%s>. Activator <%s> not found.\n",
       this->server_name_.c_str (),
       this->activator_.c_str()
       ));
@@ -821,7 +832,7 @@ TAO_IMR_Op_Add::run (void)
   ACE_CATCH (ImplementationRepository::AlreadyRegistered, ex)
   {
     ACE_ERROR ((LM_ERROR,
-      "Server <%s> already registered!\n",
+      "Server <%s> already registered.\n",
       this->server_name_.c_str ()));
     return TAO_IMR_Op::ALREADY_REGISTERED;
   }
@@ -900,7 +911,7 @@ TAO_IMR_Op_IOR::run (void)
     {
       ACE_ERROR_RETURN ((
         LM_ERROR,
-        ACE_TEXT ("Invalid ImR Locator IOR\n")
+        ACE_TEXT ("Invalid ImR IOR.\n")
         ), -1);
     }
 
@@ -916,7 +927,7 @@ TAO_IMR_Op_IOR::run (void)
 
     if (pos == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
     }
     else
     {
@@ -930,7 +941,7 @@ TAO_IMR_Op_IOR::run (void)
       }
       else
       {
-        ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
       }
     }
     ACE_CString ior (imr_str.in ());
@@ -1012,7 +1023,7 @@ TAO_IMR_Op_List::run (void)
   }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
   {
-    ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
+    ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
     return TAO_IMR_Op::NOT_FOUND;
   }
   ACE_CATCHANY
@@ -1041,7 +1052,7 @@ TAO_IMR_Op_Remove::run (void)
   }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
   {
-    ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n",
+    ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n",
       this->server_name_.c_str ()));
     return TAO_IMR_Op::NOT_FOUND;
   }
@@ -1076,8 +1087,13 @@ TAO_IMR_Op_Shutdown::run (void)
   }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
   {
-    ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
+    ACE_ERROR ((LM_ERROR, "Server <%s> already shut down.\n", this->server_name_.c_str ()));
     return TAO_IMR_Op::NOT_FOUND;
+  }
+  ACE_CATCH(CORBA::TIMEOUT, ex)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%s> to shutdown.\n",
+      this->server_name_.c_str ()));
   }
   ACE_CATCHANY
   {
@@ -1127,11 +1143,18 @@ TAO_IMR_Op_Update::run (void)
       server_information->startup
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
+
+    ACE_DEBUG((LM_DEBUG, "Successfully updated <%s>.\n", this->server_name_.c_str ()));
   }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
   {
     ACE_ERROR ((LM_ERROR, "Could not find server <%s>\n", this->server_name_.c_str ()));
     return TAO_IMR_Op::NOT_FOUND;
+  }
+  ACE_CATCH (ImplementationRepository::AlreadyRegistered, ex)
+  {
+    ACE_ERROR ((LM_ERROR, "Can't change the Activator for <%s>.\n", this->server_name_.c_str ()));
+    return TAO_IMR_Op::NORMAL;
   }
   ACE_CATCH (CORBA::NO_PERMISSION, ex)
   {

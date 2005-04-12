@@ -2,6 +2,7 @@
 #include "Locator_XMLHandler.h"
 #include "utils.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
 
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
@@ -23,6 +24,14 @@ static const char* TOKEN = "Token";
 #if defined (ACE_WIN32)
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
 #endif
+
+static ACE_CString lcase(const ACE_CString& s) {
+  ACE_CString ret(s);
+  for (size_t i = 0; i < ret.length(); ++i) {
+    ret[i] = static_cast<char>(ACE_OS::ace_tolower(s[i]));
+  }
+  return ret;
+}
 
 static void loadActivatorsAsBinary(ACE_Configuration& config, Locator_Repository::AIMap& map)
 {
@@ -46,7 +55,7 @@ static void loadActivatorsAsBinary(ACE_Configuration& config, Locator_Repository
       config.get_integer_value(key, TOKEN, token);
 
       Activator_Info_Ptr info(new Activator_Info(name, token, ior));
-      map.bind (name, info);
+      map.bind (lcase(name), info);
       index++;
     }
   }
@@ -81,7 +90,8 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
       config.get_string_value (key, IOR, ior);
       config.get_integer_value(key, START_LIMIT, start_limit);
 
-      ImplementationRepository::ActivationMode amode = static_cast<ImplementationRepository::ActivationMode> (amodeint);
+      ImplementationRepository::ActivationMode amode = ACE_static_cast (
+        ImplementationRepository::ActivationMode, amodeint);
 
       ImplementationRepository::EnvironmentList env_vars =
         ImR_Utils::parseEnvList(envstr);
@@ -145,7 +155,7 @@ public:
     const ACE_CString& ior)
   {
     Activator_Info_Ptr si(new Activator_Info(aname, token, ior));
-    this->repo_.activators().bind(aname, si);
+    this->repo_.activators().bind(lcase(aname), si);
   }
 };
 
@@ -198,7 +208,6 @@ static void saveAsXML(const ACE_CString& fname, Locator_Repository& repo) {
     return;
   }
   ACE_OS::fprintf(fp,"<?xml version=\"1.0\"?>\n");
-  ACE_OS::fprintf(fp,"<!DOCTYPE %s/>\n", Locator_XMLHandler::ROOT_TAG);
   ACE_OS::fprintf(fp,"<%s>\n", Locator_XMLHandler::ROOT_TAG);
 
   // Save servers
@@ -335,7 +344,7 @@ Locator_Repository::add_activator (const ACE_CString& name,
 {
   Activator_Info_Ptr info(new Activator_Info(name, token, ior, act));
 
-  int err = activators().bind (name, info);
+  int err = activators().bind (lcase(name), info);
   if (err != 0)
   {
     return err;
@@ -432,8 +441,15 @@ Activator_Info_Ptr
 Locator_Repository::get_activator (const ACE_CString& name)
 {
   Activator_Info_Ptr activator(0);
-  activators().find (name, activator);
+  activators().find (lcase(name), activator);
   return activator;
+}
+
+bool
+Locator_Repository::has_activator (const ACE_CString& name)
+{
+  Activator_Info_Ptr activator(0);
+  return activators().find (lcase(name), activator) == 0;
 }
 
 int
@@ -467,7 +483,7 @@ Locator_Repository::remove_server (const ACE_CString& name)
 int
 Locator_Repository::remove_activator (const ACE_CString& name)
 {
-  int ret = activators().unbind (name);
+  int ret = activators().unbind (lcase(name));
   if (ret != 0)
   {
     return ret;
@@ -519,35 +535,3 @@ Locator_Repository::repo_mode()
   }
   return "Disabled";
 }
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> >;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Entry<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex> >;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex>, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-template class ACE_Auto_Ptr<ACE_Configuration>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> >
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex> >
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#pragma instantiate  ACE_Auto_Ptr<ACE_Configuration>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

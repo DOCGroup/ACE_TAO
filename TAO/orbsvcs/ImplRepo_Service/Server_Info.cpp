@@ -25,6 +25,8 @@ Server_Info::Server_Info
  , ior(server_ior)
  , server(ImplementationRepository::ServerObject::_duplicate(svrobj))
  , start_count(0)
+ , waiting_clients(0)
+ , starting(false)
 {
 }
 
@@ -40,7 +42,13 @@ Server_Info::createImRServerInfo(ACE_ENV_SINGLE_ARG_DECL)
   info->startup.working_directory = dir.c_str();
   info->startup.activation = activation_mode;
   info->startup.activator = activator.c_str();
-  info->startup.start_limit = start_limit;
+  if (start_count >= start_limit) {
+    info->startup.start_limit = -start_limit;
+  }
+  else
+  {
+    info->startup.start_limit = start_limit;
+  }
   info->partial_ior = partial_ior.c_str();
 
   return info;
@@ -55,9 +63,3 @@ Server_Info::reset(void)
   server = ImplementationRepository::ServerObject::_nil();
   // start_count = 0; Note : We can't do this, because it would be reset during startup.
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

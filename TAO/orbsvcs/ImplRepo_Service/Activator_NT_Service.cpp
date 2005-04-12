@@ -18,9 +18,9 @@
 #include "ImR_Activator_i.h"
 #include "Activator_Options.h"
 
-#include "ace/Reactor.h"
 #include "tao/ORB_Core.h"
 
+#include "ace/Reactor.h"
 /**
  * Handles the SERVICE_CONTROL_SHUTDOWN and SERVICE_CONTROL_STOP commands
  * by shutting down the ORB.  Otherwise ACE_NT_Service::handle_control
@@ -60,7 +60,7 @@ int
 Activator_NT_Service::svc (void)
 {
   ImR_Activator_i server;
-  Options opts;
+  Activator_Options opts;
 
   if (opts.init_from_registry() != 0)
   {

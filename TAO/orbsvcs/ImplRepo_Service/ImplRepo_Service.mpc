@@ -1,9 +1,9 @@
 // $Id$
 
-project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging, imr_client {
+project(ImR_Activator_IDL) : orbsvcslib, portableserver, imr_client {
   sharedname = TAO_ImR_Activator_IDL
   dynamicflags = ACTIVATOR_IDL_BUILD_DLL
-  idlflags += -GH -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h
+  idlflags += -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h
   idl_files {
     ImR_Activator.idl
   }
@@ -16,7 +16,7 @@ project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging, imr_client {
   }
 }
 
-project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver, imr_client {
+project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver, imr_client, messaging {
   sharedname   = TAO_ImR_Locator_IDL
   after       += ImR_Activator_IDL
   libs        += TAO_ImR_Activator_IDL
@@ -28,9 +28,17 @@ project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver, imr_client {
   idl_files {
     ImR_Locator.idl
   }
+
+  idl_files {
+    idlflags    += -GH
+    AsyncStartupWaiter.idl
+  }
+
   source_files {
     ImR_LocatorS.cpp
     ImR_LocatorC.cpp
+    AsyncStartupWaiterS.cpp
+    AsyncStartupWaiterC.cpp
   }
   header_files {
     locator_idl_export.h
@@ -67,6 +75,7 @@ project(ImR_Locator) : orbsvcslib, core, minimum_corba, iortable, portableserver
     Adapter_Activator.cpp
     Forwarder.cpp
     ImR_Locator_i.cpp
+    AsyncStartupWaiter_i.cpp
     INS_Locator.cpp
     Locator_XMLHandler.cpp
     Locator_Loader.cpp

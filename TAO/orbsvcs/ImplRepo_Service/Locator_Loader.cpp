@@ -103,11 +103,3 @@ ImR_Locator_Loader::run(void)
 
 
 ACE_FACTORY_DEFINE (Locator, ImR_Locator_Loader)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<ImR_Locator_Loader>;
-template class ACE_Auto_Ptr<ImR_Locator_ORB_Runner>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<ImR_Locator_Loader>
-#pragma instantiate ACE_Auto_Ptr<ImR_Locator_ORB_Runner>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

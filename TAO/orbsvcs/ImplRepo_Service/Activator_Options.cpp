@@ -14,25 +14,26 @@
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (ImplRepo_Service,
-           Options,
+           Activator_Options,
            "$Id$")
 
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Activator_NT_Service.h
 static const ACE_TCHAR *SERVICE_REG_PATH =
-  ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOIMRActivator\\Parameters");
+  ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImRActivator\\Parameters");
 #endif /* ACE_WIN32 */
 
-Options::Options ()
+Activator_Options::Activator_Options ()
 : debug_ (1)
 , service_ (false)
+, notify_imr_ (false)
 , service_command_(SC_NONE)
 {
 }
 
 int
-Options::parse_args (int &argc, char *argv[])
+Activator_Options::parse_args (int &argc, char *argv[])
 {
   ACE_Arg_Shifter shifter (argc, argv);
  
@@ -61,7 +62,7 @@ Options::parse_args (int &argc, char *argv[])
             this->service_command_ = SC_REMOVE;
           }
           else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("install_no_locator")) == 0)
+                                   ACE_TEXT ("install_no_imr")) == 0)
           {
             this->service_command_ = SC_INSTALL_NO_LOCATOR;
           }
@@ -112,6 +113,24 @@ Options::parse_args (int &argc, char *argv[])
           this->print_usage ();
           return 1;
         }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-n")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -n option needs a name\n"));
+              this->print_usage ();
+              return -1;
+            }
+          this->name_ = shifter.get_current();
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-l")) == 0)
+        {
+          this->notify_imr_ = true;
+        }
       else
         {
           shifter.ignore_arg ();
@@ -124,7 +143,7 @@ Options::parse_args (int &argc, char *argv[])
 }
 
 int
-Options::init (int argc, char *argv[])
+Activator_Options::init (int argc, char *argv[])
 {
   // Make an initial pass through and grab the arguments that we recognize.
   // This may also run the commands to install or remove the nt service.
@@ -143,30 +162,32 @@ Options::init (int argc, char *argv[])
 }
 
 int
-Options::init_from_registry (void)
+Activator_Options::init_from_registry (void)
 {
   this->load_registry_options();
   return 0;
 }
 
 void
-Options::print_usage (void) const
+Activator_Options::print_usage (void) const
 {
   ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
-              "ImR_Activator [-c cmd] [-d 0|1|2] [-l] [-o file]\n"
+              "ImR_Activator [-c cmd] [-d 0|1|2] [-o file] [-l] [-n name]\n"
               "\n"
               "  -c command  Runs service commands \n"
-              "              ('install' or 'remove' or 'install_no_locator')\n"
+              "              ('install' or 'remove' or 'install_no_imr')\n"
               "  -d level    Sets the debug level\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
+              "  -l          Notify the ImR Locator when a process exits\n"
+              "  -n name     Specify a name for the Activator\n"
               "  -s          Runs as a service (NT Only)\n")
              );
 }
 
 int
-Options::save_registry_options()
+Activator_Options::save_registry_options()
 {
 #if defined (ACE_WIN32)
   HKEY key = 0;
@@ -196,6 +217,10 @@ Options::save_registry_options()
     (LPBYTE) &this->debug_ , sizeof(this->debug_));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
+  err = ACE_TEXT_RegSetValueEx(key, "Name", 0, REG_SZ,
+    (LPBYTE) this->name_.c_str(), this->name_.length() + 1);
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
   err = ::RegCloseKey(key);
   ACE_ASSERT(err == ERROR_SUCCESS);
 #endif
@@ -203,7 +228,7 @@ Options::save_registry_options()
 }
 
 int
-Options::load_registry_options ()
+Activator_Options::load_registry_options ()
 {
 #if defined (ACE_WIN32)
   HKEY key = 0;
@@ -245,6 +270,23 @@ Options::load_registry_options ()
     ACE_ASSERT(type == REG_DWORD);
   }
 
+  sz = sizeof(tmpstr);
+  err = ACE_TEXT_RegQueryValueEx(key, "Name", 0, &type,
+    (LPBYTE) tmpstr, &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_SZ);
+    tmpstr[sz - 1] = '\0';
+    this->name_ = tmpstr;
+  }
+
+  DWORD tmpint = this->notify_imr_;
+  sz = sizeof(tmpint);
+  err = ACE_TEXT_RegQueryValueEx(key, "NotifyImR", 0, &type,
+    (LPBYTE) &tmpint , &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_DWORD);
+  }
+
   err = ::RegCloseKey(key);
   ACE_ASSERT(err == ERROR_SUCCESS);
 #endif /* ACE_WIN32 */
@@ -252,30 +294,41 @@ Options::load_registry_options ()
 }
 
 bool
-Options::service (void) const
+Activator_Options::service (void) const
 {
   return this->service_;
 }
 
+bool
+Activator_Options::notify_imr (void) const
+{
+  return this->notify_imr_;
+}
+
 unsigned int
-Options::debug (void) const
+Activator_Options::debug (void) const
 {
   return this->debug_;
 }
 
 const ACE_CString&
-Options::ior_filename (void) const
+Activator_Options::ior_filename (void) const
 {
   return this->ior_output_file_;
 }
 
-Options::SERVICE_COMMAND
-Options::service_command(void) const
+Activator_Options::SERVICE_COMMAND
+Activator_Options::service_command(void) const
 {
   return this->service_command_;
 }
 
 const char*
-Options::cmdline(void) const {
+Activator_Options::cmdline(void) const {
   return this->cmdline_.c_str ();
+}
+
+const ACE_CString&
+Activator_Options::name(void) const {
+  return this->name_;
 }

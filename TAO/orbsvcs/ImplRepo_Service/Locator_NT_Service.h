@@ -24,8 +24,8 @@
 #include "ace/Synch.h"
 #include "tao/orbconf.h"
 
-static const char * IMR_LOCATOR_SERVICE_NAME = "TAOIMRLocator";
-static const char * IMR_LOCATOR_DISPLAY_NAME = "TAO Implementation Repository Locator";
+static const char * IMR_LOCATOR_SERVICE_NAME = "TAOImR";
+static const char * IMR_LOCATOR_DISPLAY_NAME = "TAO Implementation Repository";
 static const char * IMR_LOCATOR_DESCRIPTION = "Implementation Repository Locator service for TAO";
 
 /**
