@@ -103,10 +103,14 @@ private:
   /// The ORB Core
   TAO_ORB_Core *orb_core_;
 
-  /// A simple array of adapters.
+  /**
+   * @name A simple array of adapters.
+   */
+  //@{
   size_t adapters_capacity_;
   size_t adapters_count_;
   TAO_Adapter **adapters_;
+  //@}
 };
 
 #if defined(_MSC_VER)
