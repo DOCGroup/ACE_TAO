@@ -38,7 +38,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/value_typecode.cpp:32
+// be\be_visitor_typecode/value_typecode.cpp:50
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceFactory = 0;
 
@@ -65,7 +65,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/value_typecode.cpp:32
+// be\be_visitor_typecode/value_typecode.cpp:50
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceTemplate = 0;
 
@@ -92,18 +92,21 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:914
+// be\be_visitor_typecode/typecode_defn.cpp:925
 
+
+#ifndef _TAO_TYPECODE_PortableInterceptor_ObjectReferenceTemplateSeq_GUARD
+#define _TAO_TYPECODE_PortableInterceptor_ObjectReferenceTemplateSeq_GUARD
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
       PortableInterceptor_ObjectReferenceTemplateSeq_0 (
         CORBA::tk_sequence,
@@ -116,6 +119,8 @@ namespace TAO
   }
 }
 
+
+#endif /* _TAO_TYPECODE_PortableInterceptor_ObjectReferenceTemplateSeq_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
                             CORBA::tk_alias,
@@ -134,7 +139,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -190,7 +195,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -246,7 +251,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -302,39 +307,3 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Impl_T<
-        PortableInterceptor::ObjectReferenceFactory
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        PortableInterceptor::ObjectReferenceTemplate
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableInterceptor::ObjectReferenceTemplateSeq
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableInterceptor::ObjectReferenceFactory \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        PortableInterceptor::ObjectReferenceTemplate \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableInterceptor::ObjectReferenceTemplateSeq \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

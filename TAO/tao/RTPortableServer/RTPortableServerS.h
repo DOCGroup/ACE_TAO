@@ -26,31 +26,21 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:391
 
-#ifndef _TAO_IDL_ORIG_RTPORTABLESERVER_INCLUDEC_H_
-#define _TAO_IDL_ORIG_RTPORTABLESERVER_INCLUDEC_H_
+#ifndef _TAO_IDL_ORIG_RTPORTABLESERVERS_H_
+#define _TAO_IDL_ORIG_RTPORTABLESERVERS_H_
 
 #include /**/ "ace/pre.h"
 
-
-#include "ace/config-all.h"
+#include "RTPortableServerC.h"
+#include "tao/PortableServer/PortableServer_includeS.h"
+#include "tao/RTCORBA/RTCORBA_includeS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "rtportableserver_export.h"
-#include "tao/ORB.h"
-#include "tao/SystemException.h"
-#include "tao/Environment.h"
-
-#include "tao/RTPortableServer/RTPortableServer.h"
-
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_RTPortableServer_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -62,15 +52,24 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:61
+// be\be_visitor_module/module_sh.cpp:49
 
-// Traits specializations.
-namespace TAO
+namespace POA_RTPortableServer
 {
-}
+  
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_visitor_module/module_sh.cpp:80
+
+} // module RTPortableServer
+
+// TAO_IDL - Generated from 
+// be\be_codegen.cpp:995
+
+
+#if defined (__ACE_INLINE__)
+#include "RTPortableServerS.inl"
+#endif /* defined INLINE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
@@ -81,7 +80,5 @@ namespace TAO
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* ifndef */
-
 

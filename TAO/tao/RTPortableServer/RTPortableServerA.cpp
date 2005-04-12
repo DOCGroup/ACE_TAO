@@ -44,7 +44,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTPortableServer_POA (
     "IDL:omg.org/RTPortableServer/POA:1.0",
     "POA");
-
+  
 namespace RTPortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POA =
@@ -121,19 +121,3 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Impl_T<
-        RTPortableServer::POA
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        RTPortableServer::POA \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

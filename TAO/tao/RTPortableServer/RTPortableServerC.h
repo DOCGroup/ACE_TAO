@@ -199,7 +199,7 @@ namespace RTPortableServer
 
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     POA (void);
@@ -226,7 +226,7 @@ namespace RTPortableServer
 } // module RTPortableServer
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO

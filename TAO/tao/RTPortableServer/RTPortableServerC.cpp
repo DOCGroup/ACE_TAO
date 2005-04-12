@@ -89,7 +89,7 @@ RTPortableServer::POA::POA (void)
 RTPortableServer::POA::~POA (void)
 {}
 
-void
+void 
 RTPortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
@@ -107,10 +107,10 @@ RTPortableServer::POA::_narrow (
     {
       return POA::_nil ();
     }
-
+  
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-
+  
   return POA::_duplicate (proxy);
 }
 
@@ -124,10 +124,10 @@ RTPortableServer::POA::_unchecked_narrow (
     {
       return POA::_nil ();
     }
-
+  
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-
+  
   return POA::_duplicate (proxy);
 }
 
@@ -138,7 +138,7 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -191,42 +191,3 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
 {
   return false;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        RTPortableServer::POA
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        RTPortableServer::POA
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        RTPortableServer::POA
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        RTPortableServer::POA \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTPortableServer::POA
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTPortableServer::POA
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

@@ -36,7 +36,7 @@
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/value_typecode.cpp:32
+// be\be_visitor_typecode/value_typecode.cpp:50
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_TAO_Default_ORT_ObjectReferenceTemplate = 0;
 
@@ -63,7 +63,7 @@ namespace TAO_Default_ORT
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -117,19 +117,3 @@ operator>>= (
 }
 
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Impl_T<
-        TAO_Default_ORT::ObjectReferenceTemplate
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        TAO_Default_ORT::ObjectReferenceTemplate \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
