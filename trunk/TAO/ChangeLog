@@ -1,3 +1,11 @@
+Tue Apr 12 20:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+          Don't try to pass the permanent flag to the ForwardRequest exception,
+          this is not in the spec but also this flag is not used at all
+          in any of the code
+
 Tue Apr 12 15:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
