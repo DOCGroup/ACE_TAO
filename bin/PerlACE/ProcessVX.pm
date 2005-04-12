@@ -56,8 +56,7 @@ if ($OSNAME eq "MSWin32") {
 	require PerlACE::ProcessVX_Win32;
 }
 else {
-	print STDERR "PerlACE::ProcessVX not supported on Unix yet!";
-	exit(1);
+	# PerlACE::ProcessVX not supported on Unix yet!
 	## require PerlACE::Process_Unix;
 }
 
