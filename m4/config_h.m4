@@ -1112,8 +1112,6 @@ AH_TEMPLATE([ACE_TLI_TCP_DEVICE],
 AH_TEMPLATE([ACE_USE_POLL],
 [The OS/platform supports the poll() event demultiplexor])
 
-AH_TEMPLATE([ACE_POLL_IS_BROKEN],[Platform has broken poll()])
-
 AH_TEMPLATE([ACE_HAS_EVENT_POLL],[Platform (Linux) supports event poll 
   interface.])
 

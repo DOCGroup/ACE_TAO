@@ -38,12 +38,7 @@
 
 // First the machine specific part
 
-#if defined (__alpha)
-# if __GLIBC_MINOR__ < 2
-  // This is necessary on Alphas with glibc 2.0.7-13.
-# define ACE_POLL_IS_BROKEN
-# endif
-#elif defined (__powerpc__)
+#if defined (__powerpc__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
@@ -53,7 +48,7 @@
 // the kernel to choose the right value.
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x0000000000000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
-#endif /* ! __alpha  &&  ! __powerpc__  && ! __ia64 */
+#endif /* ! __powerpc__  && ! __ia64 */
 
 // Then glibc/libc5 specific parts
 

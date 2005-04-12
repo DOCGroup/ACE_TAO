@@ -1,3 +1,13 @@
+Tue Apr 12 07:48:05 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * ace/config-osf1-4.0.h:
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Removed references to ACE_POLL_IS_BROKEN. It is no longer
+          used in ACE/TAO code.
+        
 Mon Apr 11 21:55:57 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tests/Memcpy_Test.cpp:
@@ -7,106 +17,106 @@ Mon Apr 11 21:55:57 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Mon Apr 11 12:17:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-lite.h:
+        * ace/config-lite.h:
 
-	  Make sure DSO/DLL symbol related export macros other than
-	  ACE_Proper_Export_Flag are defined if not previously defined in
-	  the ACE_HAS_CUSTOM_EXPORT_MACROS case.  Simplifies configuration
-	  for compilers that only need ACE_Proper_Export_Flag.
+          Make sure DSO/DLL symbol related export macros other than
+          ACE_Proper_Export_Flag are defined if not previously defined in
+          the ACE_HAS_CUSTOM_EXPORT_MACROS case.  Simplifies configuration
+          for compilers that only need ACE_Proper_Export_Flag.
 
-	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
-	* m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+        * m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
 
-	  Enable g++ visibility attribute support when using g++ 4.0 or
-	  better.
+          Enable g++ visibility attribute support when using g++ 4.0 or
+          better.
 
 Mon Apr 11 11:50:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/README:
-	* ace/config-hpux-10.x.h:
-	* ace/config-hpux-11.00.h:
-	* ace/config-openvms.h:
-	* ace/config-osf1-3.2.h:
+        * ace/README:
+        * ace/config-hpux-10.x.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-openvms.h:
+        * ace/config-osf1-3.2.h:
 
-	  Fix typo: POSIX 1.b -> POSIX.1b.
+          Fix typo: POSIX 1.b -> POSIX.1b.
 
 Mon Apr 11 11:39:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_time.h:
-	* ace/OS_NS_time.inl:
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_time.inl:
 
-	  Add ACE_OS::clock_settime().
+          Add ACE_OS::clock_settime().
 
-	* ace/config-chorus.h:
-	* ace/config-cygwin32.h:
-	* ace/config-hpux-10.x.h:
-	* ace/config-hpux-11.00.h:
-	* ace/config-integritySCA.h:
-	* ace/config-linux-common.h:
-	* ace/config-lynxos.h:
-	* ace/config-netbsd.h:
-	* ace/config-openvms.h:
-	* ace/config-osf1-3.2.h:
-	* ace/config-osf1-4.0.h:
-	* ace/config-qnx-neutrino.h:
-	* ace/config-qnx-rtp-62x.h:
-	* ace/config-qnx-rtp-pre62x.h:
-	* ace/config-rtems.h:
-	* ace/config-sunos5.5.h:
-	* ace/config-vxworks5.x.h:
+        * ace/config-chorus.h:
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-10.x.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-integritySCA.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-osf1-3.2.h:
+        * ace/config-osf1-4.0.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-vxworks5.x.h:
 
-	  Define ACE_HAS_CLOCK_SETTIME in every canned config-* header
-	  that defines ACE_HAS_CLOCK_GETTIME.
+          Define ACE_HAS_CLOCK_SETTIME in every canned config-* header
+          that defines ACE_HAS_CLOCK_GETTIME.
 
-	* ace/README:
+        * ace/README:
 
-	  Document new feature test macro ACE_HAS_CLOCK_SETTIME.
+          Document new feature test macro ACE_HAS_CLOCK_SETTIME.
 
 Mon Apr 11 10:27:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
 
-	  Fixed ambiguities when determining whether g++ 4.0 or better is
-	  being used.
+          Fixed ambiguities when determining whether g++ 4.0 or better is
+          being used.
 
-	* include/makeinclude/platform_linux.GNU (CXX):
+        * include/makeinclude/platform_linux.GNU (CXX):
 
-	  Do not set CXX variable to "g++" if it has been previously set.
-	  Addresses problem where g++ version was not retrieved from the
-	  g++ compiler set by the user.
+          Do not set CXX variable to "g++" if it has been previously set.
+          Addresses problem where g++ version was not retrieved from the
+          g++ compiler set by the user.
 
 Mon Apr 11 15:56:55 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Protocol.h:
 
-	  Moved things around a bit in hope it will help BCB6.
+          Moved things around a bit in hope it will help BCB6.
 
 Mon Apr 11 12:58:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:
         * bin/PerlACE/Process_Win32.pm:
-	  Changes to improve/add support for VxWorks tests.
+          Changes to improve/add support for VxWorks tests.
 
         * bin/PerlACE/ProcessVX.pm:
         * bin/PerlACE/ProcessVX_Win32.pm:
-	  New Process class with support for running VxWorks tests on
-	  remote targets.
+          New Process class with support for running VxWorks tests on
+          remote targets.
 
-	* tests/run_test.pl:
-	  Changed to utilize the new ProcessVX class.
+        * tests/run_test.pl:
+          Changed to utilize the new ProcessVX class.
 
 Mon Apr 11 11:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
-	  Added new "C" function 'vx_execae' for VxWorks builds.
-	  Used to run VxWorks tasks (tests) in a more controlled,
-	  synchronous way.
+          Added new "C" function 'vx_execae' for VxWorks builds.
+          Used to run VxWorks tasks (tests) in a more controlled,
+          synchronous way.
 
 Mon Apr 11 11:27:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-g++-common.h:
           Defined ACE_LACKS_MEMBER_TEMPLATES for GCC < 3.0 as a solution
-	  for recent template compile errors from TypeCode refactoring.
+          for recent template compile errors from TypeCode refactoring.
 
 Mon Apr 11 11:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -128,9 +138,9 @@ Mon Apr 11 09:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 11 00:00:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* ace/CDR_Size.cpp:
+        * ace/CDR_Size.cpp:
 
-	  Removed unnecessary return statement.
+          Removed unnecessary return statement.
 
 Sun Apr 10 15:36:58 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -149,66 +159,66 @@ Sun Apr 10 15:05:35 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Sun Apr 10 13:25:26 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* ace/CDR_Size.h:
-	* ace/CDR_Size.cpp:
-	* ace/CDR_Size.inl:
+        * ace/CDR_Size.h:
+        * ace/CDR_Size.cpp:
+        * ace/CDR_Size.inl:
 
-	  Added new ACE_SizeCDR. It is a CDR stream similar to
-	  ACE_OutputCDR but instead of serializing anything
-	  ACE_SizeCDR calculates the size of the resulting
-	  representation.
+          Added new ACE_SizeCDR. It is a CDR stream similar to
+          ACE_OutputCDR but instead of serializing anything
+          ACE_SizeCDR calculates the size of the resulting
+          representation.
 
-	* ace/ace.mpc:
-	* ace/Makefile.am:
+        * ace/ace.mpc:
+        * ace/Makefile.am:
 
-	  Added new files.
+          Added new files.
 
-	* tests/CDR_Test.cpp:
+        * tests/CDR_Test.cpp:
 
-	  Added test for ACE_SizeCDR.
+          Added test for ACE_SizeCDR.
 
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Protocol.h:
 
-	  Ported to use ACE_SizeCDR.
+          Ported to use ACE_SizeCDR.
 
 Sun Apr 10 03:02:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-g++-common.h:
+        * ace/config-g++-common.h:
 
-	  Do not define "ACE_LACKS_PRAGMA_ONCE" for g++ 4.x.  G++ 4.x
-	  supports the "#pragma once" preprocessor directive.
+          Do not define "ACE_LACKS_PRAGMA_ONCE" for g++ 4.x.  G++ 4.x
+          supports the "#pragma once" preprocessor directive.
 
-	  Define the DLL export macros to the appropriate g++ 4.x
-	  visibility attribute.
+          Define the DLL export macros to the appropriate g++ 4.x
+          visibility attribute.
 
-	* include/makeinclude/platform_g++_common.GNU (CCFLAGS):
+        * include/makeinclude/platform_g++_common.GNU (CCFLAGS):
 
-	  Added "-fvisibility=hidden -fvisibility-inlines-hidden" to the
-	  compiler flags when using g++ 4.x.  Doing so, in conjunction,
-	  with the export macro changes described above, allows ACE-based
-	  shared libraries to take full advantage of G++ 4.0's visibility
-	  attribute support, resulting in substantially improved shared
-	  libraries (or DSOs in alternative speak).  Some shared
-	  library-specific improvements include substantially reduced
-	  library footprint, improved application start-up times, and
-	  improved performance.
+          Added "-fvisibility=hidden -fvisibility-inlines-hidden" to the
+          compiler flags when using g++ 4.x.  Doing so, in conjunction,
+          with the export macro changes described above, allows ACE-based
+          shared libraries to take full advantage of G++ 4.0's visibility
+          attribute support, resulting in substantially improved shared
+          libraries (or DSOs in alternative speak).  Some shared
+          library-specific improvements include substantially reduced
+          library footprint, improved application start-up times, and
+          improved performance.
 
 Sun Apr 10 02:17:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Asynch_Stream.h:
 
-	  Removed export macros from forward declarations.  They aren't
-	  necessary, and cause the forthcoming g++ 4.0 to issue an error
-	  when enabling visibility attribute support.
+          Removed export macros from forward declarations.  They aren't
+          necessary, and cause the forthcoming g++ 4.0 to issue an error
+          when enabling visibility attribute support.
 
 Sun Apr 10 02:10:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Copy_Disabled.cpp:
+        * ace/Copy_Disabled.cpp:
 
-	  Removed "#pragma once" preprocessor directive from this
-	  implementation source file.  "#pragma once" is only meant for
-	  use in sources that are included by others.
+          Removed "#pragma once" preprocessor directive from this
+          implementation source file.  "#pragma once" is only meant for
+          use in sources that are included by others.
 
 Sat Apr  9 21:05:23 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -220,60 +230,60 @@ Sat Apr  9 21:05:23 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Sat Apr  9 17:00:37 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
 
-	* tests/Memcpy_Test.cpp:
+        * tests/Memcpy_Test.cpp:
 
-	  Added a test to test the speed of memcpy () for data sizes less
-	  than 16 bytes. This test checks to see if loop unrolling is
-	  faster than memcpy for these data sizes.
+          Added a test to test the speed of memcpy () for data sizes less
+          than 16 bytes. This test checks to see if loop unrolling is
+          faster than memcpy for these data sizes.
 
-	* tests/run_test.lst:
-	* tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
 
-	  Updated the run list file to run this test and created a
-	  corresponding entry to build this test.
+          Updated the run list file to run this test and created a
+          corresponding entry to build this test.
 
 Sat Apr  9 10:04:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Thread_Hook.h (~ACE_Thread_Hook):
+        * ace/Thread_Hook.h (~ACE_Thread_Hook):
 
-	  Fixed "undefined reference" link-time error.
+          Fixed "undefined reference" link-time error.
 
 Fri Apr  8 23:24:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RB_Tree.cpp (remove_i):
+        * ace/RB_Tree.cpp (remove_i):
 
-	  Fixed "control reaches end of non-void function" warning.
+          Fixed "control reaches end of non-void function" warning.
 
 Fri Apr  8 22:42:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Capabilities.cpp (getval, resetcaps):
-	* ace/Thread_Manager.cpp (ACE_EXECUTE_OP):
+        * ace/Capabilities.cpp (getval, resetcaps):
+        * ace/Thread_Manager.cpp (ACE_EXECUTE_OP):
 
-	  Initialize variables.  Addresses "variables may be used
-	  unitialized" g++ 4.0 (CVS snapshot) warnings.
+          Initialize variables.  Addresses "variables may be used
+          unitialized" g++ 4.0 (CVS snapshot) warnings.
 
-	* ace/Connector.h (~ACE_Connector_Base):
-	* ace/Reactor_Timer_Interface.h (~ACE_Reactor_Timer_Interface):
-	* ace/Thread_Hook.h (~ACE_Thread_Hook):
+        * ace/Connector.h (~ACE_Connector_Base):
+        * ace/Reactor_Timer_Interface.h (~ACE_Reactor_Timer_Interface):
+        * ace/Thread_Hook.h (~ACE_Thread_Hook):
 
-	  Added virtual destructors.  Fixes "contains virtual functions
-	  but non-virtual destructor" g++ 4.0 (CVS snapshot) warnings.
+          Added virtual destructors.  Fixes "contains virtual functions
+          but non-virtual destructor" g++ 4.0 (CVS snapshot) warnings.
 
 Fri Apr  8 22:28:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_g++_common.GNU (templates):
+        * include/makeinclude/platform_g++_common.GNU (templates):
 
-	  Set templates variable to "automatic" if using g++ 4.x.  Thanks
-	  to John Michael Zorko for pointing out the problem.
+          Set templates variable to "automatic" if using g++ 4.x.  Thanks
+          to John Michael Zorko for pointing out the problem.
 
 Fri Apr  8 16:39:00 2005  Gary Maxey <gary.maxey@hp.com>
 
-	* ace/Stats.cpp
+        * ace/Stats.cpp
 
-	  In dump_throughput() handle cast to double when
-	  ACE_LACKS_UNSIGNEDLONGLONG_T.
+          In dump_throughput() handle cast to double when
+          ACE_LACKS_UNSIGNEDLONGLONG_T.
 
-	* tests/High_Res_Timer_Test.cpp
+        * tests/High_Res_Timer_Test.cpp
 
           Use ACE_HRTIME_CONVERSION instead of ACE_U64_TO_U32 for
           platform independence.
@@ -321,30 +331,30 @@ Fri Apr  8 07:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr  6 23:13:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Value_Ptr.h:
+        * ace/Value_Ptr.h:
 
-	  Disable converting copy/assignment operations for compilers that
-	  do not support member templates, i.e. if
-	  ACE_LACKS_MEMBER_TEMPLATES is defined.
+          Disable converting copy/assignment operations for compilers that
+          do not support member templates, i.e. if
+          ACE_LACKS_MEMBER_TEMPLATES is defined.
 
 Wed Apr  6 14:49:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Add Value_Ptr.h to list of header files.
+          Add Value_Ptr.h to list of header files.
 
 Wed Apr  6 13:41:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/CDR_Base.h:
+        * ace/CDR_Base.h:
 
-	  Corrected comment.
+          Corrected comment.
 
-	* ace/Value_Ptr.h:
+        * ace/Value_Ptr.h:
 
-	  Value_Ptr implementation based on code in Herb Sutter's book
-	  "More Exceptional C++".  It is a smart pointer implementation
-	  designed for use as a class member.
+          Value_Ptr implementation based on code in Herb Sutter's book
+          "More Exceptional C++".  It is a smart pointer implementation
+          designed for use as a class member.
 
 Wed Apr  6 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
