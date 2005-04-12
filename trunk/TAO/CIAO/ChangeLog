@@ -1,3 +1,11 @@
+Tue Apr 12 11:56:26 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/ciao/Dynamic_Component_Activator.cpp
+	* DAnCE/ciao/Servant_Activator.cpp
+	* DAnCE/ciao/Servant_Impl_Base.cpp
+
+	Fixed some more compile errors with emulated exceptions.
+	
 Tue Apr 12 11:11:41 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/ciao/Servant_Impl_Base.cpp

@@ -66,7 +66,7 @@ namespace CIAO
                      Components::RemoveFailure))
   {
     Components::SessionComponent_var temp = this->get_executor ();
-
+    /*
     Components::FacetDescriptions_var facets =
       this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -87,7 +87,7 @@ namespace CIAO
 
       this->container_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
     }
-
+    */
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
     CORBA::Object_var objref =
