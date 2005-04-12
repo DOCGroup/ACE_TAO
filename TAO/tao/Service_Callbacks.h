@@ -29,9 +29,6 @@
 
 class TAO_Profile;
 class TAO_MProfile;
-class TAO_GIOP_Invocation;
-class TAO_ServerRequest;
-class TAO_Message_State_Factory;
 class TAO_Stub;
 
 namespace CORBA
