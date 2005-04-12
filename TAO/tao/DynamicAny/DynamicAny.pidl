@@ -20,7 +20,7 @@
  * The command used to generate code from this file is:
  *
  * tao_idl \
- *  -o orig -Gp -Sci -Gd -Ge 1 -Sa -Sc -St -GT -I../.. \
+ *  -o orig -Gp -Sci -Gd -Ge 1 -Sa -Sc -St -I../.. \
  *          -Wb,export_macro=TAO_DynamicAny_Export \
  *          -Wb,export_include=dynamicany_export.h \
  *          -Wb,pre_include="ace/pre.h" \

@@ -193,7 +193,7 @@ namespace OBV_TAO_Default_ORT
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO
@@ -225,8 +225,8 @@ TAO_ORT_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_Default_ORT::
 
 namespace CORBA
 {
-  TAO_NAMESPACE_STORAGE_CLASS void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
-  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
+  extern TAO_ORT_Export void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
+  extern TAO_ORT_Export void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
 }
 
 // TAO_IDL - Generated from
@@ -236,7 +236,7 @@ TAO_ORT_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT
 TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
+// be\be_codegen.cpp:955
 
 #if defined (__ACE_INLINE__)
 #include "Default_ORTC.inl"

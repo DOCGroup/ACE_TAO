@@ -325,7 +325,7 @@ namespace OBV_PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO
@@ -385,8 +385,8 @@ TAO_ORT_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInt
 
 namespace CORBA
 {
-  TAO_NAMESPACE_STORAGE_CLASS void add_ref (PortableInterceptor::ObjectReferenceFactory *);
-  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (PortableInterceptor::ObjectReferenceFactory *);
+  extern TAO_ORT_Export void add_ref (PortableInterceptor::ObjectReferenceFactory *);
+  extern TAO_ORT_Export void remove_ref (PortableInterceptor::ObjectReferenceFactory *);
 }
 
 // TAO_IDL - Generated from
@@ -400,8 +400,8 @@ TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::O
 
 namespace CORBA
 {
-  TAO_NAMESPACE_STORAGE_CLASS void add_ref (PortableInterceptor::ObjectReferenceTemplate *);
-  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (PortableInterceptor::ObjectReferenceTemplate *);
+  extern TAO_ORT_Export void add_ref (PortableInterceptor::ObjectReferenceTemplate *);
+  extern TAO_ORT_Export void remove_ref (PortableInterceptor::ObjectReferenceTemplate *);
 }
 
 // TAO_IDL - Generated from
@@ -428,7 +428,7 @@ TAO_ORT_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:947
+// be\be_codegen.cpp:955
 
 #if defined (__ACE_INLINE__)
 #include "ObjectReferenceTemplateC.inl"

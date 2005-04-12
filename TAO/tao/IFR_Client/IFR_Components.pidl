@@ -18,7 +18,7 @@
 //
 //   The command used to generate code from this IDL file is:
 //
-//     tao_idl -Ge 1 -Sc -GA -GT -I../.. \
+//     tao_idl -Ge 1 -Sc -GA -I../.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
@@ -220,7 +220,7 @@ module CORBA
     typedef sequence<UsesDescription> UsesDescriptionSeq;
     typedef sequence<EventPortDescription> EventPortDescriptionSeq;
 
-    struct ComponentDescription 
+    struct ComponentDescription
     {
       Identifier name;
       RepositoryId id;
@@ -237,15 +237,15 @@ module CORBA
       TypeCode type;
     };
 
-    interface FactoryDef : OperationDef 
+    interface FactoryDef : OperationDef
     {
     };
 
-    interface FinderDef : OperationDef 
+    interface FinderDef : OperationDef
     {
     };
 
-    interface HomeDef : ExtInterfaceDef 
+    interface HomeDef : ExtInterfaceDef
     {
       // read/write interface
       attribute HomeDef base_home;
@@ -271,7 +271,7 @@ module CORBA
 	);
     };
 
-    struct HomeDescription 
+    struct HomeDescription
     {
       Identifier name;
       RepositoryId id;
