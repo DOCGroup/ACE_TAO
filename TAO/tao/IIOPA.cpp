@@ -313,39 +313,3 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IIOP::ListenPoint
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IIOP::ListenPointList
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IIOP::BiDirIIOPServiceContext
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IIOP::ListenPoint \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IIOP::ListenPointList \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IIOP::BiDirIIOPServiceContext \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

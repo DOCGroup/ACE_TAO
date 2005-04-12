@@ -284,29 +284,3 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Dynamic::ParameterList
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Dynamic::ExceptionList
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Dynamic::ParameterList \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Dynamic::ExceptionList \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

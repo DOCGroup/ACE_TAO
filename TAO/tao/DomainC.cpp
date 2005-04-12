@@ -98,7 +98,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-
+  
   template<>
   class  Arg_Traits<CORBA::Policy>
     : public
@@ -115,7 +115,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-
+  
   template<>
   class  Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -169,7 +169,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -189,15 +189,15 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-
+  
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
       CORBA_DomainManager_setup_collocation ();
     }
-
+  
   TAO::Arg_Traits< CORBA::Policy>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
-
+  
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
@@ -741,270 +741,3 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::Policy
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_var,
-        CORBA::Policy_out,
-        TAO::Objref_Traits<CORBA::Policy>
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::InterfaceDef
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::InterfaceDef_ptr,
-        CORBA::InterfaceDef_var,
-        CORBA::InterfaceDef_out,
-        TAO::Objref_Traits<CORBA::InterfaceDef>
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_var
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        CORBA::DomainManager
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        CORBA::DomainManager
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        CORBA::DomainManager
-      >;
-
-  template class
-    TAO::Narrow_Utils<
-        CORBA::DomainManager
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        CORBA::InterfaceDef_ptr
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        CORBA::ConstructionPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        CORBA::ConstructionPolicy
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        CORBA::ConstructionPolicy
-      >;
-
-  template class
-    TAO::Narrow_Utils<
-        CORBA::ConstructionPolicy
-      >;
-
-  template class
-    TAO_Object_Manager<
-        CORBA::DomainManager,
-        CORBA::DomainManager_var
-      >;
-
-  template class
-    TAO_MngSeq_Var_T<
-        CORBA::DomainManagerList,
-        TAO_Object_Manager<
-            CORBA::DomainManager,
-            CORBA::DomainManager_var
-          >
-      >;
-
-  template class
-    TAO_Seq_Var_Base_T<
-        CORBA::DomainManagerList,
-        TAO_Object_Manager<
-            CORBA::DomainManager,
-            CORBA::DomainManager_var
-          >
-      >;
-
-  template class
-    TAO_MngSeq_Out_T<
-        CORBA::DomainManagerList,
-        CORBA::DomainManagerList_var,
-        TAO_Object_Manager<
-            CORBA::DomainManager,
-            CORBA::DomainManager_var
-          >
-      >;
-
-#if !defined (_CORBA_DOMAINMANAGER__EXPLICIT_CS_)
-#define _CORBA_DOMAINMANAGER__EXPLICIT_CS_
-
-  template class
-    TAO_Unbounded_Object_Sequence<
-        CORBA::DomainManager,
-        CORBA::DomainManager_var
-      >;
-
-#endif /* end #if !defined */
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::Policy \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::Policy_ptr, \
-        CORBA::Policy_var, \
-        CORBA::Policy_out, \
-        TAO::Objref_Traits<CORBA::Policy> \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::InterfaceDef \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::InterfaceDef_ptr, \
-        CORBA::InterfaceDef_var, \
-        CORBA::InterfaceDef_out, \
-        TAO::Objref_Traits<CORBA::InterfaceDef> \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Ret_Object_Argument_T< \
-        CORBA::Policy_ptr, \
-        CORBA::Policy_var \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        CORBA::DomainManager \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        CORBA::DomainManager
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        CORBA::DomainManager
-      >
-
-# pragma instantiate \
-    TAO::Narrow_Utils< \
-        CORBA::DomainManager \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        CORBA::InterfaceDef_ptr \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        CORBA::ConstructionPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        CORBA::ConstructionPolicy
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        CORBA::ConstructionPolicy
-      >
-
-# pragma instantiate \
-    TAO::Narrow_Utils< \
-        CORBA::ConstructionPolicy \
-      >
-
-# pragma instantiate \
-    TAO_MngSeq_Var_T< \
-        CORBA::DomainManagerList, \
-        TAO_Object_Manager< \
-            CORBA::DomainManager, \
-            CORBA::DomainManager_var \
-          > \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Var_Base_T< \
-        CORBA::DomainManagerList, \
-        TAO_Object_Manager< \
-            CORBA::DomainManager, \
-            CORBA::DomainManager_var \
-          > \
-      >
-
-# pragma instantiate \
-    TAO_MngSeq_Out_T< \
-        CORBA::DomainManagerList, \
-        CORBA::DomainManagerList_var, \
-        TAO_Object_Manager< \
-            CORBA::DomainManager, \
-            CORBA::DomainManager_var \
-          > \
-      >
-
-#if !defined (_CORBA_DOMAINMANAGER__EXPLICIT_CS_)
-#define _CORBA_DOMAINMANAGER__EXPLICIT_CS_
-
-# pragma instantiate \
-    TAO_Unbounded_Object_Sequence< \
-        CORBA::DomainManager, \
-        CORBA::DomainManager_var \
-      >
-
-#endif /* end #if !defined */
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

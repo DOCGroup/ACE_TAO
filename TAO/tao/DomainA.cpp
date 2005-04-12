@@ -286,39 +286,3 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Impl_T<
-        CORBA::DomainManager
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        CORBA::ConstructionPolicy
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::DomainManagerList
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        CORBA::DomainManager \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        CORBA::ConstructionPolicy \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::DomainManagerList \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
