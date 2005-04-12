@@ -160,8 +160,7 @@ namespace TAO
       {
         // Notice that this is a permanent forward.
         ACE_THROW (PortableInterceptor::ForwardRequest (
-                   this->iogr_.in(),
-                   1));
+                   this->iogr_.in()));
       }
     else if ((fgvsc.object_group_ref_version ==
              this->object_group_ref_version_) &&
