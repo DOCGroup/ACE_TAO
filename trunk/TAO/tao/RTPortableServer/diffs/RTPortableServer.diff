@@ -1,18 +1,18 @@
---- orig/RTPortableServerC.h	2005-04-08 15:55:29.529012800 +0200
-+++ RTPortableServerC.h	2005-04-08 15:56:48.502571200 +0200
+--- orig/RTPortableServerC.h	2005-04-12 10:13:57.316224000 +0200
++++ RTPortableServerC.h	2005-04-12 10:16:27.251820800 +0200
 @@ -36,6 +36,10 @@
  
  #include "ace/config-all.h"
  
-+#ifndef TAO_RTPORTABLESERVER_SAFE_INCLUDE
++#ifndef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 +#error "You should not include RTPortableServerC.h directly, use RTPortableServer.h"
-+#endif /* !TAO_PORTABLESERVER_SAFE_INCLUDE */
++#endif /* !TAO_RT_PORTABLESERVER_SAFE_INCLUDE */
 +
  #if !defined (ACE_LACKS_PRAGMA_ONCE)
  # pragma once
  #endif /* ACE_LACKS_PRAGMA_ONCE */
---- orig/RTPortableServerC.cpp	2005-04-08 15:55:29.529012800 +0200
-+++ RTPortableServerC.cpp	2005-04-08 15:56:57.335272000 +0200
+--- orig/RTPortableServerC.cpp	2005-04-12 10:13:57.316224000 +0200
++++ RTPortableServerC.cpp	2005-04-12 10:14:46.496942400 +0200
 @@ -29,7 +29,7 @@
  // be\be_codegen.cpp:291
  
@@ -22,8 +22,8 @@
  #include "tao/CDR.h"
  #include "tao/ORB_Core.h"
  #include "ace/OS_NS_string.h"
---- orig/RTPortableServerA.cpp	2005-04-08 15:55:29.529012800 +0200
-+++ RTPortableServerA.cpp	2005-04-08 15:57:01.230873600 +0200
+--- orig/RTPortableServerA.cpp	2005-04-12 10:13:57.316224000 +0200
++++ RTPortableServerA.cpp	2005-04-12 10:14:46.506956800 +0200
 @@ -25,7 +25,7 @@
  // Information about TAO is available at:
  //     http://www.cs.wustl.edu/~schmidt/TAO.html
