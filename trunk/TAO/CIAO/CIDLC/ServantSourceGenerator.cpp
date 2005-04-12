@@ -2352,9 +2352,6 @@ namespace
 
         ScopedName scoped (scope_.scoped_name ());
         Name stripped (scoped.begin () + 1, scoped.end ());
-        string unique_obj_name =
-          regex::perl_s (stripped.str (), "/::/_/") + "_" + p.name ().str ();
-
 
         Traversal::ProviderData::belongs (p, belongs_);
 
@@ -2432,11 +2429,13 @@ namespace
            << "    " << scope_.name () << "_Servant" << endl
            << "  >" << endl
            << "MACRO_MADNESS_TYPEDEF;" << endl;
-
+           
+        os << "ACE_CString uuid = Servant_Impl_Base::gen_UUID ();" << endl;
+           
         os << "ACE_NEW_THROW_EX ( " << endl
            << "tmp," << endl
            << "MACRO_MADNESS_TYPEDEF (" << endl
-           << "\"" << unique_obj_name << "\"," << endl
+           << "uuid.c_str ()," << endl
            << "\"" << p.name () << "\"," << endl
            << "CIAO::Port_Activator::Facet," << endl
            << "0," << endl
@@ -2453,7 +2452,7 @@ namespace
 
         os << "::CORBA::Object_var obj =" << endl
            << "this->container_->generate_reference (" << endl
-           << "\"" << unique_obj_name << "\"," << endl;
+           << "uuid.c_str ()," << endl;
 
         Traversal::ProviderData::belongs (p, repo_id_belongs_);
 
@@ -3056,7 +3055,7 @@ namespace
          << "::CIAO::Session_Container *c)" << endl
          << "  : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base "
          << "(h, hs, c))," << endl
-         << "  comp_svnt_base (exe, h, hs, c)" << endl
+         << "    comp_svnt_base (exe, h, hs, c)" << endl
          << "{"
          << "ACE_NEW (" << endl
          << "this->context_," << endl
@@ -4286,7 +4285,8 @@ ServantSourceEmitter::pre (TranslationUnit&)
      << "#include \"Cookies.h\"" << endl
      << "#include \"ciao/Servant_Activator.h\"" << endl
      << (swapping ? "#include \"ciao/Dynamic_Component_Activator.h\"\n" : "")
-     << "#include \"ciao/Port_Activator_T.h\"" << endl << endl;
+     << "#include \"ciao/Port_Activator_T.h\"" << endl
+     << "#include \"ace/SString.h\"" << endl << endl;
 }
 
 void

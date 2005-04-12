@@ -1,3 +1,22 @@
+Tue Apr 12 17:12:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_Base.h:
+        
+          Added a static method to generate a UUID. This method is
+          called by the generated servant class to create unique
+          object ids for port object references. Thanks to Steve
+          Baker <steven_d_baker@raytheon.com> for reporting the
+          problem of connecting to facets on multiple instances
+          of the same component type.
+          
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Changed code generation for provide_*_i() to use the
+          new method described above.
+
 Tus Apr 12 16:04:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/Old_Config_Handlers/IAD_Handler.cpp

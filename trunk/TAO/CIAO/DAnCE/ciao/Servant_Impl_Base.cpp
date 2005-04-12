@@ -3,6 +3,7 @@
 #include "Servant_Impl_Base.h"
 #include "StandardConfigurator_Impl.h"
 #include "Container_Base.h"
+#include "ace/UUID.h"
 
 namespace CIAO
 {
@@ -500,6 +501,19 @@ namespace CIAO
       }
 
     return cd._retn ();
+  }
+  
+  ACE_CString
+  Servant_Impl_Base::gen_UUID (void)
+  {
+    ACE_Utils::UUID* uuid =
+      ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+      
+    const ACE_CString *tmp = uuid->to_string ();
+    ACE_CString retval = *tmp;
+    delete uuid;
+    
+    return retval;
   }
 
   Components::StandardConfigurator*
