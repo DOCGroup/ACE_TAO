@@ -78,6 +78,9 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
   {
     CORBA::String_var server_name = poa->the_name();
 
+    if (locator_.debug() > 1)
+      ACE_DEBUG ((LM_DEBUG, "ImR: Activating server <%s>.\n", server_name.in()));
+
     // The activator stores a partial ior with each server. We can
     // just tack on the current ObjectKey to get a valid ior for
     // the desired server.
@@ -106,6 +109,9 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
     TAO::ObjectKey::encode_sequence_to_string (key_str.out(), impl->object_key ());
 
     ior += key_str.in();
+
+    if (locator_.debug() > 0)
+      ACE_DEBUG ((LM_DEBUG, "ImR: Forwarding invocation on <%s> to <%s>\n", server_name.in(), ior.c_str()));
 
     forward_obj =
       this->orb_->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);

@@ -36,11 +36,12 @@ $errors = 0;
 
 unlink $imr_ior;
 unlink $name_ior;
+unlink $activator_ior;
 
 ################################################################################
 ## Start the implementation Repository
 
-$IMR->Arguments ("-o $imr_ior -d 1");
+$IMR->Arguments ("-o $imr_ior -d 2");
 $IMR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
@@ -130,5 +131,9 @@ if ($iserver != 0) {
     print STDERR "ERROR: IMR returned $iserver\n";
     ++$errors;
 }
+
+unlink $imr_ior;
+unlink $name_ior;
+unlink $activator_ior;
 
 exit $errors;

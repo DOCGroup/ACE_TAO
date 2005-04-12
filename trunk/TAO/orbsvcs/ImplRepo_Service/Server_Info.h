@@ -68,6 +68,8 @@ struct Server_Info
   /// The cached server object
   ImplementationRepository::ServerObject_var server;
   int start_count;
+  int waiting_clients;
+  bool starting;
 };
 
 typedef ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> Server_Info_Ptr;

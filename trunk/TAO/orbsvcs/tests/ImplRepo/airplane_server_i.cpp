@@ -150,40 +150,29 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       ACE_TRY_CHECK;
 
       CORBA::Object_var server_obj =
-        this->airplane_poa_->id_to_reference (server_id.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+        this->airplane_poa_->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // Create an IOR from the server object.
-      CORBA::String_var server_str =
-        this->orb_->object_to_string (server_obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior =
+        this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", server_str.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", ior.in ()));
 
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (CORBA::is_nil (adapter.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-        }
-      else
-        {
-          adapter->bind (poa_name, server_str.in () ACE_ENV_ARG_PARAMETER);
+      ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
+      adapter->bind (poa_name, ior.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-        }
 
       if (this->ior_output_file_)
         {
-          ACE_OS::fprintf (this->ior_output_file_, "%s", server_str.in ());
+          ACE_OS::fprintf (this->ior_output_file_, "%s", ior.in ());
           ACE_OS::fclose (this->ior_output_file_);
         }
     }

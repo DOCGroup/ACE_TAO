@@ -28,7 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-static const char * IMR_ACTIVATOR_SERVICE_NAME = "TAOIMRActivator";
+static const char * IMR_ACTIVATOR_SERVICE_NAME = "TAOImRActivator";
 static const char * IMR_ACTIVATOR_DISPLAY_NAME = "TAO Implementation Repository Activator";
 static const char * IMR_ACTIVATOR_DESCRIPTION = "Implementation Repository Activator service for TAO";
 

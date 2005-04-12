@@ -10,8 +10,9 @@ ACE_RCSID(ImplRepo, nestea_client_i, "$Id$")
 
 // Constructor.
 Nestea_Client_i::Nestea_Client_i (void)
-  : server_key_ (ACE::strnew ("key0")),
-    server_ (Nestea_Bookshelf::_nil ())
+  : server_key_ (ACE::strnew ("key0"))
+  , server_ (Nestea_Bookshelf::_nil ())
+  , shutdown_server_(false)
 {
 }
 
@@ -21,7 +22,7 @@ Nestea_Client_i::Nestea_Client_i (void)
 int
 Nestea_Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dsn:k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,12 +34,16 @@ Nestea_Client_i::parse_args (void)
       case 'k':  // ior provide on command line
         this->server_key_ = ACE::strnew (get_opts.opt_arg ());
         break;
+      case 's': // shutdown server before exiting
+        this->shutdown_server_ = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
+                           " [-s]"
                            " [-k server-object-key]"
                            "\n",
                            this->argv_ [0]),
@@ -69,6 +74,9 @@ Nestea_Client_i::run ()
                         "Praise: %s\n",
                         this->server_->bookshelf_size (),
                         this->server_->get_praise ()));
+
+  if (shutdown_server_)
+    server_->shutdown();
 
   return 0;
 }
@@ -117,9 +125,7 @@ Nestea_Client_i::init (int argc, char **argv)
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid server key <%s>\n",
-                           this->server_key_),
-                          -1);
+          "Error: invalid server key <%s>\n", this->server_key_), -1);
     }
   ACE_CATCHANY
     {

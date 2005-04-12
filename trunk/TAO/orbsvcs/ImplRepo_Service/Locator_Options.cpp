@@ -22,10 +22,11 @@ ACE_RCSID (ImplRepo_Service,
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Locator_NT_Service.h
 static const ACE_TCHAR *SERVICE_REG_PATH =
-  ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOIMRLocator\\Parameters");
+  ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImR\\Parameters");
 #endif /* ACE_WIN32 */
 
 static const int DEFAULT_PING_INTERVAL = 10; // seconds
+static const int DEFAULT_START_TIMEOUT = 60; // seconds
 
 Options::Options ()
 : repo_mode_ (REPO_NONE)
@@ -33,6 +34,7 @@ Options::Options ()
 , multicast_ (false)
 , service_ (false)
 , ping_interval_(DEFAULT_PING_INTERVAL)
+, startup_timeout_(DEFAULT_START_TIMEOUT)
 , readonly_ (false)
 , service_command_(SC_NONE)
 {
@@ -244,7 +246,7 @@ Options::print_usage (void) const
               "  -x file     Use XML file for storing/loading setting\n"
               "  -r          Use the registry for storing/loading settings\n"
               "  -t secs     Server startup timeout.(Default=0)\n"
-              "  -v secs     Server verification interval.(Default=10)\n"
+              "  -v msecs     Server verification interval.(Default=10s)\n"
               ));
 }
 

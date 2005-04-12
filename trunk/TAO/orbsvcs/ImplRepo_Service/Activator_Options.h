@@ -29,7 +29,7 @@
  * This is where all the settings for TAO's Implementation Repository are
  * stored.
  */
-class Activator_Export Options
+class Activator_Export Activator_Options
 {
 public:
  
@@ -40,7 +40,7 @@ public:
     SC_INSTALL_NO_LOCATOR
   };
 
-  Options ();
+  Activator_Options ();
 
   /// Parse the command-line arguments and initialize the options.
   int init (int argc, char *argv[]);
@@ -49,6 +49,10 @@ public:
 
   /// Service Mode
   bool service (void) const;
+
+  /// Notify the ImR when server processes die. 
+  /// Note : Currently this only works on Unix.
+  bool notify_imr (void) const;
 
   /// Debug level for the Implementation Repository.
   unsigned int debug (void) const;
@@ -63,6 +67,8 @@ public:
   int save_registry_options ();
 
   const char* cmdline(void) const;
+
+  const ACE_CString& name(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -88,8 +94,12 @@ private:
   /// Should we run as a service?
   bool service_;
 
+  bool notify_imr_;
+
   /// SC_NONE, SC_INSTALL, SC_REMOVE, ...
   SERVICE_COMMAND service_command_;
+
+  ACE_CString name_;
 };
 
 #endif

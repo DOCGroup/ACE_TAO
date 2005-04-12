@@ -1,8 +1,10 @@
-// "$Id$"
+// $Id$
 
 #include "ImR_Activator_i.h"
 
 #include "Activator_Options.h"
+
+#include "tao/ORB_core.h"
 
 #include "ace/Reactor.h"
 #include "ace/ARGV.h"
@@ -10,8 +12,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
 
-
-static ACE_CString getActivatorName()
+static ACE_CString getHostName()
 {
   char host_name[MAXHOSTNAMELEN];
   ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
@@ -21,54 +22,114 @@ static ACE_CString getActivatorName()
 ImR_Activator_i::ImR_Activator_i (void)
 : registration_token_(0)
 , debug_(0)
-, name_(getActivatorName())
+, notify_imr_ (false)
+, name_(getHostName())
 {
 }
 
+static PortableServer::POA_ptr
+createPersistentPOA(PortableServer::POA_ptr root_poa, const char* poa_name ACE_ENV_ARG_DECL) {
+
+  PortableServer::LifespanPolicy_var life =
+    root_poa->create_lifespan_policy(PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(PortableServer::POA::_nil());
+
+  PortableServer::IdAssignmentPolicy_var assign =
+    root_poa->create_id_assignment_policy(PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(PortableServer::POA::_nil());
+
+  CORBA::PolicyList pols;
+  pols.length(2);
+  pols[0] = PortableServer::LifespanPolicy::_duplicate(life.in());
+  pols[1] = PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
+
+  PortableServer::POAManager_var mgr = root_poa->the_POAManager();
+  PortableServer::POA_var poa =
+    root_poa->create_POA(poa_name, mgr.in(), pols ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(PortableServer::POA::_nil());
+
+  life->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN(PortableServer::POA::_nil());
+  assign->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN(PortableServer::POA::_nil());
+
+  return poa._retn();
+}
+
+// It's ok if we can't register with the ImR. It just
+// means we won't be able to notify it of any events
+// (Currently, just that we're shutting down.)
+void
+ImR_Activator_i::register_with_imr(ImplementationRepository::Activator_ptr activator)
+{
+  ACE_TRY_NEW_ENV
+  {
+    if (this->debug_ > 1)
+      ACE_DEBUG((LM_DEBUG, "ImR Activator: Contacting ImplRepoService...\n"));
+
+    // First, resolve the ImR, without this we can go no further
+    CORBA::Object_var obj =
+      orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE,
+      this->orb_->orb_core ()->reactor ());
+
+    locator_ = ImplementationRepository::Locator::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    this->registration_token_ =
+      locator_->register_activator (name_.c_str(), activator ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    if (debug_ > 0)
+      ACE_DEBUG((LM_DEBUG, "ImR Activator: Registered with ImR.\n"));
+
+    return;
+  }
+  ACE_CATCHANY
+  {
+    if (debug_ > 1)
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR Activator: Can't register with ImR.");
+  }
+  ACE_ENDTRY;
+
+  if (debug_ > 0)
+    ACE_DEBUG((LM_DEBUG, "ImR Activator: Not registered with ImR.\n"));
+}
+
 int
-ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Options& opts ACE_ENV_ARG_DECL)
+ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Activator_Options& opts ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT(! CORBA::is_nil(orb));
   orb_ = CORBA::ORB::_duplicate(orb);
   debug_ = opts.debug();
+  notify_imr_ = opts.notify_imr();
+  if (opts.name().length() > 0)
+  {
+    name_ = opts.name();
+  }
 
   ACE_TRY
   {
-    if (this->debug_ > 0)
-      ACE_DEBUG((LM_DEBUG, "ImR Activator: Contacting ImplRepoService...\n"));
-
-    // First, resolve the ImR Locator, without this we can go no further
-    CORBA::Object_var obj =
-      orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    if (CORBA::is_nil(obj.in ()))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        "Unable to resolve_initial_references \"ImplRepoService\"\n"), -1);
-    }
-    locator_ = ImplementationRepository::Locator::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    ACE_ASSERT(! CORBA::is_nil(locator_.in()));
-
-    // Create a new poa and poa manager
-    obj = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil(obj.in()));
     this->root_poa_ = PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil(this->root_poa_.in()));
 
-    // Note : There is no point in making the activator use a persistent POA, because
-    // it will always re-register with the ImR on startup anyway.
-    CORBA::PolicyList policies;
-    this->imr_poa_ = this->root_poa_->create_POA("ImR_Activator",
-      PortableServer::POAManager::_nil(), policies ACE_ENV_ARG_PARAMETER);
+    // The activator must use a persistent POA so that it can be started before the
+    // locator in some scenarios, such as when the locator persists its database, and
+    // wants to reconnect to running activators to auto_start some servers.
+    this->imr_poa_ = createPersistentPOA(this->root_poa_.in(),
+      "ImR_Activator" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil(this->imr_poa_.in()));
 
     // Activate ourself
-    PortableServer::ObjectId_var id =
-      this->imr_poa_->activate_object(this ACE_ENV_ARG_PARAMETER);
+    PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("ImR_Activator");
+    this->imr_poa_->activate_object_with_id(id.in(), this ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     obj = this->imr_poa_->id_to_reference (id.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
@@ -95,20 +156,10 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Options& opts ACE_ENV_A
       }
     }
 
-    // Register with the ImR Locator
-    this->registration_token_ =
-      locator_->register_activator (name_.c_str(), activator.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->register_with_imr(activator.in()); // no throw
 
-    // Activate the manager for the root poa
     PortableServer::POAManager_var poaman =
       this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    poaman->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    // Activate the manager for the activator poa
-    poaman = this->imr_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
     poaman->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
@@ -116,7 +167,7 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Options& opts ACE_ENV_A
     if (this->debug_ > 1)
     {
       ACE_DEBUG ((LM_DEBUG,
-        "ImR_Activator_i::init: The Activator IOR is: <%s>\n", ior.in ()));
+        "ImR Activator: The Activator IOR is: <%s>\n", ior.in ()));
     }
 
     // The last thing we do is write out the ior so that a test program can assume
@@ -144,7 +195,7 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Options& opts ACE_ENV_A
 }
 
 int
-ImR_Activator_i::init (Options& opts ACE_ENV_ARG_DECL)
+ImR_Activator_i::init (Activator_Options& opts ACE_ENV_ARG_DECL)
 {
   ACE_ARGV av(opts.cmdline());
   int argc = av.argc();
@@ -164,17 +215,18 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
   {
-    if (debug_ > 0)
+    if (debug_ > 1)
       ACE_DEBUG((LM_DEBUG, "ImR Activator: Shutting down...\n"));
 
     this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    this->unblock_all_servers();
-
-    this->locator_->unregister_activator (name_.c_str(),
-      this->registration_token_ ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    if (! CORBA::is_nil(this->locator_.in()) && this->registration_token_ != 0)
+    {
+      this->locator_->unregister_activator (name_.c_str(),
+        this->registration_token_ ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
 
     this->orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
@@ -201,189 +253,92 @@ ImR_Activator_i::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-ImR_Activator_i::start_server
-(
- ImplementationRepository::AMH_ActivatorResponseHandler_ptr rh,
- const char* name,
- const char* cmdline,
- const char* dir,
- const ImplementationRepository::EnvironmentList & env ACE_ENV_ARG_DECL)
- ACE_THROW_SPEC ((CORBA::SystemException))
+ImR_Activator_i::start_server(const char* name,
+                              const char* cmdline,
+                              const char* dir,
+                              const ImplementationRepository::EnvironmentList & env ACE_ENV_ARG_DECL)
+                              ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  RHListPtr server;
-  waiting_servers_.find(name, server);
-  if (server.null())
-  {
-    server = RHListPtr(new RHList);
-    int err = waiting_servers_.bind(name, server);
-    ACE_ASSERT(err == 0);
-    ACE_UNUSED_ARG(err);
+  if (debug_ > 1)
+    ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting server <%s>...\n", name));
+  if (debug_ > 1)
+    ACE_DEBUG((LM_DEBUG, "\tcommand line : <%s>\n\tdirectory : <%s>\n", cmdline, dir));
+
+  ACE_Process_Options proc_opts;
+  proc_opts.command_line (cmdline);
+  proc_opts.working_directory (dir);
+  // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
+  // the way unix does, so in order to avoid having the child process
+  // hold the listen socket open, we force the child to inherit no
+  // handles. This includes stdin, stdout, logs, etc.
+  proc_opts.handle_inheritence (0);
+
+  for (CORBA::ULong i = 0; i < env.length(); ++i) {
+    proc_opts.setenv (env[i].name.in(), env[i].value.in());
   }
 
-  if (server->size() == 0)
+  int pid = this->process_mgr_.spawn (proc_opts);
+  if (pid == ACE_INVALID_PID)
   {
-    if (debug_ > 0)
-      ACE_DEBUG((LM_DEBUG, "ImR Activator: Spawn server <%s>\n", name));
-    if (debug_ > 1)
-      ACE_DEBUG((LM_DEBUG, "\tcommand line : <%s>\n\tdirectory : <%s>\n", cmdline, dir));
+    ACE_ERROR ((LM_ERROR,
+      "ImR Activator: Cannot start server <%s> using <%s>\n", name, cmdline));
 
-    // Launch the process using the given command line.
-    ACE_Process_Options proc_opts;
-    proc_opts.command_line (cmdline);
-    proc_opts.working_directory (dir);
-    // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
-    // the way unix does, so in order to avoid having the child process
-    // hold the listen socket open, we force the child to inherit no
-    // handles. This includes stdin, stdout, logs, etc.
-    proc_opts.handle_inheritence (0);
-
-    for (CORBA::ULong i = 0; i < env.length(); ++i)
-      proc_opts.setenv (env[i].name.in(), env[i].value.in());
-
-    int pid = this->process_mgr_.spawn (proc_opts);
-    if (pid == ACE_INVALID_PID)
-    {
-      ACE_ERROR ((LM_ERROR,
-        "ImR Activator: Cannot spawn server <%s> using <%s>\n", name, cmdline));
-
-      ImplementationRepository::CannotActivate* ex = new
-        ImplementationRepository::CannotActivate(CORBA::string_dup ("Process Creation Failed"));
-
-      ImplementationRepository::AMH_ActivatorExceptionHolder holder(ex);
-
-      ACE_TRY
-      {
-        rh->start_server_excep (&holder ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
-      ACE_CATCHANY
-      {
-        ACE_ERROR((LM_ERROR, "Exception during asynch exception throw.\n"));
-      }
-      ACE_ENDTRY;
-      return;
-    }
-
-    if (debug_ > 0)
-    {
-      ACE_DEBUG((LM_DEBUG,
-        "ImR Activator: Successfully spawned. Waiting for status of <%s>...\n", name));
-    }
-  }
-  else if (debug_ > 0)
-  {
-    ACE_DEBUG((LM_DEBUG, "ImR Activator: Waiting for status of <%s>...\n", name));
-  }
-
-  server->push_back(ImplementationRepository::AMH_ActivatorResponseHandler::_duplicate(rh));
-}
-
-void
-ImR_Activator_i::server_status_changed
-(
- ImplementationRepository::AMH_ActivatorResponseHandler_ptr rh,
- const char* name ACE_ENV_ARG_DECL)
- ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // First, send the reply, because the servers server_is_running shouldn't
-  // have to wait for all of the waiting clients to return.
-  ACE_TRY_EX(ACE_TRY_LABEL2)
-  {
-    rh->server_status_changed(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(ACE_TRY_LABEL2);
-  }
-  ACE_CATCHANY
-  {
-    if (debug_ > 1)
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR_Activator_i::server_status_changed() return");
-  }
-  ACE_ENDTRY;
-  ACE_CHECK;
-
-  RHListPtr server;
-  this->waiting_servers_.find(name, server);
-  if (! server.null() && server->size() > 0)
-  {
-    this->unblock_server(server);
+    ACE_THROW(ImplementationRepository::CannotActivate(CORBA::string_dup ("Process Creation Failed")));
+    return;
   }
   else
   {
     if (debug_ > 0)
-      ACE_DEBUG((LM_DEBUG, "ImR Activator: No waiting clients.\n"));
-  }
-}
+    {
+      ACE_DEBUG((LM_DEBUG,
+        "ImR_Activator_i::start_server: register "
+        "death handler for process %d\n", pid));
+    }
+    this->process_mgr_.register_handler (this, pid);
 
-void
-ImR_Activator_i::unblock_all_servers()
-{
-  ServerMap::ENTRY* entry = 0;
-  ServerMap::ITERATOR it(this->waiting_servers_);
-  for (; it.next(entry); it.advance())
-  {
-    ACE_CString name = entry->ext_id_;
-    RHListPtr server = entry->int_id_;
-    this->unblock_server(server);
+    // We only bind to the process_map_ if we want to notify
+    // the locator of a process' death.
+    if (notify_imr_)
+    {
+      this->process_map_.rebind (pid, name);
+    }
   }
-  this->waiting_servers_.unbind_all();
-}
 
-void
-ImR_Activator_i::unblock_server(RHListPtr server)
-{
   if (debug_ > 0)
-    ACE_DEBUG((LM_DEBUG, "ImR Activator: Unblocking %u waiting clients.\n", server->size()));
-
-  RHList& svr = *server;
-
-  for (size_t i = 0; i < svr.size(); ++i)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
-    {
-      ImplementationRepository::AMH_ActivatorResponseHandler_var ssrh = svr[i];
-      ssrh->start_server(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-    ACE_CATCHANY
-    {
-      if (debug_ > 1)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR_Activator_i::unblock_server()");
-    }
-    ACE_ENDTRY;
+    ACE_DEBUG((LM_DEBUG, "ImR Activator: Successfully started <%s>. \n", name));
   }
-  server->clear();
 }
 
-//@@ todo : Use the process_manager so that we're notified when any of our launched
-//          processes die. Add a new operation to the Locator idl, so that we can
-//          notify the locator when this happens.
+int
+ImR_Activator_i::handle_exit (ACE_Process * process)
+{
+  // We use the process_manager so that we're notified when
+  // any of our launched processes die. We notify the locator
+  // when this happens.
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  if (debug_ > 0)
+  {
+    ACE_DEBUG
+      ((LM_DEBUG,
+      ACE_TEXT ("Process %d exited with exit code %d\n"),
+      process->getpid (), process->return_value ()));
+  }
 
-template class ACE_Array_Base<ImplementationRepository::AMH_ActivatorResponseHandler_var>;
-template class ACE_Array<ImplementationRepository::AMH_ActivatorResponseHandler_var>;
-template class ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>;
+  if (!CORBA::is_nil (this->locator_.in ()))
+  {
+    ACE_CString name;
+    if (this->process_map_.find (process->getpid (), name) == 0)
+    {
+      if (debug_ > 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("Notifying ImR_Locator about %s\n"),
+          name.c_str()));
+      }
+      this->locator_->notify_child_death(name.c_str());
+    }
+  }
 
-template class ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Entry<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex> >;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex>, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex>,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Array_Base<ImplementationRepository::AMH_ActivatorResponseHandler_var>
-#pragma instantiate ACE_Array<ImplementationRepository::AMH_ActivatorResponseHandler_var>
-#pragma instantiate ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>
-
-#pragma instantiate ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex> >
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+  return 0;
+}

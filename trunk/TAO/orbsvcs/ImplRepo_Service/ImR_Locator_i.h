@@ -11,10 +11,12 @@
 #include "INS_Locator.h"
 #include "Locator_Options.h"
 #include "Locator_Repository.h"
+#include "AsyncStartupWaiter_i.h"
 
 #include "orbsvcs/IOR_Multicast.h"
 
 #include "ImR_LocatorS.h"
+#include "AsyncStartupWaiterS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +28,8 @@ class ACE_Reactor;
 // requests an activator to take care of activating the
 // corresponding server and raises a forward exception to the
 // client pointing to the correct server.
-class Locator_Export ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
+class Locator_Export ImR_Locator_i
+  : public virtual POA_ImplementationRepository::Locator
 {
 public:
   ImR_Locator_i();
@@ -43,6 +46,7 @@ public:
   /// Run using the orb reference created during init()
   int run (ACE_ENV_SINGLE_ARG_DECL);
 
+  int debug() const;
   // Note : See the IDL for descriptions of the operations.
 
   // Activator->Locator
@@ -53,6 +57,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void unregister_activator (const char* name,
     CORBA::Long token ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void notify_child_death (const char* name ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // tao_imr->Locator
@@ -112,8 +118,6 @@ public:
     ImplementationRepository::NotFound,
     ImplementationRepository::CannotActivate));
 
-  void server_status_changed(Server_Info& info);
-
 private:
 
   char* activate_server_i (Server_Info& info, bool manual_start ACE_ENV_ARG_DECL)
@@ -121,7 +125,13 @@ private:
     ImplementationRepository::NotFound,
     ImplementationRepository::CannotActivate));
 
-  void start_server(Server_Info& info, bool manual_start ACE_ENV_ARG_DECL)
+  char* activate_perclient_server_i (Server_Info info, bool manual_start ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+    ImplementationRepository::NotFound,
+    ImplementationRepository::CannotActivate));
+
+  ImplementationRepository::StartupInfo*
+    start_server(Server_Info& info, bool manual_start ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
     ImplementationRepository::NotFound,
     ImplementationRepository::CannotActivate));
@@ -148,7 +158,7 @@ private:
 
   void auto_start_servers(ACE_ENV_SINGLE_ARG_DECL);
 
-  void set_timeout_policy(CORBA::Object_ptr obj, const ACE_Time_Value& to);
+  CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj, const ACE_Time_Value& to);
 
   void connect_server(Server_Info& info);
 
@@ -172,6 +182,9 @@ private:
   TAO_IOR_Multicast ior_multicast_;
 
   Locator_Repository repository_;
+
+  AsyncStartupWaiter_i waiter_svt_;
+  ImplementationRepository::AsyncStartupWaiter_var waiter_;
 
   bool read_only_;
   ACE_Time_Value startup_timeout_;

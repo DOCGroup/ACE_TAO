@@ -110,10 +110,3 @@ ImR_Activator_Loader::run(void)
 
 ACE_FACTORY_DEFINE (Activator, ImR_Activator_Loader)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<ImR_Activator_Loader>;
-template class ACE_Auto_Ptr<ImR_Activator_ORB_Runner>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<ImR_Activator_Loader>
-#pragma instantiate ACE_Auto_Ptr<ImR_Activator_ORB_Runner>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
