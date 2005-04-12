@@ -463,7 +463,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   if (ACE_OS::strcmp (buf, request_msg) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Sending LOCATION_FORWARD\n"));
-      ACE_THROW (PortableInterceptor::ForwardRequest (this->forward_location_, 0));
+      ACE_THROW (PortableInterceptor::ForwardRequest (this->forward_location_));
     }
   else if (ACE_OS::strcmp (buf, forward_msg) == 0)
     {

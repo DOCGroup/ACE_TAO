@@ -81,8 +81,7 @@ Client_Request_Interceptor::send_request (
                   this->request_count_));
 
       // Notice that this is not a permanent forward.
-      ACE_THROW (PortableInterceptor::ForwardRequest (forward.in (),
-                                                      0));
+      ACE_THROW (PortableInterceptor::ForwardRequest (forward.in ()));
     }
 }
 

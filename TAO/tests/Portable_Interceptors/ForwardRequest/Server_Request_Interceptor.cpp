@@ -131,8 +131,7 @@ Server_Request_Interceptor::receive_request (
 
       // Notice that this is not a permanent forward.
       ACE_THROW (PortableInterceptor::ForwardRequest (
-                   this->obj_[1],
-                   0));
+                   this->obj_[1]));
     }
 }
 
