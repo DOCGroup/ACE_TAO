@@ -1,6 +1,7 @@
 Tue Apr 12 15:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Queue.h:
+        * tao/IIOP_Transport.h:
           Improved doxygen tags
 
 Tue Apr 12 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
