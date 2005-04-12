@@ -80,13 +80,6 @@ namespace TAO
     char
     LifespanStrategyTransient::key_type (void) const
     {
-      // @@ Johnny, why can;t use the enum's defined within
-      // PortableServer IDL? Wouldn't they make life much simpler?
-      // @bala, this if for the IOR setup/parsing, I can't find these charachters
-      // in the pidl file. In the POA it are static methods, seems that this
-      // normal methods doesn't work, because in some static functions these are
-      // used. This still needs some work, but I want to get those info out of
-      // the POA.
       return 'T';
     }
 
