@@ -61,7 +61,7 @@ sub DESTROY
                      "> still running upon object destruction\n";
         $self->Kill ();
     }
-    
+
     if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
         unlink "run_test.vxs";
     }
@@ -174,7 +174,7 @@ sub Spawn ()
                      "> not executable\n";
         return -1;
     }
-    
+
     if ($self->{IGNOREEXESUBDIR} == 0) {
         if (!-f $self->Executable ()) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
@@ -186,7 +186,7 @@ sub Spawn ()
     my $status = 0;
 
     my $hard_reboot = 0;
-    
+
     my $cmdline;
     ##
     ## check if VxWorks kernel is reachable
@@ -227,46 +227,54 @@ sub Spawn ()
             exit $status;
         }
     }
-    
+
     ##
     ## initialize VxWorks kernel (reboot!) if needed
     if (!$hard_reboot && ($do_vx_init || $ENV{'ACE_RUN_VX_TGT_REBOOT'})) {
-        $cmdline = $self->{WINDSH} . " -e \"shParse {" . $self->{REBOOT_CMD} . "}\" " . $ENV{'ACE_RUN_VX_TGTSVR'};
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print $cmdline . "\n";
+        if (defined $ENV{'ACE_RUN_VX_REBOOT_TOOL'}) {
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "Calling: $ENV{'ACE_RUN_VX_REBOOT_TOOL'}\n";
+            }
+            system ($ENV{'ACE_RUN_VX_REBOOT_TOOL'});
         }
-        ## reboot VxWorks kernel to cleanup
-        Win32::Process::Create ($self->{PROCESS},
-                                $self->{WINDSH},
-                                $cmdline,
-                                0,
-                                0,
-                                '.');
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print "Spawned: " . $cmdline . "\n";
+        else {
+            $cmdline = $self->{WINDSH} . " -e \"shParse {" . $self->{REBOOT_CMD} . "}\" " . $ENV{'ACE_RUN_VX_TGTSVR'};
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print $cmdline . "\n";
+            }
+            ## reboot VxWorks kernel to cleanup
+            Win32::Process::Create ($self->{PROCESS},
+                                    $self->{WINDSH},
+                                    $cmdline,
+                                    0,
+                                    0,
+                                    '.');
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "Spawned: " . $cmdline . "\n";
+            }
+            Win32::Process::GetExitCode ($self->{PROCESS}, $status);
+            if ($status != $STILL_ACTIVE) {
+                print STDERR "ERROR: Spawn failed for <", $self->{WINDSH}, ">\n";
+                exit $status;
+            }
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "Status: $status\n";
+            }
+            $self->{RUNNING} = 1;
+            $status = $self->TimedWait (3);
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "TimedWait Status: $status\n";
+            }
+            if ($status == -1) {
+                $self->Kill ();
+                # Don't need to Wait since we are on Win32
+            }
+            $self->{RUNNING} = 0;
+            $self->{PROCESS} = undef;
         }
-        Win32::Process::GetExitCode ($self->{PROCESS}, $status);
-        if ($status != $STILL_ACTIVE) {
-            print STDERR "ERROR: Spawn failed for <", $self->{WINDSH}, ">\n";
-            exit $status;
-        }
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print "Status: $status\n";
-        }
-        $self->{RUNNING} = 1;
-        $status = $self->TimedWait (3);
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print "TimedWait Status: $status\n";
-        }
-        if ($status == -1) {
-            $self->Kill ();
-            # Don't need to Wait since we are on Win32
-        }
-        $self->{RUNNING} = 0;
-        $self->{PROCESS} = undef;
         $set_vx_defgw = 1;
         $do_vx_init = 0;
-        
+
         sleep($self->{REBOOT_TIME});
     }
 
@@ -280,7 +288,7 @@ sub Spawn ()
     }
     $cwdrel =~ s/\\/\//g;
     $program = basename($program, ".out");
-    
+
     unlink "run_test.vxs";
     my $oh = new FileHandle();
     if (!open($oh, ">run_test.vxs")) {
@@ -298,11 +306,11 @@ sub Spawn ()
               "cd \"" . $ENV{"ACE_ROOT"} . "/" . $cwdrel . "\"\n" .
               "\@cd \"" . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . "\"\n" .
               "putenv(\"TMPDIR=" . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . "\")\n";
-    
+
     if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
         print $oh "memShow();\n";
     }
-    
+
     my $length = length ($program) + 2;
     my $arguments = "";
     if (defined $self->{ARGUMENTS}) {
@@ -358,12 +366,12 @@ sub WaitKill ($)
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
         $self->Kill ();
         # Don't need to Wait since we are on Win32
-        
+
         $do_vx_init = 1; # force reboot on next run
     }
 
     $self->{RUNNING} = 0;
-    
+
     return $status;
 }
 
