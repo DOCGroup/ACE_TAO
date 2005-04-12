@@ -1,3 +1,15 @@
+Tue Apr 12 09:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/*.pidl:
+          Updated regeneration instructions to not list -GT
+
+        * tao/*C.{h,cpp,inl}:
+        * tao/*S.{h,cpp}:
+        * tao/*A.cpp:
+          Regenerated but now not generation explicit template instantiations.
+
+          This is also done in the subdirectories.
+
 Mon Apr 11 21:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/*.pidl:
