@@ -324,39 +324,3 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        GIOP::Version
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        GIOP::IORAddressingInfo
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        GIOP::TargetAddress
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        GIOP::Version \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        GIOP::IORAddressingInfo \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        GIOP::TargetAddress \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

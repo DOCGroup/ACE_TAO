@@ -240,7 +240,7 @@ namespace CONV_FRAME
 } // module CONV_FRAME
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO
