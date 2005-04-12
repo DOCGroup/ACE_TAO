@@ -74,9 +74,8 @@ module PortableInterceptor {
   const ReplyStatus SYSTEM_EXCEPTION = 1;
   const ReplyStatus USER_EXCEPTION = 2;
   const ReplyStatus LOCATION_FORWARD = 3;
-  const ReplyStatus LOCATION_FORWARD_PERMANENT = 4;  // @@ TO BE REMOVED
-  const ReplyStatus TRANSPORT_RETRY = 5;  // @@ TO BE RENUMBERED to 4
-  const ReplyStatus UNKNOWN = 6;          // @@ TO BE RENUMBERED to 5
+  const ReplyStatus TRANSPORT_RETRY = 4;
+  const ReplyStatus UNKNOWN = 5;
 
   typedef unsigned long SlotId;
 
