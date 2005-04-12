@@ -1704,6 +1704,9 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
 
   // Back to reality.
   idl_global->scopes ().pop ();
+  
+  // So we can skip typecode generation.
+  retval->home_equiv (I_TRUE);
 
   retval->set_name (equiv_name);
   retval->set_defined_in (s);

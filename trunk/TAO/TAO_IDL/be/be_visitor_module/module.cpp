@@ -745,6 +745,12 @@ be_visitor_module::visit_home (be_home *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_CS:
+      {
+        be_visitor_home_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       return 0; // nothing to be done
     }

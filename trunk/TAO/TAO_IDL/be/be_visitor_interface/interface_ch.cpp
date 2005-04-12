@@ -228,7 +228,26 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "::Components::CCMException" << be_uidt_nl
           << "));" << be_uidt_nl << be_nl;
     }
-
+/*    
+  if (node->n_inherits () > 0)
+    {
+      const char *id = node->inherits ()[0]->repoID ();
+      const char *ecb_id = "IDL:omg.org/Components/EventConsumerBase:1.0";
+      
+      if (ACE_OS::strcmp (id, ecb_id) == 0)
+        {
+          *os << "// Check that enables substitution of base class events."
+              << be_nl
+              << "virtual CORBA::Boolean tao_is_substitutable ("
+              << be_idt << be_idt_nl
+              << "const char *repo_id" << be_nl
+              << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+              << ")" << be_nl
+              << "ACE_THROW_SPEC ((CORBA::SystemException));"
+              << be_uidt_nl << be_nl;
+        }
+    }
+*/
   if (! node->is_abstract ())
     {
       node->analyze_parentage ();
@@ -377,7 +396,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   os->gen_endif ();
 
-  if (be_global->tc_support ())
+  if (be_global->tc_support () && !node->home_equiv ())
     {
       be_visitor_typecode_decl td_visitor (&ctx);
 

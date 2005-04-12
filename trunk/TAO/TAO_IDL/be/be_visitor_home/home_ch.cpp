@@ -59,6 +59,22 @@ be_visitor_home_ch::visit_home (be_home *node)
 
   os->gen_endif ();
 
+    if (be_global->tc_support ())
+      {
+        be_visitor_context ctx (*this->ctx_);
+        ctx.node (node);
+        be_visitor_typecode_decl tc_visitor (&ctx);
+
+        if (node->accept (&tc_visitor) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                              "(%N:%l) be_visitor_home_ch::"
+                              "visit_home - "
+                              "TypeCode definition failed\n"),
+                              -1);
+          }
+      }
+
   node->cli_hdr_gen (I_TRUE);
   return 0;
 }
