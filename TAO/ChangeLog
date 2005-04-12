@@ -1,3 +1,9 @@
+Tue Apr 12 11:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Service_Callbacks.h:
+          Removed forward declarations of classes that are not used in
+          this file.
+
 Tue Apr 12 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PICurrent.h:
