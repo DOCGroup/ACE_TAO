@@ -1,3 +1,16 @@
+Mon Apr 11 23:54:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+
+	  Fixed a bug where multiple "_svnt" and "_exec" libs for
+	  a given MonolithicDeploymentDescription could cause
+	  chaos while pupulating ImplementationInfo stuct. This
+	  fix now only consides the first "_svnt" and "_exec"
+	  libs, and ignore remaining ones. A better solution will
+	  be enforcing any MonolithicDeploymentDescription could
+	  only have exactly one _svnt and one _exec lib. This 
+	  will be achieved through the flattened deployment plan.
+
 Mon Apr 11 17:56:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
