@@ -1,3 +1,9 @@
+Tue Apr 12 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/PortableServer/LifespanStrategyTransient.cpp:
+          Removed some comments that are old
+
 Tue Apr 12 03:58:55 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/DynamicInterface/Request.inl:
