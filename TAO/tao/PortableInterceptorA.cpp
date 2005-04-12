@@ -60,8 +60,7 @@ namespace PortableInterceptor
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ForwardRequest[] =
   {
-    { "forward", &CORBA::_tc_Object },
-    { "permanent", &CORBA::_tc_boolean }
+    { "forward", &CORBA::_tc_Object }
     
   };
 static TAO::TypeCode::Struct<char const *,
@@ -74,7 +73,7 @@ static TAO::TypeCode::Struct<char const *,
     "IDL:omg.org/PortableInterceptor/ForwardRequest:1.0",
     "ForwardRequest",
     _tao_fields_PortableInterceptor_ForwardRequest,
-    2);
+    1);
   
 namespace PortableInterceptor
 {
