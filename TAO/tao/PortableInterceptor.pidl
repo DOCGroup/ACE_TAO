@@ -65,7 +65,6 @@ module PortableInterceptor {
   exception ForwardRequest
   {
     Object forward;
-    boolean permanent;
   };
 
   typedef short ReplyStatus;

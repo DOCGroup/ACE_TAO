@@ -239,7 +239,6 @@ namespace PortableInterceptor
   public:
     
     CORBA::Object_var forward;
-    CORBA::Boolean permanent;
     ForwardRequest (void);
     ForwardRequest (const ForwardRequest &);
     ~ForwardRequest (void);
@@ -271,8 +270,7 @@ namespace PortableInterceptor
     // be\be_visitor_exception/exception_ctor.cpp:66
     
     ForwardRequest (
-        const CORBA::Object_ptr  _tao_forward,
-        CORBA::Boolean _tao_permanent
+        const CORBA::Object_ptr  _tao_forward
       );
     
     // TAO_IDL - Generated from
