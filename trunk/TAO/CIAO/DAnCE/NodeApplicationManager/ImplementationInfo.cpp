@@ -43,6 +43,9 @@ namespace CIAO
             impl_infos[i].component_config = inst.configProperty;
           }
 
+        bool svnt_found = false;
+        bool exec_found = false;
+
         // For svnt artifact
         for (CORBA::ULong j = 0; j < artifact_num; ++j)
           {
@@ -54,15 +57,19 @@ namespace CIAO
 
             //@@ Note: I am not checking for redundancy here. Maybe
             //         the modeling tool should make sure of
-            //         uniqueness.
-            if ((pos  = tmp.find ("_svnt")) != ACE_CString::npos ||
-                (pos  = tmp.find ("_Svnt")) != ACE_CString::npos)
+            //         uniqueness, i.e., one component implementation
+            //         should have only 1 _svnt and 1 _exec libs.
+            if (!svnt_found &&
+                    ((pos  = tmp.find ("_svnt")) != ACE_CString::npos ||
+                     (pos  = tmp.find ("_Svnt")) != ACE_CString::npos))
               {
                 if (arti.location.length() < 1 )
                   {
                     ACE_DEBUG ((LM_DEBUG, "Servant Artifact must have a location!\n"));
                     return  0;
                   }
+
+                svnt_found = true;
                 // Copy the servant dll/so name.
                 // @@ Note: I ignore all the other locations except the first one.
                 impl_infos[i].servant_dll = 
@@ -92,16 +99,20 @@ namespace CIAO
 
             // As one can see, code is duplicated here. I will come back for this later.
             // For exec artifact
-            if ((pos  = tmp.find ("_exec")) != ACE_CString::npos ||
-                (pos  = tmp.find ("_Exec")) != ACE_CString::npos)
+            if (!exec_found &&
+                    ((pos  = tmp.find ("_exec")) != ACE_CString::npos ||
+                     (pos  = tmp.find ("_Exec")) != ACE_CString::npos))
               {
                 if (arti.location.length() < 1 )
                   {
                     ACE_DEBUG ((LM_DEBUG, "Executor Artifact must have a location!\n"));
                     return 0;
                   }
+
+                exec_found = true;
                 // Cpoy the servant dll/so name.
                 // @@ Note: I ignore all the other locations except the first one.
+                exec_found = true;
                 impl_infos[i].executor_dll = 
                   CORBA::string_dup (arti.location[0].in ());
 
