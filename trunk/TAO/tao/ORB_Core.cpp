@@ -142,7 +142,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     object_key_table_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
-//    server_id_ (0),
     client_factory_ (0),
     server_factory_ (0),
     opt_for_collocation_ (1),
