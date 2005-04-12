@@ -39,7 +39,7 @@ namespace CIAO
   bool
   Servant_Activator::update_port_activator (
     const PortableServer::ObjectId &oid
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var str =
