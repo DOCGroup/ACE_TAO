@@ -122,7 +122,7 @@ void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerR
     CORBA::Object_var forward = get_forward(ri
       ACE_ENV_ARG_PARAMETER);
 
-    ACE_THROW( PortableInterceptor::ForwardRequest(forward.in(), 0) );
+    ACE_THROW (PortableInterceptor::ForwardRequest (forward.in()));
   }
 }
 
