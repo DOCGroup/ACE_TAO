@@ -360,7 +360,53 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_nl
           << "}" << be_nl << be_nl;
     }
-
+/*
+  if (node->n_inherits () > 0)
+    {
+      const char *id = node->inherits ()[0]->repoID ();
+      const char *ecb_id = "IDL:omg.org/Components/EventConsumerBase:1.0";
+      
+      if (ACE_OS::strcmp (id, ecb_id) == 0)
+        {
+          *os << "// Check that enables substitution of base class events."
+              << be_nl
+              << "CORBA::Boolean" << be_nl
+              << node->full_name () << "::tao_is_substitutable ("
+              << be_idt << be_idt_nl
+              << "const char *repo_id" << be_nl
+              << "ACE_ENV_ARG_DECL" << be_uidt_nl
+              << ")" << be_nl
+              << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+              << "{" << be_idt_nl
+              << "if (repo_id == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), FALSE);"
+              << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl
+              << "CORBA::ValueFactory_var f =" << be_idt_nl
+              << "this->_stubobj ()->servant_orb_var ()->lookup_value_factory ("
+              << be_idt << be_idt_nl
+              << "repo_id" << be_nl
+              << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl
+              << "ACE_CHECK_RETURN (FALSE);" << be_nl << be_nl
+              << "if (f.ptr () == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "return FALSE;" << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl
+              << "CORBA::ValueBase_var v = f->create_for_unmarshal ();"
+              << be_nl;
+          
+          // To get the event name, chop "Consumer" from node name.
+          size_t len = ACE_OS::strlen (node->full_name ());    
+          ACE_CString event_name (node->full_name (), len - 8);
+           
+          *os << "return dynamic_cast<" << event_name.c_str ()
+              << " const*> (v.in ()) != 0;" << be_uidt_nl
+              << "}" << be_nl << be_nl;
+        }
+    }
+*/
   *os << "CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
       << "const char *value" << be_nl;
@@ -489,7 +535,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
     }
 
-  if (be_global->tc_support ())
+  if (be_global->tc_support () && !node->home_equiv ())
     {
 
       be_visitor_context ctx = *this->ctx_;

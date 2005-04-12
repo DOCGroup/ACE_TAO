@@ -105,6 +105,12 @@ be_visitor_typecode_decl::visit_component (be_component *node)
 }
 
 int
+be_visitor_typecode_decl::visit_home (be_home *node)
+{
+  return this->visit_type (node);
+}
+
+int
 be_visitor_typecode_decl::visit_sequence (be_sequence *node)
 {
   return this->visit_type (node);

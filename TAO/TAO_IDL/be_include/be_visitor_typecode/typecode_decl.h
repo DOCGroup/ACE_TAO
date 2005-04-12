@@ -60,6 +60,9 @@ public:
   virtual int visit_component (be_component *node);
   // visit component
 
+  virtual int visit_home (be_home *node);
+  // visit home
+
   virtual int visit_sequence (be_sequence *node);
   // visit a sequence
 
