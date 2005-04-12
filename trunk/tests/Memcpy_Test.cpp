@@ -1,6 +1,8 @@
 //$Id$
 
 #include "ace/OS_NS_sys_time.h"
+#include "ace/High_Res_Timer.h"
+
 #include "test_config.h"
 
 void*
@@ -44,7 +46,7 @@ testit( int type)
 
 }
 
-namespace { enum { ITERATIONS = 1000000 } ; }
+namespace { enum { ITERATIONS = 100000000 } ; }
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -54,16 +56,16 @@ run_main (int, ACE_TCHAR *[])
   //ACE_Time_Value start, now ;
   struct timeval start, now;
 
-  for( int i = ITERATIONS ; i > 0 ; --i) {
+  for (int i = ITERATIONS ; i > 0 ; --i) {
     testit(0) ;
   }
 
-  start = ACE_OS::gettimeofday () ;
-  for( int i = ITERATIONS ; i > 0 ; --i) {
+  start = ACE_High_Res_Timer::gettimeofday_hr ();
+  for (int j = ITERATIONS ; j > 0 ; --j) {
     testit(0) ;
   }
 
-  now = ACE_OS::gettimeofday() ;
+  now = ACE_High_Res_Timer::gettimeofday_hr () ;
 
   double fast = 1000000 * (now.tv_sec - start.tv_sec) +
                 now.tv_usec - start.tv_usec ;
@@ -72,11 +74,11 @@ run_main (int, ACE_TCHAR *[])
               fast / ITERATIONS
             )) ;
 
-  start = ACE_OS::gettimeofday () ;
-  for( int i = ITERATIONS ; i > 0 ; --i) {
+  start = ACE_High_Res_Timer::gettimeofday_hr () ;
+  for (int k = ITERATIONS ; k > 0 ; --k) {
     testit(1) ;
   }
-  now = ACE_OS::gettimeofday() ;
+  now = ACE_High_Res_Timer::gettimeofday_hr () ;
 
   double slow = 1000000 * (now.tv_sec-start.tv_sec) + now.tv_usec - start.tv_usec ;
   ACE_DEBUG ((LM_DEBUG,

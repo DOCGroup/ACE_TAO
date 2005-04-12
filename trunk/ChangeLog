@@ -1,8 +1,13 @@
+Tue Apr 12 07:53:39 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tests/Memcpy_Test.cpp:
+          Fixed problems with VC6 build.
+
 Tue Apr 12 07:26:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
           Fixed problem for non-Win based builds.
-          
+
 Tue Apr 12 08:06:34 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
@@ -10,7 +15,7 @@ Tue Apr 12 08:06:34 2005  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
           VERSION now defaults to 4.0.0
-        
+
 Tue Apr 12 07:48:05 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
