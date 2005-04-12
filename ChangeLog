@@ -1,3 +1,8 @@
+Tue Apr 12 07:26:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+          Fixed problem for non-Win based builds.
+          
 Tue Apr 12 08:06:34 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
@@ -1144,7 +1149,7 @@ Wed Mar  2 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ACE-INSTALL.html:
           Updated the build instructors for the tests with Borland, the
           protocols directory must also be build before the tests. Thanks
-          to Aapo Mäkinen <aapo dot makinen at firstbeattechnologies dot com>
+          to Aapo Mï¿½inen <aapo dot makinen at firstbeattechnologies dot com>
           for reporting this.
 
 Tue Mar  1 12:39:11 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
