@@ -109,7 +109,8 @@ AST_Interface::AST_Interface (void)
     pd_inherits (0),
     pd_n_inherits (0),
     pd_inherits_flat (0),
-    pd_n_inherits_flat (0)
+    pd_n_inherits_flat (0),
+    home_equiv_ (I_FALSE)
 {
   this->size_type (AST_Type::VARIABLE); // Always the case.
   this->has_constructor (I_TRUE);      // Always the case.
@@ -132,7 +133,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_inherits (ih),
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
-    pd_n_inherits_flat (nih_flat)
+    pd_n_inherits_flat (nih_flat),
+    home_equiv_ (I_FALSE)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (I_TRUE);      // always the case
@@ -1215,6 +1217,18 @@ AST_Interface::redef_clash_populate_r (AST_Interface *t)
           this->redef_clash_populate_r (supports[i]);
         }
     }
+}
+
+idl_bool
+AST_Interface::home_equiv (void) const
+{
+  return this->home_equiv_;
+}
+
+void
+AST_Interface::home_equiv (idl_bool val)
+{
+  this->home_equiv_ = val;
 }
 
 int

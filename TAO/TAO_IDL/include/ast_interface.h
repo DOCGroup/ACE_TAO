@@ -125,6 +125,10 @@ public:
   // Check if we have redefined any of our parents' operations or attributes,
   // and check if there is such a clash among the parents
   virtual idl_bool redef_clash (void);
+  
+  // Accessors for the member.
+  idl_bool home_equiv (void) const;
+  void home_equiv (idl_bool val);
 
   // Look through inherited interfaces.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
@@ -168,6 +172,9 @@ protected:
 
   // Queue of dequeued nodes to be searched for the above case.
   ACE_Unbounded_Queue<AST_Interface *> del_queue;
+  
+  // Are we the equivalent interface of a home?
+  idl_bool home_equiv_;
 
 protected:
   // Scope Management Protocol.

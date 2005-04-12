@@ -1,3 +1,29 @@
+Tue Apr 12 17:51:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_cs.h:
+        
+          New files to generate the home typecode.
+          
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_home.h:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h:
+        * TAO_IDL/include/ast_interface.h:
+        
+          Changes to exisiting files to support the new files above
+          and to suppress typecode generation for the home equivalent
+          interface, which was previously done but led to typecode
+          with an incorrect TCKind. Thanks to Ossama Othman
+          <ossama@dre.vanderbilt.edu> for pointing out the oversight.
+
 Tue Apr 12 21:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
