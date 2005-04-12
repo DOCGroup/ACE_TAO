@@ -1,3 +1,11 @@
+Tue Apr 12 13:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.{h,cpp}:
+          Removed the permanent member from the ForwardRequest exception. It
+          is not in the spec and not used.
+
 Tue Apr 12 13:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Adapter_Registry.h:
