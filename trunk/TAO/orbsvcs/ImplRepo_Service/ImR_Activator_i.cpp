@@ -4,7 +4,7 @@
 
 #include "Activator_Options.h"
 
-#include "tao/ORB_core.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
 #include "ace/ARGV.h"
