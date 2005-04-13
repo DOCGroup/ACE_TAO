@@ -147,6 +147,8 @@ libTAO_la_SOURCES = \
   IOR_Parser.cpp \
   Incoming_Message_Queue.cpp \
   Interceptor_List.cpp \
+  InvalidSlotA.cpp \
+  InvalidSlotC.cpp \
   Invocation_Adapter.cpp \
   Invocation_Base.cpp \
   Invocation_Endpoint_Selectors.cpp \
@@ -184,6 +186,8 @@ libTAO_la_SOURCES = \
   ORB.cpp \
   ORBInitInfo.cpp \
   ORBInitializer_Registry.cpp \
+  ORBInitializerA.cpp \
+  ORBInitializerC.cpp \
   ORB_Core.cpp \
   ORB_Core_Auto_Ptr.cpp \
   ORB_Table.cpp \
@@ -231,6 +235,8 @@ libTAO_la_SOURCES = \
   Remote_Invocation.cpp \
   Remote_Object_Proxy_Broker.cpp \
   Reply_Dispatcher.cpp \
+  RequestInfoA.cpp \
+  RequestInfoC.cpp \
   RequestInfo_Util.cpp \
   Request_Dispatcher.cpp \
   Resource_Factory.cpp \
@@ -548,6 +554,9 @@ nobase_include_HEADERS = \
   Interceptor_List.inl \
   InterfaceDef.pidl \
   InvalidName.pidl \
+  InvalidSlot.pidl \
+  InvalidSlotC.h \
+  InvalidSlotS.h \
   Invocation_Adapter.h \
   Invocation_Adapter.inl \
   Invocation_Base.h \
@@ -611,6 +620,9 @@ nobase_include_HEADERS = \
   ORBInitInfo.h \
   ORBInitInfo.inl \
   ORBInitializer_Registry.h \
+  ORBInitializer.pidl \
+  ORBInitializerC.h \
+  ORBInitializerS.h \
   ORB_Constants.h \
   ORB_Core.h \
   ORB_Core.i \
@@ -699,6 +711,9 @@ nobase_include_HEADERS = \
   Reply_Dispatcher.h \
   Reply_Dispatcher.i \
   RequestInfo_Util.h \
+  RequestInfo.pidl \
+  RequestInfoC.h \
+  RequestInfoS.h \
   Request_Dispatcher.h \
   Resource_Factory.h \
   Resume_Handle.h \
