@@ -46,6 +46,10 @@
 #include <orb_types.pidl>
 #include <Policy.pidl>
 
+#include <ORBInitializer.pidl>
+#include <InvalidSlot.pidl>
+#include <RequestInfo.pidl>
+
 module PortableInterceptor {
 
   typeprefix PortableInterceptor "omg.org";
@@ -67,8 +71,6 @@ module PortableInterceptor {
     Object forward;
   };
 
-  typedef short ReplyStatus;
-
   // Valid reply_status values:
   const ReplyStatus SUCCESSFUL = 0;
   const ReplyStatus SYSTEM_EXCEPTION = 1;
@@ -77,32 +79,10 @@ module PortableInterceptor {
   const ReplyStatus TRANSPORT_RETRY = 4;
   const ReplyStatus UNKNOWN = 5;
 
-  typedef unsigned long SlotId;
-
-  exception InvalidSlot {};
-
   local interface Current : CORBA::Current
   {
     any get_slot (in SlotId id) raises (InvalidSlot);
     void set_slot (in SlotId id, in any data) raises (InvalidSlot);
-  };
-
-  local interface RequestInfo
-  {
-    readonly attribute unsigned long request_id;
-    readonly attribute string operation;
-    readonly attribute Dynamic::ParameterList arguments;
-    readonly attribute Dynamic::ExceptionList exceptions;
-    readonly attribute Dynamic::ContextList contexts;
-    readonly attribute Dynamic::RequestContext operation_context;
-    readonly attribute any result;
-    readonly attribute boolean response_expected;
-    readonly attribute Messaging::SyncScope sync_scope;
-    readonly attribute ReplyStatus reply_status;
-    readonly attribute Object forward_reference;
-    any get_slot (in SlotId id) raises (InvalidSlot);
-    IOP::ServiceContext get_request_service_context (in IOP::ServiceId id);
-    IOP::ServiceContext get_reply_service_context (in IOP::ServiceId id);
   };
 
   local interface ClientRequestInfo : RequestInfo
@@ -197,13 +177,6 @@ module PortableInterceptor {
       in CORBA::PolicyType type,
       in PolicyFactory policy_factory);
   };
-
-  local interface ORBInitializer
-  {
-    void pre_init (in ORBInitInfo info);
-    void post_init (in ORBInitInfo info);
-  };
-
 };
 
 #endif  /* _PORTABLE_INTERCEPTOR_IDL_ */

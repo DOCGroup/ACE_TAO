@@ -45,6 +45,9 @@ module PortableInterceptor
   typedef CORBA::OctetSeq ObjectId;
   typedef long AdapterManagerId;
   typedef short AdapterState;
+  typedef unsigned long SlotId;
+  typedef short ReplyStatus;
+
 };
 
 #endif  /* _PI_FORWARD_IDL_ */
