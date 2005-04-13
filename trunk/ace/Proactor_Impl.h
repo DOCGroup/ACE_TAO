@@ -42,7 +42,7 @@ class ACE_Export ACE_Proactor_Impl : public ACE_Event_Handler
 
 public:
   /// Virtual destruction.
-  virtual ~ACE_Proactor_Impl (void) {}
+  virtual ~ACE_Proactor_Impl (void);
 
   /// Close the IO completion port.
   virtual int close (void) = 0;
