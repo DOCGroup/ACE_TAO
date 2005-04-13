@@ -1,10 +1,17 @@
+Wed Apr 13 07:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
+          Don't try to pass the permanent flag to the ForwardRequest exception,
+          this is not in the spec but also this flag is not used at all
+          in any of the code
+
 Tue Apr 12 17:51:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_cs.cpp:
         * TAO_IDL/be_include/be_visitor_home/home_cs.h:
-        
+
           New files to generate the home typecode.
-          
+
         * TAO_IDL/ast/ast_interface.cpp:
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
         * TAO_IDL/be/be_visitor_home.cpp:
@@ -17,7 +24,7 @@ Tue Apr 12 17:51:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_home.h:
         * TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h:
         * TAO_IDL/include/ast_interface.h:
-        
+
           Changes to exisiting files to support the new files above
           and to suppress typecode generation for the home equivalent
           interface, which was previously done but led to typecode
