@@ -95,6 +95,9 @@ module Components
     PrimaryKeyBase get_primary_key( )
       raises (NoKeyAvailable);
 
+    // Factory method to return a StandardConfigurator interface
+    StandardConfigurator get_standard_configurator ( );
+
     /// CIAO specific operations to have some control on when and how
     /// to activate  components.
     /**

@@ -1,5 +1,6 @@
 // $Id$
 #include "Container_Impl.h"
+#include "CCM_ComponentC.h" // for calling StandardConfigurator interface
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Impl.inl"
@@ -111,12 +112,17 @@ CIAO::Container_Impl::install (
          (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
 
          // Deal with Component instance related Properties.
-         // Now I am only concerning about the COMPOENTIOR and here is only
-         // the hardcoded version of the configuration.
+         // Now I am only concerning about the COMPOENTIOR and attribute
+         // configuration initialization.
+
+         // I need to map Properties to Components::ConfigValues
+         ::Components::ConfigValues comp_attributes;
+         comp_attributes.length (0);
 
          const CORBA::ULong clen = impl_infos[i].component_config.length ();
          for (CORBA::ULong prop_len = 0; prop_len < clen; ++prop_len)
            {
+             // Set up the ComponentIOR attribute
              if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
                                  "ComponentIOR") == 0)
                {
@@ -137,9 +143,33 @@ CIAO::Container_Impl::install (
 
                      ACE_TRY_THROW (CORBA::INTERNAL ());
                    }
-
+                 continue;
                }
+
+             // Initialize attributes through StandardConfigurator interface
+             // @@Todo: Currently I have to manually map the Deployment::Properties to 
+             // Components::ConfigValues, we should use a common data structure in
+             // the future. - Gan
+             ACE_DEBUG ((LM_DEBUG, "Step 10\n"));
+
+             CORBA::ULong cur_len = comp_attributes.length ();
+             comp_attributes.length (cur_len + 1);
+
+             Components::ConfigValue *item = new OBV_Components::ConfigValue ();
+             item->name (impl_infos[i].component_config[prop_len].name.in ());
+             CORBA::Any tmp = impl_infos[i].component_config[prop_len].value;
+             item->value (tmp);
+
+             comp_attributes[cur_len] = item;
            }
+           
+         ACE_DEBUG ((LM_DEBUG, "Step 20\n"));
+         //std_configurator.set_configuration
+         ::Components::StandardConfigurator_var std_configurator = 
+           comp->get_standard_configurator ();
+
+         std_configurator->set_configuration (comp_attributes);
+         ACE_DEBUG ((LM_DEBUG, "Step 30\n"));
        }
    }
   ACE_CATCHANY
