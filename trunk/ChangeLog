@@ -1,3 +1,9 @@
+Wed Apr 13 13:42:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Proactor_Impl.cpp:
+
+	  Only compile if system supports asynchronous I/O.
+
 Wed Apr 13 19:07:41 2005  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_time.inl:
@@ -6,11 +12,11 @@ Wed Apr 13 19:07:41 2005  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_unistd.inl:
           Fixed wrong comment and removed commented out code.
-        
+
         * ace/README:
           Documented new macros ACE_HAS_NONCONST_CLOCK_SETTIME
           and ACE_LACKS_SCANDIR_PROTOTYPE.
-        
+
         * ace/TSS_T.h:
           Fixed wrong comment.
 
@@ -18,11 +24,11 @@ Wed Apr 13 19:07:41 2005  Olli Savia  <ops@iki.fi>
           Added new defines ACE_HAS_NONCONST_CLOCK_SETTIME,
           ACE_HAS_SCANDIR, ACE_LACKS_SCANDIR_PROTOTYPE and
           ACE_SCANDIR_CMP_USES_VOIDPTR.
-        
+
         * ace/os_include/os_dirent.h:
           Declare scandir() prototype if ACE_LACKS_SCANDIR_PROTOTYPE
           is defined.
-        
+
 Wed Apr 13 14:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Reactor.cpp:
