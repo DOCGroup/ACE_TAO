@@ -87,10 +87,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
                   "receive_request_service_contexts().\n",
                   this->request_count_));
 
-      // Notice that this is not a permanent forward.
-      ACE_THROW (PortableInterceptor::ForwardRequest (
-                   this->obj_[0],
-                   0));
+      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[0]));
     }
 }
 
@@ -129,9 +126,7 @@ Server_Request_Interceptor::receive_request (
       // "request_count_ - 1" is used above since there was a location
       // forward.
 
-      // Notice that this is not a permanent forward.
-      ACE_THROW (PortableInterceptor::ForwardRequest (
-                   this->obj_[1]));
+      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[1]));
     }
 }
 
