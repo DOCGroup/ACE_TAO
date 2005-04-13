@@ -94,14 +94,6 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::equivalent_i (CORBA::Type
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
-CORBA::TCKind
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::kind_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
-{
-  return this->kind_;
-}
-
-template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const

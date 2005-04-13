@@ -1,16 +1,9 @@
 // $Id$
 
 #include "SystemException.h"
-#include "Environment.h"
 #include "Any_SystemException.h"
-#include "Any_Dual_Impl_T.h"
-#include "TypeCode.h"
+#include "Environment.h"
 #include "ORB_Constants.h"
-#include "TypeCode_Constants.h"
-#include "Enum_TypeCode.h"
-#include "TypeCode_Struct_Field.h"
-#include "Struct_TypeCode.h"
-#include "Null_RefCount_Policy.h"
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
@@ -835,72 +828,6 @@ CORBA::SystemException::_tao_get_omg_exception_description (
     TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
     TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED)
 
-namespace TAO
-{
-  namespace TypeCode
-  {
-    char const * const enumerators_CORBA_CompletionStatus[]=
-      {
-        "COMPLETED_YES",
-        "COMPLETED_NO",
-        "COMPLETED_MAYBE"
-      };
-
-    Enum<char const *,
-         char const * const *,
-         TAO::Null_RefCount_Policy>
-      tc_CompletionStatus ("IDL:omg.org/CORBA/CompletionStatus:1.0",
-                           "CompletionStatus",
-                           enumerators_CORBA_CompletionStatus,
-                           3 /* # of enumerators */);
-  }
-}
-
-namespace CORBA
-{
-  // An internal TypeCode.
-  TypeCode_ptr const _tc_CompletionStatus =
-    &TAO::TypeCode::tc_CompletionStatus;
-}
-
-namespace TAO
-{
-  namespace TypeCode
-  {
-    Struct_Field<char const *,
-                 CORBA::TypeCode_ptr const *> const
-    fields_CORBA_SystemException[] =
-      {
-        { "minor",     &CORBA::_tc_ulong },
-        { "completed", &CORBA::_tc_CompletionStatus }
-      };
-
-    typedef Struct<char const *,
-                   CORBA::TypeCode_ptr const *,
-                   Struct_Field<char const *,
-                                CORBA::TypeCode_ptr const *> const *,
-                   TAO::Null_RefCount_Policy> tc_SystemException;
-  }
-}
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-namespace TAO \
-{ \
-  namespace TypeCode \
-  { \
-    tc_SystemException tc_CORBA_ ## name ( \
-      CORBA::tk_except,     \
-      "IDL:omg.org/CORBA/" #name ":1.0", \
-      #name, \
-      TAO::TypeCode::fields_CORBA_SystemException, \
-      2 /* # of fields */); \
-  } \
-} \
-CORBA::TypeCode_ptr const CORBA::_tc_ ## name = \
-    &TAO::TypeCode::tc_CORBA_ ## name;
-  STANDARD_EXCEPTION_LIST
-#undef  TAO_SYSTEM_EXCEPTION
-
 static const char *repo_id_array[] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
                   (char *) "IDL:omg.org/CORBA/" #name ":1.0",
@@ -966,26 +893,6 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::TypeCode_ptr \
-CORBA::name ::_type (void) const \
-{ \
-  return CORBA::_tc_ ## name; \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA::name ::_tao_any_destructor (void * x) \
-{ \
-  delete static_cast<CORBA::name *> (x); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Exception * \
 CORBA::name ::_tao_duplicate (void) const \
 { \
@@ -1005,52 +912,3 @@ CORBA::name ::_tao_create (void) \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \
   return result; \
 }
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
-{ \
-  TAO::Any_SystemException::insert_copy ( \
-      any, \
-      CORBA::name ::_tao_any_destructor, \
-      CORBA::_tc_ ## name, \
-      ex \
-    ); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA::operator<<= (CORBA::Any &any, CORBA::name *ex) \
-{ \
-  TAO::Any_SystemException::insert ( \
-      any, \
-      CORBA::name ::_tao_any_destructor, \
-      CORBA::_tc_ ## name, \
-      ex \
-    ); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::Boolean operator>>= (const CORBA::Any &any, \
-                            const CORBA::name *&ex) \
-{ \
-  return \
-    TAO::Any_SystemException::extract ( \
-        any, \
-        CORBA::name ::_tao_any_destructor, \
-        CORBA::_tc_ ## name, \
-        (const CORBA::SystemException *&) ex, \
-        &CORBA::name ::_tao_create); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION

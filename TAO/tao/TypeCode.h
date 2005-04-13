@@ -416,7 +416,7 @@ namespace CORBA
   protected:
 
     /// Constructor.
-    TypeCode (void);
+    TypeCode (CORBA::TCKind kind);
 
     /// Destructor.
     /**
@@ -446,7 +446,6 @@ namespace CORBA
                              ACE_ENV_ARG_DECL) const = 0;
     virtual Boolean equivalent_i (TypeCode_ptr tc
                                   ACE_ENV_ARG_DECL) const = 0;
-    virtual TCKind kind_i (ACE_ENV_SINGLE_ARG_DECL) const = 0;
     virtual TypeCode_ptr get_compact_typecode_i (
       ACE_ENV_SINGLE_ARG_DECL) const = 0;
 
@@ -478,6 +477,11 @@ namespace CORBA
     // Prevent copying and assignment.
     TypeCode (TypeCode const &);
     void operator= (TypeCode const &);
+
+  protected:
+
+    /// The kind of TypeCode.
+    TCKind const kind_;
 
   };
 

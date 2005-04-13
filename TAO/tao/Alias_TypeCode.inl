@@ -15,8 +15,9 @@ TAO::TypeCode::Alias<StringType,
   char const * id,
   char const * name,
   TypeCodeType const & tc)
-  : RefCountPolicy (),
-    attributes_ (id, name),
-    content_type_ (tc)
+  : CORBA::TypeCode (Kind)
+  , RefCountPolicy ()
+  , attributes_ (id, name)
+  , content_type_ (tc)
 {
 }

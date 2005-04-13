@@ -166,14 +166,7 @@ TAO::TypeCode::Union<StringType,
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Call kind_i() instead of using CORBA::tk_union directly since a
-  // subclass, such as Except_TypeCode, can use this equivalent_i()
-  // implementation.
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (tc_kind != this_kind)
+  if (tc_kind != this->kind_)
     return 0;
 
   char const * const this_id = this->base_attributes_.id ();
@@ -231,20 +224,6 @@ TAO::TypeCode::Union<StringType,
     }
 
   return 1;
-}
-
-template <typename StringType,
-          typename TypeCodeType,
-          class CaseArrayType,
-          class RefCountPolicy>
-CORBA::TCKind
-TAO::TypeCode::Union<StringType,
-                     TypeCodeType,
-                     CaseArrayType,
-                     RefCountPolicy>::kind_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
-{
-  return CORBA::tk_union;
 }
 
 template <typename StringType,

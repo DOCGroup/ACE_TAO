@@ -260,6 +260,7 @@ libTAO_la_SOURCES = \
   Synch_Refcountable.cpp \
   Synch_Reply_Dispatcher.cpp \
   SystemException.cpp \
+  SystemExceptionA.cpp \
   TAOA.cpp \
   TAOC.cpp \
   TAO_Internal.cpp \
@@ -282,6 +283,7 @@ libTAO_la_SOURCES = \
   Transport_Timer.cpp \
   True_RefCount_Policy.cpp \
   TypeCode.cpp \
+  TypeCodeA.cpp \
   TypeCodeFactory_Adapter.cpp \
   TypeCode_Constants.cpp \
   Typecode_typesC.cpp \
@@ -649,6 +651,9 @@ nobase_include_HEADERS = \
   Objref_TypeCode.cpp \
   Objref_TypeCode.h \
   Objref_TypeCode.inl \
+  Objref_TypeCode_Base.cpp \
+  Objref_TypeCode_Base.h \
+  Objref_TypeCode_Base.inl \
   Objref_VarOut_T.cpp \
   Objref_VarOut_T.h \
   OctetSeq.pidl \

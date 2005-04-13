@@ -23,7 +23,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TypeCode.h"
+#include "tao/Objref_TypeCode_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,6 @@
 
 #include "tao/TypeCodeFactory_Adapter.h"
 
-#include "tao/TypeCode_Base_Attributes.h"
 
 namespace TAO
 {
@@ -141,8 +140,7 @@ namespace TAO
      */
     template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
     class Objref
-      : public CORBA::TypeCode,
-        private RefCountPolicy
+      : public Objref_Base<StringType, RefCountPolicy>
     {
     public:
 
@@ -150,46 +148,10 @@ namespace TAO
       Objref (char const * id,
               char const * name);
 
-      /**
-       * @name TAO-specific @c CORBA::TypeCode Methods
-       *
-       * Methods required by TAO's implementation of the
-       * @c CORBA::TypeCode class.
-       *
-       * @see @c CORBA::TypeCode
-       */
-      //@{
-      virtual bool tao_marshal (TAO_OutputCDR & cdr) const;
-      virtual void tao_duplicate (void);
-      virtual void tao_release (void);
-      //@}
-
     protected:
 
-      /**
-       * @name @c TAO CORBA::TypeCode Template Methods
-       *
-       * @c tk_abstract_interface, @c tk_component, @c
-       * tk_local_interface, @c tk_native and @c tk_objref
-       * @c CORBA::TypeCode -specific template methods.
-       *
-       * @see @c CORBA::TypeCode
-       */
-      //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ACE_ENV_ARG_DECL) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ACE_ENV_ARG_DECL) const;
-      virtual CORBA::TCKind kind_i (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual char const * id_i (ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual char const * name_i (ACE_ENV_SINGLE_ARG_DECL) const;
-
-    private:
-
-      /// Base attributes (@c id and @c name).
-      Base_Attributes<StringType> attributes_;
 
     };
 
