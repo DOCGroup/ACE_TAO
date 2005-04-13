@@ -192,6 +192,11 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
         break;
       }
 
+    if (*ior == '\0') // no key separator appended, use default key
+      {
+        break;
+      }
+
     if (uiop_compatible && *(ior - 1) == '|')
       // Assume this is an old uiop style corbaloc. No need to warn here,
       // the UIOP_Connector::corbaloc_scan already did.
