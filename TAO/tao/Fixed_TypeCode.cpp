@@ -72,14 +72,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Call kind_i() instead of using CORBA::tk_fixed directly since a
-  // subclass, such as WFixed_TypeCode, can use this equivalent_i()
-  // implementation.
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (tc_kind != this_kind)
+  if (tc_kind != this->kind_)
     return 0;
 
   // Since TCKind comparisons must be performed before equal_i() is
@@ -87,14 +80,6 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
   // tk_fixed TypeCodes.
   return this->equal_i (tc
                         ACE_ENV_ARG_PARAMETER);
-}
-
-template <class RefCountPolicy>
-CORBA::TCKind
-TAO::TypeCode::Fixed<RefCountPolicy>::kind_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
-{
-  return CORBA::tk_fixed;
 }
 
 template <class RefCountPolicy>

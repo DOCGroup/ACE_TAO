@@ -272,20 +272,6 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-CORBA::TCKind
-TAO::TypeCode::Value<StringType,
-                     TypeCodeType,
-                     FieldArrayType,
-                     RefCountPolicy>::kind_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
-{
-  return this->kind_;
-}
-
-template <typename StringType,
-          typename TypeCodeType,
-          class FieldArrayType,
-          class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,

@@ -78,7 +78,6 @@ namespace TAO
                                       ACE_ENV_ARG_DECL) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL) const;
-      virtual CORBA::TCKind kind_i (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
       virtual CORBA::ULong length_i (ACE_ENV_SINGLE_ARG_DECL) const;
@@ -86,13 +85,6 @@ namespace TAO
         ACE_ENV_SINGLE_ARG_DECL) const;
 
     private:
-
-      /// The kind of this @c TypeCode.
-      /**
-       * @c kind_ is either @c CORBA::tk_sequence or
-       * @c CORBA::tk_array.
-       */
-      CORBA::TCKind const kind_;
 
       /// Element type of the sequence.
       /**

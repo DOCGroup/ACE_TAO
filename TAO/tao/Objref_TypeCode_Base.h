@@ -2,19 +2,24 @@
 
 //=============================================================================
 /**
- *  @file    String_TypeCode.h
+ *  @file    Objref_TypeCode.h
  *
  *  $Id$
  *
- *  Header file for @c CORBA::tk_string or @c CORBA::tk_wstring
- *  @c CORBA::TypeCodes.
+ *  Header file for
+ *    @c tk_abstract_interface,
+ *    @c tk_component,
+ *    @c tk_local_interface,
+ *    @c tk_native and
+ *    @c tk_objref
+ *  @c CORBA::TypeCodes base class.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
-#ifndef TAO_STRING_TYPECODE_H
-#define TAO_STRING_TYPECODE_H
+#ifndef TAO_OBJREF_TYPECODE_BASE_H
+#define TAO_OBJREF_TYPECODE_BASE_H
 
 #include /**/ "ace/pre.h"
 
@@ -24,29 +29,33 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TypeCode_Base_Attributes.h"
+
 namespace TAO
 {
   namespace TypeCode
   {
-
     /**
-     * @class String
+     * @class Objref
      *
-     * @brief @c CORBA::TypeCode implementation for OMG IDL string
-     *        types.
+     * @brief @c CORBA::TypeCode implementation for an OMG IDL
+     *        @c object and object-like types
      *
-     * This class implements a @c CORBA::TypeCode for OMG IDL string
-     * types, including @c wstring.
+     * This class implements a @c CORBA::TypeCode for an OMG IDL
+     * @c object (interface) and object-like types (abstract
+     * interface, component, local interface and native).
      */
-    template <class RefCountPolicy>
-    class String
+    template <typename StringType, class RefCountPolicy>
+    class Objref_Base
       : public CORBA::TypeCode,
         private RefCountPolicy
     {
     public:
 
       /// Constructor.
-      String (CORBA::TCKind kind, CORBA::ULong length);
+      Objref_Base (CORBA::TCKind kind,
+              char const * id,
+              char const * name);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -67,8 +76,9 @@ namespace TAO
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
-       * @c CORBA::TypeCode template methods specific to @c tk_string
-       * @c TypeCodes.
+       * @c tk_abstract_interface, @c tk_component, @c
+       * tk_local_interface, @c tk_native and @c tk_objref
+       * @c CORBA::TypeCode -specific template methods.
        *
        * @see @c CORBA::TypeCode
        */
@@ -78,14 +88,14 @@ namespace TAO
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual CORBA::ULong length_i (ACE_ENV_SINGLE_ARG_DECL) const;
+        ACE_ENV_SINGLE_ARG_DECL) const = 0;
+      virtual char const * id_i (ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual char const * name_i (ACE_ENV_SINGLE_ARG_DECL) const;
 
-    private:
+    protected:
 
-      /// Length of the @c string.  A length of zero indicates an
-      /// unbounded @c string.
-      CORBA::ULong const length_;
+      /// Base attributes (@c id and @c name).
+      Base_Attributes<StringType> attributes_;
 
     };
 
@@ -94,17 +104,17 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/String_TypeCode.inl"
+# include "tao/Objref_TypeCode_Base.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/String_TypeCode.cpp"
+# include "tao/Objref_TypeCode_Base.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("String_TypeCode.cpp")
+# pragma implementation ("Objref_TypeCode_Base.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_STRING_TYPECODE_H */
+#endif /* TAO_OBJREF_TYPECODE_H */

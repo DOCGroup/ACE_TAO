@@ -79,14 +79,8 @@ namespace TAO
                                       ACE_ENV_ARG_DECL) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL) const;
-      virtual CORBA::TCKind kind_i (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
-
-    private:
-
-      /// Kind of this @c TypeCode.
-      CORBA::TCKind const kind_;
 
     };
 

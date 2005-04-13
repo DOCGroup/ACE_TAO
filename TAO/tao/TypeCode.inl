@@ -23,7 +23,8 @@ CORBA::release (CORBA::TypeCode_ptr obj)
 // --------------------------------------------------------------
 
 ACE_INLINE
-CORBA::TypeCode::TypeCode (void)
+CORBA::TypeCode::TypeCode (CORBA::TCKind k)
+  : kind_ (k)
 {
 }
 
@@ -59,9 +60,9 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
 }
 
 ACE_INLINE CORBA::TCKind
-CORBA::TypeCode::kind (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->kind_;
 }
 
 ACE_INLINE CORBA::TypeCode_ptr

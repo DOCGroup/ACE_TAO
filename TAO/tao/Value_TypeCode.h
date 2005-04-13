@@ -92,7 +92,6 @@ namespace TAO
                                       ACE_ENV_ARG_DECL) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL) const;
-      virtual CORBA::TCKind kind_i (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
       virtual char const * id_i (ACE_ENV_SINGLE_ARG_DECL) const;
@@ -111,13 +110,6 @@ namespace TAO
       //@}
 
     private:
-
-      /// The kind of TypeCode.
-      /**
-       * The @c kind_ may be either @c CORBA::tk_value or
-       * @c CORBA::tk_event.
-       */
-      CORBA::TCKind const kind_;
 
       /**
        * @c Valuetype Attributes
