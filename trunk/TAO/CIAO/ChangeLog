@@ -1,3 +1,13 @@
+Wed Apr 13 15:14:58 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+
+          Deleted typecodefactory base project to the mpc files.
+
 Wed Apr 13 11:39:58 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
