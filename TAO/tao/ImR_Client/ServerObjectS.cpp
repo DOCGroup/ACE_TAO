@@ -27,10 +27,10 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:599
+// .\be\be_codegen.cpp:599
 
-#ifndef _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
-#define _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
+#ifndef _TAO_IDL_SERVEROBJECTS_CPP_
+#define _TAO_IDL_SERVEROBJECTS_CPP_
 
 
 #include "ServerObjectS.h"
@@ -67,7 +67,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// .\be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -76,7 +76,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// .\be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -85,7 +85,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1455
+// .\be\be_interface.cpp:1455
 
 class TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -98,7 +98,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ACE\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -201,7 +201,7 @@ static TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable tao_Implem
 //
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker *
@@ -265,7 +265,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::dispat
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:999
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ss.cpp:999
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -299,7 +299,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::_TAO_ServerOb
 {}
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::ping (
@@ -320,7 +320,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::ping (
   ACE_CHECK;
 }
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 
 void
 POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::shutdown (
@@ -347,7 +347,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::shutdown (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:103
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ss.cpp:103
 
 POA_ImplementationRepository::ServerObject::ServerObject (void)
   : TAO_ServantBase ()
@@ -369,7 +369,7 @@ namespace POA_ImplementationRepository
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:127
+  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
   
   class ping_ServerObject
     : public TAO::Upcall_Command
@@ -396,7 +396,7 @@ namespace POA_ImplementationRepository
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:192
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ss.cpp:192
 
 void POA_ImplementationRepository::ServerObject::ping_skel (
     TAO_ServerRequest & server_request,
@@ -446,7 +446,7 @@ namespace POA_ImplementationRepository
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:127
+  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
   
   class shutdown_ServerObject
     : public TAO::Upcall_Command
@@ -473,7 +473,7 @@ namespace POA_ImplementationRepository
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:192
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ss.cpp:192
 
 void POA_ImplementationRepository::ServerObject::shutdown_skel (
     TAO_ServerRequest & server_request,
@@ -520,14 +520,14 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:169
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ss.cpp:169
 
 namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:127
+  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
   
   class _is_a_ServerObject_Upcall_Command
     : public TAO::Upcall_Command
@@ -624,7 +624,7 @@ namespace POA_ImplementationRepository
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:127
+  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
   
   class _non_existent_ServerObject_Upcall_Command
     : public TAO::Upcall_Command
@@ -710,7 +710,7 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:393
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ss.cpp:393
 
 
 
@@ -760,7 +760,7 @@ namespace POA_ImplementationRepository
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:127
+  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
   
   class _get_component_ServerObject_Upcall_Command
     : public TAO::Upcall_Command
@@ -867,7 +867,7 @@ const char* POA_ImplementationRepository::ServerObject::_interface_repository_id
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:940
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ss.cpp:940
 
 void POA_ImplementationRepository::ServerObject::_dispatch (
     TAO_ServerRequest & req,
@@ -882,7 +882,7 @@ void POA_ImplementationRepository::ServerObject::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:891
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ss.cpp:891
 
 ImplementationRepository::ServerObject *
 POA_ImplementationRepository::ServerObject::_this (ACE_ENV_SINGLE_ARG_DECL)
