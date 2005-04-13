@@ -1,3 +1,9 @@
+Wed Apr 13 23:58:15 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-irix6.x-common.h:
+          Removed ACE_HAS_SETOWN definition. It is no longer
+          used in ACE/TAO code.
+
 Wed Apr 13 23:42:41 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-interix.h:
@@ -6,9 +12,9 @@ Wed Apr 13 23:42:41 2005  Olli Savia  <ops@iki.fi>
 
 Wed Apr 13 13:42:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Proactor_Impl.cpp:
+        * ace/Proactor_Impl.cpp:
 
-	  Only compile if system supports asynchronous I/O.
+          Only compile if system supports asynchronous I/O.
 
 Wed Apr 13 19:07:41 2005  Olli Savia  <ops@iki.fi>
 
