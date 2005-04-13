@@ -21,6 +21,7 @@
 #include "ace/Process_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
