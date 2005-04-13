@@ -106,6 +106,101 @@ Tue Apr 12 17:51:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           with an incorrect TCKind. Thanks to Ossama Othman
           <ossama@dre.vanderbilt.edu> for pointing out the oversight.
 
+Tue Apr 12 23:17:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Info.h:
+        * orbsvcs/ImplRepo_Service/Activator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Loader.h:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.h:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter.idl:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/ImR.xsd:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Iterator.cpp:
+        * orbsvcs/ImplRepo_Service/Iterator.h:
+        * orbsvcs/ImplRepo_Service/Locator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_NT_Service.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/README.txt:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/repository.xml:
+        * orbsvcs/ImplRepo_Service/tao_imr.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+
+          Many fixes and some minor new features in the ImR that eliminate 
+        most of the known bugs and design flaws.
+        
+          PER_CLIENT activation now works correctly as long as you don't use 
+        the IORTable in the servers.
+          
+          There is no mechanism to allow creation of a direct object reference even 
+        when -orbuseimr 1 is specified. In OCI TAO 1.4a we were simply able to
+        add this feature to the POA, but this appears to be much more difficult or
+        impossible given the new POA design. This means that use of an IORTable will
+        cost an extra level of indirection, and PER_CLIENT won't work correctly with
+        an IORTable. 
+        
+          Add new -n <name> option to Activator to allow specifying
+        the name for the activator. It still defaults to the hostname, but
+        this will allow us to test multiple Activators using a single machine.
+
+          Use a different timeout for the ping and shutdown operations, so that we
+        can wait much longer for shutdown. This allows the imr util to more often
+        rely on the fact that the server is really shutdown, making the tests easier
+        to write. Update the imr util to show a different message if the shutdown times out.
+
+          Cleanup of debug output for ImR and Activator.
+          
+          Update the help message for tao_imr ior to reflect that
+        you can use tao_imr ior poaname or tao_imr ior poaname/object_name.
+        
+          Renamed the Options class in the Activator to Activator_Options. We
+        think this may be causing runtime problems on Linux as the Activator
+        and Locator are dynamically loaded into the same process. Both
+        shared libraries had a class named Options. 
+
+        * orbsvcs/examples/ImR/Combined_Service/readme:
+        * orbsvcs/examples/ImR/Combined_Service/start_all.conf:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/ImplRepo/Nestea.idl:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+
 Tue Apr 12 21:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
