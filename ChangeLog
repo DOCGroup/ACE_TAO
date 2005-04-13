@@ -1,3 +1,10 @@
+﻿Wed Apr 13 14:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Reactor.cpp:
+	  Added call to close() to reactor implementation in destructor to
+          prevent problems with destruction of implementation instance when
+          created on the stack.
+
 Wed Apr 13 07:32:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Thread_Hook.h:
