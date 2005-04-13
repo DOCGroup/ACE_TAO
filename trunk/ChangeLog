@@ -1,3 +1,9 @@
+Thu Apr 14 00:03:12 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-rtems.h:
+          Removed ACE_HAS_PROCESS_ENUM definition. It is no longer
+          used in ACE/TAO code.
+
 Wed Apr 13 23:58:15 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-irix6.x-common.h:
