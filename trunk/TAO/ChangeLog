@@ -1,3 +1,9 @@
+Wed Apr 13 07:06:11 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CORBALOC_Parser.cpp:
+          Added an additional test for the valid condition of no key
+          separator at the end of the corbaloc string.
+
 Wed Apr 13 11:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Any/client.cpp:
