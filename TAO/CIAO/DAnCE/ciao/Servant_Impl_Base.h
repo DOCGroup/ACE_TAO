@@ -167,9 +167,9 @@ namespace CIAO
                                  ACE_ENV_ARG_DECL) = 0;
 
     // Creates and returns the StandardConfigurator for the component.
-    virtual Components::StandardConfigurator *get_standard_configurator (
-        ACE_ENV_SINGLE_ARG_DECL
-      );
+    virtual ::Components::StandardConfigurator_ptr 
+    get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Override that returns the (passed-in) default POA of our member
     /// component's container, to ensure that we get registered

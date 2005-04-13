@@ -98,6 +98,13 @@ namespace CIAO
                                     InstanceDeploymentDescription
                                     &instance);
 
+  void update_config_property (Deployment::
+                               SubcomponentInstantiationDescription
+                               &sub_instance,
+                               Deployment::
+                               InstanceDeploymentDescription
+                               &instance);
+
   void update_common_artifact_and_art_ref (Deployment::
                                            ImplementationArtifactDescription &pack_iad,
                                            REF_MAP &primary_ref_map,

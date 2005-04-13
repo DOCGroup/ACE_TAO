@@ -197,8 +197,9 @@ namespace CIAO
     //
     ART_REF_MAP art_ref_map;
 
-    CORBA::ULong pack_len = instance.package.length ();
+    update_config_property (instance, plan.instance[l]);
 
+    CORBA::ULong pack_len = instance.package.length ();
     for (CORBA::ULong m = 0; m < pack_len; ++m)
       {
         ComponentPackageDescription
@@ -364,6 +365,22 @@ namespace CIAO
   }
 
   void
+  update_config_property (SubcomponentInstantiationDescription &sub_instance,
+                          InstanceDeploymentDescription &instance)
+  {
+    CORBA::ULong pro_len =
+    sub_instance.configProperty.length ();
+
+    for (CORBA::ULong x = 0; x < pro_len; ++x)
+      {
+        CORBA::ULong ins_pro_len (instance.configProperty. length ());
+        instance.configProperty.length (ins_pro_len + 1);
+        instance.configProperty[ins_pro_len]
+          = sub_instance.configProperty[x];
+      }
+  }
+
+  void
   update_impl_config_property (PackagedComponentImplementation
                                &impl,
                                MonolithicDeploymentDescription
@@ -372,19 +389,35 @@ namespace CIAO
                                   InstanceDeploymentDescription
                                &instance)
   {
+    int update_flag;
     CORBA::ULong pro_len =
     impl.referencedImplementation.configProperty.length ();
 
     for (CORBA::ULong x = 0; x < pro_len; ++x)
       {
+        update_flag = 1;
         CORBA::ULong impl_pro_len (mid.execParameter.length ());
         mid.execParameter.length (impl_pro_len + 1);
         mid.execParameter[impl_pro_len]
           = impl.referencedImplementation.configProperty[x];
+        const char* property_name = 
+          impl.referencedImplementation.configProperty[x].name;
         CORBA::ULong ins_pro_len (instance.configProperty. length ());
-        instance.configProperty.length (ins_pro_len + 1);
-        instance.configProperty[ins_pro_len]
-          = impl.referencedImplementation.configProperty[x];
+        for (CORBA::ULong y = 0; y < ins_pro_len; ++y)
+          {
+            const char* ins_pro_name = instance.configProperty[y].name;
+            if (strcmp (ins_pro_name, property_name) == 0)
+              {
+                update_flag = 0;
+                break;
+              }
+          }
+        if (update_flag == 1)
+          {
+            instance.configProperty.length (ins_pro_len + 1);
+            instance.configProperty[ins_pro_len]
+              = impl.referencedImplementation.configProperty[x];
+          }
       }
   }
 

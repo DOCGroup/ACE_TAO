@@ -516,9 +516,9 @@ namespace CIAO
     return retval;
   }
 
-  Components::StandardConfigurator*
-  Servant_Impl_Base::get_standard_configurator (
-    ACE_ENV_SINGLE_ARG_DECL)
+  ::Components::StandardConfigurator_ptr 
+  Servant_Impl_Base::get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Create the configurator servant.
     StandardConfigurator_Impl *config_impl = 0;
