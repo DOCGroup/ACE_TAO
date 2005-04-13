@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+                           "Exception caught in server:");
       return 1;
     }
   ACE_ENDTRY;

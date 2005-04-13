@@ -1,3 +1,9 @@
+Wed Apr 13 11:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Any/client.cpp:
+        * tests/OBV/Any/server.cpp:
+          Print out whether exception is caught in the client or in the server
+
 Wed Apr 13 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableInterceptor.pidl:
