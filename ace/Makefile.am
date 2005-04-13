@@ -208,6 +208,7 @@ libACE_la_SOURCES = \
   Pipe.cpp \
   Priority_Reactor.cpp \
   Proactor.cpp \
+  Proactor_Impl.cpp \
   Process.cpp \
   Process_Manager.cpp \
   Process_Mutex.cpp \
