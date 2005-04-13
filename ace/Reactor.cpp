@@ -85,6 +85,7 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
 
 ACE_Reactor::~ACE_Reactor (void)
 {
+  this->implementation ()->close ();
   if (this->delete_implementation_)
     delete this->implementation ();
 }
