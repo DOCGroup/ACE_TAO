@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// .\be\be_codegen.cpp:291
 
 
 #include "PI_ForwardC.h"
@@ -42,7 +42,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// .\be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -71,7 +71,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -91,7 +91,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -111,7 +111,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -131,7 +131,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -151,7 +151,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -166,6 +166,46 @@ namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_AdapterState =
     &_tao_tc_PortableInterceptor_AdapterState;
+}
+
+
+
+// TAO_IDL - Generated from
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
+
+static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_PortableInterceptor_SlotId (
+    "IDL:omg.org/PortableInterceptor/SlotId:1.0",
+    "SlotId",
+    &CORBA::_tc_ulong);
+  
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr const _tc_SlotId =
+    &_tao_tc_PortableInterceptor_SlotId;
+}
+
+
+
+// TAO_IDL - Generated from
+// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/alias_typecode.cpp:31
+
+static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_PortableInterceptor_ReplyStatus (
+    "IDL:omg.org/PortableInterceptor/ReplyStatus:1.0",
+    "ReplyStatus",
+    &CORBA::_tc_short);
+  
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr const _tc_ReplyStatus =
+    &_tao_tc_PortableInterceptor_ReplyStatus;
 }
 
 
