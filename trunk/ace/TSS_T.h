@@ -33,7 +33,7 @@
 # else
 #   define ACE_TSS_TYPE(T) T
 #   define ACE_TSS_GET(I, T) (I)
-# endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
+# endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 
 #include "ace/Thread_Mutex.h"
 

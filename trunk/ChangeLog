@@ -1,60 +1,85 @@
-﻿Wed Apr 13 14:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+Wed Apr 13 19:07:41 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_time.inl:
+          Handle broken prototype of clock_settime() by adding
+          const_cast if ACE_HAS_NONCONST_CLOCK_SETTIME is defined.
+
+        * ace/OS_NS_unistd.inl:
+          Fixed wrong comment and removed commented out code.
+        
+        * ace/README:
+          Documented new macros ACE_HAS_NONCONST_CLOCK_SETTIME
+          and ACE_LACKS_SCANDIR_PROTOTYPE.
+        
+        * ace/TSS_T.h:
+          Fixed wrong comment.
+
+        * ace/config-lynxos.h:
+          Added new defines ACE_HAS_NONCONST_CLOCK_SETTIME,
+          ACE_HAS_SCANDIR, ACE_LACKS_SCANDIR_PROTOTYPE and
+          ACE_SCANDIR_CMP_USES_VOIDPTR.
+        
+        * ace/os_include/os_dirent.h:
+          Declare scandir() prototype if ACE_LACKS_SCANDIR_PROTOTYPE
+          is defined.
+        
+Wed Apr 13 14:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Reactor.cpp:
-	  Added call to close() to reactor implementation in destructor to
+          Added call to close() to reactor implementation in destructor to
           prevent problems with destruction of implementation instance when
           created on the stack.
 
 Wed Apr 13 07:32:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Thread_Hook.h:
-	* ace/Thread_Hook.cpp:
+        * ace/Thread_Hook.h:
+        * ace/Thread_Hook.cpp:
 
-	  Move ACE_Thread_Hook destructor out of line so it's not compiled
-	  and included in each translation unit that includes Thread_Hook.h.
+          Move ACE_Thread_Hook destructor out of line so it's not compiled
+          and included in each translation unit that includes Thread_Hook.h.
 
 Wed Apr 13 07:27:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
 
-	  Move ACE_Char_Codeset_Translator destructor out of line so it is
-	  not compiled and included in each translation unit that includes
-	  CDR_Stream.h.
+          Move ACE_Char_Codeset_Translator destructor out of line so it is
+          not compiled and included in each translation unit that includes
+          CDR_Stream.h.
 
 Wed Apr 13 07:20:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Add Proactor_Impl.cpp to list of source files.
+          Add Proactor_Impl.cpp to list of source files.
 
-	* ace/Proactor_Impl.h:
-	* ace/Proactor_Impl.cpp:
+        * ace/Proactor_Impl.h:
+        * ace/Proactor_Impl.cpp:
 
-	  Move ACE_Proactor_Impl destructor out of line into new file
-	  Proactor_Impl.cpp so it's not compiled and included in each
-	  translation unit that includes Proactor_Impl.h.
+          Move ACE_Proactor_Impl destructor out of line into new file
+          Proactor_Impl.cpp so it's not compiled and included in each
+          translation unit that includes Proactor_Impl.h.
 
 Tue Apr 12 19:30:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Add Reactor_Impl.cpp to list of source files.
+          Add Reactor_Impl.cpp to list of source files.
 
-	* ace/Reactor_Impl.h:
-	* ace/Reactor_Impl.cpp:
+        * ace/Reactor_Impl.h:
+        * ace/Reactor_Impl.cpp:
 
-	  Move ACE_Reactor_Impl destructor out of line into new file
-	  Reactor_Impl.cpp so it's not compiled and included in each
-	  translation unit that includes Reactor_Impl.h.
+          Move ACE_Reactor_Impl destructor out of line into new file
+          Reactor_Impl.cpp so it's not compiled and included in each
+          translation unit that includes Reactor_Impl.h.
 
 Tue Apr 12 16:44:19 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Protocol.h:
 
-	  Got rid of the "might be used uninitialized" warnings.
+          Got rid of the "might be used uninitialized" warnings.
 
 Tue Apr 12 09:17:34 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -65,7 +90,7 @@ Tue Apr 12 09:17:34 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 Tue Apr 12 13:11:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
-	  Enhanced functionality for controlling kernel reboot.
+          Enhanced functionality for controlling kernel reboot.
 
 Tue Apr 12 07:53:39 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 

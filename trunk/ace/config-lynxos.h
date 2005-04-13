@@ -23,7 +23,7 @@
 #endif /* __GNUG__ */
 
 #if ACE_LYNXOS_MAJOR > 3 || (ACE_LYNXOS_MAJOR == 3 && ACE_LYNXOS_MINOR > 0)
-  // LynxOS 3.1.0 or greater need ipc_1c.h to be included before net/if.h
+  // LynxOS 3.1.0 or greater needs ipc_1c.h to be included before net/if.h
   // to avoid macro conflict.
 # define ACE_NEEDS_IPC_1C_H
 #endif /* ACE_LYNXOS_MAJOR */
@@ -57,6 +57,7 @@
 #define ACE_HAS_LYNXOS_SIGNALS
 #define ACE_HAS_MEMCHR
 #define ACE_HAS_MSG
+#define ACE_HAS_NONCONST_CLOCK_SETTIME
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_MSGSND
 #define ACE_HAS_NONCONST_READV
@@ -68,6 +69,7 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+#define ACE_HAS_SCANDIR
 #define ACE_HAS_SEMUN
 #define ACE_HAS_SHM_OPEN
 #define ACE_HAS_SIGINFO_T
@@ -95,6 +97,7 @@
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_RWLOCK_T
+#define ACE_LACKS_SCANDIR_PROTOTYPE
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
@@ -109,6 +112,8 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_WCHAR_H
 #define ACE_MALLOC_ALIGN 8
+#define ACE_SCANDIR_CMP_USES_VOIDPTR
+
 // Don't use MAP_FIXED, at least for now.
 #define ACE_MAP_FIXED 0
 // LynxOS, through 3.0.0, does not support MAP_PRIVATE, so map it to

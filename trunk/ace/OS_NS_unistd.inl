@@ -158,8 +158,6 @@ ACE_OS::rmdir (const char *path)
   phile_path = (char *) ACE_OS::malloc (strlen (path));
   if (phile_path == 0)
     {
-//       ACE_OS::printf ("malloc in remove_dir failed: [%X]\n",
-//                       errno);
       return -1;
     }
   else
@@ -192,7 +190,7 @@ ACE_OS::rmdir (const char *path)
                         int, -1);
 #else
   ACE_OSCALL_RETURN (::rmdir (path), int, -1);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_PSOS_LACKS_PHILE */
 }
 
 #if defined (ACE_HAS_WCHAR)
