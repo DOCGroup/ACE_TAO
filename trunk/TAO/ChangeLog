@@ -1,3 +1,13 @@
+Wed Apr 13 11:01:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Valuetype/ValueBase.cpp:
+	* tao/Valuetype/ValueBase.h:
+
+	  Removed CORBA::_tc_Visiblity TypeCode.  It is already defined in
+	  tao/VisibilityC.h and tao/VisibilityA.cpp.  It stays in the core
+	  TAO library avoid introducing an IFR_Client library dependency
+	  on the Valuetype library.
+
 Wed Apr 13 09:47:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp

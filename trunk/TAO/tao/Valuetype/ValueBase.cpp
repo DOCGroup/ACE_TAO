@@ -358,14 +358,6 @@ namespace TAO
     Alias<char const *,
           CORBA::TypeCode_ptr const *,
           CORBA::tk_alias,
-          TAO::Null_RefCount_Policy> tc_Visibility (
-     "IDL:omg.org/CORBA/Visibility:1.0",
-     "Visibility",
-     &CORBA::_tc_short);
-
-    Alias<char const *,
-          CORBA::TypeCode_ptr const *,
-          CORBA::tk_alias,
           TAO::Null_RefCount_Policy> tc_ValueModifier (
      "IDL:omg.org/CORBA/ValueModifier:1.0",
      "ValueModifier",
@@ -377,7 +369,6 @@ namespace CORBA
 {
   TypeCode_ptr const _tc_ValueBase     = &TAO::TypeCode::tc_ValueBase;
   TypeCode_ptr const _tc_EventBase     = &TAO::TypeCode::tc_EventBase;
-  TypeCode_ptr const _tc_Visibility    = &TAO::TypeCode::tc_Visibility;
   TypeCode_ptr const _tc_ValueModifier = &TAO::TypeCode::tc_ValueModifier;
 }
 
