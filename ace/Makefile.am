@@ -217,6 +217,7 @@ libACE_la_SOURCES = \
   RW_Process_Mutex.cpp \
   RW_Thread_Mutex.cpp \
   Reactor.cpp \
+  Reactor_Impl.cpp \
   Reactor_Notification_Strategy.cpp \
   Read_Buffer.cpp \
   Recursive_Thread_Mutex.cpp \
