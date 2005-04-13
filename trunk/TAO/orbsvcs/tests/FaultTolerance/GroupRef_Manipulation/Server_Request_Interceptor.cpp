@@ -124,7 +124,7 @@ Server_Request_Interceptor::receive_request (
       this->forward_request_thrown_ = true;
 
       // Throw forward exception
-      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[1], 0));
+      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[1]));
     }
 
   if (this->forward_request_thrown_ == true)
