@@ -69,7 +69,7 @@ namespace TAO
                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  ()
+      CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  (), false
                                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 

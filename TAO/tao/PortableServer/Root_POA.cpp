@@ -752,7 +752,7 @@ TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  return this->id_to_reference_i (oid ACE_ENV_ARG_PARAMETER);
+  return this->id_to_reference_i (oid, true ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -1625,14 +1625,15 @@ TAO_Root_POA::user_id_to_servant_i (const PortableServer::ObjectId &id
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::id_to_reference_i (const PortableServer::ObjectId &id
+TAO_Root_POA::id_to_reference_i (const PortableServer::ObjectId &id,
+                                 bool indirect
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
-    id_to_reference (id ACE_ENV_ARG_PARAMETER);
+    id_to_reference (id, indirect ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::OctetSeq *
@@ -2031,7 +2032,8 @@ TAO_Root_POA::invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL)
                               this->key_to_object_params_.type_id_,
                               this->key_to_object_params_.servant_,
                               this->key_to_object_params_.collocated_,
-                              this->key_to_object_params_.priority_
+                              this->key_to_object_params_.priority_,
+                              this->key_to_object_params_.indirect_
                               ACE_ENV_ARG_PARAMETER);
 }
 
@@ -2040,7 +2042,8 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
                              const char *type_id,
                              TAO_ServantBase *servant,
                              CORBA::Boolean collocated,
-                             CORBA::Short priority
+                             CORBA::Short priority,
+                             bool indirect
                              ACE_ENV_ARG_DECL)
 {
   // Check if the ORB is still running, otherwise throw an exception.
@@ -2056,7 +2059,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  if (this->active_policy_strategies_.lifespan_strategy()->use_imr ())
+  if (indirect && this->active_policy_strategies_.lifespan_strategy()->use_imr ())
     {
       // Check to see if we alter the IOR.
       CORBA::Object_var imr =
@@ -2722,13 +2725,15 @@ TAO_Root_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id
                                          const char *type_id,
                                          TAO_ServantBase *servant,
                                          CORBA::Boolean collocated,
-                                         CORBA::Short priority)
+                                         CORBA::Short priority,
+                                         bool indirect)
 {
   this->system_id_ = &system_id;
   this->type_id_ = type_id;
   this->servant_ = servant;
   this->collocated_ = collocated;
   this->priority_ = priority;
+  this->indirect_ = indirect;
 }
 
 CORBA::ULong
