@@ -970,7 +970,7 @@ private:
 class ACE_Export ACE_Char_Codeset_Translator
 {
 public:
-  virtual ~ACE_Char_Codeset_Translator () {};
+  virtual ~ACE_Char_Codeset_Translator ();
 
   /// Read a single character from the stream, converting from the
   /// stream codeset to the native codeset
