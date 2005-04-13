@@ -90,7 +90,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
   // Use a persistent POA so that any IOR
   this->imr_poa_ = createPersistentPOA(this->root_poa_.in(),
     "ImplRepo_Service" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
   ACE_ASSERT(! CORBA::is_nil(this->imr_poa_.in()));
 
   waiter_svt_.debug(debug_ > 1);
@@ -372,32 +372,32 @@ ImR_Locator_i::unregister_activator_i(const char* aname)
 
 
 void
-ImR_Locator_i::notify_child_death (const char* name)
-                  ACE_THROW_SPEC ((CORBA::SystemException))
+ImR_Locator_i::notify_child_death (const char* name ACE_ENV_ARG_DECL_NOT_USED)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT(name != 0);
 
   if (this->debug_ > 1)
     ACE_DEBUG((LM_DEBUG,
-               "ImR: Server has died <%s>.\n",
-               name));
+    "ImR: Server has died <%s>.\n",
+    name));
 
   Server_Info_Ptr info = this->repository_.get_server(name);
   if (! info.null())
-    {
-      info->ior = "";
-      info->partial_ior = "";
+  {
+    info->ior = "";
+    info->partial_ior = "";
 
-      int err = this->repository_.update_server(*info);
-      ACE_ASSERT(err == 0);
-      ACE_UNUSED_ARG(err);
-    }
+    int err = this->repository_.update_server(*info);
+    ACE_ASSERT(err == 0);
+    ACE_UNUSED_ARG(err);
+  }
   else
-    {
-      if (this->debug_ > 1)
-        ACE_DEBUG((LM_DEBUG,
-                   "ImR: Failed to find server in repository.\n"));
-    }
+  {
+    if (this->debug_ > 1)
+      ACE_DEBUG((LM_DEBUG,
+      "ImR: Failed to find server in repository.\n"));
+  }
 }
 
 void
@@ -487,7 +487,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       {
         ACE_DEBUG((LM_DEBUG,
           "ImR: Cannot Activate <%s>.\n", info.name.c_str()));
-    }
+      }
 
       waiter_svt_.unblock_all(info.name.c_str());
 
@@ -497,7 +497,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
     // Note : We already updated info with StartupInfo in server_is_running()
     ImplementationRepository::StartupInfo_var si =
-    start_server(info, manual_start ACE_ENV_ARG_PARAMETER);
+      start_server(info, manual_start ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
   }
 }
@@ -553,16 +553,16 @@ ACE_THROW_SPEC ((CORBA::SystemException,
   {
     if (debug_ > 0)
       ACE_DEBUG((LM_DEBUG, "ImR: Cannot start server <%s>. ActivationMode=MANUAL\n", info.name.c_str()));
-    ACE_THROW(ImplementationRepository::CannotActivate
-      (CORBA::string_dup ("Cannot implicitly activate MANUAL server.")));
+    ACE_THROW_RETURN(ImplementationRepository::CannotActivate
+      (CORBA::string_dup ("Cannot implicitly activate MANUAL server.")), 0);
   }
   if (info.cmdline.length() == 0)
   {
     if (debug_ > 0)
       ACE_DEBUG((LM_DEBUG, "ImR: Cannot start server <%s>."
-        " No command line.\n", info.name.c_str()));
-    ACE_THROW(ImplementationRepository::CannotActivate
-      (CORBA::string_dup ("No command line registered for server.")));
+      " No command line.\n", info.name.c_str()));
+    ACE_THROW_RETURN(ImplementationRepository::CannotActivate
+      (CORBA::string_dup ("No command line registered for server.")), 0);
   }
 
   Activator_Info_Ptr ainfo = get_activator(info.activator);
@@ -571,9 +571,9 @@ ACE_THROW_SPEC ((CORBA::SystemException,
   {
     if (debug_ > 0)
       ACE_DEBUG((LM_DEBUG, "ImR: Cannot start server <%s>. "
-        "Activator <%s> not found.\n", info.name.c_str(), info.activator.c_str()));
-    ACE_THROW(ImplementationRepository::CannotActivate
-      (CORBA::string_dup ("No activator registered for server.")));
+      "Activator <%s> not found.\n", info.name.c_str(), info.activator.c_str()));
+    ACE_THROW_RETURN(ImplementationRepository::CannotActivate
+      (CORBA::string_dup ("No activator registered for server.")), 0);
   }
 
   ACE_TRY
@@ -585,18 +585,18 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       info.starting = true;
       ++info.start_count;
       ACE_ASSERT(info.start_count <= info.start_limit);
-  if (this->debug_ > 0)
-  {
+      if (this->debug_ > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "ImR: Starting server <%s>. Attempt %d/%d.\n",
-      info.name.c_str(), info.start_count, info.start_limit));
-  }
-    ainfo->activator->start_server(
-      info.name.c_str(),
-      info.cmdline.c_str(),
-      info.dir.c_str(),
-      info.env_vars
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+          info.name.c_str(), info.start_count, info.start_limit));
+      }
+      ainfo->activator->start_server(
+        info.name.c_str(),
+        info.cmdline.c_str(),
+        info.dir.c_str(),
+        info.env_vars
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
 
     if (info.partial_ior.length() == 0)
@@ -633,32 +633,32 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     // the AsyncStartupWaiter manages to return. In fact, when the ImR is very busy
     // this is the most likely code path.
     if (info.partial_ior.length() == 0)
-  {
-    if (debug_ > 0)
+    {
+      if (debug_ > 0)
         ACE_DEBUG((LM_DEBUG, "ImR : Timeout waiting for <%s> to start.\n", info.name.c_str()));
-    info.reset();
+      info.reset();
+    }
   }
-}
   ACE_CATCH(ImplementationRepository::CannotActivate, ex)
-{
+  {
     -- info.waiting_clients;
     info.starting = false;
     info.reset();
     if (debug_ > 0)
       ACE_DEBUG((LM_DEBUG, "ImR: Activator cannot start <%s>.\n", info.name.c_str()));
-    }
-    ACE_CATCHANY
-    {
+  }
+  ACE_CATCHANY
+  {
     -- info.waiting_clients;
     info.starting = false;
-      if (debug_ > 0)
+    if (debug_ > 0)
       ACE_DEBUG((LM_DEBUG, "ImR: Unexpected exception while starting <%s>.\n", info.name.c_str()));
-      if (debug_ > 1)
+    if (debug_ > 1)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
-      ainfo->reset();
+    ainfo->reset();
     info.reset();
-    }
-    ACE_ENDTRY;
+  }
+  ACE_ENDTRY;
   return 0; // This is not a corba call, so a zero should be ok
 }
 
@@ -962,13 +962,13 @@ ImR_Locator_i::server_is_running (const char* name,
   else
   {
     if (info->activation_mode != ImplementationRepository::PER_CLIENT) {
-    info->ior = ior.in();
-    info->partial_ior = partial_ior;
+      info->ior = ior.in();
+      info->partial_ior = partial_ior;
       info->server = ImplementationRepository::ServerObject::_nil(); // Will connect at first access
 
-    int err = this->repository_.update_server(*info);
-    ACE_ASSERT(err == 0);
-    ACE_UNUSED_ARG(err);
+      int err = this->repository_.update_server(*info);
+      ACE_ASSERT(err == 0);
+      ACE_UNUSED_ARG(err);
 
       waiter_svt_.unblock_one(name, partial_ior, ior.in(), false);
     } else {
@@ -1273,8 +1273,8 @@ ImR_Locator_i::is_alive(Server_Info& info)
     if (PING_RETRY_SCHEDULE[i] > 0)
     {
       ACE_Time_Value tv(0, PING_RETRY_SCHEDULE[i] * 1000);
-    this->orb_->run(tv);
-  }
+      this->orb_->run(tv);
+    }
   }
   if (debug_ > 0)
   {
@@ -1391,8 +1391,8 @@ ImR_Locator_i::is_alive_i(Server_Info& info)
         }
       }
       return -1; // We keep trying to ping, because returning 1 now, would just lead
-                 // to clients getting the same exception. If we can't ping after several
-                 // attempts, then we'll give up and return 1, letting the client worry about it.
+      // to clients getting the same exception. If we can't ping after several
+      // attempts, then we'll give up and return 1, letting the client worry about it.
     default:
       {
         if (debug_ > 1)
@@ -1400,7 +1400,7 @@ ImR_Locator_i::is_alive_i(Server_Info& info)
           ACE_DEBUG((LM_DEBUG,
             "ImR: <%s> Unknown Local TRANSIENT. alive=false.\n", info.name.c_str()));
         }
-      info.last_ping = ACE_Time_Value::zero;
+        info.last_ping = ACE_Time_Value::zero;
       }
       return 0;
     }
@@ -1410,12 +1410,12 @@ ImR_Locator_i::is_alive_i(Server_Info& info)
     if (debug_ > 1)
     {
       ACE_DEBUG((LM_DEBUG,
-      "ImR: <%s> Ping timed out. alive=true.\n", info.name.c_str()));
+        "ImR: <%s> Ping timed out. alive=true.\n", info.name.c_str()));
     }
     return 1; // This is "alive" as far as we're concerned. Presumably the client
-              // will have a less stringent timeout policy, or will want to know
-              // about the timeout. In any case, we're only guaranteeing that the
-              // server is alive, not that it's responsive.
+    // will have a less stringent timeout policy, or will want to know
+    // about the timeout. In any case, we're only guaranteeing that the
+    // server is alive, not that it's responsive.
   }
   ACE_CATCHANY
   {
