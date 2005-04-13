@@ -125,7 +125,7 @@ class ACE_Export ACE_Reactor_Impl
 {
 public:
   /// Close down and release all resources.
-  virtual ~ACE_Reactor_Impl (void) {}
+  virtual ~ACE_Reactor_Impl (void);
 
   /// Initialization.
   virtual int open (size_t size,

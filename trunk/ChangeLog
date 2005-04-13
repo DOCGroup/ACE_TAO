@@ -1,3 +1,17 @@
+Tue Apr 12 19:30:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+	* ace/ace.mpc:
+
+	  Add Reactor_Impl.cpp to list of source files.
+
+	* ace/Reactor_Impl.h:
+	* ace/Reactor_Impl.cpp:
+
+	  Move ACE_Reactor_Impl destructor out of line into new file
+	  Reactor_Impl.cpp so it's not compiled and included in each
+	  translation unit that includes Reactor_Impl.h.
+
 Tue Apr 12 16:44:19 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Protocol.h:

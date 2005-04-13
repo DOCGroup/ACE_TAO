@@ -192,6 +192,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Process_Semaphore.cpp
     Profile_Timer.cpp
     Reactor.cpp
+    Reactor_Impl.cpp
     Reactor_Notification_Strategy.cpp
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
