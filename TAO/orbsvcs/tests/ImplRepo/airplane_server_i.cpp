@@ -5,6 +5,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/ImR_Client/ImR_Client.h"
 #include "tao/debug.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
@@ -151,9 +152,15 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       CORBA::String_var ior =
         this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", ior.in ()));
+
+      TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(airplane_poa_.in());
+      server_obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::String_var direct_ior =
+        this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
@@ -163,7 +170,7 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
         IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
-      adapter->bind (poa_name, ior.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind (poa_name, direct_ior.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
       // Make sure the POA manager is activated.

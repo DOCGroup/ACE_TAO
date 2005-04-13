@@ -1,3 +1,29 @@
+Wed Apr 13 19:51:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * TAO/orbsvcs/examples/ImR/Combined_Service/dynserver.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/test_server.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+        * TAO/tao/ImR_Client/ImR_Client.cpp:
+        * TAO/tao/PortableServer/Root_POA.cpp:
+        * TAO/tao/PortableServer/Root_POA.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategy.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:
+        
+          Add the ability to specify whether you want an indirect object
+        reference when calling TAO_Root_POA::id_to_reference_i(). This is 
+        required for efficient and correct use of an IORTable with the ImR.
+        No new methods whatsoever were added to support this feature. Instead, 
+        I just had to add the additional bool parameter to several places. Therefore
+        I expect the footprint impact to be minimal. 
+        
+          Updated all ImR tests and examples that use an IORTable, to bind
+        a direct object reference by specifying id_to_reference(id.in(), false)
+
 Wed Apr 13 11:47:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Utils/Server_Main.cpp:
