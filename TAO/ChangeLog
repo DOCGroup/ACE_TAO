@@ -1,3 +1,72 @@
+Wed Apr 13 12:32:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Alias_TypeCode.cpp:
+	* tao/Alias_TypeCode.h:
+	* tao/Alias_TypeCode.inl:
+	* tao/Empty_Param_TypeCode.cpp:
+	* tao/Empty_Param_TypeCode.h:
+	* tao/Empty_Param_TypeCode.inl:
+	* tao/Enum_TypeCode.cpp:
+	* tao/Enum_TypeCode.h:
+	* tao/Enum_TypeCode.inl:
+	* tao/Fixed_TypeCode.cpp:
+	* tao/Fixed_TypeCode.h:
+	* tao/Fixed_TypeCode.inl:
+	* tao/Sequence_TypeCode.cpp:
+	* tao/Sequence_TypeCode.h:
+	* tao/Sequence_TypeCode.inl:
+	* tao/String_TypeCode.cpp:
+	* tao/String_TypeCode.h:
+	* tao/String_TypeCode.inl:
+	* tao/Struct_TypeCode.cpp:
+	* tao/Struct_TypeCode.h:
+	* tao/Struct_TypeCode.inl:
+	* tao/Union_TypeCode.cpp:
+	* tao/Union_TypeCode.h:
+	* tao/Union_TypeCode.inl:
+	* tao/Value_TypeCode.cpp:
+	* tao/Value_TypeCode.h:
+	* tao/Value_TypeCode.inl:
+
+	  Initialize CORBA::TypeCode() base class with the appropriate
+	  CORBA::TCKind argument.
+
+	  Removed kind_i() virtual method.  It is no longer needed.
+
+	* tao/Objref_TypeCode.cpp:
+	* tao/Objref_TypeCode.h:
+	* tao/Objref_TypeCode.inl:
+	* tao/Objref_TypeCode_Base.cpp:
+	* tao/Objref_TypeCode_Base.h:
+	* tao/Objref_TypeCode_Base.inl:
+
+	  Factored common tk_{abstract_interface, component,
+	  local_interface, native, objref} TypeCode code to a base class.
+	  Only the create_compact_typecode_i() method is type-specific.
+
+	* tao/TypeCode.h:
+	* tao/TypeCode.inl:
+
+	  Added new protected "kind_" attribute.  All TypeCodes have this
+	  attribute so just store it in the CORBA::TypeCode base class.
+
+	  Removed "kind_i()" virtual method.  It is no longer needed.
+
+	* tao/SystemException.cpp:
+	* tao/SystemExceptionA.cpp:
+	* tao/TypeCode.cpp:
+	* tao/TypeCodeA.cpp:
+
+	  Moved exception TypeCode/Any related code to a seperate file to
+	  reduce footprint for applications that don't use exception
+	  TypeCodes or related Any operators.
+
+	* tao/Makefile.am:
+	* tao/tao.mpc:
+
+	  Added new TypeCodeA.cpp and SystemExceptionA.cpp sources to the
+	  appropriate source file list.
+
 Wed Apr 13 19:51:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/orbsvcs/examples/ImR/Combined_Service/dynserver.cpp:
