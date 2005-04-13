@@ -148,11 +148,8 @@ TAO_ORBInitInfo::register_initial_reference (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (id == 0)
+  if (id == 0 || ACE_OS::strlen (id) == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
-  else if (ACE_OS::strlen (id) == 0)
-    ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
-
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
@@ -170,10 +167,7 @@ TAO_ORBInitInfo::resolve_initial_references (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  if (id == 0)
-    ACE_THROW_RETURN (PortableInterceptor::ORBInitInfo::InvalidName (),
-                      CORBA::Object::_nil ());
-  else if (ACE_OS::strlen (id) == 0)
+  if (id == 0 || ACE_OS::strlen (id) == 0)
     ACE_THROW_RETURN (PortableInterceptor::ORBInitInfo::InvalidName (),
                       CORBA::Object::_nil ());
 
