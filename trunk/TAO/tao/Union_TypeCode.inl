@@ -2,9 +2,6 @@
 //
 // $Id$
 
-#include "ace/Auto_Ptr.h"
-
-
 template <typename StringType,
           typename TypeCodeType,
           class CaseArrayType,
@@ -20,7 +17,9 @@ TAO::TypeCode::Union<StringType,
   CaseArrayType const & cases,
   CORBA::ULong ncases,
   CORBA::Long default_index)
-  : base_attributes_ (id, name)
+  : CORBA::TypeCode (CORBA::tk_union)
+  , RefCountPolicy ()
+  , base_attributes_ (id, name)
   , discriminant_type_ (discriminant_type)
   , default_index_ (default_index)
   , ncases_ (ncases)

@@ -243,6 +243,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Synch_Refcountable.cpp
     Synch_Reply_Dispatcher.cpp
     SystemException.cpp
+    SystemExceptionA.cpp
     Tagged_Components.cpp
     Tagged_Profile.cpp
     TAO_Internal.cpp
@@ -266,6 +267,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     True_RefCount_Policy.cpp
     TSS_Resources.cpp
     TypeCode.cpp
+    TypeCodeA.cpp
     Typecode_typesC.cpp
     TypeCode_Constants.cpp
     TypeCodeFactory_Adapter.cpp
@@ -496,6 +498,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_Ref_Table.h
     Object_T.h
     Objref_TypeCode.h
+    Objref_TypeCode_Base.h
     Objref_VarOut_T.h
     OctetSeqC.h
     OctetSeqS.h
@@ -664,6 +667,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Connector_Impl.cpp
     Fixed_TypeCode.cpp
     Objref_TypeCode.cpp
+    Objref_TypeCode_Base.cpp
     Sequence_TypeCode.cpp
     String_TypeCode.cpp
     Struct_TypeCode.cpp

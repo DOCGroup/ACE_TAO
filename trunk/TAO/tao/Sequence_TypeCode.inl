@@ -8,7 +8,8 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::Sequence (
   CORBA::TCKind kind,
   TypeCodeType const & content_type,
   CORBA::ULong length)
-  : kind_ (kind)
+  : CORBA::TypeCode (kind)
+  , RefCountPolicy ()
   , content_type_ (content_type)
   , length_ (length)
 {

@@ -1,4 +1,4 @@
-Wed Apr 13 12:32:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Wed Apr 13 12:45:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Alias_TypeCode.cpp:
 	* tao/Alias_TypeCode.h:
@@ -82,14 +82,14 @@ Wed Apr 13 19:51:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
         * TAO/tao/PortableServer/ServantRetentionStrategyNonRetain.h:
         * TAO/tao/PortableServer/ServantRetentionStrategyRetain.cpp:
         * TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:
-        
+
           Add the ability to specify whether you want an indirect object
-        reference when calling TAO_Root_POA::id_to_reference_i(). This is 
+        reference when calling TAO_Root_POA::id_to_reference_i(). This is
         required for efficient and correct use of an IORTable with the ImR.
-        No new methods whatsoever were added to support this feature. Instead, 
+        No new methods whatsoever were added to support this feature. Instead,
         I just had to add the additional bool parameter to several places. Therefore
-        I expect the footprint impact to be minimal. 
-        
+        I expect the footprint impact to be minimal.
+
           Updated all ImR tests and examples that use an IORTable, to bind
         a direct object reference by specifying id_to_reference(id.in(), false)
 

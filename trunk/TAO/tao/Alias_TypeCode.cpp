@@ -143,20 +143,6 @@ template<typename StringType,
          typename TypeCodeType,
          CORBA::TCKind Kind,
          class RefCountPolicy>
-CORBA::TCKind
-TAO::TypeCode::Alias<StringType,
-                     TypeCodeType,
-                     Kind,
-                     RefCountPolicy>::kind_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
-{
-  return Kind;
-}
-
-template<typename StringType,
-         typename TypeCodeType,
-         CORBA::TCKind Kind,
-         class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,

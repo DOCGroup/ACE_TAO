@@ -67,12 +67,6 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc
   return 1;
 }
 
-CORBA::TCKind
-TAO::TypeCode::Empty_Param::kind_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
-{
-  return this->kind_;
-}
-
 CORBA::TypeCode_ptr
 TAO::TypeCode::Empty_Param::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const

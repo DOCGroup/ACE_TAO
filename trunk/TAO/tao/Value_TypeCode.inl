@@ -19,7 +19,8 @@ TAO::TypeCode::Value<StringType,
   TypeCodeType const & concrete_base,
   FieldArrayType const & fields,
   CORBA::ULong nfields)
-  : kind_ (kind)
+  : CORBA::TypeCode (kind)
+  , RefCountPolicy ()
   , base_attributes_ (id, name)
   , type_modifier_ (modifier)
   , concrete_base_ (concrete_base)

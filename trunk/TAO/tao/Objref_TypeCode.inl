@@ -9,7 +9,6 @@ TAO::TypeCode::Objref<StringType,
                       Kind,
                       RefCountPolicy>::Objref (char const * id,
                                                char const * name)
-  : RefCountPolicy (),
-    attributes_ (id, name)
+  : Objref_Base<StringType, RefCountPolicy> (Kind, id, name)
 {
 }
