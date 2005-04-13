@@ -1,3 +1,10 @@
+Wed Apr 13 08:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+          Don't try to pass the permanent flag to the ForwardRequest exception,
+          this is not in the spec but also this flag is not used at all
+          in any of the code
+
 Wed Apr 13 08:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
