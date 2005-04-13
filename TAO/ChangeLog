@@ -1,3 +1,32 @@
+Wed Apr 13 16:22:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        
+          Cleanup output messages.
+          
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        
+          Fix tests not to activate the poa manager until the server
+        is ready to accept incoming requests.
+        
+        * TAO/tao/ImR_Client/ServerObject.pidl:
+        * TAO/tao/ImR_Client/ServerObjectA.cpp:
+        * TAO/tao/ImR_Client/ServerObjectC.cpp:
+        * TAO/tao/ImR_Client/ServerObjectC.h:
+        * TAO/tao/ImR_Client/ServerObjectC.inl:
+        * TAO/tao/ImR_Client/ServerObjectS.cpp:
+        * TAO/tao/ImR_Client/ServerObjectS.h:
+        * TAO/tao/ImR_Client/ServerObject_i.cpp:
+        
+          Change the ServerObject::shutdown operation to a oneway to prevent
+        the need for a reply during shutdown. 
+          Changed the ServerObject::shutdown to first destroy the root poa, so 
+        that all registered child poas can notify the ImR that they are shutting
+        down. (From the ImR's perspective each child POA is a separate registered
+        server.)
+
 Wed Apr 13 14:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORBInitInfo.cpp:
@@ -185,6 +214,13 @@ Tue Apr 12 23:17:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
         think this may be causing runtime problems on Linux as the Activator
         and Locator are dynamically loaded into the same process. Both
         shared libraries had a class named Options. 
+        
+          Added the ability for the ImR Activator to cleanup spawned processes and
+        notify the ImR of process death on unix. The code should be platform
+        independent, but ACE_Process_Manager doesn't seem to work on Windows for 
+        this purpose. A new -l option enables the ImR notification which is disabled
+        by default. Thanks to Konstantinos Lykiardopoulos <klyk@intracom.gr> for the
+        initial version of this code. 
 
         * orbsvcs/examples/ImR/Combined_Service/readme:
         * orbsvcs/examples/ImR/Combined_Service/start_all.conf:
