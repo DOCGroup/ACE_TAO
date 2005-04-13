@@ -105,6 +105,13 @@ typedef DIR ACE_DIR;
 # undef rewinddir
 #endif /* rewinddir */
 
+#if defined (ACE_LACKS_SCANDIR_PROTOTYPE)
+int scandir (const char *,
+             struct dirent ***,
+             int (*) (const struct dirent *),
+             int (*) (const void *, const void *));
+#endif /* ACE_LACKS_SCANDIR_PROTOTYPE */
+    
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

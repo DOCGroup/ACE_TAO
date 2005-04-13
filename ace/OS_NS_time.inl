@@ -81,12 +81,16 @@ ACE_INLINE int
 ACE_OS::clock_settime (clockid_t clockid, const struct timespec *ts)
 {
 #if defined (ACE_HAS_CLOCK_SETTIME)
+#  if defined (ACE_HAS_NONCONST_CLOCK_SETTIME)
+  ACE_OSCALL_RETURN (::clock_settime (clockid, const_cast<struct timespec *>(ts)), int, -1);
+#  else
   ACE_OSCALL_RETURN (::clock_settime (clockid, ts), int, -1);
+#  endif /* ACE_HAS_NONCONST_CLOCK_SETTIME */
 #else
   ACE_UNUSED_ARG (clockid);
   ACE_UNUSED_ARG (ts);
   ACE_NOTSUP_RETURN (-1);
-#endif
+#endif /* ACE_HAS_CLOCK_SETTIME */
 }
 
 // Magic number declaration and definition for ctime and ctime_r ()
