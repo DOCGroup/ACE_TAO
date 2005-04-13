@@ -133,10 +133,6 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
           ACE_TRY_CHECK;
         }
 
-      // Make sure the POA manager is activated.
-      this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       ACE_NEW_RETURN (this->server_impl_,
                       Airplane_i,
                       -1);
@@ -169,6 +165,10 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
       adapter->bind (poa_name, ior.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+      // Make sure the POA manager is activated.
+      this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (this->ior_output_file_)
         {

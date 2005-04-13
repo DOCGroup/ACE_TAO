@@ -996,7 +996,7 @@ ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
   }
 
   if (this->debug_ > 0)
-    ACE_DEBUG((LM_DEBUG, "ImR: server <%s> is shutting down.\n", server));
+    ACE_DEBUG((LM_DEBUG, "ImR: Server <%s> is shutting down.\n", server));
 
   info->reset();
 

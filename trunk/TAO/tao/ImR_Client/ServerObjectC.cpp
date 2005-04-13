@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// .\be\be_codegen.cpp:291
 
 
 #include "ServerObjectC.h"
@@ -46,7 +46,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// .\be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for ImplementationRepository::ServerObject.
 
@@ -97,7 +97,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/operation_cs.cpp:78
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::ServerObject::ping (
     ACE_ENV_SINGLE_ARG_DECL
@@ -137,7 +137,7 @@ void ImplementationRepository::ServerObject::ping (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/operation_cs.cpp:78
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::ServerObject::shutdown (
     ACE_ENV_SINGLE_ARG_DECL
@@ -169,7 +169,8 @@ void ImplementationRepository::ServerObject::shutdown (
       1,
       "shutdown",
       8,
-      this->the_TAO_ServerObject_Proxy_Broker_
+      this->the_TAO_ServerObject_Proxy_Broker_,
+      TAO::TAO_ONEWAY_INVOCATION
     );
   
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
@@ -290,7 +291,7 @@ ImplementationRepository::ServerObject::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/cdr_op_cs.cpp:63
+// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

@@ -288,11 +288,10 @@ ImR_Activator_i::start_server(const char* name,
   }
   else
   {
-    if (debug_ > 0)
+    if (debug_ > 1)
     {
       ACE_DEBUG((LM_DEBUG,
-        "ImR_Activator_i::start_server: register "
-        "death handler for process %d\n", pid));
+        "ImR Activator: register death handler for process %d\n", pid));
     }
     this->process_mgr_.register_handler (this, pid);
 
