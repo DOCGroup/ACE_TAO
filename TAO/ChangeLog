@@ -1,3 +1,47 @@
+Wed Apr 13 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.pidl:
+          Moved several parts of this file to new pidl files that are
+          included here. This in preparation of some portable interceptor
+          subsetting we are going to do.
+
+        * tao/PI_Forward.pidl:
+          Moved SlotId and ReplyStatus typedefs to this file
+
+        * tao/InvalidSlot.pidl:
+          Moved the InvalidSlot exception to this file
+
+        * tao/ORBInitializer.pidl:
+          Moved the ORBInitializer interface to this file
+
+        * tao/RequestInfo.pidl:
+          Moved the RequestInfo interface to this file.
+
+        * tao/RequestInfoA.cpp:
+        * tao/RequestInfoC.{h,cpp}:
+        * tao/RequestInfoS.h:
+        * tao/ORBInitializerA.cpp:
+        * tao/ORBInitializerC.{h,cpp}:
+        * tao/ORBInitializerS.h:
+        * tao/InvalidSlotA.cpp:
+        * tao/InvalidSlotC.{h,cpp}:
+        * tao/InvalidSlotS.h:
+          New generated files
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Added new files
+
+        * tao/PI_ForwardC.{h,cpp}:
+          Regenerated
+
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.{h,cpp}:
+          Regenerated
+
+        * tao/diffs/PortableInterceptor.diff:
+          Updated
+
 Wed Apr 13 08:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
