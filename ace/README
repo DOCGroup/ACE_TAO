@@ -29,7 +29,7 @@ ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES
                                         Win32 only.  Users want to use
                                         a predefined security
                                         attributes defined in
-                                      ACE_OS::default_win32_security_attributes
+                                        ACE_OS::default_win32_security_attributes
                                         as the default security
                                         object.
 ACE_DISABLE_DEBUG_DLL_CHECK             Define this if you don't want
@@ -115,13 +115,11 @@ ACE_USES_GPROF                          ACE calls getitimer before spawning
                                         after spawning the thread in
                                         order to overcome the problems
                                         of gprof with multithreaded
-                                        applications.  It uses the
-                                        idea from
-                             http://sam.zoy.org/writings/programming/gprof.html
+                                        applications. It uses the idea from
+                                        http://sam.zoy.org/writings/programming/gprof.html
 ACE_WSOCK_VERSION                       A parameter list indicating
                                         the version of WinSock (e.g.,
                                         "1, 1" is version 1.1).
-
 ACE_HAS_AIO_CALLS                       Platform supports POSIX aio* calls.
                                         Corresponds to _POSIX_ASYNCHRONOUS_IO
                                         constant in <unistd.h>.
@@ -407,6 +405,9 @@ ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
 ACE_HAS_NEW_NOTHROW                     Compiler offers new (nothrow).
 ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
                                         in call to chdir
+ACE_HAS_NONCONST_CLOCK_SETTIME          Platform uses non-const
+                                        struct timespec * in call to
+                                        clock_settime
 ACE_HAS_NONCONST_OPENDIR                Platform uses non-const char *
                                         in call to opendir
 ACE_HAS_NONCONST_UNLINK                 Platform uses non-const char *
@@ -417,23 +418,23 @@ ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
 ACE_HAS_NONCONST_MSGSND                 Platform has a non-const
                                         parameter to msgsend() (e.g.,
                                         SCO).
-ACE_HAS_NONCONST_READV			Platform omits const qualifier from
-					iovec parameter in readv() prototype.
+ACE_HAS_NONCONST_READV                  Platform omits const qualifier from
+                                        iovec parameter in readv() prototype.
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
                                         non-const timeval* (only found
                                         on Linux right now)
-ACE_HAS_NONCONST_SENDMSG		Platform omits const qualifier
-					from msghdr parameter in sendmsg()
-					prototype.
+ACE_HAS_NONCONST_SENDMSG                Platform omits const qualifier
+                                        from msghdr parameter in sendmsg()
+                                        prototype.
 ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier
-					from rlimit parameter in setrlimit()
-					prototype.
+                                        from rlimit parameter in setrlimit()
+                                        prototype.
 ACE_HAS_NONCONST_STAT                   Platform's stat function has non const
                                         name argument
 ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
 ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
-					iovec parameter in writev() prototype.
+                                        iovec parameter in writev() prototype.
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
                                         malloc()/free() prototypes
                                         (ugh)
@@ -673,8 +674,8 @@ ACE_HAS_THR_C_DEST                      The pthread_keycreate()
 ACE_HAS_THR_C_FUNC                      The pthread_create() routine
                                         *must* take extern C
                                         functions.
-ACE_HAS_TIMEZONE			Platform/compiler supports
-					global "timezone" variable.
+ACE_HAS_TIMEZONE                        Platform/compiler supports
+                                        global "timezone" variable.
 ACE_HAS_TIMEZONE_GETTIMEOFDAY           Platform/compiler supports
                                         timezone * as second parameter
                                         to gettimeofday()
@@ -721,7 +722,7 @@ ACE_HAS_UINT64_T                        Platform provides the uint64_t type.
 
 ACE_INT8_TYPE                           Specific type to use for ACE_INT8.
                                         If not defined, ACE will attempt to
-					determine the correct type.
+                                        determine the correct type.
 ACE_INT16_TYPE                          Specific type to use for ACE_INT16.
                                         If not defined, ACE will attempt to
                                         determine the correct type.
@@ -741,49 +742,49 @@ ACE_UINT32_TYPE                         Specific type to use for ACE_UINT32.
                                         If not defined, ACE will attempt to
                                         determine the correct type.
 ACE_UINT64_TYPE                         Specific type to use for ACE_UINT64.
-					If not defined, ACE will attempt to 
-					determine the correct type.
+                                        If not defined, ACE will attempt to 
+                                        determine the correct type.
 
 ACE_INT8_FORMAT_SPECIFIER               String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_INT8 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_INT8 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 ACE_INT16_FORMAT_SPECIFIER              String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_INT16 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_INT16 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 ACE_INT32_FORMAT_SPECIFIER              String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_INT32 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_INT32 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 ACE_INT64_FORMAT_SPECIFIER              String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_INT64 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_INT64 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 ACE_UINT8_FORMAT_SPECIFIER              String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_UINT8 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_UINT8 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 ACE_UINT16_FORMAT_SPECIFIER             String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_UINT16 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_UINT16 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 ACE_UINT32_FORMAT_SPECIFIER             String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_UINT32 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_UINT32 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 ACE_UINT64_FORMAT_SPECIFIER             String literal containing *printf 
-					format specifier (including the '%')
-					to be used for ACE_UINT64 values.  If
-					not defined, ACE will attempt to 
-					determine the correct setting.
+                                        format specifier (including the '%')
+                                        to be used for ACE_UINT64 values.  If
+                                        not defined, ACE will attempt to 
+                                        determine the correct setting.
 
 ACE_HAS_VOIDPTR_GETTIMEOFDAY            Platform/compiler supports
                                         void * as second parameter
@@ -885,8 +886,8 @@ ACE_LACKS_GETPGID                       Platform lacks getpgid() call
 ACE_LACKS_GETSERVBYNAME                 Platforms lacks
                                         getservbyname() (e.g., VxWorks
                                         and Chorus).
-ACE_LACKS_GETIPNODEBYADDR		Platform lacks getipnodebyaddr().
-ACE_LACKS_GETIPNODEBYNAME		Platform lacks getipnodebyname().
+ACE_LACKS_GETIPNODEBYADDR               Platform lacks getipnodebyaddr().
+ACE_LACKS_GETIPNODEBYNAME               Platform lacks getipnodebyname().
 ACE_LACKS_INET_ATON                     Platform lacks the inet_aton()
                                         function.
 ACE_LACKS_INET_ATON_PROTOTYPE           Platform/compiler lacks the
@@ -1001,6 +1002,9 @@ ACE_LACKS_RWLOCKATTR_PSHARED            Platform lacks
 ACE_LACKS_SBRK                          Platform lacks a working
                                         sbrk() (e.g., Win32 and
                                         VxWorks)
+ACE_LACKS_SCANDIR_PROTOTYPE             Platform/compiler lacks
+                                        scandir() prototype
+                                        (e.g., LynxOS)
 ACE_LACKS_SEEKDIR                       Platform uses ACE_HAS_DIRENT
                                         but does not have seekdir ().
 ACE_LACKS_SEMBUF_T                      Platform lacks struct sembuf
