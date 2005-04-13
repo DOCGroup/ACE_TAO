@@ -186,6 +186,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     POSIX_Proactor.cpp
     Priority_Reactor.cpp
     Proactor.cpp
+    Proactor_Impl.cpp
     Process.cpp
     Process_Manager.cpp
     Process_Mutex.cpp
