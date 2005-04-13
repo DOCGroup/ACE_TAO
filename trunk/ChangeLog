@@ -1,3 +1,11 @@
+Wed Apr 13 07:32:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Thread_Hook.h:
+	* ace/Thread_Hook.cpp:
+
+	  Move ACE_Thread_Hook destructor out of line so it's not compiled
+	  and included in each translation unit that includes Thread_Hook.h.
+
 Wed Apr 13 07:27:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/CDR_Stream.h:
