@@ -1,3 +1,9 @@
+Wed Apr 13 23:42:41 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-win32-interix.h:
+          Removed ACE_HAS_MKSTEMP definition. It is no longer
+          used in ACE/TAO code.
+
 Wed Apr 13 13:42:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Proactor_Impl.cpp:
