@@ -529,7 +529,8 @@ public:
                      PortableServer::POA::ServantAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
-  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid
+  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid, 
+                                       bool indirect
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ObjectNotActive,
@@ -643,7 +644,8 @@ protected:
                                    const char *type_id,
                                    TAO_ServantBase *servant,
                                    CORBA::Boolean collocated,
-                                   CORBA::Short priority
+                                   CORBA::Short priority,
+                                   bool indirect
                                    ACE_ENV_ARG_DECL);
 
   /// Like key_to_stub() but assume that the ORB is not shutting down.
@@ -915,12 +917,14 @@ public:
     TAO_ServantBase *servant_;
     CORBA::Boolean collocated_;
     CORBA::Short priority_;
+    bool indirect_;
 
     void set (PortableServer::ObjectId_var &system_id_,
               const char *type_id_,
               TAO_ServantBase *servant_,
               CORBA::Boolean collocated_,
-              CORBA::Short priority_);
+              CORBA::Short priority_,
+              bool indirect);
   };
 
   Key_To_Object_Params key_to_object_params_;

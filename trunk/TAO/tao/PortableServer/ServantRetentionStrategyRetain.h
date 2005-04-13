@@ -87,8 +87,8 @@ namespace TAO
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy));
 
-      CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &id
-                                         ACE_ENV_ARG_DECL)
+      CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &id,
+                                         bool indirect ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy));

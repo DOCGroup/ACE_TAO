@@ -5,6 +5,7 @@
 #include "testS.h"
 
 #include "tao/IORTable/IORTable.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "ace/streams.h"
 #include "ace/ARGV.h"
@@ -64,10 +65,13 @@ int main(int argc, char* argv[]) {
     poa1->activate_object_with_id(id.in(), &svt1);
     poa2->activate_object_with_id(id.in(), &svt2);
 
-    obj = poa1->id_to_reference(id.in());
+    TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(poa1.in());
+    obj = tmp_poa->id_to_reference_i (id.in(), false);
     String_var ior = orb->object_to_string(obj.in());
     ior_table->bind ("TestObject1", ior.in());
-    obj = poa2->id_to_reference(id.in());
+
+    tmp_poa = dynamic_cast<TAO_Root_POA*>(poa2.in());
+    obj = tmp_poa->id_to_reference_i (id.in(), false);
     ior = orb->object_to_string(obj.in());
     ior_table->bind ("TestObject2", ior.in());
 

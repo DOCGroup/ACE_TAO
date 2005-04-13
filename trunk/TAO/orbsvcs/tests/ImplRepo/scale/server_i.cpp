@@ -4,6 +4,7 @@
 
 #include "tao/IORTable/IORTable.h"
 #include "tao/PortableServer/PS_CurrentC.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/ImR_Client/ImR_Client.h"
 
 #include "ace/Get_Opt.h"
@@ -158,13 +159,15 @@ Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       poa->activate_object_with_id (server_id.in (), test_svt ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      obj = poa->id_to_reference (server_id.in() ACE_ENV_ARG_PARAMETER);
+      TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(poa.in());
+      obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::String_var ior = this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var direct_ior =
+        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ior_table->bind (name.c_str(), ior.in () ACE_ENV_ARG_PARAMETER);
+      ior_table->bind (name.c_str(), direct_ior.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 

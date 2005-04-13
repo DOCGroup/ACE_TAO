@@ -97,7 +97,8 @@ namespace TAO
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::id_to_reference (
-      const PortableServer::ObjectId &/*id*/
+      const PortableServer::ObjectId &/*id*/,
+      bool indirect
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
@@ -247,7 +248,8 @@ namespace TAO
                                              intf,
                                              0,
                                              1,
-                                             priority);
+                                             priority,
+                                             true);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
                                                         user_id
@@ -288,7 +290,8 @@ namespace TAO
                                              intf,
                                              servant,
                                              1,
-                                             priority);
+                                             priority,
+                                             true);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
                                                         oid
