@@ -1,3 +1,10 @@
+Wed Apr 13 17:07:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * TAO/orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        
+          Fix some problems on exceptions=0 builds.
+
 Wed Apr 13 16:22:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
