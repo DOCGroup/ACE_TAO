@@ -1,3 +1,10 @@
+Wed Apr 13 09:47:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp
+	  (FT_ReplicaFactory_i):
+
+	  Fixed another emulated exception related compile-time error.
+
 Wed Apr 13 17:14:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:

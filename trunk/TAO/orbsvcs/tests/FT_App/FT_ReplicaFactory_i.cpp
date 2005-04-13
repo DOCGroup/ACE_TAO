@@ -73,11 +73,18 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   , empty_slots_(0)
   , quit_requested_(0)
 {
-  ACE_DEBUG((LM_DEBUG, "TestReplica type_id: %s\n", FT_TEST::_tc_TestReplica->id() ));
+  ACE_DECLARE_NEW_CORBA_ENV;
+  char const * repo_id =
+    FT_TEST::_tc_TestReplica->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "TestReplica type_id: %s\n",
+              repo_id));
+
 //  ACE_DEBUG((LM_DEBUG, "Hobbit type_id: %s\n", FT_TEST::_tc_Hobbit->id() ));
 //  ACE_DEBUG((LM_DEBUG, "Elf type_id: %s\n", FT_TEST::_tc_Elf->id() ));
 //  ACE_DEBUG((LM_DEBUG, "Human type_id: %s\n", FT_TEST::_tc_Human->id() ));
-
 }
 
 
