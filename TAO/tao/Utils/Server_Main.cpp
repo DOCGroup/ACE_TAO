@@ -16,9 +16,6 @@
 #define TAO_UTILS_SERVER_MAIN_T_CPP
 
 #include "Server_Main.h"
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
 ACE_RCSID (Utils,

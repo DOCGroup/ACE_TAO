@@ -1,3 +1,9 @@
+Wed Apr 13 11:47:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Utils/Server_Main.cpp:
+
+	  Removed "#pragma once" directive. Fixes a G++ 4.0 warning.
+
 Wed Apr 13 11:01:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Valuetype/ValueBase.cpp:
@@ -18,29 +24,29 @@ Wed Apr 13 09:47:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Wed Apr 13 17:14:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
-        
+
           Missing include for ACE_CString
 
 Wed Apr 13 17:07:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
         * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-        
+
           Fix some problems on exceptions=0 builds.
 
 Wed Apr 13 16:22:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
         * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-        
+
           Cleanup output messages.
-          
+
         * TAO/orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
         * TAO/orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
-        
+
           Fix tests not to activate the poa manager until the server
         is ready to accept incoming requests.
-        
+
         * TAO/tao/ImR_Client/ServerObject.pidl:
         * TAO/tao/ImR_Client/ServerObjectA.cpp:
         * TAO/tao/ImR_Client/ServerObjectC.cpp:
@@ -49,10 +55,10 @@ Wed Apr 13 16:22:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
         * TAO/tao/ImR_Client/ServerObjectS.cpp:
         * TAO/tao/ImR_Client/ServerObjectS.h:
         * TAO/tao/ImR_Client/ServerObject_i.cpp:
-        
+
           Change the ServerObject::shutdown operation to a oneway to prevent
-        the need for a reply during shutdown. 
-          Changed the ServerObject::shutdown to first destroy the root poa, so 
+        the need for a reply during shutdown.
+          Changed the ServerObject::shutdown to first destroy the root poa, so
         that all registered child poas can notify the ImR that they are shutting
         down. (From the ImR's perspective each child POA is a separate registered
         server.)
@@ -213,19 +219,19 @@ Tue Apr 12 23:17:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
         * orbsvcs/ImplRepo_Service/tao_imr_i.h:
 
-          Many fixes and some minor new features in the ImR that eliminate 
+          Many fixes and some minor new features in the ImR that eliminate
         most of the known bugs and design flaws.
-        
-          PER_CLIENT activation now works correctly as long as you don't use 
+
+          PER_CLIENT activation now works correctly as long as you don't use
         the IORTable in the servers.
-          
-          There is no mechanism to allow creation of a direct object reference even 
+
+          There is no mechanism to allow creation of a direct object reference even
         when -orbuseimr 1 is specified. In OCI TAO 1.4a we were simply able to
         add this feature to the POA, but this appears to be much more difficult or
         impossible given the new POA design. This means that use of an IORTable will
         cost an extra level of indirection, and PER_CLIENT won't work correctly with
-        an IORTable. 
-        
+        an IORTable.
+
           Add new -n <name> option to Activator to allow specifying
         the name for the activator. It still defaults to the hostname, but
         this will allow us to test multiple Activators using a single machine.
@@ -236,21 +242,21 @@ Tue Apr 12 23:17:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
         to write. Update the imr util to show a different message if the shutdown times out.
 
           Cleanup of debug output for ImR and Activator.
-          
+
           Update the help message for tao_imr ior to reflect that
         you can use tao_imr ior poaname or tao_imr ior poaname/object_name.
-        
+
           Renamed the Options class in the Activator to Activator_Options. We
         think this may be causing runtime problems on Linux as the Activator
         and Locator are dynamically loaded into the same process. Both
-        shared libraries had a class named Options. 
-        
+        shared libraries had a class named Options.
+
           Added the ability for the ImR Activator to cleanup spawned processes and
         notify the ImR of process death on unix. The code should be platform
-        independent, but ACE_Process_Manager doesn't seem to work on Windows for 
+        independent, but ACE_Process_Manager doesn't seem to work on Windows for
         this purpose. A new -l option enables the ImR notification which is disabled
         by default. Thanks to Konstantinos Lykiardopoulos <klyk@intracom.gr> for the
-        initial version of this code. 
+        initial version of this code.
 
         * orbsvcs/examples/ImR/Combined_Service/readme:
         * orbsvcs/examples/ImR/Combined_Service/start_all.conf:
