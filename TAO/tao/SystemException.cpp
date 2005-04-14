@@ -912,3 +912,6 @@ CORBA::name ::_tao_create (void) \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \
   return result; \
 }
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
