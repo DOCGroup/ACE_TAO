@@ -11,6 +11,8 @@
 
 #include "tao/CDR.h"
 
+#include "ace/OS_NS_string.h"
+
 
 template <typename StringType, class RefCountPolicy>
 bool
