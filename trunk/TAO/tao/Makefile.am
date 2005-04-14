@@ -187,9 +187,9 @@ libTAO_la_SOURCES = \
   NVList.cpp \
   ORB.cpp \
   ORBInitInfo.cpp \
-  ORBInitializer_Registry.cpp \
   ORBInitializerA.cpp \
   ORBInitializerC.cpp \
+  ORBInitializer_Registry.cpp \
   ORB_Core.cpp \
   ORB_Core_Auto_Ptr.cpp \
   ORB_Table.cpp \
@@ -244,9 +244,9 @@ libTAO_la_SOURCES = \
   Resource_Factory.cpp \
   Resume_Handle.cpp \
   Sequence.cpp \
-  Server_Strategy_Factory.cpp \
   ServerRequestInfoA.cpp \
   ServerRequestInfoC.cpp \
+  Server_Strategy_Factory.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
   ServicesC.cpp \
@@ -427,10 +427,10 @@ nobase_include_HEADERS = \
   Cleanup_Func_Registry.h \
   Cleanup_Func_Registry.inl \
   ClientRequestInfo.h \
+  ClientRequestInfo.inl \
+  ClientRequestInfo.pidl \
   ClientRequestInfoC.h \
   ClientRequestInfoS.h \
-  ClientRequestInfo.pidl \
-  ClientRequestInfo.inl \
   ClientRequestInfo_i.h \
   ClientRequestInfo_i.inl \
   ClientRequestInterceptor_Adapter.h \
@@ -628,10 +628,10 @@ nobase_include_HEADERS = \
   ORB.i \
   ORBInitInfo.h \
   ORBInitInfo.inl \
-  ORBInitializer_Registry.h \
   ORBInitializer.pidl \
   ORBInitializerC.h \
   ORBInitializerS.h \
+  ORBInitializer_Registry.h \
   ORB_Constants.h \
   ORB_Core.h \
   ORB_Core.i \
@@ -722,10 +722,10 @@ nobase_include_HEADERS = \
   Remote_Object_Proxy_Broker.h \
   Reply_Dispatcher.h \
   Reply_Dispatcher.i \
-  RequestInfo_Util.h \
   RequestInfo.pidl \
   RequestInfoC.h \
   RequestInfoS.h \
+  RequestInfo_Util.h \
   Request_Dispatcher.h \
   Resource_Factory.h \
   Resume_Handle.h \
@@ -744,10 +744,10 @@ nobase_include_HEADERS = \
   Sequence_TypeCode.cpp \
   Sequence_TypeCode.h \
   Sequence_TypeCode.inl \
-  Server_Strategy_Factory.h \
+  ServerRequestInfo.pidl \
   ServerRequestInfoC.h \
   ServerRequestInfoS.h \
-  ServerRequestInfo.pidl \
+  Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \
   Service_Context.inl \
@@ -2066,6 +2066,10 @@ nobase_include_HEADERS += \
   RTPortableServer/RTPortableServer.h \
   RTPortableServer/RTPortableServer.pidl \
   RTPortableServer/RTPortableServerC.h \
+  RTPortableServer/RTPortableServerS.h \
+  RTPortableServer/RTPortableServer_include.pidl \
+  RTPortableServer/RTPortableServer_includeC.h \
+  RTPortableServer/RTPortableServer_includeS.h \
   RTPortableServer/RT_Acceptor_Filters.h \
   RTPortableServer/RT_Collocation_Resolver.h \
   RTPortableServer/RT_Object_Adapter_Factory.h \
