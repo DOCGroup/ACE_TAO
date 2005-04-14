@@ -1,3 +1,8 @@
+Thu Apr 14 07:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Objref_TypeCode_Base.h:
+          Fixed fuzz error and correct doxygen class tag
+
 Thu Apr 14 00:39:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/SystemException.cpp:
