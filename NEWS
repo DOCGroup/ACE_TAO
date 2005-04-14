@@ -21,6 +21,17 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
 
 . Added support for GNU G++ 4.0.
 
+. The ACE_Reactor destructor will now call close() on the referenced reactor
+  implementation. This assures that all handlers are notified before the
+  ACE_Reactor object that's most likely referenced in these handlers is
+  invalid. Although this should not be a user-visible change, it did catch
+  some ACE tests off guard destroying reactor implementations and ACE_Reactor
+  interfaces in the wrong order, so it may come up in the field as well.
+  When using dynamically allocated reactor implementations, do not destroy
+  the implementation object before the ACE_Reactor interface object. Use of
+  the ACE_Reactor constructor's delete_implementation argument (with a value
+  of 1) is recommended when dynamically allocating reactor implementations.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.3 and ACE-5.4.4
 ====================================================
 

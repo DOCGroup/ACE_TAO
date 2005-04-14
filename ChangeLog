@@ -1,5 +1,11 @@
 Thu Apr 14 15:25:31 2005  Steve Huston  <shuston@riverace.com>
 
+	* NEWS: Added a note that the reactor change:
+	  Wed Apr 13 14:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+	  may cause some trouble in programs that dynamically allocate
+	  a reactor implementation then destroy it before the ACE_Reactor
+	  referring to it. This is always bad, but now will cause a crash.
+
 	* examples/Reactor/WFMO_Reactor/run_test.pl: Removed the "require
 	  Process" line - it tried to refer to the one in $ACE_ROOT/bin, which
 	  was removed:
