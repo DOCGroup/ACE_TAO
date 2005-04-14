@@ -68,6 +68,8 @@ libTAO_la_SOURCES = \
   CharSeqC.cpp \
   Cleanup_Func_Registry.cpp \
   ClientRequestInfo.cpp \
+  ClientRequestInfoA.cpp \
+  ClientRequestInfoC.cpp \
   ClientRequestInfo_i.cpp \
   ClientRequestInterceptor_Adapter.cpp \
   Client_Strategy_Factory.cpp \
@@ -243,6 +245,8 @@ libTAO_la_SOURCES = \
   Resume_Handle.cpp \
   Sequence.cpp \
   Server_Strategy_Factory.cpp \
+  ServerRequestInfoA.cpp \
+  ServerRequestInfoC.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
   ServicesC.cpp \
@@ -423,6 +427,9 @@ nobase_include_HEADERS = \
   Cleanup_Func_Registry.h \
   Cleanup_Func_Registry.inl \
   ClientRequestInfo.h \
+  ClientRequestInfoC.h \
+  ClientRequestInfoS.h \
+  ClientRequestInfo.pidl \
   ClientRequestInfo.inl \
   ClientRequestInfo_i.h \
   ClientRequestInfo_i.inl \
@@ -738,6 +745,9 @@ nobase_include_HEADERS = \
   Sequence_TypeCode.h \
   Sequence_TypeCode.inl \
   Server_Strategy_Factory.h \
+  ServerRequestInfoC.h \
+  ServerRequestInfoS.h \
+  ServerRequestInfo.pidl \
   Service_Callbacks.h \
   Service_Context.h \
   Service_Context.inl \
