@@ -3,6 +3,10 @@ Thu Apr 14 17:12:44 2005  Steve Huston  <shuston@riverace.com>
 	* configure.ac: Corrected the variable used to tell whether or not
 	  to check for ACE_HAS_XPG4_MULTIBYTE_CHAR. Fixes configure on Solaris.
 
+	* ace/Service_Config.h: #include "ace/SString.h" instead of
+	  "ace/SStringfwd.h" to make sure everything needed for explicit
+	  template instantiation is present.
+
 Thu Apr 14 15:25:31 2005  Steve Huston  <shuston@riverace.com>
 
 	* NEWS: Added a note that the reactor change:

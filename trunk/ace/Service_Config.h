@@ -24,7 +24,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/SStringfwd.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_signal.h"
 
 // Forward decl.
