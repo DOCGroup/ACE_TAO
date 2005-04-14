@@ -1,3 +1,9 @@
+Thu Apr 14 10:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Removed setting of ACE_HAS_CLOCK_SETTIME. Cygwin seems to define
+          clock_settime but we get an unresolved symbol when linking.
+
 Thu Apr 14 00:03:12 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-rtems.h:
