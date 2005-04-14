@@ -2,18 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    Factory_Map.h
+ *  @file    TypeCode_CDR_Extraction.h
  *
  *  $Id$
  *
- *  Header file for TAO TypeCode factory map.
+ *  Header file for TAO TypeCode CDR extraction operations.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
-#ifndef TAO_TYPECODE_FACTORY_MAP_H
-#define TAO_TYPECODE_FACTORY_MAP_H
+#ifndef TAO_TYPECODE_CDR_EXTRACTION_H
+#define TAO_TYPECODE_CDR_EXTRACTION_H
 
 #include /**/ "ace/pre.h"
 
@@ -148,4 +148,4 @@ namespace TAO
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_TYPECODE_FACTORY_MAP_H */
+#endif /* TAO_TYPECODE_CDR_EXTRACTION_H */
