@@ -1,3 +1,17 @@
+Thu Apr 14 15:25:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* examples/Reactor/WFMO_Reactor/run_test.pl: Removed the "require
+	  Process" line - it tried to refer to the one in $ACE_ROOT/bin, which
+	  was removed:
+	  Mon Apr  4 11:20:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/Priority_Reactor_Test.cpp (run_main):
+	* tests/Reactor_Notify_Test.cpp (run_test): Use the ACE_Reactor's
+	  delete_implementation setting to delete any created reactor
+	  implementation instead of using separate auto_ptr objects for the
+	  ACE_Reactor and its implementation. Prevents destruction
+	  order issues if the implementation is destroyed first.
+
 Thu Apr 14 09:21:14 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:

@@ -285,15 +285,14 @@ run_test (int disable_notify_pipe,
 
   ACE_Reactor *reactor;
   ACE_NEW_RETURN (reactor,
-                  ACE_Reactor (reactor_impl),
+                  ACE_Reactor (reactor_impl, 1),    // Delete implementation
                   -1);
 
   // Make sure this stuff gets cleaned up when this function exits.
   auto_ptr<ACE_Reactor> r (reactor);
-  auto_ptr<ACE_Select_Reactor> ri (reactor_impl);
 
   // Set the Singleton Reactor.
-  ACE_Reactor::instance (reactor);
+  ACE_Reactor *orig_reactor = ACE_Reactor::instance (reactor);
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
   ACE_ASSERT (ACE_Reactor::instance () == reactor);
 
@@ -356,6 +355,7 @@ run_test (int disable_notify_pipe,
                   ACE_TEXT ("(%t) releasing supplier task thread\n")));
       task.release ();
     }
+  ACE_Reactor::instance (orig_reactor);
   return 0;
 }
 
