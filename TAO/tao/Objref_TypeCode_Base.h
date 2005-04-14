@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Objref_TypeCode.h
+ *  @file    Objref_TypeCode_Base.h
  *
  *  $Id$
  *
@@ -36,7 +36,7 @@ namespace TAO
   namespace TypeCode
   {
     /**
-     * @class Objref
+     * @class Objref_Base
      *
      * @brief @c CORBA::TypeCode implementation for an OMG IDL
      *        @c object and object-like types
