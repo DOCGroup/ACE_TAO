@@ -1,3 +1,26 @@
+Thu Apr 14 14:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.pidl:
+          Moved ClientRequestInfo and ServerRequestInfo to their own files
+
+        * tao/ClientRequestInfo.pidl:
+        * tao/ServerRequestInfo.pidl:
+        * tao/ClientRequestInfoA.cpp:
+        * tao/ClientRequestInfoC.{h,cpp}:
+        * tao/ClientRequestInfoS.h:
+        * tao/ServerRequestInfoA.cpp:
+        * tao/ServerRequestInfoC.{h,cpp}:
+        * tao/ServerRequestInfoS.h:
+          New files
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Added new files
+
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.{h,cpp}:
+          Regenerated
+
 Thu Apr 14 14:05:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
 	* tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
