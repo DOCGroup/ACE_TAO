@@ -1,3 +1,10 @@
+Thu Apr 14 14:33:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode.h (unaliased_kind):
+
+	  Declare this function with the ACE_NAMESPACE_INLINE_FUNCTION
+	  macro to address link-time errors on Windows.
+
 Thu Apr 14 10:42:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
