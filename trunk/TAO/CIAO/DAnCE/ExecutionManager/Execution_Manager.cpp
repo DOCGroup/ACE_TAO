@@ -159,8 +159,8 @@ namespace CIAO
           CIAO::ExecutionManagerDaemon_var daemon =
             daemon_servant->_this ();
 
-          TAO::Utils::Implicit_Deactivator de (daemon_servant
-                                               ACE_ENV_ARG_PARAMETER);
+          TAO::Utils::Implicit_Deactivator de (daemon_servant);
+                                               
           ACE_TRY_CHECK;
 
           bool retval = false;

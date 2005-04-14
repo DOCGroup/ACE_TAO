@@ -46,7 +46,7 @@ namespace CIAO
                     COMP_VAR,
                     COMP_EXEC,
                     COMP_EXEC_VAR,
-                    COMP_SVNT>::~Swapping_Home_Servant_Impl (void)
+                    COMP_SVNT>::~Swapping_Home_Servant_Impl ()
   {
     const DYNAMIC_SERVANT_MAP_ITERATOR end = 
       this->dynamic_servant_map_.end ();
@@ -54,7 +54,17 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
 
-    this->container_->delete_servant_map (oid);
+    ACE_TRY_NEW_ENV;
+      {
+        this->container_->delete_servant_map (oid ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+      ACE_CATCHANY;
+      {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "~Swapping_Home_Servant_Impl\t\n");
+      }
+    ACE_ENDTRY;
 
     for (DYNAMIC_SERVANT_MAP_ITERATOR iter = 
            this->dynamic_servant_map_.begin ();
@@ -84,7 +94,7 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::remove_component (
       ::Components::CCMObject_ptr 
-      ACE_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL_NOT_USED
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
@@ -208,14 +218,14 @@ namespace CIAO
         this->repo_id_,
         Container::Component
         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    ACE_CHECK_RETURN (COMP::_nil ());
 
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
           (ec, home, this, this->container_);
 
-    this->container_->add_servant_map (oid, svt);
+    this->container_->add_servant_map (oid, svt ACE_ENV_ARG_PARAMETER);
 
     this->dynamic_servant_map_.bind (oid, svt);
 

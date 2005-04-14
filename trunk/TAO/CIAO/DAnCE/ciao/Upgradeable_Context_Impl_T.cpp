@@ -37,14 +37,14 @@ namespace CIAO
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::deactivate_facet (
       const char* obj_id
-      ACE_ENV_SINGLE_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId (obj_id);
 
-    this->container_->deactivate_facet (oid);
+    this->container_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
   }
 
   template <typename BASE_CTX, 
@@ -55,14 +55,14 @@ namespace CIAO
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
      update_port_activator (
            const char* obj_id
-           ACE_ENV_SINGLE_ARG_DECL)
+           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId (obj_id);
     CIAO::Servant_Activator *sa =
         this->container_->ports_servant_activator ();
-    sa->update_port_activator (oid);
+    sa->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
   }
 
 }

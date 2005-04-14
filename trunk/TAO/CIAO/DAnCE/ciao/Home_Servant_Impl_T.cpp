@@ -267,7 +267,7 @@ namespace CIAO
     Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ()
                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (Components::CCMObject::_nil ());
+    ACE_CHECK_RETURN (COMP::_nil ());
 
     this->objref_map_.bind (oid.in (),
       Components::CCMObject::_duplicate (ccmobjref.in ()));
