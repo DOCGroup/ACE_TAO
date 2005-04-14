@@ -1,3 +1,9 @@
+Thu Apr 14 09:21:14 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+
+          Added support for the -SS, -Sci and -Ssi options.
+
 Thu Apr 14 10:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
