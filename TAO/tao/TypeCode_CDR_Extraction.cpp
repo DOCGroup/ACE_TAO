@@ -626,6 +626,8 @@ TAO::TypeCodeFactory::tc_event_factory (CORBA::TCKind kind,
   return tc_value_factory (kind, cdr, tc);
 }
 
+// ----------------------------------------------------------------
+
 bool
 operator>> (TAO_InputCDR & cdr,
             CORBA::TypeCode_ptr & tc)
