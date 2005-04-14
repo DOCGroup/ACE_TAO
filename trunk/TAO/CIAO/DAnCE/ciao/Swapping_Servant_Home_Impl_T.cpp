@@ -223,7 +223,7 @@ namespace CIAO
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
-          (ec, home, this, this->container_);
+          (ec, home.in (), this, this->container_);
 
     this->container_->add_servant_map (oid, svt ACE_ENV_ARG_PARAMETER);
 
