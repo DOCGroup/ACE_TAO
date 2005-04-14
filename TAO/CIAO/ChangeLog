@@ -1,4 +1,9 @@
+Thu Apr 14 10:54:56 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
 
+	Fixed a warning due to ambiguous conversion.
+	
 Thu Apr 143 10:21:58 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/Hello/Sender/Sender.idl
