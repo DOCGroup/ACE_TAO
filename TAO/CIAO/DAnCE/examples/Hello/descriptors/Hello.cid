@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:ComponentImplementationDescription
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -10,11 +10,63 @@
     <instance xmi:id="a_Sender">
       <name>Sender_Instance</name>
       <package href="Sender.cpd"/>
+      
+		  <configProperty>
+		    <name>ComponentIOR</name>
+		    <value>
+		      <type>
+		        <kind>tk_string</kind>
+		      </type>
+		      <value>
+		        <string>Sender.ior</string>
+		      </value>
+		    </value>
+		  </configProperty>
+		  
+		  <configProperty>
+		    <name>local_message</name>
+		    <value>
+		      <type>
+		        <kind>tk_string</kind>
+		      </type>
+		      <value>
+		        <string>This is a test message passed in through XML.</string>
+		      </value>
+		    </value>
+		  </configProperty>
+        
+		  <configProperty>
+		    <name>hertz</name>
+		    <value>
+		      <type>
+		        <kind>tk_long</kind>
+		      </type>
+		      <value>
+		        <long>50</long>
+		      </value>
+		    </value>
+		  </configProperty>
     </instance>
+    
+		<!-- ***************************** -->    
+    
     <instance xmi:id="a_Receiver">
       <name>Receiver_Instance</name>
       <package href="Receiver.cpd"/>
+      
+		  <configProperty>
+		    <name>ComponentIOR</name>
+		    <value>
+		      <type>
+		        <kind>tk_string</kind>
+		      </type>
+		      <value>
+		        <string>Receiver.ior</string>
+		      </value>
+		    </value>
+		  </configProperty>
     </instance>
+    
     <connection>
       <name>Messages</name>
       <internalEndpoint>

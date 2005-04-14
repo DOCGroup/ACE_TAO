@@ -150,8 +150,6 @@ CIAO::Container_Impl::install (
              // @@Todo: Currently I have to manually map the Deployment::Properties to 
              // Components::ConfigValues, we should use a common data structure in
              // the future. - Gan
-             ACE_DEBUG ((LM_DEBUG, "Step 10\n"));
-
              CORBA::ULong cur_len = comp_attributes.length ();
              comp_attributes.length (cur_len + 1);
 
@@ -163,13 +161,11 @@ CIAO::Container_Impl::install (
              comp_attributes[cur_len] = item;
            }
            
-         ACE_DEBUG ((LM_DEBUG, "Step 20\n"));
          //std_configurator.set_configuration
          ::Components::StandardConfigurator_var std_configurator = 
            comp->get_standard_configurator ();
 
          std_configurator->set_configuration (comp_attributes);
-         ACE_DEBUG ((LM_DEBUG, "Step 30\n"));
        }
    }
   ACE_CATCHANY

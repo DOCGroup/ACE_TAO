@@ -22,6 +22,8 @@ module Hello
     provides ReadMessage push_message;
     publishes TimeOut click_out;
     attribute string local_message;
+    attribute long hertz;  
+    // A test attribute to test setting attributes through XML
   };
 
   home SenderHome manages Sender

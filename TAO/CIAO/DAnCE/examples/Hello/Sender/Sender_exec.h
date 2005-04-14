@@ -43,13 +43,22 @@ namespace Sender_Impl
     /// Default destructor.
     virtual ~Sender_exec_i ();
 
-    /// Operation to set the value of the attribute
+    /// Operation to set the value of the attribute "local_message"
     virtual void local_message (const char * local_message
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Operation to get the value of the attribute
+    /// Operation to get the value of the attribute "local_message"
     virtual char * local_message (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    /// Operation to set the value of the attribute "hertz"
+    virtual void hertz (CORBA::Long hertz
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    /// Operation to get the value of the attribute "hertz"
+    virtual CORBA::Long hertz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /* Operations for obtaining the interface reference. */
@@ -99,6 +108,8 @@ namespace Sender_Impl
 
   private:
     CORBA::String_var message_;
+
+    CORBA::Long hertz_;
 
     friend class Message_Impl;
   };
