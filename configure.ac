@@ -3729,7 +3729,7 @@ AC_CHECK_FUNC([strptime],
 
 ACE_CHECK_HAS_FUNCS(memchr)
 
-if test "$ace_cv_type_wchar_t" = yes; then
+if test "$ac_cv_type_wchar_t" = yes; then
   AC_CHECK_FUNC([wcslen],
     [AC_DEFINE([ACE_HAS_XPG4_MULTIBYTE_CHAR])],)
 fi
