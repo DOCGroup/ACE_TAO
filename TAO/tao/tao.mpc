@@ -273,6 +273,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TypeCode.cpp
     TypeCodeA.cpp
     Typecode_typesC.cpp
+    TypeCode_CDR_Extraction.cpp
     TypeCode_Constants.cpp
     TypeCodeFactory_Adapter.cpp
     ULongLongSeqA.cpp
@@ -619,6 +620,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Timer.h
     True_RefCount_Policy.h
     TSS_Resources.h
+    TypeCode_CDR_Extraction.h
     TypeCode_Constants.h
     TypeCode_Case.h
     TypeCode_Default_Case.h

@@ -197,10 +197,6 @@ public:
    * i.e. they are specific to TAO.
    */
   //@{
-  /// Extract a TypeCode @a tc from the given CDR stream @a cdr.
-  virtual bool extract_typecode (TAO_InputCDR & cdr,
-                                 CORBA::TypeCode_ptr & tc);
-
   /// Create an enumeration TypeCode.
   virtual CORBA::TypeCode_ptr create_enum_tc (
     char const * id,

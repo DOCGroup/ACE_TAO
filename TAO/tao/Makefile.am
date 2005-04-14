@@ -2463,7 +2463,6 @@ libTAO_TypeCodeFactory_la_CPPFLAGS = \
   -DTAO_TYPECODEFACTORY_BUILD_DLL
 
 libTAO_TypeCodeFactory_la_SOURCES = \
-  TypeCodeFactory/Factory_Map.cpp \
   TypeCodeFactory/TypeCodeFactoryA.cpp \
   TypeCodeFactory/TypeCodeFactoryC.cpp \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp \
@@ -2479,8 +2478,6 @@ libTAO_TypeCodeFactory_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  TypeCodeFactory/Factory_Map.h \
-  TypeCodeFactory/Objref_TypeCode_Factory.h \
   TypeCodeFactory/TypeCodeFactory.pidl \
   TypeCodeFactory/TypeCodeFactoryC.h \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h \
