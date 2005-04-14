@@ -1,3 +1,10 @@
+Thu Apr 14 08:37:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Objref_TypeCode_Base.cpp:
+
+	  Include "ace/OS_NS_string.h" to pull in ACE_OS::strcmp()
+	  declaration.
+
 Thu Apr 14 14:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableInterceptor.pidl:
