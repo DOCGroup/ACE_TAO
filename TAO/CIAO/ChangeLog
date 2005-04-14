@@ -1,3 +1,17 @@
+Thu Apr 14 02:02:13 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/ExecutionManager/Execution_Manager.cpp
+	* DAnCE/ciao/Context_Impl_T.cpp
+	* DAnCE/ciao/Dynamic_Component_Servant_Base.h
+	* DAnCE/ciao/Dynamic_Component_Servant_T.cpp
+	* DAnCE/ciao/Dynamic_Component_Servant_T.h
+	* DAnCE/ciao/Home_Servant_Impl_T.cpp
+	* DAnCE/ciao/Servant_Impl_T.cpp
+	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
+	* DAnCE/ciao/Upgradeable_Context_Impl_T.cpp
+
+	Fixed a number of mistakes with emulated exceptions. 
+	
 Wed Apr 13 18:55:58 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/CCM_Component.idl
