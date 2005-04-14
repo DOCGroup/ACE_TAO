@@ -42,6 +42,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Cleanup_Func_Registry.cpp
     Client_Strategy_Factory.cpp
     ClientRequestInfo.cpp
+    ClientRequestInfoA.cpp
+    ClientRequestInfoC.cpp
     ClientRequestInfo_i.cpp
     ClientRequestInterceptor_Adapter.cpp
     CodecFactory.cpp
@@ -226,6 +228,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resume_Handle.cpp
     Sequence.cpp
     Server_Strategy_Factory.cpp
+    ServerRequestInfoA.cpp
+    ServerRequestInfoC.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
     Services_Activate.cpp
@@ -348,6 +352,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     CharSeqS.h
     Cleanup_Func_Registry.h
     ClientRequestInfo.h
+    ClientRequestInfoC.h
+    ClientRequestInfoS.h
     ClientRequestInfo_i.h
     ClientRequestInterceptor_Adapter.h
     Client_Strategy_Factory.h
@@ -564,6 +570,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Sequence_TypeCode.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
+    ServerRequestInfoC.h
+    ServerRequestInfoS.h
     Service_Callbacks.h
     Service_Context.h
     Services_Activate.h
