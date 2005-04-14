@@ -1,3 +1,11 @@
+Thu Apr 14 16:12:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode.h (unaliased_kind):
+
+	  Declare with TAO_NAMESPACE_INLINE_FUNCTION, not
+	  ACE_NAMESPACE_INLINE_FUNCTION.  Fixes "inconsistent dll linkage"
+	  warnings.
+
 Thu Apr 14 15:03:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCode.cpp (operator>>):
