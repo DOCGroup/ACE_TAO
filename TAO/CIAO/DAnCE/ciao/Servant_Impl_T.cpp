@@ -112,7 +112,7 @@ namespace CIAO
           this->executor_.in ()
           ACE_ENV_ARG_PARAMETER
         );
-    ACE_CHECK;
+    ACE_CHECK_RETURN (Components::SessionComponent::_nil ());
     return temp._retn ();
   }
 

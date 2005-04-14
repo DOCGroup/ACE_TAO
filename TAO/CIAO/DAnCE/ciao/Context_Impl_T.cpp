@@ -44,17 +44,23 @@ namespace CIAO
     if (CORBA::is_nil (this->component_.in ()))
     {
       CORBA::Object_var obj;
-      ACE_TRY {
-      obj =
-        this->container_->get_objref (this->servant_
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-       }
-      ACE_CATCHANY { ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                          "Caught Exception \n"); return 0;}
+
+      ACE_TRY 
+        {
+          obj =
+            this->container_->get_objref (this->servant_
+                                          ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK; 
+        }
+      ACE_CATCHANY 
+        { 
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Caught Exception \n"); 
+          return CORBA::Object::_nil ();
+        }
       ACE_ENDTRY;
-
-
+      
+      
       this->component_ = COMP::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
