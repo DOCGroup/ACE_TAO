@@ -98,7 +98,7 @@ namespace TAO
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::id_to_reference (
       const PortableServer::ObjectId &/*id*/,
-      bool indirect
+      bool /*indirect*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
