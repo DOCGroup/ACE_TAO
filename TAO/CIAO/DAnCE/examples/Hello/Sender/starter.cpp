@@ -79,7 +79,7 @@ main (int argc, char *argv[])
                             -1);
         }
 
-      sender->local_message (message);
+      //sender->local_message (message);
 
       sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
