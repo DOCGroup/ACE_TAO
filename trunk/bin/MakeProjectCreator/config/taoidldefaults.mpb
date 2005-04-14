@@ -16,25 +16,40 @@ project {
     command              = $(TAO_IDL)
     libpath              = $(ACE_ROOT)/lib
     inputext             = .idl
-    source_pre_extension = C, S
+    source_pre_extension = C
     header_pre_extension = C, S
-    inline_pre_extension = C, S
     source_outputext     = .cpp, .cxx, .cc, .C
     header_outputext     = .h, .hpp, .hxx, .hh
-    inline_outputext     = .inl, .i
     keyword idlflags     = commandflags
 
+    // Inline related options
+    optional(inline_outputext) {
+      commandflags(!-SS && !-Ssi || !-Sci || !-Sc) += .inl, .i
+    }
+    optional(inline_pre_extension) {
+      commandflags(!-SS && !-Ssi) += S
+    }
+    optional(inline_pre_extension) {
+      commandflags(!-Sci) += C
+    }
+    optional(inline_pre_extension) {
+      commandflags(!-Sc && !-SS) += S_T
+    }
+
+    // Source related options
+    optional(source_pre_extension) {
+      commandflags(!-SS) += S
+    }
     optional(source_pre_extension) {
       commandflags(-GA) += A
     }
+
+    // Other
     optional(template_outputext) {
-      commandflags(!-Sc) += S_T.cpp, S_T.cxx, S_T.cc, S_T.C
+      commandflags(!-Sc && !-SS) += S_T.cpp, S_T.cxx, S_T.cc, S_T.C
     }
     optional(header_pre_extension) {
-      commandflags(!-Sc) += S_T
-    }
-    optional(inline_pre_extension) {
-      commandflags(!-Sc) += S_T
+      commandflags(!-Sc && !-SS) += S_T
     }
   }
 
