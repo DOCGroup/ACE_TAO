@@ -1,3 +1,21 @@
+Thu Apr 143 10:21:58 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/examples/Hello/Sender/Sender.idl
+	* DAnCE/examples/Hello/Sender/Sender_exec.cpp
+	* DAnCE/examples/Hello/Sender/Sender_exec.h
+	* DAnCE/examples/Hello/Sender/starter.cpp
+	* DAnCE/examples/Hello/descriptors/Hello.cid
+	* DAnCE/examples/Hello/descriptors/Receiver.cid
+	* DAnCE/examples/Hello/descriptors/Sender.cid
+
+	  Modified the Hello example to showcase the feature of setting
+	  attributes through XML. "string" and "long" type attributes
+	  are put into the test.
+
+	* DAnCE/ciao/Container_Impl.cpp
+
+	  Cleaned up a little bit.
+
 Thu Apr 14 10:14:44 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
