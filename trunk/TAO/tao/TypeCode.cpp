@@ -298,33 +298,6 @@ operator<< (TAO_OutputCDR & cdr,
   return (cdr << kind) && tc->tao_marshal (cdr);
 }
 
-bool
-operator>> (TAO_InputCDR & cdr,
-            CORBA::TypeCode_ptr & tc)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  TAO_TypeCodeFactory_Adapter * const adapter =
-    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "%N:%l - Unable to load TypeCodeFactory_Adapter\n"));
-        }
-
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        false);
-    }
-
-  return adapter->extract_typecode (cdr, tc);
-
-}
-
 // ---------------------------------------------------------------
 
 CORBA::TypeCode_ptr

@@ -1,4 +1,6 @@
-#include "Factory_Map.h"
+// $Id$
+
+#include "TypeCode_CDR_Extraction.h"
 
 #include "Objref_TypeCode_Factory.h"
 
@@ -10,7 +12,6 @@
 #include "tao/Alias_TypeCode.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Fixed_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
 #include "tao/String_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
@@ -21,8 +22,8 @@
 #include "tao/TypeCode_Value_Field.h"
 
 
-ACE_RCSID (TypeCodeFactory,
-           Factory_Map,
+ACE_RCSID (tao,
+           TypeCode_CDR_Extraction,
            "$Id$")
 
 
@@ -360,14 +361,14 @@ TAO::TypeCodeFactory::tc_array_factory (CORBA::TCKind kind,
 }
 
 bool
-TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind  /* kind */,
+TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
                                         TAO_InputCDR & cdr,
                                         CORBA::TypeCode_ptr & tc)
 {
   CORBA::Boolean byte_order;
 
-  // The remainder of a tk_alias TypeCode is encoded in a CDR
-  // encapsulation.
+  // The remainder of a tk_alias or tk_value_box TypeCode is encoded
+  // in a CDR encapsulation.
   if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
     return false;
 
@@ -381,17 +382,30 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind  /* kind */,
         && cdr >> content_type.out ()))
     return false;
 
-  typedef TAO::TypeCode::Alias<
-    CORBA::String_var,
-    CORBA::TypeCode_var,
-    CORBA::tk_alias,
-    TAO::True_RefCount_Policy> typecode_type;
+  if (kind == CORBA::tk_alias)
+    {
+      typedef TAO::TypeCode::Alias<
+        CORBA::String_var,
+        CORBA::TypeCode_var,
+        CORBA::tk_alias,
+        TAO::True_RefCount_Policy> typecode_type;
 
-  ACE_NEW_RETURN (tc,
-                  typecode_type (id.in (),
-                                 name.in (),
-                                 content_type),
-                  false);
+      ACE_NEW_RETURN (tc,
+                      typecode_type (id.in (), name.in (), content_type),
+                      false);
+    }
+  else
+    {
+      typedef TAO::TypeCode::Alias<
+        CORBA::String_var,
+        CORBA::TypeCode_var,
+        CORBA::tk_value_box,
+        TAO::True_RefCount_Policy> typecode_type;
+
+      ACE_NEW_RETURN (tc,
+                      typecode_type (id.in (), name.in (), content_type),
+                      false);
+    }
 
   return true;
 }
@@ -557,40 +571,11 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
 }
 
 bool
-TAO::TypeCodeFactory::tc_value_box_factory (CORBA::TCKind /* kind */,
+TAO::TypeCodeFactory::tc_value_box_factory (CORBA::TCKind kind,
                                             TAO_InputCDR & cdr,
                                             CORBA::TypeCode_ptr & tc)
 {
-  CORBA::Boolean byte_order;
-
-  // The remainder of a tk_value_box TypeCode is encoded in a CDR
-  // encapsulation.
-  if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
-    return false;
-
-  cdr.reset_byte_order (byte_order);
-
-  // Extract the repository ID, name and content type.
-  CORBA::String_var id, name;
-  CORBA::TypeCode_var content_type;
-  if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
-        && cdr >> TAO_InputCDR::to_string (name.out (), 0)
-        && cdr >> content_type.out ()))
-    return false;
-
-  typedef TAO::TypeCode::Alias<
-    CORBA::String_var,
-    CORBA::TypeCode_var,
-    CORBA::tk_value_box,
-    TAO::True_RefCount_Policy> typecode_type;
-
-  ACE_NEW_RETURN (tc,
-                  typecode_type (id.in (),
-                                 name.in (),
-                                 content_type),
-                  false);
-
-  return true;
+  return tc_alias_factory (kind, cdr, tc);
 }
 
 bool
@@ -639,4 +624,58 @@ TAO::TypeCodeFactory::tc_event_factory (CORBA::TCKind kind,
                                         CORBA::TypeCode_ptr & tc)
 {
   return tc_value_factory (kind, cdr, tc);
+}
+
+bool
+operator>> (TAO_InputCDR & cdr,
+            CORBA::TypeCode_ptr & tc)
+{
+  CORBA::TCKind kind;
+  if (!(cdr >> kind) || kind >= CORBA::TAO_TC_KIND_COUNT)
+    return false;
+
+  using namespace TAO::TypeCodeFactory;
+
+  static factory const factory_map[] =
+    {
+      tc_null_factory,
+      tc_void_factory,
+      tc_short_factory,
+      tc_long_factory,
+      tc_ushort_factory,
+      tc_ulong_factory,
+      tc_float_factory,
+      tc_double_factory,
+      tc_boolean_factory,
+      tc_char_factory,
+      tc_octet_factory,
+      tc_any_factory,
+      tc_TypeCode_factory,
+      tc_Principal_factory,
+      tc_objref_factory,
+      tc_struct_factory,
+      tc_union_factory,
+      tc_enum_factory,
+      tc_string_factory,
+      tc_sequence_factory,
+      tc_array_factory,
+      tc_alias_factory,
+      tc_except_factory,
+      tc_longlong_factory,
+      tc_ulonglong_factory,
+      tc_longdouble_factory,
+      tc_wchar_factory,
+      tc_wstring_factory,
+      tc_fixed_factory,
+      tc_value_factory,
+      tc_value_box_factory,
+      tc_native_factory,
+      tc_abstract_interface_factory,
+      tc_local_interface_factory,
+      tc_component_factory,
+      tc_home_factory,
+      tc_event_factory
+    };
+
+  return factory_map[kind] (kind, cdr, tc);
 }
