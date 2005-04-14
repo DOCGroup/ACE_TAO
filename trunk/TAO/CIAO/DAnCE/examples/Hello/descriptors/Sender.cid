@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:ComponentImplementationDescription
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -21,26 +21,4 @@
       <referencedArtifact href="Sender_Exec.iad"/>
     </primaryArtifact>
   </monolithicImpl>
-  <configProperty>
-    <name>local_message</name>
-    <value>
-      <type>
-        <kind>tk_string</kind>
-      </type>
-      <value>
-        <string>default_message</string>
-      </value>
-    </value>
-  </configProperty>
-  <configProperty>
-    <name>ComponentIOR</name>
-    <value>
-      <type>
-        <kind>tk_string</kind>
-      </type>
-      <value>
-        <string>Sender.ior</string>
-      </value>
-    </value>
-  </configProperty>
 </Deployment:ComponentImplementationDescription>

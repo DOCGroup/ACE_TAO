@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:ComponentImplementationDescription
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -21,15 +21,4 @@
       <referencedArtifact href="Receiver_Exec.iad"/>
     </primaryArtifact>
   </monolithicImpl>
-  <configProperty>
-    <name>ComponentIOR</name>
-    <value>
-      <type>
-        <kind>tk_string</kind>
-      </type>
-      <value>
-        <string>Receiver.ior</string>
-      </value>
-    </value>
-  </configProperty>
 </Deployment:ComponentImplementationDescription>

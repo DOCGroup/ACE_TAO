@@ -20,6 +20,7 @@ Sender_Impl::Sender_exec_i::local_message (const char * local_message
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   message_ = CORBA::string_dup (local_message);
+  ACE_DEBUG ((LM_DEBUG, "Executor::local_message:%s\n", message_));
 }
 
 char *
@@ -27,6 +28,22 @@ Sender_Impl::Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(message_);
+}
+
+void
+Sender_Impl::Sender_exec_i::hertz (CORBA::Long hertz
+                                   ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->hertz_ = hertz;
+  ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::Hertz:%d\n", this->hertz_));
+}
+
+CORBA::Long
+Sender_Impl::Sender_exec_i::hertz (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->hertz_;
 }
 
 Hello::CCM_ReadMessage_ptr
