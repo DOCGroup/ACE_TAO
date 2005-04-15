@@ -187,6 +187,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ORBInitializerA.cpp
     ORBInitializerC.cpp
     ORBInitInfo.cpp
+    ORBInitInfoA.cpp
+    ORBInitInfoC.cpp
     ParameterModeA.cpp
     ParameterModeC.cpp
     params.cpp
@@ -203,6 +205,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Policy_Validator.cpp
     PolicyA.cpp
     PolicyC.cpp
+    PolicyFactoryA.cpp
+    PolicyFactoryC.cpp
     PolicyFactory_Registry.cpp
     PollableC.cpp
     PortableInterceptorA.cpp
