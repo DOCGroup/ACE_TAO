@@ -1,3 +1,8 @@
+Fri Apr 15 07:57:38 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/Ping_Socket.cpp:
+          Replaced NULL with 0.
+
 Fri Apr 15 07:39:20 2005  Olli Savia  <ops@iki.fi>
 
         * ace/OS.inl:

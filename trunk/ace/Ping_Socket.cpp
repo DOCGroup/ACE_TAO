@@ -292,7 +292,7 @@ ACE::Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
                         -1);
     }
 
-  sockaddr_in *addr_connect = NULL;
+  sockaddr_in *addr_connect = 0;
   addr_connect = (sockaddr_in *) remote_addr.get_addr ();
 
   /*
@@ -335,7 +335,7 @@ ACE::Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
 #if defined (ACE_WIN32)
   _icmp->icmp_data = GetTickCount ();
 #else  /* #if defined (ACE_WIN32) */
-  gettimeofday ((struct timeval *) &_icmp->icmp_data, NULL);
+  gettimeofday ((struct timeval *) &_icmp->icmp_data, 0);
 #endif  /* #if defined (ACE_WIN32) */
 
   int length_icmp = ICMP_MIN + datalen; // checksum ICMP header and data.
