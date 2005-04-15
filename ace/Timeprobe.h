@@ -116,6 +116,7 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Singleton.h"
 #include "ace/Timeprobe_T.h"
 
