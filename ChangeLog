@@ -1,3 +1,17 @@
+Fri Apr 15 11:36:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Timeprobe.h:
+
+	  Drop the semi-colon after the ACE_SINGLETON_DECLARE.  The
+	  convention is not to add a trailing semi-colon.  Addresses a g++
+	  4.0 CVS snapshot error about an extra semi-colon.
+
+	* ace/config-g++-common.h (ACE_EXPORT_SINGLETON_DECLARE):
+
+	  Added a trailing semi-colon in the definition of this macro for
+	  g++ 4.x or better.  This is the same convention we use for
+	  Windows.
+
 Fri Apr 15 12:14:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Win32.pm:

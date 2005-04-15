@@ -152,7 +152,7 @@ typedef ACE_TIMEPROBE_SINGLETON_TYPE<ACE_TIMEPROBE_WITH_LOCKING, ACE_TIMEPROBE_S
 
 ACE_SINGLETON_DECLARE (ACE_TIMEPROBE_SINGLETON_TYPE, \
                                            ACE_TIMEPROBE_WITH_LOCKING, \
-                                           ACE_TIMEPROBE_SINGLETON_LOCK_TYPE);
+                                           ACE_TIMEPROBE_SINGLETON_LOCK_TYPE)
 
 #endif /* ACE_COMPILE_TIMEPROBES */
 
