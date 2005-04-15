@@ -20,7 +20,6 @@ Sender_Impl::Sender_exec_i::local_message (const char * local_message
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   message_ = CORBA::string_dup (local_message);
-  ACE_DEBUG ((LM_DEBUG, "Executor::local_message:%s\n", message_));
 }
 
 char *
