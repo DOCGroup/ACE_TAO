@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 print STDERR "\n********** RTCORBA ORB_init Unit Test **********\n\n";
 
-$T = new PerlACE::Process ("ORB_init");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("ORB_init");
+}
+else {
+    $T = new PerlACE::Process ("ORB_init");
+}
 
 $test = $T->SpawnWaitKill (60);
 

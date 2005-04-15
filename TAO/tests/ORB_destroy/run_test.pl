@@ -8,7 +8,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../bin';
 use PerlACE::Run_Test;
 
-$T = new PerlACE::Process ("ORB_destroy");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("ORB_destroy");
+}
+else {
+    $T = new PerlACE::Process ("ORB_destroy");
+}
 
 $test = $T->SpawnWaitKill (60);
 

@@ -12,7 +12,12 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
 $CL1 = new PerlACE::Process ("client", "-k file://$iorfile -x");
 # Use a single thread in this test, because the strategy is only for
 # single threaded cases

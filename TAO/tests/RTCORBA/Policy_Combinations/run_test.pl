@@ -49,11 +49,17 @@ for $file (@iorfiles)
     unlink $file;
 }
 
-$SV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV = new PerlACE::Process ("server");
+}
 $SV->Spawn ();
 
 for $file (@iorfiles)
 {
+    $file = PerlACE::LocalFile($file);
     if (PerlACE::waitforfile_timed ($file, 10) == -1)
     {
         $server = $SV->TimedWait (1);

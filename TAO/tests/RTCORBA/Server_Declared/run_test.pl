@@ -16,26 +16,30 @@ unlink $iorfile2;
 $status = 0;
 
 $server_args =
-    "-p $iorfile1 -o $iorfile2 -a 45 -b 55";
+    "-a 45 -b 55";
 
 print STDERR "Value is " . $^O;
 
 if ($^O eq "MSWin32") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 1 -b 2";
+        "-a 1 -b 2";
 }
 elsif ($^O eq "dec_osf") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 20 -b 30";
+        "-a 20 -b 30";
 }
 elsif ($^O eq "hpux") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 17 -b 29";
+        "-a 17 -b 29";
 }
 
 $client_args = "-p file://$iorfile1 -o file://$iorfile2";
-print STDERR "server $server_args\n";
-$SV = new PerlACE::Process ("server", $server_args);
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-p test1.ior -o test2.ior $server_args");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-p $iorfile1 -o $iorfile2 $server_args");
+}
 $CL = new PerlACE::Process ("client", $client_args);
 
 print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";

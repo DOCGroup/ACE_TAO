@@ -16,7 +16,12 @@ $ior2file = PerlACE::LocalFile ("server2.ior");
 unlink $ior1file;
 unlink $ior2file;
 
-$SV1 = new PerlACE::Process ("server", "-o $ior1file");
+if (PerlACE::is_vxworks_test()) {
+    $SV1 = new PerlACE::ProcessVX ("server", "-o server1.ior");
+}
+else {
+    $SV1 = new PerlACE::Process ("server", "-o $ior1file");
+}
 $SV2 = new PerlACE::Process ("server", "-o $ior2file");
 $CL = new PerlACE::Process ("client", "-f $ior1file -g $ior2file -n 2 -i 10 -s 5");
 

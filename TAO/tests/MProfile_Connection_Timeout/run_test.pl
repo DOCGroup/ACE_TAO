@@ -16,7 +16,12 @@ unlink $iorfile2;
 
 $status = 0;
 
-$SV1 = new PerlACE::Process ("server", "-o $iorfile1");
+if (PerlACE::is_vxworks_test()) {
+    $SV1 = new PerlACE::ProcessVX ("server", "-o server1.ior");
+}
+else {
+    $SV1 = new PerlACE::Process ("server", "-o $iorfile1");
+}
 $SV2 = new PerlACE::Process ("server", "-o $iorfile2 -r");
 $CL = new PerlACE::Process ("client", " -k file://$iorfile1 -m file://$iorfile2");
 

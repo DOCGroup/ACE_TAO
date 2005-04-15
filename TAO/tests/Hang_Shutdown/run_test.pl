@@ -9,11 +9,16 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = "server.ior";
+$iorfile = PerlACE::LocalFile ("server.ior");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV = new PerlACE::Process ("server");
+}
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
@@ -43,7 +48,12 @@ unlink $iorfile;
 
 ################################
 print STDERR "===== Client with RW handler\n";
-$SV1 = new PerlACE::Process ("server", "");
+if (PerlACE::is_vxworks_test()) {
+    $SV1 = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV1 = new PerlACE::Process ("server");
+}
 $CL1 = new PerlACE::Process ("client", 
                              " -ORBSvcConf client.conf");
 

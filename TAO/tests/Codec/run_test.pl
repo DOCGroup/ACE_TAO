@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 print STDERR "\n\n==== Running Codec test\n";
 
-$T = new PerlACE::Process ("client");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("client");
+}
+else {
+    $T = new PerlACE::Process ("client");
+}
 
 $test = $T->SpawnWaitKill (15);
 

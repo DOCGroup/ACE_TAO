@@ -27,14 +27,27 @@ my @tests = qw(unbounded_value_sequence_ut
 
 foreach my $process (@tests) {
 
-
-  my $P = new PerlACE::Process ($process,
+    
+  my $P = 0;
+  if (PerlACE::is_vxworks_test()) {
+      $P = new PerlACE::ProcessVX ($process,
+                                  '--log_level=nothing '
+                                  .'--report_level=no');
+  }
+  else {
+      $P = new PerlACE::Process ($process,
                                 '--log_level=nothing '
                                 .'--report_level=no');
+  }
   my $executable = $P->Executable;
 
   # Not all the binaries are generated in all configurations.
-  next unless -x $executable;
+  if (PerlACE::is_vxworks_test()) {
+    next unless -e $executable;
+  }
+  else {
+    next unless -x $executable;
+  }
 
   print "Running $process ...";
   my $result = $P->Spawn;

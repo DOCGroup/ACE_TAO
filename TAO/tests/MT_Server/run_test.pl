@@ -15,7 +15,12 @@ $sv_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-ORBsvcconf $sv_conf -o $iorfile -n $threads");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-ORBsvcconf server$PerlACE::svcconf_ext -o test.ior -n $threads");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-ORBsvcconf $sv_conf -o $iorfile -n $threads");
+}
 $CL1 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");
 $CL2 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");
 $CL3 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");

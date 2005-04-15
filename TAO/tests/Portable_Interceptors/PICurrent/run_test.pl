@@ -13,7 +13,12 @@ $file = PerlACE::LocalFile ("test.ior");
 
 unlink $file;
 
-$SV = new PerlACE::Process ("server", "-o $file");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $file");    
+}
 $CL = new PerlACE::Process ("client", "-k file://$file");
 
 print STDERR "\n\n==== Running PICurrent test\n";

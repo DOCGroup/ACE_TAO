@@ -13,7 +13,12 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-f $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-f test.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-f $iorfile");
+}
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
 
 print STDERR "\nrunning ST version of the client and the server\n\n";
@@ -43,7 +48,12 @@ if ($server != 0) {
 
 unlink $iorfile;
 
-$SV->Arguments ("-f $iorfile -t 3");
+if (PerlACE::is_vxworks_test()) {
+    $SV->Arguments ("-f test.ior -t 3");
+}
+else {
+    $SV->Arguments ("-f $iorfile -t 3");
+}
 $CL->Arguments ("-k file://$iorfile -x -n 10");
 
 print STDERR "\nrunning MT version of the client and the server\n\n";

@@ -11,7 +11,12 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 
-$CO = new PerlACE::Process ("collocated");
+if (PerlACE::is_vxworks_test()) {
+    $CO = new PerlACE::ProcessVX ("collocated");
+}
+else {
+    $CO = new PerlACE::Process ("collocated");
+}
 
 $CO->Spawn ();
 

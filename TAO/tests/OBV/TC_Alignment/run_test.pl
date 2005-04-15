@@ -36,8 +36,13 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$SV = new PerlACE::Process ("server", " -ORBDottedDecimalAddresses 1");
-$CL = new PerlACE::Process ("client", " -x $debug");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", " -ORBDottedDecimalAddresses 1");
+}
+else {
+    $SV = new PerlACE::Process ("server", " -ORBDottedDecimalAddresses 1");
+}
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -x $debug");
 
 $SV->Spawn ();
 

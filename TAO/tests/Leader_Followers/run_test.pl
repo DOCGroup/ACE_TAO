@@ -13,7 +13,14 @@ $iorfile = PerlACE::LocalFile ("lf.ior");
 $tpool_reactor_directive = "-ORBsvcconfdirective \"static Advanced_Resource_Factory '-ORBreactortype tp'\"";
 $select_reactor_directive = "-ORBsvcconfdirective \"static Advanced_Resource_Factory '-ORBreactortype select_mt'\"";
 
-$SV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+    $sv_iorfile = "lf.ior";
+    $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+    $sv_iorfile = $iofile;
+    $SV = new PerlACE::Process ("server");
+}
 $CL = new PerlACE::Process ("client");
 
 sub run_client ($)
@@ -112,7 +119,7 @@ if ($single == 1) {
 
     print STDERR "\n\n*** Single threaded server ***\n\n\n";
 
-    $SV->Arguments ("-o $iorfile $select_reactor_directive");
+    $SV->Arguments ("-o $sv_iorfile $select_reactor_directive");
 
     $SV->Spawn ();
 
@@ -139,7 +146,7 @@ if ($multi == 1) {
     
     print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
 
-    $SV->Arguments ("-o $iorfile -e 5 $tpool_reactor_directive");
+    $SV->Arguments ("-o $sv_iorfile -e 5 $tpool_reactor_directive");
 
     $SV->Spawn ();
 

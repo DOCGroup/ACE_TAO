@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 $threads = '10';
 
-$T = new PerlACE::Process ("Manipulation", "-n $threads");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("Manipulation", "-n $threads");
+}
+else {
+    $T = new PerlACE::Process ("Manipulation", "-n $threads");
+}
 
 $test = $T->SpawnWaitKill (60);
 

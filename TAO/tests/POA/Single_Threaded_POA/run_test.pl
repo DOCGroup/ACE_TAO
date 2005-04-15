@@ -8,7 +8,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
-$T = new PerlACE::Process ("Single_Threaded_POA");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("Single_Threaded_POA");
+}
+else {
+    $T = new PerlACE::Process ("Single_Threaded_POA");
+}
 
 $client = $T->SpawnWaitKill (60);
 

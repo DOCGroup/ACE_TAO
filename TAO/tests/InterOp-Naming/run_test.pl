@@ -18,9 +18,17 @@ $status = 0;
 print STDERR "\n\n==== InitRef test\n";
 
 unlink $file;
-$SV = new PerlACE::Process ("INS_test_server",
-                       "-ORBEndpoint iiop://1.0@"."$TARGETHOSTNAME:$port "
-                       . " -i object_name -o $file -ORBDottedDecimalAddresses 1");
+if (PerlACE::is_vxworks_test()) {
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
+    $SV = new PerlACE::ProcessVX ("INS_test_server",
+                        "-ORBEndpoint iiop://1.0@"."$TARGETHOSTNAME:$port "
+                        . " -i object_name -o test.ior -ORBDottedDecimalAddresses 1");
+}
+else {
+    $SV = new PerlACE::Process ("INS_test_server",
+                        "-ORBEndpoint iiop://1.0@"."$TARGETHOSTNAME:$port "
+                        . " -i object_name -o $file -ORBDottedDecimalAddresses 1");
+}
 
 $SV->Spawn ();
 
@@ -31,7 +39,7 @@ if (PerlACE::waitforfile_timed ($file, 10) == -1) {
 }
 
 $CL = new PerlACE::Process ("INS_test_client",
-                       " random_service "
+                       "random_service "
                        ."-ORBInitRef random_service="
                        ."corbaloc::1.1@"."$TARGETHOSTNAME:$port/object_name");
 
