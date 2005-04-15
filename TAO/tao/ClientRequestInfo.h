@@ -31,7 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/ClientRequestInfoC.h"
 #include "tao/ORB_Constants.h"
 
 class TAO_ClientRequestInfo_i;

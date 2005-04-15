@@ -41,14 +41,14 @@
 #include <Current.pidl>
 #include <Dynamic.pidl>
 #include <Messaging_SyncScope.pidl>
-#include <IOP_Codec.pidl>
-#include <IOP_IOR.pidl>
-#include <Policy.pidl>
 
 #include <ORBInitializer.pidl>
+#include <ORBInitInfo.pidl>
 #include <InvalidSlot.pidl>
 #include <ClientRequestInfo.pidl>
 #include <ServerRequestInfo.pidl>
+#include <PolicyFactory.pidl>
+#include <ORBInitInfo.pidl>
 
 module PortableInterceptor {
 
@@ -103,47 +103,6 @@ module PortableInterceptor {
     void send_reply (in ServerRequestInfo ri);
     void send_exception (in ServerRequestInfo ri) raises (ForwardRequest);
     void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
-  };
-
-  local interface PolicyFactory
-  {
-    CORBA::Policy create_policy (in CORBA::PolicyType type, in any value)
-      raises (CORBA::PolicyError);
-  };
-
-  local interface IORInterceptor;
-
-  local interface ORBInitInfo
-  {
-    typedef string ObjectId;
-
-    exception DuplicateName
-    {
-      string name;
-    };
-
-    exception InvalidName {};
-
-    readonly attribute CORBA::StringSeq arguments;
-    readonly attribute string orb_id;
-    readonly attribute IOP::CodecFactory codec_factory;
-
-    void register_initial_reference (in ObjectId id, in Object obj)
-      raises (InvalidName);
-    Object resolve_initial_references (in ObjectId id)
-      raises (InvalidName);
-    void add_client_request_interceptor (
-      in ClientRequestInterceptor interceptor)
-      raises (DuplicateName);
-    void add_server_request_interceptor (
-      in ServerRequestInterceptor interceptor)
-      raises (DuplicateName);
-    void add_ior_interceptor (in IORInterceptor interceptor)
-      raises (DuplicateName);
-    SlotId allocate_slot_id ();
-    void register_policy_factory (
-      in CORBA::PolicyType type,
-      in PolicyFactory policy_factory);
   };
 };
 

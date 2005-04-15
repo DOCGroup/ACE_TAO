@@ -187,6 +187,8 @@ libTAO_la_SOURCES = \
   NVList.cpp \
   ORB.cpp \
   ORBInitInfo.cpp \
+  ORBInitInfoA.cpp \
+  ORBInitInfoC.cpp \
   ORBInitializerA.cpp \
   ORBInitializerC.cpp \
   ORBInitializer_Registry.cpp \
@@ -215,6 +217,8 @@ libTAO_la_SOURCES = \
   Pluggable_Messaging_Utils.cpp \
   PolicyA.cpp \
   PolicyC.cpp \
+  PolicyFactoryA.cpp \
+  PolicyFactoryC.cpp \
   PolicyFactory_Registry.cpp \
   Policy_ForwardA.cpp \
   Policy_ForwardC.cpp \
@@ -628,6 +632,9 @@ nobase_include_HEADERS = \
   ORB.i \
   ORBInitInfo.h \
   ORBInitInfo.inl \
+  ORBInitInfo.pidl \
+  ORBInitInfoC.h \
+  ORBInitInfoS.h \
   ORBInitializer.pidl \
   ORBInitializerC.h \
   ORBInitializerS.h \
@@ -683,6 +690,9 @@ nobase_include_HEADERS = \
   Policy.pidl \
   PolicyC.h \
   PolicyC.inl \
+  PolicyFactory.pidl \
+  PolicyFactoryC.h \
+  PolicyFactoryS.h \
   PolicyFactory_Registry.h \
   PolicyS.h \
   Policy_Forward.pidl \

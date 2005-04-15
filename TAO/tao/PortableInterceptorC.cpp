@@ -89,7 +89,7 @@ PortableInterceptor::Interceptor::Interceptor (void)
 PortableInterceptor::Interceptor::~Interceptor (void)
 {}
 
-void 
+void
 PortableInterceptor::Interceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   Interceptor *_tao_tmp_pointer =
@@ -107,10 +107,10 @@ PortableInterceptor::Interceptor::_narrow (
     {
       return Interceptor::_nil ();
     }
-  
+
   Interceptor_ptr proxy =
     dynamic_cast<Interceptor_ptr> (_tao_objref);
-  
+
   return Interceptor::_duplicate (proxy);
 }
 
@@ -124,10 +124,10 @@ PortableInterceptor::Interceptor::_unchecked_narrow (
     {
       return Interceptor::_nil ();
     }
-  
+
   Interceptor_ptr proxy =
     dynamic_cast<Interceptor_ptr> (_tao_objref);
-  
+
   return Interceptor::_duplicate (proxy);
 }
 
@@ -138,7 +138,7 @@ PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -188,7 +188,7 @@ PortableInterceptor::Interceptor::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ForwardRequest::ForwardRequest (void)
@@ -272,7 +272,7 @@ void PortableInterceptor::ForwardRequest::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -285,7 +285,7 @@ void PortableInterceptor::ForwardRequest::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -353,7 +353,7 @@ PortableInterceptor::Current::Current (void)
 PortableInterceptor::Current::~Current (void)
 {}
 
-void 
+void
 PortableInterceptor::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -371,10 +371,10 @@ PortableInterceptor::Current::_narrow (
     {
       return Current::_nil ();
     }
-  
+
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-  
+
   return Current::_duplicate (proxy);
 }
 
@@ -388,10 +388,10 @@ PortableInterceptor::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-  
+
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-  
+
   return Current::_duplicate (proxy);
 }
 
@@ -402,7 +402,7 @@ PortableInterceptor::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -498,7 +498,7 @@ PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (void)
 PortableInterceptor::ClientRequestInterceptor::~ClientRequestInterceptor (void)
 {}
 
-void 
+void
 PortableInterceptor::ClientRequestInterceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   ClientRequestInterceptor *_tao_tmp_pointer =
@@ -516,10 +516,10 @@ PortableInterceptor::ClientRequestInterceptor::_narrow (
     {
       return ClientRequestInterceptor::_nil ();
     }
-  
+
   ClientRequestInterceptor_ptr proxy =
     dynamic_cast<ClientRequestInterceptor_ptr> (_tao_objref);
-  
+
   return ClientRequestInterceptor::_duplicate (proxy);
 }
 
@@ -533,10 +533,10 @@ PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
     {
       return ClientRequestInterceptor::_nil ();
     }
-  
+
   ClientRequestInterceptor_ptr proxy =
     dynamic_cast<ClientRequestInterceptor_ptr> (_tao_objref);
-  
+
   return ClientRequestInterceptor::_duplicate (proxy);
 }
 
@@ -547,7 +547,7 @@ PortableInterceptor::ClientRequestInterceptor::_duplicate (ClientRequestIntercep
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -643,7 +643,7 @@ PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (void)
 PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor (void)
 {}
 
-void 
+void
 PortableInterceptor::ServerRequestInterceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServerRequestInterceptor *_tao_tmp_pointer =
@@ -661,10 +661,10 @@ PortableInterceptor::ServerRequestInterceptor::_narrow (
     {
       return ServerRequestInterceptor::_nil ();
     }
-  
+
   ServerRequestInterceptor_ptr proxy =
     dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref);
-  
+
   return ServerRequestInterceptor::_duplicate (proxy);
 }
 
@@ -678,10 +678,10 @@ PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
     {
       return ServerRequestInterceptor::_nil ();
     }
-  
+
   ServerRequestInterceptor_ptr proxy =
     dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref);
-  
+
   return ServerRequestInterceptor::_duplicate (proxy);
 }
 
@@ -692,7 +692,7 @@ PortableInterceptor::ServerRequestInterceptor::_duplicate (ServerRequestIntercep
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -744,508 +744,6 @@ CORBA::Boolean
 PortableInterceptor::ServerRequestInterceptor::marshal (TAO_OutputCDR &)
 {
   return false;
-}
-
-// TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableInterceptor::PolicyFactory.
-
-PortableInterceptor::PolicyFactory_ptr
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::duplicate (
-    PortableInterceptor::PolicyFactory_ptr p
-  )
-{
-  return PortableInterceptor::PolicyFactory::_duplicate (p);
-}
-
-void
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::release (
-    PortableInterceptor::PolicyFactory_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::PolicyFactory_ptr
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::nil (void)
-{
-  return PortableInterceptor::PolicyFactory::_nil ();
-}
-
-CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::marshal (
-    PortableInterceptor::PolicyFactory_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-PortableInterceptor::PolicyFactory::PolicyFactory (void)
-{}
-
-PortableInterceptor::PolicyFactory::~PolicyFactory (void)
-{}
-
-void 
-PortableInterceptor::PolicyFactory::_tao_any_destructor (void *_tao_void_pointer)
-{
-  PolicyFactory *_tao_tmp_pointer =
-    static_cast<PolicyFactory *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyFactory::_nil ();
-    }
-  
-  PolicyFactory_ptr proxy =
-    dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-  
-  return PolicyFactory::_duplicate (proxy);
-}
-
-PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyFactory::_nil ();
-    }
-  
-  PolicyFactory_ptr proxy =
-    dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-  
-  return PolicyFactory::_duplicate (proxy);
-}
-
-PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-  
-  return obj;
-}
-
-void
-PortableInterceptor::PolicyFactory::_tao_release (PolicyFactory_ptr obj)
-{
-  CORBA::release (obj);
-}
-
-CORBA::Boolean
-PortableInterceptor::PolicyFactory::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-    )
-    {
-      return true; // success using local knowledge
-    }
-  else
-    {
-      return false;
-    }
-}
-
-const char* PortableInterceptor::PolicyFactory::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0";
-}
-
-CORBA::Boolean
-PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
-{
-  return false;
-}
-
-// TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for PortableInterceptor::ORBInitInfo.
-
-PortableInterceptor::ORBInitInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::duplicate (
-    PortableInterceptor::ORBInitInfo_ptr p
-  )
-{
-  return PortableInterceptor::ORBInitInfo::_duplicate (p);
-}
-
-void
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::release (
-    PortableInterceptor::ORBInitInfo_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::ORBInitInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::nil (void)
-{
-  return PortableInterceptor::ORBInitInfo::_nil ();
-}
-
-CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::marshal (
-    PortableInterceptor::ORBInitInfo_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return CORBA::Object::marshal (p, cdr);
-}
-
-// TAO_IDL - Generated from 
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
-
-PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (void)
-  : CORBA::UserException (
-        "IDL:omg.org/PortableInterceptor/ORBInitInfo/DuplicateName:1.0",
-        "DuplicateName"
-      )
-{
-}
-
-PortableInterceptor::ORBInitInfo::DuplicateName::~DuplicateName (void)
-{
-}
-
-PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (const ::PortableInterceptor::ORBInitInfo::DuplicateName &_tao_excp)
-  : CORBA::UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
-{
-  this->name = CORBA::string_dup (_tao_excp.name.in ());
-}
-
-PortableInterceptor::ORBInitInfo::DuplicateName&
-PortableInterceptor::ORBInitInfo::DuplicateName::operator= (const ::PortableInterceptor::ORBInitInfo::DuplicateName &_tao_excp)
-{
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
-  this->name = CORBA::string_dup (_tao_excp.name.in ());
-  return *this;
-}
-
-void PortableInterceptor::ORBInitInfo::DuplicateName::_tao_any_destructor (void *_tao_void_pointer)
-{
-  DuplicateName *_tao_tmp_pointer =
-    static_cast<DuplicateName *> (_tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-PortableInterceptor::ORBInitInfo::DuplicateName *
-PortableInterceptor::ORBInitInfo::DuplicateName::_downcast (CORBA::Exception *_tao_excp)
-{
-  return dynamic_cast<DuplicateName *> (_tao_excp);
-}
-
-const PortableInterceptor::ORBInitInfo::DuplicateName *
-PortableInterceptor::ORBInitInfo::DuplicateName::_downcast (CORBA::Exception const *_tao_excp)
-{
-  return dynamic_cast<const DuplicateName *> (_tao_excp);
-}
-
-CORBA::Exception *PortableInterceptor::ORBInitInfo::DuplicateName::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableInterceptor::ORBInitInfo::DuplicateName, 0);
-  return retval;
-}
-
-CORBA::Exception *
-PortableInterceptor::ORBInitInfo::DuplicateName::_tao_duplicate (void) const
-{
-  CORBA::Exception *result = 0;
-  ACE_NEW_RETURN (
-      result,
-      ::PortableInterceptor::ORBInitInfo::DuplicateName (*this),
-      0
-    );
-  return result;
-}
-
-void PortableInterceptor::ORBInitInfo::DuplicateName::_raise (void) const
-{
-  TAO_RAISE (*this);
-}
-
-void PortableInterceptor::ORBInitInfo::DuplicateName::_tao_encode (
-    TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
-  ) const
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void PortableInterceptor::ORBInitInfo::DuplicateName::_tao_decode (
-    TAO_InputCDR &
-    ACE_ENV_ARG_DECL
-  )
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-
-
-// TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_ctor.cpp:66
-
-PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (
-    const char * _tao_name
-  )
-  : CORBA::UserException (
-        "IDL:omg.org/PortableInterceptor/ORBInitInfo/DuplicateName:1.0",
-        "DuplicateName"
-      )
-{
-  this->name = CORBA::string_dup (_tao_name);
-}
-
-// TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::DuplicateName::_tao_type (void) const
-{
-  return ::PortableInterceptor::ORBInitInfo::_tc_DuplicateName;
-}
-
-// TAO_IDL - Generated from 
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
-
-PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (void)
-  : CORBA::UserException (
-        "IDL:omg.org/PortableInterceptor/ORBInitInfo/InvalidName:1.0",
-        "InvalidName"
-      )
-{
-}
-
-PortableInterceptor::ORBInitInfo::InvalidName::~InvalidName (void)
-{
-}
-
-PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (const ::PortableInterceptor::ORBInitInfo::InvalidName &_tao_excp)
-  : CORBA::UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
-{
-}
-
-PortableInterceptor::ORBInitInfo::InvalidName&
-PortableInterceptor::ORBInitInfo::InvalidName::operator= (const ::PortableInterceptor::ORBInitInfo::InvalidName &_tao_excp)
-{
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
-  return *this;
-}
-
-void PortableInterceptor::ORBInitInfo::InvalidName::_tao_any_destructor (void *_tao_void_pointer)
-{
-  InvalidName *_tao_tmp_pointer =
-    static_cast<InvalidName *> (_tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-PortableInterceptor::ORBInitInfo::InvalidName *
-PortableInterceptor::ORBInitInfo::InvalidName::_downcast (CORBA::Exception *_tao_excp)
-{
-  return dynamic_cast<InvalidName *> (_tao_excp);
-}
-
-const PortableInterceptor::ORBInitInfo::InvalidName *
-PortableInterceptor::ORBInitInfo::InvalidName::_downcast (CORBA::Exception const *_tao_excp)
-{
-  return dynamic_cast<const InvalidName *> (_tao_excp);
-}
-
-CORBA::Exception *PortableInterceptor::ORBInitInfo::InvalidName::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableInterceptor::ORBInitInfo::InvalidName, 0);
-  return retval;
-}
-
-CORBA::Exception *
-PortableInterceptor::ORBInitInfo::InvalidName::_tao_duplicate (void) const
-{
-  CORBA::Exception *result = 0;
-  ACE_NEW_RETURN (
-      result,
-      ::PortableInterceptor::ORBInitInfo::InvalidName (*this),
-      0
-    );
-  return result;
-}
-
-void PortableInterceptor::ORBInitInfo::InvalidName::_raise (void) const
-{
-  TAO_RAISE (*this);
-}
-
-void PortableInterceptor::ORBInitInfo::InvalidName::_tao_encode (
-    TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
-  ) const
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void PortableInterceptor::ORBInitInfo::InvalidName::_tao_decode (
-    TAO_InputCDR &
-    ACE_ENV_ARG_DECL
-  )
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::InvalidName::_tao_type (void) const
-{
-  return ::PortableInterceptor::ORBInitInfo::_tc_InvalidName;
-}
-
-PortableInterceptor::ORBInitInfo::ORBInitInfo (void)
-{}
-
-PortableInterceptor::ORBInitInfo::~ORBInitInfo (void)
-{}
-
-void 
-PortableInterceptor::ORBInitInfo::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ORBInitInfo *_tao_tmp_pointer =
-    static_cast<ORBInitInfo *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ORBInitInfo::_nil ();
-    }
-  
-  ORBInitInfo_ptr proxy =
-    dynamic_cast<ORBInitInfo_ptr> (_tao_objref);
-  
-  return ORBInitInfo::_duplicate (proxy);
-}
-
-PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ORBInitInfo::_nil ();
-    }
-  
-  ORBInitInfo_ptr proxy =
-    dynamic_cast<ORBInitInfo_ptr> (_tao_objref);
-  
-  return ORBInitInfo::_duplicate (proxy);
-}
-
-PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo::_duplicate (ORBInitInfo_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-  
-  return obj;
-}
-
-void
-PortableInterceptor::ORBInitInfo::_tao_release (ORBInitInfo_ptr obj)
-{
-  CORBA::release (obj);
-}
-
-CORBA::Boolean
-PortableInterceptor::ORBInitInfo::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/PortableInterceptor/ORBInitInfo:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-    )
-    {
-      return true; // success using local knowledge
-    }
-  else
-    {
-      return false;
-    }
-}
-
-const char* PortableInterceptor::ORBInitInfo::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/PortableInterceptor/ORBInitInfo:1.0";
-}
-
-CORBA::Boolean
-PortableInterceptor::ORBInitInfo::marshal (TAO_OutputCDR &)
-{
-  return false;
-}
-
-// Hand-crafted.
-
-::CORBA::Policy_ptr
-PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
-                                                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
-{
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
 }
 
 // TAO_IDL - Generated from

@@ -90,8 +90,8 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
       config.get_string_value (key, IOR, ior);
       config.get_integer_value(key, START_LIMIT, start_limit);
 
-      ImplementationRepository::ActivationMode amode = ACE_static_cast (
-        ImplementationRepository::ActivationMode, amodeint);
+      ImplementationRepository::ActivationMode amode =
+        static_cast <ImplementationRepository::ActivationMode> (amodeint);
 
       ImplementationRepository::EnvironmentList env_vars =
         ImR_Utils::parseEnvList(envstr);
