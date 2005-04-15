@@ -235,8 +235,6 @@ ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
                                         properly with datagrams,
                                         i.e. it fails when the iovec
                                         size is IOV_MAX.
-ACE_HAS_BROKEN_ENUMS                    Compiler can't handle large
-                                        enums (e.g., HP/UX C++)
 ACE_HAS_BROKEN_HPUX_TEMPLATES           Earlier versions of HP/UX C++
                                         are damned...
 ACE_HAS_BROKEN_MAP_FAILED               Platform doesn't cast MAP_FAILED
