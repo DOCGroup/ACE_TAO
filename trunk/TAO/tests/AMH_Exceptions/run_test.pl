@@ -19,7 +19,12 @@ $iorfile = PerlACE::LocalFile("test.ior");
 
 unlink $iorfile;
 
-$AMH = new PerlACE::Process ("server", "");
+if (PerlACE::is_vxworks_test()) {
+    $AMH = new PerlACE::ProcessVX ("server", "");
+}
+else {
+    $AMH = new PerlACE::Process ("server", "");
+}
 $CL = new PerlACE::Process ("client", "");
 
 # Run the AMH server.

@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 print STDERR "\n********** RTCORBA Destroy_Thread_Pool Unit Test **********\n\n";
 
-$T = new PerlACE::Process ("Destroy_Thread_Pool");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("Destroy_Thread_Pool");
+}
+else {
+    $T = new PerlACE::Process ("Destroy_Thread_Pool");    
+}
 
 $test = $T->SpawnWaitKill (60);
 

@@ -16,7 +16,12 @@ unlink $gwfile;
 
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $svfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $svfile");
+}
 $GW = new PerlACE::Process ("gateway", "-k file://$svfile -o $gwfile");
 $CL = new PerlACE::Process ("client", "-k file://$gwfile -x -i 100");
 

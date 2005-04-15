@@ -15,7 +15,12 @@ sub run_test
 {
     my $type = shift(@_);
 
-    $BT = new PerlACE::Process ("basic_test", "-t $type");
+    if (PerlACE::is_vxworks_test()) {
+        $BT = new PerlACE::ProcessVX ("basic_test", "-t $type");
+    }
+    else {
+        $BT = new PerlACE::Process ("basic_test", "-t $type");
+    }
     my $basictest = $BT->SpawnWaitKill (10);
     
     if ($basictest != 0) {

@@ -38,8 +38,13 @@ if ($^O eq "hpux") {
         "-b bands.hpux";
 }
 
-$SV = new PerlACE::Process ("server", $server_args);
-$CL = new PerlACE::Process ("client");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", $server_args);
+}
+else {
+    $SV = new PerlACE::Process ("server", $server_args);
+}
+$CL = new PerlACE::Process ("client", "-n file://$iorfile1 -o file://$iorfile2");
 
 $SV->Spawn();
 if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) 

@@ -16,7 +16,12 @@ unlink $iorfile;
 
 print STDERR "\n            RTCORBA CLIENT_PROPAGATED Priority Unit Test\n\n";
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", , "-o test.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", , "-o $iorfile");
+}
 $CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
 $SV->Spawn ();

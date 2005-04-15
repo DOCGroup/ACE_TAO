@@ -10,11 +10,15 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
-$svcconf = PerlACE::LocalFile ("bala$PerlACE::svcconf_ext");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-ORBSvcConf server$PerlACE::svcconf_ext -o $iorfile -c 3 -i 100");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-ORBsvcconf server$PerlACE::svcconf_ext -o test.ior -c 3 -i 100");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-ORBSvcConf server$PerlACE::svcconf_ext -o $iorfile -c 3 -i 100");
+}
 $CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", "-k file://$iorfile");
 $CL3 = new PerlACE::Process ("client", "-k file://$iorfile");

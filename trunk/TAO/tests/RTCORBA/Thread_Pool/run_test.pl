@@ -56,7 +56,12 @@ sub run_clients
     }
 }
 
-$SV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV = new PerlACE::Process ("server");
+}
 
 $SV->Spawn ();
 
@@ -86,14 +91,14 @@ for $test (@configurations)
     print STDERR "$test->{description}\n";
     print STDERR "*************************************************************\n\n";
       
-    run_clients ("-k file://$test->{file}", $number_of_clients);
+    run_clients ("-k file://".PerlACE::LocalFile($test->{file}), $number_of_clients);
   }
 
 print STDERR "\n************************\n";
 print STDERR "Shutting down the server\n";
 print STDERR "************************\n\n";
 
-run_clients ("-k file://$configurations[0]->{file} -i 0 -x", 1);
+run_clients ("-k file://".PerlACE::LocalFile($configurations[0]->{file})." -i 0 -x", 1);
 
 kill_server:
 

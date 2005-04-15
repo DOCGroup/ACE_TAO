@@ -9,11 +9,16 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("ior");
+$iorfile = PerlACE::LocalFile ("server.ior");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");    
+}
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -x 1");
 
 $SV->Spawn ();

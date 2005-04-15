@@ -29,7 +29,12 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-ORBsvcconf $server_conf -ORBdebuglevel $debug_level -o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-ORBsvcconf server$PerlACE::svcconf_ext -ORBdebuglevel $debug_level -o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-ORBsvcconf $server_conf -ORBdebuglevel $debug_level -o $iorfile");
+}
 $CL = new PerlACE::Process ($client_process, 
                             "-ORBdebuglevel $debug_level "
                             . "-k file://$iorfile "

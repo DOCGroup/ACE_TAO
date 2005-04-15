@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 print STDERR "\n********** RTCORBA Collocation Unit Test **********\n\n";
 
-$T = new PerlACE::Process ("Collocation");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("Collocation");
+}
+else {
+    $T = new PerlACE::Process ("Collocation");    
+}
 
 $test = $T->SpawnWaitKill(60);
 if ($test == 2) {

@@ -12,7 +12,12 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("collocated");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("collocated");
+}
+else {
+    $SV = new PerlACE::Process ("collocated");    
+}
 
 print STDERR "======== Running in default mode \n";
 # $SV->Arguments ("-o $iorfile -k file://$iorfile");

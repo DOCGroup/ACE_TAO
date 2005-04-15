@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$CL = new PerlACE::Process ("Thread_Cancel", "");
+if (PerlACE::is_vxworks_test()) {
+    $CL = new PerlACE::ProcessVX ("Thread_Cancel");
+}
+else {
+    $CL = new PerlACE::Process ("Thread_Cancel");
+}
 
 print STDERR "Starting Current Test\n";
 

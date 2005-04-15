@@ -43,14 +43,20 @@ unlink $iorfile;
 unlink $data_file;
 
 $server_args =
-    "-o $iorfile -ORBdebuglevel $debug_level "
-    ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
+    "-ORBdebuglevel $debug_level "
+    ."-ORBendpoint iiop:// "
+    .(PerlACE::is_vxworks_test() ? "" : "-ORBendpoint shmiop:// ");
 
 $client_args =
     "-o file://$iorfile  "
     ."-a $priority1 -b $priority2 -e 1413566210 -f 0 -n $iterations";
 
-$SV = new PerlACE::Process ("server", $server_args);
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o test.ior $server_args");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
+}
 $CL = new PerlACE::Process ("client", $client_args);
 
 print STDERR "\n********** MT Client Protocol & CLIENT_PROPAGATED combo Test\n\n";

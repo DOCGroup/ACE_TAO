@@ -13,7 +13,12 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
 $CL = new PerlACE::Process ("client", "-i 5000 -k file://$iorfile");
 $T = new PerlACE::Process ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
 

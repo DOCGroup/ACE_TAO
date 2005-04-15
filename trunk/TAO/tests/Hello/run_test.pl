@@ -8,13 +8,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../bin';
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
-unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+$iorfile = PerlACE::LocalFile ("server.ior");
+unlink $iorfile;
 
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
+$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+    
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile,

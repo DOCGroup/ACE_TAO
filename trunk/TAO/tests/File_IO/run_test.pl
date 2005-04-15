@@ -13,7 +13,12 @@ $status = 0;
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
 $CL = new PerlACE::Process ("client", "-k $iorfile");
 
 $SV->Spawn ();

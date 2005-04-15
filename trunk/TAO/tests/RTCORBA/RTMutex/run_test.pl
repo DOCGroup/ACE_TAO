@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 print STDERR "\n********** RTCORBA RTMutex Unit Test **********\n\n";
 
-$T = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("server");
+}
+else {
+    $T = new PerlACE::Process ("server");
+}
 
 $test = $T->SpawnWaitKill (60);
 

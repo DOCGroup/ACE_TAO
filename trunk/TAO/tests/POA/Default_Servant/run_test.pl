@@ -8,7 +8,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
-$T = new PerlACE::Process ("Default_Servant");
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("Default_Servant");
+}
+else {
+    $T = new PerlACE::Process ("Default_Servant");
+}
 
 $test = $T->SpawnWaitKill (60);
 

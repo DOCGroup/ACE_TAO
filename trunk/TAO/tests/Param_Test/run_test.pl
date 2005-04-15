@@ -63,7 +63,12 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$SV = new PerlACE::Process ("server", "$debug -o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "$debug -o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "$debug -o $iorfile");
+}
 $CL = new PerlACE::Process ("client");
 
 foreach $type (@types) {

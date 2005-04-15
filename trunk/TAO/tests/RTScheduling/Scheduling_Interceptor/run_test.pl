@@ -12,15 +12,27 @@ use PerlACE::Run_Test;
 
 $sleeptime = 2;
 $status = 0;
+$iorfile = PerlACE::LocalFile("test.ior");
 
-$SV = new PerlACE::Process ("Scheduler_Interceptor_Server", "-f test.ior");
-$CL = new PerlACE::Process ("Scheduler_Interceptor_Client", "-f test.ior");
+unlink $iorfile;
+
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("Scheduler_Interceptor_Server", "-f test.ior");
+}
+else {
+    $SV = new PerlACE::Process ("Scheduler_Interceptor_Server", "-f test.ior");
+}
+$CL = new PerlACE::Process ("Scheduler_Interceptor_Client", "-f $iorfile");
 
 print STDERR "Starting Server\n";
 
 $SV->Spawn ();
 
-sleep $sleeptime;
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill ();
+    exit 1;
+}
 
 print STDERR "Starting Client\n";
 

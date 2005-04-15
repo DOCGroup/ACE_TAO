@@ -12,7 +12,12 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile -ORBId ORT_test_ORB -ORBServerId ORT_test_server");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -ORBId ORT_test_ORB -ORBServerId ORT_test_server");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile -ORBId ORT_test_ORB -ORBServerId ORT_test_server");
+}
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
 print STDERR "\n\n==== Running ORT (Object Reference Template) test\n";

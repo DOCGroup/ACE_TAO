@@ -11,7 +11,12 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile -ORBdotteddecimaladdresses 1");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -ORBdotteddecimaladdresses 1");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile -ORBdotteddecimaladdresses 1");
+}
 $CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", "-k file://$iorfile");
 $CL3 = new PerlACE::Process ("client", "-k file://$iorfile");
