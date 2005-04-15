@@ -1,8 +1,8 @@
---- orig/PortableInterceptorC.h	2005-04-13 11:08:23.328516800 +0200
-+++ PortableInterceptorC.h	2005-04-13 11:10:16.621424000 +0200
-@@ -59,6 +59,12 @@
- #include "tao/PolicyC.h"
- #include "tao/ORBInitializerC.h"
+--- orig/PortableInterceptorC.h	2005-04-15 12:04:07.461212800 +0200
++++ PortableInterceptorC.h	2005-04-15 12:24:20.435384000 +0200
+@@ -61,6 +61,12 @@
+ #include "tao/PolicyFactoryC.h"
+ #include "tao/ORBInitInfoC.h"
  
 +#include "PI_ForwardC.h"
 +#include "tao/Messaging_SyncScopeC.h"
@@ -13,7 +13,7 @@
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
  #endif
-@@ -73,6 +79,16 @@
+@@ -75,6 +81,16 @@
  #pragma option push -w-rvl -w-rch -w-ccc -w-inl
  #endif /* __BORLANDC__ */
  
@@ -30,7 +30,7 @@
  // TAO_IDL - Generated from
  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:48
  
-@@ -1318,15 +1334,19 @@
+@@ -625,15 +641,19 @@
      // TAO_IDL - Generated from
      // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
      
@@ -52,41 +52,3 @@
      
      // TAO_IDL - Generated from
      // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
-@@ -1489,6 +1509,16 @@
-         ::CORBA::PolicyError
-       )) = 0;
-     
-+    // Hand-crafted addition.
-+    virtual ::CORBA::Policy_ptr _create_policy (
-+        CORBA::PolicyType type
-+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-+      )
-+      ACE_THROW_SPEC ((
-+        CORBA::SystemException
-+        , CORBA::PolicyError
-+      ));
-+
-     // TAO_IDL - Generated from
-     // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:210
-     
---- orig/PortableInterceptorC.cpp	2005-04-13 11:08:23.328516800 +0200
-+++ PortableInterceptorC.cpp	2005-04-13 11:08:44.609116800 +0200
-@@ -1772,6 +1772,18 @@
-   return false;
- }
- 
-+// Hand-crafted.
-+
-+::CORBA::Policy_ptr
-+PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
-+                                                    ACE_ENV_ARG_DECL)
-+  ACE_THROW_SPEC ((CORBA::SystemException,
-+                   CORBA::PolicyError))
-+{
-+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-+                    CORBA::Policy::_nil ());
-+}
-+
- // TAO_IDL - Generated from
- // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/cdr_op_cs.cpp:60
- 

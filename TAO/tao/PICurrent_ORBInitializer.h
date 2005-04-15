@@ -24,7 +24,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PortableInterceptorC.h"
+#include "ORBInitializerC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
