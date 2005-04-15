@@ -1,31 +1,39 @@
+Fri Apr 15 07:19:20 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/Handle_Set.cpp:
+        * ace/README:
+        * m4/config_h.m4:
+          Removed references to ACE_HAS_BROKEN_BITSHIFT. It is no longer
+          needed.
+
 Thu Apr 14 17:12:44 2005  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Corrected the variable used to tell whether or not
-	  to check for ACE_HAS_XPG4_MULTIBYTE_CHAR. Fixes configure on Solaris.
+        * configure.ac: Corrected the variable used to tell whether or not
+          to check for ACE_HAS_XPG4_MULTIBYTE_CHAR. Fixes configure on Solaris.
 
-	* ace/Service_Config.h: #include "ace/SString.h" instead of
-	  "ace/SStringfwd.h" to make sure everything needed for explicit
-	  template instantiation is present.
+        * ace/Service_Config.h: #include "ace/SString.h" instead of
+          "ace/SStringfwd.h" to make sure everything needed for explicit
+          template instantiation is present.
 
 Thu Apr 14 15:25:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* NEWS: Added a note that the reactor change:
-	  Wed Apr 13 14:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
-	  may cause some trouble in programs that dynamically allocate
-	  a reactor implementation then destroy it before the ACE_Reactor
-	  referring to it. This is always bad, but now will cause a crash.
+        * NEWS: Added a note that the reactor change:
+          Wed Apr 13 14:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+          may cause some trouble in programs that dynamically allocate
+          a reactor implementation then destroy it before the ACE_Reactor
+          referring to it. This is always bad, but now will cause a crash.
 
-	* examples/Reactor/WFMO_Reactor/run_test.pl: Removed the "require
-	  Process" line - it tried to refer to the one in $ACE_ROOT/bin, which
-	  was removed:
-	  Mon Apr  4 11:20:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+        * examples/Reactor/WFMO_Reactor/run_test.pl: Removed the "require
+          Process" line - it tried to refer to the one in $ACE_ROOT/bin, which
+          was removed:
+          Mon Apr  4 11:20:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/Priority_Reactor_Test.cpp (run_main):
-	* tests/Reactor_Notify_Test.cpp (run_test): Use the ACE_Reactor's
-	  delete_implementation setting to delete any created reactor
-	  implementation instead of using separate auto_ptr objects for the
-	  ACE_Reactor and its implementation. Prevents destruction
-	  order issues if the implementation is destroyed first.
+        * tests/Priority_Reactor_Test.cpp (run_main):
+        * tests/Reactor_Notify_Test.cpp (run_test): Use the ACE_Reactor's
+          delete_implementation setting to delete any created reactor
+          implementation instead of using separate auto_ptr objects for the
+          ACE_Reactor and its implementation. Prevents destruction
+          order issues if the implementation is destroyed first.
 
 Thu Apr 14 09:21:14 2005  Chad Elliott  <elliott_c@ociweb.com>
 
