@@ -1,8 +1,0 @@
-// $Id$
-
-workspace {
-  exclude {
-    CIAO
-  }
-}
-

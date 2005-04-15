@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./performance-tests/Cubit/TAO/IDL_Cubit/server_shmiop.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  -->
- <!--  $Id$ -->
- <!--  -->
- <static id="SHMIOP_Factory" params="-MMAPFilePrefix server_shmiop -MMAPFileSize 1000000"/>
-</ACE_Svc_Conf>
