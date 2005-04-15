@@ -17,7 +17,7 @@
 
 #if defined (ACE_HAS_SYSENT_H)
 # include /**/ <sysent.h>
-#endif /* ACE_HAS_SYSENT_H_*/
+#endif /* ACE_HAS_SYSENT_H */
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
