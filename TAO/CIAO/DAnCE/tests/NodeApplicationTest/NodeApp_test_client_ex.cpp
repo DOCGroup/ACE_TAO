@@ -94,7 +94,7 @@ main (int argc, char *argv[])
 
       assert (comp_info->length () == 1); //return 1 component objeref
 
-      const CORBA::ULong i = 0;
+      CORBA::ULong i = 0;
       Components::CCMObject_var objref = (comp_info[i]).component_ref;
 
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
@@ -128,7 +128,7 @@ main (int argc, char *argv[])
       // Invoke Operation on the Interface
       ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
 
-      for (CORBA::ULong i = 0; i < 2; ++i )
+      for (i = 0; i < 2; ++i )
         {
 	        NodeAppTest::LatencyTest_var latency_var
 	          = NodeAppTest::LatencyTest::_narrow ( (facets_info[i]->facet_ref ()));
