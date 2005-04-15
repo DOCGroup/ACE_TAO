@@ -1,3 +1,12 @@
+Fri Apr 15 07:39:20 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/OS.inl:
+          Fixed typo in comment.
+
+        * ace/config-integritySCA.h:
+          Removed ACE_HAS_SYSENT_H definition. It is no longer
+          used in ACE/TAO code.
+
 Fri Apr 15 07:27:38 2005  Olli Savia  <ops@iki.fi>
 
         * ace/README:
@@ -9,7 +18,7 @@ Fri Apr 15 07:27:38 2005  Olli Savia  <ops@iki.fi>
           Removed ACE_HAS_PTHREAD_ATTR_INIT, ACE_HAS_PTHREAD_ATTR_DESTROY and
           ACE_HAS_PTHREAD_YIELD_VOID_PTR definitions. These are no longer
           used in ACE/TAO code.
-        
+
 Fri Apr 15 07:19:20 2005  Olli Savia  <ops@iki.fi>
 
         * ace/Handle_Set.cpp:
