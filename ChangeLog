@@ -1,3 +1,8 @@
+Fri Apr 14 09:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ACE_INSTALL.html:
+          Some updates concerning VxWorks support.
+
 Thu Apr 14 23:35:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Timeprobe.h:

@@ -612,6 +612,12 @@ global.features</a> file.
       <code>#define ACE_HAS_IP_MULTICAST</code> to your
       <code>ace/config.h</code>.</p><p>
 
+      NOTE: In order for the ACE Broadcast and Multicast tests to work the VxWorks kernel 
+      should receive the packages it sends out locally. By default this is not supported.
+      To enable this behaviour you need to include the IFF_SIMPLEX flag for your required
+      NIC driver. See the following Windriver <a href="https://secure.windriver.com/cgi-bin/windsurf/techtips/public/viewSum.cgi?4542">SPR 4542</a>
+      for more information.</p><p>
+      
       In addition to all of the other benefits of ACE, it helps work
       around some deficiencies with VxWorks. The problems are:</p>
 
@@ -1921,15 +1927,39 @@ without spawning another thread by using:<p>
 spaef ace_main, "arg1" [, ...]
 </code></pre>
 
-Be aware of the fact that when you execute <code>ace_main</code> that argc
-will be zero and argv* will also be zero. Using argv[0] will then not return
-the program name, but will result in a crash.</p>
+ACE also provides the function <code>vx_execae</code> which is capable of running 
+<code>ace_main</code> in a separate thread, wait for the task to finish and return
+the return code from <code>ace_main</code>:
+
+<pre><code>
+int vx_execae (FUNCPTR acemain,char* arguments, int prio = 0, int opt = 0, int stacksz = 0);
+</code></pre>
+<p>
+You could call this from the VxWorks shell like:
+</p>
+<pre><code>
+my_rc = vx_execae ace_main, "-o server.ior -ORBDottedDecimalAddresses 1"
+</code></pre><p>
+
+When <code>prio</code>, <code>opt</code> or <code>stacksz</code> are omitted or specified 
+as <code>0</code> default values will be used. See the VxWorks shell documentation for the
+defaults for <code>prio</code> and <code>opt</code>. For <code>stacksz</code> the default is
+<code>ACE_NEEDS_HUGE_THREAD_STACKSIZE</code>.
+The <code>arguments</code> string will be parsed and passed on to <code>ace_main</code> as
+a regular <code>argc</code> and <code>argv</code>.</p><p>
+
+Be aware of the fact that when you execute <code>ace_main</code> directly from the VxWorks 
+shell argc will be zero and argv* will also be zero. Using <code>argv[0]</code> will not return
+the program name, but will result in a crash.<br>
+The ACE helper functions <code>spa</code>, <code>spaef</code> and <code>vx_execae</code> prevent 
+this problem by building a regular <code>argc</code> and <code>argv</code> which also contain a 
+valid <code>argv[0]</code> element.</p>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
 
 <strong>NOTE</strong>: Since VxWorks support is currently being reworked with
 an initial focus on static builds the support for shared builds is momentarily
-broken. This will be remedied(!) as soon as possible.
+broken. This will be remedied(!) as soon as possible.<p>
 
 ACE supports shared libraries for VxWorks, but only with the g++
 compiler.  To build shared libraries instead of the default static
@@ -1937,7 +1967,7 @@ libraries, added <code>shared_libs=1</code> (<strong>not</strong>
 <code>shared_libs_only=1</code>) to either your
 <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code> or
 your <code>make</code> invocation.  Then, be sure to load the ACE (and
-any other) shared library before loading your executable(s).<p>
+any other) shared library before loading your executable(s).</p><p>
 
 A shared library for VxWorks uses the same code as for a static
 (non-shared) library.  However, calls to static constructors/
