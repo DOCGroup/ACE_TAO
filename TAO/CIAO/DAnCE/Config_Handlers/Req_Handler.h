@@ -54,8 +54,7 @@ namespace CIAO
                     Deployment::Requirement& toconfig,
                     Requirement& desc);          
         static Requirement
-        Req_Handler::get_requirement (
-                         const Deployment::Requirement& src);
+          get_requirement (const Deployment::Requirement& src);
     };
   }
 }
