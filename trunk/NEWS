@@ -19,7 +19,23 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
   ACE logging.  Formerly any TSS objects created by these threads would
   be leaked.
 
-. Added support for GNU G++ 4.0.
+. Added support for GNU G++ 4.0.  The x.4.5 beta takes advantage of
+  g++ 4.0's symbol visibility.  This feature is conceptually similar
+  to MS Windows "__declspec(dllexport)" DLL functionality.  Using this
+  new g++ feature results in substantially improved ACE/TAO/CIAO
+  shared library binaries.  A subset of the improvements include the
+  following:
+
+      * The number of unnecessarily exported DSO/DLL symbols is
+        greatly reduced, resulting in faster program start times.
+      * Smaller footprint.
+      * Improved performance since run-time indirection of internal
+        symbols is no longer needed.
+
+  No changes to the ACE/TAO sources were necessary to support this
+  feature since the required visibility attributes were hidden behind
+  the various "*_Export" macros (formerly only useful for MS Windows
+  DLLs) used throughout ACE/TAO.
 
 . The ACE_Reactor destructor will now call close() on the referenced reactor
   implementation. This assures that all handlers are notified before the
