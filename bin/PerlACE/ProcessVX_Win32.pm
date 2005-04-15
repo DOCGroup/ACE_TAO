@@ -185,52 +185,10 @@ sub Spawn ()
 
     my $status = 0;
 
-    my $hard_reboot = 0;
-
     my $cmdline;
     ##
-    ## check if VxWorks kernel is reachable
-    $cmdline = $self->{WINDSH} . " -e \"shParse {exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"};
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-        print "Check ALIVE: $cmdline\n";
-    }
-    Win32::Process::Create ($self->{PROCESS},
-                            $self->{WINDSH},
-                            $cmdline,
-                            0,
-                            0,
-                            '.');
-    Win32::Process::GetExitCode ($self->{PROCESS}, $status);
-    if ($status != $STILL_ACTIVE) {
-        print STDERR "ERROR: Spawn failed for <", $self->{WINDSH}, ">\n";
-        exit $status;
-    }
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-        print "Status: $status\n";
-    }
-    $self->{RUNNING} = 1;
-    $status = $self->TimedWait (5);
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-        print "TimedWait Status: $status\n";
-    }
-    if ($status == -1) {
-        $self->Kill ();
-        if (defined $ENV{'ACE_RUN_VX_HARD_REBOOT_CMD'}) {
-            system($ENV{'ACE_RUN_VX_HARD_REBOOT_CMD'});
-            $set_vx_defgw = 1;
-            $do_vx_init = 0;
-            $hard_reboot = 1;
-            sleep($self->{REBOOT_TIME}+10);
-        }
-        else {
-            print STDERR "ERROR: Cannot get connection with VxWorks target\n";
-            exit $status;
-        }
-    }
-
-    ##
     ## initialize VxWorks kernel (reboot!) if needed
-    if (!$hard_reboot && ($do_vx_init || $ENV{'ACE_RUN_VX_TGT_REBOOT'})) {
+    if ($do_vx_init || $ENV{'ACE_RUN_VX_TGT_REBOOT'}) {
         if (defined $ENV{'ACE_RUN_VX_REBOOT_TOOL'}) {
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                 print "Calling: $ENV{'ACE_RUN_VX_REBOOT_TOOL'}\n";
