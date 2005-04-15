@@ -2129,6 +2129,8 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
 orbkey:
 
+#else
+  ACE_UNUSED_ARG (indirect);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_Stub *data =
