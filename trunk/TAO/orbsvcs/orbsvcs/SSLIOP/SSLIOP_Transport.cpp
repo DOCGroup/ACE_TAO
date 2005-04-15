@@ -203,13 +203,16 @@ TAO::SSLIOP::Transport::generate_request_header (
     {
       this->set_bidir_context_info (opdetails);
 
-      // Set the flag to 0
-     this->bidirectional_flag (0);
-    }
+      // Set the flag to 1
+      this->bidirectional_flag (1);
 
-  // Modify the request id if we have BiDirectional client/server
-  // setup
-  opdetails.modify_request_id (this->bidirectional_flag ());
+      // At the moment we enable BiDIR giop we have to get a new
+      // request id to make sure that we follow the even/odd rule
+      // for request id's. We only need to do this when enabled
+      // it, after that the Transport Mux Strategy will make sure
+      // that the rule is followed
+      opdetails.request_id (this->tms ()->request_id ());
+    }
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
@@ -242,8 +245,8 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
     return -1;
 
   // As we have received a bidirectional information, set the flag to
-  // 1
-  this->bidirectional_flag (1);
+  // 0
+  this->bidirectional_flag (0);
 
   return this->connection_handler_->process_listen_point_list (listen_list);
 }

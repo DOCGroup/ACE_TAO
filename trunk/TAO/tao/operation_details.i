@@ -106,20 +106,6 @@ TAO_Operation_Details::request_id (CORBA::ULong id)
   this->request_id_ = id;
 }
 
-ACE_INLINE void
-TAO_Operation_Details::modify_request_id (int originator)
-{
-  // originator ==  1 --> originating side
-  // originator ==  0 --> other side
-  // originator == -1 --> no bi-directional connection was negotiated
-
-  // The originating side must have an even request ID, and the other
-  // side must have an odd request ID.  Make sure that is the case.
-  if ((originator == 1 && ACE_ODD (this->request_id_))
-      || (originator == 0 && ACE_EVEN (this->request_id_)))
-    ++(this->request_id_);
-}
-
 ACE_INLINE CORBA::ULong
 TAO_Operation_Details::request_id (void) const
 {

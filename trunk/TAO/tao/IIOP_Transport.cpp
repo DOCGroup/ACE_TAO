@@ -9,6 +9,7 @@
 #include "Protocols_Hooks.h"
 #include "ORB_Core.h"
 #include "Thread_Lane_Resources.h"
+#include "Transport_Mux_Strategy.h"
 
 ACE_RCSID (tao,
            IIOP_Transport,
@@ -22,21 +23,9 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-#if 0
-  // First step in deprecating this. No one seems using it.
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-#endif /*if 0*/
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
-    }
+  // Use the normal GIOP object
+  ACE_NEW (this->messaging_object_,
+           TAO_GIOP_Message_Base (orb_core));
 }
 
 TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
@@ -223,13 +212,16 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
     {
       this->set_bidir_context_info (opdetails);
 
-      // Set the flag to 0  (i.e., originating side)
-      this->bidirectional_flag (0);
-    }
+      // Set the flag to 1 (i.e., originating side)
+      this->bidirectional_flag (1);
 
-  // Modify the request id if we have BiDirectional client/server
-  // setup
-  opdetails.modify_request_id (this->bidirectional_flag ());
+      // At the moment we enable BiDIR giop we have to get a new
+      // request id to make sure that we follow the even/odd rule
+      // for request id's. We only need to do this when enabled
+      // it, after that the Transport Mux Strategy will make sure
+      // that the rule is followed
+      opdetails.request_id (this->tms ()->request_id ());
+    }
 
   return TAO_Transport::generate_request_header (opdetails,
                                                  spec,
@@ -259,8 +251,8 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
     return -1;
 
   // As we have received a bidirectional information, set the flag to
-  // 1 (i.e., non-originating side)
-  this->bidirectional_flag (1);
+  // 0 (i.e., non-originating side)
+  this->bidirectional_flag (0);
 
   return this->connection_handler_->process_listen_point_list (listen_list);
 }

@@ -96,11 +96,8 @@ public:
   void reset_request_service_info (void);
   void reset_reply_service_info (void);
 
-  ///Cache the request id.
+  /// Cache the request id.
   void request_id (CORBA::ULong id);
-
-  /// Modify request id's for a BiDirectional setup
-  void modify_request_id (int originator);
 
   /// Return the request ID associated with the operation
   CORBA::ULong request_id (void) const;
