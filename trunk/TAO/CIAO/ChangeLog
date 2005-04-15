@@ -12,6 +12,12 @@ Fri Apr 15 10:46:56 CDT 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	  Fixed a warning message.
 
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+
+	  This should fix the warning message on Dynamic_Hash_Op_Lookup
+	  build.
+
 Thu Apr 14 10:54:56 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
