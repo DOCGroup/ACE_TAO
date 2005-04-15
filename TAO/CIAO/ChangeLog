@@ -1,3 +1,17 @@
+Fri Apr 15 10:46:56 CDT 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Container_Impl.cpp
+
+	  Added a condition to check whether call standard configurator.
+
+	* DAnCE/RepositoryManager/Repository_Manager.cpp
+
+	  Modified to make it work by using ORBDebugLevel.
+
+	* DAnCE/examples/Hello/Sender/Sender_exec.cpp
+
+	  Fixed a warning message.
+
 Thu Apr 14 10:54:56 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
