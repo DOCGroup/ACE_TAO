@@ -95,10 +95,11 @@ main (int argc, char *argv[])
       assert (comp_info->length () == 1); //return 1 component objeref
 
       const CORBA::ULong i = 0;
-      Components::CCMObject_ptr objref = (comp_info[i]).component_ref;
+      Components::CCMObject_var objref = (comp_info[i]).component_ref;
 
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
-        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref ACE_ENV_ARG_PARAMETER);
+        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip_var.in ()))
