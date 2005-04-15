@@ -1,3 +1,36 @@
+Fri Apr 15 12:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Replace ACE_static_cast with static_cast
+
+        * tao/diffs/PolicyFactory.diff:
+          New diff file
+
+        * tao/diffs/PortableInterceptor.diff:
+          Updated
+
+        * tao/PortableInterceptor.pidl:
+          Moved PolicyFactory and ORBInitInfo to their own files
+
+        * tao/PolicyFactory.pidl:
+        * tao/ORBInitInfo.pidl:
+        * tao/PolicyFactoryA.cpp:
+        * tao/ORBInitInfoA.cpp:
+        * tao/PolicyFactoryS.h:
+        * tao/ORBInitInfoS.h:
+        * tao/PolicyFactoryC.{h,cpp}:
+        * tao/ORBInitInfoC.{h,cpp}:
+          New files
+
+        * tao/ClientRequestInfo.h:
+        * tao/CodecFactory_ORBInitializer.h:
+        * tao/ORBInitInfo.h:
+        * tao/PICurrent_ORBInitializer.h:
+
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.{h,cpp}:
+          Regenerated
+
 Thu Apr 14 16:12:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCode.h (unaliased_kind):
