@@ -161,11 +161,14 @@ CIAO::Container_Impl::install (
              comp_attributes[cur_len] = item;
            }
            
-         //std_configurator.set_configuration
-         ::Components::StandardConfigurator_var std_configurator = 
-           comp->get_standard_configurator ();
+         if (comp_attributes.length () != 0)
+         {
+           //std_configurator.set_configuration
+           ::Components::StandardConfigurator_var std_configurator = 
+             comp->get_standard_configurator ();
 
-         std_configurator->set_configuration (comp_attributes);
+           std_configurator->set_configuration (comp_attributes);
+         }
        }
    }
   ACE_CATCHANY

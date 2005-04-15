@@ -26,6 +26,13 @@ usage (const ACE_TCHAR* program)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  // Initialize orb
+  CORBA::ORB_var orb =
+    CORBA::ORB_init (argc,
+                      argv,
+                      ""
+                      ACE_ENV_ARG_PARAMETER);
+
   // top level package URL
   char* package_url = 0;
 
@@ -66,13 +73,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     usage(argv[0]);
     return -1;
   }
-
-  // Initialize the ORB so that CORBA::Any will work
-  //
-  CORBA::ORB_var orb =
-    CORBA::ORB_init (argc,
-                     argv,
-                     "");
 
   try
     {
