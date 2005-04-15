@@ -17,7 +17,8 @@ Fri Apr 15 13:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           a new number from the TMS so that we follow the even/odd rule,
           for any following request we don't have to do this anymore because
           the TMS will make sure we follow this rule. This was triggered by
-          bugzilla bug 2091. Thanks to Bala for reviewing this change.
+          bugzilla bug 2091. Thanks to Phil Chen <pchen at bytemobile dot com>
+          for reporting this. Thanks to Bala for reviewing this change.
 
           Also removed some old code from IIOP_Transport.cpp that was not
           compiled already for a long time.
