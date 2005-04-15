@@ -35,7 +35,7 @@ class TAO_Pluggable_Reply_Params;
  * outstanding requests.
  * @@ Can the performance of the demuxer be made more predictable,
  * for example, using the request id as an active demux key?
- * NOTE: check the OMG resolutions about bidirectional
+ * @note Check the OMG resolutions about bidirectional
  * connections, it is possible that the request ids can only
  * assume even or odd values.
  */
@@ -78,7 +78,7 @@ protected:
                                    TAO_Reply_Dispatcher *,
                                    ACE_Hash <CORBA::ULong>,
                                    ACE_Equal_To <CORBA::ULong>,
-                                   ACE_Null_Mutex> 
+                                   ACE_Null_Mutex>
     REQUEST_DISPATCHER_TABLE;
 
   /// Table of <Request ID, Reply Dispatcher> pairs.
