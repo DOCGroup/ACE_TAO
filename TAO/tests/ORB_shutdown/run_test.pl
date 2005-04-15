@@ -11,7 +11,12 @@ use PerlACE::Run_Test;
 unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV = new PerlACE::Process ("server");
+}
 
 $SV->Spawn ();
 

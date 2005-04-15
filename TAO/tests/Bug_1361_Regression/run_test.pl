@@ -9,10 +9,15 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 use POSIX "sys_wait_h";
 
-$iorfile = PerlACE::LocalFile ("server$$.ior");
+$iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", " -o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
 $threads = int (rand() * 6) + 1;
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -t $threads");
 
@@ -35,7 +40,7 @@ while (($elapsed < $max_running_time) )
  # Start all clients in parallel
   $client = $CL->Spawn ();
 
-  $CL->WaitKill(60) unless $client1 < 0;
+  $CL->WaitKill(60) unless $client < 0;
 
   print STDERR "checking server alive\n";
   

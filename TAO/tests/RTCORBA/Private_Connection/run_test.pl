@@ -18,7 +18,12 @@ unlink $iorfile2;
 
 print STDERR "\n********** RTCORBA Private Connection Unit Test\n\n";
 
-$SV = new PerlACE::Process ("server", "-o $iorfile1 -p $iorfile2");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o test1.ior -p test2.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile1 -p $iorfile2");
+}
 $CL = new PerlACE::Process ("client", "-o file://$iorfile1 -p file://$iorfile2 -ORBdebuglevel 3 ");
 
 $SV->Spawn ();

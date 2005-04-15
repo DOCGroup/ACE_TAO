@@ -126,7 +126,7 @@ run_test (test_ptr objref,
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dx");
+  ACE_Get_Opt get_opts (argc, argv, "dk:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -134,6 +134,10 @@ parse_args (int argc, char *argv[])
       {
       case 'd':
         debug = 1;
+        break;
+
+      case 'k':
+        ior_input_file = get_opts.optarg;
         break;
 
       case 'x':
@@ -145,6 +149,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-d "
+                           "-k <ior> "
                            "-x "
                            "\n",
                            argv [0]),

@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$CL = new PerlACE::Process ("client", "");
+if (PerlACE::is_vxworks_test()) {
+    $CL = new PerlACE::ProcessVX ("client", "");
+}
+else {
+    $CL = new PerlACE::Process ("client", "");
+}
 
 $client = $CL->SpawnWaitKill (25);
 

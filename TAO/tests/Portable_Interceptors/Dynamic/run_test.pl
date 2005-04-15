@@ -13,7 +13,12 @@ $file = PerlACE::LocalFile ("test.ior");
 
 unlink $file;
 
-$SV = new PerlACE::Process ("server", "-ORBobjrefstyle url -o $file");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-ORBobjrefstyle url -o test.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-ORBobjrefstyle url -o $file");    
+}
 $CL = new PerlACE::Process ("client", "-ORBobjrefstyle url -f file://$file");
 
 print STDERR "\n\n==== Running interceptor Dynamic test\n";

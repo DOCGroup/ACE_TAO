@@ -12,7 +12,13 @@ $status = 0;
 
 print STDOUT "Collocation\n\n";
 
-$SV = new PerlACE::Process ("Collocation");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("Collocation");
+}
+else {
+    $SV = new PerlACE::Process ("Collocation");
+}
+
 
 $server = $SV->SpawnWaitKill (60);
 

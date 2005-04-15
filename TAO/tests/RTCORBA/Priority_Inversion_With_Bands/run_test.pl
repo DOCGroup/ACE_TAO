@@ -40,13 +40,18 @@ sub run_test
   {
     for $test (@configurations)
       {
-        unlink $test->{file};
+        unlink PerlACE::LocalFile($test->{file});
       }
 
     my @parms = @_;
     $arg = $parms[0];
 
-    $SV = new PerlACE::Process ("server", "-s $server_static_threads -d $server_dynamic_threads");
+    if (PerlACE::is_vxworks_test()) {
+        $SV = new PerlACE::ProcessVX ("server", "-s $server_static_threads -d $server_dynamic_threads");
+    }
+    else {
+        $SV = new PerlACE::Process ("server", "-s $server_static_threads -d $server_dynamic_threads");
+    }
     $server = $SV->Spawn ();
     if ($server == -1)
       {
@@ -55,7 +60,7 @@ sub run_test
 
     for $test (@configurations)
       {
-        if (PerlACE::waitforfile_timed ($test->{file}, 10) == -1)
+        if (PerlACE::waitforfile_timed (PerlACE::LocalFile($test->{file}), 10) == -1)
           {
             $server = $SV->TimedWait (1);
             if ($server == 2)
@@ -71,6 +76,7 @@ sub run_test
                 goto kill_server;
               }
           }
+        print $test->{file}."\n";
       }
 
     $CL[$i] = new PerlACE::Process ("client", $arg);
@@ -96,7 +102,7 @@ sub run_test
 
     for $test (@configurations)
       {
-        unlink $test->{file};
+        unlink PerlACE::LocalFile($test->{file});
       }
   }
 
@@ -106,7 +112,8 @@ for $test (@configurations)
     print STDERR "$test->{description}\n";
     print STDERR "*************************************************************\n\n";
 
-    run_test ("-k file://$test->{file} $test->{args}");
+    my $file = PerlACE::LocalFile($test->{file});
+    run_test ("-k file://$file $test->{args}");
   }
 
 exit $status

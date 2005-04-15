@@ -9,7 +9,7 @@ use lib '../../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = "ior";
+$iorfile = PerlACE::LocalFile("ior");
 
 @configurations = 
     (
@@ -61,7 +61,8 @@ $iorfile = "ior";
 
 sub run_client
 {
-    $CL = new PerlACE::Process ("client", @_);
+    my $arg = shift;
+    $CL = new PerlACE::Process ("client", "-k file://$iorfile " . $arg);
 
     $CL->Spawn ();
     
@@ -77,7 +78,12 @@ sub run_client
 
 sub run_server 
 {
-    $SV = new PerlACE::Process ("server", @_);
+    if (PerlACE::is_vxworks_test()) {
+        $SV = new PerlACE::ProcessVX ("server", @_);
+    }
+    else {
+        $SV = new PerlACE::Process ("server", @_);
+    }
     $SV->Spawn ();
 
     if (PerlACE::waitforfile_timed ($iorfile, 10) == -1)

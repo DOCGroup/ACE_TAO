@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$CL = new PerlACE::Process ("Current", "");
+if (PerlACE::is_vxworks_test()) {
+    $CL = new PerlACE::ProcessVX ("Current");
+}
+else {
+    $CL = new PerlACE::Process ("Current");
+}
 
 print STDERR "Starting Current Test\n";
 

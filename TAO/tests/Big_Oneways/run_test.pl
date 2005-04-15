@@ -28,7 +28,12 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 
 $status = 0;
 unlink $iorfile;
-$SV  = new PerlACE::Process ("server", "-o $iorfile $server_args");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior $server_args");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");    
+}
 $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL3 = new PerlACE::Process ("client", " -k file://$iorfile");

@@ -20,21 +20,30 @@ print STDERR "\n********** RTCORBA Client Protocol Policy Unit Test\n\n";
 
 # Arguments are platform-dependent (UIOP not available on Windows).
 $server_args =
-    "-s $iorfile1 -c $iorfile2 -p 1413566208 "
-    ."-ORBendpoint iiop:// -ORBendpoint shmiop:// -ORBEndpoint uiop:// ";
+    (PerlACE::is_vxworks_test() ? "" : (($^O eq "MSWin32") ? "-p 1413566210 " : "-p 1413566208 "))
+    ."-ORBendpoint iiop:// "
+    .(PerlACE::is_vxworks_test() ? "" : "-ORBendpoint shmiop:// ")
+    .(($^O eq "MSWin32") ? "" : "-ORBEndpoint uiop:// ");
 $client_args =
-    "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 1 ";
+    "-s file://$iorfile1 -c file://$iorfile2 "
+    .(($^O eq "MSWin32") ? "" : "-p 1413566210 ")
+    ."-ORBdebuglevel 1 ";
 
-if ($^O eq "MSWin32") {
-    $server_args =
-        "-s $iorfile1 -c $iorfile2 -p 1413566210 "
-        ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
-    $client_args =
-        "-s file://$iorfile1 -c file://$iorfile2 -ORBdebuglevel 1";
-}
+#if ($^O eq "MSWin32") {
+#    $server_args =
+#        "-p 1413566210 "
+#        ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
+#    $client_args =
+#        "-s file://$iorfile1 -c file://$iorfile2 -ORBdebuglevel 1";
+#}
 
 # Start server.
-$SV = new PerlACE::Process ("server", $server_args);
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-s test1.ior -c test2.ior $server_args");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-s $iorfile1 -c $iorfile2 $server_args");
+}
 $CL = new PerlACE::Process ("client", $client_args);
 
 $SV->Spawn ();

@@ -13,11 +13,20 @@ $obj_file = PerlACE::LocalFile ("Object.cfg");
 $base_ior_file = PerlACE::LocalFile ("default.ior");
 $overridden_ior_file = PerlACE::LocalFile ("overridden.ior");
 
-$SV = new PerlACE::Process ("server", 
-                            " -POAConfigFile $poa_file" .
-                            " -ObjectConfigFile $obj_file" . 
-                            " -BaseObjectIOR $base_ior_file" .
-                            " -OverriddenIOR $overridden_ior_file");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", 
+                                " -POAConfigFile POA.cfg" .
+                                " -ObjectConfigFile Object.cfg" . 
+                                " -BaseObjectIOR default.ior" .
+                                " -OverriddenIOR overridden.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", 
+                                " -POAConfigFile $poa_file" .
+                                " -ObjectConfigFile $obj_file" . 
+                                " -BaseObjectIOR $base_ior_file" .
+                                " -OverriddenIOR $overridden_ior_file");
+}
 
 if ($^O eq "dec_osf") {
     $poa_file = PerlACE::LocalFile ("POA.cfg.tru64");

@@ -15,8 +15,13 @@ unlink $inputfile;
 unlink $thrserverfile;
 $status = 0;
 
-$CL = new PerlACE::Process ("client");
-$SV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+    $CL = new PerlACE::ProcessVX ("client");
+}
+else {
+    $CL = new PerlACE::Process ("client");
+}
+$SV = new PerlACE::Process ("server", "-o $inputfile -i file://$thrserverfile");
 
 $client = $CL->Spawn ();
 

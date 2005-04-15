@@ -10,8 +10,12 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$SV = new PerlACE::Process ("bug_1535_regression", "");
-
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("bug_1535_regression");
+}
+else {
+    $SV = new PerlACE::Process ("bug_1535_regression");    
+}
 
 $SV->Spawn ();
 

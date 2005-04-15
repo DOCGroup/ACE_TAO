@@ -27,12 +27,16 @@ $extra_server_args = "-d 1 -ORBobjrefstyle url -ORBEndpoint iiop://1.0\@:$iiop_p
      {
          iorfiles => [ "persistent_ior", "tp_persistent_ior", "transient_ior" ],
          server => "-a tp_persistent_ior -p persistent_ior -t transient_ior $extra_server_args",
-         clients => [ "-k file://tp_persistent_ior", "-k file://persistent_ior", "-k file://transient_ior -x" ],
+         clients => [ "-k file://".PerlACE::LocalFile("tp_persistent_ior"), 
+                      "-k file://".PerlACE::LocalFile("persistent_ior"), 
+                      "-k file://".PerlACE::LocalFile("transient_ior")." -x" ],
      },
      {
          iorfiles => [ "not_used_ior_1", "not_used_ior_2", "transient_ior" ],
          server => "-a not_used_ior_1 -p not_used_ior_2 -t transient_ior $extra_server_args",
-         clients => [ "-k file://tp_persistent_ior", "-k file://persistent_ior", "-k file://transient_ior -x" ],
+         clients => [ "-k file://".PerlACE::LocalFile("tp_persistent_ior"), 
+                      "-k file://".PerlACE::LocalFile("persistent_ior"), 
+                      "-k file://".PerlACE::LocalFile("transient_ior")." -x" ],
      },
      );
 
@@ -62,7 +66,12 @@ sub run_server
 
     print "\nRunning server with the following args: $args\n\n";
 
-    $SV = new PerlACE::Process ("server", $args);
+    if (PerlACE::is_vxworks_test()) {
+        $SV = new PerlACE::ProcessVX ("server", $args);
+    }
+    else {
+        $SV = new PerlACE::Process ("server", $args);
+    }
 
     $SV->Spawn ();
 

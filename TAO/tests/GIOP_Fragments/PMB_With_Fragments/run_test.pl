@@ -17,10 +17,19 @@ $endien = (pack('L', 0x41424344) eq 'ABCD' ? '_be' : '');
 
 unlink $iorfile;
 
-$SV  = new PerlACE::Process ('server',
+if (PerlACE::is_vxworks_test()) {
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
+    $SV = new PerlACE::ProcessVX ('server',
                              '-ORBEndpoint ' .
                              "iiop://$TARGETHOSTNAME" . ":$port " .
                              "-ORBDebugLevel $debug");
+}
+else {
+    $SV = new PerlACE::Process ('server',
+                             '-ORBEndpoint ' .
+                             "iiop://$TARGETHOSTNAME" . ":$port " .
+                             "-ORBDebugLevel $debug");
+}
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
@@ -29,7 +38,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     exit 1;
 }
 
-my($cl) = system("$^X dribble.pl --port=$port " .
+my($cl) = system("$^X dribble.pl --host=$TARGETHOSTNAME --port=$port " .
                  "--stream=giop1.2_fragments$endien.dat " .
                  "--layout=giop1.2_fragments$endien.layout");
 if ($cl != 0) {
