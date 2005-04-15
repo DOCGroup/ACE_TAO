@@ -1,9 +1,9 @@
-Fri Apr 14 11:59:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+Fri Apr 15 11:59:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/tao_orb_tests.lst:
           Excluded some tests explicitly for VxWorks builds.
 
-Fri Apr 14 09:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+Fri Apr 15 09:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ACE_INSTALL.html:
           Some updates concerning VxWorks support.
