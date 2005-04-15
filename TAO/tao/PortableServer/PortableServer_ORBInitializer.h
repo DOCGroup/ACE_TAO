@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/ORBInitializerC.h"
 #include "tao/LocalObject.h"
 
 /// Forward Declarations
