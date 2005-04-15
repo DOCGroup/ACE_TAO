@@ -1,3 +1,15 @@
+Fri Apr 15 07:27:38 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+          Removed ACE_HAS_BROKEN_ENUMS. It is no longer used in ACE/TAO code.
+
+        * ace/config-fsu-pthread.h:
+        * ace/config-mit-pthread.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+          Removed ACE_HAS_PTHREAD_ATTR_INIT, ACE_HAS_PTHREAD_ATTR_DESTROY and
+          ACE_HAS_PTHREAD_YIELD_VOID_PTR definitions. These are no longer
+          used in ACE/TAO code.
+        
 Fri Apr 15 07:19:20 2005  Olli Savia  <ops@iki.fi>
 
         * ace/Handle_Set.cpp:

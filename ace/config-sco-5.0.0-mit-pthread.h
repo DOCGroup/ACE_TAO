@@ -136,9 +136,6 @@
 #define ACE_HAS_PTHREADS_STD
 #define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_HAS_SIGWAIT
-//#define       ACE_HAS_PTHREAD_YIELD_VOID_PTR
-//#define       ACE_HAS_PTHREAD_ATTR_INIT
-//#define       ACE_HAS_PTHREAD_ATTR_DESTROY
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 //#define ACE_LACKS_THREAD_STACK_ADDR
 // If ACE doesn't compile due to the lack of these methods, please
