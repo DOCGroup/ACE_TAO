@@ -292,9 +292,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_NAMESPACES],
 [Compiler/platform doesn't support namespaces (or the support is not
 fully implemented.)])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_BITSHIFT],
-[Compiler has integer overflow problem with bit-shift operations.])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS],
 [Compiler can't handle const char * as rvalue in conditional operator.])
 

@@ -225,9 +225,6 @@ ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
                                         support namespaces (or the
                                         support is not fully
                                         implemented.)
-ACE_HAS_BROKEN_BITSHIFT                 Compiler has integer overflow
-                                        problem with bit-shift
-                                        operations.
 ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS Compiler can't handle const char *
                                         as rvalue in conditional operator.
 ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls
