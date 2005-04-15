@@ -1,3 +1,32 @@
+Fri Apr 15 13:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Muxed_TMS.h:
+          Doxygen improvement
+
+        * tao/IIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvsc/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+          Fixed a bug with BiDIR GIOP. The spec describes that the originator
+          should use even numbers, the other side odd numbers. It was just
+          implemented the other way around in TAO. At the moment the first
+          request is done we check if BiDIR GIOP could be enabled.
+          Then for each request we ask the operation details
+          to modify its request id to follow the even/odd rules if BiDIR is
+          set. Changed this so that only when we enable BiDIR GIOP we request
+          a new number from the TMS so that we follow the even/odd rule,
+          for any following request we don't have to do this anymore because
+          the TMS will make sure we follow this rule. This was triggered by
+          bugzilla bug 2091. Thanks to Bala for reviewing this change.
+
+          Also removed some old code from IIOP_Transport.cpp that was not
+          compiled already for a long time.
+
+        * tao/operation_details.{h,i}:
+          Removed modifiy_request_id. The rule of even/odd BiDIR GIOP request
+          numbering is only known by the TMS and this method is not needed
+          anymore.
+
 Fri Apr 15 12:30:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/AMH_Exceptions/run_test.pl:
