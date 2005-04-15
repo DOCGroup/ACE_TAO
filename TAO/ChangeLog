@@ -1,3 +1,10 @@
+Fri Apr 15 12:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer_ORBInitializer.h:
+        * tao/PortableServer/PortableServer_PolicyFactory.h:
+        * tao/PortableServer/ServerRequestInfo.h:
+          Include a more specific file then PortableInterceptorC.h
+
 Fri Apr 15 12:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
