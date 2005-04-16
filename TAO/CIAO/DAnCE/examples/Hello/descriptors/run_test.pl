@@ -10,6 +10,8 @@ use PerlACE::Run_Test;
 
 $DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 
+$daemons_running = 0;
+$em_running = 0;
 $daemons = 2;
 @ports = ( 30000, 40000 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
@@ -32,6 +34,22 @@ sub delete_ior_files {
     unlink PerlACE::LocalFile ("DAM.ior");
 }
 
+sub kill_node_daemons {
+  for ($i = 0; $i < $daemons; ++$i) {
+    $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+  }
+}
+
+sub kill_open_processes {
+  if ($daemons_running == 1)
+    kill_node_daemons ();
+
+  if ($em_running == 1) {
+    $EM->Kill ();
+    $EM->TimedWait (1);
+  }
+}
+
 sub run_node_daemons {
   for ($i = 0; $i < $daemons; ++$i)
   {
@@ -52,23 +70,24 @@ sub run_node_daemons {
                           $PerlACE::wait_interval_for_process_creation) == -1) {
           print STDERR
             "ERROR: The ior file of node daemon $i could not be found\n";
-          kill_open_processes (); 
-          exit 1;
+          for (; $i > 0; --$i) {
+            $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+          }
+          return -1;
       }
   }
-}
-
-sub kill_node_daemons {
-  for ($i = 0; $i < $daemons; ++$i) {
-    $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
-  }
+  $daemons_running = 1;
+  return 0;
 }
 
 delete_ior_files ();
 
 # Invoke node daemons.
 print "Invoking node daemons\n";
-run_node_daemons ();
+$status = run_node_daemons ();
+
+if ($status != 0)
+  exit 1;
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
@@ -83,6 +102,8 @@ if (PerlACE::waitforfile_timed ("EM.ior",
     kill_open_processes (); 
     exit 1;
 }
+
+$em_running = 1;
 
 # Invoke executor - start the application -.
 print "Invoking executor - start the application -\n";
@@ -126,8 +147,7 @@ $E->SpawnWaitKill (3000);
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";
 
-# delete_ior_files ();
-$EM->Kill (); $EM->TimedWait (1);
-kill_node_daemons ();
+delete_ior_files ();
+kill_open_processes ();
 
 exit $status;
