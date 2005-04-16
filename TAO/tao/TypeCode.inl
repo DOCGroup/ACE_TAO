@@ -48,17 +48,6 @@ CORBA::TypeCode::_nil (void)
   return static_cast<CORBA::TypeCode_ptr> (0);
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA::TypeCode::equivalent (TypeCode_ptr tc
-                             ACE_ENV_ARG_DECL) const
-{
-  if (this == tc)
-    return 1;
-  else
-    return this->equivalent_i (tc
-                               ACE_ENV_ARG_PARAMETER);
-}
-
 ACE_INLINE CORBA::TCKind
 CORBA::TypeCode::kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {

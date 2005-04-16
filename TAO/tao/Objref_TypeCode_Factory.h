@@ -258,12 +258,14 @@ namespace TAO
           // constant.
           tc =
             CORBA::TypeCode::_duplicate (Objref_Traits<Kind>::tc_constant ());
-
-          return true;
+        }
+      else
+        {
+          tc = Objref_Traits<Kind>::create_typecode (id.in (),
+                                                     name.in ());
         }
 
-      return Objref_Traits<Kind>::create_typecode (id.in (),
-                                                   name.in ());
+      return true;
     }
 
   }  // End namespace TypeCodeFactory

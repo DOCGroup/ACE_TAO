@@ -30,7 +30,15 @@ CORBA::TypeCode::equal (TypeCode_ptr tc
                         ACE_ENV_ARG_DECL) const
 {
   if (this == tc)
-    return 1;
+    {
+      return true;
+    }
+  else if (CORBA::is_nil (tc))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
+                                          CORBA::COMPLETED_NO),
+                        false);
+    }
 
   CORBA::TCKind const tc_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -72,6 +80,24 @@ CORBA::TypeCode::equal (TypeCode_ptr tc
                         ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::Boolean
+CORBA::TypeCode::equivalent (TypeCode_ptr tc
+                             ACE_ENV_ARG_DECL) const
+{
+  if (this == tc)
+    {
+      return true;
+    }
+  else if (CORBA::is_nil (tc))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
+                                          CORBA::COMPLETED_NO),
+                        false);
+    }
+
+  return this->equivalent_i (tc
+                             ACE_ENV_ARG_PARAMETER);
+}
 
 char const *
 CORBA::TypeCode::id_i (ACE_ENV_SINGLE_ARG_DECL) const
