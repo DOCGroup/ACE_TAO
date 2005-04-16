@@ -1,6 +1,6 @@
 Sat Apr 16 18:22:23 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Root_POA.cpp
+	* tao/PortableServer/Root_POA.cpp:
 
 	  Fixed a bug in reference_to_id.  Many thanks to Ossama Othman
 	  <ossama@dre.vanderbilt.edu> for the fix.
