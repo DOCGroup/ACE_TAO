@@ -1,3 +1,16 @@
+Sat Apr 16 09:18:42 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Reactor.inl:
+	* ace/Reactor.cpp:
+
+	  Moved inlined virtual methods out of line.  Addresses unresolved
+	  symbol errors when using g++ 4.0's "-fvisibility-inline-hidden"
+	  command line option.  The methods can be inlined again once/if
+	  we make the methods non-virtual.  Since the ACE_Reactor now
+	  implements the Bridge design pattern, they no longer need to be
+	  virtual.  However, they will remain virtual for a while due to
+	  potential user legacy app / backward compatibility issues.
+
 Fri Apr 15 11:36:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Timeprobe.h:
