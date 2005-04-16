@@ -2,7 +2,7 @@ Sat Apr 16 16:33:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Parse_Node.inl:
 	* ace/Parse_Node.cpp:
-	
+
 	  Moved inlined virtual destructors out of line.  Addresses
 	  unresolved symbol errors when using g++ 4.0 with a default
 	  symbol visibility set to "hidden".
