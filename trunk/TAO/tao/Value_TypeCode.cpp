@@ -148,7 +148,7 @@ TAO::TypeCode::Value<StringType,
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return 0;
 
-      CORBA::TypeCode_ptr const lhs_tc = 
+      CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
