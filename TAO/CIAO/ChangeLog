@@ -1,3 +1,9 @@
+Sat Apr 16 17:22:42 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Hello/descriptors/run_test.pl: 
+
+          Added code to ensure killing open processes on failure.
+
 Sat Apr 16 16:38:09 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * DAnCE/examples/Hello/descriptors/run_test.pl: 

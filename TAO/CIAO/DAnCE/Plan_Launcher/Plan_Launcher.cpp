@@ -1,4 +1,5 @@
 // $Id$
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
 #include "Config_Handlers/XML_File_Intf.h"
