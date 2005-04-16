@@ -1,3 +1,9 @@
+Sat Apr 16 18:31:40 2005 CDT  Will Otte <wotte@dre.vanderbilt.edu>
+
+  * DAnCE/ExecutionManager/ExecutionManager.mpc
+  
+  Removed typecodefactory fromt the base projects.
+  
 Sat Apr 16 17:24:40 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp: 
