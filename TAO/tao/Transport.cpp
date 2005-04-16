@@ -101,7 +101,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               ACE_TEXT ("TAO (%P|%t) - ")
               DUMP_IOV_PREFIX ACE_TEXT (", ")
               ACE_TEXT ("end of data\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(location)));
+              id, ACE_TEXT_CHAR_TO_TCHAR(location)));
 
   ACE_Log_Msg::instance ()->release ();
 }
