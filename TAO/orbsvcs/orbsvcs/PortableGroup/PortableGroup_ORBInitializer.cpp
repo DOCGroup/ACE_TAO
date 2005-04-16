@@ -1,27 +1,23 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "PortableGroup_ORBInitializer.h"
-
-ACE_RCSID (PortableGroup,
-           PortableGroup_ORBInitializer,
-           "$Id$")
-
-#include "ace/Service_Repository.h"
-#include "ace/Svc_Conf.h"
+#include "PortableGroup_Request_Dispatcher.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitInfo.h"
 #include "tao/debug.h"
 
-#include "PortableGroup_Request_Dispatcher.h"
 
-static const char *pg_poa_factory_name = "TAO_PG_POA";
-static const char *pg_poa_factory_directive = "dynamic TAO_PG_POA Service_Object * TAO_PortableGroup:_make_TAO_PG_Object_Adapter_Factory()";
+ACE_RCSID (PortableGroup,
+           PortableGroup_ORBInitializer,
+           "$Id$")
 
-TAO_PortableGroup_ORBInitializer::TAO_PortableGroup_ORBInitializer ()
+
+static const char pg_poa_factory_name[] = "TAO_PG_POA";
+static const char pg_poa_factory_directive[] = "dynamic TAO_PG_POA Service_Object * TAO_PortableGroup:_make_TAO_PG_Object_Adapter_Factory()";
+
+TAO_PortableGroup_ORBInitializer::TAO_PortableGroup_ORBInitializer (void)
 {
 }
 
