@@ -440,7 +440,7 @@ CORBA::ValueModifier
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::type_modifier (
+                     RefCountPolicy>::type_modifier_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->type_modifier_;
@@ -454,7 +454,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::concrete_base_type (
+                     RefCountPolicy>::concrete_base_type_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return

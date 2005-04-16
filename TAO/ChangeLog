@@ -1,3 +1,16 @@
+Sat Apr 16 00:10:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Value_TypeCode.h (type_modifer, concrete_base_type):
+	* tao/Value_TypeCode.cpp (type_modifer, concrete_base_type):
+
+	  Fixed these incorrect protected template method names.  The
+	  method names are now "type_modifer_i" and
+	  "concrete_base_type_i", respectively.  Addresses valuetype
+	  extraction from CORBA::Any problems since the correct
+	  implementations are now invoked polymorphically rather than the
+	  default implementations that throw a CORBA::TypeCode::BadKind
+	  exception.
+
 Fri Apr 15 23:31:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Transport.cpp (dump_iov):
