@@ -246,8 +246,9 @@ namespace TAO
       cdr.reset_byte_order (byte_order);
 
       // Extract the repository ID and name.
-      CORBA::String_var id;
-      if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)))
+      CORBA::String_var id, name;
+      if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
+            && cdr >> TAO_InputCDR::to_string (name.out (), 0)))
         return false;
 
       if (ACE_OS::strcmp (id.in (),  // len >= 0!!!
@@ -260,10 +261,6 @@ namespace TAO
 
           return true;
         }
-
-      CORBA::String_var name;
-      if (!(cdr >> TAO_InputCDR::to_string (name.out (), 0)))
-        return false;
 
       return Objref_Traits<Kind>::create_typecode (id.in (),
                                                    name.in ());

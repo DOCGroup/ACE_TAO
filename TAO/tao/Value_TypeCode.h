@@ -103,9 +103,9 @@ namespace TAO
                                                  ACE_ENV_ARG_DECL) const;
       virtual CORBA::Visibility member_visibility_i (CORBA::ULong index
                                                      ACE_ENV_ARG_DECL) const;
-      virtual CORBA::ValueModifier type_modifier (
+      virtual CORBA::ValueModifier type_modifier_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual CORBA::TypeCode_ptr concrete_base_type (
+      virtual CORBA::TypeCode_ptr concrete_base_type_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
       //@}
 
