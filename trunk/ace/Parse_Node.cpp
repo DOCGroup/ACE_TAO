@@ -156,6 +156,10 @@ ACE_Suspend_Node::ACE_Suspend_Node (const ACE_TCHAR *name)
   ACE_TRACE ("ACE_Suspend_Node::ACE_Suspend_Node");
 }
 
+ACE_Suspend_Node::~ACE_Suspend_Node (void)
+{
+}
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Resume_Node)
 
 void
@@ -170,6 +174,10 @@ ACE_Resume_Node::ACE_Resume_Node (const ACE_TCHAR *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Resume_Node::ACE_Resume_Node");
+}
+
+ACE_Resume_Node::~ACE_Resume_Node (void)
+{
 }
 
 void
@@ -215,6 +223,10 @@ ACE_Remove_Node::ACE_Remove_Node (const ACE_TCHAR *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Remove_Node::ACE_Remove_Node");
+}
+
+ACE_Remove_Node::~ACE_Remove_Node (void)
+{
 }
 
 void
