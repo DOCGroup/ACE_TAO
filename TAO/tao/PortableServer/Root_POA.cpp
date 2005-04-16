@@ -1796,10 +1796,9 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   CORBA::ULong system_id_size = key.length () - starting_at;
 
   // Reset <system_id>.
-  system_id.replace (system_id_size,
-                     system_id_size,
-                     (CORBA::Octet *) key_data + starting_at,
-                     0);
+  system_id.length (system_id_size);
+  CORBA::Octet * buf = system_id.get_buffer ();
+  ACE_OS::memcpy (buf, key_data + starting_at, system_id_size);
 
   // Success
   return 0;
