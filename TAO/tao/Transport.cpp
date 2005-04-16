@@ -51,7 +51,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               ACE_TEXT ("TAO (%P|%t) - ")
               DUMP_IOV_PREFIX ACE_TEXT (", ")
               ACE_TEXT ("sending %d buffers\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (location), iovcnt));
+              id, ACE_TEXT_CHAR_TO_TCHAR (location), iovcnt));
 
   for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
     {
@@ -67,7 +67,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   DUMP_IOV_PREFIX ACE_TEXT (", ")
                   ACE_TEXT ("buffer %d/%d has %d bytes\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(location),
+                  id, ACE_TEXT_CHAR_TO_TCHAR(location),
                   i, iovcnt,
                   iov_len));
 
