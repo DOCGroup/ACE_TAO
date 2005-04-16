@@ -1,3 +1,14 @@
+Sat Apr 16 16:20:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+
+	  Removed unnecessary "ace/Service_Repository.h" and
+	  "ace/Svc_Conf.h" include directives.  The latter also introduced
+	  g++ 4.0 link-time problems since it pulled in virtual methods
+	  that are not exported.  Fixes g++ 4.0 unresolved symbol errors
+	  when setting the default symbol and inlined function visibility
+	  to "hidden".
+
 Sat Apr 16 01:36:41 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Objref_TypeCode_Factory.h (tc_objref_factory):
