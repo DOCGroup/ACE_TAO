@@ -1,3 +1,22 @@
+Sat Apr 16 01:36:41 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Objref_TypeCode_Factory.h (tc_objref_factory):
+
+	  Fixed problem where created TypeCode was not returned to the
+	  caller.
+
+	* tao/TypeCode.cpp (equal):
+
+	  Throw a CORBA::BAD_PARAM exception if the TypeCode argument is
+	  nil.  Fixes a seg fault.
+
+	* tao/TypeCode.inl (equivalent):
+
+	  Likewise.
+
+	  Moved this method out of line into `TypeCode.cpp'.  Avoids
+	  including excessive headers in this file.
+
 Sat Apr 16 00:10:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Value_TypeCode.h (type_modifer, concrete_base_type):
