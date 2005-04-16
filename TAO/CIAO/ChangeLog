@@ -1,3 +1,11 @@
+Sat Apr 16 16:10:10 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp: 
+
+          Added two command line options to plan_launcher to easily use in
+          scripts. Now the launch and destruction of the application can be
+          done in two steps.
+
 Sat Apr 16 15:00:31 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * DAnCE/examples/Hello/step-by-step.html: 
