@@ -15,14 +15,14 @@ Sun Apr 17 17:34:38 2005  Olli Savia  <ops@iki.fi>
 
 Sat Apr 16 20:47:11 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * bin/ciao_tests.lst: 
+        * bin/ciao_tests.lst:
 
           The required constraints Exceptions and !STATIC are added to the
           CIAO test.
 
 Sat Apr 16 20:37:07 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * bin/auto_run_tests.pl: 
+        * bin/auto_run_tests.pl:
         * bin/ciao_tests.lst:
 
           Added auto_build tests for CIAO.
