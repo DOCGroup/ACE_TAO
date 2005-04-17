@@ -149,7 +149,6 @@ Wed Apr 13 11:39:58 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
           Added typecodefactory base project to the mpc files.
 
-
 Tue Apr 12 17:12:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ciao/Servant_Impl_Base.cpp:
