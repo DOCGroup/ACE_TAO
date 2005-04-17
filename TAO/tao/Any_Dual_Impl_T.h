@@ -62,7 +62,7 @@ namespace TAO
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              ACE_ENV_ARG_DECL);
 
     virtual const void *value (void) const;
     virtual void free_value (void);
