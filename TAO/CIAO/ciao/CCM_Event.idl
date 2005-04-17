@@ -27,6 +27,11 @@ module Components
   interface EventConsumerBase
   {
     void push_event (in EventBase evt) raises (BadEventType);
+    
+    // CIAO-specific operation to help support the capability
+    // to subscribe to eventtypes more derived than the type
+    // consumed.
+    boolean ciao_is_substitutable (in string event_repo_id);
   };
 
   valuetype ConsumerDescription : PortDescription

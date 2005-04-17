@@ -756,12 +756,21 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os  << "Consumer_ptr c" << endl
-            << STRS[ENV_HDR] << ")" << endl
-            << STRS[EXCP_START] << endl
-            << STRS[EXCP_SYS] << "," << endl
-            << STRS[EXCP_ECL] << "));" << endl << endl;
-
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "));" << endl << endl;
+            
+        os << "// CIAO-specific." << endl
+           << STRS[COMP_CK] << " *" << endl
+           << "subscribe_" << p.name () << "_generic (" << endl
+           << STRS[COMP_ECB] << "_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "));" << endl << endl;
+            
         os << "virtual ";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -835,6 +844,11 @@ namespace
 
         os << "Consumer_var>" << endl
            << "ciao_publishes_" << p.name () << "_map_;"
+           << endl << endl;
+           
+        os << "ACE_Active_Map_Manager<" << endl
+           << STRS[COMP_ECB] << "_var>" << endl
+           << "ciao_publishes_" << p.name () << "_generic_map_;"
            << endl << endl;
       }
 
@@ -1197,6 +1211,13 @@ namespace
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "));" << endl << endl;
+           
+        os << "// CIAO-specific in " << STRS[COMP_ECB] << "." << endl
+           << "virtual CORBA::Boolean" << endl
+           << "ciao_is_substitutable (" << endl
+           << "const char *event_repo_id" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl; 
 
         os << "// Get component implementation." << endl
            << "virtual CORBA::Object_ptr" << endl
@@ -1262,6 +1283,15 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "));" << endl << endl;
+
+        os << "// CIAO-specific." << endl
+           << STRS[COMP_CK] << " *" << endl
+           << "subscribe_" << p.name () << "_generic (" << endl
+           << STRS[COMP_ECB] << "_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl

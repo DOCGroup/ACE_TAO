@@ -1306,13 +1306,6 @@ namespace
            << STRS[ENV_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
-           << "ACE_Active_Map_Manager< " << endl; //@@ gcc bug
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::iterator end =" << endl
-           << "this->ciao_publishes_" << p.name ()
-           << "_map_.end ();" << endl
            << "for (ACE_Active_Map_Manager< " << endl; //@@ gcc bug
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1320,7 +1313,8 @@ namespace
         os << "Consumer_var>::iterator iter =" << endl
            << "this->ciao_publishes_" << p.name ()
            << "_map_.begin ();"
-           << "iter != end;"
+           << "iter != this->ciao_publishes_" << p.name ()
+           << "_map_.end ();" << endl
            << "++iter)" << endl
            << "{"
            << "ACE_Active_Map_Manager< " << endl; //@@ gcc bug
@@ -1344,6 +1338,28 @@ namespace
         Traversal::PublisherData::belongs (p, simple_belongs_);
 
         os << " (" << endl
+           << "ev" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK;" << endl
+           << "}";
+           
+        os << "for (ACE_Active_Map_Manager< " << endl
+           << STRS[COMP_ECB] << "_var>::iterator giter =" << endl
+           << "this->ciao_publishes_" << p.name ()
+           << "_generic_map_.begin ();"
+           << "giter != this->ciao_publishes_" << p.name ()
+           << "_generic_map_.end ();"
+           << "++giter)" << endl
+           << "{"
+           << "ACE_Active_Map_Manager< " << endl
+           << STRS[COMP_ECB] << "_var>::ENTRY &entry = *giter;" << endl;
+
+        os << STRS[COMP_ECB] << "_var c =" << endl
+           << STRS[COMP_ECB] << "::_narrow (" << endl
+           << "entry.int_id_.in ()" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK;" << endl
+           << "entry.int_id_->push_event" << " (" << endl
            << "ev" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK;" << endl
@@ -1386,6 +1402,34 @@ namespace
            << "return retv;" << endl
            << "}";
 
+        os << STRS[COMP_CK] << " *" << endl
+           << scope_.name () << "_Context::subscribe_"
+           << p.name () << "_generic (" << endl
+           << STRS[COMP_ECB] << "_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "))" << endl
+           << "{"
+           << "if (CORBA::is_nil (c))" << endl
+           << "{"
+           << STRS[ACE_TR] << " (CORBA::BAD_PARAM (), 0);" << endl
+           << "}";
+
+        os << STRS[COMP_ECB] << "_var sub =" << endl
+           << STRS[COMP_ECB] << "::_duplicate (c);" << endl
+           << "ACE_Active_Map_Manager_Key key;"
+           << "this->ciao_publishes_" << p.name ()
+           << "_generic_map_.bind (sub.in (), key);"
+           << "sub._retn ();" << endl
+           << STRS[COMP_CK] << " * retv = 0;"
+           << "ACE_NEW_THROW_EX (" << endl
+           << "retv," << endl
+           << "::CIAO::Map_Key_Cookie (key)," << endl
+           << "CORBA::NO_MEMORY ());" << endl
+           << "return retv;" << endl
+           << "}";
+
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr" << endl
@@ -1396,11 +1440,7 @@ namespace
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
-           << "{";
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os<< "Consumer_var retv;"
+           << "{"
            << "ACE_Active_Map_Manager_Key key;" << endl
            << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == false)"
            << endl
@@ -1411,9 +1451,21 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer::_nil ());" << endl
-           << "}"
+           << "}";
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+
+        os << "Consumer_var retv;"
            << "if (this->ciao_publishes_" << p.name ()
-           << "_map_.unbind (key, retv) != 0)" << endl
+           << "_map_.unbind (key, retv) == 0)" << endl
+           << "{"
+           << "return retv._retn ();" << endl
+           << "}";
+           
+        os << STRS[COMP_ECB] << "_var ecb;" << endl;
+        
+        os << "if (this->ciao_publishes_" << p.name ()
+           << "_generic_map_.unbind (key, ecb) != 0)" << endl
            << "{"
            << STRS[ACE_TR] << " (" << endl
            << STRS[EXCP_IC] << " ()," << endl;
@@ -1422,7 +1474,11 @@ namespace
 
         os << "Consumer::_nil ());" << endl
            << "}"
-           << "return retv._retn ();" << endl
+           << "return ";
+
+        Traversal::PublisherData::belongs (p, belongs_);
+
+        os << "Consumer::_nil ();" << endl
            << "}";
       }
 
@@ -1581,7 +1637,7 @@ namespace
            << "::Components::ConsumerDescription_var safe = cd;"
            << "safe->name (\"\");"
            << "safe->type_id (\"\");"
-           << "safe->consumer (c);" << endl
+           << "safe->consumer (c.in ());" << endl
            << "retval[_ciao_index++] = safe;"
            << "}"
            << "return retval._retn ();"
@@ -1710,10 +1766,10 @@ namespace
            << STRS[COMP_CD] << "_var retval;"
            << "CORBA::ULong _ciao_index = 0;"
            << "CORBA::ULong _ciao_size = 0;"
-		   << STRS[ACE_UA] << " (tmp);"
-		   << STRS[ACE_UA] << " (retval);"
-		   << STRS[ACE_UA] << " (_ciao_index);"
-		   << STRS[ACE_UA] << " (_ciao_size);" << endl;
+		       << STRS[ACE_UA] << " (tmp);"
+		       << STRS[ACE_UA] << " (retval);"
+		       << STRS[ACE_UA] << " (_ciao_index);"
+		       << STRS[ACE_UA] << " (_ciao_size);" << endl;
            
         // Generate IF block for each event sources.
         {
@@ -1871,6 +1927,28 @@ namespace
            << STRS[ENV_ARG] << ");" << endl
            << "}";
 
+        os << STRS[COMP_CK] << " *" << endl
+           << scope_.name ()
+           << "_Servant::subscribe_" << p.name () << "_generic (" << endl
+           << STRS[COMP_ECB] << "_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "))" << endl
+           << "{";
+           
+        if (swapping)
+        {
+          os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
+             << STRS[ACE_CR] << " (0);" << endl;
+        }
+        
+        os << "return this->context_->subscribe_" << p.name ()
+           << "_generic (" << endl
+           << "c" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}";
+
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr" << endl
@@ -1890,7 +1968,7 @@ namespace
 
           Traversal::PublisherData::belongs (p, belongs_);
 
-          os << "Consumer:_nil ());" << endl;
+          os << "Consumer::_nil ());" << endl;
         }
         
         os << "return this->context_->unsubscribe_"
@@ -2155,27 +2233,47 @@ namespace
         os << "if (ACE_OS::strcmp (publisher_name, \""
            << p.name () << "\") == 0)" << endl
            << "{";
-
+           
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer_var _ciao_consumer =" << endl;
+        os << "Consumer_var sub =" << endl;
 
         Traversal::PublisherData::belongs (p, belongs_);
-
+        
         os << "Consumer::_narrow (" << endl
            << "subscribe" << endl
            << STRS[ENV_ARG] << ");"
-           << STRS[ACE_CR] << " (0);" << endl
-           << "if (::CORBA::is_nil (_ciao_consumer.in ()))" << endl
+           << STRS[ACE_CR] << " (0);" << endl;
+           
+        os << "if (CORBA::is_nil (sub.in ()))" << endl
            << "{"
-           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);"
-           << endl
-           << "}"
-           << "return this->subscribe_" << p.name ()
-           << " (" << endl
-           << "_ciao_consumer.in ()" << endl
+           << "CORBA::Boolean substitutable =" << endl
+           << "subscribe->ciao_is_substitutable (" << endl;         
+
+        Traversal::PublisherData::belongs (p, belongs_);
+        
+        os << "::_tao_obv_static_repository_id ()" << endl
+           << STRS[ENV_ARG] << ");"
+           << STRS[ACE_CR] << " (0);" << endl;
+           
+        os << "if (substitutable)" << endl
+           << "{"
+           << "return this->subscribe_" << p.name () << "_generic (" << endl
+           << "subscribe" << endl
            << STRS[ENV_ARG] << ");" << endl
-           << "}";
+           << "}"
+           << "else" << endl
+           << "{"
+           << STRS[ACE_TR] << " (" << STRS[EXCP_IC] << " (), 0);" << endl
+           << "}"
+           << "}"
+           << "else" << endl
+           << "{"
+           << "return this->subscribe_" << p.name () << " (" << endl
+           << "sub" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}"
+           << "}";      
       }
 
     private:
@@ -2618,6 +2716,58 @@ namespace
            << "}"
            << "ACE_THROW (" << STRS[EXCP_BET] << " ());" << endl
            << "}";
+           
+        os << "CORBA::Boolean" << endl
+           << scope_.name () << "_Servant::";        
+
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+
+        os << "Consumer_" << c.name ()
+           << "_Servant::ciao_is_substitutable (" << endl
+           << "const char * event_repo_id" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "if (event_repo_id == 0)" << endl
+           << "{"
+           << STRS[ACE_TR] << " (CORBA::BAD_PARAM (), FALSE);" << endl
+           << "}"
+           << scope_.name () << "_Context *ctx =" << endl
+           << scope_.name () << "_Context::_narrow (" << endl
+           << "this->ctx_" << endl
+           << STRS[ENV_ARG] << ");"
+           << STRS[ACE_CR] << " (FALSE);" << endl;
+           
+        os << "CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();"
+           << endl;
+    
+        os << "CORBA::ValueFactory f =" << endl
+           << "orb->lookup_value_factory (" << endl
+           << "event_repo_id" << endl
+           << STRS[ENV_ARG] << ");"
+           << STRS[ACE_CR] << " (FALSE);" << endl;
+           
+        os << "if (f == 0)" << endl
+           << "{"
+           << "return FALSE;" << endl
+           << "}"
+           << "CORBA::ValueBase_var v =" << endl
+           << "f->create_for_unmarshal (" << STRS[ENV_SNGL_ARG] << ");"
+           << STRS[ACE_CR] << " (FALSE);" << endl;
+           
+        os << "f->_remove_ref ();" << endl;
+           
+        os << "if (v.in () == 0)" << endl
+           << "{"
+           << "return FALSE;" << endl
+           << "}";
+           
+        os << "return dynamic_cast< ";
+           
+        Traversal::ConsumerData::belongs (c, belongs_);
+        
+        os << " *> (v.in ()) != 0;" << endl
+           << "}" << endl;
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -3114,8 +3264,9 @@ namespace
       os << "void" << endl
          << t.name () << "_Servant::set_attributes (" << endl
          << "const ::Components::ConfigValues &descr" << endl
-         << STRS[ENV_SRC_NOTUSED] << ")" << endl
-         << "{";
+         << STRS[ENV_SRC] << ")" << endl
+         << "{"
+         << "ACE_ENV_EMIT_CODE (ACE_UNUSED_ARG (ACE_TRY_ENV));" << endl;
          
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
