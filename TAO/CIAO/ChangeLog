@@ -1,3 +1,10 @@
+Sun Apr 17 16:05:57 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/examples/Swapping/Sender/Sender_exec_1.cpp
+	* DAnCE/examples/Swapping/Sender/Sender_exec_2.cpp
+
+	Fixed a compile error on platforms using emulated exceptions.
+	
 Sun Apr 17 12:46:51 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/CCM_Event.idl:

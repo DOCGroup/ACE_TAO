@@ -76,7 +76,7 @@ Sender_Impl::Sender_exec_2_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
