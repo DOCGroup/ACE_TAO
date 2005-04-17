@@ -693,9 +693,6 @@ AH_TEMPLATE([ACE_HAS_SVR4_TLI],
 AH_TEMPLATE([ACE_HAS_SYSCALL_GETRUSAGE],
 [HP/UX has an undefined syscall for GETRUSAGE.])
 
-AH_TEMPLATE([ACE_HAS_SYSCALL_H],
-[Compiler/platform contains the <sys/syscall.h> file.])
-
 AH_TEMPLATE([ACE_HAS_SYSINFO],
 [Platform supports system configuration information.])
 
