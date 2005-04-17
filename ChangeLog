@@ -1,3 +1,10 @@
+Sat Apr 16 20:37:07 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * bin/auto_run_tests.pl: 
+        * bin/ciao_tests.lst:
+
+          Added auto_build tests for CIAO.
+
 Sat Apr 16 16:33:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Parse_Node.inl:
