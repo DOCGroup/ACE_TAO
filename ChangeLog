@@ -1,3 +1,11 @@
+Sun Apr 17 19:49:05 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-netbsd.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+          Removed ACE_HAS_SYS_IOCTL_H definition. It is no longer
+          used in ACE/TAO code.
+
 Sun Apr 17 19:33:55 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-interix.h:

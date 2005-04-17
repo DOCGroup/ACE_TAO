@@ -41,9 +41,6 @@
 #define ACE_HAS_NEW_NO_H 1
 #define ACE_HAS_STDEXCEPT_NO_H 1
 
-/* Platform provides <sys/ioctl.h> header */
-#define ACE_HAS_SYS_IOCTL_H 1
-
 /*
  * TODO: These two next #defines have an #undef before them, in
  * case the variable being defined already had a value.
