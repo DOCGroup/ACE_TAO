@@ -1,3 +1,11 @@
+Sun Apr 17 20:02:01 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+        * ace/config-unixware-2.01-g++.h:
+        * ace/config-unixware-2.1.2-g++.h:
+          Removed references to ACE_HAS_THREAD_T. It is no longer
+          used in ACE/TAO code.
+
 Sun Apr 17 19:49:05 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-netbsd.h:
