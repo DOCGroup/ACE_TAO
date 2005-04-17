@@ -41,8 +41,9 @@ sub kill_node_daemons {
 }
 
 sub kill_open_processes {
-  if ($daemons_running == 1)
+  if ($daemons_running == 1) {
     kill_node_daemons ();
+  }
 
   if ($em_running == 1) {
     $EM->Kill ();
@@ -86,8 +87,10 @@ delete_ior_files ();
 print "Invoking node daemons\n";
 $status = run_node_daemons ();
 
-if ($status != 0)
+if ($status != 0) {
+  print STDERR "ERROR: Unable to execute the node daemons\n";
   exit 1;
+}
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
