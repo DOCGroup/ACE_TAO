@@ -1,3 +1,9 @@
+Sat Apr 16 20:17:38 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Hello/descriptors/run_test.pl:
+
+          Fixed some perl errors.
+
 Sat Apr 16 18:31:40 2005 CDT  Will Otte <wotte@dre.vanderbilt.edu>
 
   * DAnCE/ExecutionManager/ExecutionManager.mpc
