@@ -1722,21 +1722,6 @@ ACE_HAS_THREADS:
      not until 10.0.
 
 
-ACE_HAS_THREAD_T:
------------------
-
-  Used in:
-     ace/OS.h
-
-  Notes:
-     #if !defined (ACE_HAS_THREAD_T)
-     typedef int thread_t;
-     #endif /* !ACE_HAS_THREAD_T */
-
-  HPUX:
-     don't set.
-
-
 ACE_HAS_TIMOD_H:
 ----------------
 
