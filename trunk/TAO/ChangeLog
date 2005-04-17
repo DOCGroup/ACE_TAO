@@ -4,8 +4,8 @@ Sun Apr 17 01:07:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Removed CORBA::Environment default argument.  TAO internal
 	  methods, such as this, should always supply a CORBA::Environment
-	  argument when using emulated exceptions since a TSS access
-	  incurred otherwise.  Addresses compile-time errors related to
+	  argument when using emulated exceptions since a TSS access is
+	  otherwise incurred.  Addresses compile-time errors related to
 	  the lack of a missing full declaration for
 	  TAO_default_environment().
 
