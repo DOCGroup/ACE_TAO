@@ -6,31 +6,31 @@ Sat Apr 16 20:17:38 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Sat Apr 16 18:31:40 2005 CDT  Will Otte <wotte@dre.vanderbilt.edu>
 
-  * DAnCE/ExecutionManager/ExecutionManager.mpc
-  
-  Removed typecodefactory fromt the base projects.
-  
+	* DAnCE/ExecutionManager/ExecutionManager.mpc
+
+	  Removed typecodefactory fromt the base projects.
+
 Sat Apr 16 17:24:40 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * DAnCE/Plan_Launcher/Plan_Launcher.cpp: 
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
 
           Added a missing include file.
 
 Sat Apr 16 17:22:42 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * DAnCE/examples/Hello/descriptors/run_test.pl: 
+        * DAnCE/examples/Hello/descriptors/run_test.pl:
 
           Added code to ensure killing open processes on failure.
 
 Sat Apr 16 16:38:09 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * DAnCE/examples/Hello/descriptors/run_test.pl: 
+        * DAnCE/examples/Hello/descriptors/run_test.pl:
 
           Added perl script running all the steps for deploying an application.
 
 Sat Apr 16 16:10:10 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * DAnCE/Plan_Launcher/Plan_Launcher.cpp: 
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
 
           Added two command line options to plan_launcher to easily use in
           scripts. Now the launch and destruction of the application can be
@@ -38,16 +38,16 @@ Sat Apr 16 16:10:10 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Sat Apr 16 15:00:31 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * DAnCE/examples/Hello/step-by-step.html: 
+        * DAnCE/examples/Hello/step-by-step.html:
 
           Fixed typo on the documentation.
 
 Fri Apr 15 12:54:46 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/Config_Handlers/Req_Handler.h
 
 	Fixed a compile error on builds using -pendantic.
-	
+
 Fri Apr 15 10:46:56 CDT 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Impl.cpp
@@ -69,11 +69,11 @@ Fri Apr 15 10:46:56 CDT 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  build.
 
 Thu Apr 14 10:54:56 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
 
 	Fixed a warning due to ambiguous conversion.
-	
+
 Thu Apr 143 10:21:58 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/Hello/Sender/Sender.idl
@@ -93,14 +93,14 @@ Thu Apr 143 10:21:58 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  Cleaned up a little bit.
 
 Thu Apr 14 10:14:44 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
 
 	Added 'naming' to the list of base projects to fix a compile
 	error
-	
+
 Thu Apr 14 02:02:13 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/ExecutionManager/Execution_Manager.cpp
 	* DAnCE/ciao/Context_Impl_T.cpp
 	* DAnCE/ciao/Dynamic_Component_Servant_Base.h
@@ -111,8 +111,8 @@ Thu Apr 14 02:02:13 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
 	* DAnCE/ciao/Upgradeable_Context_Impl_T.cpp
 
-	Fixed a number of mistakes with emulated exceptions. 
-	
+	Fixed a number of mistakes with emulated exceptions.
+
 Wed Apr 13 18:55:58 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/CCM_Component.idl
@@ -126,7 +126,7 @@ Wed Apr 13 18:55:58 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/RepositoryManager/Update_Plan.cpp
 	* DAnCE/RepositoryManager/Update_Plan.h
 
-	  Fixed to make sure correct component attributes are 
+	  Fixed to make sure correct component attributes are
 	  populated. Thanks Jai <jai@dre.vanderbilt.edu> for the fix.
 
 Wed Apr 13 15:14:58 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
@@ -156,16 +156,16 @@ Tue Apr 12 17:12:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * DAnCE/ciao/Servant_Impl_Base.h:
         * ciao/Servant_Impl_Base.cpp:
         * ciao/Servant_Impl_Base.h:
-        
+
           Added a static method to generate a UUID. This method is
           called by the generated servant class to create unique
           object ids for port object references. Thanks to Steve
           Baker <steven_d_baker@raytheon.com> for reporting the
           problem of connecting to facets on multiple instances
           of the same component type.
-          
+
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Changed code generation for provide_*_i() to use the
           new method described above.
 
@@ -173,32 +173,32 @@ Tus Apr 12 16:04:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/Old_Config_Handlers/IAD_Handler.cpp
 
-	  Modified to ignore the <dependsOn> tag, since this might 
+	  Modified to ignore the <dependsOn> tag, since this might
 	  cause a problem where multiple _svnt or multiple _exec
 	  libraries to be specified as implArtifacts of a component
 	  type.
 
 Tue Apr 12 14:35:58 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* CIAO-INSTALL.html
 
 	Updated to include Xerces information.  Also cleaned up the
-	file a bit and made it XHTML compliant. 
-	
+	file a bit and made it XHTML compliant.
+
 Tue Apr 12 11:56:26 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/ciao/Dynamic_Component_Activator.cpp
 	* DAnCE/ciao/Servant_Activator.cpp
 	* DAnCE/ciao/Servant_Impl_Base.cpp
 
 	Fixed some more compile errors with emulated exceptions.
-	
+
 Tue Apr 12 11:11:41 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/ciao/Servant_Impl_Base.cpp
 
 	Fixed some compile errors with emulated exceptions.
-	
+
 Mon Apr 11 23:54:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
@@ -209,7 +209,7 @@ Mon Apr 11 23:54:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  fix now only consides the first "_svnt" and "_exec"
 	  libs, and ignore remaining ones. A better solution will
 	  be enforcing any MonolithicDeploymentDescription could
-	  only have exactly one _svnt and one _exec lib. This 
+	  only have exactly one _svnt and one _exec lib. This
 	  will be achieved through the flattened deployment plan.
 
 Mon Apr 11 17:56:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
