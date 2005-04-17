@@ -22,7 +22,6 @@
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS    // Don't have gethostbyaddr_r and friends.
 # define ACE_HAS_DIRENT
-# define ACE_HAS_ANSI_CASTS
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TYPENAME_KEYWORD
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1

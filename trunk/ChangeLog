@@ -1,16 +1,22 @@
+Sun Apr 17 19:33:55 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-win32-interix.h:
+          Removed ACE_HAS_ANSI_CASTS definition. It is no longer
+          used in ACE/TAO code.
+
 Sun Apr 17 10:44:43 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/ACE.cpp (sock_error): Added a bunch more WSA* socket error
- 	  values.  Thanks to Arto Jalkanen <ajalkane at gmail dot com> for
- 	  contributing this.
+        * ace/ACE.cpp (sock_error): Added a bunch more WSA* socket error
+          values.  Thanks to Arto Jalkanen <ajalkane at gmail dot com> for
+          contributing this.
 
 Sun Apr 17 07:51:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-lite.h (ACE_EXPORT_SINGLETON_DECLARATION):
-	  (ACE_EXPORT_SINGLETON_DECLARE):
+        * ace/config-lite.h (ACE_EXPORT_SINGLETON_DECLARATION):
+          (ACE_EXPORT_SINGLETON_DECLARE):
 
-	  Added suitable defaults when ACE_HAS_CUSTOM_EXPORT_MACROS is
-	  defined and these aren't.
+          Added suitable defaults when ACE_HAS_CUSTOM_EXPORT_MACROS is
+          defined and these aren't.
 
 Sun Apr 17 17:34:38 2005  Olli Savia  <ops@iki.fi>
 
@@ -35,39 +41,39 @@ Sat Apr 16 20:37:07 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Sat Apr 16 16:33:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Parse_Node.inl:
-	* ace/Parse_Node.cpp:
+        * ace/Parse_Node.inl:
+        * ace/Parse_Node.cpp:
 
-	  Moved inlined virtual destructors out of line.  Addresses
-	  unresolved symbol errors when using g++ 4.0 with a default
-	  symbol visibility set to "hidden".
+          Moved inlined virtual destructors out of line.  Addresses
+          unresolved symbol errors when using g++ 4.0 with a default
+          symbol visibility set to "hidden".
 
 Sat Apr 16 09:18:42 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Reactor.inl:
-	* ace/Reactor.cpp:
+        * ace/Reactor.inl:
+        * ace/Reactor.cpp:
 
-	  Moved inlined virtual methods out of line.  Addresses unresolved
-	  symbol errors when using g++ 4.0's "-fvisibility-inlines-hidden"
-	  command line option.  The methods can be inlined again once/if
-	  we make the methods non-virtual.  Since the ACE_Reactor now
-	  implements the Bridge design pattern, they no longer need to be
-	  virtual.  However, they will remain virtual for a while due to
-	  potential user legacy app / backward compatibility issues.
+          Moved inlined virtual methods out of line.  Addresses unresolved
+          symbol errors when using g++ 4.0's "-fvisibility-inlines-hidden"
+          command line option.  The methods can be inlined again once/if
+          we make the methods non-virtual.  Since the ACE_Reactor now
+          implements the Bridge design pattern, they no longer need to be
+          virtual.  However, they will remain virtual for a while due to
+          potential user legacy app / backward compatibility issues.
 
 Fri Apr 15 11:36:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Timeprobe.h:
+        * ace/Timeprobe.h:
 
-	  Drop the semi-colon after the ACE_SINGLETON_DECLARE.  The
-	  convention is not to add a trailing semi-colon.  Addresses a g++
-	  4.0 CVS snapshot error about an extra semi-colon.
+          Drop the semi-colon after the ACE_SINGLETON_DECLARE.  The
+          convention is not to add a trailing semi-colon.  Addresses a g++
+          4.0 CVS snapshot error about an extra semi-colon.
 
-	* ace/config-g++-common.h (ACE_EXPORT_SINGLETON_DECLARE):
+        * ace/config-g++-common.h (ACE_EXPORT_SINGLETON_DECLARE):
 
-	  Added a trailing semi-colon in the definition of this macro for
-	  g++ 4.x or better.  This is the same convention we use for
-	  Windows.
+          Added a trailing semi-colon in the definition of this macro for
+          g++ 4.x or better.  This is the same convention we use for
+          Windows.
 
 Fri Apr 15 12:14:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -86,16 +92,16 @@ Fri Apr 15 09:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 Thu Apr 14 23:35:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Timeprobe.h:
+        * ace/Timeprobe.h:
 
-	  Include "ace/Null_Mutex.h" to pull in complete ACE_Null_Mutex
-	  type.  Fixes "incomplete type" errors.
+          Include "ace/Null_Mutex.h" to pull in complete ACE_Null_Mutex
+          type.  Fixes "incomplete type" errors.
 
-	* ace/config-g++-common.h (ACE_EXPORT_SINGLETON_DECLARATION):
-	  (ACE_EXPORT_SINGLETON_DECLARE):
+        * ace/config-g++-common.h (ACE_EXPORT_SINGLETON_DECLARATION):
+          (ACE_EXPORT_SINGLETON_DECLARE):
 
-	  Define these macros to a suitable C++ expression.  Addresses
-	  syntax errors.
+          Define these macros to a suitable C++ expression.  Addresses
+          syntax errors.
 
 Fri Apr 15 07:57:38 2005  Olli Savia  <ops@iki.fi>
 
