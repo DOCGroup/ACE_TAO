@@ -1,3 +1,14 @@
+Sun Apr 17 01:07:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Any_Dual_Impl_T.h (_tao_decode):
+
+	  Removed CORBA::Environment default argument.  TAO internal
+	  methods, such as this, should always supply a CORBA::Environment
+	  argument when using emulated exceptions since a TSS access
+	  incurred otherwise.  Addresses compile-time errors related to
+	  the lack of a missing full declaration for
+	  TAO_default_environment().
+
 Sat Apr 16 18:22:23 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Root_POA.cpp:
