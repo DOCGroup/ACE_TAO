@@ -1,3 +1,9 @@
+Sun Apr 17 10:44:43 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/ACE.cpp (sock_error): Added a bunch more WSA* socket error
+ 	  values.  Thanks to Arto Jalkanen <ajalkane at gmail dot com> for
+ 	  contributing this.
+
 Sun Apr 17 07:51:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/config-lite.h (ACE_EXPORT_SINGLETON_DECLARATION):
