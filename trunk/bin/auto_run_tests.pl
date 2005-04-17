@@ -21,7 +21,7 @@ use Env qw(ACE_ROOT PATH);
 
 ################################################################################
 
-if (!getopts ('ados:t') || $opt_h) {
+if (!getopts ('ados:tC') || $opt_h) {
     print "auto_run_tests.pl [-a] [-h] [-s sandbox] [-o] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
@@ -33,6 +33,7 @@ if (!getopts ('ados:t') || $opt_h) {
     print "    -s sandbox  Runs each program using a sandbox program\n";
     print "    -o          ORB test only\n";
     print "    -t          TAO tests (other than ORB tests) only\n";
+    print "    -C          CIAO tests only\n";
     print "    -Config cfg Run the tests for the <cfg> configuration\n";
     print "\n";
     $ace_config_list = new PerlACE::ConfigList;
@@ -44,6 +45,9 @@ if (!getopts ('ados:t') || $opt_h) {
     $tao_config_list = new PerlACE::ConfigList;
     $tao_config_list->load ($ACE_ROOT."/bin/tao_other_tests.lst");
     print "TAO Test Configs: " . $tao_config_list->list_configs () . "\n";
+    $ciao_config_list = new PerlACE::ConfigList;
+    $ciao_config_list->load ($ACE_ROOT."/bin/ciao_tests.lst");
+    print "CIAO Test Configs: " . $ciao_config_list->list_configs () . "\n";
     exit (1);
 }
 
@@ -61,10 +65,15 @@ if ($opt_t) {
 push (@file_list, "/bin/tao_other_tests.lst");
 }
 
+if ($opt_C) {
+push (@file_list, "/bin/ciao_tests.lst");
+}
+
 if (scalar(@file_list) == 0) {
 push (@file_list, "/bin/ace_tests.lst");
 push (@file_list, "/bin/tao_orb_tests.lst") if -d "$ACE_ROOT/TAO";
 push (@file_list, "/bin/tao_other_tests.lst") if -d "$ACE_ROOT/TAO";
+push (@file_list, "/bin/ciao_test.lst") if -d "$ACE_ROOT/TAO/CIAO";
 }
 
 foreach my $test_lst (@file_list) {
