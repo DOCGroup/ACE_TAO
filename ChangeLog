@@ -1,3 +1,10 @@
+Sun Apr 17 17:34:38 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-win32-interix.h:
+        * m4/config_h.m4:
+          Removed references to ACE_HAS_SYSCALL_H. It is no longer
+          used in ACE/TAO code.
+
 Sat Apr 16 20:47:11 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst: 
