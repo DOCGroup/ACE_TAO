@@ -43,9 +43,9 @@ class ACE_Reactor;
  * it doesn't make any sense at all to make the listening
  * endpoint visible (or connectable) anywhere outside of this
  * machine.  However, the type of endpoint is left as <ACE_Addr>
- * so we can later changed to use UNIX sockets with mmap stream
- * if so desired.  (Currently, using UNIX socket with this class
- * will not work.)
+ * so we can later changed to use UNIX-domain sockets with mmap stream
+ * if so desired.  (Currently, using UNIX-domain sockets, i.e.,
+ * ACE_LSOCK_*, with this class will not work.)
  */
 class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {

@@ -3191,6 +3191,48 @@ ACE::sock_error (int error)
     case WSAEISCONN:
       return ACE_LIB_TEXT ("socket is already connected");
       /* NOTREACHED */
+    case WSAENETRESET:
+      return ACE_LIB_TEXT ("network dropped connection on reset");
+      /* NOTREACHED */
+    case WSAEMSGSIZE:
+      return ACE_LIB_TEXT ("message too long");
+      /* NOTREACHED */
+    case WSAENETUNREACH:
+      return ACE_LIB_TEXT ("network is unreachable");
+      /* NOTREACHED */
+    case WSAEFAULT:
+      return ACE_LIB_TEXT ("bad address");
+      /* NOTREACHED */
+    case WSAEDISCON:
+      return ACE_LIB_TEXT ("graceful shutdown in progress");
+      /* NOTREACHED */
+    case WSAEACCES:
+      return ACE_LIB_TEXT ("permission denied");
+      /* NOTREACHED */
+    case WSAESHUTDOWN:
+      return ACE_LIB_TEXT ("cannot send after socket shutdown");
+      /* NOTREACHED */
+    case WSAEPROCLIM:
+      return ACE_LIB_TEXT ("too many processes");
+      /* NOTREACHED */
+    case WSAEALREADY:
+      return ACE_LIB_TEXT ("operation already in progress");
+      /* NOTREACHED */
+    case WSAEPFNOSUPPORT:
+      return ACE_LIB_TEXT ("protocol family not supported");
+      /* NOTREACHED */
+    case WSAENOPROTOOPT:
+      return ACE_LIB_TEXT ("bad protocol option");
+      /* NOTREACHED */
+    case WSATYPE_NOT_FOUND:
+      return ACE_LIB_TEXT ("class type not found");
+      /* NOTREACHED */
+    case WSAEOPNOTSUPP:
+      return ACE_LIB_TEXT ("operation not supported");
+      /* NOTREACHED */
+    case WSAEDESTADDRREQ:
+      return ACE_LIB_TEXT ("destination address required");
+      /* NOTREACHED */      
     default:
       ACE_OS::sprintf (unknown_msg, ACE_LIB_TEXT ("unknown error: %d"), error);
       return unknown_msg;
@@ -3240,6 +3282,19 @@ ACE::is_sock_error (int error)
     case WSAEHOSTUNREACH:
     case WSAEADDRNOTAVAIL:
     case WSAEISCONN:
+    case WSAENETRESET:
+    case WSAEMSGSIZE:
+    case WSAENETUNREACH:
+    case WSAEFAULT:
+    case WSAEDISCON:
+    case WSAEACCES:
+    case WSAESHUTDOWN:
+    case WSAEPROCLIM:
+    case WSAEALREADY:
+    case WSAEPFNOSUPPORT:
+    case WSAENOPROTOOPT:
+    case WSATYPE_NOT_FOUND:
+    case WSAEOPNOTSUPP:
       return true;
     }
 #else
