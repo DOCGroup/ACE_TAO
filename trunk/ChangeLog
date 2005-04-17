@@ -1,3 +1,11 @@
+Sun Apr 17 07:51:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-lite.h (ACE_EXPORT_SINGLETON_DECLARATION):
+	  (ACE_EXPORT_SINGLETON_DECLARE):
+
+	  Added suitable defaults when ACE_HAS_CUSTOM_EXPORT_MACROS is
+	  defined and these aren't.
+
 Sun Apr 17 17:34:38 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-interix.h:
