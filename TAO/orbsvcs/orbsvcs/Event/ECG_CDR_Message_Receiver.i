@@ -44,19 +44,3 @@ TAO_ECG_CDR_Message_Receiver::init (TAO_ECG_Refcounted_Endpoint ignore_from
 //      }
 }
 
-ACE_INLINE void
-TAO_ECG_CDR_Message_Receiver::shutdown (void)
-{
-  // ACE_GUARD (ACE_Lock, guard, *this->lock_);
-
-  Request_Map::iterator end = this->request_map_.end ();
-  for (Request_Map::iterator i =  this->request_map_.begin ();
-       i != end;
-       ++i)
-    {
-      delete (*i).int_id_;
-      (*i).int_id_ = 0;
-    }
-
-  this->ignore_from_.reset ();
-}

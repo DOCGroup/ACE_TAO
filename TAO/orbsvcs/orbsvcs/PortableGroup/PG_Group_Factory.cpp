@@ -177,7 +177,7 @@ int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroup_ptr object_gro
 
 int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)
 {
-  ::TAO::PG_Object_Group * group;
+  ::TAO::PG_Object_Group * group = 0;
   int result = (this->group_map_.unbind (group_id, group) == 0);
   if (result)
   {

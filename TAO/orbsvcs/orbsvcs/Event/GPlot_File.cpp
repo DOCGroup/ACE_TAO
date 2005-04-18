@@ -140,7 +140,7 @@ ACE_GPlot_File::set (long entry, long value)
 {
   long old_entry;
   char *val;
-  char *old_value;
+  char *old_value = 0;
 
   ACE_NEW (val, char [32]);
 
@@ -156,7 +156,7 @@ ACE_GPlot_File::set (long entry, float value)
 {
   long old_entry;
   char *val;
-  char *old_value;
+  char *old_value = 0;
 
   ACE_NEW (val, char [32]);
 

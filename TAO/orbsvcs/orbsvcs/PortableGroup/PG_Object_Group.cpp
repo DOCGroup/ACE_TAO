@@ -271,7 +271,7 @@ TAO::PG_Object_Group::set_primary_member (
                     this->internals_,
                     0);
   int result = 1;
-  MemberInfo * info;
+  MemberInfo * info = 0;
   if (this->members_.find (the_location, info) == 0)
     {
       int cleared = 0;
@@ -347,7 +347,7 @@ TAO::PG_Object_Group::remove_member (
                    PortableGroup::MemberNotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-  MemberInfo * info;
+  MemberInfo * info = 0;
   if (this->members_.unbind (the_location, info) == 0)
     {
       if (this->members_.current_size() > 0)
@@ -579,7 +579,7 @@ TAO::PG_Object_Group::get_member_reference (
 
   CORBA::Object_var result;
 
-  MemberInfo * info;
+  MemberInfo * info = 0;
   if (this->members_.find (the_location, info) == 0)
     {
       result = CORBA::Object::_duplicate (info->member_.in ());

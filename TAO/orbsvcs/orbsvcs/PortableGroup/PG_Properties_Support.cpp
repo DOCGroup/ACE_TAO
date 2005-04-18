@@ -95,7 +95,7 @@ TAO::PG_Properties_Support::get_type_properties (
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);
 
-  TAO::PG_Property_Set * typeid_properties;
+  TAO::PG_Property_Set * typeid_properties = 0;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     typeid_properties->export_properties (*result);
@@ -117,7 +117,7 @@ TAO::PG_Properties_Support::remove_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  TAO::PG_Property_Set * typeid_properties;
+  TAO::PG_Property_Set * typeid_properties = 0;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     typeid_properties->remove (props);

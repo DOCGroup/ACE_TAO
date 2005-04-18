@@ -311,7 +311,7 @@ void TAO::PG_FactoryRegistry::register_factory (
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::register_factory);
 
-  RoleInfo * role_info;
+  RoleInfo * role_info = 0;
   auto_ptr<RoleInfo> safe_entry;
   if (this->registry_.find(role, role_info) != 0)
     {
@@ -382,7 +382,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory);
 
-  RoleInfo * role_info;
+  RoleInfo * role_info = 0;
   if (this->registry_.find(role, role_info) == 0)
   {
     PortableGroup::FactoryInfos & infos = role_info->infos_;
@@ -473,7 +473,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_role);
 
-  RoleInfo * role_info;
+  RoleInfo * role_info = 0;
   if (this->registry_.unbind(role, role_info) == 0)
   {
     ACE_DEBUG(( LM_DEBUG,
