@@ -66,11 +66,9 @@ int
 ACE_TMAIN (int, ACE_TCHAR*[])
 {
   // Manage memory automagically.
-  // Note that ordering here is important.
   ACE_Reactor_Impl *impl = new ACE_Msg_WFMO_Reactor;
-  auto_ptr<ACE_Reactor> reactor (new ACE_Reactor (impl));
+  auto_ptr<ACE_Reactor> reactor (new ACE_Reactor (impl, 1));
   ACE_Reactor::instance (reactor.get ());
-  auto_ptr<ACE_Reactor_Impl> delete_impl (impl);
 
   Event_Handler event_handler;
   global_event_handler = &event_handler;
