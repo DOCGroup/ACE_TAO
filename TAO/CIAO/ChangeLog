@@ -1,3 +1,9 @@
+Mon Apr 18 08:38:14 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Changed all instances of 'FALSE' to 'false'.
+
 Sun Apr 17 21:57:52 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
