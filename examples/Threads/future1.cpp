@@ -357,7 +357,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         ACE_DEBUG ((LM_DEBUG, "(%t) result d %u\n", (u_int) resultc));
         ACE_DEBUG ((LM_DEBUG, "(%t) result e %u\n", (u_int) resultd));
 
-        const char *name;
+        const char *name = 0;
 
         fname.get (name);
 
