@@ -505,7 +505,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration(void)
 {
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *tree_node;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *tree_node = 0;
 
   stable_tree_.find(key_array_ [2], tree_node);
   part_rev_iter_ = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (stable_tree_, tree_node);
