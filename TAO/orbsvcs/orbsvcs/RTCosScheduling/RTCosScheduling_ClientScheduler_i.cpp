@@ -12,10 +12,6 @@
 
 #include "RTCosScheduling_ClientScheduler_i.h"
 
-#if !defined (__ACE_INLINE__)
-#include "RTCosScheduling_ClientScheduler_i.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"
 
@@ -58,6 +54,14 @@ namespace TAO
           ACE_CHECK;
 
           TAO_ORB_Core *orb_core = orb->orb_core();
+
+          // @@ (OO) Why isn't an ORBInitializer being used to
+          //         register the interceptor?  In fact, all of the
+          //         following code should be done in an
+          //         ORBInitializer, except for the interceptor list
+          //         iteration.  That is already done by the ORB when
+          //         using an ORBInitializer to register an
+          //         interceptor.
 
           /// First, get a list of all interceptors currently registered
           TAO_ClientRequestInterceptor_List::TYPE &interceptors =
@@ -160,7 +164,7 @@ void  RTCosScheduling_ClientScheduler_i::schedule_activity (
     RTCosScheduling::UnknownName))
 {
   /// Look up the priority using the activity name in the activity map
-  COS_SCHEDULER_ACTIVITY_VALUE priority;
+  COS_SCHEDULER_ACTIVITY_VALUE priority = 0;
   CORBA::Short result =
   this->activity_map_.find(activity_name,
                            priority);
@@ -421,15 +425,28 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
   ACE_ENDTRY;
 }
 
+char *
+RTCosScheduling_ClientScheduler_Interceptor::name (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACE_THROW_SPEC ((CORBA::SystemException))
+{
+return CORBA::string_dup(this->name_);
+}
+
+void
+RTCosScheduling_ClientScheduler_Interceptor::destroy (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ACE_UNUSED_ARG(ri);
   ACE_TRY
     {
 
@@ -461,6 +478,40 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       ACE_TRY_THROW (CORBA::INTERNAL ());
     }
    ACE_ENDTRY;
+}
+
+void
+RTCosScheduling_ClientScheduler_Interceptor::send_poll (
+  PortableInterceptor::ClientRequestInfo_ptr
+  ACE_ENV_ARG_DECL_NOT_USED)
+ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+void
+RTCosScheduling_ClientScheduler_Interceptor::receive_reply (
+  PortableInterceptor::ClientRequestInfo_ptr
+  ACE_ENV_ARG_DECL_NOT_USED)
+ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+void
+RTCosScheduling_ClientScheduler_Interceptor::receive_exception (
+  PortableInterceptor::ClientRequestInfo_ptr
+  ACE_ENV_ARG_DECL_NOT_USED)
+ACE_THROW_SPEC ((CORBA::SystemException,
+                 PortableInterceptor::ForwardRequest))
+{
+}
+
+void
+RTCosScheduling_ClientScheduler_Interceptor::receive_other (
+  PortableInterceptor::ClientRequestInfo_ptr
+  ACE_ENV_ARG_DECL_NOT_USED)
+ACE_THROW_SPEC ((CORBA::SystemException,
+                 PortableInterceptor::ForwardRequest))
+{
 }
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

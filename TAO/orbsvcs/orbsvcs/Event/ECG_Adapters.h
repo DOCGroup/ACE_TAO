@@ -56,6 +56,8 @@ class TAO_RTEvent_Export TAO_ECG_Dgram_Handler
 {
 public:
 
+  virtual ~TAO_ECG_Dgram_Handler (void);
+
   virtual int handle_input (ACE_SOCK_Dgram& dgram) = 0;
 
   virtual void get_addr (const RtecEventComm::EventHeader& header,
