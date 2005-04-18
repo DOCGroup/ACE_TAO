@@ -13,11 +13,6 @@ ACE_RCSID (Dynamic,
            interceptors,
            "$Id$")
 
-  //const CORBA::ULong request_ctx_id = 0xdead;
-  //const CORBA::ULong reply_ctx_id = 0xbeef;
-static const char request_msg[] = "The Echo_Request_Interceptor request message";
-static const char reply_msg[] = "The Echo_Request_Interceptor reply message";
-
 Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (void)
   : myname_ ("Echo_Client_Interceptor")
 {
