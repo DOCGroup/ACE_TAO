@@ -1,3 +1,15 @@
+Mon Apr 18 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/config-win32-msvc.h:
+          Moved the _MT check from the win32-common file to win32-msvc, this
+          check is for msvc, not for Borland and g++. Thanks to
+          Stefan Morrow <stefanm at uniblue dot net> for motivating this
+          change.
+
+        * include/makeinclude/compiler.bor:
+          No need to define _MT
+
 Mon Apr 18 09:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

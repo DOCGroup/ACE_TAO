@@ -99,7 +99,7 @@ UNICODE_CFLAGS = -DACE_USES_WCHAR -WU
 PCH_CFLAGS = -H=$(OBJDIR)\$(NAME).csm -Hh=$(PCH_HEADER)
 !endif
 
-THREAD_CFLAGS = -D_MT -tWM
+THREAD_CFLAGS = -tWM
 WARNINGS_CFLAGS = -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl
 !ifdef CBX
 DEFINES_CFLAGS =

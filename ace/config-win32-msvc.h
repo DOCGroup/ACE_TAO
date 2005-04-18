@@ -65,6 +65,18 @@
 # error This version of Microsoft Visual C++ not supported.
 #endif
 
+#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// must have _MT defined to include multithreading
+// features from win32 headers
+# if !defined(_MT) && !defined (ACE_HAS_WINCE)
+// *** DO NOT *** defeat this error message by defining _MT yourself.
+// On MSVC, this is changed by selecting the Multithreaded
+// DLL or Debug Multithreaded DLL in the Project Settings
+// under C++ Code Generation.
+#  error You must link against multi-threaded libraries when using ACE (check your project settings)
+# endif /* !_MT && !ACE_HAS_WINCE */
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+
 #include <malloc.h>
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
