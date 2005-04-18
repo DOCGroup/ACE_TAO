@@ -1,14 +1,36 @@
+Mon Apr 18 08:00:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_Adapters.h (~TAO_ECG_Dgram_Handler):
+	* orbsvcs/orbsvcs/Event/ECG_Adapters.cpp (~TAO_ECG_Dgram_Handler):
+
+	  Added missing virtual destructor.  Fixes a g++ 4.0 warning.
+
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+
+	  Moved inlined virtual methods out of line to this file.
+
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
+
+	  Cleaned up CORBA::Environment arguments to better conform to
+	  current TAO conventions.
+
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.i:
+
+	  Moved inline virtual methods out of line.
+
+	  Removed this file since it is now empty.
+
 Mon Apr 18 13:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/AMI/run_test.pl:
           Fixed error in this script that caused this test to fail on all
-          platforms except VxWorks
+          platforms except VxWorks.
 
 Mon Apr 18 13:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Leader_Followers/run_test.pl:
           Fixed typo in this script that caused this test to fail on all
-          platforms except VxWorks
+          platforms except VxWorks.
 
 Mon Apr 18 13:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -20,10 +42,10 @@ Mon Apr 18 13:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
         * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
         * examples/Load_Balancing/Load_Balancer_i.cpp:
-          Initialise pointer with 0 to fix gcc pre 4.0 warning
+          Initialise pointer with 0 to fix gcc pre 4.0 warning.
 
         * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
-          Don't use an export macro with a forward declaration
+          Don't use an export macro with a forward declaration.
 
 Mon Apr 18 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

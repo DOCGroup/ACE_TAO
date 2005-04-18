@@ -90,37 +90,37 @@ public:
   //@{
   /// Return the name of this ClientRequestInterceptor.
   //
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_poll (
       PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_reply (
       PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (
       PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_other (
       PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
   //@}
@@ -208,10 +208,6 @@ class TAO_RTCosScheduling_Export RTCosScheduling_ClientScheduler_i :
 };
 
 }
-
-#if defined (__ACE_INLINE__)
-#include "RTCosScheduling_ClientScheduler_i.i"
-#endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
