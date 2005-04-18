@@ -3,6 +3,39 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Integrate Real-time Event Channel into CIAO and DAnCE.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
+======================================================
+
+. Split the previous NodeApplication interface into NodeApplication
+  and Container interfaces to allow multi-container NodeApplication
+  support. This will be particularly useful to provide an optimized
+  CIAO container support for RT-CORBA features.
+
+. Enhanced CIAO to handle dynamic replacement of components. Please
+  see an example in $CIAO_ROOT/DAnCE/examples/Swapping
+
+. Made the XML config handlers do the parsing by using XML Schema
+  Compiler (XSC).
+
+. Supported initializing attribute values on Component through XML
+  tags. Please refer to the $CIAO_ROOT/DAnCE/examples/Hello for
+  details, particularly the Hello.cid descriptor file.
+
+. Enhanced the existing set of DAnCE tools to support flattened
+  Deployment Plan based deployment. Please refer an example in
+  $CIAO_ROOT/DAnCE/examples/BasicSP/flattened_deploymentplan.cdp
+  to see how the flattened deployment plan descriptor is used to
+  deploy the BasicSP example.
+
+. Added regression test script to the nightly build for DAnCE example.
+  This will make sure DAnCE tools could be ready to use out of
+  box in various platforms.
+
+. Improved documentation pages in various places.
+
+. Some bug fixes.
+
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.3 and CIAO-0.4.4
 ======================================================
 
