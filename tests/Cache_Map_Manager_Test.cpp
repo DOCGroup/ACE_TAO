@@ -21,10 +21,6 @@
 
 #include "ace/OS_NS_string.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_time.h"
