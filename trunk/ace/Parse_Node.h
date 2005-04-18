@@ -365,11 +365,6 @@ private:
   const ACE_TCHAR *function_name_;
 };
 
-
-#if defined (__ACE_INLINE__)
-#include "ace/Parse_Node.inl"
-#endif /* __ACE_INLINE__ */
-
 /// Global variable used to communicate between the parser and the main
 /// program.
 extern ACE_Service_Config *ace_this_svc;
