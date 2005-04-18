@@ -1,3 +1,9 @@
+Mon Apr 18 12:50:51 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Added '.in ()' to some _var type arguments in generated code.
+
 Mon Apr 18 08:38:14 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:

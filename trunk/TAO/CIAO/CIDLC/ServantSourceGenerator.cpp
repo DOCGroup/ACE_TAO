@@ -2246,7 +2246,7 @@ namespace
            << "else" << endl
            << "{"
            << "return this->subscribe_" << p.name () << " (" << endl
-           << "sub" << endl
+           << "sub.in ()" << endl
            << STRS[ENV_ARG] << ");" << endl
            << "}"
            << "}";      
@@ -2710,7 +2710,7 @@ namespace
            << "}"
            << scope_.name () << "_Context *ctx =" << endl
            << scope_.name () << "_Context::_narrow (" << endl
-           << "this->ctx_" << endl
+           << "this->ctx_.in ()" << endl
            << STRS[ENV_ARG] << ");"
            << STRS[ACE_CR] << " (false);" << endl;
            
