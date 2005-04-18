@@ -73,7 +73,7 @@ if (scalar(@file_list) == 0) {
 push (@file_list, "/bin/ace_tests.lst");
 push (@file_list, "/bin/tao_orb_tests.lst") if -d "$ACE_ROOT/TAO";
 push (@file_list, "/bin/tao_other_tests.lst") if -d "$ACE_ROOT/TAO";
-push (@file_list, "/bin/ciao_test.lst") if -d "$ACE_ROOT/TAO/CIAO";
+push (@file_list, "/bin/ciao_tests.lst") if -d "$ACE_ROOT/TAO/CIAO";
 }
 
 foreach my $test_lst (@file_list) {
