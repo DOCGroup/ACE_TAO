@@ -2,10 +2,6 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Parse_Node.inl"
-#endif /* ____ */
-
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"

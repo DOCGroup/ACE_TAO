@@ -780,7 +780,6 @@ nobase_include_HEADERS = \
   Pair_T.h \
   Pair_T.inl \
   Parse_Node.h \
-  Parse_Node.inl \
   Ping_Socket.h \
   Ping_Socket.inl \
   Pipe.h \

@@ -178,6 +178,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     OS_Thread_Adapter.cpp
     OS_TLI.cpp
     Pagefile_Memory_Pool.cpp
+    Parse_Node.cpp
     PI_Malloc.cpp
     Ping_Socket.cpp
     Pipe.cpp
