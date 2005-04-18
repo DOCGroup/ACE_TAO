@@ -2,7 +2,7 @@ Mon Apr 18 13:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Leader_Followers/run_test.pl:
           Fixed typo in this script that caused this test to fail on all
-          platforms
+          platforms except VxWorks
 
 Mon Apr 18 13:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
