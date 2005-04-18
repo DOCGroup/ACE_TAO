@@ -363,14 +363,14 @@ namespace TAO
     void
     Servant_Upcall::single_threaded_poa_cleanup (void)
     {
+#if (TAO_HAS_MINIMUM_POA == 0)
       int result = 0;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
       // Since the servant lock was acquired, we must release it.
       result = this->poa_->exit ();
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       ACE_UNUSED_ARG (result);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
     }
 
     void
