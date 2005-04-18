@@ -1,3 +1,26 @@
+Mon Apr 18 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+        * orbsvcs/orbsvcs/Event/GPlot_File.cpp:
+        * examples/Callback_Quoter/Notifier_i.cpp:
+          Initialise pointer with 0 to fix gcc pre 4.0 warning
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+          Removed pragma once to fix gcc pre 4.0 warning
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.{cpp,i}:
+          Uninlined shutdown method
+
 Mon Apr 18 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
