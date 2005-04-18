@@ -76,6 +76,17 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_USES_EXPLICIT_STD_NAMESPACE
 
+#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// must have _MT defined to include multithreading
+// features from win32 headers
+# if !defined(__MT__)
+// *** DO NOT *** defeat this error message by defining __MT__ yourself.
+// You must link with the multi threaded libraries. Add -tWM to your
+// compiler options
+#  error You must link against multi-threaded libraries when using ACE (check your project settings)
+# endif /* !_MT && !ACE_HAS_WINCE */
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+
 #if (__BORLANDC__ >= 0x600)
 # define ACE_LACKS_PTRDIFF_T
 # define ACE_PTRDIFF_T_TYPE std::ptrdiff_t
