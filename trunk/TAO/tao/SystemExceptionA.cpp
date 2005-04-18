@@ -16,10 +16,9 @@ ACE_RCSID (tao,
            SystemExceptionA,
            "$Id$")
 
+
 // List of standard/system exceptions ... used to create static
-// storage for their typecodes, then later to initialize that storage
-// using the routine above. (It's just too painful to init these
-// typecodes statically in all cases!)
+// storage for their typecodes.
 
 #define STANDARD_EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \
@@ -65,7 +64,7 @@ ACE_RCSID (tao,
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
-CORBA::name ::_type (void) const \
+CORBA::name ::_tao_type (void) const \
 { \
   return CORBA::_tc_ ## name; \
 }
@@ -88,7 +87,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    char const * const enumerators_CORBA_CompletionStatus[]=
+    char const * const enumerators_CORBA_CompletionStatus[] =
       {
         "COMPLETED_YES",
         "COMPLETED_NO",
@@ -138,7 +137,7 @@ namespace TAO \
   namespace TypeCode \
   { \
     tc_SystemException tc_CORBA_ ## name ( \
-      CORBA::tk_except,     \
+      CORBA::tk_except, \
       "IDL:omg.org/CORBA/" #name ":1.0", \
       #name, \
       TAO::TypeCode::fields_CORBA_SystemException, \

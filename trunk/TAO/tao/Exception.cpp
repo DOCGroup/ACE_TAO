@@ -91,7 +91,7 @@ CORBA::Exception::_name (void) const
 }
 
 CORBA::TypeCode_ptr
-CORBA::Exception::_type (void) const
+CORBA::Exception::_tao_type (void) const
 {
   return CORBA::TypeCode::_nil ();
 }
@@ -240,7 +240,7 @@ operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
   TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
       any,
       CORBA::Exception::_tao_any_destructor,
-      exception._type (),
+      exception._tao_type (),
       exception
     );
 }
@@ -252,7 +252,7 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
   TAO::Any_Dual_Impl_T<CORBA::Exception>::insert (
       any,
       CORBA::Exception::_tao_any_destructor,
-      exception->_type (),
+      exception->_tao_type (),
       exception
     );
 }
