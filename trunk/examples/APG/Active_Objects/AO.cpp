@@ -159,7 +159,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Get results...
   for (int j = 0; j < 10; j++)
     {
-      int result;
+      int result = 0;
       results[j].get (result);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("New status_update %d\n"), result));

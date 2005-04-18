@@ -152,7 +152,7 @@ public:
 
   virtual void update (const ACE_Future<int>& future)
   {
-    int result;
+    int result = 0;
     ((ACE_Future<int>)future).get (result);
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%t) New Status %d\n"), result));
