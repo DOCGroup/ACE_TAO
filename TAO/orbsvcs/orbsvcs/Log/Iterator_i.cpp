@@ -78,14 +78,14 @@ TAO_Iterator_i::get (CORBA::ULong position,
   TAO_Log_Constraint_Interpreter interpreter (constraint_
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   // Sequentially iterate over all the records and pick the ones that
   // meet the constraints.
 
   // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
 
-  DsLogAdmin::RecordList* rec_list;
+  DsLogAdmin::RecordList* rec_list = 0;
   // Figure out the length of the list.
 
   // Allocate the list of <max_rec_list_len_> length.

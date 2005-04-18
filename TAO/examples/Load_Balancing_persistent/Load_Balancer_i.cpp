@@ -431,7 +431,7 @@ Object_Group_Factory_i::list_groups (int random
     group_iter = &rr_iter;
 
   // Iterate over groups and populate the list.
-  HASH_MAP::ENTRY *hash_entry;
+  HASH_MAP::ENTRY *hash_entry = 0;
   for (CORBA::ULong i = 0; i < len; i++)
     {
       group_iter->next (hash_entry);
@@ -924,7 +924,7 @@ RR_Object_Group::resolve (ACE_ENV_SINGLE_ARG_DECL)
                       0);
 
   // Get the id of the member to return to the client.
-  char **id;
+  char **id = 0;
   this->member_id_list_->get (id, next_);
   ACE_DEBUG ((LM_DEBUG,
               "In RR Group resolved to: %s\n", *id));

@@ -38,7 +38,7 @@ class TAO_Notify_Method_Request_Queueable;
 namespace TAO_Notify
 {
 
-class TAO_Notify_Serv_Export Routing_Slip_Persistence_Manager;
+class Routing_Slip_Persistence_Manager;
 
 // Forward declarations of TAO_Notify classes/pointers/collections
 // referenced from this header

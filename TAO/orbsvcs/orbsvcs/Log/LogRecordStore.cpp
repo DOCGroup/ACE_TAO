@@ -150,7 +150,7 @@ TAO_LogRecordStore::purge_old_records (void)
     num_records_to_purge = 1;
 
   LOG_RECORD_STORE_ITER iter (rec_hash_);
-  LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
   CORBA::ULong count = 0; // count of matches found.
 
   if (num_records_to_purge > 0 )
@@ -180,12 +180,12 @@ TAO_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
 {
   size_t mb_size = 0;
   TAO::Any_Impl *impl = rec.info.impl ();
-  
+
   if (impl->encoded ())
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       mb_size = unk->_tao_get_cdr ().start ()->length ();
     }
   else
@@ -194,7 +194,7 @@ TAO_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
       // instead of a CDR stream, not sure what info would be
       // useful here.
     }
-  
+
   return sizeof (rec) + mb_size;
 }
 
