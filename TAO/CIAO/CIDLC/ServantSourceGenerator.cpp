@@ -2706,13 +2706,13 @@ namespace
            << "{"
            << "if (event_repo_id == 0)" << endl
            << "{"
-           << STRS[ACE_TR] << " (CORBA::BAD_PARAM (), FALSE);" << endl
+           << STRS[ACE_TR] << " (CORBA::BAD_PARAM (), false);" << endl
            << "}"
            << scope_.name () << "_Context *ctx =" << endl
            << scope_.name () << "_Context::_narrow (" << endl
            << "this->ctx_" << endl
            << STRS[ENV_ARG] << ");"
-           << STRS[ACE_CR] << " (FALSE);" << endl;
+           << STRS[ACE_CR] << " (false);" << endl;
            
         os << "CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();"
            << endl;
@@ -2721,21 +2721,21 @@ namespace
            << "orb->lookup_value_factory (" << endl
            << "event_repo_id" << endl
            << STRS[ENV_ARG] << ");"
-           << STRS[ACE_CR] << " (FALSE);" << endl;
+           << STRS[ACE_CR] << " (false);" << endl;
            
         os << "if (f == 0)" << endl
            << "{"
-           << "return FALSE;" << endl
+           << "return false;" << endl
            << "}"
            << "CORBA::ValueBase_var v =" << endl
            << "f->create_for_unmarshal (" << STRS[ENV_SNGL_ARG] << ");"
-           << STRS[ACE_CR] << " (FALSE);" << endl;
+           << STRS[ACE_CR] << " (false);" << endl;
            
         os << "f->_remove_ref ();" << endl;
            
         os << "if (v.in () == 0)" << endl
            << "{"
-           << "return FALSE;" << endl
+           << "return false;" << endl
            << "}";
            
         os << "return dynamic_cast< ";
