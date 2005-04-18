@@ -1,3 +1,8 @@
+Mon Apr 18 09:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new Deactivate_Object test
+
 Mon Apr 18 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Parse_Node.{h,cpp,inl}:
