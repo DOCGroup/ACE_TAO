@@ -38,7 +38,7 @@ TAO_LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
   HASHMAP::ITERATOR iter (hash_map_);
 
   // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry;
+  HASHMAP::ENTRY *hash_entry = 0;
 
   for (CORBA::ULong i = 0; i < len; i++)
     {
@@ -104,7 +104,7 @@ TAO_LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
   HASHMAP::ITERATOR iter (hash_map_);
 
   // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry;
+  HASHMAP::ENTRY *hash_entry = 0;
 
   for (CORBA::ULong i = 0; i < len; i++)
     {

@@ -111,7 +111,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
 template <class PROXY, class ACE_LOCK> int
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL)
 {
-  ENTRY* entry;
+  ENTRY* entry = 0;
 
   if (event_type.is_special () == 1)
     {

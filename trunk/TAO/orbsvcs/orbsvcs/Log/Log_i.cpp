@@ -606,7 +606,7 @@ TAO_Log_i::query_i (const char *constraint,
   // How many entries?
 
   // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
 
   DsLogAdmin::RecordList* rec_list;
   // Figure out the length of the list.
@@ -760,7 +760,7 @@ TAO_Log_i::match_i (const char *constraint,
   // How many entries?
 
   // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -1249,7 +1249,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 
   static char out[256] = "";
 
-  double temp1 = 
+  double temp1 =
     static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (p_time));
 
   ACE_OS::sprintf (out, "time > %.0f", temp1);
@@ -1270,7 +1270,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   // How many entries?
 
   // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
 
   CORBA::ULong count = 0; // count of matches found.
 
