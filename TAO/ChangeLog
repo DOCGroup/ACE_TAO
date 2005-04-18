@@ -1,3 +1,8 @@
+Mon Apr 18 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+          Removed not used static constants
+
 Mon Apr 18 09:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tests/POA/Deactivate_Object/*:
