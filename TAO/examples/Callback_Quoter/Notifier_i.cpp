@@ -162,7 +162,7 @@ Notifier_i::market_status (const char *stock_name,
               stock_name,
               stock_value));
 
-  CONSUMERS *consumers;
+  CONSUMERS *consumers = 0;
 
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
