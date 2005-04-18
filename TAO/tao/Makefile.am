@@ -293,6 +293,7 @@ libTAO_la_SOURCES = \
   TypeCode.cpp \
   TypeCodeA.cpp \
   TypeCodeFactory_Adapter.cpp \
+  TypeCode_CDR_Extraction.cpp \
   TypeCode_Constants.cpp \
   Typecode_typesC.cpp \
   ULongLongSeqA.cpp \
@@ -839,6 +840,7 @@ nobase_include_HEADERS = \
   TypeCode_Base_Attributes.cpp \
   TypeCode_Base_Attributes.h \
   TypeCode_Base_Attributes.inl \
+  TypeCode_CDR_Extraction.h \
   TypeCode_Case.cpp \
   TypeCode_Case.h \
   TypeCode_Case.inl \
