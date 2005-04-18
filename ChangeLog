@@ -1,3 +1,14 @@
+Mon Apr 18 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Parse_Node.{h,cpp,inl}:
+          Removed inl file, it is empty
+
+        * ace/ace.mpc:
+          Added Parse_Node.cpp, it was not listed
+
+        * ace/Makefile.am:
+          Removed Parse_Node.inl
+
 Sun Apr 17 20:02:01 2005  Olli Savia  <ops@iki.fi>
 
         * ace/README:
