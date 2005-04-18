@@ -26,9 +26,10 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
+#if defined (ACE_HAS_IPV6)
+
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
-#if defined (ACE_HAS_IPV6)
 static void *
 client (void *arg)
 {

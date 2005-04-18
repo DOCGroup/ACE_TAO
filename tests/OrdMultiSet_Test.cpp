@@ -85,7 +85,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_ASSERT (iter.done () == 0);
 
       // Make sure the current element is what we expect.
-      int *ptr;
+      int *ptr = 0;
       iter.next (ptr);
       ACE_ASSERT (ptr != 0);
       ACE_ASSERT (*ptr == i);

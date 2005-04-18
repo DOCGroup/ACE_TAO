@@ -54,10 +54,6 @@
 
 ACE_RCSID(tests, Logging_Strategy_Test, "$Id$")
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 // Considering UNIX OS to be default. On Win32 platforms, the symbols
 // are got form the .exe as one cant have .exe and .dll for the same
 // .cpp. Also, on Win32 platforms one cant use the .obj to obtain
