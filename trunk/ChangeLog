@@ -1,3 +1,9 @@
+Mon Apr 18 14:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Active_Objects/AO.cpp:
+        * examples/APG/Active_Objects/AO2.cpp:
+          Initialise local variables with 0
+
 Mon Apr 18 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RB_Tree_Test.cpp:
