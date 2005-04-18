@@ -1,3 +1,8 @@
+Mon Apr 18 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RB_Tree_Test.cpp:
+          Initialise pointer with 0
+
 Mon Apr 18 12:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Threads/future1.cpp:
