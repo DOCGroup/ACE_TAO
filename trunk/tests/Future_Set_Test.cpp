@@ -584,7 +584,7 @@ run_main (int, ACE_TCHAR *[])
                   (u_int) resultd));
     }
 
-  const ACE_TCHAR *name;
+  const ACE_TCHAR *name = 0;
   count = 0;
   while (fsetname.next_readable (fname))
     {
