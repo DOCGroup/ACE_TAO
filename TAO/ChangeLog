@@ -1,3 +1,25 @@
+Mon Apr 18 11:50:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Exception.h (_type):
+	* tao/Exception.cpp (_type):
+	* tao/SystemException.h (_type):
+	* tao/SystemException.cpp (_type):
+
+	  The TypeCode rewrite changed the name of the generated
+	  _type() user exception method to _tao_type() since it specific
+	  to TAO.  However, those changes were not propagated to the
+	  CORBA::Exception base class and CORBA::SystemException classes.
+	  As a result, code that attempted to retrieve the user exception
+	  TypeCode using the _type() method would end up with the base
+	  class method returning a nil TypeCode.  Renamed the _type()
+	  method to _tao_type() in these files.  Fixes memory related
+	  problems when attempting to call TypeCode methods on a TypeCode
+	  retrieved from an Any containing a user exception.
+
+	* tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
+
+	  Made test title output more descriptive.
+
 Mon Apr 18 08:00:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Adapters.h (~TAO_ECG_Dgram_Handler):
@@ -77,7 +99,7 @@ Mon Apr 18 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 18 09:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/tests/POA/Deactivate_Object/*:
+        * tests/POA/Deactivate_Object/*:
           New regression test to test deactivate_object. Thanks to Will Otte
           <wotte@dre.vanderbilt.edu> and Jai <jai@dre.vanderbilt.edu> for
           this test. Thanks to Ossama for already supplying the fix

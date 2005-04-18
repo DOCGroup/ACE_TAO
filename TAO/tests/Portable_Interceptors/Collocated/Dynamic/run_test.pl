@@ -14,13 +14,13 @@ $file = PerlACE::LocalFile ("test.ior");
 unlink $file;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("Collocated_Test", "-ORBobjrefstyle url");
+    $SV = new PerlACE::ProcessVX ("Collocated_Test", "-ORBObjRefStyle url");
 }
 else {
-    $SV = new PerlACE::Process ("Collocated_Test", "-ORBobjrefstyle url");    
+    $SV = new PerlACE::Process ("Collocated_Test", "-ORBObjRefStyle url");
 }
 
-print STDERR "\n\n==== Running interceptor Dynamic test\n";
+print STDERR "\n\n==== Running interceptor collocated Dynamic test\n";
 
 $SV->Spawn ();
 
