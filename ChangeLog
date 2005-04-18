@@ -1,3 +1,8 @@
+Mon Apr 18 12:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Threads/future1.cpp:
+          Initialise pointer with 0
+
 Mon Apr 18 11:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp:
