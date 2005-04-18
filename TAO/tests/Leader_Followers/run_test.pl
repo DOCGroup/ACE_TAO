@@ -18,7 +18,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server");
 }
 else {
-    $sv_iorfile = $iofile;
+    $sv_iorfile = $iorfile;
     $SV = new PerlACE::Process ("server");
 }
 $CL = new PerlACE::Process ("client");
