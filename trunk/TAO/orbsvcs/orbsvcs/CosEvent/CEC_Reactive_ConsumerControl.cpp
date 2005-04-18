@@ -113,7 +113,7 @@ TAO_CEC_Reactive_ConsumerControl::need_to_disconnect (
                                     PortableServer::ServantBase* proxy)
 {
   bool disconnect = true;
-  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry;
+  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry = 0;
   if (this->event_channel_->
       get_servant_retry_map ().find (proxy, entry) == 0)
     {
@@ -131,7 +131,7 @@ void
 TAO_CEC_Reactive_ConsumerControl::successful_transmission (
                                     PortableServer::ServantBase* proxy)
 {
-  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry;
+  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry = 0;
   if (this->event_channel_->
       get_servant_retry_map ().find (proxy, entry) == 0)
     {

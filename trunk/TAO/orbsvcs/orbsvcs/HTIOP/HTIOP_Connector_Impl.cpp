@@ -5,15 +5,9 @@
 
 #include "HTIOP_Connector_Impl.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
 ACE_RCSID(HTIOP,
           TAO_HTIOP_Connector_Impl,
           "$Id$")
-
 
 template <class SVC_HANDLER>
 TAO::HTIOP::Connect_Creation_Strategy<SVC_HANDLER>::

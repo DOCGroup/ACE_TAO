@@ -119,7 +119,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  Type_Prop_Table::ENTRY * entry;
+  Type_Prop_Table::ENTRY * entry = 0;
   if (this->type_properties_.find (type_id, entry) != 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
@@ -137,7 +137,7 @@ TAO_PG_PropertyManager::get_type_properties (
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
 
-  Type_Prop_Table::ENTRY * entry;
+  Type_Prop_Table::ENTRY * entry = 0;
   PortableGroup::Properties * type_properties = 0;
 
   if (this->type_properties_.find (type_id, entry) == 0)
@@ -190,7 +190,7 @@ TAO_PG_PropertyManager::remove_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  Type_Prop_Table::ENTRY * entry;
+  Type_Prop_Table::ENTRY * entry = 0;
   if (this->type_properties_.find (type_id, entry) != 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
@@ -271,7 +271,7 @@ TAO_PG_PropertyManager::get_properties (
 
   CORBA::ULong type_props_len = 0;
   PortableGroup::Properties * type_properties = 0;
-  Type_Prop_Table::ENTRY * type_entry;
+  Type_Prop_Table::ENTRY * type_entry = 0;
   if (this->type_properties_.find (type_id.in (), type_entry) == 0)
     {
       type_properties = &type_entry->int_id_;

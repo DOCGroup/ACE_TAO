@@ -1,3 +1,17 @@
+Mon Apr 18 11:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+          Removed pragma once to fix gcc pre 4.0 warning
+
+        * tests/Future_Set_Test.cpp:
+        * tests/OrdMultiSet_Test.cpp:
+          Initialise pointer with 0
+
+        * tests/SOCK_Test_IPv6.cpp:
+          Moved ACE_ALPHABET into ACE_HAS_IPV6 block
+
 Mon Apr 18 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:

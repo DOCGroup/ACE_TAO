@@ -16,19 +16,8 @@
 #include "RTCosScheduling_ClientScheduler_i.i"
 #endif /* __ACE_INLINE__ */
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"
-
-/**
- *  Note - Before making this file with Makefile.RTCosScheduling, please make
- *  sure that you first comment out the following line from the
- *  RTCosSchedulingS.h file:
- *  //#include "tao/PortableServer/PortableServerS.h"
- */
 
 #include "tao/ORB_Core.h"
 #include "tao/LocalObject.h"

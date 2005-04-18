@@ -507,6 +507,24 @@ TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 
   return entry;
 }
+
+void
+TAO_ECG_CDR_Message_Receiver::shutdown (void)
+{
+  // ACE_GUARD (ACE_Lock, guard, *this->lock_);
+
+  Request_Map::iterator end = this->request_map_.end ();
+  for (Request_Map::iterator i =  this->request_map_.begin ();
+       i != end;
+       ++i)
+    {
+      delete (*i).int_id_;
+      (*i).int_id_ = 0;
+    }
+
+  this->ignore_from_.reset ();
+}
+
 // ****************************************************************
 int
 TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,

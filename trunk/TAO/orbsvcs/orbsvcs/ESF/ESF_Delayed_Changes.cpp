@@ -128,7 +128,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     }
   else
     {
-      ACE_Command_Base* command;
+      ACE_Command_Base* command = 0;
       ACE_NEW (command,
                Connected_Command (this,
                                   proxy));
