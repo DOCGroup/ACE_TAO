@@ -1,6 +1,12 @@
+Mon Apr 18 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Added a check that when threading is enabled we have to link
+          with multithreaded libraries.
+
 Mon Apr 18 11:43:05 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * bin/auto_run_tests.pl: 
+        * bin/auto_run_tests.pl:
 
           Fixed a typo preventing autobilds to run CIAO test.
 
