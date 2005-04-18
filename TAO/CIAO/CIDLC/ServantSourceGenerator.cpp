@@ -1314,26 +1314,10 @@ namespace
            << "this->ciao_publishes_" << p.name ()
            << "_map_.begin ();"
            << "iter != this->ciao_publishes_" << p.name ()
-           << "_map_.end ();" << endl
+           << "_map_.end ();"
            << "++iter)" << endl
            << "{"
-           << "ACE_Active_Map_Manager< " << endl; //@@ gcc bug
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::ENTRY &entry = *iter;" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var c =" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer::_narrow (" << endl
-           << "entry.int_id_.in ()" << endl
-           << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK;" << endl
-           << "entry.int_id_->push_";
+           << "(*iter).int_id_->push_";
 
         Traversal::PublisherData::belongs (p, simple_belongs_);
 
@@ -1351,15 +1335,7 @@ namespace
            << "_generic_map_.end ();"
            << "++giter)" << endl
            << "{"
-           << "ACE_Active_Map_Manager< " << endl
-           << STRS[COMP_ECB] << "_var>::ENTRY &entry = *giter;" << endl;
-
-        os << STRS[COMP_ECB] << "_var c =" << endl
-           << STRS[COMP_ECB] << "::_narrow (" << endl
-           << "entry.int_id_.in ()" << endl
-           << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK;" << endl
-           << "entry.int_id_->push_event" << " (" << endl
+           << "(*giter).int_id_->push_event" << " (" << endl
            << "ev" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK;" << endl
