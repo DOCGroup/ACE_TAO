@@ -2,11 +2,19 @@
 
 #include "ECG_Adapters.h"
 
-ACE_RCSID(Event, ECG_Adapters, "$Id$")
+ACE_RCSID (Event,
+           ECG_Adapters,
+           "$Id$")
+
 
 TAO_ECG_Handler_Shutdown::~TAO_ECG_Handler_Shutdown (void)
 {
 }
+
+TAO_ECG_Dgram_Handler::~TAO_ECG_Dgram_Handler (void)
+{
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown, ACE_Null_Mutex>;
