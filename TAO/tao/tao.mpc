@@ -410,6 +410,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Encodable.h
     Endpoint.h
     Endpoint_Selector_Factory.h
+    Enum_TypeCode.h
     Environment.h
     Exception_Data.h
     Exception.h
@@ -591,6 +592,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Special_Basic_Argument_T.h
     StringSeqC.h
     StringSeqS.h
+    String_TypeCode.h
+    String_TypeCode_Traits.h
     Struct_TypeCode.h
     Stub_Factory.h
     Stub.h

@@ -20,35 +20,13 @@ namespace TAO
                                   void *value)
     : Any_Impl (0, tc),
       kind_ (CORBA::tk_null)
-  {
-    if (CORBA::is_nil (tc))
-      {
-        return;
-      }
-      
-    ACE_DECLARE_NEW_CORBA_ENV;
-    CORBA::TCKind tckind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  {      
+    ACE_DECLARE_NEW_CORBA_ENV;      
+    this->kind_ = TAO::unaliased_kind (tc
+                                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    
-    if (tckind == CORBA::tk_alias)
-      {
-        CORBA::TypeCode_var contained =
-          CORBA::TypeCode::_duplicate (tc);
-        
-        while (tckind == CORBA::tk_alias)
-          {
-            contained =
-              contained->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
-            
-            tckind = contained->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
-          }
-      }
-      
-    this->kind_ = tckind;
 
-    switch (tckind)
+    switch (this->kind_)
     {
       case CORBA::tk_short:
         this->u_.s = *static_cast<CORBA::Short *> (value);
