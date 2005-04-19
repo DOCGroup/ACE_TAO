@@ -16,11 +16,30 @@
 
 #include "test_config.h"
 
-#if defined (ACE_WIN32)
 #include "ace/ACE.h"
-#endif /* ACE_WIN32 */
 
 ACE_RCSID(tests, ACE_Test, "$Id$")
+
+int
+log2_test (void)
+{
+  int values[] = {1, 2, 4, 8, 1048576};
+  int results[] = {0, 1, 2, 3, 20};
+  int result = 0;
+  int error_count = 0;
+
+  for (int i = 0; i < sizeof (values)/sizeof(int); i++)
+    {
+      result = ACE::log2(values [i]);
+      if (result != results [i])
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %d, output %d, expected %d\n"), values [i], result, results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
 
 // Test ACE::execname to be sure it finds .exe without regard to case.
 int
@@ -75,6 +94,9 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = execname_test ()) != 0)
+    status = result;
+
+  if ((result = log2_test ()) != 0)
     status = result;
 
   ACE_END_TEST;
