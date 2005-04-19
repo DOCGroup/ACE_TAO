@@ -483,7 +483,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);
 
-  ENTRY_DEF *hash_entry;
+  ENTRY_DEF *hash_entry = 0;
 
   for (CORBA::ULong i = 0; i < n; i++)
     {

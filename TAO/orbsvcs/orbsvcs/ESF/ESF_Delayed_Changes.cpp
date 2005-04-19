@@ -100,7 +100,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 {
   while (!this->command_queue_.is_empty ())
     {
-      ACE_Command_Base* command;
+      ACE_Command_Base* command = 0;
       this->command_queue_.dequeue_head (command);
 
       command->execute ();
