@@ -322,13 +322,13 @@ private:
   timeval tv_;
 };
 
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
-
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_WIN32) && defined (_WIN32_WCE)
+}
+#endif
 
 #if defined (__MINGW32__)
 // The MingW linker has problems with the exported statics
