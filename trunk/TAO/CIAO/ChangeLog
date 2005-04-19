@@ -1,3 +1,10 @@
+Tue Apr 19 17:33:55 2005  Nanbor Wang  <nanbor@tesla.txcorp.com>
+
+	* docs/schema/ServerResourceUsage.txt: 
+	* docs/schema/CIAOServerResources.xsd: Added the first draft
+	  schema for DAnCE RT extension, and a file to document how I
+	  foresee the extension can be used.
+
 Tue Apr 19 12:16:00 2005 CDT  Will Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/IDREF_Base.h
