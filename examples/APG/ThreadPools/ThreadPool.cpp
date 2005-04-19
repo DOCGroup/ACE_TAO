@@ -114,7 +114,7 @@ public:
           }
 
         // Choose a worker.
-        Worker *worker;
+        Worker *worker = 0;
         {
           ACE_GUARD_RETURN (ACE_Thread_Mutex,
                             worker_mon, this->workers_lock_, -1);
