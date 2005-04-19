@@ -1,3 +1,13 @@
+Tue Apr 19 07:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+          Initialise pointer with 0 to fix gcc pre 4.0 warning.
+
 Mon Apr 18 21:36:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/ImplRepo_Service/Makefile.am:
