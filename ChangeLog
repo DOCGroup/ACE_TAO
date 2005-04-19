@@ -1,3 +1,18 @@
+Tue Apr 19 19:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.inl:
+          Fixed log2 method. It returned incorrectly log2(x) + 1.
+
+        * ace/Log_Record.cpp:
+          Removed <none> from priority_names_ array now log2 gives back the
+          correct result
+
+        * tests/ACE_Test.cpp:
+          Added a regression test for ACE::log2.
+
+          This fixes bugzilla bug 2078. Thanks to Brian O'Connor
+          <brian dot oconnor at hp dot com> for reporting this problem.
+
 Tue Apr 19 18:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-pharlap.h:
