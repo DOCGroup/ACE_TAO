@@ -46,6 +46,11 @@
 // the correct value.
 #define ACE_PAGE_SIZE 4096
 
+#if defined (ACE_HAS_PHARLAP_RT)
+  // ETS winsock doesn't define IP level socket options
+# define IP_TOS 8
+#endif /* ACE_HAS_PHARLAP_RT */
+
 // Let the config-win32.h file do its thing
 #undef ACE_CONFIG_H
 #include "ace/config-win32.h"
