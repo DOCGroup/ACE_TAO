@@ -1,3 +1,10 @@
+Mon Apr 18 17:56:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add check for check_settime and set ACE_HAS_CLOCK_SETTIME if
+	  it exists.
+
 Mon Apr 18 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
