@@ -10,6 +10,10 @@ class LogMessage
 public:
   enum { CRITICAL, NORMAL};
 
+  virtual ~LogMessage ()
+  {
+  }
+
   virtual int priority (void)
   {
     return NORMAL;
