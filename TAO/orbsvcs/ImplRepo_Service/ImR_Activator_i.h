@@ -68,7 +68,7 @@ public:
    const char* cmdline,
    const char* dir,
    const ImplementationRepository::EnvironmentList & env ACE_ENV_ARG_DECL)
-   ACE_THROW_SPEC ((CORBA::SystemException));
+   ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::CannotActivate));
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (Activator_Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
