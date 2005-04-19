@@ -12,19 +12,13 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
 bin_PROGRAMS =
-lib_LTLIBRARIES =
-noinst_HEADERS =
-CLEANFILES =
-BUILT_SOURCES =
 
 ## Makefile.ImR_Activator_IDL.am
 
-if BUILD_CORBA_MESSAGING
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
+  ImR_ActivatorS_T.inl \
   ImR_ActivatorC.inl \
   ImR_ActivatorS.inl \
-  ImR_ActivatorS_T.inl \
   ImR_ActivatorC.h \
   ImR_ActivatorS.h \
   ImR_ActivatorS_T.h \
@@ -32,11 +26,11 @@ BUILT_SOURCES += \
   ImR_ActivatorS.cpp \
   ImR_ActivatorS_T.cpp
 
-CLEANFILES += \
+CLEANFILES = \
   ImR_Activator-stamp \
+  ImR_ActivatorS_T.inl \
   ImR_ActivatorC.inl \
   ImR_ActivatorS.inl \
-  ImR_ActivatorS_T.inl \
   ImR_ActivatorC.h \
   ImR_ActivatorS.h \
   ImR_ActivatorS_T.h \
@@ -44,13 +38,13 @@ CLEANFILES += \
   ImR_ActivatorS.cpp \
   ImR_ActivatorS_T.cpp
 
-ImR_ActivatorC.inl ImR_ActivatorS.inl ImR_ActivatorS_T.inl ImR_ActivatorC.h ImR_ActivatorS.h ImR_ActivatorS_T.h ImR_ActivatorC.cpp ImR_ActivatorS.cpp ImR_ActivatorS_T.cpp: ImR_Activator-stamp
+ImR_ActivatorS_T.inl ImR_ActivatorC.inl ImR_ActivatorS.inl ImR_ActivatorC.h ImR_ActivatorS.h ImR_ActivatorS_T.h ImR_ActivatorC.cpp ImR_ActivatorS.cpp ImR_ActivatorS_T.cpp: ImR_Activator-stamp
 
 ImR_Activator-stamp: $(srcdir)/ImR_Activator.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GH -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h $(srcdir)/ImR_Activator.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h $(srcdir)/ImR_Activator.idl
 	@touch $@
 
-lib_LTLIBRARIES += libTAO_ImR_Activator_IDL.la
+noinst_LTLIBRARIES = libTAO_ImR_Activator_IDL.la
 
 libTAO_ImR_Activator_IDL_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -65,38 +59,53 @@ libTAO_ImR_Activator_IDL_la_SOURCES = \
   ImR_ActivatorC.cpp \
   ImR_ActivatorS.cpp
 
-libTAO_ImR_Activator_IDL_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_ImR_Activator_IDL_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-noinst_HEADERS += \
+noinst_HEADERS = \
   ImR_Activator.idl \
   ImR_ActivatorC.h \
   ImR_ActivatorC.inl \
   ImR_ActivatorS.h \
-  ImR_ActivatorS.inl \
   ImR_ActivatorS_T.cpp \
   ImR_ActivatorS_T.h \
   ImR_ActivatorS_T.inl \
   activator_idl_export.h
-
-endif BUILD_CORBA_MESSAGING
 
 ## Makefile.ImR_Locator_IDL.am
 
 if BUILD_CORBA_MESSAGING
 
 BUILT_SOURCES += \
+  AsyncStartupWaiterS_T.inl \
+  AsyncStartupWaiterC.inl \
+  AsyncStartupWaiterS.inl \
+  AsyncStartupWaiterC.h \
+  AsyncStartupWaiterS.h \
+  AsyncStartupWaiterS_T.h \
+  AsyncStartupWaiterC.cpp \
+  AsyncStartupWaiterS.cpp \
+  AsyncStartupWaiterS_T.cpp
+
+CLEANFILES += \
+  AsyncStartupWaiter-stamp \
+  AsyncStartupWaiterS_T.inl \
+  AsyncStartupWaiterC.inl \
+  AsyncStartupWaiterS.inl \
+  AsyncStartupWaiterC.h \
+  AsyncStartupWaiterS.h \
+  AsyncStartupWaiterS_T.h \
+  AsyncStartupWaiterC.cpp \
+  AsyncStartupWaiterS.cpp \
+  AsyncStartupWaiterS_T.cpp
+
+AsyncStartupWaiterS_T.inl AsyncStartupWaiterC.inl AsyncStartupWaiterS.inl AsyncStartupWaiterC.h AsyncStartupWaiterS.h AsyncStartupWaiterS_T.h AsyncStartupWaiterC.cpp AsyncStartupWaiterS.cpp AsyncStartupWaiterS_T.cpp: AsyncStartupWaiter-stamp
+
+AsyncStartupWaiter-stamp: $(srcdir)/AsyncStartupWaiter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h -GH $(srcdir)/AsyncStartupWaiter.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  ImR_LocatorS_T.inl \
   ImR_LocatorC.inl \
   ImR_LocatorS.inl \
-  ImR_LocatorS_T.inl \
   ImR_LocatorC.h \
   ImR_LocatorS.h \
   ImR_LocatorS_T.h \
@@ -106,9 +115,9 @@ BUILT_SOURCES += \
 
 CLEANFILES += \
   ImR_Locator-stamp \
+  ImR_LocatorS_T.inl \
   ImR_LocatorC.inl \
   ImR_LocatorS.inl \
-  ImR_LocatorS_T.inl \
   ImR_LocatorC.h \
   ImR_LocatorS.h \
   ImR_LocatorS_T.h \
@@ -116,13 +125,13 @@ CLEANFILES += \
   ImR_LocatorS.cpp \
   ImR_LocatorS_T.cpp
 
-ImR_LocatorC.inl ImR_LocatorS.inl ImR_LocatorS_T.inl ImR_LocatorC.h ImR_LocatorS.h ImR_LocatorS_T.h ImR_LocatorC.cpp ImR_LocatorS.cpp ImR_LocatorS_T.cpp: ImR_Locator-stamp
+ImR_LocatorS_T.inl ImR_LocatorC.inl ImR_LocatorS.inl ImR_LocatorC.h ImR_LocatorS.h ImR_LocatorS_T.h ImR_LocatorC.cpp ImR_LocatorS.cpp ImR_LocatorS_T.cpp: ImR_Locator-stamp
 
 ImR_Locator-stamp: $(srcdir)/ImR_Locator.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h $(srcdir)/ImR_Locator.idl
 	@touch $@
 
-lib_LTLIBRARIES += libTAO_ImR_Locator_IDL.la
+noinst_LTLIBRARIES += libTAO_ImR_Locator_IDL.la
 
 libTAO_ImR_Locator_IDL_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -134,26 +143,23 @@ libTAO_ImR_Locator_IDL_la_CPPFLAGS = \
   -DLOCATOR_IDL_BUILD_DLL
 
 libTAO_ImR_Locator_IDL_la_SOURCES = \
+  AsyncStartupWaiterC.cpp \
+  AsyncStartupWaiterS.cpp \
   ImR_LocatorC.cpp \
   ImR_LocatorS.cpp
 
-libTAO_ImR_Locator_IDL_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_ImR_Locator_IDL_la_LIBADD = \
-  libTAO_ImR_Activator_IDL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
 noinst_HEADERS += \
+  AsyncStartupWaiter.idl \
+  AsyncStartupWaiterC.h \
+  AsyncStartupWaiterC.inl \
+  AsyncStartupWaiterS.h \
+  AsyncStartupWaiterS_T.cpp \
+  AsyncStartupWaiterS_T.h \
+  AsyncStartupWaiterS_T.inl \
   ImR_Locator.idl \
   ImR_LocatorC.h \
   ImR_LocatorC.inl \
   ImR_LocatorS.h \
-  ImR_LocatorS.inl \
   ImR_LocatorS_T.cpp \
   ImR_LocatorS_T.h \
   ImR_LocatorS_T.inl \
@@ -167,7 +173,7 @@ if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
-lib_LTLIBRARIES += libTAO_ImR_Activator.la
+noinst_LTLIBRARIES += libTAO_ImR_Activator.la
 
 libTAO_ImR_Activator_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -254,7 +260,7 @@ if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
-lib_LTLIBRARIES += libTAO_ImR_Locator.la
+noinst_LTLIBRARIES += libTAO_ImR_Locator.la
 
 libTAO_ImR_Locator_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -269,6 +275,7 @@ libTAO_ImR_Locator_la_CPPFLAGS = \
 libTAO_ImR_Locator_la_SOURCES = \
   Activator_Info.cpp \
   Adapter_Activator.cpp \
+  AsyncStartupWaiter_i.cpp \
   Forwarder.cpp \
   INS_Locator.cpp \
   ImR_Locator_i.cpp \
@@ -299,6 +306,7 @@ libTAO_ImR_Locator_la_LIBADD = \
 noinst_HEADERS += \
   Activator_Info.h \
   Adapter_Activator.h \
+  AsyncStartupWaiter_i.h \
   Forwarder.h \
   INS_Locator.h \
   ImR_Locator_i.h \

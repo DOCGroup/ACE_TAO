@@ -1,3 +1,9 @@
+Mon Apr 18 21:36:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/ImplRepo_Service/Makefile.am:
+
+	  Regenerate.
+
 Mon Apr 18 15:41:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
