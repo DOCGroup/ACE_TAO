@@ -1,3 +1,9 @@
+Tue Apr 19 18:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-pharlap.h:
+          Define IP_TOS to 8 when ACE_HAS_PHARLAP_RT is defined. Thanks to
+          David Hauck <davidh at netacquire dot com> for this fix
+
 Tue Apr 19 16:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.h:
