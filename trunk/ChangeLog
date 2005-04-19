@@ -1,3 +1,11 @@
+Tue Apr 19 16:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+          Fixed compile problem with Embedded Visual C++ 4.0 using a release
+          build. Thanks to <ofup at voila dot fr> for reporting this problem
+          and to Bruce Elliot <bruce dot elliott at cox dot net> for
+          delivering the fix
+
 Tue Apr 19 08:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadPools/ThreadPool.cpp:
