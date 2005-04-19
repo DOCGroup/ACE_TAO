@@ -17,6 +17,10 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#undef THREAD_CANCELLED
+#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+
 // List of standard/system exceptions ... used to create static
 // storage for their typecodes.
 
