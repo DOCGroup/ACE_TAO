@@ -3411,7 +3411,7 @@ ACE_CHECK_LACKS_FUNCS(access)
 
 ACE_CHECK_LACKS_FUNCS(bsearch)
 
-ACE_CHECK_HAS_FUNCS(clock_gettime)
+ACE_CHECK_HAS_FUNCS(clock_gettime clock_settime)
 
 ACE_CHECK_LACKS_FUNCS(difftime)
 
