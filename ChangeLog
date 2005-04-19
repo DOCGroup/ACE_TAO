@@ -1,3 +1,11 @@
+Tue Apr 19 06:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/UPIPE_Event_Server/UPIPE_Event.mpc:
+        * examples/ASX/Event_Server/Event_Server/Event.mpc:
+        * examples/ASX/Event_Server/Transceiver/Transceiver.mpc:
+          Fixed these mpc files, they should build an executable, not a
+          shared library
+
 Mon Apr 18 17:56:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
