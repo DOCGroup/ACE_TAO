@@ -7,7 +7,7 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Marshal.h"
 #include "tao/Environment.h"
-#include "tao/TypeCode.h"
+#include "tao/String_TypeCode_Traits.h"
 
 #include "ace/CORBA_macros.h"
 
@@ -47,36 +47,33 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
                                                   CORBA::ULong bound
   )
 {
-//   CORBA::TypeCode_ptr bounded_tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_var bounded_tc;
 
-//   if (bound > 0)
-//     {
-//       CORBA::TCKind kind = static_cast<CORBA::TCKind> (tc->kind_);
-//       static CORBA::Long _oc_buffer [] =
-//         {
-//           TAO_ENCAP_BYTE_ORDER,
-//           static_cast<CORBA::Long> (bound)
-//         };
+  if (bound > 0)
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+      CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
 
-//       ACE_NEW (bounded_tc,
-//                CORBA::TypeCode (kind,
-//                                 sizeof _oc_buffer,
-//                                 (char *) &_oc_buffer,
-//                                 1,
-//                                 0));
-//     }
-//   else
-//     {
-//       bounded_tc = CORBA::TypeCode::_duplicate (tc);
-//     }
+      bounded_tc =
+        TAO::TypeCodeFactory::String_Traits<from_T>::create_typecode (kind,
+                                                                      bound);
+    }
+  else
+    {
+      bounded_tc = CORBA::TypeCode::_duplicate (tc);
+    }
 
-  Any_Special_Impl_T<T, from_T, to_T> * new_impl = 0;
+  if (CORBA::is_nil (bounded_tc.in ()))
+    return;
+
+  Any_Special_Impl_T<T, from_T, to_T> * new_impl;
   ACE_NEW (new_impl,
            Any_Special_Impl_T (destructor,
-                               /* bounded_ */ tc,
+                               bounded_tc.in (),
                                value,
                                bound));
-//   CORBA::release (bounded_tc);
+
   any.replace (new_impl);
 }
 

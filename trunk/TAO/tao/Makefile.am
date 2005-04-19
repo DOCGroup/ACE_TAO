@@ -491,6 +491,7 @@ nobase_include_HEADERS = \
   Endpoint.h \
   Endpoint.i \
   Endpoint_Selector_Factory.h \
+  Enum_TypeCode.h \
   Enum_TypeCode.inl \
   Environment.h \
   Environment.i \
@@ -780,6 +781,7 @@ nobase_include_HEADERS = \
   String_TypeCode.cpp \
   String_TypeCode.h \
   String_TypeCode.inl \
+  String_TypeCode_Traits.h \
   Struct_TypeCode.cpp \
   Struct_TypeCode.h \
   Struct_TypeCode.inl \

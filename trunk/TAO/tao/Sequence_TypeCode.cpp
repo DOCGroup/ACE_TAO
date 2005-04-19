@@ -43,8 +43,9 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_release (void)
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                               ACE_ENV_ARG_DECL) const
+TAO::TypeCode::Sequence<TypeCodeType,
+                        RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
+                                                  ACE_ENV_ARG_DECL) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
@@ -66,21 +67,16 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::equal_i (CORBA::TypeCode_
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
-                                                     ACE_ENV_ARG_DECL) const
+TAO::TypeCode::Sequence<TypeCodeType,
+                        RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
+                                                       ACE_ENV_ARG_DECL) const
 {
-  // We could refactor this code to the CORBA::TypeCode::equivalent()
-  // method but doing so would force us to determine the unaliased
-  // kind of this TypeCode.  Since we already know the unaliased kind
-  // of this TypeCode, choose to optimize away the additional kind
-  // unaliasing operation rather than save space.
-
-  CORBA::TCKind const tc_kind =
-    TAO::unaliased_kind (tc
-                         ACE_ENV_ARG_PARAMETER);
+  // The following calls won't throw since CORBA::TypeCode::equal()
+  // has already established the kind of tc is the same as our kind.
+  CORBA::ULong const tc_length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (tc_kind != this->kind_)
+  if (this->length_ != tc_length)
     return 0;
 
   CORBA::TypeCode_var rhs_content_type =

@@ -1,10 +1,6 @@
 // $Id$
 
 #include "TypeCode.h"
-#include "TypeCodeFactory_Adapter.h"
-#include "ORB_Core.h"
-
-#include "ace/Dynamic_Service.h"
 
 
 ACE_RCSID (tao,
@@ -95,8 +91,64 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
                         false);
     }
 
-  return this->equivalent_i (tc
+  CORBA::TypeCode_ptr const mutable_this =
+    const_cast<CORBA::TypeCode_ptr> (this);
+
+  CORBA::TypeCode_var unaliased_this =
+    TAO::unaliased_typecode (mutable_this
                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  CORBA::TypeCode_var unaliased_tc =
+    TAO::unaliased_typecode (tc
+                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+
+  CORBA::TCKind const this_kind =
+    unaliased_this->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  CORBA::TCKind const tc_kind =
+    unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  if (tc_kind != this_kind)
+    return false;
+
+  ACE_TRY
+    {
+      char const * const this_id =
+        unaliased_this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      char const * const tc_id =
+        unaliased_tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (ACE_OS::strlen (this_id) == 0
+          || ACE_OS::strlen (tc_id) == 0)
+        {
+          return this->equivalent_i (tc
+                                     ACE_ENV_ARG_PARAMETER);
+        }
+      else if (ACE_OS::strcmp (this_id, tc_id) != 0)
+        {
+          return false;
+        }
+    }
+  ACE_CATCH (CORBA::TypeCode::BadKind, ex)
+    {
+      // Some TypeCodes do not support the id() operation.  Ignore the
+      // failure, and continue equivalence verification using TypeCode
+      // subclass-specific techniques.
+      return this->equivalent_i (tc
+                                 ACE_ENV_ARG_PARAMETER);
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (false);
+
+  return true;
 }
 
 char const *
@@ -342,7 +394,8 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
 
   if (tc_kind == CORBA::tk_alias)
     {
-      CORBA::TypeCode_var tc_content;
+      CORBA::TypeCode_var tc_content =
+        CORBA::TypeCode::_duplicate (tc);
 
       // Iterate until we get to the actual unaliased type.
       do

@@ -105,10 +105,10 @@ TAO::TypeCode::Struct<StringType,
 
   CORBA::ULong const tc_nfields =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_nfields != this->nfields_)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
@@ -119,28 +119,28 @@ TAO::TypeCode::Struct<StringType,
         Traits<StringType>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-        return 0;
+        return false;
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
         tc->member_type (i
                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       CORBA::Boolean const equal_members =
         lhs_tc->equal (rhs_tc.in ()
                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (!equal_members)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 template <typename StringType,
@@ -155,61 +155,35 @@ TAO::TypeCode::Struct<StringType,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
-  // We could refactor this code to the CORBA::TypeCode::equivalent()
-  // method but doing so would force us to determine the unaliased
-  // kind of this TypeCode.  Since we already know the unaliased kind
-  // of this TypeCode, choose to optimize away the additional kind
-  // unaliasing operation rather than save space.
+  // Perform a structural comparison, excluding the name() and
+  // member_name() operations.
 
-  CORBA::TCKind const tc_kind =
-    TAO::unaliased_kind (tc
+  CORBA::ULong const tc_nfields =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  if (tc_nfields != this->nfields_)
+    return false;
+
+  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+    {
+      CORBA::TypeCode_ptr const lhs =
+        Traits<StringType>::get_typecode (this->fields_[i].type);
+      CORBA::TypeCode_var const rhs =
+        tc->member_type (i
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
-  if (tc_kind != this->kind_)
-    return 0;
+      CORBA::Boolean const equiv_members =
+        lhs->equivalent (rhs.in ()
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
 
-  char const * const this_id = this->base_attributes_.id ();
-  char const * const tc_id   = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (ACE_OS::strlen (this_id) == 0
-      || ACE_OS::strlen (tc_id) == 0)
-    {
-      // Perform a structural comparison, excluding the name() and
-      // member_name() operations.
-
-      CORBA::ULong const tc_nfields =
-        tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (tc_nfields != this->nfields_)
-        return 0;
-
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
-        {
-          CORBA::TypeCode_ptr const lhs =
-            Traits<StringType>::get_typecode (this->fields_[i].type);
-          CORBA::TypeCode_var const rhs =
-            tc->member_type (i
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          CORBA::Boolean const equiv_members =
-            lhs->equivalent (rhs.in ()
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          if (!equiv_members)
-            return 0;
-        }
-    }
-  else if (ACE_OS::strcmp (this_id, tc_id) != 0)
-    {
-      return 0;
+      if (!equiv_members)
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 template <typename StringType,

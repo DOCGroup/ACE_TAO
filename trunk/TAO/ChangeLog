@@ -1,3 +1,45 @@
+Tue Apr 19 17:12:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode.cpp (unaliased_typecode):
+
+	  Fixed problem where the initial TypeCode over which we are
+	  iterating was not initialized.
+
+	  (equivalent):
+
+	  Factored out common TypeCode equivalence verification code to
+	  this base class method, and added missing TypeCode unaliasing
+	  code for the TypeCode being invoked (e.g. the left hand side).
+
+	* tao/Alias_TypeCode.cpp (equivalent_i):
+	* tao/Enum_TypeCode.cpp:
+	* tao/Fixed_TypeCode.cpp:
+	* tao/Objref_TypeCode_Base.cpp:
+	* tao/Sequence_TypeCode.cpp:
+	* tao/String_TypeCode.cpp:
+	* tao/Struct_TypeCode.cpp:
+	* tao/TAO_Internal.cpp:
+	* tao/TypeCode.cpp:
+	* tao/Union_TypeCode.cpp:
+	* tao/Value_TypeCode.cpp:
+
+	  Factored out common TypeCode equivalence verification code to
+	  the CORBA::TypeCode::equivalent() base class method.
+
+	* tao/Any_Basic_Impl.cpp (Any_Basic_Impl):
+
+	  Replaced duplicated TypeCode unaliasing code with a call to
+	  TAO::unaliased_typecode().
+
+	* tao/String_TypeCode_Traits.h:
+
+	  New {w}string TypeCode creation traits templates.
+
+	* tao/Any_Special_Impl_T.cpp (insert):
+
+	  Added missing bounded {w}string TypeCode support that was
+	  disabled during the TypeCode rewrite merge.
+
 Tue Apr 19 11:10:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:

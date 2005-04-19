@@ -25,7 +25,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ACE.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_stdio.h"
 
 
@@ -78,7 +77,7 @@ namespace
   /**
    * @note In/decrement operations are atomic.
    */
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> service_open_count (0);
+  long service_open_count = 0;
 
   char const * resource_factory_args =
     TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
@@ -259,7 +258,12 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 int
 TAO::ORB::close_services (void)
 {
-  --service_open_count;  // Atomic!
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                            guard,
+                            *ACE_Static_Object_Lock::instance (),
+                            -1));
+
+  --service_open_count;
 
   return 0;
 }
@@ -287,121 +291,124 @@ namespace
     ignore_default_svc_conf_file = true;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
-    if (service_open_count++ == 0)  // Atomic increment
-      {
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Resource_Factory);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Client_Strategy_Factory);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Server_Strategy_Factory);
+    {
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                                guard,
+                                *ACE_Static_Object_Lock::instance (),
+                                -1));
 
-        // Configure the IIOP factory. You do *NOT* need modify this
-        // code to add your own protocol, instead simply add the
-        // following to your svc.conf file:
-        //
-        // dynamic PN_Factory Service_Object * LIB:_make_PN_Protocol_Factory() ""
-        // static Resource_Factory "-ORBProtocolFactory PN_Factory"
-        //
-        // where PN is the name of your protocol and LIB is the base
-        // name of the shared library that implements the protocol.
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_IIOP_Protocol_Factory);
-
-        // add descriptor to list of static objects.
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_MCAST_Parser);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_CORBANAME_Parser);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_CORBALOC_Parser);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_FILE_Parser);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_DLL_Parser);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Stub_Factory);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Protocols_Hooks);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
-        ACE_Service_Config::process_directive (
-          ace_svc_desc_TAO_Default_Collocation_Resolver);
-
-        int result = 0;
-
-        if (!skip_service_config_open)
-          {
-            // Copy command line parameter not to use original.
-            ACE_Argv_Type_Converter command_line (argc, argv);
-
-            result =
-              ACE_Service_Config::open (command_line.get_argc(),
-                                        command_line.get_TCHAR_argv(),
-                                        ACE_DEFAULT_LOGGER_KEY,
-                                        0, // Don't ignore static services.
-                                        ignore_default_svc_conf_file);
-          }
-
-        // If available, allow the Adapter Factory to setup.
-        ACE_Service_Object *adapter_factory =
-          ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
-            TAO_ORB_Core::poa_factory_name ().c_str());
-
-        if (adapter_factory != 0)
-          {
-            adapter_factory->init (0, 0);
-          }
-
-        // Handle RTCORBA library special case.  Since RTCORBA needs
-        // its init method call to register several hooks, call it
-        // here if it hasn't already been called.
-        ACE_Service_Object * const rt_loader =
-          ACE_Dynamic_Service<ACE_Service_Object>::instance ("RT_ORB_Loader");
-
-        if (rt_loader != 0)
-          {
-            rt_loader->init (0, 0);
-          }
-
-        ACE_Service_Object * const rtscheduler_loader =
-          ACE_Dynamic_Service<ACE_Service_Object>::instance ("RTScheduler_Loader");
-
-        if (rtscheduler_loader != 0)
-          {
-            rtscheduler_loader->init (0, 0);
-          }
-
-        // @@ What the heck do these things do and do we need to avoid
-        //    calling them if we're not invoking the svc.conf file?
-        // @@ They are needed for platforms that have no file system,
-        //    like VxWorks.
-        if (resource_factory_args != 0)
-          {
-            ACE_Service_Config::process_directive (
-              ACE_TEXT_CHAR_TO_TCHAR (resource_factory_args));
-          }
-
-        if (client_strategy_factory_args != 0)
-          {
-            ACE_Service_Config::process_directive (
-              ACE_TEXT_CHAR_TO_TCHAR (client_strategy_factory_args));
-          }
-
-        if (server_strategy_factory_args != 0)
-          {
-            ACE_Service_Config::process_directive (
-              ACE_TEXT_CHAR_TO_TCHAR (server_strategy_factory_args));
-          }
-
-        return result;
-      }
-    else
-      {
+      if (service_open_count++ != 0)  // Atomic increment
         return 0;
+    }
+
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Resource_Factory);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Client_Strategy_Factory);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Server_Strategy_Factory);
+
+    // Configure the IIOP factory. You do *NOT* need modify this
+    // code to add your own protocol, instead simply add the
+    // following to your svc.conf file:
+    //
+    // dynamic PN_Factory Service_Object * LIB:_make_PN_Protocol_Factory() ""
+    // static Resource_Factory "-ORBProtocolFactory PN_Factory"
+    //
+    // where PN is the name of your protocol and LIB is the base
+    // name of the shared library that implements the protocol.
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_IIOP_Protocol_Factory);
+
+    // add descriptor to list of static objects.
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_MCAST_Parser);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_CORBANAME_Parser);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_CORBALOC_Parser);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_FILE_Parser);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_DLL_Parser);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Stub_Factory);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Protocols_Hooks);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
+    ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_Default_Collocation_Resolver);
+
+    int result = 0;
+
+    if (!skip_service_config_open)
+      {
+        // Copy command line parameter not to use original.
+        ACE_Argv_Type_Converter command_line (argc, argv);
+
+        result =
+          ACE_Service_Config::open (command_line.get_argc(),
+                                    command_line.get_TCHAR_argv(),
+                                    ACE_DEFAULT_LOGGER_KEY,
+                                    0, // Don't ignore static services.
+                                    ignore_default_svc_conf_file);
       }
+
+    // If available, allow the Adapter Factory to setup.
+    ACE_Service_Object *adapter_factory =
+      ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
+        TAO_ORB_Core::poa_factory_name ().c_str());
+
+    if (adapter_factory != 0)
+      {
+        adapter_factory->init (0, 0);
+      }
+
+    // Handle RTCORBA library special case.  Since RTCORBA needs
+    // its init method call to register several hooks, call it
+    // here if it hasn't already been called.
+    ACE_Service_Object * const rt_loader =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance ("RT_ORB_Loader");
+
+    if (rt_loader != 0)
+      {
+        rt_loader->init (0, 0);
+      }
+
+    ACE_Service_Object * const rtscheduler_loader =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance ("RTScheduler_Loader");
+
+    if (rtscheduler_loader != 0)
+      {
+        rtscheduler_loader->init (0, 0);
+      }
+
+    // @@ What the heck do these things do and do we need to avoid
+    //    calling them if we're not invoking the svc.conf file?
+    // @@ They are needed for platforms that have no file system,
+    //    like VxWorks.
+    if (resource_factory_args != 0)
+      {
+        ACE_Service_Config::process_directive (
+          ACE_TEXT_CHAR_TO_TCHAR (resource_factory_args));
+      }
+
+    if (client_strategy_factory_args != 0)
+      {
+        ACE_Service_Config::process_directive (
+          ACE_TEXT_CHAR_TO_TCHAR (client_strategy_factory_args));
+      }
+
+    if (server_strategy_factory_args != 0)
+      {
+        ACE_Service_Config::process_directive (
+          ACE_TEXT_CHAR_TO_TCHAR (server_strategy_factory_args));
+      }
+
+    return result;
   }
 }
 
