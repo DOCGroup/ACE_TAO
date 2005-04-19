@@ -26,4 +26,8 @@ project : taolib, core, portableserver {
   PIDL_Files {
     ImR_Client
   }
+
+  Pkgconfig_Files {
+    ImR_Client/TAO_ImR_Client.pc.in
+  }
 }
