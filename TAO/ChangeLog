@@ -1,3 +1,8 @@
+Tue Apr 19 11:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/SystemExceptionA.cpp:
+          Added LynxOS compile fix from Olli Savia <ops@iki.fi>
+
 Tue Apr 19 07:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp:
