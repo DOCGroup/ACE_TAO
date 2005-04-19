@@ -75,7 +75,7 @@ protected:
     for (ACE_HANDLE handle;
          (handle = peer_iterator ()) != ACE_INVALID_HANDLE;
          ) {
-      ACE_FILE_IO *log_file;
+      ACE_FILE_IO *log_file = 0;
       log_map_.find (handle, log_file);
       Logging_Handler logging_handler (*log_file, handle);
 
