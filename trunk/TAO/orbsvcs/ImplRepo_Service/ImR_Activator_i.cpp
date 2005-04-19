@@ -257,7 +257,7 @@ ImR_Activator_i::start_server(const char* name,
                               const char* cmdline,
                               const char* dir,
                               const ImplementationRepository::EnvironmentList & env ACE_ENV_ARG_DECL)
-                              ACE_THROW_SPEC ((CORBA::SystemException))
+                              ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::CannotActivate))
 {
   if (debug_ > 1)
     ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting server <%s>...\n", name));
