@@ -78,7 +78,7 @@ TAO::TypeCode::Alias<StringType,
 {
   // The CORBA::TypeCode base class already verified equality of the
   // base attributes (id and name).  Perform an equality comparison of
-  // the members.
+  // the content.
 
   CORBA::TypeCode_var rhs_content_type =
     tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -98,45 +98,14 @@ CORBA::Boolean
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
                      Kind,
-                     RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
-                                                    ACE_ENV_ARG_DECL) const
+                     RefCountPolicy>::equivalent_i (
+  CORBA::TypeCode_ptr
+  ACE_ENV_ARG_DECL_NOT_USED) const
 {
-  // We could refactor this code to the CORBA::TypeCode::equivalent()
-  // method but doing so would force us to determine the unaliased
-  // kind of this TypeCode.  Since we already know the unaliased kind
-  // of this TypeCode, choose to optimize away the additional kind
-  // unaliasing operation rather than save space.
+  // Equivalence already verified in the base class
+  // CORBA::TypeCode::equivalent() method.
 
-  CORBA::TCKind const tc_kind =
-    TAO::unaliased_kind (tc
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (tc_kind != Kind)
-    return (0);
-
-  char const * const this_id = this->attributes_.id ();
-  char const * const tc_id   = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (ACE_OS::strlen (this_id) == 0
-      || ACE_OS::strlen (tc_id) == 0)
-    {
-      CORBA::TypeCode_var rhs_content_type =
-        tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      return
-        Traits<StringType>::get_typecode (this->content_type_)->equivalent (
-          rhs_content_type.in ()
-          ACE_ENV_ARG_PARAMETER);
-    }
-  else if (ACE_OS::strcmp (this_id, tc_id) != 0)
-    {
-      return 0;
-    }
-
-  return 1;
+  return true;
 }
 
 template<typename StringType,

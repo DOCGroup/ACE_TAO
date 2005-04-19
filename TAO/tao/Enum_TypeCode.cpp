@@ -114,41 +114,15 @@ TAO::TypeCode::Enum<StringType,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
-  // We could refactor this code to the CORBA::TypeCode::equivalent()
-  // method but doing so would force us to determine the unaliased
-  // kind of this TypeCode.  Since we already know the unaliased kind
-  // of this TypeCode, choose to optimize away the additional kind
-  // unaliasing operation rather than save space.
+  // Perform a structural comparison, excluding the name() and
+  // member_name() operations.
 
-  CORBA::TCKind const tc_kind =
-    TAO::unaliased_kind (tc
-                         ACE_ENV_ARG_PARAMETER);
+  CORBA::ULong const tc_nenumerators =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (tc_kind != this->kind_)
+  if (tc_nenumerators != this->nenumerators_)
     return 0;
-
-  char const * const this_id = this->base_attributes_.id ();
-  char const * const tc_id   = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (ACE_OS::strlen (this_id) == 0
-      || ACE_OS::strlen (tc_id) == 0)
-    {
-      // Perform a enumural comparison, excluding the name() and
-      // member_name() operations.
-
-      CORBA::ULong const tc_nenumerators =
-        tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (tc_nenumerators != this->nenumerators_)
-        return 0;
-    }
-  else if (ACE_OS::strcmp (this_id, tc_id) != 0)
-    {
-      return 0;
-    }
 
   return 1;
 }

@@ -155,72 +155,46 @@ TAO::TypeCode::Union<StringType,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
-  // We could refactor this code to the CORBA::TypeCode::equivalent()
-  // method but doing so would force us to determine the unaliased
-  // kind of this TypeCode.  Since we already know the unaliased kind
-  // of this TypeCode, choose to optimize away the additional kind
-  // unaliasing operation rather than save space.
+  // Perform a structural comparison, excluding the name() and
+  // member_name() operations.
 
-  CORBA::TCKind const tc_kind =
-    TAO::unaliased_kind (tc
-                         ACE_ENV_ARG_PARAMETER);
+  CORBA::ULong const tc_count =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (tc_kind != this->kind_)
+  CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong const this_count = this->case_count ();
+
+  if (tc_count != this_count
+      || tc_def != this->default_index_)
     return 0;
 
-  char const * const this_id = this->base_attributes_.id ();
-  char const * const tc_id   = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc_discriminator =
+    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (ACE_OS::strlen (this_id) == 0
-      || ACE_OS::strlen (tc_id) == 0)
+  CORBA::Boolean const equiv_discriminators =
+    (*this->discriminant_type_)->equivalent (tc_discriminator.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (!equiv_discriminators)
+    return 0;
+
+  for (CORBA::ULong i = 0; i < this_count; ++i)
     {
-      // Perform a structural comparison, excluding the name() and
-      // member_name() operations.
+      case_type & lhs_case = this->the_case (i);
 
-      CORBA::ULong const tc_count =
-        tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+      bool const equivalent_case =
+        lhs_case.equivalent (i,
+                             tc
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      CORBA::ULong const this_count = this->case_count ();
-
-      if (tc_count != this_count
-          || tc_def != this->default_index_)
+      if (!equivalent_case)
         return 0;
-
-      CORBA::TypeCode_var tc_discriminator =
-        tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      CORBA::Boolean const equiv_discriminators =
-        (*this->discriminant_type_)->equivalent (tc_discriminator.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (!equiv_discriminators)
-        return 0;
-
-      for (CORBA::ULong i = 0; i < this_count; ++i)
-        {
-          case_type & lhs_case = this->the_case (i);
-
-          bool const equivalent_case =
-            lhs_case.equivalent (i,
-                                 tc
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          if (!equivalent_case)
-            return 0;
-        }
-    }
-  else if (ACE_OS::strcmp (this_id, tc_id) != 0)
-    {
-      return 0;
     }
 
   return 1;

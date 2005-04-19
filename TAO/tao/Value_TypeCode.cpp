@@ -179,90 +179,64 @@ TAO::TypeCode::Value<StringType,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
-  // We could refactor this code to the CORBA::TypeCode::equivalent()
-  // method but doing so would force us to determine the unaliased
-  // kind of this TypeCode.  Since we already know the unaliased kind
-  // of this TypeCode, choose to optimize away the additional kind
-  // unaliasing operation rather than save space.
-
-  CORBA::TCKind const tc_kind =
-    TAO::unaliased_kind (tc
-                         ACE_ENV_ARG_PARAMETER);
+  CORBA::ValueModifier const tc_type_modifier =
+    tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (tc_kind != this->kind_)
+  if (tc_type_modifier != this->type_modifier_)
     return 0;
 
-  char const * const this_id = this->base_attributes_.id ();
-  char const * const tc_id   = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var rhs_concrete_base_type =
+    tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (ACE_OS::strlen (this_id) == 0
-      || ACE_OS::strlen (tc_id) == 0)
+  CORBA::Boolean const equivalent_concrete_base_types =
+    this->equivalent (rhs_concrete_base_type.in ()
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (!equivalent_concrete_base_types)
+    return 0;
+
+  // Perform a structural comparison, excluding the name() and
+  // member_name() operations.
+
+  CORBA::ULong const tc_nfields =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (tc_nfields != this->nfields_)
+    return 0;
+
+  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
-      CORBA::ValueModifier const tc_type_modifier =
-        tc->type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
+      Value_Field<StringType, TypeCodeType> const & lhs_field =
+        this->fields_[i];
+
+      CORBA::Visibility const lhs_visibility =
+        lhs_field.visibility;
+      CORBA::Visibility const rhs_visibility =
+        tc->member_visibility (i
+                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      if (tc_type_modifier != this->type_modifier_)
+      if (lhs_visibility != rhs_visibility)
         return 0;
 
-      CORBA::TypeCode_var rhs_concrete_base_type =
-        tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_ptr const lhs_tc =
+        Traits<StringType>::get_typecode (lhs_field.type);
+      CORBA::TypeCode_var const rhs_tc =
+        tc->member_type (i
+                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Boolean const equivalent_concrete_base_types =
-        this->equivalent (rhs_concrete_base_type.in ()
-                          ACE_ENV_ARG_PARAMETER);
+      CORBA::Boolean const equiv_types =
+        lhs_tc->equivalent (rhs_tc.in ()
+                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      if (!equivalent_concrete_base_types)
+      if (!equiv_types)
         return 0;
-
-      // Perform a structural comparison, excluding the name() and
-      // member_name() operations.
-
-      CORBA::ULong const tc_nfields =
-        tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (tc_nfields != this->nfields_)
-        return 0;
-
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
-        {
-          Value_Field<StringType, TypeCodeType> const & lhs_field =
-            this->fields_[i];
-
-          CORBA::Visibility const lhs_visibility =
-            lhs_field.visibility;
-          CORBA::Visibility const rhs_visibility =
-            tc->member_visibility (i
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          if (lhs_visibility != rhs_visibility)
-            return 0;
-
-          CORBA::TypeCode_ptr const lhs_tc =
-            Traits<StringType>::get_typecode (lhs_field.type);
-          CORBA::TypeCode_var const rhs_tc =
-            tc->member_type (i
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          CORBA::Boolean const equiv_types =
-            lhs_tc->equivalent (rhs_tc.in ()
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          if (!equiv_types)
-            return 0;
-        }
-    }
-  else if (ACE_OS::strcmp (this_id, tc_id) != 0)
-    {
-      return 0;
     }
 
   return 1;
