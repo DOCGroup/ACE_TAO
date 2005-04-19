@@ -1,3 +1,8 @@
+Tue Apr 19 08:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/ThreadSafety/Mutex.cpp:
+          Added virtual destructor to LogMessage to silince pre gcc 4.0
+
 Tue Apr 19 06:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/UPIPE_Event_Server/UPIPE_Event.mpc:
