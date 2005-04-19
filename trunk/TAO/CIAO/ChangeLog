@@ -1,53 +1,54 @@
 Tue Apr 19 12:16:00 2005 CDT  Will Otte  <wotte@dre.vanderbilt.edu>
-  * DAnCE/Config_Handlers/IDREF_Base.h
-  
-  Fixed a compile error on VC71.
+
+        * DAnCE/Config_Handlers/IDREF_Base.h
+
+          Fixed a compile error on VC71.
 
 Mon Apr 18 12:50:51 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Added '.in ()' to some _var type arguments in generated code.
 
 Mon Apr 18 08:38:14 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Changed all instances of 'FALSE' to 'false'.
 
 Sun Apr 17 21:57:52 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Removed unnecessary _narrow() and local variable from generated
           event push operations.
 
 Sun Apr 17 16:05:57 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/examples/Swapping/Sender/Sender_exec_1.cpp
 	* DAnCE/examples/Swapping/Sender/Sender_exec_2.cpp
 
 	Fixed a compile error on platforms using emulated exceptions.
-	
+
 Sun Apr 17 12:46:51 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/CCM_Event.idl:
         * DAnCE/ciao/CCM_Event.idl:
-        
+
           Added operation ciao_is_substitutable() to EventConsumerBase,
           so we can check if there is an inheritance relationship
           when a base class event consumer is passed to the subscribe()
           operation for a derived eventtype. Thanks to Boris Kolpackov
           <boris@dre.vanderbilt.edu> for suggesting this approach.
-          
+
         * CIDLC/Literals.cpp:
-        
+
           Cosmetic changes.
-          
+
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
-          Added code generation to take advantage of the new 
+
+          Added code generation to take advantage of the new
           EventConsumerBase operation described above.
 
 Sat Apr 16 20:17:38 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
