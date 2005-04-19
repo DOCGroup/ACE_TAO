@@ -18,7 +18,6 @@ Tue Apr 19 17:12:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/Sequence_TypeCode.cpp:
 	* tao/String_TypeCode.cpp:
 	* tao/Struct_TypeCode.cpp:
-	* tao/TypeCode.cpp:
 	* tao/Union_TypeCode.cpp:
 	* tao/Value_TypeCode.cpp:
 
