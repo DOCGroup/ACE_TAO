@@ -20,8 +20,8 @@ namespace TAO
                                   void *value)
     : Any_Impl (0, tc),
       kind_ (CORBA::tk_null)
-  {      
-    ACE_DECLARE_NEW_CORBA_ENV;      
+  {
+    ACE_DECLARE_NEW_CORBA_ENV;
     this->kind_ = TAO::unaliased_kind (tc
                                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -134,7 +134,7 @@ namespace TAO
 
         auto_ptr<TAO::Any_Basic_Impl> replacement_safety (replacement);
 
-        // We know this will work since the unencoded case is covered above.  
+        // We know this will work since the unencoded case is covered above.
         TAO::Unknown_IDL_Type *unk =
           dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
@@ -143,7 +143,7 @@ namespace TAO
         // will not help.
         CORBA::TCKind const tck = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
-        
+
         // We don't want the rd_ptr of unk to move, in case it is
         // shared by another Any. This copies the state, not the buffer.
         TAO_InputCDR for_reading (unk->_tao_get_cdr ());
