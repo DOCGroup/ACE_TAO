@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server) : acelib {
-  sharedname = Event_Server
+project(*Server) : aceexe {
+  exename = Event_Server
   Source_Files {
     Consumer_Router.cpp
     Event_Analyzer.cpp

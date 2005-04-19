@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server) : acelib {
-  sharedname = UPIPE_Event_Server
+project(*Server) : aceexe {
   Source_Files {
     Consumer_Router.cpp
     Event_Analyzer.cpp
