@@ -1,3 +1,8 @@
+Tue Apr 19 08:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/ThreadPools/ThreadPool.cpp:
+          Initialise pointer with 0
+
 Tue Apr 19 08:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadSafety/Mutex.cpp:
