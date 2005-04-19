@@ -14,7 +14,7 @@
 #include "Config_Handlers_Export.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
-#include "ace/String_Base.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
