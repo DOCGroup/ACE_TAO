@@ -22,7 +22,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
 const ACE_TCHAR *ACE_Log_Record::priority_names_[] =
 {
-  ACE_LIB_TEXT ("<none>"),
   ACE_LIB_TEXT ("LM_SHUTDOWN"),
   ACE_LIB_TEXT ("LM_TRACE"),
   ACE_LIB_TEXT ("LM_DEBUG"),
