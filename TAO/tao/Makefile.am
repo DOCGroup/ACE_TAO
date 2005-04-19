@@ -1934,8 +1934,14 @@ nobase_include_HEADERS += \
   ImR_Client/ServerObject_i.h \
   ImR_Client/imr_client_export.h
 
+pkgconfig_DATA += TAO_ImR_Client.pc
+
+TAO_ImR_Client.pc: ${top_builddir}/config.status ${srcdir}/ImR_Client/TAO_ImR_Client.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ImR_Client/TAO_ImR_Client.pc.in
+
 EXTRA_DIST += \
-  ImR_Client/TAO_IMR_Client.rc
+  ImR_Client/TAO_IMR_Client.rc \
+  ImR_Client/TAO_ImR_Client.pc.in
 
 
 ## Makefile.RTCORBA.am

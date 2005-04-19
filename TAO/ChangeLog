@@ -1,8 +1,22 @@
+Tue Apr 19 11:10:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerated.
+
+	* tao/ImR_Client.Added:
+
+          Added Pkgconfig_Files definition.
+
+	* tao/ImR_Client/TAO_ImR_Client.pc.in:
+
+          New file, pkg-config *.pc template for TAO_ImR_Client library.
+
 Tue Apr 19 15:17:12 UTC 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
-        
+
           Fix incorrect exception specifications.
 
 Tue Apr 19 11:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
