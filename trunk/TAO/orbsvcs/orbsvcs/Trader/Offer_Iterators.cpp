@@ -89,7 +89,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
 {
   while (! this->iters_.is_empty ())
     {
-      CosTrading::OfferIterator* offer_iter;
+      CosTrading::OfferIterator* offer_iter = 0;
       this->iters_.dequeue_head (offer_iter);
 
       ACE_TRY_NEW_ENV

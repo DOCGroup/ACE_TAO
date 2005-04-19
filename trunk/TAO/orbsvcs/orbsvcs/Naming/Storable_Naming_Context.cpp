@@ -1393,7 +1393,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
 
-  ENTRY_DEF *hash_entry;
+  ENTRY_DEF *hash_entry = 0;
 
   for (CORBA::ULong i = 0; i < n; i++)
     {
