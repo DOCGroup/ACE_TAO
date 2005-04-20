@@ -84,7 +84,7 @@ namespace CIAO
       for (CORBA::ULong l = 0; l < plan_ins_len; ++l)
         {
           const char* plan_name = plan.instance[l].name;
-          if (strcmp (plan_name, in_name) == 0)
+          if (ACE_OS::strcmp (plan_name, in_name) == 0)
             {
               traverse_assembly_instance (ins, plan, l,
                                           ref_map, primary_ref_map,
@@ -137,7 +137,7 @@ namespace CIAO
       for (CORBA::ULong w = 0; w < plan_ins_len; ++w)
         {
           const char* pl_name = plan.instance[w].name;
-          if (strcmp (pl_name, ins_name) == 0)
+          if (ACE_OS::strcmp (pl_name, ins_name) == 0)
             {
               plan.connection[con_length].internalEndpoint
                 [iep_len].instanceRef = w;
@@ -174,7 +174,7 @@ namespace CIAO
           {
             const char* main_port_name = cid.port[n].name;
             const char* port_name = pspe.portName;
-            if (strcmp (main_port_name, port_name) == 0)
+            if (ACE_OS::strcmp (main_port_name, port_name) == 0)
               {
                 pspe.kind = cid.port[n].kind;
               }
@@ -406,7 +406,7 @@ namespace CIAO
         for (CORBA::ULong y = 0; y < ins_pro_len; ++y)
           {
             const char* ins_pro_name = instance.configProperty[y].name;
-            if (strcmp (ins_pro_name, property_name) == 0)
+            if (ACE_OS::strcmp (ins_pro_name, property_name) == 0)
               {
                 update_flag = 0;
                 break;
