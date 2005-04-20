@@ -249,15 +249,19 @@
   typedef long long		ACE_INT64;
 #endif /* defined (ACE_INT64_TYPE) */
 
-#if defined (ACE_UINT64_TYPE)
+#if !(defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T))
+/* See matching #if around ACE_U_LongLong class declaration below */
+
+#  if defined (ACE_UINT64_TYPE)
   typedef ACE_UINT64_TYPE	ACE_UINT64;
-#elif defined (ACE_HAS_UINT64_T)
+#  elif defined (ACE_HAS_UINT64_T)
   typedef uint64_t		ACE_UINT64;
-#elif ACE_SIZEOF_LONG == 8
+#  elif ACE_SIZEOF_LONG == 8
   typedef unsigned long		ACE_UINT64;
-#elif !(defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)) && ACE_SIZEOF_LONG_LONG == 8
+#  elif ACE_SIZEOF_LONG_LONG == 8
   typedef unsigned long	long	ACE_UINT64;
-#endif /* defined (ACE_UINT64_TYPE) */
+#  endif /* defined (ACE_UINT64_TYPE) */
+#endif /* !(ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T) */
 
 
 typedef ACE_UINT16 ACE_USHORT16;  // @@ Backward compatibility.

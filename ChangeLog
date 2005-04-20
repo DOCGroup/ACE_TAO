@@ -3,6 +3,16 @@ Wed Apr 20 07:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/ACE_Test.cpp:
           Fixed compile warning
 
+Tue Apr 19 16:41:47 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Basic_Types.h: Don't attempt to typedef ACE_UINT64 based on
+	  specific available types if ACE_LACKS_LONGLONG_T or
+	  ACE_LACKS_UNSIGNEDLONGLONG_T is defined - in either of these 'lacks'
+	  is set, ACE_U_LongLong is declared and typedef'd to ACE_UINT64.
+
+	* tests/Proactor_Test.cpp:
+	* tests/Proactor_Test_IPV6.cpp: Added missing template instantiations.
+
 Tue Apr 19 19:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.inl:
