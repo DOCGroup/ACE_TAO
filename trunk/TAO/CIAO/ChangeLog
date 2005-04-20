@@ -1,3 +1,10 @@
+Wed Apr 20 12:43:53 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Hello/descriptors/run_test.pl: 
+
+          Not all the test platforms has CIAO_ROOT environment variable
+          defined. Changed that dependency to ACE_ROOT in the script.
+
 Wed Apr 20 13:11:28 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
