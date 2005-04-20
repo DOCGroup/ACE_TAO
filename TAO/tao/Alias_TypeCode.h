@@ -92,7 +92,13 @@ namespace TAO
       /// Constructor.
       Alias (char const * id,
              char const * name,
+#ifdef __BORLANDC__
+             // Borland C++ currently can't handle a reference to
+             // const pointer to const CORBA::TypeCode_ptr
+             TypeCodeType tc);
+#else
              TypeCodeType const & tc);
+#endif
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
