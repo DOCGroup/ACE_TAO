@@ -175,8 +175,9 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   else
     {
       // Check the element type.
-      list.enqueue_tail (this);
-      this->in_recursion_ = type->in_recursion (list);
+      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
+      scope_list.enqueue_tail (this);
+      this->in_recursion_ = type->in_recursion (scope_list);
       return this->in_recursion_;
     }
 }
