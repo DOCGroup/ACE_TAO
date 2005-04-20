@@ -161,8 +161,8 @@
     </xsd:annotation>
     <xsd:choice maxOccurs="unbounded">
       <xsd:element name="priorityModel" type="CIAO:PriorityModelPolicyDef"/>
-      <xsd:element name="threadpool" type="CIAO:ThreadpoolPolicyDef"/>
-      <xsd:element name="banded_connection" type="CIAO:BandedConnectionPolicyDef"/>
+      <xsd:element name="threadpool" type="xsd:IDREF"/>
+      <xsd:element name="connectionBands" type="xsd:IDREF"/>
     </xsd:choice>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
@@ -179,19 +179,6 @@
       <xsd:element name="type" type="CIAO:PriorityType"/>
     </xsd:sequence>
     <xsd:attribute name="priority" type="xsd:int"/>
-  </xsd:complexType>
-
-  <xsd:complexType name="ThreadpoolPolicyDef">
-    <xsd:attribute name="id" type="xsd:IDREF"/>  <!-- Referring to ThreadpoolDef 
-                                                      or ThreadpoolWithLanesDef 
-                                                      defined above in ORBResources -->
-    <!-- Empty sub element -->
-  </xsd:complexType>
-
-  <xsd:complexType name="BandedConnectionPolicyDef">
-    <xsd:attribute name="id" type="xsd:IDREF"/>  <!-- Referring to the ConnectionBandsDef
-                                                      defined above in ORBResources -->
-    <!-- Empty sub element -->
   </xsd:complexType>
 
 </xsd:schema>
