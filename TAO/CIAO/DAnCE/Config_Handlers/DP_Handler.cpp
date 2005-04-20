@@ -1,3 +1,9 @@
+#if defined (_MSC_VER) && (_MSC_VER < 1300)
+#pragma warning (disable: 4018)
+#pragma warning (disable: 4284)
+#pragma warning (disable: 4146)
+#endif
+
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"
 
@@ -9,7 +15,7 @@
 #include "cdp.hpp"
 
 #include "DP_PCD_Handler.h"
-
+  
 ACE_RCSID (Config_Handlers,
            DP_Handler,
            "$Id$")
