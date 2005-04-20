@@ -57,6 +57,10 @@
 class ACEXML_Export ACEXML_Attributes
 {
 public:
+
+  /// Destructor.
+  virtual ~ACEXML_Attributes (void);
+
   /**
    * Look up the index of an attribute by XML 1.0 qualified name.
    */

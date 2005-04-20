@@ -14,6 +14,7 @@
 #define _ACEXML_LOCATOR_H_
 #include /**/ "ace/pre.h"
 
+#include "ACEXML/common/ACEXML_Export.h"
 #include "ACEXML/common/XML_Types.h"
 
 /**
@@ -43,6 +44,9 @@
 class ACEXML_Export ACEXML_Locator
 {
 public:
+
+  virtual ~ACEXML_Locator (void);
+
   /*
    * Return the column number where the current document event ends.
    */

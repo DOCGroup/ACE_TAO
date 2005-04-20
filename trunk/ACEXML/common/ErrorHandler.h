@@ -47,6 +47,9 @@
 class ACEXML_Export ACEXML_ErrorHandler
 {
 public:
+
+  virtual ~ACEXML_ErrorHandler (void);
+
   /**
    * Receive notification of a recoverable error.
    */

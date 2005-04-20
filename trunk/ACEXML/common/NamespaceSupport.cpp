@@ -166,7 +166,7 @@ ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
   if (!prefix)
     return 0;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry;
+  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
   if (this->effective_context_->find (ACEXML_String (prefix, 0, 0),
                                       entry) == 0)
