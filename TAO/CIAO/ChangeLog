@@ -1,3 +1,9 @@
+Tue Apr 19 23:41:02 2005 CDT  Will Otte  <wotte@dre.vanderbilt.edu>
+
+  * DAnCE/Config_Handlers/XML_File_Intf.cpp
+
+  Silenced some compile errors in VC6.
+  
 Tue Apr 19 16:46:00 2005 CDT  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* CIAO-INSTALL.html

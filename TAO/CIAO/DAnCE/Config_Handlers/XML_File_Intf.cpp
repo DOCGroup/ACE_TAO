@@ -1,9 +1,18 @@
 // $Id$
+
+#if defined (_MSC_VER) && (_MSC_VER < 1300)
+#pragma warning (disable: 4018)
+#pragma warning (disable: 4284)
+#pragma warning (disable: 4146)
+#endif
+
 #include "XML_File_Intf.h"
 #include "XML_Helper.h"
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"
+
+
 
 namespace CIAO
 {
@@ -42,7 +51,7 @@ namespace CIAO
 
       return false;
     }
-
+ 
     ::Deployment::DeploymentPlan const *
     XML_File_Intf::get_plan (void) const
     {
