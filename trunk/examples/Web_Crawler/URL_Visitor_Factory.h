@@ -39,7 +39,7 @@ public:
 
   virtual URL_Visitor *make_visitor (void) = 0;
   // Factory Method that makes the appropriate type of <URL_Visitor>.
-  
+
   virtual Command_Processor *make_command_processor (void) = 0;
   // Factory Method that makes the appropriate type of
   // <Command_Processor>.
@@ -52,11 +52,11 @@ class URL_Validation_Visitor_Factory : public URL_Visitor_Factory
 public:
   virtual URL_Visitor *make_visitor (void);
   // Factory Method that makes a <URL_Validation_Visitor>.
-  
+
   virtual Command_Processor *make_command_processor (void);
   // Factory Method that makes a <FIFO_Command_Processor>.
 
- 
+
 };
 
 class URL_Download_Visitor_Factory : public URL_Visitor_Factory
@@ -66,7 +66,7 @@ class URL_Download_Visitor_Factory : public URL_Visitor_Factory
 public:
   virtual URL_Visitor *make_visitor (void);
   // Factory Method that makes a <URL_Download_Visitor>.
-  
+
   virtual Command_Processor *make_command_processor (void);
   // Factory Method that makes a <FIFO_Command_Processor>.
 };
