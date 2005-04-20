@@ -28,7 +28,7 @@ log2_test (void)
   u_long result = 0;
   int error_count = 0;
 
-  for (int i = 0; i < sizeof (values)/sizeof(u_long); i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (u_long) ; i++)
     {
       result = ACE::log2(values [i]);
       if (result != results [i])
