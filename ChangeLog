@@ -3,6 +3,11 @@ Wed Apr 20 07:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/ACE_Test.cpp:
           Fixed compile warning
 
+Tue Apr 19 18:46:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Makefile.am: Correct the variable name used to inject a test
+	  executor - TESTS_ENVIRONMENT, not TEST_ENVIRONMENT.
+
 Tue Apr 19 16:41:47 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Basic_Types.h: Don't attempt to typedef ACE_UINT64 based on

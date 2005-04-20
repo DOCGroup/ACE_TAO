@@ -23,7 +23,7 @@ noinst_HEADERS =
 
 dist_check_SCRIPTS = run_test.lst run_test.pl
 TESTS = $(noinst_PROGRAMS)
-TEST_ENVIRONMENT = $(srcdir)/run_test.pl -t
+TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
 
 ## Makefile.Test_Output.am 
 
