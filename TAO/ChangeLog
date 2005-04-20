@@ -1,9 +1,22 @@
+Wed Apr 20 19:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Alias_TypeCode.h:
+        * tao/Alias_TypeCode.inl:
+        * tao/Sequence_TypeCode.h:
+        * tao/Sequence_TypeCode.inl:
+        * tao/Union_TypeCode.h:
+        * tao/Union_TypeCode.inl:
+        * tao/Value_TypeCode.h:
+        * tao/Value_TypeCode.inl:
+          Extended the checks for Borland to include a version number.
+          Hopefully Borland fixes this problem in newer compiler versions
+
 Wed Apr 20 14:22:57 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_sequence.cpp:
         * TAO_IDL/ast/ast_structure.cpp:
         * TAO_IDL/ast/ast_union.cpp:
-        
+
           Fixed the in_recursion() method in the above node types to
           eliminate a false positive result in the test for the
           presence of a recursive type. The false positive occured
