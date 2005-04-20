@@ -13,6 +13,10 @@ URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
 {
 }
 
+URL_Processing_Strategy::~URL_Processing_Strategy (void)
+{
+}
+
 int
 URL_Processing_Strategy::destroy (void)
 {
@@ -227,6 +231,10 @@ URL_Validation_Visitation_Strategy_Factory::destroy (void)
   // Commit suicide.
   delete this;
   return 0;
+}
+
+URL_Visitor::~URL_Visitor (void)
+{
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -599,6 +607,10 @@ URL_Download_Visitation_Strategy_Factory::make_body_strategy (URL_Iterator &iter
 
 URL_Visitation_Strategy_Factory::URL_Visitation_Strategy_Factory (URL *url)
   : url_ (url)
+{
+}
+
+URL_Visitation_Strategy_Factory::~URL_Visitation_Strategy_Factory (void)
 {
 }
 

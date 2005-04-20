@@ -46,6 +46,10 @@ class File_Parser
   //     Class used to parse the configuration file for the
   //     <Consumer_Map>.
 public:
+
+  /// Destructor.
+  virtual ~File_Parser (void);
+
   // = Open and Close the file specified
   int open (const ACE_TCHAR filename[]);
   int close (void);

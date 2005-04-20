@@ -9,9 +9,12 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Cleanup_Strategies_T, "$Id$")
-
 ////////////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER>
+ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::~ACE_Cleanup_Strategy (void)
+{
+}
 
 template <class KEY, class VALUE, class CONTAINER> int
 ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
