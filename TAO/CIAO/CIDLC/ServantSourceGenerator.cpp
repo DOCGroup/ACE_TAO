@@ -2504,7 +2504,7 @@ namespace
            << "  >" << endl
            << "MACRO_MADNESS_TYPEDEF;" << endl;
            
-        os << "ACE_CString uuid = Servant_Impl_Base::gen_UUID ();" << endl;
+        os << "ACE_CString uuid = ::CIAO::Servant_Impl_Base::gen_UUID ();" << endl;
            
         os << "ACE_NEW_THROW_EX ( " << endl
            << "tmp," << endl
