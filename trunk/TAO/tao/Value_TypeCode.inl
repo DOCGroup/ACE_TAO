@@ -16,7 +16,13 @@ TAO::TypeCode::Value<StringType,
   char const * id,
   char const * name,
   CORBA::ValueModifier modifier,
+#ifdef __BORLANDC__
+  // Borland C++ currently can't handle a reference to
+  // const pointer to const CORBA::TypeCode_ptr
+  TypeCodeType concrete_base,
+#else
   TypeCodeType const & concrete_base,
+#endif
   FieldArrayType const & fields,
   CORBA::ULong nfields)
   : CORBA::TypeCode (kind)
