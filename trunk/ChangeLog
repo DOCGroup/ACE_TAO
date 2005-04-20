@@ -1,3 +1,10 @@
+Wed Apr 20 16:06:22 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/run_test.pl: If -t is specified (run specified test[s]) then
+	  don't load run_test.lst. This allows autoconfig builds to use this
+	  script to run the "make check"-ordered tests using this script
+	  to do log checks and timeouts.
+
 Wed Apr 20 20:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ACE_Test.cpp:

@@ -423,8 +423,6 @@ sub delete_temp_files ()
 
 ################################################################################
 
-$config_list->load ("run_test.lst");
-
 if (!getopts ('dhtvo:') || $opt_h) {
     print "run_test.pl [-h] [-v] [-o <output file>] [-t file1 file2 ...]\n";
     print "\n";
@@ -465,6 +463,7 @@ if (defined $opt_t) {
     @tests = @ARGV;
 }
 else {
+    $config_list->load ("run_test.lst");
     @tests = $config_list->valid_entries ();
 }
 
