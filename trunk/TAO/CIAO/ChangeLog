@@ -1,3 +1,11 @@
+Wed Apr 20 13:11:28 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Added full scoping to a generated method call on 
+          Servant_Impl_Base, to eliminate a warning from the
+          Borland compiler.
+
 Wed Apr 20 13:05:23 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
