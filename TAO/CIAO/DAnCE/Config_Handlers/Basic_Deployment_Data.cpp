@@ -4907,7 +4907,7 @@ namespace CIAO
 
     TCKind::
     TCKind (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
-    : Type (a)
+    : ::XSCRT::Type (a)
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
@@ -5256,7 +5256,7 @@ namespace CIAO
 
     SatisfierPropertyKind::
     SatisfierPropertyKind (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
-    : Type (a)
+    : ::XSCRT::Type (a)
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
@@ -5644,7 +5644,7 @@ namespace CIAO
 
     ResourceUsageKind::
     ResourceUsageKind (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
-    : Type (a)
+    : ::XSCRT::Type (a)
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
@@ -5809,7 +5809,7 @@ namespace CIAO
 
     CCMComponentPortKind::
     CCMComponentPortKind (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
-    : Type (a)
+    : ::XSCRT::Type (a)
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
