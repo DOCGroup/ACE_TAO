@@ -16,7 +16,7 @@ URL_Visitor *
 URL_Validation_Visitor_Factory::make_visitor (void)
 {
   URL_Visitor *v;
-  
+
   ACE_NEW_RETURN (v,
                   URL_Validation_Visitor,
                   0);
@@ -28,7 +28,7 @@ Command_Processor *
 URL_Validation_Visitor_Factory::make_command_processor (void)
 {
   Command_Processor *cp;
-  
+
   ACE_NEW_RETURN (cp,
                   Command_Processor,
                   0);
@@ -39,7 +39,7 @@ URL_Visitor *
 URL_Download_Visitor_Factory::make_visitor (void)
 {
   URL_Visitor *v;
-  
+
   ACE_NEW_RETURN (v,
                   URL_Download_Visitor,
                   0);
