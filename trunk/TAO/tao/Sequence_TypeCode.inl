@@ -6,7 +6,7 @@ template <typename TypeCodeType, class RefCountPolicy>
 ACE_INLINE
 TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::Sequence (
   CORBA::TCKind kind,
-#ifdef __BORLANDC__
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
   // Borland C++ currently can't handle a reference to
   // const pointer to const CORBA::TypeCode_ptr
   TypeCodeType content_type,

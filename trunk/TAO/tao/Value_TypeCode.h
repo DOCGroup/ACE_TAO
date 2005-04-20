@@ -59,7 +59,7 @@ namespace TAO
              char const * id,
              char const * name,
              CORBA::ValueModifier modifier,
-#ifdef __BORLANDC__
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
              // Borland C++ currently can't handle a reference to
              // const pointer to const CORBA::TypeCode_ptr
              TypeCodeType concrete_base,
