@@ -1,3 +1,17 @@
+Wed Apr 20 09:57:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Alias_TypeCode.h:
+	* tao/Alias_TypeCode.inl:
+	* tao/Sequence_TypeCode.h:
+	* tao/Sequence_TypeCode.inl:
+	* tao/Union_TypeCode.h:
+	* tao/Union_TypeCode.inl:
+	* tao/Value_TypeCode.h:
+	* tao/Value_TypeCode.inl:
+
+	  Work around Borland C++ internal error by passing the TypeCode
+	  constructor argument by value instead of by const reference.
+
 Tue Apr 19 17:12:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCode.cpp (unaliased_typecode):
