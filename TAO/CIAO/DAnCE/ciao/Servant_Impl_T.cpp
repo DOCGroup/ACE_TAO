@@ -265,7 +265,7 @@ namespace CIAO
             typename CONTEXT>
   CORBA::Boolean
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::is_activated (
-      ACE_ENV_SINGLE_ARG_DECL
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
