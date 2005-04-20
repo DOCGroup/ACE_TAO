@@ -1,3 +1,8 @@
+Wed Apr 20 20:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ACE_Test.cpp:
+          Now fixed the compile warning for real
+
 Wed Apr 20 12:51:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Cleanup_Strategies_T.cpp:
