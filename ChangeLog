@@ -1,3 +1,16 @@
+Wed Apr 20 12:51:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Cleanup_Strategies_T.cpp:
+	* ace/Cleanup_Strategies_T.h:
+	* apps/Gateway/Gateway/File_Parser.h:
+	* apps/Gateway/Gateway/File_Parser.cpp:
+	* examples/Web_Crawler/URL_Visitor.cpp:
+	* examples/Web_Crawler/URL_Visitor.h:
+	* examples/Web_Crawler/URL_Visitor_Factory.cpp:
+	* examples/Web_Crawler/URL_Visitor_Factory.h:
+
+	  Added virtual destructors to address g++ 4.0 warnings.
+
 Wed Apr 20 07:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ACE_Test.cpp:

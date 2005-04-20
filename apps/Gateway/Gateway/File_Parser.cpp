@@ -1,25 +1,23 @@
 // $Id$
 
 #ifndef FILE_PARSER_C
-
 #define FILE_PARSER_C
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "File_Parser.h"
-
-ACE_RCSID(Gateway, File_Parser, "$Id$")
 
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
 typedef FP::Return_Type FP_RETURN_TYPE;
 
 // File_Parser stuff.
+
+template <class ENTRY>
+File_Parser<ENTRY>::~File_Parser (void)
+{
+}
 
 template <class ENTRY> int
 File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
