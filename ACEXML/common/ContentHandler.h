@@ -45,6 +45,9 @@
 class ACEXML_Export ACEXML_ContentHandler
 {
 public:
+
+  virtual ~ACEXML_ContentHandler (void);
+
   /**
    * Receive notification of character data.
    */

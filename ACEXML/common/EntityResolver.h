@@ -21,6 +21,7 @@
 
 #include "ACEXML/common/Env.h"
 #include "ACEXML/common/InputSource.h"
+#include "ACEXML/common/SAXExceptions.h"
 
 /**
  * @class ACEXML_EntityResolver EntityResolver.h "ACEXML/common/EntityResolver.h"
@@ -43,6 +44,9 @@
 class ACEXML_Export ACEXML_EntityResolver
 {
 public:
+
+  virtual ~ACEXML_EntityResolver (void);
+
   /**
    * Allow the application to resolve external entities.
    */

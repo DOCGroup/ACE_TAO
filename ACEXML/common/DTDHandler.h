@@ -51,6 +51,9 @@
 class ACEXML_Export ACEXML_DTDHandler
 {
 public:
+
+  virtual ~ACEXML_DTDHandler (void);
+
   /**
    * Receive notification of a notation declaration event.
    */
