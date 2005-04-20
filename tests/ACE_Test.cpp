@@ -23,12 +23,12 @@ ACE_RCSID(tests, ACE_Test, "$Id$")
 int
 log2_test (void)
 {
-  int values[] = {1, 2, 4, 8, 1048576};
-  int results[] = {0, 1, 2, 3, 20};
-  int result = 0;
+  u_long values[] = {1, 2, 4, 8, 1048576};
+  u_long results[] = {0, 1, 2, 3, 20};
+  u_long result = 0;
   int error_count = 0;
 
-  for (int i = 0; i < sizeof (values)/sizeof(int); i++)
+  for (int i = 0; i < sizeof (values)/sizeof(u_long); i++)
     {
       result = ACE::log2(values [i]);
       if (result != results [i])
