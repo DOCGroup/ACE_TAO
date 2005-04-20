@@ -145,7 +145,8 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      list.enqueue_tail (this);
+      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
+      scope_list.enqueue_tail (this);
         
       // Initialize an iterator to iterate over our scope.
       // Continue until each element is visited.
@@ -179,7 +180,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                                 0);
             }
             
-          if (type->in_recursion (list))
+          if (type->in_recursion (scope_list))
             {
               this->in_recursion_ = 1;
               return this->in_recursion_;
