@@ -47,6 +47,8 @@ public:
                            URL_Iterator &);
   // Constructor.
 
+  virtual ~URL_Processing_Strategy (void);
+
   virtual int execute (void) = 0;
   // Perform the strategy.
 
@@ -125,6 +127,9 @@ class URL_Visitation_Strategy_Factory
   // = DESCRIPTION
 public:
   URL_Visitation_Strategy_Factory (URL *);
+
+  /// Destructor.
+  virtual ~URL_Visitation_Strategy_Factory (void);
 
   // = Factory Methods.
   virtual URL_Iterator *make_header_iterator (void) = 0;
@@ -214,6 +219,9 @@ class URL_Visitor
   // = DESCRIPTION
   //   This class plays the "visitor" role in the Visitor pattern.
 public:
+
+  virtual ~URL_Visitor (void);
+
   virtual int visit (HTTP_URL &http_url) = 0;
   // Visit an <HTTP_URL>.
 

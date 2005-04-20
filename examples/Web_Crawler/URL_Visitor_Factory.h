@@ -33,6 +33,10 @@ class URL_Visitor_Factory
   //   Subclasses define each of the Factory Methods to
   //   make the right objects, which all "vary" together.
 public:
+
+  /// Destructor.
+  virtual ~URL_Visitor_Factory (void);
+
   virtual URL_Visitor *make_visitor (void) = 0;
   // Factory Method that makes the appropriate type of <URL_Visitor>.
   

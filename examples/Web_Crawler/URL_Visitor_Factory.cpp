@@ -3,7 +3,14 @@
 
 #include "URL_Visitor_Factory.h"
 
-ACE_RCSID(Web_Crawler, URL_Visitor_Factory, "$Id$")
+ACE_RCSID (Web_Crawler,
+           URL_Visitor_Factory,
+           "$Id$")
+
+
+URL_Visitor_Factory::~URL_Visitor_Factory (void)
+{
+}
 
 URL_Visitor *
 URL_Validation_Visitor_Factory::make_visitor (void)
