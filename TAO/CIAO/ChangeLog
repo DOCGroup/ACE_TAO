@@ -1,3 +1,13 @@
+Thu Apr 21 09:06:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * Added UUID generation for the object id when creating 
+          event consumers, similar to that already added for facets.
+          This change eliminates the error of repeated connection
+          to the same event consumer instance when multiple
+          instances and connections are intended. Thanks to
+          Steve Baker <steven_d_baker@raytheon.com> for reporting
+          the problem.
+
 Thu Apr 21 09:04:32 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/examples/Hello/descriptors/TestNodeManagerMap.dat
