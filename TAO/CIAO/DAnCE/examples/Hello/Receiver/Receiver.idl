@@ -16,6 +16,5 @@ module Hello
   home ReceiverHome manages Receiver
   {
   };
-
 };
 #endif /*RECEIVER_IDL*/
