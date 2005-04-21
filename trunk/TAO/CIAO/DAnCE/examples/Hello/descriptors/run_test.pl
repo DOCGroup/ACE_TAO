@@ -13,10 +13,10 @@ $DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
 $daemons_running = 0;
 $em_running = 0;
 $daemons = 2;
-@ports = ( 30000, 40000 );
+@ports = ( 60001, 60002 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
+$dat_file = "TestNodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 $controller_exec = "$DAnCE/examples/Hello/Sender/starter";
 

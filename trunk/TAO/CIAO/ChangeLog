@@ -1,3 +1,12 @@
+Thu Apr 21 09:04:32 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/examples/Hello/descriptors/TestNodeManagerMap.dat
+	* DAnCE/examples/Hello/descriptors/run_test.pl
+	
+	Added a NodeManagerMap specific to the test and changed the ports
+	that the node managers invoked by the test listen on to avoid
+	test failures.
+	
 Wed Apr 20 16:14:26 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 	
 	* docs/schema/CIAOServerResources.xsd
