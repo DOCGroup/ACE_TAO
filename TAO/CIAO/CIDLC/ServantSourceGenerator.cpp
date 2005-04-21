@@ -2773,11 +2773,6 @@ namespace
 
         os << "Consumer::_nil ());" << endl;
 
-        ScopedName scoped (scope_.scoped_name ());
-        Name stripped (scoped.begin () + 1, scoped.end ());
-        string unique_obj_name =
-          regex::perl_s (stripped.str (), "/::/_/") + "_" + c.name ().str ();
-
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "Consumer_var eco =" << endl;
@@ -2852,18 +2847,21 @@ namespace
            << scope_.name () << "_Servant"
            << " > " << endl
            << " MACRO_MADNESS_TYPEDEF;"
-           << endl << endl;
+           << endl;
+           
+        os << "ACE_CString uuid = ::CIAO::Servant_Impl_Base::gen_UUID ();"
+           << endl;
 
         os << "ACE_NEW_THROW_EX ( " << endl
            << "  tmp," << endl
            << "  MACRO_MADNESS_TYPEDEF (" << endl
-           << "\"" << unique_obj_name << "\"," << endl
-           << "\"" << c.name () << "\"," << endl
-           << "CIAO::Port_Activator::Sink," << endl
-           << "this->executor_.in ()," << endl
-           << "this->context_," << endl
-           << "this)," << endl
-           << "CORBA::NO_MEMORY ());" << endl << endl;
+           << "    uuid.c_str ()," << endl
+           << "    \"" << c.name () << "\"," << endl
+           << "    CIAO::Port_Activator::Sink," << endl
+           << "    this->executor_.in ()," << endl
+           << "    this->context_," << endl
+           << "    this)," << endl
+           << "  CORBA::NO_MEMORY ());" << endl << endl;
 
         os << "CIAO::Servant_Activator *sa = " << endl
            << "this->container_->ports_servant_activator ();" <<endl
@@ -2874,13 +2872,14 @@ namespace
 
         os << "::CORBA::Object_var obj =" << endl
            << "this->container_->generate_reference (" << endl
-           << "\"" << unique_obj_name << "\"," << endl;
+           << "  uuid.c_str ()," << endl
+           << "  ";
 
         Traversal::ConsumerData::belongs (c, repo_id_belongs_);
 
         os << "," << endl
-           << "CIAO::Container::Facet_Consumer" << endl
-           << STRS[ENV_ARG] << ");"
+           << "  CIAO::Container::Facet_Consumer" << endl
+           << "  " << STRS[ENV_ARG] << ");"
            << STRS[ACE_CR] << " (";
 
         Traversal::ConsumerData::belongs (c, belongs_);
