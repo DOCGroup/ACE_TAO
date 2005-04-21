@@ -1,3 +1,18 @@
+Thu Apr 21 18:10:13 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/examples/Hello/Hello_Base/Hello_Base.idl:
+        * DAnCE/examples/HelloHello_Base/Hello_Base.mpc:
+        * DAnCE/examples/HelloReceiver/Receiver.idl:
+        * DAnCE/examples/HelloReceiver/Receiver.mpc:
+        * DAnCE/examples/HelloSender/Sender.idl:
+        * DAnCE/examples/HelloSender/Sender.mpc:
+        
+          Made cosmetic changes to all files, and added explicit
+          specification of header and inline files in MPC 
+          projects. Also added -Sc command line option to the
+          IDL compiler, to suppress generation of the TIE
+          classes.
+
 Thu Apr 21 17:40:12 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CIDL/Traversal/Elements.cpp:

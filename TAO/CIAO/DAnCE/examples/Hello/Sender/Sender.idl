@@ -29,6 +29,5 @@ module Hello
   home SenderHome manages Sender
   {
   };
-
 };
 #endif /*CIAO_SENDER_IDL*/
