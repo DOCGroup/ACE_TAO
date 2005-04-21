@@ -12,25 +12,15 @@
 # NOTE: On Solaris86, you'll need to use GNU as instead of /usr/ccs/bin/as,
 #       if you want -gstabs+ and -pipe support.
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
+debug ?= 1
+optimize ?= 1
+threads ?= 1
+exceptions ?= 1
+pipes ?= 1
 
-ifeq (,$(exceptions))
-exceptions = 0
-endif
-# if we are not working with old gcc ...
-ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
 ifeq ($(exceptions),0)
-CFLAGS += -fno-exceptions
+  CFLAGS += -fno-exceptions
 endif # exceptions
-endif # ! ACE_HAS_GNUG_PRE_2_8
 
 ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g
@@ -38,8 +28,6 @@ ifeq ($(shell /bin/uname -m),i86pc)
 else  # ! i86pc
   DCFLAGS         += -g
 endif # ! i86pc
-
-pipes ?= 1
 
 CC              = gcc
 CXX             = g++
