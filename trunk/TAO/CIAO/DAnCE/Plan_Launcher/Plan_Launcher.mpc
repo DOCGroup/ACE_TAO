@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Plan_Launcher): naming, ciao_deployment_stub, xerces, taoexe {
+project(Plan_Launcher): naming, ciao_server_dnc, xerces, taoexe {
   exename = plan_launcher
   requires += exceptions
   after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
