@@ -8,21 +8,14 @@
 # debug = 1
 # optimize = 1
 
-ifndef exceptions
-  exceptions = 1
-endif
+exceptions ?= 1
+debug ?= 1
+optimize ?= 1
+threads ?= 1
+
 ifeq ($(exceptions),1)
   CPPFLAGS += -Kc++eh
 endif # exceptions
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
