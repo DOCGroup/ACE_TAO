@@ -1794,7 +1794,7 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GI[h|s|b|e|c]\t\tGenerate Implementation Files \n")
+      ACE_TEXT (" -GI[h|s|b|e|c|a|d]\tGenerate Implementation Files \n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -1816,6 +1816,16 @@ BE_GlobalData::usage (void) const
       ACE_TEXT ("  \t\t\te - Suffix to the implementation class names.")
       ACE_TEXT (" Default is _i\n")
     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\tc - Generate copy constructors in the servant")
+      ACE_TEXT (" implementation template files (off by default)\n")
+     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\ta - Generate assignment operators in the servant")
+      ACE_TEXT (" implementation template files (off by default)\n")
+     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT ("  \t\t\td - Generate debug (source file/line#) information.")
