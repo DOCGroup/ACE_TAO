@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (ExecutionManager_stub): ciao_deployment_stub, ciao_server_dnc {
+project (ExecutionManager_stub): ciao_server_dnc {
 
   sharedname = ExecutionManager_stub
 

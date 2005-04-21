@@ -1,3 +1,10 @@
+Thu Apr 21 14:31:21 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        
+          Changes to eliminate some warnings in the Debian LInux build.
+
 Thu Apr 21 09:06:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Added UUID generation for the object id when creating 
