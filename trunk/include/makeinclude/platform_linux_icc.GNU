@@ -5,12 +5,9 @@
 #
 # This is just a copy of platform_linux.GNU, with a few things changed.
 
-# debug = 1
-# optimize = 1
-
 exceptions ?= 1
 debug ?= 1
-optimize ?= 1
+optimize ?= 0
 threads ?= 1
 
 ifeq ($(exceptions),1)
