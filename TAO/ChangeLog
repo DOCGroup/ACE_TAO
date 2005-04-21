@@ -1,3 +1,8 @@
+Thu Apr 21 11:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          Added missing -GI options help
+
 Thu Apr 21 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/pragma.idl:
