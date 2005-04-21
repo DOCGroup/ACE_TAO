@@ -259,21 +259,6 @@
 				Name="Source Files"
 				Filter="">
 				<File
-					RelativePath=".\Traversal\Elements.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath=".\Traversal\Executor.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">

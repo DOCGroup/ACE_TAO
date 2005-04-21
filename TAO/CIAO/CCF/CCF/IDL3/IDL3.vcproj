@@ -376,21 +376,6 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\Traversal\EventType.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath=".\Traversal\Home.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
