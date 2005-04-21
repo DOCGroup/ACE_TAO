@@ -1,3 +1,16 @@
+Thu Apr 21 17:40:12 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/CIDL/Traversal/Elements.cpp:
+        * CCF/CCF/IDL3/Traversal/EventType.cpp:
+        
+          Removed these files, since they contain nothing but
+          empty namespaces.
+          
+        * CCF/CCF/CIDL/CIDL.vcproj:
+        * CCF/CCF/IDL3/IDL3.vcproj:
+        
+          Removed the above files from the appropriate projects.
+
 Thu Apr 21 14:31:21 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
