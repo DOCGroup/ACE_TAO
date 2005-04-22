@@ -1,3 +1,16 @@
+Fri Apr 22 14:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          Generate the template specializations within namespace TAO {}
+          to fix compile errors using the Visual Age 6.0 compiler on AIX
+          5.1
+
+        * tao/BoundsA.cpp:
+        * tao/PolicyA.cpp:
+          Regenerated these files as test with the changes above, other
+          generated files will follow later
+
 Fri Apr 22 14:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any.cpp:
