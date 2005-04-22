@@ -69,6 +69,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump (void) const
 template <class SVC_HANDLER> SVC_HANDLER *
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (void)
 {
+  // @@ TODO: This method should be removed after a couple of betas.
   SVC_HANDLER *svc_handler = 0;
 
   // Make sure that we haven't already initialized the Svc_Handler.
@@ -104,6 +105,51 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (void)
 
   return svc_handler;
 }
+
+template <class SVC_HANDLER> bool
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
+{
+  // Make sure that we haven't already initialized the Svc_Handler.
+  if (!this->svc_handler_)
+    return false;
+
+  {
+    // Exclusive access to the Reactor.
+    ACE_GUARD_RETURN (ACE_Lock,
+                      ace_mon,
+                      this->reactor ()->lock (),
+                      0);
+
+    // Double check.
+    if (!this->svc_handler_)
+      return false;
+
+    // Remember the Svc_Handler.
+    sh = this->svc_handler_;
+
+    this->svc_handler_ = 0;
+
+    // Remove from Reactor.
+    if (this->reactor ()->remove_handler (
+          sh->get_handle (),
+          ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
+      return false;
+
+    // Cancel timer.
+    if (this->reactor ()->cancel_timer (this->timer_id (),
+                                        0,
+                                        0) == -1)
+      return false;
+
+    // Remove this handle from the set of non-blocking handles
+    // in the Connector.
+    this->connector_.non_blocking_handles ().clr_bit
+      (sh->get_handle ());
+  }
+
+  return true;
+}
+
 
 template <class SVC_HANDLER> int
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
@@ -491,7 +537,10 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cancel (SVC_HANDLER *sh)
   if (nbch == 0)
     return -1;
 
-  nbch->close ();
+  SVC_HANDLER *tmp_sh = 0;
+
+  if (nbch->close (tmp_sh) == false)
+    return -1;
 
   return 0;
 }
