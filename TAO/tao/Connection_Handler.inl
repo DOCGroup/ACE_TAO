@@ -17,7 +17,8 @@ TAO_Connection_Handler::transport (void)
 ACE_INLINE bool
 TAO_Connection_Handler::is_closed (void) const
 {
-  return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
+  return (this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED ||
+	  this->state_ == TAO_LF_Event::LFS_TIMEOUT);
 }
 
 ACE_INLINE bool
