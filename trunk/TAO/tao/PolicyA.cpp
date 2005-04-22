@@ -424,10 +424,7 @@ namespace TAO
   {
     return false;
   }
-}
-
-namespace TAO
-{
+  
   template<>
   CORBA::Boolean
   TAO::Any_Impl_T<CORBA::PolicyManager>::demarshal_value (TAO_InputCDR &)
@@ -502,10 +499,7 @@ namespace TAO
   {
     return false;
   }
-}
-
-namespace TAO
-{
+  
   template<>
   CORBA::Boolean
   TAO::Any_Impl_T<CORBA::PolicyCurrent>::demarshal_value (TAO_InputCDR &)
