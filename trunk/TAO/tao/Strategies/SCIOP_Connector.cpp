@@ -451,16 +451,10 @@ TAO_SCIOP_Connector::cancel_svc_handler (
     dynamic_cast<TAO_SCIOP_Connection_Handler*>(svc_handler);
 
   if (handler)
-    {
-      // Cancel from the connector
-      this->base_connector_.cancel (handler);
+    // Cancel from the connector
+    return this->base_connector_.cancel (handler);
 
-      return 0;
-    }
-  else
-    {
-      return -1;
-    }
+  return -1;
 }
 
 

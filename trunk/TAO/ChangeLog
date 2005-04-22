@@ -1,3 +1,19 @@
+Fri Apr 22 12:09:23 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+
+	  Fix for BUGID 2074. In cancel_svc_handler () return the value
+	  from base.connector_.cancel () properly. 
+	
+	* tao/Connection_Handler.inl:
+
+	  Added a check for TIMEOUT as part of of the is_closed () call. 
+
 Fri Apr 22 10:01:31 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
