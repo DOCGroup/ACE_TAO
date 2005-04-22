@@ -771,14 +771,17 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 // ================================================================
 // Any_Impl_T template specializations.
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Object>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::Object>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return 1;
+  }
 }
 
 // ================================================================
