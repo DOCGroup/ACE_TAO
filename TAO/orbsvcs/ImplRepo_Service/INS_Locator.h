@@ -21,6 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/LocalObject.h"
+
+
 class ImR_Locator_i;
 
 /**
@@ -31,7 +34,9 @@ class ImR_Locator_i;
  * This class provides a callback for the IORTable to call when it needs
  * to dynamically receive a IOR to forward in response to an INS request.
  */
-class INS_Locator : public virtual IORTable::Locator
+class INS_Locator
+  : public virtual IORTable::Locator,
+    public virtual CORBA::LocalObject
 {
 public:
   INS_Locator (ImR_Locator_i& loc);

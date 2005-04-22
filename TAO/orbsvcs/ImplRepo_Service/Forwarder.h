@@ -23,6 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/LocalObject.h"
+
+
 class ImR_Locator_i;
 
 /**
@@ -34,7 +37,9 @@ class ImR_Locator_i;
  * is used to handle arbitrary calls and forward them to the
  * correct place.
  */
-class ImR_Forwarder: public PortableServer::ServantLocator
+class ImR_Forwarder
+  : public PortableServer::ServantLocator,
+    public CORBA::LocalObject
 {
 public:
   ImR_Forwarder (ImR_Locator_i& imr_impl);

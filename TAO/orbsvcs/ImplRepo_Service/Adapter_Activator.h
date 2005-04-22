@@ -22,6 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/LocalObject.h"
+
+
 /**
  * @class ImR_Adapter_Activator
  *
@@ -32,7 +35,9 @@
  * the POA structure that the request expects.  For each POA created, the
  * same ServantLocator will be registered in each one.
  */
-class ImR_Adapter : public PortableServer::AdapterActivator
+class ImR_Adapter
+  : public PortableServer::AdapterActivator,
+    public CORBA::LocalObject
 {
 public:
   ImR_Adapter();
