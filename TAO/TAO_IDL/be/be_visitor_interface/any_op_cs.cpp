@@ -107,15 +107,12 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
-          << "}" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
-          << "namespace TAO" << be_nl
-          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Impl_T<" << node->name ()
+          << "Any_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
