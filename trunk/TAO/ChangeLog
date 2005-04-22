@@ -27,20 +27,20 @@ Fri Apr 22 12:09:23 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Strategies/UIOP_Connector.cpp:
 
 	  Fix for BUGID 2074. In cancel_svc_handler () return the value
-	  from base.connector_.cancel () properly. 
-	
+	  from base.connector_.cancel () properly.
+
 	* tao/Connection_Handler.inl:
 
-	  Added a check for TIMEOUT as part of of the is_closed () call. 
+	  Added a check for TIMEOUT as part of of the is_closed () call.
 
 Fri Apr 22 10:01:31 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
-        
+
           Cosmetic changes - removed commented-out code.
-          
+
         * TAO_IDL/be/be_visitor_traits.cpp:
-        
+
           Added code generation of the declaration of the Objref_Traits<>
           specialization for interfaces that are forward declared and not
           defined. Some compilers need to see this declaration earlier
