@@ -1,3 +1,22 @@
+Fri Apr 22 12:17:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/ImplRepo_Service/Adapter_Activator.h (ImR_Adapter):
+	* orbsvcs/ImplRepo_Service/Forwarder.h (ImR_Forwarder):
+	* orbsvcs/ImplRepo_Service/INS_Locator.h (INS_Locator):
+
+	  Inherit from CORBA::LocalObject.  The C++ mapping requires that
+	  implementations of locality constrained objects do so.
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (~ImR_Locator_i):
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h (~ImR_Locator_i):
+
+	  Added an out-of-line destructor.  For some reason g++ 4.0 needs
+	  this out-of-line destructor instead of the default one generated
+	  by the compiler.  Without this destructor, we get a number of
+	  "undefined reference" link errors related to the virtual tables
+	  of the INS_Locator, ImR_Adapter and ImR_Forwarder members in
+	  this class.
+
 Fri Apr 22 12:09:23 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:

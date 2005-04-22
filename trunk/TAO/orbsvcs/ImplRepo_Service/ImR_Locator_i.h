@@ -34,6 +34,8 @@ class Locator_Export ImR_Locator_i
 public:
   ImR_Locator_i();
 
+  ~ImR_Locator_i (void);
+
   /// Initialize the service, creating its own orb, poa, etc.
   int init (Options& opts ACE_ENV_ARG_DECL);
 
