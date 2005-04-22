@@ -24,4 +24,8 @@ project(ACEXML): acelib, codecs, core {
     XMLReader.h
     XML_Types.h
   }
+
+  Pkgconfig_Files {
+    ACEXML.pc.in
+  }
 }

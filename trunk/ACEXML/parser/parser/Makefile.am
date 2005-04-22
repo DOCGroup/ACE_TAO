@@ -6,15 +6,15 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
 
 includedir = @includedir@/ACEXML/parser/parser
-pkgconfigdatadir = ${prefix}/lib/pkgconfig
+pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.ACEXML_Parser.am 
+
 lib_LTLIBRARIES = libACEXML_Parser.la
 
 libACEXML_Parser_la_CPPFLAGS = \
@@ -32,22 +32,27 @@ libACEXML_Parser_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACEXML_Parser_la_LIBADD = \
- $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS = \
   Entity_Manager.h \
-  Parser.h \
-  ParserContext.h \
-  ParserInternals.h \
-  Parser_export.h \
   Entity_Manager.i \
+  Parser.h \
   Parser.i \
-  ParserContext.inl
+  ParserContext.h \
+  ParserContext.inl \
+  ParserInternals.h \
+  Parser_export.h
 
-pkgconfigdata_DATA = ACEXML_Parser.pc
+pkgconfig_DATA = ACEXML_Parser.pc
 
 ACEXML_Parser.pc: ${top_builddir}/config.status ${srcdir}/ACEXML_Parser.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/ACEXML_Parser.pc.in
+
+EXTRA_DIST = \
+  ACEXML_Parser.pc.in
+
 
 ## Clean up template repositories, etc.
 clean-local:
