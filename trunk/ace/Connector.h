@@ -66,7 +66,22 @@ public:
                                    long timer_id);
 
   /// Close up and return underlying SVC_HANDLER *.
+  /** @deprecated: This should be deprecated sooner or later. The next
+   *   method  should be used.
+   */
   SVC_HANDLER *close (void);
+
+  /// Close up and return underlying SVC_HANDLER through @c sh.
+  /**
+   * If the return value is true the close was performed succesfully,
+   * and if the return value is false, the close was not
+   * successfull. The @c sh does not have any connection to the return
+   * value. The argument will return a valid svc_handler object if a
+   * valid one exists within the object. Returning a valid svc_handler
+   * pointer also invalidates the svc_handler contained in this
+   * object.
+   */
+  bool close (SVC_HANDLER *&sh);
 
   /// Get SVC_HANDLER.
   SVC_HANDLER *svc_handler (void);

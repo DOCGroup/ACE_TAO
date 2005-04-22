@@ -1,3 +1,13 @@
+Fri Apr 22 12:14:41 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Connector.cpp:
+	* ace/Connector.h:
+
+	  Added a new version of NBCH::close () which can be used by
+	  ACE_Connector::cancel () . The close () was essential for the
+	  cancel ()  to provide proper pre and post conditions, without
+	  which applications have no clue on the status of things.
+
 Thu Apr 21 23:57:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_g++_common.GNU:
