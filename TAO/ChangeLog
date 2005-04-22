@@ -1,3 +1,23 @@
+Thu Apr 21 23:27:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/skip.cpp:
+
+	  Corrected class name in TAO_Marshal_String::skip() debugging
+	  messaging.  It erroneously referred to
+	  TAO_Marshal_TypeCode::skip().
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp
+	  (alias_value_box_tc_common):
+	  (value_event_tc_common):
+
+	  Store a duplicate of the TypeCode argument in a TypeCode_var
+	  before passing the content/concrete_base TypeCode to the
+	  containing TypeCode constructor.  A template typedef related
+	  workaround for MSVC++ 6 causes us to introduce needlessly
+	  complicated memory management.  Addresses seg faults when
+	  creating an alias, value box, valuetype or eventtype TypeCode
+	  with the TAO's implementation of the CORBA TypeCodeFactory.
+
 Thu Apr 21 11:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:

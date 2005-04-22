@@ -615,7 +615,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_Marshal_TypeCode::skip detected error\n")));
+                    ACE_TEXT ("TAO_Marshal_String::skip detected error\n")));
       ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);
