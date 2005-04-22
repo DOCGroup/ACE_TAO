@@ -94,10 +94,12 @@ ifeq ($(GNU_LD),1)
   STATIC_LINK_FLAG ?= -static
 endif # GNU_LD
 
-# Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast
-# for shared libraries. (see http://gcc.gnu.org/faq.html#dso)
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
+    # Add all symbols to the dynamic symbol table.  Needed to enable
+    # dynamic_cast<> for shared libraries. (see
+    # http://gcc.gnu.org/faq.html#dso)
+
     ifeq ($(GNU_LD),1)
       # Make sure this version of ld supports the -E option.
       ifneq ($(mingw32),1)
@@ -114,11 +116,11 @@ ifeq ($(shared_libs), 1)
         LDFLAGS += -Wl,-E
       endif # LD_EXPORT_DEFINED = 1
     endif # GNU ld
+
+    # Take advantage of G++ (>= 4.x) visibility attributes to generate
+    # improved shared library binaries.
+    ifeq ($(GXX_4_OR_BETTER), 1)
+      CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+    endif # GXX_4_OR_BETTER == 1
   endif # static_libs_only
 endif # shared_libs
-
-# Take advantage of G++ (>= 4.x) visibility attributes to generate
-# improved shared library binaries.
-ifeq ($(GXX_4_OR_BETTER), 1)
-  CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
-endif # GXX_4_OR_BETTER == 1
