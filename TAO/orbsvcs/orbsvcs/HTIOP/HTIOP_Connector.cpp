@@ -315,16 +315,12 @@ TAO::HTIOP::Connector::cancel_svc_handler (
     dynamic_cast<TAO::HTIOP::Connection_Handler*> (svc_handler);
 
   if (handler)
-    {
       // Cancel from the connector
       //      this->base_connector_.cancel (handler);
+    return 0;
 
-      return 0;
-    }
-  else
-    {
-      return -1;
-    }
+  return -1;
+
 }
 
 
