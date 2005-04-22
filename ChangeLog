@@ -1,3 +1,10 @@
+Thu Apr 21 23:57:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_g++_common.GNU:
+
+	  Only add g++ 4.x visibility flags when shared libraries are
+	  enabled.
+
 Thu Apr 21 18:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
