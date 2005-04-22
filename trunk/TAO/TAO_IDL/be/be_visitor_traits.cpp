@@ -96,7 +96,7 @@ be_visitor_traits::visit_module (be_module *node)
 int
 be_visitor_traits::visit_interface (be_interface *node)
 {
-  if (node->cli_traits_gen () || !node->is_defined ())
+  if (node->cli_traits_gen ())
     {
       return 0;
     }
@@ -156,9 +156,9 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
   be_interface *fd =
     be_interface::narrow_from_decl (node->full_definition ());
 
-  // The logic in visit_interface() should handle what gets generated
-  // and what doesn't.
-  if (this->visit_interface (fd) != 0)
+  // We want to generate just the declaration of the Arg_Traits<>
+  // specialization if the interface is forward declared but not defined.
+  if (!fd->is_defined () && this->visit_interface (fd) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_traits::"
