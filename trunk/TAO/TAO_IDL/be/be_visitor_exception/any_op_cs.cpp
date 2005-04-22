@@ -52,9 +52,11 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   if (!node->is_local ())
     {
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Dual_Impl_T<" << node->name ()
+          << "Any_Dual_Impl_T<" << node->name ()
           << ">::demarshal_value (" << be_idt << be_idt_nl
           << "TAO_InputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -75,6 +77,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "}" << be_uidt_nl
           << "ACE_ENDTRY;" << be_nl << be_nl
           << "return true;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
   // Since we don't generate CDR stream operators for types that
@@ -86,21 +89,27 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   else
     {
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Dual_Impl_T<" << node->name ()
+          << "Any_Dual_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Dual_Impl_T<" << node->name ()
+          << "Any_Dual_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
 
