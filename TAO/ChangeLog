@@ -1,3 +1,8 @@
+Fri Apr 22 20:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DomainA.cpp:
+          Regenerated this file
+
 Fri Apr 22 12:17:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/Adapter_Activator.h (ImR_Adapter):
