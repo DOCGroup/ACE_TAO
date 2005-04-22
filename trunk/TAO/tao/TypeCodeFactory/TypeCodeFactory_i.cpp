@@ -322,6 +322,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
 #else
   ACE_UNUSED_ARG (tc);
 
+// CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (discriminator_type));
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), tc);
 
 #endif  /* 0 */
@@ -352,9 +354,9 @@ TAO_TypeCodeFactory_i::create_enum_tc (
                         tc);
     }
 
-  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
-
   CORBA::ULong const len = members.length ();
+
+  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
   ACE_Array_Base<CORBA::String_var> enumerators (len);
 
@@ -1069,10 +1071,10 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   // @@ TODO: Re-enable recursive struct TypeCode support.
 
+  CORBA::ULong const len = members.length ();
+
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 //   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
-
-  CORBA::ULong const len = members.length ();
 
   ACE_Array_Base<
     TAO::TypeCode::Struct_Field<CORBA::String_var,
@@ -1198,6 +1200,8 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
                         tc);
     }
 
+  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (underlying_type));
+
   if (kind == CORBA::tk_alias)
     {
       typedef TAO::TypeCode::Alias<CORBA::String_var,
@@ -1206,7 +1210,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
                                    TAO::True_RefCount_Policy> typecode_type;
 
       ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name, underlying_type),
+                        typecode_type (id, name, tmp),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (tc);
     }
@@ -1218,7 +1222,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
                                    TAO::True_RefCount_Policy> typecode_type;
 
       ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name, underlying_type),
+                        typecode_type (id, name, tmp),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (tc);
     }
@@ -1263,7 +1267,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
   // @@ TODO: Re-enable recursive valuetype TypeCode support.
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
-//   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
+  //   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
@@ -1323,6 +1327,8 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 //       cdr << members[index].access;
     }
 
+  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (concrete_base));
+
   typedef TAO::TypeCode::Value<
     CORBA::String_var,
     CORBA::TypeCode_var,
@@ -1335,7 +1341,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
                                    id,
                                    name,
                                    type_modifier,
-                                   concrete_base,
+                                   tmp,
                                    fields,
                                    len),
                     CORBA::NO_MEMORY ());
