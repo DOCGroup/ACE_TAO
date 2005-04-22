@@ -1,3 +1,10 @@
+Fri Apr 22 16:30:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Added imr_client to base project list, IFR_Service executable
+          needs to link to the ImR_Client library.
+
 Fri Apr 22 20:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DomainA.cpp:
