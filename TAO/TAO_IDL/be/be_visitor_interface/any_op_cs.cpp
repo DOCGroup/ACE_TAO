@@ -55,24 +55,29 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   if (! node->is_abstract ())
     {
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
+          << "Any_Impl_T<" << node->name () << ">::to_object ("
           << be_idt <<  be_idt_nl
           << "CORBA::Object_ptr &_tao_elem" << be_uidt_nl
           << ") const" << be_uidt_nl
           << "{" << be_idt_nl
           << "_tao_elem = CORBA::Object::_duplicate (this->value_);" << be_nl
           << "return true;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
 
   if (node->is_abstract () || node->has_mixed_parentage ())
     {
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Impl_T<" << node->name ()
+          << "Any_Impl_T<" << node->name ()
           << ">::to_abstract_base ("
           << be_idt <<  be_idt_nl
           << "CORBA::AbstractBase_ptr &_tao_elem" << be_uidt_nl
@@ -81,6 +86,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "_tao_elem = CORBA::AbstractBase::_duplicate (this->value_);"
           << be_nl
           << "return true;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
 
@@ -93,21 +99,27 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   if (node->is_local ())
     {
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Impl_T<" << node->name ()
+          << "Any_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
 
