@@ -6,15 +6,15 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
 
 includedir = @includedir@/ACEXML/common
-pkgconfigdatadir = ${prefix}/lib/pkgconfig
+pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.ACEXML.am
+
 lib_LTLIBRARIES = libACEXML.la
 
 libACEXML_la_CPPFLAGS = \
@@ -23,18 +23,24 @@ libACEXML_la_CPPFLAGS = \
   -DACEXML_BUILD_DLL
 
 libACEXML_la_SOURCES = \
+  Attributes.cpp \
   AttributesImpl.cpp \
   Attributes_Def_Builder.cpp \
   CharStream.cpp \
+  ContentHandler.cpp \
+  DTDHandler.cpp \
   DTD_Manager.cpp \
   DefaultHandler.cpp \
   Element_Def_Builder.cpp \
   Encoding.cpp \
+  EntityResolver.cpp \
   Env.cpp \
+  ErrorHandler.cpp \
   Exception.cpp \
   FileCharStream.cpp \
   HttpCharStream.cpp \
   InputSource.cpp \
+  Locator.cpp \
   LocatorImpl.cpp \
   Mem_Map_Stream.cpp \
   NamespaceSupport.cpp \
@@ -45,6 +51,7 @@ libACEXML_la_SOURCES = \
   URL_Addr.cpp \
   Validator.cpp \
   XMLFilterImpl.cpp \
+  XMLReader.cpp \
   XML_Codecs.cpp \
   ZipCharStream.cpp
 
@@ -52,12 +59,13 @@ libACEXML_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACEXML_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS = \
   ACEXML_Export.h \
   Attributes.h \
   AttributesImpl.h \
+  AttributesImpl.i \
   Attributes_Def_Builder.h \
   CharStream.h \
   ContentHandler.h \
@@ -68,40 +76,43 @@ nobase_include_HEADERS = \
   Encoding.h \
   EntityResolver.h \
   Env.h \
+  Env.i \
   ErrorHandler.h \
   Exception.h \
+  Exception.i \
   FileCharStream.h \
   HttpCharStream.h \
   InputSource.h \
   Locator.h \
   LocatorImpl.h \
+  LocatorImpl.i \
   Mem_Map_Stream.h \
   NamespaceSupport.h \
   SAXExceptions.h \
+  SAXExceptions.i \
   StrCharStream.h \
   StreamFactory.h \
   Transcode.h \
   URL_Addr.h \
+  URL_Addr.inl \
   Validator.h \
   XMLFilter.h \
   XMLFilterImpl.h \
+  XMLFilterImpl.i \
   XMLReader.h \
   XML_Codecs.h \
   XML_Macros.h \
   XML_Types.h \
-  ZipCharStream.h \
-  AttributesImpl.i \
-  Env.i \
-  Exception.i \
-  LocatorImpl.i \
-  SAXExceptions.i \
-  URL_Addr.inl \
-  XMLFilterImpl.i
+  ZipCharStream.h
 
-pkgconfigdata_DATA = ACEXML.pc
+pkgconfig_DATA = ACEXML.pc
 
 ACEXML.pc: ${top_builddir}/config.status ${srcdir}/ACEXML.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/ACEXML.pc.in
+
+EXTRA_DIST = \
+  ACEXML.pc.in
+
 
 ## Clean up template repositories, etc.
 clean-local:
