@@ -4,6 +4,7 @@
 #include "RequestProcessingStrategy.h"
 #include "RequestProcessingStrategyServantLocator.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingStrategyServantLocatorFactoryImpl,

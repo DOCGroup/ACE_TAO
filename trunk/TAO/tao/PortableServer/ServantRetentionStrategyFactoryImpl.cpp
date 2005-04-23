@@ -3,6 +3,7 @@
 #include "ServantRetentionStrategyFactoryImpl.h"
 #include "ServantRetentionStrategy.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            ServantRetentionStrategyFactoryImpl,
