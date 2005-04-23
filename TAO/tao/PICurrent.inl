@@ -28,13 +28,13 @@ TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier
 // ------------------------------------------------------------------
 
 ACE_INLINE void
-TAO::PICurrent_Impl::copy_callback (TAO::PICurrent_Copy_Callback * cb)
+TAO::PICurrent_Impl::copy_callback (TAO::PICurrent_Copy_Callback *cb)
 {
   this->copy_callback_ = cb;
 }
 
 ACE_INLINE void
-TAO::PICurrent_Impl::destruction_callback (TAO::PICurrent_Impl * p)
+TAO::PICurrent_Impl::destruction_callback (TAO::PICurrent_Impl *p)
 {
   this->destruction_callback_ = p;
 }
@@ -53,7 +53,7 @@ TAO::PICurrent_Impl::current_slot_table (void)
 }
 
 ACE_INLINE void
-TAO::PICurrent_Impl::lc_slot_table (TAO::PICurrent_Impl * p)
+TAO::PICurrent_Impl::lc_slot_table (TAO::PICurrent_Impl *p)
 {
   if (p != 0)
     {

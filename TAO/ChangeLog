@@ -6,6 +6,8 @@ Sat Apr 23 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Apr 23 13:03:14 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* tao/PICurrent.cpp: 
+  	* tao/PICurrent.h: 
 	* tao/PICurrent.inl: Changed all uses of "id" to something else to
 	  avoid conflicts with Mac OS X, where "id" is a keyword.  Thanks
  	  to Ron Wilson <ronwilson@mac.com> for reporting this problem.
