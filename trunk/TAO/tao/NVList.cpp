@@ -15,6 +15,7 @@
 #include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/NVList.i"

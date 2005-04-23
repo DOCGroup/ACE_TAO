@@ -1,3 +1,11 @@
+Sat Apr 23 15:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/NVList.cpp:
+          Include ace/Log_Msg.h to get ACE_DEBUG
+
+        * tao/ClientRequestInfoA.cpp:
+          Regenerated
+
 Fri Apr 22 23:08:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/IFRService/Container_i.cpp:
