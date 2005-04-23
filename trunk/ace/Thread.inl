@@ -260,22 +260,22 @@ ACE_Thread::self (ACE_hthread_t &t_id)
 }
 
 ACE_INLINE int
-ACE_Thread::getprio (ACE_hthread_t id, int &priority)
+ACE_Thread::getprio (ACE_hthread_t ht_id, int &priority)
 {
   ACE_TRACE ("ACE_Thread::getprio");
-  return ACE_OS::thr_getprio (id, priority);
+  return ACE_OS::thr_getprio (ht_id, priority);
 }
 
 ACE_INLINE int
-ACE_Thread::getprio (ACE_hthread_t id, int &priority, int &policy)
+ACE_Thread::getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 {
   ACE_TRACE ("ACE_Thread::getprio");
-  return ACE_OS::thr_getprio (id, priority, policy);
+  return ACE_OS::thr_getprio (ht_id, priority, policy);
 }
 
 ACE_INLINE int
-ACE_Thread::setprio (ACE_hthread_t id, int priority, int policy)
+ACE_Thread::setprio (ACE_hthread_t ht_id, int priority, int policy)
 {
   ACE_TRACE ("ACE_Thread::setprio");
-  return ACE_OS::thr_setprio (id, priority, policy);
+  return ACE_OS::thr_setprio (ht_id, priority, policy);
 }
