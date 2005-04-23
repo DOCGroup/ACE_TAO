@@ -265,8 +265,8 @@ TAO_LB_LoadMinimum::analyze_loads (
 
   const CORBA::ULong len = locations->length ();
 
-  CosLoadBalancing::Load total_load;
-  CosLoadBalancing::Load avg_load;
+  CosLoadBalancing::Load total_load = { 0, 0 };
+  CosLoadBalancing::Load avg_load = { 0, 0 };
 
   CORBA::Float min_load = FLT_MAX;
 
