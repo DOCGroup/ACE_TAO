@@ -35,7 +35,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/struct_typecode.cpp:70
+// be\be_visitor_typecode/struct_typecode.cpp:70
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_InvalidSlot = 0;
 static TAO::TypeCode::Struct<char const *,
@@ -59,33 +59,36 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from 
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::InvalidSlot>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
+namespace TAO
 {
-  CORBA::String_var id;
-  
-  if (!(cdr >> id.out ()))
-    {
-      return false;
-    }
-  
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return false;
-    }
-  ACE_ENDTRY;
-  
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<PortableInterceptor::InvalidSlot>::demarshal_value (
+      TAO_InputCDR & cdr
+    )
+  {
+    CORBA::String_var id;
+    
+    if (!(cdr >> id.out ()))
+      {
+        return false;
+      }
+    
+    ACE_TRY_NEW_ENV
+      {
+        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return false;
+      }
+    ACE_ENDTRY;
+    
+    return true;
+  }
 }
 
 // Copying insertion.
