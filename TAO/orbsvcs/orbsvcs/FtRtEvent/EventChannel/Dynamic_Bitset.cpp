@@ -15,8 +15,8 @@ inline unsigned ceil(unsigned numerator, unsigned denominator)
 
 Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset::size_type size)
   : buffer_size_(ceil(size,BITS_PER_BLOCK))
-  , buffer_(new block[buffer_size_])
   , bit_size_(size)
+  , buffer_(new block[buffer_size_])
 {
   memset(buffer_, 0, buffer_size_*BYTES_PER_BLOCK);
 }
