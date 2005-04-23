@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Exercise many different combinations of STDERR and OSTREAM.
 
-      float f = 3.1416 * counter++;
+      double f = 3.1416 * counter++;
       int   i = 10000;
 
       ACE_DEBUG ((LM_INFO,

@@ -251,7 +251,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   // Exercise many different combinations of OSTREAM.
 
-  float f = 3.1416 * counter++;
+  double f = 3.1416 * counter++;
   int n = 10000;
 
   ACE_DEBUG ((LM_INFO,
