@@ -1214,7 +1214,7 @@ int
 ACEXML_Parser::parse_entity_decl (ACEXML_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACEXML_Char nextch;
+  ACEXML_Char nextch = 0;
 
   if ((this->parse_token (ACE_TEXT ("NTITY")) < 0) ||
       this->skip_whitespace_count (&nextch) == 0)
