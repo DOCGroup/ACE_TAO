@@ -17,7 +17,7 @@ ACE_RCSID (tao,
 #include "SystemException.h"
 
 
-TAO::PICurrent::PICurrent (TAO_ORB_Core * orb_core)
+TAO::PICurrent::PICurrent (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
     slot_count_ (0)
 {
@@ -29,43 +29,39 @@ TAO::PICurrent::~PICurrent (void)
 }
 
 CORBA::Any *
-TAO::PICurrent::get_slot (PortableInterceptor::SlotId id
+TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (id ACE_ENV_ARG_PARAMETER);
+  this->check_validity (identifier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  PICurrent_Impl * impl = this->tsc ();
+  PICurrent_Impl *impl = this->tsc ();
 
   if (impl == 0)
-    {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
-    }
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                            CORBA::COMPLETED_NO),
+                      0);
 
   return impl->get_slot (id ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO::PICurrent::set_slot (PortableInterceptor::SlotId id,
-                         const CORBA::Any & data
+TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
+                         const CORBA::Any &data
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (id ACE_ENV_ARG_PARAMETER);
+  this->check_validity (identifier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  PICurrent_Impl * impl = this->tsc ();
+  PICurrent_Impl *impl = this->tsc ();
 
   if (impl == 0)
-    {
-      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                       CORBA::COMPLETED_NO));
-    }
+    ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                     CORBA::COMPLETED_NO));
 
   impl->set_slot (id, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -74,7 +70,7 @@ TAO::PICurrent::set_slot (PortableInterceptor::SlotId id,
 TAO::PICurrent_Impl *
 TAO::PICurrent::tsc (void)
 {
-  TAO_ORB_Core_TSS_Resources * tss =
+  TAO_ORB_Core_TSS_Resources *tss =
     this->orb_core_->get_tss_resources ();
 
   return &tss->pi_current_;
@@ -101,7 +97,7 @@ TAO::PICurrent_Impl::~PICurrent_Impl (void)
 
 
 CORBA::Any *
-TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
+TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
@@ -115,7 +111,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
 
   CORBA::Any * any = 0;
 
-  if (id < table.size ())
+  if (identifier < table.size ())
     {
       ACE_NEW_THROW_EX (any,
                         CORBA::Any (table[id]), // Make a copy.
@@ -145,7 +141,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
 }
 
 void
-TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
+TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
                                const CORBA::Any & data
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -158,18 +154,14 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
   // necessary, before modifying our own slot table.
   if (this->copy_callback_ != 0
       && this->copy_callback_->execute () != 0)
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
+    ACE_THROW (CORBA::INTERNAL ());
 
   // If the slot table array isn't large enough, then increase its
   // size.  We're guaranteed not to exceed the number of allocated
   // slots for the reason stated above.
-  if (id >= this->slot_table_.size ()
+  if (identifier >= this->slot_table_.size ()
       && this->slot_table_.size (id + 1) != 0)
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
+    ACE_THROW (CORBA::INTERNAL ());
 
   this->slot_table_[id] = CORBA::Any (data);
 }
@@ -180,7 +172,6 @@ TAO::PICurrent_Impl::execute_destruction_callback (
 {
   this->lc_slot_table_ = old_lc_slot_table;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

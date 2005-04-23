@@ -1729,7 +1729,7 @@ namespace ACE_OS {
   int thr_setconcurrency (int hint);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_setprio (ACE_hthread_t id,
+  int thr_setprio (ACE_hthread_t ht_id,
                    int priority,
                    int policy = -1);
 
@@ -1740,7 +1740,7 @@ namespace ACE_OS {
   /// for internal use.  Applications should call thr_setspecific
   extern ACE_Export
   int thr_setspecific_native (ACE_OS_thread_key_t key,
-                       void *data);
+                              void *data);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   extern ACE_Export
