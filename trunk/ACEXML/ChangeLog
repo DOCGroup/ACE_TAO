@@ -1,3 +1,9 @@
+Fri Apr 22 21:34:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* parser/parser/Parser.cpp (parse_entity_decl):
+
+	  Fixed "variable may be used uninitialized" warning.
+
 Fri Apr 22 11:09:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* parser/parser/Makefile.am:
