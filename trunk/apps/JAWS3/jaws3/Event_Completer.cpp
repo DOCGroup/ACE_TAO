@@ -8,6 +8,10 @@
 
 // Default do nothing completers.
 
+JAWS_Event_Completer::~JAWS_Event_Completer (void)
+{
+}
+
 void
 JAWS_Event_Completer::default_complete (const JAWS_Event_Result &, void *)
 {

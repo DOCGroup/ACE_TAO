@@ -178,7 +178,9 @@ Throughput_Stats::dump_results (const ACE_TCHAR *test_name,
 
 inline
 Throughput_Stats::Throughput_Stats (void)
-  : n_ (0)
+  : n_ (0),
+    start_ (),
+    stop_ ()
 {
 }
 

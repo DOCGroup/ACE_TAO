@@ -97,9 +97,14 @@ Thread_Mutex::release (void)
 class Mutex_Base
 {
 public:
+  virtual ~Mutex_Base (void);
   virtual int acquire (void) = 0;
   virtual int release (void) = 0;
 };
+
+Mutex_Base::~Mutex_Base (void)
+{
+}
 
 // Subclass for threaded mutex, defines virtual functions.
 class Thread_Mutex_Derived : public Mutex_Base

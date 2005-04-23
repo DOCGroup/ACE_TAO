@@ -13,7 +13,7 @@ class DataElement
   friend class DataElementEx;
 
 public:
-  DataElement () { count_++; }
+  DataElement () : data_ (0) { count_++; }
 
   DataElement (int data) : data_(data) { count_++; }
 

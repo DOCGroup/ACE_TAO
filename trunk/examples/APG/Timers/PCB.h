@@ -9,6 +9,7 @@ class PCB
 {
 public:
   PCB ();
+  virtual ~PCB ();
 
   // Set/get the timer id that is being handled by this instance.
   void setID (long timerID);

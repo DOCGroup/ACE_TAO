@@ -8,27 +8,31 @@ PCB::PCB() : count_(0)
 {
   ACE_TRACE (ACE_TEXT ("PCB::PCB"));
 }
-	
+
+PCB::~PCB()
+{
+}
+
 int PCB::handleEvent (const void *arg)
 {
   ACE_TRACE (ACE_TEXT ("PCB::handle_timeout"));
 
   const int *val = static_cast<const int*> (arg);
-  ACE_ASSERT ((*val) == timerID_); 
+  ACE_ASSERT ((*val) == timerID_);
 
   ACE_UNUSED_ARG (val);
 
-  ACE_DEBUG ((LM_DEBUG, 
-              ACE_TEXT("Timer %d expiry handled by thread %t\n"), 
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("Timer %d expiry handled by thread %t\n"),
               timerID_));
   if (count_ == 5)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Reseting interval for timer %d\n"),
                   timerID_));
 
       // New interval is 10 ms.
-      ACE_Time_Value interval (0L, 1000L); 
+      ACE_Time_Value interval (0L, 1000L);
       if (PTimer::instance ()->reset_interval (timerID_, interval) != -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   ACE_TEXT ("%p\n"),
@@ -64,10 +68,10 @@ int
 PCB::handleClose (void)
 {
   ACE_TRACE (ACE_TEXT ("PCB::handle_close"));
-  return 0; 
+  return 0;
 }
 
-int 
+int
 PCB::handleCancel (void)
 {
   ACE_TRACE (ACE_TEXT ("PCB::handleCancel"));

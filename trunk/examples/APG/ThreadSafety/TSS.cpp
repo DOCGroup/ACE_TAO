@@ -11,7 +11,7 @@
 void*
 ClientContext::get_attribute (const char *name)
 {
-  void * value;
+  void * value = 0;
   attributeMap_.find (name, value);
   return value;
 }

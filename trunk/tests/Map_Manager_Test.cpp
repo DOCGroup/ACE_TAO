@@ -213,7 +213,7 @@ test_hash_cache_map_manager (size_t table_size,
   HASH_CACHE_MAP_MANAGER map (null_caching_strategy,
                               table_size);
   TYPE i;
-  TYPE j;
+  TYPE j = 0;
   ssize_t k;
 
   for (i = 0; i < iterations; i++)
@@ -338,7 +338,7 @@ test_active_map_manager (size_t table_size,
 {
   ACTIVE_MAP_MANAGER map (table_size);
   TYPE i;
-  TYPE j;
+  TYPE j = 0;
   ssize_t k;
 
   ACTIVE_MAP_MANAGER::key_type *active_keys;
@@ -427,7 +427,7 @@ test_hash_map_manager (size_t table_size,
 {
   HASH_MAP_MANAGER map (table_size);
   TYPE i;
-  TYPE j;
+  TYPE j = 0;
   ssize_t k;
 
   for (i = 0; i < iterations; i++)
@@ -630,7 +630,7 @@ test_map_manager (size_t table_size,
 {
   MAP_MANAGER map (table_size);
   TYPE i;
-  TYPE j;
+  TYPE j = 0;
   ssize_t k;
 
   for (i = 0; i < iterations; ++i)
