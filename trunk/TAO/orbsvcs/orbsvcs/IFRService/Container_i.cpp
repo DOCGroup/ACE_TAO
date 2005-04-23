@@ -823,12 +823,12 @@ TAO_Container_i::create_constant_i (const char *id,
   // Store the value.
   ACE_Message_Block *mb = 0;
   TAO::Any_Impl *impl = value.impl ();
-  
+
   if (impl->encoded ())
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       mb = unk->_tao_get_cdr ().steal_contents ();
     }
   else
@@ -2344,12 +2344,12 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       CORBA::ULong x;
       TAO::Any_Impl *impl = value.impl ();
       TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
-      
+
       if (impl->encoded ())
         {
           TAO::Unknown_IDL_Type *unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-            
+
           in = unk->_tao_get_cdr ();
         }
       else
@@ -2359,8 +2359,8 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
           TAO_InputCDR tmp (out);
           in = tmp;
         }
-       
-      in.read_ulong (x);  
+
+      in.read_ulong (x);
       result = static_cast<u_int> (x);
       break;
     }
