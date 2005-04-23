@@ -693,9 +693,10 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
 }
  
 void 
-ACE_Scheduler_Factory::log_scheduling_tuples(TAO_RT_Info_Tuple ** tuple_ptr_array,
-                                    long tuple_ptr_array_size,
-                                    const char* file_name)
+ACE_Scheduler_Factory::log_scheduling_tuples(
+  TAO_RT_Info_Tuple ** tuple_ptr_array,
+  long tuple_ptr_array_size,
+  const char* file_name)
 {
    // Open the file
    FILE* file = stdout;
@@ -706,15 +707,16 @@ ACE_Scheduler_Factory::log_scheduling_tuples(TAO_RT_Info_Tuple ** tuple_ptr_arra
         return;
     }
 
-   const char* subset_tuple_format = "             {\n"
-                                     "%13d, /* handle */\n"
-                                     "%13d, /* rate_index */\n"
-                                     "%13d, /* period */\n"
-                                     "%13d, /* criticality */\n"
-                                     "%13d, /* priority */\n"
-                                     "%13d, /* preemption_subpriority */\n"
-                                     "%13d, /* preemption_priority */\n"
-                                     "%13d } /* enabled */\n";
+   static const char subset_tuple_format[] =
+     "             {\n"
+     "%13d, /* handle */\n"
+     "%13d, /* rate_index */\n"
+     "%13d, /* period */\n"
+     "%13d, /* criticality */\n"
+     "%13d, /* priority */\n"
+     "%13d, /* preemption_subpriority */\n"
+     "%13d, /* preemption_priority */\n"
+     "%13u } /* enabled */\n";
 
    for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
    {

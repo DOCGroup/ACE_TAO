@@ -532,7 +532,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
 
   for (CORBA::ULong j = 0; j < size; ++j)
     {
-      CORBA::DefinitionKind next_kind;
+      CORBA::DefinitionKind next_kind = CORBA::dk_none;
       kind_queue.dequeue_head (next_kind);
 
       ACE_TString next_path;
@@ -608,7 +608,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
 
   for (CORBA::ULong i = 0; i < size; ++i)
     {
-      CORBA::DefinitionKind next_kind;
+      CORBA::DefinitionKind next_kind = CORBA::dk_none;
       kind_queue.dequeue_head (next_kind);
 
       ACE_TString next_path;
