@@ -8,7 +8,7 @@
 
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
-
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (tao,
            ORBInitializer_Registry,
