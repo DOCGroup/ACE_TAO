@@ -18,8 +18,8 @@ Dynamic_Bitset::~Dynamic_Bitset()
 
 ACE_INLINE
 Dynamic_Bitset::Dynamic_Bitset(const Dynamic_Bitset& other)
-  : buffer_(new block[other.buffer_size_])
-  , buffer_size_(other.buffer_size_)
+  : buffer_size_(other.buffer_size_)
+  , buffer_(new block[other.buffer_size_])
   , bit_size_(other.bit_size_)
 {
   ACE_OS::memcpy(buffer_, other.buffer_, buffer_size_*BYTES_PER_BLOCK);
