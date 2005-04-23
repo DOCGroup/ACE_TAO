@@ -95,7 +95,7 @@ int StackExample::runFixedStack (void)
 
   for (int l = 0; l < 100; l++)
     {
-      DataElement* elem;
+      DataElement* elem = 0;
       fstack.pop (elem);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), elem->getData ()));
       delete elem;

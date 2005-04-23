@@ -21,7 +21,7 @@ class CompletionCallBack: public ACE_Future_Observer<ACE_CString*>
 public:
   virtual void update (const ACE_Future<ACE_CString*> & future)
   {
-    ACE_CString *result;
+    ACE_CString *result = 0;
 
     // Block for the result.
     future.get (result);
@@ -81,6 +81,8 @@ class Worker;
 class IManager
 {
 public:
+  virtual ~IManager (void) { }
+
   virtual int return_to_work (Worker *worker) = 0;
 };
 
@@ -206,7 +208,7 @@ private:
       while (this->workers_.is_empty ())
         workers_cond_.wait ();
 
-    Worker *worker;
+    Worker *worker = 0;
     this->workers_.dequeue_head (worker);
     return worker;
   }

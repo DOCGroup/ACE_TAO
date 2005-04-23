@@ -1,3 +1,38 @@
+Fri Apr 22 22:45:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* apps/JAWS3/jaws3/Event_Completer.h (~JAWS_Event_Completer):
+	* apps/JAWS3/jaws3/Event_Completer.cpp (~JAWS_Event_Completer):
+	* examples/APG/ThreadPools/Futures.cpp (~IManager):
+	* examples/APG/ThreadPools/ThreadPool.cpp (~IManager):
+	* examples/APG/Timers/PCB.h (~PCB):
+	* examples/APG/Timers/PCB.cpp (~PCB):
+	* performance-tests/Misc/test_mutex.cpp (~Mutex_Base):
+
+	  Added virtual destructor to silence g++ 4.0 warnings.
+
+	* examples/APG/Containers/DataElement.h:
+	* examples/APG/Containers/Stacks.cpp:
+	* examples/APG/ThreadPools/Futures.cpp:
+	* examples/APG/ThreadSafety/TSS.cpp (get_attribute):
+	* performance-tests/Server_Concurrency/Latency_Stats.h
+	  (Throughput_Stats):
+	* tests/Cache_Map_Manager_Test.cpp (find_test_hash_cache):
+	* tests/Future_Test.cpp (run_main):
+	* tests/Map_Manager_Test.cpp:
+
+	  Fixed "variable may be used initialized" g++ 4.0 warnings.
+
+	* examples/APG/Naming/Temperature_Monitor2.cpp (record_history):
+	* examples/Log_Msg/test_log_msg.cpp (ACE_TMAIN):
+	* tests/Log_Msg_Test.cpp (test_log_msg_features):
+
+	  Fixed "operation may undefined" g++ 4.0 warnings.
+
+	* tests/Message_Block_Test.cpp:
+
+	  Fixed "non-local variable '<anonymous struct> alloc_struct [2]'
+	  uses anonymous type" g++ 4.0 warning.
+
 Fru Apr 22 18:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

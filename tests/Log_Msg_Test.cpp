@@ -239,61 +239,81 @@ test_log_msg_features (const ACE_TCHAR *program)
   // properly guarded.
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
   size_t i = 0;
-  const ACE_TCHAR alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
+  static const ACE_TCHAR alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
   size_t j = ACE_OS::strlen (alphabet);
   while (i < ACE_Log_Record::MAXLOGMSGLEN)
-    big[i++] = alphabet[i % j];
+    {
+      size_t const index = i++;
+      big[index] = alphabet[i % j];
+    }
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big: %s\n"), big));
 #endif /* !VXWORKS */
 
   // Exercise many different combinations of OSTREAM.
 
+  float f = 3.1416 * counter++;
+  int n = 10000;
+
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("%10f, %*s%s = %d\n"),
-              3.1416 * counter++,
+              f,
               8,
               ACE_TEXT (""),
               ACE_TEXT ("hello"),
-              10000));
+              n));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
 
+  f = 3.1416 * counter;
+  n = 10000 * counter++;
+
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("%10f, %*s%s = %d\n"),
-              3.1416 * counter,
+              f,
               8,
               ACE_TEXT (""),
               ACE_TEXT ("world"),
-              10000 * counter++));
+              n));
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
 
   // The next two messages shouldn't print.
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("%10f, %*s%s = %d\n"),
-              3.1416 * counter,
-              8,
-              ACE_TEXT (""),
-              ACE_TEXT ("world"),
-              10000 * counter++));
+
+  f = 3.1416 * counter;
+  n = 10000 * counter++;
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("%10f, %*s%s = %d\n"),
-              3.1416 * counter,
+              f,
               8,
               ACE_TEXT (""),
               ACE_TEXT ("world"),
-              10000 * counter++));
+              n));
+
+  f = 3.1416 * counter;
+  n = 10000 * counter++;
+
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("%10f, %*s%s = %d\n"),
+              f,
+              8,
+              ACE_TEXT (""),
+              ACE_TEXT ("world"),
+              n));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
+
+  f = 3.1416 * counter;
+  n = 10000 * counter++;
+
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("%10f, %*s%s = %d\n"),
-              3.1416 * counter,
+              f,
               8,
               ACE_TEXT (""),
               ACE_TEXT ("world"),
-              10000 * counter++));
+              n));
 
   static int array[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 
