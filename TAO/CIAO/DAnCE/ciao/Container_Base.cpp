@@ -455,7 +455,6 @@ namespace CIAO
      Dynamic_Component_Servant_Base*
      ACE_ENV_ARG_DECL)
   {
-    ACE_THROW(CORBA::NO_IMPLEMENT ());
   }
 
   void
@@ -464,7 +463,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_UNUSED_ARG (oid);
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
   }
 
   void
@@ -472,7 +470,6 @@ namespace CIAO
     (PortableServer::ObjectId &
      ACE_ENV_ARG_DECL)
   {
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
   }
 
   CORBA::Object_ptr

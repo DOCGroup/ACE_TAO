@@ -44,13 +44,18 @@ namespace CIAO
     virtual ~Upgradeable_Context_Impl (void);
 
     virtual void
-    deactivate_facet (const char* obj_id
+    deactivate_facet (const PortableServer::ObjectId &oid
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    update_port_activator (const char *obj_id
+    update_port_activator (const PortableServer::ObjectId &oid
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void
+    remove_facet (CORBA::Object_ptr reference
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::ConsumerDescriptions *
