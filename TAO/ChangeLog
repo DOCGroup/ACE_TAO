@@ -1,7 +1,17 @@
+Fri Apr 22 20:00:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* docs/rtcorba/features.html:
+
+	  Fix typo.
+
+	* orbsvcs/IFR_Service/Makefile.am
+
+	  Regenerate.
+
 Fri Apr 22 16:30:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
-        
+
           Added imr_client to base project list, IFR_Service executable
           needs to link to the ImR_Client library.
 
