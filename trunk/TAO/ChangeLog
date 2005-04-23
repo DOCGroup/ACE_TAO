@@ -1,8 +1,18 @@
-Sat Apr 23 19:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sat Apr 23 19:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableInterceptorA.cpp:
         * tao/PolicyFactoryA.cpp:
         * tao/TAOA.cpp:
+        * tao/PortableServer/ThreadPolicyA.cpp:
+        * tao/PortableServer/ServantRetentionPolicyA.cpp:
+        * tao/PortableServer/RequestProcessingPolicyA.cpp:
+        * tao/PortableServer/PS_CurrentA.cpp:
+        * tao/PortableServer/POAManagerA.cpp:
+        * tao/PortableServer/LifespanPolicyA.cpp:
+        * tao/PortableServer/ImplicitActivationPolicyA.cpp:
+        * tao/PortableServer/IdUniquenessPolicyA.cpp:
+        * tao/PortableServer/ForwardRequestA.cpp:
+        * tao/PortableServer/AdapterActivatorA.cpp:
           Regenerated
 
         * tao/TAO_Internal.cpp:
@@ -10,6 +20,20 @@ Sat Apr 23 19:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/UserException.cpp:
           Added include of ace/OS_NS_string.h to get ACE_OS::strcmp
+
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategyORBControl.cpp:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingle.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+          Added include of ace/Log_Msg to get ACE_ERROR and ACE_ASSERT
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Added include of ace/Auto_Ptr.h to get auto_ptr.
 
 Sat Apr 23 19:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
