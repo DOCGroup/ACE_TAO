@@ -15,6 +15,8 @@ class JAWS_Export JAWS_Event_Completer
 {
 public:
 
+  virtual ~JAWS_Event_Completer (void);
+
   virtual void accept_complete (const JAWS_Event_Result &r, void *act = 0);
   // The callback entry point when input has been read.
 

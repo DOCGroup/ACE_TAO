@@ -261,12 +261,14 @@ typedef ACE_TCHAR MEMORY_CHUNK[ACE_MALLOC_ALIGN * ACE_ALLOC_SIZE];
 ACE_Cached_Allocator<MEMORY_CHUNK,
                      ACE_SYNCH_MUTEX>
                      mem_allocator (ACE_ALLOC_AMOUNT);
-struct
+struct alloc_struct_type
 {
   ACE_Allocator *strategy_;
   const ACE_TCHAR *name_;
   ACE_Profile_Timer::ACE_Elapsed_Time et_;
-} alloc_struct[ACE_ALLOC_STRATEGY_NO] =
+};
+
+alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 {
   { 0, ACE_TEXT ("Default"), {0,0,0} },
   { &mem_allocator, ACE_TEXT ("Cached Memory"), {0,0,0} }

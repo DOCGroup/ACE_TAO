@@ -86,59 +86,74 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Exercise many different combinations of STDERR and OSTREAM.
 
+      float f = 3.1416 * counter++;
+      int   i = 10000;
+
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",
-                  3.1416 * counter++,
+                  f,
                   8,
                   "",
                   "hello",
-                  10000));
+                  i));
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (&cout);
 
+      f = 3.1416 * counter;
+      i = 10000 * counter++;
+
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",
-                  3.1416 * counter,
+                  f,
                   8,
                   "",
                   "world",
-                  10000 * counter++));
+                  i));
 
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
 
+      f = 3.1416 * counter;
+      i = 10000 * counter++;
+
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",
-                  3.1416 * counter,
+                  f,
                   8,
                   "",
                   "world",
-                  10000 * counter++));
+                  i));
 
       ACE_LOG_MSG->msg_ostream (0);
 
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
+      f = 3.1416 * counter;
+      i = 10000 * counter++;
+
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",
-                  3.1416 * counter,
+                  f,
                   8,
                   "",
                   "world",
-                  10000 * counter++));
+                  i));
 
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (&cerr);
 
+      f = 3.1416 * counter;
+      i = 10000 * counter++;
+
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",
-                  3.1416 * counter,
+                  f,
                   8,
                   "",
                   "world",
-                  10000 * counter++));
+                  i));
 
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
 

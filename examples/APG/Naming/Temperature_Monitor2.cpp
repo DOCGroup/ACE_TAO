@@ -45,7 +45,8 @@ void Temperature_Monitor2::record_history (float temp)
 
   this->shared_context_.rebind (name, value);
 
-  counterValue = ++counterValue % this->opt_.history_size ();
+  ++counterValue;
+  counterValue %= this->opt_.history_size ();
   this->shared_context_.rebind ("counter", counterValue);
 }
 // Listing 2
