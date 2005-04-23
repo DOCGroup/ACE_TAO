@@ -1,5 +1,9 @@
 Fri Apr 22 23:08:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+
+	  Fixed "variable may be used uninitialized" g++ 4.0 warnings.
+
 	* orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):
 
 	  Made format string variable into a string literal.  Allows g++
