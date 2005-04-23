@@ -44,7 +44,7 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier
                                             CORBA::COMPLETED_NO),
                       0);
 
-  return impl->get_slot (id ACE_ENV_ARG_PARAMETER);
+  return impl->get_slot (identifier ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -63,7 +63,7 @@ TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
     ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                      CORBA::COMPLETED_NO));
 
-  impl->set_slot (id, data ACE_ENV_ARG_PARAMETER);
+  impl->set_slot (identifier, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -114,7 +114,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
   if (identifier < table.size ())
     {
       ACE_NEW_THROW_EX (any,
-                        CORBA::Any (table[id]), // Make a copy.
+                        CORBA::Any (table[identifier]), // Make a copy.
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             0,
@@ -160,7 +160,7 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // size.  We're guaranteed not to exceed the number of allocated
   // slots for the reason stated above.
   if (identifier >= this->slot_table_.size ()
-      && this->slot_table_.size (id + 1) != 0)
+      && this->slot_table_.size (identifier + 1) != 0)
     ACE_THROW (CORBA::INTERNAL ());
 
   this->slot_table_[id] = CORBA::Any (data);
