@@ -1,3 +1,10 @@
+Sat Apr 23 13:54:10 2005  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/example/Swapping/Sender/Sender_exec_1.cpp:
+
+	  Made a modification to the example to reflect changes made
+	  in the infrastructure code.
+
 Sat Apr 23 13:43:22 2005  Jai Balasubramanian  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Base.cpp:
