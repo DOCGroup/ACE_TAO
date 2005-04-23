@@ -63,33 +63,37 @@ namespace CORBA
   typedef TAO_Objref_Out_T<InterfaceDef> InterfaceDef_out;
 }
 
+namespace TAO
+{
+
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<>
-void
-TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::Parameter & p)
-{
-  TAO_IFR_Client_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+  template<>
+  void
+  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::Parameter & p)
+  {
+    TAO_IFR_Client_Adapter *adapter =
+      ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+          TAO_ORB_Core::ifr_client_adapter_name ()
+        );
 
-  adapter->interfacedef_any_insert (p.argument, this->x_);
-  p.mode = CORBA::PARAM_IN;
-}
+    adapter->interfacedef_any_insert (p.argument, this->x_);
+    p.mode = CORBA::PARAM_IN;
+  }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-template<>
-CORBA::Boolean
-TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr)
-{
-  TAO_IFR_Client_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+  template<>
+  CORBA::Boolean
+  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr)
+  {
+    TAO_IFR_Client_Adapter *adapter =
+      ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+          TAO_ORB_Core::ifr_client_adapter_name ()
+        );
 
-  return adapter->interfacedef_cdr_insert (cdr, this->x_);
+    return adapter->interfacedef_cdr_insert (cdr, this->x_);
+  }
 }
 
 // Arg traits specializations.
@@ -98,7 +102,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-  
+
   template<>
   class  Arg_Traits<CORBA::Policy>
     : public
@@ -115,7 +119,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-  
+
   template<>
   class  Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -169,7 +173,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -189,15 +193,15 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
       CORBA_DomainManager_setup_collocation ();
     }
-  
+
   TAO::Arg_Traits< CORBA::Policy>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
-  
+
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
