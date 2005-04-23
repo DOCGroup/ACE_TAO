@@ -56,8 +56,8 @@ public:
 
   friend bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
 private:
-  block* buffer_;
   size_type buffer_size_;
+  block* buffer_;
   size_type bit_size_;
 };
 
