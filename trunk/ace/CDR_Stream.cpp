@@ -1,10 +1,9 @@
 #include "ace/CDR_Stream.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
 #endif /* ! __ACE_INLINE__ */
-
-#include "ace/SString.h"
 
 ACE_RCSID (ace,
            CDR_Stream,
