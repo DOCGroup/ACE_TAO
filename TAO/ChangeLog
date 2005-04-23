@@ -1,13 +1,19 @@
+Sat Apr 23 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.cpp:
+          Put the specializations in the TAO namespace to fix compile
+          problems with AIX
+
 Sat Apr 23 13:03:14 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tao/PICurrent.inl: Changed all uses of "id" to something else to
 	  avoid conflicts with Mac OS X, where "id" is a keyword.  Thanks
  	  to Ron Wilson <ronwilson@mac.com> for reporting this problem.
 
-	* orbsvcs/tests/FT_App/StubBatchConsumer.h: Added the 
+	* orbsvcs/tests/FT_App/StubBatchConsumer.h: Added the
 	  ACE_THROW_SPEC to the offer_change() method.  Thanks to Ron
  	  Wilson <ronwilson@mac.com> for reporting this problem.
-  
+
 Sat Apr 23 18:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.cpp:
