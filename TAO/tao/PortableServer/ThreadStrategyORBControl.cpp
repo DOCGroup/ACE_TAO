@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ThreadStrategyORBControl.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            ThreadStrategyORBControl,

@@ -18,6 +18,7 @@
 #include "Root_POA.h"
 #include "Active_Object_Map.h"
 #include "Active_Object_Map_Entry.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,

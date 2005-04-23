@@ -1,3 +1,16 @@
+Sat Apr 23 19:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptorA.cpp:
+        * tao/PolicyFactoryA.cpp:
+        * tao/TAOA.cpp:
+          Regenerated
+
+        * tao/TAO_Internal.cpp:
+          Added include of ace/Static_Object_Lock to get ACE_Static_Object_Lock
+
+        * tao/UserException.cpp:
+          Added include of ace/OS_NS_string.h to get ACE_OS::strcmp
+
 Sat Apr 23 19:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/InvalidSlotA.cpp:

@@ -3,6 +3,7 @@
 #include "ThreadStrategyFactoryImpl.h"
 #include "ThreadStrategy.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            ThreadStrategyFactoryImpl,
