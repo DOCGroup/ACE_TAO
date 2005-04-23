@@ -5,6 +5,12 @@ Sat Apr 23 08:20:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Fixed "possible loss of data" VC++ 7.1 warnings.
 
+Fri Apr 22 18:02:37 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (open): Fixed a problem with LOGGER and logger_key
+	  and the backend_->open() call.  Thanks to Jerry D. De Master
+ 	  <jdemaste at rite-solutions dot com> for reporting this.
+
 Fri Apr 22 22:45:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* apps/JAWS3/jaws3/Event_Completer.h (~JAWS_Event_Completer):
