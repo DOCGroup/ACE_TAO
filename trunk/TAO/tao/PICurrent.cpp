@@ -163,7 +163,7 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
       && this->slot_table_.size (identifier + 1) != 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  this->slot_table_[id] = CORBA::Any (data);
+  this->slot_table_[identifier] = CORBA::Any (data);
 }
 
 void
