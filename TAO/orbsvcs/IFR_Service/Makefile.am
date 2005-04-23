@@ -8,12 +8,7 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
-
-lib_LTLIBRARIES =
 bin_PROGRAMS =
-noinst_HEADERS =
 
 ## Makefile.IFR_Service.am
 
@@ -35,6 +30,7 @@ IFR_Service_SOURCES = \
   IFR_Service.h
 
 IFR_Service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_IFRService.la \
   $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
@@ -50,7 +46,7 @@ endif !BUILD_MINIMUM_CORBA
 
 if !BUILD_MINIMUM_CORBA
 
-lib_LTLIBRARIES += libTAO_IFR_BE.la
+lib_LTLIBRARIES = libTAO_IFR_BE.la
 
 libTAO_IFR_BE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -82,7 +78,7 @@ libTAO_IFR_BE_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS += \
+noinst_HEADERS = \
   be_extern.h \
   be_global.h \
   ifr_adding_visitor.h \
