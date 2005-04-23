@@ -5,6 +5,7 @@
 #include "ace/Timer_Queue.h"
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.inl"
