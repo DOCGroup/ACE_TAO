@@ -1,3 +1,16 @@
+Fri Apr 22 21:42:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* server/HTTP_Helpers.cpp (HTTP_mktime):
+
+	  Made rfc1123_date, rfc850_date and asctime_date strings into
+	  string literals.  Allows g++ format specifier argument checking
+	  to work, and addresses a related g++ 4.0 warning.
+
+	* server/IO.h (~JAWS_IO_Handler):
+	* server/IO.cpp (~JAWS_IO_Handler):
+
+	  Added virtual destructor to silence g++ 4.0 warnings.
+
 Thu Aug 26 08:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * clients/Caching/http_client.cpp:

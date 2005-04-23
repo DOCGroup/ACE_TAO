@@ -10,7 +10,11 @@
 #include "IO.h"
 #include "HTTP_Helpers.h"
 
-ACE_RCSID(server, IO, "$Id$")
+
+ACE_RCSID (server,
+           IO,
+           "$Id$")
+
 
 JAWS_IO::JAWS_IO (void)
   : handler_ (0)
@@ -25,6 +29,10 @@ void
 JAWS_IO::handler (JAWS_IO_Handler *handler)
 {
   this->handler_ = handler;
+}
+
+JAWS_IO_Handler::~JAWS_IO_Handler (void)
+{
 }
 
 JAWS_Synch_IO::JAWS_Synch_IO (void)
