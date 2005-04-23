@@ -109,6 +109,31 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL)
        ACE_ENV_ARG_PARAMETER);
   this->base_exec_->consumers (retval._retn ());
 
+  CORBA::Object_var o =
+    this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  Hello::Sender_var sender =
+    Hello::Sender::_narrow (o.in ()
+                            ACE_ENV_ARG_PARAMETER);
+
+  Components::FacetDescriptions_var facets =
+      sender->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+  const CORBA::ULong facet_len = facets->length ();
+    CORBA::ULong i = 0;
+    for (i = 0; i < facet_len; ++i)
+    {
+      this->context_->remove_facet
+              (facets[i]->facet_ref ()
+               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      /*
+      this->context_->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
+      this->context_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
+      */
+    }
+
   /*
   this->context_->deactivate_facet ("Hello_Sender_push_message");
   this->context_->update_port_activator ("Hello_Sender_push_message");
