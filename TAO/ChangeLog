@@ -1,3 +1,8 @@
+Sat Apr 23 17:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.cpp:
+          Added include of ace/OS_NS_string.h to get ACE_OS::strncmp
+
 Sat Apr 23 17:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connector_Registry.cpp:

@@ -20,6 +20,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID (tao,
            default_resource,
