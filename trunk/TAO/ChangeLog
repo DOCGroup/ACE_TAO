@@ -1,3 +1,13 @@
+Fri Apr 22 22:49:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp
+	  (analyze_loads):
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp
+	  (analyze_loads):
+
+	  Fixed "variable may be used initialized" g++ 4.0 warnings.  In
+	  this case, the variable was indeed used undefined!
+
 Fri Apr 22 20:00:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* docs/rtcorba/features.html:
