@@ -95,7 +95,9 @@ public:
         const CosNotification::EventTypeSeq & removed
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
-      throw (CORBA::SystemException, CosNotifyComm::InvalidEventType);
+     ACE_THROW_SPEC ((
+       CORBA::SystemException, CosNotifyComm::InvalidEventType
+     ));
 
   ////////////////////
   // Forbidden methods

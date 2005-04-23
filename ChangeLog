@@ -1,3 +1,13 @@
+Sat Apr 23 13:12:27 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Task.inl (grp_id): 
+	* ace/Managed_Object.h (class ACE_Managed_Object): 
+	* ace/Thread.inl (setprio): 
+	* ace/OS_NS_Thread.inl:
+	  Changed all uses of "id" to something else to avoid conflicts
+ 	  with Mac OS X, where "id" is a keyword.  Thanks to Ron Wilson
+ 	  <ronwilson@mac.com> for reporting this problem.
+	
 Sat Apr 23 08:20:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Log_Msg/test_log_msg.cpp (ACE_TMAIN):

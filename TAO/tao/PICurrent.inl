@@ -16,12 +16,12 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc)
 }
 
 ACE_INLINE void
-TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &id
+TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier
                                 ACE_ENV_ARG_DECL)
 {
   // No need to acquire a lock for this check.  At this point, these
   // attributes are read only.
-  if (id >= this->slot_count_)
+  if (identifier >= this->slot_count_)
     ACE_THROW (PortableInterceptor::InvalidSlot ());
 }
 
