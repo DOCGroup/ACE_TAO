@@ -1,3 +1,10 @@
+Sat Apr 23 20:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Size.cpp:
+        * ace/CDR_Stream.cpp:
+          Do the include of SString.h before the include of the inline file
+          to fix compile problems with AIX
+
 Sat Apr 23 20:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.cpp:
