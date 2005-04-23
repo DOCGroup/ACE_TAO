@@ -95,11 +95,11 @@ struct ACE_Scheduler_Factory_Data
   //   ACE_TSS objects.  We can't use ACE_Singleton directly, because
   //   construction of ACE_Runtime_Scheduler takes arguments.
 
-/* WSOA merge - commented out 
+/* WSOA merge - commented out
   ACE_Runtime_Scheduler scheduler_;
   // The static runtime scheduler.
 */
-  
+
   TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX> scheduler_;
   // The scheduler.
 
@@ -113,7 +113,7 @@ struct ACE_Scheduler_Factory_Data
     : scheduler_ (TAO_SF_config_count,
                   TAO_SF_config_info,
                   TAO_SF_entry_count,
-                  TAO_SF_rt_info, 
+                  TAO_SF_rt_info,
                   TAO_SF_dependency_count,
                   TAO_SF_dep_info,
                   0),
@@ -411,7 +411,7 @@ int ACE_Scheduler_Factory::dump_schedule
       if (dump_disabled_infos
           || info.enabled == RtecScheduler::RT_INFO_ENABLED
           || info.enabled == RtecScheduler::RT_INFO_NON_VOLATILE)
-	{
+        {
       if (i != 0)
         // Finish previous line.
         ACE_OS::fprintf(file, ",\n");
@@ -444,7 +444,7 @@ int ACE_Scheduler_Factory::dump_schedule
                            info.enabled);
     }
     }
-  
+
   // Finish last line.
   ACE_OS::fprintf(file, "\n");
 
@@ -475,12 +475,12 @@ int ACE_Scheduler_Factory::dump_schedule
       if (dump_disabled_infos
           || dep.enabled == RtecBase::DEPENDENCY_ENABLED
           || dep.enabled == RtecBase::DEPENDENCY_NON_VOLATILE)
-	{
+        {
           // Finish previous line.
           if (i != 0)
-	    {
+            {
               ACE_OS::fprintf (file, ",\n");
-	    }
+            }
 
           ACE_OS::fprintf (file,
                            dependency_format,
@@ -489,7 +489,7 @@ int ACE_Scheduler_Factory::dump_schedule
                            dep.rt_info,
                            dep.rt_info_depended_on,
                            dep.enabled);
-	}
+        }
     }
 
   // Finish last line.
@@ -536,7 +536,7 @@ int ACE_Scheduler_Factory::dump_schedule
 void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry, FILE* file)
 {
 
-   if( entry == 0 ) 
+   if( entry == 0 )
    {
       ACE_OS::fprintf (file, "Entry is NULL");
       return;
@@ -582,11 +582,11 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    TAO_RT_Info_Tuple* current_admitted_tuple = entry->current_admitted_tuple();
 
    ACE_OS::fprintf(file, "\n   Current admitted Tuple:\n");
-   if( current_admitted_tuple == 0 ) 
+   if( current_admitted_tuple == 0 )
    {
       ACE_OS::fprintf (file, "   =>NONE_ADMITTED\n");
    }
-   else 
+   else
    {
       ACE_OS::fprintf (file,
                        admitted_tuple_format,
@@ -604,7 +604,7 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    ACE_OS::fprintf(file, "\n      Original Tuple Subset\n   {\n");
    log_tuple_subset(entry->orig_tuple_subset(), file);
    ACE_OS::fprintf(file, "\n   }");
-   
+
    // Print out the prop_tuple_subset_
    ACE_OS::fprintf(file, "\n      Propagated Tuple Subset\n   {\n");
    log_tuple_subset(entry->prop_tuple_subset(), file);
@@ -614,7 +614,7 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
 }
 
 void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
-                      FILE* file)                      
+                      FILE* file)
 {
    TAO_RT_Info_Tuple **tuple_ptr_ptr;
    const char* subset_tuple_format = "             {\n"
@@ -630,8 +630,8 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
 
    TUPLE_SET_ITERATOR
       tuple_iter (tuple_subset);
-   
-   
+
+
    while (tuple_iter.done () == 0)
    {
       // Get a pointer to the tuple COPY under the iterator.
@@ -639,10 +639,10 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
          || tuple_ptr_ptr == 0 || ((*tuple_ptr_ptr) == 0) )
       {
          ACE_OS::fprintf (file, "{ NULL TUPLE POINTER }\n");
-      } 
-      else 
+      }
+      else
       {
-      
+
       ACE_OS::fprintf (file,
          subset_tuple_format,
          (*tuple_ptr_ptr)->handle,
@@ -655,13 +655,13 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
          (*tuple_ptr_ptr)->preemption_priority,
          (*tuple_ptr_ptr)->enabled);
       }
-      
+
       tuple_iter.advance ();
    }
 }
 
-int 
-ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array, 
+int
+ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array,
                                               long entry_ptr_array_size,
                                               const char* file_name)
 {
@@ -677,22 +677,22 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
 
    // Iterate through the array.  The index is the (handle - 1) of the rt_info in the array
    for(int index = 0; index < entry_ptr_array_size; ++index)
-   {  
+   {
       ACE_OS::fprintf(file, "\n\nScheduler Entry Array contents\n");
       TAO_Reconfig_Scheduler_Entry * entry = entry_ptr_array[index];
 
       log_scheduling_entry(entry, file);
-         
+
 
    }
 
-   
+
    ACE_OS::fclose (file);
    return 0;
 
 }
- 
-void 
+
+void
 ACE_Scheduler_Factory::log_scheduling_tuples(
   TAO_RT_Info_Tuple ** tuple_ptr_array,
   long tuple_ptr_array_size,
@@ -720,8 +720,8 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
 
    for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
    {
-	   fprintf(file,
-		       subset_tuple_format,
+           fprintf(file,
+                       subset_tuple_format,
                tuple_ptr_array[ndx]->handle,
                tuple_ptr_array[ndx]->rate_index,
                tuple_ptr_array[ndx]->period,
