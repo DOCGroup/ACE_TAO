@@ -1,3 +1,11 @@
+Fri Apr 22 23:08:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):
+
+	  Made format string variable into a string literal.  Allows g++
+	  format specifier argument checking to work, and addresses a
+	  related g++ 4.0 warning.
+
 Fri Apr 22 23:02:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h
