@@ -35,7 +35,7 @@
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -53,30 +53,36 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.

@@ -26,7 +26,7 @@
 #include "ace/Env_Value_T.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
-
+#include "ace/Static_Object_Lock.h"
 
 ACE_RCSID (tao,
            TAO_Internal,

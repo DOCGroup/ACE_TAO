@@ -1,3 +1,19 @@
+Sat Apr 23 19:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/InvalidSlotA.cpp:
+        * tao/IOP_CodecA.cpp:
+        * tao/ORBInitInfoA.cpp:
+        * tao/RequestInfoA.cpp:
+        * tao/ServerRequestInfoA.cpp:
+        * tao/ORBInitializerA.cpp:
+          Regenerated
+
+        * tao/PICurrent.cpp:
+          Fixed compile errors
+
+        * tao/ORBInitializer_Registry.cpp:
+          Added include of ace/Log_Msg.h to get ACE_ERROR
+
 Sat Apr 23 18:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DomainC.cpp:
