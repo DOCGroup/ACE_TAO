@@ -9,6 +9,7 @@
 
 #include "ace/SOCK.h"
 #include "ace/Reactor.h"
+#include "ace/os_include/sys/os_socket.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"

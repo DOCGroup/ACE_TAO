@@ -9,6 +9,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
