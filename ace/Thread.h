@@ -157,13 +157,13 @@ public:
   static int suspend (ACE_hthread_t);
 
   /// Get the priority of a particular thread.
-  static int getprio (ACE_hthread_t id, int &priority);
+  static int getprio (ACE_hthread_t ht_id, int &priority);
 
   /// Get the priority and policy of a particular thread.
-  static int getprio (ACE_hthread_t id, int &priority, int &policy);
+  static int getprio (ACE_hthread_t ht_id, int &priority, int &policy);
 
   /// Set the priority of a particular thread.
-  static int setprio (ACE_hthread_t id, int priority, int policy = -1);
+  static int setprio (ACE_hthread_t ht_id, int priority, int policy = -1);
 
   /// Send a signal to the thread.
   static int kill (ACE_thread_t, int signum);

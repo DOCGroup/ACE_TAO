@@ -59,7 +59,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    PICurrent (TAO_ORB_Core * orb_core);
+    PICurrent (TAO_ORB_Core *orb_core);
 
     /**
      * @name PortableInterceptor::Current Methods
@@ -70,13 +70,13 @@ namespace TAO
     //@{
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
-    virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Any *get_slot (PortableInterceptor::SlotId id
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::InvalidSlot));
 
     /// Set information in the slot table at the given SlotId.
-    virtual void set_slot (PortableInterceptor::SlotId id,
+    virtual void set_slot (PortableInterceptor::SlotId identifier,
                            const CORBA::Any & data
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -91,7 +91,7 @@ namespace TAO
     PICurrent_Impl * tsc (void);
 
     /// Verify the validity of the given SlotId.
-    void check_validity (const PortableInterceptor::SlotId &id
+    void check_validity (const PortableInterceptor::SlotId &identifier
                          ACE_ENV_ARG_DECL);
 
     /// Initialize the PICurrent object.
@@ -153,13 +153,13 @@ namespace TAO
 
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
-    CORBA::Any * get_slot (PortableInterceptor::SlotId id
-                           ACE_ENV_ARG_DECL)
+    CORBA::Any *get_slot (PortableInterceptor::SlotId identifier
+                          ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::InvalidSlot));
 
     /// Set information in the slot table at the given SlotId.
-    void set_slot (PortableInterceptor::SlotId id,
+    void set_slot (PortableInterceptor::SlotId identifier,
                    const CORBA::Any & data
                    ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -167,13 +167,13 @@ namespace TAO
 
     /// Set the PICurrent copy callback object responsible for deep
     /// copying the source PICurrent's slot table.
-    void copy_callback (PICurrent_Copy_Callback * cb);
+    void copy_callback (PICurrent_Copy_Callback *cb);
 
     /// Set the PICurrent destruction callback object that will be
     /// notified of this object's destruction.
-    void destruction_callback (PICurrent_Impl * p);
+    void destruction_callback (PICurrent_Impl *p);
 
-    void execute_destruction_callback (Table * old_lc_slot_table);
+    void execute_destruction_callback (Table *old_lc_slot_table);
 
     /// Return a reference to the underlying slot table.
     Table & slot_table (void);
@@ -187,14 +187,14 @@ namespace TAO
     Table & current_slot_table (void);
 
     /// Logically (shallow) copy the given slot table.
-    void lc_slot_table (PICurrent_Impl * p);
+    void lc_slot_table (PICurrent_Impl *p);
 
     /// Return pointer to the logically copied slot table.
     /**
      * @return Zero if no logically copied slot table.  Non-zero
      *         otherwise.
      */
-    Table * lc_slot_table (void) const;
+    Table *lc_slot_table (void) const;
 
   private:
 
@@ -212,15 +212,15 @@ namespace TAO
 
     /// Table that was logically copied from a PICurrent in another
     /// scope, i.e. either the request scope or the thread scope.
-    Table * lc_slot_table_;
+    Table *lc_slot_table_;
 
     /// Callback object responsible for performing deep copies of a
     /// PICurrent's slot table.
-    PICurrent_Copy_Callback * copy_callback_;
+    PICurrent_Copy_Callback *copy_callback_;
 
     /// PICurrent_Impl object that will be notified of this object's
     /// destruction.
-    PICurrent_Impl * destruction_callback_;
+    PICurrent_Impl *destruction_callback_;
 
   };
 }
