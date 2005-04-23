@@ -227,8 +227,8 @@ TAO_LB_LoadAverage::analyze_loads (
 
   const CORBA::ULong len = locations->length ();
 
-  CosLoadBalancing::Load total_load;
-  CosLoadBalancing::Load avg_load;
+  CosLoadBalancing::Load total_load = { 0, 0 };
+  CosLoadBalancing::Load avg_load  = { 0, 0 };
 
   CosLoadBalancing::LoadList tmp (len);
   tmp.length (1);
