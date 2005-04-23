@@ -86,6 +86,10 @@ class JAWS_IO_Handler
   // = DESCRIPTION
 {
 public:
+
+  /// Destructor.
+  virtual ~JAWS_IO_Handler (void);
+
   virtual void read_complete (ACE_Message_Block &data) = 0;
   // This method is called by the IO class when new client data shows
   // up.
