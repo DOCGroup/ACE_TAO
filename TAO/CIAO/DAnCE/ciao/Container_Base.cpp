@@ -458,7 +458,7 @@ namespace CIAO
   }
 
   void
-  Session_Container::deactivate_facet (PortableServer::ObjectId &oid
+  Session_Container::deactivate_facet (const PortableServer::ObjectId &oid
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -495,6 +495,15 @@ namespace CIAO
 
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
+
+    CORBA::String_var str =
+      PortableServer::ObjectId_to_string (oid);
+
+    if (t == Container::Facet_Consumer)
+    {
+      ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
+                  str.in ()));
+    }
 
     CORBA::Object_var objref =
       tmp->create_reference_with_id (oid.in (),
