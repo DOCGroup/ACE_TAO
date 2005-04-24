@@ -1,3 +1,18 @@
+Sun Apr 24 10:53:40 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* ace/MEM_Stream.h: 
+	* ace/MEM_Acceptor.cpp: Changed code to ensure the internal buffer
+	  size of MEM_Stream will be at least 4096 bytes by default.  The
+	  minimum internal buffer size determines the largest message
+	  allowable per send operation.  This size used to depend on the
+	  default minimum size of ACE_Malloc size, which currently no
+	  longer allocates a minimum of 4K memory.  One can change the
+	  default MEM_Stream buffer size by redefining the
+	  ACE_MEM_STREAM_MIN_BUFFER (in bytes) in the config.h file.
+
+	  Thanks to Voronkov Konstantin <beowinkle at yahoo dot com> for
+	  motivating this change.
+
 Sun Apr 24 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-aix-5.x.h:
