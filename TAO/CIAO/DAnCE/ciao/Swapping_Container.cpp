@@ -43,7 +43,7 @@ namespace CIAO
   }
 
   void
-  Swapping_Container::deactivate_facet (PortableServer::ObjectId &oid
+  Swapping_Container::deactivate_facet (const PortableServer::ObjectId &oid
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
