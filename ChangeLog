@@ -1,3 +1,10 @@
+Sun Apr 24 14:02:51 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst: 
+
+          CIAO regression test won't run on minimum_corba. Added the
+          configuration requirement in the file.
+
 Sun Apr 24 10:53:40 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* ace/MEM_Stream.h: 
