@@ -40,9 +40,7 @@
 // AIX 5.1 has netinet/tcp.h
 #undef ACE_LACKS_NETINET_TCP_H
 
-#if (defined (_AIX) && defined (__GNUC__))
 #define ACE_HAS_POSIX_GETPWNAM_R
-#endif /* (defined (_AIX) && defined (__GNUC__)) */
 
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
 
