@@ -74,7 +74,7 @@ namespace CIAO
 
     virtual void delete_servant_map (PortableServer::ObjectId &oid);
 
-    virtual void deactivate_facet (PortableServer::ObjectId &oid
+    virtual void deactivate_facet (const PortableServer::ObjectId &oid
                                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

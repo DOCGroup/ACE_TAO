@@ -267,7 +267,7 @@ namespace CIAO
      * deactivate_facet from the Swapping_Conatiner's interface. It
      * would make the base container interface much cleaner.
      */
-    virtual void deactivate_facet (PortableServer::ObjectId &oid
+    virtual void deactivate_facet (const PortableServer::ObjectId &oid
                                    ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
