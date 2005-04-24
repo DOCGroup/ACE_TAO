@@ -195,6 +195,10 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                        ACE_LIB_TEXT ("ACE_MEM_Acceptor::%p error receiving strategy\n"), ACE_LIB_TEXT ("accept")),
                       -1);
 
+  // Ensure minimum buffer size
+  if (this->malloc_options_.minimum_bytes_ < ACE_MEM_STREAM_MIN_BUFFER)
+    this->malloc_options_.minimum_bytes_ = ACE_MEM_STREAM_MIN_BUFFER;
+
   // Client will decide what signaling strategy to use.
 
   // Now set up the shared memory malloc pool.

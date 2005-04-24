@@ -25,6 +25,10 @@
 
 #include "ace/INET_Addr.h"
 
+#if !defined (ACE_MEM_STREAM_MIN_BUFFER)
+# define ACE_MEM_STREAM_MIN_BUFFER 4096
+#endif /* ACE_MEM_STREAM_MIN_BUFFER */
+
 class ACE_MEM_Acceptor;
 class ACE_MEM_Connector;
 
@@ -36,11 +40,12 @@ class ACE_MEM_Connector;
  * This adds additional wrapper methods atop the <ACE_MEM_IO>
  * class.  Notice that ACE_MEM_Stream can only send messages no bigger
  * than the underlying MMAP file size minus sizeof (ACE_MEM_SAP_Node).
- * The size of the MMAP file is default to 4096.  If you need to
- * increase the size of allowable message ACE_MEM_Stream can handle,
- * you can set it to either
+ * The size of the MMAP file is default to ACE_MEM_STREAM_MIN_BUFFER.
+ * (Define above in this file, to 4096 bytes.)
+ * If you need to increase the size of allowable message
+ * ACE_MEM_Stream can handle, you can set it to either
  * @c ACE_MEM_Acceptor::malloc_options(). minimal_bytes_
- * @c ACE_MEM_Connector::malloc_options(). minimal_bytes_
+ * @c ACE_MEM_Acceptor::init_buffer_size (size_t size);
  * before establishing a connection.
  */
 class ACE_Export ACE_MEM_Stream : public ACE_MEM_IO
