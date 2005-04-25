@@ -453,13 +453,13 @@ namespace CIAO
   Session_Container::add_servant_map
     (PortableServer::ObjectId &,
      Dynamic_Component_Servant_Base*
-     ACE_ENV_ARG_DECL)
+     ACE_ENV_ARG_DECL_NOT_USED)
   {
   }
 
   void
   Session_Container::deactivate_facet (const PortableServer::ObjectId &oid
-                                       ACE_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_UNUSED_ARG (oid);
@@ -468,7 +468,7 @@ namespace CIAO
   void
   Session_Container::delete_servant_map
     (PortableServer::ObjectId &
-     ACE_ENV_ARG_DECL)
+     ACE_ENV_ARG_DECL_NOT_USED)
   {
   }
 
