@@ -1,3 +1,9 @@
+Mon Apr 25 11:07:28 2005  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Container_Base.cpp:
+
+	  Fixed compiler warnings in the Debian Full_Reactor build.
+
 Sun Apr 24 02:47:22 2005  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Base.cpp:
