@@ -264,6 +264,48 @@ namespace CORBA
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_CORBA_POLICY__TRAITS_CH_)
+#define _CORBA_POLICY__TRAITS_CH_
+  
+  template<>
+  struct TAO_Export Objref_Traits< ::CORBA::Policy>
+  {
+    static ::CORBA::Policy_ptr duplicate (
+        ::CORBA::Policy_ptr
+      );
+    static void release (
+        ::CORBA::Policy_ptr
+      );
+    static ::CORBA::Policy_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::Policy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_POLICYCURRENT__TRAITS_CH_)
+#define _CORBA_POLICYCURRENT__TRAITS_CH_
+  
+  template<>
+  struct TAO_Export Objref_Traits< ::CORBA::PolicyCurrent>
+  {
+    static ::CORBA::PolicyCurrent_ptr duplicate (
+        ::CORBA::PolicyCurrent_ptr
+      );
+    static void release (
+        ::CORBA::PolicyCurrent_ptr
+      );
+    static ::CORBA::PolicyCurrent_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::PolicyCurrent_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 }
 
 // TAO_IDL - Generated from
