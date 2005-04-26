@@ -1,3 +1,14 @@
+Tue Apr 26 18:14:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/releasenotes/index.html:
+        
+          Updated CIDL compiler documentation, and added item about the
+          existing IDL3-to-IDL2 coverter.
+          
+        * tools/IDL3_to_IDL2/README:
+        
+          Updated documentation file.
+
 Tue Apr 26 11:34:52 2005  Nanbor Wang  <nanbor@tesla.txcorp.com>
 
 	* docs/schema/CIAOServerResources.xsd: Changed some of the XML
