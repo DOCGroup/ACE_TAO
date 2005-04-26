@@ -951,6 +951,16 @@ TAO_TypeCodeFactory_i::create_tc_common (
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (tc);
     }
+  else if (kind == CORBA::tk_home)
+    {
+      typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                    CORBA::tk_home,
+                                    TAO::True_RefCount_Policy> typecode_type;
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+    }
   else if (kind == CORBA::tk_local_interface)
     {
       typedef TAO::TypeCode::Objref<CORBA::String_var,
@@ -1327,7 +1337,10 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 //       cdr << members[index].access;
     }
 
-  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (concrete_base));
+  CORBA::TypeCode_var tmp (
+    CORBA::TypeCode::_duplicate (CORBA::is_nil (concrete_base)
+                                 ? CORBA::_tc_null
+                                 : concrete_base));
 
   typedef TAO::TypeCode::Value<
     CORBA::String_var,
