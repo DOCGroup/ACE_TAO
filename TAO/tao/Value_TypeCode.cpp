@@ -28,13 +28,15 @@ TAO::TypeCode::Value<StringType,
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
+  TAO_OutputCDR enc;
+
   bool const success =
-    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
-    && (cdr << this->type_modifier_)
-    && (cdr << Traits<StringType>::get_typecode (this->concrete_base_))
-    && (cdr << this->nfields_);
+    (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
+    && (enc << this->type_modifier_)
+    && (enc << Traits<StringType>::get_typecode (this->concrete_base_))
+    && (enc << this->nfields_);
 
   if (!success)
     return false;
@@ -48,13 +50,15 @@ TAO::TypeCode::Value<StringType,
     {
       Value_Field<StringType, TypeCodeType> const & field = *i;
 
-      if (!(cdr << Traits<StringType>::get_string (field.name))
-          || !(cdr << Traits<StringType>::get_typecode (field.type))
-          || !(cdr << field.visibility))
+      if (!(enc << Traits<StringType>::get_string (field.name))
+          || !(enc << Traits<StringType>::get_typecode (field.type))
+          || !(enc << field.visibility))
         return false;
     }
 
-  return true;
+  return
+    cdr << enc.total_length ()
+    && cdr.write_octet_array_mb (enc.begin ());
 }
 
 template <typename StringType,
