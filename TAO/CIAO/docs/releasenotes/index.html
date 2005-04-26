@@ -109,7 +109,15 @@ release</a> of <a href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a>:
   interface.<p> 
 
   <li>Implemented get_all_facets() and get_all_consumers() navigation
-      methods. 
+      methods.<p>
+      
+  <li>Added support for the IDL keywords <code>setraises</code> and
+  <code>getraises</code>, associated with attributes in IDL3.<p>
+  
+  <li>Added support for both subscription and event push of event types
+  that are a base class of the IDL-specified port type. A check is
+  performed during the subscribe call to make sure the eventtype is
+  actually an ancestor of the declared port type.</li>
   </ul>
   <p>
 
@@ -123,7 +131,15 @@ release</a> of <a href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a>:
 
  <li> The CIAO static configurator tool has been enhanced to support
  processing of RTCORBA policy related information. Please see
- ACE_wrappers/TAO/CIAO/docs/static_ciao_index.html.
+ ACE_wrappers/TAO/CIAO/docs/static_ciao_index.html.<p>
+ 
+ <li> To further interoperability with non-component-aware clients, there
+ are files in the $CIAO_ROOT/tools/IDL3_to_IDL2 directory that can be 
+ compiled into an executable called tao_idl3_to_idl2. This executable
+ takes an IDL file (on the command line) containing IDL3 declarations
+ and outputs an IDL file with the IDL3 declarations converted to 
+ equivalent IDL2. IDL2 declarations in the input file are unchanged.
+ See the README file in that directory for more information.<p>
 
 </ol>
 

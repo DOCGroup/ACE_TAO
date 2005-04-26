@@ -4,7 +4,10 @@
 A pluggable back end used with the IDL compiler parser
 and command line processor, this tool converts CCM-related
 IDL constructs into their corresponding IDL2 equivalents,
-in a new IDL file. 
+in a new IDL file. For more information about CIAO and the CIAO
+CIDL compiler, please see
+
+$CIAO_ROOT/docs/releasenotes/index.html
 
 COMPILING:
 
@@ -122,5 +125,4 @@ interface BarHomeImplicit : Components::KeylessCCMHome
 interface BarHome : BarHomeExplicit, BarHomeImplicit 
 {
 };
-
 
