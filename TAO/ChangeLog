@@ -1,3 +1,15 @@
+Mon Apr 25 22:47:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerated.
+
+	* tao/tao.mpc:
+
+	  Added TypeCode_Traits.h and Enum_TypeCode.cpp to list of
+	  Header_Files and Template_Files respectively.
+
+
 Mon Apr 25 19:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Policy_ForwardC.h:
