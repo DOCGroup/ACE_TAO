@@ -1,3 +1,12 @@
+Tue Apr 26 11:34:52 2005  Nanbor Wang  <nanbor@tesla.txcorp.com>
+
+	* docs/schema/CIAOServerResources.xsd: Changed some of the XML
+	  element and type names to be more consistent with the rest of
+	  RTCORBA spec that the following new IDL file follows.
+	
+	* DAnCE/ciao/ServerResources.idl: First cut of server
+	  configuration information set in IDL.
+
 Mon Apr 25 11:07:28 2005  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Base.cpp:
