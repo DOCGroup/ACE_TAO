@@ -56,7 +56,7 @@ TAO::TypeCode::Union<StringType,
         return false;
     }
 
-  return 
+  return
     cdr << enc.total_length ()
     && cdr.write_octet_array_mb (enc.begin ());
 }
