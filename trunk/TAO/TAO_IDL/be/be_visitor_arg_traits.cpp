@@ -540,10 +540,17 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
+    
+  const char *guard_string = node->flat_name ();
+  
+  if (alias != 0)
+    {
+      guard_string = alias->flat_name ();
+    }
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+  os->gen_ifdef_macro (guard_string, guard_suffix.c_str ());
 
 
   idl_bool const skel =
