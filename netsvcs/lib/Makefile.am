@@ -33,6 +33,9 @@ libnetsvcs_la_SOURCES = \
 libnetsvcs_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
+libnetsvcs_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 noinst_HEADERS = \
   Base_Optimizer.h \
   Client_Logging_Handler.h \
