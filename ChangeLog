@@ -1,13 +1,19 @@
+Tue Apr 26 10:59:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* netsvcs/lib/Makefile.am:
+
+	  Add *_LDFLAGS definition to set shared library version number.
+
 Sun Apr 24 14:02:51 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * bin/ciao_tests.lst: 
+        * bin/ciao_tests.lst:
 
           CIAO regression test won't run on minimum_corba. Added the
           configuration requirement in the file.
 
 Sun Apr 24 10:53:40 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* ace/MEM_Stream.h: 
+	* ace/MEM_Stream.h:
 	* ace/MEM_Acceptor.cpp: Changed code to ensure the internal buffer
 	  size of MEM_Stream will be at least 4096 bytes by default.  The
 	  minimum internal buffer size determines the largest message
