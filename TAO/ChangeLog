@@ -1,3 +1,17 @@
+Tue Apr 26 10:43:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_tc_common):
+
+	  Added overlooked CORBA::tk_home case.  Fixes an internal
+	  run-time error (CORBA::INTERNAL system exception being thrown).
+
+	  (value_event_tc_common):
+
+	  Set the concrete base type TypeCode to CORBA::_tc_null if the
+	  corresponding user supplied argument is nil.  This is compliant
+	  with the CORBA specification.  Fixes a CORBA::MARSHAL system
+	  exception being thrown at run-time.
+
 Tue Apr 26 01:46:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Alias_TypeCode.cpp (tao_marshal):
