@@ -43,5 +43,18 @@ typedef TAO_R5 TAO_V5;
 
 typedef TAO_V5 TAO_Z5[5];
 
+// Need to make sure that the arg traits specializations for each
+// typedef has a unique #ifndef guard.
+module TestModule 
+{
+ 	typedef string<32> typedef_1;	
+	typedef string<32> typedef_2;
+
+	interface TestInterface 
+	{		
+		void set_typedef_1 (in TestModule::typedef_1 typ1);
+    void set_typedef_2 (in TestModule::typedef_2 typ2);
+  };	
+};
 
 
