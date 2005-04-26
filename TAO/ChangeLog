@@ -32,7 +32,7 @@ Tue Apr 26 12:55:32 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
 
 	  Replicated fix from "Fri Apr 22 12:09:23 2005  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" for above protocol. 
+	  Natarajan  <bala@dre.vanderbilt.edu>" for above protocol.
 
 Mon Apr 25 23:26:54 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
