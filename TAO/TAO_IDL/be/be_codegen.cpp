@@ -2020,6 +2020,14 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
       "tao/Struct_TypeCode.h",
       stream);
 
+  this->gen_cond_file_include (
+      idl_global->exception_seen_
+//       | idl_global->fixed_size_arg_seen_ // Could be a struct
+//       | idl_global->var_size_arg_seen_   // Could be a struct
+      | idl_global->aggregate_seen_,
+      "tao/TypeCode_Struct_Field.h",
+      stream);
+
   this->gen_cond_file_include (idl_global->union_seen_,
                                "tao/TypeCode_Non_Default_Case.h",
                                stream);
@@ -2034,5 +2042,9 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 
   this->gen_cond_file_include (idl_global->valuetype_seen_,
                                "tao/Value_TypeCode.h",
+                               stream);
+
+  this->gen_cond_file_include (idl_global->valuetype_seen_,
+                               "tao/TypeCode_Value_Field.h",
                                stream);
 }

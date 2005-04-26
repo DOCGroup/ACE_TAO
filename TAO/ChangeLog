@@ -1,3 +1,11 @@
+Mon Apr 25 23:26:54 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_typecode_includes):
+
+	  Generate include directives for
+	  "tao/TypeCode_{Struct,Value}_Field.h" headers.  Needed for IBM
+	  C++ compiler.
+
 Mon Apr 25 22:47:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
@@ -8,7 +16,6 @@ Mon Apr 25 22:47:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	  Added TypeCode_Traits.h and Enum_TypeCode.cpp to list of
 	  Header_Files and Template_Files respectively.
-
 
 Mon Apr 25 19:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
