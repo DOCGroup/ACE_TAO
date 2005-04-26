@@ -491,6 +491,7 @@ nobase_include_HEADERS = \
   Endpoint.h \
   Endpoint.i \
   Endpoint_Selector_Factory.h \
+  Enum_TypeCode.cpp \
   Enum_TypeCode.h \
   Enum_TypeCode.inl \
   Environment.h \
@@ -854,6 +855,7 @@ nobase_include_HEADERS = \
   TypeCode_Non_Default_Case.h \
   TypeCode_Non_Default_Case.inl \
   TypeCode_Struct_Field.h \
+  TypeCode_Traits.h \
   TypeCode_Value_Field.h \
   Typecode_types.pidl \
   Typecode_typesC.h \
