@@ -237,10 +237,13 @@ namespace TAO
                        CORBA::TypeCode_ptr & tc)
     {
       CORBA::Boolean byte_order;
+      CORBA::ULong encapsulation_length;
 
       // The remainder of a tk_objref TypeCode is encoded in a CDR
       // encapsulation.
-      if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
+      if (!(cdr >> encapsulation_length
+            && encapsulation_length > 0
+            && cdr >> TAO_InputCDR::to_boolean (byte_order)))
         return false;
 
       cdr.reset_byte_order (byte_order);

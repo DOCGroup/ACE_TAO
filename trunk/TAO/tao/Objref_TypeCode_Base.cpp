@@ -25,10 +25,14 @@ TAO::TypeCode::Objref_Base<StringType, RefCountPolicy>::tao_marshal (
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
+  TAO_OutputCDR enc;
+
   return
-    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << TAO_OutputCDR::from_string (this->attributes_.id (), 0))
-    && (cdr << TAO_OutputCDR::from_string (this->attributes_.name (), 0));
+    enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+    && enc << TAO_OutputCDR::from_string (this->attributes_.id (), 0)
+    && enc << TAO_OutputCDR::from_string (this->attributes_.name (), 0)
+    && cdr << enc.total_length ()
+    && cdr.write_octet_array_mb (enc.begin ());
 }
 
 template <typename StringType, class RefCountPolicy>

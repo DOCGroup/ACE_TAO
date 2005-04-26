@@ -183,10 +183,13 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
   ACE_ASSERT (kind == CORBA::tk_struct || kind == CORBA::tk_except);
 
   CORBA::Boolean byte_order;
+  CORBA::ULong encapsulation_length;
 
   // The remainder of a tk_struct/tk_except TypeCode is encoded in
   // a CDR encapsulation.
-  if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
+  if (!(cdr >> encapsulation_length
+        && encapsulation_length > 0
+        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
     return false;
 
   cdr.reset_byte_order (byte_order);
@@ -245,10 +248,13 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
                                        CORBA::TypeCode_ptr & tc)
 {
   CORBA::Boolean byte_order;
+  CORBA::ULong encapsulation_length;
 
   // The remainder of a tk_enum TypeCode is encoded in a CDR
   // encapsulation.
-  if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
+  if (!(cdr >> encapsulation_length
+        && encapsulation_length > 0
+        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
     return false;
 
   cdr.reset_byte_order (byte_order);
@@ -325,10 +331,13 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
                                            CORBA::TypeCode_ptr & tc)
 {
   CORBA::Boolean byte_order;
+  CORBA::ULong encapsulation_length;
 
   // The remainder of a tk_sequence TypeCode is encoded in a CDR
   // encapsulation.
-  if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
+  if (!(cdr >> encapsulation_length
+        && encapsulation_length > 0
+        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
     return false;
 
   cdr.reset_byte_order (byte_order);
@@ -366,10 +375,13 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
                                         CORBA::TypeCode_ptr & tc)
 {
   CORBA::Boolean byte_order;
+  CORBA::ULong encapsulation_length;
 
   // The remainder of a tk_alias or tk_value_box TypeCode is encoded
   // in a CDR encapsulation.
-  if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
+  if (!(cdr >> encapsulation_length
+        && encapsulation_length > 0
+        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
     return false;
 
   cdr.reset_byte_order (byte_order);
@@ -493,10 +505,13 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
                                         CORBA::TypeCode_ptr & tc)
 {
   CORBA::Boolean byte_order;
+  CORBA::ULong encapsulation_length;
 
   // The remainder of a tk_value/tk_event TypeCode is encoded in a
   // CDR encapsulation.
-  if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
+  if (!(cdr >> encapsulation_length
+        && encapsulation_length > 0
+        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
     return false;
 
   cdr.reset_byte_order (byte_order);

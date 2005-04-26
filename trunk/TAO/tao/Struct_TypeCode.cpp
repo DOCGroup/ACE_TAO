@@ -34,11 +34,13 @@ TAO::TypeCode::Struct<StringType,
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
+  TAO_OutputCDR enc;
+
   bool const success =
-    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
-    && (cdr << this->nfields_);
+    (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
+    && (enc << this->nfields_);
 
   if (!success)
     return false;
@@ -52,13 +54,15 @@ TAO::TypeCode::Struct<StringType,
     {
       Struct_Field<StringType, TypeCodeType> const & field = *i;
 
-      if (!(cdr << TAO_OutputCDR::from_string (
+      if (!(enc << TAO_OutputCDR::from_string (
                        Traits<StringType>::get_string (field.name), 0))
-          || !(cdr << Traits<StringType>::get_typecode (field.type)))
+          || !(enc << Traits<StringType>::get_typecode (field.type)))
         return false;
     }
 
-  return true;
+  return
+    cdr << enc.total_length ()
+    && cdr.write_octet_array_mb (enc.begin ());
 }
 
 template <typename StringType,
