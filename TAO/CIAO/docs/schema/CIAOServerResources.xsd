@@ -91,13 +91,20 @@
     </xsd:choice>
   </xsd:complexType>
 
+  <xsd:simpleType name="Priority">
+    <restriction base="xsd:int">
+      <minInclusive value="0"/>
+      <maxInclusive value="32767"/>
+    </restriction>
+  </xsd:simpleType>
+
   <xsd:complexType name="ThreadpoolDef">
     <xsd:attribute name="id" type="xsd:ID"/>
     <xsd:attribute name="stacksize" type="xsd:unsignedLong"/>
     <xsd:attribute name="static_threads" type="xsd:unsignedLong"/>
     <xsd:attribute name="dynamic_threads" type="xsd:unsignedLong"/>
-    <xsd:attribute name="priority" type="xsd:int"/>
-    <xsd:attribute name="buffering" type="xsd:boolean"/>
+    <xsd:attribute name="default_priority" type="CIAO:Priority"/>
+    <xsd:attribute name="allow_request_buffering" type="xsd:boolean"/>
     <xsd:attribute name="max_buffered_requests" type="xsd:unsignedLong"/>
     <xsd:attribute name="max_request_buffered_size" type="xsd:unsignedLong"/>
     <!-- empty subelement -->
@@ -112,8 +119,8 @@
                                                    referenced by individual policies
                                                    in the policysets below -->
     <xsd:attribute name="stacksize" type="xsd:unsignedLong"/>
-    <xsd:attribute name="borrowing" type="xsd:boolean"/>
-    <xsd:attribute name="buffering" type="xsd:boolean"/>
+    <xsd:attribute name="allow_borrowing" type="xsd:boolean"/>
+    <xsd:attribute name="allow_request_buffering" type="xsd:boolean"/>
     <xsd:attribute name="max_buffered_requests" type="xsd:unsignedLong"/>
     <xsd:attribute name="max_request_buffered_size" type="xsd:unsignedLong"/>
   </xsd:complexType>
@@ -121,7 +128,7 @@
   <xsd:complexType name="ThreadpoolLaneDef">
     <xsd:attribute name="static_threads" type="xsd:unsignedLong"/>
     <xsd:attribute name="dynamic_threads" type="xsd:unsignedLong"/>
-    <xsd:attribute name="priority" type="xsd:int"/>
+    <xsd:attribute name="priority" type="CIAO:Priority"/>
     <!-- empty subelement -->
   </xsd:complexType>
 
@@ -162,12 +169,12 @@
     <xsd:choice maxOccurs="unbounded">
       <xsd:element name="priorityModel" type="CIAO:PriorityModelPolicyDef"/>
       <xsd:element name="threadpool" type="xsd:IDREF"/>
-      <xsd:element name="connectionBands" type="xsd:IDREF"/>
+      <xsd:element name="priorityBandedConnection" type="xsd:IDREF"/>
     </xsd:choice>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
 
-  <xsd:simpleType name="PriorityType">
+  <xsd:simpleType name="PriorityModel">
     <xsd:restriction base="xsd:NCName">
       <xsd:enumeration value="SERVER_DECLARED"/>
       <xsd:enumeration value="CLIENT_PROPAGATED"/>
@@ -176,9 +183,9 @@
 
   <xsd:complexType name="PriorityModelPolicyDef">
     <xsd:sequence>
-      <xsd:element name="type" type="CIAO:PriorityType"/>
+      <xsd:element name="priority_model" type="CIAO:PriorityModel"/>
     </xsd:sequence>
-    <xsd:attribute name="priority" type="xsd:int"/>
+    <xsd:attribute name="server_priority" type="CIAO:Priority"/>
   </xsd:complexType>
 
 </xsd:schema>
