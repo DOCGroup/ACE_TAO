@@ -1,3 +1,32 @@
+Tue Apr 26 01:46:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Alias_TypeCode.cpp (tao_marshal):
+	* tao/Enum_TypeCode.cpp (tao_marshal):
+	* tao/Objref_TypeCode_Base.cpp (tao_marshal):
+	* tao/Sequence_TypeCode.cpp (tao_marshal):
+	* tao/Struct_TypeCode.cpp (tao_marshal):
+	* tao/Union_TypeCode.cpp (tao_marshal):
+	* tao/Value_TypeCode.cpp (tao_marshal):
+
+	  Corrected marshaling of these complex parameter list TypeCodes.
+	  They were missing the CDR encapsulation length before the actual
+	  encapsulation.
+
+	* tao/Objref_TypeCode_Factory.h:
+	* tao/TypeCode_CDR_Extraction.cpp:
+
+	  Extract the CDR encapsulation length before the remainder of the
+	  encapsulation when demarshaling complex parameter list
+	  TypeCodes.
+
+	* tests/Codec/README:
+
+	  Updated expected output.
+
+	* tests/Codec/client.cpp (main):
+
+	  Added missing space in debugging message.
+
 Tue Apr 26 12:55:32 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:

@@ -19,8 +19,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 bool
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+                    RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
 {
   // A tk_enum TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
@@ -28,11 +27,13 @@ TAO::TypeCode::Enum<StringType,
   // a CDR encapsulation.
 
   // Create a CDR encapsulation.
+  TAO_OutputCDR enc;
+
   bool const success =
-    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
-    && (cdr << this->nenumerators_);
+    (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
+    && (enc << this->nenumerators_);
 
   if (!success)
     return false;
@@ -44,12 +45,14 @@ TAO::TypeCode::Enum<StringType,
     {
       StringType const & enumerator = *i;
 
-      if (!(cdr << TAO_OutputCDR::from_string (
+      if (!(enc << TAO_OutputCDR::from_string (
               Traits<StringType>::get_string (enumerator), 0)))
         return false;
     }
 
-  return true;
+  return
+    cdr << enc.total_length ()
+    && cdr.write_octet_array_mb (enc.begin ());
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>

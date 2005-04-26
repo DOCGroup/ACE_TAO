@@ -21,10 +21,14 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_marshal (
   // marshaled into a CDR encapsulation.
 
   // Create a CDR encapsulation.
+  TAO_OutputCDR enc;
+
   return
-    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << Traits<TypeCodeType>::get_typecode (this->content_type_))
-    && (cdr << this->length_);
+    enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+    && enc << Traits<TypeCodeType>::get_typecode (this->content_type_)
+    && enc << this->length_
+    && cdr << enc.total_length ()
+    && cdr.write_octet_array_mb (enc.begin ());
 }
 
 template <typename TypeCodeType, class RefCountPolicy>

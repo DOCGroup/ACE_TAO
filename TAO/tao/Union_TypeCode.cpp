@@ -33,13 +33,15 @@ TAO::TypeCode::Union<StringType,
   CORBA::ULong const count = this->case_count ();
 
   // Create a CDR encapsulation.
+  TAO_OutputCDR enc;
+
   bool const success =
-    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
-    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
-    && (cdr << Traits<StringType>::get_typecode (this->discriminant_type_))
-    && (cdr << this->default_index_)
-    && (cdr << count);
+    (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
+    && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
+    && (enc << Traits<StringType>::get_typecode (this->discriminant_type_))
+    && (enc << this->default_index_)
+    && (enc << count);
 
   if (!success)
     return false;
@@ -50,11 +52,13 @@ TAO::TypeCode::Union<StringType,
     {
       case_type & c = this->the_case (i);
 
-      if (!c.marshal (cdr))
+      if (!c.marshal (enc))
         return false;
     }
 
-  return true;
+  return 
+    cdr << enc.total_length ()
+    && cdr.write_octet_array_mb (enc.begin ());
 }
 
 template <typename StringType,

@@ -18,13 +18,13 @@ Testing CDR encapsulation Codec encode()/decode()
 =================================================
 Original
 --------
-I want a standing ovation!
+1010
 -3427
 I'm Batman.
 
 Extracted
 ---------
-I want a standing ovation!
+1010
 -3427
 I'm Batman.
 
@@ -32,13 +32,13 @@ Testing CDR encapsulation Codec encode_value()/decode_value()
 =============================================================
 Original
 --------
-I want a standing ovation!
+1010
 -3427
 I'm Batman.
 
 Extracted
 ---------
-I want a standing ovation!
+1010
 -3427
 I'm Batman.
 
