@@ -10,6 +10,10 @@
 #include "ace/Default_Constants.h"
 #include "ace/OS_Memory.h"
 
+#if defined (ACE_HAS_CLOCK_GETTIME)
+# include "ace/os_include/os_time.h"
+#endif /* ACE_HAS_CLOCK_GETTIME */
+
 #if defined (ACE_LACKS_ACCESS)
 #  include "ace/OS_NS_stdio.h"
 #endif /* ACE_LACKS_ACCESS */
@@ -1067,16 +1071,6 @@ ACE_OS::sleep (u_int seconds)
 #if defined (ACE_WIN32)
   ::Sleep (seconds * ACE_ONE_SECOND_IN_MSECS);
   return 0;
-#if 0
-#elif defined (HPUX_10) && defined (ACE_HAS_PTHREADS_DRAFT4)
-  // On HP-UX 10, _CMA_NOWRAPPERS_ disables the mapping from sleep to cma_sleep
-  // which makes sleep() put the whole process to sleep, and keeps it from
-  // noticing pending cancels.  So, in this case, use pthread_delay_np
-  struct timespec rqtp;
-  rqtp.tv_sec = seconds;
-  rqtp.tv_nsec = 0L;
-  return pthread_delay_np (&rqtp);
-#endif /* 0 */
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   struct timespec rqtp;
   // Initializer doesn't work with Green Hills 1.8.7
