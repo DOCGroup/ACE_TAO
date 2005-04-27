@@ -1,3 +1,12 @@
+Wed Apr 27 16:10:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):
+
+	  Corrected format specifier for an enumeration.  An enumeration
+	  is implicitly converted to an "int", not "unsigned int".
+	  Addresses compile-time warnings from g++ builds with format
+	  specifier warnings enabled.
+
 Wed Apr 27 18:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
