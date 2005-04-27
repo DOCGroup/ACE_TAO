@@ -18,20 +18,25 @@ module Deployment
 
   //Below are from the OMG Deployment.idl
 
-  exception StartError {
+  exception StartError
+  {
     string name;
     string reason;
   };
 
-  exception InvalidConnection {
+  exception InvalidConnection
+  {
     string name;
     string reason;
   };
+  
   //==============property==================
-  struct Property {
+  struct Property
+  {
     string name;
     any value;
   };
+  
   typedef sequence < Property > Properties;
 
   //============connection==================
@@ -39,7 +44,8 @@ module Deployment
   typedef sequence < Object > Endpoints;
   //typedef Object Endpoint;
 
-  enum CCMComponentPortKind {
+  enum CCMComponentPortKind
+  {
     Facet,
     SimplexReceptacle,
     MultiplexReceptacle,
@@ -51,7 +57,8 @@ module Deployment
   // To avoid the connection info in the plan being passed to the
   // local node and to make the implementation not very cumbersome
   // I changed the connection struct to include some extra informations.
-  struct Connection {
+  struct Connection
+  {
     string instanceName;
     string portName;
     CCMComponentPortKind kind;
@@ -60,6 +67,7 @@ module Deployment
     // Since we will not have more than 1 objref in there.
     Object endpoint;
   };
+  
   typedef sequence < Connection > Connections;
 
   //=======================================
