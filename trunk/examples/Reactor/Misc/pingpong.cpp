@@ -255,12 +255,12 @@ worker (void *arg)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_LOG_MSG->open (argv[0]);
-
   if (argc != 2)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("usage: %n string\n%a"),
-                1));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("usage: pingpong <string>\n")),
+                       -1);
+
+  ACE_LOG_MSG->open (argv[0]);
 
   string_name = argv[1];
 
