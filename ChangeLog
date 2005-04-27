@@ -1,3 +1,10 @@
+Wed Apr 27 15:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+          Fixed wrong LDFLAGS. Thanks to Peter Grotrian
+          <peter dot grotrian at pdv-fs dot de> for reporting this. This
+          fixes bugzilla [2096]
+
 Wed Apr 27 15:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Barrier.h:
