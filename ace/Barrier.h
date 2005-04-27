@@ -26,6 +26,10 @@
 
 // ACE platform supports some form of threading.
 #if !defined (ACE_HAS_THREADS)
+
+#include "ace/config-all.h"
+
+
 /**
  * @class ACE_Barrier
  *

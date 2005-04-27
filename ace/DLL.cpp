@@ -1,4 +1,3 @@
-// DLL.cpp
 // $Id$
 
 #include "ace/DLL.h"
@@ -8,6 +7,7 @@
 #include "ace/DLL_Manager.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_dlfcn.h"
+#include "ace/OS_NS_Thread.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
 
