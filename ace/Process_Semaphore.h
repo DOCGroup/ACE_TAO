@@ -38,8 +38,8 @@
 class ACE_Export ACE_Process_Semaphore
 {
 public:
-  /// Initialize the semaphore, with an initial value of <count> and a
-  /// maximum value of <max>.
+  /// Initialize the semaphore, with an initial value of @a count and a
+  /// maximum value of @a max.
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
                          const ACE_TCHAR *name = 0,
                          void * = 0,
@@ -66,8 +66,8 @@ public:
   /**
    * Conditionally decrement the semaphore if count is greater than 0
    * (i.e., won't block).  Returns -1 on failure.  If we "failed"
-   * because someone else already had the lock, <errno> is set to
-   * <EBUSY>.
+   * because someone else already had the lock, @c errno is set to
+   * @c EBUSY.
    */
   int tryacquire (void);
 

@@ -26,8 +26,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
 
-#include <stdlib.h>
-
 // Forward declaration.
 class ACE_Allocator;
 class ACE_Data_Block;

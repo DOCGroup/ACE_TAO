@@ -66,19 +66,19 @@ public:
             ACE_Time_Value *timeout  = 0);
 
   // = Send/recv char buffers.
-  /// Send a buffer of <n> bytes through the message queue.  Returns -1
+  /// Send a buffer of @a n bytes through the message queue.  Returns -1
   /// on error, else number of bytes sent.
   ssize_t send (const char *buffer,
                 size_t n,
                 ACE_Time_Value *timeout = 0);
 
-  /// Recv a buffer of upto <n> bytes from the message queue.  Returns
+  /// Recv a buffer of upto @a n bytes from the message queue.  Returns
   /// -1 on error, else number of bytes read.
   ssize_t recv (char *buffer,
                 size_t n,
                 ACE_Time_Value *timeout = 0);
 
-  /// Send a buffer of exactly <n> bytes to the message queue.  Returns
+  /// Send a buffer of exactly @a n bytes to the message queue.  Returns
   /// -1 on error, else number of bytes written (which should == n).
   ssize_t send_n (const char *buffer,
                   size_t n,
@@ -113,8 +113,8 @@ private:
   /// Address of who we are connected to.
   ACE_UPIPE_Addr remote_addr_;
 
-  /// Stream component used by the <UPIPE_Acceptor> and
-  /// <UPIPE_Connector> to link together two UPIPE_Streams.
+  /// Stream component used by the @c UPIPE_Acceptor and
+  /// @c UPIPE_Connector to link together two UPIPE_Streams.
   MT_Stream stream_;
 
   /// Keep track of whether the sender and receiver have both shut

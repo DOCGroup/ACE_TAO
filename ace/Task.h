@@ -82,7 +82,7 @@ public:
   virtual int open (void *args = 0);
 
   /**
-   * Hook called from <ACE_Thread_Exit> when during thread exit and from
+   * Hook called from ACE_Thread_Exit when during thread exit and from
    * the default implementation of <module_closed>.  In general, this
    * method shouldn't be called directly by an application,
    * particularly if the <Task> is running as an Active Object.
@@ -234,14 +234,14 @@ public:
   size_t thr_count (void) const;
 
   /// Atomically decrement the thread count by 1.  This should only be
-  /// called by the <ACE_Thread_Exit> class destructor.
+  /// called by the ACE_Thread_Exit class destructor.
   void thr_count_dec (void);
 
   /// Routine that runs the service routine as a daemon thread.
   static ACE_THR_FUNC_RETURN svc_run (void *);
 
   /// Cleanup hook that is called when a thread exits to gracefully
-  /// shutdown an <ACE_Task>.
+  /// shutdown an ACE_Task.
   static void cleanup (void *object, void *params);
 
   // = Internal data (should be private...).
