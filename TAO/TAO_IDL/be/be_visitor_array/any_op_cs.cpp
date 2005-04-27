@@ -63,9 +63,11 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   if (node->is_local ())
     {
       *os << be_nl << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
+          << "Any_Array_Impl_T<" << be_idt << be_idt_nl
           << node->name () << "_slice," << be_nl
           << node->name () << "_forany" << be_uidt_nl
           << ">::marshal_value (TAO_OutputCDR &)" << be_uidt_nl
@@ -76,12 +78,13 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       *os << be_nl << be_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
+          << "Any_Array_Impl_T<" << be_idt << be_idt_nl
           << node->name () << "_slice," << be_nl
           << node->name () << "_forany" << be_uidt_nl
           << ">::demarshal_value (TAO_OutputCDR &)" << be_uidt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
 

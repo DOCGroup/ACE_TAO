@@ -31,6 +31,7 @@
 #include "tao/Alias_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
+#include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"

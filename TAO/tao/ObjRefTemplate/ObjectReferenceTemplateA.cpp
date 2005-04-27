@@ -32,6 +32,7 @@
 #include "tao/Sequence_TypeCode.h"
 #include "tao/String_TypeCode.h"
 #include "tao/Value_TypeCode.h"
+#include "tao/TypeCode_Value_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
@@ -141,15 +142,18 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/any_op_cs.cpp:57
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
-    CORBA::ValueBase *&_tao_elem
-  ) const
+namespace TAO
 {
-  CORBA::add_ref (this->value_);
-  _tao_elem = this->value_;
-  return 1;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
+      CORBA::ValueBase *&_tao_elem
+    ) const
+  {
+    CORBA::add_ref (this->value_);
+    _tao_elem = this->value_;
+    return 1;
+  }
 }
 // Copying insertion.
 void
@@ -197,15 +201,18 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/any_op_cs.cpp:57
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>::to_value (
-    CORBA::ValueBase *&_tao_elem
-  ) const
+namespace TAO
 {
-  CORBA::add_ref (this->value_);
-  _tao_elem = this->value_;
-  return 1;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>::to_value (
+      CORBA::ValueBase *&_tao_elem
+    ) const
+  {
+    CORBA::add_ref (this->value_);
+    _tao_elem = this->value_;
+    return 1;
+  }
 }
 // Copying insertion.
 void
@@ -252,6 +259,7 @@ operator>>= (
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
+
 
 // Copying insertion.
 void operator<<= (
