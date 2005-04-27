@@ -2209,7 +2209,7 @@ namespace
          << " ::PortableServer::Servant" << endl
          << "create" << t.name () << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
-         << "CIAO::Session_Container *c,
+         << "CIAO::Session_Container *c," << endl
          << "const char *ins_name" << endl
          << STRS[ENV_HDR] << ");" << endl;
     }
