@@ -31,6 +31,7 @@
 #include "tao/Alias_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Value_TypeCode.h"
+#include "tao/TypeCode_Value_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
@@ -43,7 +44,7 @@ static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> con
     { "is_system_exception", &CORBA::_tc_boolean, CORBA::PUBLIC_MEMBER },
     { "byte_order", &CORBA::_tc_boolean, CORBA::PUBLIC_MEMBER },
     { "marshaled_exception", &CORBA::_tc_OctetSeq, CORBA::PUBLIC_MEMBER }
-    
+
   };
 
 static TAO::TypeCode::Value<char const *,
@@ -59,7 +60,7 @@ static TAO::TypeCode::Value<char const *,
     &CORBA::_tc_null,
     _tao_fields_Messaging_ExceptionHolder,
     3);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ExceptionHolder =
@@ -77,7 +78,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_Messaging_ReplyHandler (
     "IDL:omg.org/Messaging/ReplyHandler:1.0",
     "ReplyHandler");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyHandler =
@@ -89,16 +90,20 @@ namespace Messaging
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/any_op_cs.cpp:57
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ExceptionHolder>::to_value (
-    CORBA::ValueBase *&_tao_elem
-  ) const
+namespace TAO
 {
-  CORBA::add_ref (this->value_);
-  _tao_elem = this->value_;
-  return 1;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ExceptionHolder>::to_value (
+      CORBA::ValueBase *&_tao_elem
+    ) const
+  {
+    CORBA::add_ref (this->value_);
+    _tao_elem = this->value_;
+    return 1;
+  }
 }
+
 // Copying insertion.
 void
 operator<<= (
@@ -145,14 +150,17 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyHandler>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyHandler>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
 // Copying insertion.

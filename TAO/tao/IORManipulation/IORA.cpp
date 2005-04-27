@@ -32,6 +32,7 @@
 #include "tao/Objref_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
+#include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
@@ -238,31 +239,34 @@ namespace TAO_IOP
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::EmptyProfileList>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
+namespace TAO
 {
-  CORBA::String_var id;
-  
-  if (!(cdr >> id.out ()))
-    {
-      return false;
-    }
-  
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return false;
-    }
-  ACE_ENDTRY;
-  
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<TAO_IOP::EmptyProfileList>::demarshal_value (
+      TAO_InputCDR & cdr
+    )
+  {
+    CORBA::String_var id;
+    
+    if (!(cdr >> id.out ()))
+      {
+        return false;
+      }
+    
+    ACE_TRY_NEW_ENV
+      {
+        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return false;
+      }
+    ACE_ENDTRY;
+    
+    return true;
+  }
 }
 
 // Copying insertion.
@@ -323,31 +327,34 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::NotFound>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
+namespace TAO
 {
-  CORBA::String_var id;
-  
-  if (!(cdr >> id.out ()))
-    {
-      return false;
-    }
-  
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return false;
-    }
-  ACE_ENDTRY;
-  
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<TAO_IOP::NotFound>::demarshal_value (
+      TAO_InputCDR & cdr
+    )
+  {
+    CORBA::String_var id;
+    
+    if (!(cdr >> id.out ()))
+      {
+        return false;
+      }
+    
+    ACE_TRY_NEW_ENV
+      {
+        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return false;
+      }
+    ACE_ENDTRY;
+    
+    return true;
+  }
 }
 
 // Copying insertion.
@@ -408,31 +415,34 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::Duplicate>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
+namespace TAO
 {
-  CORBA::String_var id;
-  
-  if (!(cdr >> id.out ()))
-    {
-      return false;
-    }
-  
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return false;
-    }
-  ACE_ENDTRY;
-  
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<TAO_IOP::Duplicate>::demarshal_value (
+      TAO_InputCDR & cdr
+    )
+  {
+    CORBA::String_var id;
+    
+    if (!(cdr >> id.out ()))
+      {
+        return false;
+      }
+    
+    ACE_TRY_NEW_ENV
+      {
+        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return false;
+      }
+    ACE_ENDTRY;
+    
+    return true;
+  }
 }
 
 // Copying insertion.
@@ -493,31 +503,34 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::Invalid_IOR>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
+namespace TAO
 {
-  CORBA::String_var id;
-  
-  if (!(cdr >> id.out ()))
-    {
-      return false;
-    }
-  
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return false;
-    }
-  ACE_ENDTRY;
-  
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<TAO_IOP::Invalid_IOR>::demarshal_value (
+      TAO_InputCDR & cdr
+    )
+  {
+    CORBA::String_var id;
+    
+    if (!(cdr >> id.out ()))
+      {
+        return false;
+      }
+    
+    ACE_TRY_NEW_ENV
+      {
+        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return false;
+      }
+    ACE_ENDTRY;
+    
+    return true;
+  }
 }
 
 // Copying insertion.
@@ -578,31 +591,34 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::MultiProfileList>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
+namespace TAO
 {
-  CORBA::String_var id;
-  
-  if (!(cdr >> id.out ()))
-    {
-      return false;
-    }
-  
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return false;
-    }
-  ACE_ENDTRY;
-  
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<TAO_IOP::MultiProfileList>::demarshal_value (
+      TAO_InputCDR & cdr
+    )
+  {
+    CORBA::String_var id;
+    
+    if (!(cdr >> id.out ()))
+      {
+        return false;
+      }
+    
+    ACE_TRY_NEW_ENV
+      {
+        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return false;
+      }
+    ACE_ENDTRY;
+    
+    return true;
+  }
 }
 
 // Copying insertion.
@@ -663,28 +679,34 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<TAO_IOP::TAO_IOR_Property>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<TAO_IOP::TAO_IOR_Property>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<TAO_IOP::TAO_IOR_Property>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -732,28 +754,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -801,21 +829,24 @@ operator>>= (
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
-
-
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
-}// Copying insertion.
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const TAO_IOP::TAO_IOR_Manipulation::IORList &_tao_elem

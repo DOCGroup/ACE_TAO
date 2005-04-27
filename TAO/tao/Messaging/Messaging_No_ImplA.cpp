@@ -31,6 +31,7 @@
 #include "tao/Alias_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
+#include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
@@ -375,28 +376,34 @@ namespace Messaging
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RebindPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -502,28 +509,34 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -571,28 +584,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -640,28 +659,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -709,28 +734,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -778,28 +809,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -847,28 +884,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -916,28 +959,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -1043,28 +1092,34 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RoutingPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -1112,28 +1167,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -1181,28 +1242,34 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.

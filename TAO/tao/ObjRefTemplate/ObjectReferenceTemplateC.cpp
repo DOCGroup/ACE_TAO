@@ -55,7 +55,7 @@ namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
+  // be\be_visitor_arg_traits.cpp:489
 
 #if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRINGSEQ__ARG_TRAITS_CS_

@@ -30,6 +30,7 @@
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
+#include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
@@ -61,31 +62,34 @@ namespace CORBA
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
+namespace TAO
 {
-  CORBA::String_var id;
-  
-  if (!(cdr >> id.out ()))
-    {
-      return false;
-    }
-  
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return false;
-    }
-  ACE_ENDTRY;
-  
-  return true;
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
+      TAO_InputCDR & cdr
+    )
+  {
+    CORBA::String_var id;
+    
+    if (!(cdr >> id.out ()))
+      {
+        return false;
+      }
+    
+    ACE_TRY_NEW_ENV
+      {
+        this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return false;
+      }
+    ACE_ENDTRY;
+    
+    return true;
+  }
 }
 
 // Copying insertion.
