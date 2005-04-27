@@ -141,9 +141,9 @@ UTL_String::canonicalize (void)
 {
   for (size_t i = 0; i < this->len; ++i)
     {
-      if (ACE_OS::isalpha (this->p_str[i]))
+      if (ACE_OS::ace_isalpha (this->p_str[i]))
         {
-          this->c_str[i] = (char) ACE_OS::toupper (this->p_str[i]);
+          this->c_str[i] = (char) ACE_OS::ace_toupper (this->p_str[i]);
         }
       else
         {
