@@ -89,7 +89,7 @@ namespace TAO
     S & arg (void);
 
   private:
-    mutable S & x_;
+    S & x_;
   };
 
   /**
