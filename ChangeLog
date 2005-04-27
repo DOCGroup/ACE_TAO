@@ -1,3 +1,9 @@
+Wed Apr 27 15:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+          When ACE_HAS_CLOCK_GETTIME is defined include ace/os_include/
+          os_time.h to get nanosleep. Fixes compile errors with gcc on ia64
+
 Tue Apr 26 10:59:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* netsvcs/lib/Makefile.am:
