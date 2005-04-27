@@ -1,3 +1,9 @@
+Wed Apr 27 20:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Misc/pingpong.cpp:
+          When no commandline argument has been passed, exit normally with
+          an ACE_ERROR_RETURN instead of an abort
+
 Wed Apr 27 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Block.h:
