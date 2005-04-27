@@ -1,3 +1,29 @@
+Wed Apr 27 18:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+          Generate template specializations withing namespace TAO {} to
+          resolve compiler errors with Visual Age
+
+        * tao/Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.h:
+          Removed not needed mutable keyword
+
+        * tao/TAOA.cpp:
+        * tao/WrongTransactionA.cpp:
+        * tao/IORManipulation/IORA.cpp:
+        * tao/Messaging/*A.cpp:
+        * tao/Messaging/*C.{h,cpp,inl}:
+        * tao/ObjRefTemplate/*A.cpp:
+        * tao/ObjRefTemplate/*C.{h,cpp,inl}:
+        * tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.{h,cpp}:
+          Regenerated
+
 Wed Apr 27 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_string.cpp:
