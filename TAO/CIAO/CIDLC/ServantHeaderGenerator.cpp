@@ -1457,6 +1457,7 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr executor," << endl
          << "::Components::CCMHome_ptr h," << endl
+         << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
          << "::CIAO::Session_Container *c);" << endl << endl;
 
@@ -1632,7 +1633,8 @@ namespace
 
       os << "// CIAO specific operations on the servant " << endl
          << "CORBA::Object_ptr" << endl
-         << "get_facet_executor (const char *name" << endl
+         << "get_facet_executor (" << endl
+         << "const char *name" << endl
          << STRS[ENV_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS]<< "));" << endl << endl;
@@ -1655,6 +1657,8 @@ namespace
 
         component_emitter.traverse (t);
       }
+      
+      os << "const char *ins_name_;" << endl << endl;
 
       os << "private:" << endl << endl
          << "void" << endl
@@ -2004,6 +2008,7 @@ namespace
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
+         << "const char *ins_name," << endl
          << "::CIAO::Session_Container *c);" << endl << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);"

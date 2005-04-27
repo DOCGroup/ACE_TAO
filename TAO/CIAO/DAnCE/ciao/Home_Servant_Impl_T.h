@@ -55,7 +55,8 @@ namespace CIAO
   {
   public:
     Home_Servant_Impl (EXEC * exe,
-                       Session_Container * c);
+                       Session_Container * c,
+                       const char *ins_name);
 
     virtual ~Home_Servant_Impl (void);
 
@@ -98,14 +99,18 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
+    const char *ins_name_;
     EXEC_VAR executor_;
 
     typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
-                            Components::CCMObject_ptr,
-                            TAO_ObjectId_Hash,
-                            ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX> OBJREF_MAP;
+                                    Components::CCMObject_ptr,
+                                    TAO_ObjectId_Hash,
+                                    ACE_Equal_To<PortableServer::ObjectId>,
+                                    ACE_SYNCH_MUTEX>
+      OBJREF_MAP;
+    
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;
+    
     OBJREF_MAP objref_map_;
   };
 }

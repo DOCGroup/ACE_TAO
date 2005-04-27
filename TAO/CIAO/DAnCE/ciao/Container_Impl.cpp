@@ -53,13 +53,13 @@ CIAO::Container_Impl::init (const ::Deployment::Properties &properties
 Deployment::ComponentInfos *
 CIAO::Container_Impl::install (
     const ::Deployment::ContainerImplementationInfo & container_impl_info
-    ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ::Deployment::UnknownImplId,
-        ::Deployment::ImplEntryPointNotFound,
-        ::Deployment::InstallationFailure,
-        ::Components::InvalidConfiguration))
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                  ::Deployment::UnknownImplId,
+                  ::Deployment::ImplEntryPointNotFound,
+                  ::Deployment::InstallationFailure,
+                  ::Components::InvalidConfiguration))
 {
   Deployment::ComponentInfos_var retv;
   ACE_TRY
@@ -220,7 +220,8 @@ CIAO::Container_Impl::install_home (
     this->container_->ciao_install_home (impl_info.executor_dll.in (),
                                          impl_info.executor_entrypt.in (),
                                          impl_info.servant_dll.in (),
-                                         impl_info.servant_entrypt.in ()
+                                         impl_info.servant_entrypt.in (),
+                                         impl_info.component_instance_name.in ()
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Components::CCMHome::_nil ());
   // We don't have to do _narrow since the generated code makes sure of
