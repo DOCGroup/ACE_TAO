@@ -28,8 +28,8 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-// Specifies the size of the fixed length portion of
-// the Transfer structure in ACE_Token_Request
+/// Specifies the size of the fixed length portion of
+/// the Transfer structure in ACE_Token_Request
 #define ACE_TOKEN_REQUEST_HEADER_SIZE 40
 
 /**
@@ -114,8 +114,10 @@ public:
   /// Set notify.  These should be used when acquire is the operation type.
   void notify (ACE_UINT32);
 
-  // = Set/get the timeout.
+  /// Get the timeout.
   ACE_Synch_Options &options (void) const;
+
+  /// Set the timeout.
   void options (const ACE_Synch_Options &options);
 
   // = Set/get the name of the token and the client id.  The set

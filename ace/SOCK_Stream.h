@@ -28,9 +28,9 @@ class ACE_Message_Block;
 /**
  * @class ACE_SOCK_Stream
  *
- * @brief Defines the methods in the <ACE_SOCK_Stream> abstraction.
+ * @brief Defines the methods in the ACE_SOCK_Stream abstraction.
  *
- * This adds additional wrapper methods atop the <ACE_SOCK_IO>
+ * This adds additional wrapper methods atop the ACE_SOCK_IO
  * class.
  *
  * <buf> is the buffer to write from or receive into.
@@ -73,7 +73,7 @@ public:
   /// Constructor.
   ACE_SOCK_Stream (void);
 
-  /// Constructor (sets the underlying <ACE_HANDLE> with <h>).
+  /// Constructor (sets the underlying ACE_HANDLE with @a h).
   ACE_SOCK_Stream (ACE_HANDLE h);
 
   /// Destructor.
@@ -81,46 +81,46 @@ public:
 
   // = I/O functions.
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Receive an <iovec> of size <iovcnt> from the connected socket.
+  /// Receive an @c iovec of size @a iovcnt from the connected socket.
   ssize_t recvv_n (iovec iov[],
                    int iovcnt,
                    const ACE_Time_Value *timeout = 0,
                    size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connection socket.
+  /// Try to send exactly @a len bytes from @a buf>to the connection socket.
   ssize_t send_n (const void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connected socket.
+  /// Try to send exactly @a len bytes from @a buf to the connected socket.
   ssize_t send_n (const void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Send all the <message_block>s chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
+  /// Send all the @c message_block's chained through their @c next and
+  /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Send an <iovec> of size <iovcnt> to the connected socket.
+  /// Send an @c iovec of size @a iovcnt to the connected socket.
   ssize_t sendv_n (const iovec iov[],
                    int iovcnt,
                    const ACE_Time_Value *timeout = 0,
@@ -144,7 +144,7 @@ public:
 
   /**
    * Close down the socket (we need this to make things work correctly
-   * on Win32, which requires use to do a <close_writer> before doing
+   * on Win32, which requires use to do a close_writer() before doing
    * the close to avoid losing data).
    */
   int close (void);

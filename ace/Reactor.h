@@ -236,7 +236,7 @@ public:
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq);
 
-  /// Return the current <ACE_Timer_Queue>.
+  /// Return the current ACE_Timer_Queue.
   virtual ACE_Timer_Queue *timer_queue (void) const;
 
   /// Close down and release all resources.
@@ -439,12 +439,12 @@ public:
   /**
    * Remove signal handler registration.
    *
-   * Remove the ACE_Event_Handler currently associated with <signum>.
+   * Remove the ACE_Event_Handler currently associated with @a signum.
    * Install the new disposition (if given) and return the previous
    * disposition (if desired by the caller).
    *
    * ACE_Event_Handler::handle_close() will be called with
-   * <ACE_Event_Handler::SIGNAL_MASK>.
+   * @c ACE_Event_Handler::SIGNAL_MASK.
    * ACE_Event_Handler::remove_reference() will also be called.
    */
   virtual int remove_handler (int signum,
@@ -464,19 +464,19 @@ public:
   // = Suspend and resume Handlers.
 
   /**
-   * Suspend <handle> temporarily.
+   * Suspend @a handle temporarily.
    */
   virtual int suspend_handler (ACE_HANDLE handle);
 
   /**
-   * Suspend <event_handler> temporarily.
+   * Suspend @a event_handler temporarily.
    *
    * Handle is obtained from ACE_Event_Handler::get_handle().
    */
   virtual int suspend_handler (ACE_Event_Handler *event_handler);
 
   /**
-   * Suspend <handles> temporarily.
+   * Suspend @a handles temporarily.
    *
    * Shorthand for calling suspend_handler(ACE_HANDLE) with multiple
    * <handles>.
@@ -489,12 +489,12 @@ public:
   virtual int suspend_handlers (void);
 
   /**
-   * Resume <handle>.
+   * Resume @a handle.
    */
   virtual int resume_handler (ACE_HANDLE handle);
 
   /**
-   * Resume <event_handler>.
+   * Resume @a event_handler.
    *
    * Handle is obtained from ACE_Event_Handler::get_handle().
    */
@@ -553,8 +553,8 @@ public:
   /**
    * Reset recurring timer interval.
    *
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
    * <gettimeofday>.  If <interval> is equal to
    * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
@@ -690,7 +690,7 @@ public:
 
   /**
    * Get the maximum number of times that the ACE_Reactor will
-   * iterate and dispatch the <ACE_Event_Handlers> that are passed in
+   * iterate and dispatch the ACE_Event_Handler's that are passed in
    * via the notify queue before breaking out of its
    * <ACE_Message_Queue::dequeue> loop.
    */
@@ -698,7 +698,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. If <eh> == 0, all notifications for
+   * ACE_Event_Handler object. If @a eh == 0, all notifications for
    * all handlers are removed (but not any notifications posted just
    * to wake up the reactor itself). Returns the number of
    * notifications purged.  Returns -1 on error.
@@ -707,7 +707,7 @@ public:
    * from the Reactor and ACE_Event_Handler::remove_reference() will
    * be called.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler *,
+  virtual int purge_pending_notifications (ACE_Event_Handler *eh,
                                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // = Assorted helper methods.
@@ -734,7 +734,7 @@ public:
                        ACE_Event_Handler **event_handler = 0);
 
   /**
-   * Check to see if <signum> is associated with a valid Event_Handler
+   * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
    * this <handler> if <event_handler> != 0.
    */
@@ -755,7 +755,7 @@ public:
   /// Wake up all threads in waiting in the event loop
   virtual void wakeup_all_threads (void);
 
-  /// Transfers ownership of Reactor to the <new_owner>.
+  /// Transfers ownership of Reactor to the @a new_owner.
   virtual int owner (ACE_thread_t new_owner,
                      ACE_thread_t *old_owner = 0);
 
