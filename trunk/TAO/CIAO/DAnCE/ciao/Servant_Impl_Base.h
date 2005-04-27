@@ -199,9 +199,6 @@ namespace CIAO
         const char *port_name
       );
       
-    // Used to create unique object IDs for port object references.  
-    static ACE_CString gen_UUID (void);
-      
   protected:
     typedef ACE_Hash_Map_Manager_Ex<const char *,
                                     ::Components::FacetDescription_var,

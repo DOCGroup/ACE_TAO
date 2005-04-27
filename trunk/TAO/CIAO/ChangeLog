@@ -1,3 +1,27 @@
+Wed Apr 27 11:15:12 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Container_Base.cpp:
+        * DAnCE/ciao/Container_Base.h:
+        * DAnCE/ciao/Container_Impl.cpp:
+        * DAnCE/ciao/Deployment_Core.idl:
+        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Home_Servant_Impl_T.h:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        
+          Some cosmetic changes and changes by Jaiganesh Balasubramanian
+          <jai@dre.vanderbilt.edu> to support the passing and storing of
+          the component instance name (from the descriptor XML file) in
+          the component instance. Also removed the gen_UUID() static 
+          method from class Servant_Impl_Base, since it is no longer
+          used.
+          
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Changes to servant code generation corresponding with the
+          changes above.
+
 Tue Apr 26 18:14:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/releasenotes/index.html:

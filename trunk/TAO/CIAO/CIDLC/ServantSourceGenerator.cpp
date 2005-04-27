@@ -2504,12 +2504,10 @@ namespace
            << "  >" << endl
            << "MACRO_MADNESS_TYPEDEF;" << endl;
            
-        os << "ACE_CString uuid = ::CIAO::Servant_Impl_Base::gen_UUID ();" << endl;
-           
         os << "ACE_NEW_THROW_EX ( " << endl
            << "tmp," << endl
            << "MACRO_MADNESS_TYPEDEF (" << endl
-           << "uuid.c_str ()," << endl
+           << "this->ins_name_," << endl
            << "\"" << p.name () << "\"," << endl
            << "CIAO::Port_Activator::Facet," << endl
            << "0," << endl
@@ -2526,7 +2524,7 @@ namespace
 
         os << "::CORBA::Object_var obj =" << endl
            << "this->container_->generate_reference (" << endl
-           << "uuid.c_str ()," << endl;
+           << "this->ins_name_," << endl;
 
         Traversal::ProviderData::belongs (p, repo_id_belongs_);
 
@@ -2849,13 +2847,10 @@ namespace
            << " MACRO_MADNESS_TYPEDEF;"
            << endl;
            
-        os << "ACE_CString uuid = ::CIAO::Servant_Impl_Base::gen_UUID ();"
-           << endl;
-
         os << "ACE_NEW_THROW_EX ( " << endl
            << "  tmp," << endl
            << "  MACRO_MADNESS_TYPEDEF (" << endl
-           << "    uuid.c_str ()," << endl
+           << "    this->ins_name_," << endl
            << "    \"" << c.name () << "\"," << endl
            << "    CIAO::Port_Activator::Sink," << endl
            << "    this->executor_.in ()," << endl
@@ -2872,7 +2867,7 @@ namespace
 
         os << "::CORBA::Object_var obj =" << endl
            << "this->container_->generate_reference (" << endl
-           << "  uuid.c_str ()," << endl
+           << "  this->ins_name_," << endl
            << "  ";
 
         Traversal::ConsumerData::belongs (c, repo_id_belongs_);
@@ -3176,11 +3171,13 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
+         << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
          << "::CIAO::Session_Container *c)" << endl
          << "  : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base "
          << "(h, hs, c))," << endl
-         << "    comp_svnt_base (exe, h, hs, c)" << endl
+         << "    comp_svnt_base (exe, h, hs, c)," << endl
+         << "    ins_name_ (ins_name)" << endl
          << "{"
          << "ACE_NEW (" << endl
          << "this->context_," << endl
@@ -4092,9 +4089,10 @@ namespace
          << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
+         << "const char *ins_name," << endl
          << "::CIAO::Session_Container *c)" << endl
          << "  : ACE_NESTED_CLASS (CIAO, Home_Servant_Impl_Base (c))," << endl
-         << "    home_svnt_base (exe, c";
+         << "    home_svnt_base (exe, c, ins_name";
          
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
@@ -4314,7 +4312,8 @@ namespace
          << endl
          << "create" << t.name () << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
-         << "CIAO::Session_Container *c" << endl
+         << "CIAO::Session_Container *c," << endl
+         << "const char *ins_name" << endl
          << STRS[ENV_SRC] << ")" << endl
          << "{"
          << "if (p == 0)" << endl
@@ -4338,6 +4337,7 @@ namespace
          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
          << "::" << t.name () << "_Servant (" << endl
          << "x.in ()," << endl
+         << "ins_name," << endl
          << "c);" << endl
          << "}";
     }

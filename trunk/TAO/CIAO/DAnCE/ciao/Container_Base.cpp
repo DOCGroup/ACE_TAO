@@ -28,12 +28,12 @@ namespace CIAO
   }
 
   Container::Container (CORBA::ORB_ptr o, Container_Impl *container_impl)
-    : orb_ (CORBA::ORB::_duplicate (o))
+    : orb_ (CORBA::ORB::_duplicate (o)),
+      container_impl_ (container_impl)
   {
-    this->container_impl_ = container_impl;
   }
 
-  Container::~Container ()
+  Container::~Container (void)
   {
   }
 
@@ -77,7 +77,7 @@ namespace CIAO
   {
   }
 
-  Session_Container::~Session_Container ()
+  Session_Container::~Session_Container (void)
   {
   }
 
@@ -92,7 +92,8 @@ namespace CIAO
     if (name == 0)
       {
         this->number_ = ++Session_Container::serial_number_;
-        ACE_OS::sprintf (buffer, "CIAO::Session_Container-%ld",
+        ACE_OS::sprintf (buffer,
+                         "CIAO::Session_Container-%ld",
                          this->number_);
         name = buffer;
       }
@@ -103,9 +104,11 @@ namespace CIAO
     ACE_CHECK_RETURN (-1);
 
     if (CORBA::is_nil (poa_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to initialize the POA.\n"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Unable to initialize the POA.\n"),
+                          -1);
+      }
 
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ()
@@ -149,7 +152,9 @@ namespace CIAO
     CORBA::PolicyList policies (0);
 
     if (p != 0)
-      policies = *p;
+      {
+        policies = *p;
+      }
 
     PortableServer::POAManager_var poa_manager =
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -205,7 +210,8 @@ namespace CIAO
 
     this->facet_cons_poa_->set_servant_manager (
         this->sa_
-        ACE_ENV_ARG_PARAMETER);
+        ACE_ENV_ARG_PARAMETER
+      );
     ACE_CHECK;
   }
 
@@ -218,18 +224,22 @@ namespace CIAO
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
-      tmp = this->component_poa_.in ();
+      {
+        tmp = this->component_poa_.in ();
+      }
     else
-      tmp = this->facet_cons_poa_.in ();
+      {
+        tmp = this->facet_cons_poa_.in ();
+      }
 
-    PortableServer::ObjectId_var oid
-      = tmp->activate_object (p
-                              ACE_ENV_ARG_PARAMETER);
+    PortableServer::ObjectId_var oid =
+      tmp->activate_object (p
+                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
-    CORBA::Object_var objref
-      = tmp->id_to_reference (oid.in ()
-                              ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var objref =
+      tmp->id_to_reference (oid.in ()
+                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
     return objref._retn ();
@@ -246,9 +256,9 @@ namespace CIAO
                                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
-    CORBA::Object_var objref
-      = this->component_poa_->id_to_reference (id.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var objref =
+      this->component_poa_->id_to_reference (id.in ()
+                                             ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
     oid = id._retn ();
@@ -266,7 +276,8 @@ namespace CIAO
   Session_Container::ciao_install_home (const char *exe_dll_name,
                                         const char *exe_entrypt,
                                         const char *sv_dll_name,
-                                        const char *sv_entrypt
+                                        const char *sv_entrypt,
+                                        const char *ins_name
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Deployment::UnknownImplId,
@@ -285,9 +296,17 @@ namespace CIAO
             if (CIAO::debug_level () > 10)
               {
                 if (exe_dll_name == 0)
-                  ACE_DEBUG ((LM_DEBUG, "ERROR (install_home): Null component executor DLL name\n"));
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "ERROR (install_home): Null component "
+                                "executor DLL name\n"));
+                  }
                 if (sv_dll_name == 0)
-                  ACE_DEBUG ((LM_DEBUG, "ERROR (install_home): Null component servant DLL name\n"));
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "ERROR (install_home): Null component "
+                                "servant DLL name\n"));
+                  }
               }
 
             ACE_THROW_RETURN (Deployment::UnknownImplId (),
@@ -299,7 +318,12 @@ namespace CIAO
                                0) != 0)
           {
             if (CIAO::debug_level () > 10)
-              ACE_DEBUG ((LM_ERROR, "ERROR (install_home): Failed to open executor DLL: %s\n", exe_dll_name));
+              {
+                ACE_DEBUG ((LM_ERROR,
+                            "ERROR (install_home): Failed to open executor DLL: %s\n",
+                            exe_dll_name));
+              }
+              
             ACE_THROW_RETURN (Deployment::UnknownImplId (),
                               Components::CCMHome::_nil ());
           }
@@ -309,14 +333,21 @@ namespace CIAO
                               0) != 0)
           {
             if (CIAO::debug_level () > 10)
-              ACE_DEBUG ((LM_ERROR, "ERROR (install_home): Failed to open servant DLL: %s\n", sv_dll_name));
+              {
+                ACE_DEBUG ((LM_ERROR,
+                            "ERROR (install_home): Failed to open servant DLL: %s\n",
+                            sv_dll_name));
+              }
+              
             ACE_THROW_RETURN (Deployment::UnknownImplId (),
                               Components::CCMHome::_nil ());
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
-          ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
-                            Components::CCMHome::_nil ());
+          {
+            ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+                              Components::CCMHome::_nil ());
+          }
 
         // @@ (OO) Please use a static_cast<> here instead of a C-style
         //         cast.  ANSI C++ casts are the preferred (and modern)
@@ -326,38 +357,52 @@ namespace CIAO
     }
     else
       {
-        if (static_entrypts_maps_ == 0 ||
-            static_entrypts_maps_->home_creator_funcptr_map_ == 0 ||
-            static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
-          ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
-                            Components::CCMHome::_nil ());
+        if (static_entrypts_maps_ == 0
+            || static_entrypts_maps_->home_creator_funcptr_map_ == 0
+            || static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
+          {
+            ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+                              Components::CCMHome::_nil ());
+          }
 
         ACE_CString exe_entrypt_str (exe_entrypt);
-        static_entrypts_maps_->home_creator_funcptr_map_->
-          find (exe_entrypt_str, hcreator);
+        static_entrypts_maps_->home_creator_funcptr_map_->find (
+            exe_entrypt_str,
+            hcreator
+          );
 
         ACE_CString sv_entrypt_str (sv_entrypt);
-        static_entrypts_maps_->home_servant_creator_funcptr_map_->
-          find (sv_entrypt_str, screator);
+        static_entrypts_maps_->home_servant_creator_funcptr_map_->find (
+            sv_entrypt_str,
+            screator
+          );
       }
 
     if (hcreator == 0 || screator == 0)
-      ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
-                        Components::CCMHome::_nil ());
+      {
+        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+                          Components::CCMHome::_nil ());
+      }
 
     Components::HomeExecutorBase_var home_executor = hcreator ();
+    
     if (CORBA::is_nil (home_executor.in ()))
-      ACE_THROW_RETURN (Deployment::InstallationFailure (),
-                        Components::CCMHome::_nil ());
+      {
+        ACE_THROW_RETURN (Deployment::InstallationFailure (),
+                          Components::CCMHome::_nil ());
+      }
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
-                                                     this
+                                                     this,
+                                                     ins_name
                                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
     if (home_servant == 0)
-      ACE_THROW_RETURN (Deployment::InstallationFailure (),
-                        Components::CCMHome::_nil ());
+      {
+        ACE_THROW_RETURN (Deployment::InstallationFailure (),
+                          Components::CCMHome::_nil ());
+      }
 
     PortableServer::ServantBase_var safe (home_servant);
 
@@ -373,7 +418,6 @@ namespace CIAO
     ACE_CHECK_RETURN (0);
 
     return homeref._retn ();
-
   }
 
   void
@@ -396,9 +440,13 @@ namespace CIAO
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
-      tmp = this->component_poa_.in ();
+      {
+        tmp = this->component_poa_.in ();
+      }
     else
-      tmp = this->facet_cons_poa_.in ();
+      {
+        tmp = this->facet_cons_poa_.in ();
+      }
 
     PortableServer::ObjectId_var oid =
       tmp->reference_to_id (objref
@@ -418,9 +466,13 @@ namespace CIAO
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
-      tmp = this->component_poa_.in ();
+      {
+        tmp = this->component_poa_.in ();
+      }
     else
-      tmp = this->facet_cons_poa_.in ();
+      {
+        tmp = this->facet_cons_poa_.in ();
+      }
 
     PortableServer::ObjectId_var oid
       = tmp->servant_to_id (svt
@@ -450,10 +502,11 @@ namespace CIAO
   }
 
   void
-  Session_Container::add_servant_map
-    (PortableServer::ObjectId &,
-     Dynamic_Component_Servant_Base*
-     ACE_ENV_ARG_DECL_NOT_USED)
+  Session_Container::add_servant_map (
+      PortableServer::ObjectId &,
+      Dynamic_Component_Servant_Base*
+      ACE_ENV_ARG_DECL_NOT_USED
+    )
   {
   }
 
@@ -466,9 +519,10 @@ namespace CIAO
   }
 
   void
-  Session_Container::delete_servant_map
-    (PortableServer::ObjectId &
-     ACE_ENV_ARG_DECL_NOT_USED)
+  Session_Container::delete_servant_map (
+      PortableServer::ObjectId &
+      ACE_ENV_ARG_DECL_NOT_USED
+    )
   {
   }
 
@@ -489,9 +543,13 @@ namespace CIAO
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
-      tmp = this->component_poa_.in ();
+      {
+        tmp = this->component_poa_.in ();
+      }
     else
-      tmp = this->facet_cons_poa_.in ();
+      {
+        tmp = this->facet_cons_poa_.in ();
+      }
 
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
@@ -513,5 +571,4 @@ namespace CIAO
 
     return objref._retn ();
   }
-
 }
