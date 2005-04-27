@@ -71,8 +71,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (util, 
-           utl_string, 
+#include "ace/OS_NS_ctype.h"
+
+ACE_RCSID (util,
+           utl_string,
            "$Id$")
 
 UTL_String::UTL_String (void)
@@ -139,9 +141,9 @@ UTL_String::canonicalize (void)
 {
   for (size_t i = 0; i < this->len; ++i)
     {
-      if (isalpha (this->p_str[i]))
+      if (ACE_OS::isalpha (this->p_str[i]))
         {
-          this->c_str[i] = (char) toupper (this->p_str[i]);
+          this->c_str[i] = (char) ACE_OS::toupper (this->p_str[i]);
         }
       else
         {
