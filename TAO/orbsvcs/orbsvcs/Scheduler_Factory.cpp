@@ -716,12 +716,12 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
      "%13d, /* priority */\n"
      "%13d, /* preemption_subpriority */\n"
      "%13d, /* preemption_priority */\n"
-     "%13u } /* enabled */\n";
+     "%13d } /* enabled */\n";
 
    for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
-   {
-           fprintf(file,
-                       subset_tuple_format,
+     {
+       fprintf(file,
+               subset_tuple_format,
                tuple_ptr_array[ndx]->handle,
                tuple_ptr_array[ndx]->rate_index,
                tuple_ptr_array[ndx]->period,
@@ -730,7 +730,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
                tuple_ptr_array[ndx]->preemption_subpriority,
                tuple_ptr_array[ndx]->preemption_priority,
                tuple_ptr_array[ndx]->enabled);
-   }
+     }
 
    ACE_OS::fclose (file);
 }
