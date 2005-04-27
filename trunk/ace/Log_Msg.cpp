@@ -2182,6 +2182,11 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
                           size_t size,
                           const ACE_TCHAR *text)
 {
+  // Only print the message if <priority_mask_> hasn't been reset to
+  // exclude this logging priority.
+  if (this->log_priority_enabled (log_priority) == 0)
+    return 0;
+
   ACE_TCHAR buf[ACE_Log_Record::MAXLOGMSGLEN -
     ACE_Log_Record::VERBOSE_LEN - 58];
   // 58 for the HEXDUMP header;
