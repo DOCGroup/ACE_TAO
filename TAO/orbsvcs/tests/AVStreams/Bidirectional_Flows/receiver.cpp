@@ -10,7 +10,7 @@ static FILE *output_file = 0;
 static const char *output_file_name = "output";
 // File name of the file into which received data is written.
 
-typedef ACE_Singleton<Receiver,ACE_Null_Mutex> RECEIVER;
+typedef ACE_Unmanaged_Singleton<Receiver,ACE_Null_Mutex> RECEIVER;
 //Create a singleton instance of the receiver.
 
 int
@@ -349,17 +349,19 @@ main (int argc,
 
   ACE_OS::fclose (output_file);
 
+  RECEIVER::close ();  // Explicitly finalize the Unmanaged_Singleton.
+
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <Receiver,ACE_Null_Mutex>;
+template class ACE_Unmanaged_Singleton <Receiver,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <Receiver,ACE_Null_Mutex>
+#pragma instantiate ACE_Unmanaged_Singleton <Receiver,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Receiver, ACE_Null_Mutex> *ACE_Singleton<Receiver, ACE_Null_Mutex>::singleton_;
+template ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

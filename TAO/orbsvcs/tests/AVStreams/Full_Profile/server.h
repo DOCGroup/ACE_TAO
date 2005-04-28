@@ -63,4 +63,4 @@ protected:
   AVStreams::FlowConsumer_var fep_b_obj_;
 };
 
-typedef ACE_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;
+typedef ACE_Unmanaged_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;
