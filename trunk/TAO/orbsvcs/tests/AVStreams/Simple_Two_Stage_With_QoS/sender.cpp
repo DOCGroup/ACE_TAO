@@ -103,19 +103,19 @@ Sender::parse_args (int argc,
           this->filename_ = opts.opt_arg ();
           break;
         case 'p':
-	    this->protocol_ = opts.opt_arg ();
+            this->protocol_ = opts.opt_arg ();
 #ifdef ACE_HAS_RAPI
-	    if (this->protocol_ != ACE_CString ("QoS_UDP"))
-	      ACE_ERROR_RETURN ((LM_ERROR,
-				 "When rapi=1 protocol must be QoS_UDP\n"),
-				-1);
-#else 
-  	    if (this->protocol_ == ACE_CString ("QoS_UDP"))
-	      ACE_ERROR_RETURN ((LM_ERROR,
-		  	         "When rapi=0 protocol must not be QoS_UDP\n"),
-				-1);
+            if (this->protocol_ != ACE_CString ("QoS_UDP"))
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "When rapi=1 protocol must be QoS_UDP\n"),
+                                -1);
+#else
+            if (this->protocol_ == ACE_CString ("QoS_UDP"))
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "When rapi=0 protocol must not be QoS_UDP\n"),
+                                -1);
 #endif //ACE_HAS_RAPI
-	    break;
+            break;
         case 'r':
           this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
           break;
@@ -272,17 +272,17 @@ Sender::init (int argc,
   ACE_INET_Addr* addr;
   if (this->address_ != 0)
     ACE_NEW_RETURN (addr,
-		    ACE_INET_Addr (this->address_),
-		    -1);
+                    ACE_INET_Addr (this->address_),
+                    -1);
   else
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       ACE_NEW_RETURN (addr,
-		      ACE_INET_Addr ("5000",
-				     buf),
-		      -1);
+                      ACE_INET_Addr ("5000",
+                                     buf),
+                      -1);
     }
 
   // Create the forward flow specification to describe the flow.
@@ -296,17 +296,17 @@ Sender::init (int argc,
   ACE_INET_Addr* peer_addr;
   if (this->peer_addr_ != 0)
     ACE_NEW_RETURN (peer_addr,
-		    ACE_INET_Addr (this->peer_addr_),
-		    -1);
+                    ACE_INET_Addr (this->peer_addr_),
+                    -1);
   else
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       ACE_NEW_RETURN (peer_addr,
-		      ACE_INET_Addr ("5050",
-				     buf),
-		      -1);
+                      ACE_INET_Addr ("5050",
+                                     buf),
+                      -1);
     }
 
   entry.set_peer_addr (peer_addr);
@@ -487,7 +487,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
       this->streamctrl_->destroy (stop_spec
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0
                                                   ACE_ENV_ARG_PARAMETER);
