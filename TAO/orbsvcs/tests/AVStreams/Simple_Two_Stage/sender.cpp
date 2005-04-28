@@ -5,8 +5,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-typedef ACE_Singleton<Sender, ACE_Null_Mutex> SENDER;
 // Create a singleton instance of the Sender.
+
+// An Unmanaged_Singleton is used to avoid static object destruction
+// order related problems since the underlying singleton object
+// contains references to static TypeCodes.
+
+typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+
 
 int
 Sender_StreamEndPoint::get_callback (const char *,
@@ -488,17 +494,20 @@ main (int argc,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
+
+  SENDER::close ();  // Explicitly finalize the Unmanaged_Singleton.
+
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <Sender,ACE_Null_Mutex>;
+template class ACE_Unmanaged_Singleton <Sender,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_A<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <Sender,ACE_Null_Mutex>
+#pragma instantiate ACE_Unmanaged_Singleton <Sender,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Sender, ACE_Null_Mutex> *ACE_Singleton<Sender, ACE_Null_Mutex>::singleton_;
+template ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
