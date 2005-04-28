@@ -104,26 +104,20 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       if (node->is_local ())
         {
-          *os << " = 0;";
-        }
-      else
-        {
-          *os << ";";
+          *os << " = 0";
         }
 
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
-      *os << ";";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-      // Each method is pure virtual in the server header.
-      *os << " = 0;";
+      *os << " = 0";
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
     default:
-      break;
+      return 0;
     }
+    
+  *os << ";";
 
   return 0;
 }

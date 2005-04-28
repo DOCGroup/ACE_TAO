@@ -2449,6 +2449,15 @@ be_interface::session_component_child (void)
   return this->session_component_child_;
 }
 
+idl_bool
+be_interface::is_event_consumer (void)
+{
+  return 
+    this->pd_n_inherits == 1
+    && ACE_OS::strcmp (this->pd_inherits[0]->full_name (),
+                       "Components::EventConsumerBase") == 0;
+}
+
 const char *
 be_interface::base_proxy_impl_name (void)
 {
