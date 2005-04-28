@@ -1,3 +1,36 @@
+Thu Apr 28 15:01:38 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+
+	  Removed unused singleton.
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.h:
+	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.h:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+
+	  Converted remaining ACE_Singletons to ACE_Unmanaged_Singleton.
+	  See the ChangeLog entry "Wed Apr 27 23:36:45 2005  Ossama Othman
+	  <ossama@dre.vanderbilt.edu>" for details.
+
 Thu Apr 28 00:09:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCode.cpp (~TypeCode):

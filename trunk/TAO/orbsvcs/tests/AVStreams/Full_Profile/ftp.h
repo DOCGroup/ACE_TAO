@@ -84,6 +84,6 @@ private:
   AVStreams::FlowProducer_var fep_a_obj_;
 };
 
-typedef ACE_Singleton<Client,ACE_Null_Mutex> CLIENT;
+typedef ACE_Unmanaged_Singleton<Client,ACE_Null_Mutex> CLIENT;
 
 #endif /* TAO_AV_FTP_H */
