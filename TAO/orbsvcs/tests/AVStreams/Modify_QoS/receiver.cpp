@@ -3,9 +3,6 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 
-typedef ACE_Singleton<Receiver, ACE_Null_Mutex> RECEIVER;
-// Create a singleton instance of the Sender.
-
 static FILE *output_file = 0;
 // File handle of the file into which received data is written.
 
@@ -338,11 +335,9 @@ main (int argc,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <Receiver,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <Receiver,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
