@@ -10,6 +10,7 @@
 # include "tao/Union_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+#include "tao/SystemException.h"
 
 #include "ace/Value_Ptr.h"
 
@@ -57,7 +58,7 @@ TAO::TypeCode::Union<StringType,
     }
 
   return
-    cdr << enc.total_length ()
+    cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());
 }
 

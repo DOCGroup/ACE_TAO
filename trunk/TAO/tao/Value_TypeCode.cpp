@@ -5,6 +5,12 @@
 
 #include "tao/Value_TypeCode.h"
 #include "tao/TypeCode_Value_Field.h"
+#include "tao/CDR.h"
+
+#include "tao/ORB_Core.h"
+#include "tao/TypeCodeFactory_Adapter.h"
+
+#include "ace/Dynamic_Service.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Value_TypeCode.inl"
@@ -57,7 +63,7 @@ TAO::TypeCode::Value<StringType,
     }
 
   return
-    cdr << enc.total_length ()
+    cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());
 }
 
