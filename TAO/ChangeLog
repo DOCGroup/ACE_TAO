@@ -1,3 +1,17 @@
+Wed Apr 27 17:39:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Alias_TypeCode.cpp (tao_marshal):
+	* tao/Enum_TypeCode.cpp (tao_marshal):
+	* tao/Objref_TypeCode_Base.cpp (tao_marshal):
+	* tao/Sequence_TypeCode.cpp (tao_marshal):
+	* tao/Struct_TypeCode.cpp (tao_marshal):
+	* tao/Union_TypeCode.cpp (tao_marshal):
+	* tao/Value_TypeCode.cpp (tao_marshal):
+
+	  Cast the size_t return value of TAO_OutputCDR::total_length() to
+	  CORBA::ULong.  Addresses ambiguous CDR stream insertion operator
+	  overloads in some VxWorks builds.
+
 Wed Apr 27 16:10:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):

@@ -7,6 +7,7 @@
 #include "tao/TypeCode_Traits.h"
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/ORB_Core.h"
+#include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -51,7 +52,7 @@ TAO::TypeCode::Enum<StringType,
     }
 
   return
-    cdr << enc.total_length ()
+    cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());
 }
 

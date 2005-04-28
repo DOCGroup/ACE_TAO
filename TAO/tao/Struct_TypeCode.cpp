@@ -61,7 +61,7 @@ TAO::TypeCode::Struct<StringType,
     }
 
   return
-    cdr << enc.total_length ()
+    cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());
 }
 
