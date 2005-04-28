@@ -15,6 +15,14 @@ applications that utilize the ACE features.
           it is used for generating the lookup function for operation
           names associated with IDL interfaces.
 
-	. JAWS -- This is a high-performance HTTP Web server written
-	  with ACE.  It illustrates a number of sophisticated ACE
+	. JAWS -- This is a high-performance HTTP 1.0 web server
+          written with ACE.  It illustrates a number of sophisticated ACE 
 	  concurrency and event demultiplexing strategies.
+
+        . JAWS2 is an implementation of HTTP/1.0 similar to JAWS.  It has
+          no HTTP/1.1 features.  It extends JAWS to add a more
+          flexible I/O and concurrency framework utilizing strategies. 
+
+        . JAWS3 is a framework that provides a state-machine interface
+          to developing a server, but it does not implement HTTP.
+

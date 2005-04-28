@@ -4,14 +4,15 @@ Wed Apr 27 14:29:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	  Check log priority before allocating message buffer and
 	  formatting message, an unnecessary expense if the message isn't
-	  going to be output.  Thanks to < joez at datawire dot net > for
+	  going to be output.  Thanks to <joez at datawire dot net> for
 	  reporting this problem.
 
 Wed Apr 27 20:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Misc/pingpong.cpp:
           When no commandline argument has been passed, exit normally with
-          an ACE_ERROR_RETURN instead of an abort
+ 	  an ACE_ERROR_RETURN instead of an abort.  Thanks to Alex Ott
+ 	  <ott@jet.msk.su> for reporting this.
 
 Wed Apr 27 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
