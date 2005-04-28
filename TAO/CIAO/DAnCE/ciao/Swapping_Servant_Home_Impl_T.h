@@ -56,6 +56,7 @@ namespace CIAO
   public:
     Swapping_Home_Servant_Impl (EXEC * exe,
                        Session_Container * c,
+                       const char* ins_name,
                        const char* obj_id, const char* repo_id);
 
     virtual ~Swapping_Home_Servant_Impl (void);
@@ -117,6 +118,7 @@ namespace CIAO
     typedef DYNAMIC_SERVANT_MAP::iterator DYNAMIC_SERVANT_MAP_ITERATOR;
     DYNAMIC_SERVANT_MAP dynamic_servant_map_;
 
+    const char* ins_name_;
     const char* obj_id_;
     const char* repo_id_;
   };

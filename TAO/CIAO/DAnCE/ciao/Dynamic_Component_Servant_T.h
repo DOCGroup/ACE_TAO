@@ -40,6 +40,7 @@ namespace CIAO
     // @@Jai, please add documentation for these methods.
     Dynamic_Component_Servant (Components::EnterpriseComponent_ptr ec,
                                Components::CCMHome_ptr home,
+                               const char* ins_name,
                                Home_Servant_Impl_Base *home_servant,
                                Session_Container *c);
 
@@ -55,6 +56,8 @@ namespace CIAO
 
   protected:
     Components::EnterpriseComponent_var executor_;
+
+    CORBA::String_var ins_name_;
 
     Home_Servant_Impl_Base *home_servant_;
 
