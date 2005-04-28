@@ -167,7 +167,7 @@ private:
 
 };
 
-typedef ACE_Singleton<Client,ACE_Null_Mutex> CLIENT;
+typedef ACE_Unmanaged_Singleton<Client,ACE_Null_Mutex> CLIENT;
 
 #endif /* TAO_AV_FTP_H */
 
