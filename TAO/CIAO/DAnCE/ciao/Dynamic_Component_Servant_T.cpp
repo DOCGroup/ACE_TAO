@@ -18,10 +18,12 @@ namespace CIAO
     ::Dynamic_Component_Servant
         (Components::EnterpriseComponent_ptr ec,
          Components::CCMHome_ptr home,
+         const char* ins_name,
          Home_Servant_Impl_Base *home_servant,
          Session_Container *c)
       : Dynamic_Component_Servant_Base (c)
       , executor_ (Components::EnterpriseComponent::_duplicate (ec))
+      , ins_name_ (ins_name)
       , home_servant_ (home_servant)
       , home_ (Components::CCMHome::_duplicate (home))
       , component_removed_ (false)
@@ -100,6 +102,7 @@ namespace CIAO
 
     /// @@ Jai, should you be using ACE_NEW_THROW_EX here?
     COMP_SVNT *svt = new COMP_SVNT(ciao_comp.in (), this->home_.in (),
+                                   this->ins_name_.in (),
                                    this->home_servant_,
                                    this->container_);
 

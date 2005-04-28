@@ -25,9 +25,11 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::Swapping_Home_Servant_Impl (
       EXEC * exe,
-      Session_Container * c, const char* obj_id, const char* repo_id)
+      Session_Container * c, 
+      const char* ins_name, const char* obj_id, const char* repo_id)
     : Home_Servant_Impl_Base (c),
-      executor_ (EXEC::_duplicate (exe)), obj_id_ (obj_id), repo_id_ (repo_id)
+      executor_ (EXEC::_duplicate (exe)), 
+      ins_name_ (ins_name), obj_id_ (obj_id), repo_id_ (repo_id)
   {
   }
 
@@ -223,7 +225,7 @@ namespace CIAO
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
-          (ec, home.in (), this, this->container_);
+          (ec, home.in (), this->ins_name_, this, this->container_);
 
     this->container_->add_servant_map (oid, svt ACE_ENV_ARG_PARAMETER);
 
