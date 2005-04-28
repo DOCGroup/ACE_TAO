@@ -216,19 +216,19 @@ Client::init (int argc,
   ACE_INET_Addr* addr;
   if (this->address_ != 0)
     ACE_NEW_RETURN (addr,
-		    ACE_INET_Addr (this->address_),
-		    -1);
+                    ACE_INET_Addr (this->address_),
+                    -1);
   else
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       ACE_NEW_RETURN (addr,
-		      ACE_INET_Addr ("5000",
-				     buf),
-		      -1);
+                      ACE_INET_Addr ("5000",
+                                     buf),
+                      -1);
     }
-		    
+
   // Initialize the flowname
   ACE_NEW_RETURN (this->flowname_,
                   char [BUFSIZ],
@@ -249,17 +249,17 @@ Client::init (int argc,
   ACE_INET_Addr* peer_addr;
   if (this->peer_addr_str_ != 0)
     ACE_NEW_RETURN (peer_addr,
-		    ACE_INET_Addr (this->peer_addr_str_),
-		    -1);
+                    ACE_INET_Addr (this->peer_addr_str_),
+                    -1);
   else
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       ACE_NEW_RETURN (peer_addr,
-		      ACE_INET_Addr ("5050",
-				     buf),
-		      -1);
+                      ACE_INET_Addr ("5050",
+                                     buf),
+                      -1);
     }
 
   entry.set_peer_addr (peer_addr);
