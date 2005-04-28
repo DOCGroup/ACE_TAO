@@ -52,7 +52,7 @@ int
 FTP_Server_Callback::handle_end_stream (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::end_stream\n"));
-  done = 1; 
+  done = 1;
   return 0;
 }
 
@@ -138,10 +138,10 @@ Server::run (void)
       while( !done )
       {
          if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
-	 {
+         {
               orb->perform_work( ACE_ENV_SINGLE_ARG_PARAMETER );
-	      ACE_TRY_CHECK;
-	 }
+              ACE_TRY_CHECK;
+         }
       }
       ACE_TRY_CHECK;
 

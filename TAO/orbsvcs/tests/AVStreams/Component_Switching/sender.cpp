@@ -233,7 +233,7 @@ Sender::init (int argc,
   ACE_Reactor *reactor =
     TAO_AV_CORE::instance ()->reactor ();
 
-  
+
   if (reactor->register_handler (SIGINT,
                                  &this->signal_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
