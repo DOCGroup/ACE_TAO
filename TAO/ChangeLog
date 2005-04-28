@@ -1,3 +1,24 @@
+Wed Apr 27 23:36:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/server.h:
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+
+	  Use an ACE_Unmanaged_Singleton instead of an ACE_Singleton,
+	  and explicitly close that unmanaged singleton prior to exiting
+	  main() to avoid order of destruction of static object	related
+	  problems.  The singleton instance in question indirectly
+	  contains a pointer to static TypeCodes, and assumes that the
+	  singleton itself will be destroyed after the static TypeCodes.
+	  This is not a portable assumption, especially since the CORBA
+	  spec explicitly allows reference count operations on TypeCodes
+	  to be no-ops, which is the case with TAO's new TypeCode
+	  implementation.
+
 Wed Apr 27 17:39:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Alias_TypeCode.cpp (tao_marshal):
