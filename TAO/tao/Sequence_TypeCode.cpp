@@ -4,6 +4,8 @@
 #define TAO_SEQUENCE_TYPECODE_CPP
 
 #include "tao/Sequence_TypeCode.h"
+#include "tao/CDR.h"
+#include "tao/TypeCode_Traits.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Sequence_TypeCode.inl"
@@ -27,7 +29,7 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_marshal (
     enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
     && enc << Traits<TypeCodeType>::get_typecode (this->content_type_)
     && enc << this->length_
-    && cdr << enc.total_length ()
+    && cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());
 }
 
