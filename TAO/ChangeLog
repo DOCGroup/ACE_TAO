@@ -1,3 +1,11 @@
+Thu Apr 28 00:09:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode.cpp (~TypeCode):
+	* tao/TypeCode.inl (~TypeCode):
+
+	  Moved destructor out of line since it is virtual.  Inlining it
+	  doesn't buy us anything in this case.
+
 Wed Apr 27 23:36:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:

@@ -20,6 +20,10 @@ ACE_RCSID (tao,
 
 #include "ace/OS_NS_string.h"
 
+  
+CORBA::TypeCode::~TypeCode (void)
+{
+}
 
 CORBA::Boolean
 CORBA::TypeCode::equal (TypeCode_ptr tc
