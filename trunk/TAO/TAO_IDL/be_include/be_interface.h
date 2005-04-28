@@ -329,6 +329,9 @@ public:
 
   int session_component_child (void);
   // Is Components::SessionComponent an immediate parent?
+  
+  idl_bool is_event_consumer (void);
+  // Is EventConsumerBase our parent?
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
