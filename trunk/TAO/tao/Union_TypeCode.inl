@@ -35,7 +35,7 @@ TAO::TypeCode::Union<StringType,
 
 template <typename StringType,
           typename TypeCodeType,
-          typename CaseArrayType,
+          class CaseArrayType,
           class RefCountPolicy>
 ACE_INLINE CORBA::ULong
 TAO::TypeCode::Union<StringType,
@@ -48,12 +48,12 @@ TAO::TypeCode::Union<StringType,
 
 template <typename StringType,
           typename TypeCodeType,
-          typename CaseArrayType,
+          class CaseArrayType,
           class RefCountPolicy>
 ACE_INLINE typename TAO::TypeCode::Union<StringType,
                                          TypeCodeType,
                                          CaseArrayType,
-                                         RefCountPolicy>::case_type const &
+                                         RefCountPolicy>::case_type &
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
