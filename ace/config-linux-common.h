@@ -283,7 +283,9 @@
 
 // glibc requires _XOPEN_SOURCE_EXTENDED to make this prototype
 // visible, so force ACE to declare one.  Yuk!
-#define ACE_LACKS_MKSTEMP_PROTOTYPE
+#ifndef _XOPEN_SOURCE_EXTENDED
+# define ACE_LACKS_MKSTEMP_PROTOTYPE
+#endif  /* !_XOPEN_SOURCE_EXTENDED */
 
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
