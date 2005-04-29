@@ -1,3 +1,11 @@
+Thu Apr 28 22:53:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-linux-common.h (ACE_LACKS_MKSTEMP_PROTOTYPE):
+
+	  Do not define this preprocessor symbol if _XOPEN_SOURCE_EXTENDED
+	  is already defined.  Addresses mkstemp() unmatched prototype
+	  related errors exhibited by g++ 4.0 on some Linux platforms.
+
 Wed Apr 27 14:29:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Log_Msg.cpp (ACE_Log_Msg::log_hexdump):
