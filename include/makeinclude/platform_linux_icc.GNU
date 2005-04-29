@@ -98,6 +98,12 @@ ifneq ($(SYSARCH),ia64)
   OCFLAGS += -axK
 endif
 
+# Disable floating point optimizer solves problem with
+# min/max float values in the TAO_IDL compiler
+ifeq ($(SYSARCH),ia64)
+  CPPFLAGS += -mp
+endif
+
 PIC     = -KPIC
 AR      = ar
 ARFLAGS = rsuv
