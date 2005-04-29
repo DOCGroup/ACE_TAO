@@ -1,3 +1,12 @@
+Fri Apr 29 09:08:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* src/Key_List.cpp (output_binary_search_function): Added a
+  
+	  do {/* null */} while (&base == 0);
+	  
+	  to silence warnings on some compilers.  Thanks to Frank Pilhofer
+ 	  <fp@mc.com>.
+
 Fri Aug  5 15:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * apps/gperf/tests/gperf_test.mpb
