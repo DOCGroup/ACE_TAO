@@ -29,12 +29,12 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if defined (__USE_POSIX199309)
+#if (defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199309L)
 #  if !defined (ACE_HAS_CLOCK_GETTIME)
 #    define ACE_HAS_CLOCK_GETTIME
 #    define ACE_HAS_CLOCK_SETTIME
-#  endif
-#endif
+#  endif  /* !ACE_HAS_CLOCK_GETTIME */
+#endif  /* _POSIX_C_SOURCE >= 199309L */
 
 // First the machine specific part
 
@@ -97,8 +97,13 @@
 # define ACE_LACKS_STRTOK_R_PROTOTYPE
 // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
 
-// These macros determined by reading stdio.h on RH 7.1.
-# if defined (__USE_BSD) || defined (__USE_ISOC99) || defined (__USE_UNIX98)
+// These macros determined by reading <stdio.h> on RH 7.1 and glibc's
+// <features.h>.
+# if defined (_BSD_SOURCE) \
+  || defined (_ISOC99_SOURCE) \
+  || defined (_ISOC9X_SOURCE) \
+  || (defined (__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) \
+  || (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
 #   define ACE_HAS_SNPRINTF
 # endif
 
