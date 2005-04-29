@@ -16,6 +16,10 @@ ACE_Thread_Exit::cleanup (void *instance)
 
   delete (ACE_TSS_TYPE (ACE_Thread_Exit) *) instance;
 
+  // Set the thr_exit_ static to null to keep things from crashing if
+  // ACE::fini() is enabled here.
+  ACE_Thread_Manager::thr_exit_ = 0;
+
   ACE_Thread_Exit::is_constructed_ = 0;
   // All TSS objects have been destroyed.  Reset this flag so
   // ACE_Thread_Exit singleton can be created again.
