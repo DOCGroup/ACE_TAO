@@ -1,3 +1,9 @@
+Fri Apr 29 11:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Array_VarOut_T.inl:
+          In TAO_Array_Forany_T<T,T_slice,TAG>::in also use the workaround
+          for Visual Age 6.
+
 Fri Apr 29 11:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POAManagerA.cpp:
