@@ -1,3 +1,8 @@
+Fri Apr 29 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Fixed_Array_Argument_T.inl:
+          Workaround for msvc6 is also needed for Visual Age 6
+
 Fri Apr 29 11:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Array_VarOut_T.inl:
