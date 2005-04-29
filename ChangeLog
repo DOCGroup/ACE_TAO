@@ -1,3 +1,12 @@
+Thu Apr 28 23:06:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-linux-common.h:
+
+	  Do not perform feature tests using implementation-specific
+	  preprocessor symbols.  Use the standard ones instead
+	  (e.g. _POSIX_C_SOURCE, _ISO_C99SOURCE, _BSD_SOURCE,
+	  _XOPEN_SOURCE, etc).
+
 Thu Apr 28 22:53:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/config-linux-common.h (ACE_LACKS_MKSTEMP_PROTOTYPE):
