@@ -1,5 +1,27 @@
-Fri Apr 29 09:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Apr 29 11:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/PortableServer/POAManagerA.cpp:
+        * tao/PortableServer/ServantManagerA.cpp:
+        * tao/PortableServer/PortableServerA.cpp:
+        * tao/PortableServer/ServantLocatorA.cpp:
+        * tao/PortableServer/ServantActivatorA.cpp:
+        * tao/PortableServer/IdAssignmentPolicyA.cpp:
+        * tao/IFR_Client/IFR_BaseA.cpp:
+        * tao/IFR_Client/IFR_BasicA.cpp:
+        * tao/IFR_Client/IFR_ComponentsA.cpp:
+        * tao/IFR_Client/IFR_ExtendedA.cpp:
+        * tao/ImR_Client/ImplRepoA.cpp:
+        * tao/ImR_Client/ServerObjectA.cpp:
+        * tao/RTCORBA/RTCORBAA.cpp:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+          Regenerated these files so that they are compilable with Visual
+          Age 6
+
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+          Generate template specializations withing namespace TAO {} to
+          resolve compiler errors with Visual Age
+
+Fri Apr 29 09:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Union_TypeCode.inl:
           Fixed method signatures to match with declaration
