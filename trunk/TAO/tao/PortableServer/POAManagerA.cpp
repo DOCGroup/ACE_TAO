@@ -32,6 +32,7 @@
 #include "tao/Enum_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
+#include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
@@ -252,21 +253,23 @@ CORBA::Boolean operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_enum/any_op_cs.cpp:52
 
-
-
-template<>
-CORBA::Boolean
-TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::marshal_value (TAO_OutputCDR &)
+namespace TAO
 {
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Basic_Impl_T<PortableServer::POAManager::State>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Basic_Impl_T<PortableServer::POAManager::State>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
-
-template<>
-CORBA::Boolean
-TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
-}void operator<<= (
+void operator<<= (
     CORBA::Any &_tao_any,
     PortableServer::POAManager::State _tao_elem
   )
