@@ -59,10 +59,11 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
-      *os << be_nl << be_nl
+      *os << "namespace TAO" << be_nl
+          << "{" << be_idt_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Basic_Impl_T<" << node->name ()
+          << "Any_Basic_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
@@ -71,11 +72,12 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       *os << be_nl << be_nl
           << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Any_Basic_Impl_T<" << node->name ()
+          << "Any_Basic_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
-          << "}";
+          << "}" << be_uidt_nl
+          << "}" << be_nl << be_nl;
     }
 
   // Generate the Any <<= and >>= operator declarations
