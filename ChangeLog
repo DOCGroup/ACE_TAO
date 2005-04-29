@@ -1,3 +1,11 @@
+Fri Apr 29 09:25:28 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Thread_Exit.cpp (cleanup): Set ACE_Thread_Manager::thr_exit_
+	  to 0 to prevent a later crash in
+ 	  ACE_Thread_Manager::set_thr_exit().  Thanks to D. J. Stacnniak
+ 	  <djstachniak@yahoo.com> for submitting a fix and Slava Gorelik
+ 	  <slava.gorelik@sap.com> for reporting the problem.
+
 Fri Apr 29 12:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
