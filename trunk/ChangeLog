@@ -1,3 +1,9 @@
+Fri Apr 29 08:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          On IA64 add -mp to the compiler flags to disable the optimizer
+          because of problems in the TAO IDL_Test
+
 Thu Apr 28 23:06:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/config-linux-common.h:
