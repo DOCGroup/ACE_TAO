@@ -2,12 +2,14 @@
 //
 // $Id$
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S,
+         typename S_slice,
+         typename S_forany>
 ACE_INLINE
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::
 In_Fixed_Array_Argument_T (const S_slice * x)
   : x_ (
-#if defined (_MSC_VER) && _MSC_VER <= 1200
+#if (defined (_MSC_VER) && _MSC_VER <= 1200) || (defined (__IBMCPP__) && (__IBMCPP__ <= 600))
         // @@ (OO) MSVC++ 6 can't handle the const_cast<> in the
         //         multi-dimensional array case so C-style
         //         "sledgehammer" cast instead (reinterpret_cast<>
@@ -22,7 +24,9 @@ In_Fixed_Array_Argument_T (const S_slice * x)
 {
 }
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S,
+         typename S_slice,
+         typename S_forany>
 ACE_INLINE
 const S_slice *
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
@@ -32,14 +36,18 @@ TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
 
 // ===========================================================================
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S,
+         typename S_slice,
+         typename S_forany>
 ACE_INLINE
 TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::
 Inout_Fixed_Array_Argument_T (S_slice *& x)
   : x_ (x)
 {}
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S,
+         typename S_slice,
+         typename S_forany>
 ACE_INLINE
 S_slice *
 TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
@@ -49,13 +57,17 @@ TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
 
 // ===========================================================================
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S,
+         typename S_slice,
+         typename S_forany>
 ACE_INLINE
 TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::Out_Fixed_Array_Argument_T (S_slice *&x)
   : x_ (x)
 {}
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S,
+         typename S_slice,
+         typename S_forany>
 ACE_INLINE
 S_slice *&
 TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
