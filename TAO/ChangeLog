@@ -1,3 +1,9 @@
+Fri Apr 29 09:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        * tao/Union_TypeCode.inl:
+          Fixed method signatures to match with declaration
+
 Thu Apr 28 17:45:59 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
@@ -5,7 +11,7 @@ Thu Apr 28 17:45:59 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
         * TAO_IDL/be/be_visitor_operation/arglist.cpp:
         * TAO_IDL/be_include/be_interface.h:
-        
+
           Added code generation for a default implementation of the
           CIAO-specific operation ciao_is_substitutable(), recently
           added to EventConsumerBase in CCM_Event.idl. This implementation
