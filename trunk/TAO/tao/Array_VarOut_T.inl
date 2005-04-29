@@ -326,7 +326,7 @@ TAO_Array_Forany_T<T,T_slice,TAG>::in (void) const
 {
   // @@@ (JP) This looks scary I know but it helps MSVC understand
   // things better when the array is multi-dimensional.
-#if defined (_MSC_VER) && _MSC_VER <= 1200
+#if (defined (_MSC_VER) && _MSC_VER <= 1200) || (defined (__IBMCPP__) && (__IBMCPP__ <= 600))
   // @@ (OO) MSVC++ 6 can't handle the const_cast<> in the
   //         multi-dimensional array case so reinterpret_cast<> cast
   //         instead.  It's not clear if this is really the right
