@@ -65,7 +65,8 @@ public:
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_timeout (const ACE_Time_Value &,
                               const void *);
-
+  virtual int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask);
 private:
   char buf_[BUFSIZ];
   // Buffer to send.
@@ -96,6 +97,14 @@ ACE_HANDLE
 Ping_Pong::get_handle (void) const
 {
   return this->handle_;
+}
+
+int 
+Ping_Pong::handle_close (ACE_HANDLE,
+                         ACE_Reactor_Mask)
+{
+  delete this; // Cleanup when we're removed from the reactor.
+  return 0;
 }
 
 int
@@ -193,28 +202,24 @@ static const int SHUTDOWN_TIME = 10;
 static void
 run_svc (ACE_HANDLE handle)
 {
-  // The <callback> object is an <ACE_Event_Handler> created on the
-  // stack.  This is normally not a good idea, but in this case it
-  // works because the ACE_Reactor is destroyed before leaving this
-  // scope as well, so it'll remove the <callback> object from its
-  // internal tables BEFORE it is destroyed.
-  Ping_Pong callback (ACE_TEXT_ALWAYS_CHAR (string_name), handle);
+  Ping_Pong *callback = 0;
+  ACE_NEW (callback,
+           Ping_Pong (ACE_TEXT_ALWAYS_CHAR (string_name),
+                      handle));
 
-  // Note that we put the <reactor> AFTER the <callback> so that the
-  // <reactor> will get shutdown first.
   ACE_Reactor reactor;
 
   // Register the callback object for the various I/O, signal, and
   // timer-based events.
 
-  if (reactor.register_handler (&callback,
+  if (reactor.register_handler (callback,
                                 ACE_Event_Handler::READ_MASK
                                 | ACE_Event_Handler::WRITE_MASK) == -1
 #if !defined (CHORUS)
       || reactor.register_handler (SIGINT,
-                                   &callback) == -1
+                                   callback) == -1
 #endif /* CHORUS */
-      || reactor.schedule_timer (&callback,
+      || reactor.schedule_timer (callback,
                                  0,
                                  SHUTDOWN_TIME) == -1)
     {
