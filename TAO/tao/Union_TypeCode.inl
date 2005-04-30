@@ -53,7 +53,7 @@ template <typename StringType,
 ACE_INLINE typename TAO::TypeCode::Union<StringType,
                                          TypeCodeType,
                                          CaseArrayType,
-                                         RefCountPolicy>::case_type &
+                                         RefCountPolicy>::case_type const &
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
