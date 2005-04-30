@@ -943,14 +943,14 @@ Key_List::output_binary_search_function (void)
   // Logic to handle the Binary Search.
 
   ACE_OS::printf ("int first = 0, last = 0, middle;\n");
-  ACE_OS::printf ("%s*base;\n",struct_tag);
+  ACE_OS::printf ("%s*base = 0;\n",struct_tag);
   ACE_OS::printf ("do {/* null */} while (&base == 0); // Silence warnings about unused variables...");
   ACE_OS::printf ("\nlast = %d;\n",total_keys - 1);
   ACE_OS::printf ("while (last >= first)\n");
   ACE_OS::printf ("\t{\n");
   ACE_OS::printf ("\t   middle = (last + first) / 2;\n");
-  ACE_OS::printf ("\t   if (strcmp (wordlist[middle].opname_, str) == 0)\n      break;\n");
-  ACE_OS::printf ("\t   if (strcmp (wordlist[middle].opname_, str) < 0)\n      first = middle + 1;\n");
+  ACE_OS::printf ("\t   if (strcmp (wordlist[middle].%s, str) == 0)\n      break;\n", option.key_name());
+  ACE_OS::printf ("\t   if (strcmp (wordlist[middle].%s, str) < 0)\n      first = middle + 1;\n", option.key_name());
   ACE_OS::printf ("\t   else last = middle - 1;\n");
   ACE_OS::printf ("\t}\n");
   ACE_OS::printf ("if (last < first)\n  return 0;\n");
@@ -1040,7 +1040,7 @@ Key_List::output_linear_search_function (void)
 
   ACE_OS::printf ("for (int i=0; i<=%d; i++)",total_keys-1);
   ACE_OS::printf ("\t{\n");
-  ACE_OS::printf ("\t   if (strcmp (wordlist[i].opname_, str) == 0)\n");
+  ACE_OS::printf ("\t   if (strcmp (wordlist[i].%s, str) == 0)\n", option.key_name());
   ACE_OS::printf ("\t        return &wordlist[i];\n");
   ACE_OS::printf ("\t}\n");
   ACE_OS::printf ("return 0;\n}\n");
