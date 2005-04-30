@@ -9,6 +9,7 @@
  *  Header file for
  *    @c tk_abstract_interface,
  *    @c tk_component,
+ *    @c tk_home,
  *    @c tk_local_interface,
  *    @c tk_native and
  *    @c tk_objref
@@ -43,7 +44,7 @@ namespace TAO
      *
      * This class implements a @c CORBA::TypeCode for an OMG IDL
      * @c object (interface) and object-like types (abstract
-     * interface, component, local interface and native).
+     * interface, component, home, local interface and native).
      */
     template <typename StringType, class RefCountPolicy>
     class Objref_Base
