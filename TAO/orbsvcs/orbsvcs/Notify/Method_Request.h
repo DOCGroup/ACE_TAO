@@ -35,6 +35,9 @@ class TAO_Notify_Method_Request_Queueable;
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
 public:
+  /// Destructor.
+  virtual ~TAO_Notify_Method_Request (void);
+
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
   virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL) = 0;

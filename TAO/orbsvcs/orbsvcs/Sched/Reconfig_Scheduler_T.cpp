@@ -350,7 +350,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
 
   // Unbind and delete each RT_Info in the map: this also cleans up
   // all the entries and tuples associated with each RT_Info.
-  TAO_RT_Info_Ex *rt_info;
+  TAO_RT_Info_Ex *rt_info = 0;
   RtecScheduler::handle_t handle;
   while (rt_info_map_.current_size () > 0)
     {
@@ -378,7 +378,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
 
   // Delete each Config_Info in the map.
   RtecScheduler::Preemption_Priority_t config_priority;
-  RtecScheduler::Config_Info *config_info;
+  RtecScheduler::Config_Info *config_info = 0;
   while (config_info_map_.current_size () > 0)
     {
       config_priority = (*config_info_map_.begin ()).ext_id_;
@@ -393,7 +393,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
     }
 
   // Delete each dependency set in the caller map
-  RtecScheduler::Dependency_Set *dependency_set;
+  RtecScheduler::Dependency_Set *dependency_set = 0;
   while (calling_dependency_set_map_.current_size () > 0)
     {
       handle = (*calling_dependency_set_map_.begin ()).ext_id_;
@@ -1610,7 +1610,7 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
       ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
     }
 
-  RtecScheduler::Config_Info *config_info;
+  RtecScheduler::Config_Info *config_info = 0;
   if (config_info_map_.find (p_priority, config_info) != 0)
     {
       ACE_THROW (RtecScheduler::UNKNOWN_PRIORITY_LEVEL());

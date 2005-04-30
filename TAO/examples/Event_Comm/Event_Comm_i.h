@@ -39,6 +39,9 @@ class ShutdownCallback
   // = TITLE
   //   Helper callback class to shutdown the application.
 public:
+  /// Destructor.
+  virtual ~ShutdownCallback (void);
+
   virtual void close (void) = 0;
   // This method is to be called to shutdown the application.
 };

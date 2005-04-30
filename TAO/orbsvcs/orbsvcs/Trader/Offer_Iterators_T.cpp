@@ -74,7 +74,7 @@ next_n (CORBA::ULong n,
       // If offer is found, put it into the sequence.
       // remove this id irrespective of whether the offer is found
       // or not.
-      CosTrading::OfferId id;
+      CosTrading::OfferId id = 0;
       this->offer_ids_.dequeue_head (id);
 
       CosTrading::OfferId_var offerid_var (id);

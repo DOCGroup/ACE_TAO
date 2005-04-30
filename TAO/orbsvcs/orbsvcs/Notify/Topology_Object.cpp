@@ -15,6 +15,10 @@
 
 namespace TAO_Notify
 {
+  Topology_Savable::~Topology_Savable (void)
+  {
+  }
+
   void
   Topology_Savable::reconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   {

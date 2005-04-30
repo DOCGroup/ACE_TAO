@@ -18,9 +18,14 @@
 
 ACE_RCSID(TIE, test_i, "$Id$")
 
-  // Constructor
-  Tie_i::Tie_i (CORBA::Long value)
-    : value_ (value)
+// Constructor
+Tie_i::Tie_i (CORBA::Long value)
+  : value_ (value)
+{
+}
+
+// Destructor
+Tie_i::~Tie_i (void)
 {
 }
 
