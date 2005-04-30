@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 //=============================================================================
@@ -20,6 +22,9 @@ class Tie_i
 public:
   // constructor - takes a POA and a value parameter
   Tie_i (CORBA::Long value);
+
+  /// Destructor.
+  virtual ~Tie_i (void);
 
   // Simple doit method
   virtual CORBA::Long doit (ACE_ENV_SINGLE_ARG_DECL)

@@ -623,6 +623,10 @@ ACE_Scheduler_Strategy::ACE_Scheduler_Strategy (
 {
 }
 
+ACE_Scheduler_Strategy::~ACE_Scheduler_Strategy (void)
+{
+}
+
 // = Compares two dispatch entries using the specific priority, dynamic
 //   subpriority, and static subpriority method definitions provided by
 //   the derived strategy class to produce the strategy specific sort

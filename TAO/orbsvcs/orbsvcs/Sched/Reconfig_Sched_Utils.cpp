@@ -24,9 +24,6 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID (Sched, Reconfig_Sched_Utils, "$Id$")
 
@@ -728,6 +725,12 @@ effective_exec_multiplier (CORBA::Long l)
 */
 
 ///////////////////////////
+
+TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor (void)
+{
+}
+
+///////////////////////////
 // TAO_RSE_Reset_Visitor //
 ///////////////////////////
 
@@ -940,6 +943,12 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
   this->enabled_ = et;
 }
 
+
+////////////////////////////////////////////
+
+TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor (void)
+{
+}
 
 ////////////////////////////////////////////
 // class TAO_Reconfig_Sched_Strategy_Base //

@@ -8,6 +8,11 @@
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Queueable, "$Id$")
 
+
+TAO_Notify_Method_Request::~TAO_Notify_Method_Request (void)
+{
+}
+
 TAO_Notify_Method_Request_Queueable *
 TAO_Notify_Method_Request_Queueable::copy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {

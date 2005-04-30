@@ -276,6 +276,10 @@ Routing_Slip_Persistence_Manager::Block_Header::Block_Header(Header_Type type)
 {
 }
 
+Routing_Slip_Persistence_Manager::Block_Header::~Block_Header (void)
+{
+}
+
 size_t
 Routing_Slip_Persistence_Manager::Block_Header::extract_header(
   Persistent_Storage_Block& psb, size_t offset)

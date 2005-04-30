@@ -387,6 +387,9 @@ class TAO_RTSched_Export TAO_Reconfig_Sched_Entry_Visitor
 {
 public:
 
+  /// Destructor.
+  virtual ~TAO_Reconfig_Sched_Entry_Visitor (void);
+
   virtual int visit (TAO_Reconfig_Scheduler_Entry &) = 0;
   // Visit a Reconfig Scheduler Entry.
 
@@ -426,11 +429,13 @@ class TAO_RTSched_Export TAO_RT_Info_Tuple_Visitor
 {
 public:
 
+  /// Destructor.
+  virtual ~TAO_RT_Info_Tuple_Visitor (void);
+
   virtual int visit (TAO_RT_Info_Tuple &) = 0;
   // Visit a RT_Info tuple.
 
 };
-
 
 class TAO_RTSched_Export TAO_Reconfig_Sched_Strategy_Base
   // = TITLE
