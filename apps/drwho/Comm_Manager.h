@@ -22,6 +22,10 @@
 
 class Comm_Manager
 {
+public:
+
+  virtual ~Comm_Manager (void);
+
   // = TITLE
   //   Provides a virtual communcations layer for the drwho program.
 protected:

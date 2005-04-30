@@ -5,6 +5,8 @@ project(*-client) : aceexe {
   requires += rwho
   avoids += uses_wchar
   Source_Files {
+    Comm_Manager.cpp
+    Select_Manager.cpp
     Protocol_Manager.cpp
     Drwho_Node.cpp
     Rwho_DB_Manager.cpp
@@ -49,6 +51,8 @@ project(*-server) : aceexe {
   requires += rwho
   avoids += uses_wchar
   Source_Files {
+    Comm_Manager.cpp
+    Select_Manager.cpp
     Protocol_Manager.cpp
     Drwho_Node.cpp
     Rwho_DB_Manager.cpp
