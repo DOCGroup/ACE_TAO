@@ -237,7 +237,8 @@ namespace CIAO
   Session_Container::ciao_install_home (const char *exe_dll_name,
                                         const char *exe_entrypt,
                                         const char *sv_dll_name,
-                                        const char *sv_entrypt
+                                        const char *sv_entrypt,
+                                        const char *ins_name
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::Deployment::UnknownImplId,
@@ -304,7 +305,8 @@ namespace CIAO
                         Components::CCMHome::_nil ());
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
-                                                     this
+                                                     this,
+                                                     ins_name
                                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
