@@ -14,9 +14,13 @@
 class IO_Test
 {
 public:
+
   // Initialize the test name
   IO_Test (const char *name,
            ACE_Profile_Timer &tm);
+
+  // Destructor.
+  virtual ~IO_Test (void);
 
   // Return the name of the test
   const char *name (void);

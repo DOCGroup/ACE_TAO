@@ -187,6 +187,10 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
     }
 }
 
+Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base (void)
+{
+}
+
 // Constructor.
 
 Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,

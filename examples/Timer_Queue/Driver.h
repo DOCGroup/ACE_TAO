@@ -50,6 +50,8 @@ public:
   // Sets the <receiver_> of the Command to recvr, and the
   // <action_> of the Command to <action>.
 
+  virtual ~Command (void);
+
   virtual int execute (void *arg);
   // Invokes the method <action_> from the object <receiver_>.
 
