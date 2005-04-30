@@ -9,6 +9,7 @@
  *  Header file for
  *    @c tk_abstract_interface,
  *    @c tk_component,
+ *    @c tk_home,
  *    @c tk_local_interface,
  *    @c tk_native and
  *    @c tk_objref
@@ -79,8 +80,8 @@ namespace TAO
                                ACE_ENV_ARG_DECL)
       {
         return factory->create_home_tc (id,
-                                       ""  /* empty name */
-                                       ACE_ENV_ARG_PARAMETER);
+                                        ""  /* empty name */
+                                        ACE_ENV_ARG_PARAMETER);
       }
     };
 
@@ -136,7 +137,7 @@ namespace TAO
      *
      * This class implements a @c CORBA::TypeCode for an OMG IDL
      * @c object (interface) and object-like types (abstract
-     * interface, component, local interface and native).
+     * interface, component, home, local interface and native).
      */
     template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
     class Objref
