@@ -125,6 +125,7 @@ private:
 class TAO_Lockable
 {
 public:
+  virtual ~TAO_Lockable (void);
 
   virtual ACE_Lock& lock (void) = 0;
 };

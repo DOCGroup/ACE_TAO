@@ -32,6 +32,9 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Event_Persistence_Factory
   {
   public:
+    /// Destructor.
+    virtual ~Event_Persistence_Factory (void);
+
     /// Create a Persistence Manager
     virtual Routing_Slip_Persistence_Manager *
       create_routing_slip_persistence_manager (Persistent_Callback * callback) = 0;

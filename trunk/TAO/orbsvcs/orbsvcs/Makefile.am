@@ -1897,6 +1897,7 @@ Notify = \
   Notify/EventType.cpp \
   Notify/EventTypeSeq.cpp \
   Notify/Event_Manager.cpp \
+  Notify/Event_Persistence_Factory.cpp \
   Notify/FilterAdmin.cpp \
   Notify/ID_Factory.cpp \
   Notify/Method_Request.cpp \

@@ -22,10 +22,6 @@
 #include "Reconfig_Scheduler.h"
 
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 ACE_RCSID(Sched, Reconfig_Scheduler, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

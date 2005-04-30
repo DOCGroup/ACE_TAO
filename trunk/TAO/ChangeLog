@@ -1,3 +1,52 @@
+Sat Apr 30 00:48:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated source file lists to include new
+	  Notify/Event_Persistence_Factory.cpp file.
+
+	* orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.cpp:
+
+	  New file containing destructor definition.
+
+	* orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request.h:
+	* orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+	* orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+	* orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+	* orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+	* orbsvcs/orbsvcs/Notify/Topology_Object.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.h:
+	* orbsvcs/tests/Notify/lib/Task_Callback.h:
+	* orbsvcs/tests/Security/ssliop_corbaloc/client.h:
+	* orbsvcs/tests/Simple_Naming/client.h:
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	* examples/Event_Comm/Event_Comm_i.h:
+	* examples/POA/TIE/test_i.cpp:
+	* examples/POA/TIE/test_i.h:
+
+	  Various g++ 4.0 warnings fixes, including missing virtual
+	  destructors, potential use of uninitialized variables and
+	  use of "#pragma once" in a main source file.
+
+Tue Apr 26 11:06:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Objref_TypeCode.h:
+	* tao/Objref_TypeCode_Base.h:
+
+	  Updated documentation to list "home" TypeCodes.
+
 Fri Apr 29 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Fixed_Array_Argument_T.inl:

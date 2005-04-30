@@ -39,6 +39,9 @@ namespace TAO_Notify
 class TAO_Notify_Serv_Export Persistent_Callback
 {
 public:
+  /// Destructor.
+  virtual ~Persistent_Callback (void);
+
   /// \brief Called by a Persistent_File_Allocator when a write request has
   /// completed.
   virtual void persist_complete() = 0;

@@ -161,6 +161,9 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   return return_value;
 }
 
+TAO_Lockable::~TAO_Lockable (void)
+{
+}
 
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)

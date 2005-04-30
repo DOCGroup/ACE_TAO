@@ -36,6 +36,7 @@ class Naming_Test
   //    chosen at runtime.
 
 public:
+  virtual ~Naming_Test (void) {}
   virtual int execute (TAO_Naming_Client &root_context) = 0;
   // Execute the test code.  <root_context> is the context to assume
   // as the root for all tests operations.

@@ -13,6 +13,10 @@
 namespace TAO_Notify
 {
 
+Persistent_Callback::~Persistent_Callback (void)
+{
+}
+
 Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
   const size_t block_size)
   : block_number_(block_number)

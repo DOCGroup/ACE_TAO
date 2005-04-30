@@ -118,9 +118,12 @@ class TAO_RTSched_Export ACE_Scheduler_Strategy
   //    specific scheduling algorithm.
 {
 public:
-
+  
   ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
   // = Constructor.
+
+  /// Destructor.
+  virtual ~ACE_Scheduler_Strategy (void);
 
   virtual int priority_comp (const Dispatch_Entry &first_entry,
                              const Dispatch_Entry &second_entry) = 0;

@@ -7,6 +7,7 @@
 
 ACE_RCSID(Event_Comm, Event_Comm_i, "$Id$")
 
+
 class Consumer_Entry
 {
   // = TITLE
@@ -393,6 +394,14 @@ Notifier_i::push (const Event_Comm::Event &event
                 "there were %d consumers\n",
                 count));
 }
+
+// -------------
+
+ShutdownCallback::~ShutdownCallback (void)
+{
+}
+
+// -------------
 
 Consumer_i::Consumer_i (void)
   : shutdown (0)
