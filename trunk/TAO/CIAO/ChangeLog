@@ -1,3 +1,14 @@
+Sat Apr 30 09:58:05 2005  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Home_Servant_Impl_T.cpp:
+	* ciao/Home_Servant_Impl_T.h:
+
+	  Made changes to the old CIAO infrastructure to support
+	  passing and storing of the component instance name from the
+	  descriptor XML file and into the component instance.
+
 Thu Apr 28 14:50:05 2005  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Dynamic_Component_Servant_T.cpp:

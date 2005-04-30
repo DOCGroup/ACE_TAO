@@ -74,7 +74,8 @@ namespace CIAO
       (const char *exe_dll_name,
        const char *exe_entrypt,
        const char *sv_dll_name,
-       const char *sv_entrypt
+       const char *sv_entrypt,
+       const char *ins_name
        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::Deployment::UnknownImplId,
@@ -114,7 +115,8 @@ namespace CIAO
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
   typedef ::PortableServer::Servant (*ServantFactory)
     (::Components::HomeExecutorBase_ptr p,
-     ::CIAO::Session_Container *c
+     ::CIAO::Session_Container *c,
+     const char *ins_name
 #if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
     , CORBA::Environment &
 #endif
@@ -176,7 +178,8 @@ namespace CIAO
       (const char *exe_dll_name,
        const char *exe_entrypt,
        const char *sv_dll_name,
-       const char *sv_entrypt
+       const char *sv_entrypt,
+       const char *ins_name
        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::Deployment::UnknownImplId,
