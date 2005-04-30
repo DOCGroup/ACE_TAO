@@ -1,3 +1,18 @@
+Fri Apr 29 23:45:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Mem_Map/IO-tests/IO_Test.cpp:
+	* examples/Mem_Map/IO-tests/IO_Test.h:
+	* examples/Reactor/Misc/test_event_handler_t.cpp:
+	* examples/Threads/future2.cpp:
+	* examples/Timer_Queue/Driver.cpp:
+	* examples/Timer_Queue/Driver.h:
+
+	  Added virtual destructor to silence g++ 4.0 warnings.
+
+	* examples/Threads/future2.cpp (test_timeout):
+
+	  Fixed "variable may be used initialized" warning.
+
 Fri Apr 29 09:25:28 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Thread_Exit.cpp (cleanup): Set ACE_Thread_Manager::thr_exit_

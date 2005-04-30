@@ -11,6 +11,7 @@ class ACE_Test_Sig_Handler
 {
 public:
   ACE_Test_Sig_Handler (void) {}
+  virtual ~ACE_Test_Sig_Handler (void) {}
   virtual ACE_HANDLE get_handle (void) const { return 0; }
   virtual void set_handle (ACE_HANDLE) {}
   virtual int handle_async_io (ACE_HANDLE) { return 0; }
