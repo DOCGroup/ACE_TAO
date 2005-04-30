@@ -1,3 +1,21 @@
+Fri Apr 29 23:54:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Comm_Manager.h:
+	* Select_Manager.h:
+
+	  Added virtual destructor to silence g++ 4.0 warnings.
+
+	* Comm_Manager.cpp:
+	* Select_Manager.cpp:
+
+	  New files containing virtual destructor definition.
+
+	* Makefile.am:
+	* drwho.mpc:
+
+	  Added new Comm_Manager.cpp and Select_Manager.cpp files to the
+	  source file list.
+
 Sat Feb 17 08:33:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* File_Manager.cpp: Fixed several unreachable statements.

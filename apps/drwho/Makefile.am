@@ -28,6 +28,7 @@ client_SOURCES = \
   Binary_Search.cpp \
   CM_Client.cpp \
   CM_Server.cpp \
+  Comm_Manager.cpp \
   Drwho_Node.cpp \
   File_Manager.cpp \
   HT_Client.cpp \
@@ -57,6 +58,7 @@ client_SOURCES = \
   SM_Client.cpp \
   SM_Server.cpp \
   Search_Struct.cpp \
+  Select_Manager.cpp \
   Single_Lookup.cpp \
   client.cpp \
   BS_Client.h \
@@ -117,6 +119,7 @@ server_SOURCES = \
   Binary_Search.cpp \
   CM_Client.cpp \
   CM_Server.cpp \
+  Comm_Manager.cpp \
   Drwho_Node.cpp \
   File_Manager.cpp \
   HT_Client.cpp \
@@ -146,6 +149,7 @@ server_SOURCES = \
   SM_Client.cpp \
   SM_Server.cpp \
   Search_Struct.cpp \
+  Select_Manager.cpp \
   Single_Lookup.cpp \
   server.cpp \
   BS_Client.h \

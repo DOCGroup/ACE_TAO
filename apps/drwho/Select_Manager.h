@@ -20,6 +20,8 @@
 class Select_Manager
 {
 public:
+  virtual ~Select_Manager (void);
+
   virtual int mux (char *packet,
                    int &packet_length) = 0 ;
 
