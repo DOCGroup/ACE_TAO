@@ -55,7 +55,8 @@ namespace CIAO
   {
   public:
     Home_Servant_Impl (EXEC * exe,
-                       Session_Container * c);
+                       Session_Container * c,
+                       const char *ins_name);
                        
     virtual ~Home_Servant_Impl (void);
     
@@ -95,6 +96,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
+    const char *ins_name_;
     EXEC_VAR executor_;
 
     ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,

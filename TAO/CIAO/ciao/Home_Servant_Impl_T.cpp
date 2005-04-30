@@ -24,9 +24,11 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::Home_Servant_Impl (
       EXEC * exe,
-      Session_Container * c
+      Session_Container * c,
+      const char *ins_name
     )
     : Home_Servant_Impl_Base (c),
+      ins_name_ (ins_name),
       executor_ (EXEC::_duplicate (exe))
   {
   }
@@ -199,6 +201,7 @@ namespace CIAO
     ACE_NEW_RETURN (svt,
                     COMP_SVNT (exe,
                                home.in (),
+                               this->ins_name_,
                                this,
                                this->container_),
                     COMP::_nil ());
