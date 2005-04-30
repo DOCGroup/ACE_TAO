@@ -1,3 +1,9 @@
+Sat Apr 30 08:16:42 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Select_Manager.cpp:
+
+	  Fixed syntax error due to missing ACE_RCSID macro definition.
+
 Fri Apr 29 23:54:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Comm_Manager.h:
