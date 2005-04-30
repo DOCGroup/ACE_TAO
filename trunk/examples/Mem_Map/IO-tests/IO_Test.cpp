@@ -19,6 +19,10 @@ IO_Test::IO_Test (const char *name,
 {
 }
 
+IO_Test::~IO_Test (void)
+{
+}
+
 const char *
 IO_Test::name (void)
 {

@@ -38,6 +38,12 @@ Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
 {
 }
 
+// destructor
+template <class RECEIVER, class ACTION>
+Command<RECEIVER, ACTION>::~Command (void)
+{
+}
+
 // invokes an operation.
 
 template <class RECEIVER, class ACTION> int

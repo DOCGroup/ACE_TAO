@@ -484,7 +484,7 @@ test_timeout (int n_iterations)
   ACE_Time_Value *delay;
   ACE_NEW (delay, ACE_Time_Value (1));
 
-  u_long resulta;
+  u_long resulta = 0;
   fresulta.get (resulta, delay);
 
   if (fresulta.ready ())

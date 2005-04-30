@@ -272,6 +272,9 @@ class Output_Device_Wrapper_Base
   //    write the contents of the passed message out the underlying
   //    output device, and update device settings, respectively.
 public:
+
+  virtual ~Output_Device_Wrapper_Base (void);
+
   virtual int write_output_message (void *) = 0;
   // Writes contents of the passed message block out to the underlying
   // output device.
