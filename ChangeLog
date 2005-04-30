@@ -1,3 +1,10 @@
+Sat Apr 30 15:24:13 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* examples/Reactor/Misc/pingpong.cpp (run_svc): Allocate the
+	  Ping_Pong callback dynamically to avoid crashses when things
+ 	  close down.  Thanks to Johnny Willemsen for narrowing down the
+ 	  problem and to Alex Ott <ott@jet.msk.su> for reporting it.
+
 Fri Apr 29 23:45:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
