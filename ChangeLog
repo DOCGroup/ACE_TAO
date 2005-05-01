@@ -1,3 +1,23 @@
+Sun May  1 01:06:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_Base.cpp:
+	* ace/Select_Reactor_Base.inl:
+
+	  Moved all virtual functions out of line.  Inlining them prevents
+	  run-time type identification from functioning properly when
+	  using g++ 4.x's "-fvisibility-inlines-hidden" command line
+	  option/feature.  Addresses failed dynamic_cast<>s of an
+	  ACE_Reactor_Impl base class to an ACE_Select_Reactor subclass.
+
+	* ace/Select_Reactor_Base.h (~ACE_Reactor_Notify):
+
+	  Explicitly declare this destructor as virtual.  It was already
+	  implicitly virtual due to the virtual destructor in the
+	  ACE_Event_Handler base class.  This explicit declaration is
+	  simply a reminder that it is virtual, and shouldn't be inlined
+	  since doing so can potentially cause failed dynamic_cast<>s when
+	  using g++ 4.x's hidden visibility of inlined functions feature.
+
 Sat Apr 30 15:24:13 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* examples/Reactor/Misc/pingpong.cpp (run_svc): Allocate the
