@@ -99,7 +99,7 @@ Ping_Pong::get_handle (void) const
   return this->handle_;
 }
 
-int 
+int
 Ping_Pong::handle_close (ACE_HANDLE,
                          ACE_Reactor_Mask)
 {
@@ -231,7 +231,7 @@ run_svc (ACE_HANDLE handle)
 
   // Main event loop (one per process).
 
-  while (callback.is_set () == 0)
+  while (callback->is_set () == 0)
     if (reactor.handle_events () == -1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
