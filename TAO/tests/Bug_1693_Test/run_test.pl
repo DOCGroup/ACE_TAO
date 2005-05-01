@@ -20,7 +20,7 @@ else {
 $test = $T->SpawnWaitKill (15);
 
 if ($test != 0) {
-    print STDERR "ERROR: Codec test returned $test\n";
+    print STDERR "ERROR: Bug 1693 test returned $test\n";
     exit 1;
 }
 
