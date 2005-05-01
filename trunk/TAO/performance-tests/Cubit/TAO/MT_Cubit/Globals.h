@@ -185,6 +185,9 @@ public:
   MT_Priority (void);
   // constructor.
 
+  /// Destructor.
+  virtual ~MT_Priority (void);
+
   virtual ACE_Sched_Priority get_high_priority (void);
   // Sets the priority of the high priority thread.
 

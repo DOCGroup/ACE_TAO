@@ -1,3 +1,27 @@
+Sat Apr 30 20:10:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+
+	  Match format specifier to actual type, i.e. "%lu" for an
+	  unsigned long.
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+
+	  Fixed "variable may be used uninitialized" warnings.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+
+  	  Added missing virtual destructor.  Fixes a g++ 4.0 warning.
+
+	* tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
+	* tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
+	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+
+	  Removed extraneous DSO/DLL symbol export declarations from
+	  typedef.
+
 Sat Apr 30 10:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Union_TypeCode.{h,cpp,inl}:
