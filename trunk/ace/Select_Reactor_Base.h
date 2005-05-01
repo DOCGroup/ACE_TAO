@@ -121,7 +121,7 @@ public:
   ACE_Select_Reactor_Notify (void);
 
   /// Destructor.
-  ~ACE_Select_Reactor_Notify (void);
+  virtual ~ACE_Select_Reactor_Notify (void);
 
   // = Initialization and termination methods.
   /// Initialize.
