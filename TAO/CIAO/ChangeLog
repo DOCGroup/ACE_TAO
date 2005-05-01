@@ -1,3 +1,9 @@
+Sat May 1 03:11:17 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* ciao/tools/Simple_Component_Server/Simple_Component_Server.cpp:
+
+	  Made a change to fix compile errors.
+
 Sat Apr 30 20:02:10 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* ciao/Container_Impl.cpp:
