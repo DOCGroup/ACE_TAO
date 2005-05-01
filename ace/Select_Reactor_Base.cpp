@@ -547,6 +547,10 @@ ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
 {
 }
 
+ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify (void)
+{
+}
+
 void
 ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)
 {
@@ -1081,6 +1085,19 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
   return number_dispatched;
 }
 
+// -------------------------------------------
+
+int
+ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,
+                                                      ACE_Reactor_Mask mask)
+{
+  if (this->notify_handler_ == 0)
+    return 0;
+  else
+    return this->notify_handler_->purge_pending_notifications (eh, mask);
+}
+
+
 // Perform GET, CLR, SET, and ADD operations on the Handle_Sets.
 //
 // GET = 1, Retrieve current value
@@ -1091,7 +1108,6 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 //          (only changes enabled bits)
 //
 // Returns the original mask.  Must be called with locks held.
-
 int
 ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
                                   ACE_Reactor_Mask mask,

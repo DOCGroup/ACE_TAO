@@ -9,11 +9,6 @@ ACE_Event_Tuple::~ACE_Event_Tuple (void)
 }
 
 ACE_INLINE
-ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify (void)
-{
-}
-
-ACE_INLINE
 ACE_Select_Reactor_Handler_Repository::~ACE_Select_Reactor_Handler_Repository (void)
 {
 }
@@ -69,16 +64,6 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   , mask_signals_ (ms)
   , supress_renew_ (0)
 {
-}
-
-ACE_INLINE int
-ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,
-                                                      ACE_Reactor_Mask mask)
-{
-  if (this->notify_handler_ == 0)
-    return 0;
-  else
-    return this->notify_handler_->purge_pending_notifications (eh, mask);
 }
 
 ACE_INLINE int
