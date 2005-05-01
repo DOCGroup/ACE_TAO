@@ -50,6 +50,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
 
 . Improved performance of HTBP by not requiring a lookup of peer hostname.
 
+. Added new ACE_SizeCDR stream which allows one to calculate size of the
+  representation without writing anything.
+
+. Number of improvements in RMCast, reliable multicast implementation.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.3 and ACE-5.4.4
 ====================================================
 
