@@ -710,7 +710,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
    static const char subset_tuple_format[] =
      "             {\n"
      "%13d, /* handle */\n"
-     "%13d, /* rate_index */\n"
+     "%13lu, /* rate_index */\n"
      "%13d, /* period */\n"
      "%13d, /* criticality */\n"
      "%13d, /* priority */\n"
