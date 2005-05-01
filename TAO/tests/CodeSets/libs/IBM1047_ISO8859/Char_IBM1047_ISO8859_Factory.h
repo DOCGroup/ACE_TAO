@@ -29,7 +29,7 @@
 #include "IBM1047_ISO8859_export.h"
 #include "Char_IBM1047_ISO8859_Translator.h"
 
-typedef IBM1047_ISO8859_Export TAO_Codeset_Translator_Factory_T<IBM1047_ISO8859> Char_IBM1047_ISO8859_Factory;
+typedef TAO_Codeset_Translator_Factory_T<IBM1047_ISO8859> Char_IBM1047_ISO8859_Factory;
 
 ACE_STATIC_SVC_DECLARE_EXPORT (IBM1047_ISO8859, Char_IBM1047_ISO8859_Factory)
 ACE_FACTORY_DECLARE (IBM1047_ISO8859, Char_IBM1047_ISO8859_Factory)

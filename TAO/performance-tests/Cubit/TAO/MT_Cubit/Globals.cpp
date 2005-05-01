@@ -117,6 +117,10 @@ MT_Priority::MT_Priority (void)
 {
 }
 
+MT_Priority::~MT_Priority (void)
+{
+}
+
 ACE_Sched_Priority
 MT_Priority::get_high_priority (void)
 {

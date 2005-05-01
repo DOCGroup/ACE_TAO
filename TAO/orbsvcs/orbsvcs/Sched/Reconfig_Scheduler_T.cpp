@@ -2781,7 +2781,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Empty out the previously stored configuration infos, if any.
   RtecScheduler::Preemption_Priority_t config_priority;
-  RtecScheduler::Config_Info *config_info_temp;
+  RtecScheduler::Config_Info *config_info_temp = 0;
   while (config_info_map_.current_size () > 0)
     {
       config_priority = (*config_info_map_.begin ()).ext_id_;

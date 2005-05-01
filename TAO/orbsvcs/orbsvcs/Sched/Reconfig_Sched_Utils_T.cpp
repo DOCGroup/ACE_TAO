@@ -94,7 +94,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
         {
           // Iterate over the set of dependencies for the current entry.
           TAO_Reconfig_Scheduler_Entry * next_rse = 0;
-          TAO_RT_Info_Ex *next_rt_info;
+          TAO_RT_Info_Ex *next_rt_info = 0;
           for (u_int i = 0; i < dependency_set->length (); ++i)
             {
               // Skip over disabled dependencies
