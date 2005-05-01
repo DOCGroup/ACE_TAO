@@ -152,7 +152,8 @@ install_homes (CIAO::Session_Container &container,
             container.ciao_install_home (items[0],
                                          items[1],
                                          items[2],
-                                         items[3]
+                                         items[3],
+                                         "instance_name"
                                          ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
