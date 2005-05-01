@@ -106,7 +106,8 @@ CIAO::Container_Impl::install_home (const char * id,
     (config_info.executor_dll_.in (),
      entrypt,
      config_info.servant_dll_.in (),
-     config_info.servant_entrypt_.in ()
+     config_info.servant_entrypt_.in (),
+     "instance_name"
      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 

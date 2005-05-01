@@ -1,3 +1,9 @@
+Sat Apr 30 20:02:10 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* ciao/Container_Impl.cpp:
+
+	  Made a change to fix compile errors.
+
 Sat Apr 30 09:58:05 2005  Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
 
 	* ciao/Container_Base.cpp:
