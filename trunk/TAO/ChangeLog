@@ -1,9 +1,14 @@
+Mon May  2 11:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
+          Fixed warning in AIX Visual Age 6 build
+
 Sun May  1 23:44:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/svc.conf:
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/svc.conf:
 
-	  Set -ORBDropRepliesOnShutdown to 0 as per Johnny's advice. 
+	  Set -ORBDropRepliesOnShutdown to 0 as per Johnny's advice.
 
 Sat Apr 30 20:10:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
