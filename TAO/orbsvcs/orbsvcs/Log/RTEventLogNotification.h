@@ -45,8 +45,9 @@
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_RTEventLog_Export TAO_RTEventLogNotification : public TAO_LogNotification,
-                                                         POA_RtecEventComm::PushSupplier
+class TAO_RTEventLog_Export TAO_RTEventLogNotification :
+  public TAO_LogNotification,
+  public POA_RtecEventComm::PushSupplier
 {
 public:
   // = Initialization and Termination methods.
