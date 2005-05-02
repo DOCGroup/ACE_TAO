@@ -207,7 +207,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_FP_Scheduling_SegmentSchedulingParameterPolicy (
     "IDL:FP_Scheduling/SegmentSchedulingParameterPolicy:1.0",
     "SegmentSchedulingParameterPolicy");
-  
+
 namespace FP_Scheduling
 {
   ::CORBA::TypeCode_ptr const _tc_SegmentSchedulingParameterPolicy =
@@ -258,7 +258,7 @@ FP_Scheduling::FP_Scheduler::FP_Scheduler (void)
 FP_Scheduling::FP_Scheduler::~FP_Scheduler (void)
 {}
 
-void 
+void
 FP_Scheduling::FP_Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   FP_Scheduler *_tao_tmp_pointer =
@@ -276,10 +276,10 @@ FP_Scheduling::FP_Scheduler::_narrow (
     {
       return FP_Scheduler::_nil ();
     }
-  
+
   FP_Scheduler_ptr proxy =
     dynamic_cast<FP_Scheduler_ptr> (_tao_objref);
-  
+
   return FP_Scheduler::_duplicate (proxy);
 }
 
@@ -293,10 +293,10 @@ FP_Scheduling::FP_Scheduler::_unchecked_narrow (
     {
       return FP_Scheduler::_nil ();
     }
-  
+
   FP_Scheduler_ptr proxy =
     dynamic_cast<FP_Scheduler_ptr> (_tao_objref);
-  
+
   return FP_Scheduler::_duplicate (proxy);
 }
 
@@ -307,7 +307,7 @@ FP_Scheduling::FP_Scheduler::_duplicate (FP_Scheduler_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -370,7 +370,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_FP_Scheduling_FP_Scheduler (
     "IDL:FP_Scheduling/FP_Scheduler:1.0",
     "FP_Scheduler");
-  
+
 namespace FP_Scheduling
 {
   ::CORBA::TypeCode_ptr const _tc_FP_Scheduler =
@@ -382,28 +382,31 @@ namespace FP_Scheduling
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return 1;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return false;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -451,28 +454,31 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<FP_Scheduling::FP_Scheduler>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<FP_Scheduling::FP_Scheduler>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return 1;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<FP_Scheduling::FP_Scheduler>::marshal_value (TAO_OutputCDR &)
-{
-  return false;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<FP_Scheduling::FP_Scheduler>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<FP_Scheduling::FP_Scheduler>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<FP_Scheduling::FP_Scheduler>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
