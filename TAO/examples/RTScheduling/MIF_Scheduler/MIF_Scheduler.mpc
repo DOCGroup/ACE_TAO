@@ -3,13 +3,13 @@
 
 project(*Starter): namingexe, rtscheduling_server {
   idlflags += -o ..
-  
+
   IDL_Files {
     ../Synch.idl
   }
-  
+
   Source_Files {
-    ../Starter.cpp  
+    ../Starter.cpp
     ../Synch_i.cpp
     ../SynchC.cpp
     ../SynchS.cpp
@@ -20,12 +20,13 @@ project(*Starter): namingexe, rtscheduling_server {
 
 project(*test) : namingexe, rtscheduling_server {
   idlflags += -o ..
-  
+
   IDL_Files {
     ../Synch.idl
     ../Job.idl
+    ../MIF_Scheduling.idl
   }
-  
+
   Source_Files {
     test.cpp
     MIF_DT_Creator.cpp
