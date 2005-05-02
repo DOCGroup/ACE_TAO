@@ -207,7 +207,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_MIF_Scheduling_SegmentSchedulingParameterPolicy (
     "IDL:MIF_Scheduling/SegmentSchedulingParameterPolicy:1.0",
     "SegmentSchedulingParameterPolicy");
-  
+
 namespace MIF_Scheduling
 {
   ::CORBA::TypeCode_ptr const _tc_SegmentSchedulingParameterPolicy =
@@ -258,7 +258,7 @@ MIF_Scheduling::MIF_Scheduler::MIF_Scheduler (void)
 MIF_Scheduling::MIF_Scheduler::~MIF_Scheduler (void)
 {}
 
-void 
+void
 MIF_Scheduling::MIF_Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   MIF_Scheduler *_tao_tmp_pointer =
@@ -276,10 +276,10 @@ MIF_Scheduling::MIF_Scheduler::_narrow (
     {
       return MIF_Scheduler::_nil ();
     }
-  
+
   MIF_Scheduler_ptr proxy =
     dynamic_cast<MIF_Scheduler_ptr> (_tao_objref);
-  
+
   return MIF_Scheduler::_duplicate (proxy);
 }
 
@@ -293,10 +293,10 @@ MIF_Scheduling::MIF_Scheduler::_unchecked_narrow (
     {
       return MIF_Scheduler::_nil ();
     }
-  
+
   MIF_Scheduler_ptr proxy =
     dynamic_cast<MIF_Scheduler_ptr> (_tao_objref);
-  
+
   return MIF_Scheduler::_duplicate (proxy);
 }
 
@@ -307,7 +307,7 @@ MIF_Scheduling::MIF_Scheduler::_duplicate (MIF_Scheduler_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -370,7 +370,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_MIF_Scheduling_MIF_Scheduler (
     "IDL:MIF_Scheduling/MIF_Scheduler:1.0",
     "MIF_Scheduler");
-  
+
 namespace MIF_Scheduling
 {
   ::CORBA::TypeCode_ptr const _tc_MIF_Scheduler =
@@ -382,28 +382,31 @@ namespace MIF_Scheduling
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return 1;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return false;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<MIF_Scheduling::SegmentSchedulingParameterPolicy>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
@@ -451,28 +454,31 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
+namespace TAO
 {
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return 1;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::marshal_value (TAO_OutputCDR &)
-{
-  return false;
-}
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::demarshal_value (TAO_InputCDR &)
-{
-  return false;
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<MIF_Scheduling::MIF_Scheduler>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
 }
 
 // Copying insertion.
