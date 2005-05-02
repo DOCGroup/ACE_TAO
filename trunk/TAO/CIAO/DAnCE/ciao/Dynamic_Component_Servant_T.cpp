@@ -67,7 +67,7 @@ namespace CIAO
     // having a list of servants and you turn on a bit. What is the
     // granularity of the bit? Looks like its too coarse. Do you see
     // what I am saying?
-    COMP_SVNT *servant;
+    COMP_SVNT *servant = 0;
     if (this->servant_map_.find (oid, servant) == 0)
       {
         servant->remove ();
