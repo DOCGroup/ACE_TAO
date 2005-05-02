@@ -23,6 +23,7 @@ project(*test) : namingexe, rtscheduling_server {
   IDL_Files {
     ../Synch.idl
     ../Job.idl
+    ../FP_Scheduling.idl
   }
   Source_Files {
     test.cpp
