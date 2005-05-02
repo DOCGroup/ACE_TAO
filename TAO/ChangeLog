@@ -1,6 +1,15 @@
+Mon May  2 09:50:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader.h:
+
+	  Work around Borland unresolved symbol errors concerning the
+	  out-of-line virtual destructor.  The virtual destructor should
+	  not be inlined, nor should we have to export TAO_Lockable from
+	  the DSO/DLL.  *sigh*
+
 Mon May  2 10:36:43 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tao/PortableServer/PortableServer_WFunctions.cpp (PortableServer): 
+	* tao/PortableServer/PortableServer_WFunctions.cpp (PortableServer):
 	  Remove the "+ 1" from the string length so things will work
  	  better for wstrings.  Thanks to Wolfgang Fischer <fiw@arcor.de>
  	  for reporting this.
