@@ -25,10 +25,10 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::Swapping_Home_Servant_Impl (
       EXEC * exe,
-      Session_Container * c, 
+      Session_Container * c,
       const char* ins_name, const char* obj_id, const char* repo_id)
     : Home_Servant_Impl_Base (c),
-      executor_ (EXEC::_duplicate (exe)), 
+      executor_ (EXEC::_duplicate (exe)),
       ins_name_ (ins_name), obj_id_ (obj_id), repo_id_ (repo_id)
   {
   }
@@ -50,7 +50,7 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::~Swapping_Home_Servant_Impl ()
   {
-    const DYNAMIC_SERVANT_MAP_ITERATOR end = 
+    const DYNAMIC_SERVANT_MAP_ITERATOR end =
       this->dynamic_servant_map_.end ();
 
     PortableServer::ObjectId_var oid =
@@ -68,7 +68,7 @@ namespace CIAO
       }
     ACE_ENDTRY;
 
-    for (DYNAMIC_SERVANT_MAP_ITERATOR iter = 
+    for (DYNAMIC_SERVANT_MAP_ITERATOR iter =
            this->dynamic_servant_map_.begin ();
          iter != end; ++iter)
       {
@@ -95,7 +95,7 @@ namespace CIAO
                     COMP_EXEC,
                     COMP_EXEC_VAR,
                     COMP_SVNT>::remove_component (
-      ::Components::CCMObject_ptr 
+      ::Components::CCMObject_ptr
       ACE_ENV_ARG_DECL_NOT_USED
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -104,7 +104,7 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
 
-    Dynamic_Component_Servant_Base *servant;
+    Dynamic_Component_Servant_Base *servant = 0;
     if (this->dynamic_servant_map_.find (oid, servant) == 0)
     {
       servant->destroy (oid);
@@ -258,7 +258,7 @@ namespace CIAO
                     COMP_SVNT>::update_component_map (
     PortableServer::ObjectId &oid)
   {
-    Dynamic_Component_Servant_Base *servant;
+    Dynamic_Component_Servant_Base *servant = 0;
     if (this->dynamic_servant_map_.find (oid, servant) == 0)
     {
       servant->update_destroy_count ();

@@ -4,6 +4,8 @@ Mon May 2 07:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tools/Assembly_Deployer/Assembly_Impl.cpp:
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * DAnCE/ciao/Dynamic_Component_Servant_T.cpp:
           Fixed gcc 4 warnings
 
 Sat May 1 03:11:17 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
