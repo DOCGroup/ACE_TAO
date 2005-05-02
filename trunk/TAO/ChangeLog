@@ -1,3 +1,9 @@
+Mon May  2 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+          Removed a \ at the beginning of this file and also zapped a lot of
+          empty lines. Caused problems with Visual Age 6 on AIX
+
 Mon May  2 11:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
