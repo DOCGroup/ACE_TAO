@@ -1,3 +1,11 @@
+Mon May 2 07:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/RTComponentServer/RTConfig_Manager.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+          Fixed gcc 4 warnings
+
 Sat May 1 03:11:17 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* ciao/tools/Simple_Component_Server/Simple_Component_Server.cpp:
@@ -42,29 +50,29 @@ Wed Apr 27 11:15:12 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * DAnCE/ciao/Home_Servant_Impl_T.h:
         * DAnCE/ciao/Servant_Impl_Base.cpp:
         * DAnCE/ciao/Servant_Impl_Base.h:
-        
+
           Some cosmetic changes and changes by Jaiganesh Balasubramanian
           <jai@dre.vanderbilt.edu> to support the passing and storing of
           the component instance name (from the descriptor XML file) in
-          the component instance. Also removed the gen_UUID() static 
+          the component instance. Also removed the gen_UUID() static
           method from class Servant_Impl_Base, since it is no longer
           used.
-          
+
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Changes to servant code generation corresponding with the
           changes above.
 
 Tue Apr 26 18:14:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/releasenotes/index.html:
-        
+
           Updated CIDL compiler documentation, and added item about the
           existing IDL3-to-IDL2 coverter.
-          
+
         * tools/IDL3_to_IDL2/README:
-        
+
           Updated documentation file.
 
 Tue Apr 26 11:34:52 2005  Nanbor Wang  <nanbor@tesla.txcorp.com>
@@ -72,7 +80,7 @@ Tue Apr 26 11:34:52 2005  Nanbor Wang  <nanbor@tesla.txcorp.com>
 	* docs/schema/CIAOServerResources.xsd: Changed some of the XML
 	  element and type names to be more consistent with the rest of
 	  RTCORBA spec that the following new IDL file follows.
-	
+
 	* DAnCE/ciao/ServerResources.idl: First cut of server
 	  configuration information set in IDL.
 
@@ -117,9 +125,9 @@ Thu Apr 21 18:10:13 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * DAnCE/examples/HelloReceiver/Receiver.mpc:
         * DAnCE/examples/HelloSender/Sender.idl:
         * DAnCE/examples/HelloSender/Sender.mpc:
-        
+
           Made cosmetic changes to all files, and added explicit
-          specification of header and inline files in MPC 
+          specification of header and inline files in MPC
           projects. Also added -Sc command line option to the
           IDL compiler, to suppress generation of the TIE
           classes.
@@ -128,25 +136,25 @@ Thu Apr 21 17:40:12 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CIDL/Traversal/Elements.cpp:
         * CCF/CCF/IDL3/Traversal/EventType.cpp:
-        
+
           Removed these files, since they contain nothing but
           empty namespaces.
-          
+
         * CCF/CCF/CIDL/CIDL.vcproj:
         * CCF/CCF/IDL3/IDL3.vcproj:
-        
+
           Removed the above files from the appropriate projects.
 
 Thu Apr 21 14:31:21 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
-        
+
           Changes to eliminate some warnings in the Debian LInux build.
 
 Thu Apr 21 09:06:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * Added UUID generation for the object id when creating 
+        * Added UUID generation for the object id when creating
           event consumers, similar to that already added for facets.
           This change eliminates the error of repeated connection
           to the same event consumer instance when multiple
@@ -155,23 +163,23 @@ Thu Apr 21 09:06:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           the problem.
 
 Thu Apr 21 09:04:32 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* DAnCE/examples/Hello/descriptors/TestNodeManagerMap.dat
 	* DAnCE/examples/Hello/descriptors/run_test.pl
-	
+
 	Added a NodeManagerMap specific to the test and changed the ports
 	that the node managers invoked by the test listen on to avoid
 	test failures.
-	
+
 Wed Apr 20 16:14:26 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* docs/schema/CIAOServerResources.xsd
 
 	Fixed syntax and semantic errors.
-	
+
 Wed Apr 20 12:43:53 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-        * DAnCE/examples/Hello/descriptors/run_test.pl: 
+        * DAnCE/examples/Hello/descriptors/run_test.pl:
 
           Not all the test platforms has CIAO_ROOT environment variable
           defined. Changed that dependency to ACE_ROOT in the script.
@@ -179,8 +187,8 @@ Wed Apr 20 12:43:53 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 Wed Apr 20 13:11:28 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
-          Added full scoping to a generated method call on 
+
+          Added full scoping to a generated method call on
           Servant_Impl_Base, to eliminate a warning from the
           Borland compiler.
 
@@ -188,15 +196,15 @@ Wed Apr 20 13:05:23 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
 	* DAnCE/RepositoryManager/Update_Plan.cpp
-	
-	Fixed compile errors in Borland. 
-	
+
+	Fixed compile errors in Borland.
+
 Wed Apr 20 08:09:17 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
-  
+
 	* DAnCE/ciao/Servant_Impl_T.cpp
 
-	Fixed a compile error with emulated exceptions. 
-	
+	Fixed a compile error with emulated exceptions.
+
 Wed Apr 20 08:03:23 2005 CDT  Will Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/DP_Handler.cpp

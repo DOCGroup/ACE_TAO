@@ -132,7 +132,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
-  PB_MAP::ENTRY *entry;
+  PB_MAP::ENTRY *entry = 0;
 
   if (this->priority_bands_map_.find (name, entry) != 0)
     {
@@ -207,7 +207,7 @@ CIAO::RTPolicy_Set_Manager::find_policies_by_name (const char *name
     }
 
 
-  POLICY_MAP::ENTRY *entry;
+  POLICY_MAP::ENTRY *entry = 0;
 
   if (this->policy_map_.find (name, entry) != 0)
     {
