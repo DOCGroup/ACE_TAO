@@ -43,14 +43,14 @@ namespace PortableServer
   {
     // Compute resulting wide string's length.
     CORBA::ULong string_length =
-      id.length () / sizeof (CORBA::WChar) + 1;
+      id.length () / sizeof (CORBA::WChar);
 
     // Allocate an extra slot if the id's length is not "aligned" on a
     // CORBA::WChar.
     if (id.length () % sizeof (CORBA::WChar))
       string_length++;
 
-    // Create space.
+    // Create space - note that this method adds + 1 for the '\0'.
     CORBA::WChar* string = CORBA::wstring_alloc (string_length);
 
     // Copy the data
