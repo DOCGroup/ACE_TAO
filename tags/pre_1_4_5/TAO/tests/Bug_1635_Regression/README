@@ -1,0 +1,7 @@
+This test provides regression for Bug 1635:
+"Enhancement - provide date and time stamping to the TAO log file"
+
+The fix allows the setting of a system property that results in a date and time stamp being applied to all ACE log messages.
+
+The client program merely initialises and destroys an ORB - enough activity to prompt the writing of debug messages. The run_test.pl checks the debug output produced for timestamps.
+
