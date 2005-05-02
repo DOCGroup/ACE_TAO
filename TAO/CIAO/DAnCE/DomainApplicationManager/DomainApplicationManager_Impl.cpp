@@ -246,7 +246,7 @@ split_plan (void)
       // the hash map for this instance.
       ACE_Hash_Map_Entry
         <ACE_CString,
-        Chained_Artifacts> *entry;
+        Chained_Artifacts> *entry = 0;
 
       if (this->artifact_map_.find
           (ACE_CString (my_instance.node.in ()),

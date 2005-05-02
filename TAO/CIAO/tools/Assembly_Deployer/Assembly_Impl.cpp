@@ -228,7 +228,7 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
     {
       CIAO::Assembly_Connection::Connect_Info *connection;
       conn_iter.next (connection);
-   
+
       segment_timers[CREATE_CONNECTION_TIMER].start_timer ();
       this->make_connection (connection
                              ACE_ENV_ARG_PARAMETER);
@@ -264,7 +264,7 @@ CIAO::Assembly_Impl::tear_down (ACE_ENV_SINGLE_ARG_DECL)
 
     while (!iter.done ())
       {
-        CIAO::Assembly_Context::COMP_MAP::ENTRY *entry;
+        CIAO::Assembly_Context::COMP_MAP::ENTRY *entry = 0;
         iter.next (entry);
 
         entry->int_id_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -436,7 +436,7 @@ CIAO::Assembly_Impl::resolve_component (CIAO::Assembly_Connection::IF_Resolver_I
 {
   if (info->resolver_type () == CIAO::Assembly_Connection::COMP_IDREF)
     {
-      CIAO::Assembly_Context::COMP_MAP::ENTRY *entry;
+      CIAO::Assembly_Context::COMP_MAP::ENTRY *entry = 0;
 
       if (this->assembly_context_.instantiated_components_.find (info->resolver_info (),
                                                                  entry) != 0)
@@ -467,7 +467,7 @@ CIAO::Assembly_Impl::resolve_home (CIAO::Assembly_Connection::IF_Resolver_Info *
     {
     case CIAO::Assembly_Connection::HOME_IDREF:
       {
-        CIAO::Assembly_Context::HOME_MAP::ENTRY *entry;
+        CIAO::Assembly_Context::HOME_MAP::ENTRY *entry = 0;
 
         if (this->assembly_context_.installed_homes_.find (info->resolver_info (),
                                                            entry) != 0)

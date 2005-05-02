@@ -47,7 +47,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
       if (check_ior_duplication.bind (ior, 0) == 1) // duplication found
         {
           ACE_DEBUG ((LM_ERROR, "(%P|%t) IOR of NodeManagers should be unique, "
-                                "check your node manager map file.\n")); 
+                                "check your node manager map file.\n"));
           return -1; // indicate "init" failed.
         }
 
@@ -71,7 +71,7 @@ CIAO::Deployment_Configuration::get_node_manager_ior (const char *name)
 
   ACE_Hash_Map_Entry
     <ACE_CString,
-    CIAO::Deployment_Configuration::Node_Manager_Info> *entry;
+    CIAO::Deployment_Configuration::Node_Manager_Info> *entry = 0;
 
   if (this->deployment_info_.find (ACE_CString (name),
                                    entry) != 0)
@@ -97,7 +97,7 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
 
   ACE_Hash_Map_Entry
     <ACE_CString,
-    CIAO::Deployment_Configuration::Node_Manager_Info> *entry;
+    CIAO::Deployment_Configuration::Node_Manager_Info> *entry = 0;
 
   if (this->deployment_info_.find (ACE_CString (name),
                                    entry) != 0)
