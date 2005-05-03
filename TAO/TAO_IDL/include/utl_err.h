@@ -136,6 +136,7 @@ public:
     EIDL_BACK_END,              // Back end error
     EIDL_ILLEGAL_INFIX,         // Illegal infix operator in expression
     EIDL_LOCAL_REMOTE_MISMATCH, // Local type used in remote operation
+    EIDL_IGNORE_IDL3_ERROR,     // -Sm option used with component or home decl
     EIDL_OK                     // No error
   };
 
@@ -329,6 +330,9 @@ public:
   // Report local type used in remote operation.
   void local_remote_mismatch (AST_Decl *l,
                               UTL_Scope *s);
+                              
+  // Improper use of -Sm option.
+  void ignore_idl3_error (AST_Decl *d);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

@@ -1,3 +1,33 @@
+Tue May  3 18:27:02 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        
+          Removed includes that were commented out.
+          
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_component_fwd.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Added definition and execution of a new error message that
+          informs the user of the improper use of the -Sm option, that
+          is, with tao_idl on an IDL file that contains component
+          declarations, component forward declarations, or home
+          declarations. This option is to be used only with tao_idl on
+          IDL files produced by the tao_idl3_to_idl2 executable, to
+          prevent duplicate creation of event consumer nodes. Thanks
+          to Boris Kolpackov <boris@dre.vanderbilt.edu> for reporting
+          the crash previously caused by improper usage of this option.
+
 Mon May  2 18:41:12 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/FP_Scheduling.{pidl,idl}:

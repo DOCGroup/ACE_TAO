@@ -4515,7 +4515,8 @@ uses_decl :
               c->uses ().enqueue_tail (ud);
 
               if (ud.is_multiple == I_TRUE
-                  && !idl_global->using_ifr_backend ())
+                  && !idl_global->using_ifr_backend ()
+                  && !idl_global->ignore_idl3 ())
                 {
                   // These datatypes must be created in the
                   // front end so they can be looked up
