@@ -529,6 +529,11 @@ public:
 
   bool using_ifr_backend (void) const;
   void using_ifr_backend (bool val);
+  // Accessor for the using_ifr_backend_ member.
+
+  bool ignore_idl3 (void) const;
+  void ignore_idl3 (bool val);
+  // Accessor for the ignore_idl3_ member.
 
   int check_gperf (void);
   // Currently called only from IDL backend, but could be useful elsewhere.
@@ -629,6 +634,10 @@ private:
 
   bool using_ifr_backend_;
   // Set by the IFR backend itself.
+  
+  bool ignore_idl3_;
+  // Need this for eventtypes left over after running idl3_to_idl2,
+  // we don't want to try to generate another event consumer.
 };
 
 

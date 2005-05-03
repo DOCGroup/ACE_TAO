@@ -53,8 +53,6 @@
 #include "be_visitor_union_fwd.h"
 #include "be_visitor_valuetype.h"
 #include "be_visitor_valuetype_fwd.h"
-//#include "be_visitor_eventtype.h"
-//#include "be_visitor_eventtype_fwd.h"
 #include "be_visitor_component.h"
 #include "be_visitor_component_fwd.h"
 #include "be_visitor_home.h"

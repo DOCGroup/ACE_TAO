@@ -426,10 +426,6 @@ public:
   void gen_anyop_files (idl_bool val);
   // Accessors for the member.
 
-  idl_bool do_ccm_preproc (void) const;
-  void do_ccm_preproc (idl_bool val);
-  // Accessors for the member do_ccm_preproc_.
-
   idl_bool gen_skel_files (void) const;
   void gen_skel_files (idl_bool val);
   // Accessors for the member gen_skel_files_.
@@ -597,9 +593,6 @@ private:
 
   idl_bool gen_anyop_files_;
   // Separate files for generated Any operators?
-
-  idl_bool do_ccm_preproc_;
-  // Do the IDL3 to IDL2 preprocessing?
 
   idl_bool gen_skel_files_;
   // True by default, but a command line option can turn this off so

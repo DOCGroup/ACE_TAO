@@ -128,7 +128,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     idl_flags_ (""),
     preserve_cpp_keywords_ (I_TRUE),
     pass_orb_idl_ (I_FALSE),
-    using_ifr_backend_ (false)
+    using_ifr_backend_ (false),
+    ignore_idl3_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -1287,6 +1288,18 @@ void
 IDL_GlobalData::using_ifr_backend (bool val)
 {
   this->using_ifr_backend_ = val;
+}
+
+bool
+IDL_GlobalData::ignore_idl3 (void) const
+{
+  return this->ignore_idl3_;
+}
+
+void
+IDL_GlobalData::ignore_idl3 (bool val)
+{
+  this->ignore_idl3_ = val;
 }
 
 // Return 0 on success, -1 failure. The <errno> corresponding to the
