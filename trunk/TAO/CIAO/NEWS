@@ -35,6 +35,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
 
 . Some bug fixes.
 
+. Added support for reception of eventtypes of a more derived type than
+  the type of the event sink. Subscription will succeed if the passed
+  event consumer is associated with an eventtype that is an ancestor of
+  the published eventtype.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.3 and CIAO-0.4.4
 ======================================================
