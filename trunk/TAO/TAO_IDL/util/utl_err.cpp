@@ -203,6 +203,8 @@ error_string (UTL_Error::ErrorCode c)
       return "illegal infix operator in expression";
     case UTL_Error::EIDL_LOCAL_REMOTE_MISMATCH:
       return "";
+    case UTL_Error::EIDL_IGNORE_IDL3_ERROR:
+      return "improper use of -Sm option with ";
   }
 
   return 0;
@@ -1375,4 +1377,17 @@ UTL_Error::local_remote_mismatch (AST_Decl *l,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
+
+void
+UTL_Error::ignore_idl3_error (AST_Decl *d)
+{
+  idl_error_header (EIDL_IGNORE_IDL3_ERROR,
+                    d->line (),
+                    d->file_name ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
 

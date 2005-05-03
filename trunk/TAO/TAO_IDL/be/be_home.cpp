@@ -21,6 +21,7 @@
 #include "be_component.h"
 #include "be_visitor.h"
 #include "global_extern.h"
+#include "utl_err.h"
 
 ACE_RCSID (be,
            be_home,
@@ -114,6 +115,12 @@ be_home::destroy (void)
 int
 be_home::accept (be_visitor *visitor)
 {
+  if (idl_global->ignore_idl3 ())
+    {
+      idl_global->err ()->ignore_idl3_error (this);
+      return -1;
+    }
+    
   return visitor->visit_home (this);
 }
 

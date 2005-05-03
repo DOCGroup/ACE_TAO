@@ -121,7 +121,7 @@ BE_produce (void)
       BE_abort ();
     }
 
-  if (be_global->do_ccm_preproc ())
+  if (!idl_global->ignore_idl3 ())
     {
       // Make a pass over the AST and introduce
       // CCM specific nodes.

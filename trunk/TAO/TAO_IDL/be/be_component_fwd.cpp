@@ -19,6 +19,8 @@
 
 #include "be_component_fwd.h"
 #include "be_visitor.h"
+#include "global_extern.h"
+#include "utl_err.h"
 
 ACE_RCSID (be, 
            be_component_fwd, 
@@ -68,6 +70,12 @@ be_component_fwd::destroy (void)
 int
 be_component_fwd::accept (be_visitor *visitor)
 {
+  if (idl_global->ignore_idl3 ())
+    {
+      idl_global->err ()->ignore_idl3_error (this);
+      return -1;
+    }
+    
   return visitor->visit_component_fwd (this);
 }
 
