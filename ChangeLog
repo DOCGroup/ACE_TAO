@@ -1,3 +1,16 @@
+Tue May  3 14:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Simplified this file
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Simplified this file and set gcc as preprocessor for TAO_IDL. The
+          Visual Age preprocessor is not usable for building applications
+          with idl files that include other idl files which only contain
+          includes. This is reported to IBM and we now force gcc as
+          preprocessor to prevent all kind of strange errors when building
+          the TAO examples/tests
+
 Sun May  1 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Misc/pingpong.cpp:
