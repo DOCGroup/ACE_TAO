@@ -6,33 +6,20 @@
 # Note that as of ACE 6.0, the only supported compiler from IBM will
 # be Visual Age C++ 5 (batch mode only) and up.
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
+debug ?= 1
+distrib ?= 0
+exceptions ?= 1
+optimize ?= 0
+rtti ?= 1
+threads ?= 1
+buildbits ?= 32
+
 ifeq (,$(inline))
 ifeq (1,$(debug))
   inline = 0
 else
   inline = 1
 endif
-endif
-ifeq (,$(rtti))
-  rtti = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(buildbits))
-  buildbits = 32
 endif
 
 # First, find out which compiler we're building with. The settings we
@@ -143,6 +130,13 @@ else    # Visual Age 5 and 6
     ARFLAGS := -X64 $(ARFLAGS)
   endif
 endif
+
+# The Visual Age preprocessor is not usable with the TAO_IDL compiler.
+# At the moment an idl file just contains includes of other idl files
+# the Visual Age preprocessor doesn't report that file in the list of
+# files that is used. The only way we can workaround this is using the
+# gcc preprocessor
+TAO_IDL_PREPROCESSOR = gcc
 
 ifeq ($(exceptions),0)
   CCFLAGS     += -qnoeh
