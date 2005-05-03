@@ -7,30 +7,14 @@
 # Contributed by Ian Wright <I.Wright@elsevier.co.uk>
 # Updated for AIX 4.3 and gcc 3 by Steve Huston  <shuston@riverace.com>
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(rtti))
-  rtti = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(buildbits))
-  buildbits = native
-endif
-ifeq (,$(with_ld))
-  with_ld = aix
-endif
+debug ?= 1
+distrib ?= 0
+exceptions ?= 1
+optimize ?= 1
+rtti ?= 1
+threads ?= 1
+buildbits ?= native
+with_ld ?= aix
 
 # Yes, believe it or not...
 # The way to make a shared lib on AIX is to make a shared object file and
