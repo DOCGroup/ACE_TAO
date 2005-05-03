@@ -2504,33 +2504,41 @@ namespace
            << "  >" << endl
            << "MACRO_MADNESS_TYPEDEF;" << endl;
            
+        os << "ACE_CString obj_id (this->ins_name_);"
+           << "obj_id += \"_" << p.name () << "\";" << endl;
+           
         os << "ACE_NEW_THROW_EX ( " << endl
-           << "tmp," << endl
-           << "MACRO_MADNESS_TYPEDEF (" << endl
-           << "this->ins_name_," << endl
-           << "\"" << p.name () << "\"," << endl
-           << "CIAO::Port_Activator::Facet," << endl
-           << "0," << endl
-           << "this->context_," << endl
-           << "this)," << endl
-           << "CORBA::NO_MEMORY ());" << endl;
+           << "  tmp," << endl
+           << "  MACRO_MADNESS_TYPEDEF (" << endl
+           << "    obj_id.c_str ()," << endl
+           << "    \"" << p.name () << "\"," << endl
+           << "    CIAO::Port_Activator::Facet," << endl
+           << "    0," << endl
+           << "    this->context_," << endl
+           << "    this)," << endl
+           << "  CORBA::NO_MEMORY ());" << endl;
 
         os << "CIAO::Servant_Activator *sa = " << endl
            << "this->container_->ports_servant_activator ();" << endl
            << "if (!sa->register_port_activator (tmp))" << endl
            << "{"
-           << "return 0;" << endl
+           << "return ";           
+
+        Traversal::ProviderData::belongs (p, belongs_);
+
+        os << "::_nil ();"
            << "}";
 
         os << "::CORBA::Object_var obj =" << endl
-           << "this->container_->generate_reference (" << endl
-           << "this->ins_name_," << endl;
+           << "  this->container_->generate_reference (" << endl
+           << "    obj_id.c_str ()," << endl
+           << "    ";
 
         Traversal::ProviderData::belongs (p, repo_id_belongs_);
 
         os << "," << endl
-           << "CIAO::Container::Facet_Consumer" << endl
-           << STRS[ENV_ARG] << ");"
+           << "    CIAO::Container::Facet_Consumer" << endl
+           << "    " << STRS[ENV_ARG] << ");"
            << STRS[ACE_CR] << " (";
 
         Traversal::ProviderData::belongs (p, belongs_);
@@ -2829,52 +2837,58 @@ namespace
            << " > *tmp = 0;" << endl
            << "typedef  CIAO::Port_Activator_T<" << endl;
 
-        os << scope_.name  () << "_Servant::";
+        os << "    " << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
         os << "Consumer_" << c.name ()
            << "_Servant," << endl
-           << c.scoped_name ().scope_name ().scope_name ()
+           << "    " << c.scoped_name ().scope_name ().scope_name ()
            << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name ()
            << "," << endl
-           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << "    " << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
            << c.scoped_name ().scope_name ().simple_name ()
            << "_Context, " << endl
-           << scope_.name () << "_Servant"
-           << " > " << endl
-           << " MACRO_MADNESS_TYPEDEF;"
-           << endl;
+           << "    " << scope_.name () << "_Servant" << endl
+           << "  >" << endl
+           << "MACRO_MADNESS_TYPEDEF;" << endl;
+           
+        os << "ACE_CString obj_id (this->ins_name_);"
+           << "obj_id += \"_" << c.name () << "\";" << endl;
            
         os << "ACE_NEW_THROW_EX ( " << endl
            << "  tmp," << endl
            << "  MACRO_MADNESS_TYPEDEF (" << endl
-           << "    this->ins_name_," << endl
+           << "    obj_id.c_str ()," << endl
            << "    \"" << c.name () << "\"," << endl
            << "    CIAO::Port_Activator::Sink," << endl
            << "    this->executor_.in ()," << endl
            << "    this->context_," << endl
            << "    this)," << endl
-           << "  CORBA::NO_MEMORY ());" << endl << endl;
+           << "  CORBA::NO_MEMORY ());" << endl;
 
         os << "CIAO::Servant_Activator *sa = " << endl
            << "this->container_->ports_servant_activator ();" <<endl
            << "if (!sa->register_port_activator (tmp))" << endl
            << "{"
-           << "return 0;" << endl
+           << "return ";
+
+        Traversal::ConsumerData::belongs (c, belongs_);
+
+        os << "Consumer::_nil ();"
            << "}";
 
         os << "::CORBA::Object_var obj =" << endl
-           << "this->container_->generate_reference (" << endl
-           << "  this->ins_name_," << endl
-           << "  ";
+           << "  this->container_->generate_reference (" << endl
+           << "    obj_id.c_str ()," << endl
+           << "    ";
 
         Traversal::ConsumerData::belongs (c, repo_id_belongs_);
 
         os << "," << endl
-           << "  CIAO::Container::Facet_Consumer" << endl
-           << "  " << STRS[ENV_ARG] << ");"
+           << "    CIAO::Container::Facet_Consumer" << endl
+           << "    " << STRS[ENV_ARG] << ");"
            << STRS[ACE_CR] << " (";
 
         Traversal::ConsumerData::belongs (c, belongs_);
