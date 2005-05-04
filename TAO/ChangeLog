@@ -1,3 +1,17 @@
+Wed May  4 11:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ImplicitActivationPolicyA.cpp:
+        * tao/PortableServer/PortableServerA.cpp:
+        * tao/PortableServer/ThreadPolicyA.cpp:
+        * tao/PortableServer/AdapterActivatorA.cpp:
+        * tao/PortableServer/ForwardRequestA.cpp:
+        * tao/PortableServer/RequestProcessingPolicyA.cpp:
+        * tao/PortableServer/ServantLocatorA.cpp:
+        * tao/PortableServer/ServantActivatorA.cpp:
+        * tao/PortableServer/ServantManagerA.cpp:
+        * tao/PortableServer/ServantRetentionPolicyA.cpp:
+          Applied manual diff to fix compile errors in minimum corba builds
+
 Wed May  4 08:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.{h,cpp}:
