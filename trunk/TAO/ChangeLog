@@ -1,3 +1,11 @@
+Wed May  4 11:54:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Union_TypeCode.cpp (equal, equivalent):
+	* tao/Union_TypeCode_Static.cpp (equal, equivalent):
+
+	  Use Traits<>::get_typecode() to get the discriminant TypeCode.
+	  Addresses dynamic union TypeCode compile-time problems.
+
 Wed May  4 09:25:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Objref_TypeCode_Factory.h:

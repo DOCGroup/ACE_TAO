@@ -124,8 +124,9 @@ TAO::TypeCode::Union<StringType,
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean const equal_discriminators =
-    (*this->discriminant_type_)->equal (tc_discriminator.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+    Traits<StringType>::get_typecode (this->discriminant_type_)->equal (
+      tc_discriminator.in ()
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!equal_discriminators)
@@ -181,8 +182,9 @@ TAO::TypeCode::Union<StringType,
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean const equiv_discriminators =
-    (*this->discriminant_type_)->equivalent (tc_discriminator.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+    Traits<StringType>::get_typecode (this->discriminant_type_)->equivalent (
+      tc_discriminator.in ()
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!equiv_discriminators)
