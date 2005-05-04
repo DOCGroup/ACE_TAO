@@ -70,7 +70,7 @@ Tue May  3 23:02:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Added missing include directives.
 
-	* tao/Objref_TypeCode_Factory.h:	
+	* tao/Objref_TypeCode_Factory.h:
 	* tao/SystemExceptionA.cpp:
 	* tao/TypeCode_CDR_Extraction.cpp:
 	* tao/TypeCode_Constants.cpp:
@@ -79,7 +79,7 @@ Tue May  3 23:02:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Updated to use latest TypeCode changes (header rename, template
 	  parameter changes, etc).
-	
+
 	* tao/AnySeqA.cpp:
 	* tao/BooleanSeqA.cpp:
 	* tao/BoundsA.cpp:
@@ -167,7 +167,7 @@ Tue May  3 23:02:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Regenerated.
 
-	* tao/Makefile.am: 
+	* tao/Makefile.am:
 	* tao/tao.mpc:
 
 	  Updated source file lists in accordance with latest TypeCode
@@ -177,9 +177,9 @@ Tue May  3 18:27:02 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_module.cpp:
         * TAO_IDL/be/be_visitor_root.cpp:
-        
+
           Removed includes that were commented out.
-          
+
         * TAO_IDL/be/be_component.cpp:
         * TAO_IDL/be/be_component_fwd.cpp:
         * TAO_IDL/be/be_global.cpp:
@@ -192,7 +192,7 @@ Tue May  3 18:27:02 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Added definition and execution of a new error message that
           informs the user of the improper use of the -Sm option, that
           is, with tao_idl on an IDL file that contains component
