@@ -50,11 +50,11 @@ namespace TAO
      * @c struct or @c exception.
      */
     template<>
-    class Struct<char const *,
-                 CORBA::TypeCode_ptr const *,
-                 Struct_Field<char const *,
-                              CORBA::TypeCode_ptr const *> const *,
-                 TAO::Null_RefCount_Policy>
+    class TAO_Export Struct<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            Struct_Field<char const *,
+                                         CORBA::TypeCode_ptr const *> const *,
+                            TAO::Null_RefCount_Policy>
       : public CORBA::TypeCode,
         private TAO::Null_RefCount_Policy
     {
