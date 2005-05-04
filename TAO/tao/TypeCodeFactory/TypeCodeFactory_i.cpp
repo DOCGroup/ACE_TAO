@@ -1162,7 +1162,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
   ACE_NEW_THROW_EX (tc,
                     typecode_type (kind, id, name, tmp),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (tc)
+  ACE_CHECK_RETURN (tc);
 
   return tc;
 }
