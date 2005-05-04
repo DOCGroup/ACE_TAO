@@ -65,10 +65,10 @@ namespace TAO
         CORBA::tk_sequence,
         &PortableServer::_tc_POA,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_PortableServer_POAList_0 =
       &PortableServer_POAList_0;
-    
+
   }
 }
 
@@ -82,7 +82,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/PortableServer/POAList:1.0",
     "POAList",
     &TAO::TypeCode::tc_PortableServer_POAList_0);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POAList =
@@ -106,7 +106,7 @@ static TAO::TypeCode::Struct<char const *,
     "AdapterAlreadyExists",
     _tao_fields_PortableServer_POA_AdapterAlreadyExists,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_AdapterAlreadyExists =
   &_tao_tc_PortableServer_POA_AdapterAlreadyExists;
 
@@ -125,7 +125,7 @@ static TAO::TypeCode::Struct<char const *,
     "AdapterNonExistent",
     _tao_fields_PortableServer_POA_AdapterNonExistent,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_AdapterNonExistent =
   &_tao_tc_PortableServer_POA_AdapterNonExistent;
 
@@ -135,7 +135,7 @@ static TAO::TypeCode::Struct<char const *,
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableServer_POA_InvalidPolicy[] =
   {
     { "index", &CORBA::_tc_ushort }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              CORBA::TypeCode_ptr const *,
@@ -148,9 +148,11 @@ static TAO::TypeCode::Struct<char const *,
     "InvalidPolicy",
     _tao_fields_PortableServer_POA_InvalidPolicy,
     1);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_InvalidPolicy =
   &_tao_tc_PortableServer_POA_InvalidPolicy;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:74
@@ -167,9 +169,11 @@ static TAO::TypeCode::Struct<char const *,
     "NoServant",
     _tao_fields_PortableServer_POA_NoServant,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_NoServant =
   &_tao_tc_PortableServer_POA_NoServant;
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:74
@@ -186,7 +190,7 @@ static TAO::TypeCode::Struct<char const *,
     "ObjectAlreadyActive",
     _tao_fields_PortableServer_POA_ObjectAlreadyActive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ObjectAlreadyActive =
   &_tao_tc_PortableServer_POA_ObjectAlreadyActive;
 
@@ -205,7 +209,7 @@ static TAO::TypeCode::Struct<char const *,
     "ObjectNotActive",
     _tao_fields_PortableServer_POA_ObjectNotActive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ObjectNotActive =
   &_tao_tc_PortableServer_POA_ObjectNotActive;
 
@@ -224,7 +228,7 @@ static TAO::TypeCode::Struct<char const *,
     "ServantAlreadyActive",
     _tao_fields_PortableServer_POA_ServantAlreadyActive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ServantAlreadyActive =
   &_tao_tc_PortableServer_POA_ServantAlreadyActive;
 
@@ -243,7 +247,7 @@ static TAO::TypeCode::Struct<char const *,
     "ServantNotActive",
     _tao_fields_PortableServer_POA_ServantNotActive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ServantNotActive =
   &_tao_tc_PortableServer_POA_ServantNotActive;
 
@@ -262,7 +266,7 @@ static TAO::TypeCode::Struct<char const *,
     "WrongAdapter",
     _tao_fields_PortableServer_POA_WrongAdapter,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_WrongAdapter =
   &_tao_tc_PortableServer_POA_WrongAdapter;
 
@@ -281,7 +285,7 @@ static TAO::TypeCode::Struct<char const *,
     "WrongPolicy",
     _tao_fields_PortableServer_POA_WrongPolicy,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_WrongPolicy =
   &_tao_tc_PortableServer_POA_WrongPolicy;
 
@@ -294,7 +298,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/POA:2.3",
     "POA");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POA =
@@ -303,7 +307,7 @@ namespace PortableServer
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 namespace TAO
@@ -314,7 +318,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POAList>::demarshal_value (TAO_InputCDR &)
@@ -402,7 +406,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableServer::POA>::demarshal_value (TAO_InputCDR &)
@@ -453,7 +457,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -464,7 +468,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::AdapterAlreadyExists>::demarshal_value (TAO_InputCDR &)
@@ -528,7 +532,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -539,7 +543,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::AdapterNonExistent>::demarshal_value (TAO_InputCDR &)
@@ -603,7 +607,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -614,7 +618,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::InvalidPolicy>::demarshal_value (TAO_InputCDR &)
@@ -678,8 +682,10 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 namespace TAO
 {
@@ -689,7 +695,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::NoServant>::demarshal_value (TAO_InputCDR &)
@@ -753,7 +759,9 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -764,7 +772,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::ObjectAlreadyActive>::demarshal_value (TAO_InputCDR &)
@@ -828,7 +836,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -839,7 +847,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::ObjectNotActive>::demarshal_value (TAO_InputCDR &)
@@ -903,7 +911,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -914,7 +922,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::ServantAlreadyActive>::demarshal_value (TAO_InputCDR &)
@@ -978,7 +986,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -989,7 +997,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::ServantNotActive>::demarshal_value (TAO_InputCDR &)
@@ -1053,7 +1061,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -1064,7 +1072,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::WrongAdapter>::demarshal_value (TAO_InputCDR &)
@@ -1128,7 +1136,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -1139,7 +1147,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POA::WrongPolicy>::demarshal_value (TAO_InputCDR &)
