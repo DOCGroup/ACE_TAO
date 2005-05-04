@@ -28,16 +28,17 @@
 #include "IIOPC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
+#include "tao/Struct_TypeCode_Static.h"
+#include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_IIOP_ListenPoint[] =
   {
@@ -66,12 +67,12 @@ namespace IIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_IIOP_ListenPointList_GUARD
@@ -97,9 +98,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_IIOP_ListenPointList_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_IIOP_ListenPointList (
+    CORBA::tk_alias,
     "IDL:omg.org/IIOP/ListenPointList:1.0",
     "ListenPointList",
     &TAO::TypeCode::tc_IIOP_ListenPointList_0);
@@ -113,7 +114,7 @@ namespace IIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_IIOP_BiDirIIOPServiceContext[] =
   {
@@ -141,7 +142,7 @@ namespace IIOP
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -199,7 +200,8 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
+
 
 // Copying insertion.
 void operator<<= (
@@ -257,7 +259,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

@@ -28,12 +28,12 @@
 #include "RTCORBA.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Enum_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Enum_TypeCode_Static.h"
+#include "tao/Objref_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
+#include "tao/Struct_TypeCode_Static.h"
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
@@ -42,13 +42,13 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_NativePriority (
+    CORBA::tk_alias,
     "IDL:omg.org/RTCORBA/NativePriority:1.0",
     "NativePriority",
     &CORBA::_tc_short);
@@ -62,13 +62,13 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_Priority (
+    CORBA::tk_alias,
     "IDL:omg.org/RTCORBA/Priority:1.0",
     "Priority",
     &CORBA::_tc_short);
@@ -82,13 +82,13 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_NetworkPriority (
+    CORBA::tk_alias,
     "IDL:omg.org/RTCORBA/NetworkPriority:1.0",
     "NetworkPriority",
     &CORBA::_tc_long);
@@ -102,13 +102,13 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_ThreadpoolId (
+    CORBA::tk_alias,
     "IDL:omg.org/RTCORBA/ThreadpoolId:1.0",
     "ThreadpoolId",
     &CORBA::_tc_ulong);
@@ -122,7 +122,7 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_RTCORBA_ThreadpoolLane[] =
   {
@@ -152,12 +152,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_RTCORBA_ThreadpoolLanes_GUARD
@@ -183,9 +183,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_RTCORBA_ThreadpoolLanes_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_ThreadpoolLanes (
+    CORBA::tk_alias,
     "IDL:omg.org/RTCORBA/ThreadpoolLanes:1.0",
     "ThreadpoolLanes",
     &TAO::TypeCode::tc_RTCORBA_ThreadpoolLanes_0);
@@ -199,7 +199,7 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/enum_typecode.cpp:34
+// be/be_visitor_typecode/enum_typecode.cpp:34
 
 static char const * const _tao_enumerators_RTCORBA_PriorityModel[] =
   {
@@ -226,12 +226,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_PriorityModelPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/PriorityModelPolicy:1.0",
     "PriorityModelPolicy");
   
@@ -244,12 +244,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_ThreadpoolPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/ThreadpoolPolicy:1.0",
     "ThreadpoolPolicy");
   
@@ -262,12 +262,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_ProtocolProperties (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/ProtocolProperties:1.0",
     "ProtocolProperties");
   
@@ -280,7 +280,7 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_RTCORBA_Protocol[] =
   {
@@ -310,12 +310,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_RTCORBA_ProtocolList_GUARD
@@ -341,9 +341,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_RTCORBA_ProtocolList_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_ProtocolList (
+    CORBA::tk_alias,
     "IDL:omg.org/RTCORBA/ProtocolList:1.0",
     "ProtocolList",
     &TAO::TypeCode::tc_RTCORBA_ProtocolList_0);
@@ -357,12 +357,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_ServerProtocolPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/ServerProtocolPolicy:1.0",
     "ServerProtocolPolicy");
   
@@ -375,12 +375,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_ClientProtocolPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/ClientProtocolPolicy:1.0",
     "ClientProtocolPolicy");
   
@@ -393,12 +393,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_PrivateConnectionPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/PrivateConnectionPolicy:1.0",
     "PrivateConnectionPolicy");
   
@@ -411,12 +411,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_TCPProtocolProperties (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/TCPProtocolProperties:1.0",
     "TCPProtocolProperties");
   
@@ -429,12 +429,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_GIOPProtocolProperties (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/GIOPProtocolProperties:1.0",
     "GIOPProtocolProperties");
   
@@ -447,12 +447,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_UnixDomainProtocolProperties (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/UnixDomainProtocolProperties:1.0",
     "UnixDomainProtocolProperties");
   
@@ -465,12 +465,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_SharedMemoryProtocolProperties (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/SharedMemoryProtocolProperties:1.0",
     "SharedMemoryProtocolProperties");
   
@@ -483,12 +483,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_UserDatagramProtocolProperties (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/UserDatagramProtocolProperties:1.0",
     "UserDatagramProtocolProperties");
   
@@ -501,12 +501,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_StreamControlProtocolProperties (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/StreamControlProtocolProperties:1.0",
     "StreamControlProtocolProperties");
   
@@ -519,7 +519,7 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_RTCORBA_PriorityBand[] =
   {
@@ -548,12 +548,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_RTCORBA_PriorityBands_GUARD
@@ -579,9 +579,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_RTCORBA_PriorityBands_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_PriorityBands (
+    CORBA::tk_alias,
     "IDL:omg.org/RTCORBA/PriorityBands:1.0",
     "PriorityBands",
     &TAO::TypeCode::tc_RTCORBA_PriorityBands_0);
@@ -595,12 +595,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_PriorityBandedConnectionPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/PriorityBandedConnectionPolicy:1.0",
     "PriorityBandedConnectionPolicy");
   
@@ -613,12 +613,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_Current (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/Current:1.0",
     "Current");
   
@@ -631,12 +631,12 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_Mutex (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/Mutex:1.0",
     "Mutex");
   
@@ -649,7 +649,7 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_RTCORBA_RTORB_MutexNotFound = 0;
 static TAO::TypeCode::Struct<char const *,
@@ -668,7 +668,7 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_RTCORBA_RTORB_MutexNotFound;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_RTCORBA_RTORB_InvalidThreadpool = 0;
 static TAO::TypeCode::Struct<char const *,
@@ -687,12 +687,12 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_RTCORBA_RTORB_InvalidThreadpool;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_RTCORBA_RTORB (
+    CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/RTORB:1.0",
     "RTORB");
   
@@ -705,7 +705,7 @@ namespace RTCORBA
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -763,7 +763,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.
@@ -822,7 +822,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_cs.cpp:52
+// be/be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -850,7 +850,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -925,7 +925,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1000,7 +1000,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1075,7 +1075,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 
 
@@ -1150,7 +1150,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 namespace TAO
 {
@@ -1225,7 +1225,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1300,7 +1300,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1375,7 +1375,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1450,7 +1450,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1525,7 +1525,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1600,7 +1600,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1675,7 +1675,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1750,7 +1750,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1825,7 +1825,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1900,7 +1900,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1958,7 +1958,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.
@@ -2017,7 +2017,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -2092,7 +2092,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -2167,7 +2167,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -2242,7 +2242,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -2317,7 +2317,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -2392,7 +2392,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
 {

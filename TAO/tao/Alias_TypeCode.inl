@@ -5,13 +5,12 @@
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 ACE_INLINE
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::Alias (
+  CORBA::TCKind kind,
   char const * id,
   char const * name,
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
@@ -21,7 +20,7 @@ TAO::TypeCode::Alias<StringType,
 #else
   TypeCodeType const & tc)
 #endif
-  : CORBA::TypeCode (Kind)
+  : CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , attributes_ (id, name)
   , content_type_ (tc)

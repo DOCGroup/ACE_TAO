@@ -28,21 +28,21 @@
 #include "DomainC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Objref_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_DomainManager (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/DomainManager:1.0",
     "DomainManager");
   
@@ -55,12 +55,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ConstructionPolicy (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ConstructionPolicy:1.0",
     "ConstructionPolicy");
   
@@ -73,12 +73,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_CORBA_DomainManagerList_GUARD
@@ -104,9 +104,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_CORBA_DomainManagerList_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_DomainManagerList (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/DomainManagerList:1.0",
     "DomainManagerList",
     &TAO::TypeCode::tc_CORBA_DomainManagerList_0);
@@ -120,7 +120,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -178,7 +178,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -236,7 +236,8 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
+
 
 // Copying insertion.
 void operator<<= (

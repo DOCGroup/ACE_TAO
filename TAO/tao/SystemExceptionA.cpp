@@ -5,9 +5,9 @@
 #include "Any_Dual_Impl_T.h"
 #include "TypeCode.h"
 #include "TypeCode_Constants.h"
-#include "Enum_TypeCode.h"
+#include "Enum_TypeCode_Static.h"
 #include "TypeCode_Struct_Field.h"
-#include "Struct_TypeCode.h"
+#include "Struct_TypeCode_Static.h"
 #include "Null_RefCount_Policy.h"
 #include "CORBA_String.h"
 
@@ -127,11 +127,11 @@ namespace TAO
         { "completed", &CORBA::_tc_CompletionStatus }
       };
 
-    typedef Struct<char const *,
-                   CORBA::TypeCode_ptr const *,
-                   Struct_Field<char const *,
-                                CORBA::TypeCode_ptr const *> const *,
-                   TAO::Null_RefCount_Policy> tc_SystemException;
+    typedef TAO::TypeCode::Struct<char const *,
+                                  CORBA::TypeCode_ptr const *,
+                                  TAO::TypeCode::Struct_Field<char const *,
+                                                              CORBA::TypeCode_ptr const *> const *,
+                                  TAO::Null_RefCount_Policy> tc_SystemException;
   }
 }
 

@@ -28,19 +28,19 @@
 #include "orb_typesC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/String_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORBid (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/ORBid:1.0",
     "ORBid",
     &CORBA::_tc_string);
@@ -54,13 +54,13 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_Flags (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/Flags:1.0",
     "Flags",
     &CORBA::_tc_ulong);
@@ -74,13 +74,13 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_Identifier (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/Identifier:1.0",
     "Identifier",
     &CORBA::_tc_string);
@@ -94,13 +94,13 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_RepositoryId (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/RepositoryId:1.0",
     "RepositoryId",
     &CORBA::_tc_string);

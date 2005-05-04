@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Struct_TypeCode.h"
+#include "Struct_TypeCode_Static.h"
 #include "Null_RefCount_Policy.h"
 
 

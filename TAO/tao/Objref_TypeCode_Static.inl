@@ -3,14 +3,13 @@
 // $Id$
 
 
-template <typename StringType, class RefCountPolicy>
 ACE_INLINE
-TAO::TypeCode::Objref_Base<StringType, RefCountPolicy>::Objref_Base (
+TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::Objref (
   CORBA::TCKind kind,
   char const * id,
   char const * name)
   : CORBA::TypeCode (kind)
-  , RefCountPolicy ()
+  , TAO::Null_RefCount_Policy ()
   , attributes_ (id, name)
 {
 }

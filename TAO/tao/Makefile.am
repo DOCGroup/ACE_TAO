@@ -35,6 +35,7 @@ libTAO_la_SOURCES = \
   Adapter.cpp \
   Adapter_Factory.cpp \
   Adapter_Registry.cpp \
+  Alias_TypeCode_Static.cpp \
   Any.cpp \
   AnySeqA.cpp \
   AnySeqC.cpp \
@@ -104,6 +105,7 @@ libTAO_la_SOURCES = \
   Encodable.cpp \
   Endpoint.cpp \
   Endpoint_Selector_Factory.cpp \
+  Enum_TypeCode_Static.cpp \
   Environment.cpp \
   Exception.cpp \
   Exclusive_TMS.cpp \
@@ -204,6 +206,7 @@ libTAO_la_SOURCES = \
   Object_Proxy_Broker.cpp \
   Object_Proxy_Impl.cpp \
   Object_Ref_Table.cpp \
+  Objref_TypeCode_Static.cpp \
   OctetSeqA.cpp \
   OctetSeqC.cpp \
   PICurrent.cpp \
@@ -248,6 +251,7 @@ libTAO_la_SOURCES = \
   Resource_Factory.cpp \
   Resume_Handle.cpp \
   Sequence.cpp \
+  Sequence_TypeCode_Static.cpp \
   ServerRequestInfoA.cpp \
   ServerRequestInfoC.cpp \
   Server_Strategy_Factory.cpp \
@@ -258,8 +262,10 @@ libTAO_la_SOURCES = \
   ShortSeqA.cpp \
   ShortSeqC.cpp \
   Special_Basic_Arguments.cpp \
+  String_TypeCode_Static.cpp \
   StringSeqA.cpp \
   StringSeqC.cpp \
+  Struct_TypeCode_Static.cpp \
   Stub.cpp \
   Stub_Factory.cpp \
   Sync_Strategies.cpp \
@@ -304,7 +310,9 @@ libTAO_la_SOURCES = \
   UShortSeqC.cpp \
   UTF16_BOM_Factory.cpp \
   UTF16_BOM_Translator.cpp \
+  Union_TypeCode_Static.cpp \
   UserException.cpp \
+  Value_TypeCode_Static.cpp \
   ValueModifierC.cpp \
   Valuetype_Adapter.cpp \
   VisibilityA.cpp \
@@ -351,6 +359,8 @@ nobase_include_HEADERS = \
   Alias_TypeCode.cpp \
   Alias_TypeCode.h \
   Alias_TypeCode.inl \
+  Alias_TypeCode_Static.h \
+  Alias_TypeCode_Static.inl \
   Allocator.h \
   Any.h \
   Any.i \
@@ -494,6 +504,8 @@ nobase_include_HEADERS = \
   Enum_TypeCode.cpp \
   Enum_TypeCode.h \
   Enum_TypeCode.inl \
+  Enum_TypeCode_Static.h \
+  Enum_TypeCode_Static.inl \
   Environment.h \
   Environment.i \
   Exception.h \
@@ -668,9 +680,8 @@ nobase_include_HEADERS = \
   Objref_TypeCode.cpp \
   Objref_TypeCode.h \
   Objref_TypeCode.inl \
-  Objref_TypeCode_Base.cpp \
-  Objref_TypeCode_Base.h \
-  Objref_TypeCode_Base.inl \
+  Objref_TypeCode_Static.h \
+  Objref_TypeCode_Static.inl \
   Objref_VarOut_T.cpp \
   Objref_VarOut_T.h \
   OctetSeq.pidl \
@@ -757,6 +768,8 @@ nobase_include_HEADERS = \
   Sequence_TypeCode.cpp \
   Sequence_TypeCode.h \
   Sequence_TypeCode.inl \
+  Sequence_TypeCode_Static.h \
+  Sequence_TypeCode_Static.inl \
   ServerRequestInfo.pidl \
   ServerRequestInfoC.h \
   ServerRequestInfoS.h \
@@ -782,10 +795,14 @@ nobase_include_HEADERS = \
   String_TypeCode.cpp \
   String_TypeCode.h \
   String_TypeCode.inl \
+  String_TypeCode_Static.h \
+  String_TypeCode_Static.inl \
   String_TypeCode_Traits.h \
   Struct_TypeCode.cpp \
   Struct_TypeCode.h \
   Struct_TypeCode.inl \
+  Struct_TypeCode_Static.h \
+  Struct_TypeCode_Static.inl \
   Stub.h \
   Stub.i \
   Stub_Factory.h \
@@ -878,6 +895,8 @@ nobase_include_HEADERS = \
   Union_TypeCode.cpp \
   Union_TypeCode.h \
   Union_TypeCode.inl \
+  Union_TypeCode_Static.h \
+  Union_TypeCode_Static.inl \
   UserException.h \
   UserException.inl \
   ValueModifier.pidl \
@@ -885,6 +904,8 @@ nobase_include_HEADERS = \
   Value_TypeCode.cpp \
   Value_TypeCode.h \
   Value_TypeCode.inl \
+  Value_TypeCode_Static.h \
+  Value_TypeCode_Static.inl \
   Valuetype_Adapter.h \
   VarOut_T.cpp \
   VarOut_T.h \

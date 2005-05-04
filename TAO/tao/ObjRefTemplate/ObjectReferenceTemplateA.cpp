@@ -28,10 +28,10 @@
 #include "ObjectReferenceTemplate.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Value_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
+#include "tao/Value_TypeCode_Static.h"
 #include "tao/TypeCode_Value_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
@@ -39,7 +39,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/value_typecode.cpp:50
+// be/be_visitor_typecode/value_typecode.cpp:50
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceFactory = 0;
 
@@ -66,7 +66,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/value_typecode.cpp:50
+// be/be_visitor_typecode/value_typecode.cpp:50
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceTemplate = 0;
 
@@ -93,12 +93,12 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_PortableInterceptor_ObjectReferenceTemplateSeq_GUARD
@@ -124,9 +124,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_PortableInterceptor_ObjectReferenceTemplateSeq_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ObjectReferenceTemplateSeq (
+    CORBA::tk_alias,
     "IDL:omg.org/PortableInterceptor/ObjectReferenceTemplateSeq:1.0",
     "ObjectReferenceTemplateSeq",
     &TAO::TypeCode::tc_PortableInterceptor_ObjectReferenceTemplateSeq_0);
@@ -140,7 +140,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/any_op_cs.cpp:57
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 namespace TAO
 {
@@ -155,6 +155,7 @@ namespace TAO
     return 1;
   }
 }
+
 // Copying insertion.
 void
 operator<<= (
@@ -199,7 +200,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/any_op_cs.cpp:57
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 namespace TAO
 {
@@ -214,6 +215,7 @@ namespace TAO
     return 1;
   }
 }
+
 // Copying insertion.
 void
 operator<<= (
@@ -258,7 +260,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.

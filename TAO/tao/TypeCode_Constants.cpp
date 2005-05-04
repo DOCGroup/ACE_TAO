@@ -11,8 +11,8 @@ ACE_RCSID (tao,
 
 #include "Null_RefCount_Policy.h"
 #include "Empty_Param_TypeCode.h"
-#include "Objref_TypeCode.h"
-#include "String_TypeCode.h"
+#include "Objref_TypeCode_Static.h"
+#include "String_TypeCode_Static.h"
 
 
 namespace TAO
@@ -52,22 +52,23 @@ namespace TAO
     char const tc_object_id[]   = "IDL:omg.org/CORBA/Object:1.0";
     char const tc_object_name[] = "Object";
     Objref<char const *,
-           CORBA::tk_objref,
-           TAO::Null_RefCount_Policy> tc_Object (tc_object_id, tc_object_name);
+           TAO::Null_RefCount_Policy> tc_Object (CORBA::tk_objref,
+                                                 tc_object_id,
+                                                 tc_object_name);
 
     char const tc_component_id[]   = "IDL:omg.org/CORBA/CCMObject:1.0";
     char const tc_component_name[] = "CCMObject";
     Objref<char const *,
-           CORBA::tk_component,
-           TAO::Null_RefCount_Policy> tc_Component (tc_component_id,
+           TAO::Null_RefCount_Policy> tc_Component (CORBA::tk_component,
+                                                    tc_component_id,
                                                     tc_component_name);
 
     char const tc_home_id[]   = "IDL:omg.org/CORBA/CCMHome:1.0";
     char const tc_home_name[] = "CCMHome";
     Objref<char const *,
-           CORBA::tk_home,
-           TAO::Null_RefCount_Policy> tc_Home (tc_home_id, tc_home_name);
-
+           TAO::Null_RefCount_Policy> tc_Home (CORBA::tk_home,
+                                               tc_home_id,
+                                               tc_home_name);
   }  // End TypeCode namespace
 }  // End TAO namespace
 

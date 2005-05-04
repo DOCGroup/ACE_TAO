@@ -931,70 +931,13 @@ TAO_TypeCodeFactory_i::create_tc_common (
 
   CORBA::TypeCode_ptr tc;
 
-  if (kind == CORBA::tk_abstract_interface)
-    {
-      typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                    CORBA::tk_abstract_interface,
-                                    TAO::True_RefCount_Policy> typecode_type;
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
-  else if (kind == CORBA::tk_component)
-    {
-      typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                    CORBA::tk_component,
-                                    TAO::True_RefCount_Policy> typecode_type;
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
-  else if (kind == CORBA::tk_home)
-    {
-      typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                    CORBA::tk_home,
-                                    TAO::True_RefCount_Policy> typecode_type;
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
-  else if (kind == CORBA::tk_local_interface)
-    {
-      typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                    CORBA::tk_local_interface,
-                                    TAO::True_RefCount_Policy> typecode_type;
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
-  else if (kind == CORBA::tk_native)
-    {
-      typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                    CORBA::tk_native,
-                                    TAO::True_RefCount_Policy> typecode_type;
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
-  else if (kind == CORBA::tk_objref)
-    {
-      typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                    CORBA::tk_objref,
-                                    TAO::True_RefCount_Policy> typecode_type;
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
-  else
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::TypeCode::_nil ());
-    }
+  typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                TAO::True_RefCount_Policy> typecode_type;
+
+  ACE_NEW_THROW_EX (tc,
+                    typecode_type (kind, id, name),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
 
   return tc;
 }
@@ -1212,30 +1155,14 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 
   CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (underlying_type));
 
-  if (kind == CORBA::tk_alias)
-    {
-      typedef TAO::TypeCode::Alias<CORBA::String_var,
-                                   CORBA::TypeCode_var,
-                                   CORBA::tk_alias,
-                                   TAO::True_RefCount_Policy> typecode_type;
+  typedef TAO::TypeCode::Alias<CORBA::String_var,
+    CORBA::TypeCode_var,
+    TAO::True_RefCount_Policy> typecode_type;
 
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name, tmp),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
-  else
-    {
-      typedef TAO::TypeCode::Alias<CORBA::String_var,
-                                   CORBA::TypeCode_var,
-                                   CORBA::tk_value_box,
-                                   TAO::True_RefCount_Policy> typecode_type;
-
-      ACE_NEW_THROW_EX (tc,
-                        typecode_type (id, name, tmp),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (tc);
-    }
+  ACE_NEW_THROW_EX (tc,
+                    typecode_type (kind, id, name, tmp),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc)
 
   return tc;
 }
