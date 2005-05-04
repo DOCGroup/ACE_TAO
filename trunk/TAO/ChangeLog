@@ -1,3 +1,8 @@
+Wed May  4 12:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+          Fixed compile problem with emulated exceptions
+
 Wed May  4 11:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ImplicitActivationPolicyA.cpp:
