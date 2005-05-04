@@ -28,11 +28,11 @@
 #include "IFR_ComponentsC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Objref_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
+#include "tao/Struct_TypeCode_Static.h"
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
@@ -40,12 +40,12 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_EventDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/EventDef:1.0",
     "EventDef");
   
@@ -61,12 +61,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_Container (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/Container:1.0",
     "Container");
   
@@ -82,12 +82,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_ModuleDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/ModuleDef:1.0",
     "ModuleDef");
   
@@ -103,12 +103,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_Repository (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/Repository:1.0",
     "Repository");
   
@@ -124,12 +124,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_ProvidesDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/ProvidesDef:1.0",
     "ProvidesDef");
   
@@ -145,7 +145,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ComponentIR_ProvidesDescription[] =
   {
@@ -180,12 +180,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_UsesDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/UsesDef:1.0",
     "UsesDef");
   
@@ -201,7 +201,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ComponentIR_UsesDescription[] =
   {
@@ -237,12 +237,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_EventPortDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/EventPortDef:1.0",
     "EventPortDef");
   
@@ -258,7 +258,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ComponentIR_EventPortDescription[] =
   {
@@ -293,12 +293,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_EmitsDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/EmitsDef:1.0",
     "EmitsDef");
   
@@ -314,12 +314,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_PublishesDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/PublishesDef:1.0",
     "PublishesDef");
   
@@ -335,12 +335,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_ConsumesDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/ConsumesDef:1.0",
     "ConsumesDef");
   
@@ -356,12 +356,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_ComponentDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/ComponentDef:1.0",
     "ComponentDef");
   
@@ -377,12 +377,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_CORBA_ComponentIR_ProvidesDescriptionSeq_GUARD
@@ -408,9 +408,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_CORBA_ComponentIR_ProvidesDescriptionSeq_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_ProvidesDescriptionSeq (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/ComponentIR/ProvidesDescriptionSeq:1.0",
     "ProvidesDescriptionSeq",
     &TAO::TypeCode::tc_CORBA_ComponentIR_ProvidesDescriptionSeq_0);
@@ -427,12 +427,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_CORBA_ComponentIR_UsesDescriptionSeq_GUARD
@@ -458,9 +458,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_CORBA_ComponentIR_UsesDescriptionSeq_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_UsesDescriptionSeq (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/ComponentIR/UsesDescriptionSeq:1.0",
     "UsesDescriptionSeq",
     &TAO::TypeCode::tc_CORBA_ComponentIR_UsesDescriptionSeq_0);
@@ -477,12 +477,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_CORBA_ComponentIR_EventPortDescriptionSeq_GUARD
@@ -508,9 +508,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_CORBA_ComponentIR_EventPortDescriptionSeq_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_EventPortDescriptionSeq (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/ComponentIR/EventPortDescriptionSeq:1.0",
     "EventPortDescriptionSeq",
     &TAO::TypeCode::tc_CORBA_ComponentIR_EventPortDescriptionSeq_0);
@@ -527,7 +527,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ComponentIR_ComponentDescription[] =
   {
@@ -570,12 +570,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_FactoryDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/FactoryDef:1.0",
     "FactoryDef");
   
@@ -591,12 +591,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_FinderDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/FinderDef:1.0",
     "FinderDef");
   
@@ -612,12 +612,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_objref,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ComponentIR_HomeDef (
+    CORBA::tk_objref,
     "IDL:omg.org/CORBA/ComponentIR/HomeDef:1.0",
     "HomeDef");
   
@@ -633,7 +633,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ComponentIR_HomeDescription[] =
   {
@@ -675,7 +675,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -733,7 +733,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -791,7 +791,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -849,7 +849,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -907,7 +907,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -965,7 +965,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1023,7 +1023,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1081,7 +1081,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1139,7 +1139,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1197,7 +1197,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1255,7 +1255,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1313,7 +1313,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1371,7 +1371,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1429,7 +1429,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1487,7 +1487,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.
@@ -1546,7 +1546,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.
@@ -1605,7 +1605,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.
@@ -1664,7 +1664,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1722,7 +1722,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1780,7 +1780,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1838,7 +1838,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1896,7 +1896,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

@@ -28,9 +28,9 @@
 #include "Messaging_No_ImplC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Objref_TypeCode_Static.h"
+#include "tao/Struct_TypeCode_Static.h"
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
@@ -38,13 +38,13 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_Priority (
+    CORBA::tk_alias,
     "IDL:omg.org/Messaging/Priority:1.0",
     "Priority",
     &CORBA::_tc_short);
@@ -58,13 +58,13 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RebindMode (
+    CORBA::tk_alias,
     "IDL:omg.org/Messaging/RebindMode:1.0",
     "RebindMode",
     &CORBA::_tc_short);
@@ -78,13 +78,13 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RoutingType (
+    CORBA::tk_alias,
     "IDL:omg.org/Messaging/RoutingType:1.0",
     "RoutingType",
     &CORBA::_tc_short);
@@ -98,13 +98,13 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_Ordering (
+    CORBA::tk_alias,
     "IDL:omg.org/Messaging/Ordering:1.0",
     "Ordering",
     &CORBA::_tc_ushort);
@@ -118,12 +118,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RebindPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RebindPolicy:1.0",
     "RebindPolicy");
   
@@ -136,7 +136,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_PriorityRange[] =
   {
@@ -165,12 +165,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RequestPriorityPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestPriorityPolicy:1.0",
     "RequestPriorityPolicy");
   
@@ -183,12 +183,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_ReplyPriorityPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0",
     "ReplyPriorityPolicy");
   
@@ -201,12 +201,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RequestStartTimePolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestStartTimePolicy:1.0",
     "RequestStartTimePolicy");
   
@@ -219,12 +219,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RequestEndTimePolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestEndTimePolicy:1.0",
     "RequestEndTimePolicy");
   
@@ -237,12 +237,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_ReplyStartTimePolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0",
     "ReplyStartTimePolicy");
   
@@ -255,12 +255,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_ReplyEndTimePolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0",
     "ReplyEndTimePolicy");
   
@@ -273,12 +273,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RelativeRequestTimeoutPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0",
     "RelativeRequestTimeoutPolicy");
   
@@ -291,7 +291,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:70
+// be/be_visitor_typecode/struct_typecode.cpp:74
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_RoutingTypeRange[] =
   {
@@ -320,12 +320,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RoutingPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RoutingPolicy:1.0",
     "RoutingPolicy");
   
@@ -338,12 +338,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_MaxHopsPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/MaxHopsPolicy:1.0",
     "MaxHopsPolicy");
   
@@ -356,12 +356,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_QueueOrderPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/QueueOrderPolicy:1.0",
     "QueueOrderPolicy");
   
@@ -374,7 +374,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -449,7 +449,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -507,7 +507,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -582,7 +582,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -657,7 +657,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -732,7 +732,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -807,7 +807,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -882,7 +882,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -957,7 +957,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1032,7 +1032,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1090,7 +1090,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1165,7 +1165,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -1240,7 +1240,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {

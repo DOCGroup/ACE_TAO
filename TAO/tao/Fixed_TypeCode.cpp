@@ -4,6 +4,7 @@
 #define TAO_FIXED_TYPECODE_CPP
 
 #include "tao/Fixed_TypeCode.h"
+#include "tao/CDR.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Fixed_TypeCode.inl"

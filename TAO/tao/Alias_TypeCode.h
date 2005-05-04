@@ -32,44 +32,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template <CORBA::TCKind KIND> struct Alias_Traits;
-
-    template<>
-    struct Alias_Traits<CORBA::tk_alias>
-    {
-      static
-      CORBA::TypeCode_ptr
-      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
-                               char const * id,
-                               CORBA::TypeCode_ptr compact_content_type
-                               ACE_ENV_ARG_DECL)
-      {
-        return factory->create_alias_tc (id,
-                                         "",  /* empty name */
-                                         compact_content_type
-                                         ACE_ENV_ARG_PARAMETER);
-      }
-    };
-
-    template<>
-    struct Alias_Traits<CORBA::tk_value_box>
-    {
-      static
-      CORBA::TypeCode_ptr
-      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
-                               char const * id,
-                               CORBA::TypeCode_ptr compact_content_type
-                               ACE_ENV_ARG_DECL)
-      {
-        return factory->create_value_box_tc (id,
-                                             "",  /* empty name */
-                                             compact_content_type
-                                             ACE_ENV_ARG_PARAMETER);
-      }
-    };
-
-
-
     /**
      * @class Alias
      *
@@ -81,7 +43,6 @@ namespace TAO
      */
     template <typename StringType,
               typename TypeCodeType,
-              CORBA::TCKind Kind,
               class RefCountPolicy>
     class Alias
       : public CORBA::TypeCode,
@@ -90,7 +51,8 @@ namespace TAO
     public:
 
       /// Constructor.
-      Alias (char const * id,
+      Alias (CORBA::TCKind kind,
+             char const * id,
              char const * name,
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
              // Borland C++ currently can't handle a reference to

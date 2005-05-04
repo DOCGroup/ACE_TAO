@@ -2,25 +2,25 @@
 
 //=============================================================================
 /**
- *  @file    Objref_TypeCode_Base.h
+ *  @file    Objref_TypeCode_Static.h
  *
  *  $Id$
  *
- *  Header file for
+ *  Header file for static
  *    @c tk_abstract_interface,
  *    @c tk_component,
  *    @c tk_home,
  *    @c tk_local_interface,
  *    @c tk_native and
  *    @c tk_objref
- *  @c CORBA::TypeCodes base class.
+ *  @c CORBA::TypeCodes.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
-#ifndef TAO_OBJREF_TYPECODE_BASE_H
-#define TAO_OBJREF_TYPECODE_BASE_H
+#ifndef TAO_OBJREF_TYPECODE_STATIC_H
+#define TAO_OBJREF_TYPECODE_STATIC_H
 
 #include /**/ "ace/pre.h"
 
@@ -31,30 +31,34 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TypeCode_Base_Attributes.h"
+#include "tao/Null_RefCount_Policy.h"
+
 
 namespace TAO
 {
   namespace TypeCode
   {
+    template <typename StringType, class RefCountPolicy> class Objref;
+
     /**
-     * @class Objref_Base
+     * @class Objref
      *
      * @brief @c CORBA::TypeCode implementation for an OMG IDL
-     *        @c object and object-like types
+     *        @c object and object-like types.
      *
      * This class implements a @c CORBA::TypeCode for an OMG IDL
      * @c object (interface) and object-like types (abstract
      * interface, component, home, local interface and native).
      */
-    template <typename StringType, class RefCountPolicy>
-    class Objref_Base
+    template<>
+    class TAO_Export Objref<char const *, TAO::Null_RefCount_Policy>
       : public CORBA::TypeCode,
-        private RefCountPolicy
+        private TAO::Null_RefCount_Policy
     {
     public:
 
       /// Constructor.
-      Objref_Base (CORBA::TCKind kind,
+      Objref (CORBA::TCKind kind,
               char const * id,
               char const * name);
 
@@ -89,14 +93,14 @@ namespace TAO
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        ACE_ENV_SINGLE_ARG_DECL) const = 0;
+        ACE_ENV_SINGLE_ARG_DECL) const;
       virtual char const * id_i (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual char const * name_i (ACE_ENV_SINGLE_ARG_DECL) const;
 
     protected:
 
       /// Base attributes (@c id and @c name).
-      Base_Attributes<StringType> attributes_;
+      Base_Attributes<char const *> attributes_;
 
     };
 
@@ -105,17 +109,9 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Objref_TypeCode_Base.inl"
+# include "tao/Objref_TypeCode_Static.inl"
 #endif  /* __ACE_INLINE__ */
-
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/Objref_TypeCode_Base.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Objref_TypeCode_Base.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_OBJREF_TYPECODE_H */
+#endif /* TAO_OBJREF_TYPECODE_STATIC_H */

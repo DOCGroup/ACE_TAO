@@ -4,6 +4,7 @@
 #define TAO_STRING_TYPECODE_CPP
 
 #include "tao/String_TypeCode.h"
+#include "tao/CDR.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/String_TypeCode.inl"

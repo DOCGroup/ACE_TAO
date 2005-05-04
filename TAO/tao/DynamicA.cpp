@@ -28,20 +28,20 @@
 #include "DynamicC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_Dynamic_ParameterList_GUARD
@@ -67,9 +67,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_Dynamic_ParameterList_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Dynamic_ParameterList (
+    CORBA::tk_alias,
     "IDL:omg.org/Dynamic/ParameterList:1.0",
     "ParameterList",
     &TAO::TypeCode::tc_Dynamic_ParameterList_0);
@@ -83,13 +83,13 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Dynamic_ContextList (
+    CORBA::tk_alias,
     "IDL:omg.org/Dynamic/ContextList:1.0",
     "ContextList",
     &CORBA::_tc_StringSeq);
@@ -103,12 +103,12 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_Dynamic_ExceptionList_GUARD
@@ -134,9 +134,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_Dynamic_ExceptionList_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Dynamic_ExceptionList (
+    CORBA::tk_alias,
     "IDL:omg.org/Dynamic/ExceptionList:1.0",
     "ExceptionList",
     &TAO::TypeCode::tc_Dynamic_ExceptionList_0);
@@ -150,13 +150,13 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Dynamic_RequestContext (
+    CORBA::tk_alias,
     "IDL:omg.org/Dynamic/RequestContext:1.0",
     "RequestContext",
     &CORBA::_tc_StringSeq);
@@ -170,7 +170,8 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
+
 
 // Copying insertion.
 void operator<<= (
@@ -228,7 +229,8 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
+
 
 // Copying insertion.
 void operator<<= (

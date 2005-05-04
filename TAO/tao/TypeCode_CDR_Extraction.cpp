@@ -2,30 +2,52 @@
 
 #include "TypeCode_CDR_Extraction.h"
 
-#include "Objref_TypeCode_Factory.h"
-
 #include "tao/CDR.h"
 
 #include "tao/TypeCode_Constants.h"
 #include "tao/True_RefCount_Policy.h"
 
-#include "tao/Alias_TypeCode.h"
-#include "tao/Enum_TypeCode.h"
-#include "tao/Fixed_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
-//#include "tao/Union_TypeCode.h"
-#include "tao/Value_TypeCode.h"
+#include "tao/Alias_TypeCode.cpp"
+#include "tao/Enum_TypeCode.cpp"
+#include "tao/Fixed_TypeCode.cpp"
+#include "Objref_TypeCode_Factory.h"
+#include "tao/Sequence_TypeCode.cpp"
+#include "tao/String_TypeCode.cpp"
+#include "tao/Struct_TypeCode.cpp"
+//#include "tao/Union_TypeCode.cpp"
+#include "tao/Value_TypeCode.cpp"
 
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/TypeCode_Value_Field.h"
+
+#include "ace/Array_Base.h"
 
 
 ACE_RCSID (tao,
            TypeCode_CDR_Extraction,
            "$Id$")
 
+
+namespace
+{
+  bool start_cdr_encap_extraction (TAO_InputCDR & cdr)
+  {
+    CORBA::Boolean byte_order;
+
+    // Don't bother demarshaling the encapsulation length.  Prefer
+    // speed over early error checking.  Any CDR length related
+    // failures will be detected when demarshaling the remainder of
+    // the complex parameter list TypeCode.
+
+    if (!(cdr.skip_ulong () // Skip encapsulation length.
+          && cdr >> TAO_InputCDR::to_boolean (byte_order)))
+      return false;
+
+    cdr.reset_byte_order (byte_order);
+
+    return true;
+  }
+}
 
 bool
 TAO::TypeCodeFactory::tc_null_factory (CORBA::TCKind,
@@ -182,17 +204,10 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 {
   ACE_ASSERT (kind == CORBA::tk_struct || kind == CORBA::tk_except);
 
-  CORBA::Boolean byte_order;
-  CORBA::ULong encapsulation_length;
-
   // The remainder of a tk_struct/tk_except TypeCode is encoded in
   // a CDR encapsulation.
-  if (!(cdr >> encapsulation_length
-        && encapsulation_length > 0
-        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
+  if (!start_cdr_encap_extraction (cdr))
     return false;
-
-  cdr.reset_byte_order (byte_order);
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id, name;
@@ -247,17 +262,11 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
                                        TAO_InputCDR & cdr,
                                        CORBA::TypeCode_ptr & tc)
 {
-  CORBA::Boolean byte_order;
-  CORBA::ULong encapsulation_length;
-
   // The remainder of a tk_enum TypeCode is encoded in a CDR
   // encapsulation.
-  if (!(cdr >> encapsulation_length
-        && encapsulation_length > 0
-        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
-    return false;
 
-  cdr.reset_byte_order (byte_order);
+  if (!start_cdr_encap_extraction (cdr))
+    return false;
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id, name;
@@ -330,17 +339,11 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
                                            TAO_InputCDR & cdr,
                                            CORBA::TypeCode_ptr & tc)
 {
-  CORBA::Boolean byte_order;
-  CORBA::ULong encapsulation_length;
-
   // The remainder of a tk_sequence TypeCode is encoded in a CDR
   // encapsulation.
-  if (!(cdr >> encapsulation_length
-        && encapsulation_length > 0
-        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
-    return false;
 
-  cdr.reset_byte_order (byte_order);
+  if (!start_cdr_encap_extraction (cdr))
+    return false;
 
   // Extract the repository ID, name and content type.
   CORBA::TypeCode_var content_type;
@@ -374,17 +377,11 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
                                         TAO_InputCDR & cdr,
                                         CORBA::TypeCode_ptr & tc)
 {
-  CORBA::Boolean byte_order;
-  CORBA::ULong encapsulation_length;
-
   // The remainder of a tk_alias or tk_value_box TypeCode is encoded
   // in a CDR encapsulation.
-  if (!(cdr >> encapsulation_length
-        && encapsulation_length > 0
-        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
-    return false;
 
-  cdr.reset_byte_order (byte_order);
+  if (!start_cdr_encap_extraction (cdr))
+    return false;
 
   // Extract the repository ID, name and content type.
   CORBA::String_var id, name;
@@ -394,28 +391,27 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
         && cdr >> content_type.out ()))
     return false;
 
+  typedef TAO::TypeCode::Alias<
+    CORBA::String_var,
+    CORBA::TypeCode_var,
+    TAO::True_RefCount_Policy> typecode_type;
+
   if (kind == CORBA::tk_alias)
     {
-      typedef TAO::TypeCode::Alias<
-        CORBA::String_var,
-        CORBA::TypeCode_var,
-        CORBA::tk_alias,
-        TAO::True_RefCount_Policy> typecode_type;
-
       ACE_NEW_RETURN (tc,
-                      typecode_type (id.in (), name.in (), content_type),
+                      typecode_type (CORBA::tk_alias,
+                                     id.in (),
+                                     name.in (),
+                                     content_type),
                       false);
     }
   else
     {
-      typedef TAO::TypeCode::Alias<
-        CORBA::String_var,
-        CORBA::TypeCode_var,
-        CORBA::tk_value_box,
-        TAO::True_RefCount_Policy> typecode_type;
-
       ACE_NEW_RETURN (tc,
-                      typecode_type (id.in (), name.in (), content_type),
+                      typecode_type (CORBA::tk_value_box,
+                                     id.in (),
+                                     name.in (),
+                                     content_type),
                       false);
     }
 
@@ -504,17 +500,11 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
                                         TAO_InputCDR & cdr,
                                         CORBA::TypeCode_ptr & tc)
 {
-  CORBA::Boolean byte_order;
-  CORBA::ULong encapsulation_length;
-
   // The remainder of a tk_value/tk_event TypeCode is encoded in a
-  // CDR encapsulation.
-  if (!(cdr >> encapsulation_length
-        && encapsulation_length > 0
-        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
-    return false;
+  // CDR encapsulation
 
-  cdr.reset_byte_order (byte_order);
+  if (!start_cdr_encap_extraction (cdr))
+    return false;
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id;
