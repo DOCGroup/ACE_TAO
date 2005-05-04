@@ -1,3 +1,8 @@
+Tue May 03 22:42:47 2005  Nanbor Wang  <nanbor@gauss.txcorp.com>
+
+	* NEWS: Updated news on upcoming real-time extension on Gan Deng's
+	  behalf.  
+
 Tue May  3 13:05:44 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
@@ -2032,7 +2037,6 @@ Sun Jan 23 01:49:51 2005  Marek Brudka  <mbrudka@aster.pl>
         * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
         Removed deprecated qt_moc base project.
 
->>>>>>> 1.1095
 Fri Jan 21 17:27:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
