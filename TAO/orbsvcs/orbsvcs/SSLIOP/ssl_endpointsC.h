@@ -115,7 +115,7 @@ public:
 extern TAO_SSLIOP_Export ::CORBA::TypeCode_ptr const _tc_TAO_SSLEndpointSequence;
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO

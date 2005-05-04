@@ -33,9 +33,9 @@
 #include "tao/CDR.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -126,9 +126,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_TAO_SSLEndpointSequence_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_TAO_SSLEndpointSequence (
+    CORBA::tk_alias,
     "IDL:TAO_SSLEndpointSequence:1.0",
     "TAO_SSLEndpointSequence",
     &TAO::TypeCode::tc_TAO_SSLEndpointSequence_0);
