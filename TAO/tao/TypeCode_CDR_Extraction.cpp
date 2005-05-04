@@ -7,15 +7,15 @@
 #include "tao/TypeCode_Constants.h"
 #include "tao/True_RefCount_Policy.h"
 
-#include "tao/Alias_TypeCode.cpp"
-#include "tao/Enum_TypeCode.cpp"
-#include "tao/Fixed_TypeCode.cpp"
-#include "Objref_TypeCode_Factory.h"
-#include "tao/Sequence_TypeCode.cpp"
-#include "tao/String_TypeCode.cpp"
-#include "tao/Struct_TypeCode.cpp"
-//#include "tao/Union_TypeCode.cpp"
-#include "tao/Value_TypeCode.cpp"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Enum_TypeCode.h"
+#include "tao/Fixed_TypeCode.h"
+#include "Objref_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
+//#include "tao/Union_TypeCode.h"
+#include "tao/Value_TypeCode.h"
 
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/TypeCode_Value_Field.h"
@@ -190,11 +190,97 @@ TAO::TypeCodeFactory::tc_Principal_factory (CORBA::TCKind,
 }
 
 bool
-TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind,
+TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
                                          TAO_InputCDR & cdr,
                                          CORBA::TypeCode_ptr & tc)
 {
-  return tc_objref_factory<CORBA::tk_objref> (cdr, tc);
+  // The remainder of a tk_objref TypeCode is encoded in a CDR
+  // encapsulation.
+
+  CORBA::Boolean byte_order;
+
+  // Don't bother demarshaling the encapsulation length.  Prefer
+  // speed over early error checking.  Any CDR length related
+  // failures will be detected when demarshaling the remainder of
+  // the complex parameter list TypeCode.
+
+  if (!(cdr.skip_ulong () // Skip encapsulation length.
+        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
+    return false;
+
+  cdr.reset_byte_order (byte_order);
+
+  // Extract the repository ID and name.
+  CORBA::String_var id;
+  if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)))
+    return false;
+
+  static char const Object_id[]    = "IDL:omg.org/CORBA/Object:1.0";
+  static char const CCMObject_id[] = "IDL:omg.org/CORBA/CCMObject:1.0";
+  static char const CCMHome_id[]   = "IDL:omg.org/CORBA/CCMHome:1.0";
+
+  char const * tc_constant_id = "";
+
+  switch (kind)
+    {
+    case CORBA::tk_component:
+      tc_constant_id = CCMObject_id;
+      break;
+    case CORBA::tk_home:
+      tc_constant_id = CCMHome_id;
+      break;
+    case CORBA::tk_objref:
+      tc_constant_id = Object_id;
+      break;
+    default:
+      break;
+    }
+
+  if (ACE_OS::strcmp (id.in (),  // len >= 0!!!
+                      tc_constant_id) == 0)
+    {
+      if (!cdr.skip_string ())  // No need to demarshal the name.
+        return false;
+
+      CORBA::TypeCode_ptr tc_constant = CORBA::TypeCode::_nil ();
+      switch (kind)
+        {
+        case CORBA::tk_component:
+          tc_constant = CORBA::_tc_Component;
+          break;
+        case CORBA::tk_home:
+          tc_constant = CORBA::_tc_Home;
+          break;
+        case CORBA::tk_objref:
+          tc_constant = CORBA::_tc_Object;
+          break;
+        default:
+          break;
+        }
+
+      // No need to create a TypeCode.  Just use the TypeCode
+      // constant.
+      tc =
+        CORBA::TypeCode::_duplicate (tc_constant);
+    }
+  else
+    {
+      CORBA::String_var name;
+
+      if (!(cdr >> TAO_InputCDR::to_string (name.out (), 0)))
+        return false;
+
+      typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                    TAO::True_RefCount_Policy> typecode_type;
+
+      ACE_NEW_RETURN (tc,
+                      typecode_type (kind,
+                                     id.in (),
+                                     name.in ()),
+                      false);
+    }
+
+  return true;
 }
 
 bool
@@ -396,24 +482,12 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
     CORBA::TypeCode_var,
     TAO::True_RefCount_Policy> typecode_type;
 
-  if (kind == CORBA::tk_alias)
-    {
-      ACE_NEW_RETURN (tc,
-                      typecode_type (CORBA::tk_alias,
-                                     id.in (),
-                                     name.in (),
-                                     content_type),
-                      false);
-    }
-  else
-    {
-      ACE_NEW_RETURN (tc,
-                      typecode_type (CORBA::tk_value_box,
-                                     id.in (),
-                                     name.in (),
-                                     content_type),
-                      false);
-    }
+  ACE_NEW_RETURN (tc,
+                  typecode_type (kind,
+                                 id.in (),
+                                 name.in (),
+                                 content_type),
+                  false);
 
   return true;
 }
@@ -588,7 +662,7 @@ TAO::TypeCodeFactory::tc_native_factory (CORBA::TCKind,
                                          TAO_InputCDR & cdr,
                                          CORBA::TypeCode_ptr & tc)
 {
-  return tc_objref_factory<CORBA::tk_native> (cdr, tc);
+  return tc_objref_factory (CORBA::tk_native, cdr, tc);
 }
 
 bool
@@ -596,7 +670,7 @@ TAO::TypeCodeFactory::tc_abstract_interface_factory (CORBA::TCKind,
                                                      TAO_InputCDR & cdr,
                                                      CORBA::TypeCode_ptr & tc)
 {
-  return tc_objref_factory<CORBA::tk_abstract_interface> (cdr, tc);
+  return tc_objref_factory (CORBA::tk_abstract_interface, cdr, tc);
 }
 
 bool
@@ -604,7 +678,7 @@ TAO::TypeCodeFactory::tc_local_interface_factory (CORBA::TCKind,
                                                   TAO_InputCDR & cdr,
                                                   CORBA::TypeCode_ptr & tc)
 {
-  return tc_objref_factory<CORBA::tk_local_interface> (cdr, tc);
+  return tc_objref_factory (CORBA::tk_local_interface, cdr, tc);
 }
 
 bool
@@ -612,7 +686,7 @@ TAO::TypeCodeFactory::tc_component_factory (CORBA::TCKind,
                                             TAO_InputCDR & cdr,
                                             CORBA::TypeCode_ptr & tc)
 {
-  return tc_objref_factory<CORBA::tk_component> (cdr, tc);
+  return tc_objref_factory (CORBA::tk_component, cdr, tc);
 }
 
 bool
@@ -620,7 +694,7 @@ TAO::TypeCodeFactory::tc_home_factory (CORBA::TCKind,
                                        TAO_InputCDR & cdr,
                                        CORBA::TypeCode_ptr & tc)
 {
-  return tc_objref_factory<CORBA::tk_home> (cdr, tc);
+  return tc_objref_factory (CORBA::tk_home, cdr, tc);
 }
 
 bool
