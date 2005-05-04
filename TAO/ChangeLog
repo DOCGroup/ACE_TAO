@@ -1,3 +1,11 @@
+Tue May  3 23:37:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Struct_TypeCode_Static.h:
+	* tao/Value_TypeCode_Static.h:
+
+	  Added missing TAO_Export.  Fixes undefined symbol errors on
+	  platforms that support DSO/DLL symbol hiding.
+
 Tue May  3 23:02:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:

@@ -50,11 +50,11 @@ namespace TAO
      * @c valuetype or @c event.
      */
     template<>
-    class Value<char const *,
-                CORBA::TypeCode_ptr const *,
-                Value_Field<char const *,
-                            CORBA::TypeCode_ptr const *> const *,
-                TAO::Null_RefCount_Policy>
+    class TAO_Export Value<char const *,
+                           CORBA::TypeCode_ptr const *,
+                           Value_Field<char const *,
+                                       CORBA::TypeCode_ptr const *> const *,
+                           TAO::Null_RefCount_Policy>
       : public CORBA::TypeCode,
         private TAO::Null_RefCount_Policy
     {
