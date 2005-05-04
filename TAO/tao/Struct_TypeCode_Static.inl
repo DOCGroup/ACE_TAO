@@ -15,7 +15,7 @@ TAO::TypeCode::Struct<char const *,
   Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * fields,
   CORBA::ULong nfields)
   : CORBA::TypeCode (kind)
-  , TAO::Null_RefCount_Policy ()
+  , ACE_NESTED_CLASS (TAO, Null_RefCount_Policy) ()
   , base_attributes_ (id, name)
   , nfields_ (nfields)
   , fields_ (fields)

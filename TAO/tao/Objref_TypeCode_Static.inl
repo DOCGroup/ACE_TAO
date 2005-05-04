@@ -9,7 +9,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::Objref (
   char const * id,
   char const * name)
   : CORBA::TypeCode (kind)
-  , TAO::Null_RefCount_Policy ()
+  , ACE_NESTED_CLASS (TAO, Null_RefCount_Policy) ()
   , attributes_ (id, name)
 {
 }
