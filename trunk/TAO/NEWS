@@ -1,14 +1,25 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-- (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
+. (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
   strict policy enforcement
 
-- (Johnny/Ossama) Location Forwarding fixes
+. (Johnny/Ossama) Location Forwarding fixes
 
-- (JTC/Ossama) autoconf support for TAO
+. (JTC/Ossama) autoconf support for TAO
 
   . ONGOING - ETA unknown
+
+. Subset PortableInterceptors and Anys to separate libraries
+
+. When making asynchronous invocations data is queued until it can be
+  transported on the network
+
+. Add possibility to set customer allocators to be used by the ORB for
+  marshaling and demarshaling
+
+. Improve CORBA compliance by fixing bugzilla bugs 1917, 1271, 1951,
+  and 2043
 
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.6
 ============================================
