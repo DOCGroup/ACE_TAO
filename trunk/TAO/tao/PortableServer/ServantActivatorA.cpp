@@ -34,6 +34,8 @@
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/objref_typecode.cpp:76
 
@@ -43,7 +45,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/ServantActivator:2.3",
     "ServantActivator");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantActivator =
@@ -76,7 +78,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableServer::ServantActivator>::demarshal_value (TAO_InputCDR &)
@@ -126,3 +128,5 @@ operator>>= (
         _tao_elem
       );
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
