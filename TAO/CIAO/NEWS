@@ -3,6 +3,20 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Integrate Real-time Event Channel into CIAO and DAnCE.
 
+PLANNED MAJOR CHANGES FOR x.4.6
+===============================
+
+. Integrate Real-time QoS support to CIAO based on OMG's new
+  Deployment and Configuration (D&C) specification. Such effort
+  will allow application developers to use real-time CORBA features
+  within their CCM appliation through meta-programming (via XML
+  metadata)
+
+. Enhance DAnCE to support adding/removing components to/from the
+  existing running assembly without shutting down the running appliation.
+  This will allow the application developers to evolve their applications
+  on the fly without servie down time.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
 ======================================================
 
