@@ -18,12 +18,10 @@
 
 template <typename StringType,
           typename TypeCodeType,
-          CORBA::TCKind Kind,
           class RefCountPolicy>
 bool
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
 {
   // A tk_alias TypeCode has a "complex" parameter list type (see
@@ -46,12 +44,10 @@ TAO::TypeCode::Alias<StringType,
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 void
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref ();
@@ -59,12 +55,10 @@ TAO::TypeCode::Alias<StringType,
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 void
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref ();
@@ -72,12 +66,10 @@ TAO::TypeCode::Alias<StringType,
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
                                                ACE_ENV_ARG_DECL) const
 {
@@ -97,12 +89,10 @@ TAO::TypeCode::Alias<StringType,
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr
   ACE_ENV_ARG_DECL_NOT_USED) const
@@ -115,12 +105,10 @@ TAO::TypeCode::Alias<StringType,
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
@@ -131,7 +119,7 @@ TAO::TypeCode::Alias<StringType,
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
+      ACE_THROW_RETURN (CORBA::INITIALIZE (),
                         CORBA::TypeCode::_nil ());
     }
 
@@ -141,21 +129,28 @@ TAO::TypeCode::Alias<StringType,
         ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  return
-    Alias_Traits<Kind>::create_compact_typecode (adapter,
-                                                 this->attributes_.id (),
-                                                 compact_content_type.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
+  if (this->kind_ == CORBA::tk_alias)
+    {
+      return adapter->create_alias_tc (this->attributes_.id (),
+                                       "",  /* empty name */
+                                       compact_content_type.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+    }
+  else
+    {
+      return adapter->create_value_box_tc (this->attributes_.id (),
+                                           "",  /* empty name */
+                                           compact_content_type.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+    }
 }
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::id_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
@@ -166,12 +161,10 @@ TAO::TypeCode::Alias<StringType,
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::name_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
@@ -182,12 +175,10 @@ TAO::TypeCode::Alias<StringType,
 
 template<typename StringType,
          typename TypeCodeType,
-         CORBA::TCKind Kind,
          class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     Kind,
                      RefCountPolicy>::content_type_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {

@@ -28,19 +28,19 @@
 #include "AnySeqC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_CORBA_AnySeq_GUARD
@@ -66,9 +66,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_CORBA_AnySeq_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_AnySeq (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/AnySeq:1.0",
     "AnySeq",
     &TAO::TypeCode::tc_CORBA_AnySeq_0);
@@ -82,7 +82,8 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
+
 
 // Copying insertion.
 void operator<<= (

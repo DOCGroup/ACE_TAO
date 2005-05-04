@@ -28,18 +28,18 @@
 #include "PS_ForwardC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableServer_ObjectId (
+    CORBA::tk_alias,
     "IDL:omg.org/PortableServer/ObjectId:2.3",
     "ObjectId",
     &CORBA::_tc_OctetSeq);

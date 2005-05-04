@@ -28,20 +28,20 @@
 #include "Messaging_RT_PolicyC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Objref_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_Timeout (
+    CORBA::tk_alias,
     "IDL:omg.org/Messaging/Timeout:1.0",
     "Timeout",
     &TimeBase::_tc_TimeT);
@@ -55,12 +55,12 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
-                             CORBA::tk_local_interface,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RelativeRoundtripTimeoutPolicy (
+    CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RelativeRoundtripTimeoutPolicy:1.0",
     "RelativeRoundtripTimeoutPolicy");
   
@@ -73,7 +73,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {

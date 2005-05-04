@@ -28,16 +28,16 @@
 #include "Default_ORTC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Value_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
+#include "tao/Value_TypeCode_Static.h"
 #include "tao/TypeCode_Value_Field.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/value_typecode.cpp:50
+// be/be_visitor_typecode/value_typecode.cpp:50
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_TAO_Default_ORT_ObjectReferenceTemplate = 0;
 
@@ -64,7 +64,7 @@ namespace TAO_Default_ORT
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/any_op_cs.cpp:57
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 namespace TAO
 {
@@ -79,6 +79,7 @@ namespace TAO
     return 1;
   }
 }
+
 // Copying insertion.
 void
 operator<<= (

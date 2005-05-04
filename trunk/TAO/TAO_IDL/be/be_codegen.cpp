@@ -1989,10 +1989,10 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.
   this->gen_standard_include (stream,
-                              "tao/Alias_TypeCode.h");
+                              "tao/Alias_TypeCode_Static.h");
 
   this->gen_cond_file_include (idl_global->enum_seen_,
-                               "tao/Enum_TypeCode.h",
+                               "tao/Enum_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->interface_seen_,
@@ -2000,16 +2000,16 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 //                                | idl_global->non_local_iface_seen_
 //                                | idl_global->local_iface_seen_
 //                                | idl_global->base_object_seen_,
-                               "tao/Objref_TypeCode.h",
+                               "tao/Objref_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->seq_seen_
                                | idl_global->array_seen_,
-                               "tao/Sequence_TypeCode.h",
+                               "tao/Sequence_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->string_seen_,
-                               "tao/String_TypeCode.h",
+                               "tao/String_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (
@@ -2017,7 +2017,7 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 //       | idl_global->fixed_size_arg_seen_ // Could be a struct
 //       | idl_global->var_size_arg_seen_   // Could be a struct
       | idl_global->aggregate_seen_,
-      "tao/Struct_TypeCode.h",
+      "tao/Struct_TypeCode_Static.h",
       stream);
 
   this->gen_cond_file_include (
@@ -2037,11 +2037,11 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
                                stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/Union_TypeCode.h",
+                               "tao/Union_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->valuetype_seen_,
-                               "tao/Value_TypeCode.h",
+                               "tao/Value_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->valuetype_seen_,

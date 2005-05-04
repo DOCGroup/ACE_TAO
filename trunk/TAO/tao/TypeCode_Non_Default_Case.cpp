@@ -7,6 +7,7 @@
 
 #include "tao/CDR.h"
 #include "tao/Any.h"
+#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/TypeCode_Non_Default_Case.inl"

@@ -63,6 +63,10 @@ int
 TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                                         bool is_exception)
 {
+  // Exceptions cannot be recursive.
+  ACE_ASSERT (!is_exception || (is_exception && !this->in_recursion_));
+
+
   TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl

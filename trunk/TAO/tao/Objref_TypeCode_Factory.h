@@ -9,6 +9,7 @@
  *  Header file for
  *    @c tk_abstract_interface,
  *    @c tk_component,
+ *    @c tk_home,
  *    @c tk_local_interface,
  *    @c tk_native and
  *    @c tk_objref
@@ -56,12 +57,13 @@ namespace TAO
       {
         typedef TAO::TypeCode::Objref<
           CORBA::String_var,
-          CORBA::tk_abstract_interface,
           TAO::True_RefCount_Policy> typecode_type;
 
         CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
         ACE_NEW_RETURN (tc,
-                        typecode_type (id, name),
+                        typecode_type (CORBA::tk_abstract_interface,
+                                       id,
+                                       name),
                         tc);
 
         return tc;
@@ -86,12 +88,11 @@ namespace TAO
       {
         typedef TAO::TypeCode::Objref<
           CORBA::String_var,
-          CORBA::tk_component,
           TAO::True_RefCount_Policy> typecode_type;
 
         CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
         ACE_NEW_RETURN (tc,
-                        typecode_type (id, name),
+                        typecode_type (CORBA::tk_component, id, name),
                         tc);
 
         return tc;
@@ -117,12 +118,11 @@ namespace TAO
       {
         typedef TAO::TypeCode::Objref<
           CORBA::String_var,
-          CORBA::tk_home,
           TAO::True_RefCount_Policy> typecode_type;
 
         CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
         ACE_NEW_RETURN (tc,
-                        typecode_type (id, name),
+                        typecode_type (CORBA::tk_home, id, name),
                         tc);
 
         return tc;
@@ -147,12 +147,13 @@ namespace TAO
       {
         typedef TAO::TypeCode::Objref<
           CORBA::String_var,
-          CORBA::tk_local_interface,
           TAO::True_RefCount_Policy> typecode_type;
 
         CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
         ACE_NEW_RETURN (tc,
-                        typecode_type (id, name),
+                        typecode_type (CORBA::tk_local_interface,
+                                       id,
+                                       name),
                         tc);
 
         return tc;
@@ -177,12 +178,11 @@ namespace TAO
       {
         typedef TAO::TypeCode::Objref<
           CORBA::String_var,
-          CORBA::tk_native,
           TAO::True_RefCount_Policy> typecode_type;
 
         CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
         ACE_NEW_RETURN (tc,
-                        typecode_type (id, name),
+                        typecode_type (CORBA::tk_native, id, name),
                         tc);
 
         return tc;
@@ -207,12 +207,11 @@ namespace TAO
       {
         typedef TAO::TypeCode::Objref<
           CORBA::String_var,
-          CORBA::tk_objref,
           TAO::True_RefCount_Policy> typecode_type;
 
         CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
         ACE_NEW_RETURN (tc,
-                        typecode_type (id, name),
+                        typecode_type (CORBA::tk_objref, id, name),
                         tc);
 
         return tc;
@@ -236,27 +235,33 @@ namespace TAO
     tc_objref_factory (TAO_InputCDR & cdr,
                        CORBA::TypeCode_ptr & tc)
     {
-      CORBA::Boolean byte_order;
-      CORBA::ULong encapsulation_length;
-
       // The remainder of a tk_objref TypeCode is encoded in a CDR
       // encapsulation.
-      if (!(cdr >> encapsulation_length
-            && encapsulation_length > 0
+
+      CORBA::Boolean byte_order;
+
+      // Don't bother demarshaling the encapsulation length.  Prefer
+      // speed over early error checking.  Any CDR length related
+      // failures will be detected when demarshaling the remainder of
+      // the complex parameter list TypeCode.
+
+      if (!(cdr.skip_ulong () // Skip encapsulation length.
             && cdr >> TAO_InputCDR::to_boolean (byte_order)))
         return false;
 
       cdr.reset_byte_order (byte_order);
 
       // Extract the repository ID and name.
-      CORBA::String_var id, name;
-      if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
-            && cdr >> TAO_InputCDR::to_string (name.out (), 0)))
+      CORBA::String_var id;
+      if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)))
         return false;
 
       if (ACE_OS::strcmp (id.in (),  // len >= 0!!!
                           Objref_Traits<Kind>::tc_constant_id ()) == 0)
         {
+          if (!cdr.skip_string ())  // No need to demarshal the name.
+            return false;
+
           // No need to create a TypeCode.  Just use the TypeCode
           // constant.
           tc =
@@ -264,6 +269,11 @@ namespace TAO
         }
       else
         {
+          CORBA::String_var name;
+
+          if (!(cdr >> TAO_InputCDR::to_string (name.out (), 0)))
+            return false;
+
           tc = Objref_Traits<Kind>::create_typecode (id.in (),
                                                      name.in ());
         }

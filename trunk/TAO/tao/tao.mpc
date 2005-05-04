@@ -13,6 +13,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Adapter.cpp
     Adapter_Factory.cpp
     Adapter_Registry.cpp
+    Alias_TypeCode_Static.cpp
     Any.cpp
     Any_Basic_Impl.cpp
     Any_Impl.cpp
@@ -86,6 +87,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Encodable.cpp
     Endpoint.cpp
     Endpoint_Selector_Factory.cpp
+    Enum_TypeCode_Static.cpp
     Environment.cpp
     Exception.cpp
     Exclusive_TMS.cpp
@@ -174,6 +176,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ObjectIdListA.cpp
     ObjectIdListC.cpp
     ObjectKey_Table.cpp
+    Objref_TypeCode_Static.cpp
     OctetSeqA.cpp
     OctetSeqC.cpp
     operation_details.cpp
@@ -231,6 +234,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resource_Factory.cpp
     Resume_Handle.cpp
     Sequence.cpp
+    Sequence_TypeCode_Static.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInfoA.cpp
     ServerRequestInfoC.cpp
@@ -241,8 +245,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ShortSeqC.cpp
     skip.cpp
     Special_Basic_Arguments.cpp
+    String_TypeCode_Static.cpp
     StringSeqA.cpp
     StringSeqC.cpp
+    Struct_TypeCode_Static.cpp
     Stub.cpp
     Stub_Factory.cpp
     Sync_Strategies.cpp
@@ -284,11 +290,13 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ULongLongSeqC.cpp
     ULongSeqA.cpp
     ULongSeqC.cpp
+    Union_TypeCode_Static.cpp
     UserException.cpp
     UShortSeqA.cpp
     UShortSeqC.cpp
     UTF16_BOM_Factory.cpp
     UTF16_BOM_Translator.cpp
+    Value_TypeCode_Static.cpp
     Valuetype_Adapter.cpp
     ValueModifierC.cpp
     VisibilityA.cpp
@@ -316,6 +324,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Adapter.h
     Adapter_Registry.h
     Alias_TypeCode.h
+    Alias_TypeCode_Static.h
     Allocator.h
     Any_Arg_Traits.h
     Any_Array_Impl_T.h
@@ -411,6 +420,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Endpoint.h
     Endpoint_Selector_Factory.h
     Enum_TypeCode.h
+    Enum_TypeCode_Static.h
     Environment.h
     Exception_Data.h
     Exception.h
@@ -510,7 +520,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_Ref_Table.h
     Object_T.h
     Objref_TypeCode.h
-    Objref_TypeCode_Base.h
+    Objref_TypeCode_Static.h
     Objref_VarOut_T.h
     OctetSeqC.h
     OctetSeqS.h
@@ -576,6 +586,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Sequence.h
     Sequence_T.h
     Sequence_TypeCode.h
+    Sequence_TypeCode_Static.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
     ServerRequestInfoC.h
@@ -593,8 +604,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     StringSeqC.h
     StringSeqS.h
     String_TypeCode.h
+    String_TypeCode_Static.h
     String_TypeCode_Traits.h
     Struct_TypeCode.h
+    Struct_TypeCode_Static.h
     Stub_Factory.h
     Stub.h
     Synch_Invocation.h
@@ -648,12 +661,14 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ULongSeqC.h
     ULongSeqS.h
     Union_TypeCode.h
+    Union_TypeCode_Static.h
     UserException.h
     UShortSeqC.h
     UShortSeqS.h
     UTF16_BOM_Factory.h
     UTF16_BOM_Translator.h
     Value_TypeCode.h
+    Value_TypeCode_Static.h
     Valuetype_Adapter.h
     Var_Array_Argument_T.h
     varbase.h
@@ -688,7 +703,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Enum_TypeCode.cpp
     Fixed_TypeCode.cpp
     Objref_TypeCode.cpp
-    Objref_TypeCode_Base.cpp
     Sequence_TypeCode.cpp
     String_TypeCode.cpp
     Struct_TypeCode.cpp

@@ -28,18 +28,18 @@
 #include "ObjectIdListC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Sequence_TypeCode_Static.h"
+#include "tao/String_TypeCode_Static.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORB_ObjectId (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/ORB_ObjectId:1.0",
     "ORB_ObjectId",
     &CORBA::_tc_string);
@@ -53,12 +53,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:925
+// be/be_visitor_typecode/typecode_defn.cpp:925
 
 
 #ifndef _TAO_TYPECODE_CORBA_ORB_ObjectIdList_GUARD
@@ -84,9 +84,9 @@ namespace TAO
 #endif /* _TAO_TYPECODE_CORBA_ORB_ObjectIdList_GUARD */
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
-                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORB_ObjectIdList (
+    CORBA::tk_alias,
     "IDL:omg.org/CORBA/ORB_ObjectIdList:1.0",
     "ORB_ObjectIdList",
     &TAO::TypeCode::tc_CORBA_ORB_ObjectIdList_0);

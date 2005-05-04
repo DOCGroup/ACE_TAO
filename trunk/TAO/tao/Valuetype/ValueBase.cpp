@@ -7,8 +7,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Null_RefCount_Policy.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/Value_TypeCode.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Value_TypeCode_Static.h"
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
@@ -357,8 +357,8 @@ namespace TAO
 
     Alias<char const *,
           CORBA::TypeCode_ptr const *,
-          CORBA::tk_alias,
           TAO::Null_RefCount_Policy> tc_ValueModifier (
+      CORBA::tk_alias,
      "IDL:omg.org/CORBA/ValueModifier:1.0",
      "ValueModifier",
      &CORBA::_tc_short);

@@ -1,3 +1,170 @@
+Tue May  3 23:02:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_visitor_typecode/alias_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+
+	  Updated generated stubs to use latest TypeCode changes (header
+	  rename, template parameter changes, etc).
+
+	* tao/Alias_TypeCode.cpp:
+	* tao/Alias_TypeCode.h:
+	* tao/Alias_TypeCode.inl:
+	* tao/Objref_TypeCode.cpp:
+	* tao/Objref_TypeCode.h:
+	* tao/Objref_TypeCode.inl:
+
+	  Converted CORBA::TCKind template parameter to a constructor
+	  parameter.  Allows a single instance of the TypeCode template in
+	  question to represent multiple kinds of TypeCodes, rather than a
+	  dedicated instance for each kind of TypeCode.  Reduces
+	  footprint.
+
+	* tao/Alias_TypeCode_Static.cpp:
+	* tao/Alias_TypeCode_Static.h:
+	* tao/Alias_TypeCode_Static.inl:
+	* tao/Enum_TypeCode_Static.cpp:
+	* tao/Enum_TypeCode_Static.h:
+	* tao/Enum_TypeCode_Static.inl:
+	* tao/Objref_TypeCode_Static.cpp:
+	* tao/Objref_TypeCode_Static.h:
+	* tao/Objref_TypeCode_Static.inl:
+	* tao/Sequence_TypeCode_Static.cpp:
+	* tao/Sequence_TypeCode_Static.h:
+	* tao/Sequence_TypeCode_Static.inl:
+	* tao/String_TypeCode_Static.cpp:
+	* tao/String_TypeCode_Static.h:
+	* tao/String_TypeCode_Static.inl:
+	* tao/Struct_TypeCode_Static.cpp:
+	* tao/Struct_TypeCode_Static.h:
+	* tao/Struct_TypeCode_Static.inl:
+	* tao/Union_TypeCode_Static.cpp:
+	* tao/Union_TypeCode_Static.h:
+	* tao/Union_TypeCode_Static.inl:
+	* tao/Value_TypeCode_Static.cpp:
+	* tao/Value_TypeCode_Static.h:
+	* tao/Value_TypeCode_Static.inl:
+
+	  New static TypeCode template specializations.  Works around
+	  compilers that create multiple template instantiations, reducing
+	  footprint greatly.
+
+	* tao/Objref_TypeCode_Base.cpp:
+	* tao/Objref_TypeCode_Base.h:
+	* tao/Objref_TypeCode_Base.inl:
+
+	  Removed these files.  They are no longer needed.
+
+	* tao/Fixed_TypeCode.cpp:
+	* tao/String_TypeCode.cpp:
+	* tao/TypeCode_Non_Default_Case.cpp:
+
+	  Added missing include directives.
+
+	* tao/Objref_TypeCode_Factory.h:	
+	* tao/SystemExceptionA.cpp:
+	* tao/TypeCode_CDR_Extraction.cpp:
+	* tao/TypeCode_Constants.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+	* tao/Valuetype/ValueBase.cpp:
+
+	  Updated to use latest TypeCode changes (header rename, template
+	  parameter changes, etc).
+	
+	* tao/AnySeqA.cpp:
+	* tao/BooleanSeqA.cpp:
+	* tao/BoundsA.cpp:
+	* tao/CONV_FRAMEA.cpp:
+	* tao/CharSeqA.cpp:
+	* tao/ClientRequestInfoA.cpp:
+	* tao/CurrentA.cpp:
+	* tao/DomainA.cpp:
+	* tao/DoubleSeqA.cpp:
+	* tao/DynamicA.cpp:
+	* tao/Dynamic_ParameterA.cpp:
+	* tao/FloatSeqA.cpp:
+	* tao/GIOPA.cpp:
+	* tao/IIOPA.cpp:
+	* tao/IIOP_EndpointsA.cpp:
+	* tao/IOP_CodecA.cpp:
+	* tao/IOP_IORA.cpp:
+	* tao/InvalidSlotA.cpp:
+	* tao/LongDoubleSeqA.cpp:
+	* tao/LongLongSeqA.cpp:
+	* tao/LongSeqA.cpp:
+	* tao/Messaging_PolicyValueA.cpp:
+	* tao/ORBInitInfoA.cpp:
+	* tao/ORBInitializerA.cpp:
+	* tao/ObjectIdListA.cpp:
+	* tao/OctetSeqA.cpp:
+	* tao/PI_ForwardC.cpp:
+	* tao/ParameterModeA.cpp:
+	* tao/PolicyA.cpp:
+	* tao/PolicyFactoryA.cpp:
+	* tao/Policy_ForwardA.cpp:
+	* tao/PortableInterceptorA.cpp:
+	* tao/RequestInfoA.cpp:
+	* tao/ServerRequestInfoA.cpp:
+	* tao/ServicesA.cpp:
+	* tao/ShortSeqA.cpp:
+	* tao/StringSeqA.cpp:
+	* tao/TAOA.cpp:
+	* tao/TimeBaseA.cpp:
+	* tao/TypeCodeA.cpp:
+	* tao/ULongLongSeqA.cpp:
+	* tao/ULongSeqA.cpp:
+	* tao/UShortSeqA.cpp:
+	* tao/VisibilityA.cpp:
+	* tao/WCharSeqA.cpp:
+	* tao/WStringSeqA.cpp:
+	* tao/WrongTransactionA.cpp:
+	* tao/orb_typesA.cpp:
+	* tao/IFR_Client/IFR_BaseA.cpp:
+	* tao/IFR_Client/IFR_BasicA.cpp:
+	* tao/IFR_Client/IFR_ComponentsA.cpp:
+	* tao/IFR_Client/IFR_ExtendedA.cpp:
+	* tao/IORManipulation/IORA.cpp:
+	* tao/ImR_Client/ImplRepoA.cpp:
+	* tao/ImR_Client/ServerObjectA.cpp:
+	* tao/Messaging/MessagingA.cpp:
+	* tao/Messaging/Messaging_No_ImplA.cpp:
+	* tao/Messaging/Messaging_RT_PolicyA.cpp:
+	* tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
+	* tao/Messaging/TAO_ExtA.cpp:
+	* tao/ObjRefTemplate/Default_ORTA.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
+	* tao/PortableServer/AdapterActivatorA.cpp:
+	* tao/PortableServer/ForwardRequestA.cpp:
+	* tao/PortableServer/IdAssignmentPolicyA.cpp:
+	* tao/PortableServer/IdUniquenessPolicyA.cpp:
+	* tao/PortableServer/ImplicitActivationPolicyA.cpp:
+	* tao/PortableServer/LifespanPolicyA.cpp:
+	* tao/PortableServer/POAManagerA.cpp:
+	* tao/PortableServer/PS_CurrentA.cpp:
+	* tao/PortableServer/PS_ForwardA.cpp:
+	* tao/PortableServer/PortableServerA.cpp:
+	* tao/PortableServer/RequestProcessingPolicyA.cpp:
+	* tao/PortableServer/ServantActivatorA.cpp:
+	* tao/PortableServer/ServantLocatorA.cpp:
+	* tao/PortableServer/ServantManagerA.cpp:
+	* tao/PortableServer/ServantRetentionPolicyA.cpp:
+	* tao/PortableServer/ThreadPolicyA.cpp:
+	* tao/RTCORBA/RTCORBAA.cpp:
+	* tao/RTPortableServer/RTPortableServerA.cpp:
+	* tao/RTScheduling/RTSchedulerA.cpp:
+	* tao/Strategies/sciop_endpointsC.cpp:
+	* tao/Strategies/uiop_endpointsC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
+
+	  Regenerated.
+
+	* tao/Makefile.am: 
+	* tao/tao.mpc:
+
+	  Updated source file lists in accordance with latest TypeCode
+	  source changes.
+
 Tue May  3 18:27:02 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_module.cpp:
