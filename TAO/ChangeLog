@@ -1,3 +1,10 @@
+Wed May  4 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/NamingViewer/res/NamingViewer.ico:
+          Use an icon with a transparent backgroup. Thanks to
+          Frank Pilhofer <fp at mc dot com> for creating this. Fixes bugzilla
+          bug 2104
+
 Wed May  4 12:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
