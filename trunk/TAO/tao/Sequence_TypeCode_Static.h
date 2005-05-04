@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Sequence_Typecode_Static.h
+ *  @file    Sequence_TypeCode_Static.h
  *
  *  $Id$
  *

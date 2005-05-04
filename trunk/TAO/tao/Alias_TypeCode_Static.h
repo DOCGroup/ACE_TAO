@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Alias_Typecode_Static.h
+ *  @file    Alias_TypeCode_Static.h
  *
  *  $Id$
  *
