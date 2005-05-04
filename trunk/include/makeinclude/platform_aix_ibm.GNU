@@ -135,8 +135,9 @@ endif
 # At the moment an idl file just contains includes of other idl files
 # the Visual Age preprocessor doesn't report that file in the list of
 # files that is used. The only way we can workaround this is using the
-# gcc preprocessor
-TAO_IDL_PREPROCESSOR = gcc
+# gcc preprocessor, do this in your platform_macros.GNU is this
+# causes problems
+# TAO_IDL_PREPROCESSOR = gcc
 
 ifeq ($(exceptions),0)
   CCFLAGS     += -qnoeh
