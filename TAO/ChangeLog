@@ -1,3 +1,18 @@
+Wed May  4 09:25:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Objref_TypeCode_Factory.h:
+
+	  Remove this file.  It is no longer needed.
+
+	* tao/TypeCode_CDR_Extraction.cpp (tc_objref_factory):
+
+	  De-templatized objref-like TypeCode extraction code.  Knocks off
+	  5K from static footprint.
+
+Wed May  4 09:21:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode_CDR_Extraction.cpp:
+
 Wed May  4 08:41:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Alias_TypeCode_Static.inl:
