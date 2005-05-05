@@ -52,6 +52,16 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
   tags. Please refer to the $CIAO_ROOT/DAnCE/examples/Hello for
   details, particularly the Hello.cid descriptor file.
 
+. Supported parsing component instance names and using them to generate
+  unique component port references, so that multiple instances of the
+  same component can be deployed in a single container and the client
+  requests could be properly designated to the appropriate ports.
+
+. Enhance CIAO to support establishing connections between derived
+  type ports and base type ports. For example, application deployer
+  could set up event connections between base event sink port type and
+  derived event source port type.
+
 . Enhanced the existing set of DAnCE tools to support flattened
   Deployment Plan based deployment. Please refer an example in
   $CIAO_ROOT/DAnCE/examples/BasicSP/flattened_deploymentplan.cdp
