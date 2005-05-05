@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_component, utils {
-  after += CIAO_Server
-  libs    += CIAO_Server
-}

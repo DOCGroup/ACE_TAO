@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(EC_Mcast): rteventexe, messaging {
-  exename  = EC_Mcast
-}
