@@ -1,3 +1,11 @@
+Thu May  5 11:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          When building shared libraries add -Wl,-E to the linker options
+          to be able to do a dynamic_cast in a shared library of a class
+          that is defined in the application. This fixes the ACE DLL_Test
+          failure with the Intel C++ Compiler.
+
 Tue May  3 14:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_g++.GNU:
