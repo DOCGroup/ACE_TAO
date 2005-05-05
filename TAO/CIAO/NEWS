@@ -58,6 +58,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
   to see how the flattened deployment plan descriptor is used to
   deploy the BasicSP example.
 
+. Develop regression/performance tests (similar to TAO
+  regression/performance tests) that will test/evaluate the
+  performance of various features of CIAO.
+
 . Added regression test script to the nightly build for DAnCE example.
   This will make sure DAnCE tools could be ready to use out of
   box in various platforms.
