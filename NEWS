@@ -10,6 +10,11 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.6
 
 . Support for shared libraries with VxWorks
 
+. RMCast
+  - Reactor-compatible interface.
+  - Message unavailability reporting.
+  - Protocol documentation.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
 ====================================================
 
