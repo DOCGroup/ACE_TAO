@@ -17,6 +17,17 @@ PLANNED MAJOR CHANGES FOR x.4.6
   This will allow the application developers to evolve their applications
   on the fly without servie down time.
 
+. Enhance DAnCE to support configurable output of debugging information.
+  Support for debugging information will be added at the level of both the
+  DAnCE/CIAO infrastructure as well as individual component instances.
+  Support for tracing of the DAnCE/CIAO infrastructure will also be added.
+  Together, these efforts will help developers to understand the execution of
+  their component-based applications, as well as allowing customization of
+  the amount of debugging information logged
+
+. Add a Quoter example for DAnCE, which has been a consistent tutorial example
+  since TAO. Add the CIAO OEP/Display example for DAnCE.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
 ======================================================
 
