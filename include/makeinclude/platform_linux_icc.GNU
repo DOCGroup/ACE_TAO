@@ -113,6 +113,12 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
 
+ifeq ($(shared_libs), 1)
+  ifneq ($static_libs_only), 1)
+    LDFLAGS += -Wl,-E
+  endif
+endif
+
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
