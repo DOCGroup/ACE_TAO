@@ -1361,7 +1361,7 @@ idl3_to_idl2_visitor::gen_provides (AST_Component *node)
       iter.next (pd);
       
       *os << be_nl << be_nl
-          << pd->impl->name () << " provides_" << pd->id << " ();";
+          << pd->impl->name () << " provide_" << pd->id << " ();";
     }
 }
 
