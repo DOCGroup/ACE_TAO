@@ -69,4 +69,4 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::type (CORBA::TypeCode_ptr tc)
   // "CORBA::TypeCode_var", not in the "CORBA::TypeCode_ptr const *"
   // case.
   this->type_ = CORBA::TypeCode::_duplicate (tc);
-};
+}
