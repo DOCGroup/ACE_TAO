@@ -1,3 +1,11 @@
+Fri May  6 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Recursive_Condition_Bug_Test.cpp:
+          When creating the ACE_Message_Block using an allocator, pass the
+          allocator to the ACE_Message_Block so that the MB will use that
+          allocator to free itself. Fixes a mismatch free/delete error
+          with valgrind
+
 Fri May  6 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
