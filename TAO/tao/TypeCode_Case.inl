@@ -9,10 +9,20 @@ template <typename StringType, typename TypeCodeType>
 ACE_INLINE
 TAO::TypeCode::Case<StringType, TypeCodeType>::Case (
   char const * member_name,
-  TypeCodeType const & member_type)
+  TypeCodeType member_type)
   : name_ (member_name)
   , type_ (member_type)
 {
+}
+
+template <typename StringType, typename TypeCodeType>
+ACE_INLINE
+TAO::TypeCode::Case<StringType, TypeCodeType>::Case (void)
+  : name_ ()
+  , type_ ()
+{
+  // Only used when StringType and TypeCodeType are CORBA::String_var
+  // and CORBA::TypeCode_var, respectively.
 }
 
 template <typename StringType, typename TypeCodeType>
@@ -36,9 +46,27 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::name (void) const
 }
 
 template <typename StringType, typename TypeCodeType>
+ACE_INLINE void
+TAO::TypeCode::Case<StringType, TypeCodeType>::name (
+  char const * the_name)
+{
+  this->name_ = the_name;
+}
+
+template <typename StringType, typename TypeCodeType>
 ACE_INLINE CORBA::TypeCode_ptr
 TAO::TypeCode::Case<StringType, TypeCodeType>::type (void) const
 {
   return
     Traits<StringType>::get_typecode (this->type_);
 }
+
+template <typename StringType, typename TypeCodeType>
+ACE_INLINE void
+TAO::TypeCode::Case<StringType, TypeCodeType>::type (CORBA::TypeCode_ptr tc)
+{
+  // This assignment works since it is only used when TypeCodeType is
+  // "CORBA::TypeCode_var", not in the "CORBA::TypeCode_ptr const *"
+  // case.
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
+};

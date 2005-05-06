@@ -23,27 +23,3 @@ TAO::TypeCode::Union<char const *,
   , cases_ (cases)
 {
 }
-
-ACE_INLINE CORBA::ULong
-TAO::TypeCode::Union<char const *,
-                     CORBA::TypeCode_ptr const *,
-                     TAO::TypeCode::Case<char const *,
-                                         CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::case_count (void) const
-{
-  return this->ncases_;
-}
-
-ACE_INLINE
-TAO::TypeCode::Union<char const *,
-                     CORBA::TypeCode_ptr const *,
-                     TAO::TypeCode::Case<char const *, CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::case_type const &
-TAO::TypeCode::Union<char const *,
-                     CORBA::TypeCode_ptr const *,
-                     TAO::TypeCode::Case<char const *, CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::the_case (
-  CORBA::ULong index) const
-{
-  return *this->cases_[index];
-}

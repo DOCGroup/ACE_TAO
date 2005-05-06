@@ -645,8 +645,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TypeCode_CDR_Extraction.h
     TypeCode_Constants.h
     TypeCode_Case.h
-    TypeCode_Default_Case.h
-    TypeCode_Non_Default_Case.h
+    TypeCode_Case_T.h
     TypeCode_Struct_Field.h
     TypeCode_Traits.h
     TypeCode_Value_Field.h
@@ -709,8 +708,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TAO_Singleton.cpp
     TypeCode_Base_Attributes.cpp
     TypeCode_Case.cpp
-    TypeCode_Default_Case.cpp
-    TypeCode_Non_Default_Case.cpp
+    TypeCode_Case_T.cpp
     Union_TypeCode.cpp
     Value_TypeCode.cpp
     orb.idl

@@ -864,13 +864,10 @@ nobase_include_HEADERS = \
   TypeCode_Case.cpp \
   TypeCode_Case.h \
   TypeCode_Case.inl \
+  TypeCode_Case_T.cpp \
+  TypeCode_Case_T.h \
+  TypeCode_Case_T.inl \
   TypeCode_Constants.h \
-  TypeCode_Default_Case.cpp \
-  TypeCode_Default_Case.h \
-  TypeCode_Default_Case.inl \
-  TypeCode_Non_Default_Case.cpp \
-  TypeCode_Non_Default_Case.h \
-  TypeCode_Non_Default_Case.inl \
   TypeCode_Struct_Field.h \
   TypeCode_Traits.h \
   TypeCode_Value_Field.h \

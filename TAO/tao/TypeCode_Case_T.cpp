@@ -1,17 +1,18 @@
 // $Id$
 
-#ifndef TAO_TYPECODE_NON_DEFAULT_CASE_CPP
-#define TAO_TYPECODE_NON_DEFAULT_CASE_CPP
+#ifndef TAO_TYPECODE_CASE_T_CPP
+#define TAO_TYPECODE_CASE_T_CPP
 
-#include "TypeCode_Non_Default_Case.h"
+#include "TypeCode_Case_T.h"
 
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/TypeCode_Non_Default_Case.inl"
+# include "tao/TypeCode_Case_T.inl"
 #endif /* __ACE_INLINE__ */
+
 
 namespace TAO
 {
@@ -63,33 +64,41 @@ namespace TAO
       }
     };
 
-    template <>
-    struct Case_Traits<CORBA::WChar>
-    {
-      inline static CORBA::Any::from_wchar any_from (CORBA::WChar v)
-      {
-        return CORBA::Any::from_wchar (v);
-      }
-
-      inline static CORBA::Any::to_wchar any_to (CORBA::WChar & v)
-      {
-        return CORBA::Any::to_wchar (v);
-      }
-    };
-
   } // End TypeCode namespace
 }  // End TAO namespace
 
 // ----------------------------------------------------------------
 
+
+template <typename DiscriminatorType,
+          typename StringType,
+          typename TypeCodeType>
+TAO::TypeCode::Case<StringType, TypeCodeType> *
+TAO::TypeCode::Case_T<DiscriminatorType,
+                      StringType,
+                      TypeCodeType>::clone (void) const
+{
+  Case<StringType, TypeCodeType> * p = 0;
+
+  typedef Case_T<DiscriminatorType,
+                 StringType,
+                 TypeCodeType> case_type;
+
+  // The compiler generated memberwise copy constructor is sufficient.
+  ACE_NEW_RETURN (p,
+                  case_type (*this),
+                  p);
+
+  return p;
+}
+
 template <typename DiscriminatorType,
           typename StringType,
           typename TypeCodeType>
 bool
-TAO::TypeCode::Non_Default_Case<DiscriminatorType,
-                                StringType,
-                                TypeCodeType>::marshal_label (
-  TAO_OutputCDR & cdr) const
+TAO::TypeCode::Case_T<DiscriminatorType,
+                      StringType,
+                      TypeCodeType>::marshal_label (TAO_OutputCDR & cdr) const
 {
   return
     (cdr <<
@@ -100,12 +109,11 @@ template <typename DiscriminatorType,
           typename StringType,
           typename TypeCodeType>
 bool
-TAO::TypeCode::Non_Default_Case<DiscriminatorType,
-                                StringType,
-                                TypeCodeType>::equal_label (
-  CORBA::ULong index,
-  CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+TAO::TypeCode::Case_T<DiscriminatorType,
+                      StringType,
+                      TypeCodeType>::equal_label (CORBA::ULong index,
+                                                  CORBA::TypeCode_ptr tc
+                                                  ACE_ENV_ARG_DECL) const
 {
   CORBA::Any_var const any = tc->member_label (index
                                                ACE_ENV_ARG_PARAMETER);
@@ -131,10 +139,9 @@ template <typename DiscriminatorType,
           typename StringType,
           typename TypeCodeType>
 CORBA::Any *
-TAO::TypeCode::Non_Default_Case<DiscriminatorType,
-                                StringType,
-                                TypeCodeType>::label (
-  ACE_ENV_SINGLE_ARG_DECL) const
+TAO::TypeCode::Case_T<DiscriminatorType,
+                      StringType,
+                      TypeCodeType>::label (ACE_ENV_SINGLE_ARG_DECL) const
 {
   CORBA::Any * value;
 
@@ -152,5 +159,4 @@ TAO::TypeCode::Non_Default_Case<DiscriminatorType,
 }
 
 
-
-#endif  /* TAO_TYPECODE_NON_DEFAULT_CASE_CPP */
+#endif  /* TAO_TYPECODE_CASE_T_CPP */

@@ -2029,11 +2029,7 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
       stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/TypeCode_Non_Default_Case.h",
-                               stream);
-
-  this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/TypeCode_Default_Case.h",
+                               "tao/TypeCode_Case_T.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
