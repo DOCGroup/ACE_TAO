@@ -36,7 +36,7 @@ namespace TAO
      * supports constructors for the corresponding @c TypeCode
      * implementations.
      */
-    template <class TypeCodeBase, 
+    template <class TypeCodeBase,
               typename TypeCodeType,
               typename MemberArrayType>
     class Recursive_Type
