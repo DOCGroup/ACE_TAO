@@ -441,7 +441,8 @@ Receiver::handle_input (ACE_HANDLE handle)
                         "Nesting level %d\n",
                         this->nested_upcalls_level_));
 
-          if (this->nested_upcalls_level_ != max_nested_upcall_level)
+          if ((this->nested_upcalls_level_ != max_nested_upcall_level) &&
+            (global_event_loop_thread_variable != 0))
             global_event_loop_thread_variable->svc ();
 
           this->nested_upcalls_level_--;
@@ -1144,6 +1145,11 @@ testing (ACE_Reactor *reactor,
   // Wait for threads to exit.
   result = thread_manager.wait ();
   ACE_ASSERT (result == 0);
+
+  // Set the global variable to zero again because the
+  // event_loop_thread exists on the stack and now
+  // gets destructed.
+  global_event_loop_thread_variable = 0;
 }
 
 template <class REACTOR_IMPL>
