@@ -27,6 +27,18 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+namespace TAO
+{
+  namespace TypeCode
+  {
+    template <typename StringType, typename TypeCodeType> class Case;
+
+    typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
+  }
+}
+
+
 class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
     : public virtual CORBA::TypeCodeFactory,
       public virtual TAO_Local_RefCounted_Object
@@ -204,8 +216,8 @@ private:
   /// Finds a legal default label value.
   void compute_default_label (CORBA::TCKind kind,
                               CORBA::ULong skip_slot,
-                              const CORBA::UnionMemberSeq &members //,
-                              /* TAO_OutputCDR &cdr */);
+                              const CORBA::UnionMemberSeq &members,
+                              TAO::TypeCode::Case_Dynamic *& the_case);
 
   /// Called for all types that take just an id and a name.
   CORBA::TypeCode_ptr create_tc_common (
