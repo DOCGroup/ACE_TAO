@@ -1,3 +1,8 @@
+Fri May  6 13:50:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_time.inl:
+          Fixed ACE_OS::gethrtime() for Intel Compiler on PENTIUM plaform.
+
 Fri May  6 11:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Timer_Cancellation_Test.cpp:
@@ -50,55 +55,55 @@ Sun May  1 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May  1 01:06:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Select_Reactor_Base.cpp:
-	* ace/Select_Reactor_Base.inl:
+    * ace/Select_Reactor_Base.cpp:
+    * ace/Select_Reactor_Base.inl:
 
-	  Moved all virtual functions out of line.  Inlining them prevents
-	  run-time type identification from functioning properly when
-	  using g++ 4.x's "-fvisibility-inlines-hidden" command line
-	  option/feature.  Addresses failed dynamic_cast<>s of an
-	  ACE_Reactor_Impl base class to an ACE_Select_Reactor subclass.
+      Moved all virtual functions out of line.  Inlining them prevents
+      run-time type identification from functioning properly when
+      using g++ 4.x's "-fvisibility-inlines-hidden" command line
+      option/feature.  Addresses failed dynamic_cast<>s of an
+      ACE_Reactor_Impl base class to an ACE_Select_Reactor subclass.
 
-	* ace/Select_Reactor_Base.h (~ACE_Reactor_Notify):
+    * ace/Select_Reactor_Base.h (~ACE_Reactor_Notify):
 
-	  Explicitly declare this destructor as virtual.  It was already
-	  implicitly virtual due to the virtual destructor in the
-	  ACE_Event_Handler base class.  This explicit declaration is
-	  simply a reminder that it is virtual, and shouldn't be inlined
-	  since doing so can potentially cause failed dynamic_cast<>s when
-	  using g++ 4.x's hidden visibility of inlined functions feature.
+      Explicitly declare this destructor as virtual.  It was already
+      implicitly virtual due to the virtual destructor in the
+      ACE_Event_Handler base class.  This explicit declaration is
+      simply a reminder that it is virtual, and shouldn't be inlined
+      since doing so can potentially cause failed dynamic_cast<>s when
+      using g++ 4.x's hidden visibility of inlined functions feature.
 
 Sat Apr 30 15:24:13 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* examples/Reactor/Misc/pingpong.cpp (run_svc): Allocate the
-	  Ping_Pong callback dynamically to avoid crashses when things
- 	  close down.  Thanks to Johnny Willemsen for narrowing down the
- 	  problem and to Alex Ott <ott@jet.msk.su> for reporting it.
+    * examples/Reactor/Misc/pingpong.cpp (run_svc): Allocate the
+      Ping_Pong callback dynamically to avoid crashses when things
+      close down.  Thanks to Johnny Willemsen for narrowing down the
+      problem and to Alex Ott <ott@jet.msk.su> for reporting it.
 
 Fri Apr 29 23:45:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
-	* examples/Bounded_Packet_Relay/BPR_Drivers.h:
-	* examples/Mem_Map/IO-tests/IO_Test.cpp:
-	* examples/Mem_Map/IO-tests/IO_Test.h:
-	* examples/Reactor/Misc/test_event_handler_t.cpp:
-	* examples/Threads/future2.cpp:
-	* examples/Timer_Queue/Driver.cpp:
-	* examples/Timer_Queue/Driver.h:
+    * examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
+    * examples/Bounded_Packet_Relay/BPR_Drivers.h:
+    * examples/Mem_Map/IO-tests/IO_Test.cpp:
+    * examples/Mem_Map/IO-tests/IO_Test.h:
+    * examples/Reactor/Misc/test_event_handler_t.cpp:
+    * examples/Threads/future2.cpp:
+    * examples/Timer_Queue/Driver.cpp:
+    * examples/Timer_Queue/Driver.h:
 
-	  Added virtual destructor to silence g++ 4.0 warnings.
+      Added virtual destructor to silence g++ 4.0 warnings.
 
-	* examples/Threads/future2.cpp (test_timeout):
+    * examples/Threads/future2.cpp (test_timeout):
 
-	  Fixed "variable may be used initialized" warning.
+      Fixed "variable may be used initialized" warning.
 
 Fri Apr 29 09:25:28 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Thread_Exit.cpp (cleanup): Set ACE_Thread_Manager::thr_exit_
-	  to 0 to prevent a later crash in
- 	  ACE_Thread_Manager::set_thr_exit().  Thanks to D. J. Stachniak
- 	  <djstachniak@yahoo.com> for submitting a fix and Slava Gorelik
- 	  <slava.gorelik@sap.com> for reporting the problem.
+    * ace/Thread_Exit.cpp (cleanup): Set ACE_Thread_Manager::thr_exit_
+      to 0 to prevent a later crash in
+      ACE_Thread_Manager::set_thr_exit().  Thanks to D. J. Stachniak
+      <djstachniak@yahoo.com> for submitting a fix and Slava Gorelik
+      <slava.gorelik@sap.com> for reporting the problem.
 
 Fri Apr 29 12:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -113,36 +118,36 @@ Fri Apr 29 08:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr 28 23:06:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-linux-common.h:
+    * ace/config-linux-common.h:
 
-	  Do not perform feature tests using implementation-specific
-	  preprocessor symbols.  Use the standard ones instead
-	  (e.g. _POSIX_C_SOURCE, _ISO_C99SOURCE, _BSD_SOURCE,
-	  _XOPEN_SOURCE, etc).
+      Do not perform feature tests using implementation-specific
+      preprocessor symbols.  Use the standard ones instead
+      (e.g. _POSIX_C_SOURCE, _ISO_C99SOURCE, _BSD_SOURCE,
+      _XOPEN_SOURCE, etc).
 
 Thu Apr 28 22:53:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-linux-common.h (ACE_LACKS_MKSTEMP_PROTOTYPE):
+    * ace/config-linux-common.h (ACE_LACKS_MKSTEMP_PROTOTYPE):
 
-	  Do not define this preprocessor symbol if _XOPEN_SOURCE_EXTENDED
-	  is already defined.  Addresses mkstemp() unmatched prototype
-	  related errors exhibited by g++ 4.0 on some Linux platforms.
+      Do not define this preprocessor symbol if _XOPEN_SOURCE_EXTENDED
+      is already defined.  Addresses mkstemp() unmatched prototype
+      related errors exhibited by g++ 4.0 on some Linux platforms.
 
 Wed Apr 27 14:29:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Log_Msg.cpp (ACE_Log_Msg::log_hexdump):
+    * ace/Log_Msg.cpp (ACE_Log_Msg::log_hexdump):
 
-	  Check log priority before allocating message buffer and
-	  formatting message, an unnecessary expense if the message isn't
-	  going to be output.  Thanks to <joez at datawire dot net> for
-	  reporting this problem.
+      Check log priority before allocating message buffer and
+      formatting message, an unnecessary expense if the message isn't
+      going to be output.  Thanks to <joez at datawire dot net> for
+      reporting this problem.
 
 Wed Apr 27 20:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Misc/pingpong.cpp:
           When no commandline argument has been passed, exit normally with
- 	  an ACE_ERROR_RETURN instead of an abort.  Thanks to Alex Ott
- 	  <ott@jet.msk.su> for reporting this.
+      an ACE_ERROR_RETURN instead of an abort.  Thanks to Alex Ott
+      <ott@jet.msk.su> for reporting this.
 
 Wed Apr 27 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -180,9 +185,9 @@ Wed Apr 27 15:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 26 10:59:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* netsvcs/lib/Makefile.am:
+    * netsvcs/lib/Makefile.am:
 
-	  Add *_LDFLAGS definition to set shared library version number.
+      Add *_LDFLAGS definition to set shared library version number.
 
 Sun Apr 24 14:02:51 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
@@ -193,18 +198,18 @@ Sun Apr 24 14:02:51 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Sun Apr 24 10:53:40 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* ace/MEM_Stream.h:
-	* ace/MEM_Acceptor.cpp: Changed code to ensure the internal buffer
-	  size of MEM_Stream will be at least 4096 bytes by default.  The
-	  minimum internal buffer size determines the largest message
-	  allowable per send operation.  This size used to depend on the
-	  default minimum size of ACE_Malloc size, which currently no
-	  longer allocates a minimum of 4K memory.  One can change the
-	  default MEM_Stream buffer size by redefining the
-	  ACE_MEM_STREAM_MIN_BUFFER (in bytes) in the config.h file.
+    * ace/MEM_Stream.h:
+    * ace/MEM_Acceptor.cpp: Changed code to ensure the internal buffer
+      size of MEM_Stream will be at least 4096 bytes by default.  The
+      minimum internal buffer size determines the largest message
+      allowable per send operation.  This size used to depend on the
+      default minimum size of ACE_Malloc size, which currently no
+      longer allocates a minimum of 4K memory.  One can change the
+      default MEM_Stream buffer size by redefining the
+      ACE_MEM_STREAM_MIN_BUFFER (in bytes) in the config.h file.
 
-	  Thanks to Voronkov Konstantin <beowinkle at yahoo dot com> for
-	  motivating this change.
+      Thanks to Voronkov Konstantin <beowinkle at yahoo dot com> for
+      motivating this change.
 
 Sun Apr 24 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -225,61 +230,61 @@ Sat Apr 23 20:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Apr 23 13:12:27 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Task.inl (grp_id):
-	* ace/Managed_Object.h (class ACE_Managed_Object):
-	* ace/Thread.inl (setprio):
-	* ace/OS_NS_Thread.inl:
-	  Changed all uses of "id" to something else to avoid conflicts
- 	  with Mac OS X, where "id" is a keyword.  Thanks to Ron Wilson
- 	  <ronwilson@mac.com> for reporting this problem.
+    * ace/Task.inl (grp_id):
+    * ace/Managed_Object.h (class ACE_Managed_Object):
+    * ace/Thread.inl (setprio):
+    * ace/OS_NS_Thread.inl:
+      Changed all uses of "id" to something else to avoid conflicts
+      with Mac OS X, where "id" is a keyword.  Thanks to Ron Wilson
+      <ronwilson@mac.com> for reporting this problem.
 
 Sat Apr 23 08:20:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Log_Msg/test_log_msg.cpp (ACE_TMAIN):
-	* tests/Log_Msg_Test.cpp (test_log_msg_features):
+    * examples/Log_Msg/test_log_msg.cpp (ACE_TMAIN):
+    * tests/Log_Msg_Test.cpp (test_log_msg_features):
 
-	  Fixed "possible loss of data" VC++ 7.1 warnings.
+      Fixed "possible loss of data" VC++ 7.1 warnings.
 
 Fri Apr 22 18:02:37 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (open): Fixed a problem with LOGGER and logger_key
-	  and the backend_->open() call.  Thanks to Jerry D. De Master
- 	  <jdemaste at rite-solutions dot com> for reporting this.
+    * ace/Log_Msg.cpp (open): Fixed a problem with LOGGER and logger_key
+      and the backend_->open() call.  Thanks to Jerry D. De Master
+      <jdemaste at rite-solutions dot com> for reporting this.
 
 Fri Apr 22 22:45:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* apps/JAWS3/jaws3/Event_Completer.h (~JAWS_Event_Completer):
-	* apps/JAWS3/jaws3/Event_Completer.cpp (~JAWS_Event_Completer):
-	* examples/APG/ThreadPools/Futures.cpp (~IManager):
-	* examples/APG/ThreadPools/ThreadPool.cpp (~IManager):
-	* examples/APG/Timers/PCB.h (~PCB):
-	* examples/APG/Timers/PCB.cpp (~PCB):
-	* performance-tests/Misc/test_mutex.cpp (~Mutex_Base):
+    * apps/JAWS3/jaws3/Event_Completer.h (~JAWS_Event_Completer):
+    * apps/JAWS3/jaws3/Event_Completer.cpp (~JAWS_Event_Completer):
+    * examples/APG/ThreadPools/Futures.cpp (~IManager):
+    * examples/APG/ThreadPools/ThreadPool.cpp (~IManager):
+    * examples/APG/Timers/PCB.h (~PCB):
+    * examples/APG/Timers/PCB.cpp (~PCB):
+    * performance-tests/Misc/test_mutex.cpp (~Mutex_Base):
 
-	  Added virtual destructor to silence g++ 4.0 warnings.
+      Added virtual destructor to silence g++ 4.0 warnings.
 
-	* examples/APG/Containers/DataElement.h:
-	* examples/APG/Containers/Stacks.cpp:
-	* examples/APG/ThreadPools/Futures.cpp:
-	* examples/APG/ThreadSafety/TSS.cpp (get_attribute):
-	* performance-tests/Server_Concurrency/Latency_Stats.h
-	  (Throughput_Stats):
-	* tests/Cache_Map_Manager_Test.cpp (find_test_hash_cache):
-	* tests/Future_Test.cpp (run_main):
-	* tests/Map_Manager_Test.cpp:
+    * examples/APG/Containers/DataElement.h:
+    * examples/APG/Containers/Stacks.cpp:
+    * examples/APG/ThreadPools/Futures.cpp:
+    * examples/APG/ThreadSafety/TSS.cpp (get_attribute):
+    * performance-tests/Server_Concurrency/Latency_Stats.h
+      (Throughput_Stats):
+    * tests/Cache_Map_Manager_Test.cpp (find_test_hash_cache):
+    * tests/Future_Test.cpp (run_main):
+    * tests/Map_Manager_Test.cpp:
 
-	  Fixed "variable may be used initialized" g++ 4.0 warnings.
+      Fixed "variable may be used initialized" g++ 4.0 warnings.
 
-	* examples/APG/Naming/Temperature_Monitor2.cpp (record_history):
-	* examples/Log_Msg/test_log_msg.cpp (ACE_TMAIN):
-	* tests/Log_Msg_Test.cpp (test_log_msg_features):
+    * examples/APG/Naming/Temperature_Monitor2.cpp (record_history):
+    * examples/Log_Msg/test_log_msg.cpp (ACE_TMAIN):
+    * tests/Log_Msg_Test.cpp (test_log_msg_features):
 
-	  Fixed "operation may undefined" g++ 4.0 warnings.
+      Fixed "operation may undefined" g++ 4.0 warnings.
 
-	* tests/Message_Block_Test.cpp:
+    * tests/Message_Block_Test.cpp:
 
-	  Fixed "non-local variable '<anonymous struct> alloc_struct [2]'
-	  uses anonymous type" g++ 4.0 warning.
+      Fixed "non-local variable '<anonymous struct> alloc_struct [2]'
+      uses anonymous type" g++ 4.0 warning.
 
 Fru Apr 22 18:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -288,20 +293,20 @@ Fru Apr 22 18:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 22 12:14:41 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Connector.cpp:
-	* ace/Connector.h:
+    * ace/Connector.cpp:
+    * ace/Connector.h:
 
-	  Added a new version of NBCH::close () which can be used by
-	  ACE_Connector::cancel () . The close () was essential for the
-	  cancel ()  to provide proper pre and post conditions, without
-	  which applications have no clue on the status of things.
+      Added a new version of NBCH::close () which can be used by
+      ACE_Connector::cancel () . The close () was essential for the
+      cancel ()  to provide proper pre and post conditions, without
+      which applications have no clue on the status of things.
 
 Thu Apr 21 23:57:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_g++_common.GNU:
+    * include/makeinclude/platform_g++_common.GNU:
 
-	  Only add g++ 4.x visibility flags when shared libraries are
-	  enabled.
+      Only add g++ 4.x visibility flags when shared libraries are
+      enabled.
 
 Thu Apr 21 18:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -322,10 +327,10 @@ Thu Apr 21 18:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 20 16:06:22 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/run_test.pl: If -t is specified (run specified test[s]) then
-	  don't load run_test.lst. This allows autoconfig builds to use this
-	  script to run the "make check"-ordered tests using this script
-	  to do log checks and timeouts.
+    * tests/run_test.pl: If -t is specified (run specified test[s]) then
+      don't load run_test.lst. This allows autoconfig builds to use this
+      script to run the "make check"-ordered tests using this script
+      to do log checks and timeouts.
 
 Wed Apr 20 20:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -334,16 +339,16 @@ Wed Apr 20 20:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 20 12:51:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Cleanup_Strategies_T.cpp:
-	* ace/Cleanup_Strategies_T.h:
-	* apps/Gateway/Gateway/File_Parser.h:
-	* apps/Gateway/Gateway/File_Parser.cpp:
-	* examples/Web_Crawler/URL_Visitor.cpp:
-	* examples/Web_Crawler/URL_Visitor.h:
-	* examples/Web_Crawler/URL_Visitor_Factory.cpp:
-	* examples/Web_Crawler/URL_Visitor_Factory.h:
+    * ace/Cleanup_Strategies_T.cpp:
+    * ace/Cleanup_Strategies_T.h:
+    * apps/Gateway/Gateway/File_Parser.h:
+    * apps/Gateway/Gateway/File_Parser.cpp:
+    * examples/Web_Crawler/URL_Visitor.cpp:
+    * examples/Web_Crawler/URL_Visitor.h:
+    * examples/Web_Crawler/URL_Visitor_Factory.cpp:
+    * examples/Web_Crawler/URL_Visitor_Factory.h:
 
-	  Added virtual destructors to address g++ 4.0 warnings.
+      Added virtual destructors to address g++ 4.0 warnings.
 
 Wed Apr 20 07:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -352,18 +357,18 @@ Wed Apr 20 07:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 19 18:46:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Makefile.am: Correct the variable name used to inject a test
-	  executor - TESTS_ENVIRONMENT, not TEST_ENVIRONMENT.
+    * tests/Makefile.am: Correct the variable name used to inject a test
+      executor - TESTS_ENVIRONMENT, not TEST_ENVIRONMENT.
 
 Tue Apr 19 16:41:47 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Basic_Types.h: Don't attempt to typedef ACE_UINT64 based on
-	  specific available types if ACE_LACKS_LONGLONG_T or
-	  ACE_LACKS_UNSIGNEDLONGLONG_T is defined - in either of these 'lacks'
-	  is set, ACE_U_LongLong is declared and typedef'd to ACE_UINT64.
+    * ace/Basic_Types.h: Don't attempt to typedef ACE_UINT64 based on
+      specific available types if ACE_LACKS_LONGLONG_T or
+      ACE_LACKS_UNSIGNEDLONGLONG_T is defined - in either of these 'lacks'
+      is set, ACE_U_LongLong is declared and typedef'd to ACE_UINT64.
 
-	* tests/Proactor_Test.cpp:
-	* tests/Proactor_Test_IPV6.cpp: Added missing template instantiations.
+    * tests/Proactor_Test.cpp:
+    * tests/Proactor_Test_IPV6.cpp: Added missing template instantiations.
 
 Tue Apr 19 19:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -415,10 +420,10 @@ Tue Apr 19 06:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 18 17:56:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+    * configure.ac:
 
-	  Add check for check_settime and set ACE_HAS_CLOCK_SETTIME if
-	  it exists.
+      Add check for check_settime and set ACE_HAS_CLOCK_SETTIME if
+      it exists.
 
 Mon Apr 18 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -434,9 +439,9 @@ Mon Apr 18 11:43:05 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Mon Apr 18 11:38:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* examples/Reactor/WFMO_Reactor/Window_Messages.cpp: Remove poorly
-	  ordered auto_ptr for ACE_Msg_WFMO_Reactor instance. Let the
-	  ACE_Reactor object delete the implementation to assure correct order.
+    * examples/Reactor/WFMO_Reactor/Window_Messages.cpp: Remove poorly
+      ordered auto_ptr for ACE_Msg_WFMO_Reactor instance. Let the
+      ACE_Reactor object delete the implementation to assure correct order.
 
 Mon Apr 18 14:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
