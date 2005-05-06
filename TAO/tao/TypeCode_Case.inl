@@ -3,6 +3,7 @@
 // $Id$
 
 #include "tao/CDR.h"
+#include "tao/TypeCode_Traits.h"
 
 
 template <typename StringType, typename TypeCodeType>

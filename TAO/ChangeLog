@@ -1,3 +1,22 @@
+Fri May  6 13:18:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode_Case.inl:
+
+	  Include "tao/TypeCode_Traits.h" to pull in the appropriate
+	  traits templates used in this source file.
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_union_tc):
+	  (compute_default_label):
+
+	  Ported pre-typecode-rewrite code to work with the new TypeCode
+	  implementation.
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.h (compute_default_label):
+
+	  This method no longer accepts a reference to a CDR output
+	  stream.  It now accepts a reference to a pointer to
+	  TAO::TypeCode::Case_Dynamic.
+
 Fri May  6 01:00:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Alias_TypeCode_Static.cpp:
