@@ -1,3 +1,16 @@
+Fri May  6 01:00:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Alias_TypeCode_Static.cpp:
+	* tao/Enum_TypeCode_Static.cpp:
+	* tao/Objref_TypeCode_Static.cpp:
+	* tao/Sequence_TypeCode_Static.cpp:
+	* tao/String_TypeCode_Static.cpp:
+	* tao/Struct_TypeCode_Static.cpp:
+	* tao/Union_TypeCode_Static.cpp:
+	* tao/Value_TypeCode_Static.cpp:
+
+	  Work around broken MSVC++ 6 namespace support.
+
 Fri May  6 07:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TypeCode_Case.inl:
