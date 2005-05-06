@@ -40,14 +40,14 @@ int
 Deadlock::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Deadlock starts accessing Reactor and Timer Queue....\n"));
+              ACE_TEXT ("Deadlock starts accessing Reactor and Timer Queue....\n")));
 
   this->reactor ()->schedule_timer (this,
                                     0,
                                     ACE_Time_Value (1));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Deadlock completes accessing Reactor and Timer Queue....\n"));
+              ACE_TEXT ("Deadlock completes accessing Reactor and Timer Queue....\n")));
 
   return 0;
 }
@@ -57,7 +57,7 @@ Deadlock::handle_timeout (const ACE_Time_Value &,
                           const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Deadlock timeout\n"));
+              ACE_TEXT ("Deadlock timeout\n")));
 
   return 0;
 }
@@ -87,7 +87,7 @@ Event_Handler::handle_timeout (const ACE_Time_Value &,
                                const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Event_Handler timeout\n"));
+              ACE_TEXT ("Event_Handler timeout\n")));
 
   return -1;
 }
@@ -97,7 +97,7 @@ Event_Handler::handle_close (ACE_HANDLE,
                              ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Event_Handler closed\n"));
+              ACE_TEXT ("Event_Handler closed\n")));
 
   // Activate Deadlock.
   this->deadlock_.activate ();
@@ -106,13 +106,13 @@ Event_Handler::handle_close (ACE_HANDLE,
   ACE_OS::sleep (1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Event Handler starts accessing Reactor....\n"));
+              ACE_TEXT ("Event Handler starts accessing Reactor....\n")));
 
   // This is a superfluous call to the Reactor to acquire its lock.
   this->reactor ()->max_notify_iterations ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Event Handler completes accessing Reactor....\n"));
+              ACE_TEXT ("Event Handler completes accessing Reactor....\n")));
 
   return 0;
 }
