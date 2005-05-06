@@ -30,8 +30,6 @@ TAO::TypeCode::Union<char const *,
   // the CORBA specification), meaning that it must be marshaled into
   // a CDR encapsulation.
 
-  CORBA::ULong const count = this->case_count ();
-
   // Create a CDR encapsulation.
   TAO_OutputCDR enc;
 
@@ -41,16 +39,16 @@ TAO::TypeCode::Union<char const *,
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
     && (enc << Traits<char const *>::get_typecode (this->discriminant_type_))
     && (enc << this->default_index_)
-    && (enc << count);
+    && (enc << this->ncases_);
 
   if (!success)
     return false;
 
   // Note that we handle the default case below, too.
 
-  for (unsigned int i = 0; i < count; ++i)
+  for (unsigned int i = 0; i < this->ncases_; ++i)
     {
-      case_type const & c = this->the_case (i);
+      case_type const & c = *this->cases_[i];
 
       if (!c.marshal (enc))
         return false;
@@ -102,9 +100,7 @@ TAO::TypeCode::Union<char const *,
   CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong const this_count = this->case_count ();
-
-  if (tc_count != this_count
+  if (tc_count != this->ncases_
       || tc_def != this->default_index_)
     return 0;
 
@@ -122,9 +118,18 @@ TAO::TypeCode::Union<char const *,
   if (!equal_discriminators)
     return 0;
 
-  for (CORBA::ULong i = 0; i < this_count; ++i)
+  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
-      case_type const & lhs_case = this->the_case (i);
+      if (this->default_index_ > -1
+          && static_cast<CORBA::ULong> (this->default_index_) == i)
+        {
+          // Don't bother checking equality of default case label.  It
+          // will always be the zero octet (the CDR encoded value is
+          // ignored).
+          continue;
+        }
+
+      case_type const & lhs_case = *this->cases_[i];
 
       bool const equal_case =
         lhs_case.equal (i,
@@ -158,9 +163,7 @@ TAO::TypeCode::Union<char const *,
   CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong const this_count = this->case_count ();
-
-  if (tc_count != this_count
+  if (tc_count != this->ncases_
       || tc_def != this->default_index_)
     return 0;
 
@@ -177,9 +180,18 @@ TAO::TypeCode::Union<char const *,
   if (!equiv_discriminators)
     return 0;
 
-  for (CORBA::ULong i = 0; i < this_count; ++i)
+  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
-      case_type const & lhs_case = this->the_case (i);
+      if (this->default_index_ > -1
+          && static_cast<CORBA::ULong> (this->default_index_) == i)
+        {
+          // Don't bother checking equality/equivalence of default
+          // case label.  It will always be the zero octet (the CDR
+          // encoded value is ignored).
+          continue;
+        }
+
+      case_type const & lhs_case = *this->cases_[i];
 
       bool const equivalent_case =
         lhs_case.equivalent (i,
@@ -220,9 +232,8 @@ TAO::TypeCode::Union<char const *,
 //           // the compact TypeCode.
 //           tc_cases[i].name = empty_name;
 //           tc_cases[i].type =
-//             Traits<char const *>::get_typecode (
-//               this->the_case (i).type)->get_compact_typecode (
-//                 ACE_ENV_ARG_PARAMETER);
+//             this->cases_[i]->type ()->get_compact_typecode (
+//               ACE_ENV_ARG_PARAMETER);
 //           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 //         }
 //     }
@@ -290,7 +301,7 @@ TAO::TypeCode::Union<char const *,
                      TAO::Null_RefCount_Policy>::member_count_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return this->case_count ();
+  return this->ncases_;
 }
 
 char const *
@@ -304,10 +315,10 @@ TAO::TypeCode::Union<char const *,
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
-  if (index >= this->case_count ())
+  if (index >= this->ncases_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-  return Traits<char const *>::get_string (this->the_case (index).name ());
+  return this->cases_[index]->name ();
 }
 
 CORBA::TypeCode_ptr
@@ -319,11 +330,11 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index
   ACE_ENV_ARG_DECL) const
 {
-  if (index >= this->case_count ())
+  if (index >= this->ncases_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                       CORBA::TypeCode::_nil ());
 
-  return CORBA::TypeCode::_duplicate (this->the_case (index).type ());
+  return CORBA::TypeCode::_duplicate (this->cases_[index]->type ());
 }
 
 CORBA::Any *
@@ -335,11 +346,33 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index
   ACE_ENV_ARG_DECL) const
 {
-  if (index >= this->case_count ())
+  if (index >= this->ncases_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                       0);
 
-  return this->the_case (index).label (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // Default case.
+  if (this->default_index_ > -1
+      && static_cast<CORBA::ULong> (this->default_index_) == index)
+    {
+      CORBA::Any * any;
+      ACE_NEW_THROW_EX (any,
+                        CORBA::Any,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      CORBA::Any_var safe_any (any);
+
+      // Default case's label is a zero octet.
+      CORBA::Any::from_octet const zero_octet (0);
+
+      // Default case/member has a zero octet label value.
+      (*any) <<= zero_octet;
+
+      return safe_any._retn ();
+    }
+
+  // Non-default cases.
+  return this->cases_[index]->label (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr

@@ -1,3 +1,54 @@
+Thu May  5 20:24:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+
+	  Updated filenames in union TypeCode related header include
+	  directives.
+
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+
+	  Updated to generated code using new TypeCode::Case_T<> class
+	  template.  Addresses incorrect default case TypeCode support.
+
+	* tao/GIOPA.cpp:
+
+	  Regenerated.
+	  
+	* tao/TypeCode_CDR_Extraction.cpp:
+
+	  Added missing support for union TypeCode demarshaling.
+
+	* tao/TypeCode_Case.h:
+	* tao/TypeCode_Case.inl:
+	* tao/TypeCode_Case_T.cpp:
+	* tao/TypeCode_Case_T.h:
+	* tao/TypeCode_Case_T.inl:
+
+	* tao/TypeCode_Default_Case.cpp:
+	* tao/TypeCode_Default_Case.h:
+	* tao/TypeCode_Default_Case.inl:
+	* tao/TypeCode_Non_Default_Case.cpp:
+	* tao/TypeCode_Non_Default_Case.h:
+	* tao/TypeCode_Non_Default_Case.inl:
+
+	  Removed.  TypeCode_Case_T.* supercedes them.
+
+	* tao/Union_TypeCode.cpp:
+	* tao/Union_TypeCode.h:
+	* tao/Union_TypeCode.inl:
+	* tao/Union_TypeCode_Static.cpp:
+	* tao/Union_TypeCode_Static.h:
+	* tao/Union_TypeCode_Static.inl:
+
+	  Fixed default case marshaling.
+
+	  Removed unnecessary methods.
+
+	* tao/Makefile.am:
+	* tao/tao.mpc:
+
+	  Updated source file lists.
+
 Wed May  4 11:54:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Union_TypeCode.cpp (equal, equivalent):

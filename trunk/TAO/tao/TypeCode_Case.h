@@ -57,11 +57,23 @@ namespace TAO
     public:
 
       /// Constructor.
+      /**
+       * Constructor used when creating static @c union @c TypeCodes.
+       */
       Case (char const * name,
-            TypeCodeType const & tc);
+            TypeCodeType tc);
+
+      /// Constructor.
+      /**
+       * Constructor used when creating dynamic @c union @c TypeCodes.
+       */
+      Case (void);
 
       /// Destructor.
       virtual ~Case (void);
+
+      /// Cloning/copying operation.
+      virtual Case * clone (void) const = 0;
 
       /// Return the IDL @c union case label value embedded within a
       /// @c CORBA::Any.
@@ -70,12 +82,22 @@ namespace TAO
       /// Get the name of the @c union case/member.
       char const * name (void) const;
 
+      /// Set the name of the @c union case/member.
+      void name (char const * the_name);
+
       /// Get the @c CORBA::TypeCode of the @c union case/member.
       /**
        * @note The reference count is not manipulated by this method,
        *       i.e., ownership is retained by this class.
        */
       CORBA::TypeCode_ptr type (void) const;
+
+      /// Set the @c CORBA::TypeCode of the @c union case/member.
+      /**
+       * @note @c CORBA::TypeCode::_duplicate() is called on the
+       *       @c TypeCode @a tc.
+       */
+      void type (CORBA::TypeCode_ptr tc);
 
       /// Marshal this IDL @c union member into the given output CDR
       /// stream.
@@ -122,7 +144,7 @@ namespace TAO
     private:
 
       /// The name of the case.
-      StringType const name_;
+      StringType name_;
 
       /// Pointer to the @c CORBA::TypeCode of the case.
       /**
@@ -135,12 +157,33 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c Case.
        */
-      TypeCodeType const type_;
+      TypeCodeType type_;
 
     };
 
+    typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
+
   }  // End namespace TypeCode
 }  // End namespace TAO
+
+
+namespace ACE
+{
+  /// @see ace/Value_Ptr.h.
+  template <typename T> struct VP_traits;
+
+  template <>
+  struct TAO_Export VP_traits<TAO::TypeCode::Case_Dynamic>
+  {
+    /// Copy the given object.
+    static TAO::TypeCode::Case_Dynamic * clone (
+      TAO::TypeCode::Case_Dynamic const * p)
+    {
+      return p->clone ();
+    }
+  };
+
+} // End namespace ACE namespace.
 
 
 #ifdef __ACE_INLINE__
