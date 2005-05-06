@@ -20,9 +20,16 @@ Thu May  5 20:24:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCode_Case.h:
 	* tao/TypeCode_Case.inl:
+
+	  Added dynamic union TypeCode support.
+
 	* tao/TypeCode_Case_T.cpp:
 	* tao/TypeCode_Case_T.h:
 	* tao/TypeCode_Case_T.inl:
+
+	  New class template that represents a union TypeCode case.  It is
+	  used for both non-default and default union cases/members.
+	  Separate classes are no longer necessary.
 
 	* tao/TypeCode_Default_Case.cpp:
 	* tao/TypeCode_Default_Case.h:
