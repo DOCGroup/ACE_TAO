@@ -739,6 +739,9 @@ nobase_include_HEADERS = \
   Queued_Message.inl \
   Reactive_Connect_Strategy.h \
   Reactive_Flushing_Strategy.h \
+  Recursive_Type_TypeCode.cpp \
+  Recursive_Type_TypeCode.h \
+  Recursive_Type_TypeCode.inl \
   RefCount_Policy_Traits.h \
   Refcounted_ObjectKey.h \
   Refcounted_ObjectKey.inl \

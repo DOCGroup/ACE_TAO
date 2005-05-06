@@ -29,13 +29,11 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_marshal (
 void
 TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_duplicate (void)
 {
-  this->TAO::Null_RefCount_Policy::add_ref ();
 }
 
 void
 TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_release (void)
 {
-  this->TAO::Null_RefCount_Policy::remove_ref ();
 }
 
 CORBA::Boolean

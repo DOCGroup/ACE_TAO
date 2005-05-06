@@ -11,6 +11,14 @@ Fri May  6 01:00:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Work around broken MSVC++ 6 namespace support.
 
+	* tao/Recursive_Type_TypeCode.cpp:
+	* tao/Recursive_Type_TypeCode.h:
+	* tao/Recursive_Type_TypeCode.inl:
+
+	  New decorator template for recursive type TypeCodes.  It is
+	  intended to be wrapped around struct, union and valuetype
+	  TypeCode implementations.
+
 Fri May  6 07:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TypeCode_Case.inl:
