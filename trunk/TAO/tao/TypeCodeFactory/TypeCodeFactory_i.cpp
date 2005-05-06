@@ -19,6 +19,7 @@
 #include "tao/Union_TypeCode.h"
 #include "tao/Value_TypeCode.h"
 
+#include "tao/TypeCode_Case_T.h"
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/TypeCode_Value_Field.h"
 
@@ -243,90 +244,326 @@ TAO_TypeCodeFactory_i::create_union_tc (
                         CORBA::TypeCode::_nil ());
     }
 
-//   TAO_OutputCDR cdr;
 //   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
 
-//   cdr << TAO_ENCAP_BYTE_ORDER;
-
-//   cdr << id;
-
-//   cdr << name;
-
-//   cdr << discriminator_type;
-
-//   cdr << default_index;
-
-//   cdr << len - dups;
-
-#if 0
   // Use an ACE::Value_Ptr to provide exception safety and proper
   // copying semantics.
-  typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
-                                             CORBA::TypeCode_var> > elem_type;
-  ACE_Array_Base<elem_type> cases (len - dups);
+  typedef ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic> elem_type;
+  typedef ACE_Array_Base<elem_type> case_array_type;
+
+  case_array_type cases (len - dups);
+
+  CORBA::TCKind const kind =
+    discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  CORBA::ULong ci = 0;  // Case array index.
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
+      CORBA::UnionMember const & member = members[index];
+
       if (index > 0)
         {
           // Is this a duplicate case label? If so, skip it - a member
-          // goes into the typecode only once.
-          if (ACE_OS::strcmp (members[index].name,
-                              members[index - 1].name)
-               == 0)
+          // goes into the TypeCode only once.
+          if (ACE_OS::strcmp (member.name,
+                              members[index - 1].name) == 0)
             {
               continue;
             }
         }
 
-      CORBA::TCKind const kind =
-        discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      elem_type & element = cases[ci];
+
+      TAO::TypeCode::Case_Dynamic * the_case = 0;
 
       if (index == raw_default_index)
         {
           // This is the default label - we have to find a legal value.
           this->compute_default_label (kind,
                                        index,
-                                       members //,
-                                       /* cdr */);
+                                       members,
+                                       the_case);
+
+          if (the_case == 0)
+            {
+              // Should never throw since label kind was
+              // verified earlier.
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                  CORBA::COMPLETED_NO),
+                                CORBA::TypeCode::_nil ());
+            }
         }
       else
         {
-          CORBA::Boolean const good_label =
-            members[index].label.impl ()->marshal_value (cdr);
-
-          if (!good_label)
+          // Ugly.  *sigh*
+          switch (kind)
             {
-              return tc;  // tc == CORBA::TypeCode::_nil ()
+            case CORBA::tk_enum:
+              {
+                TAO::Any_Impl * const impl = member.label.impl ();
+                TAO_InputCDR for_reading (
+                  static_cast<ACE_Message_Block *> (0));
+
+                if (impl->encoded ())
+                  {
+                    TAO::Unknown_IDL_Type * const unk =
+                      dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+                    // We don't want unk's rd_ptr to move, in case we
+                    // are shared by another Any, so we use this to
+                    // copy the state, not the buffer.
+                    for_reading = unk->_tao_get_cdr ();
+                  }
+                else
+                  {
+                    TAO_OutputCDR out;
+                    impl->marshal_value (out);
+                    TAO_InputCDR tmp (out);
+                    for_reading = tmp;
+                  }
+
+                CORBA::ULong label;
+                for_reading.read_ulong (label);
+
+                typedef TAO::TypeCode::Case_T<CORBA::ULong,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+            case CORBA::tk_ulong:
+              {
+                CORBA::ULong label;
+                if (!(member.label >>= label))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::ULong,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+            case CORBA::tk_long:
+              {
+                CORBA::Long label;
+                if (!(member.label >>= label))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::Long,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+            case CORBA::tk_ushort:
+              {
+                CORBA::UShort label;
+                if (!(member.label >>= label))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::UShort,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+            case CORBA::tk_short:
+              {
+                CORBA::Short label;
+                if (!(member.label >>= label))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::Short,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+            case CORBA::tk_char:
+              {
+                CORBA::Char label;
+                if (!(member.label >>= CORBA::Any::to_char (label)))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::Char,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+            case CORBA::tk_boolean:
+              {
+                CORBA::Boolean label;
+                if (!(member.label >>= CORBA::Any::to_boolean (label)))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::Boolean,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+            case CORBA::tk_longlong:
+              {
+                CORBA::LongLong label;
+                if (!(member.label >>= label))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::LongLong,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+#if !defined (ACE_LACKS_LONGLONG_T)
+            case CORBA::tk_ulonglong:
+              {
+                CORBA::ULongLong label;
+                if (!(member.label >>= label))
+                  {
+                    // Should never throw since label kind was
+                    // verified earlier.
+                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
+                                                        CORBA::COMPLETED_NO),
+                                      CORBA::TypeCode::_nil ());
+                  }
+
+                typedef TAO::TypeCode::Case_T<CORBA::ULongLong,
+                                              CORBA::String_var,
+                                              CORBA::TypeCode_var> case_type;
+
+                ACE_NEW_THROW_EX (the_case,
+                                  case_type (label),
+                                  CORBA::NO_MEMORY ());
+                ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              }
+              break;
+#endif  /* !ACE_LACKS_LONGLONG_T */
+            default:
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 20,
+                                                  CORBA::COMPLETED_NO),
+                                CORBA::TypeCode::_nil ());
             }
         }
 
-//       cdr << members[index].name;
+      ++ci;
 
-//       if (members[index].type->offset_map () != 0)
+      elem_type case_value (the_case);
+      element.swap (case_value);  // Exception-safe
+
+      element->name (member.name.in ());
+      element->type (member.type.in ());
+
+//       if (member.type->offset_map () != 0)
 //         {
 //           this->update_map (offset_map,
-//                             members[index].type.in (),
+//                             member.type.in (),
 //                             id,
 //                             cdr);
 //         }
 
-//       cdr << members[index].type.in ();
-//     }
     }
+
 //   return this->assemble_tc (cdr,
 //                             CORBA::tk_union,
 //                             offset_map
 //                             ACE_ENV_ARG_PARAMETER);
 
-#else
-  ACE_UNUSED_ARG (tc);
+  // @@ Blame this on MSVC++ 6 workarounds.  *sigh*
+  CORBA::TypeCode_var duped_disc_typed (
+    CORBA::TypeCode::_duplicate (discriminator_type));
 
-// CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (discriminator_type));
+  typedef TAO::TypeCode::Union<CORBA::String_var,
+                               CORBA::TypeCode_var,
+                               case_array_type,
+                               TAO::True_RefCount_Policy> typecode_type;
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), tc);
+  ACE_NEW_THROW_EX (tc,
+                    typecode_type (id,
+                                   name,
+                                   duped_disc_typed,
+                                   cases,     // Will be copied.
+                                   cases.size (),
+                                   default_index),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-#endif  /* 0 */
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -710,9 +947,8 @@ void
 TAO_TypeCodeFactory_i::compute_default_label (
   CORBA::TCKind kind,
   CORBA::ULong skip_slot,
-  const CORBA::UnionMemberSeq &members //,
-  // TAO_OutputCDR &cdr
-  )
+  const CORBA::UnionMemberSeq &members,
+  TAO::TypeCode::Case_Dynamic *& the_case)
 {
   // One to hold the current default value, one to
   // hold the curent label's extracted value.
@@ -872,37 +1108,94 @@ TAO_TypeCodeFactory_i::compute_default_label (
     }
 
   // Add the default value to the encapsulation.
-//   switch (kind)
-//   {
-//     case CORBA::tk_char:
-//       cdr << CORBA::Any::from_char (dv.char_val);
-//       break;
-//     case CORBA::tk_boolean:
-//       cdr << CORBA::Any::from_boolean (dv.bool_val);
-//       break;
-//     case CORBA::tk_short:
-//       cdr << dv.short_val;
-//       break;
-//     case CORBA::tk_ushort:
-//       cdr << dv.ushort_val;
-//       break;
-//     case CORBA::tk_long:
-//       cdr << dv.long_val;
-//       break;
-//     case CORBA::tk_ulong:
-//       cdr << dv.ulong_val;
-//       break;
-// #if !defined (ACE_LACKS_LONGLONG_T)
-//     case CORBA::tk_ulonglong:
-//       cdr << dv.ulonglong_val;
-//       break;
-// #endif /* ACE_LACKS_LONGLONG_T */
-//     case CORBA::tk_enum:
-//       cdr << dv.enum_val;
-//       break;
-//     default:
-//       break;
-//   }
+  switch (kind)
+  {
+    case CORBA::tk_char:
+      {
+        typedef TAO::TypeCode::Case_T<CORBA::Char,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.char_val));
+      }
+      break;
+    case CORBA::tk_boolean:
+      {
+        typedef TAO::TypeCode::Case_T<CORBA::Boolean,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.bool_val));
+      }
+      break;
+    case CORBA::tk_short:
+      {
+        typedef TAO::TypeCode::Case_T<CORBA::Short,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.short_val));
+      }
+      break;
+    case CORBA::tk_ushort:
+      {
+        typedef TAO::TypeCode::Case_T<CORBA::UShort,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.ushort_val));
+      }
+      break;
+    case CORBA::tk_long:
+      {
+        typedef TAO::TypeCode::Case_T<CORBA::Long,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.long_val));
+      }
+      break;
+    case CORBA::tk_ulong:
+      {
+        typedef TAO::TypeCode::Case_T<CORBA::ULong,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.ulong_val));
+      }
+      break;
+#if !defined (ACE_LACKS_LONGLONG_T)
+    case CORBA::tk_ulonglong:
+      {
+        typedef TAO::TypeCode::Case_T<CORBA::ULongLong,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.ulonglong_val));
+      }
+      break;
+#endif /* ACE_LACKS_LONGLONG_T */
+    case CORBA::tk_enum:
+      {
+        // Enumerators are encoded as CORBA::ULong.
+        typedef TAO::TypeCode::Case_T<CORBA::ULong,
+                                      CORBA::String_var,
+                                      CORBA::TypeCode_var> case_type;
+
+        ACE_NEW (the_case,
+                 case_type (dv.enum_val));
+      }
+      break;
+    default:
+      break;
+  }
 }
 
 CORBA::TypeCode_ptr
