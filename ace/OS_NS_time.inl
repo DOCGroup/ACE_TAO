@@ -238,9 +238,8 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_gethrtime ();
-#elif (defined(__KCC) || defined (__GNUG__)) && !defined (__MINGW32__) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
+#elif (defined(__KCC) || defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined (__MINGW32__) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
-
 # if defined (ACE_LACKS_LONGLONG_T)
   double now;
 # else  /* ! ACE_LACKS_LONGLONG_T */
@@ -341,9 +340,9 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 
   do {
     asm volatile ("mftbu %0\n"
-		  "mftb  %1\n"
-		  "mftbu %2"
-		  : "=r" (most), "=r" (least), "=r" (scratch));
+          "mftb  %1\n"
+          "mftbu %2"
+          : "=r" (most), "=r" (least), "=r" (scratch));
   } while (most != scratch);
 #endif
 
