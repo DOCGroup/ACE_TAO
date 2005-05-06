@@ -18,7 +18,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     guard,
                     this->lock_,
                     false);
-  
+
   // Top-level TypeCode case.
   if (this->starting_offset_ == 0)
     {
@@ -76,7 +76,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     guard,
                     this->lock_,
                     false);
-  
+
   // Top-level TypeCode case.
   if (!(this->in_recursion_))
     {
@@ -117,7 +117,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     guard,
                     this->lock_,
                     false);
-  
+
   // Top-level TypeCode case.
   if (!(this->in_recursion_))
     {
