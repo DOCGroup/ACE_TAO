@@ -51,7 +51,7 @@ public:
     while (--max_iterations > 0)
       {
         // dequeue the next object
-        ACE_Message_Block * mb;
+        ACE_Message_Block * mb = 0;
 
         if (this->getq (mb) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -114,13 +114,20 @@ public:
     void *nc_arg = const_cast<void *> (arg);
     Test_Task *test_task =
       reinterpret_cast<Test_Task *> (nc_arg);
-    ACE_Message_Block *mb;
+    ACE_Message_Block *mb = 0;
     ACE_NEW_MALLOC_RETURN (mb,
                            static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (sizeof (*this),    // size
                                               ACE_Message_Block::MB_DATA, // type
                                               0,       // cont
-                                              (char *) this),     // data
+                                              (char *) this,     // data
+                                              0,
+                                              0,
+                                              ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
+                                              ACE_Time_Value::zero,
+                                              ACE_Time_Value::max_time,
+                                              0,
+                                              ACE_Allocator::instance()),     // data
                            -1);
 
     test_task->putq (mb);
@@ -148,14 +155,21 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("open")),
                       -1);
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_MALLOC_RETURN (mb,
                          static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                          ACE_Message_Block (sizeof (handler),    // size
                                             ACE_Message_Block::MB_DATA, // type
                                             0,       // cont
-                                            (char *) &handler),     // data
-                         -1);
+                                            (char *) &handler,
+                                            0,
+                                            0,
+                                            ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
+                                            ACE_Time_Value::zero,
+                                            ACE_Time_Value::max_time,
+                                            0,
+                                            ACE_Allocator::instance()),     // data
+                          -1);
 
   if (-1 == task.putq (mb))
     ACE_ERROR_RETURN ((LM_ERROR,
