@@ -1,3 +1,10 @@
+Fri May  6 08:15:43 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+        
+          Changed base project lists and added explicit lists (sometimes
+          empty) for header and inline files.
+
 Wed May  4 19:27:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
