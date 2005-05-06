@@ -1,3 +1,8 @@
+Fri May  6 07:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TypeCode_Case.inl:
+          Removed not needed ; at the end of the file
+
 Thu May  5 23:11:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/Unknown_User_Exception.cpp:
@@ -21,7 +26,7 @@ Thu May  5 20:24:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/GIOPA.cpp:
 
 	  Regenerated.
-	  
+
 	* tao/TypeCode_CDR_Extraction.cpp:
 
 	  Added missing support for union TypeCode demarshaling.
