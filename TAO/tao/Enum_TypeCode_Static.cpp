@@ -63,7 +63,6 @@ TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::tao_duplicate (void)
 {
-  this->TAO::Null_RefCount_Policy::add_ref ();
 }
 
 void
@@ -71,7 +70,6 @@ TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::tao_release (void)
 {
-  this->TAO::Null_RefCount_Policy::remove_ref ();
 }
 
 CORBA::Boolean
