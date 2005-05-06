@@ -14,9 +14,10 @@
 #include "tao/Sequence_TypeCode.h"
 #include "tao/String_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
-//#include "tao/Union_TypeCode.h"
+#include "tao/Union_TypeCode.h"
 #include "tao/Value_TypeCode.h"
 
+#include "tao/TypeCode_Case_T.h"
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/TypeCode_Value_Field.h"
 
@@ -196,19 +197,8 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
 {
   // The remainder of a tk_objref TypeCode is encoded in a CDR
   // encapsulation.
-
-  CORBA::Boolean byte_order;
-
-  // Don't bother demarshaling the encapsulation length.  Prefer
-  // speed over early error checking.  Any CDR length related
-  // failures will be detected when demarshaling the remainder of
-  // the complex parameter list TypeCode.
-
-  if (!(cdr.skip_ulong () // Skip encapsulation length.
-        && cdr >> TAO_InputCDR::to_boolean (byte_order)))
+  if (!start_cdr_encap_extraction (cdr))
     return false;
-
-  cdr.reset_byte_order (byte_order);
 
   // Extract the repository ID and name.
   CORBA::String_var id;
@@ -335,12 +325,222 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 
 bool
 TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
-                                        TAO_InputCDR & /* cdr */,
-                                        CORBA::TypeCode_ptr & /* tc */)
+                                        TAO_InputCDR & cdr,
+                                        CORBA::TypeCode_ptr & tc)
 {
-  ACE_ASSERT (0);   // @@ Temporarily unimplemented.
+  // The remainder of a tk_enum TypeCode is encoded in a CDR
+  // encapsulation.
 
-  return false;  // @@ Temporarily unimplemented.
+  if (!start_cdr_encap_extraction (cdr))
+    return false;
+
+  // Extract the repository ID, name, discriminant type, default index
+  // and case count.
+  CORBA::String_var id, name;
+  CORBA::TypeCode_var discriminant_type;
+  CORBA::Long default_index = -1;
+  CORBA::ULong ncases = 0;  // Just 'n case :-)
+
+  if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
+        && cdr >> TAO_InputCDR::to_string (name.out (), 0)
+        && cdr >> discriminant_type.out ()))
+    return false;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  CORBA::TCKind const discriminant_kind =
+    discriminant_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  // Check for valid discriminant type.
+  if (!(discriminant_kind == CORBA::tk_enum
+        || discriminant_kind == CORBA::tk_ulong
+        || discriminant_kind == CORBA::tk_long
+        || discriminant_kind == CORBA::tk_ushort
+        || discriminant_kind == CORBA::tk_short
+        || discriminant_kind == CORBA::tk_char
+        || discriminant_kind == CORBA::tk_boolean
+        || discriminant_kind == CORBA::tk_longlong
+        || discriminant_kind == CORBA::tk_ulonglong))
+    return false;
+
+  if (!(cdr >> default_index
+        && default_index >= -1
+        && cdr >> ncases))
+    return false;
+
+  // Use an ACE::Value_Ptr to provide exception safety and proper
+  // copying semantics.
+  typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
+                                             CORBA::TypeCode_var> > elem_type;
+  typedef ACE_Array_Base<elem_type> case_array_type;
+
+  case_array_type cases (ncases);
+
+  for (CORBA::ULong i = 0; i < ncases; ++i)
+    {
+      elem_type & member = cases[i];
+
+      TAO::TypeCode::Case<CORBA::String_var, CORBA::TypeCode_var> * the_case;
+
+      // Ugly.  *sigh*
+      switch (discriminant_kind)
+        {
+        case CORBA::tk_enum:  // Enumerators are encoded as unsigned longs.
+        case CORBA::tk_ulong:
+          {
+            CORBA::ULong label;
+            if (!(cdr >> label))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::ULong,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+        case CORBA::tk_long:
+          {
+            CORBA::Long label;
+            if (!(cdr >> label))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::Long,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+        case CORBA::tk_ushort:
+          {
+            CORBA::UShort label;
+            if (!(cdr >> label))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::UShort,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+        case CORBA::tk_short:
+          {
+            CORBA::Short label;
+            if (!(cdr >> label))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::Short,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+        case CORBA::tk_char:
+          {
+            CORBA::Char label;
+            if (!(cdr >> CORBA::Any::to_char (label)))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::Char,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+        case CORBA::tk_boolean:
+          {
+            CORBA::Boolean label;
+            if (!(cdr >> CORBA::Any::to_boolean (label)))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::Boolean,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+        case CORBA::tk_longlong:
+          {
+            CORBA::LongLong label;
+            if (!(cdr >> label))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::LongLong,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+#if !defined (ACE_LACKS_LONGLONG_T)
+        case CORBA::tk_ulonglong:
+          {
+            CORBA::ULongLong label;
+            if (!(cdr >> label))
+              return false;
+
+            typedef TypeCode::Case_T<CORBA::ULongLong,
+                                     CORBA::String_var,
+                                     CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (label),
+                            false);
+          }
+          break;
+#endif  /* !ACE_LACKS_LONGLONG_T */
+        default:
+          return false;
+        }
+
+      elem_type case_value (the_case);
+      member.swap (case_value);  // Exception-safe
+
+      CORBA::String_var the_name;
+      CORBA::TypeCode_var the_type;
+
+      if (!(cdr >> TAO_InputCDR::to_string (the_name.out (), 0)
+            && cdr >> the_type.out ()))
+        return false;
+
+      member->name (the_name.in ());
+      member->type (the_type.in ());
+    }
+
+  typedef TAO::TypeCode::Union<CORBA::String_var,
+                               CORBA::TypeCode_var,
+                               case_array_type,
+                               TAO::True_RefCount_Policy> typecode_type;
+
+  ACE_NEW_RETURN (tc,
+                  typecode_type (id.in (),
+                                 name.in (),
+                                 discriminant_type,
+                                 cases,     // Will be copied.
+                                 ncases,
+                                 default_index),
+                  false);
+
+  return true;
 }
 
 bool

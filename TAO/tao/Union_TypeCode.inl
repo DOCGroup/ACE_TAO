@@ -32,32 +32,3 @@ TAO::TypeCode::Union<StringType,
   , cases_ (cases)
 {
 }
-
-template <typename StringType,
-          typename TypeCodeType,
-          class CaseArrayType,
-          class RefCountPolicy>
-ACE_INLINE CORBA::ULong
-TAO::TypeCode::Union<StringType,
-                     TypeCodeType,
-                     CaseArrayType,
-                     RefCountPolicy>::case_count (void) const
-{
-  return this->ncases_;
-}
-
-template <typename StringType,
-          typename TypeCodeType,
-          class CaseArrayType,
-          class RefCountPolicy>
-ACE_INLINE typename TAO::TypeCode::Union<StringType,
-                                         TypeCodeType,
-                                         CaseArrayType,
-                                         RefCountPolicy>::case_type const &
-TAO::TypeCode::Union<StringType,
-                     TypeCodeType,
-                     CaseArrayType,
-                     RefCountPolicy>::the_case (CORBA::ULong index) const
-{
-  return *this->cases_[index];
-}

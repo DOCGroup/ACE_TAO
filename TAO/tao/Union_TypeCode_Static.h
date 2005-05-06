@@ -114,27 +114,6 @@ namespace TAO
       virtual CORBA::Long default_index_i (ACE_ENV_SINGLE_ARG_DECL) const;
       //@}
 
-      /// Return the number of cases in the IDL @c union, including
-      /// the @c default case.
-      CORBA::ULong case_count (void) const;
-
-      /// Return @c union case corresponding to given member (not
-      /// @c case_type array) index.
-      /**
-       * @param index The zero-based index of the @c union member,
-       *              including the @c default case.  For example, if
-       *              the @c default case is the second @union
-       *              case/member, the @a index would be @c 1.
-       *
-       * @return Reference to @c union case/member corresponding to
-       *         the given member zero-based @a index value.
-       *
-       * @note This method handles the @c default case.  Do not
-       *       attempt to perform special handling for the @c default
-       *       case by shifting the index value by one, for example.
-       */
-      case_type const & the_case (CORBA::ULong index) const;
-
     private:
 
       /**

@@ -137,21 +137,19 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
       ACE_ASSERT (branch != 0);
 
+      os << "static TAO::TypeCode::Case_T<"
+         << discriminant_type->full_name () << ", "
+         << "char const *, CORBA::TypeCode_ptr const *> const "
+         << fields_name.c_str () << "_" << i <<" (";
+
       if (branch->label ()->label_kind () == AST_UnionLabel::UL_label)
         {
           // Non-default case.
-
-          os << "static TAO::TypeCode::Non_Default_Case<"
-             << discriminant_type->full_name () << ", "
-             << "char const *, CORBA::TypeCode_ptr const *> const "
-             << fields_name.c_str () << "_" << i <<" (";
 
           // Generate the label value.  Only the first label value is
           // used in the case where multiple labels are used for the
           // same union branch/case.
           branch->gen_label_value (&os, 0);
-
-          os << ", ";
         }
       else
         {
@@ -160,11 +158,10 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
           ACE_ASSERT (branch->label ()->label_kind ()
                       == AST_UnionLabel::UL_default);
 
-          os << "static TAO::TypeCode::Default_Case<char const *, CORBA::TypeCode_ptr const *> const "
-             << fields_name.c_str () << "_" << i << "(";
+          branch->gen_default_label_value (&os, node);
         }
 
-      os << "\"" << branch->original_local_name () << "\", "
+      os << ", \"" << branch->original_local_name () << "\", "
          << "&"  << type->tc_name ()
          << ");" << be_nl;
     }

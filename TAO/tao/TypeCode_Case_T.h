@@ -2,18 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    TypeCode_Non_Default_Case.h
+ *  @file    TypeCode_Case_T.h
  *
  *  $Id$
  *
- *  Header file for @c TAO::TypeCode::Non_Default_Case type.
+ *  Header file for @c TAO::TypeCode::Case_T template.
  *
  *  @author Ossama Othman
  */
 //=============================================================================
 
-#ifndef TAO_TYPECODE_NON_DEFAULT_CASE_H
-#define TAO_TYPECODE_NON_DEFAULT_CASE_H
+#ifndef TAO_TYPECODE_CASE_T_H
+#define TAO_TYPECODE_CASE_T_H
 
 #include /**/ "ace/pre.h"
 
@@ -31,11 +31,11 @@ namespace TAO
   namespace TypeCode
   {
     /**
-     * @class Non_Default_Case
+     * @class Case_T
      *
      * @brief Representation of an OMG IDL defined @c union @c case.
      *
-     * A @c Non_Default_Case contains the corresponding case label value, name and
+     * A @c Case_T contains the corresponding case label value, name and
      * pointer to the @c CORBA::TypeCode for a given OMG IDL @c union
      * @c case.  For
      * example, the cases in following OMG IDL @c union:
@@ -51,20 +51,20 @@ namespace TAO
      * \endcode
      *
      * would be represented using the following statically instantiated
-     * @c TAO::TypeCode::Non_Default_Case array:
+     * @c TAO::TypeCode::Case_T array:
      *
      * \code
-     *   typedef TAO::TypeCode::Non_Default_Case<CORBA::Short,
-                                                 char const *> Foo_Case;
+     *   typedef TAO::TypeCode::Case_T<CORBA::Short, char const *> Foo_Case;
      *   Foo_Case _tao_cases_Foo[] =
      *     {
      *       Foo_Case (0, "a", &CORBA::_tc_short),
-     *       Foo_Case (1, "b", &CORBA::_tc_short),
-     *       Foo_Case (2, "c", &CORBA::_tc_long)
+     *       Foo_Case (1, "a", &CORBA::_tc_short),
+     *       Foo_Case (2, "b", &CORBA::_tc_long),
+     *       Foo_Case (0, "c", &CORBA::_tc_octet)
      *     };
      * \endcode
      *
-     * The @c default case is passed directly to the
+     * The @c default index is passed directly to the
      * @c TAO::TypeCode::Union constructor.
      *
      * The template parameter @a DISCRIMINATOR_TYPE is the
@@ -84,14 +84,21 @@ namespace TAO
     template <typename DiscriminatorType,
               typename StringType,
               typename TypeCodeType>
-    class Non_Default_Case : public Case<StringType, TypeCodeType>
+    class Case_T : public Case<StringType, TypeCodeType>
     {
     public:
 
       /// Constructor.
-      Non_Default_Case (DiscriminatorType member_label,
-                        char const * member_name,
-                        TypeCodeType member_type);
+      Case_T (DiscriminatorType member_label,
+              char const * member_name,
+              TypeCodeType member_type);
+
+      /// Constructor.
+      /**
+       * Constructor only used in the dynamically constructed @c union
+       * @c TypeCode case.
+       */
+      Case_T (DiscriminatorType member_label);
 
       /**
        * @name @c TAO::TypeCode::Case Methods
@@ -102,6 +109,7 @@ namespace TAO
        * @see @c TAO::TypeCode::Case
        */
       //@{
+      Case<StringType, TypeCodeType> * clone (void) const;
       virtual CORBA::Any * label (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual bool marshal_label (TAO_OutputCDR & cdr) const;
       virtual bool equal_label (CORBA::ULong index,
@@ -121,17 +129,17 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/TypeCode_Non_Default_Case.inl"
+# include "tao/TypeCode_Case_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/TypeCode_Non_Default_Case.cpp"
+# include "tao/TypeCode_Case_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Non_Default_Case.cpp")
+# pragma implementation ("TypeCode_Case_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_TYPECODE_NON_DEFAULT_CASE_H */
+#endif /* TAO_TYPECODE_CASE_T_H */
