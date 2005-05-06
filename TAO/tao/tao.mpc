@@ -571,6 +571,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Queued_Message.h
     Reactive_Connect_Strategy.h
     Reactive_Flushing_Strategy.h
+    Recursive_Type_TypeCode.h
     RefCount_Policy_Traits.h
     Refcounted_ObjectKey.h
     Remote_Invocation.h
@@ -702,6 +703,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Enum_TypeCode.cpp
     Fixed_TypeCode.cpp
     Objref_TypeCode.cpp
+    Recursive_Type_TypeCode.cpp
     Sequence_TypeCode.cpp
     String_TypeCode.cpp
     Struct_TypeCode.cpp
