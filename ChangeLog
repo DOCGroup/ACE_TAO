@@ -1,3 +1,8 @@
+Fri May  6 11:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Timer_Cancellation_Test.cpp:
+          Added missing ACE_TEXT macro usage
+
 Fri May  6 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Recursive_Condition_Bug_Test.cpp:
