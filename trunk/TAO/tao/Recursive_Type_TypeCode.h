@@ -13,11 +13,12 @@
  */
 //=============================================================================
 
-#ifndef TAO_RECURSIVE_TYPECODE_H
-#define TAO_RECURSIVE_TYPECODE_H
+#ifndef TAO_RECURSIVE_TYPE_TYPECODE_H
+#define TAO_RECURSIVE_TYPE_TYPECODE_H
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Recursive_Thread_Mutex.h"
 
 namespace TAO
 {
@@ -137,6 +138,14 @@ namespace TAO
 # include "tao/Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
+#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
+# include "tao/Recursive_Type_TypeCode.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
+# pragma implementation ("Recursive_Type_TypeCode.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #include /**/ "ace/post.h"
 
-#endif  /* TAO_RECURSIVE_TYPECODE_H */
+#endif  /* TAO_RECURSIVE_TYPE_TYPECODE_H */

@@ -300,6 +300,7 @@ public:
   bool octet_seq_seen_;
   bool operation_seen_;
   bool pseudo_seq_seen_;
+  bool recursive_type_seen_;
   bool seq_seen_;
   bool short_seq_seen_;
   bool special_basic_arg_seen_;
