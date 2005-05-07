@@ -19,7 +19,6 @@
 TAO::be_visitor_value_typecode::be_visitor_value_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
-  , in_recursion_ (false)
   , is_recursive_ (false)
 {
 }
@@ -30,27 +29,33 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
   if (!node->is_defined ())
     return this->gen_forward_declared_typecode (node);
 
-  if (this->in_recursion_)
-    {
-      // This works because the same visitor instance is used for the
-      // top-level TypeCode and the indirected TypeCode in the member
-      // containing the recursive type (e.g. an anonymous sequence).
+  // Check if we are repeated.
+  be_visitor_typecode_defn::QNode const * const qnode =
+    this->queue_lookup (this->tc_queue_, node);
 
+  if (qnode)
+    {
       this->is_recursive_ = true;
 
       return 0;
     }
-  else
+  else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
     {
-      this->in_recursion_ = true;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_typecode_defn::"
+                         "visit_type - "
+                         "queue insert failed\n"),
+                        -1);
     }
+
+  if (this->recursion_detect_)
+    return 0;
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
 
   if (this->gen_member_typecodes (node) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -297,12 +297,17 @@ protected:
    */
   bool is_typecode_generation_required (be_type * node);
 
-private:
-  //
-  friend class Scoped_Compute_Queue_Guard;
+protected:
+
+  /// Queue to keep nodes
+  ACE_Unbounded_Queue <QNode*> tc_queue_;
 
   /// @c true if we are detecting recursion.
   bool recursion_detect_;
+
+private:
+  //
+  friend class Scoped_Compute_Queue_Guard;
 
   ACE_CDR::Long computed_tc_size_;
   // the tc size of the node under consideration
@@ -318,9 +323,6 @@ private:
   ACE_CDR::Long tc_offset_;
   // current computed length of the typecode
 
-  ACE_Unbounded_Queue <QNode*> tc_queue_;
-  // queue to keep nodes
-
   ACE_Unbounded_Queue <QNode*> compute_queue_;
   // queue to keep nodes
 
@@ -334,6 +336,8 @@ private:
   int push (ACE_CDR::Long);
 
   int pop (ACE_CDR::Long &);
+
+protected:
 
   // queue related routines
 

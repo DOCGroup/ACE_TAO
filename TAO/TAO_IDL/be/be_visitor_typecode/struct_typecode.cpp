@@ -19,7 +19,6 @@
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
-  , in_recursion_ (false)
   , is_recursive_ (false)
 {
 }
@@ -30,20 +29,27 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
   if (!node->is_defined ())
     return this->gen_forward_declared_typecode (node);
 
-  if (this->in_recursion_)
-    {
-      // This works because the same visitor instance is used for the
-      // top-level TypeCode and the indirected TypeCode in the member
-      // containing the recursive type (e.g. an anonymous sequence).
+  // Check if we are repeated.
+  be_visitor_typecode_defn::QNode const * const qnode =
+    this->queue_lookup (this->tc_queue_, node);
 
+  if (qnode)
+    {
       this->is_recursive_ = true;
 
       return 0;
     }
-  else
+  else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
     {
-      this->in_recursion_ = true;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_typecode_defn::"
+                         "visit_type - "
+                         "queue insert failed\n"),
+                        -1);
     }
+
+  if (this->recursion_detect_)
+    return 0;
 
   static bool const is_exception = false;
 
@@ -53,6 +59,9 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
 int
 TAO::be_visitor_struct_typecode::visit_exception (be_exception * node)
 {
+  if (this->recursion_detect_)
+    return 0;
+
   // No need to check for recursion since exceptions are never
   // recursive.
 
@@ -66,7 +75,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                                         bool is_exception)
 {
   // Exceptions cannot be recursive.
-  ACE_ASSERT (!is_exception || (is_exception && !this->in_recursion_));
+//   ACE_ASSERT (!is_exception || (is_exception && !this->in_recursion_));
 
 
   TAO_OutStream & os = *this->ctx_->stream ();

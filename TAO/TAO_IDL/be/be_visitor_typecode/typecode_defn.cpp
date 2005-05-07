@@ -1063,7 +1063,7 @@ be_visitor_typecode_defn::visit_structure (be_structure * node)
 }
 
 int
-be_visitor_typecode_defn::visit_typedef (be_typedef *node)
+be_visitor_typecode_defn::visit_typedef (be_typedef * node)
 {
   // Only used for recursion detection.
 
@@ -1071,9 +1071,9 @@ be_visitor_typecode_defn::visit_typedef (be_typedef *node)
   // visited are strings and sequences.  All others have their own
   // full-fledged visitors (e.g. objref_typecode, etc.)
 
-  this->recursion_detect_ = true;
-
   be_type * const base = be_type::narrow_from_decl (node->base_type ());
+
+  this->recursion_detect_ = true;
 
   // Generate typecode for the base type, being careful to avoid doing
   // so a for a typedef since that could recursively cause multiple
