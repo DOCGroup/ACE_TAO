@@ -1,3 +1,18 @@
+Sat May  7 10:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
+
+	  Fixed duplicate generation of TypeCodes.
+
+	  Fixed false positives in recursive type detection.
+
 Sat May  7 11:13:12 UTC  2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/svc.conf:

@@ -53,10 +53,6 @@ namespace TAO
 
   private:
 
-    /// @c true if a {value,event}type TypeCode is already being
-    /// generated using this visitor.
-    bool in_recursion_;
-
     /// @c true if the valuetype or eventtype is recursive.
     bool is_recursive_;
 
