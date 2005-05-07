@@ -1,14 +1,22 @@
+Sat May  7 19:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+          Removed requires+=cidlc for the NodeAppTest_RoundTrip_svnt project.
+          It should not be there. Thanks for Jaiganesh B
+          <jai@dre.vanderbilt.edu> for finding out that this caused the
+          problems in the gcc4 build
+
 Fri May  6 08:15:43 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
-        
+
           Changed base project lists and added explicit lists (sometimes
           empty) for header and inline files.
 
 Wed May  4 19:27:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Fixed typo in generated code - changed "provides_" prefix
           in component facet access operation to the correct
           "provide_". Thanks to Don Busch <busch_d@ociweb.com> for
@@ -17,12 +25,12 @@ Wed May  4 19:27:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue May 03 22:42:47 2005  Nanbor Wang  <nanbor@gauss.txcorp.com>
 
 	* NEWS: Updated news on upcoming real-time extension on Gan Deng's
-	  behalf.  
+	  behalf.
 
 Tue May  3 13:05:44 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Changed the generated string (used for object id) which is passed
           to the port activator constructor and to generate_reference() to
           be a concatentation of the component instance name and the port
