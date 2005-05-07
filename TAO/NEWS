@@ -24,9 +24,13 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.6
 ============================================
 
-- (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
+. (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
   . ONGOING - ETA 2/30 -- currently targeted for TAO 1.4.6.
+
+. (OCI) Tag Alternate IIOP Address
+
+. (OCI) Support for bi-directional communication over SSLIOP
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.4 and TAO-1.4.5
 ====================================================
