@@ -57,6 +57,9 @@ namespace TAO
     /// generated using this visitor.
     bool in_recursion_;
 
+    /// @c true if the valuetype or eventtype is recursive.
+    bool is_recursive_;
+
   };
 
 }

@@ -1,3 +1,35 @@
+Fri May  6 18:28:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+
+	  Generate include directive for "tao/Recursive_Type_TypeCode.h"
+	  if any struct, union or valuetype is seen.
+
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
+
+	  Added recursive type TypeCode support.
+
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
+
+	  Added new "recursive_type_seen_" flag for use in determining
+	  whether Recursive_Type_TypeCode.h header should be included.
+
+	* tao/Recursive_Type_TypeCode.cpp:
+	* tao/Recursive_Type_TypeCode.h:
+	* tao/Recursive_Type_TypeCode.inl:
+
+	  Added missing include directives.
+
+	  Fixed syntax errors.
+
 Fri May  6 13:18:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCode_Case.inl:

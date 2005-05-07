@@ -57,6 +57,9 @@ namespace TAO
     /// this visitor.
     bool in_recursion_;
 
+    /// @c true if the union is recursive.
+    bool is_recursive_;
+
   };
 
 }

@@ -78,6 +78,13 @@ namespace TAO
      */
     bool in_recursion_;
 
+    /// @c true if the struct is recursive.
+    /**
+     * @note Only applies for struct TypeCodes.  Exceptions cannot be
+     *       recursive.
+     */
+    bool is_recursive_;
+
   };
 
 }

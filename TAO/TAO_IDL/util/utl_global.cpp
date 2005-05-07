@@ -232,6 +232,7 @@ IDL_GlobalData::reset_flag_seen (void)
   octet_seq_seen_ = false;
   operation_seen_ = false;
   pseudo_seq_seen_ = false;
+  recursive_type_seen_ = false;
   seq_seen_ = false;
   short_seq_seen_ = false;
   special_basic_arg_seen_ = false;
