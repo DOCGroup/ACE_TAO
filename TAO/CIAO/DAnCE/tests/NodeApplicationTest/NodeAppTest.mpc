@@ -17,11 +17,11 @@ project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
   Source_Files {
     NodeAppTest_RoundTripC.cpp
   }
-  
+
   Header_Files {
     NodeAppTest_RoundTripC.h
   }
-  
+
   Inline_Files {
     NodeAppTest_RoundTripC.inl
   }
@@ -29,7 +29,6 @@ project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
 
 project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
   after += NodeAppTest_RoundTrip_stub
-  requires += cidl
   sharedname  = NodeAppTest_RoundTrip_svnt
 
   libs    += NodeAppTest_RoundTrip_stub
@@ -50,13 +49,13 @@ project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
     NodeAppTest_RoundTripS.cpp
     NodeAppTest_RoundTrip_svnt.cpp
   }
-  
+
   Header_Files {
     NodeAppTest_RoundTripEC.h
     NodeAppTest_RoundTripS.h
     NodeAppTest_RoundTrip_svnt.h
   }
-  
+
   Inline_Files {
     NodeAppTest_RoundTripEC.inl
     NodeAppTest_RoundTripS.inl
@@ -82,14 +81,14 @@ project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
   Header_Files {
     RoundTrip_exec.h
   }
-  
+
   Inline_Files {
   }
 }
 
 project (NodeAppTest_client_simple) : ciao_deployment_stub {
  after += NodeAppTest_RoundTrip_stub
- libs += NodeAppTest_RoundTrip_stub 
+ libs += NodeAppTest_RoundTrip_stub
  exename += client_simple
 
  IDL_Files {
@@ -98,10 +97,10 @@ project (NodeAppTest_client_simple) : ciao_deployment_stub {
  Source_Files {
    NodeApp_test_client_simple.cpp
  }
- 
+
  Header_Files {
  }
- 
+
  Inline_Files {
  }
 }
@@ -117,17 +116,17 @@ project (NodeAppTest_client) : ciao_deployment_stub {
  Source_Files {
    NodeApp_test_client.cpp
  }
- 
+
  Header_Files {
  }
- 
+
  Inline_Files {
  }
 }
 
 project (NodeAppTest_client_ex) : ciao_deployment_stub {
  after += NodeAppTest_RoundTrip_stub
- libs += NodeAppTest_RoundTrip_stub 
+ libs += NodeAppTest_RoundTrip_stub
  exename += client_ex
 
  IDL_Files {
@@ -136,10 +135,10 @@ project (NodeAppTest_client_ex) : ciao_deployment_stub {
  Source_Files {
    NodeApp_test_client_ex.cpp
  }
- 
+
  Header_Files {
  }
- 
+
  Inline_Files {
  }
 }
