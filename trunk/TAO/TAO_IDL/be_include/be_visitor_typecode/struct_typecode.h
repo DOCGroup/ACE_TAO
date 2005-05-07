@@ -70,14 +70,6 @@ namespace TAO
 
   private:
 
-    /// @c true if a struct TypeCode is already being generated using
-    /// this visitor.
-    /**
-     * @note Only applies for struct TypeCodes.  Exceptions cannot be
-     *       recursive.
-     */
-    bool in_recursion_;
-
     /// @c true if the struct is recursive.
     /**
      * @note Only applies for struct TypeCodes.  Exceptions cannot be
