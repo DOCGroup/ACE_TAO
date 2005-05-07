@@ -2043,4 +2043,14 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
   this->gen_cond_file_include (idl_global->valuetype_seen_,
                                "tao/TypeCode_Value_Field.h",
                                stream);
+
+  // @@ Until we get idl_global->recursive_type_seen_ set
+  //    automatically, include Recursive_Type_TypeCode.h whenever a
+  //    struct, union or valuetype is seen, just in case.
+  this->gen_cond_file_include (idl_global->aggregate_seen_
+                               | idl_global->union_seen_
+                               | idl_global->valuetype_seen_, // idl_global->recursive_type_seen_,
+                               "tao/Recursive_Type_TypeCode.h",
+                               stream);
+
 }

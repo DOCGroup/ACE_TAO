@@ -6,13 +6,15 @@
 # include "tao/Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
+#include "tao/CDR.h"
+
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
 bool
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::tao_marshal (
-  TAO_Output & cdr) const
+  TAO_OutputCDR & cdr) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,

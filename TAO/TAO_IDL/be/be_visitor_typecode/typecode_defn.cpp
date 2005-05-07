@@ -66,6 +66,7 @@ Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
 
 be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
     : be_visitor_scope (ctx),
+      recursion_detect_ (false),
       computed_tc_size_ (0),
       computed_encap_len_ (0),
       computed_scope_encap_len_ (0),
@@ -940,6 +941,9 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
                         -1);
     }
 
+  if (this->recursion_detect_)
+    return 0;  // Nothing else to do.
+
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
   //       itself?
@@ -985,7 +989,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
      << "}" << be_nl << be_nl;
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
-     << be_nl;
+     << be_nl << be_nl;
 
   return 0; // this->gen_typecode_ptr (node);
 }
@@ -999,6 +1003,9 @@ be_visitor_typecode_defn::visit_string (be_string * node)
       // use the {w}string TypeCode constant.
       return 0;
     }
+
+  if (this->recursion_detect_)
+    return 0;  // Nothing else to do.
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -1039,7 +1046,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
      << "}" << be_nl << be_nl;
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
-     << be_nl;
+     << be_nl << be_nl;
 
   return 0; // this->gen_typecode_ptr (node);
 }
@@ -1055,34 +1062,37 @@ be_visitor_typecode_defn::visit_structure (be_structure * node)
   return this->gen_forward_declared_typecode (node);
 }
 
-// int
-// be_visitor_typecode_defn::visit_typedef (be_typedef *node)
-// {
-//   switch (this->ctx_->sub_state ())
-//     {
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-//       return this->visit_type (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-//       return this->gen_typecode (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-//       return this->gen_encapsulation (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-//       this->computed_tc_size_ = this->compute_tc_size (node);
-//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-//       this->computed_encap_len_ = this->compute_encap_length (node);
-//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
-//     default:
-//       // error
-//       break;
-//     }
+int
+be_visitor_typecode_defn::visit_typedef (be_typedef *node)
+{
+  // Only used for recursion detection.
 
-//   ACE_ERROR_RETURN ((LM_ERROR,
-//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-//                      ACE_TEXT ("visit - bad sub state ")
-//                      ACE_TEXT ("in visitor context\n")),
-//                     -1);
-// }
+  // The only base types with no-op visitors that will be potentially
+  // visited are strings and sequences.  All others have their own
+  // full-fledged visitors (e.g. objref_typecode, etc.)
+
+  this->recursion_detect_ = true;
+
+  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+
+  // Generate typecode for the base type, being careful to avoid doing
+  // so a for a typedef since that could recursively cause multiple
+  // base type TypeCode definitions to be generated.
+  if (!base || (base->accept (this) == -1))
+    {
+      this->recursion_detect_ = false;
+
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::visit_typedef) - ")
+                         ACE_TEXT ("failed to visit base typecode\n")),
+                        -1);
+    }
+
+  this->recursion_detect_ = false;
+
+  return 0;
+}
 
 int
 be_visitor_typecode_defn::visit_union (be_union *node)

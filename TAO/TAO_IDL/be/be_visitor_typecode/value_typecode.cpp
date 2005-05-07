@@ -20,6 +20,7 @@ TAO::be_visitor_value_typecode::be_visitor_value_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
   , in_recursion_ (false)
+  , is_recursive_ (false)
 {
 }
 
@@ -31,11 +32,12 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   if (this->in_recursion_)
     {
-      // Nothing to do yet.
+      // This works because the same visitor instance is used for the
+      // top-level TypeCode and the indirected TypeCode in the member
+      // containing the recursive type (e.g. an anonymous sequence).
 
-      /**
-       * @todo Merge recursive union TypeCode generation code.
-       */
+      this->is_recursive_ = true;
+
       return 0;
     }
   else
@@ -120,14 +122,34 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
       // Generate the TypeCode instantiation.
 
-      os << be_nl
-         << "static TAO::TypeCode::Value<char const *," << be_nl
-         << "                            CORBA::TypeCode_ptr const *," << be_nl
-         << "                            TAO::TypeCode::Value_Field<char const *,"
-         << be_nl
-         << "                                                       CORBA::TypeCode_ptr const *> const *," << be_nl
-         << "                            TAO::Null_RefCount_Policy>"
-         << be_idt_nl
+      static char const StringType[]      = "char const *";
+      static char const TypeCodeType[]    = "CORBA::TypeCode_ptr const *";
+      static char const MemberArrayType[] =
+        "TAO::TypeCode::Value_Field<char const *, "
+        "CORBA::TypeCode_ptr const *> const *";
+
+      os << "static ";
+
+      if (this->is_recursive_)
+        {
+          os << "TAO::TypeCode::Recursive_Type<" << be_idt_nl;
+        }
+
+      // -- TypeCodeBase --
+      os
+        << "TAO::TypeCode::Value<" << StringType << "," << be_nl
+        << "                     " << TypeCodeType << "," << be_nl
+        << "                     " << MemberArrayType << "," << be_nl
+        << "                     TAO::Null_RefCount_Policy>";
+
+      if (this->is_recursive_)
+        {
+          os << "," << be_nl
+             << TypeCodeType << "," << be_nl
+             << MemberArrayType << " >" << be_uidt_nl;
+        }
+
+      os << be_idt_nl
          << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
          << "CORBA::tk_"
          << (dynamic_cast<be_eventtype *> (node) ? "event" : "value")

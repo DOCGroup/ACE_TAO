@@ -6,7 +6,7 @@ template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
 ACE_INLINE
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
-                              MemberArrayType>::RecursiveType (
+                              MemberArrayType>::Recursive_Type (
   CORBA::TCKind kind,
   char const * id,
   char const * name,
@@ -24,7 +24,7 @@ template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
 ACE_INLINE
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
-                              MemberArrayType>::RecursiveType (
+                              MemberArrayType>::Recursive_Type (
   char const * id,
   char const * name,
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
@@ -51,7 +51,7 @@ template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
 ACE_INLINE
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
-                              MemberArrayType>::RecursiveType (
+                              MemberArrayType>::Recursive_Type (
   CORBA::TCKind kind,
   char const * id,
   char const * name,
@@ -63,7 +63,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
 #endif
   MemberArrayType const & fields,
   CORBA::ULong nfields)
-  TypeCodeBase (kind,
+  : TypeCodeBase (kind,
                 id,
                 name,
                 modifier,

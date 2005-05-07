@@ -90,6 +90,9 @@ public:
   virtual int visit_structure (be_structure *node);
   // visit a structure
 
+  // visit a typedef
+  virtual int visit_typedef (be_typedef *node);
+
   virtual int visit_union (be_union *node);
   // visit a union
 
@@ -295,9 +298,11 @@ protected:
   bool is_typecode_generation_required (be_type * node);
 
 private:
-
   //
   friend class Scoped_Compute_Queue_Guard;
+
+  /// @c true if we are detecting recursion.
+  bool recursion_detect_;
 
   ACE_CDR::Long computed_tc_size_;
   // the tc size of the node under consideration
