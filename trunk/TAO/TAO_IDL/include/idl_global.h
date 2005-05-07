@@ -546,7 +546,7 @@ public:
                                    AST_Component::port_description &pd);
   // We must do this in the front end since the executor
   // mapping IDL will have these data types.
-  
+
   int path_cmp (const char *s, const char *t);
   // Case insensitive for Windows, otherwise not.
 
@@ -635,7 +635,7 @@ private:
 
   bool using_ifr_backend_;
   // Set by the IFR backend itself.
-  
+
   bool ignore_idl3_;
   // Need this for eventtypes left over after running idl3_to_idl2,
   // we don't want to try to generate another event consumer.
