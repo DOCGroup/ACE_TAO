@@ -676,7 +676,9 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Var_Size_Argument_T.h
     Version.h
     VisibilityC.h
+    VisibilityS.h
     ValueModifierC.h
+    ValueModifierS.h
     Wait_On_Leader_Follower.h
     Wait_On_LF_No_Upcall.h
     Wait_On_Reactor.h
