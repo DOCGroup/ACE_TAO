@@ -42,7 +42,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
   else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typecode_defn::"
+                         "(%N:%l) be_visitor_value_typecode::"
                          "visit_type - "
                          "queue insert failed\n"),
                         -1);
