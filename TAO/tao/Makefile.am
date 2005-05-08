@@ -901,6 +901,7 @@ nobase_include_HEADERS = \
   UserException.inl \
   ValueModifier.pidl \
   ValueModifierC.h \
+  ValueModifierS.h \
   Value_TypeCode.cpp \
   Value_TypeCode.h \
   Value_TypeCode.inl \
@@ -919,6 +920,7 @@ nobase_include_HEADERS = \
   Version.h \
   Visibility.pidl \
   VisibilityC.h \
+  VisibilityS.h \
   WCharSeq.pidl \
   WCharSeqC.h \
   WCharSeqS.h \
