@@ -1,3 +1,12 @@
+Sat May  7 20:12:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+	  (is_typecode_generation_required):
+
+	  Include NT_{interface_fwd,valuetype,valuetype_fwd} node types
+	  when deciding whether a TypeCode should be generated.  Fixes
+	  duplicate valuetype TypeCode definition errors.
+
 Sat May  7 10:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:

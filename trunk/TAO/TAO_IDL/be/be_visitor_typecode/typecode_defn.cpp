@@ -574,7 +574,15 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
 {
   AST_Decl::NodeType const nt = node->node_type ();
 
-  if (nt == AST_Decl::NT_interface)
+//   ACE_DEBUG ((LM_DEBUG,
+//               "NODE: %u | %s\n",
+//               nt,
+//               node->repoID ()));
+
+  if (nt == AST_Decl::NT_interface
+      || nt == AST_Decl::NT_interface_fwd
+      || nt == AST_Decl::NT_valuetype
+      || nt == AST_Decl::NT_valuetype_fwd)
     {
       // interfaces, valuetypes, eventtypes and components
 
