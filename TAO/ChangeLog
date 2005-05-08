@@ -6,13 +6,17 @@ Sun May  8 07:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May  8 00:20:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (visit_array):
-	  (visit_sequence):
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
 
-	  Only generate a TypeCode for the base/content type if the latter
-	  is not defined.  Addresses duplicate definitions in the case of
-	  structure containing arrays of structures (not necessarily
-	  recursive).
+	  Fixed duplicate TypeCode generation in cases where
+	  struct/union/valuetype indirectly contained members of the same
+	  type, such as through an array.
 
 Sat May  7 20:12:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
