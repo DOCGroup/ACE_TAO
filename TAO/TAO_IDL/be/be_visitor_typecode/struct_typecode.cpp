@@ -20,6 +20,7 @@ TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
   , is_recursive_ (false)
+  , is_nested_ (false)
 {
 }
 
@@ -48,7 +49,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
                         -1);
     }
 
-  if (this->recursion_detect_)
+  if (this->recursion_detect_ || this->is_nested_)
     return 0;
 
   static bool const is_exception = false;
@@ -77,6 +78,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
   // Exceptions cannot be recursive.
 //   ACE_ASSERT (!is_exception || (is_exception && !this->in_recursion_));
 
+  this->is_nested_ = true;
 
   TAO_OutStream & os = *this->ctx_->stream ();
 

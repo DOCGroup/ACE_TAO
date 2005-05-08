@@ -625,17 +625,10 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
-  AST_Decl::NodeType nt = base->node_type ();
-  bool const anonymous =
-    nt == AST_Decl::NT_array
-    || nt == AST_Decl::NT_sequence
-    || nt == AST_Decl::NT_string;
-
   // Generate typecode for the base type, being careful to avoid doing
   // so for a typedef since that could recursively cause multiple base
   // type TypeCode definitions to be generated.
-  if (!base || (nt != AST_Decl::NT_typedef
-                && (anonymous || !base->is_defined ())
+  if (!base || (base->node_type () != AST_Decl::NT_typedef
                 && base->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -946,17 +939,10 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
-  AST_Decl::NodeType nt = base->node_type ();
-  bool const anonymous =
-    nt == AST_Decl::NT_array
-    || nt == AST_Decl::NT_sequence
-    || nt == AST_Decl::NT_string;
-
   // Generate typecode for the base type, being careful to avoid doing
   // so for a typedef since that could recursively cause multiple base
   // type TypeCode definitions to be generated.
-  if (!base || (nt != AST_Decl::NT_typedef
-                && (anonymous || !base->is_defined ())
+  if (!base || (base->node_type () != AST_Decl::NT_typedef
                 && base->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
