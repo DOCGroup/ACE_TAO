@@ -1,7 +1,12 @@
+Sun May  8 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+          Removed requires+=cidl
+
 Sat May  7 19:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
-          Removed requires+=cidlc for the NodeAppTest_RoundTrip_svnt project.
+          Removed requires+=cidl for the NodeAppTest_RoundTrip_svnt project.
           It should not be there. Thanks for Jaiganesh B
           <jai@dre.vanderbilt.edu> for finding out that this caused the
           problems in the gcc4 build
