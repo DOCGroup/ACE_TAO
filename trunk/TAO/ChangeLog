@@ -1,3 +1,13 @@
+Sun May  8 00:20:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp (visit_array):
+	  (visit_sequence):
+
+	  Only generate a TypeCode for the base/content type if the latter
+	  is not defined.  Addresses duplicate definitions in the case of
+	  structure containing arrays of structures (not necessarily
+	  recursive).
+
 Sat May  7 20:12:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp

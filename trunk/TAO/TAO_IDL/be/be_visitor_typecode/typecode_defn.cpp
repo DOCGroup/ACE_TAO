@@ -626,9 +626,10 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
   // Generate typecode for the base type, being careful to avoid doing
-  // so a for a typedef since that could recursively cause multiple
-  // base type TypeCode definitions to be generated.
+  // so for a typedef since that could recursively cause multiple base
+  // type TypeCode definitions to be generated.
   if (!base || (base->node_type () != AST_Decl::NT_typedef
+                && !base->is_defined ()
                 && base->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -637,6 +638,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
                          ACE_TEXT ("failed to generate base typecode\n")),
                         -1);
     }
+
+  if (this->recursion_detect_)
+    return 0;  // Nothing else to do.
 
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
@@ -937,9 +941,10 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
   // Generate typecode for the base type, being careful to avoid doing
-  // so a for a typedef since that could recursively cause multiple
-  // base type TypeCode definitions to be generated.
+  // so for a typedef since that could recursively cause multiple base
+  // type TypeCode definitions to be generated.
   if (!base || (base->node_type () != AST_Decl::NT_typedef
+                && !base->is_defined ()
                 && base->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,

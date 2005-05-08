@@ -33,8 +33,8 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
   // Generate typecode for the base type, being careful to avoid doing
-  // so a for a typedef since that could recursively cause multiple
-  // base type TypeCode definitions to be generated.
+  // so for a typedef since that could recursively cause multiple base
+  // type TypeCode definitions to be generated.
   if (!base || (base->node_type () != AST_Decl::NT_typedef
                 && base->accept (this) == -1))
     {
