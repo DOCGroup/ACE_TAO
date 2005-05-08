@@ -56,6 +56,10 @@ namespace TAO
     /// @c true if the valuetype or eventtype is recursive.
     bool is_recursive_;
 
+    /// @c true if this visitor is already visiting an outer scope
+    /// struct or exception
+    bool is_nested_;
+
   };
 
 }

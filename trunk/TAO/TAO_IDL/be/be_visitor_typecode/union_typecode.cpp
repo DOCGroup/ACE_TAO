@@ -17,6 +17,7 @@ TAO::be_visitor_union_typecode::be_visitor_union_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
   , is_recursive_ (false)
+  , is_nested_ (false)
 {
 }
 
@@ -45,8 +46,10 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
                         -1);
     }
 
-  if (this->recursion_detect_)
+  if (this->recursion_detect_ || this->is_nested_)
     return 0;
+
+  this->is_nested_ = true;
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
