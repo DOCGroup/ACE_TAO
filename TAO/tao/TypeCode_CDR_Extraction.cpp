@@ -406,7 +406,7 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 
 
   // Check if struct TypeCode is recursive.
-  if (kind == CORBA::tk_struct && find_recursive_tc (id, tc, infos))
+  if (kind == CORBA::tk_struct && find_recursive_tc (id.in (), tc, infos))
     {
       // Set remaining parameters.
 
@@ -644,7 +644,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
                                TAO::True_RefCount_Policy> typecode_type;
 
   // Check if union TypeCode is recursive.
-  if (find_recursive_tc (id, tc, infos))
+  if (find_recursive_tc (id.in (), tc, infos))
     {
       // Set remaining parameters.
 
@@ -986,7 +986,7 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
     TAO::True_RefCount_Policy> typecode_type;
 
   // Check if valuetype/eventtype TypeCode is recursive.
-  if (find_recursive_tc (id, tc, infos))
+  if (find_recursive_tc (id.in (), tc, infos))
     {
       // Set remaining parameters.
 
@@ -1208,7 +1208,7 @@ namespace
 
     // Don't bother demarshaling the rest of the parameters.  They will
     // be handled by the top-level TypeCode demarshaling call.
-  
+
     switch (kind)
       {
       case CORBA::tk_struct:
