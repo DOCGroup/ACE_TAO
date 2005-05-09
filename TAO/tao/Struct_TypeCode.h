@@ -60,6 +60,11 @@ namespace TAO
               FieldArrayType const & fields,
               CORBA::ULong nfields);
 
+      /// Constructor used for recursive TypeCodes.
+      Struct (CORBA::TCKind kind,
+              char const * id,
+              char const * name);
+
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
        *
@@ -100,7 +105,7 @@ namespace TAO
                                                  ACE_ENV_ARG_DECL) const;
       //@}
 
-    private:
+    protected:
 
       /**
        * @c Struct Attributes
@@ -119,11 +124,11 @@ namespace TAO
       Base_Attributes<StringType> const base_attributes_;
 
       /// The number of fields in the OMG IDL structure.
-      CORBA::ULong const nfields_;
+      CORBA::ULong nfields_;
 
       /// Array of @c TAO::TypeCode fields representing structure of the
       /// OMG IDL defined @c struct.
-      FieldArrayType const fields_;
+      FieldArrayType fields_;
 
       //@}
 

@@ -83,6 +83,11 @@ namespace TAO
                       MemberArrayType const & fields,
                       CORBA::ULong nfields);
 
+      /// Dynamic @c Recursive_Type TypeCode constructor.
+      Recursive_Type (CORBA::TCKind kind,
+                      char const * id,
+                      char const * name);
+
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
        *
@@ -110,6 +115,37 @@ namespace TAO
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL) const;
       //@}
+
+      /// Set @c struct @c TypeCode parameters.
+      void struct_parameters (MemberArrayType const & fields,
+                              CORBA::ULong nfields);
+
+      /// Set @c union @c TypeCode parameters.
+      void union_parameters (
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
+                      // Borland C++ currently can't handle a
+                      // reference to const pointer to const
+                      // CORBA::TypeCode_ptr.
+                      TypeCodeType discriminant_type,
+#else
+                      TypeCodeType const & discriminant_type,
+#endif
+                      MemberArrayType const & cases,
+                      CORBA::ULong ncases,
+                      CORBA::Long default_index);
+
+      /// Set @c valuetype or @c eventtype @c TypeCode parameters.
+      void valuetype_parameters (CORBA::ValueModifier modifier,
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
+                                 // Borland C++ currently can't handle a
+                                 // reference to const pointer to const
+                                 // CORBA::TypeCode_ptr.
+                                 TypeCodeType concrete_base,
+#else
+                                 TypeCodeType const & concrete_base,
+#endif
+                                 MemberArrayType const & fields,
+                                 CORBA::ULong nfields);
 
     private:
 

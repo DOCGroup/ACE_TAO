@@ -68,6 +68,11 @@ namespace TAO
              CORBA::ULong ncases,
              CORBA::Long default_index);
 
+      /// Constructor used for recursive TypeCodes.
+      Union (CORBA::TCKind kind,
+             char const * id,
+             char const * name);
+
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
        *
@@ -112,7 +117,7 @@ namespace TAO
       virtual CORBA::Long default_index_i (ACE_ENV_SINGLE_ARG_DECL) const;
       //@}
 
-    private:
+    protected:
 
       /**
        * @c Union Attributes
@@ -131,22 +136,22 @@ namespace TAO
       Base_Attributes<StringType> const base_attributes_;
 
       /// Type of IDL @c union discriminant.
-      TypeCodeType const discriminant_type_;
+      TypeCodeType discriminant_type_;
 
       /// Index of the default union case.
       /**
        * This value will be -1 if no default case is found in the
        * union.
        */
-      CORBA::Long const default_index_;
+      CORBA::Long default_index_;
 
       /// The number of cases in the OMG IDL union, excluding the
       /// @c default case.
-      CORBA::ULong const ncases_;
+      CORBA::ULong ncases_;
 
       /// Array of @c TAO::TypeCode::Case representing structure of
       /// the OMG IDL defined @c union.
-      CaseArrayType const cases_;
+      CaseArrayType cases_;
 
       //@}
 

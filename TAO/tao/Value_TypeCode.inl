@@ -34,3 +34,25 @@ TAO::TypeCode::Value<StringType,
   , fields_ (fields)
 {
 }
+
+template <typename StringType,
+          typename TypeCodeType,
+          class FieldArrayType,
+          class RefCountPolicy>
+ACE_INLINE
+TAO::TypeCode::Value<StringType,
+                     TypeCodeType,
+                     FieldArrayType,
+                     RefCountPolicy>::Value (
+  CORBA::TCKind kind,
+  char const * id,
+  char const * name)
+  : CORBA::TypeCode (kind)
+  , RefCountPolicy ()
+  , base_attributes_ (id, name)
+  , type_modifier_ (CORBA::VM_NONE)
+  , concrete_base_ ()
+  , nfields_ (0)
+  , fields_ ()
+{
+}
