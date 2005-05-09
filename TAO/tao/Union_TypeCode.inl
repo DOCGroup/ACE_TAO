@@ -32,3 +32,25 @@ TAO::TypeCode::Union<StringType,
   , cases_ (cases)
 {
 }
+
+template <typename StringType,
+          typename TypeCodeType,
+          class CaseArrayType,
+          class RefCountPolicy>
+ACE_INLINE
+TAO::TypeCode::Union<StringType,
+                     TypeCodeType,
+                     CaseArrayType,
+                     RefCountPolicy>::Union (
+  CORBA::TCKind,
+  char const * id,
+  char const * name)
+  : CORBA::TypeCode (CORBA::tk_union)
+  , RefCountPolicy ()
+  , base_attributes_ (id, name)
+  , discriminant_type_ (0)
+  , default_index_ (-1)
+  , ncases_ (0)
+  , cases_ ()
+{
+}
