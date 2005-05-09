@@ -171,7 +171,14 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
+#if defined (__INTEL_COMPILER) && defined (_MSC_VER) && (_MSC_VER <= 1200)
+      // The XICL6 compiler (Intel C++ 7.1 in Visual C++ compatible
+      // mode) has a bug and can't handle the normal construct
+      CORBA::Policy_ptr temp = policies[i];
+      CORBA::Policy_var policy = CORBA::Policy::_duplicate (temp);
+#else
       CORBA::Policy_var policy = policies[i];
+#endif
 
       if (CORBA::is_nil (policy.in ()))
         {
