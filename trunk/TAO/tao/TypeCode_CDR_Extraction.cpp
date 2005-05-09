@@ -17,6 +17,8 @@
 #include "tao/Union_TypeCode.h"
 #include "tao/Value_TypeCode.h"
 
+#include "tao/Recursive_Type_TypeCode.h"
+
 #include "tao/TypeCode_Case_T.h"
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/TypeCode_Value_Field.h"
@@ -28,6 +30,33 @@ ACE_RCSID (tao,
            TypeCode_CDR_Extraction,
            "$Id$")
 
+
+namespace TAO
+{
+  namespace TypeCodeFactory
+  {
+    // An array of TC_Info objects is used instead of a map of
+    // repository IDs to TypeCodes since it is presumed that the
+    // number of directly or indirectly embedded types in a TypeCode
+    // capable of holding another TypeCode will be small enough to
+    // make traversing a list faster than performing a map lookup.
+    // Use a simple array also reduces static and run-time footprint.
+
+    struct TC_Info
+    {
+      /// Constructor.
+      TC_Info (void) : id (0), type () {}
+
+      /// Repository ID.
+      char const * id;
+
+      /// TypeCode
+      CORBA::TypeCode_ptr type;
+    };
+
+    typedef ACE_Array_Base<TC_Info> TC_Info_List;
+  }
+}
 
 namespace
 {
@@ -48,12 +77,59 @@ namespace
 
     return true;
   }
+
+  // ---------------------------------------------------------
+
+  CORBA::ULong const TYPECODE_INDIRECTION = 0xffffffff;
+
+  // ---------------------------------------------------------
+
+  // Use an ACE::Value_Ptr to provide exception safety and proper
+  // copying semantics.
+  typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var, CORBA::TypeCode_var> > union_elem_type;
+  typedef ACE_Array_Base<union_elem_type> union_case_array_type;
+
+  // ------------------------------------------------------------
+
+  /// Demarshal a TypeCode.
+  bool tc_demarshal (TAO_InputCDR & cdr,
+                     CORBA::TypeCode_ptr & tc,
+                     TAO::TypeCodeFactory::TC_Info_List & infos);
+
+  /// Demarshal an indirected TypeCode.
+  bool tc_demarshal_indirection (TAO_InputCDR & cdr,
+                                 CORBA::TypeCode_ptr & tc,
+                                 TAO::TypeCodeFactory::TC_Info_List & infos);
+
+  bool find_recursive_tc (char const * id,
+                          CORBA::TypeCode_ptr & tc,
+                          TAO::TypeCodeFactory::TC_Info_List & infos)
+  {
+    // See comments above for rationale behind using an array instead
+    // of a map.
+
+    size_t const len = infos.size ();
+
+    for (size_t i = 0; i < len; ++i)
+      {
+        TAO::TypeCodeFactory::TC_Info & info = infos[i];
+
+        if (ACE_OS::strcmp (info.id, id) == 0)
+          {
+            tc = info.type;
+            return true;
+          }
+      }
+
+    return false;
+  }
 }
 
 bool
 TAO::TypeCodeFactory::tc_null_factory (CORBA::TCKind,
                                        TAO_InputCDR &,
-                                       CORBA::TypeCode_ptr & tc)
+                                       CORBA::TypeCode_ptr & tc,
+                                       TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
 
@@ -63,7 +139,8 @@ TAO::TypeCodeFactory::tc_null_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_void_factory (CORBA::TCKind,
                                        TAO_InputCDR &,
-                                       CORBA::TypeCode_ptr & tc)
+                                       CORBA::TypeCode_ptr & tc,
+                                       TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
@@ -73,7 +150,8 @@ TAO::TypeCodeFactory::tc_void_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_short_factory (CORBA::TCKind,
                                         TAO_InputCDR &,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_short);
 
@@ -83,7 +161,8 @@ TAO::TypeCodeFactory::tc_short_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_long_factory (CORBA::TCKind,
                                        TAO_InputCDR &,
-                                       CORBA::TypeCode_ptr & tc)
+                                       CORBA::TypeCode_ptr & tc,
+                                       TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
 
@@ -93,7 +172,8 @@ TAO::TypeCodeFactory::tc_long_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_ushort_factory (CORBA::TCKind,
                                          TAO_InputCDR &,
-                                         CORBA::TypeCode_ptr & tc)
+                                         CORBA::TypeCode_ptr & tc,
+                                         TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
 
@@ -103,7 +183,8 @@ TAO::TypeCodeFactory::tc_ushort_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_ulong_factory (CORBA::TCKind,
                                         TAO_InputCDR &,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
 
@@ -113,7 +194,8 @@ TAO::TypeCodeFactory::tc_ulong_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_float_factory (CORBA::TCKind,
                                         TAO_InputCDR &,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
 
@@ -123,7 +205,8 @@ TAO::TypeCodeFactory::tc_float_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_double_factory (CORBA::TCKind,
                                          TAO_InputCDR &,
-                                         CORBA::TypeCode_ptr & tc)
+                                         CORBA::TypeCode_ptr & tc,
+                                         TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_double);
 
@@ -133,7 +216,8 @@ TAO::TypeCodeFactory::tc_double_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_boolean_factory (CORBA::TCKind,
                                           TAO_InputCDR &,
-                                          CORBA::TypeCode_ptr & tc)
+                                          CORBA::TypeCode_ptr & tc,
+                                          TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
 
@@ -143,7 +227,8 @@ TAO::TypeCodeFactory::tc_boolean_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_char_factory (CORBA::TCKind,
                                        TAO_InputCDR &,
-                                       CORBA::TypeCode_ptr & tc)
+                                       CORBA::TypeCode_ptr & tc,
+                                       TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_char);
 
@@ -153,7 +238,8 @@ TAO::TypeCodeFactory::tc_char_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_octet_factory (CORBA::TCKind,
                                         TAO_InputCDR &,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
 
@@ -163,7 +249,8 @@ TAO::TypeCodeFactory::tc_octet_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_any_factory (CORBA::TCKind,
                                       TAO_InputCDR &,
-                                      CORBA::TypeCode_ptr & tc)
+                                      CORBA::TypeCode_ptr & tc,
+                                      TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
 
@@ -173,7 +260,8 @@ TAO::TypeCodeFactory::tc_any_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_TypeCode_factory (CORBA::TCKind,
                                            TAO_InputCDR &,
-                                           CORBA::TypeCode_ptr & tc)
+                                           CORBA::TypeCode_ptr & tc,
+                                           TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
 
@@ -183,7 +271,8 @@ TAO::TypeCodeFactory::tc_TypeCode_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_Principal_factory (CORBA::TCKind,
                                             TAO_InputCDR &,
-                                            CORBA::TypeCode_ptr & tc)
+                                            CORBA::TypeCode_ptr & tc,
+                                            TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_Principal);
 
@@ -193,7 +282,8 @@ TAO::TypeCodeFactory::tc_Principal_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
                                          TAO_InputCDR & cdr,
-                                         CORBA::TypeCode_ptr & tc)
+                                         CORBA::TypeCode_ptr & tc,
+                                         TC_Info_List &)
 {
   // The remainder of a tk_objref TypeCode is encoded in a CDR
   // encapsulation.
@@ -276,7 +366,8 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
 bool
 TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
                                          TAO_InputCDR & cdr,
-                                         CORBA::TypeCode_ptr & tc)
+                                         CORBA::TypeCode_ptr & tc,
+                                         TC_Info_List & infos)
 {
   ACE_ASSERT (kind == CORBA::tk_struct || kind == CORBA::tk_except);
 
@@ -294,31 +385,54 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
         && cdr >> nfields))
     return false;
 
-  ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                             CORBA::TypeCode_var> >
-    fields (nfields);
+  typedef ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                                     CORBA::TypeCode_var> >
+    member_array_type;
+
+  member_array_type fields (nfields);
 
   for (CORBA::ULong i = 0; i < nfields; ++i)
     {
       if (!(cdr >> TAO_InputCDR::to_string (fields[i].name.out (), 0)
-            && cdr >> fields[i].type.out ()))
+            && tc_demarshal (cdr, fields[i].type.out (), infos)))
         return false;
     }
 
   typedef TAO::TypeCode::Struct<
     CORBA::String_var,
     CORBA::TypeCode_var,
-    ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                               CORBA::TypeCode_var> >,
+    member_array_type,
     TAO::True_RefCount_Policy> typecode_type;
 
-  ACE_NEW_RETURN (tc,
-                  typecode_type (kind,
-                                 id.in (),
-                                 name.in (),
-                                 fields,     // Will be copied.
-                                 nfields),
-                  false);
+
+  // Check if struct TypeCode is recursive.
+  if (kind == CORBA::tk_struct && find_recursive_tc (id, tc, infos))
+    {
+      // Set remaining parameters.
+
+      typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                            CORBA::TypeCode_var,
+                                            member_array_type>
+        recursive_typecode_type;
+
+      recursive_typecode_type * const rtc =
+        dynamic_cast<recursive_typecode_type *> (tc);
+
+      ACE_ASSERT (rtc);
+
+      rtc->struct_parameters (fields,
+                              nfields);
+    }
+  else
+    {
+      ACE_NEW_RETURN (tc,
+                      typecode_type (kind,
+                                     id.in (),
+                                     name.in (),
+                                     fields,     // Will be copied.
+                                     nfields),
+                      false);
+    }
 
   return true;
 }
@@ -326,7 +440,8 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 bool
 TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
                                         TAO_InputCDR & cdr,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List & infos)
 {
   // The remainder of a tk_enum TypeCode is encoded in a CDR
   // encapsulation.
@@ -343,7 +458,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
 
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
         && cdr >> TAO_InputCDR::to_string (name.out (), 0)
-        && cdr >> discriminant_type.out ()))
+        && cdr >> discriminant_type.out ())) // No need to use tc_demarshal()
     return false;
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -368,11 +483,8 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
         && cdr >> ncases))
     return false;
 
-  // Use an ACE::Value_Ptr to provide exception safety and proper
-  // copying semantics.
-  typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
-                                             CORBA::TypeCode_var> > elem_type;
-  typedef ACE_Array_Base<elem_type> case_array_type;
+  typedef union_elem_type       elem_type;
+  typedef union_case_array_type case_array_type;
 
   case_array_type cases (ncases);
 
@@ -519,7 +631,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
       CORBA::TypeCode_var the_type;
 
       if (!(cdr >> TAO_InputCDR::to_string (the_name.out (), 0)
-            && cdr >> the_type.out ()))
+            && tc_demarshal (cdr, the_type.out (), infos)))
         return false;
 
       member->name (the_name.in ());
@@ -531,14 +643,37 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
                                case_array_type,
                                TAO::True_RefCount_Policy> typecode_type;
 
-  ACE_NEW_RETURN (tc,
-                  typecode_type (id.in (),
-                                 name.in (),
-                                 discriminant_type,
-                                 cases,     // Will be copied.
-                                 ncases,
-                                 default_index),
-                  false);
+  // Check if union TypeCode is recursive.
+  if (find_recursive_tc (id, tc, infos))
+    {
+      // Set remaining parameters.
+
+      typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                            CORBA::TypeCode_var,
+                                            case_array_type>
+        recursive_typecode_type;
+
+      recursive_typecode_type * const rtc =
+        dynamic_cast<recursive_typecode_type *> (tc);
+
+      ACE_ASSERT (rtc);
+
+      rtc->union_parameters (discriminant_type,
+                             cases,     // Will be copied.
+                             ncases,
+                             default_index);
+    }
+  else
+    {
+      ACE_NEW_RETURN (tc,
+                      typecode_type (id.in (),
+                                     name.in (),
+                                     discriminant_type,
+                                     cases,     // Will be copied.
+                                     ncases,
+                                     default_index),
+                      false);
+    }
 
   return true;
 }
@@ -546,7 +681,8 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
 bool
 TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
                                        TAO_InputCDR & cdr,
-                                       CORBA::TypeCode_ptr & tc)
+                                       CORBA::TypeCode_ptr & tc,
+                                       TC_Info_List &)
 {
   // The remainder of a tk_enum TypeCode is encoded in a CDR
   // encapsulation.
@@ -589,7 +725,8 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
 bool
 TAO::TypeCodeFactory::tc_string_factory (CORBA::TCKind kind,
                                          TAO_InputCDR & cdr,
-                                         CORBA::TypeCode_ptr & tc)
+                                         CORBA::TypeCode_ptr & tc,
+                                         TC_Info_List &)
 {
   // A tk_string/tk_wstring TypeCode has a simple parameter list,
   // i.e. it is not encoded in a CDR encapsulation.
@@ -623,7 +760,8 @@ TAO::TypeCodeFactory::tc_string_factory (CORBA::TCKind kind,
 bool
 TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
                                            TAO_InputCDR & cdr,
-                                           CORBA::TypeCode_ptr & tc)
+                                           CORBA::TypeCode_ptr & tc,
+                                           TC_Info_List & infos)
 {
   // The remainder of a tk_sequence TypeCode is encoded in a CDR
   // encapsulation.
@@ -635,7 +773,7 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
   CORBA::TypeCode_var content_type;
   CORBA::ULong length;
 
-  if (!(cdr >> content_type.out ()
+  if (!(tc_demarshal (cdr, content_type.out (), infos)
         && cdr >> length))
     return false;
 
@@ -653,15 +791,17 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
 bool
 TAO::TypeCodeFactory::tc_array_factory (CORBA::TCKind kind,
                                         TAO_InputCDR & cdr,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List & infos)
 {
-  return tc_sequence_factory (kind, cdr, tc);
+  return tc_sequence_factory (kind, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
                                         TAO_InputCDR & cdr,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List & infos)
 {
   // The remainder of a tk_alias or tk_value_box TypeCode is encoded
   // in a CDR encapsulation.
@@ -674,7 +814,7 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
   CORBA::TypeCode_var content_type;
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
         && cdr >> TAO_InputCDR::to_string (name.out (), 0)
-        && cdr >> content_type.out ()))
+        && tc_demarshal (cdr, content_type.out (), infos)))
     return false;
 
   typedef TAO::TypeCode::Alias<
@@ -695,15 +835,17 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
 bool
 TAO::TypeCodeFactory::tc_except_factory (CORBA::TCKind kind,
                                          TAO_InputCDR & cdr,
-                                         CORBA::TypeCode_ptr & tc)
+                                         CORBA::TypeCode_ptr & tc,
+                                         TC_Info_List & infos)
 {
-  return tc_struct_factory (kind, cdr, tc);
+  return tc_struct_factory (kind, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_longlong_factory (CORBA::TCKind,
                                            TAO_InputCDR &,
-                                           CORBA::TypeCode_ptr & tc)
+                                           CORBA::TypeCode_ptr & tc,
+                                           TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
 
@@ -713,7 +855,8 @@ TAO::TypeCodeFactory::tc_longlong_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_ulonglong_factory (CORBA::TCKind,
                                             TAO_InputCDR &,
-                                            CORBA::TypeCode_ptr & tc)
+                                            CORBA::TypeCode_ptr & tc,
+                                            TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
 
@@ -723,7 +866,8 @@ TAO::TypeCodeFactory::tc_ulonglong_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_longdouble_factory (CORBA::TCKind,
                                              TAO_InputCDR &,
-                                             CORBA::TypeCode_ptr & tc)
+                                             CORBA::TypeCode_ptr & tc,
+                                             TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
 
@@ -733,7 +877,8 @@ TAO::TypeCodeFactory::tc_longdouble_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_wchar_factory (CORBA::TCKind,
                                         TAO_InputCDR &,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List &)
 {
   tc = CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
 
@@ -743,15 +888,17 @@ TAO::TypeCodeFactory::tc_wchar_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_wstring_factory (CORBA::TCKind kind,
                                           TAO_InputCDR & cdr,
-                                          CORBA::TypeCode_ptr & tc)
+                                          CORBA::TypeCode_ptr & tc,
+                                          TC_Info_List & infos)
 {
-  return tc_string_factory (kind, cdr, tc);
+  return tc_string_factory (kind, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_fixed_factory (CORBA::TCKind,
                                         TAO_InputCDR & cdr,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List &)
 {
   // A tk_fixed TypeCode has a simple parameter list, i.e. it is not
   // encoded in a CDR encapsulation.
@@ -772,7 +919,8 @@ TAO::TypeCodeFactory::tc_fixed_factory (CORBA::TCKind,
 bool
 TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
                                         TAO_InputCDR & cdr,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List & infos)
 {
   // The remainder of a tk_value/tk_event TypeCode is encoded in a
   // CDR encapsulation
@@ -814,9 +962,11 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
         && cdr >> nfields))
     return false;
 
-  ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                            CORBA::TypeCode_var> >
-    fields (nfields);
+  typedef ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                                    CORBA::TypeCode_var> >
+    member_array_type;
+
+  member_array_type fields (nfields);
 
   for (CORBA::ULong i = 0; i < nfields; ++i)
     {
@@ -824,7 +974,7 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
                                  CORBA::TypeCode_var> & field = fields[i];
 
       if (!(cdr >> TAO_InputCDR::to_string (field.name.out (), 0)
-            && cdr >> field.type.out ()
+            && tc_demarshal (cdr, field.type.out (), infos)
             && cdr >> field.visibility))
         return false;
     }
@@ -832,19 +982,41 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
   typedef TAO::TypeCode::Value<
     CORBA::String_var,
     CORBA::TypeCode_var,
-    ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                              CORBA::TypeCode_var> >,
+    member_array_type,
     TAO::True_RefCount_Policy> typecode_type;
 
-  ACE_NEW_RETURN (tc,
-                  typecode_type (kind,
-                                 id.in (),
-                                 name.in (),
-                                 type_modifier,
+  // Check if valuetype/eventtype TypeCode is recursive.
+  if (find_recursive_tc (id, tc, infos))
+    {
+      // Set remaining parameters.
+
+      typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                            CORBA::TypeCode_var,
+                                            member_array_type>
+        recursive_typecode_type;
+
+      recursive_typecode_type * const rtc =
+        dynamic_cast<recursive_typecode_type *> (tc);
+
+      ACE_ASSERT (rtc);
+
+      rtc->valuetype_parameters (type_modifier,
                                  concrete_base,
                                  fields,     // Will be copied.
-                                 nfields),
-                  false);
+                                 nfields);
+    }
+  else
+    {
+      ACE_NEW_RETURN (tc,
+                      typecode_type (kind,
+                                     id.in (),
+                                     name.in (),
+                                     type_modifier,
+                                     concrete_base,
+                                     fields,     // Will be copied.
+                                     nfields),
+                      false);
+    }
 
   return true;
 }
@@ -852,57 +1024,284 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
 bool
 TAO::TypeCodeFactory::tc_value_box_factory (CORBA::TCKind kind,
                                             TAO_InputCDR & cdr,
-                                            CORBA::TypeCode_ptr & tc)
+                                            CORBA::TypeCode_ptr & tc,
+                                            TC_Info_List & infos)
 {
-  return tc_alias_factory (kind, cdr, tc);
+  return tc_alias_factory (kind, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_native_factory (CORBA::TCKind,
                                          TAO_InputCDR & cdr,
-                                         CORBA::TypeCode_ptr & tc)
+                                         CORBA::TypeCode_ptr & tc,
+                                         TC_Info_List & infos)
 {
-  return tc_objref_factory (CORBA::tk_native, cdr, tc);
+  return tc_objref_factory (CORBA::tk_native, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_abstract_interface_factory (CORBA::TCKind,
                                                      TAO_InputCDR & cdr,
-                                                     CORBA::TypeCode_ptr & tc)
+                                                     CORBA::TypeCode_ptr & tc,
+                                                     TC_Info_List & infos)
 {
-  return tc_objref_factory (CORBA::tk_abstract_interface, cdr, tc);
+  return tc_objref_factory (CORBA::tk_abstract_interface, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_local_interface_factory (CORBA::TCKind,
                                                   TAO_InputCDR & cdr,
-                                                  CORBA::TypeCode_ptr & tc)
+                                                  CORBA::TypeCode_ptr & tc,
+                                                  TC_Info_List & infos)
 {
-  return tc_objref_factory (CORBA::tk_local_interface, cdr, tc);
+  return tc_objref_factory (CORBA::tk_local_interface, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_component_factory (CORBA::TCKind,
                                             TAO_InputCDR & cdr,
-                                            CORBA::TypeCode_ptr & tc)
+                                            CORBA::TypeCode_ptr & tc,
+                                            TC_Info_List & infos)
 {
-  return tc_objref_factory (CORBA::tk_component, cdr, tc);
+  return tc_objref_factory (CORBA::tk_component, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_home_factory (CORBA::TCKind,
                                        TAO_InputCDR & cdr,
-                                       CORBA::TypeCode_ptr & tc)
+                                       CORBA::TypeCode_ptr & tc,
+                                       TC_Info_List & infos)
 {
-  return tc_objref_factory (CORBA::tk_home, cdr, tc);
+  return tc_objref_factory (CORBA::tk_home, cdr, tc, infos);
 }
 
 bool
 TAO::TypeCodeFactory::tc_event_factory (CORBA::TCKind kind,
                                         TAO_InputCDR & cdr,
-                                        CORBA::TypeCode_ptr & tc)
+                                        CORBA::TypeCode_ptr & tc,
+                                        TC_Info_List & infos)
 {
-  return tc_value_factory (kind, cdr, tc);
+  return tc_value_factory (kind, cdr, tc, infos);
+}
+
+// ---------------------------------------------------------------
+
+namespace
+{
+  bool
+  tc_demarshal (TAO_InputCDR & cdr,
+                CORBA::TypeCode_ptr & tc,
+                TAO::TypeCodeFactory::TC_Info_List & infos)
+  {
+    CORBA::TCKind kind;
+    if (!(cdr >> kind)
+        || (kind >= CORBA::TAO_TC_KIND_COUNT
+            && static_cast<CORBA::ULong> (kind) != TYPECODE_INDIRECTION))
+      return false;
+
+    if (static_cast<CORBA::ULong> (kind) == TYPECODE_INDIRECTION)
+      return tc_demarshal_indirection (cdr, tc, infos);
+
+    using namespace TAO::TypeCodeFactory;
+
+    static factory const factory_map[] =
+      {
+        tc_null_factory,
+        tc_void_factory,
+        tc_short_factory,
+        tc_long_factory,
+        tc_ushort_factory,
+        tc_ulong_factory,
+        tc_float_factory,
+        tc_double_factory,
+        tc_boolean_factory,
+        tc_char_factory,
+        tc_octet_factory,
+        tc_any_factory,
+        tc_TypeCode_factory,
+        tc_Principal_factory,
+        tc_objref_factory,
+        tc_struct_factory,
+        tc_union_factory,
+        tc_enum_factory,
+        tc_string_factory,
+        tc_sequence_factory,
+        tc_array_factory,
+        tc_alias_factory,
+        tc_except_factory,
+        tc_longlong_factory,
+        tc_ulonglong_factory,
+        tc_longdouble_factory,
+        tc_wchar_factory,
+        tc_wstring_factory,
+        tc_fixed_factory,
+        tc_value_factory,
+        tc_value_box_factory,
+        tc_native_factory,
+        tc_abstract_interface_factory,
+        tc_local_interface_factory,
+        tc_component_factory,
+        tc_home_factory,
+        tc_event_factory
+      };
+
+    return factory_map[kind] (kind, cdr, tc, infos);
+  }
+
+  bool
+  tc_demarshal_indirection (TAO_InputCDR & cdr,
+                            CORBA::TypeCode_ptr & tc,
+                            TAO::TypeCodeFactory::TC_Info_List & infos)
+  {
+    CORBA::Long offset;
+
+    if (!(cdr >> offset) || offset < -4)
+      {
+        // Offsets must be negative since they point back to a
+        // TypeCode found earlier in the CDR stream.  They must be
+        // less than -4 since an offset of -4 points back to the
+        // indirection TypeCode itself, meaning that it would be
+        // self-indirecting.
+        return false;
+      }
+
+    ACE_Message_Block * const mb =
+      const_cast<ACE_Message_Block *> (cdr.start ());
+
+    TAO_InputCDR indir_stream (mb->rd_ptr () + offset - 4,
+                               -1 * (offset - 4),
+                               cdr.byte_order ());
+
+    if (!indir_stream.good_bit ())
+      {
+        return false;
+      }
+
+    CORBA::TCKind kind;
+    if (!(cdr >> kind)
+
+        // Indirected TypeCode must point to top-level TypeCode.
+        || static_cast<CORBA::ULong> (kind) == TYPECODE_INDIRECTION
+
+        // Only struct, union and valuetype TypeCodes may be recursive.
+        || !(kind == CORBA::tk_struct
+             || kind == CORBA::tk_union
+             || kind == CORBA::tk_value
+             || kind == CORBA::tk_event)
+
+        // Currently all recursive TypeCodes have complex parameter
+        // lists, meaning they are encoded as CDR encapsulations.
+        || !start_cdr_encap_extraction (indir_stream))
+      return false;
+
+    /**
+     * @todo Recursive TypeCode demarshaling is currently suboptimal
+     *       due to redundant demarshaling of TypeCode parameters,
+     *       such as repository ID, and excessive
+     *       allocations/copying.
+     */
+
+    CORBA::String_var id, name;
+    if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
+          && cdr >> TAO_InputCDR::to_string (name.out (), 0)))
+      return false;
+
+    // Don't bother demarshaling the rest of the parameters.  They will
+    // be handled by the top-level TypeCode demarshaling call.
+  
+    switch (kind)
+      {
+      case CORBA::tk_struct:
+        {
+          typedef ACE_Array_Base<
+            TAO::TypeCode::Struct_Field<
+              CORBA::String_var,
+              CORBA::TypeCode_var> > member_array_type;
+
+          typedef TAO::TypeCode::Struct<
+            CORBA::String_var,
+            CORBA::TypeCode_var,
+            member_array_type,
+            TAO::True_RefCount_Policy> typecode_type;
+
+          typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                                CORBA::TypeCode_var,
+                                                member_array_type>
+            recursive_typecode_type;
+
+          ACE_NEW_RETURN (tc,
+                          recursive_typecode_type (kind,
+                                                   id.in (),
+                                                   name.in ()),
+                          false);
+        }
+        break;
+      case CORBA::tk_union:
+        {
+          typedef union_case_array_type member_array_type;
+
+          typedef TAO::TypeCode::Union<
+            CORBA::String_var,
+            CORBA::TypeCode_var,
+            member_array_type,
+            TAO::True_RefCount_Policy> typecode_type;
+
+          typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                                CORBA::TypeCode_var,
+                                                member_array_type>
+            recursive_typecode_type;
+
+          ACE_NEW_RETURN (tc,
+                          recursive_typecode_type (kind,
+                                                   id.in (),
+                                                   name.in ()),
+                          false);
+        }
+        break;
+      case CORBA::tk_value:
+      case CORBA::tk_event:
+        {
+          typedef ACE_Array_Base<
+            TAO::TypeCode::Value_Field<
+              CORBA::String_var,
+              CORBA::TypeCode_var> > member_array_type;
+
+          typedef TAO::TypeCode::Value<
+            CORBA::String_var,
+            CORBA::TypeCode_var,
+            member_array_type,
+            TAO::True_RefCount_Policy> typecode_type;
+
+          typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                                CORBA::TypeCode_var,
+                                                member_array_type>
+            recursive_typecode_type;
+
+          ACE_NEW_RETURN (tc,
+                          recursive_typecode_type (kind,
+                                                   id.in (),
+                                                   name.in ()),
+                          false);
+        }
+        break;
+      default:
+        return false;  // We should never get here.
+      };
+
+    size_t const old_size = infos.size ();
+    if (infos.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
+      return false;
+
+    TAO::TypeCodeFactory::TC_Info & info = infos[old_size];
+
+    ACE_DECLARE_NEW_CORBA_ENV;
+    info.id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (false);  // Should never throw!
+
+    info.type = tc;
+
+    return true;
+  }
 }
 
 // ----------------------------------------------------------------
@@ -911,52 +1310,7 @@ bool
 operator>> (TAO_InputCDR & cdr,
             CORBA::TypeCode_ptr & tc)
 {
-  CORBA::TCKind kind;
-  if (!(cdr >> kind) || kind >= CORBA::TAO_TC_KIND_COUNT)
-    return false;
+  TAO::TypeCodeFactory::TC_Info_List infos;
 
-  using namespace TAO::TypeCodeFactory;
-
-  static factory const factory_map[] =
-    {
-      tc_null_factory,
-      tc_void_factory,
-      tc_short_factory,
-      tc_long_factory,
-      tc_ushort_factory,
-      tc_ulong_factory,
-      tc_float_factory,
-      tc_double_factory,
-      tc_boolean_factory,
-      tc_char_factory,
-      tc_octet_factory,
-      tc_any_factory,
-      tc_TypeCode_factory,
-      tc_Principal_factory,
-      tc_objref_factory,
-      tc_struct_factory,
-      tc_union_factory,
-      tc_enum_factory,
-      tc_string_factory,
-      tc_sequence_factory,
-      tc_array_factory,
-      tc_alias_factory,
-      tc_except_factory,
-      tc_longlong_factory,
-      tc_ulonglong_factory,
-      tc_longdouble_factory,
-      tc_wchar_factory,
-      tc_wstring_factory,
-      tc_fixed_factory,
-      tc_value_factory,
-      tc_value_box_factory,
-      tc_native_factory,
-      tc_abstract_interface_factory,
-      tc_local_interface_factory,
-      tc_component_factory,
-      tc_home_factory,
-      tc_event_factory
-    };
-
-  return factory_map[kind] (kind, cdr, tc);
+  return tc_demarshal (cdr, tc, infos);
 }

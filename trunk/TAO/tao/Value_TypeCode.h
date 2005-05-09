@@ -69,6 +69,11 @@ namespace TAO
              FieldArrayType const & fields,
              CORBA::ULong nfields);
 
+      /// Constructor used for recursive TypeCodes.
+      Value (CORBA::TCKind kind,
+              char const * id,
+              char const * name);
+
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
        *
@@ -115,7 +120,7 @@ namespace TAO
         ACE_ENV_SINGLE_ARG_DECL) const;
       //@}
 
-    private:
+    protected:
 
       /**
        * @c Valuetype Attributes
@@ -135,18 +140,18 @@ namespace TAO
 
       /// The @c ValueModifier of the @c valuetype of @c eventtype
       /// represented by this @c TypeCode.
-      CORBA::ValueModifier const type_modifier_;
+      CORBA::ValueModifier type_modifier_;
 
       /// The @c TypeCode corresponding to the concrete base
       /// @c valuetype or @c eventtype.
-      TypeCodeType const concrete_base_;
+      TypeCodeType concrete_base_;
 
       /// The number of fields in the OMG IDL value.
-      CORBA::ULong const nfields_;
+      CORBA::ULong nfields_;
 
       /// Array of @c TAO::TypeCode fields representing structure of the
       /// OMG IDL defined @c value.
-      FieldArrayType const fields_;
+      FieldArrayType fields_;
 
       //@}
 
