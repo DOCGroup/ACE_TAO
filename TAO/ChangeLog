@@ -1,3 +1,12 @@
+Mon May  9 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Policy_Set.cpp:
+          As part of the POA refactoring we removed a workaround for
+          vc5 but we found that this workaround is still needed for the
+          Intel 7.1 C++ compiler using msvc emulation, so readded the
+          workaround again, but now with some specific defines so
+          that we only use this workaround for Intel C++ 7.1
+
 Mon May  9 01:56:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Recursive_Type_TypeCode.h:
