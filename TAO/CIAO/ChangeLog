@@ -1,3 +1,9 @@
+Tue May 10 07:49:47 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* DAnCE/examples/Hello/descriptors: Changed the name of 
+	  ruNodeDaemons.pl to run_NodeDaemons.pl.  Thanks to Arno Wilhelm
+ 	  <arno.wilhelm@profile.co.at> for reporting this.
+
 Sun May  8 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIDL/CodeGen/CodeGen.mpc:
