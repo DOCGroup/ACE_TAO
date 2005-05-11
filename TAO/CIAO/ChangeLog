@@ -1,3 +1,9 @@
+Tue May 10 21:12:47 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* docs/releasenotes/dance.html: Updated this page to clearly
+	  point out which OMG D&C specification DAnCE implements. 
+	  Thanks to Gary Duzan <gduzan@bbn.com> for requesting this.
+
 Tue May 10 07:49:47 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* DAnCE/examples/Hello/descriptors: Changed the name of 
