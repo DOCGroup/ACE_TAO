@@ -35,6 +35,14 @@ TAO::TypeCode::Alias<char const *,
 
   TAO_OutputCDR enc;
 
+  // Account for the encoded CDR encapsulation length and byte order.
+  //
+  // Aligning on an octet since the next value after the CDR
+  // encapsulation length will always be the byte order octet/boolean
+  // in this case.
+  offset = ACE_align_binary (offset + 4,
+                             ACE_CDR::OCTET_ALIGN);
+
   return
     enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
     && enc << TAO_OutputCDR::from_string (this->attributes_.id (), 0)
