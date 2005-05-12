@@ -420,7 +420,8 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
 
       ACE_ASSERT (rtc);
 
-      rtc->struct_parameters (fields,
+      rtc->struct_parameters (name.in (),
+                              fields,
                               nfields);
     }
   else
@@ -658,7 +659,8 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
 
       ACE_ASSERT (rtc);
 
-      rtc->union_parameters (discriminant_type,
+      rtc->union_parameters (name.in (),
+                             discriminant_type,
                              cases,     // Will be copied.
                              ncases,
                              default_index);
@@ -763,6 +765,8 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
                                            CORBA::TypeCode_ptr & tc,
                                            TC_Info_List & infos)
 {
+  ACE_ASSERT (kind == CORBA::tk_sequence || kind == CORBA::tk_array);
+
   // The remainder of a tk_sequence TypeCode is encoded in a CDR
   // encapsulation.
 
@@ -1000,7 +1004,8 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
 
       ACE_ASSERT (rtc);
 
-      rtc->valuetype_parameters (type_modifier,
+      rtc->valuetype_parameters (name.in (),
+                                 type_modifier,
                                  concrete_base,
                                  fields,     // Will be copied.
                                  nfields);
@@ -1093,13 +1098,15 @@ namespace
                 CORBA::TypeCode_ptr & tc,
                 TAO::TypeCodeFactory::TC_Info_List & infos)
   {
-    CORBA::TCKind kind;
+    // ULong since we need to detect indirected TypeCodes, too.
+
+    CORBA::ULong kind;
     if (!(cdr >> kind)
-        || (kind >= CORBA::TAO_TC_KIND_COUNT
-            && static_cast<CORBA::ULong> (kind) != TYPECODE_INDIRECTION))
+        || (kind >= static_cast<CORBA::ULong> (CORBA::TAO_TC_KIND_COUNT)
+            && kind != TYPECODE_INDIRECTION))
       return false;
 
-    if (static_cast<CORBA::ULong> (kind) == TYPECODE_INDIRECTION)
+    if (kind == TYPECODE_INDIRECTION)
       return tc_demarshal_indirection (cdr, tc, infos);
 
     using namespace TAO::TypeCodeFactory;
@@ -1145,7 +1152,10 @@ namespace
         tc_event_factory
       };
 
-    return factory_map[kind] (kind, cdr, tc, infos);
+    return factory_map[kind] (static_cast<CORBA::TCKind> (kind),
+                              cdr,
+                              tc,
+                              infos);
   }
 
   bool
@@ -1155,7 +1165,7 @@ namespace
   {
     CORBA::Long offset;
 
-    if (!(cdr >> offset) || offset < -4)
+    if (!(cdr >> offset) || offset >= -4)
       {
         // Offsets must be negative since they point back to a
         // TypeCode found earlier in the CDR stream.  They must be
@@ -1165,11 +1175,12 @@ namespace
         return false;
       }
 
-    ACE_Message_Block * const mb =
-      const_cast<ACE_Message_Block *> (cdr.start ());
+//     ACE_Message_Block * const mb =
+//       const_cast<ACE_Message_Block *> (cdr.start ());
 
-    TAO_InputCDR indir_stream (mb->rd_ptr () + offset - 4,
-                               -1 * (offset - 4),
+//     TAO_InputCDR indir_stream (mb->rd_ptr () + offset - 4,
+    TAO_InputCDR indir_stream (cdr.rd_ptr () + offset - sizeof (CORBA::Long),
+                               (-offset) + sizeof (CORBA::Long),
                                cdr.byte_order ());
 
     if (!indir_stream.good_bit ())
@@ -1178,7 +1189,7 @@ namespace
       }
 
     CORBA::TCKind kind;
-    if (!(cdr >> kind)
+    if (!(indir_stream >> kind)
 
         // Indirected TypeCode must point to top-level TypeCode.
         || static_cast<CORBA::ULong> (kind) == TYPECODE_INDIRECTION
@@ -1192,7 +1203,9 @@ namespace
         // Currently all recursive TypeCodes have complex parameter
         // lists, meaning they are encoded as CDR encapsulations.
         || !start_cdr_encap_extraction (indir_stream))
-      return false;
+      {
+        return false;
+      }
 
     /**
      * @todo Recursive TypeCode demarshaling is currently suboptimal
@@ -1201,9 +1214,8 @@ namespace
      *       allocations/copying.
      */
 
-    CORBA::String_var id, name;
-    if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
-          && cdr >> TAO_InputCDR::to_string (name.out (), 0)))
+    CORBA::String_var id;
+    if (!(indir_stream >> TAO_InputCDR::to_string (id.out (), 0)))
       return false;
 
     // Don't bother demarshaling the rest of the parameters.  They will
@@ -1231,8 +1243,7 @@ namespace
 
           ACE_NEW_RETURN (tc,
                           recursive_typecode_type (kind,
-                                                   id.in (),
-                                                   name.in ()),
+                                                   id.in ()),
                           false);
         }
         break;
@@ -1253,8 +1264,7 @@ namespace
 
           ACE_NEW_RETURN (tc,
                           recursive_typecode_type (kind,
-                                                   id.in (),
-                                                   name.in ()),
+                                                   id.in ()),
                           false);
         }
         break;
@@ -1279,8 +1289,7 @@ namespace
 
           ACE_NEW_RETURN (tc,
                           recursive_typecode_type (kind,
-                                                   id.in (),
-                                                   name.in ()),
+                                                   id.in ()),
                           false);
         }
         break;

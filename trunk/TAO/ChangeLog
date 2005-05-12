@@ -1,3 +1,67 @@
+Wed May 11 13:28:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+
+	  Generate an #include directive for "tao/TypeCode.h" if an Any
+	  was seen.  Fixes compile-time errors when attempting to make
+	  calls on a TypeCode pseudo-reference, such as one retrieved from
+	  through the standard CORBA::Any::type() accessor.
+
+	* tao/Alias_TypeCode.cpp:
+	* tao/Alias_TypeCode.h:
+	* tao/Alias_TypeCode_Static.cpp:
+	* tao/Alias_TypeCode_Static.h:
+	* tao/Empty_Param_TypeCode.cpp:
+	* tao/Empty_Param_TypeCode.h:
+	* tao/Enum_TypeCode.cpp:
+	* tao/Enum_TypeCode.h:
+	* tao/Enum_TypeCode_Static.cpp:
+	* tao/Enum_TypeCode_Static.h:
+	* tao/Fixed_TypeCode.cpp:
+	* tao/Fixed_TypeCode.h:
+	* tao/Objref_TypeCode.cpp:
+	* tao/Objref_TypeCode.h:
+	* tao/Objref_TypeCode_Static.cpp:
+	* tao/Objref_TypeCode_Static.h:
+	* tao/Recursive_Type_TypeCode.cpp:
+	* tao/Recursive_Type_TypeCode.h:
+	* tao/Recursive_Type_TypeCode.inl:
+	* tao/Sequence_TypeCode.cpp:
+	* tao/Sequence_TypeCode.h:
+	* tao/Sequence_TypeCode_Static.cpp:
+	* tao/Sequence_TypeCode_Static.h:
+	* tao/String_TypeCode.cpp:
+	* tao/String_TypeCode.h:
+	* tao/String_TypeCode_Static.cpp:
+	* tao/String_TypeCode_Static.h:
+	* tao/Struct_TypeCode.cpp:
+	* tao/Struct_TypeCode.h:
+	* tao/Struct_TypeCode.inl:
+	* tao/Struct_TypeCode_Static.cpp:
+	* tao/Struct_TypeCode_Static.h:
+	* tao/TypeCode.cpp:
+	* tao/TypeCode.h:
+	* tao/TypeCode.inl:
+	* tao/TypeCode_Base_Attributes.h:
+	* tao/TypeCode_Base_Attributes.inl:
+	* tao/TypeCode_CDR_Extraction.cpp:
+	* tao/TypeCode_Case.h:
+	* tao/TypeCode_Case.inl:
+	* tao/Union_TypeCode.cpp:
+	* tao/Union_TypeCode.h:
+	* tao/Union_TypeCode.inl:
+	* tao/Union_TypeCode_Static.cpp:
+	* tao/Union_TypeCode_Static.h:
+	* tao/Value_TypeCode.cpp:
+	* tao/Value_TypeCode.h:
+	* tao/Value_TypeCode.inl:
+	* tao/Value_TypeCode_Static.cpp:
+	* tao/Value_TypeCode_Static.h:
+
+	  Fixed recursive TypeCode marshaling and demarshaling.  Alignment
+	  padding was not taken into account when calculating the
+	  indirection offset.
+
 Mon May  9 20:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TypeCode_CDR_Extraction.cpp:

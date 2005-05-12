@@ -85,8 +85,7 @@ namespace TAO
 
       /// Dynamic @c Recursive_Type TypeCode constructor.
       Recursive_Type (CORBA::TCKind kind,
-                      char const * id,
-                      char const * name);
+                      char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -94,11 +93,17 @@ namespace TAO
        * Methods required by TAO's implementation of the
        * @c CORBA::TypeCode class.
        *
+       * @par
+       *
+       * These are recursive type @c TypeCode marshaling operation
+       * overrides.
+       *
        * @see @c CORBA::TypeCode
        */
       //@{
-      /// Recursive type @c TypeCode marshaling operation override.
-      virtual bool tao_marshal (TAO_OutputCDR & cdr) const;
+      virtual bool tao_marshal_kind (TAO_OutputCDR & cdr) const;
+      virtual bool tao_marshal (TAO_OutputCDR & cdr,
+                                CORBA::ULong offset) const;
       //@}
 
       /**
@@ -117,25 +122,28 @@ namespace TAO
       //@}
 
       /// Set @c struct @c TypeCode parameters.
-      void struct_parameters (MemberArrayType const & fields,
+      void struct_parameters (char const * name,
+                              MemberArrayType const & fields,
                               CORBA::ULong nfields);
 
       /// Set @c union @c TypeCode parameters.
       void union_parameters (
+                             char const * name,
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-                      // Borland C++ currently can't handle a
-                      // reference to const pointer to const
-                      // CORBA::TypeCode_ptr.
-                      TypeCodeType discriminant_type,
+                             // Borland C++ currently can't handle a
+                             // reference to const pointer to const
+                             // CORBA::TypeCode_ptr.
+                             TypeCodeType discriminant_type,
 #else
-                      TypeCodeType const & discriminant_type,
+                             TypeCodeType const & discriminant_type,
 #endif
-                      MemberArrayType const & cases,
-                      CORBA::ULong ncases,
-                      CORBA::Long default_index);
+                             MemberArrayType const & cases,
+                             CORBA::ULong ncases,
+                             CORBA::Long default_index);
 
       /// Set @c valuetype or @c eventtype @c TypeCode parameters.
-      void valuetype_parameters (CORBA::ValueModifier modifier,
+      void valuetype_parameters (char const * name,
+                                 CORBA::ValueModifier modifier,
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
                                  // Borland C++ currently can't handle a
                                  // reference to const pointer to const
@@ -149,12 +157,26 @@ namespace TAO
 
     private:
 
+      /**
+       * @class Reset
+       *
+       * @brief Reset flag to false in an exception-safe manner.
+       *
+       * Reset flag to false in an exception-safe manner.
+       */
+      class Reset
+      {
+      public:
+        Reset (bool & flag) : flag_ (flag) { }
+        ~Reset (void) { this->flag_ = false; }
+      private:
+        bool & flag_;
+      };
+
+    private:
+
       /// Internal state thread synchronization mutex.
       mutable TAO_SYNCH_RECURSIVE_MUTEX lock_;
-
-      /// The recursive type @c TypeCode starting position/offset in
-      /// the CDR stream.
-      mutable CORBA::Long starting_offset_;
 
       /// @c true if equality or equivalence is being determined
       /// recursively.
