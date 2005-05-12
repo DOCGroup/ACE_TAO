@@ -7,7 +7,8 @@
  *  $Id$
  *
  *   This file factors out common macros and other utilities used by the
- *   ACE automated regression tests.
+ *   ACE automated regression tests.  It also shows how to redirect ACE_DEBUG/ACE_ERROR
+ *   output to a file.
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
