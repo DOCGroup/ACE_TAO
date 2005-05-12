@@ -1,3 +1,13 @@
+Wed May 11 23:42:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+	  (gen_member_typecodes):
+
+	  Fixed recursive valuetype detection in cases where the recursion
+	  is through a direct member of the valuetype (e.g. "valuetype V {
+	  public V foo; }" instead of an indirect recursion through a
+	  sequence (e.g. "valuetype V { sequence<V> foo; }").
+
 Wed May 11 21:20:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Alias_TypeCode.cpp (tao_marshal):
