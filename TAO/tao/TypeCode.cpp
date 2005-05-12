@@ -25,6 +25,12 @@ CORBA::TypeCode::~TypeCode (void)
 {
 }
 
+bool
+CORBA::TypeCode::tao_marshal_kind (TAO_OutputCDR & cdr) const
+{
+  return cdr << this->kind_;
+}
+
 CORBA::Boolean
 CORBA::TypeCode::equal (TypeCode_ptr tc
                         ACE_ENV_ARG_DECL) const
@@ -362,22 +368,30 @@ CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &
 // ---------------------------------------------------------------
 
 bool
-operator<< (TAO_OutputCDR & cdr,
-            CORBA::TypeCode_ptr tc)
+TAO::TypeCode::marshal (TAO_OutputCDR & cdr,
+                        CORBA::TypeCode_ptr tc,
+                        CORBA::ULong offset)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  // Marshal the TypeCode TCKind and TypeCode body.
+  //
+  // Update the offset value in case a recursive TypeCode is being
+  // marshaled.
 
-  if (tc == 0)
-    {
-      ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                        CORBA::COMPLETED_MAYBE),
-                        false);
-    }
+  return
+    tc != 0
+    && tc->tao_marshal_kind (cdr)
+    && tc->tao_marshal (cdr, aligned_offset (offset) + sizeof (CORBA::ULong));
+}
 
-  CORBA::ULong const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+CORBA::ULong
+TAO::TypeCode::aligned_offset (CORBA::ULong offset)
+{
+  ptrdiff_t const unaligned_offset =
+    static_cast<ptrdiff_t> (offset);
 
-  return (cdr << kind) && tc->tao_marshal (cdr);
+  return
+    static_cast<CORBA::ULong> (ACE_align_binary (unaligned_offset,
+                                                 ACE_CDR::LONG_ALIGN));
 }
 
 // ---------------------------------------------------------------

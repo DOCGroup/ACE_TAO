@@ -29,13 +29,16 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::Case (void)
 template <typename StringType, typename TypeCodeType>
 ACE_INLINE bool
 TAO::TypeCode::Case<StringType, TypeCodeType>::marshal (
-  TAO_OutputCDR & cdr) const
+  TAO_OutputCDR & cdr,
+  CORBA::ULong offset) const
 {
   return
     this->marshal_label (cdr)
     && (cdr << TAO_OutputCDR::from_string (
          Traits<StringType>::get_string (this->name_), 0))
-    && (cdr << Traits<StringType>::get_typecode (this->type_));
+    && TAO::TypeCode::marshal (cdr,
+                               Traits<StringType>::get_typecode (this->type_),
+                               offset + cdr.total_length ());
 }
 
 template <typename StringType, typename TypeCodeType>

@@ -385,12 +385,29 @@ namespace CORBA
     TypeCode_ptr concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const;
     //@}
 
+    /// Marshal the @c TypeCode @c TCKind.
+    /**
+     *
+     */
+    virtual bool tao_marshal_kind (TAO_OutputCDR & cdr) const;
+
     /// Marshal this @c TypeCode into a CDR output stream.
     /**
      * Marshal this @c TypeCode into the @a cdr output CDR stream,
      * excluding the @c TypeCode kind.  Existing @a cdr contents will
      * not be altered.  The marshaled @c TypeCode will be appended to
      * the given @a cdr CDR output stream.
+     *
+     * @param cdr    Output CDR stream into which the @c TypeCode will be
+     *               marshaled.
+     *
+     * @param offset Number of bytes currently in the output CDR
+     *               stream, including the top-level TypeCode @c
+     *               TCKind.  This argument is useful for recursive
+     *               @c TypeCodes.  @c TypeCodes that contain other
+     *               @c TypeCodes should pass an updated @a offset
+     *               value to the marshaling operation for those
+     *               contained @c TypeCodes.
      *
      * @return @c true if marshaling was successful.
      *
@@ -400,7 +417,8 @@ namespace CORBA
      * @note If this method returns @false, the contents of the @a cdr
      *       output CDR stream are undefined.
      */
-    virtual bool tao_marshal (TAO_OutputCDR & cdr) const = 0;
+    virtual bool tao_marshal (TAO_OutputCDR & cdr,
+                              CORBA::ULong offset) const = 0;
 
     /// Increase the reference count on this @c TypeCode.
     virtual void tao_duplicate (void) = 0;
@@ -488,13 +506,31 @@ namespace CORBA
 }  // End namespace CORBA
 
 
-TAO_Export bool operator<< (TAO_OutputCDR & cdr,
-                                     CORBA::TypeCode_ptr tc);
+TAO_NAMESPACE_INLINE_FUNCTION
+bool operator<< (TAO_OutputCDR & cdr,
+                            CORBA::TypeCode_ptr tc);
+
 TAO_Export bool operator>> (TAO_InputCDR & cdr,
                             CORBA::TypeCode_ptr & tc);
 
 namespace TAO
 {
+  namespace TypeCode
+  {
+    /// Marshal the @c TypeCode @a tc in to the output CDR stream @a
+    /// cdr.
+    /**
+     * @see @CORBA::TypeCode::tao_marshal() description for details.
+     */
+    
+    TAO_Export bool marshal (TAO_OutputCDR & cdr,
+                             CORBA::TypeCode_ptr tc,
+                             CORBA::ULong offset);
+
+    /// Return @a offset aligned on the appropriate CDR boundary.
+    TAO_Export CORBA::ULong aligned_offset (CORBA::ULong offset);
+  }
+
   /// Return the unaliased content @c TypeCode of the given
   /// @c TypeCode.
   TAO_Export CORBA::TypeCode_ptr unaliased_typecode (CORBA::TypeCode_ptr tc
@@ -510,12 +546,8 @@ namespace TAO
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
                                 ACE_ENV_ARG_DECL);
 
-}
+  // ---------------------------------------------------------------
 
-// ---------------------------------------------------------------
-
-namespace TAO
-{
   // Used in generated code if CORBA::TypeCode is an argument or
   // return type.
   template<>

@@ -13,7 +13,8 @@
 
 template <class RefCountPolicy>
 bool
-TAO::TypeCode::Fixed<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
+TAO::TypeCode::Fixed<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr,
+                                                   CORBA::ULong) const
 {
   // A tk_fixed TypeCode has a "simple" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of

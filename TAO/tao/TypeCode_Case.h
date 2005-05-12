@@ -101,7 +101,8 @@ namespace TAO
 
       /// Marshal this IDL @c union member into the given output CDR
       /// stream.
-      bool marshal (TAO_OutputCDR & cdr) const;
+      bool marshal (TAO_OutputCDR & cdr,
+                    CORBA::ULong offset) const;
 
       /// Check for equality of the @c case attributes contained by this
       /// class and the corresponding member attributes at index "@a

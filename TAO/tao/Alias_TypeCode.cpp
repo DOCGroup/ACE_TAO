@@ -22,7 +22,8 @@ template <typename StringType,
 bool
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
+                     RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr,
+                                                   CORBA::ULong offset) const
 {
   // A tk_alias TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
@@ -37,7 +38,9 @@ TAO::TypeCode::Alias<StringType,
     enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
     && enc << TAO_OutputCDR::from_string (this->attributes_.id (), 0)
     && enc << TAO_OutputCDR::from_string (this->attributes_.name (), 0)
-    && enc << Traits<StringType>::get_typecode (this->content_type_)
+    && marshal (enc,
+                Traits<StringType>::get_typecode (this->content_type_),
+                offset + enc.total_length ())
     && cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());
 }

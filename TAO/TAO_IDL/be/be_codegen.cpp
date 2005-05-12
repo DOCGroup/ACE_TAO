@@ -1432,6 +1432,12 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
+  this->gen_cond_file_include (
+      idl_global->any_seen_,
+      "tao/TypeCode.h",
+      this->client_header_
+    );
+
   // Include the Messaging library entry point, if AMI is enabled.
   if (be_global->ami_call_back () == I_TRUE)
     {

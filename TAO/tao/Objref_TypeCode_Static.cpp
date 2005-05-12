@@ -21,7 +21,8 @@ ACE_RCSID (tao,
 
 bool
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+  TAO_OutputCDR & cdr,
+  CORBA::ULong) const
 {
   // A tk_objref TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
