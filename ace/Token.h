@@ -169,24 +169,29 @@ public:
   /// in line gets it.
   int release (void);
 
-  /// Behave like acquire but in a lower priority.  It should probably
-  /// be called acquire_yield.
+  /// Behaves like acquire() but at a lower priority.  It should probably
+  /// be called acquire_yield() since the semantics aren't really
+  /// what's commonly expected for readers/writer locks.  See the class
+  /// documentation above for more details.
   int acquire_read (void);
 
-  /// More sophisticate version of acquire_read.
+  /// Behaves like acquire() but at a lower priority.  It should probably
+  /// be called acquire_yield() since the semantics aren't really
+  /// what's commonly expected for readers/writer locks.  See the class
+  /// documentation above for more details.
   int acquire_read (void (*sleep_hook)(void *),
                     void *arg = 0,
                     ACE_Time_Value *timeout = 0);
 
-  /// Just calls <acquire>.
+  /// Calls acquire().
   int acquire_write (void);
 
-  /// More sophisticate version of acquire_write.
+  /// Calls acquire().
   int acquire_write (void (*sleep_hook)(void *),
                      void *arg = 0,
                      ACE_Time_Value *timeout = 0);
 
-  /// Lower priority try_acquire.
+  /// Lower priority try_acquire().
   int tryacquire_read (void);
 
   /// Just calls <tryacquire>.

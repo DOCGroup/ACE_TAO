@@ -2423,11 +2423,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
 #   endif /*CHORUS */
 
-#   if defined (ACE_HAS_PTHREAD_SETSTACK)
-  if ((stacksize != 0) && (stack != 0))
-#   else
   if (stacksize != 0)
-#   endif /* ACE_HAS_PTHREAD_SETSTACK */
     {
       size_t size = stacksize;
 
@@ -2441,9 +2437,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (::pthread_attr_setstacksize (&attr, size) != 0)
 #     else
 #       if defined (ACE_HAS_PTHREAD_SETSTACK)
-        if (ACE_ADAPT_RETVAL(pthread_attr_setstack (&attr, stack, size), result) == -1)
+        int result;
+        if (stack != 0)
+          result = ACE_ADAPT_RETVAL (pthread_attr_setstack (&attr, stack, size), result);
+        else
+          result = ACE_ADAPT_RETVAL (pthread_attr_setstacksize (&attr, size), result);
+        if (result == -1)
 #       else
-        if (ACE_ADAPT_RETVAL(pthread_attr_setstacksize (&attr, size), result) == -1)
+        if (ACE_ADAPT_RETVAL (pthread_attr_setstacksize (&attr, size), result) == -1)
 #       endif /* ACE_HAS_PTHREAD_SETSTACK */
 #     endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
           {
@@ -2921,7 +2922,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           // Set the priority of the new thread and then let it
           // continue, but only if the user didn't start it suspended
           // in the first place!
-          if ((result = ACE_OS::thr_setprio (*thr_id, priority)) != 0)
+          result = ACE_OS::thr_setprio (*thr_id, priority);
+          if (result != 0)
             {
               errno = result;
               return -1;
@@ -2929,7 +2931,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
           if (start_suspended == 0)
             {
-              if ((result = ACE_OS::thr_continue (*thr_id)) != 0)
+              result = ACE_OS::thr_continue (*thr_id);
+              if (result != 0)
                 {
                   errno = result;
                   return -1;
