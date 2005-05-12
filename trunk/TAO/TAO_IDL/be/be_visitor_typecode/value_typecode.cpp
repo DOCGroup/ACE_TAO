@@ -232,6 +232,8 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
 
       if (this->is_typecode_generation_required (member_type))
         member_type->accept (this);
+      else if (member_type == static_cast<be_type *> (node))
+        this->is_recursive_ = true;
     }
 
   return 0;
