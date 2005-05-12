@@ -17,7 +17,8 @@ ACE_RCSID (tao,
 bool
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
                         TAO::Null_RefCount_Policy>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+  TAO_OutputCDR & cdr,
+  CORBA::ULong offset) const
 {
   // A tk_array or tk_sequence TypeCode has a "complex" parameter list
   // type (see Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR
@@ -27,9 +28,20 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   // Create a CDR encapsulation.
   TAO_OutputCDR enc;
 
+  // Account for the encoded CDR encapsulation length and byte order.
+  //
+  // Aligning on an octet since the next value after the CDR
+  // encapsulation length will always be the byte order octet/boolean
+  // in this case.
+  offset = ACE_align_binary (offset + 4,
+                             ACE_CDR::OCTET_ALIGN);
+
   return
     enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-    && enc << Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_)
+    && marshal (enc,
+                Traits<CORBA::TypeCode_ptr const *>::get_typecode (
+                  this->content_type_),
+                offset + enc.total_length ())
     && enc << this->length_
     && cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());

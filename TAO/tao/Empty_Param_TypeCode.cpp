@@ -13,7 +13,8 @@ ACE_RCSID (tao,
 
 
 bool
-TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &) const
+TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &,
+                                         CORBA::ULong) const
 {
   // Empty parameter list.  Nothing to marshal.
 

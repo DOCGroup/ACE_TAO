@@ -43,11 +43,10 @@ TAO::TypeCode::Union<StringType,
                      CaseArrayType,
                      RefCountPolicy>::Union (
   CORBA::TCKind,
-  char const * id,
-  char const * name)
+  char const * id)
   : CORBA::TypeCode (CORBA::tk_union)
   , RefCountPolicy ()
-  , base_attributes_ (id, name)
+  , base_attributes_ (id)
   , discriminant_type_ (0)
   , default_index_ (-1)
   , ncases_ (0)

@@ -23,7 +23,8 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+  TAO_OutputCDR & cdr,
+  CORBA::ULong offset) const
 {
   // A tk_union TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
@@ -37,7 +38,9 @@ TAO::TypeCode::Union<char const *,
     (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
-    && (enc << Traits<char const *>::get_typecode (this->discriminant_type_))
+    && marshal (enc,
+                Traits<char const *>::get_typecode (this->discriminant_type_),
+                offset + enc.total_length ())
     && (enc << this->default_index_)
     && (enc << this->ncases_);
 
@@ -50,7 +53,7 @@ TAO::TypeCode::Union<char const *,
     {
       case_type const & c = *this->cases_[i];
 
-      if (!c.marshal (enc))
+      if (!c.marshal (enc, offset + enc.total_length ()))
         return false;
     }
 

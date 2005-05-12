@@ -71,8 +71,7 @@ namespace TAO
 
       /// Constructor used for recursive TypeCodes.
       Value (CORBA::TCKind kind,
-              char const * id,
-              char const * name);
+              char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -83,7 +82,8 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal (TAO_OutputCDR & cdr) const;
+      virtual bool tao_marshal (TAO_OutputCDR & cdr,
+                                CORBA::ULong offset) const;
       virtual void tao_duplicate (void);
       virtual void tao_release (void);
       //@}
@@ -136,7 +136,7 @@ namespace TAO
 
       /// Base attributes containing repository ID and name of
       /// @c valuetype.
-      Base_Attributes<StringType> const base_attributes_;
+      Base_Attributes<StringType> base_attributes_;
 
       /// The @c ValueModifier of the @c valuetype of @c eventtype
       /// represented by this @c TypeCode.

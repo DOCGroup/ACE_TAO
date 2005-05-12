@@ -25,7 +25,8 @@ TAO::TypeCode::Value<char const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+  TAO_OutputCDR & cdr,
+  CORBA::ULong offset) const
 {
   // A tk_value TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
@@ -35,12 +36,22 @@ TAO::TypeCode::Value<char const *,
   // Create a CDR encapsulation.
   TAO_OutputCDR enc;
 
+  // Account for the encoded CDR encapsulation length and byte order.
+  //
+  // Aligning on an octet since the next value after the CDR
+  // encapsulation length will always be the byte order octet/boolean
+  // in this case.
+  offset = ACE_align_binary (offset + 4,
+                             ACE_CDR::OCTET_ALIGN);
+
   bool const success =
     (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
     && (enc << this->type_modifier_)
-    && (enc << Traits<char const *>::get_typecode (this->concrete_base_))
+    && marshal (enc,
+                Traits<char const *>::get_typecode (this->concrete_base_),
+                offset + enc.total_length ())
     && (enc << this->nfields_);
 
   if (!success)
@@ -51,12 +62,17 @@ TAO::TypeCode::Value<char const *,
   Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const end =
     begin + this->nfields_;
 
-  for (Value_Field<char const *, CORBA::TypeCode_ptr const *> const * i = begin; i != end; ++i)
+  for (Value_Field<char const *, CORBA::TypeCode_ptr const *> const * i =
+         begin;
+       i != end;
+       ++i)
     {
       Value_Field<char const *, CORBA::TypeCode_ptr const *> const & field = *i;
 
       if (!(enc << Traits<char const *>::get_string (field.name))
-          || !(enc << Traits<char const *>::get_typecode (field.type))
+          || !marshal (enc,
+                       Traits<char const *>::get_typecode (field.type),
+                       offset + enc.total_length ())
           || !(enc << field.visibility))
         return false;
     }

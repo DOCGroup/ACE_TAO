@@ -45,12 +45,23 @@ namespace TAO
       Base_Attributes (char const * id,
                        char const * name);
 
+      /// Constructor used by recursive @c TypeCodes.
+      Base_Attributes (char const * id);
+
       /// Get the @c RepositoryId globally identifying the type.
       char const * id (void) const;
 
       /// Get the simple name identifying the type within its
       /// enclosing scope.
       char const * name (void) const;
+
+      /// Set the simple name identifying the type within its
+      /// enclosing scope.
+      /**
+       * @note This method only used when creating a recursive
+       *       TypeCode.
+       */
+      void name (char const * the_name);
 
     private:
 
@@ -59,7 +70,7 @@ namespace TAO
 
       /// The simple name identifying the type within its enclosing
       /// scope.
-      STRING_TYPE const name_;
+      STRING_TYPE name_;
 
     };
 

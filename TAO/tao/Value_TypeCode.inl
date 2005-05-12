@@ -45,11 +45,10 @@ TAO::TypeCode::Value<StringType,
                      FieldArrayType,
                      RefCountPolicy>::Value (
   CORBA::TCKind kind,
-  char const * id,
-  char const * name)
+  char const * id)
   : CORBA::TypeCode (kind)
   , RefCountPolicy ()
-  , base_attributes_ (id, name)
+  , base_attributes_ (id)
   , type_modifier_ (CORBA::VM_NONE)
   , concrete_base_ ()
   , nfields_ (0)

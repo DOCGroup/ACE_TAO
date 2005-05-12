@@ -26,7 +26,8 @@ bool
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
+                      RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr,
+                                                    CORBA::ULong offset) const
 {
   // A tk_struct TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
@@ -35,6 +36,14 @@ TAO::TypeCode::Struct<StringType,
 
   // Create a CDR encapsulation.
   TAO_OutputCDR enc;
+
+  // Account for the encoded CDR encapsulation length and byte order.
+  //
+  // Aligning on an octet since the next value after the CDR
+  // encapsulation length will always be the byte order octet/boolean
+  // in this case.
+  offset = ACE_align_binary (offset + 4,
+                             ACE_CDR::OCTET_ALIGN);
 
   bool const success =
     (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
@@ -56,7 +65,9 @@ TAO::TypeCode::Struct<StringType,
 
       if (!(enc << TAO_OutputCDR::from_string (
                        Traits<StringType>::get_string (field.name), 0))
-          || !(enc << Traits<StringType>::get_typecode (field.type)))
+          || !marshal (enc,
+                       Traits<StringType>::get_typecode (field.type),
+                       offset + enc.total_length ()))
         return false;
     }
 

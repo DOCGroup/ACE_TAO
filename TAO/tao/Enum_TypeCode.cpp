@@ -20,7 +20,8 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 bool
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
+                    RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr,
+                                                  CORBA::ULong) const
 {
   // A tk_enum TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of

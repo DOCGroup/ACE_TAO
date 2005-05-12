@@ -14,7 +14,6 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   CORBA::ULong nfields)
   : TypeCodeBase (kind, id, name, fields, nfields)
   , lock_ ()
-  , starting_offset_ (0)
   , in_recursion_ (false)
 {
   // ACE_ASSERT (kind != CORBA::tk_except);
@@ -42,7 +41,6 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                   ncases,
                   default_index)
   , lock_ ()
-  , starting_offset_ (0)
   , in_recursion_ (false)
 {
 }
@@ -64,14 +62,13 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   MemberArrayType const & fields,
   CORBA::ULong nfields)
   : TypeCodeBase (kind,
-                id,
-                name,
-                modifier,
-                concrete_base,
-                fields,
-                nfields)
+                  id,
+                  name,
+                  modifier,
+                  concrete_base,
+                  fields,
+                  nfields)
   , lock_ ()
-  , starting_offset_ (0)
   , in_recursion_ (false)
 {
 }
@@ -82,11 +79,9 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::Recursive_Type (
   CORBA::TCKind kind,
-  char const * id,
-  char const * name)
-  : TypeCodeBase (kind, id, name)
+  char const * id)
+  : TypeCodeBase (kind, id)
   , lock_ ()
-  , starting_offset_ (0)
   , in_recursion_ (false)
 {
 //   ACE_ASSERT (kind == CORBA::tk_struct
@@ -100,9 +95,11 @@ ACE_INLINE void
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::struct_parameters (
+  char const * name,
   MemberArrayType const & fields,
   CORBA::ULong nfields)
 {
+  this->base_attributes_.name (name);
   this->fields_  = fields;
   this->nfields_ = nfields;
 }
@@ -112,6 +109,7 @@ ACE_INLINE void
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::union_parameters (
+  char const * name,
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
   TypeCodeType discriminant_type,
 #else
@@ -121,6 +119,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   CORBA::ULong ncases,
   CORBA::Long default_index)
 {
+  this->base_attributes_.name (name);
   this->discriminant_type_ = discriminant_type;
   this->cases_             = cases;
   this->ncases_            = ncases;
@@ -132,6 +131,7 @@ ACE_INLINE void
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::valuetype_parameters (
+  char const * name,
   CORBA::ValueModifier modifier,
 #if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
   TypeCodeType concrete_base,
@@ -141,6 +141,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   MemberArrayType const & fields,
   CORBA::ULong nfields)
 {
+  this->base_attributes_.name (name);
   this->type_modifier_ = modifier;
   this->concrete_base_ = concrete_base;
   this->fields_        = fields;

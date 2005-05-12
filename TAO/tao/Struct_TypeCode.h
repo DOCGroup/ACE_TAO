@@ -62,8 +62,7 @@ namespace TAO
 
       /// Constructor used for recursive TypeCodes.
       Struct (CORBA::TCKind kind,
-              char const * id,
-              char const * name);
+              char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -74,7 +73,8 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal (TAO_OutputCDR & cdr) const;
+      virtual bool tao_marshal (TAO_OutputCDR & cdr,
+                                CORBA::ULong offset) const;
       virtual void tao_duplicate (void);
       virtual void tao_release (void);
       //@}
@@ -121,7 +121,7 @@ namespace TAO
 
       /// Base attributes containing repository ID and name of
       /// structure type.
-      Base_Attributes<StringType> const base_attributes_;
+      Base_Attributes<StringType> base_attributes_;
 
       /// The number of fields in the OMG IDL structure.
       CORBA::ULong nfields_;

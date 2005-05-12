@@ -14,7 +14,8 @@ bool
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+  TAO_OutputCDR & cdr,
+  CORBA::ULong offset) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
@@ -22,48 +23,34 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                     false);
 
   // Top-level TypeCode case.
-  if (this->starting_offset_ == 0)
+  if (!(this->in_recursion_))
     {
+      this->in_recursion_ = true;
+
       // Starting offset should point to the CORBA::TCKind value.
-      //
-      // Note that this subtraction doesn't need to take into account
-      // alignment padding since CORBA::TCKind (encoded as a
-      // CORBA::ULong) is already aligned on the appropriate boundary,
-      // and since the CORBA::TCKind was the last thing marshaled into
-      // the CDR stream before getting here.
-      this->starting_offset_ = cdr.total_length () - sizeof (CORBA::TCKind);
 
-      // ACE_ASSERT (this->starting_offset_ != 0);
+      // Note that this doesn't need to take into account alignment
+      // padding since CORBA::TCKind (encoded as a CORBA::ULong) is
+      // already aligned on the appropriate boundary, and since the
+      // CORBA::TCKind was the last thing marshaled into the CDR
+      // stream before getting here.
+      offset = sizeof (CORBA::ULong);
 
-      // Reset offset to zero in an exception-safe manner once
+      // Reset recursion flag to false in an exception-safe manner once
       // marshaling is done.
-      class Offset_Reset
-      {
-      public:
-        Offset_Reset (CORBA::Long & offset) : offset_ (offset) {}
-        ~Offset_Reset (void) { this->offset_ = 0; }
-      private:
-        CORBA::Long & offset_;
-      };
+      //
+      // Only reset the recursion flag at the top-level.
+      Reset flag (this->in_recursion_);
 
-      // Only reset the offset at the top-level.
-
-      Offset_Reset (this->starting_offset_);
-
-      return this->TypeCodeBase::tao_marshal (cdr);
+      return this->TypeCodeBase::tao_marshal (cdr, offset);
     }
 
   // Recursive/indirected TypeCode case.
-  CORBA::ULong const indirection_kind = 0xffffffff;
 
-  if (!(cdr << indirection_kind
-        && cdr << (static_cast<CORBA::Long> (cdr.total_length ())
-                   - this->starting_offset_)))
-    {
-      return false;
-    }
+//   ACE_ASSERT (offset > 4
+//               && offset < static_cast<CORBA::ULong> (ACE_INT32_MAX));
 
-  return true;
+  return (cdr << -static_cast<CORBA::Long> (offset));
 }
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
@@ -85,18 +72,9 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       this->in_recursion_ = true;
 
       // Reset recursion flag to false in an exception-safe manner once
-      // equivalence determination is done.
-      class Reset
-      {
-      public:
-        Reset (bool & flag) : flag_ (flag) {}
-        ~Reset (void) { this->flag_ = false; }
-      private:
-        bool & flag_;
-      };
-
+      // equality determination is done.
+      //
       // Only reset the recursion flag at the top-level.
-
       Reset flag (this->in_recursion_);
 
       return this->TypeCodeBase::equal_i (tc
@@ -126,18 +104,9 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       this->in_recursion_ = true;
 
       // Reset recursion flag to false in an exception-safe manner once
-      // equality determination is done.
-      class Reset
-      {
-      public:
-        Reset (bool & flag) : flag_ (flag) {}
-        ~Reset (void) { this->flag_ = false; }
-      private:
-        bool & flag_;
-      };
-
+      // equivalence determination is done.
+      //
       // Only reset the recursion flag at the top-level.
-
       Reset flag (this->in_recursion_);
 
       return this->TypeCodeBase::equivalent_i (tc
@@ -146,4 +115,26 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
 
   // Nothing else to do.
   return true;
+}
+
+template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
+bool
+TAO::TypeCode::Recursive_Type<TypeCodeBase,
+                              TypeCodeType,
+                              MemberArrayType>::tao_marshal_kind (
+  TAO_OutputCDR & cdr) const
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                    guard,
+                    this->lock_,
+                    false);
+
+  // Top-level TypeCode case.
+  if (!(this->in_recursion_))
+    return this->ACE_NESTED_CLASS (CORBA, TypeCode)::tao_marshal_kind (cdr);
+
+  // Recursive/indirected TypeCode case.
+  CORBA::ULong const indirection_kind = 0xffffffff;
+
+  return (cdr << indirection_kind);
 }

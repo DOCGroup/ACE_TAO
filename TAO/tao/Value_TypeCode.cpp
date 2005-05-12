@@ -26,7 +26,8 @@ TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
                      RefCountPolicy>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+  TAO_OutputCDR & cdr,
+  CORBA::ULong offset) const
 {
   // A tk_value TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
@@ -36,12 +37,22 @@ TAO::TypeCode::Value<StringType,
   // Create a CDR encapsulation.
   TAO_OutputCDR enc;
 
+  // Account for the encoded CDR encapsulation length and byte order.
+  //
+  // Aligning on an octet since the next value after the CDR
+  // encapsulation length will always be the byte order octet/boolean
+  // in this case.
+  offset = ACE_align_binary (offset + 4,
+                             ACE_CDR::OCTET_ALIGN);
+
   bool const success =
     (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
     && (enc << this->type_modifier_)
-    && (enc << Traits<StringType>::get_typecode (this->concrete_base_))
+    && marshal (enc,
+                Traits<StringType>::get_typecode (this->concrete_base_),
+                offset + enc.total_length ())
     && (enc << this->nfields_);
 
   if (!success)
@@ -57,7 +68,9 @@ TAO::TypeCode::Value<StringType,
       Value_Field<StringType, TypeCodeType> const & field = *i;
 
       if (!(enc << Traits<StringType>::get_string (field.name))
-          || !(enc << Traits<StringType>::get_typecode (field.type))
+          || !marshal (enc,
+                       Traits<StringType>::get_typecode (field.type),
+                       offset + enc.total_length ())
           || !(enc << field.visibility))
         return false;
     }
