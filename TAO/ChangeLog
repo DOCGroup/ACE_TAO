@@ -1,3 +1,21 @@
+Thu May 12 09:07:34 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/PortableServer/Var_Array_SArgument_T.cpp:
+        
+          Added explicit construction of T_forany class when passing
+          the associated T_slice* to an Any or CDR operator, in the
+          context of an OUT operation parameter. Implicit conversion
+          is ambiguous if there are two or more arrays with the
+          same element type. The explicit conversion is already in
+          place for all other parameter types. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for uncovering this bug and for
+          supplying the example IDL checked in below.
+          
+        * tests/IDL_Test/array.idl:
+        
+          Added IDL to test for the bug described above.
+
 Wed May 11 23:42:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp

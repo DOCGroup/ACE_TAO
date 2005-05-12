@@ -107,3 +107,19 @@ interface testdata
   typedef sequence<ArrayDeChar> ArrayDeCharList;
 };
 
+// Tests for explicit conversion of slice pointer to the
+// corresponding forany class before using CDR or Any
+// operators. This is required because myvec2_slice and
+// myvec3_slice are the same type, so implicit conversion
+// from myvec2_slice (in the case below) could go to
+// myvec2_forany or myvec3_forany.
+module arraytest
+{
+  typedef string myvec2[2];
+  typedef string myvec3[3];
+
+  interface MyTest
+  {
+    void test_method (out myvec2 mystring);
+  };
+};

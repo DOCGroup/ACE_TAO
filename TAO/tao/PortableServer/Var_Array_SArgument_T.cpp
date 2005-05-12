@@ -79,7 +79,8 @@ TAO::Out_Var_Array_SArgument_T<S_slice,S_var,S_forany>::marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return cdr << this->x_.ptr ();
+  S_forany tmp (this->x_.ptr ());
+  return cdr << tmp;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
