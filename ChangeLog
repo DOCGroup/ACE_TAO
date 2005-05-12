@@ -1,3 +1,19 @@
+Thu May 12 10:20:55 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* Updated the COPYING file to clarify some ambiguity about
+ 	  proprietary usage of ACE.
+
+Tue May 10 08:34:16 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Token.h (ACE_Token): Improved the documentation to emphasize
+	  that the semantics aren't truly readers/writer.  Thanks to
+	  Altaf Aali <altafaali@comcast.net> for motivating this.
+
+	* ace/OS_NS_Thread.cpp (thr_create): Fixed a bug that wasn't
+	  allowing the stack size to be size if the stack address wasn't
+ 	  also being set.  Thanks to Andreas Schuler
+ 	  <Andreas.Schuler@med.ge.com> for reporting this.
+
 Fri May  6 13:50:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_time.inl:
