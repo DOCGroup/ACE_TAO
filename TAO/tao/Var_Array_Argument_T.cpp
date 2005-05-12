@@ -104,7 +104,8 @@ void
 TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany,S_tag>::
 interceptor_param (Dynamic::Parameter & p)
 {
-  p.argument <<= this->x_;
+  S_forany tmp (this->x_);
+  p.argument <<= tmp;
   p.mode = CORBA::PARAM_OUT;
 }
 
