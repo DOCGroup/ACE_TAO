@@ -1,3 +1,8 @@
+Thu May 12 19:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/TAO-tutorials.html:
+          Removed link that seems to be not valid anymore
+
 Thu May 12 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
