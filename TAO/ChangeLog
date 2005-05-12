@@ -1,13 +1,20 @@
+Thu May 12 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Fixed crash of TAO on 64bit platforms when TAO debug level is
+          set to 5. ACE_SIZE_T_FORMAT_SPECIFIER is for use with printf,
+          not for ACE_DEBUG. This fixes bugzilla bug 2113.
+
 Thu May 12 10:20:55 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* Updated the COPYING file to clarify some ambiguity about
  	  proprietary usage of TAO.
-  
+
 Thu May 12 09:07:34 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Var_Array_Argument_T.cpp:
         * tao/PortableServer/Var_Array_SArgument_T.cpp:
-        
+
           Added explicit construction of T_forany class when passing
           the associated T_slice* to an Any or CDR operator, in the
           context of an OUT operation parameter. Implicit conversion
@@ -15,10 +22,11 @@ Thu May 12 09:07:34 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           same element type. The explicit conversion is already in
           place for all other parameter types. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for uncovering this bug and for
-          supplying the example IDL checked in below.
-          
+          supplying the example IDL checked in below. This fixes bugzilla
+          id 2116.
+
         * tests/IDL_Test/array.idl:
-        
+
           Added IDL to test for the bug described above.
 
 Wed May 11 23:42:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
