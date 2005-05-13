@@ -1915,18 +1915,18 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
       {
         CORBA::ULong const nfields =
           unaliased_member->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_CHECK_RETURN (false);
 
         for (CORBA::ULong i = 0; i < nfields; ++i)
           {
             CORBA::TypeCode_var member_tc =
               unaliased_member->member_type (i
                                              ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            ACE_CHECK_RETURN (false);
 
             CORBA::TCKind const member_tc_kind =
               member_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            ACE_CHECK_RETURN (false);
 
             if (member_tc_kind == CORBA::TAO_TC_KIND_COUNT)
               {
@@ -2003,11 +2003,11 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
       {
         CORBA::TypeCode_var content_tc =
           unaliased_member->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_CHECK_RETURN (false);
 
         CORBA::TCKind const content_tc_kind =
           content_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_CHECK_RETURN (false);
 
         if (content_tc_kind == CORBA::TAO_TC_KIND_COUNT)
           {
