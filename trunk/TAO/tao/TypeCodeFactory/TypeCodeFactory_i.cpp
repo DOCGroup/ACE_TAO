@@ -1891,10 +1891,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
   if (kind != CORBA::tk_struct
       && kind != CORBA::tk_union
       && kind != CORBA::tk_value
-      && kind != CORBA::tk_event
-      && kind != CORBA::tk_sequence
-      && kind != CORBA::tk_array
-      && kind != CORBA::tk_alias)
+      && kind != CORBA::tk_event)
     return false;
 
   CORBA::TypeCode_var unaliased_member =
@@ -1979,12 +1976,20 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                         ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), false);
                   }
               }
-            else if (this->check_recursion (kind,
-                                            id,
-                                            member_tc.in (),
-                                            recursive_tc))
+            else
               {
-                return true;
+                bool const recursion_detected =
+                  this->check_recursion (kind,
+                                         id,
+                                         member_tc.in (),
+                                         recursive_tc
+                                         ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK_RETURN (false);
+
+                if (recursion_detected)
+                  {
+                    return true;
+                  }
               }
 
             // Not recursive or not the recursive TypeCode we want.
