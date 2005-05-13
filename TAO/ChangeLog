@@ -1,3 +1,10 @@
+Fri May 13 11:08:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+
+	  Corrected inline file path in #include directive.  Addresses
+	  build errors in builds where inlining is disabled.
+
 Fri May 13 09:31:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (check_recursion):

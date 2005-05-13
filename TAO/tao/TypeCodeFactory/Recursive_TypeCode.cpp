@@ -3,7 +3,7 @@
 #include "Recursive_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/Recursive_TypeCode.inl"
+# include "Recursive_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include "tao/SystemException.h"
