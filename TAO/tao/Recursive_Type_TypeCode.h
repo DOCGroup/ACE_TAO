@@ -106,6 +106,8 @@ namespace TAO
                                 CORBA::ULong offset) const;
       //@}
 
+    protected:
+
       /**
        * @name TAO @c CORBA::TypeCode Template Methods
        *
@@ -120,6 +122,9 @@ namespace TAO
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL) const;
       //@}
+
+
+    public:
 
       /// Set @c struct @c TypeCode parameters.
       void struct_parameters (char const * name,
