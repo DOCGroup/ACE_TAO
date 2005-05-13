@@ -1,3 +1,9 @@
+Fri May 13 09:31:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (check_recursion):
+
+	  Fixed emulated exception usage error.
+
 Fri May 13 00:04:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Recursive_Type_TypeCode.h:
