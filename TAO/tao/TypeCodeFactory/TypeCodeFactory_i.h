@@ -289,17 +289,23 @@ private:
   CORBA::Boolean valid_disc_type (CORBA::TypeCode_ptr tc
                                   ACE_ENV_ARG_DECL);
 
-  /// Common code for allocating and doing the final assembly of a typecode.
-//   CORBA::TypeCode_ptr assemble_tc (TAO_OutputCDR &cdr,
-//                                    CORBA::TCKind kind,
-//                                    CORBA::TypeCode::OFFSET_MAP *map
-//                                    ACE_ENV_ARG_DECL);
+  /// Check @a member for recursive @c TypeCode.
+  /**
+   * @return @c true if @a member contains a recursive @c TypeCode,
+   *         and set @a recursive_tc to the actual recursive
+   *         @c TypeCode that was represented by the recursive
+   *         @c TypeCode placeholder.
+   */
+  bool check_recursion (CORBA::TCKind kind,
+                        char const * id,
+                        CORBA::TypeCode_ptr member,
+                        CORBA::TypeCode_out recursive_tc
+                        ACE_ENV_ARG_DECL);
 
-//   /// Update the offset map we will pass to the typecode we are constructing.
-//   void update_map (CORBA::TypeCode::OFFSET_MAP *&offset_map,
-//                    CORBA::TypeCode_ptr member_tc,
-//                    const char *id,
-//                    TAO_OutputCDR &cdr);
+  /// Make a recursive TypeCode with the given kind and repository ID.
+  CORBA::TypeCode_ptr make_recursive_tc (CORBA::TCKind kind,
+                                         char const * id
+                                         ACE_ENV_ARG_DECL);
 
   /// Prohibited
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "TypeCodeFactory_i.h"
+#include "Recursive_TypeCode.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Marshal.h"
@@ -19,6 +20,8 @@
 #include "tao/Union_TypeCode.h"
 #include "tao/Value_TypeCode.h"
 
+#include "tao/Recursive_Type_TypeCode.h"
+
 #include "tao/TypeCode_Case_T.h"
 #include "tao/TypeCode_Struct_Field.h"
 #include "tao/TypeCode_Value_Field.h"
@@ -35,9 +38,69 @@
 
 #include "ace/os_include/os_ctype.h"
 
+
 ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_i,
            "$Id$")
+
+
+namespace TCF
+{
+  namespace Struct
+  {
+    typedef
+      ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                                 CORBA::TypeCode_var> >
+        field_array_type;
+
+    typedef TAO::TypeCode::Struct<CORBA::String_var,
+                                  CORBA::TypeCode_var,
+                                  field_array_type,
+                                  TAO::True_RefCount_Policy> typecode_type;
+
+    typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                          CORBA::TypeCode_var,
+                                          field_array_type>
+      recursive_typecode_type;
+
+  }  // End namespace Struct
+
+  namespace Union
+  {
+    // Use an ACE::Value_Ptr to provide exception safety and proper
+    // copying semantics.
+    typedef ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic> elem_type;
+    typedef ACE_Array_Base<elem_type> case_array_type;
+
+    typedef TAO::TypeCode::Union<CORBA::String_var,
+                                 CORBA::TypeCode_var,
+                                 case_array_type,
+                                 TAO::True_RefCount_Policy> typecode_type;
+
+    typedef TAO::TypeCode::Recursive_Type<
+      typecode_type,
+      CORBA::TypeCode_var,
+      case_array_type> recursive_typecode_type;
+  }  // End namespace Union
+
+  namespace Value
+  {
+    typedef
+      ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                                CORBA::TypeCode_var> >
+        field_array_type;
+
+    typedef TAO::TypeCode::Value<CORBA::String_var,
+                                 CORBA::TypeCode_var,
+                                 field_array_type,
+                                 TAO::True_RefCount_Policy> typecode_type;
+
+    typedef TAO::TypeCode::Recursive_Type<typecode_type,
+                                          CORBA::TypeCode_var,
+                                          field_array_type>
+      recursive_typecode_type;
+  }  // End namespace Value
+}
 
 
 TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i (void)
@@ -125,6 +188,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
   // to do it once *before* the overall length is written to the
   // CDR stream, to know by how much, if any, the number of members
   // differs from the number of labels.
+  //
+  // @@ Now that the TypeCode implementation has been rewritten, do we
+  // still need to iterate over the members twice?
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       CORBA::UnionMember const & member = members[i];
@@ -244,12 +310,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                         CORBA::TypeCode::_nil ());
     }
 
-//   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
-
-  // Use an ACE::Value_Ptr to provide exception safety and proper
-  // copying semantics.
-  typedef ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic> elem_type;
-  typedef ACE_Array_Base<elem_type> case_array_type;
+  using namespace TCF::Union;
 
   case_array_type cases (len - dups);
 
@@ -257,6 +318,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
     discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   CORBA::ULong ci = 0;  // Case array index.
+
+  bool is_recursive = false;
+  CORBA::TypeCode_var recursive_tc;
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
@@ -272,6 +336,19 @@ TAO_TypeCodeFactory_i::create_union_tc (
               continue;
             }
         }
+
+      // Check if recursive.
+      bool const recursion_detected =
+        this->check_recursion (CORBA::tk_union,
+                               id,
+                               member.type.in (),
+                               recursive_tc.out ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (tc);
+
+      // Do not clobber previous positive detection.
+      if (recursion_detected)
+        is_recursive = true;
 
       elem_type & element = cases[ci];
 
@@ -528,35 +605,33 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       element->name (member.name.in ());
       element->type (member.type.in ());
-
-//       if (member.type->offset_map () != 0)
-//         {
-//           this->update_map (offset_map,
-//                             member.type.in (),
-//                             id,
-//                             cdr);
-//         }
-
     }
 
-//   return this->assemble_tc (cdr,
-//                             CORBA::tk_union,
-//                             offset_map
-//                             ACE_ENV_ARG_PARAMETER);
-
   // @@ Blame this on MSVC++ 6 workarounds.  *sigh*
-  CORBA::TypeCode_var duped_disc_typed (
+  CORBA::TypeCode_var duped_disc_type (
     CORBA::TypeCode::_duplicate (discriminator_type));
 
-  typedef TAO::TypeCode::Union<CORBA::String_var,
-                               CORBA::TypeCode_var,
-                               case_array_type,
-                               TAO::True_RefCount_Policy> typecode_type;
+  if (is_recursive)
+    {
+
+      recursive_typecode_type * const rtc =
+        dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
+
+      ACE_ASSERT (rtc);
+
+      rtc->union_parameters (name,
+                             duped_disc_type,
+                             cases,     // Will be copied.
+                             cases.size (),
+                             default_index);
+
+      return recursive_tc._retn ();
+    }
 
   ACE_NEW_THROW_EX (tc,
                     typecode_type (id,
                                    name,
-                                   duped_disc_typed,
+                                   duped_disc_type,
                                    cases,     // Will be copied.
                                    cases.size (),
                                    default_index),
@@ -1315,16 +1390,17 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
                         tc);
     }
 
-  // @@ TODO: Re-enable recursive struct TypeCode support.
-
   CORBA::ULong const len = members.length ();
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
-//   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
 
-  ACE_Array_Base<
-    TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                CORBA::TypeCode_var> > fields (len);
+  using namespace TCF::Struct;
+
+  field_array_type fields (len);
+
+  bool is_recursive = false;
+
+  CORBA::TypeCode_var recursive_tc;
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
@@ -1366,35 +1442,34 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
       TAO::TypeCode::Struct_Field<CORBA::String_var,
                                   CORBA::TypeCode_var> & field = fields[index];
 
+      // Check if recursive.
+      bool const recursion_detected =
+        this->check_recursion (kind,
+                               id,
+                               member_tc,
+                               recursive_tc.out ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (tc);
+
+      // Do not clobber previous positive detection.
+      if (recursion_detected)
+        is_recursive = true;
+
       field.name = member_name;
       field.type = CORBA::TypeCode::_duplicate (member_tc);
-
-//       cdr << member_name;
-
-//       if (member_tc->offset_map () != 0)
-//         {
-//           // Exceptions can't be recursive.
-//           if (kind != CORBA::tk_struct)
-//             {
-//               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-//                                 tc);
-//             }
-
-//           this->update_map (offset_map,
-//                             member_tc,
-//                             id,
-//                             cdr);
-//         }
-
-//       cdr << member_tc;
     }
 
-  typedef TAO::TypeCode::Struct<
-    CORBA::String_var,
-    CORBA::TypeCode_var,
-    ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                               CORBA::TypeCode_var> >,
-    TAO::True_RefCount_Policy> typecode_type;
+  if (is_recursive)
+    {
+      recursive_typecode_type * const rtc =
+        dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
+
+      ACE_ASSERT (rtc);
+
+      rtc->struct_parameters (name, fields, len);
+
+      return recursive_tc._retn ();
+    }
 
   ACE_NEW_THROW_EX (tc,
                     typecode_type (kind,
@@ -1490,14 +1565,14 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
   CORBA::ULong const len = members.length ();
 
-  ACE_Array_Base<
-    TAO::TypeCode::Value_Field<CORBA::String_var,
-                               CORBA::TypeCode_var> > fields (len);
+  using namespace TCF::Value;
 
-  // @@ TODO: Re-enable recursive valuetype TypeCode support.
+  field_array_type fields (len);
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
-  //   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
+
+  bool is_recursive = false;
+  CORBA::TypeCode_var recursive_tc;
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
@@ -1535,26 +1610,25 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
                             tc);
         }
 
+      // Check if recursive.
+      bool const recursion_detected =
+        this->check_recursion (kind,
+                               id,
+                               member_tc,
+                               recursive_tc.out ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (tc);
+
+      // Do not clobber previous positive detection.
+      if (recursion_detected)
+        is_recursive = true;
+
       TAO::TypeCode::Value_Field<CORBA::String_var,
                                  CORBA::TypeCode_var> & field = fields[index];
 
       field.name       = member_name;
       field.type       = CORBA::TypeCode::_duplicate (member_tc);
       field.visibility = members[index].access;
-
-//       cdr << member_name;
-
-//       if (member_tc->offset_map () != 0)
-//         {
-//           this->update_map (offset_map,
-//                             member_tc,
-//                             id,
-//                             cdr);
-//         }
-
-//       cdr << member_tc;
-
-//       cdr << members[index].access;
     }
 
   CORBA::TypeCode_var tmp (
@@ -1562,12 +1636,21 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
                                  ? CORBA::_tc_null
                                  : concrete_base));
 
-  typedef TAO::TypeCode::Value<
-    CORBA::String_var,
-    CORBA::TypeCode_var,
-    ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                              CORBA::TypeCode_var> >,
-    TAO::True_RefCount_Policy> typecode_type;
+  if (is_recursive)
+    {
+      recursive_typecode_type * const rtc =
+        dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
+
+      ACE_ASSERT (rtc);
+
+      rtc->valuetype_parameters (name,
+                                 type_modifier,
+                                 tmp,
+                                 fields,
+                                 len);
+
+      return recursive_tc._retn ();
+    }
 
   ACE_NEW_THROW_EX (tc,
                     typecode_type (kind,
@@ -1652,10 +1735,8 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
 
   switch (kind)
   {
-    case CORBA::tk_null:
-      // @todo FIXME
-      ACE_THROW_RETURN (CORBA::INTERNAL (), false);
-      // return tc->offset_map () != 0;
+    case CORBA::TAO_TC_KIND_COUNT:
+      return 1;  // Recursive TypeCode.
     case CORBA::tk_void:
     case CORBA::tk_except:
       return 0;
@@ -1665,10 +1746,11 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members,
-                                            CORBA::TypeCode_ptr disc_tc,
-                                            CORBA::ULong default_index_slot
-                                            ACE_ENV_ARG_DECL)
+TAO_TypeCodeFactory_i::unique_label_values (
+  const CORBA::UnionMemberSeq &members,
+  CORBA::TypeCode_ptr disc_tc,
+  CORBA::ULong default_index_slot
+  ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind disc_kind = disc_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -1838,152 +1920,214 @@ TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
      || kind == CORBA::tk_ulonglong);
 }
 
-// CORBA::TypeCode_ptr
-// TAO_TypeCodeFactory_i::assemble_tc (TAO_OutputCDR &cdr,
-//                                     CORBA::TCKind kind,
-//                                     CORBA::TypeCode::OFFSET_MAP *map
-//                                     ACE_ENV_ARG_DECL)
-// {
-//   ACE_Message_Block consolidated_block;
+bool
+TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
+                                        char const * id,
+                                        CORBA::TypeCode_ptr member,
+                                        CORBA::TypeCode_out recursive_tc
+                                        ACE_ENV_ARG_DECL)
+{
+  if (kind != CORBA::tk_struct
+      && kind != CORBA::tk_union
+      && kind != CORBA::tk_value
+      && kind != CORBA::tk_event
+      && kind != CORBA::tk_sequence
+      && kind != CORBA::tk_array
+      && kind != CORBA::tk_alias)
+    return false;
 
-//   ACE_CDR::consolidate (&consolidated_block,
-//                         cdr.begin ());
+  CORBA::TypeCode_var unaliased_member =
+    TAO::unaliased_typecode (member
+                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
 
-//   CORBA::TypeCode_ptr new_typecode =
-//     CORBA::TypeCode::_nil ();
+  CORBA::TCKind const unaliased_member_kind =
+    unaliased_member->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
 
-//   ACE_NEW_THROW_EX (new_typecode,
-//                     CORBA::TypeCode (kind,
-//                                      consolidated_block.length (),
-//                                      consolidated_block.rd_ptr (),
-//                                      true,
-//                                      0),
-//                     CORBA::NO_MEMORY ());
-//   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  // Recursively iterate through the member and content types until
+  // we've exhausted all TypeCodes capable of containing other
+  // TypeCodes.
+  switch (unaliased_member_kind)
+    {
+    case CORBA::tk_struct:
+    case CORBA::tk_union:
+    case CORBA::tk_value:
+    case CORBA::tk_event:
+      {
+        CORBA::ULong const nfields =
+          unaliased_member->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-//   new_typecode->offset_map (map);
-//   return new_typecode;
-// }
+        for (CORBA::ULong i = 0; i < nfields; ++i)
+          {
+            CORBA::TypeCode_var member_tc =
+              unaliased_member->member_type (i
+                                             ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
 
-// void
-// TAO_TypeCodeFactory_i::update_map (
-//     CORBA::TypeCode::OFFSET_MAP *&offset_map,
-//     CORBA::TypeCode_ptr member_tc,
-//     const char *id,
-//     TAO_OutputCDR &cdr
-//   )
-// {
-//   ptrdiff_t unaligned_offset =
-//     static_cast<ptrdiff_t> (cdr.total_length ());
+            CORBA::TCKind const member_tc_kind =
+              member_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
 
-//   CORBA::Long aligned_offset =
-//     static_cast<CORBA::Long> (ACE_align_binary (unaligned_offset,
-//                                        sizeof (CORBA::Long)));
+            if (member_tc_kind == CORBA::TAO_TC_KIND_COUNT)
+              {
+                // Valuetypes can directly contain a recursive member
+                // (e.g. valuetype V { public V member; };).  Check if
+                // the member TypeCode is the recursive TypeCode
+                // placeholder.
+                if (kind == CORBA::tk_value || kind == CORBA::tk_event)
+                  {
+                    char const * member_tc_id =
+                      member_tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+                    ACE_CHECK_RETURN (false);
 
-//   CORBA::TypeCode::OFFSET_MAP *member_offset_map = member_tc->offset_map ();
-//   CORBA::TypeCode::OFFSET_LIST *offset_list = 0;
-//   CORBA::Long *list_entry = 0;
-//   const char *member_id = 0;
-//   int no_matching_id = 1;
-//   int propagating_recursion = 1;
+                    if (ACE_OS::strcmp (id, member_tc_id) == 0)
+                      {
+                        TAO::TypeCodeFactory::Recursive_TypeCode * const rtc =
+                          dynamic_cast<
+                            TAO::TypeCodeFactory::Recursive_TypeCode *> (
+                              member_tc.in ());
 
-//   // For anything except the immediate product of create_recursive_tc,
-//   // the insertion of a member will include an encap length.
-//   CORBA::Long member_encap_len_bytes =
-//     member_tc->kind_ == ~0 ? 0 : static_cast<CORBA::Long> (sizeof (CORBA::Long));
+                        ACE_ASSERT (rtc);
 
-//   CORBA::Long tc_kind_bytes =
-//     static_cast<CORBA::Long> (sizeof (CORBA::TCKind));
+                        if (CORBA::is_nil (recursive_tc.ptr ()))
+                          {
+                            recursive_tc =
+                              this->make_recursive_tc (kind,
+                                                       id
+                                                       ACE_ENV_ARG_PARAMETER);
+                            ACE_CHECK_RETURN (false);
+                          }
 
-//   for (CORBA::TypeCode::OFFSET_MAP_ITERATOR iter (*member_offset_map);
-//        ! iter.done ();
-//        iter.advance ())
-//     {
-//       member_id = (*iter).ext_id_;
+                        // Set the actual recursive TypeCode.
+                        rtc->the_typecode (recursive_tc.ptr ());
 
-//       if (offset_map != 0)
-//         {
-//           no_matching_id = offset_map->find (member_id, offset_list);
-//         }
+                        return true;
+                      }
 
-//       if (no_matching_id && id != 0)
-//         {
-//           propagating_recursion = ACE_OS::strcmp (member_id, id);
-//         }
+                    // Different recursive TypeCode.  Let it be.
+                  }
+                else
+                  {
+                    // @@ structs and unions may not directly contain
+                    //    recursive members.  They must be indirectly
+                    //    recursive through a member sequence (which
+                    //    itself may be contained inside a nested
+                    //    struct, union, etc).
+                        ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), false);
+                  }
+              }
+            else if (this->check_recursion (kind,
+                                            id,
+                                            member_tc.in (),
+                                            recursive_tc))
+              {
+                return true;
+              }
 
-//      if (propagating_recursion)
-//         {
-//           ACE_NEW (offset_list,
-//                    CORBA::TypeCode::OFFSET_LIST);
-//         }
+            // Not recursive or not the recursive TypeCode we want.
+            // Try the next member.
+          }
+      }
+      break;
 
-//       for (CORBA::TypeCode::OFFSET_LIST_ITERATOR list_iter (*(*iter).int_id_);
-//            ! list_iter.done ();
-//            list_iter.advance ())
-//         {
-//           list_iter.next (list_entry);
+    case CORBA::tk_sequence:
+    case CORBA::tk_array:
+      {
+        CORBA::TypeCode_var content_tc =
+          unaliased_member->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-//           if (propagating_recursion)
-//             {
-//               offset_list->enqueue_tail (*list_entry
-//                                          + aligned_offset
-//                                          + member_encap_len_bytes
-//                                          + tc_kind_bytes);
+        CORBA::TCKind const content_tc_kind =
+          content_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-//               if (offset_map == 0)
-//                 {
-//                   ACE_NEW (offset_map,
-//                            CORBA::TypeCode::OFFSET_MAP);
-//                 }
-//             }
-//           else
-//             {
-//               const char *slot =
-//                 member_tc->buffer_ + static_cast<ptrdiff_t> (*list_entry);
+        if (content_tc_kind == CORBA::TAO_TC_KIND_COUNT)
+          {
+            char const * content_tc_id =
+              content_tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK_RETURN (false);
 
-//               CORBA::Long recursion_offset =
-//                 -1 * (aligned_offset
-//                       + *list_entry
-//                       + tc_kind_bytes               // Member TCKind.
-//                       + member_encap_len_bytes      // Member encap length.
-//                       + 4                           // Top level encap length.
-//                       + tc_kind_bytes);             // Top level TCKind.
+            if (ACE_OS::strcmp (id, content_tc_id) == 0)
+              {
+                TAO::TypeCodeFactory::Recursive_TypeCode * const rtc =
+                  dynamic_cast<TAO::TypeCodeFactory::Recursive_TypeCode *>
+                  (content_tc.in ());
 
-// #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-//               *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
-//                 recursion_offset;
-// #else
-//               if (! cdr.do_byte_swap ())
-//                 {
-//                   *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
-//                     recursion_offset;
-//                 }
-//               else
-//                 {
-//                   ACE_CDR::swap_4 (reinterpret_cast<char *> (&recursion_offset),
-//                                    const_cast<char *> (slot));
-//                 }
-// #endif /* ACE_ENABLE_SWAP_ON_WRITE */
-//             }
-//         }
+                ACE_ASSERT (rtc);
 
-//       if (no_matching_id && offset_map != 0)
-//         {
-//           char *str = CORBA::string_dup (member_id);
-//           int status = offset_map->bind (str, offset_list);
+                if (CORBA::is_nil (recursive_tc.ptr ()))
+                  {
+                    recursive_tc =
+                      this->make_recursive_tc (kind,
+                                               id
+                                               ACE_ENV_ARG_PARAMETER);
+                    ACE_CHECK_RETURN (false);
+                  }
 
-//           if (status != 0)
-//             {
-//               CORBA::string_free (str);
+                // Set the actual recursive TypeCode.
+                rtc->the_typecode (recursive_tc.ptr ());
 
-//               if (propagating_recursion)
-//                 {
-//                   delete offset_list;
-//                 }
-//             }
-//         }
-//     }
-// }
+                return true;
+              }
+
+            // Different recursive TypeCode.  Let it be.
+          }
+
+        return this->check_recursion (kind,
+                                      id,
+                                      content_tc.in (),
+                                      recursive_tc
+                                      ACE_ENV_ARG_PARAMETER);
+      }
+
+    default:
+      break;  // Not a recursion-capable TypeCode.
+    }
+
+  return false;
+}
+
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind,
+                                          char const * id
+                                          ACE_ENV_ARG_DECL)
+{
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+
+  switch (kind)
+    {
+    case CORBA::tk_struct:
+      ACE_NEW_THROW_EX (tc,
+                        TCF::Struct::recursive_typecode_type (kind, id),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+      break;
+
+    case CORBA::tk_union:
+      ACE_NEW_THROW_EX (tc,
+                        TCF::Union::recursive_typecode_type (kind, id),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+      break;
+
+    case CORBA::tk_value:
+    case CORBA::tk_event:
+      ACE_NEW_THROW_EX (tc,
+                        TCF::Value::recursive_typecode_type (kind, id),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+      break;
+
+    default:  // Should never hit this case.
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        tc);
+    }
+
+  return tc;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
