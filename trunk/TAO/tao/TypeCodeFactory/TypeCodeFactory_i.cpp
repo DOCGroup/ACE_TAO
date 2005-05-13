@@ -342,7 +342,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         this->check_recursion (CORBA::tk_union,
                                id,
                                member.type.in (),
-                               recursive_tc.out ()
+                               recursive_tc.inout ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (tc);
 
@@ -884,60 +884,21 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-#if 0
+  ACE_NEW_THROW_EX (tc,
+                    TAO::TypeCodeFactory::Recursive_TypeCode (id),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
 
-  CORBA::TypeCode::OFFSET_MAP *map = 0;
-  ACE_NEW_RETURN (map,
-                  CORBA::TypeCode::OFFSET_MAP,
-                  CORBA::TypeCode::_nil ());
-
-  CORBA::ULong initial_offset = 0;
-  CORBA::TypeCode::OFFSET_LIST *list = 0;
-  ACE_NEW_RETURN (list,
-                  CORBA::TypeCode::OFFSET_LIST,
-                  CORBA::TypeCode::_nil ());
-  list->enqueue_tail (initial_offset);
-  char *str = CORBA::string_dup (id);
-  const int status = map->bind (str, list);
-
-  if (status != 0)
-    {
-      CORBA::string_free (str);
-      delete list;
-      delete map;
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
-    }
-
-  TAO_OutputCDR cdr;
-  CORBA::Long max_neg = 0xffffffff;
-
-  // Negative offset value, updated later with the actual value.
-  cdr << max_neg;
-
-  // In an embedded recursive typecode, the indirection
-  // value -1 goes where the TCKind would go for any
-  // other embedded typecode.
-  CORBA::TCKind rec_kind =
-    static_cast<CORBA::TCKind> (max_neg);
-
-  return this->assemble_tc (cdr,
-                            rec_kind,
-                            map
-                            ACE_ENV_ARG_PARAMETER);
-
-#else
-
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
-
-#endif  /* 0 */
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -1447,7 +1408,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
         this->check_recursion (kind,
                                id,
                                member_tc,
-                               recursive_tc.out ()
+                               recursive_tc.inout ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (tc);
 
@@ -1615,7 +1576,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
         this->check_recursion (kind,
                                id,
                                member_tc,
-                               recursive_tc.out ()
+                               recursive_tc.inout ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (tc);
 
@@ -1924,7 +1885,7 @@ bool
 TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                                         char const * id,
                                         CORBA::TypeCode_ptr member,
-                                        CORBA::TypeCode_out recursive_tc
+                                        CORBA::TypeCode_ptr & recursive_tc
                                         ACE_ENV_ARG_DECL)
 {
   if (kind != CORBA::tk_struct
@@ -1991,7 +1952,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
                         ACE_ASSERT (rtc);
 
-                        if (CORBA::is_nil (recursive_tc.ptr ()))
+                        if (CORBA::is_nil (recursive_tc))
                           {
                             recursive_tc =
                               this->make_recursive_tc (kind,
@@ -2001,7 +1962,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                           }
 
                         // Set the actual recursive TypeCode.
-                        rtc->the_typecode (recursive_tc.ptr ());
+                        rtc->the_typecode (recursive_tc);
 
                         return true;
                       }
@@ -2057,7 +2018,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
                 ACE_ASSERT (rtc);
 
-                if (CORBA::is_nil (recursive_tc.ptr ()))
+                if (CORBA::is_nil (recursive_tc))
                   {
                     recursive_tc =
                       this->make_recursive_tc (kind,
@@ -2067,7 +2028,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                   }
 
                 // Set the actual recursive TypeCode.
-                rtc->the_typecode (recursive_tc.ptr ());
+                rtc->the_typecode (recursive_tc);
 
                 return true;
               }
