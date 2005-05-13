@@ -1,3 +1,24 @@
+Fri May 13 00:04:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Recursive_Type_TypeCode.h:
+
+	  Protected class members that were public but should have been
+	  protected.
+
+	* tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+	* tao/TypeCodeFactory/Recursive_TypeCode.h:
+	* tao/TypeCodeFactory/Recursive_TypeCode.inl:
+
+	  A placeholder TypeCode for recursive TypeCodes.  It is meant
+	  solely for use as an intermediate TypeCode, and merely forwards
+	  all operations to the actual recursive TypeCode that is set by
+	  the TypeCodeFactory.
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+	  Added support for recursive TypeCodes.
+
 Thu May 12 19:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/TAO-tutorials.html:
