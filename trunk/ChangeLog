@@ -1,3 +1,8 @@
+Fri May 13 06:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.inl:
+          Made fix for Intel C++ compiler under Windows
+
 Thu May 12 10:20:55 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* Updated the COPYING file to clarify some ambiguity about
