@@ -1,3 +1,8 @@
+Sat May 14 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Added new TypeCodeFactory files
+
 Fri May 13 11:08:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory/Recursive_TypeCode.cpp:
