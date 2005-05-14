@@ -2512,6 +2512,7 @@ libTAO_TypeCodeFactory_la_SOURCES = \
   TypeCodeFactory/TypeCodeFactoryC.cpp \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp \
   TypeCodeFactory/TypeCodeFactory_Loader.cpp \
+  TypeCodeFactory/Recursive_TypeCode.cpp \
   TypeCodeFactory/TypeCodeFactory_i.cpp
 
 libTAO_TypeCodeFactory_la_LDFLAGS = \
@@ -2528,6 +2529,8 @@ nobase_include_HEADERS += \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h \
   TypeCodeFactory/TypeCodeFactory_Loader.h \
   TypeCodeFactory/TypeCodeFactory_i.h \
+  TypeCodeFactory/Recursive_TypeCode.h \
+  TypeCodeFactory/Recursive_TypeCode.inl \
   TypeCodeFactory/typecodefactory_export.h
 
 pkgconfig_DATA += TAO_TypeCodeFactory.pc
