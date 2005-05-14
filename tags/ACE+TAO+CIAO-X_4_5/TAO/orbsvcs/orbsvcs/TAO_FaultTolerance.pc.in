@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: TAO_FaultTolerance
+Description: TAO Fault Tolerant Client ORB Library
+Requires: TAO_FT_ServerORB, TAO_FT_ClientORB, TAO_CosNotification
+Version: @VERSION@
+Libs: -L${libdir} -lTAO_FaultTolerance
+Cflags: -I${includedir}
