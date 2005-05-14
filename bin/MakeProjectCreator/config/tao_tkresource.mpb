@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: acelib, ace_tkreactor {
-  requires += tao_tkresource
-  after    += TAO_TkResource
-  libs     += TAO_TkResource
-}
