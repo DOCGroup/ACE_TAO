@@ -281,7 +281,7 @@ be_visitor_arg_traits::visit_eventtype_fwd (be_eventtype_fwd *node)
 int
 be_visitor_arg_traits::visit_operation (be_operation *node)
 {
-  if (this->generated (node) || node->is_local ())
+  if (this->generated (node) || node->is_local () || node->imported ())
     {
       return 0;
     }
