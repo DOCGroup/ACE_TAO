@@ -1,3 +1,19 @@
+Mon May 16 12:33:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* THANKS:
+
+	  Added Mario Di Giacomo to the Hall of Fame.
+
+	* ace/Service_Templates.cpp:
+
+	  Include "ace/SString.h" to pull in ACE_TString declaration.
+	  Thanks to Mario Di Giacomo <mdigiacomo at anteon dot com> for
+	  reporting the problem.
+
+	* tests/Cache_Map_Manager_Test.cpp (find_test_cache):
+
+	  Fixed "variable may be used uninitialized" warning.
+
 Mon May 16 19:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Malloc.h:
