@@ -17,7 +17,10 @@ VXWORKS = 1
 CROSS-COMPILE = 1
 
 ifeq ("$(OS)", "Windows_NT")
+ifneq ($(MAKE_MODE), unix)
 vxworks_ntbuild = 1
+MKDIR_NTSTYLE = 1
+endif
 endif
 
 debug ?= 1
@@ -112,6 +115,10 @@ include $(TGT_DIR)/h/make/defs.default
 include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
 include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
 include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+
+ifeq ($(MAKE_MODE), unix)
+  RM=rm -f
+endif
 
 ifeq ("$(VXWORKSLINK)","true")
   override LARGE_PROJECT =
