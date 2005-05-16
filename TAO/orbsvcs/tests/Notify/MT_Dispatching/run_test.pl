@@ -21,7 +21,7 @@ $status = 0;
    {
     description => "no threads",
     config => "notify_nothreads$PerlACE::svcconf_ext",
-    supplier => " -c 10 -f",
+    supplier => " -c 10 -e 10 -f",
     consumer => " -c 2 -f -e 48",
    },
    {

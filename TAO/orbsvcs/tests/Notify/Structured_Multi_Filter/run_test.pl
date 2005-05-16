@@ -82,6 +82,8 @@ foreach $ops (@ops)
     unlink $ior;
     unlink $notifyior;
 
+    sleep (2);
+
     #################
     print "\n********** Running Structured_Consumer Test\n\n";
 
@@ -120,6 +122,8 @@ foreach $ops (@ops)
 
     unlink $ior;
     unlink $notifyior;
+
+    sleep (2);
   }
 
 

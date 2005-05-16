@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: orbsvcslib, rtevent, svc_utils, iortable, portableserver {
+project: rtevent {
   sharedname = ECMcastTests
   dynamicflags   = ECMCASTTESTS_BUILD_DLL
   Header_Files {
