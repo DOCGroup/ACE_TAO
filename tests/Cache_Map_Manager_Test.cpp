@@ -240,7 +240,7 @@ find_test_cache (MAP_CACHE &cache)
 {
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
-      VALUE j;
+      VALUE j = 0;
       int result = cache.find (lookup_array[i], j);
 
       ACE_ASSERT (result != -1);
