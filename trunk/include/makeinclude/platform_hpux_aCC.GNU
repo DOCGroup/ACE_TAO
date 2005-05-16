@@ -15,27 +15,13 @@
 #  -Wl,+vnocompatwarnings is added to shut up the "At least one PA 2.0 object
 # file detected..." messages.
 
-ifeq (,$(buildbits))
-  buildbits = 0
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(versioned_so))
-  versioned_so = 0
-endif
+buildbits ?= 0
+debug ?= 1
+distrib ?= 0
+exceptions ?= 1
+optimize ?= 0
+threads ?= 1
+versioned_so ?= 0
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
@@ -141,7 +127,7 @@ CPPFLAGS        += $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LAC
 # If exception support is explicitly disabled, tell the compiler.
 # This is not recommended since the run-time library can throw exceptions.
 ifneq ($(exceptions),1)
-CCFLAGS  += +noeh
+  CCFLAGS  += +noeh
 endif
 
 # Additionally, on HP-UX 10.20, suppress 495 to shut up the warnings from

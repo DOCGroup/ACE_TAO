@@ -4,21 +4,12 @@
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
 # should allow ACE to be built on Linux.
 
-# debug = 1
-# optimize = 1
-
 # We always include config-linux.h on Linux platforms.
 ACE_PLATFORM_CONFIG ?= config-linux.h
 
 exceptions ?= 1
-
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-
+debug ?= 1
+optimize ?= 1
 threads ?= 1
 
 PLATFORM_XT_CPPFLAGS=
@@ -92,8 +83,8 @@ ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
-# 
-# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h 
+#
+# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
 # instead of setting them directly here (older versions of gcc don't set it
 # for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, etc...
 CPPFLAGS += -D_GNU_SOURCE
@@ -109,9 +100,9 @@ endif
 # look for the rt library in the usual places
 LIBS += $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -lrt)
 
-PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
-PLATFORM_QT_LIBS=-lqt-mt
-PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
+PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
+PLATFORM_QT_LIBS ?= -lqt-mt
+PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
 
 OCFLAGS ?= -O3
 PIC     = -fPIC
@@ -123,7 +114,7 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

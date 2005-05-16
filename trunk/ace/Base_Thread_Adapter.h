@@ -25,7 +25,7 @@
 #include "os_include/sys/os_time.h"
 #endif // ACE_USES_GPROF
 
-// Run the thread entry point for the <ACE_Thread_Adapter>.  This must
+// Run the thread entry point for the ACE_Thread_Adapter.  This must
 // be an extern "C" to make certain compilers happy...
 #if defined (ACE_PSOS)
 extern "C" void ace_thread_adapter (unsigned long args);

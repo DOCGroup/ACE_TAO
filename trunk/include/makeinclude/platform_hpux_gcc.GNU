@@ -1,33 +1,15 @@
 # $Id$
 #
 
-ifeq (,$(buildbits))
-  buildbits = 0
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(stdcpplib))
-  stdcpplib = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(versioned_so))
-  versioned_so = 0
-endif
-ifeq (,$(with_ld))
-  with_ld = hpux
-endif
+buildbits ?= 0
+debug ?= 1
+distrib ?= 0
+exceptions ?= 1
+optimize ?= 1
+stdcpplib ?= 1
+threads ?= 1
+versioned_so ?= 0
+with_ld ?= hpux
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))

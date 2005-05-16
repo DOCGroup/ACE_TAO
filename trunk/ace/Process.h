@@ -74,8 +74,8 @@ protected:
 
 public:
   /**
-   * If <inherit_environment> == 1, the new process will inherit the
-   * environment of the current process.  <command_line_buf_len> is the
+   * If @a inherit_environment == 1, the new process will inherit the
+   * environment of the current process.  @a command_line_buf_len is the
    * max strlen for command-line arguments.
    */
   ACE_Process_Options (int inherit_environment = 1,
@@ -107,7 +107,7 @@ public:
               ...);
 
   /**
-   * Set a single environment variable, <variable_name>.  Since
+   * Set a single environment variable, @a variable_name.  Since
    * different platforms separate each environment variable
    * differently, you must call this method once for each variable.
    * <format> can be any printf format string.  So options->setenv
@@ -118,10 +118,10 @@ public:
               const ACE_TCHAR *format,
               ...);
 
-  /// Same as above with argv format.  <envp> must be null terminated.
+  /// Same as above with argv format.  @a envp must be null terminated.
   int setenv (ACE_TCHAR *envp[]);
 
-  /// Set the working directory for the process.  strlen of <wd> must
+  /// Set the working directory for the process.  strlen of @a wd must
   /// be <= MAXPATHLEN.
   void working_directory (const char *wd);
 
@@ -131,8 +131,8 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /**
-   * Set the command-line arguments.  <format> can use any printf
-   * formats.  The first token in <format> should be the path to the
+   * Set the command-line arguments.  @a format can use any printf
+   * formats.  The first token in @a format should be the path to the
    * application.  This can either be a full path, relative path, or
    * just an executable name.  If an executable name is used, we rely
    * on the platform's support for searching paths.  Since we need a
@@ -146,13 +146,13 @@ public:
   int command_line (const ACE_ANTI_TCHAR *format, ...);
 #endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
 
-  /// Same as above in argv format.  <argv> must be null terminated.
+  /// Same as above in argv format.  @a argv must be null terminated.
   int command_line (const ACE_TCHAR * const argv[]);
 
   // = Set/get the pathname used to name the process.
   /**
    * Specify the full path or relative path, or just the executable
-   * name for the process. If this is set, then <name> will be used to
+   * name for the process. If this is set, then @a name will be used to
    * create the process instead of argv[0] set in the command
    * line. This is here so that you can supply something other than
    * executable name as argv[0].
@@ -163,7 +163,6 @@ public:
   /// method is not called, this method will return argv[0].
   const ACE_TCHAR *process_name (void);
 
-  // = Set/get creation flags.
   /// Get the creation flags.
   u_long creation_flags (void) const;
 
@@ -203,17 +202,15 @@ public:
    */
   ACE_TCHAR *env_buf (void);
 
-  // = Get/set process group.
   /// Get the process group.  On UNIX, these methods are used by the
-  /// <ACE_Process_Manager> to manage groups of processes.
+  /// ACE_Process_Manager to manage groups of processes.
   pid_t getgroup (void) const;
 
   /// Set the process group.  On UNIX, these methods are used by the
-  /// <ACE_Process_Manager> to manage groups of processes.
+  /// ACE_Process_Manager to manage groups of processes.
   pid_t setgroup (pid_t pgrp);
 
-  /// Default is TRUE.
-  /// Allows disabling of handle inheritence.
+  /// Allows disabling of handle inheritence, default is TRUE.
   int handle_inheritence (void);
   void handle_inheritence (int);
 
@@ -309,8 +306,8 @@ public:
 protected:
 
 #if !defined (ACE_HAS_WINCE)
-  /// Add <assignment> to environment_buf_ and adjust
-  /// environment_argv_.  <len> is the strlen of <assignment>.
+  /// Add @a assignment to environment_buf_ and adjust
+  /// environment_argv_.  @a len is the strlen of @a assignment.
   int setenv_i (ACE_TCHAR *assignment, size_t len);
 
   /// Whether the child process inherits the current process
@@ -456,7 +453,7 @@ public:
   virtual int prepare (ACE_Process_Options &options);
 
   /**
-   * Launch a new process as described by <options>.  Returns the
+   * Launch a new process as described by @a options.  Returns the
    * process id of the newly spawned child on success or -1 on
    * failure.
    */
@@ -586,7 +583,7 @@ class ACE_Export ACE_Managed_Process : public ACE_Process
 public:
   ACE_Managed_Process ();
 
-  /// Cleanup by deleting <this>.
+  /// Cleanup by deleting @c this.
   virtual void unmanage (void);
 
 private:
