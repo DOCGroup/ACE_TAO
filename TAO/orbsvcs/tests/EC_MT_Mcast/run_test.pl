@@ -12,23 +12,27 @@ $status = 0;
 
 $svc_conf = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
 
+$mcast_address = (int(rand(16)) + 224) . '.' . int(rand(256)) . '.' .
+                 int(rand(256)) . '.' . int(rand(256)) . ':' .
+                 (10001 + PerlACE::uniqueid());
+
 # Run two copies of the same test...
 $T1 = new PerlACE::Process ("MCast",
-                            "-ORBSvcConf $svc_conf");
+                            "-m $mcast_address -ORBSvcConf $svc_conf");
 $T2 = new PerlACE::Process ("MCast",
-                            "-ORBSvcConf $svc_conf");
+                            "-m $mcast_address -ORBSvcConf $svc_conf");
 
 $T1->Spawn ();
 $T2->Spawn ();
 
-$test1 = $T1->WaitKill (300);
+$test1 = $T1->WaitKill (600);
 
 if ($test1 != 0) {
     print STDERR "ERROR: test 1 returned $test1\n";
     $status = 1;
 }
 
-$test2 = $T2->WaitKill (300);
+$test2 = $T2->WaitKill (30);
 
 if ($test2 != 0) {
     print STDERR "ERROR: test 2 returned $test2\n";

@@ -37,6 +37,14 @@ while ($line = <DATA>)
     chomp $line;
     @words = split (/ /, $line);
 
+    # Ignore the empty line, the "CommandLine:" line and the "WARNING:" line
+    # from the orbsvcs/orbsvcs/Shutdown_Utilities.cpp.
+    if ($#words == -1 or
+        $words[0] eq "CommandLine:" or
+        $line =~ /WARNING: /) {
+      next;
+    }
+
     # Make sure the line contains expected output.
     if (not ($words[0] eq "Unbound" or
              $words[0] eq "Bound" or

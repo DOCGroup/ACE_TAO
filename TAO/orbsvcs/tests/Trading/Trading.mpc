@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Test Lib): orbsvcslib, trading_serv, naming, svc_utils, iortable, portableserver {
+project(*Test Lib): orbsvcslib, trading_serv, naming {
   sharedname = TTest
   idlflags += -I..\..\.. -I..\..\..\orbsvcs -Sc -Wb,export_macro=TAO_TTest_Export -Wb,export_include=ttest_export.h
   dynamicflags = TAO_TTEST_BUILD_DLL
@@ -23,7 +23,7 @@ project(*Test Lib): orbsvcslib, trading_serv, naming, svc_utils, iortable, porta
   }
 }
 
-project(*export test): namingexe, trading_serv, utils, portableserver {
+project(*export test): namingexe, trading_serv {
   after   += Trading_Test_Lib
   libs    += TTest
 
@@ -35,7 +35,7 @@ project(*export test): namingexe, trading_serv, utils, portableserver {
   }
 }
 
-project(*import test): namingexe, trading_serv, utils, portableserver {
+project(*import test): namingexe, trading_serv {
   after   += Trading_Test_Lib
   libs    += TTest
 
@@ -47,7 +47,7 @@ project(*import test): namingexe, trading_serv, utils, portableserver {
   }
 }
 
-project(*colocated test): namingexe, trading_serv, utils {
+project(*colocated test): namingexe, trading_serv {
   after   += Trading_Test_Lib
   libs    += TTest
 

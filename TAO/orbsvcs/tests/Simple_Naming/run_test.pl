@@ -11,6 +11,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../../bin';
 use PerlACE::Run_Test;
+use Cwd;
+
+## Save the starting directory
+$startdir = getcwd();
 
 # Amount of delay (in seconds) between starting a server and a client
 # to allow proper server initialization.
@@ -37,7 +41,7 @@ $status = 0;
 sub name_server
 {
     my $args = "-ORBNameServicePort $ns_multicast_port -o $iorfile -m 1 @_";
-    my $prog = "../../Naming_Service/Naming_Service";
+    my $prog = "$startdir/../../Naming_Service/Naming_Service";
     $NS = new PerlACE::Process ($prog, $args);
 
     unlink $iorfile;
@@ -54,7 +58,7 @@ sub name_server
 sub client
 {
     my $args = "@_"." ";
-    my $prog = "client";
+    my $prog = "$startdir/client";
 
     $CL = new PerlACE::Process ($prog, $args);
 
@@ -98,6 +102,22 @@ sub client
              );
 
 $test_number = 0;
+
+## Allow the user to determine where the persistent file will be located
+## just in case the current directory is not suitable for locking.
+## We can't change the name of the persistent file because that is not
+## sufficient to work around locking problems for Tru64 when the current
+## directory is NFS mounted from a system that does not properly support
+## locking.
+foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
+  if (defined $possible && -d $possible) {
+    if (chdir($possible)) {
+      last;
+    }
+  }
+}
+
+print "INFO: Running the test in ", getcwd(), "\n";
 
 unlink ($persistent_ior_file, $persistent_log_file);
 
@@ -151,7 +171,7 @@ $NS->Kill ();
 unlink $iorfile;
 
 
-$errors = system ("perl process-m-output.pl $data_file 15") >> 8;
+$errors = system ("perl $startdir/process-m-output.pl $data_file 15") >> 8;
 
 if ($errors > 0) {
     $status = 1;

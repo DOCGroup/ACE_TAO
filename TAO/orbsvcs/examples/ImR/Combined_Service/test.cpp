@@ -4,15 +4,17 @@
 #include "testC.h"
 
 #include <stdexcept>
-#include <sstream>
+#include "ace/SString.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
 #define assertTrue(CONDITION) \
     if (CONDITION == false) { \
-    std::ostringstream oss; \
-      oss << "Error : "#CONDITION" "__FILE__":" << __LINE__; \
-      throw std::runtime_error(oss.str()); \
-    } \
+      ACE_CString str("Error : "#CONDITION" "__FILE__":"); \
+      char line[32]; \
+      ACE_OS::sprintf(line, "%d", __LINE__); \
+      throw std::runtime_error(str.c_str()); \
+    }
 
 using namespace CORBA;
 

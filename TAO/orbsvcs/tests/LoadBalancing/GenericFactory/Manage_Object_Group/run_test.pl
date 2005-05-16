@@ -13,9 +13,16 @@ unlink $lm_ior;
 
 $status = 0;
 
+## The LoadManager needs to register signals with the ORB's reactor (on
+## Windows only) and thus can not use the TP Reactor since it doesn't
+## support that kind of thing.  So, we swith to the Select MT Reactor.
+$lm_conf = PerlACE::LocalFile ("windows$PerlACE::svcconf_ext");
+
 $init_ref = "-ORBInitRef LoadManager=file://lm.ior";
 
-$LM = new PerlACE::Process ("../../../../LoadBalancer/LoadManager", "-o lm.ior");
+$LM = new PerlACE::Process ("../../../../LoadBalancer/LoadManager",
+                            "-o lm.ior" . ($^O eq 'MSWin32' ?
+                                           " -ORBSvcConf $lm_conf" : ''));
 $SV = new PerlACE::Process ("server", $init_ref);
 
 print STDERR "\n\n======== Running Manage ObjectGroup Membership Test================\n";

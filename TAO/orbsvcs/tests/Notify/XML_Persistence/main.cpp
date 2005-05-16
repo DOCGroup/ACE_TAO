@@ -6,6 +6,13 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 
+// On SunOS 5.8 and MacOS X, the static initialization trick used
+// in the CosNotification_Serv library does not work.  Including the
+// initializer class here works around the problem.
+#if defined (sun) || defined (__APPLE__)
+#include "orbsvcs/Notify/CosNotify_Initializer.h"
+#endif /* sun || __APPLE__ */
+
 #include "tao/TimeBaseC.h"
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
