@@ -1,3 +1,16 @@
+Mon May 16 15:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/DII_Arguments.h:
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        * tao/DynamicInterface/Dynamic_Implementation.h:
+        * tao/DynamicInterface/ExceptionList.h:
+        * tao/DynamicInterface/Server_Request.h:
+          Doxygen improvements
+
 Mon May 16 14:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Channel_Clients.{h,cpp}:

@@ -4,21 +4,10 @@
 
 #versioned_so = 1
 
-ifndef exceptions
-  exceptions = 1
-endif
-
-ifeq (,$(debug))
-  debug = 1
-endif
-
-ifeq (,$(optimize))
-  optimize = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
+exceptions ?= 1
+debug ?= 1
+optimize ?= 1
+threads ?= 1
 
 CC          = gcc
 CXX		= g++
