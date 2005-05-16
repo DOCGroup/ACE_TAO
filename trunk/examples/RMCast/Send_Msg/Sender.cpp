@@ -2,10 +2,10 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include <ace/OS.h>
-#include <ace/Log_Msg.h>
+#include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
-#include <ace/RMCast/Socket.h>
+#include "ace/RMCast/Socket.h"
 
 #include "Protocol.h"
 
@@ -20,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     ACE_INET_Addr addr (argv[1]);
 
-    ACE_RMCast::Socket socket (addr);
+    ACE_RMCast::Socket socket (addr, false);
 
     Message msg;
     msg.sn = 0;
