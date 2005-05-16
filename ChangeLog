@@ -1,3 +1,10 @@
+Mon May 16 11:05:26 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* examples/RMCast/Send_Msg/Receiver.cpp:
+	* examples/RMCast/Send_Msg/Sender.cpp:
+
+	  Showcase new features (see below).
+
 Mon May 16 10:58:43 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.cpp:
