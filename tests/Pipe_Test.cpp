@@ -103,14 +103,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_INIT_LOG (ACE_TEXT("Pipe_Test-children"));
 
       ACE_Process_Options options;
-      if (close_pipe == 0)
-        options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              ACE_TEXT ("Pipe_Test") ACE_PLATFORM_EXE_SUFFIX
-                              ACE_TEXT (" -c -d"));
-      else
-        options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              ACE_TEXT ("Pipe_Test") ACE_PLATFORM_EXE_SUFFIX
-                              ACE_TEXT (" -c"));
+      options.command_line (ACE_TEXT ("%s -c%s"),
+                            argv[0],
+                            close_pipe == 0 ? " -d" : "");
 
       ACE_exitcode status = 0;
 

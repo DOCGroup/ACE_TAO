@@ -1,3 +1,46 @@
+Mon May 16 09:01:07 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Conn_Test.cpp:
+
+          Force this test to use threads (instead of fork) on MacOS X.
+
+        * tests/FIFO_Test.cpp:
+
+          Sleep 1 second (as is done on AIX and HP-UX) before attempting to
+          receive from the fifo.
+
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+
+          Set global_event_loop_thread_variable before activating the thread
+          that may use it.
+
+        * tests/Naming_Test.cpp:
+
+          Allow the user to determine the location of the context file by
+          the TMPDIR, TEMP and TMP environment variables.
+
+        * tests/Pipe_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+
+          Use the value from argv[0] instead of hardcoding the exe name.
+          The hardcoded name does not work on Windows Release builds.
+
+        * tests/Process_Strategy_Test.cpp:
+
+          Use threads by default on HP-UX instead of fork.
+          Added a timeout for the recv() call in
+          Counting_Service::handle_input() for HP-UX only.
+
+        * tests/run_test.lst:
+
+          Added a configuration for NO_MCAST for machines that do not have
+          multicast capabilities or the multicast implementation is broken.
+
+        * tests/SSL/aix_hack_for_main.cpp:
+        * tests/aix_hack_for_main.cpp:
+
+          Removed these files.  They are no longer needed due to MPC.
+
 Mon May 16 08:52:11 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/crosscompile.mpb:
@@ -15,7 +58,7 @@ Mon May 16 08:52:11 2005  Chad Elliott  <elliott_c@ociweb.com>
           input file dependencies.
 
           Changed the OBJS setting to use $(notdir) only if the source file
-          contains ../ and added explicit rules for source files that are  
+          contains ../ and added explicit rules for source files that are
           located in subdirectories.
 
         * include/makeinclude/platform_macosx_panther.GNU:

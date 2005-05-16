@@ -57,6 +57,11 @@
 
 ACE_RCSID(tests, Process_Strategy_Test, "$Id$")
 
+// This test does not function properly when fork() is used on HP-UX
+#if defined(__hpux)
+#define ACE_LACKS_FORK
+#endif /* __hpux */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>;
 template class ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
@@ -409,6 +414,14 @@ int
 Counting_Service::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
+  ACE_Time_Value* timeout = 0;
+#if defined (__hpux)
+  // Even though we're in handle_input, there seems to be a
+  // situation on HP-UX where there is nothing to recv just yet.
+  // So, we recv() with a timeout and everything works.
+  ACE_Time_Value hpux_timeout (3);
+  timeout = &hpux_timeout;
+#endif /* __hpux */
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) reading from peer on %d\n"),
@@ -416,7 +429,8 @@ Counting_Service::handle_input (ACE_HANDLE)
   size_t len;
   // Read the PDU length first.
   ssize_t bytes = this->peer ().recv ((void *) &len,
-                                      sizeof len);
+                                      sizeof len,
+                                      timeout);
   if (bytes <= 0)
     return -1;
 
