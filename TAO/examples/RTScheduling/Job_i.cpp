@@ -75,7 +75,11 @@ Job_i::work (CORBA::ULong work,
 		importance));
 
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg,"Guid is %d\n", guid_);
+  ACE_OS::sprintf (msg,
+                   "Guid is "
+                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   "\n", guid_);
+
   dt_creator_->log_msg (msg);
 
   for (; work != 0; work--)
@@ -133,7 +137,12 @@ void
 Job_i::dump_stats (void)
 {
   char fname [BUFSIZ];
-  ACE_OS::sprintf (fname, "Job_%d.dat",guid_);
+  ACE_OS::sprintf (fname,
+                   "Job_"
+                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ".dat",
+                   guid_);
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"File name %s\n",
@@ -141,7 +150,10 @@ Job_i::dump_stats (void)
 
 
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "#Schedule Output for DT %d", guid_);
+  ACE_OS::sprintf (msg,
+                   "#Schedule Output for DT "
+                   ACE_SIZE_T_FORMAT_SPECIFIER,
+                   guid_);
 
   task_stats_->dump_samples (fname,
 			     msg,
