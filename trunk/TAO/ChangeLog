@@ -6,6 +6,7 @@ Mon May 16 18:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/Reply_Dispatcher.h:
         * tao/Sequence.h:
         * tao/Transport_Acceptor.h:
+        * tao/SmartProxies/Smart_Proxies.h:
           Doxygen improvements
 
 Mon May 16 10:09:45 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
