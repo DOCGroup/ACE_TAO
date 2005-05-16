@@ -1,3 +1,10 @@
+Mon May 16 11:27:30 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIAO-INSTALL.html:
+        
+          Added line to table about availability of binaries for MacOS
+          and Solaris.
+
 Sat May 14 06:12:44 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 0.4.5 released.
