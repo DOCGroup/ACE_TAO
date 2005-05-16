@@ -152,27 +152,14 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Process_Mutex mutex( mutex_name );
 #     endif
 
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+      static const ACE_TCHAR* format = ACE_TEXT ("%ls -c -n %ls%s");
+#else
+      static const ACE_TCHAR* format = ACE_TEXT ("%s -c -n %s%s");
+#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
       ACE_Process_Options options;
-      if (release_mutex == 0)
-        options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              ACE_TEXT ("Process_Mutex_Test")
-                              ACE_PLATFORM_EXE_SUFFIX
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                              ACE_TEXT (" -c -n %ls -d"),
-#else
-                              ACE_TEXT (" -c -n %s -d"),
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
-                              mutex_name);
-      else
-        options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              ACE_TEXT ("Process_Mutex_Test")
-                              ACE_PLATFORM_EXE_SUFFIX
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                              ACE_TEXT (" -c -n %ls"),
-#else
-                              ACE_TEXT (" -c -n %s"),
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
-                              mutex_name);
+      options.command_line (format, argv[0], mutex_name,
+                            release_mutex == 0 ? " -d" : "");
 
       // Spawn <n_processes> child processes that will contend for the
       // lock.

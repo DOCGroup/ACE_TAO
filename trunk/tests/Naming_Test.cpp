@@ -200,6 +200,22 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
   else
     {
+      // Allow the user to determine where the context file will be
+      // located just in case the current directory is not suitable for
+      // locking.  We don't just set namespace_dir () on name_options
+      // because that is not sufficient to work around locking problems
+      // for Tru64 when the current directory is NFS mounted from a
+      // system that does not properly support locking.
+      const char* temp_envs[] = { "TMPDIR", "TEMP", "TMP", 0 };
+      for(const char** temp_env = temp_envs; *temp_env != 0; ++temp_env)
+        {
+          char* temp_dir = ACE_OS::getenv(*temp_env);
+          if (temp_dir != 0)
+            {
+              ACE_OS::chdir (temp_dir);
+              break;
+            }
+        }
       ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
                                                 ACE_DIRECTORY_SEPARATOR_CHAR));
       ACE_OS::strcat (temp_file, ACE_TEXT ("XXXXXX"));

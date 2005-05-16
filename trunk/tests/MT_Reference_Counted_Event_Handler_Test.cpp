@@ -1123,12 +1123,12 @@ testing (ACE_Reactor *reactor,
                                        *reactor);
   if (run_event_loop_thread)
     {
+      global_event_loop_thread_variable =
+        &event_loop_thread;
+
       result =
         event_loop_thread.activate ();
       ACE_ASSERT (result == 0);
-
-      global_event_loop_thread_variable =
-        &event_loop_thread;
     }
 
   // Create a thread to run the purger.
