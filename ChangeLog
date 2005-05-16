@@ -1,3 +1,22 @@
+Mon May 16 10:58:43 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Link.h:
+	* protocols/ace/RMCast/Protocol.cpp:
+	* protocols/ace/RMCast/Protocol.h:
+	* protocols/ace/RMCast/Retransmit.cpp:
+	* protocols/ace/RMCast/Socket.cpp:
+	* protocols/ace/RMCast/Socket.h:
+
+	  Implemented message aging and unavailability reporting,
+	  reactor-compatible interface, and message size query
+	  interface.
+
+	* protocols/ace/RMCast/README:
+
+	  Protocol documentation.
+
 Sat May 14 06:05:55 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 5.4.5 released.

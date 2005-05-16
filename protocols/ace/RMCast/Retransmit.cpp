@@ -2,14 +2,15 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include <ace/Time_Value.h>     // ACE_Time_Value
-#include <ace/OS_NS_sys_time.h> // gettimeofday
+#include "ace/Time_Value.h"     // ACE_Time_Value
+#include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "Retransmit.h"
 
 namespace ACE_RMCast
 {
   ACE_Time_Value const tick (0, 50000);
+  unsigned long const retention_time = 60; // How many ticks to retain.
 
   Retransmit::
   Retransmit ()
@@ -72,6 +73,8 @@ namespace ACE_RMCast
           u64* psn;
           j.next (psn);
 
+          Message_ptr m (new Message);
+          m->add (Profile_ptr (new SN (*psn)));
 
           Queue::ENTRY* pair;
 
@@ -79,21 +82,18 @@ namespace ACE_RMCast
           {
             //cerr << 5 << "PRTM " << to << " " << pair->ext_id_ << endl;
 
-            Message_ptr m (new Message);
-
-            m->add (Profile_ptr (new SN (pair->ext_id_)));
             m->add (pair->int_id_.data ());
 
             pair->int_id_.reset ();
-
-            out_->send (m);
           }
           else
           {
-            //@@ TODO: message aging
-            //
             //cerr << 4 << "message " << *psn << " not available" << endl;
+
+            m->add (Profile_ptr (new NoData));
           }
+
+          out_->send (m);
         }
       }
     }
@@ -119,7 +119,7 @@ namespace ACE_RMCast
 
       for (Queue::iterator i (queue_); !i.done ();)
       {
-        if ((*i).int_id_.inc () >= 60)
+        if ((*i).int_id_.inc () >= retention_time)
         {
           u64 sn ((*i).ext_id_);
           i.advance ();
