@@ -112,11 +112,11 @@ public:
   // = The following two functions should be protected but we made it
   // public because it breaks some compilers.
 
-  TAO_Base_Sequence (const TAO_Base_Sequence &rhs);
-  TAO_Base_Sequence &operator= (const TAO_Base_Sequence &rhs);
   // Copy constructor and assignment operator are protected, the
   // derived classes must provided the right semantics for the buffer
   // copy, only the static fields are actually copy.
+  TAO_Base_Sequence (const TAO_Base_Sequence &rhs);
+  TAO_Base_Sequence &operator= (const TAO_Base_Sequence &rhs);
 
 protected:
 
