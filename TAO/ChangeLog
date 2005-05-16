@@ -1,7 +1,17 @@
+Mon May 16 18:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CDR.h:
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Translator_Factory_T.h:
+        * tao/Reply_Dispatcher.h:
+        * tao/Sequence.h:
+        * tao/Transport_Acceptor.h:
+          Doxygen improvements
+
 Mon May 16 10:09:45 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_operation):
-        
+
           Added check for imported node, skipping code generation if the
           node is imported. For all other node types in this visitor, arg
           traits specializations must be generated, since an IDL type
