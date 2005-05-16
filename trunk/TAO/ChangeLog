@@ -1,3 +1,26 @@
+Mon May 16 14:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Channel_Clients.{h,cpp}:
+          Removed, not needed anymore
+
+        * orbsvcs/orbsvcs/Channel_Clients_T.h:
+        * orbsvcs/orbsvcs/Scheduler_Utilities.h:
+          Doxygen fixes
+
+        * orbsvcs/orbsvcs/Makefile.am:
+          Removed Channel_Clients files
+
+        * orbsvcs/orbsvcs/Scheduler_Utilities.cpp:
+          Removed not needed include of OS.h
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+          Doxygen improvement
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.h:
+          Include Channel_Clients_T.h instead of Channel_Clients.h
+
 Mon May 16 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTEvent.mpc:
