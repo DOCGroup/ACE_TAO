@@ -41,7 +41,9 @@ extern "C" {
 #ifndef IPPROTO_SCTP
 #define IPPROTO_SCTP 132
 #endif // !IPPROTO_SCTP
+#ifndef SCTP_NODELAY
 #define SCTP_NODELAY 1
+#endif // SCTP_NODELAY
 
 
 typedef ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>

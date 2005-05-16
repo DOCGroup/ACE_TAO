@@ -227,8 +227,8 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
     sciop_endpoint->is_preferred_network ();
 
   if (pn)
-    local_addr.set ((u_short) 0,
-                    sciop_endpoint->preferred_network ());
+    local_address.set ((u_short) 0,
+                       sciop_endpoint->preferred_network ());
 
   int result =
     this->base_connector_.connect (svc_handler,
