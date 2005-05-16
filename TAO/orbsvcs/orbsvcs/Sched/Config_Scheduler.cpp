@@ -259,6 +259,11 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   BaseSchedImplType::status_t schedule_status;
   schedule_status = impl->schedule (anomaly_set);
 
+  if (dependencies.ptr () == 0)
+    {
+      dependencies = new RtecScheduler::Dependency_Set ();
+    }
+
   // Iterate over the set of anomalies, reporting each one, storing
   // it in the set of anomalies to return, and determining the worst
   // anomaly severity.

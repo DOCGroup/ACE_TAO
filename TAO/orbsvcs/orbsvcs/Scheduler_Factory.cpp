@@ -340,12 +340,12 @@ int ACE_Scheduler_Factory::dump_schedule
   if (dependency_format == 0)
       dependency_format = "  { (RtecScheduler::Dependency_Type_t) %d, %10d, "
                           "%10d, %10d,"
-                          "(RtecScheduler::Dispatching_Type_t) %d }";
+                          "(RtecScheduler::Dependency_Enabled_Type_t) %d }";
 
   // Default format for printing Config_Info output.
   if (config_info_format == 0)
     config_info_format = "  { %10d, %10d, "
-                         "(RtecScheduler::Dependency_Enabled_Type_t) %d }";
+                         "(RtecScheduler::Dispatching_Type_t) %d }";
 
   FILE* file = stdout;
   if (file_name != 0)
