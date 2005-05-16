@@ -40,7 +40,7 @@ public:
   TAO_Codeset_Translator_Factory_T ();
   virtual ~TAO_Codeset_Translator_Factory_T ();
 
-  /// initialize the factory service object. Instantiates the translator.
+  /// Initialize the factory service object. Instantiates the translator.
   int init( int argc, ACE_TCHAR* argv[]);
 
   /// ncs returns the translator's native codeset ID.
