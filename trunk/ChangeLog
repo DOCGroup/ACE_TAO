@@ -1,3 +1,14 @@
+Mon May 16 10:57:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+
+	  Reset DEFAULT_INCLUDES to address ambiguity between system's
+	  signal.h and semaphore.h headers and ACE's Signal.h and
+	  Semaphore.h headers on case insensitive file systems.
+
+	  This may be the best setting for all ACE/TAO Makefile.am's,
+	  but this is the only one that requires it.
+
 Mon May 16 10:56:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

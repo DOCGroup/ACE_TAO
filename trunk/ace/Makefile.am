@@ -5,6 +5,7 @@
 
 includedir = @includedir@/ace
 pkgconfigdir = @libdir@/pkgconfig
+DEFAULT_INCLUDES =
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
