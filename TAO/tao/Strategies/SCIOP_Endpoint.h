@@ -32,6 +32,7 @@
 #include "strategies_export.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
+#include "tao/IIOP_EndpointsC.h"
 
 class TAO_SCIOP_Connection_Handler;
 

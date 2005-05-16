@@ -503,6 +503,12 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
               this->opt_for_collocation_ = 1;
               this->use_global_collocation_ = 0;
             }
+          else
+            {
+              ACE_DEBUG ((LM_WARNING,
+                          ACE_TEXT ("WARNING: Unknown option to ")
+                          ACE_TEXT ("'-ORBCollocation': %s\n"), opt));
+            }
 
           arg_shifter.consume_arg ();
         }

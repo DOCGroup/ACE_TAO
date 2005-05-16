@@ -84,7 +84,7 @@ TAO_SCIOP_Endpoint::~TAO_SCIOP_Endpoint (void)
 {
 }
 
-TAO_SCIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
+TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
   : TAO_Endpoint (rhs.tag_,
                   rhs.priority_)
   , host_ (rhs.host_)
@@ -277,7 +277,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 
   pos = tmp.find (this->host_.in ());
 
-  TAO_IIOP_Endpoint *latest = this;
+  TAO_SCIOP_Endpoint *latest = this;
 
   CORBA::ULong count = 0;
 
