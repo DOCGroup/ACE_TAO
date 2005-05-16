@@ -45,6 +45,12 @@ ACE_RCSID(tests, Conn_Test, "$Id$")
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
+// This test doesn't work well using fork() on MacOS X.  So we
+// will force it to use threads instead.
+#if defined (__APPLE__)
+#  define ACE_LACKS_FORK
+#endif /* __APPLE__ */
+
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
 // listen-mode port/socket.  Also, note that since timed accept is

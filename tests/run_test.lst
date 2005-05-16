@@ -76,7 +76,7 @@ Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus
 Message_Queue_Test_Ex: !chorus
-Multicast_Test: !ST
+Multicast_Test: !ST !NO_MCAST
 Multihomed_INET_Addr_Test
 Naming_Test: !chorus !LynxOS !Unicos !VxWorks
 Network_Adapters_Test
@@ -147,7 +147,7 @@ Vector_Test
 WFMO_Reactor_Test
 INET_Addr_Test_IPV6
 Max_Default_Port_Test_IPV6
-Multicast_Test_IPV6
+Multicast_Test_IPV6: !NO_MCAST
 Multihomed_INET_Addr_Test_IPV6
 Proactor_Test_IPV6
 SOCK_Send_Recv_Test_IPV6
