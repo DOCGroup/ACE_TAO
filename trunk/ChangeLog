@@ -1,3 +1,16 @@
+Mon May 16 15:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+        * include/makeinclude/platform_sco5.0.0-nothread.GNU:
+        * include/makeinclude/platform_sunos4_g++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_unixware_g++.GNU:
+        * include/makeinclude/platform_unixware_udk.GNU:
+        * include/makeinclude/platform_win32_dmc.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Simplified these files by using the ?= operator. This sets a value
+          only when it is not set yet.
+
 Mon May 16 09:24:29 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
