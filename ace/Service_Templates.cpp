@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Service_Templates.h"
+#include "ace/SString.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<ACE_Static_Svc_Descriptor *>;
