@@ -3579,7 +3579,8 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_OS_TRACE ("ACE_OS::thr_getprio");
   ACE_UNUSED_ARG (policy);
 #if defined (ACE_HAS_THREADS)
-# if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# if (defined (ACE_HAS_PTHREADS) && \
+     (!defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
@@ -4095,7 +4096,8 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
   ACE_OS_TRACE ("ACE_OS::thr_setprio");
   ACE_UNUSED_ARG (policy);
 #if defined (ACE_HAS_THREADS)
-# if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# if (defined (ACE_HAS_PTHREADS) && \
+      (!defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;

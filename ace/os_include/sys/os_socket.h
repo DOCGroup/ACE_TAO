@@ -164,6 +164,7 @@ typedef int ACE_SOCKET_LEN;
 #if defined (ACE_HAS_LKSCTP)
 extern "C"
 {
+#include /**/ <netinet/in.h>
 #include /**/ <netinet/sctp.h>
 }
 #endif /* ACE_HAS_LKSCTP */
