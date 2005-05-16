@@ -2,11 +2,11 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include <ace/Vector_T.h>
-#include <ace/Log_Msg.h>
-#include <ace/OS_NS_string.h>
+#include "ace/Vector_T.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
-#include <ace/RMCast/Socket.h>
+#include "ace/RMCast/Socket.h"
 
 #include "Protocol.h"
 
@@ -25,7 +25,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     ACE_INET_Addr addr (argv[1]);
 
-    ACE_RMCast::Socket socket (addr);
+    ACE_RMCast::Socket socket (addr, false);
 
 
     Message expected_msg;
@@ -60,7 +60,18 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     while (true)
     {
-      size_t s = socket.size ();
+      ssize_t s = socket.size ();
+
+      if (s == -1 && errno == ENOENT)
+      {
+        ACE_ERROR ((LM_ERROR, "unavailable message detected\n"));
+
+        // Receive it.
+        //
+        socket.recv (&msg, sizeof (msg));
+
+        continue;
+      }
 
       if (s != sizeof (msg))
       {
@@ -84,7 +95,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       {
         received[msg.sn] = 1;
 
-        if (ACE_OS::memcmp (expected_msg.payload, msg.payload, payload_size) != 0)
+        if (ACE_OS::memcmp (expected_msg.payload,
+                            msg.payload,
+                            payload_size) != 0)
         {
           damaged[msg.sn] = 1;
         }
