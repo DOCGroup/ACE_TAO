@@ -1,3 +1,19 @@
+Mon May 16 08:21:34 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Warn the user if the parameter to -ORBCollocation is not
+          recognized.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+
+          Corrected many build issues dealing with SCTP.
+
 Sat May 14 06:09:23 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 1.4.5 released.
@@ -9,37 +25,37 @@ Sat May 14 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri May 13 11:08:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+        * tao/TypeCodeFactory/Recursive_TypeCode.cpp:
 
-	  Corrected inline file path in #include directive.  Addresses
-	  build errors in builds where inlining is disabled.
+          Corrected inline file path in #include directive.  Addresses
+          build errors in builds where inlining is disabled.
 
 Fri May 13 09:31:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (check_recursion):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (check_recursion):
 
-	  Fixed emulated exception usage error.
+          Fixed emulated exception usage error.
 
 Fri May 13 00:04:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Recursive_Type_TypeCode.h:
+        * tao/Recursive_Type_TypeCode.h:
 
-	  Protected class members that were public but should have been
-	  protected.
+          Protected class members that were public but should have been
+          protected.
 
-	* tao/TypeCodeFactory/Recursive_TypeCode.cpp:
-	* tao/TypeCodeFactory/Recursive_TypeCode.h:
-	* tao/TypeCodeFactory/Recursive_TypeCode.inl:
+        * tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+        * tao/TypeCodeFactory/Recursive_TypeCode.h:
+        * tao/TypeCodeFactory/Recursive_TypeCode.inl:
 
-	  A placeholder TypeCode for recursive TypeCodes.  It is meant
-	  solely for use as an intermediate TypeCode, and merely forwards
-	  all operations to the actual recursive TypeCode that is set by
-	  the TypeCodeFactory.
+          A placeholder TypeCode for recursive TypeCodes.  It is meant
+          solely for use as an intermediate TypeCode, and merely forwards
+          all operations to the actual recursive TypeCode that is set by
+          the TypeCodeFactory.
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
 
-	  Added support for recursive TypeCodes.
+          Added support for recursive TypeCodes.
 
 Thu May 12 19:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -55,8 +71,8 @@ Thu May 12 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu May 12 10:20:55 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Updated the COPYING file to clarify some ambiguity about
- 	  proprietary usage of TAO.
+        * Updated the COPYING file to clarify some ambiguity about
+          proprietary usage of TAO.
 
 Thu May 12 09:07:34 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -79,85 +95,85 @@ Thu May 12 09:07:34 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed May 11 23:42:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
-	  (gen_member_typecodes):
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+          (gen_member_typecodes):
 
-	  Fixed recursive valuetype detection in cases where the recursion
-	  is through a direct member of the valuetype (e.g. "valuetype V {
-	  public V foo; }" instead of an indirect recursion through a
-	  sequence (e.g. "valuetype V { sequence<V> foo; }").
+          Fixed recursive valuetype detection in cases where the recursion
+          is through a direct member of the valuetype (e.g. "valuetype V {
+          public V foo; }" instead of an indirect recursion through a
+          sequence (e.g. "valuetype V { sequence<V> foo; }").
 
 Wed May 11 21:20:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Alias_TypeCode.cpp (tao_marshal):
-	* tao/Alias_TypeCode_Static.cpp (tao_marshal):
+        * tao/Alias_TypeCode.cpp (tao_marshal):
+        * tao/Alias_TypeCode_Static.cpp (tao_marshal):
 
-	  Account for the encoded CDR encapsulation length and byte
-	  order when calculating offset.
+          Account for the encoded CDR encapsulation length and byte
+          order when calculating offset.
 
 Wed May 11 13:28:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+        * TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
 
-	  Generate an #include directive for "tao/TypeCode.h" if an Any
-	  was seen.  Fixes compile-time errors when attempting to make
-	  calls on a TypeCode pseudo-reference, such as one retrieved from
-	  through the standard CORBA::Any::type() accessor.
+          Generate an #include directive for "tao/TypeCode.h" if an Any
+          was seen.  Fixes compile-time errors when attempting to make
+          calls on a TypeCode pseudo-reference, such as one retrieved from
+          through the standard CORBA::Any::type() accessor.
 
-	* tao/Alias_TypeCode.cpp:
-	* tao/Alias_TypeCode.h:
-	* tao/Alias_TypeCode_Static.cpp:
-	* tao/Alias_TypeCode_Static.h:
-	* tao/Empty_Param_TypeCode.cpp:
-	* tao/Empty_Param_TypeCode.h:
-	* tao/Enum_TypeCode.cpp:
-	* tao/Enum_TypeCode.h:
-	* tao/Enum_TypeCode_Static.cpp:
-	* tao/Enum_TypeCode_Static.h:
-	* tao/Fixed_TypeCode.cpp:
-	* tao/Fixed_TypeCode.h:
-	* tao/Objref_TypeCode.cpp:
-	* tao/Objref_TypeCode.h:
-	* tao/Objref_TypeCode_Static.cpp:
-	* tao/Objref_TypeCode_Static.h:
-	* tao/Recursive_Type_TypeCode.cpp:
-	* tao/Recursive_Type_TypeCode.h:
-	* tao/Recursive_Type_TypeCode.inl:
-	* tao/Sequence_TypeCode.cpp:
-	* tao/Sequence_TypeCode.h:
-	* tao/Sequence_TypeCode_Static.cpp:
-	* tao/Sequence_TypeCode_Static.h:
-	* tao/String_TypeCode.cpp:
-	* tao/String_TypeCode.h:
-	* tao/String_TypeCode_Static.cpp:
-	* tao/String_TypeCode_Static.h:
-	* tao/Struct_TypeCode.cpp:
-	* tao/Struct_TypeCode.h:
-	* tao/Struct_TypeCode.inl:
-	* tao/Struct_TypeCode_Static.cpp:
-	* tao/Struct_TypeCode_Static.h:
-	* tao/TypeCode.cpp:
-	* tao/TypeCode.h:
-	* tao/TypeCode.inl:
-	* tao/TypeCode_Base_Attributes.h:
-	* tao/TypeCode_Base_Attributes.inl:
-	* tao/TypeCode_CDR_Extraction.cpp:
-	* tao/TypeCode_Case.h:
-	* tao/TypeCode_Case.inl:
-	* tao/Union_TypeCode.cpp:
-	* tao/Union_TypeCode.h:
-	* tao/Union_TypeCode.inl:
-	* tao/Union_TypeCode_Static.cpp:
-	* tao/Union_TypeCode_Static.h:
-	* tao/Value_TypeCode.cpp:
-	* tao/Value_TypeCode.h:
-	* tao/Value_TypeCode.inl:
-	* tao/Value_TypeCode_Static.cpp:
-	* tao/Value_TypeCode_Static.h:
+        * tao/Alias_TypeCode.cpp:
+        * tao/Alias_TypeCode.h:
+        * tao/Alias_TypeCode_Static.cpp:
+        * tao/Alias_TypeCode_Static.h:
+        * tao/Empty_Param_TypeCode.cpp:
+        * tao/Empty_Param_TypeCode.h:
+        * tao/Enum_TypeCode.cpp:
+        * tao/Enum_TypeCode.h:
+        * tao/Enum_TypeCode_Static.cpp:
+        * tao/Enum_TypeCode_Static.h:
+        * tao/Fixed_TypeCode.cpp:
+        * tao/Fixed_TypeCode.h:
+        * tao/Objref_TypeCode.cpp:
+        * tao/Objref_TypeCode.h:
+        * tao/Objref_TypeCode_Static.cpp:
+        * tao/Objref_TypeCode_Static.h:
+        * tao/Recursive_Type_TypeCode.cpp:
+        * tao/Recursive_Type_TypeCode.h:
+        * tao/Recursive_Type_TypeCode.inl:
+        * tao/Sequence_TypeCode.cpp:
+        * tao/Sequence_TypeCode.h:
+        * tao/Sequence_TypeCode_Static.cpp:
+        * tao/Sequence_TypeCode_Static.h:
+        * tao/String_TypeCode.cpp:
+        * tao/String_TypeCode.h:
+        * tao/String_TypeCode_Static.cpp:
+        * tao/String_TypeCode_Static.h:
+        * tao/Struct_TypeCode.cpp:
+        * tao/Struct_TypeCode.h:
+        * tao/Struct_TypeCode.inl:
+        * tao/Struct_TypeCode_Static.cpp:
+        * tao/Struct_TypeCode_Static.h:
+        * tao/TypeCode.cpp:
+        * tao/TypeCode.h:
+        * tao/TypeCode.inl:
+        * tao/TypeCode_Base_Attributes.h:
+        * tao/TypeCode_Base_Attributes.inl:
+        * tao/TypeCode_CDR_Extraction.cpp:
+        * tao/TypeCode_Case.h:
+        * tao/TypeCode_Case.inl:
+        * tao/Union_TypeCode.cpp:
+        * tao/Union_TypeCode.h:
+        * tao/Union_TypeCode.inl:
+        * tao/Union_TypeCode_Static.cpp:
+        * tao/Union_TypeCode_Static.h:
+        * tao/Value_TypeCode.cpp:
+        * tao/Value_TypeCode.h:
+        * tao/Value_TypeCode.inl:
+        * tao/Value_TypeCode_Static.cpp:
+        * tao/Value_TypeCode_Static.h:
 
-	  Fixed recursive TypeCode marshaling and demarshaling.  Alignment
-	  padding was not taken into account when calculating the
-	  indirection offset.
+          Fixed recursive TypeCode marshaling and demarshaling.  Alignment
+          padding was not taken into account when calculating the
+          indirection offset.
 
 Mon May  9 20:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -175,18 +191,18 @@ Mon May  9 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May  9 01:56:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Recursive_Type_TypeCode.h:
-	* tao/Recursive_Type_TypeCode.inl:
-	* tao/Struct_TypeCode.h:
-	* tao/Struct_TypeCode.inl:
-	* tao/TypeCode_CDR_Extraction.cpp:
-	* tao/TypeCode_CDR_Extraction.h:
-	* tao/Union_TypeCode.h:
-	* tao/Union_TypeCode.inl:
-	* tao/Value_TypeCode.h:
-	* tao/Value_TypeCode.inl:
+        * tao/Recursive_Type_TypeCode.h:
+        * tao/Recursive_Type_TypeCode.inl:
+        * tao/Struct_TypeCode.h:
+        * tao/Struct_TypeCode.inl:
+        * tao/TypeCode_CDR_Extraction.cpp:
+        * tao/TypeCode_CDR_Extraction.h:
+        * tao/Union_TypeCode.h:
+        * tao/Union_TypeCode.inl:
+        * tao/Value_TypeCode.h:
+        * tao/Value_TypeCode.inl:
 
-	  Enabled recursive TypeCode demarshaling/creation.
+          Enabled recursive TypeCode demarshaling/creation.
 
 Sun May  8 07:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -196,41 +212,41 @@ Sun May  8 07:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May  8 00:20:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
-	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
-	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
-	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+        * TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
 
-	  Fixed duplicate TypeCode generation in cases where
-	  struct/union/valuetype indirectly contained members of the same
-	  type, such as through an array.
+          Fixed duplicate TypeCode generation in cases where
+          struct/union/valuetype indirectly contained members of the same
+          type, such as through an array.
 
 Sat May  7 20:12:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
-	  (is_typecode_generation_required):
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+          (is_typecode_generation_required):
 
-	  Include NT_{interface_fwd,valuetype,valuetype_fwd} node types
-	  when deciding whether a TypeCode should be generated.  Fixes
-	  duplicate valuetype TypeCode definition errors.
+          Include NT_{interface_fwd,valuetype,valuetype_fwd} node types
+          when deciding whether a TypeCode should be generated.  Fixes
+          duplicate valuetype TypeCode definition errors.
 
 Sat May  7 10:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
-	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
-	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
-	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
-	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+        * TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
 
-	  Fixed duplicate generation of TypeCodes.
+          Fixed duplicate generation of TypeCodes.
 
-	  Fixed false positives in recursive type detection.
+          Fixed false positives in recursive type detection.
 
 Sat May  7 11:13:12 UTC  2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -239,75 +255,75 @@ Sat May  7 11:13:12 UTC  2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri May  6 18:28:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Generate include directive for "tao/Recursive_Type_TypeCode.h"
-	  if any struct, union or valuetype is seen.
+          Generate include directive for "tao/Recursive_Type_TypeCode.h"
+          if any struct, union or valuetype is seen.
 
-	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
-	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
-	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
-	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
-	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+        * TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
 
-	  Added recursive type TypeCode support.
+          Added recursive type TypeCode support.
 
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
 
-	  Added new "recursive_type_seen_" flag for use in determining
-	  whether Recursive_Type_TypeCode.h header should be included.
+          Added new "recursive_type_seen_" flag for use in determining
+          whether Recursive_Type_TypeCode.h header should be included.
 
-	* tao/Recursive_Type_TypeCode.cpp:
-	* tao/Recursive_Type_TypeCode.h:
-	* tao/Recursive_Type_TypeCode.inl:
+        * tao/Recursive_Type_TypeCode.cpp:
+        * tao/Recursive_Type_TypeCode.h:
+        * tao/Recursive_Type_TypeCode.inl:
 
-	  Added missing include directives.
+          Added missing include directives.
 
-	  Fixed syntax errors.
+          Fixed syntax errors.
 
 Fri May  6 13:18:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCode_Case.inl:
+        * tao/TypeCode_Case.inl:
 
-	  Include "tao/TypeCode_Traits.h" to pull in the appropriate
-	  traits templates used in this source file.
+          Include "tao/TypeCode_Traits.h" to pull in the appropriate
+          traits templates used in this source file.
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_union_tc):
-	  (compute_default_label):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_union_tc):
+          (compute_default_label):
 
-	  Ported pre-typecode-rewrite code to work with the new TypeCode
-	  implementation.
+          Ported pre-typecode-rewrite code to work with the new TypeCode
+          implementation.
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.h (compute_default_label):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h (compute_default_label):
 
-	  This method no longer accepts a reference to a CDR output
-	  stream.  It now accepts a reference to a pointer to
-	  TAO::TypeCode::Case_Dynamic.
+          This method no longer accepts a reference to a CDR output
+          stream.  It now accepts a reference to a pointer to
+          TAO::TypeCode::Case_Dynamic.
 
 Fri May  6 01:00:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Alias_TypeCode_Static.cpp:
-	* tao/Enum_TypeCode_Static.cpp:
-	* tao/Objref_TypeCode_Static.cpp:
-	* tao/Sequence_TypeCode_Static.cpp:
-	* tao/String_TypeCode_Static.cpp:
-	* tao/Struct_TypeCode_Static.cpp:
-	* tao/Union_TypeCode_Static.cpp:
-	* tao/Value_TypeCode_Static.cpp:
+        * tao/Alias_TypeCode_Static.cpp:
+        * tao/Enum_TypeCode_Static.cpp:
+        * tao/Objref_TypeCode_Static.cpp:
+        * tao/Sequence_TypeCode_Static.cpp:
+        * tao/String_TypeCode_Static.cpp:
+        * tao/Struct_TypeCode_Static.cpp:
+        * tao/Union_TypeCode_Static.cpp:
+        * tao/Value_TypeCode_Static.cpp:
 
-	  Work around broken MSVC++ 6 namespace support.
+          Work around broken MSVC++ 6 namespace support.
 
-	* tao/Recursive_Type_TypeCode.cpp:
-	* tao/Recursive_Type_TypeCode.h:
-	* tao/Recursive_Type_TypeCode.inl:
+        * tao/Recursive_Type_TypeCode.cpp:
+        * tao/Recursive_Type_TypeCode.h:
+        * tao/Recursive_Type_TypeCode.inl:
 
-	  New decorator template for recursive type TypeCodes.  It is
-	  intended to be wrapped around struct, union and valuetype
-	  TypeCode implementations.
+          New decorator template for recursive type TypeCodes.  It is
+          intended to be wrapped around struct, union and valuetype
+          TypeCode implementations.
 
 Fri May  6 07:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -316,103 +332,103 @@ Fri May  6 07:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu May  5 23:11:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.cpp:
 
-	  Fixed duplicate symbol definition caused by struct/exception
-	  TypeCode template specialization and primary template
-	  instantiation.  Use the specialization instead.
+          Fixed duplicate symbol definition caused by struct/exception
+          TypeCode template specialization and primary template
+          instantiation.  Use the specialization instead.
 
 Thu May  5 20:24:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Updated filenames in union TypeCode related header include
-	  directives.
+          Updated filenames in union TypeCode related header include
+          directives.
 
-	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
 
-	  Updated to generated code using new TypeCode::Case_T<> class
-	  template.  Addresses incorrect default case TypeCode support.
+          Updated to generated code using new TypeCode::Case_T<> class
+          template.  Addresses incorrect default case TypeCode support.
 
-	* tao/GIOPA.cpp:
+        * tao/GIOPA.cpp:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/TypeCode_CDR_Extraction.cpp:
+        * tao/TypeCode_CDR_Extraction.cpp:
 
-	  Added missing support for union TypeCode demarshaling.
+          Added missing support for union TypeCode demarshaling.
 
-	* tao/TypeCode_Case.h:
-	* tao/TypeCode_Case.inl:
+        * tao/TypeCode_Case.h:
+        * tao/TypeCode_Case.inl:
 
-	  Added dynamic union TypeCode support.
+          Added dynamic union TypeCode support.
 
-	* tao/TypeCode_Case_T.cpp:
-	* tao/TypeCode_Case_T.h:
-	* tao/TypeCode_Case_T.inl:
+        * tao/TypeCode_Case_T.cpp:
+        * tao/TypeCode_Case_T.h:
+        * tao/TypeCode_Case_T.inl:
 
-	  New class template that represents a union TypeCode case.  It is
-	  used for both non-default and default union cases/members.
-	  Separate classes are no longer necessary.
+          New class template that represents a union TypeCode case.  It is
+          used for both non-default and default union cases/members.
+          Separate classes are no longer necessary.
 
-	* tao/TypeCode_Default_Case.cpp:
-	* tao/TypeCode_Default_Case.h:
-	* tao/TypeCode_Default_Case.inl:
-	* tao/TypeCode_Non_Default_Case.cpp:
-	* tao/TypeCode_Non_Default_Case.h:
-	* tao/TypeCode_Non_Default_Case.inl:
+        * tao/TypeCode_Default_Case.cpp:
+        * tao/TypeCode_Default_Case.h:
+        * tao/TypeCode_Default_Case.inl:
+        * tao/TypeCode_Non_Default_Case.cpp:
+        * tao/TypeCode_Non_Default_Case.h:
+        * tao/TypeCode_Non_Default_Case.inl:
 
-	  Removed.  TypeCode_Case_T.* supercedes them.
+          Removed.  TypeCode_Case_T.* supercedes them.
 
-	* tao/Union_TypeCode.cpp:
-	* tao/Union_TypeCode.h:
-	* tao/Union_TypeCode.inl:
-	* tao/Union_TypeCode_Static.cpp:
-	* tao/Union_TypeCode_Static.h:
-	* tao/Union_TypeCode_Static.inl:
+        * tao/Union_TypeCode.cpp:
+        * tao/Union_TypeCode.h:
+        * tao/Union_TypeCode.inl:
+        * tao/Union_TypeCode_Static.cpp:
+        * tao/Union_TypeCode_Static.h:
+        * tao/Union_TypeCode_Static.inl:
 
-	  Fixed default case marshaling.
+          Fixed default case marshaling.
 
-	  Removed unnecessary methods.
+          Removed unnecessary methods.
 
-	* tao/Makefile.am:
-	* tao/tao.mpc:
+        * tao/Makefile.am:
+        * tao/tao.mpc:
 
-	  Updated source file lists.
+          Updated source file lists.
 
 Wed May  4 11:54:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Union_TypeCode.cpp (equal, equivalent):
-	* tao/Union_TypeCode_Static.cpp (equal, equivalent):
+        * tao/Union_TypeCode.cpp (equal, equivalent):
+        * tao/Union_TypeCode_Static.cpp (equal, equivalent):
 
-	  Use Traits<>::get_typecode() to get the discriminant TypeCode.
-	  Addresses dynamic union TypeCode compile-time problems.
+          Use Traits<>::get_typecode() to get the discriminant TypeCode.
+          Addresses dynamic union TypeCode compile-time problems.
 
 Wed May  4 09:25:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Objref_TypeCode_Factory.h:
+        * tao/Objref_TypeCode_Factory.h:
 
-	  Remove this file.  It is no longer needed.
+          Remove this file.  It is no longer needed.
 
-	* tao/TypeCode_CDR_Extraction.cpp (tc_objref_factory):
+        * tao/TypeCode_CDR_Extraction.cpp (tc_objref_factory):
 
-	  De-templatized objref-like TypeCode extraction code.  Knocks off
-	  5K from static footprint.
+          De-templatized objref-like TypeCode extraction code.  Knocks off
+          5K from static footprint.
 
 Wed May  4 08:41:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Alias_TypeCode_Static.inl:
-	* tao/Enum_TypeCode_Static.inl:
-	* tao/Objref_TypeCode_Static.inl:
-	* tao/Sequence_TypeCode_Static.inl:
-	* tao/String_TypeCode_Static.inl:
-	* tao/Struct_TypeCode_Static.inl:
-	* tao/Union_TypeCode_Static.inl:
-	* tao/Value_TypeCode_Static.inl:
+        * tao/Alias_TypeCode_Static.inl:
+        * tao/Enum_TypeCode_Static.inl:
+        * tao/Objref_TypeCode_Static.inl:
+        * tao/Sequence_TypeCode_Static.inl:
+        * tao/String_TypeCode_Static.inl:
+        * tao/Struct_TypeCode_Static.inl:
+        * tao/Union_TypeCode_Static.inl:
+        * tao/Value_TypeCode_Static.inl:
 
-	  Work around MSVC++ 6 broken namespace support by wrapping
-	  TAO::Null_RefCount_Policy base class initialization with
-	  the ACE_NESTED_CLASS macro.
+          Work around MSVC++ 6 broken namespace support by wrapping
+          TAO::Null_RefCount_Policy base class initialization with
+          the ACE_NESTED_CLASS macro.
 
 Wed May  4 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -453,178 +469,178 @@ Wed May  4 08:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May  3 23:37:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Struct_TypeCode_Static.h:
-	* tao/Value_TypeCode_Static.h:
+        * tao/Struct_TypeCode_Static.h:
+        * tao/Value_TypeCode_Static.h:
 
-	  Added missing TAO_Export.  Fixes undefined symbol errors on
-	  platforms that support DSO/DLL symbol hiding.
+          Added missing TAO_Export.  Fixes undefined symbol errors on
+          platforms that support DSO/DLL symbol hiding.
 
 Tue May  3 23:02:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_visitor_typecode/alias_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp:
-	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_typecode/alias_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
 
-	  Updated generated stubs to use latest TypeCode changes (header
-	  rename, template parameter changes, etc).
+          Updated generated stubs to use latest TypeCode changes (header
+          rename, template parameter changes, etc).
 
-	* tao/Alias_TypeCode.cpp:
-	* tao/Alias_TypeCode.h:
-	* tao/Alias_TypeCode.inl:
-	* tao/Objref_TypeCode.cpp:
-	* tao/Objref_TypeCode.h:
-	* tao/Objref_TypeCode.inl:
+        * tao/Alias_TypeCode.cpp:
+        * tao/Alias_TypeCode.h:
+        * tao/Alias_TypeCode.inl:
+        * tao/Objref_TypeCode.cpp:
+        * tao/Objref_TypeCode.h:
+        * tao/Objref_TypeCode.inl:
 
-	  Converted CORBA::TCKind template parameter to a constructor
-	  parameter.  Allows a single instance of the TypeCode template in
-	  question to represent multiple kinds of TypeCodes, rather than a
-	  dedicated instance for each kind of TypeCode.  Reduces
-	  footprint.
+          Converted CORBA::TCKind template parameter to a constructor
+          parameter.  Allows a single instance of the TypeCode template in
+          question to represent multiple kinds of TypeCodes, rather than a
+          dedicated instance for each kind of TypeCode.  Reduces
+          footprint.
 
-	* tao/Alias_TypeCode_Static.cpp:
-	* tao/Alias_TypeCode_Static.h:
-	* tao/Alias_TypeCode_Static.inl:
-	* tao/Enum_TypeCode_Static.cpp:
-	* tao/Enum_TypeCode_Static.h:
-	* tao/Enum_TypeCode_Static.inl:
-	* tao/Objref_TypeCode_Static.cpp:
-	* tao/Objref_TypeCode_Static.h:
-	* tao/Objref_TypeCode_Static.inl:
-	* tao/Sequence_TypeCode_Static.cpp:
-	* tao/Sequence_TypeCode_Static.h:
-	* tao/Sequence_TypeCode_Static.inl:
-	* tao/String_TypeCode_Static.cpp:
-	* tao/String_TypeCode_Static.h:
-	* tao/String_TypeCode_Static.inl:
-	* tao/Struct_TypeCode_Static.cpp:
-	* tao/Struct_TypeCode_Static.h:
-	* tao/Struct_TypeCode_Static.inl:
-	* tao/Union_TypeCode_Static.cpp:
-	* tao/Union_TypeCode_Static.h:
-	* tao/Union_TypeCode_Static.inl:
-	* tao/Value_TypeCode_Static.cpp:
-	* tao/Value_TypeCode_Static.h:
-	* tao/Value_TypeCode_Static.inl:
+        * tao/Alias_TypeCode_Static.cpp:
+        * tao/Alias_TypeCode_Static.h:
+        * tao/Alias_TypeCode_Static.inl:
+        * tao/Enum_TypeCode_Static.cpp:
+        * tao/Enum_TypeCode_Static.h:
+        * tao/Enum_TypeCode_Static.inl:
+        * tao/Objref_TypeCode_Static.cpp:
+        * tao/Objref_TypeCode_Static.h:
+        * tao/Objref_TypeCode_Static.inl:
+        * tao/Sequence_TypeCode_Static.cpp:
+        * tao/Sequence_TypeCode_Static.h:
+        * tao/Sequence_TypeCode_Static.inl:
+        * tao/String_TypeCode_Static.cpp:
+        * tao/String_TypeCode_Static.h:
+        * tao/String_TypeCode_Static.inl:
+        * tao/Struct_TypeCode_Static.cpp:
+        * tao/Struct_TypeCode_Static.h:
+        * tao/Struct_TypeCode_Static.inl:
+        * tao/Union_TypeCode_Static.cpp:
+        * tao/Union_TypeCode_Static.h:
+        * tao/Union_TypeCode_Static.inl:
+        * tao/Value_TypeCode_Static.cpp:
+        * tao/Value_TypeCode_Static.h:
+        * tao/Value_TypeCode_Static.inl:
 
-	  New static TypeCode template specializations.  Works around
-	  compilers that create multiple template instantiations, reducing
-	  footprint greatly.
+          New static TypeCode template specializations.  Works around
+          compilers that create multiple template instantiations, reducing
+          footprint greatly.
 
-	* tao/Objref_TypeCode_Base.cpp:
-	* tao/Objref_TypeCode_Base.h:
-	* tao/Objref_TypeCode_Base.inl:
+        * tao/Objref_TypeCode_Base.cpp:
+        * tao/Objref_TypeCode_Base.h:
+        * tao/Objref_TypeCode_Base.inl:
 
-	  Removed these files.  They are no longer needed.
+          Removed these files.  They are no longer needed.
 
-	* tao/Fixed_TypeCode.cpp:
-	* tao/String_TypeCode.cpp:
-	* tao/TypeCode_Non_Default_Case.cpp:
+        * tao/Fixed_TypeCode.cpp:
+        * tao/String_TypeCode.cpp:
+        * tao/TypeCode_Non_Default_Case.cpp:
 
-	  Added missing include directives.
+          Added missing include directives.
 
-	* tao/Objref_TypeCode_Factory.h:
-	* tao/SystemExceptionA.cpp:
-	* tao/TypeCode_CDR_Extraction.cpp:
-	* tao/TypeCode_Constants.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tao/Valuetype/ValueBase.cpp:
+        * tao/Objref_TypeCode_Factory.h:
+        * tao/SystemExceptionA.cpp:
+        * tao/TypeCode_CDR_Extraction.cpp:
+        * tao/TypeCode_Constants.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/Valuetype/ValueBase.cpp:
 
-	  Updated to use latest TypeCode changes (header rename, template
-	  parameter changes, etc).
+          Updated to use latest TypeCode changes (header rename, template
+          parameter changes, etc).
 
-	* tao/AnySeqA.cpp:
-	* tao/BooleanSeqA.cpp:
-	* tao/BoundsA.cpp:
-	* tao/CONV_FRAMEA.cpp:
-	* tao/CharSeqA.cpp:
-	* tao/ClientRequestInfoA.cpp:
-	* tao/CurrentA.cpp:
-	* tao/DomainA.cpp:
-	* tao/DoubleSeqA.cpp:
-	* tao/DynamicA.cpp:
-	* tao/Dynamic_ParameterA.cpp:
-	* tao/FloatSeqA.cpp:
-	* tao/GIOPA.cpp:
-	* tao/IIOPA.cpp:
-	* tao/IIOP_EndpointsA.cpp:
-	* tao/IOP_CodecA.cpp:
-	* tao/IOP_IORA.cpp:
-	* tao/InvalidSlotA.cpp:
-	* tao/LongDoubleSeqA.cpp:
-	* tao/LongLongSeqA.cpp:
-	* tao/LongSeqA.cpp:
-	* tao/Messaging_PolicyValueA.cpp:
-	* tao/ORBInitInfoA.cpp:
-	* tao/ORBInitializerA.cpp:
-	* tao/ObjectIdListA.cpp:
-	* tao/OctetSeqA.cpp:
-	* tao/PI_ForwardC.cpp:
-	* tao/ParameterModeA.cpp:
-	* tao/PolicyA.cpp:
-	* tao/PolicyFactoryA.cpp:
-	* tao/Policy_ForwardA.cpp:
-	* tao/PortableInterceptorA.cpp:
-	* tao/RequestInfoA.cpp:
-	* tao/ServerRequestInfoA.cpp:
-	* tao/ServicesA.cpp:
-	* tao/ShortSeqA.cpp:
-	* tao/StringSeqA.cpp:
-	* tao/TAOA.cpp:
-	* tao/TimeBaseA.cpp:
-	* tao/TypeCodeA.cpp:
-	* tao/ULongLongSeqA.cpp:
-	* tao/ULongSeqA.cpp:
-	* tao/UShortSeqA.cpp:
-	* tao/VisibilityA.cpp:
-	* tao/WCharSeqA.cpp:
-	* tao/WStringSeqA.cpp:
-	* tao/WrongTransactionA.cpp:
-	* tao/orb_typesA.cpp:
-	* tao/IFR_Client/IFR_BaseA.cpp:
-	* tao/IFR_Client/IFR_BasicA.cpp:
-	* tao/IFR_Client/IFR_ComponentsA.cpp:
-	* tao/IFR_Client/IFR_ExtendedA.cpp:
-	* tao/IORManipulation/IORA.cpp:
-	* tao/ImR_Client/ImplRepoA.cpp:
-	* tao/ImR_Client/ServerObjectA.cpp:
-	* tao/Messaging/MessagingA.cpp:
-	* tao/Messaging/Messaging_No_ImplA.cpp:
-	* tao/Messaging/Messaging_RT_PolicyA.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
-	* tao/Messaging/TAO_ExtA.cpp:
-	* tao/ObjRefTemplate/Default_ORTA.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
-	* tao/PortableServer/AdapterActivatorA.cpp:
-	* tao/PortableServer/ForwardRequestA.cpp:
-	* tao/PortableServer/IdAssignmentPolicyA.cpp:
-	* tao/PortableServer/IdUniquenessPolicyA.cpp:
-	* tao/PortableServer/ImplicitActivationPolicyA.cpp:
-	* tao/PortableServer/LifespanPolicyA.cpp:
-	* tao/PortableServer/POAManagerA.cpp:
-	* tao/PortableServer/PS_CurrentA.cpp:
-	* tao/PortableServer/PS_ForwardA.cpp:
-	* tao/PortableServer/PortableServerA.cpp:
-	* tao/PortableServer/RequestProcessingPolicyA.cpp:
-	* tao/PortableServer/ServantActivatorA.cpp:
-	* tao/PortableServer/ServantLocatorA.cpp:
-	* tao/PortableServer/ServantManagerA.cpp:
-	* tao/PortableServer/ServantRetentionPolicyA.cpp:
-	* tao/PortableServer/ThreadPolicyA.cpp:
-	* tao/RTCORBA/RTCORBAA.cpp:
-	* tao/RTPortableServer/RTPortableServerA.cpp:
-	* tao/RTScheduling/RTSchedulerA.cpp:
-	* tao/Strategies/sciop_endpointsC.cpp:
-	* tao/Strategies/uiop_endpointsC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
+        * tao/AnySeqA.cpp:
+        * tao/BooleanSeqA.cpp:
+        * tao/BoundsA.cpp:
+        * tao/CONV_FRAMEA.cpp:
+        * tao/CharSeqA.cpp:
+        * tao/ClientRequestInfoA.cpp:
+        * tao/CurrentA.cpp:
+        * tao/DomainA.cpp:
+        * tao/DoubleSeqA.cpp:
+        * tao/DynamicA.cpp:
+        * tao/Dynamic_ParameterA.cpp:
+        * tao/FloatSeqA.cpp:
+        * tao/GIOPA.cpp:
+        * tao/IIOPA.cpp:
+        * tao/IIOP_EndpointsA.cpp:
+        * tao/IOP_CodecA.cpp:
+        * tao/IOP_IORA.cpp:
+        * tao/InvalidSlotA.cpp:
+        * tao/LongDoubleSeqA.cpp:
+        * tao/LongLongSeqA.cpp:
+        * tao/LongSeqA.cpp:
+        * tao/Messaging_PolicyValueA.cpp:
+        * tao/ORBInitInfoA.cpp:
+        * tao/ORBInitializerA.cpp:
+        * tao/ObjectIdListA.cpp:
+        * tao/OctetSeqA.cpp:
+        * tao/PI_ForwardC.cpp:
+        * tao/ParameterModeA.cpp:
+        * tao/PolicyA.cpp:
+        * tao/PolicyFactoryA.cpp:
+        * tao/Policy_ForwardA.cpp:
+        * tao/PortableInterceptorA.cpp:
+        * tao/RequestInfoA.cpp:
+        * tao/ServerRequestInfoA.cpp:
+        * tao/ServicesA.cpp:
+        * tao/ShortSeqA.cpp:
+        * tao/StringSeqA.cpp:
+        * tao/TAOA.cpp:
+        * tao/TimeBaseA.cpp:
+        * tao/TypeCodeA.cpp:
+        * tao/ULongLongSeqA.cpp:
+        * tao/ULongSeqA.cpp:
+        * tao/UShortSeqA.cpp:
+        * tao/VisibilityA.cpp:
+        * tao/WCharSeqA.cpp:
+        * tao/WStringSeqA.cpp:
+        * tao/WrongTransactionA.cpp:
+        * tao/orb_typesA.cpp:
+        * tao/IFR_Client/IFR_BaseA.cpp:
+        * tao/IFR_Client/IFR_BasicA.cpp:
+        * tao/IFR_Client/IFR_ComponentsA.cpp:
+        * tao/IFR_Client/IFR_ExtendedA.cpp:
+        * tao/IORManipulation/IORA.cpp:
+        * tao/ImR_Client/ImplRepoA.cpp:
+        * tao/ImR_Client/ServerObjectA.cpp:
+        * tao/Messaging/MessagingA.cpp:
+        * tao/Messaging/Messaging_No_ImplA.cpp:
+        * tao/Messaging/Messaging_RT_PolicyA.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
+        * tao/Messaging/TAO_ExtA.cpp:
+        * tao/ObjRefTemplate/Default_ORTA.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
+        * tao/PortableServer/AdapterActivatorA.cpp:
+        * tao/PortableServer/ForwardRequestA.cpp:
+        * tao/PortableServer/IdAssignmentPolicyA.cpp:
+        * tao/PortableServer/IdUniquenessPolicyA.cpp:
+        * tao/PortableServer/ImplicitActivationPolicyA.cpp:
+        * tao/PortableServer/LifespanPolicyA.cpp:
+        * tao/PortableServer/POAManagerA.cpp:
+        * tao/PortableServer/PS_CurrentA.cpp:
+        * tao/PortableServer/PS_ForwardA.cpp:
+        * tao/PortableServer/PortableServerA.cpp:
+        * tao/PortableServer/RequestProcessingPolicyA.cpp:
+        * tao/PortableServer/ServantActivatorA.cpp:
+        * tao/PortableServer/ServantLocatorA.cpp:
+        * tao/PortableServer/ServantManagerA.cpp:
+        * tao/PortableServer/ServantRetentionPolicyA.cpp:
+        * tao/PortableServer/ThreadPolicyA.cpp:
+        * tao/RTCORBA/RTCORBAA.cpp:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+        * tao/RTScheduling/RTSchedulerA.cpp:
+        * tao/Strategies/sciop_endpointsC.cpp:
+        * tao/Strategies/uiop_endpointsC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/Makefile.am:
-	* tao/tao.mpc:
+        * tao/Makefile.am:
+        * tao/tao.mpc:
 
-	  Updated source file lists in accordance with latest TypeCode
-	  source changes.
+          Updated source file lists in accordance with latest TypeCode
+          source changes.
 
 Tue May  3 18:27:02 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -673,19 +689,19 @@ Mon May  2 18:41:12 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May  2 09:50:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
 
-	  Work around Borland unresolved symbol errors concerning the
-	  out-of-line virtual destructor.  The virtual destructor should
-	  not be inlined, nor should we have to export TAO_Lockable from
-	  the DSO/DLL.  *sigh*
+          Work around Borland unresolved symbol errors concerning the
+          out-of-line virtual destructor.  The virtual destructor should
+          not be inlined, nor should we have to export TAO_Lockable from
+          the DSO/DLL.  *sigh*
 
 Mon May  2 10:36:43 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tao/PortableServer/PortableServer_WFunctions.cpp (PortableServer):
-	  Remove the "+ 1" from the string length so things will work
- 	  better for wstrings.  Thanks to Wolfgang Fischer <fiw@arcor.de>
- 	  for reporting this.  This fixes bugid 2095.
+        * tao/PortableServer/PortableServer_WFunctions.cpp (PortableServer):
+          Remove the "+ 1" from the string length so things will work
+          better for wstrings.  Thanks to Wolfgang Fischer <fiw@arcor.de>
+          for reporting this.  This fixes bugid 2095.
 
 Mon May  2 13:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -706,34 +722,34 @@ Mon May  2 11:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May  1 23:44:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/svc.conf:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/svc.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/svc.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/svc.conf:
 
-	  Set -ORBDropRepliesOnShutdown to 0 as per Johnny's advice.
+          Set -ORBDropRepliesOnShutdown to 0 as per Johnny's advice.
 
 Sat Apr 30 20:10:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
 
-	  Match format specifier to actual type, i.e. "%lu" for an
-	  unsigned long.
+          Match format specifier to actual type, i.e. "%lu" for an
+          unsigned long.
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
 
-	  Fixed "variable may be used uninitialized" warnings.
+          Fixed "variable may be used uninitialized" warnings.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
 
-  	  Added missing virtual destructor.  Fixes a g++ 4.0 warning.
+          Added missing virtual destructor.  Fixes a g++ 4.0 warning.
 
-	* tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
-	* tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
-	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
 
-	  Removed extraneous DSO/DLL symbol export declarations from
-	  typedef.
+          Removed extraneous DSO/DLL symbol export declarations from
+          typedef.
 
 Sat Apr 30 10:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -742,52 +758,52 @@ Sat Apr 30 10:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Apr 30 00:48:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated source file lists to include new
-	  Notify/Event_Persistence_Factory.cpp file.
+          Updated source file lists to include new
+          Notify/Event_Persistence_Factory.cpp file.
 
-	* orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.cpp:
 
-	  New file containing destructor definition.
+          New file containing destructor definition.
 
-	* orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request.cpp:
-	* orbsvcs/orbsvcs/Notify/Method_Request.h:
-	* orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
-	* orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
-	* orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
-	* orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
-	* orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
-	* orbsvcs/orbsvcs/Notify/Topology_Object.h:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.h:
-	* orbsvcs/tests/Notify/lib/Task_Callback.h:
-	* orbsvcs/tests/Security/ssliop_corbaloc/client.h:
-	* orbsvcs/tests/Simple_Naming/client.h:
-	* examples/Event_Comm/Event_Comm_i.cpp:
-	* examples/Event_Comm/Event_Comm_i.h:
-	* examples/POA/TIE/test_i.cpp:
-	* examples/POA/TIE/test_i.h:
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/tests/Notify/lib/Task_Callback.h:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.h:
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * examples/Event_Comm/Event_Comm_i.cpp:
+        * examples/Event_Comm/Event_Comm_i.h:
+        * examples/POA/TIE/test_i.cpp:
+        * examples/POA/TIE/test_i.h:
 
-	  Various g++ 4.0 warnings fixes, including missing virtual
-	  destructors, potential use of uninitialized variables and
-	  use of "#pragma once" in a main source file.
+          Various g++ 4.0 warnings fixes, including missing virtual
+          destructors, potential use of uninitialized variables and
+          use of "#pragma once" in a main source file.
 
 Tue Apr 26 11:06:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Objref_TypeCode.h:
-	* tao/Objref_TypeCode_Base.h:
+        * tao/Objref_TypeCode.h:
+        * tao/Objref_TypeCode_Base.h:
 
-	  Updated documentation to list "home" TypeCodes.
+          Updated documentation to list "home" TypeCodes.
 
 Fri Apr 29 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -846,88 +862,88 @@ Thu Apr 28 17:45:59 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr 28 15:01:38 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
 
-	  Removed unused singleton.
+          Removed unused singleton.
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/server.h:
-	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/ftp.h:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
-	* orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
 
-	  Converted remaining ACE_Singletons to ACE_Unmanaged_Singleton.
-	  See the ChangeLog entry "Wed Apr 27 23:36:45 2005  Ossama Othman
-	  <ossama@dre.vanderbilt.edu>" for details.
+          Converted remaining ACE_Singletons to ACE_Unmanaged_Singleton.
+          See the ChangeLog entry "Wed Apr 27 23:36:45 2005  Ossama Othman
+          <ossama@dre.vanderbilt.edu>" for details.
 
 Thu Apr 28 00:09:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCode.cpp (~TypeCode):
-	* tao/TypeCode.inl (~TypeCode):
+        * tao/TypeCode.cpp (~TypeCode):
+        * tao/TypeCode.inl (~TypeCode):
 
-	  Moved destructor out of line since it is virtual.  Inlining it
-	  doesn't buy us anything in this case.
+          Moved destructor out of line since it is virtual.  Inlining it
+          doesn't buy us anything in this case.
 
 Wed Apr 27 23:36:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/server.h:
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.h:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
 
-	  Use an ACE_Unmanaged_Singleton instead of an ACE_Singleton,
-	  and explicitly close that unmanaged singleton prior to exiting
-	  main() to avoid order of destruction of static object	related
-	  problems.  The singleton instance in question indirectly
-	  contains a pointer to static TypeCodes, and assumes that the
-	  singleton itself will be destroyed after the static TypeCodes.
-	  This is not a portable assumption, especially since the CORBA
-	  spec explicitly allows reference count operations on TypeCodes
-	  to be no-ops, which is the case with TAO's new TypeCode
-	  implementation.
+          Use an ACE_Unmanaged_Singleton instead of an ACE_Singleton,
+          and explicitly close that unmanaged singleton prior to exiting
+          main() to avoid order of destruction of static object related
+          problems.  The singleton instance in question indirectly
+          contains a pointer to static TypeCodes, and assumes that the
+          singleton itself will be destroyed after the static TypeCodes.
+          This is not a portable assumption, especially since the CORBA
+          spec explicitly allows reference count operations on TypeCodes
+          to be no-ops, which is the case with TAO's new TypeCode
+          implementation.
 
 Wed Apr 27 17:39:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Alias_TypeCode.cpp (tao_marshal):
-	* tao/Enum_TypeCode.cpp (tao_marshal):
-	* tao/Objref_TypeCode_Base.cpp (tao_marshal):
-	* tao/Sequence_TypeCode.cpp (tao_marshal):
-	* tao/Struct_TypeCode.cpp (tao_marshal):
-	* tao/Union_TypeCode.cpp (tao_marshal):
-	* tao/Value_TypeCode.cpp (tao_marshal):
+        * tao/Alias_TypeCode.cpp (tao_marshal):
+        * tao/Enum_TypeCode.cpp (tao_marshal):
+        * tao/Objref_TypeCode_Base.cpp (tao_marshal):
+        * tao/Sequence_TypeCode.cpp (tao_marshal):
+        * tao/Struct_TypeCode.cpp (tao_marshal):
+        * tao/Union_TypeCode.cpp (tao_marshal):
+        * tao/Value_TypeCode.cpp (tao_marshal):
 
-	  Cast the size_t return value of TAO_OutputCDR::total_length() to
-	  CORBA::ULong.  Addresses ambiguous CDR stream insertion operator
-	  overloads in some VxWorks builds.
+          Cast the size_t return value of TAO_OutputCDR::total_length() to
+          CORBA::ULong.  Addresses ambiguous CDR stream insertion operator
+          overloads in some VxWorks builds.
 
 Wed Apr 27 16:10:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):
 
-	  Corrected format specifier for an enumeration.  An enumeration
-	  is implicitly converted to an "int", not "unsigned int".
-	  Addresses compile-time warnings from g++ builds with format
-	  specifier warnings enabled.
+          Corrected format specifier for an enumeration.  An enumeration
+          is implicitly converted to an "int", not "unsigned int".
+          Addresses compile-time warnings from g++ builds with format
+          specifier warnings enabled.
 
 Wed Apr 27 18:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -979,74 +995,74 @@ Tue Apr 26 13:22:08 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Apr 26 10:43:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_tc_common):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_tc_common):
 
-	  Added overlooked CORBA::tk_home case.  Fixes an internal
-	  run-time error (CORBA::INTERNAL system exception being thrown).
+          Added overlooked CORBA::tk_home case.  Fixes an internal
+          run-time error (CORBA::INTERNAL system exception being thrown).
 
-	  (value_event_tc_common):
+          (value_event_tc_common):
 
-	  Set the concrete base type TypeCode to CORBA::_tc_null if the
-	  corresponding user supplied argument is nil.  This is compliant
-	  with the CORBA specification.  Fixes a CORBA::MARSHAL system
-	  exception being thrown at run-time.  Note that this is already
-	  done for the static TypeCodes generated by the TAO_IDL
-	  compiler.
+          Set the concrete base type TypeCode to CORBA::_tc_null if the
+          corresponding user supplied argument is nil.  This is compliant
+          with the CORBA specification.  Fixes a CORBA::MARSHAL system
+          exception being thrown at run-time.  Note that this is already
+          done for the static TypeCodes generated by the TAO_IDL
+          compiler.
 
 Tue Apr 26 01:46:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Alias_TypeCode.cpp (tao_marshal):
-	* tao/Enum_TypeCode.cpp (tao_marshal):
-	* tao/Objref_TypeCode_Base.cpp (tao_marshal):
-	* tao/Sequence_TypeCode.cpp (tao_marshal):
-	* tao/Struct_TypeCode.cpp (tao_marshal):
-	* tao/Union_TypeCode.cpp (tao_marshal):
-	* tao/Value_TypeCode.cpp (tao_marshal):
+        * tao/Alias_TypeCode.cpp (tao_marshal):
+        * tao/Enum_TypeCode.cpp (tao_marshal):
+        * tao/Objref_TypeCode_Base.cpp (tao_marshal):
+        * tao/Sequence_TypeCode.cpp (tao_marshal):
+        * tao/Struct_TypeCode.cpp (tao_marshal):
+        * tao/Union_TypeCode.cpp (tao_marshal):
+        * tao/Value_TypeCode.cpp (tao_marshal):
 
-	  Corrected marshaling of these complex parameter list TypeCodes.
-	  They were missing the CDR encapsulation length before the actual
-	  encapsulation.
+          Corrected marshaling of these complex parameter list TypeCodes.
+          They were missing the CDR encapsulation length before the actual
+          encapsulation.
 
-	* tao/Objref_TypeCode_Factory.h:
-	* tao/TypeCode_CDR_Extraction.cpp:
+        * tao/Objref_TypeCode_Factory.h:
+        * tao/TypeCode_CDR_Extraction.cpp:
 
-	  Extract the CDR encapsulation length before the remainder of the
-	  encapsulation when demarshaling complex parameter list
-	  TypeCodes.
+          Extract the CDR encapsulation length before the remainder of the
+          encapsulation when demarshaling complex parameter list
+          TypeCodes.
 
-	* tests/Codec/README:
+        * tests/Codec/README:
 
-	  Updated expected output.
+          Updated expected output.
 
-	* tests/Codec/client.cpp (main):
+        * tests/Codec/client.cpp (main):
 
-	  Added missing space in debugging message.
+          Added missing space in debugging message.
 
 Tue Apr 26 12:55:32 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
 
-	  Replicated fix from "Fri Apr 22 12:09:23 2005  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" for above protocol.
+          Replicated fix from "Fri Apr 22 12:09:23 2005  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" for above protocol.
 
 Mon Apr 25 23:26:54 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (gen_typecode_includes):
+        * TAO_IDL/be/be_codegen.cpp (gen_typecode_includes):
 
-	  Generate include directives for
-	  "tao/TypeCode_{Struct,Value}_Field.h" headers.  Needed for IBM
-	  C++ compiler.
+          Generate include directives for
+          "tao/TypeCode_{Struct,Value}_Field.h" headers.  Needed for IBM
+          C++ compiler.
 
 Mon Apr 25 22:47:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Added TypeCode_Traits.h and Enum_TypeCode.cpp to list of
-	  Header_Files and Template_Files respectively.
+          Added TypeCode_Traits.h and Enum_TypeCode.cpp to list of
+          Header_Files and Template_Files respectively.
 
 Mon Apr 25 19:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1122,15 +1138,15 @@ Sat Apr 23 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Apr 23 13:03:14 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tao/PICurrent.cpp:
-  	* tao/PICurrent.h:
-	* tao/PICurrent.inl: Changed all uses of "id" to something else to
-	  avoid conflicts with Mac OS X, where "id" is a keyword.  Thanks
- 	  to Ron Wilson <ronwilson@mac.com> for reporting this problem.
+        * tao/PICurrent.cpp:
+        * tao/PICurrent.h:
+        * tao/PICurrent.inl: Changed all uses of "id" to something else to
+          avoid conflicts with Mac OS X, where "id" is a keyword.  Thanks
+          to Ron Wilson <ronwilson@mac.com> for reporting this problem.
 
-	* orbsvcs/tests/FT_App/StubBatchConsumer.h: Added the
-	  ACE_THROW_SPEC to the offer_change() method.  Thanks to Ron
- 	  Wilson <ronwilson@mac.com> for reporting this problem.
+        * orbsvcs/tests/FT_App/StubBatchConsumer.h: Added the
+          ACE_THROW_SPEC to the offer_change() method.  Thanks to Ron
+          Wilson <ronwilson@mac.com> for reporting this problem.
 
 Sat Apr 23 18:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1161,45 +1177,45 @@ Sat Apr 23 15:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 22 23:08:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
 
-	  Fixed "variable may be used uninitialized" g++ 4.0 warnings.
+          Fixed "variable may be used uninitialized" g++ 4.0 warnings.
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp (log_scheduling_tuples):
 
-	  Made format string variable into a string literal.  Allows g++
-	  format specifier argument checking to work, and addresses a
-	  related g++ 4.0 warning.
+          Made format string variable into a string literal.  Allows g++
+          format specifier argument checking to work, and addresses a
+          related g++ 4.0 warning.
 
 Fri Apr 22 23:02:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.cpp
-	  (Dynamic_Bitset):
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.cpp
+          (Dynamic_Bitset):
 
-	  Reordered class attributes to fix "variable is used
-	  uninitialized" ("is" not "may be"!) g++ 4.0 warning.
+          Reordered class attributes to fix "variable is used
+          uninitialized" ("is" not "may be"!) g++ 4.0 warning.
 
 Fri Apr 22 22:49:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp
-	  (analyze_loads):
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp
-	  (analyze_loads):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp
+          (analyze_loads):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp
+          (analyze_loads):
 
-	  Fixed "variable may be used uninitialized" g++ 4.0 warnings.  In
-	  this case, the variable was indeed used undefined!
+          Fixed "variable may be used uninitialized" g++ 4.0 warnings.  In
+          this case, the variable was indeed used undefined!
 
 Fri Apr 22 20:00:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* docs/rtcorba/features.html:
+        * docs/rtcorba/features.html:
 
-	  Fix typo.
+          Fix typo.
 
-	* orbsvcs/IFR_Service/Makefile.am
+        * orbsvcs/IFR_Service/Makefile.am
 
-	  Regenerate.
+          Regenerate.
 
 Fri Apr 22 16:30:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1215,38 +1231,38 @@ Fri Apr 22 20:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 22 12:17:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/Adapter_Activator.h (ImR_Adapter):
-	* orbsvcs/ImplRepo_Service/Forwarder.h (ImR_Forwarder):
-	* orbsvcs/ImplRepo_Service/INS_Locator.h (INS_Locator):
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h (ImR_Adapter):
+        * orbsvcs/ImplRepo_Service/Forwarder.h (ImR_Forwarder):
+        * orbsvcs/ImplRepo_Service/INS_Locator.h (INS_Locator):
 
-	  Inherit from CORBA::LocalObject.  The C++ mapping requires that
-	  implementations of locality constrained objects do so.
+          Inherit from CORBA::LocalObject.  The C++ mapping requires that
+          implementations of locality constrained objects do so.
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (~ImR_Locator_i):
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h (~ImR_Locator_i):
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (~ImR_Locator_i):
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h (~ImR_Locator_i):
 
-	  Added an out-of-line destructor.  For some reason g++ 4.0 needs
-	  this out-of-line destructor instead of the default one generated
-	  by the compiler.  Without this destructor, we get a number of
-	  "undefined reference" link errors related to the virtual tables
-	  of the INS_Locator, ImR_Adapter and ImR_Forwarder members in
-	  this class.
+          Added an out-of-line destructor.  For some reason g++ 4.0 needs
+          this out-of-line destructor instead of the default one generated
+          by the compiler.  Without this destructor, we get a number of
+          "undefined reference" link errors related to the virtual tables
+          of the INS_Locator, ImR_Adapter and ImR_Forwarder members in
+          this class.
 
 Fri Apr 22 12:09:23 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* tao/IIOP_Connector.cpp:
-	* tao/Strategies/SCIOP_Connector.cpp:
-	* tao/Strategies/SHMIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
 
-	  Fix for BUGID 2074. In cancel_svc_handler () return the value
-	  from base.connector_.cancel () properly.
+          Fix for BUGID 2074. In cancel_svc_handler () return the value
+          from base.connector_.cancel () properly.
 
-	* tao/Connection_Handler.inl:
+        * tao/Connection_Handler.inl:
 
-	  Added a check for TIMEOUT as part of of the is_closed () call.
+          Added a check for TIMEOUT as part of of the is_closed () call.
 
 Fri Apr 22 10:01:31 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1283,23 +1299,23 @@ Fri Apr 22 14:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr 21 23:27:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/skip.cpp:
+        * tao/skip.cpp:
 
-	  Corrected class name in TAO_Marshal_String::skip() debugging
-	  messaging.  It erroneously referred to
-	  TAO_Marshal_TypeCode::skip().
+          Corrected class name in TAO_Marshal_String::skip() debugging
+          messaging.  It erroneously referred to
+          TAO_Marshal_TypeCode::skip().
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp
-	  (alias_value_box_tc_common):
-	  (value_event_tc_common):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp
+          (alias_value_box_tc_common):
+          (value_event_tc_common):
 
-	  Store a duplicate of the TypeCode argument in a TypeCode_var
-	  before passing the content/concrete_base TypeCode to the
-	  containing TypeCode constructor.  A template typedef related
-	  workaround for MSVC++ 6 causes us to introduce needlessly
-	  complicated memory management.  Addresses seg faults when
-	  creating an alias, value box, valuetype or eventtype TypeCode
-	  with the TAO's implementation of the CORBA TypeCodeFactory.
+          Store a duplicate of the TypeCode argument in a TypeCode_var
+          before passing the content/concrete_base TypeCode to the
+          containing TypeCode constructor.  A template typedef related
+          workaround for MSVC++ 6 causes us to introduce needlessly
+          complicated memory management.  Addresses seg faults when
+          creating an alias, value box, valuetype or eventtype TypeCode
+          with the TAO's implementation of the CORBA TypeCodeFactory.
 
 Thu Apr 21 11:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1338,75 +1354,75 @@ Wed Apr 20 14:22:57 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Apr 20 09:57:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Alias_TypeCode.h:
-	* tao/Alias_TypeCode.inl:
-	* tao/Sequence_TypeCode.h:
-	* tao/Sequence_TypeCode.inl:
-	* tao/Union_TypeCode.h:
-	* tao/Union_TypeCode.inl:
-	* tao/Value_TypeCode.h:
-	* tao/Value_TypeCode.inl:
+        * tao/Alias_TypeCode.h:
+        * tao/Alias_TypeCode.inl:
+        * tao/Sequence_TypeCode.h:
+        * tao/Sequence_TypeCode.inl:
+        * tao/Union_TypeCode.h:
+        * tao/Union_TypeCode.inl:
+        * tao/Value_TypeCode.h:
+        * tao/Value_TypeCode.inl:
 
-	  Work around Borland C++ internal error by passing the TypeCode
-	  constructor argument by value instead of by const reference.
+          Work around Borland C++ internal error by passing the TypeCode
+          constructor argument by value instead of by const reference.
 
 Tue Apr 19 17:12:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCode.cpp (unaliased_typecode):
+        * tao/TypeCode.cpp (unaliased_typecode):
 
-	  Fixed problem where the initial TypeCode over which we are
-	  iterating was not initialized.
+          Fixed problem where the initial TypeCode over which we are
+          iterating was not initialized.
 
-	  (equivalent):
+          (equivalent):
 
-	  Factored out common TypeCode equivalence verification code to
-	  this base class method, and added missing TypeCode unaliasing
-	  code for the TypeCode being invoked (e.g. the left hand side).
+          Factored out common TypeCode equivalence verification code to
+          this base class method, and added missing TypeCode unaliasing
+          code for the TypeCode being invoked (e.g. the left hand side).
 
-	* tao/Alias_TypeCode.cpp (equivalent_i):
-	* tao/Enum_TypeCode.cpp:
-	* tao/Fixed_TypeCode.cpp:
-	* tao/Objref_TypeCode_Base.cpp:
-	* tao/Sequence_TypeCode.cpp:
-	* tao/String_TypeCode.cpp:
-	* tao/Struct_TypeCode.cpp:
-	* tao/Union_TypeCode.cpp:
-	* tao/Value_TypeCode.cpp:
+        * tao/Alias_TypeCode.cpp (equivalent_i):
+        * tao/Enum_TypeCode.cpp:
+        * tao/Fixed_TypeCode.cpp:
+        * tao/Objref_TypeCode_Base.cpp:
+        * tao/Sequence_TypeCode.cpp:
+        * tao/String_TypeCode.cpp:
+        * tao/Struct_TypeCode.cpp:
+        * tao/Union_TypeCode.cpp:
+        * tao/Value_TypeCode.cpp:
 
-	  Factored out common TypeCode equivalence verification code to
-	  the CORBA::TypeCode::equivalent() base class method.
+          Factored out common TypeCode equivalence verification code to
+          the CORBA::TypeCode::equivalent() base class method.
 
-	* tao/Any_Basic_Impl.cpp (Any_Basic_Impl):
+        * tao/Any_Basic_Impl.cpp (Any_Basic_Impl):
 
-	  Replaced duplicated TypeCode unaliasing code with a call to
-	  TAO::unaliased_typecode().
+          Replaced duplicated TypeCode unaliasing code with a call to
+          TAO::unaliased_typecode().
 
-	* tao/String_TypeCode_Traits.h:
+        * tao/String_TypeCode_Traits.h:
 
-	  New {w}string TypeCode creation traits templates.
+          New {w}string TypeCode creation traits templates.
 
-	* tao/Any_Special_Impl_T.cpp (insert):
+        * tao/Any_Special_Impl_T.cpp (insert):
 
-	  Added missing bounded {w}string TypeCode support that was
-	  disabled during the TypeCode rewrite merge.
+          Added missing bounded {w}string TypeCode support that was
+          disabled during the TypeCode rewrite merge.
 
-	* tao/TAO_Internal.cpp (service_config_open_count):
+        * tao/TAO_Internal.cpp (service_config_open_count):
 
-	  Use the ACE_Static_Object_Lock instead of ACE_Atomic_Op to make
-	  operations on this global variable thread safe.  Addresses some
-	  static object order of construction/destruction related errors.
+          Use the ACE_Static_Object_Lock instead of ACE_Atomic_Op to make
+          operations on this global variable thread safe.  Addresses some
+          static object order of construction/destruction related errors.
 
 Tue Apr 19 11:10:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/ImR_Client.Added:
+        * tao/ImR_Client.Added:
 
           Added Pkgconfig_Files definition.
 
-	* tao/ImR_Client/TAO_ImR_Client.pc.in:
+        * tao/ImR_Client/TAO_ImR_Client.pc.in:
 
           New file, pkg-config *.pc template for TAO_ImR_Client library.
 
@@ -1434,65 +1450,65 @@ Tue Apr 19 07:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 18 21:36:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
 Mon Apr 18 15:41:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Add ORBInitInfoS.h and PolicyFactoryS.h to list of header
-	  files.
+          Add ORBInitInfoS.h and PolicyFactoryS.h to list of header
+          files.
 
 Mon Apr 18 11:50:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Exception.h (_type):
-	* tao/Exception.cpp (_type):
-	* tao/SystemException.h (_type):
-	* tao/SystemException.cpp (_type):
+        * tao/Exception.h (_type):
+        * tao/Exception.cpp (_type):
+        * tao/SystemException.h (_type):
+        * tao/SystemException.cpp (_type):
 
-	  The TypeCode rewrite changed the name of the generated
-	  _type() user exception method to _tao_type() since it specific
-	  to TAO.  However, those changes were not propagated to the
-	  CORBA::Exception base class and CORBA::SystemException classes.
-	  As a result, code that attempted to retrieve the user exception
-	  TypeCode using the _type() method would end up with the base
-	  class method returning a nil TypeCode.  Renamed the _type()
-	  method to _tao_type() in these files.  Fixes memory related
-	  problems when attempting to call TypeCode methods on a TypeCode
-	  retrieved from an Any containing a user exception.
+          The TypeCode rewrite changed the name of the generated
+          _type() user exception method to _tao_type() since it specific
+          to TAO.  However, those changes were not propagated to the
+          CORBA::Exception base class and CORBA::SystemException classes.
+          As a result, code that attempted to retrieve the user exception
+          TypeCode using the _type() method would end up with the base
+          class method returning a nil TypeCode.  Renamed the _type()
+          method to _tao_type() in these files.  Fixes memory related
+          problems when attempting to call TypeCode methods on a TypeCode
+          retrieved from an Any containing a user exception.
 
-	* tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
+        * tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
 
-	  Made test title output more descriptive.
+          Made test title output more descriptive.
 
 Mon Apr 18 08:00:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Event/ECG_Adapters.h (~TAO_ECG_Dgram_Handler):
-	* orbsvcs/orbsvcs/Event/ECG_Adapters.cpp (~TAO_ECG_Dgram_Handler):
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.h (~TAO_ECG_Dgram_Handler):
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.cpp (~TAO_ECG_Dgram_Handler):
 
-	  Added missing virtual destructor.  Fixes a g++ 4.0 warning.
+          Added missing virtual destructor.  Fixes a g++ 4.0 warning.
 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
 
-	  Moved inlined virtual methods out of line to this file.
+          Moved inlined virtual methods out of line to this file.
 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
 
-	  Cleaned up CORBA::Environment arguments to better conform to
-	  current TAO conventions.
+          Cleaned up CORBA::Environment arguments to better conform to
+          current TAO conventions.
 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.i:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.i:
 
-	  Moved inline virtual methods out of line.
+          Moved inline virtual methods out of line.
 
-	  Removed this file since it is now empty.
+          Removed this file since it is now empty.
 
 Mon Apr 18 13:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1563,70 +1579,70 @@ Mon Apr 18 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Apr 17 01:07:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Any_Dual_Impl_T.h (_tao_decode):
+        * tao/Any_Dual_Impl_T.h (_tao_decode):
 
-	  Removed CORBA::Environment default argument.  TAO internal
-	  methods, such as this, should always supply a CORBA::Environment
-	  argument when using emulated exceptions since a TSS access is
-	  otherwise incurred.  Addresses compile-time errors related to
-	  the lack of a missing full declaration for
-	  TAO_default_environment().
+          Removed CORBA::Environment default argument.  TAO internal
+          methods, such as this, should always supply a CORBA::Environment
+          argument when using emulated exceptions since a TSS access is
+          otherwise incurred.  Addresses compile-time errors related to
+          the lack of a missing full declaration for
+          TAO_default_environment().
 
 Sat Apr 16 18:22:23 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.cpp:
 
-	  Fixed a bug in reference_to_id.  Many thanks to Ossama Othman
-	  <ossama@dre.vanderbilt.edu> for the fix.
+          Fixed a bug in reference_to_id.  Many thanks to Ossama Othman
+          <ossama@dre.vanderbilt.edu> for the fix.
 
 Sat Apr 16 16:20:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
 
-	  Removed unnecessary "ace/Service_Repository.h" and
-	  "ace/Svc_Conf.h" include directives.  The latter also introduced
-	  g++ 4.0 link-time problems since it pulled in virtual methods
-	  that are not exported.  Fixes g++ 4.0 unresolved symbol errors
-	  when setting the default symbol and inlined function visibility
-	  to "hidden".
+          Removed unnecessary "ace/Service_Repository.h" and
+          "ace/Svc_Conf.h" include directives.  The latter also introduced
+          g++ 4.0 link-time problems since it pulled in virtual methods
+          that are not exported.  Fixes g++ 4.0 unresolved symbol errors
+          when setting the default symbol and inlined function visibility
+          to "hidden".
 
 Sat Apr 16 01:36:41 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Objref_TypeCode_Factory.h (tc_objref_factory):
+        * tao/Objref_TypeCode_Factory.h (tc_objref_factory):
 
-	  Fixed problem where created TypeCode was not returned to the
-	  caller.
+          Fixed problem where created TypeCode was not returned to the
+          caller.
 
-	* tao/TypeCode.cpp (equal):
+        * tao/TypeCode.cpp (equal):
 
-	  Throw a CORBA::BAD_PARAM exception if the TypeCode argument is
-	  nil.  Fixes a seg fault.
+          Throw a CORBA::BAD_PARAM exception if the TypeCode argument is
+          nil.  Fixes a seg fault.
 
-	* tao/TypeCode.inl (equivalent):
+        * tao/TypeCode.inl (equivalent):
 
-	  Likewise.
+          Likewise.
 
-	  Moved this method out of line into `TypeCode.cpp'.  Avoids
-	  including excessive headers in this file.
+          Moved this method out of line into `TypeCode.cpp'.  Avoids
+          including excessive headers in this file.
 
 Sat Apr 16 00:10:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Value_TypeCode.h (type_modifer, concrete_base_type):
-	* tao/Value_TypeCode.cpp (type_modifer, concrete_base_type):
+        * tao/Value_TypeCode.h (type_modifer, concrete_base_type):
+        * tao/Value_TypeCode.cpp (type_modifer, concrete_base_type):
 
-	  Fixed these incorrect protected template method names.  The
-	  method names are now "type_modifer_i" and
-	  "concrete_base_type_i", respectively.  Addresses valuetype
-	  extraction from CORBA::Any problems since the correct
-	  implementations are now invoked polymorphically rather than the
-	  default implementations that throw a CORBA::TypeCode::BadKind
-	  exception.
+          Fixed these incorrect protected template method names.  The
+          method names are now "type_modifer_i" and
+          "concrete_base_type_i", respectively.  Addresses valuetype
+          extraction from CORBA::Any problems since the correct
+          implementations are now invoked polymorphically rather than the
+          default implementations that throw a CORBA::TypeCode::BadKind
+          exception.
 
 Fri Apr 15 23:31:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Transport.cpp (dump_iov):
+        * tao/Transport.cpp (dump_iov):
 
-	  Fixed seg fault due to missing size_t ACE_DEBUG argument.
+          Fixed seg fault due to missing size_t ACE_DEBUG argument.
 
 Fri Apr 15 09:58:50 2005  Chad Elliott  <elliott_c@ociweb.com>
 

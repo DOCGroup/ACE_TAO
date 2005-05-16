@@ -36,7 +36,7 @@ private:
    ACE_Reactor* reactor_;
 };
 
-class TAO_FTEC_Fault_Listener;
+#include "FTEC_Group_Manager.h"
 
 template <ACE_PEER_STREAM_1>
 class ConnectionDetectHandler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
