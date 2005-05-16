@@ -51,54 +51,54 @@ class TAO_DynamicInterface_Export TAO_DynamicImplementation
   //    serving a CORBA request. Invoking this method in other
   //    circumstances may lead to unpredictable results.
 public:
+  /// The invoke() method receives requests issued to any CORBA object
+  /// incarnated by the DSI servant and performs the processing
+  /// necessary to execute the request.
   virtual void invoke (CORBA::ServerRequest_ptr request
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
-  // The invoke() method receives requests issued to any CORBA object
-  // incarnated by the DSI servant and performs the processing
-  // necessary to execute the request.
 
+  /// The _primary_interface() method receives an ObjectId value and a
+  /// POA_ptr as input parameters and returns a valid RepositoryId
+  /// representing the most-derived interface for that oid.
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) = 0;
-  // The _primary_interface() method receives an ObjectId value and a
-  // POA_ptr as input parameters and returns a valid RepositoryId
-  // representing the most-derived interface for that oid.
 
+  /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char *logical_type_id
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Local implementation of the CORBA::Object::_is_a method.
 
+  /// Returns a CORBA::Object_ptr for the target object.
   CORBA::Object_ptr _this (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Returns a CORBA::Object_ptr for the target object.
 
+  /// Query the Interface Repository for the interface definition.
   virtual CORBA::InterfaceDef_ptr _get_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
-  // Query the Interface Repository for the interface definition.
 
 protected:
 
+  /// Return 0.  Should never be used.
   virtual const char *_interface_repository_id (void) const;
-  // Return 0.  Should never be used.
 
+  /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);
-  // Simply returns "this"
 
+  /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // This is an auxiliary method for _this() and _narrow().
 
+  /// Turns around and calls invoke.
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *context
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Turns around and calls invoke.
 
 private:
+  /// Encapsulates code common to _is_a(), _get_interface() and _create_stub().
   CORBA::RepositoryId get_id_from_primary_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
-  // Encapsulates code common to _is_a(), _get_interface() and _create_stub().
 };
 
 #include /**/ "ace/post.h"

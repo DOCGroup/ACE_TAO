@@ -64,33 +64,33 @@ namespace CORBA
     //    of TAO_ServerRequest that is passed up to the POA from
     //    the ORB.
   public:
+    /// Constructor.
     ServerRequest (TAO_ServerRequest &orb_server_request);
-    // Constructor.
 
+    /// Destructor.
     ~ServerRequest (void);
-    // Destructor.
 
+    /// Implementation uses this to provide the ORB with the operation's
+    /// parameter list ... on return, their values are available; the
+    /// list fed in has typecodes and (perhap) memory assigned.
     void arguments (CORBA::NVList_ptr &list
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // Implementation uses this to provide the ORB with the operation's
-    // parameter list ... on return, their values are available; the
-    // list fed in has typecodes and (perhap) memory assigned.
 
+    /// Implementation uses this to provide the operation result
+    /// ... illegal if exception() was called or params() was not called.
+    ///
+    /// XXX Implementation should be able to assume response has been
+    /// sent when this returns, and reclaim memory it allocated.
     void set_result (const CORBA::Any &value
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // Implementation uses this to provide the operation result
-    // ... illegal if exception() was called or params() was not called.
-    //
-    // XXX Implementation should be able to assume response has been
-    // sent when this returns, and reclaim memory it allocated.
 
+    /// Implementation uses this to provide the exception value which is
+    /// the only result of this particular invocation.
+    ///
+    /// XXX Implementation should be able to assume response has been
+    /// sent when this returns, and reclaim memory it allocated.
     void set_exception (const CORBA::Any &value
                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // Implementation uses this to provide the exception value which is
-    // the only result of this particular invocation.
-    //
-    // XXX Implementation should be able to assume response has been
-    // sent when this returns, and reclaim memory it allocated.
 
     // = Get various universal call attributes.
 
@@ -101,17 +101,17 @@ namespace CORBA
     // this stuff is a catastrophic error since this is all part of the
     // basic CORBA Object Model.
 
+    /// Marshal outgoing parameters.
     void dsi_marshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    // Marshal outgoing parameters.
 
+    /// Accessor for the Context member.
     CORBA::Context_ptr ctx (void) const;
-    // Accessor for the Context member.
 
+    /// Mutator for the Context member.
     void ctx (CORBA::Context_ptr);
-    // Mutator for the Context member.
 
+    /// Get the operation name.
     const char *operation (void) const;
-    // Get the operation name.
 
     // Pseudo object methods.
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
@@ -121,52 +121,52 @@ namespace CORBA
     CORBA::ULong _incr_refcnt (void);
     CORBA::ULong _decr_refcnt (void);
 
+    /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);
-    // Set the lazy evaluation flag.
 
+    /// Get the byte order of the incoming CDR stream.
     int _tao_incoming_byte_order (void) const;
-    // Get the byte order of the incoming CDR stream.
 
+    /// Set the byte order of the outgoing CDR stream.
     void _tao_reply_byte_order (int byte_order);
-    // Set the byte order of the outgoing CDR stream.
 
     /// Return a reference to the underlying TAO_ServerRequest object.
     TAO_ServerRequest & _tao_server_request (void);
 
+    /// Returns a user exception through a TAO gateway without
+    /// knowing its type.
     void gateway_exception_reply (ACE_CString &raw_exception);
-    // Returns a user exception through a TAO gateway without
-    // knowing its type.
 
-    // Useful for template programming.
+    /// Useful for template programming.
     typedef CORBA::ServerRequest_ptr _ptr_type;
 
   private:
+    /// If zero then the NVList is evaluated ASAP.
     bool lazy_evaluation_;
-    // If zero then the NVList is evaluated ASAP.
 
+    /// Context associated with this request.
     CORBA::Context_ptr ctx_;
-    // Context associated with this request.
 
+    /// Incoming parameters.
     CORBA::NVList_ptr params_;
-    // Incoming parameters.
 
+    /// Return value.
     CORBA::Any_ptr retval_;
-    // Return value.
 
+    /// Any exception which might be raised.
     CORBA::Any_ptr exception_;
-    // Any exception which might be raised.
 
+    /// Reference counting.
     CORBA::ULong refcount_;
-    // Reference counting.
 
+    /// Protect the refcount_ and response_receieved_.
     TAO_SYNCH_MUTEX lock_;
-    // Protect the refcount_ and response_receieved_.
 
+    /// Request from the ORB.
     TAO_ServerRequest &orb_server_request_;
-    // Request from the ORB.
 
+    /// Have we sent a user exception obtained from a gateway?
     int sent_gateway_exception_;
-    // Have we sent a user exception obtained from a gateway?
   };
 } // End CORBA namespace
 
