@@ -19,11 +19,13 @@ namespace CIAO
     const char* ior_file = "file://em.ior";
     const char* dap_ior_filename = 0;
     const char* dap_ior = 0;
-    enum { 
+    enum mode_type { 
       pl_mode_start,
       pl_mode_stop,
       pl_mode_interactive
-    } mode = pl_mode_interactive;
+    };
+
+    mode_type mode = pl_mode_interactive;
 
     static void
     usage (const ACE_TCHAR* program)

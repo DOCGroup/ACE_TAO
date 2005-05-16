@@ -14,6 +14,13 @@
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
+template <typename DATA>
+Process_Function::~Process_Function (void)
+{
+}
+
+// -------------------------------------------
+
 /*
  *  Process references
  */

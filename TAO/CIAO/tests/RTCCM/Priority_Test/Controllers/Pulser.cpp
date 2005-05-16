@@ -7,6 +7,12 @@
 
 //=================================================================
 
+PTImpl::Pulse_Handler::~Pulse_Handler (void)
+{
+}
+
+// ------
+
 PTImpl::Pulser::Pulser (PTImpl::Pulse_Handler *cb)
   : active_ (0),
     done_ (0),
