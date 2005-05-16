@@ -1,3 +1,21 @@
+Mon May 16 10:09:45 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_operation):
+        
+          Added check for imported node, skipping code generation if the
+          node is imported. For all other node types in this visitor, arg
+          traits specializations must be generated, since an IDL type
+          declared in an included file could be used as a parameter in
+          an operation in the main file. But when visiting an operation
+          itself, the only thing that triggers an arg traits specialization
+          is an anonymous bounded string parameter (deprecated but still
+          legal). Since this type of declaration is not visible outside
+          the operation's scope, it should not trigger code generation
+          if the node is imported. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out that this code generation
+          for an imported operation causes a C++ compilation failure, due
+          to the lack of a proper #include of tao/BD_String_Arg_Traits.h.
+
 Mon May 16 15:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Context.h:
