@@ -19,7 +19,7 @@ Thread_Task::svc (void)
         ACE_DEBUG ((LM_DEBUG,
                     "Thread_Task::svc %d\n",
                     importance_));
-  
+
       const char * name = 0;
       CORBA::Policy_var implicit_sched_param = CORBA::Policy::_duplicate (sched_param_.in ());;
       this->current_->begin_scheduling_segment (name,
@@ -31,11 +31,17 @@ Thread_Task::svc (void)
       ACE_OS::memcpy (&count_,
                       this->current_->id ()->get_buffer (),
                       this->current_->id ()->length ());
-  
+
       char msg [BUFSIZ];
-      ACE_OS::sprintf (msg, "Thread_Task::svc Imp=%d Guid=%d\n", importance_, count_);
+      ACE_OS::sprintf (msg,
+                       "Thread_Task::svc Imp=%d Guid="
+                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       "\n",
+                       importance_,
+                       count_);
+
       dt_creator_->log_msg (msg);
-  
+
       this->perform_task ();
 
       this->current_->end_scheduling_segment (name
@@ -94,15 +100,22 @@ void
 Thread_Task::dump_stats (void)
 {
   char fname [BUFSIZ];
-  ACE_OS::sprintf (fname, "DT_%d.dat",count_);
+  ACE_OS::sprintf (fname,
+                   "DT_"
+                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ".dat",count_);
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"File name %s\n",
 		fname));
-  
+
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "#Schedule Output for DT %d", count_);
-  
+  ACE_OS::sprintf (msg,
+                   "#Schedule Output for DT "
+                   ACE_SIZE_T_FORMAT_SPECIFIER,
+                   count_);
+
   task_stats_->dump_samples (fname,
 			     msg,
 			     ACE_High_Res_Timer::global_scale_factor ());
