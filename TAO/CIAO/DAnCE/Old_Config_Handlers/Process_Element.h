@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //==================================================================
 /**
  *  @file Process_Element.h
@@ -69,11 +71,14 @@ template <typename DATA>
 class Process_Function 
 {
 public:
-  virtual void call(DOMDocument*, DOMNodeIterator*, DATA&)=0;
+  /// Destructor.
+  virtual ~Process_Function (void);
+
+  virtual void call (DOMDocument*, DOMNodeIterator*, DATA&) = 0;
 
   void operator() (DOMDocument* doc, DOMNodeIterator* iter, DATA& data)
   {
-    call(doc, iter, data);
+    call (doc, iter, data);
   }
 };
 

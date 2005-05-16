@@ -92,7 +92,7 @@ namespace CIAO
                                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    Components::CCMObject_ptr ccm_obj_ptr;
+    Components::CCMObject_ptr ccm_obj_ptr = Components::CCM_Object::_nil ();
     if (objref_map_.find (oid.in (), ccm_obj_ptr) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));

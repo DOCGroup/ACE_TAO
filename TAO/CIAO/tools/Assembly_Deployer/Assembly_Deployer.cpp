@@ -154,7 +154,7 @@ teardown_assembly (Components::Deployment::AssemblyFactory_ptr factory
   FILE *ckh = ACE_OS::fopen (cookie_teardown, "r");
   if (ckh != NULL)
     {
-      fscanf (ckh, "%d %d", &i, &g);
+      fscanf (ckh, "%u %u", &i, &g);
       ACE_OS::fclose (ckh);
     }
   else

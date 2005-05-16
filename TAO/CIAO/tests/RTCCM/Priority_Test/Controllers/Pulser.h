@@ -21,6 +21,10 @@ namespace PTImpl
   class Pulse_Handler
   {
   public:
+
+    /// Destructor.
+    virtual ~Pulse_Handler (void);
+
     /// Helper function to be called back by Pulse_Handler
     virtual void pulse (void) = 0;
   };
