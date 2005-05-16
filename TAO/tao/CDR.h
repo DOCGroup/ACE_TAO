@@ -130,7 +130,7 @@ public:
   /// Destructor.
   ~TAO_OutputCDR (void);
 
-  // @@ TODO: do we want a special method to write an array of
+  // @todo do we want a special method to write an array of
   // strings and wstrings?
 
   // = TAO specific methods.

@@ -60,7 +60,7 @@ public:
 
   /**
    * Dispatch the reply. Return 1 on sucess, -1 on error.
-   * @@ TODO Pluggable Messaging:  this method has too many arguments,
+   * @todo Pluggable Messaging:  this method has too many arguments,
    *    the "Right Thing"[tm] is for the Transport Object to create a
    *    "ClientReply" that encapsulates all we need to process a
    *    reply.  Naturally it is possible that different messaging
@@ -72,7 +72,7 @@ public:
   /**
    * The used for the pending reply has been closed.
    * No reply is expected.
-   * @@ TODO: If the connection was closed due to a CloseConnection
+   * @todo If the connection was closed due to a CloseConnection
    *    message then we could re-issue the request instead of raising
    *    the exception, it would a matter of simply adding a boolean
    *    argument to this function.

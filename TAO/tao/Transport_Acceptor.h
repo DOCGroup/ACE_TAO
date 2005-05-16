@@ -109,7 +109,7 @@ public:
                               TAO_MProfile &mprofile,
                               CORBA::Short priority) = 0;
 
-  /// Return 1 if the <endpoint> has the same address as the acceptor.
+  /// Return 1 if the @a endpoint has the same address as the acceptor.
   virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
 
   /**
@@ -120,9 +120,9 @@ public:
   virtual CORBA::ULong endpoint_count (void) = 0;
 
   /**
-   * This method fetches the <key> from the <profile>. Protocols that
+   * This method fetches the @a key from the @a profile. Protocols that
    * are pluggable can send data that are specific in the
-   * <profile_data> field encapsulated as a octet stream. This method
+   * @c profile_data field encapsulated as a octet stream. This method
    * allows those  protocols to get the object key from the
    * encapsulation.
    */
