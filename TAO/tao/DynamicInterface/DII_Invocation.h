@@ -1,20 +1,18 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    DynamicInterface
-//
-// = DESCRIPTION
-//    The DII invocation classes.
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DII_Invocation.h
+ *
+ *  $Id$
+ *
+ *  @brief The DII invocation classes.
+ *
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_DII_INVOCATION_H
 #define TAO_DII_INVOCATION_H
@@ -68,7 +66,7 @@ namespace TAO
 
     CORBA::ExceptionList *excp_list_;
 
-    // Back pointer to the DII request that created us.
+    /// Back pointer to the DII request that created us.
     CORBA::Request_ptr host_;
 
   };
@@ -103,7 +101,7 @@ namespace TAO
 
   private:
 
-    // Back pointer to the DII request that created us.
+    /// Back pointer to the DII request that created us.
     CORBA::Request_ptr host_;
 
   };

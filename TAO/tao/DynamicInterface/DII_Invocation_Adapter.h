@@ -41,12 +41,11 @@ namespace TAO
   class Argument;
   class Collocation_Proxy_Broker;
   struct Exception_Data;
+
   /**
    * @class DII_Invocation_Adapter
    *
    * @brief Generic interface for the DII invocation object visible
-   *
-   *
    */
   class TAO_DynamicInterface_Export DII_Invocation_Adapter :
     public Invocation_Adapter

@@ -51,72 +51,74 @@ namespace CORBA
   typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
   typedef TAO_Pseudo_Out_T<ExceptionList, ExceptionList_var> ExceptionList_out;
 
+  /**
+   * @class ExceptionList
+   *
+   * @brief ExceptionList definition taken from CORBA v2.2 Feb 1998.
+   *
+   * Maintains a list of TypeCodes for Exceptions.
+   */
   class TAO_DynamicInterface_Export ExceptionList
   {
-    // = TITLE
-    //    ExceptionList definition taken from CORBA v2.2 Feb 1998.
-    //
-    // = DESCRIPTION
-    //    Maintains a list of TypeCodes for Exceptions.
   public:
     // = Intialization and termination methods.
 
+    /// Constructor.
     ExceptionList (void);
-    // Constructor.
 
+    /// Constructor - initialize given a length and an array of
+    /// TypeCodes.
     ExceptionList (CORBA::ULong len,
                    CORBA::TypeCode_ptr *tc_list);
-    // Constructor - initialize given a length and an array of
-    // TypeCodes.
 
+    /// Destructor.
     ~ExceptionList (void);
-    // Destructor.
 
+    /// Return the number of elements.
     CORBA::ULong count (void);
-    // Return the number of elements.
 
+    /// Increase the reference count.
     ExceptionList_ptr _duplicate (void);
-    // Increase the reference count.
 
+    /// Increase the reference count in the spec defined manner.
     static ExceptionList_ptr _duplicate (ExceptionList *);
-    // Increase the reference count in the spec defined manner.
 
     void _destroy (void);
 
     static ExceptionList_ptr _nil (void);
 
+    /// Add a TypeCode to the list.
     void add (CORBA::TypeCode_ptr tc);
-    // Add a TypeCode to the list.
 
+    /// Add and consume a TypeCode to the list.
     void add_consume (CORBA::TypeCode_ptr tc);
-    // Add and consume a TypeCode to the list.
 
+    /// Return the typecode at slot i. Raises the "Bounds" exception.
     CORBA::TypeCode_ptr item (CORBA::ULong slot
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // Return the typecode at slot i. Raises the "Bounds" exception.
 
+    /// Remove the typecode at slot i. Raises the "Bounds" exception.
     void remove (CORBA::ULong slot
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // Remove the typecode at slot i. Raises the "Bounds" exception.
 
+    /// Increment and decrement ref counts.
     void _incr_refcnt (void);
     void _decr_refcnt (void);
-    // Increment and decrement ref counts.
 
+    /// Useful for template programming.
     typedef CORBA::ExceptionList_ptr _ptr_type;
     typedef CORBA::ExceptionList_var _var_type;
-    // Useful for template programming.
 
   private:
     // = Not allowed.
     ExceptionList (const ExceptionList &);
     ExceptionList &operator= (const ExceptionList &);
 
+    /// Reference counter.
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
-    // Reference counter.
 
+    /// Internal list of typecodes.
     ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
-    // Internal list of typecodes.
   };
 }  // End CORBA namespace
 

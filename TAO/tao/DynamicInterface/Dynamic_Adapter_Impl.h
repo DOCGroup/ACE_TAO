@@ -30,18 +30,17 @@
 #include "dynamicinterface_export.h"
 #include "ace/Service_Config.h"
 
+  /**
+   * @class TAO_Dynamic_Adapter_Impl
+   *
+   * Concrete subclass of TAO_Dynamic_Adapter
+   * in the TAO library. This class helps implement various
+   * functions in the CORBA namespace relating to DII/DSI
+   * invocations.
+   */
 class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   : public TAO_Dynamic_Adapter
 {
-  // = TITLE
-  //    TAO_Dynamic_Adapter_Impl.
-  //
-  // = DESCRIPTION
-  //    Concrete subclass of TAO_Dynamic_Adapter
-  //    in the TAO library. This class helps implement various
-  //    functions in the CORBA namespace relating to DII/DSI
-  //    invocations.
-  //
 public:
   TAO_Dynamic_Adapter_Impl (void);
   virtual ~TAO_Dynamic_Adapter_Impl (void);
