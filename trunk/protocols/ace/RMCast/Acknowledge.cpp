@@ -242,7 +242,7 @@ namespace ACE_RMCast
       }
     }
 
-    if (m->find (Data::id))
+    if (m->find (Data::id) || m->find (NoData::id))
     {
       Address from (
         static_cast<From const*> (m->find (From::id))->address ());

@@ -39,7 +39,7 @@ namespace ACE_RMCast
       unsigned long port (a.get_port_number ());
       unsigned long ip (a.get_ip_address ());
 
-      port <<= sizeof  (sizeof (unsigned long) - sizeof (unsigned short));
+      port <<= sizeof (unsigned long) - sizeof (unsigned short);
 
       return port ^ ip;
     }
@@ -433,6 +433,7 @@ namespace ACE_RMCast
     Address address_;
   };
 
+
   //
   //
   //
@@ -499,6 +500,7 @@ namespace ACE_RMCast
     char* buf_;
     size_t size_;
   };
+
 
   //
   //
@@ -809,6 +811,44 @@ namespace ACE_RMCast
     Map;
 
     Map map_;
+  };
+
+
+  //
+  //
+  //
+  struct NoData;
+
+  typedef
+  ACE_Refcounted_Auto_Ptr<NoData, ACE_Null_Mutex>
+  NoData_ptr;
+
+  struct NoData : Profile
+  {
+    static u16 const id;
+
+  public:
+    NoData (Header const& h, istream&)
+        : Profile (h)
+    {
+    }
+
+    NoData ()
+        : Profile (id)
+    {
+      Profile::size (0);
+    }
+
+  public:
+    virtual void
+    serialize_body (ostream&) const
+    {
+    }
+
+    virtual void
+    serialize_body (sstream&) const
+    {
+    }
   };
 
 }
