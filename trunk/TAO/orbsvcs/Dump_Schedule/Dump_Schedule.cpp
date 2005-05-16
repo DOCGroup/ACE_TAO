@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      const char *name = 0;
+      const char *name = "ScheduleService";
       if (command_line.get_argc() > 1)
         {
           name = command_line.get_ASCII_argv()[1];
