@@ -1,3 +1,15 @@
+Mon May 16 11:35:00 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/tests/tests.mwc:
+	* protocols/tests/RMCast/Protocol.h:
+	* protocols/tests/RMCast/RMCast.mpc:
+	* protocols/tests/RMCast/Receiver.cpp:
+	* protocols/tests/RMCast/Sender.cpp:
+	* protocols/tests/RMCast/run_test.pl:
+
+	  Added regression test with loss and reordering simulator
+	  for RMCast.
+
 Mon May 16 11:26:14 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* examples/RMCast/Makefile.am:
