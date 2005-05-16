@@ -1,3 +1,26 @@
+Mon May 16 09:24:29 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Enabled the Exposed_Policies test on Linux.
+
+        * bin/tao_other_tests.lst:
+
+          Added a !NO_IFR configuration to each IFR related test.
+          The IFR_Service will not run on MacOS X unless TAO is built
+          statically due to gcc's in ability to deal with template
+          instantiated singletons correctly.
+
+          Added a NO_LOADAVG configuration to avoid running the load average
+          based test on platforms that do not have support for obtaining the
+          load average from the system.
+
+          Added a configuration for NO_MCAST for machines that do not have
+          multicast capabilities or the multicast implementation is broken.
+
+          Added !STATIC to two LoadManager tests to support static builds on
+          Windows.
+
 Mon May 16 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Active_Map_Manager.h:
