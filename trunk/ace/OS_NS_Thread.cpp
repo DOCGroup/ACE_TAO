@@ -773,8 +773,8 @@ private:
 private:
   static unsigned int reference_count_;
   static ACE_TSS_Cleanup * instance_;
-  static ACE_Thread_Mutex mutex_;
-  static ACE_Thread_Condition<ACE_Thread_Mutex> condition_;
+  static ACE_Thread_Mutex* mutex_;
+  static ACE_Thread_Condition<ACE_Thread_Mutex>* condition_;
 
 private:
   ACE_TSS_Cleanup * ptr_;
@@ -790,7 +790,17 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
   : ptr_(0)
   , flags_(0)
 {
-  ACE_Guard<ACE_Thread_Mutex> guard(mutex_);
+  // During static construction or construction of the ACE_Object_Manager,
+  // there can be only one thread in this constructor at any one time, so
+  // it's safe to check for a zero mutex_.  If it's zero, we create a new
+  // mutex and condition variable.
+  if (mutex_ == 0)
+    {
+      ACE_NEW (mutex_, ACE_Thread_Mutex ());
+      ACE_NEW (condition_, ACE_Thread_Condition<ACE_Thread_Mutex> (*mutex_));
+    }
+
+  ACE_Guard<ACE_Thread_Mutex> guard(*mutex_);
 
   if (purpose == CREATE)
   {
@@ -810,7 +820,7 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
       ACE_SET_BITS(flags_, FLAG_DELETING);
       while (reference_count_ > 0)
       {
-        condition_.wait();
+        condition_->wait();
       }
     }
   }
@@ -824,9 +834,10 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
       }
   }
 }
+
 TSS_Cleanup_Instance::~TSS_Cleanup_Instance()
 {
-  ACE_Guard<ACE_Thread_Mutex> guard(mutex_);
+  ACE_Guard<ACE_Thread_Mutex> guard(*mutex_);
   if (ptr_ != 0)
     {
       if (ACE_BIT_ENABLED (flags_,FLAG_DELETING))
@@ -841,7 +852,7 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance()
           --reference_count_;
           if (reference_count_ == 0 && instance_ == NULL)
             {
-              condition_.signal();
+              condition_->signal();
             }
         }
     }
@@ -871,9 +882,8 @@ TSS_Cleanup_Instance::operator ->()
 // = Static object initialization.
 unsigned int TSS_Cleanup_Instance::reference_count_ = 0;
 ACE_TSS_Cleanup * TSS_Cleanup_Instance::instance_ = 0;
-ACE_Thread_Mutex TSS_Cleanup_Instance::mutex_ (0, 0);
-ACE_Thread_Condition<ACE_Thread_Mutex> TSS_Cleanup_Instance::condition_
-  (TSS_Cleanup_Instance::mutex_);
+ACE_Thread_Mutex* TSS_Cleanup_Instance::mutex_ = 0;
+ACE_Thread_Condition<ACE_Thread_Mutex>* TSS_Cleanup_Instance::condition_ = 0;
 
 ACE_TSS_Cleanup::~ACE_TSS_Cleanup (void)
 {
@@ -2069,7 +2079,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 #elif defined (ACE_HAS_STHREADS)
   return ACE_OS::set_scheduling_params (sched_params, id);
 #elif defined (ACE_HAS_PTHREADS) && \
-      (!defined (ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS))
+      (!defined (ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) || \
+      defined (ACE_HAS_PTHREAD_SCHEDPARAM))
   ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
@@ -2088,7 +2099,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-# if defined(ACE_TANDEM_T1248_PTHREADS)
+# if defined(ACE_TANDEM_T1248_PTHREADS) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)
       ACE_NOTSUP_RETURN (-1);
 # else  /* ! ACE_TANDEM_T1248_PTHREADS */
       int result = ::sched_setscheduler (0, // this process
@@ -2520,7 +2531,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   endif /* ACE_LACKS_SETDETACH */
 
       // *** Set Policy
-#   if !defined (ACE_LACKS_SETSCHED)
+#   if !defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)
       // If we wish to set the priority explicitly, we have to enable
       // explicit scheduling, and a policy, too.
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)

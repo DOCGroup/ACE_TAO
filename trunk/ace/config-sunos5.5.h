@@ -338,7 +338,7 @@
 #define ACE_HAS_MEMCHR
 
 #if defined (__SUNPRO_CC)
-# define ACE_CC_NAME "SunPro C++"
+# define ACE_CC_NAME ACE_LIB_TEXT ("SunPro C++")
 # define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
 # define ACE_CC_MINOR_VERSION (__SUNPRO_CC & 0x00ff)
 # define ACE_CC_BETA_VERSION  (0)
@@ -347,9 +347,9 @@
 # define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 # define ACE_CC_BETA_VERSION  (0)
 # if __GNUC_MINOR__ >= 90
-#   define ACE_CC_NAME "egcs"
+#   define ACE_CC_NAME ACE_LIB_TEXT ("egcs")
 # else
-#   define ACE_CC_NAME "g++"
+#   define ACE_CC_NAME ACE_LIB_TEXT ("g++")
 # endif /* __GNUC_MINOR__ */
 #endif /* __GNUG__ */
 

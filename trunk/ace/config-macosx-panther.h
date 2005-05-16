@@ -83,7 +83,7 @@
 #define ACE_HAS_SIN_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-//#define ACE_HAS_SYSV_IPC
+#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
@@ -156,6 +156,7 @@
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_SEARCH_H
 
+#define ACE_HAS_PTHREAD_SCHEDPARAM
 #define ACE_LACKS_SETSCHED
 //#define ACE_HAS_RECURSIVE_MUTEXES
 

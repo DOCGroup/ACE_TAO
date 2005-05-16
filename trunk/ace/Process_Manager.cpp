@@ -268,13 +268,13 @@ ACE_Process_Manager::close (void)
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
-#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
-  if (this->reactor ())
+  if (this->reactor () != 0)
     {
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
       this->reactor ()->remove_handler (SIGCHLD, (ACE_Sig_Action *) 0);
+#endif /*  !ACE_WIN32  */
       this->reactor (0);
     }
-#endif /*  !ACE_WIN32  */
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
