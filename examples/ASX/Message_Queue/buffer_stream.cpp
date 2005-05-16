@@ -37,7 +37,7 @@ public:
   virtual int close (u_long = 0);
 };
 
-// Define the Producer interface. 
+// Define the Producer interface.
 
 class Producer : public Common_Task
 {
@@ -50,13 +50,13 @@ public:
 
 class Consumer : public Common_Task
   // = TITLE
-  //    Define the Consumer interface. 
+  //    Define the Consumer interface.
 {
 public:
   Consumer (void) {}
 
   virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);  
+                   ACE_Time_Value *tv = 0);
   // Enqueue the message on the ACE_Message_Queue for subsequent
   // handling in the svc() method.
 
@@ -71,7 +71,7 @@ private:
 class Filter : public MT_Task
   // = TITLE
   //    Defines a Filter that prepends a line number in front of each
-  //    line.  
+  //    line.
 {
 public:
   Filter (void): count_ (1) {}
@@ -87,7 +87,7 @@ private:
 
 // Spawn off a new thread.
 
-int 
+int
 Common_Task::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
@@ -98,7 +98,7 @@ Common_Task::open (void *)
   return 0;
 }
 
-int 
+int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -121,13 +121,13 @@ Common_Task::close (u_long exit_status)
 int
 Producer::svc (void)
 {
-  // Keep reading stdin, until we reach EOF. 
+  // Keep reading stdin, until we reach EOF.
 
   for (int n; ; )
     {
       // Allocate a new message (add one to avoid nasty boundary
       // conditions).
-      
+
       ACE_Message_Block *mb;
 
       ACE_NEW_RETURN (mb,
@@ -163,15 +163,15 @@ Producer::svc (void)
 	}
     }
 
-  return 0; 
+  return 0;
 }
 
 // Simply enqueue the Message_Block into the end of the queue.
 
 int
 Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{ 
-  return this->putq (mb, tv); 
+{
+  return this->putq (mb, tv);
 }
 
 // The consumer dequeues a message from the ACE_Message_Queue, writes
@@ -193,7 +193,7 @@ Consumer::svc (void)
       ACE_Message_Block *mb;
 
       // Wait for upto 4 seconds.
-      this->timeout_.sec (ACE_OS::time (0) + 4); 
+      this->timeout_.sec (ACE_OS::time (0) + 4);
 
       result = this->getq (mb, &this->timeout_);
 
@@ -221,21 +221,10 @@ Consumer::svc (void)
   return 0;
 }
 
-// The filter prepends a line number in front of each line.
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-#  if defined (ACE_WIN64)
-#    define FMTSTR  "%I64u: %s"
-#  else
-#    define FMTSTR  "%u: %s"
-#  endif /* ACE_WIN64 */
-#else
-#  define FMTSTR  "%u: %ls"
-#endif /* ACE_WIN32 || !ACE_USES_WCHAR */
-
 int
 Filter::put (ACE_Message_Block *mb,
-	     ACE_Time_Value *tv)
-{ 
+             ACE_Time_Value *tv)
+{
   if (mb->length () == 0)
     return this->put_next (mb, tv);
   else
@@ -253,7 +242,8 @@ Filter::put (ACE_Message_Block *mb,
 
       // Prepend the line count in front of the buffer.
       ACE_OS::sprintf (mb->rd_ptr (),
-                       FMTSTR,
+                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       ": %s",
                        this->count_++,
                        buf);
       return this->put_next (mb, tv);
@@ -262,7 +252,7 @@ Filter::put (ACE_Message_Block *mb,
 
 // Main driver function.
 
-int 
+int
 ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
@@ -271,8 +261,8 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   MT_Stream stream;
 
   MT_Module *pm;
-  MT_Module *fm; 
-  MT_Module *cm; 
+  MT_Module *fm;
+  MT_Module *cm;
 
   ACE_NEW_RETURN (cm,
                   MT_Module (ACE_TEXT ("Consumer"),
@@ -311,7 +301,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR,

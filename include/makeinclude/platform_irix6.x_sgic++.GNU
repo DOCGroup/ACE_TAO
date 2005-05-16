@@ -7,15 +7,9 @@
 # environment variable to -n32.  This causes a new compiler to be
 # invoked.
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
+debug ?= 1
+optimize ?= 1
+threads ?= 1
 
 ifndef templates
   templates = implicit

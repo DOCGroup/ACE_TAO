@@ -39,13 +39,13 @@ PLATFORM_WX_CPPFLAGS= $(shell wx-config --cxxflags) $(PLATFORM_GTK_CPPFLAGS)
 PLATFORM_WX_LIBS    = $(shell wx-config --libs)     $(PLATFORM_GTK_LIBS)
 PLATFORM_WX_LDFLAGS = $(shell wx-config --ldflags)  $(PLATFORM_GTK_LDFLAGS)
 
-PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
-PLATFORM_TCL_LIBS=-ltcl8.4
-PLATFORM_TCL_LDFLAGS=
+PLATFORM_TCL_CPPFLAGS ?= -I/usr/include/tcl8.4
+PLATFORM_TCL_LIBS ?= -ltcl8.4
+PLATFORM_TCL_LDFLAGS =
 
-PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-PLATFORM_TK_LDFLAGS=
+PLATFORM_TK_CPPFLAGS ?= -I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+PLATFORM_TK_LIBS ?= $(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+PLATFORM_TK_LDFLAGS ?=
 
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
@@ -68,7 +68,7 @@ ifeq (8.0,$(findstring 8.0,$(CXX_VERSION)))
   CFLAGS += -wd1476,1505
 endif
 ifeq (8.1,$(findstring 8.1,$(CXX_VERSION)))
-  CFLAGS += -wd1476,1505 -no-gcc
+  CFLAGS += -wd1476,1505,1572 -no-gcc
 endif
 
 CFLAGS  += -w1
@@ -89,9 +89,9 @@ ifeq ($(threads),1)
   endif
 endif
 
-PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
-PLATFORM_QT_LIBS=-lqt
-PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
+PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
+PLATFORM_QT_LIBS ?= -lqt-mt
+PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
 
 OCFLAGS += -O3
 ifneq ($(SYSARCH),ia64)

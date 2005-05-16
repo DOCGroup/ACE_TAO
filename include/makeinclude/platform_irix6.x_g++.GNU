@@ -4,12 +4,8 @@
 
 include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
+debug ?= 1
+optimize ?= 1
 
 CC              = gcc
 CXX             = g++
@@ -29,7 +25,7 @@ SOFLAGS         += -shared $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
                   $(SOLINK.cc) $(LDFLAGS) -o $@ $(VSHDIR)$*.o
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

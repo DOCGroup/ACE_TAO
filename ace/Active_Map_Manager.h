@@ -61,11 +61,11 @@ public:
   /// Size required to store information about active key.
   static size_t size (void);
 
-  /// Recover state of active key from <data>.  User must make sure
-  /// that <data> encoded using the <encode> method.
+  /// Recover state of active key from @a data.  User must make sure
+  /// that @a data encoded using the encode() method.
   void decode (const void *data);
 
-  /// Encode state of the active key into <data>.  <data> must be as
+  /// Encode state of the active key into @a data.  @a data must be as
   /// big as the value returned from <size>.
   void encode (void *data) const;
 

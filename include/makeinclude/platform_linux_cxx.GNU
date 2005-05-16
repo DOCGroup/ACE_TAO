@@ -4,8 +4,8 @@
 # Linux, using the cxx compiler..
 
 debug = 1
-exceptions = 1
-rtti = 1
+exceptions ?= 1
+rtti ?= 1
 
 CC              = cxx
 CXX             = $(CC)
