@@ -1,18 +1,15 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = DESCRIPTION
-//     Dispatch the reply appropriately.
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DII_Reply_Dispatcher.h
+ *
+ *  $Id$
+ *
+ *  @brief Dispatch the reply appropriately.
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
 
 #ifndef TAO_DII_REPLY_DISPATCHER_H
 #define TAO_DII_REPLY_DISPATCHER_H
@@ -66,7 +63,7 @@ public:
   }
 
 protected:
-  // Destructor.
+  /// Destructor.
   ~TAO_DII_Deferred_Reply_Dispatcher (void);
 
 private:

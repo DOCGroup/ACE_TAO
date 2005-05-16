@@ -124,72 +124,74 @@ namespace CORBA
     TAO_SYNCH_MUTEX refcount_lock_;
   };
 
+  /**
+   * @class ContextList
+   *
+   * @brief ContextList definition taken from CORBA v2.3a Dec 1998
+   *
+   * Maintains a list of strings for Contexts.
+   */
   class TAO_DynamicInterface_Export ContextList
   {
-    // = TITLE
-    //    ContextList definition taken from CORBA v2.3a Dec 1998
-    //
-    // = DESCRIPTION
-    //    Maintains a list of strings for Contexts.
   public:
+    /// Constructor.
     ContextList (void);
-    // Constructor.
 
+    /// Constructor - initialize given a length and an array of
+    /// strings.
     ContextList (CORBA::ULong len,
                        char **ctx_list);
-    // Constructor - initialize given a length and an array of
-    // strings.
 
+    /// Destructor.
     ~ContextList (void);
-    // Destructor.
 
+    /// Return the number of elements.
     CORBA::ULong count (void);
-    // Return the number of elements.
 
+    /// Increment the reference count.
     ContextList_ptr _duplicate (void);
-    // Increment the reference count.
 
+    /// Increment the reference count.
     static ContextList_ptr _duplicate (ContextList *);
-    // Increment the reference count.
 
+    /// Decrement the reference count and delete if it is 0.
     void _destroy (void);
-    // Decrement the reference count and delete if it is 0.
 
+    /// Return null pointer of this type.
     static ContextList_ptr _nil ();
-    // Return null pointer of this type.
 
+    /// Add a string to the list.
     void add (char *ctx);
-    // Add a string to the list.
 
+    /// Add and consume a string to the list.
     void add_consume (char *ctx);
-    // Add and consume a string to the list.
 
+    /// Return the typecode at slot i. Raises the "Bounds" exception.
     char *item (CORBA::ULong slot
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // Return the typecode at slot i. Raises the "Bounds" exception.
 
+    /// Remove the typecode at slot i. Raises the "Bounds" exception.
     void remove (CORBA::ULong slot
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // Remove the typecode at slot i. Raises the "Bounds" exception.
 
+    /// Increment and decrement ref counts.
     void _incr_refcnt (void);
     void  _decr_refcnt (void);
-    // Increment and decrement ref counts.
 
     // Useful for template programming.
     typedef CORBA::ContextList_ptr _ptr_type;
     typedef CORBA::ContextList_var _var_type;
 
   private:
-  // Not allowed.
+    // Not allowed.
     ContextList (const ContextList &);
     ContextList &operator= (const ContextList &);
 
+    /// Reference counter.
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
-    // Reference counter.
 
+    /// Internal list of typecodes.
     ACE_Unbounded_Queue<char *> ctx_list_;
-    // Internal list of typecodes.
   };
 } // End CORBA namespace.
 

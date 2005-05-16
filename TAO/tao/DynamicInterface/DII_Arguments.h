@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @authors Jeff Parsons <j.parsons@vanderbilt.edu>
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_DII_ARGUMENTS_H
 #define TAO_DII_ARGUMENTS_H
@@ -42,7 +41,6 @@ namespace TAO
    * @class NamedValue_Argument
    *
    * @brief Class for the return value of a CORBA::(Server)Request.
-   *
    */
   class NamedValue_Argument : public Argument
   {
@@ -63,10 +61,9 @@ namespace TAO
   };
 
   /**
-   * @class NamedValue_Argument
+   * @class NVList_Argument
    *
    * @brief Class for the argument list of a CORBA::(Server)Request.
-   *
    */
   class NVList_Argument : public Argument
   {
