@@ -416,7 +416,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ],
   [
     case "$host" in
-      *win*)
+      *win32*)
            ace_user_enable_wfmo=yes
                ;;
       *)
@@ -443,7 +443,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ],
   [
     case "$host" in
-      *win*)
+      *win32*)
            ace_user_enable_winregistry=yes
                ;;
       *)
