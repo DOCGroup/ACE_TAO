@@ -24,7 +24,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/Channel_Clients.h"
+#include "orbsvcs/Channel_Clients_T.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"

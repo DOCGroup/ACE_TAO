@@ -367,9 +367,6 @@ nobase_include_HEADERS += \
   AVStreamsS_T.cpp \
   AVStreamsS_T.inl \
   AVStreamsS_T.inl \
-  Channel_Clients_T.cpp \
-  Channel_Clients_T.h \
-  Channel_Clients_T.i \
   Null_MediaCtrl.idl \
   Null_MediaCtrlC.h \
   Null_MediaCtrlC.inl \
