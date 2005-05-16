@@ -1,3 +1,17 @@
+Sun May 15 11:57:56 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/INET_Addr.cpp (set): Changed the test from
+	
+	  if (port_number < 0)
+	  
+	  to 
+	  
+	  if (port_number == -1)
+	  
+	  to work around problems when (port_number & 0x80 != 0).  Thanks
+ 	  to Vemund Handeland <vemund.handeland@fantoft.no> for reporting
+ 	  this.
+
 Mon May 16 11:35:00 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/tests/tests.mwc:
