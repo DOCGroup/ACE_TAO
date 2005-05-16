@@ -1,3 +1,72 @@
+Mon May 16 09:18:26 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.mpc:
+        * orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+        * orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.mpc:
+        * orbsvcs/tests/Event/lib/Event_lib.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
+
+          Removed redundant base projects.
+
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+
+          Modified the assertTrue macro so that it would build on LynxOS.
+
+        * orbsvcs/tests/EC_MT_Mcast/run_test.pl:
+
+          Generate a unique multicast address and port to avoid collisions
+          on the same network.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/windows.conf.xml:
+
+          On Windows, we use a configurator file to switch from the default
+          reactor (TP) to Select MT.  The LoadManager, on Windows only,
+          requires a reactor that supports registering signal handlers and
+          the TP Reactor no longer supports that sort of thing.
+
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+
+          Committing a change from Dale Wilson <wilson_d@ociweb.com>.
+
+          Change shut down timeout from hard coded 1 to symbolic 10
+          to eliminate intermittent timeouts on various platforms.
+
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+
+          Committing a change from Trevor Fields <fields_t@ociweb.com>.
+
+          Added delay between iterations of the test to allow
+          complete shutdown of Naming service.  The problem showed
+          up on dual processor machines.
+
+        * orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+
+          Added an include of the CosNotification library initializer header
+          to work around static construction issues on SunOS and MacOS X.
+
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+
+          Allow the user to determine the location of the persistence file
+          by the TMPDIR, TEMP and TMP environment variables.  This will work
+          around NFS locking issues.
+
+        * orbsvcs/tests/Simple_Naming/process-m-output.pl:
+
+          Committing a change from Yan Dai <dai_y@ociweb.com>.
+
+          Modified the test scripts to accept the empty line, the
+          "CommandLine" line and the "WARNING" lines from
+          orbsvcs/orbsvcs/Shutdown_Utilities.cpp.
+
 Mon May 16 08:25:53 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:

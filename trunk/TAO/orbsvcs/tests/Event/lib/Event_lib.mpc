@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Event_Test_Lib): orbsvcslib, rtevent, naming, svc_utils, iortable, portableserver {
+project(Event_Test_Lib): rtevent, naming {
   sharedname   = ECTests
   dynamicflags = EC_TEST_BUILD_DLL
   Header_Files {
