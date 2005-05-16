@@ -1,3 +1,19 @@
+Mon May 16 08:25:53 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+
+          Set the default name to "ScheduleService".
+
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+
+          Allocate an RtecScheduler::Dependency_Set into the out parameter
+          if it doesn't contain one yet.
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+
+          Switched the types for the generated code to match up with actual
+          types for the POD_Dependency_Info and POD_Config_Info structures.
+
 Mon May 16 08:21:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/ORB_Core.cpp:
