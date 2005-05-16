@@ -99,7 +99,7 @@ public:
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the <ACE_Process_Semaphore>
+   * <tryacquire> and is only here to make the ACE_Process_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, <errno> is set to <EBUSY>.
@@ -107,7 +107,7 @@ public:
   int tryacquire_write (void);
 
   /**
-   * This is only here to make the <ACE_Process_Semaphore>
+   * This is only here to make the ACE_Process_Semaphore
    * interface consistent with the other synchronization APIs.
    * Assumes the caller has already acquired the semaphore using one of
    * the above calls, and returns 0 (success) always.

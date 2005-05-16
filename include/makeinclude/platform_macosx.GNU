@@ -5,24 +5,13 @@
 #       users. Non-Fink users should simply create these directories to
 #       eliminate the warnings.
 
-ifndef exceptions
-  exceptions = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
-ifeq (,$(versioned_so))
-  versioned_so = 0
-endif
-with_ld = macosx
-
+exceptions ?= 1
+threads ?= 1
+debug ?= 1
+optimize ?= 0
+versioned_so ?= 0
 pipes ?= 1
+with_ld = macosx
 
 CC              = gcc
 CXX             = g++
@@ -41,7 +30,7 @@ LIBS            += -lcc_dynamic -lstdc++ -lSystem
 ##   - type:
 ##        fink install dlcompat
 ## 10.3 does not need this package.
-LIBS            += -ldl 
+LIBS            += -ldl
 # 10.3 cannot do -03, this could be version dependent (probably on gcc)
 OCFLAGS         += -O2
 RANLIB          = ranlib
@@ -49,7 +38,7 @@ SOEXT		= dylib
 SOFLAGS += -dynamic
 SOBUILD = -o $(VSHDIR)$*.dylib $<
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

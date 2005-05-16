@@ -7,19 +7,10 @@ ifndef BCB
 BCB = /usr/local/kylix3
 endif
 
-ifndef exceptions
-  exceptions = 1
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
+exceptions ?= 1
+debug ?= 1
+optimize ?= 1
+threads ?= 1
 
 PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
 PLATFORM_TCL_LIBS=-ltcl8.4
@@ -112,9 +103,9 @@ CCFLAGS += $(CFLAGS)
 BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v
 BORINITEXEOBJ = borinit.o
 BORINITSHAREDOBJ = borinitso.o
-BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so libc.so libm.so libdl.so 
+BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so libc.so libm.so libdl.so
 BOREXELIBS += crt1.o
-LIBS += $(BORSHAREDOBJ) 
+LIBS += $(BORSHAREDOBJ)
 
 PRELINK=
 SOFLAGS= -Tpd $(BORLDFLAGS)

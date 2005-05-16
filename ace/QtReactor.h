@@ -198,9 +198,9 @@ private:
 
 private slots:
 
-// These are all part of the communication mechanism adopted in Qt.
-/// Dispatch a Read Event
-void read_event (int FD);
+    // These are all part of the communication mechanism adopted in Qt.
+    /// Dispatch a Read Event
+    void read_event (int FD);
 
     /// Dispatch a Write Event
     void write_event (int FD);

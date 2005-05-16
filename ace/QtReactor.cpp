@@ -73,7 +73,7 @@ ACE_QtReactor::~ACE_QtReactor (void)
     MAP::ITERATOR iterEnd = this->read_notifier_.end ();
     while( iter != iterEnd )
     {
-        MAP::ENTRY &entry ( *iter );
+        MAP::ENTRY &entry = *iter;
         // QOBject destructor notifies qapplication (hopefully) on delete
         delete entry.int_id_;
         ++iter;
@@ -84,7 +84,7 @@ ACE_QtReactor::~ACE_QtReactor (void)
     this->write_notifier_.end ();
     while( iter != iterEnd )
     {
-        MAP::ENTRY &entry ( *iter );
+        MAP::ENTRY &entry = *iter;
         // QOBject destructor notifies qapplication (hopefully) on delete
         delete entry.int_id_;
         ++iter;
@@ -95,7 +95,7 @@ ACE_QtReactor::~ACE_QtReactor (void)
     this->exception_notifier_.end ();
     while( iter != iterEnd )
     {
-        MAP::ENTRY &entry ( *iter );
+        MAP::ENTRY &entry = *iter;
         // QOBject destructor notifies qapplication (hopefully) on delete
         delete entry.int_id_;
         ++iter;
@@ -620,8 +620,6 @@ ACE_QtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
   return nfound;
   // Timed out or input available
 }
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Entry<ACE_HANDLE, QSocketNotifier *>;
