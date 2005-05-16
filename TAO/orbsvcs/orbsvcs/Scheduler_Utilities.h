@@ -40,6 +40,8 @@ class TAO_RTSched_Export ACE_RT_Info : public RtecScheduler::RT_Info
   //   IDL.
 public:
 
+  /// Construct a helper class instance from values for
+  /// the fields of the IDL struct it wraps.
   ACE_RT_Info (const char* entry_point,
                RtecScheduler::Time worst_time,
                RtecScheduler::Time typical_time,
@@ -48,15 +50,13 @@ public:
                RtecScheduler::Importance_t importance,
                RtecScheduler::Quantum_t quantum,
                CORBA::Long threads);
-  // Construct a helper class instance from values for
-  // the fields of the IDL struct it wraps.
 
+  /// Construct a helper class instance from the IDL struct it wraps.
   ACE_RT_Info (const RtecScheduler::RT_Info& rt_info);
-  // Construct a helper class instance from the IDL struct it wraps.
 
+  /// Add a dependency of one RT_Info upon another.
   int add_dependency(RtecScheduler::handle_t dep,
                      int number_of_calls = 1);
-  // Add a dependency of one RT_Info upon another.
 
 };
 

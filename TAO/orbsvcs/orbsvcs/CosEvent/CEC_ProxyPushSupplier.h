@@ -5,8 +5,8 @@
  *
  *  $Id$
  *
- *  @authors Carlos O'Ryan (coryan@cs.wustl.edu)
- *           Jon Astle (jon@astle45.fsnet.co.uk)
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  */
 //=============================================================================
 
