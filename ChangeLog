@@ -1,3 +1,11 @@
+Mon May 16 15:58:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Corrected the names of the Sun compilers supported.
+	  Thanks to Nick Todd <nicholas dot todd at gs dot com> for
+	  bringing this error to our attention.
+
+	* THANKS: Added Nick Todd to the Hall of Fame.
+
 Mon May 16 12:33:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* THANKS:
