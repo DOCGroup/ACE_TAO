@@ -2694,9 +2694,11 @@ idl_store_pragma (char *buf)
   // also compensates for the behavior of the Sun preprocessor,
   // which put spaces around the double colons of a non-quoted
   // scoped name, a case which is possible in #pragma version.
+  // Also eats whitespace, which some preprocessors (for example
+  // Intel) don't automatically do.
   while (*sp != '\n')
     {
-      if (*sp == ' ' && *(sp + 1) == ':')
+      if (*sp == ' ' && (*(sp + 1) == ':' || *(sp + 1) == ' '))
         {
           ++crunched;
         }
