@@ -284,10 +284,10 @@ public:
   /**
    * @class ACE_Name_Node
    *
-   * @brief This class supports "named memory regions" within <ACE_Malloc>.
+   * @brief This class supports "named memory regions" within ACE_Malloc.
    *
    * Internally, the named memory regions are stored as a
-   * doubly-linked list within the <Memory_Pool>.  This makes
+   * doubly-linked list within the @c Memory_Pool.  This makes
    * it easy to iterate over the items in the list in both FIFO
    * and LIFO order.
    */
