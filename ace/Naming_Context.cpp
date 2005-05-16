@@ -530,13 +530,6 @@ void
 ACE_Name_Options::base_address (char *base_address)
 {
   ACE_TRACE ("ACE_Name_Options::base_address");
-  // HP-UX 11, aC++ has a bug with 64-bit pointer initialization from
-  // a literal.  To work around it, assign the literal to a long, then
-  // to the pointer.  This is allegedly fixed in aC++ A.03.10.
-#if defined (__hpux) && defined(__LP64__)
-  long temp = ACE_DEFAULT_BASE_ADDRL;
-  base_address = (char *) temp;
-#endif /* defined (__hpux) && defined(__LP64__) */
   this->base_address_ = base_address;
 }
 

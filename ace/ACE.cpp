@@ -124,7 +124,7 @@ ACE::compiler_name (void)
 #ifdef ACE_CC_NAME
   return ACE_CC_NAME;
 #else
-  return "";
+  return ACE_LIB_TEXT ("");
 #endif
 }
 

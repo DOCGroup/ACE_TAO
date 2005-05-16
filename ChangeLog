@@ -1,83 +1,149 @@
+Mon May 16 08:44:14 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ACE.cpp:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-common.h:
+        * ace/config-sunos5.5.h:
+
+          Put ACE_LIB_TEXT around all ACE_CC_NAME definitions to support
+          wide character builds on Solaris, QNX and IRIX.
+
+        * ace/ACE_export.h:
+
+          Added support for SunCC 5.6.
+
+        * ace/Multihomed_INET_Addr.h:
+        * ace/Multihomed_INET_Addr.cpp:
+
+          Added an explicit constructor that takes a const char* for
+          symmetry with the ACE_INET_Addr class.
+
+        * ace/Naming_Context.cpp:
+
+          Removed a bug workaround for aCC A.03.04.  It is no longer a
+          problem to specify other mmap base addresses when running
+          64-bit HP-UX applications.
+
+        * ace/OS_NS_Thread.inl:
+        * ace/config-macosx-panther.h:
+        * ace/Sched_Params.cpp:
+
+          MacOS X has pthread_getschedparam but has the ACE_LACKS_SETSCHED
+          macro defined.  I have added a new macro,
+          ACE_HAS_PTHREAD_SCHEDPARAM, that can be defined to use
+          pthread_getschedparam and pthread_setschedparam even when   
+          ACE_LACKS_SETSCHED is defined.
+
+
+        * ace/OS_NS_Thread.cpp:
+
+          Fixed an issue that arose within the static builds on Windows.
+          The ACE_Thread_Mutex static data member of the
+          TSS_Cleanup_Instance class was being used (in the
+          TSS_Cleanup_Instance constructor) before it was statically
+          initialized.  I have switched it (and the condition variable
+          associated with it) to a pointer that is allocated the first time
+          into the TSS_Cleanup_Instance constructor.
+
+        * ace/Process_Manager.cpp:
+
+          Committing a change from Justin Michel <michel_j@ociweb.com>.
+          The close() method failed to unregister the reactor on Windows.
+
+        * ace/ace.mpc:
+
+          Removed an unnecessary 'install' setting.
+
+        * ace/config-sunos5.10.h:
+
+          SunOS 5.10 has scandir (ACE_HAS_SCANDIR).
+
+        * ace/os_include/sys/os_socket.h:
+
+          When using LKSCTP, include <netinet/in.h> before <netinet/sctp.h>
+          to avoid macro problems.
+
 Sun May 15 11:57:56 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp (set): Changed the test from
-	
-	  if (port_number < 0)
-	  
-	  to 
-	  
-	  if (port_number == -1)
-	  
-	  to work around problems when (port_number & 0x80 != 0).  Thanks
- 	  to Vemund Handeland <vemund.handeland@fantoft.no> for reporting
- 	  this.
+        * ace/INET_Addr.cpp (set): Changed the test from
+
+          if (port_number < 0)
+
+          to
+
+          if (port_number == -1)
+
+          to work around problems when (port_number & 0x80 != 0).  Thanks
+          to Vemund Handeland <vemund.handeland@fantoft.no> for reporting
+          this.
 
 Mon May 16 11:35:00 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/tests/tests.mwc:
-	* protocols/tests/RMCast/Protocol.h:
-	* protocols/tests/RMCast/RMCast.mpc:
-	* protocols/tests/RMCast/Receiver.cpp:
-	* protocols/tests/RMCast/Sender.cpp:
-	* protocols/tests/RMCast/run_test.pl:
+        * protocols/tests/tests.mwc:
+        * protocols/tests/RMCast/Protocol.h:
+        * protocols/tests/RMCast/RMCast.mpc:
+        * protocols/tests/RMCast/Receiver.cpp:
+        * protocols/tests/RMCast/Sender.cpp:
+        * protocols/tests/RMCast/run_test.pl:
 
-	  Added regression test with loss and reordering simulator
-	  for RMCast.
+          Added regression test with loss and reordering simulator
+          for RMCast.
 
 Mon May 16 11:26:14 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* examples/RMCast/Makefile.am:
-	* examples/RMCast/Send_Msg/Makefile.am:
-	* examples/RMCast/Send_Msg/Protocol.h:
-	* examples/RMCast/Send_Msg/README:
-	* examples/RMCast/Send_Msg/Receiver.cpp:
-	* examples/RMCast/Send_Msg/Send_Msg.mpc:
-	* examples/RMCast/Send_Msg/Sender.cpp:
+        * examples/RMCast/Makefile.am:
+        * examples/RMCast/Send_Msg/Makefile.am:
+        * examples/RMCast/Send_Msg/Protocol.h:
+        * examples/RMCast/Send_Msg/README:
+        * examples/RMCast/Send_Msg/Receiver.cpp:
+        * examples/RMCast/Send_Msg/Send_Msg.mpc:
+        * examples/RMCast/Send_Msg/Sender.cpp:
 
-	  Removed as part of the moving all RMCast-related
-	  code to protocols/.
+          Removed as part of the moving all RMCast-related
+          code to protocols/.
 
 Mon May 16 11:22:09 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/examples/example_base.mpb:
-	* protocols/examples/examples.mwc:
-	* protocols/examples/RMCast/Makefile.am:
-	* protocols/examples/RMCast/Send_Msg/Makefile.am:
-	* protocols/examples/RMCast/Send_Msg/Protocol.h:
-	* protocols/examples/RMCast/Send_Msg/README:
-	* protocols/examples/RMCast/Send_Msg/Receiver.cpp:
-	* protocols/examples/RMCast/Send_Msg/Send_Msg.mpc:
-	* protocols/examples/RMCast/Send_Msg/Sender.cpp:
+        * protocols/examples/example_base.mpb:
+        * protocols/examples/examples.mwc:
+        * protocols/examples/RMCast/Makefile.am:
+        * protocols/examples/RMCast/Send_Msg/Makefile.am:
+        * protocols/examples/RMCast/Send_Msg/Protocol.h:
+        * protocols/examples/RMCast/Send_Msg/README:
+        * protocols/examples/RMCast/Send_Msg/Receiver.cpp:
+        * protocols/examples/RMCast/Send_Msg/Send_Msg.mpc:
+        * protocols/examples/RMCast/Send_Msg/Sender.cpp:
 
-	  Copyied from examples/RMCast as part of the moving
-	  all RMCast-related code to protocols/.
+          Copyied from examples/RMCast as part of the moving
+          all RMCast-related code to protocols/.
 
 
 Mon May 16 11:05:26 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* examples/RMCast/Send_Msg/Receiver.cpp:
-	* examples/RMCast/Send_Msg/Sender.cpp:
+        * examples/RMCast/Send_Msg/Receiver.cpp:
+        * examples/RMCast/Send_Msg/Sender.cpp:
 
-	  Showcase new features (see below).
+          Showcase new features (see below).
 
 Mon May 16 10:58:43 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Acknowledge.cpp:
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Link.h:
-	* protocols/ace/RMCast/Protocol.cpp:
-	* protocols/ace/RMCast/Protocol.h:
-	* protocols/ace/RMCast/Retransmit.cpp:
-	* protocols/ace/RMCast/Socket.cpp:
-	* protocols/ace/RMCast/Socket.h:
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Link.h:
+        * protocols/ace/RMCast/Protocol.cpp:
+        * protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Retransmit.cpp:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Socket.h:
 
-	  Implemented message aging and unavailability reporting,
-	  reactor-compatible interface, and message size query
-	  interface.
+          Implemented message aging and unavailability reporting,
+          reactor-compatible interface, and message size query
+          interface.
 
-	* protocols/ace/RMCast/README:
+        * protocols/ace/RMCast/README:
 
-	  Protocol documentation.
+          Protocol documentation.
 
 Sat May 14 06:05:55 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -90,19 +156,19 @@ Fri May 13 06:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu May 12 10:20:55 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Updated the COPYING file to clarify some ambiguity about
- 	  proprietary usage of ACE.
+        * Updated the COPYING file to clarify some ambiguity about
+          proprietary usage of ACE.
 
 Tue May 10 08:34:16 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Token.h (ACE_Token): Improved the documentation to emphasize
-	  that the semantics aren't truly readers/writer.  Thanks to
-	  Altaf Aali <altafaali@comcast.net> for motivating this.
+        * ace/Token.h (ACE_Token): Improved the documentation to emphasize
+          that the semantics aren't truly readers/writer.  Thanks to
+          Altaf Aali <altafaali@comcast.net> for motivating this.
 
-	* ace/OS_NS_Thread.cpp (thr_create): Fixed a bug that wasn't
-	  allowing the stack size to be size if the stack address wasn't
- 	  also being set.  Thanks to Andreas Schuler
- 	  <Andreas.Schuler@med.ge.com> for reporting this.
+        * ace/OS_NS_Thread.cpp (thr_create): Fixed a bug that wasn't
+          allowing the stack size to be size if the stack address wasn't
+          also being set.  Thanks to Andreas Schuler
+          <Andreas.Schuler@med.ge.com> for reporting this.
 
 Fri May  6 13:50:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 

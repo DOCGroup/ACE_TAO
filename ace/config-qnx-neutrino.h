@@ -36,9 +36,9 @@
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__
-# define ACE_CC_NAME "gcc"
+# define ACE_CC_NAME ACE_LIB_TEXT ("gcc")
 #else
-# define ACE_CC_NAME "NTO compiler ??"
+# define ACE_CC_NAME ACE_LIB_TEXT ("NTO compiler ??")
 #endif
 
 // /usr/nto/include/float.h defines

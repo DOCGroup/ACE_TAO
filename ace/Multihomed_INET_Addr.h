@@ -36,6 +36,15 @@ public:
   ACE_Multihomed_INET_Addr (void);
 
   /**
+   * Initializes an <ACE_Multihomed_INET_Addr> from the <address>,
+   * which can be "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234"
+   * or "128.252.166.57:1234").  If there is no ':' in the <address> it
+   * is assumed to be a port number, with the IP address being
+   * INADDR_ANY.
+   */
+  explicit ACE_Multihomed_INET_Addr (const char address[]);
+
+  /**
    * Constructs an <ACE_Multihomed_INET_Addr> from a <port_number>, a
    * <primary_host_name>, and an array of <secondary_host_names>.
    * <size> is taken to be the length of the array.  If <encode> is
