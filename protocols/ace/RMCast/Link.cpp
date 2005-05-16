@@ -15,14 +15,15 @@ namespace ACE_RMCast
   ACE_Time_Value const timeout (0, 500);
 
   Link::
-  Link (Address const& addr)
+  Link (Address const& addr, bool simulator)
       : addr_ (addr),
         ssock_ (Address (static_cast<unsigned short> (0),
                          static_cast<ACE_UINT32> (INADDR_ANY)),
                 AF_INET,
                 IPPROTO_UDP,
                 1),
-        stop_ (false)
+        stop_ (false),
+        simulator_ (simulator)
 
   {
     srand (time (0));
@@ -101,11 +102,9 @@ namespace ACE_RMCast
   void Link::
   send (Message_ptr m)
   {
-    bool const sim = false;
-
     // Simulate message loss and reordering.
     //
-    if (sim)
+    if (simulator_)
     {
       if ((rand () % 5) != 0)
       {
@@ -279,6 +278,10 @@ namespace ACE_RMCast
         else if (id == NRTM::id)
           {
             m->add (Profile_ptr (new NRTM (hdr, is)));
+          }
+        else if (id == NoData::id)
+          {
+            m->add (Profile_ptr (new NoData (hdr, is)));
           }
         else
           {

@@ -5,10 +5,10 @@
 #ifndef ACE_RMCAST_LINK_H
 #define ACE_RMCAST_LINK_H
 
-#include <ace/SOCK_Dgram.h>
-#include <ace/SOCK_Dgram_Mcast.h>
+#include "ace/SOCK_Dgram.h"
+#include "ace/SOCK_Dgram_Mcast.h"
 
-#include <ace/Thread_Manager.h>
+#include "ace/Thread_Manager.h"
 
 #include "Stack.h"
 #include "Protocol.h"
@@ -18,7 +18,7 @@ namespace ACE_RMCast
   class Link : public Element
   {
   public:
-    Link (Address const& addr);
+    Link (Address const& addr, bool simulator);
 
     virtual void
     in_start (In_Element* in);
@@ -58,6 +58,7 @@ namespace ACE_RMCast
 
     // Simulator.
     //
+    bool simulator_;
     Message_ptr hold_;
 
     Mutex mutex_;

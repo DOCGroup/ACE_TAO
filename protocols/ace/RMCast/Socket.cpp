@@ -4,8 +4,11 @@
 
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "ace/Unbounded_Queue.h"
+
+#include "ace/Pipe.h"
 
 #include "Stack.h"
 #include "Protocol.h"
@@ -26,17 +29,20 @@ namespace ACE_RMCast
   public:
     ~Socket_Impl ();
 
-    Socket_Impl (Address const& a, bool loop);
+    Socket_Impl (Address const& a, bool loop, bool simulator);
 
   public:
     void
     send_ (void const* buf, size_t s);
 
-    size_t
+    ssize_t
     recv_ (void* buf, size_t s);
 
-    size_t
+    ssize_t
     size_ ();
+
+    ACE_HANDLE
+    get_handle_ () const;
 
   private:
     virtual void
@@ -52,6 +58,8 @@ namespace ACE_RMCast
 
     ACE_Unbounded_Queue<Message_ptr> queue_;
 
+    ACE_Pipe signal_pipe_;
+
     ACE_Auto_Ptr<Acknowledge> acknowledge_;
     ACE_Auto_Ptr<Retransmit> retransmit_;
     ACE_Auto_Ptr<Simulator> simulator_;
@@ -60,13 +68,17 @@ namespace ACE_RMCast
 
 
   Socket_Impl::
-  Socket_Impl (Address const& a, bool loop)
-      : loop_ (loop), sn_ (1), cond_ (mutex_)
+  Socket_Impl (Address const& a, bool loop, bool simulator)
+      : loop_ (loop),
+        sn_ (1),
+        cond_ (mutex_)
   {
+    signal_pipe_.open ();
+
     acknowledge_.reset (new Acknowledge ());
     retransmit_.reset (new Retransmit ());
     simulator_.reset (new Simulator ());
-    link_.reset (new Link (a));
+    link_.reset (new Link (a, simulator));
 
     // Start IN stack from top to bottom.
     //
@@ -119,49 +131,90 @@ namespace ACE_RMCast
     Element::send (m);
   }
 
-  size_t Socket_Impl::
+  ssize_t Socket_Impl::
   recv_ (void* buf, size_t s)
   {
     Lock l (mutex_);
 
-    while (queue_.is_empty ()) cond_.wait ();
+    while (queue_.is_empty ())
+      cond_.wait ();
 
     Message_ptr m;
-    if (queue_.dequeue_head (m) == -1) abort ();
+
+    if (queue_.dequeue_head (m) == -1)
+      abort ();
+
+
+    if (queue_.is_empty ())
+    {
+      // Remove data from the pipe.
+      //
+      char c;
+
+      if (ACE_OS::read (signal_pipe_.read_handle (), &c, 1) != 1)
+      {
+        perror ("read: ");
+        abort ();
+      }
+    }
+
+
+    if (m->find (NoData::id) != 0)
+    {
+      errno = ENOENT;
+      return -1;
+    }
 
     Data const* d = static_cast<Data const*>(m->find (Data::id));
 
-    size_t r (d->size () < s ? d->size () : s);
+    ssize_t r (static_cast<ssize_t> (d->size () < s ? d->size () : s));
 
     ACE_OS::memcpy (buf, d->buf (), r);
 
     return r;
   }
 
-  size_t Socket_Impl::
+  ssize_t Socket_Impl::
   size_ ()
   {
     Lock l (mutex_);
 
-    while (queue_.is_empty ()) cond_.wait ();
+    while (queue_.is_empty ())
+      cond_.wait ();
 
     // I can't get the head of the queue without actually dequeuing
     // the element.
     //
     Message_ptr m;
-    if (queue_.dequeue_head (m) == -1) abort ();
-    if (queue_.enqueue_head (m) == -1) abort ();
+
+    if (queue_.dequeue_head (m) == -1)
+      abort ();
+
+    if (queue_.enqueue_head (m) == -1)
+      abort ();
+
+    if (m->find (NoData::id) != 0)
+    {
+      errno = ENOENT;
+      return -1;
+    }
 
     Data const* d = static_cast<Data const*>(m->find (Data::id));
 
-    return d->size ();
+    return static_cast<ssize_t> (d->size ());
+  }
+
+  ACE_HANDLE Socket_Impl::
+  get_handle_ () const
+  {
+    return signal_pipe_.read_handle ();
   }
 
 
   void Socket_Impl::
   recv (Message_ptr m)
   {
-    if (m->find (Data::id) != 0)
+    if (m->find (Data::id) != 0 || m->find (NoData::id) != 0)
     {
       if (!loop_)
       {
@@ -170,7 +223,8 @@ namespace ACE_RMCast
         Address from (
           static_cast<From const*> (m->find (From::id))->address ());
 
-        if (to == from) return;
+        if (to == from)
+          return;
       }
 
       Lock l (mutex_);
@@ -179,9 +233,24 @@ namespace ACE_RMCast
 
       queue_.enqueue_tail (m);
 
-      if (signal) cond_.signal ();
+      if (signal)
+      {
+        // Also write to the pipe.
+        //
+        char c;
+
+        if (ACE_OS::write (signal_pipe_.write_handle (), &c, 1) != 1)
+        {
+          perror ("write: ");
+          abort ();
+        }
+
+        cond_.signal ();
+      }
+
     }
   }
+
 
   // Socket
   //
@@ -192,8 +261,8 @@ namespace ACE_RMCast
   }
 
   Socket::
-  Socket (Address const& a, bool loop)
-      : impl_ (new Socket_Impl (a, loop))
+  Socket (Address const& a, bool loop, bool simulator)
+      : impl_ (new Socket_Impl (a, loop, simulator))
   {
   }
 
@@ -203,15 +272,21 @@ namespace ACE_RMCast
     impl_->send_ (buf, s);
   }
 
-  size_t Socket::
+  ssize_t Socket::
   recv (void* buf, size_t s)
   {
     return impl_->recv_ (buf, s);
   }
 
-  size_t Socket::
+  ssize_t Socket::
   size ()
   {
     return impl_->size_ ();
+  }
+
+  ACE_HANDLE Socket::
+  get_handle () const
+  {
+    return impl_->get_handle_ ();
   }
 }
