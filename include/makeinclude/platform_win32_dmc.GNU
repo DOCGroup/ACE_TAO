@@ -4,25 +4,13 @@
 # optimize = 1
 # exceptions = 0
 
-ifndef winsock2
-  winsock2 = 1
-endif
+winsock2 ?= 1
+exceptions ?= 0
+debug ?= 1
+optimize ?= 1
+threads ?= 1
+rtti ?= 1
 
-ifndef exceptions
-  exceptions = 0
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(rtti))
-  rtti = 1
-endif
 pipes = 0
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG -v1
