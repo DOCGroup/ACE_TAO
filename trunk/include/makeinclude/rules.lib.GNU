@@ -79,16 +79,14 @@ else # VLIBS
   endif # IDL_SRC
 endif # !VLIBS
 
-VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(LSRC))))
 ifdef LSRC2
   LSRC += $(LSRC2)
 endif
 
-VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
-VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
+VSHOBJS = $(addprefix $(VSHDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC))), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var))))
 
 ifneq ($(IDL_SRC),)
-  $(VLOBJS) $(VSHOBJS) $(VSHOBJS1): $(IDL_SRC)
+  $(VSHOBJS): $(IDL_SRC)
 endif
 
 ifdef static_libs
@@ -109,7 +107,7 @@ endif # shared_libs
 ace_lib_prelink ?= 0
 aix_build ?= 0
 
-$(VLIB): $(VLOBJS)
+$(VLIB): $(VSHOBJS)
 
 ifeq (1,$(repo))
   ifneq (,$(ACELIB))
@@ -152,8 +150,8 @@ endif # RANLIB
 # The AIX shr.o build is out here to keep it away from the SOVERSION stuff.
 # The SOVERSION transform is applied after building the library file.
 ifeq (1,$(aix_build))
-shr.o: $(VSHOBJS1)
-	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+shr.o: $(VSHOBJS)
+	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 
 .INTERMEDIATE: shr.o
 endif # aix_build
@@ -168,7 +166,7 @@ else # ! aix_build
   ifdef SHLIBBUILD
 $(VSHLIB): $(VSHOBJS)
   else # ! SHLIBBUILD
-$(VSHLIB): $(VSHOBJS1)
+$(VSHLIB): $(VSHOBJS)
   endif  # SHLIBBUILD
   ifdef PRELIB
 	$(PRELIB)
@@ -188,23 +186,23 @@ $(VSHLIB): $(VSHOBJS1)
     ifdef ibmcxx_build
 	if test -s ./$(TEMPINCDIR)/*.$(OBJEXT); \
         then \
-		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(TEMPINCDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
+		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(TEMPINCDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
         else \
-		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
+		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
 	fi
     else # !ibmcxx_build
       ifdef kylix
-	$(SOLINK.cc) $(LDFLAGS) $(VSHOBJS1), $@,, $(ACE_SHLIBS) $(LIBS) $(BORINITSHAREDOBJ)
+	$(SOLINK.cc) $(LDFLAGS) $^, $@,, $(ACE_SHLIBS) $(LIBS) $(BORINITSHAREDOBJ)
       else # ! kylix
         ifeq (1,$(ace_lib_prelink))
           #### Attempt a link (which will fail), to add template instantiations
           #### to lib files, for example.
-	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $(VSHOBJS1) $(LDFLAGS) $(ACE_NUL_STDERR)
+	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $^ $(LDFLAGS) $(ACE_NUL_STDERR)
         endif # ace_lib_prelink
         ifeq ($(split),1)
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
         else # ! split
-	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
         endif  # split
       endif  # kylix
     endif  # ibmcxx_build

@@ -1,3 +1,55 @@
+Mon May 16 08:52:11 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/crosscompile.mpb:
+
+          Added lib_warning, require_warning and avoid_warning to the list
+          of targets in the CROSS-COMPILE portion.
+
+        * bin/MakeProjectCreator/config/rtcorbaevent.mpb:
+
+          The RTCORBAEvent library requires the CosNaming library.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Support the MPC feature that will allow users to specify arbitrary
+          input file dependencies.
+
+          Changed the OBJS setting to use $(notdir) only if the source file
+          contains ../ and added explicit rules for source files that are  
+          located in subdirectories.
+
+        * include/makeinclude/platform_macosx_panther.GNU:
+
+          Explicitly default the threads variable to threads=1.  This
+          was preventing ACE_TMCast from building.
+          Change the optimization option to -O2.  -O3 was causing some
+          link problems in the IDL compiler.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Allow users to override the inline and exceptions settings.
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/rules.local.GNU:
+
+          Provide better support for building for VxWorks on a Windows host
+          without Cygwin.
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Changed the SHOBJS setting to be consistent with the OBJS setting.
+          Also, removed VLOBJS and SHOBJS1 which were redundant and set
+          exactly as SHOBJS was.
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Set ec_typed_events to 1 by default.  This matches the default for
+          MPC features.
+
+        * bin/pch_cmd.pl:
+
+          Removed this file.  It is no longer necessary.
+
 Mon May 16 08:44:14 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ACE.cpp:
@@ -32,7 +84,7 @@ Mon May 16 08:44:14 2005  Chad Elliott  <elliott_c@ociweb.com>
           MacOS X has pthread_getschedparam but has the ACE_LACKS_SETSCHED
           macro defined.  I have added a new macro,
           ACE_HAS_PTHREAD_SCHEDPARAM, that can be defined to use
-          pthread_getschedparam and pthread_setschedparam even when   
+          pthread_getschedparam and pthread_setschedparam even when
           ACE_LACKS_SETSCHED is defined.
 
 
