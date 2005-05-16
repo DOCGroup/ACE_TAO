@@ -40,26 +40,14 @@
 # size should not be penalized.  We don't use it because it's not
 # necessary with automatic template instantiation.
 
-ifeq (,$(compat4))
-  compat4 = 0
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(stdcpplib))
-  stdcpplib = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(versioned_so))
-  versioned_so = 1
-endif
-tk_reactor = 0
-ace_with_x11 = 0
+compat4 ?= 0
+debug ?= 1
+distrib ?= 0
+stdcpplib ?= 1
+threads ?= 1
+versioned_so ?= 1
+tk_reactor ?= 0
+ace_with_x11 ?= 0
 
 PLATFORM_TK_CPPFLAGS=
 PLATFORM_TK_LIBS=-ltk -ltcl
@@ -205,7 +193,8 @@ LD              = $(CXX)
 ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/lib -R./
 endif
-  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4 -ladm
+
+LIBS          += -lsocket -ldl -lnsl -lgen -lposix4 -ladm
 
 LDFLAGS         += -xildoff
 

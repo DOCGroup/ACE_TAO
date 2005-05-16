@@ -2,18 +2,9 @@
 
 # UnixWare V2.2.1.2 with g++ version 2.7.2.2
 
-#ifndef debug
-debug = 0
-#endif
-
-#ifndef exceptions
-exceptions = 1
-#endif
-
-#ifndef threads
-threads = 1
-#endif
-
+debug ?= 0
+exceptions ?= 1
+threads ?= 1
 
 CC              = gcc
 CXX             = g++
@@ -43,7 +34,7 @@ SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK        = $(SOLINK.cc) -o $@ $(LDFLAGS) $<
 PRELIB          = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

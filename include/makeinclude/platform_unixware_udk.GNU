@@ -2,18 +2,9 @@
 
 # UnixWare V2.2.1.2 with g++ version 2.7.2.2
 
-#ifndef debug
-debug = 1
-#endif
-
-#ifndef exceptions
-exceptions = 1
-#endif
-
-#ifndef threads
-threads = 1
-#endif
-
+debug ?= 1
+exceptions ?= 1
+threads ?= 1
 
 CC              = CC
 CXX             = CC
