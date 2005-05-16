@@ -1,3 +1,14 @@
+Mon May 16 14:08:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll (idl_store_pragma):
+        * TAO_IDL/fe/lex.yy.cpp (idl_store_pragma):
+        
+          Added code to eat extra whitespace in a #pragma directive,
+          need when using preprocessors that don't do it automatically.
+          Thanks to Johnny Willemsen <jwillwmsen@remedy.nl> for
+          discovering this quirk about the preprocessor used with the
+          Intel C++ compiler.
+
 Mon May 16 18:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CDR.h:
