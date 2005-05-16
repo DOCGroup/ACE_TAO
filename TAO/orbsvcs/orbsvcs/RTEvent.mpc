@@ -100,5 +100,6 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging {
   Template_Files {
     Event/EC_Busy_Lock.cpp
     Event/EC_Lifetime_Utils_T.cpp
+    Channel_Clients_T.cpp
   }
 }

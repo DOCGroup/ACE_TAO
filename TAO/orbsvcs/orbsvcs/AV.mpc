@@ -50,7 +50,6 @@ project(AV) : orbsvcslib, core, property, naming, qos {
   }
 
   Header_Files {
-    Channel_Clients_T.h
     AV/AVStreams_i.h
     AV/AV_Core.h
     AV/AV_export.h
@@ -78,7 +77,6 @@ project(AV) : orbsvcslib, core, property, naming, qos {
     AV/SCTP_SEQ.h
   }
   Template_Files {
-    Channel_Clients_T.cpp
     AV/Endpoint_Strategy_T.cpp
     AV/Flows_T.cpp
   }

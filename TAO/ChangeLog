@@ -1,3 +1,17 @@
+Mon May 16 14:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Thread_Task.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+          Use ACE_SIZE_T_FORMAT_SPECIFIER to print out an size_t variable
+          with ACE_OS::sprintf
+
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Skel.mpc:
+          Moved the Serv and Skel projects to their own file. This makes it
+          possible to create a workspace with just one of the projects
+
 Mon May 16 09:18:26 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.mpc:
