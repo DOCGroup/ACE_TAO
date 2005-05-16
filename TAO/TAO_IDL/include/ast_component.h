@@ -27,14 +27,18 @@ public:
   // Extend lookup to the base component.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
                                        idl_bool treat_as_ref);
-                                       
+
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
                                        idl_bool treat_as_ref);
-                                       
+
   // Utility data structure for port declarations.
   struct port_description
   {
+    // Constructor.
+    port_description (void) : id (0), impl (0), is_multiple (false) {}
+
+    // Fields.
     Identifier *id;
     AST_Type *impl;
     idl_bool is_multiple;
@@ -45,7 +49,7 @@ public:
   AST_Component *base_component (void) const;
 
   AST_Interface **supports (void) const;
-  
+
   long n_supports (void) const;
 
   ACE_Unbounded_Queue<port_description> &provides (void);
