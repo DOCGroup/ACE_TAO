@@ -107,7 +107,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name
     }
 
 
-  RTCORBA::ThreadpoolId ret_id;    // return id
+  RTCORBA::ThreadpoolId ret_id = 0;    // return id
 
   if (this->threadpool_map_.find (name, ret_id) != 0)
     {

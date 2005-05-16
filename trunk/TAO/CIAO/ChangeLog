@@ -1,7 +1,37 @@
+Mon May 16 12:06:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp (~IndentityProvider):
+	* DAnCE/Old_Config_Handlers/Process_Element.h (Process_Function):
+	* DAnCE/Old_Config_Handlers/Process_Element.cpp
+	  (~Process_Function):
+	* tests/RTCCM/Priority_Test/Controllers/Pulser.h (Pulse_Handler):
+	* tests/RTCCM/Priority_Test/Controllers/Pulser.cpp
+	  (~Pulse_Handler):
+
+	  Added missing virtual destructor.  Fixes g++ 4.0 "class with
+	  virtual functions but no virtual destructor" warnings.
+
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp (mode):
+
+	  Fixed "non-local variable uses anonymous type" g++ 4.0 warning.
+
+	* DAnCE/ciao/Home_Servant_Impl_T.cpp (remove_component):
+	* tools/RTComponentServer/RTConfig_Manager.cpp
+	  (find_threadpool_by_name):
+	* tools/XML_Helpers/RTConfig_Handlers.cpp (add_threadpoollane):
+	  (add_priorityband):
+
+	  Fixed "variable may be used uninitialized" warnings.
+
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp
+	  (teardown_assembly):
+
+	  Fixed format specifier mismatch.
+
 Mon May 16 11:27:30 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO-INSTALL.html:
-        
+
           Added line to table about availability of binaries for MacOS
           and Solaris.
 
@@ -13,16 +43,16 @@ Thu May 12 10:20:55 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* Updated the COPYING file to clarify some ambiguity about
  	  proprietary usage of CIAO.
-  
+
 Tue May 10 21:12:47 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* docs/releasenotes/dance.html: Updated this page to clearly
-	  point out which OMG D&C specification DAnCE implements. 
+	  point out which OMG D&C specification DAnCE implements.
 	  Thanks to Gary Duzan <gduzan@bbn.com> for requesting this.
 
 Tue May 10 07:49:47 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* DAnCE/examples/Hello/descriptors: Changed the name of 
+	* DAnCE/examples/Hello/descriptors: Changed the name of
 	  ruNodeDaemons.pl to run_NodeDaemons.pl.  Thanks to Arno Wilhelm
  	  <arno.wilhelm@profile.co.at> for reporting this.
 
@@ -281,9 +311,9 @@ Wed Apr 20 08:09:17 CDT 2005  Will Otte  <wotte@dre.vanderbilt.edu>
 Wed Apr 20 08:03:23 2005 CDT  Will Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/DP_Handler.cpp
-	
+
 	Silenced some compile errors in VC6.
-	
+
 Tue Apr 19 23:41:02 2005 CDT  Will Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/XML_File_Intf.cpp

@@ -497,7 +497,7 @@ CIAO::RTConfig_Handler::add_threadpoollane (ACEXML_Attributes *alist
     DYNAMICTHR_READ ;
 
   char *endpos;
-  RTCORBA::ThreadpoolLane alane;
+  RTCORBA::ThreadpoolLane alane = {0, 0, 0};
 
   for (size_t i = 0; i < alist->getLength (); ++i)
     {
@@ -574,7 +574,7 @@ CIAO::RTConfig_Handler::add_priorityband (ACEXML_Attributes *alist
     HIGH_READ ;
 
   char *endpos;
-  RTCORBA::PriorityBand band;
+  RTCORBA::PriorityBand band = {0, 0};
 
   for (size_t i = 0; i < alist->getLength (); ++i)
     {
