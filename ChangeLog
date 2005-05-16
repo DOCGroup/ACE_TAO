@@ -1,3 +1,19 @@
+Mon May 16 11:22:09 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/examples/example_base.mpb:
+	* protocols/examples/examples.mwc:
+	* protocols/examples/RMCast/Makefile.am:
+	* protocols/examples/RMCast/Send_Msg/Makefile.am:
+	* protocols/examples/RMCast/Send_Msg/Protocol.h:
+	* protocols/examples/RMCast/Send_Msg/README:
+	* protocols/examples/RMCast/Send_Msg/Receiver.cpp:
+	* protocols/examples/RMCast/Send_Msg/Send_Msg.mpc:
+	* protocols/examples/RMCast/Send_Msg/Sender.cpp:
+
+	  Copyied from examples/RMCast as part of the moving
+	  all RMCast-related code to protocols/.
+
+
 Mon May 16 11:05:26 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* examples/RMCast/Send_Msg/Receiver.cpp:
