@@ -1,3 +1,11 @@
+Mon May 16 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+          Added Channel_Clients_T.cpp, it belongs to this project
+
+        * orbsvcs/orbsvcs/AV.mpc:
+          Removed Channel_Clients_T files, they don't belong to the AV service
+
 Mon May 16 14:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/Job_i.cpp:
