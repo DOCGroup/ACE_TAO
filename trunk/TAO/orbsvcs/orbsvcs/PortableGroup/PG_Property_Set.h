@@ -168,7 +168,7 @@ namespace TAO
     /**
      * a parent to another property decoder that provides default values
      * these can be chained indefinitely.
-     * @@ TODO: reference counted pointers would be a good idea here.
+     * @todo reference counted pointers would be a good idea here.
      */
     PG_Property_Set * defaults_;
   };
