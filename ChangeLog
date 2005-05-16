@@ -1,3 +1,34 @@
+Mon May 16 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Active_Map_Manager.h:
+        * ace/Base_Thread_Adapter.h:
+        * ace/Process.h:
+        * ace/QtReactor.h:
+          Doxygen improvement
+
+        * ace/QtReactor.cpp:
+          Fixed compile problems with msvc6
+
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+          Use ACE_SIZE_T_FORMAT_SPECIFIER to print out an size_t variable
+          with ACE_OS::sprintf
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_irix6.x_g++.GNU:
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_borland.GNU:
+        * include/makeinclude/platform_linux_cxx.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+          Simplified these files by using the ?= operator. This sets a value
+          only when it is not set yet. Also set some variables using ?= so
+          that our users can easily define their own values.
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Disable warning 1572 (floating point warning), correct name of Qt
+          library and only set several variables when they are not set yet
+
 Mon May 16 09:01:07 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Conn_Test.cpp:
