@@ -1,3 +1,10 @@
+Mon May 16 10:49:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/POSIX_CB_Proactor.h:
+
+	  Add defined(__APPLE__) to conditional wrapping sigval_t type
+	  definition.
+
 Mon May 16 10:45:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):

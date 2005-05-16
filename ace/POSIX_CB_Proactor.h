@@ -27,7 +27,7 @@
 
 #include "ace/POSIX_Proactor.h"
 
-#if defined(AIX) || defined(sun)
+#if defined(AIX) || defined(sun) || defined(__APPLE__)
 typedef union sigval sigval_t;
 #endif
 
