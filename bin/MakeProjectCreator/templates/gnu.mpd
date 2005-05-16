@@ -43,7 +43,7 @@ CIAO_ROOT ?= $(TAO_ROOT)/CIAO
 <%foreach(grouped_source_files)%>
 <%grouped_source_file%> = \
 <%foreach(grouped_source_file->files)%>
-  <%noextension(grouped_source_file->file)%><%fornotlast(" \\")%>
+  <%grouped_source_file->file%><%fornotlast(" \\")%>
 <%endfor%>
 
 <%endfor%>
@@ -55,7 +55,7 @@ FILES += \
 <%else%>
 FILES = \
 <%foreach(source_files)%>
-  <%noextension(source_file)%><%fornotlast(" \\")%>
+  <%source_file%><%fornotlast(" \\")%>
 <%endfor%>
 
 <%endif%>
@@ -153,6 +153,10 @@ ifeq ($(versioned_so),1)
 SOVERSION = .<%version%>
 endif
 <%endif%>
+
+ifneq (,$(RC))
+  FILES += $(RESOURCES)
+endif
 
 # To build multiple targets in the same directory on AIX, it works
 # best to have a template directory per project.
@@ -317,15 +321,12 @@ else
 endif
 <%endfor%>
 
-OBJS   = $(addsuffix .$(OBJEXT), $(notdir $(FILES)))
-SRC    = $(addsuffix .cpp, $(FILES))
+# If it contains ../ at all use notdir.
+OBJS   = $(foreach var, $(addsuffix .$(OBJEXT), $(basename $(FILES))), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var)))
+SRC    = $(FILES)
 <%endif%>
-ifneq (,$(RC))
-  FILES += $(RESOURCES)
-endif
-
 <%if(sharedname || staticname)%>
-LSRC   = $(addsuffix .cpp, $(FILES))
+LSRC   = $(FILES)
 <%endif%>
 
 <%marker(circuit)%>
@@ -365,6 +366,36 @@ ifeq ($(VXWORKSLINK),true)
 include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
 endif
 
+<%foreach(source_files)%>
+<%if(dirname(source_file) && !contains(source_file, \.\./))%>
+<%if(starts_with(source_file, \$) || !ends_with(source_file, \.cpp))%>
+<%if(ends_with(source_file, \.c))%>
+$(VDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
+	@$(MKDIR) $(VDIR)<%dirname(source_file)%>
+	$(COMPILE.c) $(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
+
+ifneq ($(VSHDIR), $(VDIR))
+$(VSHDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
+	@$(MKDIR) $(VSHDIR)<%dirname(source_file)%>
+	$(COMPILE.c) $(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+endif
+<%else%>
+$(VDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
+	@$(MKDIR) $(VDIR)<%dirname(source_file)%>
+	$(COMPILE.cc) $(ACE_USE_PCH_OPT) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
+
+ifneq ($(VSHDIR), $(VDIR))
+$(VSHDIR)<%noextension(source_file)%>.$(OBJEXT): <%source_file%>
+	@$(MKDIR) $(VSHDIR)<%dirname(source_file)%>
+	$(COMPILE.cc) $(ACE_USE_PCH_OPT) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+endif
+<%endif%>
+
+<%endif%>
+<%endif%>
+<%endfor%>
 <%if(libpaths)%>
 ifeq ($(VXWORKSLINK),true)
 LDLIBPATH     =<%foreach(libpaths)%> -L<%libpath%><%endfor%>
@@ -481,7 +512,7 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%> <%custom_type->input_file->dependencies%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
 <%if(flag_overrides(custom_type->input_file, gendir))%>
 	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
 <%endif%>

@@ -554,6 +554,8 @@ else
   endif
 endif
 
+ec_typed_events ?= 1
+
 ifeq ($(exceptions),0)
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.

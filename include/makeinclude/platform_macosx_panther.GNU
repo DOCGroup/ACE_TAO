@@ -5,6 +5,9 @@
 ifndef exceptions
   exceptions = 1
 endif
+ifeq (,$(threads))
+  threads = 1
+endif
 ifeq (,$(debug))
   debug = 1
 endif
@@ -27,7 +30,7 @@ DLD             = libtool
 LD              = $(CXX)
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
-OCFLAGS         += -O3 -mcpu=G3 -mtune=G4
+OCFLAGS         += -O2 -mcpu=G3 -mtune=G4
 RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS += -dynamic

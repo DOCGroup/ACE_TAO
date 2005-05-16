@@ -108,8 +108,8 @@ else  # ! 4.2
       ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
         inline = 0
       else # ! 5.1
-        inline = 1
-        exceptions = 1
+        inline ?= 1
+        exceptions ?= 1
       endif # 5.2 or greater
     endif #! 5.0
 
