@@ -1,3 +1,12 @@
+Mon May 16 10:56:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add ACE_LD_SEARCH_PATH and ACE_DLL_SUFFIX settings for
+	  darwin/MacOSX.
+
+	  Add ACE_HAS_NANOSLEEP feature test check.
+
 Mon May 16 10:49:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/POSIX_CB_Proactor.h:
