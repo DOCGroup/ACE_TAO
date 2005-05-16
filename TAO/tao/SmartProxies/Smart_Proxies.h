@@ -1,23 +1,18 @@
 // $Id$
 // This may look like C, but it's really -*- C++ -*-
-// SmartProxies.h,v 1.0
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    SmartProxies.h
-//
-// = DESCRIPTION
-//     This file contains a base class for the generated smart proxy classes
-//     It's purpose is to hold the pointer to the real proxy
-//
-// = AUTHOR
-//     Brian Wallis <brian.wallis@ot.com.au>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Smart_Proxies.h
+ *
+ *  $Id$
+ *
+ * This file contains a base class for the generated smart proxy classes
+ * It's purpose is to hold the pointer to the real proxy
+ *
+ *  @author Brian Wallis <brian.wallis@ot.com.au>
+ */
+//=============================================================================
 
 #ifndef TAO_SMARTPROXIES_H
 #define TAO_SMARTPROXIES_H
