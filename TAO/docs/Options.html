@@ -1295,19 +1295,19 @@ from a server.
         <p><em>MT</em> means use the multi-threaded client connection
 handler which uses the leader follower model. This model allows the use
 of multiple threads with a single Reactor. </p>
-        <p><em>RW</em> selects a strategy that simply blocks in <code>recv()</code>
-when waiting for a response from the server instead of waiting in the
-Reactor. The <em>RW</em> strategy only works when the application does
-not have to worry about new request showing up when waiting for a
+        <p><em>RW</em> selects a strategy that simply blocks in
+<code>recv()</code> when waiting for a response from the server
+instead of waiting in the Reactor using the Leader/Followers
+pattern. The <em>RW</em> strategy only works when the application
+does not have to worry about new request showing up when waiting for a
 response. Further, this strategy cannot be used with Asynchronous
 Method Invocation (AMI) calls. Therefore, this strategy is appropriate
-only for "pure" synchronous clients. Note that applications with nested
-upcalls are not "pure" synchronous clients. Also note that this
-strategy will only effect two way calls, since there is no waiting for
-one way calls. This strategy can also be used in an application that is
-both a client and a server if the server side is handled by a separate
-thread and the client threads are "pure" clients. </p>
-<p>
+only for "pure" synchronous clients. Note that applications that
+require nested upcalls are not "pure" synchronous clients. Also note that this
+strategy will only affect two way calls, since there is no waiting for
+one way calls. This strategy can also be used in an application that
+is both a client and a server if the server side is handled by a
+separate thread and the client threads are "pure" clients. </p> <p>
         <CODE>MT_NOUPCALL</CODE> <b>(EXPERIMENTAL!)</b> means use a client connection handler that
         participates in the leader-follower model like MT, but, like
         RW, does not allow handling of nested upcalls within the
@@ -1316,7 +1316,7 @@ thread and the client threads are "pure" clients. </p>
         grow thread pools.  Unlike RW, this does not require  <a
         href="#ORBTransportMuxStrategy">-ORBTransportMuxStrategy&nbsp;<em>EXCLUSIVE</em></a>.
 <!--
-I'm not sure what the effect of AMI on this option is.
+I'm not sure what the affect of AMI on this option is.
 -->
 </p>
         <p>Default for this option is <em>MT</em>. </p>
