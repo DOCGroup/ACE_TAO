@@ -211,7 +211,11 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                       serv_cxt->context_data.length ());
 
       char msg [BUFSIZ];
-      ACE_OS::sprintf (msg,"The Guid is %d\n", gu_id);
+      ACE_OS::sprintf (msg,
+                       "The Guid is "
+                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       "\n", gu_id);
+
       DT_TEST::instance ()->dt_creator ()->log_msg (msg);
 
       RTScheduling::Current::IdType* guid;
