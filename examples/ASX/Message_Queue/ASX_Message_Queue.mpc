@@ -9,6 +9,7 @@ project(*Bounded_Buffer) : aceexe {
 }
 
 project(*Buffer_Stream) : aceexe {
+  avoids += uses_wchar
   exename = buffer_stream
   Source_Files {
     buffer_stream.cpp
