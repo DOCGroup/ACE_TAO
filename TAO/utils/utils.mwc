@@ -4,6 +4,10 @@
 workspace {
   nslist
   catior
+
   // must have wxWindows=1 in $ACE_ROOT/bin/MakeProjectCreator/config/default.features to generate Makefile for wxNamingViewer
   wxNamingViewer
+
+  // must have mfc=1 in $ACE_ROOT/bin/MakeProjectCreator/config/default.features to generate Makefile for wxNamingViewer
+  NamingViewer
 }
