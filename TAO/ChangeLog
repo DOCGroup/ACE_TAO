@@ -1,3 +1,9 @@
+Tue May 17 05:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
+          Use ACE_SIZE_T_FORMAT_SPECIFIER to print out an size_t variable
+          with ACE_OS::sprintf
+
 Tue May 17 05:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
