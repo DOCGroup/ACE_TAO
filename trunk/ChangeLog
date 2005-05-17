@@ -8,8 +8,9 @@ Tue May 17 09:32:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Collection_Test.cpp:
 
-	  Avoid casting between a pointer to a function a pointer to an
-	  object.  ISO C++ forbids such casts.  Fixes a g++ 4.0 warning.
+	  Avoid casting between a pointer to a function and a pointer to
+	  an object.  ISO C++ forbids such casts.  Fixes a g++ 4.0
+	  warning.
 
 Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
 
