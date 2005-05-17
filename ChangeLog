@@ -23,7 +23,7 @@ Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/Global_Macros.h:
         * ace/ace_wchar.h:
         * ace/config-win32-msvc.h:
- 
+
           Add a new ACE_LACKS_NATIVE_WCHAR_T macro, which can be used to check
         whether a platform supports overloading on wchar_t without conflict.
         The existing ACE_WSTRING_HAS_USHORT_SUPPORT was incorrectly being used
@@ -31,7 +31,7 @@ Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
         on VC7+.
 
         * ace/OS_NS_time.inl:
- 
+
           Add a static_cast<long> because time_t is 64bit on some platforms
         where long is 32 bit.
 
