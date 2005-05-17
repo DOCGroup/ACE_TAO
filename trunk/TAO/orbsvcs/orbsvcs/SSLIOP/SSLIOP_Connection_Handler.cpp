@@ -166,6 +166,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
 
+  int use_dotted_decimal_addresses = 
+    this->orb_core ()->orb_params ()->use_dotted_decimal_addresses ();
+  
   if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
       && local_addr.get_port_number () == remote_addr.get_port_number ())
     {
@@ -175,9 +178,11 @@ TAO::SSLIOP::Connection_Handler::open (void *)
           char local_as_string[MAXHOSTNAMELEN + 16];
 
           (void) remote_addr.addr_to_string (remote_as_string,
-                                             sizeof (remote_as_string));
+                                             sizeof (remote_as_string),
+                                             use_dotted_decimal_addresses);
           (void) local_addr.addr_to_string (local_as_string,
-                                            sizeof (local_as_string));
+                                            sizeof (local_as_string),
+                                             use_dotted_decimal_addresses);
           ACE_ERROR ((LM_ERROR,
                       "TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, "
                       "Holy Cow! The remote addr and "
@@ -193,14 +198,32 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       char client[MAXHOSTNAMELEN + 16];
 
       // Verify that we can resolve the peer hostname.
-      if (remote_addr.addr_to_string (client, sizeof (client)) == -1)
-        return -1;
+      if (remote_addr.addr_to_string (client, 
+                                      sizeof (client),
+                                      use_dotted_decimal_addresses) == -1)
+      {
+        ACE_OS::strcpy (client, "*unable to obtain*");
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
-                  ACE_TEXT ("client <%s> on %d\n"),
+                  ACE_TEXT ("client <%s> on [%d]\n"),
                   client,
                   this->peer ().get_handle ()));
+      
+      // Verify that we can resolve our hostname.
+      if (local_addr.addr_to_string (client, 
+                                      sizeof (client),
+                                      use_dotted_decimal_addresses) == -1)
+      {
+        ACE_OS::strcpy (client, "*unable to obtain*");
+      }
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) SSLIOP connection accepted from ")
+                  ACE_TEXT ("server <%s> on [%d]\n"),
+                  client,
+                  this->get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1
@@ -356,23 +379,16 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       TAO_IIOP_Endpoint tmpoint (addr,
         this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
-      // @@ This is broken.  We need to include the
-      //    SecurityAssociation options so that the invocation to the
-      //    originator is attempted with the appropriate security
-      //    settings.  Unfortunately, there is currently no portable
-      //    way to send the SecurityAssociation options with the
+      // @@ This is broken.  Instead of just using the default CORBA
+      // SecurityAssociation options, by not supplying SSLIOP::SSL
+      // instance in the endpoint constructor, we need to include the
+      // actual SecurityAssociation options so that the invocation to
+      // the originator is attempted with the appropriate security
+      // settings. Unfortunately, there is currently no portable way to
+      // send the SecurityAssociation options with the
       //    IIOP::ListenPointList.  Presumably the new Firewall
       //    specification will address this deficiency.
-      const ::SSLIOP::SSL ssl =
-        {
-          0,                        // target_supports
-          0,                        // target_requires
-          listen_point.port         // port
-        };
-
-      // Construct an SSLIOP_Endpoint
-      TAO_SSLIOP_Endpoint endpoint (&ssl,
-                                    &tmpoint);
+      TAO_SSLIOP_Synthetic_Endpoint endpoint (&tmpoint);
 
       // Construct a property object
       TAO_Base_Transport_Property prop (&endpoint);

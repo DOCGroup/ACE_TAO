@@ -4,7 +4,9 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/os_include/os_netdb.h"
 
+#include "tao/debug.h"
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Endpoint,
@@ -88,6 +90,41 @@ TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
     delete this->iiop_endpoint_;
 }
 
+#if 0
+static void
+dump_endpoint (const char* msg, const TAO_Endpoint *other_endpoint)
+{
+  
+  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
+
+  TAO_SSLIOP_Endpoint *endpoint =
+    dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
+
+  if (endpoint == 0)
+  {
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) endpoint - %s: Unable to cast an endpoint to SSLIOP_Endpoint\n", msg));
+    return;
+  }
+  
+  char hostaddr[MAXHOSTNAMELEN + 16];
+  int gothost = endpoint->addr_to_string (hostaddr, sizeof hostaddr);
+
+  ACE_DEBUG ((LM_INFO, "TAO (%P|%t) SSLIOPEndpoint %s - %@ {%s, ssl=%d, iiop=%d,"
+                " qop=%d, trst=(%d,%d), c=%@, crdh=0x%x}, h=0x%x\n", 
+                msg,
+                endpoint,
+                (gothost == 0 ? hostaddr : "*UNKNOWN*"),
+                endpoint->ssl_component ().port , 
+                endpoint->iiop_endpoint ()->port (),
+                endpoint->qop() , 
+                endpoint->trust().trust_in_target , 
+                endpoint->trust().trust_in_client ,
+                endpoint->credentials() , 
+                (endpoint->credentials_set () ? endpoint->credentials()->hash () : 0) , 
+                endpoint->hash ()));
+}
+#endif /* 0 */
+
 int
 TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
@@ -136,10 +173,22 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
       || this->trust_.trust_in_client != t.trust_in_client
       || (!CORBA::is_nil (this->credentials_.in ())
           && !(*this->credentials_.in () == *endpoint->credentials ())))
+  {
+    return 0;
+  }
+
+  // Comparing the underlying iiop endpoints is wrong, as their port
+  // numbers often may not make sense. Or may not being used anyway.
+  // Therefore, we only need to directly compare the hosts. See also the
+  // comments in the hash() method.
+  if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
     return 0;
 
-  return
-    this->iiop_endpoint_->is_equivalent (endpoint->iiop_endpoint_);
+  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (), 
+                       endpoint->iiop_endpoint()->host ()) != 0))
+    return 0;
+
+  return 1;
 }
 
 TAO_Endpoint *
@@ -172,7 +221,10 @@ TAO_SSLIOP_Endpoint::hash (void)
   if (this->hash_val_ != 0)
     return this->hash_val_;
 
-  {
+  // Do this with no locks held, as it may try to acquire it, too.
+  const ACE_INET_Addr &oaddr = this->object_addr();
+
+  { // nested scope for the lock
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
                       this->addr_lookup_lock_,
@@ -181,15 +233,18 @@ TAO_SSLIOP_Endpoint::hash (void)
     if (this->hash_val_ != 0)
       return this->hash_val_;
 
+
+    // Note that we are not using the underlying IIOP endpoint's hash
+    // value in order to avoid the influence of the IIOP port number,
+    // since it is ignored anyway. When it features a
+    // purely fictional port number, as when accepting an SSL
+    // connection, the unsecured port is undefined and
+    // had we used it in computing the hash it would have broken the
+    // bi-directional support - as the 'guessed' IIOP port value will
+    // hardly match the one specified in the bi-dir service context.
     this->hash_val_ =
-      this->iiop_endpoint_->hash ()
-      + this->ssl_component_.port
-      + this->qop_
-      + this->trust_.trust_in_target
-      + this->trust_.trust_in_client
-      + (CORBA::is_nil (this->credentials_.in ())
-         ? 0
-         : this->credentials_->hash ());
+      oaddr.get_ip_address ()
+      + this->ssl_component_.port;
   }
 
   return this->hash_val_;
@@ -249,3 +304,76 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
   // reset the hash value to force a recomputation.
   this->hash_val_ = 0;
 }
+
+
+
+
+TAO_SSLIOP_Synthetic_Endpoint::~TAO_SSLIOP_Synthetic_Endpoint ()
+{
+}
+
+TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl)
+  : TAO_SSLIOP_Endpoint (ssl, 0)
+{
+}
+
+
+TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp)
+  : TAO_SSLIOP_Endpoint ((const ::SSLIOP::SSL *)0, iiop_endp)
+{
+   this->ssl_component_.port = iiop_endp->port ();
+}
+
+
+CORBA::Boolean
+TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+{
+  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
+
+  TAO_SSLIOP_Endpoint *endpoint =
+    dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
+
+  if (endpoint == 0)
+    return 0;
+  
+  if ((this->ssl_component ().port != 0
+       && endpoint->ssl_component ().port != 0
+       && this->ssl_component ().port != endpoint->ssl_component ().port)
+       || this->qop () < endpoint->qop ())
+  {
+    return 0;
+  }
+
+  // Comparing the underlying iiop endpoints is wrong, as their port
+  // numbers often may not make sense, or are not being used anyway.
+  // Therefore, directly comparing the hosts at this point. See also the
+  // comments in the hash() method
+  if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
+    return 0;
+
+  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (), 
+                       endpoint->iiop_endpoint()->host ()) != 0))
+    return 0;
+
+  return 1;
+}
+
+TAO_Endpoint *
+TAO_SSLIOP_Synthetic_Endpoint::duplicate (void)
+{
+  TAO_SSLIOP_Synthetic_Endpoint *endpoint = 0;
+
+  // @@ We need to set the priority of the newly formed endpoint. It
+  // shouldnt be a problem as long as SSL is not used with RTCORBA.
+  ACE_NEW_RETURN (endpoint,
+                  TAO_SSLIOP_Synthetic_Endpoint (&(this->ssl_component ())),
+                  0);
+
+  if (this->credentials_set())
+    endpoint->set_sec_attrs (this->qop (),this->trust (), this->credentials ());
+
+  endpoint->iiop_endpoint (this->iiop_endpoint (), true);
+  endpoint->hash_val_ = this->hash ();
+  return endpoint;
+}
+
