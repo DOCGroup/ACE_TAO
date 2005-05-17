@@ -15,7 +15,7 @@
 BEGIN_DEPLOYMENT_NAMESPACE
 
 template <typename DATA>
-Process_Function::~Process_Function (void)
+Process_Function<DATA>::~Process_Function (void)
 {
 }
 

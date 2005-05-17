@@ -1,3 +1,10 @@
+Mon May 16 21:29:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/Old_Config_Handlers/Process_Element.cpp:
+	* DAnCE/ciao/Home_Servant_Impl_T.cpp (remove_component):
+
+	  Fixed syntax errors.
+
 Mon May 16 12:06:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/XSCRT/Elements.hpp (~IndentityProvider):
