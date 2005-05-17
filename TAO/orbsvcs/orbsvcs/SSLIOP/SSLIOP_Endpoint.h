@@ -61,7 +61,7 @@ namespace TAO
                 TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
-      ~TAO_SSLIOP_Endpoint (void);
+      virtual ~TAO_SSLIOP_Endpoint (void);
 
       /**
        * @name TAO_Endpoint Methods
@@ -73,19 +73,27 @@ namespace TAO
       virtual int addr_to_string (char *buffer, size_t length);
 
       /// Return true if this endpoint is equivalent to @param
-      /// other_endpoint.
-      /**
-       * Two endpoints are equivalent iff their iiop counterparts are
-       * equivalent, and, if both have non-zero ssl ports, their ssl
-       * ports are the same.
-       */
+      /// other_endpoint. The relationship is defined as equivalency of
+      /// their qop, hostname and ssl ports (if non-zero).
+      /// Two endpoints may be equivalent even if their iiop counterparts are
+      /// not. In fact, there are cases (as with the LPL processing)
+      /// when those counterparts are not known at all.
       CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
       virtual TAO_Endpoint *duplicate (void);
 
-      /// Return a hash value for this object.
+      /// Return a hash value for this object.  Note that only the IP
+      /// address and port are used to generate the hash value. This may
+      /// cause a few more hash table collisions in the transport cache,
+      /// because a synthesized SSLIOP endpoints for an address will
+      /// have the same hash value as a fully qualified one. The
+      /// redeeming feature is that it makes / bi-directional SSLIOP work
+      /// by allowing descendent class (Synthetic_Endpoint) instances to
+      /// be used as keys in the cache manager and match other fully
+      /// qualified endpoint. (which were  used earlier to cache a
+      /// particular transport)
       virtual CORBA::ULong hash (void);
       //@}
 
@@ -143,11 +151,13 @@ namespace TAO
       /// that was set to nil explicitly.
       int credentials_set (void) const;
 
-    private:
+    protected:
 
       /// Cache the SSL tagged component in a decoded format. Notice
       /// that we do not need to marshal this object!
       ::SSLIOP::SSL ssl_component_;
+
+    private:
 
       /// Cached instance of ACE_INET_Addr for use in making invocations,
       /// etc.
@@ -180,6 +190,54 @@ namespace TAO
 
       /// A flag indicating that credentials_ was explicitly initialized
       int credentials_set_;
+    };
+
+    /**
+     * @class SSLIOP_Synthetic_Endpoint
+     *
+     * @brief SSLIOP-specific implementation of PP Framework Endpoint
+     *        interface, representing synthetic endpoints. An endpoints
+     *        is synthetic whenever there is insuficient data to fully
+     *        initialize an SSLIOP endpoint: qop, trust, credentials,
+     *        etc. Such as when creating an SSLIOP endpoint in response
+     *        of a Listen Point List or accepting a connection.
+     *
+     *        LPL and IOR-originated endpoints can now compare as
+     *        equivalent, if they denote the same host, port and
+     *        protection.  That would have given some false
+     *        positives in some very obscure cases (same SSL port, but
+     *        different protection or undelying IIOP port, or vice versa)
+     *        The "synthetic eVndpoint" has its very own is_equivalent()
+     *        to help eliminate any false positives and make the process
+     *        more clear.
+     *
+     */
+    class TAO_SSLIOP_Export TAO_SSLIOP_Synthetic_Endpoint : public TAO_SSLIOP_Endpoint
+    {
+    public:
+
+      /// Constructor
+      TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
+
+      /// Destructor.
+      virtual ~TAO_SSLIOP_Synthetic_Endpoint (void);
+
+      /**
+       * Return true if this endpoint is equivalent to @param
+       * other_endpoint.
+       * Two synthetic endpoints are equivalent iff their iiop counterparts are
+       * equivalent, and, if both have non-zero ssl ports, their ssl
+       * ports are the same.
+       */
+      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+      
+      /// Return a copy of the corresponding endpoints by allocating
+      /// memory.
+      virtual TAO_Endpoint *duplicate (void);
+    
+    private:
+      TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
+
     };
 
 //   }  // End SSLIOP namespace.
