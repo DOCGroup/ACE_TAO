@@ -72,7 +72,7 @@ class Process_Function
 {
 public:
   /// Destructor.
-  virtual ~Process_Function (void);
+  virtual ~Process_Function (void) {};
 
   virtual void call (DOMDocument*, DOMNodeIterator*, DATA&) = 0;
 
