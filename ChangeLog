@@ -1,3 +1,9 @@
+Tue May 17 18:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/Message_Queue/ASX_Message_Queue.mpc:
+          Don't build the buffer_stream exe when wchar is enabled, this
+          example expects just char.
+
 Tue May 17 09:32:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Collection_Test.cpp:
