@@ -38,9 +38,9 @@ process_refs(DOMNode*& node,
     {
       DOMNamedNodeMap* named_node_map = node->getAttributes ();
       //auto_ptr<DOMNamedNodeMap> cleanup_nodemap (named_node_map);
-      
+
       int length = named_node_map->getLength ();
-      
+
       for (int j = 0; j < length; j++)
         {
           DOMNode* attribute_node = named_node_map->item (j);
@@ -69,9 +69,9 @@ process_ref(DOMNode*& node,
     {
       DOMNamedNodeMap* named_node_map = node->getAttributes ();
       //auto_ptr<DOMNamedNodeMap> cleanup_nodemap (named_node_map);
-      
+
       int length = named_node_map->getLength ();
-      
+
       for (int j = 0; j < length; j++)
         {
           DOMNode* attribute_node = named_node_map->item (j);
@@ -117,7 +117,7 @@ process_reference (DOMNode* node,
                    IDREF_MAP& idref_map)
 {
   bool result = (node_name == XStr (ACE_TEXT (name)));
-  
+
   if (result == true)
     process_ref (node, ref, index, idref_map);
 

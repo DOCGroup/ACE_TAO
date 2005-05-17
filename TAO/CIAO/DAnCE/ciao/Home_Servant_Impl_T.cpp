@@ -274,7 +274,7 @@ namespace CIAO
 
     this->objref_map_.bind (oid.in (),
       Components::CCMObject::_duplicate (ccmobjref.in ()));
-    
+
     return ho._retn ();
   }
 
