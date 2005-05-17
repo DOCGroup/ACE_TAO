@@ -31,7 +31,7 @@ class ACE_INET_Addr;
 namespace ACE
 {
   /**
-   * @class ACE_Ping_Socket
+   * @class Ping_Socket
    *
    * @brief This class is useful to perform ICMP echo checks (pinging)
    * on the party of your interest.  It may be used as well to check
