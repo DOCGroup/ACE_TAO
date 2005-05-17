@@ -81,14 +81,13 @@
 using std::size_t;
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
-// Since MSVC uses ushort16 = wchar_t, it is the only one
-// that does not need this defined
-
-#if defined (ACE_HAS_WCHAR) && !defined (_MSC_VER)
+// This makes the somewhat dubious assumption that if a platform lacks
+// a native wchar_t type, then it will typedef it as unsigned short.
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_NATIVE_WCHAR_T)
 # if !defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
 #  define ACE_WSTRING_HAS_USHORT_SUPPORT
 # endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
-#endif /* ACE_HAS_WCHAR && !_MSC_VER */
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_NATIVE_WCHAR_T */
 
 // Set the default behaviour for ACE_TEXT_WIDE to use the L-prefix
 #if !defined (ACE_USES_L_PREFIX)

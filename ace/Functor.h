@@ -368,9 +368,7 @@ public:
 
 #if defined (ACE_HAS_WCHAR)
 
-#  if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
-// MSVC uses ACE_UINT16 as wchar_t, and since there's a ACE_Hash<ACE_UINT16>,
-// there can't be a ACE_Hash<wchar_t>.
+#  if ! defined (ACE_LACKS_NATIVE_WCHAR_T)
 /**
  * @class ACE_Hash<wchar_t>
  *
@@ -383,8 +381,7 @@ public:
   /// Simply returns t
   unsigned long operator () (wchar_t t) const;
 };
-#  endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
-
+#  endif /* ACE_LACKS_NATIVE_WCHAR_T */
 /**
  * @class ACE_Hash<const wchar_t *>
  *

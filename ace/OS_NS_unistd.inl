@@ -44,6 +44,9 @@ ACE_OS::access (const char *path, int amode)
     ACE_UNUSED_ARG (amode);
     ACE_NOTSUP_RETURN (-1);
 #  endif  // ACE_HAS_WINCE
+#elif defined(ACE_WIN32)
+  // Windows doesn't support checking X_OK(6)
+  ACE_OSCALL_RETURN (::access (path, amode & 6), int, -1);
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
 #endif /* ACE_LACKS_ACCESS */

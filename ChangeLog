@@ -1,41 +1,90 @@
+Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/Cache_Map_Manager_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Caching_Strategies_T.cpp:
+        * ace/Caching_Utility_T.cpp:
+        * ace/Cleanup_Strategies_T.cpp:
+        * ace/Hash_Cache_Map_Manager_T.h:
+        * ace/Hash_Cache_Map_Manager_T.cpp:
+        * ace/QoS/QoS_Manager.h:
+
+          Fix incorrect use of #pragma once.
+
+        * ace/Functor.h:
+        * ace/Functor.inl:
+        * ace/Global_Macros.h:
+        * ace/ace_wchar.h:
+        * ace/config-win32-msvc.h:
+ 
+          Add a new ACE_LACKS_NATIVE_WCHAR_T macro, which can be used to check
+        whether a platform supports overloading on wchar_t without conflict.
+        The existing ACE_WSTRING_HAS_USHORT_SUPPORT was incorrectly being used
+        for two purposes. This setting should let us enable native wchar_t support
+        on VC7+.
+
+        * ace/OS_NS_time.inl:
+ 
+          Add a static_cast<long> because time_t is 64bit on some platforms
+        where long is 32 bit.
+
+        * ace/OS_NS_unistd.inl:
+
+          Mask out the X_OK(6) bit for the amode parameter of the access() function
+        because this bit is illegal on Win32 and will assert.
+
+        * ace/config-win32-msvc-7.h:
+
+          Clarify comment on ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+
+        * ace/config-win32-msvc-8.h:
+
+          Disable deprecation warning 4996, because the _CRT_SECURE_NO_DEPRECATE macro
+        doesn't appear to work correctly.
+
+        * ace/streams.h:
+
+          Add missing "using std::ios_base".
+
+
 Mon May 16 21:39:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Ping_Socket.h (Ping_Socket):
+        * ace/Ping_Socket.h (Ping_Socket):
 
-	  Corrected class name in Doxygen documentation.
+          Corrected class name in Doxygen documentation.
 
 Mon May 16 19:18:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* examples/Makefile.am:
-	* protocols/Makefile.am:
-	* protocols/examples/Makefile.am:
+        * configure.ac:
+        * examples/Makefile.am:
+        * protocols/Makefile.am:
+        * protocols/examples/Makefile.am:
 
-	  Adapt autoconf build to adjust to relocation of RMCast examples.
+          Adapt autoconf build to adjust to relocation of RMCast examples.
 
 Mon May 16 15:58:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Corrected the names of the Sun compilers supported.
-	  Thanks to Nick Todd <nicholas dot todd at gs dot com> for
-	  bringing this error to our attention.
+        * ACE-INSTALL.html: Corrected the names of the Sun compilers supported.
+          Thanks to Nick Todd <nicholas dot todd at gs dot com> for
+          bringing this error to our attention.
 
-	* THANKS: Added Nick Todd to the Hall of Fame.
+        * THANKS: Added Nick Todd to the Hall of Fame.
 
 Mon May 16 12:33:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Mario Di Giacomo to the Hall of Fame.
+          Added Mario Di Giacomo to the Hall of Fame.
 
-	* ace/Service_Templates.cpp:
+        * ace/Service_Templates.cpp:
 
-	  Include "ace/SString.h" to pull in ACE_TString declaration.
-	  Thanks to Mario Di Giacomo <mdigiacomo at anteon dot com> for
-	  reporting the problem.
+          Include "ace/SString.h" to pull in ACE_TString declaration.
+          Thanks to Mario Di Giacomo <mdigiacomo at anteon dot com> for
+          reporting the problem.
 
-	* tests/Cache_Map_Manager_Test.cpp (find_test_cache):
+        * tests/Cache_Map_Manager_Test.cpp (find_test_cache):
 
-	  Fixed "variable may be used uninitialized" warning.
+          Fixed "variable may be used uninitialized" warning.
 
 Mon May 16 19:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -44,37 +93,37 @@ Mon May 16 19:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 16 10:57:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Reset DEFAULT_INCLUDES to address ambiguity between system's
-	  signal.h and semaphore.h headers and ACE's Signal.h and
-	  Semaphore.h headers on case insensitive file systems.
+          Reset DEFAULT_INCLUDES to address ambiguity between system's
+          signal.h and semaphore.h headers and ACE's Signal.h and
+          Semaphore.h headers on case insensitive file systems.
 
-	  This may be the best setting for all ACE/TAO Makefile.am's,
-	  but this is the only one that requires it.
+          This may be the best setting for all ACE/TAO Makefile.am's,
+          but this is the only one that requires it.
 
 Mon May 16 10:56:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add ACE_LD_SEARCH_PATH and ACE_DLL_SUFFIX settings for
-	  darwin/MacOSX.
+          Add ACE_LD_SEARCH_PATH and ACE_DLL_SUFFIX settings for
+          darwin/MacOSX.
 
-	  Add ACE_HAS_NANOSLEEP feature test check.
+          Add ACE_HAS_NANOSLEEP feature test check.
 
 Mon May 16 10:49:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/POSIX_CB_Proactor.h:
+        * ace/POSIX_CB_Proactor.h:
 
-	  Add defined(__APPLE__) to conditional wrapping sigval_t type
-	  definition.
+          Add defined(__APPLE__) to conditional wrapping sigval_t type
+          definition.
 
 Mon May 16 10:45:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
+        * m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
 
-	  Changed *win* patterns to *win32* to avoid matching darwin,
-	  the MacOSX kernel.
+          Changed *win* patterns to *win32* to avoid matching darwin,
+          the MacOSX kernel.
 
 Mon May 16 15:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
