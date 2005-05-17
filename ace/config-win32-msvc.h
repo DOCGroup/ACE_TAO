@@ -54,6 +54,10 @@
 #  endif
 #endif /* _CPPRTTI */
 
+#if ! defined(_NATIVE_WCHAR_T_DEFINED)
+  #define ACE_LACKS_NATIVE_WCHAR_T
+#endif
+
 #if (_MSC_VER >= 1400)
 # include "ace/config-win32-msvc-8.h"
 #elif (_MSC_VER >= 1300)

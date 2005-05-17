@@ -73,6 +73,7 @@
 #     if !defined (ACE_USES_OLD_IOSTREAMS)
         // Make these available in the global name space
         using std::ios;
+        using std::ios_base;
         using std::streambuf;
         using std::istream;
         using std::ostream;
