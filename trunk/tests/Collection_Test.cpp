@@ -66,7 +66,10 @@ void iterate_const(const UNBOUNDED_SET& set)
   }
 }
 
-int dummyfunc() { return 0; }
+struct DummyFunctor
+{
+  int operator() (void) { return 0; }
+};
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -74,6 +77,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Collection_Test"));
 
   deletion_func NO_DFUNC = (deletion_func)0;
+  DummyFunctor dummyfunc;
+
   {
     UNBOUNDED_SET unbounded_set;
 
