@@ -1,3 +1,13 @@
+Tue May 17 09:18:15 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Removed unnecessary Resource_Files section.
+
+        * utils/utils.mwc:
+
+          Added the NamingViewer directory.
+
 Tue May 17 05:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
@@ -13,22 +23,22 @@ Tue May 17 05:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 16 19:22:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
 
-	  #include "orbsvcs/PortableGroup/PG_Operators.h" and remove the
-	  "bool operator==(const FTRT::Location&, const FTRT::Location&)"
-	  implementation.  FTRT::Location is typedef for CosNaming::Name,
-	  and the operator== implementation for that in the PortableGroup
-	  library conflict on MacOSX.
+          #include "orbsvcs/PortableGroup/PG_Operators.h" and remove the
+          "bool operator==(const FTRT::Location&, const FTRT::Location&)"
+          implementation.  FTRT::Location is typedef for CosNaming::Name,
+          and the operator== implementation for that in the PortableGroup
+          library conflict on MacOSX.
 
 Mon May 16 12:15:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/include/ast_component.h
-	  (AST_Component::port_descriptor):
+        * TAO_IDL/include/ast_component.h
+          (AST_Component::port_descriptor):
 
-	  Added an inlined constructor to this structure to make sure all
-	  fields are initialized prior to use.  Fixes a g++ 4.0 "variable
-	  is used initialized" warning.
+          Added an inlined constructor to this structure to make sure all
+          fields are initialized prior to use.  Fixes a g++ 4.0 "variable
+          is used initialized" warning.
 
 Mon May 16 14:08:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
