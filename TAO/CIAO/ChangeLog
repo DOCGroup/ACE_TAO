@@ -1,3 +1,18 @@
+Tue May 17 20:49:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIAO/tests/IDL3/ImpliedIDL/All/all.mpc:
+        * CIAO/tests/IDL3/ImpliedIDL/All/convert.idl:
+        * CIAO/tests/IDL3/ImpliedIDL/All/pass_through.idl:
+        * CIAO/tests/IDL3/ImpliedIDL/All/include.idl:
+        * CIAO/tests/IDL3/ImpliedIDL/All/README:
+        
+          New files comprising a test for the tao_idl3_to_idl2
+          executable. The test executes tao_idl3_to_idl2 on the
+          listed IDL files, then executes the TAO IDL compiler on
+          the resulting IDL files. The resulting C++ code is compiled,
+          and if there are no errors or warnings in this last step,
+          the test is a success.
+
 Tue May 17 07:51:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DAnCE/Old_Config_Handlers/Process_Element.h:
