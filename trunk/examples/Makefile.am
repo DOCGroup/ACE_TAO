@@ -27,7 +27,6 @@ SUBDIRS = \
         Naming \
         OS \
         QOS \
-        RMCast \
         Reactor \
         Registry \
         Service_Configurator \
