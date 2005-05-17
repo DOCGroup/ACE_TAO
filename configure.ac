@@ -7575,8 +7575,6 @@ AC_CONFIG_FILES([
   examples/QOS/Change_Sender_TSpec/Makefile
   examples/QOS/Diffserv/Makefile
   examples/QOS/Simple/Makefile
-  examples/RMCast/Makefile
-  examples/RMCast/Send_Msg/Makefile
   examples/Reactor/Makefile
   examples/Reactor/Dgram/Makefile
   examples/Reactor/FIFO/Makefile
@@ -7628,6 +7626,9 @@ AC_CONFIG_FILES([
   protocols/ace/HTBP/Makefile
   protocols/ace/RMCast/Makefile
   protocols/ace/TMCast/Makefile
+  protocols/examples/Makefile
+  protocols/examples/RMCast/Makefile
+  protocols/examples/RMCast/Send_Msg/Makefile
   tests/Makefile
   tests/HTBP/Makefile
   tests/HTBP/Reactor_Tests/Makefile
