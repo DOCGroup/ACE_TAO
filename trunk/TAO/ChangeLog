@@ -1,3 +1,10 @@
+Tue May 17 05:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Control.h:
+          Removed not needed include of Channel_Clients.h. This file has
+          been removed and the include was not needed.
+
 Mon May 16 19:22:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
