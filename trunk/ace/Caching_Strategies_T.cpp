@@ -11,7 +11,7 @@
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define ACE_LACKS_PRAGMA_ONCE
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, Caching_Strategies_T, "$Id$")

@@ -113,9 +113,7 @@
 
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
-// With the MSVC7 compiler there is a new 'feature' when a base-class is a
-// specialization of a class template. The class template must be explicit
-// instantiated and exported.
+// A template can not be exported. Only an instantiation may be exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 
 // At least for ACE_UNIMPLEMENTED_FUNC in class templates, this is needed to
