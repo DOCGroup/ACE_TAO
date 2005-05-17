@@ -9,36 +9,12 @@
 #include "Replication_Service.h"
 #include "../Utils/Log.h"
 #include "tao/CDR.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_Group_Manager,
            "$Id$")
 
-
-inline bool operator == (const TAO_String_Manager& lhs, const TAO_String_Manager& rhs)
-{
-    return strcmp(lhs.in(), rhs.in()) == 0;
-}
-
-inline bool operator == (const CosNaming::NameComponent& lhs, const CosNaming::NameComponent& rhs)
-{
-    if (lhs.id == rhs.id) {
-        if (lhs.kind == rhs.kind)
-          return true;
-    }
-    return false;
-}
-
-bool operator == (const FTRT::Location& lhs, const FTRT::Location& rhs)
-{
-    if (lhs.length() == rhs.length()) {
-        for (unsigned i = 0; i < lhs.length(); ++i)
-            if (!(lhs[i] == rhs[i]))
-                return false;
-        return true;
-    }
-    return false;
-}
 
 int find_by_location(const FTRT::ManagerInfoList& list,
                 const FTRT::Location & location)
