@@ -69,7 +69,26 @@ private:
   // Argument list.
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
+
+protected:
+  /**
+  * A class with a "magic" constructor/desructor to call
+  * ACE_NT_Service::report_status() when an instance of it goes out of scope, as
+  * it might should an exception occurs.
+  */
+  class AutoFinalizer
+  {
+    
+  public:
+    AutoFinalizer (TAO_NT_Naming_Service &service);
+    ~AutoFinalizer ();
+    
+  private:
+    TAO_NT_Naming_Service &service_;
+  };
 };
+
+
 
 typedef ACE_Singleton<TAO_NT_Naming_Service, TAO_NT_Naming_Service::MUTEX> SERVICE;
 

@@ -1,3 +1,102 @@
+Tue May 17 15:55:35 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.{h,cpp}:
+
+	  For Windows platforms, changed how the handle_control() stops
+	  the ORB. Instead of having to explicitly stop the reactor loop
+	  it only needs to call ORB::shutdown(). This also avoids a
+	  potential race condition that may occur as the ORB gets
+	  destroy()-ed between the two calls. Added an AutoFinalizer
+	  class, whose destructor notifies the Windows SCM by calling
+	  ACE_NT_Service::report_status() when an instance goes out of
+	  scope. This is helpful in the presence of unexpected
+	  exceptions.  This patch was forward-ported from 1.3a_p9, based
+	  upon RT4982. 
+	  
+	* TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+	  Added ACE_TEXT_ALWAYS_CHAR ()
+	  
+Tue May 17 15:14:55 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+          This change allows bi-directional policy to work with SSLIOP
+          endpoints.  When a server accepts a client-initiated
+          connection or a listen point list, there is no data available
+          about the IIOP endpoints, underlying the SSLIOP endpoints.
+          There is also no data for most of the attributes of the secure
+          connection.  Therefore the "server" must synthesize those,
+          however this can not be done correctly. The problem becomes
+          evident when bi-directional policy is in effect for both
+          peers: a "server" during callback, needs to use the same
+          connection the "client" has initiated, but the secure endpoint
+          obtained from an IOR can not yield the same hash value as the
+          synthesized endpoint (from an LPL), used to cache the
+          connection.  Also, such endpoints can not be equivalent, in
+          terms of the is_equivalent () method. The IOR from the client
+          contains the real (non-synthetic) port number for the IIOP
+          endpoint underlying the SSL endpoint.  This causes the server
+          to decide that it deals with a different endpoint and try to
+          open a new connection. When the ORBs are using bi-directional
+          policies and are behind a firewall, this will fail
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+
+          Creates an instance of the new SSLIOP_Synthetic_Endpoint,
+          which it then uses to re-cache the transport.
+          TAO_SSLIOP_Connection_Handler::add_transport_to_cache()
+          ultimately uses the is_equivalent () method to compare
+          endpoints. That method must not compare the underlying IIOP
+          port numbers, because in some cases SSLIOP endpoints are
+          instantiated with limited amount of information available. For
+          example, when accepting a connections in server role, the
+          underlying IIOP endpoint's port is unknown an is merely
+          assigned to be the same as the secure port, effectively
+          precludes the ability of the server to find a connection
+          cached with these parameters later.
+        
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.{h,cpp):
+
+          Introduced a new SSLIOP_Synthetic_Endpoint, which relaxes the
+          equivalence comparison with another SSLIOP_Endpoint to limit
+          it to only hostname, SSL port and QoP.
+          Changed the hash() implementation in SSLIOP_Endpoint to
+          eliminate any influence the embedded IIOP endpoint has on the
+          hash value. This allows the SSLIOP_Synthetic_Endpoint to hash
+          just like an SSLIOP_Endpoint and makes possible that synthetic
+          endpoints to be used to find previously cached transports.
+
+        * orbsvcs/tests/Security/BiDirectional/BiDirectional.mpc:
+        * orbsvcs/tests/Security/BiDirectional/README:
+        * orbsvcs/tests/Security/BiDirectional/client.conf:
+        * orbsvcs/tests/Security/BiDirectional/client.cpp:
+        * orbsvcs/tests/Security/BiDirectional/run_test.pl:
+        * orbsvcs/tests/Security/BiDirectional/server.conf:
+        * orbsvcs/tests/Security/BiDirectional/server.cpp:
+        * orbsvcs/tests/Security/BiDirectional/test.idl:
+        * orbsvcs/tests/Security/BiDirectional/test_i.h:
+        * orbsvcs/tests/Security/BiDirectional/test_i.i:
+        * orbsvcs/tests/Security/BiDirectional/test_i.cpp:
+
+          A test that demonstrates the problem. Uses TAO-specific
+          interfaces to the ORB core to obtain the number of currently
+          open connections before and after an invocation. This is done
+          both in the servant and in the client.
+
+        * orbsvcs/tests/Security/BiDirectional/ssl/ca.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-key.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/make-client-keys:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-key.pem:
+
+          Client and server certificates and keys. Also, a script to
+          regenerate them all.
+          
+
+        * tao/Transport_Cache_Manager.cpp:
+
+          Added more informative logging.
+
 Tue May 17 09:18:15 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * utils/NamingViewer/NamingViewer.mpc:

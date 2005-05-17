@@ -15,6 +15,18 @@
 #define TAO_NAMING_SERVICE_OPTS_NAME "TaoNamingServiceOptions"
 #define TAO_SERVICE_PARAM_COUNT "TaoServiceParameterCount"
 
+TAO_NT_Naming_Service::AutoFinalizer::AutoFinalizer (TAO_NT_Naming_Service &service)
+  : service_ (service)
+{
+}
+
+TAO_NT_Naming_Service::AutoFinalizer::~AutoFinalizer ()
+{
+  service_.report_status (SERVICE_STOPPED);  
+  ACE_DEBUG ((LM_DEBUG, "Reported service stoped\n"));
+}
+
+
 TAO_NT_Naming_Service::TAO_NT_Naming_Service (void)
   : argc_ (0),
     argc_save_ (0),
@@ -40,13 +52,36 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
   if (control_code == SERVICE_CONTROL_SHUTDOWN
       || control_code == SERVICE_CONTROL_STOP)
     {
+      // Just in case any of the following method calls 
+      // throws in a way we do not expect.
+      // This instance's destructor will notify the OS.
+      TAO_NT_Naming_Service::AutoFinalizer afinalizer (*this);
+
       report_status (SERVICE_STOP_PENDING);
-      TAO_ORB_Core_instance ()->reactor ()->end_reactor_event_loop ();
-      TAO_ORB_Core_instance ()->orb ()->shutdown (1);
-      report_status (SERVICE_STOPPED);
+      
+      // This must be all that needs to be done since this method is executing
+      // in a separate thread from the one running the reactor.
+      // When the reactor is stopped it calls ORB::destroy(), which in turn
+      // calls ORB::shutdown(1) *and* unbinds the ORB from the ORB table.
+
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          TAO_ORB_Core_instance ()->orb ()->shutdown (1 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // What should we do here? Even the log messages are not
+          // showing up, since the thread that runs this is not an ACE
+          // thread. It is allways spawned/controlled by Windows ...
+        }
+      ACE_ENDTRY;
     }
   else
+  {
     ACE_NT_Service::handle_control (control_code);
+  }
 }
 
 int
@@ -136,12 +171,20 @@ TAO_NT_Naming_Service::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      // Just in case handle_control does not get the chance
+      // to execute, or is never called by Windows. This instance's
+      // destructor will inform the OS of our demise.
+      TAO_NT_Naming_Service::AutoFinalizer afinalizer (*this);
+
+      ACE_DEBUG ((LM_INFO, "Notifying Windows of service startup\n"));
       report_status (SERVICE_RUNNING);
+
       naming_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
+      ACE_DEBUG ((LM_INFO, "Exception in service - exitting\n"));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO NT Naming Service");
       return -1;
@@ -149,6 +192,7 @@ TAO_NT_Naming_Service::svc (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (1);
 
+  ACE_DEBUG ((LM_INFO, "Exiting gracefully\n"));
   return 0;
 }
 

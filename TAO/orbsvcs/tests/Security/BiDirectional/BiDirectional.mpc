@@ -1,0 +1,14 @@
+project(*Server): taoexe, portableserver, minimum_corba, bidir_giop {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
+  Source_Files {
+    test_i.cpp
+    client.cpp
+  }
+}
+
