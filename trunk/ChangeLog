@@ -1,3 +1,9 @@
+Mon May 16 21:39:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Ping_Socket.h (Ping_Socket):
+
+	  Corrected class name in Doxygen documentation.
+
 Mon May 16 19:18:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
