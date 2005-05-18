@@ -39,7 +39,6 @@
 
 #include <PI_Forward.pidl>
 #include <Current.pidl>
-#include <Dynamic.pidl>
 #include <Messaging_SyncScope.pidl>
 
 #include <ORBInitializer.pidl>
@@ -49,6 +48,8 @@
 #include <ServerRequestInfo.pidl>
 #include <PolicyFactory.pidl>
 #include <ORBInitInfo.pidl>
+#include <ClientRequestInterceptor.pidl>
+#include <ServerRequestInterceptor.pidl>
 
 module PortableInterceptor {
 
@@ -59,17 +60,6 @@ module PortableInterceptor {
   const AdapterState    DISCARDING      = 2;
   const AdapterState    INACTIVE        = 3;
   const AdapterState    NON_EXISTENT    = 4;
-
-  local interface Interceptor
-  {
-    readonly attribute string name;
-    void destroy ();
-  };
-
-  exception ForwardRequest
-  {
-    Object forward;
-  };
 
   // Valid reply_status values:
   const ReplyStatus SUCCESSFUL = 0;
@@ -83,26 +73,6 @@ module PortableInterceptor {
   {
     any get_slot (in SlotId id) raises (InvalidSlot);
     void set_slot (in SlotId id, in any data) raises (InvalidSlot);
-  };
-
-  local interface ClientRequestInterceptor : Interceptor
-  {
-    void send_request  (in ClientRequestInfo ri) raises (ForwardRequest);
-    void send_poll (in ClientRequestInfo ri);
-    void receive_reply (in ClientRequestInfo ri);
-    void receive_exception (in ClientRequestInfo ri) raises (ForwardRequest);
-    void receive_other (in ClientRequestInfo ri) raises (ForwardRequest);
-  };
-
-  local interface ServerRequestInterceptor : Interceptor
-  {
-    /// Proprietary method in TAO for fault tolerance
-    void tao_ft_interception_point (in ServerRequestInfo ri, out CORBA::OctetSeq os) raises (ForwardRequest);
-    void receive_request_service_contexts (in ServerRequestInfo ri) raises (ForwardRequest);
-    void receive_request (in ServerRequestInfo ri) raises (ForwardRequest);
-    void send_reply (in ServerRequestInfo ri);
-    void send_exception (in ServerRequestInfo ri) raises (ForwardRequest);
-    void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
   };
 };
 

@@ -47,6 +47,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInfoC.cpp
     ClientRequestInfo_i.cpp
     ClientRequestInterceptor_Adapter.cpp
+    ClientRequestInterceptorA.cpp
+    ClientRequestInterceptorC.cpp
     CodecFactory.cpp
     CodecFactory_ORBInitializer.cpp
     Codeset_Manager.cpp
@@ -123,6 +125,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOPA.cpp
     IIOPC.cpp
     Incoming_Message_Queue.cpp
+    InterceptorA.cpp
+    InterceptorC.cpp
     Interceptor_List.cpp
     InvalidSlotA.cpp
     InvalidSlotC.cpp
@@ -200,6 +204,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PICurrent.cpp
     PICurrent_Copy_Callback.cpp
     PICurrent_ORBInitializer.cpp
+    PIForwardRequestA.cpp
+    PIForwardRequestC.cpp
     Pluggable_Messaging.cpp
     Pluggable_Messaging_Utils.cpp
     Policy_ForwardA.cpp
@@ -238,6 +244,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Server_Strategy_Factory.cpp
     ServerRequestInfoA.cpp
     ServerRequestInfoC.cpp
+    ServerRequestInterceptorA.cpp
+    ServerRequestInterceptorC.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
     Services_Activate.cpp
@@ -370,6 +378,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInfoS.h
     ClientRequestInfo_i.h
     ClientRequestInterceptor_Adapter.h
+    ClientRequestInterceptorC.h
+    ClientRequestInterceptorS.h
     Client_Strategy_Factory.h
     CodecFactory.h
     CodecFactory_ORBInitializer.h
@@ -460,6 +470,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h
+    InterceptorC.h
+    InterceptorS.h
     Interceptor_List.h
     InvalidSlotC.h
     InvalidSlotS.h
@@ -545,6 +557,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PICurrent_Copy_Callback.h
     PICurrent.h
     PICurrent_ORBInitializer.h
+    PIForwardRequestC.h
+    PIForwardRequestS.h
     PI_ForwardC.h
     Pluggable_Messaging.h
     Pluggable_Messaging_Utils.h
@@ -592,6 +606,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Server_Strategy_Factory.h
     ServerRequestInfoC.h
     ServerRequestInfoS.h
+    ServerRequestInterceptorC.h
+    ServerRequestInterceptorS.h
     Service_Callbacks.h
     Service_Context.h
     Services_Activate.h
