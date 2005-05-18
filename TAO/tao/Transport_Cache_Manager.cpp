@@ -133,8 +133,8 @@ namespace TAO
     if (TAO_debug_level > 5 && retval != 0)
       {
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Transport_Cache_Manager::bind_i "
-                    "failed\n"));
+                    "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                    "unable to bind\n"));
       }
     else if (TAO_debug_level > 3)
       {
@@ -243,7 +243,7 @@ namespace TAO
 
                 return 0;
               }
-            else if (TAO_debug_level > 4)
+            else if (TAO_debug_level > 6)
                   {
                     ACE_DEBUG ((LM_DEBUG,
                                 "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
