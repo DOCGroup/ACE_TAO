@@ -1,3 +1,10 @@
+Wed May 18 15:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Semaphore.cpp:
+          Removed check for missing shm_open() since this causes problems
+          for platforms supporting POSIX_SEM (and thus not using shm_open/open).
+          Thanks to Raoul Gough <Raoul dot Gough at liffe dot com> for reporting this.
+
 Wed May 18 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/Message_Queue/buffer_stream.cpp:
