@@ -61,10 +61,6 @@ ifeq ($(include_lib),1)
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 endif
 
-ifdef CLEANUP_BIN
-  include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-endif # BIN
-
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Remove the -g option if requested.

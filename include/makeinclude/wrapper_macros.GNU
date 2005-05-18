@@ -191,11 +191,7 @@
 # SHLIB variables.  If it's dependent on a component, use the BIN2 or
 # BIN_UNCHECKED variety, then assign that to BIN if the required component
 # is available.
-#
-# If you want to include multiple targets in a single Makefile, you must
-# create your own targets, e.g., server and client.  In this case, assign
-# them to BIN, or BIN_UNCHECKED if they depend on other components, do not
-# include rules.bin.GNU.  That way they will still get cleaned up.
+
 BIN_UNCHECKED ?=
 CLEANUP_BIN ?=
 ifdef BIN

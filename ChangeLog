@@ -1,7 +1,24 @@
+Wed May 18 09:25:35 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+
+          Fixed a problem that I introduced in a previous change.  Resource
+          files were not being handled properly and the
+          platform_gnuwin32_common.GNU file was referencing $(VSHOBJS1)
+          which I removed.
+
+        * include/makeinclude/all_in_one.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.bin.GNU:
+
+          Removed the file rules.bin.GNU and all references to it.
+
 Tue May 17 20:58:46 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/taoidl3toidl2defaults.mpb:
-        
+
           New file, a base project for the tao_idl3_to_idl2 executable,
           so it can be executed automatically in a test or example.
 
@@ -13,11 +30,11 @@ Tue May 17 18:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 17 09:32:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Collection_Test.cpp:
+        * tests/Collection_Test.cpp:
 
-	  Avoid casting between a pointer to a function and a pointer to
-	  an object.  ISO C++ forbids such casts.  Fixes a g++ 4.0
-	  warning.
+          Avoid casting between a pointer to a function and a pointer to
+          an object.  ISO C++ forbids such casts.  Fixes a g++ 4.0
+          warning.
 
 Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
 
