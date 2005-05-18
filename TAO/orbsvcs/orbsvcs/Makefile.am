@@ -2016,6 +2016,7 @@ nobase_include_HEADERS += \
   Notify/EventTypeSeq.h \
   Notify/Event_Manager.h \
   Notify/Event_Manager.inl \
+  Notify/Event_Persistence_Factory.h \
   Notify/FilterAdmin.h \
   Notify/FilterAdmin.inl \
   Notify/ID_Factory.h \
@@ -3393,6 +3394,9 @@ libTAO_RTEvent_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  Channel_Clients_T.cpp \
+  Channel_Clients_T.h \
+  Channel_Clients_T.i \
   Event/ECG_Adapters.h \
   Event/ECG_Address_Server_Base.h \
   Event/ECG_CDR_Message_Receiver.h \
