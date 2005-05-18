@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "PortableInterceptorC.h"
+#include "InterceptorC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode_Static.h"
@@ -40,15 +40,15 @@
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
-  _tao_tc_PortableInterceptor_Current (
+  _tao_tc_PortableInterceptor_Interceptor (
     CORBA::tk_local_interface,
-    "IDL:omg.org/PortableInterceptor/Current:1.0",
-    "Current");
+    "IDL:omg.org/PortableInterceptor/Interceptor:1.0",
+    "Interceptor");
   
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr const _tc_Current =
-    &_tao_tc_PortableInterceptor_Current;
+  ::CORBA::TypeCode_ptr const _tc_Interceptor =
+    &_tao_tc_PortableInterceptor_Interceptor;
 }
 
 
@@ -60,7 +60,7 @@ namespace TAO
 {
   template<>
   CORBA::Boolean
-  Any_Impl_T<PortableInterceptor::Current>::to_object (
+  Any_Impl_T<PortableInterceptor::Interceptor>::to_object (
       CORBA::Object_ptr &_tao_elem
     ) const
   {
@@ -73,14 +73,14 @@ namespace TAO
 {
   template<>
   CORBA::Boolean
-  Any_Impl_T<PortableInterceptor::Current>::marshal_value (TAO_OutputCDR &)
+  Any_Impl_T<PortableInterceptor::Interceptor>::marshal_value (TAO_OutputCDR &)
   {
     return false;
   }
   
   template<>
   CORBA::Boolean
-  Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
+  Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR &)
   {
     return false;
   }
@@ -90,11 +90,11 @@ namespace TAO
 void
 operator<<= (
     CORBA::Any &_tao_any,
-    PortableInterceptor::Current_ptr _tao_elem
+    PortableInterceptor::Interceptor_ptr _tao_elem
   )
 {
-  PortableInterceptor::Current_ptr _tao_objptr =
-    PortableInterceptor::Current::_duplicate (_tao_elem);
+  PortableInterceptor::Interceptor_ptr _tao_objptr =
+    PortableInterceptor::Interceptor::_duplicate (_tao_elem);
   _tao_any <<= &_tao_objptr;
 }
 
@@ -102,13 +102,13 @@ operator<<= (
 void
 operator<<= (
     CORBA::Any &_tao_any,
-    PortableInterceptor::Current_ptr *_tao_elem
+    PortableInterceptor::Interceptor_ptr *_tao_elem
   )
 {
-  TAO::Any_Impl_T<PortableInterceptor::Current>::insert (
+  TAO::Any_Impl_T<PortableInterceptor::Interceptor>::insert (
       _tao_any,
-      PortableInterceptor::Current::_tao_any_destructor,
-      PortableInterceptor::_tc_Current,
+      PortableInterceptor::Interceptor::_tao_any_destructor,
+      PortableInterceptor::_tc_Interceptor,
       *_tao_elem
     );
 }
@@ -116,14 +116,14 @@ operator<<= (
 CORBA::Boolean
 operator>>= (
     const CORBA::Any &_tao_any,
-    PortableInterceptor::Current_ptr &_tao_elem
+    PortableInterceptor::Interceptor_ptr &_tao_elem
   )
 {
   return
-    TAO::Any_Impl_T<PortableInterceptor::Current>::extract (
+    TAO::Any_Impl_T<PortableInterceptor::Interceptor>::extract (
         _tao_any,
-        PortableInterceptor::Current::_tao_any_destructor,
-        PortableInterceptor::_tc_Current,
+        PortableInterceptor::Interceptor::_tao_any_destructor,
+        PortableInterceptor::_tc_Interceptor,
         _tao_elem
       );
 }

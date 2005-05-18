@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "PortableInterceptorC.h"
+#include "InterceptorC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -49,89 +49,89 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
 
-// Traits specializations for PortableInterceptor::Current.
+// Traits specializations for PortableInterceptor::Interceptor.
 
-PortableInterceptor::Current_ptr
-TAO::Objref_Traits<PortableInterceptor::Current>::duplicate (
-    PortableInterceptor::Current_ptr p
+PortableInterceptor::Interceptor_ptr
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::duplicate (
+    PortableInterceptor::Interceptor_ptr p
   )
 {
-  return PortableInterceptor::Current::_duplicate (p);
+  return PortableInterceptor::Interceptor::_duplicate (p);
 }
 
 void
-TAO::Objref_Traits<PortableInterceptor::Current>::release (
-    PortableInterceptor::Current_ptr p
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::release (
+    PortableInterceptor::Interceptor_ptr p
   )
 {
   CORBA::release (p);
 }
 
-PortableInterceptor::Current_ptr
-TAO::Objref_Traits<PortableInterceptor::Current>::nil (void)
+PortableInterceptor::Interceptor_ptr
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::nil (void)
 {
-  return PortableInterceptor::Current::_nil ();
+  return PortableInterceptor::Interceptor::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::Current>::marshal (
-    PortableInterceptor::Current_ptr p,
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::marshal (
+    PortableInterceptor::Interceptor_ptr p,
     TAO_OutputCDR & cdr
   )
 {
   return CORBA::Object::marshal (p, cdr);
 }
 
-PortableInterceptor::Current::Current (void)
+PortableInterceptor::Interceptor::Interceptor (void)
 {}
 
-PortableInterceptor::Current::~Current (void)
+PortableInterceptor::Interceptor::~Interceptor (void)
 {}
 
 void 
-PortableInterceptor::Current::_tao_any_destructor (void *_tao_void_pointer)
+PortableInterceptor::Interceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
-  Current *_tao_tmp_pointer =
-    static_cast<Current *> (_tao_void_pointer);
+  Interceptor *_tao_tmp_pointer =
+    static_cast<Interceptor *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
-PortableInterceptor::Current_ptr
-PortableInterceptor::Current::_narrow (
+PortableInterceptor::Interceptor_ptr
+PortableInterceptor::Interceptor::_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return Current::_nil ();
+      return Interceptor::_nil ();
     }
   
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
+  Interceptor_ptr proxy =
+    dynamic_cast<Interceptor_ptr> (_tao_objref);
   
-  return Current::_duplicate (proxy);
+  return Interceptor::_duplicate (proxy);
 }
 
-PortableInterceptor::Current_ptr
-PortableInterceptor::Current::_unchecked_narrow (
+PortableInterceptor::Interceptor_ptr
+PortableInterceptor::Interceptor::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return Current::_nil ();
+      return Interceptor::_nil ();
     }
   
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
+  Interceptor_ptr proxy =
+    dynamic_cast<Interceptor_ptr> (_tao_objref);
   
-  return Current::_duplicate (proxy);
+  return Interceptor::_duplicate (proxy);
 }
 
-PortableInterceptor::Current_ptr
-PortableInterceptor::Current::_duplicate (Current_ptr obj)
+PortableInterceptor::Interceptor_ptr
+PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
 {
   if (! CORBA::is_nil (obj))
     {
@@ -142,13 +142,13 @@ PortableInterceptor::Current::_duplicate (Current_ptr obj)
 }
 
 void
-PortableInterceptor::Current::_tao_release (Current_ptr obj)
+PortableInterceptor::Interceptor::_tao_release (Interceptor_ptr obj)
 {
   CORBA::release (obj);
 }
 
 CORBA::Boolean
-PortableInterceptor::Current::_is_a (
+PortableInterceptor::Interceptor::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -156,11 +156,7 @@ PortableInterceptor::Current::_is_a (
   if (
       !ACE_OS::strcmp (
           value,
-          "IDL:omg.org/CORBA/Current:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/PortableInterceptor/Current:1.0"
+          "IDL:omg.org/PortableInterceptor/Interceptor:1.0"
         ) ||
       !ACE_OS::strcmp (
           value,
@@ -180,13 +176,13 @@ PortableInterceptor::Current::_is_a (
     }
 }
 
-const char* PortableInterceptor::Current::_interface_repository_id (void) const
+const char* PortableInterceptor::Interceptor::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/PortableInterceptor/Current:1.0";
+  return "IDL:omg.org/PortableInterceptor/Interceptor:1.0";
 }
 
 CORBA::Boolean
-PortableInterceptor::Current::marshal (TAO_OutputCDR &)
+PortableInterceptor::Interceptor::marshal (TAO_OutputCDR &)
 {
   return false;
 }
