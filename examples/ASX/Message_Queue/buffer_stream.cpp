@@ -128,7 +128,7 @@ Producer::svc (void)
       // Allocate a new message (add one to avoid nasty boundary
       // conditions).
 
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ + 1),
@@ -190,7 +190,7 @@ Consumer::svc (void)
 
   for (;;)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       // Wait for upto 4 seconds.
       this->timeout_.sec (ACE_OS::time (0) + 4);
@@ -198,14 +198,14 @@ Consumer::svc (void)
       result = this->getq (mb, &this->timeout_);
 
       if (result == -1)
-	break;
+        break;
 
       int length = mb->length ();
 
       if (length > 0)
-	ACE_OS::write (ACE_STDOUT,
-		       mb->rd_ptr (),
-		       ACE_OS::strlen (mb->rd_ptr ()));
+        ACE_OS::write (ACE_STDOUT,
+                       mb->rd_ptr (),
+                       ACE_OS::strlen (mb->rd_ptr ()));
 
       mb->release ();
 
@@ -260,9 +260,9 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   // This Stream controls hierachically-related active objects.
   MT_Stream stream;
 
-  MT_Module *pm;
-  MT_Module *fm;
-  MT_Module *cm;
+  MT_Module *pm = 0;
+  MT_Module *fm = 0;
+  MT_Module *cm = 0;
 
   ACE_NEW_RETURN (cm,
                   MT_Module (ACE_TEXT ("Consumer"),
