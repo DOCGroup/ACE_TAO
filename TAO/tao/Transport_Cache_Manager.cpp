@@ -1,7 +1,6 @@
 //$Id$
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Transport.h"
-#include "tao/Endpoint.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Connection_Purging_Strategy.h"
@@ -84,22 +83,15 @@ namespace TAO
   Transport_Cache_Manager::bind_i (Cache_ExtId &ext_id,
                                    Cache_IntId &int_id)
   {
-    if (TAO_debug_level > 4)
-      {
-        char address [ACE_UNIQUE_NAME_LEN+1];
-        if (ext_id.property ()->endpoint ()->addr_to_string (address, 
-                                                             sizeof address) == -1)
-          ACE_OS::strncpy (address, "*UNRESOLVED*", sizeof address);
-        
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i ")
-                    ACE_TEXT ("<%s> (%@,hash=0x%x) -> Transport[%d] (%@)\n"), 
-                    address,
-                    ext_id.property (),
-                    ext_id.hash (),
-                    int_id.transport ()->id (),
-                    int_id.transport ()));
-      }
+    if (TAO_debug_level > 0)
+       {
+         ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                    "0x%x -> 0x%x Transport[%d]\n",
+                     ext_id.property (),
+                    int_id.transport (),
+                    int_id.transport ()->id ()));
+       }
 
     // Get the entry too
     HASH_MAP_ENTRY *entry = 0;
@@ -119,10 +111,10 @@ namespace TAO
       }
     else if (retval == 1)
       {
-        if (TAO_debug_level > 4 && retval != 0)
+        if (TAO_debug_level > 4)
           {
             ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                        "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
                         "unable to bind in the first attempt. "
                         "Trying with a new index\n"));
           }
@@ -140,7 +132,7 @@ namespace TAO
 
     if (TAO_debug_level > 5 && retval != 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - Transport_Cache_Manager::bind_i "
                     "failed\n"));
       }
@@ -214,21 +206,6 @@ namespace TAO
     // Make a temporary object. It does not do a copy.
     Cache_ExtId tmp_key (key.property ());
 
-    if (TAO_debug_level > 4)
-      {
-        char address [ACE_UNIQUE_NAME_LEN+1];
-        if (tmp_key.property ()->endpoint ()->addr_to_string (address, 
-                                                             sizeof address) == -1)
-          ACE_OS::strncpy (address, "*UNRESOLVED*", sizeof address);
-        
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::find_i, ")
-                    ACE_TEXT ("looking for <%s> (%@, hash=0x%x)\n"), 
-                    address,
-                    tmp_key.property (),
-                    tmp_key.hash ()));
-      }
-
     while (retval == 0)
       {
         // Wait for a connection..
@@ -237,13 +214,6 @@ namespace TAO
         // Look for an entry in the map
         retval = this->cache_map_.find (tmp_key,
                                         entry);
-
-        if (TAO_debug_level > 4 && retval != 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::find_i, ")
-                        ACE_TEXT ("cache miss!\n")));
-          }
 
         // We have an entry in the map, check whether it is idle.
         if (entry)
@@ -265,8 +235,8 @@ namespace TAO
                 if (TAO_debug_level > 4)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::find_i, ")
-                                ACE_TEXT ("at index %d, Transport[%d] (idle)\n"),
+                                "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
+                                "at index %d (Transport[%d]) - idle\n",
                                 entry->ext_id_.index (),
                                 entry->int_id_.transport ()->id ()));
                   }
@@ -276,8 +246,8 @@ namespace TAO
             else if (TAO_debug_level > 4)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::find_i, ")
-                                ACE_TEXT ("at index %d, Transport[%d] is not idle\n"),
+                                "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
+                                "at index %d (Transport[%d]) - not idle\n",
                                 entry->ext_id_.index (),
                                 entry->int_id_.transport ()->id ()));
                   }
@@ -290,7 +260,7 @@ namespace TAO
     // If we are here then it is an error
     if (TAO_debug_level > 4 && retval != 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
                     "no idle transport is available\n"));
       }
