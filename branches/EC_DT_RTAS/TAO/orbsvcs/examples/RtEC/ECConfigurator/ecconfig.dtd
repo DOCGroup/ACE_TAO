@@ -60,7 +60,7 @@
   <!-- Consumer/Supplier on remote are local but subscribe/publish remotely -->
   <!ELEMENT RemoteEventChannel (IORFile, (Consumer,Supplier)*) >
   <!ATTLIST RemoteEventChannel name CDATA #REQUIRED >
-  <!ATTLIST RemoteEventChannel connection (Input|Output|TwoWay|StartTime) #REQUIRED >
+  <!ATTLIST RemoteEventChannel connection (Input,Output,TwoWay) #REQUIRED >
 
   <!ELEMENT IORFile (#PCDATA) >
 

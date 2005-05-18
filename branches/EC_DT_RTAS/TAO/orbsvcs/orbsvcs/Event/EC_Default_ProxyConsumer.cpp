@@ -109,6 +109,7 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
   if (!ace_mon.locked ())
     return;
 
+#if defined (ACE_HAS_DSUI)
   RtecEventComm::EventSet &tmp_event = (RtecEventComm::EventSet&)event;
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
   tmp_event[0].header.eid.id = oid.id;
@@ -118,6 +119,7 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
   oid.type = tmp_event[0].header.type;
 
   DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(Object_ID), (char*)&oid);
+#endif /* ACE_HAS_DSUI */
 
   ace_mon.filter->push (event, this
                         ACE_ENV_ARG_PARAMETER);

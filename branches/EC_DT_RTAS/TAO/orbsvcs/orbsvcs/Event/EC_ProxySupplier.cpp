@@ -17,12 +17,12 @@
 #include "EC_ProxySupplier.i"
 #endif /* __ACE_INLINE__ */
 
-#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#if defined (ACE_HAS_DSUI)
 #include "ec_dsui_config.h"
 #include "ec_dsui_families.h"
 #include <ace/Counter.h>
 #include <dsui.h>
-#endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
+#endif /* ACE_HAS_DSUI */
 
 ACE_RCSID (Event,
            EC_ProxySupplier,
@@ -294,6 +294,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
+#if defined (ACE_HAS_DSUI)
     Object_ID oid;
     oid.id = event[0].header.eid.id;
     oid.tid = event[0].header.eid.tid;
@@ -302,6 +303,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
     oid.type = event[0].header.type;
 
     DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+#endif /* ACE_HAS_DSUI */
 
     this->event_channel_->dispatching ()->push (this,
                                                 consumer.in (),
@@ -360,6 +362,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
+#if defined (ACE_HAS_DSUI)
     Object_ID oid;
     oid.id = event[0].header.eid.id;
     oid.tid = event[0].header.eid.tid;
@@ -368,6 +371,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
     oid.type = event[0].header.type;
 
     DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+#endif /* ACE_HAS_DSUI */
 
     this->event_channel_->dispatching ()->push_nocopy (this,
                                                        consumer.in (),
@@ -404,6 +408,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
 
   ACE_TRY
     {
+#if defined (ACE_HAS_DSUI)
       Object_ID oid;
       oid.id = event[0].header.eid.id;
       oid.tid = event[0].header.eid.tid;
@@ -412,6 +417,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
       oid.type = event[0].header.type;
 
       DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+#endif /* ACE_HAS_DSUI */
 
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -469,6 +475,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
 {
   ACE_TRY
     {
+#ifdef ACE_HAS_DSUI
       Object_ID oid;
       oid.id = event[0].header.eid.id;
       oid.tid = event[0].header.eid.tid;
@@ -477,6 +484,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
       oid.type = event[0].header.type;
 
       DSTRM_EVENT (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
+#endif /* ACE_HAS_DSUI */
 
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
