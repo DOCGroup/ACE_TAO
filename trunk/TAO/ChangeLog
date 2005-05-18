@@ -1,3 +1,12 @@
+Wed May 18 06:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/BiDirectional/BiDirectional.mpc:
+          Give this project an unique name so that MPC doesn't complain about
+          duplicate names
+
+        * orbsvcs/tests/Security/BiDirectional/test.idl:
+          Converted documentation to doxygen style
+
 Tue May 17 15:55:35 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/Naming_Service/NT_Naming_Service.{h,cpp}:
@@ -11,12 +20,12 @@ Tue May 17 15:55:35 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 	  ACE_NT_Service::report_status() when an instance goes out of
 	  scope. This is helpful in the presence of unexpected
 	  exceptions.  This patch was forward-ported from 1.3a_p9, based
-	  upon RT4982. 
-	  
+	  upon RT4982.
+
 	* TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
 
 	  Added ACE_TEXT_ALWAYS_CHAR ()
-	  
+
 Tue May 17 15:14:55 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
           This change allows bi-directional policy to work with SSLIOP
@@ -53,7 +62,7 @@ Tue May 17 15:14:55 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
           assigned to be the same as the secure port, effectively
           precludes the ability of the server to find a connection
           cached with these parameters later.
-        
+
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.{h,cpp):
 
           Introduced a new SSLIOP_Synthetic_Endpoint, which relaxes the
@@ -91,7 +100,7 @@ Tue May 17 15:14:55 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
           Client and server certificates and keys. Also, a script to
           regenerate them all.
-          
+
 
         * tao/Transport_Cache_Manager.cpp:
 
