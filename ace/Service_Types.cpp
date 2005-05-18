@@ -11,7 +11,11 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(ace, Service_Types, "$Id$")
+
+ACE_RCSID (ace,
+           Service_Types,
+           "$Id$")
+
 
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
@@ -93,13 +97,65 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::init");
 
-  void *obj = this->object ();
-  ACE_Service_Object *so = (ACE_Service_Object *) obj;
+  void * const obj = this->object ();
+
+  ACE_Service_Object * const so =
+    static_cast<ACE_Service_Object *> (obj);
 
   if (so == 0)
     return -1;
   else
     return so->init (argc, argv);
+}
+
+int
+ACE_Service_Object_Type::fini (void) const
+{
+  ACE_TRACE ("ACE_Service_Object_Type::fini");
+
+  void * const obj = this->object ();
+
+  ACE_Service_Object * const so =
+    static_cast<ACE_Service_Object *> (obj);
+
+  if (so)
+    {
+      so->fini ();
+
+#if 0
+      if (ACE_BIT_ENABLED (this->flags_,
+                           ACE_Service_Type::DELETE_OBJ))
+        delete so;
+#endif /* 1 */
+    }
+
+  return ACE_Service_Type_Impl::fini ();
+}
+
+ACE_Service_Object_Type::~ACE_Service_Object_Type (void)
+{
+  ACE_TRACE ("ACE_Service_Object_Type::~ACE_Service_Object_Type");
+}
+
+int
+ACE_Service_Object_Type::suspend (void) const
+{
+  ACE_TRACE ("ACE_Service_Object_Type::suspend");
+  return static_cast<ACE_Service_Object *> (this->object ())->suspend ();
+}
+
+int
+ACE_Service_Object_Type::resume (void) const
+{
+  ACE_TRACE ("ACE_Service_Object_Type::resume");
+  return static_cast<ACE_Service_Object *> (this->object ())->resume ();
+}
+
+int
+ACE_Service_Object_Type::info (ACE_TCHAR **str, size_t len) const
+{
+  ACE_TRACE ("ACE_Service_Object_Type::info");
+  return static_cast<ACE_Service_Object *> (this->object ())->info (str, len);
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Module_Type)
@@ -118,6 +174,11 @@ ACE_Module_Type::ACE_Module_Type (void *m,
   : ACE_Service_Type_Impl (m, m_name, f)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
+}
+
+ACE_Module_Type::~ACE_Module_Type (void)
+{
+  ACE_TRACE ("ACE_Module_Type::~ACE_Module_Type");
 }
 
 int
@@ -276,6 +337,11 @@ ACE_Stream_Type::ACE_Stream_Type (void *s,
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");
 }
 
+ACE_Stream_Type::~ACE_Stream_Type (void)
+{
+  ACE_TRACE ("ACE_Stream_Type::~ACE_Stream_Type");
+}
+
 int
 ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
 {
@@ -388,28 +454,7 @@ ACE_Stream_Type::find (const ACE_TCHAR *mod_name) const
   return 0;
 }
 
-int
-ACE_Service_Object_Type::fini (void) const
-{
-  ACE_TRACE ("ACE_Service_Object_Type::fini");
 
-  void *obj = this->object ();
-
-  ACE_Service_Object *so = (ACE_Service_Object *) obj;
-
-  if (so)
-    {
-      so->fini ();
-
-#if 0
-      if (ACE_BIT_ENABLED (this->flags_,
-                           ACE_Service_Type::DELETE_OBJ))
-        delete so;
-#endif /* 1 */
-    }
-
-  return ACE_Service_Type_Impl::fini ();
-}
 /*
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Message_Queue<ACE_SYNCH>;

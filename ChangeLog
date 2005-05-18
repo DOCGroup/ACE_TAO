@@ -1,12 +1,26 @@
+Wed May 18 16:19:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Service_Types.cpp:
+	* ace/Service_Types.inl:
+
+	  Moved virtual method implementation out-of-line.  Since the
+	  classes to which they belong are exported, inlining them will
+	  cause problems when attempting to perform a dynamic_cast<> in
+	  binaries built with g++ 4.0's -fvisibility-inlines-hidden
+	  command line option.
+
 Wed May 18 15:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Semaphore.cpp:
+
           Removed check for missing shm_open() since this causes problems
-          for platforms supporting POSIX_SEM (and thus not using shm_open/open).
-          Thanks to Raoul Gough <Raoul dot Gough at liffe dot com> for reporting this.
+          for platforms supporting POSIX_SEM (and thus not using
+	  shm_open/open).  Thanks to Raoul Gough <Raoul dot Gough at liffe
+	  dot com> for reporting this.
 
         * ace/config-openvms.h:
-          Added ACE_LACKS_UNNAMED_SEMAPHORE to compensate for above change.
+          Added ACE_LACKS_UNNAMED_SEMAPHORE to compensate for above
+	  change.
 
 Wed May 18 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -70,30 +84,31 @@ Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/ace_wchar.h:
         * ace/config-win32-msvc.h:
 
-          Add a new ACE_LACKS_NATIVE_WCHAR_T macro, which can be used to check
-        whether a platform supports overloading on wchar_t without conflict.
-        The existing ACE_WSTRING_HAS_USHORT_SUPPORT was incorrectly being used
-        for two purposes. This setting should let us enable native wchar_t support
-        on VC7+.
+          Add a new ACE_LACKS_NATIVE_WCHAR_T macro, which can be used to
+	  check whether a platform supports overloading on wchar_t without
+	  conflict.  The existing ACE_WSTRING_HAS_USHORT_SUPPORT was
+	  incorrectly being used for two purposes. This setting should let
+	  us enable native wchar_t support on VC7+.
 
         * ace/OS_NS_time.inl:
 
           Add a static_cast<long> because time_t is 64bit on some platforms
-        where long is 32 bit.
+          where long is 32 bit.
 
         * ace/OS_NS_unistd.inl:
 
-          Mask out the X_OK(6) bit for the amode parameter of the access() function
-        because this bit is illegal on Win32 and will assert.
+          Mask out the X_OK(6) bit for the amode parameter of the access()
+	  function because this bit is illegal on Win32 and will assert.
 
         * ace/config-win32-msvc-7.h:
 
-          Clarify comment on ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+          Clarify comment on ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT.
 
         * ace/config-win32-msvc-8.h:
 
-          Disable deprecation warning 4996, because the _CRT_SECURE_NO_DEPRECATE macro
-        doesn't appear to work correctly.
+          Disable deprecation warning 4996, because the
+	  _CRT_SECURE_NO_DEPRECATE macro doesn't appear to work
+	  correctly.
 
         * ace/streams.h:
 
