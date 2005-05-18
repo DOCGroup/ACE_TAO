@@ -1,8 +1,31 @@
+Wed May 18 17:13:53 2005  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_ch.h:
+
+          Make valuetype anonymous private sequence member definitions
+          public rather than private.
+
+          This fixes Bugzilla #2119.
+
+        * tests/Bug_2119_Regression/README:
+        * tests/Bug_2119_Regression/test.idl:
+        * tests/Bug_2119_Regression/test.mpc:
+
+          Regression test for the above.
+
+        * tao/Synch_Invocation.cpp:
+
+          Add COMM_FAILURE to the list of SystemExceptions that can be
+          retried in a fault tolerant configuration.
+
+          This fixes Bugzilla #2118.
+
 Wed May 18 10:29:33 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * tao/Transport_Cache_Manager.cpp:
 	  Fixed Borland build problems and some stylistic improvements
-	  to logging. 
+	  to logging.
 
 Wed May 18 15:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
