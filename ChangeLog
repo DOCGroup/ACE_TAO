@@ -5,6 +5,9 @@ Wed May 18 15:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
           for platforms supporting POSIX_SEM (and thus not using shm_open/open).
           Thanks to Raoul Gough <Raoul dot Gough at liffe dot com> for reporting this.
 
+        * ace/config-openvms.h:
+          Added ACE_LACKS_UNNAMED_SEMAPHORE to compensate for above change.
+
 Wed May 18 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/Message_Queue/buffer_stream.cpp:
