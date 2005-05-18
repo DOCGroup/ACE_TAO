@@ -1,8 +1,20 @@
+Wed May 18 15:03:15 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
+
+	  Renamed the BiDirectional.mpc to avoid build problems on Windows
+	  platforms, caused by duplicate (case-insensitive) project names.
+	  It conflicts with tests/BiDirectional/BiDirectional.mpc
+
+        * orbsvcs/tests/Security/BiDirectional/BiDirectional.mpc:
+
+          Removed this file.
+
 Wed May 18 14:38:15 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/Naming_Service/NT_Naming_Service.h:
 
-	Fixing a build problem with Borland on Windows.
+        Fixing a build problem with Borland on Windows.
 
 Wed May 18 13:05:48 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
