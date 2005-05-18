@@ -20,29 +20,6 @@ CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj
 
 ACE_INLINE
 CORBA::Boolean
-CORBA::AbstractBase::_is_a (const char *type_id
-                            ACE_ENV_ARG_DECL_NOT_USED)
-{
-  return ! ACE_OS::strcmp (type_id,
-                           "IDL:omg.org/CORBA/AbstractBase:1.0");
-}
-
-ACE_INLINE
-const char *
-CORBA::AbstractBase::_interface_repository_id (void) const
-{
-  return "IDL:omg.org/CORBA/AbstractBase:1.0";
-}
-
-ACE_INLINE
-const char *
-CORBA::AbstractBase::_tao_obv_repository_id (void) const
-{
-  return "IDL:omg.org/CORBA/AbstractBase:1.0";
-}
-
-ACE_INLINE
-CORBA::Boolean
 CORBA::AbstractBase::_is_objref (void) const
 {
   return this->is_objref_;

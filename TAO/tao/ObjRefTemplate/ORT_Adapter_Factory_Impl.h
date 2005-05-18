@@ -61,11 +61,10 @@ static TAO_Module_Initializer
   TAO_Requires_ORTFactory_Initializer =
     &TAO::ORT_Adapter_Factory_Impl::Initializer;
 
-  #else
+#else
 
-  static int
-  TAO_Requires_ORTFactory_Initializer =
-    TAO::ORT_Adapter_Factory_Impl::Initializer ();
+static int TAO_Requires_ORTFactory_Initializer =
+  TAO::ORT_Adapter_Factory_Impl::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
