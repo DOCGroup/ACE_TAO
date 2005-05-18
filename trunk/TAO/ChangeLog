@@ -1,3 +1,8 @@
+Wed May 18 15:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PIForwardRequest.pidl:
+          Fixed fuzz error
+
 Wed May 18 13:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.h:
