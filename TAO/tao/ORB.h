@@ -554,8 +554,9 @@ namespace CORBA
     CORBA::ULong _decr_refcnt (void);
 
     /// Set the IOR flag.
-    /// Get the IOR flag.
     void _use_omg_ior_format (CORBA::Boolean ior);
+
+    /// Get the IOR flag.
     CORBA::Boolean _use_omg_ior_format (void);
 
     /// Get the ORB core.
@@ -576,7 +577,6 @@ namespace CORBA
     // Useful for template programming.
     typedef ORB_ptr _ptr_type;
     typedef ORB_var _var_type;
-
 
     /// Get the Timeout value
     ACE_Time_Value *get_timeout (void);
