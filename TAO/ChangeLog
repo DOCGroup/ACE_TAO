@@ -1,3 +1,8 @@
+Wed May 18 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/corba.h:
+          Removed duplicate includes
+
 Wed May 18 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableInterceptor.pidl:
