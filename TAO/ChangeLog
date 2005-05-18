@@ -1,3 +1,8 @@
+Wed May 18 13:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.h:
+          Doxygen improvement
+
 Wed May 18 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/corba.h:
