@@ -1,11 +1,17 @@
+Wed May 18 14:38:15 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.h:
+
+	Fixing a build problem with Borland on Windows.
+
 Wed May 18 13:05:48 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * tao/Transport_Cache_Manager.cpp:
 
-	  Reverted changes that added printing of the stringified
-	  endpoint address, because it is not possible to pre-determine
-	  the lenght of the character representation for all protocols' 
-	  endpoints. Thanks Johny and Ossama.
+          Reverted changes that added printing of the stringified
+          endpoint address, because it is not possible to pre-determine
+          the lenght of the character representation for all protocols'
+          endpoints. Thanks Johny and Ossama.
 
 Wed May 18 17:13:53 2005  Simon McQueen  <sm@prismtech.com>
 
