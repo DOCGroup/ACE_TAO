@@ -99,6 +99,9 @@ Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
   CORBA::remove_ref (_tao_tmp_pointer);
 }
 
+Messaging::ExceptionHolder::~ExceptionHolder (void)
+{}
+
 CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return this->_tao_marshal__Messaging_ExceptionHolder (strm);

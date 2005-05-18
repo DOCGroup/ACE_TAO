@@ -33,10 +33,6 @@ ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void)
 {}
 
-ACE_INLINE
-Messaging::ExceptionHolder::~ExceptionHolder (void)
-{}
-
 ACE_INLINE const char* 
 Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 {
