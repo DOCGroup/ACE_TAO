@@ -51,6 +51,8 @@ be_visitor_valuetype_field_ch::visit_field (be_field *node)
     }
 
   this->ctx_->node (node); // save the node
+  
+  this->visibility_ = node->visibility ();
 
   if (bt->accept (this) == -1)
     {
@@ -507,6 +509,11 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
       be_visitor_sequence_ch visitor (&ctx);
+      
+      if (this->visibility_ == AST_Field::vis_PRIVATE)
+        {
+          *os << be_uidt_nl << "public:" << be_idt_nl;
+        }
 
       if (node->accept (&visitor) == -1)
         {
@@ -515,6 +522,11 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
                              "visit_sequence - "
                              "codegen failed\n"),
                             -1);
+        }
+        
+      if (this->visibility_ == AST_Field::vis_PRIVATE)
+        {
+          *os << be_uidt_nl << be_nl << "protected:" << be_idt;
         }
 
       // Generate the anonymous sequence member typedef.
