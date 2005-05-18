@@ -107,12 +107,12 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 SHLIBBUILD = \
   $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
   dlltool --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
-    $(VSHOBJS1) \
+    $(VSHOBJS) \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
   && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
   && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
     -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
-    $(VSHOBJS1) $(ACE_SHLIBS) $(LIBS)
+    $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
 
 ifneq ($(GNUWIN32_DLL_ALLOW_EXECP), 1)
   ifeq ($(exceptions),1)

@@ -79,14 +79,15 @@ else # VLIBS
   endif # IDL_SRC
 endif # !VLIBS
 
+VLOBJS = $(addprefix $(VDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC)) $(RESOURCES)), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var))))
 ifdef LSRC2
   LSRC += $(LSRC2)
 endif
 
-VSHOBJS = $(addprefix $(VSHDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC))), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var))))
+VSHOBJS = $(addprefix $(VSHDIR),$(foreach var, $(addsuffix .$(OBJEXT), $(basename $(LSRC)) $(RESOURCES)), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var))))
 
 ifneq ($(IDL_SRC),)
-  $(VSHOBJS): $(IDL_SRC)
+  $(VLOBJS) $(VSHOBJS): $(IDL_SRC)
 endif
 
 ifdef static_libs
@@ -107,7 +108,7 @@ endif # shared_libs
 ace_lib_prelink ?= 0
 aix_build ?= 0
 
-$(VLIB): $(VSHOBJS)
+$(VLIB): $(VLOBJS)
 
 ifeq (1,$(repo))
   ifneq (,$(ACELIB))
@@ -163,11 +164,7 @@ $(VSHLIB): shr.o
 	-$(RANLIB) $@
   endif # RANLIB
 else # ! aix_build
-  ifdef SHLIBBUILD
 $(VSHLIB): $(VSHOBJS)
-  else # ! SHLIBBUILD
-$(VSHLIB): $(VSHOBJS)
-  endif  # SHLIBBUILD
   ifdef PRELIB
 	$(PRELIB)
   endif # PRELIB

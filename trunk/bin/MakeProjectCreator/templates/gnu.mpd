@@ -59,13 +59,6 @@ FILES = \
 <%endfor%>
 
 <%endif%>
-<%if(resource_files)%>
-RESOURCES += \
-<%foreach(resource_files)%>
-  <%resource_file%><%fornotlast(" \\")%>
-<%endfor%>
-
-<%endif%>
 <%vpath%>
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -154,10 +147,15 @@ SOVERSION = .<%version%>
 endif
 <%endif%>
 
+<%if(resource_files)%>
 ifneq (,$(RC))
-  FILES += $(RESOURCES)
+RESOURCES += \
+<%foreach(resource_files)%>
+  <%resource_file%><%fornotlast(" \\")%>
+<%endfor%>
 endif
 
+<%endif%>
 # To build multiple targets in the same directory on AIX, it works
 # best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
@@ -322,7 +320,7 @@ endif
 <%endfor%>
 
 # If it contains ../ at all use notdir.
-OBJS   = $(foreach var, $(addsuffix .$(OBJEXT), $(basename $(FILES))), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var)))
+OBJS   = $(foreach var, $(addsuffix .$(OBJEXT), $(basename $(FILES)) $(RESOURCES)), $(if $(findstring ../,$(var)),$(notdir $(var)),$(var)))
 SRC    = $(FILES)
 <%endif%>
 <%if(sharedname || staticname)%>
