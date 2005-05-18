@@ -1,3 +1,8 @@
+Wed May 18 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+          Initialise all pointers with 0
+
 Wed May 18 09:25:35 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
