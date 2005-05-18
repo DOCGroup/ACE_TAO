@@ -1,3 +1,9 @@
+Wed May 18 10:29:33 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * tao/Transport_Cache_Manager.cpp:
+	  Fixed Borland build problems and some stylistic improvements
+	  to logging. 
+
 Wed May 18 15:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PIForwardRequest.pidl:
@@ -68,20 +74,20 @@ Tue May 17 15:55:35 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/Naming_Service/NT_Naming_Service.{h,cpp}:
 
-	  For Windows platforms, changed how the handle_control() stops
-	  the ORB. Instead of having to explicitly stop the reactor loop
-	  it only needs to call ORB::shutdown(). This also avoids a
-	  potential race condition that may occur as the ORB gets
-	  destroy()-ed between the two calls. Added an AutoFinalizer
-	  class, whose destructor notifies the Windows SCM by calling
-	  ACE_NT_Service::report_status() when an instance goes out of
-	  scope. This is helpful in the presence of unexpected
-	  exceptions.  This patch was forward-ported from 1.3a_p9, based
-	  upon RT4982.
+          For Windows platforms, changed how the handle_control() stops
+          the ORB. Instead of having to explicitly stop the reactor loop
+          it only needs to call ORB::shutdown(). This also avoids a
+          potential race condition that may occur as the ORB gets
+          destroy()-ed between the two calls. Added an AutoFinalizer
+          class, whose destructor notifies the Windows SCM by calling
+          ACE_NT_Service::report_status() when an instance goes out of
+          scope. This is helpful in the presence of unexpected
+          exceptions.  This patch was forward-ported from 1.3a_p9, based
+          upon RT4982.
 
-	* TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
 
-	  Added ACE_TEXT_ALWAYS_CHAR ()
+          Added ACE_TEXT_ALWAYS_CHAR ()
 
 Tue May 17 15:14:55 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
