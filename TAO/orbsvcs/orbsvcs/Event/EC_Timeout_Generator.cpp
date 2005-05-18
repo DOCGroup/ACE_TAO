@@ -44,6 +44,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       evnt.header.type = filter->type ();
       evnt.header.source = 0;
 
+#ifdef ACE_HAS_DSUI
       Object_ID oid = ACE_OBJECT_COUNTER->increment();
       evnt.header.eid.id = oid.id;
       evnt.header.eid.tid = oid.tid;
@@ -52,6 +53,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       oid.type = filter->type ();
 
       DSTRM_EVENT (EC2_GROUP_FAM, ENTER_TIMEOUT_GENERATOR, 0, sizeof(Object_ID), (char*)&oid);
+#endif /* ACE_HAS_DSUI */
 
       RtecEventComm::EventSet single_event (1, 1, &evnt, 0);
 
