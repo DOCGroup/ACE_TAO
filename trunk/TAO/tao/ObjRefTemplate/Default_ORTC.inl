@@ -33,10 +33,6 @@ ACE_INLINE
 TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
 {}
 
-ACE_INLINE
-TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
-{}
-
 ACE_INLINE const char* 
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 {

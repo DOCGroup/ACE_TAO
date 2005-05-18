@@ -128,6 +128,15 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl << be_nl;
     }
 
+  // Generate destructor.
+  //
+  // @@ Do not inline this destructor.  It is virtual.  Inlining
+  //    virtual functions, including virtual destructors, wreaks havoc
+  //    with g++ >= 4.0 RTTI support when the
+  //    "-fvisibility-inlines-hidden" command line option is used.
+  *os << node->name () << "::~" << node->local_name () << " (void)" << be_nl;
+  *os << "{}\n" << be_nl;
+
   idl_bool is_an_amh_exception_holder =
     this->is_amh_exception_holder (node);
 

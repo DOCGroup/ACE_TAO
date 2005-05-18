@@ -170,6 +170,26 @@ CORBA::AbstractBase::_to_value (void)
 }
 
 CORBA::Boolean
+CORBA::AbstractBase::_is_a (const char *type_id
+                            ACE_ENV_ARG_DECL_NOT_USED)
+{
+  return ! ACE_OS::strcmp (type_id,
+                           "IDL:omg.org/CORBA/AbstractBase:1.0");
+}
+
+const char *
+CORBA::AbstractBase::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/CORBA/AbstractBase:1.0";
+}
+
+const char *
+CORBA::AbstractBase::_tao_obv_repository_id (void) const
+{
+  return "IDL:omg.org/CORBA/AbstractBase:1.0";
+}
+
+CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 {
   CORBA::Boolean discriminator = true;

@@ -34,8 +34,7 @@ namespace TAO
     TAO_Root_POA::ort_adapter_factory_name ("Concrete_ORT_Adapter_Factory"
       );
 
-    return
-      ACE_Service_Config::process_directive (
+    return ACE_Service_Config::process_directive (
           ace_svc_desc_ORT_Adapter_Factory_Impl
         );
   }

@@ -1,7 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
+
 #include "ace/Log_Msg.h" // for ACE_ASSERT
+
 
 // *************************************************************
 // Inline operations for class TAO_Valuetype_Manager
@@ -139,15 +142,6 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::operator[] (
 // *************************************************************
 // class TAO_Bounded_Valuetype_Sequence
 // *************************************************************
-
-template<typename T, typename T_var, size_t MAX>
-ACE_INLINE
-TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::~TAO_Bounded_Valuetype_Sequence (
-    void
-  )
-{
-  this->_deallocate_buffer ();
-}
 
 template<typename T, typename T_var, size_t MAX>
 ACE_INLINE
