@@ -97,6 +97,9 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_p
   CORBA::remove_ref (_tao_tmp_pointer);
 }
 
+TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
+{}
+
 CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return this->_tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (strm);

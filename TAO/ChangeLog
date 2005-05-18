@@ -1,3 +1,39 @@
+Wed May 18 16:23:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+	  Moved generated virtual methods out of line.  Doing causes RTTI
+	  problems when the stubs are compiled with g++ 4.0's
+	  "-fvisibility-inlines-hidden" command line option, and the
+	  classes in the stubs are export from a DSO/DLL.
+
+	* tao/ObjRefTemplate/Default_ORTC.cpp:
+	* tao/ObjRefTemplate/Default_ORTC.inl:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.inl:
+	* tao/Valuetype/AbstractBase.cpp:
+	* tao/Valuetype/AbstractBase.inl:
+	* tao/Valuetype/Sequence_T.cpp:
+	* tao/Valuetype/Sequence_T.inl:
+
+	  Moved virtual methods out of line.  See above for the motivation
+	  behind this change.
+
+	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+
+	  Moved preprocessor "#else" to the first column for portability
+	  reasons.
+
+	* tao/PortableServer/ORT_Adapter_Factory.cpp:
+	* tao/PortableServer/ORT_Adapter_Factory.h (ORT_Adapter_Factory):
+
+	  Added a virtual destructor.  Even though this class only defines
+	  an interface, an out-of-line virtual destructor is necessary to
+	  avoid dynamic_cast<> failures when using g++ 4.0's
+	  -fvisibility-inlines-hidden command line option.  Apparently the
+	  compiler generated destructor is inlined.
+
 Wed May 18 14:56:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
@@ -142,7 +178,7 @@ Tue May 17 15:55:35 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
           exceptions.  This patch was forward-ported from 1.3a_p9, based
           upon RT4982.
 
-        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
 
           Added ACE_TEXT_ALWAYS_CHAR ()
 

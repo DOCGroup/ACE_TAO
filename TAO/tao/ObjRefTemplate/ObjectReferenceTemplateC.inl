@@ -33,10 +33,6 @@ ACE_INLINE
 PortableInterceptor::ObjectReferenceFactory::ObjectReferenceFactory (void)
 {}
 
-ACE_INLINE
-PortableInterceptor::ObjectReferenceFactory::~ObjectReferenceFactory (void)
-{}
-
 ACE_INLINE const char* 
 PortableInterceptor::ObjectReferenceFactory::_tao_obv_static_repository_id ()
 {
@@ -48,10 +44,6 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_static_repository_id ()
 
 ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
-{}
-
-ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
 
 ACE_INLINE const char* 

@@ -358,6 +358,14 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::TAO_Bounded_Valuetype_Sequence (
     }
 }
 
+template<typename T, typename T_var, size_t MAX>
+TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::~TAO_Bounded_Valuetype_Sequence (
+    void
+  )
+{
+  this->_deallocate_buffer ();
+}
+
 template <typename T, typename T_var, size_t MAX>
 TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>&
 TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::operator= (

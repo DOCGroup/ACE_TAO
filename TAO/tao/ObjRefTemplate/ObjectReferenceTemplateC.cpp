@@ -122,6 +122,9 @@ PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_voi
   CORBA::remove_ref (_tao_tmp_pointer);
 }
 
+PortableInterceptor::ObjectReferenceFactory::~ObjectReferenceFactory (void)
+{}
+
 CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
     TAO_InputCDR &strm,
     ObjectReferenceFactory *&new_object
@@ -211,6 +214,9 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_vo
     static_cast<ObjectReferenceTemplate *> (_tao_void_pointer);
   CORBA::remove_ref (_tao_tmp_pointer);
 }
+
+PortableInterceptor::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
+{}
 
 CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
     TAO_InputCDR &strm,
