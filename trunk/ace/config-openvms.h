@@ -87,6 +87,8 @@
 
 #define ACE_LACKS_UNIX_SIGNALS 1
 
+#define ACE_LACKS_UNNAMED_SEMAPHORE 1
+
 #define ACE_MT_SAFE 1
                                         /*Compile using multi-thread libraries*/
 #define ACE_NEW_THROWS_EXCEPTIONS 1
