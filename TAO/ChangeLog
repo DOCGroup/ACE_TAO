@@ -1,3 +1,10 @@
+Wed May 18 14:56:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Wed May 18 15:03:15 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
