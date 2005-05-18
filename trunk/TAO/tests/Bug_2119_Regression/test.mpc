@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+project (tao67_test) : taolib_with_idl, valuetype, portableserver  {
+  libpaths   += $(ACE_ROOT)/ace $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/ObjRefTemplate $(TAO_ROOT)/tao/Valuetype $(TAO_ROOT)/tao/IORTable $(TAO_ROOT)/tao
+}
+

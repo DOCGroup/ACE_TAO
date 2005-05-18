@@ -565,7 +565,9 @@ namespace TAO
          ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
          ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0) &&
+                                "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
+         ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) &&
         (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
       {
         {

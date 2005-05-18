@@ -91,6 +91,7 @@ public:
 private:
   const char *pre_op_;
   const char *post_op_;
+  AST_Field::Visibility visibility_;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FIELD_CH_H_ */
