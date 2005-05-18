@@ -8,6 +8,8 @@ Wed May 18 16:23:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  "-fvisibility-inlines-hidden" command line option, and the
 	  classes in the stubs are export from a DSO/DLL.
 
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.inl:
 	* tao/ObjRefTemplate/Default_ORTC.cpp:
 	* tao/ObjRefTemplate/Default_ORTC.inl:
 	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
@@ -18,7 +20,7 @@ Wed May 18 16:23:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/Valuetype/Sequence_T.inl:
 
 	  Moved virtual methods out of line.  See above for the motivation
-	  behind this change.
+	  behind these changes.
 
 	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
 
