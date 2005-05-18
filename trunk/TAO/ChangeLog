@@ -1,3 +1,45 @@
+Wed May 18 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.pidl:
+          Moved several interfaces to their own file
+
+        * tao/ClientRequestInterceptor.pidl:
+        * tao/Interceptor.pidl:
+        * tao/PIForwardRequest.pidl:
+        * tao/ServerRequestInterceptor.pidl:
+          New files, contains parts of the original PortableInterceptor.pidl
+
+        * tao/ClientRequestInterceptorA.cpp:
+        * tao/ClientRequestInterceptorC.cpp:
+        * tao/ClientRequestInterceptorC.h:
+        * tao/ClientRequestInterceptorS.h:
+        * tao/InterceptorA.cpp:
+        * tao/InterceptorC.cpp:
+        * tao/InterceptorC.h:
+        * tao/InterceptorS.h:
+        * tao/PIForwardRequestA.cpp:
+        * tao/PIForwardRequestC.cpp:
+        * tao/PIForwardRequestC.h:
+        * tao/PIForwardRequestS.h:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorS.h:
+        * tao/ServerRequestInterceptorA.cpp:
+        * tao/ServerRequestInterceptorC.cpp:
+        * tao/ServerRequestInterceptorC.h:
+        * tao/ServerRequestInterceptorS.h:
+          Mew generated files
+
+        * tao/tao.mpc:
+          Added new files
+
+        * tao/diffs/PortableInterceptor.diff:
+          Removed, not needed anymore
+
+        * tao/diffs/ServerRequestInterceptor.diff:
+          New diff file
+
 Wed May 18 06:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/BiDirectional/BiDirectional.mpc:
