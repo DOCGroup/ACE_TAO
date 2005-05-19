@@ -20,7 +20,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::srand ((u_int) ACE_OS::time (0));
 
-  ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER, logger_key);
+  if (ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER, logger_key) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open logger\n"), -1);
 
   ACE_DEBUG ((LM_STARTUP, "starting up the test\n"));
 
