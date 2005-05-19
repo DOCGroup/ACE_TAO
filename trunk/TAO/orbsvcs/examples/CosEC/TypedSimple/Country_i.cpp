@@ -17,7 +17,7 @@ Country_i::~Country_i (void)
   
 void Country_i::update_population (const char * country,
                                    CORBA::Long population
-                                   ACE_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
@@ -34,7 +34,8 @@ Country_i::get_typed_consumer (ACE_ENV_SINGLE_ARG_DECL)
   //Add your implementation here
   ACE_DEBUG ((LM_DEBUG, "Country_i::get_typed_consumer called...\n"));
 
-  Country_var ret = this->_this();
+  Country_var ret = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   ACE_DEBUG ((LM_DEBUG, "...returning CORBA::Object_ptr for Country_i\n"));
 
@@ -43,7 +44,7 @@ Country_i::get_typed_consumer (ACE_ENV_SINGLE_ARG_DECL)
   
 void
 Country_i::push (const CORBA::Any & /* data */
-                 ACE_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
 
@@ -62,16 +63,19 @@ Country_i::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   // Deactivate the impl
   PortableServer::POA_var t_poa =
     this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
   
   PortableServer::ObjectId_var t_id =
-    t_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+    t_poa->servant_to_id (this
+                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  t_poa->deactivate_object (t_id.in ()
+                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "Country_i::disconnect_push_consumer, calling ORB shutdown...\n"));
-  orb_->shutdown(0);
-  ACE_TRY_CHECK;
+  orb_->shutdown (0
+                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
