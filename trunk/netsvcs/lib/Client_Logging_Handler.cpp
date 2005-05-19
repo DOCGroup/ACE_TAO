@@ -33,7 +33,7 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle
 // This is called when a <send> to the logging server fails...
 
 int
-ACE_Client_Logging_Handler::handle_signal (int signum, 
+ACE_Client_Logging_Handler::handle_signal (int signum,
                                            siginfo_t *,
                                            ucontext_t *)
 {
@@ -194,7 +194,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                                ACE_TEXT ("%n: %p\n"),
                                ACE_TEXT ("remove_handler")),
                               0);
- 
+
           ACE_OS::closesocket (handle);
 #  if 0
           ACE_DEBUG ((LM_DEBUG,
@@ -203,11 +203,11 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
           return 0;
         }
 #endif /* ACE_WIN32 */
- 
+
       ssize_t retrieved = ACE_OS::recv (handle,
                                         (char *) &log_record,
                                         (int) length);
- 
+
       // We got a ``short-read.''  Try once more, then abandon all
       // hope on this socket.  Note that if we were trying to write a
       // totally "bullet-proof" app that couldn't lose any data
@@ -225,7 +225,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
           ACE_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("partial message retrieved, attempting second try...\n")));
 #endif /* 0 */
- 
+
           int remainder = length - retrieved;
 
           int secondtry = ACE_OS::recv (handle,
@@ -438,7 +438,10 @@ int
 ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
   // We'll log *our* error and debug messages to stderr!
-  ACE_LOG_MSG->open (ACE_TEXT ("Client Logging Service"));
+  if (ACE_LOG_MSG->open (ACE_TEXT ("Client Logging Service")) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Can't open Log_Msg\n")),
+                      -1);
 
   // Use the options hook to parse the command line arguments and set
   // options.
@@ -476,7 +479,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
       // Figure out what remote port we're really bound to.
       if (stream.get_remote_addr (server_addr) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("get_remote_addr")),
                           -1);
@@ -502,23 +505,23 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'h':
+       {
+        case 'h':
           ACE_OS::free ((void *) this->server_host_);
-	  this->server_host_ = ACE_OS::strdup (get_opt.opt_arg ());
-	  break;
-	case 'k':
+          this->server_host_ = ACE_OS::strdup (get_opt.opt_arg ());
+          break;
+        case 'k':
           ACE_OS::free ((void *) this->logger_key_);
-	  this->logger_key_ = ACE_OS::strdup (get_opt.opt_arg ());
-	  break;
-	case 'p':
-	  this->server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%n:\n[-p server-port]\n%a"), 1),
-                            -1);
-	}
+          this->logger_key_ = ACE_OS::strdup (get_opt.opt_arg ());
+          break;
+        case 'p':
+          this->server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("%n:\n[-p server-port]\n%a"), 1),
+                                  -1);
+        }
     }
 
   if (this->server_addr_.set (this->server_port_,
