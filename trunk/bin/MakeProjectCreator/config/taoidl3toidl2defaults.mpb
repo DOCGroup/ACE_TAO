@@ -12,4 +12,6 @@ project {
     generic_outputext           = _IDL2.idl
     keyword idl3toidl2flags     = commandflags
   }
+  
+  after += TAO_IDL3_TO_IDL2_EXE  
 }
