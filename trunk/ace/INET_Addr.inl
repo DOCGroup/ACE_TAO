@@ -86,15 +86,6 @@ ACE_INET_Addr::get_port_number (void) const
 #endif /* ACE_HAS_IPV6 */
 }
 
-// Return the address.
-
-ACE_INLINE void *
-ACE_INET_Addr::get_addr (void) const
-{
-  ACE_TRACE ("ACE_INET_Addr::get_addr");
-  return (void*)&this->inet_addr_;
-}
-
 ACE_INLINE int
 ACE_INET_Addr::get_addr_size (void) const
 {
@@ -157,9 +148,3 @@ ACE_INET_Addr::set (const wchar_t addr[])
 }
 
 #endif /* ACE_HAS_WCHAR */
-
-ACE_INLINE void
-ACE_INET_Addr::set_addr (void *addr, int len)
-{
-  this->set_addr (addr, len, 0);
-}

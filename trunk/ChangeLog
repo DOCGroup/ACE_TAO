@@ -1,3 +1,12 @@
+Thu May 19 08:58:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/INET_Addr.cpp:
+	* ace/INET_Addr.inl:
+
+	  Moved remaining virtual methods out of line.  See "Wed May 18
+	  16:19:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>" for
+	  details.
+
 Thu May 19 15:21:00 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/taoidl3toidl2defaults.mpb:
