@@ -1,80 +1,92 @@
+Thu May 19 08:55:36 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/tests/Security/BiDirectional/server.cpp:
+	  
+	  Added an include file for ACE_OS::fopen() to fix VC6 build
+	  errors.
+	  
+        * orbsvcs/tests/Security/BiDirectional/test_i.cpp:
+	  
+	  Changed reference to a non-existent test_i.i file to fix
+	  problems with builds that do not have inline.
+
 Thu May 19 00:55:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Valuetype/ValueFactory_Map.cpp (instance):
-	* tao/Valuetype/ValueFactory_Map.h (instance):
+        * tao/Valuetype/ValueFactory_Map.cpp (instance):
+        * tao/Valuetype/ValueFactory_Map.h (instance):
 
-	  Avoid multiple singleton instantions by hiding singleton
-	  template instance behind this new static method.  See
-	  TSS_Resources.* changes below for additional details.
+          Avoid multiple singleton instantions by hiding singleton
+          template instance behind this new static method.  See
+          TSS_Resources.* changes below for additional details.
 
 Thu May 19 00:29:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TSS_Resources.cpp (instance):
-	* tao/TSS_Resources.h (instance):
+        * tao/TSS_Resources.cpp (instance):
+        * tao/TSS_Resources.h (instance):
 
-	  Hide TAO_TSS_Singleton behind new TAO_TSS_Resources::instance()
-	  method.  Addresses multiple TAO_TSS_Singleton instances on
-	  platforms/compilers that support symbol hiding, but for which we
-	  do not yet have an appropriate *_SINGLETON_DECLARATION() macro,
-	  such as g++ 4.0.  Fixes problems where an incorrect singleton
-	  instance is returned to the caller.
+          Hide TAO_TSS_Singleton behind new TAO_TSS_Resources::instance()
+          method.  Addresses multiple TAO_TSS_Singleton instances on
+          platforms/compilers that support symbol hiding, but for which we
+          do not yet have an appropriate *_SINGLETON_DECLARATION() macro,
+          such as g++ 4.0.  Fixes problems where an incorrect singleton
+          instance is returned to the caller.
 
-	  Removed unnecessary zero pointer check before operator delete()
-	  call.  Calling operator delete() on a zero pointer is perfectly
-	  valid.
+          Removed unnecessary zero pointer check before operator delete()
+          call.  Calling operator delete() on a zero pointer is perfectly
+          valid.
 
 Wed May 18 16:23:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
-	  Moved generated virtual methods out of line.  Inlining them
-	  causes RTTI problems when the stubs are compiled with g++ 4.0's
-	  "-fvisibility-inlines-hidden" command line option, and the
-	  classes in the stubs are exported from a DSO/DLL.
+          Moved generated virtual methods out of line.  Inlining them
+          causes RTTI problems when the stubs are compiled with g++ 4.0's
+          "-fvisibility-inlines-hidden" command line option, and the
+          classes in the stubs are exported from a DSO/DLL.
 
-	* tao/Messaging/MessagingC.cpp:
-	* tao/Messaging/MessagingC.inl:
-	* tao/ObjRefTemplate/Default_ORTC.cpp:
-	* tao/ObjRefTemplate/Default_ORTC.inl:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.inl:
-	* tao/Valuetype/AbstractBase.cpp:
-	* tao/Valuetype/AbstractBase.inl:
-	* tao/Valuetype/Sequence_T.cpp:
-	* tao/Valuetype/Sequence_T.inl:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.inl:
+        * tao/ObjRefTemplate/Default_ORTC.cpp:
+        * tao/ObjRefTemplate/Default_ORTC.inl:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.inl:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/AbstractBase.inl:
+        * tao/Valuetype/Sequence_T.cpp:
+        * tao/Valuetype/Sequence_T.inl:
 
-	  Moved virtual methods out of line.  See above for the motivation
-	  behind these changes.
+          Moved virtual methods out of line.  See above for the motivation
+          behind these changes.
 
-	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
 
-	  Moved preprocessor "#else" to the first column for portability
-	  reasons.
+          Moved preprocessor "#else" to the first column for portability
+          reasons.
 
-	* tao/PortableServer/ORT_Adapter_Factory.cpp:
-	* tao/PortableServer/ORT_Adapter_Factory.h (ORT_Adapter_Factory):
+        * tao/PortableServer/ORT_Adapter_Factory.cpp:
+        * tao/PortableServer/ORT_Adapter_Factory.h (ORT_Adapter_Factory):
 
-	  Added a virtual destructor.  Even though this class only defines
-	  an interface, an out-of-line virtual destructor is necessary to
-	  avoid dynamic_cast<> failures when using g++ 4.0's
-	  -fvisibility-inlines-hidden command line option.  Apparently the
-	  compiler generated destructor is inlined.
+          Added a virtual destructor.  Even though this class only defines
+          an interface, an out-of-line virtual destructor is necessary to
+          avoid dynamic_cast<> failures when using g++ 4.0's
+          -fvisibility-inlines-hidden command line option.  Apparently the
+          compiler generated destructor is inlined.
 
 Wed May 18 14:56:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Wed May 18 15:03:15 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
 
-	  Renamed the BiDirectional.mpc to avoid build problems on Windows
-	  platforms, caused by duplicate (case-insensitive) project names.
-	  It conflicts with tests/BiDirectional/BiDirectional.mpc
+          Renamed the BiDirectional.mpc to avoid build problems on Windows
+          platforms, caused by duplicate (case-insensitive) project names.
+          It conflicts with tests/BiDirectional/BiDirectional.mpc
 
         * orbsvcs/tests/Security/BiDirectional/BiDirectional.mpc:
 
