@@ -43,7 +43,7 @@ Thu May 19 00:55:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
         * tao/Valuetype/ValueFactory_Map.cpp (instance):
         * tao/Valuetype/ValueFactory_Map.h (instance):
 
-          Avoid multiple singleton instantions by hiding singleton
+          Avoid multiple singleton instances by hiding singleton
           template instance behind this new static method.  See
           TSS_Resources.* changes below for additional details.
 
