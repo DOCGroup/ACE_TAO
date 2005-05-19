@@ -1235,7 +1235,7 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-template <class SVC_HANDLER> ACE_INLINE void
+template <class SVC_HANDLER> void
 ACE_Singleton_Strategy<SVC_HANDLER>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)

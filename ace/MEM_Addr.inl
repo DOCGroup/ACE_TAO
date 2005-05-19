@@ -6,11 +6,6 @@
 #include "ace/Global_Macros.h"
 
 
-ACE_INLINE
-ACE_MEM_Addr::~ACE_MEM_Addr (void)
-{
-}
-
 // Set the port number.
 
 ACE_INLINE void
@@ -110,10 +105,4 @@ ACE_MEM_Addr::operator != (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator !=");
   return !((*this) == sap);
-}
-
-ACE_INLINE u_long
-ACE_MEM_Addr::hash (void) const
-{
-  return this->external_.hash ();
 }

@@ -1,13 +1,31 @@
 Wed May 18 16:19:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* ace/ATM_Addr.cpp:
+	* ace/ATM_Addr.inl:
+	* ace/DEV_Addr.cpp:
+	* ace/DEV_Addr.inl:
+	* ace/FILE_Addr.cpp:
+	* ace/FILE_Addr.inl:
+	* ace/INET_Addr.cpp:
+	* ace/INET_Addr.inl:
+	* ace/MEM_Addr.cpp:
+	* ace/MEM_Addr.inl:
+	* ace/SPIPE_Addr.cpp:
+	* ace/SPIPE_Addr.inl:
 	* ace/Service_Types.cpp:
 	* ace/Service_Types.inl:
+	* ace/UNIX_Addr.cpp:
+	* ace/UNIX_Addr.inl:
 
 	  Moved virtual method implementation out-of-line.  Since the
 	  classes to which they belong are exported, inlining them will
 	  cause problems when attempting to perform a dynamic_cast<> in
 	  binaries built with g++ 4.0's -fvisibility-inlines-hidden
 	  command line option.
+
+	* ace/Strategies_T.cpp (dump):
+
+	  Removed ACE_INLINE from this out of line method.
 
 Wed May 18 15:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 

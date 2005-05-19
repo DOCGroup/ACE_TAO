@@ -104,6 +104,14 @@ ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
   return 0;
 }
 
+// Return the address.
+
+void *
+ACE_FILE_Addr::get_addr (void) const
+{
+  return (void *) &this->filename_;
+}
+
 void
 ACE_FILE_Addr::dump (void) const
 {
