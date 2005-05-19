@@ -54,7 +54,13 @@ public:
                   void *optval,
                   int *optlen) const;
 
-  /// Close down the socket handle.
+  /**
+   * Close the socket.
+   * This method also sets the object's handle value to ACE_INVALID_HANDLE.
+   *
+   * @return The result of closing the socket; 0 if the handle value
+   *         was already ACE_INVALID_HANDLE.
+   */
   int close (void);
 
   /// Return the local endpoint address in the referenced <ACE_Addr>.
