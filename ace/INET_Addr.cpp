@@ -504,6 +504,21 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
   return -1;
 }
 
+// Return the address.
+
+void *
+ACE_INET_Addr::get_addr (void) const
+{
+  ACE_TRACE ("ACE_INET_Addr::get_addr");
+  return (void*)&this->inet_addr_;
+}
+
+void
+ACE_INET_Addr::set_addr (void *addr, int len)
+{
+  this->set_addr (addr, len, 0);
+}
+
 // Set a pointer to the address.
 void
 ACE_INET_Addr::set_addr (void *addr, int /* len */, int map)
