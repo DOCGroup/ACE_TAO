@@ -55,6 +55,10 @@ ACE_MEM_Addr::ACE_MEM_Addr (u_short port_number)
   this->initialize_local (port_number);
 }
 
+ACE_MEM_Addr::~ACE_MEM_Addr (void)
+{
+}
+
 int
 ACE_MEM_Addr::initialize_local (u_short port_number)
 {
@@ -138,6 +142,12 @@ ACE_MEM_Addr::get_host_name (void) const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_name");
   return this->external_.get_host_name ();
+}
+
+u_long
+ACE_MEM_Addr::hash (void) const
+{
+  return this->external_.hash ();
 }
 
 void

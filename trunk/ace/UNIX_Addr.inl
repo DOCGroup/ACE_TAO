@@ -8,35 +8,6 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-// Return a pointer to the underlying address.
-
-ACE_INLINE void *
-ACE_UNIX_Addr::get_addr (void) const
-{
-  return (void *) &this->unix_addr_;
-}
-
-// Transform the string into the current addressing format.
-
-ACE_INLINE int
-ACE_UNIX_Addr::string_to_addr (const char addr[])
-{
-  ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
-                    sizeof this->unix_addr_.sun_path);
-  return 0;
-}
-
-// Transform the current address into string format.
-
-ACE_INLINE int
-ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
-{
-  ACE_OS::strsncpy (s,
-                    ACE_TEXT_CHAR_TO_TCHAR (this->unix_addr_.sun_path),
-                    len);
-  return 0;
-}
-
 #if defined (ACE_HAS_WCHAR)
 /// Creates an ACE_UNIX_Addr from a string.
 ACE_INLINE
@@ -77,12 +48,6 @@ ACE_INLINE const char *
 ACE_UNIX_Addr::get_path_name (void) const
 {
   return this->unix_addr_.sun_path;
-}
-
-ACE_INLINE u_long
-ACE_UNIX_Addr::hash (void) const
-{
-  return ACE::hash_pjw (this->unix_addr_.sun_path);
 }
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
