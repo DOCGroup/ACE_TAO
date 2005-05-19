@@ -18,31 +18,27 @@ ACE_RCSID (ace,
            ICMP_Socket,
            "$Id$")
 
-
-namespace ACE
-{
-  ACE_ALLOC_HOOK_DEFINE (ICMP_Socket)
-}
+ACE_ALLOC_HOOK_DEFINE (ACE_ICMP_Socket)
 
 
 void
-ACE::ICMP_Socket::dump (void) const
+ACE_ICMP_Socket::dump (void) const
 {
-  ACE_TRACE ("ACE::ICMP_Socket::dump");
+  ACE_TRACE ("ACE_ICMP_Socket::dump");
 }
 
-ACE::ICMP_Socket::ICMP_Socket (void)
+ACE_ICMP_Socket::ACE_ICMP_Socket (void)
 {
-  ACE_TRACE ("ACE::ICMP_Socket::ICMP_Socket");
+  ACE_TRACE ("ACE_ICMP_Socket::ACE_ICMP_Socket");
 }
 
 ssize_t
-ACE::ICMP_Socket::send (void const * buf,
-                        size_t n,
-                        ACE_Addr const & addr,
-                        int flags) const
+ACE_ICMP_Socket::send (void const * buf,
+                       size_t n,
+                       ACE_Addr const & addr,
+                       int flags) const
 {
-  ACE_TRACE ("ACE::ICMP_Socket::send");
+  ACE_TRACE ("ACE_ICMP_Socket::send");
 
   return ACE_OS::sendto (this->get_handle (),
                          (char const *) buf,
@@ -53,12 +49,12 @@ ACE::ICMP_Socket::send (void const * buf,
 }
 
 ssize_t
-ACE::ICMP_Socket::recv (void * buf,
-                        size_t n,
-                        ACE_Addr & addr,
-                        int flags) const
+ACE_ICMP_Socket::recv (void * buf,
+                       size_t n,
+                       ACE_Addr & addr,
+                       int flags) const
 {
-  ACE_TRACE ("ACE::ICMP_Socket::recv");
+  ACE_TRACE ("ACE_ICMP_Socket::recv");
 
   int addr_len = addr.get_size ();
   ssize_t status = ACE_OS::recvfrom (this->get_handle (),
@@ -73,12 +69,12 @@ ACE::ICMP_Socket::recv (void * buf,
 }
 
 ssize_t
-ACE::ICMP_Socket::recv (void * buf,
-                        size_t n,
-                        int flags,
-                        ACE_Time_Value const * timeout) const
+ACE_ICMP_Socket::recv (void * buf,
+                       size_t n,
+                       int flags,
+                       ACE_Time_Value const * timeout) const
 {
-  ACE_TRACE ("ACE::ICMP_Socket::recv");
+  ACE_TRACE ("ACE_ICMP_Socket::recv");
 
   return ACE::recv (this->get_handle (),
                     buf,
@@ -88,40 +84,33 @@ ACE::ICMP_Socket::recv (void * buf,
 }
 
 int
-ACE::ICMP_Socket::open (ACE_Addr const & local,
-                        int protocol,
-                        int reuse_addr)
+ACE_ICMP_Socket::open (ACE_Addr const & local,
+                       int protocol,
+                       int reuse_addr)
 {
-  ACE_TRACE ("ACE::ICMP_Socket::open");
+  ACE_TRACE ("ACE_ICMP_Socket::open");
 
-  if (! this->check_root_euid ())
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n", "(%P|%t) ACE::ICMP_Socket::open - "
-                         "root-privileges required."),
-                        -1);
-    }
-
-  //+ if icmp protocol is supported on this host
+  // Check if icmp protocol is supported on this host
   int proto_number = -1;
   protoent *proto;
 
   if (! (proto = getprotobyname ("icmp")))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n", "(%P|%t) ACE::ICMP_Socket::open - "
-                         "ICMP protocol is not properly configured "
-                         "or not supported."),
+                         ACE_TEXT ("(%P|%t) ACE_ICMP_Socket::open: %p; %s\n"),
+                         ACE_TEXT ("getprotobyname"),
+                         ACE_TEXT ("ICMP protocol is not properly configured ")
+                         ACE_TEXT ("or not supported.")),
                         -1);
     }
   proto_number = proto->p_proto;
 
-  if (proto_number != IPPROTO_ICMP)
+  if (proto_number != IPPROTO_ICMP || proto_number != protocol)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n", "(%P|%t) ACE::ICMP_Socket::open - "
-                         "only IPPROTO_ICMP protocol is "
-                         "currently supported."),
+                         ACE_TEXT ("(%P|%t) ACE::ICMP_Socket::open - ")
+                         ACE_TEXT ("only IPPROTO_ICMP protocol is ")
+                         ACE_TEXT ("currently supported.\n")),
                         -1);
     }
 
@@ -137,9 +126,9 @@ ACE::ICMP_Socket::open (ACE_Addr const & local,
 }
 
 int
-ACE::ICMP_Socket::shared_open (ACE_Addr const & local)
+ACE_ICMP_Socket::shared_open (ACE_Addr const & local)
 {
-  ACE_TRACE ("ACE::ICMP_Socket::shared_open");
+  ACE_TRACE ("ACE_ICMP_Socket::shared_open");
 
   int error = 0;
   if (local == ACE_Addr::sap_any)
@@ -165,8 +154,8 @@ ACE::ICMP_Socket::shared_open (ACE_Addr const & local)
 }
 
 unsigned short
-ACE::ICMP_Socket::calculate_checksum (unsigned short * paddress,
-                                      int len)
+ACE_ICMP_Socket::calculate_checksum (unsigned short * paddress,
+                                     int len)
 {
   int nleft = len;
   int sum = 0;
@@ -190,18 +179,6 @@ ACE::ICMP_Socket::calculate_checksum (unsigned short * paddress,
   answer = ~sum;                      // truncate to 16 bits
 
   return (answer);
-}
-
-int
-ACE::ICMP_Socket::check_root_euid (void)
-{
-  int euid = 0;
-
-#if ! defined (ACE_WIN32)
-  euid = static_cast<int> (::geteuid ());
-#endif  /* #if ! defined (ACE_WIN32) */
-
-  return (euid == 0);
 }
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */

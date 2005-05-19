@@ -2,9 +2,8 @@
 //
 // $Id$
 
-
 ACE_INLINE
-ACE::ICMP_Socket::~ICMP_Socket (void)
+ACE_ICMP_Socket::~ACE_ICMP_Socket (void)
 {
-    ACE_TRACE ("ACE::ICMP_Socket::~ICMP_Socket");
+  ACE_TRACE ("ACE_ICMP_Socket::~ACE_ICMP_Socket");
 }
