@@ -1,3 +1,8 @@
+Thu May 19 15:59:38 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/SOCK.h: Clarified doc on close() - it sets the object's
+	  handle to ACE_INVALID_HANDLE.
+
 Thu May 19 08:58:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.cpp:
