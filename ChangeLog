@@ -1,3 +1,12 @@
+Thu May 19 00:38:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* config-g++-common.h:
+	* config-lite.h:
+
+	  Removed ACE_EXPORT_SINGLETON_{DECLARATION,DECLARE} macro
+	  definitions.  They do not provide the expected behavior in g++
+	  4.0 configurations, as they do in VC++ configurations.
+
 Wed May 18 16:19:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ATM_Addr.cpp:
