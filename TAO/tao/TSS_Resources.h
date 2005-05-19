@@ -14,6 +14,7 @@
 
 #ifndef TAO_TAO_TSS_RESOURCES_H
 #define TAO_TAO_TSS_RESOURCES_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Policy_Manager.h"
@@ -23,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton.h"
 #include "tao/Environment.h"
 #include "tao/TAO_Export.h"
 
@@ -50,6 +50,9 @@ public:
 
   /// Destructor
   ~TAO_TSS_Resources (void);
+
+  /// Return a singleton instance of this class.
+  static TAO_TSS_Resources * instance (void);
 
 private:
 
@@ -93,24 +96,20 @@ public:
   TAO_Policy_Current_Impl * policy_current_;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-  /** A factory for creating GUIReactors.
-   *
-   * GUIResource_Factory has to be stored in TSS, as GUIReactor are operational
-   * only in within the context of GUI event loops.
+
+   /// A factory for creating GUIReactors.
+  /**
+   * @c GUIResource_Factory has to be stored in TSS, as GUIReactors
+   * are operational only in within the context of GUI event loops.
    */
-  TAO::GUIResource_Factory *gui_resource_factory_;
+  TAO::GUIResource_Factory * gui_resource_factory_;
 };
 
 /**
- * @todo TAO_TSS_RESOURCES singleton typedef should go away.
+ * @todo TAO_TSS_RESOURCES typedef should go away.  It is deprecated,
+ *       and only exists for backward compatibility.
  */
-typedef TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
-        TAO_TSS_RESOURCES;
-
-TAO_SINGLETON_DECLARE (TAO_TSS_Singleton,
-                       TAO_TSS_Resources,
-                       TAO_SYNCH_MUTEX)
-
+typedef TAO_TSS_Resources TAO_TSS_RESOURCES;
 
 #include /**/ "ace/post.h"
 
