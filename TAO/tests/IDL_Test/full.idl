@@ -52,7 +52,7 @@ module mod2
     full op (inout full full_arg,
              inout un un_arg,
              inout full_seq full_seq_arg)
-             raises (bar);
+      raises (bar);
   };
 
   interface full;
