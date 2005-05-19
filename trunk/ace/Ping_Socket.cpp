@@ -104,8 +104,8 @@ ACE_Ping_Socket::ACE_Ping_Socket (ACE_Addr const & local,
   if (this->open (local, protocol, reuse_addr) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ACE_Ping_Socket::ACE_Ping_Socket: %p\n"),
-                  ACE_TEXT ("open")));
+                  ACE_LIB_TEXT ("ACE_Ping_Socket::ACE_Ping_Socket: %p\n"),
+                  ACE_LIB_TEXT ("open")));
       return;
     }
 
@@ -219,56 +219,61 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
 
   if ((icmplen = len - hlen1) < ICMP_MIN)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram")
-                  ACE_TEXT (" - ICMP length is %d < 8.\n"),
-                  icmplen));
+      ACE_DEBUG
+        ((LM_DEBUG,
+          ACE_LIB_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram")
+          ACE_LIB_TEXT (" - ICMP length is %d < 8.\n"),
+          icmplen));
       ACE_ERROR_RETURN
         ((LM_ERROR,
-          ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram - ")
-          ACE_TEXT ("The ICMP header either not received or is corrupted.")),
+          ACE_LIB_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram - ")
+          ACE_LIB_TEXT ("The ICMP header either not received or is corrupted.")),
          -1);
     }
 
   if (icmp->icmp_type == ICMP_ECHOREPLY)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram")
-                  ACE_TEXT (" - ICMP_ECHOREPLY received.\n")));
+      ACE_DEBUG
+        ((LM_DEBUG,
+          ACE_LIB_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram")
+          ACE_LIB_TEXT (" - ICMP_ECHOREPLY received.\n")));
 
       if (icmp->icmp_id != getpid ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) ACE_Ping_Socket::")
-                             ACE_TEXT ("process_incoming_dgram ")
-                             ACE_TEXT ("- The ICMP header received is a reply")
-                             ACE_TEXT (" to request of another process.")),
-                            -1);
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_LIB_TEXT ("(%P|%t) ACE_Ping_Socket::")
+              ACE_LIB_TEXT ("process_incoming_dgram ")
+              ACE_LIB_TEXT ("- The ICMP header received is a reply")
+              ACE_LIB_TEXT (" to request of another process.")),
+             -1);
         }
       if (icmplen < 16)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) ACE_Ping_Socket::")
-                             ACE_TEXT ("process_incoming_dgram - ICMP length ")
-                             ACE_TEXT ("is %d < 16."),
-                             icmplen),
-                            -1);
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_LIB_TEXT ("(%P|%t) ACE_Ping_Socket::")
+              ACE_LIB_TEXT ("process_incoming_dgram - ICMP length ")
+              ACE_LIB_TEXT ("is %d < 16."),
+              icmplen),
+             -1);
         }
 
       ACE_DEBUG
         ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) ACE::Ping_Socket::process_incoming_dgram - ")
-          ACE_TEXT ("received ")
-          ACE_TEXT ("ICMP datagram with length of %d bytes (not counting ")
-          ACE_TEXT ("IP-header): seq=%u, ttl=%d.\n"),
+          ACE_LIB_TEXT ("(%P|%t) ACE::Ping_Socket::process_incoming_dgram - ")
+          ACE_LIB_TEXT ("received ")
+          ACE_LIB_TEXT ("ICMP datagram with length of %d bytes (not counting ")
+          ACE_LIB_TEXT ("IP-header): seq=%u, ttl=%d.\n"),
           icmplen, icmp->icmp_seq, ip->ip_ttl));
 
       return 0; //= success
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) ACE::Ping_Socket::process_incoming_dgram - ")
-              ACE_TEXT ("received datagram that is not ICMP_ECHOREPLY.\n")));
+  ACE_DEBUG
+    ((LM_DEBUG,
+      ACE_LIB_TEXT ("(%P|%t) ACE::Ping_Socket::process_incoming_dgram - ")
+      ACE_LIB_TEXT ("received datagram that is not ICMP_ECHOREPLY.\n")));
 
   return -1;
 }
@@ -351,7 +356,7 @@ ACE_Ping_Socket::make_echo_check (ACE_INET_Addr & remote_addr,
 
   ACE_DEBUG
     ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) ACE_Ping_Socket::make_echo_check - sent %d.\n"),
+      ACE_LIB_TEXT ("(%P|%t) ACE_Ping_Socket::make_echo_check - sent %d.\n"),
       rval_send));
 
   return this->receive_echo_reply (timeout);
