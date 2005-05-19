@@ -1,14 +1,21 @@
+Thu May 19 09:42:22 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Trading/Trading.mpc:
+
+          I accidentally removed the utils base project from 3 of the
+          projects in this mpc file.
+
 Thu May 19 08:55:36 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/tests/Security/BiDirectional/server.cpp:
-	  
-	  Added an include file for ACE_OS::fopen() to fix VC6 build
-	  errors.
-	  
+
+          Added an include file for ACE_OS::fopen() to fix VC6 build
+          errors.
+
         * orbsvcs/tests/Security/BiDirectional/test_i.cpp:
-	  
-	  Changed reference to a non-existent test_i.i file to fix
-	  problems with builds that do not have inline.
+
+          Changed reference to a non-existent test_i.i file to fix
+          problems with builds that do not have inline.
 
 Thu May 19 00:55:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
