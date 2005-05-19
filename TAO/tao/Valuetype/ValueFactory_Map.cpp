@@ -1,10 +1,13 @@
 #include "ValueFactory_Map.h"
 #include "ValueFactory.h"
 #include "tao/CORBA_String.h"
+#include "tao/TAO_Singleton.h"
+
 
 ACE_RCSID (Valuetype,
            ValueFactory_Map,
            "$Id$")
+
 
 TAO_ValueFactory_Map::TAO_ValueFactory_Map (void)
   : map_ (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
@@ -101,6 +104,18 @@ TAO_ValueFactory_Map::find (const char *repo_id,
 
   return ret;
 }
+
+TAO_ValueFactory_Map *
+TAO_ValueFactory_Map::instance (void)
+{
+  // Hide the template instantiation to prevent multiple instances
+  // from being created.
+
+  return
+    TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::instance ();
+}
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
