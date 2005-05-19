@@ -1,3 +1,20 @@
+Thu May 19 00:29:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TSS_Resources.cpp (instance):
+	* tao/TSS_Resources.h (instance):
+
+	  Hide TAO_TSS_Singleton behind new TAO_TSS_Resources::instance()
+	  method.  Addresses multiple TAO_TSS_Singleton template
+	  instantiations on platforms/compilers that support symbol
+	  hiding, but for which we do not yet have an appropriate
+	  *_SINGLETON_DECLARATION() macro, such as g++ 4.0.  Fixes
+	  problems where an incorrect singleton instance is returned to
+	  the caller.
+
+	  Removed unnecessary zero pointer check before operator delete()
+	  call.  Calling operator delete() on a zero pointer is perfectly
+	  valid.
+
 Wed May 18 16:23:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
