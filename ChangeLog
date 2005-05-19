@@ -1,3 +1,8 @@
+Thu May 19 14:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+          When we can't open the logger print out an error and exit with -1.
+
 Thu May 19 00:38:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* config-g++-common.h:
