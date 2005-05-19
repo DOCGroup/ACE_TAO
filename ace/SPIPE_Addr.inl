@@ -6,23 +6,6 @@
 #include "ace/SString.h"
 
 
-ACE_INLINE int
-ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
-{
-  ACE_OS::strsncpy (s,
-                    this->SPIPE_addr_.rendezvous_,
-                    len);
-  return 0;
-}
-
-// Return the address.
-
-ACE_INLINE void *
-ACE_SPIPE_Addr::get_addr (void) const
-{
-  return (void *) &this->SPIPE_addr_;
-}
-
 // Compare two addresses for equality.
 
 ACE_INLINE bool

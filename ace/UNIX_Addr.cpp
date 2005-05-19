@@ -24,6 +24,41 @@ ACE_UNIX_Addr::set_addr (void *addr, int len)
 		  len);
 }
 
+// Return a pointer to the underlying address.
+
+void *
+ACE_UNIX_Addr::get_addr (void) const
+{
+  return (void *) &this->unix_addr_;
+}
+
+// Transform the string into the current addressing format.
+
+int
+ACE_UNIX_Addr::string_to_addr (const char addr[])
+{
+  ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
+                    sizeof this->unix_addr_.sun_path);
+  return 0;
+}
+
+// Transform the current address into string format.
+
+int
+ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
+{
+  ACE_OS::strsncpy (s,
+                    ACE_TEXT_CHAR_TO_TCHAR (this->unix_addr_.sun_path),
+                    len);
+  return 0;
+}
+
+u_long
+ACE_UNIX_Addr::hash (void) const
+{
+  return ACE::hash_pjw (this->unix_addr_.sun_path);
+}
+
 void
 ACE_UNIX_Addr::dump (void) const
 {

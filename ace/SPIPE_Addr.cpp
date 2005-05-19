@@ -33,6 +33,15 @@ ACE_SPIPE_Addr::set_addr (void *addr, int len)
 		  len);
 }
 
+// Return the address.
+
+void *
+ACE_SPIPE_Addr::get_addr (void) const
+{
+  return (void *) &this->SPIPE_addr_;
+}
+
+
 // Do nothing constructor.
 
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (void)
@@ -41,6 +50,15 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (void)
   (void) ACE_OS::memset ((void *) &this->SPIPE_addr_,
                          0,
 			 sizeof this->SPIPE_addr_);
+}
+
+int
+ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
+{
+  ACE_OS::strsncpy (s,
+                    this->SPIPE_addr_.rendezvous_,
+                    len);
+  return 0;
 }
 
 // Transform the string into the current addressing format.

@@ -9,9 +9,32 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(ace, DEV_Addr, "$Id$")
+ACE_RCSID (ace,
+           DEV_Addr,
+           "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Addr)
+
+// Transform the current address into string format.
+
+int
+ACE_DEV_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
+{
+  ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
+
+  ACE_OS::strsncpy (s, this->devname_, len);
+  return 0;
+}
+
+// Return a pointer to the address.
+
+void *
+ACE_DEV_Addr::get_addr (void) const
+{
+  ACE_TRACE ("ACE_DEV_Addr::get_addr");
+
+  return (void *) &this->devname_;
+}
 
 void
 ACE_DEV_Addr::dump (void) const

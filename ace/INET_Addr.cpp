@@ -96,6 +96,20 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
                           this->get_size ()) == 0);
 }
 
+u_long
+ACE_INET_Addr::hash (void) const
+{
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == PF_INET6)
+    {
+      const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
+      return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
+  return this->get_ip_address () + this->get_port_number ();
+}
+
 ACE_INET_Addr::ACE_INET_Addr (void)
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
@@ -610,6 +624,10 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 #endif /* ACE_HAS_WCHAR */
+
+ACE_INET_Addr::~ACE_INET_Addr (void)
+{
+}
 
 int
 ACE_INET_Addr::get_host_name (char hostname[],

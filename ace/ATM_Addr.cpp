@@ -114,6 +114,19 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ACE_TCHAR sap[],
   this->set (sap, selector);
 }
 
+ACE_ATM_Addr::~ACE_ATM_Addr (void)
+{
+}
+
+// Return the address.
+
+void *
+ACE_ATM_Addr::get_addr (void) const
+{
+  ACE_TRACE ("ACE_ATM_Addr::get_addr");
+  return (void *) &this->atm_addr_;
+}
+
 void
 ACE_ATM_Addr::init (u_char selector)
 {

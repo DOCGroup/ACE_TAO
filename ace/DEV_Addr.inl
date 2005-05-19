@@ -16,27 +16,6 @@ ACE_DEV_Addr::set (const ACE_TCHAR *devname)
   ACE_OS::strsncpy (this->devname_, devname, MAXPATHLEN);
 }
 
-// Transform the current address into string format.
-
-ACE_INLINE int
-ACE_DEV_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
-{
-  ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
-
-  ACE_OS::strsncpy (s, this->devname_, len);
-  return 0;
-}
-
-// Return a pointer to the address.
-
-ACE_INLINE void *
-ACE_DEV_Addr::get_addr (void) const
-{
-  ACE_TRACE ("ACE_DEV_Addr::get_addr");
-
-  return (void *) &this->devname_;
-}
-
 // Compare two addresses for equality.
 
 ACE_INLINE bool

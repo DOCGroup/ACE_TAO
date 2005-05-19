@@ -8,11 +8,6 @@
 #include "ace/OS_NS_arpa_inet.h"
 
 
-ACE_INLINE
-ACE_INET_Addr::~ACE_INET_Addr (void)
-{
-}
-
 ACE_INLINE void
 ACE_INET_Addr::reset (void)
 {
@@ -112,21 +107,6 @@ ACE_INET_Addr::get_addr_size (void) const
 #else
   return sizeof this->inet_addr_.in4_;
 #endif /* ACE_HAS_IPV6 */
-}
-
-
-ACE_INLINE u_long
-ACE_INET_Addr::hash (void) const
-{
-#if defined (ACE_HAS_IPV6)
-  if (this->get_type () == PF_INET6)
-    {
-      const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
-      return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
-    }
-  else
-#endif /* ACE_HAS_IPV6 */
-  return this->get_ip_address () + this->get_port_number ();
 }
 
 ACE_INLINE bool

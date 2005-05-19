@@ -5,14 +5,6 @@
 
 #include "ace/SString.h"
 
-// Return the address.
-
-ACE_INLINE void *
-ACE_FILE_Addr::get_addr (void) const
-{
-  return (void *) &this->filename_;
-}
-
 // Compare two addresses for equality.
 
 ACE_INLINE bool
