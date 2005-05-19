@@ -307,6 +307,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
 
               return 0;
             }
+
         }
       else if (!can_be_redefined (predef))
         {
@@ -1645,7 +1646,7 @@ AST_Module::referenced (AST_Decl *e,
       return I_TRUE;
     }
     
-  return this->look_in_previous (e->local_name ()) != 0;
+  return this->look_in_previous (e->local_name (), true) != 0;
 }
 
 void
@@ -1700,25 +1701,39 @@ AST_Module::add_to_previous (AST_Module *m)
 }
 
 AST_Decl *
-AST_Module::look_in_previous (Identifier *e)
+AST_Module::look_in_previous (Identifier *e, bool ignore_fwd)
 {
-  AST_Decl *d = 0;
+  AST_Decl **d = 0;
   AST_Decl *retval = 0;
-  ACE_Unbounded_Set_Iterator<AST_Decl *> iter (this->previous_);
 
   // If there are more than two openings of this module, we want
   // to get the last one - the one that will have the decls from
   // all the previous openings added to previous_.
-  while (!iter.done ())
+  for (ACE_Unbounded_Set_Iterator<AST_Decl *> iter (this->previous_);
+       !iter.done ();
+       iter.advance ())
     {
-      d = *iter;
-
-      if (e->case_compare (d->local_name ()))
+      iter.next (d);
+      
+      if (ignore_fwd)
         {
-          retval = d;
+          AST_Decl::NodeType nt = (*d)->node_type ();
+          
+          if (nt == AST_Decl::NT_interface_fwd
+              || nt == AST_Decl::NT_eventtype_fwd
+              || nt == AST_Decl::NT_component_fwd
+              || nt == AST_Decl::NT_struct_fwd
+              || nt == AST_Decl::NT_union_fwd
+              || nt == AST_Decl::NT_valuetype_fwd)
+            {
+              continue;
+            }
         }
 
-      iter++;
+      if (e->case_compare ((*d)->local_name ()))
+        {
+          retval = *d;
+        }
     }
 
   return retval;
