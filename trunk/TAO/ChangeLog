@@ -1,15 +1,23 @@
+Thu May 19 00:55:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Valuetype/ValueFactory_Map.cpp (instance):
+	* tao/Valuetype/ValueFactory_Map.h (instance):
+
+	  Avoid multiple singleton instantions by hiding singleton
+	  template instance behind this new static method.  See
+	  TSS_Resources.* changes below for additional details.
+
 Thu May 19 00:29:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TSS_Resources.cpp (instance):
 	* tao/TSS_Resources.h (instance):
 
 	  Hide TAO_TSS_Singleton behind new TAO_TSS_Resources::instance()
-	  method.  Addresses multiple TAO_TSS_Singleton template
-	  instantiations on platforms/compilers that support symbol
-	  hiding, but for which we do not yet have an appropriate
-	  *_SINGLETON_DECLARATION() macro, such as g++ 4.0.  Fixes
-	  problems where an incorrect singleton instance is returned to
-	  the caller.
+	  method.  Addresses multiple TAO_TSS_Singleton instances on
+	  platforms/compilers that support symbol hiding, but for which we
+	  do not yet have an appropriate *_SINGLETON_DECLARATION() macro,
+	  such as g++ 4.0.  Fixes problems where an incorrect singleton
+	  instance is returned to the caller.
 
 	  Removed unnecessary zero pointer check before operator delete()
 	  call.  Calling operator delete() on a zero pointer is perfectly

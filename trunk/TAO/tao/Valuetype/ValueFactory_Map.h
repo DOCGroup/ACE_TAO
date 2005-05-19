@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton.h"
-
 #include "valuetype_export.h"
 
 #include "ace/Hash_Map_Manager_T.h"
@@ -69,6 +67,9 @@ public:
 
   void dump (void);
 
+  /// Return singleton instance of this class.
+  static TAO_ValueFactory_Map * instance (void);
+
 private:
 
   /// The hash table data structure.
@@ -84,12 +85,10 @@ private:
 
 // Currently the ValueFactory_Map is a singleton and not per ORB
 // as in the OMG spec.
-typedef TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
-        TAO_VALUEFACTORY_MAP;
-
-TAO_VALUETYPE_SINGLETON_DECLARE (TAO_Singleton,
-                                 TAO_ValueFactory_Map,
-                                 TAO_SYNCH_MUTEX)
+/**
+ * @todo Remove this legacy ValueFactory_Map typedef.
+ */
+typedef TAO_ValueFactory_Map TAO_VALUEFACTORY_MAP;
 
 #include /**/ "ace/post.h"
 
