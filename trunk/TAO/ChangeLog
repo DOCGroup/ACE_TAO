@@ -1,3 +1,24 @@
+Thu May 19 15:03:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/include/ast_module.h:
+        
+          Modified look_in_previous() by adding a boolean parameter to
+          optionally ignore forward declared types when iterating 
+          over the declarations in previous openings of a module. This
+          new parameter is false by default, so that ordinary lookups
+          will behave as always. In AST_Module::referenced() however,
+          the argument is passed as true explicitly, to avoid 
+          redefinition errors for forward delcared types that appear
+          in an opening of a module previous to the one in which they
+          are fully defined, and also referenced before the full
+          definition appears. Thanks to Aaron <crackajaxx@gmail.com>
+          for reporting the problem and sending example IDL files>.
+          
+        * tests/IDL_Test/full.idl:
+        
+          Cosmetic changes.
+
 Thu May 19 09:42:22 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Trading/Trading.mpc:
