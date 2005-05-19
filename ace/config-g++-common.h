@@ -72,8 +72,8 @@
 # define ACE_HAS_CUSTOM_EXPORT_MACROS
 # define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
 # define ACE_Proper_Import_Flag
-# define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
-# define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE<CLASS, LOCK>;
+# define ACE_EXPORT_SINGLETON_DECLARATION(T)
+# define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #define ACE_IMPORT_SINGLETON_DECLARATION(T)
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #endif  /* __GNU__ > 3 */
