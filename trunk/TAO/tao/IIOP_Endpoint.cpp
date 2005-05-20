@@ -366,7 +366,8 @@ TAO_IIOP_Endpoint::hash (void)
 bool
 TAO_IIOP_Endpoint::is_preferred_network (void) const
 {
-  return (this->preferred_path_.host.in () != 0);
+  return (this->preferred_path_.host.in () != 0 &&
+          this->preferred_path_.host.in ()[0] != 0);
 }
 
 const char *
