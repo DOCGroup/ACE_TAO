@@ -71,22 +71,22 @@ private:
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
   friend class AutoFinalizer;
 
-protected:
-  /**
-  * A class with a "magic" constructor/desructor to call
-  * ACE_NT_Service::report_status() when an instance of it goes out of scope, as
-  * it might should an exception occurs.
+};
+
+/**
+ * A class with a "magic" constructor/desructor to call the inherited
+ * from ACE_NT_Service report_status() when an instance of it goes out
+ * of scope, should an exception occurs.
   */
-  class AutoFinalizer
-  {
+class AutoFinalizer
+{
     
-  public:
+public:
     AutoFinalizer (TAO_NT_Naming_Service &service);
     ~AutoFinalizer ();
     
-  private:
+private:
     TAO_NT_Naming_Service &service_;
-  };
 };
 
 
