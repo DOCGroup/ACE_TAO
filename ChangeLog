@@ -1,3 +1,9 @@
+Fri May 20 15:28:00 2005  Gary Maxey  <gary.maxey@hp.com>
+
+        * ace/config-lite.h
+
+          Added TANDEM platform for ACE_NOTREACHED macro.
+
 Thu May 19 19:10:30 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (handle_output): Removed
