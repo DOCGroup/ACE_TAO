@@ -15,12 +15,12 @@
 #define TAO_NAMING_SERVICE_OPTS_NAME "TaoNamingServiceOptions"
 #define TAO_SERVICE_PARAM_COUNT "TaoServiceParameterCount"
 
-TAO_NT_Naming_Service::AutoFinalizer::AutoFinalizer (TAO_NT_Naming_Service &service)
+AutoFinalizer::AutoFinalizer (TAO_NT_Naming_Service &service)
   : service_ (service)
 {
 }
 
-TAO_NT_Naming_Service::AutoFinalizer::~AutoFinalizer ()
+AutoFinalizer::~AutoFinalizer ()
 {
   service_.report_status (SERVICE_STOPPED);  
   ACE_DEBUG ((LM_DEBUG, "Reported service stoped\n"));
@@ -55,7 +55,7 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
       // Just in case any of the following method calls 
       // throws in a way we do not expect.
       // This instance's destructor will notify the OS.
-      TAO_NT_Naming_Service::AutoFinalizer afinalizer (*this);
+      AutoFinalizer afinalizer (*this);
 
       report_status (SERVICE_STOP_PENDING);
       
@@ -174,7 +174,7 @@ TAO_NT_Naming_Service::svc (void)
       // Just in case handle_control does not get the chance
       // to execute, or is never called by Windows. This instance's
       // destructor will inform the OS of our demise.
-      TAO_NT_Naming_Service::AutoFinalizer afinalizer (*this);
+      AutoFinalizer afinalizer (*this);
 
       ACE_DEBUG ((LM_INFO, "Notifying Windows of service startup\n"));
       report_status (SERVICE_RUNNING);
