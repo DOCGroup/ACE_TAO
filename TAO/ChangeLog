@@ -1,3 +1,18 @@
+Fri May 20 12:38:34 2005  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          Check for alias before bailing out of ::visit_string.
+
+          This fixes bug #2124.
+
+        * tests/Bug_2124_Regression/Bug_2124_Regression.mpc:
+        * tests/Bug_2124_Regression/README:
+        * tests/Bug_2124_Regression/test.cpp:
+        * tests/Bug_2124_Regression/Test.idl:
+
+          A regression test for the above fix.
+
 Fri May 20 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Current.pidl:
