@@ -732,7 +732,7 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   //@}
 
   /// Do we put the ImR's endpoints into persistent object references we create
- 	CORBA::Boolean imr_endpoints_in_ior (void);
+  CORBA::Boolean imr_endpoints_in_ior (void);
 
   /// Resolve the TypeCodeFactory DLL.
   CORBA::Object_ptr resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL);
