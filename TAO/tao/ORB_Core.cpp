@@ -130,6 +130,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     protocol_factories_ (0),
     implrepo_service_ (CORBA::Object::_nil ()),
     use_implrepo_ (0),
+    imr_endpoints_in_ior_ (1),
     typecode_factory_ (CORBA::Object::_nil ()),
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
@@ -709,6 +710,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
         {
           // Use IR or not.
           this->use_implrepo_ = ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBIMREndpointsInIOR"))))
+        {
+          this->imr_endpoints_in_ior_ = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }

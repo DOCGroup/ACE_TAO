@@ -285,7 +285,7 @@ generate more output (try 10). The default value of this option is 0.</td>
         <td>Controls the amount of status data printed on each line of
         the debug log. Higher numbers generate more output.
         The default value of this option is 0. </td>
-      </tr>  
+      </tr>
       <tr>
         <td><code>-ORBLogFile</code> <em>Logfilename</em></td>
         <td>Causes all <code>ACE_DEBUG</code> and <code>ACE_ERROR</code>
@@ -395,7 +395,7 @@ arrived higher priority request since Reactor notifications are given
 preferences over normal I/O, thereby causing priority inversion.</p>
         </td>
       </tr>
-      <tr>        
+      <tr>
        <td><code>-ORBDisableRTCollocation</code> <em>boolean
        (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
        option controls whether the application wants to use or discard
@@ -405,7 +405,7 @@ preferences over normal I/O, thereby causing priority inversion.</p>
        useful for applications using the RT ORB and doesn't want
        to use the RT collocation decisions but fallback on the default
        decisions for better performance. The default value is
-       <code>0</code> (false). </td>      
+       <code>0</code> (false). </td>
        </tr>
     </tbody>
   </table>
@@ -444,8 +444,8 @@ decimal notation for addresses. This option can be used to workaround
 broken DNS implementations and may also reduce the time spent resolving
 IP addresses.  This option is enabled (<code>1</code>) by default on
 Windows since DNS is often misconfigured there.  On other platforms
-this option is disabled (<code>0</code>) since domain names are 
-more flexible address notations for IORs.</td> 
+this option is disabled (<code>0</code>) since domain names are
+more flexible address notations for IORs.</td>
       </tr>
       <tr>
         <td><code>-ORBEndpoint</code> <em>endpoint</em></td>
@@ -458,7 +458,7 @@ more flexible address notations for IORs.</td>
       </tr>
       <tr>
         <td><code>-ORBPreferredInterfaces</code>
-        <em>"targetNetwork:localNetwork,.."</em></td> 
+        <em>"targetNetwork:localNetwork,.."</em></td>
         <td><a name="-ORBPreferredInterfaces"></a> This option allows
         clients running on a multihomed host to pick a local
         network/interface to communicate with a remote target. This
@@ -467,12 +467,12 @@ more flexible address notations for IORs.</td>
         <em>localNetwork</em> parts. Multiple preferred tuples (a
         tuple refers to a <em> target-to-local</em> network combo) can
         be provided in the option using a comma seperated list. The
-        option doesn't yet support using jsut the network part of the 
-        qualified name. 
+        option doesn't yet support using jsut the network part of the
+        qualified name.
         </tr>
       <tr>
         <td><code>-ORBEnforcePreferredInterfaces</code>
-        <em>Yes/No</em></td> 
+        <em>Yes/No</em></td>
         <td><a name="-ORBEnforcePreferredInterfaces"></a> This option
         specifies whether <CODE>-ORBPreferredInterfaces</CODE> option
         needs to be enforced. The option is supposed to help with the following
@@ -514,7 +514,7 @@ more flexible address notations for IORs.</td>
         <code>W.w</code> are optional protocol versions for each
         address. An example of an IIOP endpoint is:
         <blockquote><code>iiop://<i><em>hostname</em></i>:<i><em>port</em></i>
-        </code></blockquote> 
+        </code></blockquote>
 
         Sets of endpoints may be specified using multiple
         <code>-ORBListenEndpoints</code> options or by delimiting
@@ -581,7 +581,7 @@ more flexible address notations for IORs.</td>
         <blockquote><code>-ORBLaneListenEndpoints 2:3 uiop://
         -ORBLaneListenEndpoints 2:3 shmiop:// </code></blockquote>
         then a default endpoint will be created for the specified
-        protocol. 
+        protocol.
         </td>
       </tr>
       <tr>
@@ -634,8 +634,15 @@ requests. By default, the <code>TAO_DEFAULT_TRADING_SERVICE_REQUEST_PORT</code>
         <td>This argument specifies that for POAs with the <code>PERSISTENT</code>
 policy, that the TAO <a href="implrepo/">Implementation Repository</a>
 should be used for notification of startup and shutdown and object
-references should be changed to use the Implementation Repository also.
-        </td>
+references should be changed to use the Implementation Repository also (N.B.
+although see <code>-ORBIMREndpointsInIOR</code> below). </td>
+      </tr>
+      <tr>
+        <td> <code>-ORBIMREndpointsInIOR</code> <em>boolean (0|1)</em></td>
+        <td>This argument specifies whether, for POAs with the <code>PERSISTENT</code>
+policy, the TAO <a href="implrepo/">Implementation Repository</a>
+listen endpoints should be encoded into IORs when <code>-ORBUseIMR</code>
+is set. The default is true. </td>
       </tr>
     </tbody>
   </table>
