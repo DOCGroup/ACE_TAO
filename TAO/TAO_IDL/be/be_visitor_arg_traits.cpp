@@ -518,7 +518,8 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 int
 be_visitor_arg_traits::visit_string (be_string *node)
 {
-  if (this->generated (node) || !node->seen_in_operation ())
+  if ((this->generated (node) && !this->ctx_->alias())
+       || !node->seen_in_operation ())
     {
       return 0;
     }
