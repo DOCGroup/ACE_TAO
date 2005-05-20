@@ -2,10 +2,10 @@ Thu May 19 18:50:23 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/ICMP_Socket.{h cpp inl}:
 	* ace/Ping_Socket.{h cpp inl}:
-	* tests/Network_Adapters_Test.cpp: Moved ICMP_Socket and Ping_Socket
-	  out of the ACE namespace and changed names to ACE_ICMP_Socket and
-	  ACE_Ping_Socket, respectively. Also fixed up some text strings with
-	  ACE_TEXT.
+	* tests/Network_Adapters_Test.{cpp, h}: Moved ICMP_Socket and
+	  Ping_Socket out of the ACE namespace and changed names to
+	  ACE_ICMP_Socket and ACE_Ping_Socket, respectively. Also fixed up
+	  some text strings with ACE_TEXT.
 	  ACE_ICMP_Socket now does not check for root euid - allow the OS to
 	  do whatever checks it requires/implements.
 	  Improved implementation of ACE_Ping_Socket.
