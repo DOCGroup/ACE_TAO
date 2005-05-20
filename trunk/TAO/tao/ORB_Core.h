@@ -731,6 +731,9 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   void implrepo_service (const CORBA::Object_ptr ir);
   //@}
 
+  /// Do we put the ImR's endpoints into persistent object references we create
+ 	CORBA::Boolean imr_endpoints_in_ior (void);
+
   /// Resolve the TypeCodeFactory DLL.
   CORBA::Object_ptr resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -1052,6 +1055,9 @@ protected:
 
   /// Flag for whether the implrepo support is enabled or not.
   int use_implrepo_;
+
+  /// Flag for whether to put the ImR endpoints into our object refs.
+  int imr_endpoints_in_ior_;
 
   /// The cached IOR for the TypeCodeFactory DLL.
   CORBA::Object_ptr typecode_factory_;
