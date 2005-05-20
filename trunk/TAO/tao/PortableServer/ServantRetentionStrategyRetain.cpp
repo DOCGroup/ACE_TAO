@@ -318,7 +318,7 @@ namespace TAO
         }
 
       poa_current_impl.object_id(user_id);
-      servant_upcall.user_id (&user_id);
+      servant_upcall.user_id (&poa_current_impl.object_id());
 
       // If the POA has the RETAIN policy, the POA looks in the Active
       // Object Map to find if there is a servant associated with the
