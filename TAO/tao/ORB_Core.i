@@ -358,6 +358,12 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
   this->implrepo_service_ = ir;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::imr_endpoints_in_ior (void)
+{
+  return imr_endpoints_in_ior_;
+}
+
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL)
 {
