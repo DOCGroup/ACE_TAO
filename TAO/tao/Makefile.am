@@ -72,6 +72,8 @@ libTAO_la_SOURCES = \
   ClientRequestInfoA.cpp \
   ClientRequestInfoC.cpp \
   ClientRequestInfo_i.cpp \
+  ClientRequestInterceptorA.cpp \
+  ClientRequestInterceptorC.cpp \
   ClientRequestInterceptor_Adapter.cpp \
   Client_Strategy_Factory.cpp \
   CodecFactory.cpp \
@@ -150,6 +152,8 @@ libTAO_la_SOURCES = \
   IORInterceptor_Adapter_Factory.cpp \
   IOR_Parser.cpp \
   Incoming_Message_Queue.cpp \
+  InterceptorA.cpp \
+  InterceptorC.cpp \
   Interceptor_List.cpp \
   InvalidSlotA.cpp \
   InvalidSlotC.cpp \
@@ -212,6 +216,8 @@ libTAO_la_SOURCES = \
   PICurrent.cpp \
   PICurrent_Copy_Callback.cpp \
   PICurrent_ORBInitializer.cpp \
+  PIForwardRequestA.cpp \
+  PIForwardRequestC.cpp \
   PI_ForwardC.cpp \
   ParameterModeA.cpp \
   ParameterModeC.cpp \
@@ -254,6 +260,8 @@ libTAO_la_SOURCES = \
   Sequence_TypeCode_Static.cpp \
   ServerRequestInfoA.cpp \
   ServerRequestInfoC.cpp \
+  ServerRequestInterceptorA.cpp \
+  ServerRequestInterceptorC.cpp \
   Server_Strategy_Factory.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
@@ -262,9 +270,9 @@ libTAO_la_SOURCES = \
   ShortSeqA.cpp \
   ShortSeqC.cpp \
   Special_Basic_Arguments.cpp \
-  String_TypeCode_Static.cpp \
   StringSeqA.cpp \
   StringSeqC.cpp \
+  String_TypeCode_Static.cpp \
   Struct_TypeCode_Static.cpp \
   Stub.cpp \
   Stub_Factory.cpp \
@@ -312,8 +320,8 @@ libTAO_la_SOURCES = \
   UTF16_BOM_Translator.cpp \
   Union_TypeCode_Static.cpp \
   UserException.cpp \
-  Value_TypeCode_Static.cpp \
   ValueModifierC.cpp \
+  Value_TypeCode_Static.cpp \
   Valuetype_Adapter.cpp \
   VisibilityA.cpp \
   VisibilityC.cpp \
@@ -448,6 +456,9 @@ nobase_include_HEADERS = \
   ClientRequestInfoS.h \
   ClientRequestInfo_i.h \
   ClientRequestInfo_i.inl \
+  ClientRequestInterceptor.pidl \
+  ClientRequestInterceptorC.h \
+  ClientRequestInterceptorS.h \
   ClientRequestInterceptor_Adapter.h \
   ClientRequestInterceptor_Adapter.inl \
   Client_Strategy_Factory.h \
@@ -578,6 +589,9 @@ nobase_include_HEADERS = \
   IOR_Parser.h \
   Incoming_Message_Queue.h \
   Incoming_Message_Queue.inl \
+  Interceptor.pidl \
+  InterceptorC.h \
+  InterceptorS.h \
   Interceptor_List.h \
   Interceptor_List.inl \
   InterfaceDef.pidl \
@@ -691,6 +705,9 @@ nobase_include_HEADERS = \
   PICurrent.inl \
   PICurrent_Copy_Callback.h \
   PICurrent_ORBInitializer.h \
+  PIForwardRequest.pidl \
+  PIForwardRequestC.h \
+  PIForwardRequestS.h \
   PI_Forward.pidl \
   PI_ForwardC.h \
   ParameterMode.pidl \
@@ -776,6 +793,9 @@ nobase_include_HEADERS = \
   ServerRequestInfo.pidl \
   ServerRequestInfoC.h \
   ServerRequestInfoS.h \
+  ServerRequestInterceptor.pidl \
+  ServerRequestInterceptorC.h \
+  ServerRequestInterceptorS.h \
   Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \
@@ -2508,11 +2528,11 @@ libTAO_TypeCodeFactory_la_CPPFLAGS = \
   -DTAO_TYPECODEFACTORY_BUILD_DLL
 
 libTAO_TypeCodeFactory_la_SOURCES = \
+  TypeCodeFactory/Recursive_TypeCode.cpp \
   TypeCodeFactory/TypeCodeFactoryA.cpp \
   TypeCodeFactory/TypeCodeFactoryC.cpp \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp \
   TypeCodeFactory/TypeCodeFactory_Loader.cpp \
-  TypeCodeFactory/Recursive_TypeCode.cpp \
   TypeCodeFactory/TypeCodeFactory_i.cpp
 
 libTAO_TypeCodeFactory_la_LDFLAGS = \
@@ -2524,13 +2544,13 @@ libTAO_TypeCodeFactory_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  TypeCodeFactory/Recursive_TypeCode.h \
+  TypeCodeFactory/Recursive_TypeCode.inl \
   TypeCodeFactory/TypeCodeFactory.pidl \
   TypeCodeFactory/TypeCodeFactoryC.h \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h \
   TypeCodeFactory/TypeCodeFactory_Loader.h \
   TypeCodeFactory/TypeCodeFactory_i.h \
-  TypeCodeFactory/Recursive_TypeCode.h \
-  TypeCodeFactory/Recursive_TypeCode.inl \
   TypeCodeFactory/typecodefactory_export.h
 
 pkgconfig_DATA += TAO_TypeCodeFactory.pc
