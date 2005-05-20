@@ -1,3 +1,11 @@
+Fri May 20 15:40:17 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/ORB_Core.i:
+
+          Further to Fri May 20 11:27:02 2005  Simon McQueen:
+          I forgot to commit the accessor implementation. Not
+          my finest hour.
+
 Fri May 20 14:19:08 2005  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/ast/ast_array.cpp:
