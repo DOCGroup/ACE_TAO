@@ -540,18 +540,42 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
-    
-  const char *guard_string = node->flat_name ();
-  
-  if (alias != 0)
-    {
-      guard_string = alias->flat_name ();
-    }
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (guard_string, guard_suffix.c_str ());
+    
+  if (alias == 0)
+    {
+      os->gen_ifdef_macro (node->flat_name(), guard_suffix.c_str ());
+    }
+  else
+    {
+      // Form a unique macro name using the local name and the bound.     
+      unsigned long l = bound;
+      int num_digits = 0;
+      while (l > 0)
+        {
+          l /= 10 ;
+          ++num_digits ;
+        }
+      size_t bound_length = num_digits + 1;
+      char* bound_string = 0;
+      ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
+      ACE_OS::sprintf (bound_string, "%lu", bound);
+    
+      size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
+                          ACE_OS::strlen (bound_string) +
+                          1;
+      char* cat_string = 0;
+      ACE_NEW_RETURN (cat_string, char[cat_length], -1) ; 
+      ACE_OS::strcpy (cat_string, alias->local_name ()->get_string ()) ;
+      ACE_OS::strcat (cat_string, bound_string);
 
+      os->gen_ifdef_macro (cat_string, guard_suffix.c_str ());
+       
+      delete [] cat_string;
+      delete [] bound_string;
+    }
 
   idl_bool const skel =
     (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);

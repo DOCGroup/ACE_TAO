@@ -1,3 +1,21 @@
+Fri May 20 08:55:03 2005  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          Generate a guard macro definition based upon the bound length
+          and local name of bound strings to prevent duplicate definitions
+          when a string of the same length is defined with the same name
+          in two different scopes.
+
+          This fixes bug #2122.
+
+        * tests/Bug_2122_Regression/Bug_2122_Regression.mpc:
+        * tests/Bug_2122_Regression/README:
+        * tests/Bug_2122_Regression/test.cpp:
+        * tests/Bug_2122_Regression/Test.idl:
+
+          A regression test for the above.
+
 Thu May 19 11:52:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/CosEC/TypedSimple/Country_i.cpp:
