@@ -193,7 +193,6 @@ Consumer_Handler::handle_output (ACE_HANDLE)
           }
         case 0:                 // Partial Send - we got flow controlled by the receiver
           {
-            ACE_ASSERT (errno == EWOULDBLOCK);
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("%D Partial Send due to flow control")
                         ACE_TEXT ("- scheduling new wakeup with reactor\n")));
