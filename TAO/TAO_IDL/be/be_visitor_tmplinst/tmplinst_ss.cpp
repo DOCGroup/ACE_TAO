@@ -117,16 +117,16 @@ be_visitor_tmplinst_ss::visit_valuetype (be_valuetype *node)
       os->gen_ifdef_macro (node->flat_name (), "sarg_traits_tmplinst");
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Arg_Traits<" << node->name ()
+          << this->prefix_ << " TAO::Arg_Traits< ::" << node->name ()
           << ">" << this->suffix_;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Object_SArg_Traits_T<" << this->linebreak_
           << be_idt << be_idt_nl
-          << node->name () << " *," << this->linebreak_ << be_nl
-          << node->name () << "_var," << this->linebreak_ << be_nl
-          << node->name () << "_out," << this->linebreak_ << be_uidt_nl
+          << "::" << node->name () << " *," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_var," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_out," << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt << be_uidt;
 
       os->gen_endif ();

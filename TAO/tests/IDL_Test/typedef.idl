@@ -57,4 +57,54 @@ module TestModule
   };	
 };
 
+// Caught failure of arg traits generation for the 2nd typedef.
+module bug_2124
+{   
+   typedef string<10> MyString;
+   typedef MyString OtherString;
+
+   interface Foo
+   {
+      void op1 (in MyString s);
+      void op2 (in OtherString s);
+   };
+};
+
+// Caught a case where the #ifdef guards were different, but the
+// generated string typename was.
+module bug_2122
+{
+   module One
+   {
+      typedef string<40> MyString;
+
+      interface Whatever
+      {
+         void someOp( in MyString s );
+      };
+   };
+
+   module Two
+   {
+      typedef string<100> MyString; // Same name, different size!
+
+      interface WhoCares
+      {
+         void someOp( in MyString s );
+      };
+   };
+
+   module Three
+   {
+      typedef string<100> MyString; // Same name, same size!
+
+      interface WhoCares
+      {
+         void someOp( in MyString s );
+      };
+   };
+};
+
+
+
 
