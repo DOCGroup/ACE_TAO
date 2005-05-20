@@ -1,3 +1,17 @@
+Fri May 20 16:51:35 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (TAO_LogRecoreStore::log):
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+
+	  Use "%d" instead of "%Q" log format directive for ACE_UINT64_TO_U32
+	  parameter.
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (TAO_LogRecordStore::update):
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+
+	  Subtract size of existing record and Add size of new record to
+	  current size.
+
 Fri May 20 16:44:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
@@ -5,37 +19,37 @@ Fri May 20 16:44:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	  Regenerated.
 
 Fri May 20 17:10:00 2005    Huang-Ming Huang <hh1@cse.wustl.edu>
-        
+
         * tao/IIOP_Endpoint:
-          
+
           Fixed problem in TAO_IIOP_Endpoint::is_preferred_network()
           which should check for empty string rather than null pointer.
 
 Fri May 20 17:00:00 2005    Huang-Ming Huang <hh1@cse.wustl.edu>
-        
+
         * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
-        
+
           Fixed problem in ServantRetentionStrategyRetain::find_servant()
           where servant_upcall.user_id is assigned to a local variable which
-          causes memory access violation when ServerReqeustInfo::object_id() 
-          is accessed inside interceptors. 
+          causes memory access violation when ServerReqeustInfo::object_id()
+          is accessed inside interceptors.
 
 Fri May 20 18:30:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
         * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
         * TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
-        
+
           Added global '::' qualifier to several instances of code
           generation of a scoped name used as a template argument,
           to avoid ambiguity if there are two modules with the same
           name at different levels of nesting. This fix closes
           [BUGID:2125].
-          
+
         * tests/IDL_Test/array.idl:
         * tests/IDL_Test/nested_scope.idl:
         * tests/IDL_Test/typedef.idl:
-        
+
           Added various IDL snips provided by Simon McQueen
           <sm@prismtech.com> in various (now closed) Bugzilla entries.
 

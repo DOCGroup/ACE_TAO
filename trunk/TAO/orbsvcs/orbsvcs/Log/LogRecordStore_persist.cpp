@@ -100,7 +100,7 @@ TAO_LogRecordStore::log (DsLogAdmin::LogRecord &rec)
     {
      #if defined (ACE_LACKS_LONGLONG_T)
            ACE_ERROR_RETURN ((LM_ERROR,
-                         "LogRecordStore (%P|%t):Failed to bind %Q in the hash map\n",
+                         "LogRecordStore (%P|%t):Failed to bind %d in the hash map\n",
                          ACE_U64_TO_U32(rec.id)),
                              -1);
       #else
@@ -132,12 +132,25 @@ TAO_LogRecordStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &re
 int
 TAO_LogRecordStore::update (DsLogAdmin::LogRecord &rec)
 {
-  if (rec_hash_.unbind (rec.id, rec) != 0)
+  DsLogAdmin::LogRecord oldrec;
+
+  if (rec_hash_.unbind (rec.id, oldrec) != 0)
     {
       return -1;
     }
 
-  return rec_hash_.bind (rec.id, rec);
+  --this->num_records_;
+  this->current_size_ -= log_record_size(oldrec);
+
+  if (rec_hash_.bind (rec.id, rec) != 0) 
+    {
+      return -1;
+    }
+
+  ++this->num_records_;
+  this->current_size_ += log_record_size(rec);
+
+  return 0;
 }
 
 int
