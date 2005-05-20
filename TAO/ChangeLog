@@ -1,3 +1,12 @@
+Fri May 20 17:00:00 2005    Huang-Ming Huang <hh1@cse.wustl.edu>
+        
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp
+        
+          Fixed problem in ServantRetentionStrategyRetain::find_servant()
+          where servant_upcall.user_id is assigned to a local variable which
+          causes memory access violation when ServerReqeustInfo::object_id() 
+          is accessed inside interceptors. 
+
 Fri May 20 18:30:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
