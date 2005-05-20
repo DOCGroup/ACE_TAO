@@ -126,7 +126,7 @@ public:
   int dispatch_echo_checks (int first_call = 0);
 
   /// Access to ping_socket.
-  ACE::Ping_Socket& ping_socket (void);
+  ACE_Ping_Socket& ping_socket (void);
 
   /// Returns 1 if a single char of success_status_ is 0
   /// (connected).
@@ -135,7 +135,7 @@ public:
 private:
 
   /// Wrapper for sending/receiving ICMPs.
-  ACE::Ping_Socket ping_socket_;
+  ACE_Ping_Socket ping_socket_;
 
   /// Time to wait for reply.
   ACE_Time_Value reply_wait_;
@@ -183,8 +183,8 @@ public:
   virtual int open (void);
 
   // De-registers this from the reactor and stops reactors event_loop.
-    virtual int handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask close_mask);
+  virtual int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask);
 
   // Called by reactor from the notification queue.
   virtual int handle_input (ACE_HANDLE);
