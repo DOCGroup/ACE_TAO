@@ -1,3 +1,19 @@
+Fri May 20 15:22:42 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        
+          Changed the copy constructor for generated skeleton-side
+          valuetype classes private and unimplemented. Skeleton
+          code is generated for valuetypes only if they support a
+          concrete interface. However, these valuetypes also inherit
+          from the stub-side valuetype class, which has a private
+          unimplemented copy constructor. This fact makes it
+          problematic to generate a valid copy constructor for the
+          skeleton-side class, since C++ (and many compilers) require each
+          base class copy constructor to be called in the 
+          initialization list.
+
 Fri May 20 15:40:17 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/ORB_Core.i:

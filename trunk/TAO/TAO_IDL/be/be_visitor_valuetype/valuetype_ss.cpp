@@ -91,7 +91,16 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       << local_name_prefix << node_local_name
       << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-
+      
+// @@@ (JP) I'm commenting out the copy constructor for now. The
+// declaration in the skeleton header file has been made private. These
+// valuetypes (only if a concrete interface is supported) inherit
+// from the stub-side valuetype, which has a private umimplemented
+// copy constructor. This makes it impossible to call all the base
+// class copy constructors, which some compilers require. If there
+// is no fallout from this change, this code will be removed, if
+// there is a problem, we'll have to reevaluate the approach.
+/*
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name << " ("
       << "const " << local_name_prefix << node_local_name << "& rhs)";
@@ -104,7 +113,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     {
       AST_Decl *scope = ScopeAsDecl (concrete->defined_in ());
 
-      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ", "
+      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", "
           << concrete->local_name () << ") (rhs)," << be_nl;
     }
   else
@@ -115,11 +124,12 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << "ValueBase (rhs)" << be_uidt << be_uidt_nl
       << "{}" << be_nl << be_nl;
+*/
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
       << " (void)" << be_nl
-      << "{}" << be_nl << be_nl;
+      << "{}";
 
   return 0;
 }
