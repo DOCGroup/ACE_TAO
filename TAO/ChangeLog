@@ -1,3 +1,22 @@
+Fri May 20 18:30:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+        
+          Added global '::' qualifier to several instances of code
+          generation of a scoped name used as a template argument,
+          to avoid ambiguity if there are two modules with the same
+          name at different levels of nesting. This fix closes
+          [BUGID:2125].
+          
+        * tests/IDL_Test/array.idl:
+        * tests/IDL_Test/nested_scope.idl:
+        * tests/IDL_Test/typedef.idl:
+        
+          Added various IDL snips provided by Simon McQueen
+          <sm@prismtech.com> in various (now closed) Bugzilla entries.
+
 Fri May 20 12:13:13 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/Naming_Service/NT_Naming_Service.h:

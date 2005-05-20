@@ -42,16 +42,16 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Arg_Traits<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << this->linebreak_ << be_uidt_nl
+          << "::" << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Object_Arg_Traits_T<" << this->linebreak_
           << be_idt << be_idt_nl
-          << node->name () << "_ptr," << this->linebreak_ << be_nl
-          << node->name () << "_var," << this->linebreak_ << be_nl
-          << node->name () << "_out," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_ptr," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_var," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_out," << this->linebreak_ << be_nl
           << "TAO::Objref_Traits<" << node->name ()
           << ">" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -180,16 +180,16 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << " TAO::Arg_Traits<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << this->linebreak_ << be_uidt_nl
+          << "::" << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Object_Arg_Traits_T<" << this->linebreak_
           << be_idt << be_idt_nl
-          << node->name () << " *," << this->linebreak_ << be_nl
-          << node->name () << "_var," << this->linebreak_ << be_nl
-          << node->name () << "_out," << this->linebreak_ << be_nl
+          << "::" << node->name () << " *," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_var," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_out," << this->linebreak_ << be_nl
           << "TAO::Objref_Traits<" << node->name () << "> "
           << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -326,16 +326,16 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Arg_Traits<" << alias->name ()
+          << this->prefix_ << " TAO::Arg_Traits< ::" << alias->name ()
           << ">" << this->suffix_;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Var_Size_Arg_Traits_T<" << this->linebreak_
           << be_idt << be_idt_nl
-          << alias->name () << "," << this->linebreak_ << be_nl
-          << alias->name () << "_var," << this->linebreak_ << be_nl
-          << alias->name () << "_out" << this->linebreak_ << be_uidt_nl
+          << "::" << alias->name () << "," << this->linebreak_ << be_nl
+          << "::" << alias->name () << "_var," << this->linebreak_ << be_nl
+          << "::" << alias->name () << "_out" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
         os->gen_endif ();
@@ -469,16 +469,16 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
 
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
-      *os << be_nl << be_nl << this->prefix_ << " TAO::Arg_Traits<"
+      *os << be_nl << be_nl << this->prefix_ << " TAO::Arg_Traits< ::"
           << node->name () << ">" << this->suffix_;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::" << (variable ? "Var" : "Fixed") << "_Array_Arg_Traits_T<"
           << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << "," << this->linebreak_ << be_nl
-          << node->name () << "_slice," << this->linebreak_ << be_nl
-          << node->name () << "_var," << this->linebreak_ << be_nl;
+          << "::" << node->name () << "," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_slice," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_var," << this->linebreak_ << be_nl;
 
       if (variable)
         {
@@ -673,11 +673,11 @@ be_visitor_tmplinst_cs::visit_enum (be_enum *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Arg_Traits<" << node->name ()
+          << this->prefix_ << " TAO::Arg_Traits< ::" << node->name ()
           << ">" << this->suffix_;
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Basic_Arg_Traits_T<" << node->name ()
+          << this->prefix_ << " TAO::Basic_Arg_Traits_T< ::" << node->name ()
           << ">" << this->suffix_;
 
       os->gen_endif ();
@@ -763,20 +763,20 @@ be_visitor_tmplinst_cs::visit_structure (be_structure *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Arg_Traits<" << node->name ()
+          << this->prefix_ << " TAO::Arg_Traits< ::" << node->name ()
           << ">" << this->suffix_;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::" << (variable ? "Var" : "Fixed") << "_Size_Arg_Traits_T<"
           << this->linebreak_ << be_idt << be_idt_nl
-          << node->name ();
+          << "::" << node->name ();
 
       if (variable)
         {
           *os << "," << this->linebreak_ << be_nl
-              << node->name () << "_var," << this->linebreak_ << be_nl
-              << node->name () << "_out";
+              << "::" << node->name () << "_var," << this->linebreak_ << be_nl
+              << "::" << node->name () << "_out";
         }
 
       *os << this->linebreak_ << be_uidt_nl
@@ -842,20 +842,20 @@ be_visitor_tmplinst_cs::visit_union (be_union *node)
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Arg_Traits<" << node->name ()
+          << this->prefix_ << " TAO::Arg_Traits< ::" << node->name ()
           << ">" << this->suffix_;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::" << (variable ? "Var" : "Fixed") << "_Size_Arg_Traits_T<"
           << this->linebreak_ << be_idt << be_idt_nl
-          << node->name ();
+          << "::" << node->name ();
 
       if (variable)
         {
           *os << "," << this->linebreak_ << be_nl
-              << node->name () << "_var," << this->linebreak_ << be_nl
-              << node->name () << "_out";
+              << "::" << node->name () << "_var," << this->linebreak_ << be_nl
+              << "::" << node->name () << "_out";
         }
 
       *os << this->linebreak_ << be_uidt_nl

@@ -151,3 +151,25 @@ module Negotiator
   };
 };
 
+// Caught some generation of arg helper template parameters not using
+// the qualifying '::' on scoped names.
+
+module bug_2125 
+{
+  module Bar 
+  {
+    enum Stuff {ONE, TWO};
+  };
+};
+
+module Wow 
+{
+  module bug_2125 
+  {
+    interface MyInterface 
+    {
+      void op1 (in bug_2125::Bar::Stuff fbs);
+      void op2 (in ::bug_2125::Bar::Stuff fbs);
+    };
+  };
+};

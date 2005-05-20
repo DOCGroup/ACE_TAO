@@ -123,3 +123,29 @@ module arraytest
     void test_method (out myvec2 mystring);
   };
 };
+
+// Caught the has_constructor() flag not being passed from the
+// element type to the array in the AST.
+module bug_2126
+{
+  union FirstUnion switch (boolean)
+  {
+    case TRUE: long first_union_foo;
+    case FALSE: long first_union_bar;
+  };
+
+  typedef FirstUnion FirstUnionArray[2];
+
+  struct MyStruct
+  {
+    FirstUnionArray my_struct_foo;
+  };
+
+  union SecondUnion switch (boolean)
+  {
+    case TRUE: MyStruct second_union_struct_member;
+    case FALSE: long wibble;
+  };
+};
+
+
