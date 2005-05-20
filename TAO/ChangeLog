@@ -1,3 +1,23 @@
+Fri May 20 11:27:02 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+
+          Add orb init option -ORBIMREndpointsInIMR to allow control over
+          whether the ImR enpoint is encoded into persistent policy object
+          refs whhen the POA has been registered with the ImR. Default is true.
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          Check whether the above property is set before encoding ImR location
+          in preference to the local listener address into object references.
+
+        * docs/Options.html:
+
+          Document the above new option.
+
+          This fixes bug #2123.
+
 Fri May 20 08:55:03 2005  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:

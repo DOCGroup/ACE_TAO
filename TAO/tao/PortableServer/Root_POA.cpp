@@ -2058,7 +2058,8 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  if (indirect && this->active_policy_strategies_.lifespan_strategy()->use_imr ())
+  if (indirect && this->active_policy_strategies_.lifespan_strategy()->use_imr ()
+         && this->orb_core ().imr_endpoints_in_ior ())
     {
       // Check to see if we alter the IOR.
       CORBA::Object_var imr =
