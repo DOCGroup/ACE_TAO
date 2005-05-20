@@ -195,6 +195,8 @@ AST_Array::compute_size_type (void)
   // Our size type is the same as our type.
   this->size_type (type->size_type ());
 
+  this->has_constructor (type->has_constructor ());
+
   return 0;
 }
 

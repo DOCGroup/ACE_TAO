@@ -1,3 +1,19 @@
+Fri May 20 14:19:08 2005  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/ast/ast_array.cpp:
+
+          Arrays need to take on the "constructed ?" status of the
+          type they are an array of as they do with the size type.
+
+          This fixes bug #2126.
+
+        * tests/Bug_2126_Regression/Bug_2126_Regression.mpc:
+        * tests/Bug_2126_Regression/README:
+        * tests/Bug_2126_Regression/test.cpp:
+        * tests/Bug_2126_Regression/Test.idl:
+
+          A regression test for the above fix.
+
 Fri May 20 12:38:34 2005  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
