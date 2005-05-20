@@ -1,3 +1,9 @@
+Fri May 20 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Current.pidl:
+          Updated header to doxygen style and removed remark about patching
+          generated files, this is not needed anymore
+
 Fri May 20 11:27:02 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/ORB_Core.cpp:
