@@ -1,3 +1,23 @@
+Fri May 20 21:11:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/TP_Reactor_Test.cpp (delete_reactor):
+
+	* ace/Log_Msg.cpp (msg_ostream):
+
+	* ace/SString.h (ACE_Auto_String_Free):
+
+	  Corrected documentation suggesting use of
+	  ACE_Auto_Array_Ptr<char *>.  The correct template argument is
+	  "char", not "char *".
+
+	* ace/DLL.cpp (~ACE_DLL):
+
+	  Explicitly delete() this->dll_name_.  It is normally delete()d
+	  in ACE_DLL::close().  However, that may not occur if full
+	  ACE_DLL initialization is interruepted due to errors
+	  (e.g. attempting to open a DSO/DLL that does not exist).  Fixes
+	  a memory leak.
+
 Fri May 20 15:28:00 2005  Gary Maxey  <gary.maxey@hp.com>
 
         * ace/config-lite.h
@@ -6,9 +26,12 @@ Fri May 20 15:28:00 2005  Gary Maxey  <gary.maxey@hp.com>
 
 Thu May 19 19:10:30 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (handle_output): Removed
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp
+	  (handle_output):
+
+	  Removed
 	
-	  ACE_ASSERT (errno == EWOULDBLOCK);
+	    ACE_ASSERT (errno == EWOULDBLOCK);
 	  
 	  since errno may have been changed by this point.  Thanks to Ro
  	  Madhavan <ro_madhavan@sify.com> for reporting this.
