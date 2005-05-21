@@ -439,7 +439,6 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-
   if (!this->are_policies_parsed_)
     // None has already parsed the policies.
     {
@@ -543,6 +542,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
     }
 
 #else
+  ACE_UNUSED_ARG (pl);
   ACE_ENV_ARG_NOT_USED;    // FUZZ: ignore check_for_ace_check
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
