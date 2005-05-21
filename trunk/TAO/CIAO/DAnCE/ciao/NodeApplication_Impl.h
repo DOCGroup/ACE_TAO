@@ -101,6 +101,22 @@ namespace CIAO
      *
      *-----------------------------------------------------------*/
 
+    /**
+     * @method ciao_preactivate
+     */
+    virtual void
+    ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StartError));
+
+    /**
+     * @method ciao_postactivate
+     */
+    virtual void
+    ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StartError));
+
     /// Initialize the NodeApplication
     virtual CORBA::Long init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -168,19 +184,6 @@ namespace CIAO
         const ::Deployment::NodeImplementationInfo & node_impl_info
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
-
-    /// This function is a helper for start call. Bala's
-    /// Idea of adding those pre/post activate calls doesn't work
-    /// with the new sepc.
-    ///@@ TODO.   Come up with new ways of synchronized initialization process.
-    typedef void (Components::CCMObject::*Funct_Ptr)
-      (ACE_ENV_SINGLE_ARG_DECL);
-
-    virtual void start_i (Funct_Ptr functor
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StartError));
 
     /// To store all created Component object.
     // @@Gan/Jai, as we discussed before this is simply a BAD

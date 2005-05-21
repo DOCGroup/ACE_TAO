@@ -259,16 +259,23 @@ namespace CIAO
                 ACE_DEBUG ((LM_DEBUG,
                             "CIAO_PlanLauncher: start Launch application..."));
 
-              // Start the Application immediately
-              int start = 1;
+              // Don not start the Application immediately since it vialtes
+              // the semantics of component activation sequence
+              int start = 0;
 
-              dapp_mgr->startLaunch (properties.in (), start);
+              dapp_mgr->startLaunch (properties.in (), 0);
               ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
+              // Call finish Launch to complete the connections
               ACE_DEBUG ((LM_DEBUG,
                           "CIAO_PlanLauncher: finish Launch application..."));
-              // Call finish Launch to complete the connections
               dapp_mgr->finishLaunch (start);
+              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+
+              // Call start to activate components
+              ACE_DEBUG ((LM_DEBUG,
+                          "CIAO_PlanLauncher: start activating components..."));
+              dapp_mgr->start ();
               ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
               ACE_DEBUG ((LM_DEBUG,

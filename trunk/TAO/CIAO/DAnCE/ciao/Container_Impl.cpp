@@ -374,7 +374,7 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
 
   /* Before we do remove component we have to inform the homeservant so
    * Component::ccm_passivate ()
-   * constainer::ninstall_component () ->deactivate_object () will be called.
+   * constainer::uninstall_component () ->deactivate_object () will be called.
    *
    * ccm_remove will be called when the poa destroys the servant.
    */
