@@ -1,13 +1,13 @@
 Fri May 20 20:47:00 2005    Huang-Ming Huang <hh1@cse.wustl.edu>
 
-  * tao/MProfile.cpp:
-  * tao/Profile.h:
-  * tao/Profile.cpp
-  * tao/Stub.cpp:
-  
-    Removed the association of TAO_Profile to TAO_Stub. This allows an
-    instance of TAO_Profile to be shared between different TAO_MProfile
-    objects.
+	* tao/MProfile.cpp:
+	* tao/Profile.h:
+	* tao/Profile.cpp
+	* tao/Stub.cpp:
+
+          Removed the association of TAO_Profile to TAO_Stub. This allows
+	  an instance of TAO_Profile to be shared between different
+	  TAO_MProfile objects.
 
 Fri May 20 16:51:35 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
