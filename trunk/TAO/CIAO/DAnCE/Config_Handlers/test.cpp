@@ -55,7 +55,6 @@ int main (int argc, char *argv[])
     {
       DeploymentPlan dp = deploymentPlan (doc);
       
-      
       DP_Handler dp_handler (dp);
       
       std::cout << "Instance document import succeeded.  Dumping contents....\n";
