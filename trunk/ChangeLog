@@ -1,3 +1,8 @@
+Fri May 20 19:05:22 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Thread.h (ACE_Thread): Updated the documentation of ACE_Thread::join().
+	  Thanks to Alan Balasuar <balasuar@gmail.com> for motivating this fix.
+
 Sat May 21 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/HTBP/Reactor_Tests/server.cpp:

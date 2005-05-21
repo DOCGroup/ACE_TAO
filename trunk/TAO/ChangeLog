@@ -9,35 +9,35 @@ Sat May 21 18:34:12 UTC 2005   Johnny Willemsen  <jwillemsen@remedy.nl>
           Use taoserver as base project to fix unresolved link errors
 
 Fri May 20 20:47:00 2005    Huang-Ming Huang <hh1@cse.wustl.edu>
-
-	* tao/MProfile.cpp:
-	* tao/Profile.h:
-	* tao/Profile.cpp
-	* tao/Stub.cpp:
-
-          Removed the association of TAO_Profile to TAO_Stub. This allows
-	  an instance of TAO_Profile to be shared between different
-	  TAO_MProfile objects.
+ 
+        * tao/MProfile.cpp:
+        * tao/Profile.h:
+        * tao/Profile.cpp
+        * tao/Stub.cpp:
+  
+          Removed the association of TAO_Profile to TAO_Stub. This allows an
+          instance of TAO_Profile to be shared between different TAO_MProfile
+          objects.
 
 Fri May 20 16:51:35 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (TAO_LogRecoreStore::log):
-	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp (TAO_LogRecoreStore::log):
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
 
-	  Use "%d" instead of "%Q" log format directive for ACE_UINT64_TO_U32
-	  parameter.
+          Use "%d" instead of "%Q" log format directive for ACE_UINT64_TO_U32
+          parameter.
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (TAO_LogRecordStore::update):
-	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp (TAO_LogRecordStore::update):
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
 
-	  Subtract size of existing record and Add size of new record to
-	  current size.
+          Subtract size of existing record and Add size of new record to
+          current size.
 
 Fri May 20 16:44:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Fri May 20 17:10:00 2005    Huang-Ming Huang <hh1@cse.wustl.edu>
 
@@ -79,7 +79,7 @@ Fri May 20 12:13:13 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
         * orbsvcs/Naming_Service/NT_Naming_Service.h:
         * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
 
-	  Fixed build problems with Visual C++ 6 on Windows
+          Fixed build problems with Visual C++ 6 on Windows
 
 Fri May 20 15:22:42 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
