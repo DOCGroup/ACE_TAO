@@ -514,7 +514,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
 
-          my_na->ciao_preactivate ();
+          my_na->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (CIAO::debug_level () > 1)
@@ -536,7 +536,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
 
-          my_na->start ();
+          my_na->start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (CIAO::debug_level () > 1)
@@ -558,7 +558,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
 
-          my_na->ciao_postactivate ();
+          my_na->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       if (CIAO::debug_level () > 1)
@@ -585,9 +585,30 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::destroyApplication.\n"));
   ACE_TRY
     {
+      CORBA::ULong i;
+
+      // Invoke ciao_passivate () operation on each cached NodeApplication object.
+      for (i = 0; i < this->num_child_plans_; ++i)
+        {
+          // Get the NodeApplication object references.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
+
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StopError ()); // Should never happen!
+
+          ::Deployment::NodeApplication_ptr my_na =
+                  (entry->int_id_).node_application_.in ();
+
+          my_na->ciao_passivate ();
+          ACE_TRY_CHECK;
+        }
+
       // Invoke destroyManager() operation on each cached
       // NodeManager object.
-      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+      for (i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeManager and NodeApplicationManager object references.
           ACE_Hash_Map_Entry

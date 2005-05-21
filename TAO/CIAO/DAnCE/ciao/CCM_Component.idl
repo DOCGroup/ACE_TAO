@@ -126,6 +126,9 @@ module Components
     void ciao_postactivate ()
       raises (InvalidConfiguration);
 
+    void ciao_passivate ()
+      raises (InvalidConfiguration);
+
     void configuration_complete ()
       raises (InvalidConfiguration);
 

@@ -21,11 +21,6 @@ module Deployment {
     string reason;
   };
 
-  exception StopError {
-    string name;
-    string reason;
-  };
-
   exception NameExists {
   };
 
