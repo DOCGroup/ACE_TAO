@@ -5,10 +5,4 @@ project: acedefaults, aceversion {
   after    += ACE
   libs     += ACE
   libout    = $(ACE_ROOT)/lib
-
-  specific(gnuace) {
-    libs += dsui
-    libpaths += $(DATASTREAM_ROOT)/lib
-    includes += $(DATASTREAM_ROOT)/include
-  }
 }

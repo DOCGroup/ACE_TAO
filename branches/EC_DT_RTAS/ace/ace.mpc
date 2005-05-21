@@ -18,12 +18,6 @@ project(ACE) : acedefaults, aceversion, core, other, codecs, token, svcconf, uui
   //OS_String.cpp
   //Synch.cpp
 
-  specific(gnuace) {
-    libs += dsui
-    libpaths += $(DATASTREAM_ROOT)/lib
-    includes += $(DATASTREAM_ROOT)/include
-  }
-
   Source_Files(ACE_COMPONENTS) {
     OS {
       Basic_Types.cpp
@@ -277,7 +271,6 @@ project(ACE) : acedefaults, aceversion, core, other, codecs, token, svcconf, uui
       Message_Queue.cpp
       Reactor_Notification_Strategy.cpp
       Task.cpp
-      ace_dsui_vars.cpp
     }
 
     Memory {
