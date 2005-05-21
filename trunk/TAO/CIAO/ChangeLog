@@ -1,8 +1,53 @@
+Sat May 21 16:08:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
+
+	* DAnCE/ciao/Deployment_Core.idl
+
+	  Added <ciao_passivate> operation on the NodeApplication interface,
+	  which is useful for enforce the correct component deactivation
+	  sequence.
+
+	* DAnCE/ciao/Deployment.idl
+
+	  Moved the StopError exception definition and put into the
+	  Deployment_Core.idl, since <ciao_passviate> operation needs
+	  such exception declaration.
+
+	* DAnCE/ciao/CCM_Component.idl
+
+	  Added <ciao_passivate> operation to the CCM_Object interface.
+
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.h
+
+	  Implementation of the above added operation <ciao_passivate>.
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+
+	  Modified to call <ciao_passivate> before calling <destroyApplication>.
+
+	* DAnCE/RepositoryManager/Repository_Manager.cpp
+
+	  Modified the Repository_Manager/executor to invoke <start> separately
+	  from invoking finishLaunch.
+
+	* DAnCE/ciao/Servant_Impl_Base.cpp
+
+	  Removed the call of <ciao_passivate> from the Servant_Impl_Base::remove()
+	  function since this will be called separately on the whole assembly, i.e.
+	  passivate ALL components in the assembly before removing components.
+
+	* DAnCE/ciao/Servant_Impl_T.cpp
+	* DAnCE/ciao/Servant_Impl_T.h
+
+	  Changed the operation name from "_ciao_passivate" to "ciao_passivate",
+	  in order to make it to be the implementation of the <ciao_passivate>
+	  operation added on the CCM_Object interface.
+
 Sat May 21 14:39:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
 	* DAnCE/ciao/Deployment_Core.idl
 
-	  Added ciao_preactivate and ciao_postactivate operations on the
+	  Added <ciao_preactivate> and <ciao_postactivate> operations on the
 	  NodeApplication interface, which is useful for enforce the correct
 	  component activation operation sequence.
 
@@ -19,7 +64,9 @@ Sat May 21 14:39:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
 	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
 
-	  Modified to disable "start" while "finishLaunch".
+	  Modified to disable the "start" while "finishLaunch", since
+	  it is the application developer's control to invoke start
+	  operation in the whole assembly.
 
 	* DAnCE/ciao/Container_Base.cpp
 	* DAnCE/ciao/Container_Impl.cpp

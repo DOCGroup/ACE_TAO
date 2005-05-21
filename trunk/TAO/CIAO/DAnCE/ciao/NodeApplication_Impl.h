@@ -117,6 +117,14 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
+    /**
+     * @method ciao_passivate
+     */
+    virtual void
+    ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StopError));
+
     /// Initialize the NodeApplication
     virtual CORBA::Long init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));

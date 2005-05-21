@@ -226,14 +226,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       Deployment::Properties,
                       1);
       ACE_DEBUG ((LM_DEBUG, "Executor: start Launch application....."));
-      // Start the Application immediately
-      int start = 1;
+
+      // Do not start the Application immediately
+      int start = 0;
       dapp_mgr->startLaunch (properties.in (), start);
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "Executor: finish Launch application....."));
       // Call finish Launch to complete the connections
+      ACE_DEBUG ((LM_DEBUG, "Executor: finish Launch application....."));
       dapp_mgr->finishLaunch (start);
+      ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+
+      // Call start to activate components
+      ACE_DEBUG ((LM_DEBUG, "Executor: start activating components..."));
+      dapp_mgr->start ();
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Executor: Application Deployed successfully \n"));
