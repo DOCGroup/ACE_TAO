@@ -1,3 +1,50 @@
+Sat May 21 17:17:58 EDT 2005	Stoyan Paunov <s.paunov@vanderbilt.edu>
+
+
+	* Deployment.idl
+		modified the Deployment idl to include the new_RepositoryManager IDL
+
+	* new_RepositoryManager.idl
+		idl for the new_RepositoryManager deamon which just includes the idl defined 
+		within the Deployment namespace
+
+	* new_RepositoryManager.mpc
+		mpc file for the RM deamon. Make sure you install ZZIP and ZLIB and specify
+		ZZIP_ROOT and ZLIB_ROOT or the RM would not compile. Unfortunately I could not get 
+		it to use the zzip and zlib features that come with MPC because there were some issues
+ 
+	* new_RepositoryManager_Impl.cpp
+	* new_RepositoryManager_Impl.h
+		Implementation files for the deamon
+
+	* RepositoryManager.cpp
+		bootstrapping main program for the RM deamon
+
+	* RMadmin.cpp
+		client program to communicate with the RM
+
+	* Options.cpp
+	* Options.h
+		Options singleton files for the RM client
+
+	* packages/inconsistent.cpk
+	* packages/package.cpk
+		some manually created packages to be used to test the RM
+
+	* Modified_Deployment.xsd
+		this is copied out of the XSC_ConfigHandlers dir. I need it for the 
+		test of the getPlan function. Otherwise XERCESC fails
+
+	* README.txt
+		not much in here for right now. I will add some docs ASAP
+
+	* ZIP_Wrapper.cpp
+	* ZIP_Wrapper.h
+		Wrapper around ZZIP for easy access.
+
+
 Wed Mar 30 18:02:02 2005  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
 	Created repo_manager_packaging branch.
+
+
