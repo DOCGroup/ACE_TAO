@@ -7,8 +7,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
   dynamicflags = TAO_RTEVENT_BUILD_DLL
   tagchecks   += RTEvent
   // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs $(DATASTREAM_ROOT)/include
-  libs += wrappers dsui
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 
   IDL_Files {
     RtecDefaultEventData.idl
@@ -100,7 +99,6 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       Event/EC_Type_Filter.cpp
       Event/EC_UDP_Admin.cpp
       Event/EC_Event_Limit.cpp
-      Event/ec_dsui_vars.cpp
     }
   }
 }

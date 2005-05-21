@@ -17,7 +17,7 @@ project(Kokyu) : acelib {
     Default_Dispatcher_Impl.cpp
     Dispatcher_Task.cpp
     Kokyu_defs.cpp
-    kokyu_dsui_vars.cpp
+    //kokyu_dsui_vars.cpp
   }
 
   Template_Files {
@@ -40,12 +40,6 @@ project(RGKokyu) : acelib {
     all : clean
   }
 
-  specific(gnuace) {
-    libs += dsui
-    libpaths += $(DATASTREAM_ROOT)/lib
-    includes += $(DATASTREAM_ROOT)/include
-  }
-
   Source_Files {
     Dispatch_Deferrer.cpp
     Dispatcher_Impl.cpp
@@ -53,7 +47,6 @@ project(RGKokyu) : acelib {
     Default_Dispatcher_Impl.cpp
     Dispatcher_Task.cpp
     Kokyu_defs.cpp
-    kokyu_dsui_vars.cpp
   }
 
   Template_Files {

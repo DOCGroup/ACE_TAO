@@ -5,11 +5,4 @@ project(RMCast) : acelib, core {
   requires    += rmcast
   sharedname   = ACE_RMCast
   dynamicflags = ACE_RMCAST_BUILD_DLL
-
-  specific(gnuace) {
-    libs += dsui
-    libpaths += $(DATASTREAM_ROOT)/lib
-    includes += $(DATASTREAM_ROOT)/include
-  }
-
 }
