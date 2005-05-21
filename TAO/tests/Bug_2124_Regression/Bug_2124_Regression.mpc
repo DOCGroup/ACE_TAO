@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (*Test) : taoclient { 
+project (*Test) : taoserver {
    Source_Files {
       test.cpp
    }

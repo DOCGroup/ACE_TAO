@@ -142,7 +142,9 @@ Stream_Handler::handle_input (ACE_HANDLE h)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Stream_Handler::handle_input (%d) read %d:\n%C\n"),
               h, n, buffer));
-  if (ACE_OS::strstr (buffer, "goodbye") != 0)
+
+  const char *tok_loc = ACE_OS::strstr (buffer, "goodbye");
+  if (tok_loc != 0)
     this->reactor()->end_event_loop();
   else
     {
