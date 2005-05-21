@@ -224,7 +224,7 @@ namespace CIAO
                                 Deployment::Connections & retv);
 
     /// Dump connections, a static method
-    static void dump_connections (const ::Deployment::Connections & connections);
+    void dump_connections (const ::Deployment::Connections & connections);
 
   protected:
     /// location of the Domainapplication

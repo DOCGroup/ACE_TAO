@@ -53,6 +53,8 @@ CIAO::NodeApplication_Impl::finishLaunch (
                    Deployment::StartError,
                    Deployment::InvalidConnection))
 {
+  ACE_UNUSED_ARG (start);
+
   ACE_TRY
     {
       const CORBA::ULong length = providedReference.length ();
@@ -116,13 +118,6 @@ CIAO::NodeApplication_Impl::finishLaunch (
               ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
         }
-      if (start)
-        {
-          this->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-
-      ACE_DEBUG ((LM_DEBUG, "Launching NodeApplication finished successfully.\n\n"));
     }
   ACE_CATCHANY
     {
@@ -135,27 +130,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
 }
 
 void
-CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError))
-{
-  //@@ Note: set_session_context will be called when the servant is created.
-  Funct_Ptr functor = & Components::CCMObject::ciao_preactivate;
-  start_i (functor ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  functor = & Components::CCMObject::ciao_activate;
-  start_i (functor ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  functor = & Components::CCMObject::ciao_postactivate;
-  start_i (functor ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-void
-CIAO::NodeApplication_Impl::start_i (Funct_Ptr functor
-                                     ACE_ENV_ARG_DECL)
+CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -164,7 +139,37 @@ CIAO::NodeApplication_Impl::start_i (Funct_Ptr functor
        iter != end;
        ++iter)
   {
-    (((*iter).int_id_)->*functor) (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ((*iter).int_id_)->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+}
+
+void
+CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  Component_Iterator end = this->component_map_.end ();
+  for (Component_Iterator iter (this->component_map_.begin ());
+       iter != end;
+       ++iter)
+  {
+    ((*iter).int_id_)->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+}
+
+void
+CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
+{
+  Component_Iterator end = this->component_map_.end ();
+  for (Component_Iterator iter (this->component_map_.begin ());
+       iter != end;
+       ++iter)
+  {
+    ((*iter).int_id_)->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
 }
@@ -272,7 +277,8 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
                   ::Components::CreateFailure,
                   ::Components::InvalidConfiguration))
 {
-  ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::create_container()\n"));
+  if (CIAO::debug_level () > 1)
+    ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::create_container()\n"));
 
   CIAO::Container_Impl *container_servant = 0;
 
@@ -319,8 +325,9 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
     this->container_set_.add (ci.in ());
   }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "LEAVING: NodeApplication_Impl::create_container()\n"));
+  if (CIAO::debug_level () > 1)
+    ACE_DEBUG ((LM_DEBUG,
+                "LEAVING: NodeApplication_Impl::create_container()\n"));
   return ci._retn ();
 }
 

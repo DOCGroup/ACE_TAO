@@ -1,3 +1,35 @@
+Sat May 21 14:39:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
+
+	* DAnCE/ciao/Deployment_Core.idl
+
+	  Added ciao_preactivate and ciao_postactivate operations on the
+	  NodeApplication interface, which is useful for enforce the correct
+	  component activation operation sequence.
+
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.h
+
+	  Implemented the above operations.
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+
+	  Modified it to call ciao_preactivate and ciao_postactivate
+	  on NodeApplications accordingly
+
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
+
+	  Modified to disable "start" while "finishLaunch".
+
+	* DAnCE/ciao/Container_Base.cpp
+	* DAnCE/ciao/Container_Impl.cpp
+
+	  Put some debug output into the CIAO_DebugLevel control
+
+	* DAnCE/examples/Hello/Sender/Sender_exec.cpp
+
+	  Cosmetic changes.
+
 Tue May 17 20:49:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO/tests/IDL3/ImpliedIDL/All/all.mpc:

@@ -161,14 +161,14 @@ module Deployment
   {
     readonly attribute ::Deployment::Properties properties;
 
-    // @@ Initialize the nodeapplication, so it will know what
-    //    components it will create and home many of them are
-    //    there. However the real create action will take place when
-    //    start launch is called on NodeApplicationManager.
+    /// @@ Initialize the nodeapplication, so it will know what
+    ///    components it will create and home many of them are
+    ///    there. However the real create action will take place when
+    ///    start launch is called on NodeApplicationManager.
     long init ();
 
-    // @@ This operation will be called by NodeApplicationManager
-    //    client to really start to create homes and components.
+    /// @@ This operation will be called by NodeApplicationManager
+    ///    client to really start to create homes and components.
     ComponentInfos install (in NodeImplementationInfo node_impl_info)
       raises (UnknownImplId,
               ImplEntryPointNotFound,
@@ -176,9 +176,9 @@ module Deployment
               ::Components::InvalidConfiguration,
               ::Components::RemoveFailure);
 
-    //@@ We know that Dployment::NodeApplicationManager will be returned,
-    //   however to avoid the size of the shared object of CIAO_Server.
-    //   we return an Object.
+    ///@@ We know that Dployment::NodeApplicationManager will be returned,
+    ///   however to avoid the size of the shared object of CIAO_Server.
+    ///   we return an Object.
     Object get_node_application_manager ();
 
     Container create_container (in ::Deployment::Properties properties)
@@ -190,9 +190,18 @@ module Deployment
 
     Containers get_containers ();
 
-    // Remove all containers, components and component homes.
-    // Shuts down the ORB of the NodeApplication to terminate the process.
+    /// Remove all containers, components and component homes.
+    /// Shuts down the ORB of the NodeApplication to terminate the process.
     oneway void remove ();
+
+    /// CIAO specific extensions. This will enforce the component to
+    /// be activated (preactivate, activate, postactivated) before the assembly
+    /// is established
+    void ciao_preactivate ()
+      raises (StartError);
+
+    void ciao_postactivate ()
+      raises (StartError);
   };
 
 };

@@ -494,8 +494,13 @@ start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::start.\n"));
   ACE_TRY
     {
-      // Invoke start() operation on each cached NodeApplication object.
-      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+      CORBA::ULong i;
+
+      // @TODO: Below code has too much duplication, I will come back to
+      // reorganize it later. 
+
+      // Invoke ciao_preactivate () operation on each cached NodeApplication object.
+      for (i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplication object reference.
           ACE_Hash_Map_Entry
@@ -506,13 +511,59 @@ start (ACE_ENV_SINGLE_ARG_DECL)
                                         entry) != 0)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
-          // @@TODO: This might cause problem!
-          ::Deployment::NodeApplication_var my_na =
+          ::Deployment::NodeApplication_ptr my_na =
+            (entry->int_id_).node_application_.in ();
+
+          my_na->ciao_preactivate ();
+          ACE_TRY_CHECK;
+        }
+      if (CIAO::debug_level () > 1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO_DomainApplicationManager: ciao_preactivation finished.\n"));
+
+      // Invoke start () operation on each cached NodeApplication object.
+      for (i = 0; i < this->num_child_plans_; ++i)
+        {
+          // Get the NodeApplication object reference.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
+
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StartError ()); // Should never happen!
+
+          ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
 
           my_na->start ();
           ACE_TRY_CHECK;
         }
+      if (CIAO::debug_level () > 1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO_DomainApplicationManager: ccm_activate finished.\n"));
+
+      // Invoke ciao_postctivate () operation on each cached NodeApplication object.
+      for (i = 0; i < this->num_child_plans_; ++i)
+        {
+          // Get the NodeApplication object reference.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
+
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StartError ()); // Should never happen!
+
+          ::Deployment::NodeApplication_ptr my_na =
+            (entry->int_id_).node_application_.in ();
+
+          my_na->ciao_postactivate ();
+          ACE_TRY_CHECK;
+        }
+      if (CIAO::debug_level () > 1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO_DomainApplicationManager: ciao_postactivation finished.\n"));
     }
   ACE_CATCHANY
     {
