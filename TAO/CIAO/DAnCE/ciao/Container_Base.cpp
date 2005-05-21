@@ -559,8 +559,9 @@ namespace CIAO
 
     if (t == Container::Facet_Consumer)
     {
-      ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
-                  str.in ()));
+      if (CIAO::debug_level () > 1)
+        ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
+                    str.in ()));
     }
 
     CORBA::Object_var objref =
