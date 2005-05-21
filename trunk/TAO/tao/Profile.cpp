@@ -31,8 +31,6 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           const TAO::ObjectKey &obj_key,
                           const TAO_GIOP_Message_Version &version)
   : version_ (version)
-    , stub_ (0)
-    , policy_list_ (0)
     , are_policies_parsed_ (false)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
@@ -55,8 +53,6 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
                           const TAO_GIOP_Message_Version &version)
   : version_ (version)
-    , stub_ (0)
-    , policy_list_ (0)
     , are_policies_parsed_ (false)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
@@ -340,6 +336,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
   tagged_components_.set_component (tagged_component);
 }
 
+
 void
 TAO_Profile::policies (CORBA::PolicyList *policy_list
                        ACE_ENV_ARG_DECL)
@@ -435,12 +432,13 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 }
 
 
-CORBA::PolicyList &
-TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
+
+void
+TAO_Profile::get_policies (CORBA::PolicyList& pl
+                           ACE_ENV_ARG_DECL)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  CORBA::PolicyList * pl = this->stub_->base_profiles ().policy_list_;
 
   if (!this->are_policies_parsed_)
     // None has already parsed the policies.
@@ -463,7 +461,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
 
           if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             {
-              return *(stub_->base_profiles ().policy_list_);
+              return ;
             }
 
           in_cdr.reset_byte_order (static_cast <int> (byte_order));
@@ -474,8 +472,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
 
           if (!(in_cdr >> policy_value_seq))
             {
-              ACE_THROW_RETURN (CORBA::INV_OBJREF (),
-                                *(stub_->base_profiles ().policy_list_));
+              ACE_THROW (CORBA::INV_OBJREF ());
             }
 
           // Here we extract the Messaging::PolicyValue out of the sequence
@@ -485,7 +482,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
           CORBA::ULong length = policy_value_seq.length ();
 
           // Set the policy list length.
-          pl->length (length);
+          pl.length (length);
 
           for (CORBA::ULong i = 0; i < length; ++i)
             {
@@ -512,7 +509,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
                       in_cdr.reset_byte_order (static_cast <int> (byte_order));
 
                       policy->_tao_decode (in_cdr);
-                      (*pl)[i] = policy._retn ();
+                      pl[i] = policy._retn ();
                     }
                   else
                     {
@@ -549,20 +546,8 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENV_ARG_NOT_USED;    // FUZZ: ignore check_for_ace_check
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
-  return *(stub_->base_profiles ().policy_list_);
 }
 
-void
-TAO_Profile::the_stub (TAO_Stub *stub)
-{
-  this->stub_ = stub;
-}
-
-TAO_Stub*
-TAO_Profile::the_stub (void)
-{
-  return stub_;
-}
 
 void
 TAO_Profile::verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL)

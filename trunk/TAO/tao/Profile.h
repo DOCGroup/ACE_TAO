@@ -139,13 +139,9 @@ public:
                          ACE_ENV_ARG_DECL);
 
   /// Accessor for the client exposed policies of this profile.
-  virtual CORBA::PolicyList&  policies (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Sets the TAO_Stub to which this profile is associated.
-  virtual void the_stub (TAO_Stub *stub);
-
-  /// Gets the TAO_MProfile that holds the TAO_Profile instance.
-  virtual TAO_Stub* the_stub (void);
+  //virtual CORBA::PolicyList&  policies (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void  get_policies (CORBA::PolicyList &policy_list
+                              ACE_ENV_ARG_DECL);
 
   /// Returns true if this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;
@@ -308,11 +304,8 @@ protected:
   /// The tagged components
   TAO_Tagged_Components tagged_components_;
 
-  /// Pointer to the TAO_Stub to which this profile is related.
-  TAO_Stub *stub_;
-
   /// Client exposed policies of this profile.
-  CORBA::PolicyList *policy_list_;
+  //CORBA::PolicyList *policy_list_;
 
   // NOTE: In this implementation it is assumed that the <policy_list>
   // is exactly the same for each profile.
