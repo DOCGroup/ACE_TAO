@@ -1,3 +1,8 @@
+Sat May 21 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/HTBP/Reactor_Tests/server.cpp:
+          Fixed value computed is not used warning in GCC IA64 build
+
 Fri May 20 15:28:00 2005  Gary Maxey  <gary.maxey@hp.com>
 
         * ace/config-lite.h
@@ -10,9 +15,9 @@ Thu May 19 19:10:30 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	  (handle_output):
 
 	  Removed
-	
+
 	    ACE_ASSERT (errno == EWOULDBLOCK);
-	  
+
 	  since errno may have been changed by this point.  Thanks to Ro
  	  Madhavan <ro_madhavan@sify.com> for reporting this.
 
