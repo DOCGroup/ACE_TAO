@@ -88,7 +88,7 @@ namespace CIAO
 
     /// @@NOTE: The busted operation.
     void
-    _ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     CORBA::Boolean

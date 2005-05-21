@@ -174,6 +174,21 @@ CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
   }
 }
 
+void
+CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError))
+{
+  Component_Iterator end = this->component_map_.end ();
+  for (Component_Iterator iter (this->component_map_.begin ());
+       iter != end;
+       ++iter)
+  {
+    ((*iter).int_id_)->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+}
+
 Deployment::ComponentInfos *
 CIAO::NodeApplication_Impl::install (
     const ::Deployment::NodeImplementationInfo & node_impl_info

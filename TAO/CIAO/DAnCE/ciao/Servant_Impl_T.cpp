@@ -277,7 +277,7 @@ namespace CIAO
             typename EXEC_VAR,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::_ciao_passivate (
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::ciao_passivate (
       ACE_ENV_SINGLE_ARG_DECL
     )
   ACE_THROW_SPEC ((CORBA::SystemException))

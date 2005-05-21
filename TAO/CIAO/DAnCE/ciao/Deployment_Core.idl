@@ -24,6 +24,11 @@ module Deployment
     string reason;
   };
 
+  exception StopError {
+    string name;
+    string reason;
+  };
+
   exception InvalidConnection
   {
     string name;
@@ -202,6 +207,9 @@ module Deployment
 
     void ciao_postactivate ()
       raises (StartError);
+
+    void ciao_passivate ()
+      raises (StopError);
   };
 
 };
