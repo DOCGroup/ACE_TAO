@@ -325,7 +325,8 @@ TAO_MProfile::init_policy_list (ACE_ENV_SINGLE_ARG_DECL)
   // it causes the initialization of the policies
   // for the current profile.
 
-  this->get_current_profile ()->policies (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->get_current_profile ()->get_policies (*this->policy_list_
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->is_policy_list_initialized_ = 1;
