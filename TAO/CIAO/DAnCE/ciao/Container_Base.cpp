@@ -79,6 +79,7 @@ namespace CIAO
 
   Session_Container::~Session_Container (void)
   {
+    delete this->sa_;
   }
 
   int
