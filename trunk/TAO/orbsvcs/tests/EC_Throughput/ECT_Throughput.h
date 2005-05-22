@@ -124,12 +124,6 @@ private:
   int active_count_;
   // How many consumers are still receiving events.
 
-  int reactive_ec_;
-  // If not zero then we use a reactive EC.
-
-  int new_ec_;
-  // If not zero then we use the new EC implementation
-
   int ec_concurrency_hwm_;
   // Set the HWM for the concurrency in the EC.
 
