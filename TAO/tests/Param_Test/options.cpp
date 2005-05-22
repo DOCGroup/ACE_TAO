@@ -24,7 +24,7 @@
 #include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID (Param_Test,
-           options, 
+           options,
            "$Id$")
 
 // Constructor.p
