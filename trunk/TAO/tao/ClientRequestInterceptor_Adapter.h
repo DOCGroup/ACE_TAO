@@ -20,15 +20,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Interceptor_List.h"
+#include "orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+#include "ClientRequestInterceptor_List.h"
 
 class TAO_ClientRequestInfo;
 class TAO_ClientRequestInfo_i;

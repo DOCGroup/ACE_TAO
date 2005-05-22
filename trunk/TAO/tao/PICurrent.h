@@ -14,8 +14,6 @@
 #define TAO_PI_CURRENT_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Array_Base.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -24,6 +22,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+#include "ace/Array_Base.h"
 #include "Any.h"
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
