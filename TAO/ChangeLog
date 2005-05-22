@@ -1,3 +1,26 @@
+Sun May 22 11:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ClientRequestInfo_i.h:
+        * tao/ClientRequestInterceptor_Adapter.h:
+        * tao/ClientRequestInterceptor_List.cpp:
+        * tao/ClientRequestInterceptor_List.h:
+        * tao/ClientRequestInterceptor_List.inl:
+        * tao/Interceptor_List.cpp:
+        * tao/Interceptor_List.h:
+        * tao/Interceptor_List.inl:
+        * tao/ORB_Core.h:
+        * tao/PICurrent.h:
+        * tao/PICurrent_Copy_Callback.h:
+        * tao/PICurrent_ORBInitializer.h:
+        * tao/ServerRequestInterceptor_List.cpp:
+        * tao/ServerRequestInterceptor_List.h:
+        * tao/ServerRequestInterceptor_List.inl:
+        * tao/tao.mpc:
+        * tao/PortableServer/ServerInterceptorAdapter.h:
+          Moved ClientRequestInterceptor_List and
+          ServerRequestInterceptor_List to their own files and updated
+          includes.
+
 Sun May 22 11:54:16 2005  Olli Savia  <ops@iki.fi>
 
         * tao/Collocated_Invocation.cpp:
