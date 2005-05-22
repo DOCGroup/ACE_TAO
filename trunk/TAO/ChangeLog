@@ -1,3 +1,18 @@
+Sun May 22 10:33:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Root_POA.cpp (create_POA_i):
+
+	  Increment the reference count immediately after binding the
+	  child POA to children map.  Addresses a seg fault introduced by
+	  the leak fix described in ChangeLog entry "Sun May 22 00:00:31
+	  2005  Ossama Othman  <ossama@dre.vanderbilt.edu>".
+
+	* tao/PortableServer/Root_POA.h (create_POA_i):
+
+	  No need to return a pointer to TAO_Root_POA.  Return a
+	  PortableServer::POA_ptr instead.  Allows implementation to be
+	  slightly simplified.
+
 Sun May 22 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.mpc:
