@@ -14,6 +14,9 @@
 #define TAO_PI_CURRENT_H
 
 #include /**/ "ace/pre.h"
+
+#include "tao/TAO_Export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
