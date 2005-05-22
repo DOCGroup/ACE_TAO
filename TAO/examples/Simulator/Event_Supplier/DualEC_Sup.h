@@ -20,13 +20,12 @@
 #ifndef DUALEC_SUP_H
 #define DUALEC_SUP_H
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/RtecSchedulerS.h"
 
 #include "NavWeapC.h"
 #include "NavWeapS.h"
@@ -139,10 +138,6 @@ private:
   // Termination servant implementation and client reference
   Terminator terminator_impl_;
   NavWeapTerminator_var terminator_;
-
-  // Default EC module factory for Event
-  // Service servant implementations.
-  TAO_Default_Module_Factory default_module_factory_;
 
   // Event Service servant implementation pointers.
   POA_RtecEventChannelAdmin::EventChannel *ec_hi_impl_;

@@ -111,19 +111,6 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-#if 0
-      // Create an event channel implementation...
-      TAO_Default_Module_Factory module_factory;
-      ACE_EventChannel event_channel_impl (scheduler.in (),
-                                           1,
-                                           ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                           &module_factory);
-
-      RtecEventChannelAdmin::EventChannel_var event_channel =
-        event_channel_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-#else
-
       TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
       attributes.scheduler = scheduler.in (); // no need to dup
@@ -137,7 +124,6 @@ main (int argc, char* argv[])
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-#endif /* 0 */
 
       // ****************************************************************
 
