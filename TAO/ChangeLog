@@ -1,3 +1,11 @@
+Sun May 22 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.mpc:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Converted this test to use the new RTEC instead of the old one
+          which will be removed soon. Also removed a workaround for the Sun 4.2
+          compiler which we don't support already for a long time
+
 Sun May 22 14:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PICurrent.h:
