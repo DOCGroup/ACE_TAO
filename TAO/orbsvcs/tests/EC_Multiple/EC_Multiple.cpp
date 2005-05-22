@@ -12,8 +12,8 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Event/Event_Channel.h"
 
 #include "tao/ORB_Core.h"
 
@@ -27,8 +27,8 @@
 # include <sys/lwp.h> /* for _lwp_self */
 #endif /* sun */
 
-ACE_RCSID (EC_Multiple, 
-           EC_Multiple, 
+ACE_RCSID (EC_Multiple,
+           EC_Multiple,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -421,8 +421,9 @@ Test_ECG::run (int argc, char* argv[])
 
       // Create the EventService implementation, but don't start its
       // internal threads.
-      // Explicit cat to CORBA::Boolean to disambiguate call.
-      ACE_EventChannel ec_impl (CORBA::Boolean(0));
+      TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
+                                            root_poa.in ());
+      TAO_EC_Event_Channel ec_impl (attr);
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
@@ -589,30 +590,6 @@ Test_ECG::run (int argc, char* argv[])
           RtecScheduler::Config_Info_Set_var configs;
           RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
 
-#if defined (__SUNPRO_CC)
-          // Sun C++ 4.2 warns with the code below:
-          //   Warning (Anachronism): Temporary used for non-const
-          //   reference, now obsolete.
-          //   Note: Type "CC -migration" for more on anachronisms.
-          //   Warning (Anachronism): The copy constructor for argument
-          //   infos of type RtecScheduler::RT_Info_Set_out should take
-          //   const RtecScheduler::RT_Info_Set_out&.
-          // But, this code is not CORBA conformant, because users should
-          // not define instances of _out types.
-
-          RtecScheduler::RT_Info_Set_out infos_out (infos);
-          RtecScheduler::Dependency_Set_out deps_out (deps);
-          RtecScheduler::Config_Info_Set_out configs_out (configs);
-          RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out (anomalies);
-          ACE_Scheduler_Factory::server ()->compute_scheduling
-            (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             infos_out, deps_out, 
-             configs_out, anomalies_out ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-#else  /* ! __SUNPRO_CC */
           ACE_Scheduler_Factory::server ()->compute_scheduling
             (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
@@ -622,7 +599,6 @@ Test_ECG::run (int argc, char* argv[])
              configs.out (), anomalies.out ()
              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-#endif /* ! __SUNPRO_CC */
 
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 deps.in (),
