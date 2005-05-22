@@ -149,19 +149,19 @@ protected:
 
   /// If non-0 then wipeout the logfile, otherwise append to it.
   /// Default value is 0.
-  int wipeout_logfile_;
+  bool wipeout_logfile_;
+
+  /// If non-0 we have a maximum number of log files we can write.
+  /// Default value is 0, i.e., no maximum number.
+  bool fixed_number_;
+
+  /// If non-0 we order the files as we rotate them.  Default value
+  /// is 0, i.e., we do not rotate files by default.
+  bool order_files_;
 
   /// This tells us in what file we last wrote. It will be increased
   /// to enable multiple log files
   int count_;
-
-  /// If non-0 we have a maximum number of log files we can write.
-  /// Default value is 0, i.e., no maximum number.
-  int fixed_number_;
-
-  /// If non-0 we order the files as we rotate them.  Default value
-  /// is 0, i.e., we do not rotate files by default.
-  int order_files_;
 
   /// Tells us what is the maximum log file to write. We will write
   /// <max_file_number_> + 1 files (includes the current log file).

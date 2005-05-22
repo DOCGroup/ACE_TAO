@@ -14,7 +14,11 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(lib, Logging_Strategy, "$Id$")
+
+ACE_RCSID (ace,
+           Logging_Strategy,
+           "$Id$")
+
 
 // Parse the string containing (thread) priorities and set them
 // accordingly.
@@ -140,10 +144,10 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   // unduing the behavior in <init>, where these are set by
   // <ACE_Log_Msg::instance>.
   this->flags_ = 0;
-  this->wipeout_logfile_ = 0;
+  this->wipeout_logfile_ = false;
   this->count_ = 0;
-  this->fixed_number_ = 0;
-  this->order_files_ = 0;
+  this->fixed_number_ = false;
+  this->order_files_ = false;
   this->max_file_number_ = 1;
   this->interval_ = ACE_DEFAULT_LOGFILE_POLL_INTERVAL;
   this->max_size_ = 0;
@@ -188,11 +192,11 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
         case 'N':
           // The max number for the log_file being created
           this->max_file_number_ = ACE_OS::atoi (get_opt.opt_arg ()) - 1;
-          this->fixed_number_ = 1;
+          this->fixed_number_ = true;
           break;
         case 'o':
           // Log_files generation order
-          this->order_files_ = 1;
+          this->order_files_ = true;
           break;
         case 'p':
           temp = get_opt.opt_arg ();
@@ -213,7 +217,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
         case 'w':
           // Cause the logfile to be wiped out, both on startup and on
           // reconfigure.
-          this->wipeout_logfile_ = 1;
+          this->wipeout_logfile_ = true;
           break;
         default:
           break;
@@ -223,7 +227,20 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_Logging_Strategy::ACE_Logging_Strategy (void)
-  : log_msg_ (ACE_Log_Msg::instance ())
+  : thread_priority_mask_ (0)
+  , process_priority_mask_ (0)
+  , flags_ (0)
+  , filename_ (0)
+  , logger_key_ (0)
+  , program_name_ (0)
+  , wipeout_logfile_ (false)
+  , fixed_number_ (false)
+  , order_files_ (false)
+  , count_ (0)
+  , max_file_number_ (1) // 2 files by default (max file number + 1)
+  , interval_ (ACE_DEFAULT_LOGFILE_POLL_INTERVAL)
+  , max_size_ (0)
+  , log_msg_ (ACE_Log_Msg::instance ())
 {
 #if defined (ACE_DEFAULT_LOGFILE)
   this->filename_ = ACE::strnew (ACE_DEFAULT_LOGFILE);
@@ -246,8 +263,6 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
   ACE_OS::strcat (this->filename_,
                   ACE_LIB_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
-  this->logger_key_ = 0;
-  this->program_name_ = 0;
 }
 
 int
