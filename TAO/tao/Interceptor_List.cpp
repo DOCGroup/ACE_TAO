@@ -1,20 +1,18 @@
 // $Id$
 
 #include "tao/Interceptor_List.h"
-#include "tao/SystemException.h"
-#include "tao/ORB_Constants.h"
-#include "ace/os_include/os_stddef.h"
-#include "ace/OS_NS_string.h"
-
-#if !defined (__ACE_INLINE__)
-# include "tao/Interceptor_List.inl"
-#endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            Interceptor_List,
            "$Id$")
 
 // ****************************************************************
+
+#include "tao/InterceptorC.h"
+#include "tao/SystemException.h"
+#include "tao/ORB_Constants.h"
+#include "ace/os_include/os_stddef.h"
+#include "ace/OS_NS_string.h"
 
 TAO_Interceptor_List::TAO_Interceptor_List (void)
 {
@@ -99,112 +97,3 @@ TAO_Interceptor_List::add_interceptor_i (
     }
 }
 
-
-// -------------------------------------------------------------------
-
-#if TAO_HAS_INTERCEPTORS == 1
-
-TAO_ClientRequestInterceptor_List::TAO_ClientRequestInterceptor_List (void)
-  : interceptors_ ()
-{
-}
-
-TAO_ClientRequestInterceptor_List::~TAO_ClientRequestInterceptor_List (void)
-{
-}
-
-size_t
-TAO_ClientRequestInterceptor_List::length (void)
-{
-  return this->interceptors_.size ();
-}
-
-void
-TAO_ClientRequestInterceptor_List::length (size_t len)
-{
-  this->interceptors_.size (len);
-}
-
-
-PortableInterceptor::Interceptor_ptr
-TAO_ClientRequestInterceptor_List::interceptor (size_t index)
-{
-  return this->interceptors_[index].in ();
-}
-
-void
-TAO_ClientRequestInterceptor_List::add_interceptor (
-  PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-  ACE_ENV_ARG_DECL)
-{
-  const size_t index = this->add_interceptor_i (interceptor
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->interceptors_[index] =
-    PortableInterceptor::ClientRequestInterceptor::_duplicate (interceptor);
-}
-
-// -------------------------------------------------------------------
-
-TAO_ServerRequestInterceptor_List::TAO_ServerRequestInterceptor_List (void)
-  : interceptors_ ()
-{
-}
-
-TAO_ServerRequestInterceptor_List::~TAO_ServerRequestInterceptor_List (void)
-{
-}
-
-size_t
-TAO_ServerRequestInterceptor_List::length (void)
-{
-  return this->interceptors_.size ();
-}
-
-void
-TAO_ServerRequestInterceptor_List::length (size_t len)
-{
-  this->interceptors_.size (len);
-}
-
-PortableInterceptor::Interceptor_ptr
-TAO_ServerRequestInterceptor_List::interceptor (size_t index)
-{
-  return this->interceptors_[index].in ();
-}
-
-void
-TAO_ServerRequestInterceptor_List::add_interceptor (
-  PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-  ACE_ENV_ARG_DECL)
-{
-  const size_t index = this->add_interceptor_i (interceptor
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->interceptors_[index] =
-    PortableInterceptor::ServerRequestInterceptor::_duplicate (interceptor);
-}
-
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-# if TAO_HAS_INTERCEPTORS == 1
-
-template class ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_var>;
-template class ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_var>;
-
-# endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# if TAO_HAS_INTERCEPTORS == 1
-
-#pragma instantiate ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_var>
-#pragma instantiate ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_var>
-
-# endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

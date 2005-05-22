@@ -32,7 +32,7 @@
 #include "portableserver_export.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/Interceptor_List.h"
+#include "tao/ServerRequestInterceptor_List.h"
 
 class TAO_ServerRequest;
 

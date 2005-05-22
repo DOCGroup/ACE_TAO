@@ -16,14 +16,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "LocalObject.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbconf.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 
+#include "LocalObject.h"
 #include "ORBInitializerC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
