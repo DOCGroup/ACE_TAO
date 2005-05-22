@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Front End of the Telecom Log Service 
+ *  Front End of the Telecom Log Service
  *  RTEvent_Logging_Service
  *
  *
@@ -31,21 +31,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Module_Factory;
-
-class RTEvent_Logging_Service 
+class RTEvent_Logging_Service
 {
-  //
-  // = TITLE
-  //   
-  //   
-  //
-  // = DESCRIPTION
-  //   
-  //   
-  //   
-  //   
-  //
 public:
   RTEvent_Logging_Service (void);
   virtual ~RTEvent_Logging_Service (void);
@@ -57,16 +44,7 @@ private:
   int parse_args (int argc, char* argv[]);
   // parse the command line args
 
-  enum {
-    ES_NEW, // Use the Service Configurator to find factory
-    ES_OLD_REACTIVE,   // Reactive dispatching, old EC.
-    ES_OLD_MT          // Prioritized dispatching, old EC.
-  };
-
 private:
-  TAO_Module_Factory *module_factory_;
-  // The module factory for the EC.
-
   POA_RtecScheduler::Scheduler *sched_impl_;
   // The Scheduler implementation.
 
@@ -78,9 +56,6 @@ private:
 
   const char* pid_file_name_;
   // The name of a file where the process stores its pid
-
-  int event_service_type_;
-  // The type of event service we will use
 
   int global_scheduler_;
   // Should we use a global scheduler or a local one?
@@ -104,7 +79,6 @@ private:
   // The corba object after activation.
 
   TAO_Naming_Client naming_client_;
-
 };
 
 #endif /* RTEVENT_LOGGING_SERVICE_H */
