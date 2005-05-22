@@ -40,9 +40,6 @@ Options::Options (void)
 
 Options::~Options (void)
 {
-  // Free resources
-  CORBA::string_free (this->ior_);
-  this->ior_ = 0;
 }
 
 // Parses the command line arguments and returns an error status.
@@ -82,7 +79,6 @@ Options::parse_args (int argc, char **argv)
         break;
 
      case 'k':
-        CORBA::string_free (this->ior_);
         this->ior_ = CORBA::string_dup (get_opts.opt_arg ());
         break;
 
@@ -199,17 +195,17 @@ Options::read_ior (char *filename)
   ACE_Read_Buffer ior_buffer (f_handle);
   this->ior_ = ior_buffer.read ();
 
-  if (this->ior_ == 0)
+  if (this->ior_.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
   return 0;
 }
 
-char *
-Options::param_test_ior (void)
+char const *
+Options::param_test_ior (void) const
 {
-  return this->ior_;
+  return this->ior_.in ();
 }
 
 Options::TEST_TYPE

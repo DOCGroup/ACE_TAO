@@ -89,7 +89,7 @@ public:
   int parse_args (int argc, char **argv);
   // Parses the arguments passed on the command line.
 
-  char *param_test_ior (void);
+  char const * param_test_ior (void) const;
   // return the IOR for the servant
 
   TEST_TYPE test_type (void);
@@ -111,7 +111,7 @@ private:
   int read_ior (char *filename);
   // Function to read the servant IOR from a file.
 
-  char *ior_;
+  CORBA::String_var ior_;
   // IOR for the servant
 
   TEST_TYPE test_type_;
