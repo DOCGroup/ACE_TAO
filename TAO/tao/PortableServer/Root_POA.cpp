@@ -451,7 +451,7 @@ TAO_Root_POA::new_POA (const String &name,
   return poa;
 }
 
-TAO_Root_POA *
+PortableServer::POA_ptr
 TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
                             TAO_POA_Manager &poa_manager,
                             const TAO_POA_Policy_Set &policies
@@ -471,11 +471,11 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
   if (result != -1)
     {
       ACE_THROW_RETURN (PortableServer::POA::AdapterAlreadyExists (),
-                        0);
+                        PortableServer::POA::_nil ());
     }
 
   //
-  // Child was not found
+  // Child was not found.  Create one.
   //
 
   // The specified policy objects are associated with the POA and used
@@ -483,15 +483,15 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
   // copied before this operation returns, so the application is free
   // to destroy them while the POA is in use. Policies are not
   // inherited from the parent POA.
-  TAO_Root_POA *poa = this->new_POA (adapter_name,
-                                poa_manager,
-                                policies,
-                                this,
-                                this->object_adapter ().lock (),
-                                this->object_adapter ().thread_lock (),
-                                this->orb_core_,
-                                this->object_adapter_
-                                ACE_ENV_ARG_PARAMETER);
+  TAO_Root_POA * poa = this->new_POA (adapter_name,
+                                      poa_manager,
+                                      policies,
+                                      this,
+                                      this->object_adapter ().lock (),
+                                      this->object_adapter ().thread_lock (),
+                                      this->orb_core_,
+                                      this->object_adapter_
+                                      ACE_ENV_ARG_PARAMETER);
 
   // Give ownership of the new map to the POA_var.  Note, that it
   // is important for the POA_var to take ownership before
@@ -499,7 +499,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
   PortableServer::POA_var new_poa = poa;
 
   // Check for exception in construction of the POA.
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Add to children map
   result = this->children_.bind (adapter_name,
@@ -507,14 +507,20 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
   if (result != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        0);
+                        PortableServer::POA::_nil ());
     }
+
+  // Increment the reference count on the child POA since the children
+  // map must retain ownership.  Do so immediately before any other
+  // operations to prevent memory cleanup problems induced from
+  // errors below.
+  poa->_add_ref ();
 
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
   poa->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Note: Creating a POA using a POA manager that is in the active
   // state can lead to race conditions if the POA supports preexisting
@@ -529,11 +535,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
 
   // Everything is fine. Don't let the POA_var release the
   // implementation.
-  (void) new_poa._retn ();  // We could do a "return new_poa._retn()"
-                            // but the return type doesn't match this
-                            // method's return type.
-
-  return poa;
+  return new_poa._retn ();
 }
 
 PortableServer::POA_ptr
@@ -581,16 +583,18 @@ TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
               ACE_TRY_EX (UnknownAdapter)
                 {
                   // ATTENTION: Trick locking here, see class header for details
-                  TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
+                  TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (
+                    *this);
                   ACE_UNUSED_ARG (non_servant_upcall);
 
                   // When unknown_adapter gives a system exception, the POA
                   // should raise OBJ_ADAPTER with standard minor code 1.
                   // See 11.3.9.2 of the Corba spec
                   success =
-                    this->adapter_activator_->unknown_adapter (this,
-                                                               child_name.c_str ()
-                                                               ACE_ENV_ARG_PARAMETER);
+                    this->adapter_activator_->unknown_adapter (
+                      this,
+                      child_name.c_str ()
+                      ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK_EX (UnknownAdapter);
                 }
               ACE_CATCH (CORBA::SystemException, ex)
