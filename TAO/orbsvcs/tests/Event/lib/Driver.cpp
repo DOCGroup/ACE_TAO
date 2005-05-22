@@ -49,10 +49,6 @@ EC_Driver::EC_Driver (void)
      thr_create_flags_ (THR_NEW_LWP|THR_BOUND|THR_SCHED_FIFO),
      use_remote_ec_ (0),
      event_service_name_ ("EventService"),
-     use_old_ec_ (0),
-#if !defined(TAO_EC_DISABLE_OLD_EC)
-     module_factory_ (0),
-#endif
      ec_impl_ (0)
 {
   TAO_EC_Default_Factory::init_svcs ();
@@ -287,15 +283,6 @@ EC_Driver::initialize_ec_impl (ACE_ENV_SINGLE_ARG_DECL)
     }
 #endif
 
-#if !defined(EC_DISABLE_OLD_EC)
-  if (this->use_old_ec_ == 1)
-    {
-      this->initialize_old_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      return;
-    }
-#endif
-
   this->initialize_new_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -335,64 +322,6 @@ EC_Driver::get_naming_context (ACE_ENV_SINGLE_ARG_DECL)
   return CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
 }
 #endif
-
-#if !defined(EC_DISABLE_OLD_EC)
-int
-EC_Driver::initialize_old_ec (ACE_ENV_SINGLE_ARG_DECL)
-{
-  CosNaming::NamingContext_var naming_context =
-    this->get_naming_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // This is the name we (potentially) register the Scheduling
-  // Service in the Naming Service.
-  CosNaming::Name schedule_name (1);
-  schedule_name.length (1);
-  schedule_name[0].id = CORBA::string_dup ("ScheduleService");
-
-  if (this->use_runtime_scheduler_ == 1)
-    ACE_NEW (this->scheduler_impl_,
-             ACE_Runtime_Scheduler (runtime_configs_size,
-                                    runtime_configs,
-                                    runtime_infos_size,
-                                    runtime_infos));
-  else
-    ACE_NEW (this->scheduler_impl_,
-             ACE_Config_Scheduler ());
-
-
-  this->scheduler_ =
-    this->scheduler_impl_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  CORBA::String_var str =
-    this->orb_->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  ACE_DEBUG ((LM_DEBUG,
-              "EC_Driver (%P|%t) The (local) scheduler IOR is <%s>\n",
-              str.in ()));
-
-
-  if (this->reactive_ec_ == 1)
-    ACE_NEW_RETURN (this->module_factory_,
-                    TAO_Reactive_Module_Factory,
-                    -1);
-  else
-    ACE_NEW_RETURN (this->module_factory_,
-                    TAO_Default_Module_Factory,
-                    -1);
-
-  ACE_NEW_RETURN (this->ec_impl_,
-                  ACE_EventChannel (scheduler.in (), 1,
-                                    ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                    this->module_factory_),
-                  -1);
-
-  this->event_channel_ =
-    this->ec_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-}
-#endif /* */
 
 void
 EC_Driver::initialize_new_ec (ACE_ENV_SINGLE_ARG_DECL)
@@ -437,23 +366,6 @@ EC_Driver::deactivate_ec (ACE_ENV_SINGLE_ARG_DECL)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) EC deactivated\n"));
 
-#if !defined(EC_DISABLE_OLD_EC)
-  if (this->use_old_ec_ == 1)
-    {
-      // Deactivate the Scheduler
-      PortableServer::POA_var poa =
-        scheduler_impl._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (&scheduler_impl ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) scheduler deactivated\n"));
-    }
-#endif
 }
 
 void
@@ -839,18 +751,6 @@ EC_Driver::parse_args (int &argc, char *argv [])
               this->event_service_name_ = arg_shifter.get_current ();
               arg_shifter.consume_arg ();
             }
-        }
-
-      else if (ACE_OS::strcmp (arg, "-old_reactive") == 0)
-        {
-          arg_shifter.consume_arg ();
-          this->use_old_ec_ = 1;
-        }
-
-      else if (ACE_OS::strcmp (arg, "-old_threaded") == 0)
-        {
-          arg_shifter.consume_arg ();
-          this->use_old_ec_ = 1;
         }
 
       else if (ACE_OS::strcmp (arg, "-suppliers") == 0)

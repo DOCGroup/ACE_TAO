@@ -201,12 +201,7 @@ public:
        get_naming_context (ACE_ENV_SINGLE_ARG_DECL);
 #endif
 
-#if !defined(EC_DISABLE_OLD_EC)
-  /// Initialize the EC using the old implementation
-  virtual void initialize_old_ec (ACE_ENV_SINGLE_ARG_DECL);
-#endif
-
-  /// Initialize the EC using the old implementation
+  /// Initialize the EC using the new implementation
   virtual void initialize_new_ec (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Allocate the suppliers and the consumers
@@ -315,14 +310,6 @@ protected:
 
   /// The name of the remote event service
   const char* event_service_name_;
-
-  /// Use the old implementation of the event channel.
-  int use_old_ec_;
-
-#if !defined(TAO_EC_DISABLE_OLD_EC)
-  /// The module factory for the OLD ec
-  TAO_Module_Factory* module_factory_;
-#endif
 
   /// The event channel implementation
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;

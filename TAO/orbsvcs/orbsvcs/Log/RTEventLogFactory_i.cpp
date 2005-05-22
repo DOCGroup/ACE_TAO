@@ -11,8 +11,6 @@
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 

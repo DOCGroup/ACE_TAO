@@ -26,6 +26,7 @@
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/event/EC_Event_Channel.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -631,21 +632,25 @@ DualEC_Supplier::create_event_channels (void)
     {
       // Create Event Service Implementations, passing in the respective
       // Scheduling Service Implementations (which must already be created).
+      TAO_EC_Event_Channel_Attributes attr_high (root_POA_var_.in (),
+                                                 root_POA_var_.in ());
+
+      attr_high.scheduler = sched_hi_.in ();
+
       ACE_NEW_RETURN (this->ec_hi_impl_,
-                      ACE_EventChannel (sched_hi_.in (),
-                                        1,
-                                        ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                        &default_module_factory_),
+                      TAO_EC_Event_Channel (attr_high),
                       -1);
 
       this->ec_hi_ = ec_hi_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      TAO_EC_Event_Channel_Attributes attr_low (root_POA_var_.in (),
+                                                root_POA_var_.in ());
+
+      attr_low.scheduler = sched_lo_.in ();
+
       ACE_NEW_RETURN (this->ec_lo_impl_,
-                      ACE_EventChannel (sched_lo_.in (),
-                                        1,
-                                        ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                        &default_module_factory_),
+                      TAO_EC_Event_Channel (attr_low),
                       -1);
 
       this->ec_lo_ = ec_lo_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -678,69 +683,27 @@ DualEC_Supplier::compute_schedules (void)
 {
   ACE_TRY_NEW_ENV
     {
-#if defined (__SUNPRO_CC)
-          // Sun C++ 4.2 warns with the code below:
-          //   Warning (Anachronism): Temporary used for non-const
-          //   reference, now obsolete.
-          //   Note: Type "CC -migration" for more on anachronisms.
-          //   Warning (Anachronism): The copy constructor for argument
-          //   infos of type RtecScheduler::RT_Info_Set_out should take
-          //   const RtecScheduler::RT_Info_Set_out&.
-          // But, this code is not CORBA conformant, because users should
-          // not define instances of _out types.
+      sched_hi_->compute_scheduling
+        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         this->infos_hi_.out (),
+         this->deps_hi_.out (),
+         this->configs_hi_.out (),
+         this->anomalies_hi_.out () ACE_ENV_ARG_PARAMETER);
+       ACE_TRY_CHECK;
 
-
-          RtecScheduler::RT_Info_Set_out infos_out_hi (this->infos_hi_);
-          RtecScheduler::Dependency_Set_out deps_out_hi (this->deps_hi_);
-          RtecScheduler::Config_Info_Set_out configs_out_hi (this->configs_hi_);
-          RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out_hi (this->anomalies_hi_);
-          sched_hi_->compute_scheduling
-            (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             infos_out_hi, deps_out_hi,
-             configs_out_hi, anomalies_out_hi ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          RtecScheduler::RT_Info_Set_out infos_out_lo (this->infos_lo_);
-          RtecScheduler::Dependency_Set_out deps_out_lo (this->deps_lo_);
-          RtecScheduler::Config_Info_Set_out configs_out_lo (this->configs_lo_);
-          RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out_lo (this->anomalies_lo_);
-          sched_lo_->compute_scheduling
-            (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             infos_out_lo, deps_out_lo,
-             configs_out_lo, anomalies_out_lo ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-#else  /* ! __SUNPRO_CC */
-
-          sched_hi_->compute_scheduling
-            (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             this->infos_hi_.out (),
-             this->deps_hi_.out (),
-             this->configs_hi_.out (),
-             this->anomalies_hi_.out () ACE_ENV_ARG_PARAMETER);
-           ACE_TRY_CHECK;
-
-          sched_lo_->compute_scheduling
-            (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD),
-             this->infos_lo_.out (),
-             this->deps_hi_.out (),
-             this->configs_lo_.out (),
-             this->anomalies_lo_.out () ACE_ENV_ARG_PARAMETER);
-           ACE_TRY_CHECK;
-
-#endif /* ! __SUNPRO_CC */
+      sched_lo_->compute_scheduling
+        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         this->infos_lo_.out (),
+         this->deps_hi_.out (),
+         this->configs_lo_.out (),
+         this->anomalies_lo_.out () ACE_ENV_ARG_PARAMETER);
+       ACE_TRY_CHECK;
 
       if (dump_schedule_headers_ && (this->hi_schedule_file_name_ != 0))
         {
