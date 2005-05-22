@@ -230,7 +230,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
   ACE_High_Res_Timer::global_scale_factor_status_ = 1;
 #endif /* (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
            ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER) && \
-          ! ACE_HAS_HIGH_RES_TIMER &&
+          ! ACE_HAS_HI_RES_TIMER &&
           ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
   return ACE_High_Res_Timer::global_scale_factor_;
