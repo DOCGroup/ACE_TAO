@@ -74,6 +74,12 @@ ACE_DLL::~ACE_DLL (void)
   ACE_TRACE ("ACE_DLL::~ACE_DLL");
 
   this->close ();
+
+  // Normally delete()d in ACE_DLL::close().  However, that may not
+  // occur if full ACE_DLL initialization is interrupted due to errors
+  // (e.g. attempting to open a DSO/DLL that does not exist).  Make
+  // sure this->dll_name_ is deallocated.
+  delete [] this->dll_name_;
 }
 
 // This method opens the library based on the mode specified using the
@@ -128,7 +134,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
 
   if (!this->dll_name_)
     this->dll_name_ = ACE::strnew (dll_filename);
-
+  
   this->open_mode_ = open_mode;
   this->close_handle_on_destruction_ = close_handle_on_destruction;
 
@@ -161,7 +167,7 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   return sym;
 }
 
-// The library is closed using the ACE_SHLIB_HANDLE obejct, i.e., the
+// The library is closed using the ACE_SHLIB_HANDLE object, i.e., the
 // shared object is now disassociated form the current process.
 
 int

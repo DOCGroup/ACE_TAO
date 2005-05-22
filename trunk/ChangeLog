@@ -1,7 +1,58 @@
+Fri May 20 21:11:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/DLL.cpp (~ACE_DLL):
+
+	  Explicitly delete() this->dll_name_.  It is normally delete()d
+	  in ACE_DLL::close().  However, that may not occur if full
+	  ACE_DLL initialization is interruepted due to errors
+	  (e.g. attempting to open a DSO/DLL that does not exist).  Fixes
+	  a memory leak.
+
+	* ace/Log_Msg.cpp (msg_ostream):
+
+	  Delete the previously allocated ostream prior to setting the new
+	  one, if necessary.  Fixes a memory leak.
+
+	* ace/Logging_Strategy.h (ACE_Logging_Strategy):
+
+	  Converted integer fields that are really booleans to be of type
+	  "bool", and reordered fields to avoid excessive alignment
+	  padding.  Reduces size of this class by 8 bytes on most
+	  platforms.
+
+	* ace/Logging_Strategy.cpp:
+
+	  Initialize fields in base member initializer list to prevent
+	  accidental use of uninitialized fields.
+
+	  Use C++ "true" and "false" instead of "1" and "0", respectively,
+	  when setting boolean field values.
+
+	* ace/SString.h (ACE_Auto_String_Free):
+
+	  Corrected documentation suggesting use of
+	  ACE_Auto_Array_Ptr<char *>.  The correct template argument is
+	  "char", not "char *".
+
+	* tests/CDR_Test.cpp:
+	* tests/Multicast_Test.cpp:
+
+	  Fixed memory leaks.
+
+	* tests/Logging_Strategy_Test.cpp:
+
+	  Updated to be consistent with boolean field changes in
+	  ACE_Logging_Strategy class.
+
+	* tests/TP_Reactor_Test.cpp (delete_reactor):
+
+	  Reordered finalization code to prevent memory leak.
+
 Fri May 20 19:05:22 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Thread.h (ACE_Thread): Updated the documentation of ACE_Thread::join().
-	  Thanks to Alan Balasuar <balasuar@gmail.com> for motivating this fix.
+	* ace/Thread.h (ACE_Thread): Updated the documentation of
+	  ACE_Thread::join().  Thanks to Alan Balasuar
+	  <balasuar@gmail.com> for motivating this fix.
 
 Sat May 21 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

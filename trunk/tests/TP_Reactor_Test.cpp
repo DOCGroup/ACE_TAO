@@ -189,8 +189,8 @@ MyTask::delete_reactor (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) Delete TP_Reactor\n")));
 
-  ACE_Reactor::instance ((ACE_Reactor *) 0);
   delete this->my_reactor_;
+  ACE_Reactor::instance ((ACE_Reactor *) 0);
   this->my_reactor_ = 0;
   this->reactor (0);
 

@@ -153,13 +153,15 @@ short_stream (void)
                        ACE_TEXT ("buffer length not preserved")),
                       1);
 
-  u_long in_chunk, out_chunk;
-
   for (i = 0; i < len; i++)
     {
-      in_chunk = u_long (* (in_mb->rd_ptr () + i));
-      out_chunk = u_long (* (out_mb->rd_ptr () + i));
-      if (in_chunk != out_chunk )
+      unsigned long const in_chunk =
+        static_cast<unsigned long> (* (in_mb->rd_ptr () + i));
+
+      unsigned long const out_chunk =
+        static_cast<unsigned long> (* (out_mb->rd_ptr () + i));
+
+      if (in_chunk != out_chunk)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("buffer contents not preserved")),
@@ -192,7 +194,11 @@ short_stream (void)
   ACE_InputCDR::to_wchar twc (wch1);
   is >> twc;
   is >> str1;
-  is >> wstr1;
+  ACE_InputCDR::to_wstring twstr (wstr1, 0);
+  is >> twstr;
+  // @todo Lose the ACE_Auto_Array_Ptr.  We should be using a
+  //       std::string, or the like.
+  ACE_Auto_Array_Ptr<ACE_CDR::WChar> safe_wstr (wstr1);
   is >> s1;
   is >> us1;
   is >> l1;
@@ -222,7 +228,7 @@ short_stream (void)
                        ACE_TEXT ("string transfer error")),
                       1);
 
-  if (ACE_OS::wscmp(wstr1, wstr))
+  if (ACE_OS::wscmp (wstr1, wstr))
      ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("wide string transfer error")),
