@@ -1,58 +1,64 @@
+Sun May 22 12:01:46 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/High_Res_Timer.cpp:
+
+          Fixed a typo in comment.
+
 Fri May 20 21:11:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/DLL.cpp (~ACE_DLL):
+        * ace/DLL.cpp (~ACE_DLL):
 
-	  Explicitly delete() this->dll_name_.  It is normally delete()d
-	  in ACE_DLL::close().  However, that may not occur if full
-	  ACE_DLL initialization is interruepted due to errors
-	  (e.g. attempting to open a DSO/DLL that does not exist).  Fixes
-	  a memory leak.
+          Explicitly delete() this->dll_name_.  It is normally delete()d
+          in ACE_DLL::close().  However, that may not occur if full
+          ACE_DLL initialization is interruepted due to errors
+          (e.g. attempting to open a DSO/DLL that does not exist).  Fixes
+          a memory leak.
 
-	* ace/Log_Msg.cpp (msg_ostream):
+        * ace/Log_Msg.cpp (msg_ostream):
 
-	  Delete the previously allocated ostream prior to setting the new
-	  one, if necessary.  Fixes a memory leak.
+          Delete the previously allocated ostream prior to setting the new
+          one, if necessary.  Fixes a memory leak.
 
-	* ace/Logging_Strategy.h (ACE_Logging_Strategy):
+        * ace/Logging_Strategy.h (ACE_Logging_Strategy):
 
-	  Converted integer fields that are really booleans to be of type
-	  "bool", and reordered fields to avoid excessive alignment
-	  padding.  Reduces size of this class by 8 bytes on most
-	  platforms.
+          Converted integer fields that are really booleans to be of type
+          "bool", and reordered fields to avoid excessive alignment
+          padding.  Reduces size of this class by 8 bytes on most
+          platforms.
 
-	* ace/Logging_Strategy.cpp:
+        * ace/Logging_Strategy.cpp:
 
-	  Initialize fields in base member initializer list to prevent
-	  accidental use of uninitialized fields.
+          Initialize fields in base member initializer list to prevent
+          accidental use of uninitialized fields.
 
-	  Use C++ "true" and "false" instead of "1" and "0", respectively,
-	  when setting boolean field values.
+          Use C++ "true" and "false" instead of "1" and "0", respectively,
+          when setting boolean field values.
 
-	* ace/SString.h (ACE_Auto_String_Free):
+        * ace/SString.h (ACE_Auto_String_Free):
 
-	  Corrected documentation suggesting use of
-	  ACE_Auto_Array_Ptr<char *>.  The correct template argument is
-	  "char", not "char *".
+          Corrected documentation suggesting use of
+          ACE_Auto_Array_Ptr<char *>.  The correct template argument is
+          "char", not "char *".
 
-	* tests/CDR_Test.cpp:
-	* tests/Multicast_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Multicast_Test.cpp:
 
-	  Fixed memory leaks.
+          Fixed memory leaks.
 
-	* tests/Logging_Strategy_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
 
-	  Updated to be consistent with boolean field changes in
-	  ACE_Logging_Strategy class.
+          Updated to be consistent with boolean field changes in
+          ACE_Logging_Strategy class.
 
-	* tests/TP_Reactor_Test.cpp (delete_reactor):
+        * tests/TP_Reactor_Test.cpp (delete_reactor):
 
-	  Reordered finalization code to prevent memory leak.
+          Reordered finalization code to prevent memory leak.
 
 Fri May 20 19:05:22 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Thread.h (ACE_Thread): Updated the documentation of
-	  ACE_Thread::join().  Thanks to Alan Balasuar
-	  <balasuar@gmail.com> for motivating this fix.
+        * ace/Thread.h (ACE_Thread): Updated the documentation of
+          ACE_Thread::join().  Thanks to Alan Balasuar
+          <balasuar@gmail.com> for motivating this fix.
 
 Sat May 21 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -67,42 +73,42 @@ Fri May 20 15:28:00 2005  Gary Maxey  <gary.maxey@hp.com>
 
 Thu May 19 19:10:30 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp
-	  (handle_output):
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp
+          (handle_output):
 
-	  Removed
+          Removed
 
-	    ACE_ASSERT (errno == EWOULDBLOCK);
+            ACE_ASSERT (errno == EWOULDBLOCK);
 
-	  since errno may have been changed by this point.  Thanks to Ro
- 	  Madhavan <ro_madhavan@sify.com> for reporting this.
+          since errno may have been changed by this point.  Thanks to Ro
+          Madhavan <ro_madhavan@sify.com> for reporting this.
 
 Thu May 19 18:50:23 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/ICMP_Socket.{h cpp inl}:
-	* ace/Ping_Socket.{h cpp inl}:
-	* tests/Network_Adapters_Test.{cpp, h}: Moved ICMP_Socket and
-	  Ping_Socket out of the ACE namespace and changed names to
-	  ACE_ICMP_Socket and ACE_Ping_Socket, respectively. Also fixed up
-	  some text strings with ACE_TEXT.
-	  ACE_ICMP_Socket now does not check for root euid - allow the OS to
-	  do whatever checks it requires/implements.
-	  Improved implementation of ACE_Ping_Socket.
-	  Thanks to Robert Iakobashvili for these improvements and changes.
+        * ace/ICMP_Socket.{h cpp inl}:
+        * ace/Ping_Socket.{h cpp inl}:
+        * tests/Network_Adapters_Test.{cpp, h}: Moved ICMP_Socket and
+          Ping_Socket out of the ACE namespace and changed names to
+          ACE_ICMP_Socket and ACE_Ping_Socket, respectively. Also fixed up
+          some text strings with ACE_TEXT.
+          ACE_ICMP_Socket now does not check for root euid - allow the OS to
+          do whatever checks it requires/implements.
+          Improved implementation of ACE_Ping_Socket.
+          Thanks to Robert Iakobashvili for these improvements and changes.
 
 Thu May 19 15:59:38 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/SOCK.h: Clarified doc on close() - it sets the object's
-	  handle to ACE_INVALID_HANDLE.
+        * ace/SOCK.h: Clarified doc on close() - it sets the object's
+          handle to ACE_INVALID_HANDLE.
 
 Thu May 19 08:58:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/INET_Addr.cpp:
-	* ace/INET_Addr.inl:
+        * ace/INET_Addr.cpp:
+        * ace/INET_Addr.inl:
 
-	  Moved remaining virtual methods out of line.  See "Wed May 18
-	  16:19:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>" for
-	  details.
+          Moved remaining virtual methods out of line.  See "Wed May 18
+          16:19:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>" for
+          details.
 
 Thu May 19 15:21:00 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -124,41 +130,41 @@ Thu May 19 14:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu May 19 00:38:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* config-g++-common.h:
-	* config-lite.h:
+        * config-g++-common.h:
+        * config-lite.h:
 
-	  Removed ACE_EXPORT_SINGLETON_{DECLARATION,DECLARE} macro
-	  definitions.  They do not provide the expected behavior in g++
-	  4.0 configurations, as they do in VC++ configurations.
+          Removed ACE_EXPORT_SINGLETON_{DECLARATION,DECLARE} macro
+          definitions.  They do not provide the expected behavior in g++
+          4.0 configurations, as they do in VC++ configurations.
 
 Wed May 18 16:19:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ATM_Addr.cpp:
-	* ace/ATM_Addr.inl:
-	* ace/DEV_Addr.cpp:
-	* ace/DEV_Addr.inl:
-	* ace/FILE_Addr.cpp:
-	* ace/FILE_Addr.inl:
-	* ace/INET_Addr.cpp:
-	* ace/INET_Addr.inl:
-	* ace/MEM_Addr.cpp:
-	* ace/MEM_Addr.inl:
-	* ace/SPIPE_Addr.cpp:
-	* ace/SPIPE_Addr.inl:
-	* ace/Service_Types.cpp:
-	* ace/Service_Types.inl:
-	* ace/UNIX_Addr.cpp:
-	* ace/UNIX_Addr.inl:
+        * ace/ATM_Addr.cpp:
+        * ace/ATM_Addr.inl:
+        * ace/DEV_Addr.cpp:
+        * ace/DEV_Addr.inl:
+        * ace/FILE_Addr.cpp:
+        * ace/FILE_Addr.inl:
+        * ace/INET_Addr.cpp:
+        * ace/INET_Addr.inl:
+        * ace/MEM_Addr.cpp:
+        * ace/MEM_Addr.inl:
+        * ace/SPIPE_Addr.cpp:
+        * ace/SPIPE_Addr.inl:
+        * ace/Service_Types.cpp:
+        * ace/Service_Types.inl:
+        * ace/UNIX_Addr.cpp:
+        * ace/UNIX_Addr.inl:
 
-	  Moved virtual method implementation out-of-line.  Since the
-	  classes to which they belong are exported, inlining them will
-	  cause problems when attempting to perform a dynamic_cast<> in
-	  binaries built with g++ 4.0's -fvisibility-inlines-hidden
-	  command line option.
+          Moved virtual method implementation out-of-line.  Since the
+          classes to which they belong are exported, inlining them will
+          cause problems when attempting to perform a dynamic_cast<> in
+          binaries built with g++ 4.0's -fvisibility-inlines-hidden
+          command line option.
 
-	* ace/Strategies_T.cpp (dump):
+        * ace/Strategies_T.cpp (dump):
 
-	  Removed ACE_INLINE from this out of line method.
+          Removed ACE_INLINE from this out of line method.
 
 Wed May 18 15:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -166,12 +172,12 @@ Wed May 18 15:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
           Removed check for missing shm_open() since this causes problems
           for platforms supporting POSIX_SEM (and thus not using
-	  shm_open/open).  Thanks to Raoul Gough <Raoul dot Gough at liffe
-	  dot com> for reporting this.
+          shm_open/open).  Thanks to Raoul Gough <Raoul dot Gough at liffe
+          dot com> for reporting this.
 
         * ace/config-openvms.h:
           Added ACE_LACKS_UNNAMED_SEMAPHORE to compensate for above
-	  change.
+          change.
 
 Wed May 18 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -236,10 +242,10 @@ Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/config-win32-msvc.h:
 
           Add a new ACE_LACKS_NATIVE_WCHAR_T macro, which can be used to
-	  check whether a platform supports overloading on wchar_t without
-	  conflict.  The existing ACE_WSTRING_HAS_USHORT_SUPPORT was
-	  incorrectly being used for two purposes. This setting should let
-	  us enable native wchar_t support on VC7+.
+          check whether a platform supports overloading on wchar_t without
+          conflict.  The existing ACE_WSTRING_HAS_USHORT_SUPPORT was
+          incorrectly being used for two purposes. This setting should let
+          us enable native wchar_t support on VC7+.
 
         * ace/OS_NS_time.inl:
 
@@ -249,7 +255,7 @@ Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/OS_NS_unistd.inl:
 
           Mask out the X_OK(6) bit for the amode parameter of the access()
-	  function because this bit is illegal on Win32 and will assert.
+          function because this bit is illegal on Win32 and will assert.
 
         * ace/config-win32-msvc-7.h:
 
@@ -258,8 +264,8 @@ Tue May 17 07:50:07 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/config-win32-msvc-8.h:
 
           Disable deprecation warning 4996, because the
-	  _CRT_SECURE_NO_DEPRECATE macro doesn't appear to work
-	  correctly.
+          _CRT_SECURE_NO_DEPRECATE macro doesn't appear to work
+          correctly.
 
         * ace/streams.h:
 
