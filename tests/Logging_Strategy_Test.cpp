@@ -86,9 +86,9 @@ static ACE_TCHAR *file_name = 0;
 static int max_size_files = 0;
 static int max_num_files = 0;
 static int interval_time = 0;
-static int order_state = 0;
+static bool order_state = false;
 static int num_files = 0;
-static int wipeout_logfile = 0;
+static bool wipeout_logfile = false;
 
 // This adapter function runs the Reactor's event loop in a separate
 // thread of control.
@@ -376,12 +376,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case 'o':
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Ordering files activated\n")));
-          order_state = 1;
+          order_state = true;
           break;
         case 'w':
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Wipeout logfile activated\n")));
-          wipeout_logfile = 1;
+          wipeout_logfile = true;
           break;
         default:
           ACE_ERROR_RETURN

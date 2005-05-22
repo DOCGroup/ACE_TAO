@@ -2528,6 +2528,9 @@ ACE_Log_Msg::msg_ostream (void) const
 void
 ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, int delete_ostream)
 {
+  if (this->delete_ostream_)
+    delete this->ostream_;
+
   this->delete_ostream_ = delete_ostream;
   this->ostream_ = m;
 }

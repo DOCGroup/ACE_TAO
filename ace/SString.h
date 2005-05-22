@@ -458,7 +458,7 @@ protected:
  * Keeps a pointer to a string and deallocates it (using
  * <ACE_OS::free>) on its destructor.
  * If you need to delete using "delete[]" the
- * ACE_Auto_Array_Ptr<char*> is your choice.
+ * ACE_Auto_Array_Ptr<char> is your choice.
  * The class plays the same role as auto_ptr<>
  */
 class ACE_Export ACE_Auto_String_Free
