@@ -403,15 +403,15 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
     }
   else
     {
-      tao_poa_manager = dynamic_cast <TAO_POA_Manager *>(poa_manager);
+      tao_poa_manager = dynamic_cast<TAO_POA_Manager *> (poa_manager);
     }
 
   PortableServer::POAManager_var safe_poa_manager = tao_poa_manager;
 
-  TAO_Root_POA *poa = this->create_POA_i (adapter_name,
-                                     *tao_poa_manager,
-                                     tao_policies
-                                     ACE_ENV_ARG_PARAMETER);
+  PortableServer::POA_var poa = this->create_POA_i (adapter_name,
+                                                    *tao_poa_manager,
+                                                    tao_policies
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Release the POA_Manager_var since we got here without error.  The
@@ -419,7 +419,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
   // (actually it shares the ownership with its peers).
   (void) safe_poa_manager._retn ();
 
-  return PortableServer::POA::_duplicate (poa);
+  return poa._retn ();
 }
 
 TAO_Root_POA *

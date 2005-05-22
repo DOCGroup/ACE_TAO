@@ -1,7 +1,36 @@
+Sun May 22 00:00:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+
+	* tao/Any.h (to_object, to_abstract_base, to_value):
+
+	  Made these constructors explicit, in keeping with the CORBA spec
+	  since it requires that the other "to_" helper structs have
+	  explicit single argument constructors if supported by the C++
+	  compiler.
+
+	* tao/PortableServer/Root_POA.cpp (create_POA_i):
+
+	  Do not duplicate POA returned from the other create_POA_i()
+	  override called in this method since we are returning it
+	  directly to the caller and do not need to retain ownership.
+	  Fixes a number of memory leaks.
+
+	* tests/ORT/ObjectReferenceFactory.h:
+
+	  CORBA::DefaultValueRefCountBase mix-in class should be the last
+	  in the inheritance chain.  Addresses potential memory leaks.
+
+	* tests/Param_Test/options.cpp:
+	* tests/Param_Test/options.h:
+
+	  Store the test IOR in a CORBA::String_var and drop the explicit
+	  calls to CORBA::string_free().  Simplifies memory management and
+	  fixes a memory leak.
+
 Sat May 21 18:38:12 UTC 2005   Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.cpp:
-          Fixed unused argument warning when messaging is disabled
+          Fixed unused argument warning when messaging is disabled.
 
 Sat May 21 18:34:12 UTC 2005   Johnny Willemsen  <jwillemsen@remedy.nl>
 
