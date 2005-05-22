@@ -75,6 +75,7 @@ libTAO_la_SOURCES = \
   ClientRequestInterceptorA.cpp \
   ClientRequestInterceptorC.cpp \
   ClientRequestInterceptor_Adapter.cpp \
+  ClientRequestInterceptor_List.cpp \
   Client_Strategy_Factory.cpp \
   CodecFactory.cpp \
   CodecFactory_ORBInitializer.cpp \
@@ -262,6 +263,7 @@ libTAO_la_SOURCES = \
   ServerRequestInfoC.cpp \
   ServerRequestInterceptorA.cpp \
   ServerRequestInterceptorC.cpp \
+  ServerRequestInterceptor_List.cpp \
   Server_Strategy_Factory.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
@@ -461,6 +463,8 @@ nobase_include_HEADERS = \
   ClientRequestInterceptorS.h \
   ClientRequestInterceptor_Adapter.h \
   ClientRequestInterceptor_Adapter.inl \
+  ClientRequestInterceptor_List.h \
+  ClientRequestInterceptor_List.inl \
   Client_Strategy_Factory.h \
   CodecFactory.h \
   CodecFactory_ORBInitializer.h \
@@ -593,7 +597,6 @@ nobase_include_HEADERS = \
   InterceptorC.h \
   InterceptorS.h \
   Interceptor_List.h \
-  Interceptor_List.inl \
   InterfaceDef.pidl \
   InvalidName.pidl \
   InvalidSlot.pidl \
@@ -796,6 +799,8 @@ nobase_include_HEADERS = \
   ServerRequestInterceptor.pidl \
   ServerRequestInterceptorC.h \
   ServerRequestInterceptorS.h \
+  ServerRequestInterceptor_List.h \
+  ServerRequestInterceptor_List.inl \
   Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \

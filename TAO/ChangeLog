@@ -1,3 +1,9 @@
+Sun May 22 16:37:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Sun May 22 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.{cpp,h}:
