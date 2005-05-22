@@ -8,8 +8,6 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Event/Event_Channel.h"
-#include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
@@ -23,8 +21,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Throughput, 
+ACE_RCSID (EC_Throughput,
+           ECT_Throughput,
            "$Id$")
 
 int
@@ -53,8 +51,6 @@ ECT_Throughput::ECT_Throughput (void)
     supplier_type_shift_ (0),
     pid_file_name_ (0),
     active_count_ (0),
-    reactive_ec_ (0),
-    new_ec_ (1),
     ec_concurrency_hwm_ (1),
     thr_create_flags_ (THR_NEW_LWP|THR_BOUND|THR_SCHED_FIFO)
 {
@@ -118,8 +114,6 @@ ECT_Throughput::run (int argc, char* argv[])
                       "  supplier type count = <%d>\n"
                       "  supplier type shift = <%d>\n"
                       "  pid file name = <%s>\n"
-                      "  reactive EC = <%d>\n"
-                      "  new EC = <%d>\n"
                       "  concurrency HWM = <%d>\n",
 
                       this->n_consumers_,
@@ -136,8 +130,6 @@ ECT_Throughput::run (int argc, char* argv[])
                       this->supplier_type_shift_,
 
                       this->pid_file_name_?this->pid_file_name_:"nil",
-                      this->reactive_ec_,
-                      this->new_ec_,
                       this->ec_concurrency_hwm_
                       ) );
         }
@@ -230,47 +222,19 @@ ECT_Throughput::run (int argc, char* argv[])
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 #endif /* 0 */
 
-      // The factories must be destroyed *after* the EC, hence the
-      // auto_ptr declarations must go first....
-      auto_ptr<TAO_Module_Factory> module_factory;
-
       auto_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl;
-      if (this->new_ec_ == 0)
-        {
 
-          if (this->reactive_ec_ == 1)
-            {
-              auto_ptr<TAO_Module_Factory> auto_module_factory (new TAO_Reactive_Module_Factory);
-              module_factory = auto_module_factory;
-            }
-          else
-            {
-              auto_ptr<TAO_Module_Factory> auto_module_factory (new TAO_Default_Module_Factory);
-              module_factory = auto_module_factory;
-            }
+      TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
+                                            root_poa.in ());
 
-          // Create the EC
-          auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl
-            (new ACE_EventChannel (scheduler.in (),
-                                   1,
-                                   ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                   module_factory.get ()));
-          ec_impl = auto_ec_impl;
-        }
-      else
-        {
-          TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                                root_poa.in ());
+      TAO_EC_Event_Channel *ec =
+        new TAO_EC_Event_Channel (attr);
 
-          TAO_EC_Event_Channel *ec =
-            new TAO_EC_Event_Channel (attr);
+      ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-          ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
-          ec_impl = auto_ec_impl;
-        }
+      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
+      ec_impl = auto_ec_impl;
 
       RtecEventChannelAdmin::EventChannel_var channel =
         ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -513,45 +477,13 @@ ECT_Throughput::dump_results (void)
 int
 ECT_Throughput::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "rdc:s:u:n:t:b:h:l:p:m:w:");
+  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:l:p:w:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
-        case 'r':
-          this->new_ec_ = 0;
-          this->reactive_ec_ = 1;
-          break;
-
-        case 'm':
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "rt") == 0)
-            {
-              this->new_ec_ = 0;
-              this->reactive_ec_ = 0;
-            }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "st") == 0)
-            {
-              this->new_ec_ = 0;
-              this->reactive_ec_ = 1;
-            }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "new") == 0)
-            {
-              this->new_ec_ = 1;
-              this->reactive_ec_ = 1;
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Unknown mode <%s> "
-                          "default is rt\n",
-                          get_opt.opt_arg ()));
-              this->new_ec_ = 0;
-              this->reactive_ec_ = 0;
-            }
-          break;
-
         case 'c':
           this->n_consumers_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;

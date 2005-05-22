@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
+project(ECT Supplier): rteventexe, rtevent, rtsched, naming, iortable, messaging {
   exename = ECT_Supplier
 
   Source_Files {
@@ -11,7 +11,7 @@ project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messag
   }
 }
 
-project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
+project(ECT Consumer): rteventexe, rtevent, rtsched, naming, iortable, messaging {
   exename = ECT_Consumer
 
   Source_Files {
@@ -21,7 +21,7 @@ project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messag
   }
 }
 
-project(ECT Throughput): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
+project(ECT Throughput): rteventexe, rtevent, rtsched, naming, iortable, messaging {
   exename = ECT_Throughput
 
   Source_Files {

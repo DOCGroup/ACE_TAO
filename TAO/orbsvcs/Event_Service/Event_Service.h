@@ -68,15 +68,6 @@ private:
   /// Parse the command line args
   int parse_args (int argc, ACE_TCHAR* argv[]);
 
-  enum {
-    /// Use the Service Configurator to find factory
-    ES_NEW,
-    /// Reactive dispatching, old EC.
-    ES_OLD_REACTIVE,
-    /// Prioritized dispatching, old EC.
-    ES_OLD_MT
-  };
-
   enum Sched_type_t {ES_SCHED_NONE, ES_SCHED_GLOBAL, ES_SCHED_LOCAL};
 
 private:
@@ -103,9 +94,6 @@ private:
 
   /// Should we use a global scheduler or a local one or none?
   Sched_type_t scheduler_type_;
-
-  /// The type of event service we will use
-  int event_service_type_;
 
   /// A reference to the ORB, to shut it down properly.
   CORBA::ORB_var orb_;

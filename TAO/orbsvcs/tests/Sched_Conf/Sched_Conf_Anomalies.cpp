@@ -355,38 +355,13 @@ main (int argc, char *argv[])
       RtecScheduler::Config_Info_Set_var configs;
       RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
 
-#if defined (__SUNPRO_CC)
-      // Sun C++ 4.2 warns with the code below:
-      //   Warning (Anachronism): Temporary used for non-const
-      //   reference, now obsolete.
-      //   Note: Type "CC -migration" for more on anachronisms.
-      //   Warning (Anachronism): The copy constructor for argument
-      //   infos of type RtecScheduler::RT_Info_Set_out should take
-      //   const RtecScheduler::RT_Info_Set_out&.
-      // But, this code is not CORBA conformant, because users should
-      // not define instances of _out types.
-
-      RtecScheduler::RT_Info_Set_out infos_out (infos);
-      RtecScheduler::Dependency_Set_out deps_out (deps);
-      RtecScheduler::Config_Info_Set_out configs_out (configs);
-      RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out (anomalies);
-      ACE_Scheduler_Factory::server ()->compute_scheduling
-        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                         ACE_SCOPE_THREAD),
-         ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                         ACE_SCOPE_THREAD),
-         infos_out, deps_out,
-         configs_out, anomalies_out ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
-#else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          infos.out (), deps.out (),
-         configs.out (), anomalies.out () ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
-#endif /* ! __SUNPRO_CC */
-
+         configs.out (), anomalies.out () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),

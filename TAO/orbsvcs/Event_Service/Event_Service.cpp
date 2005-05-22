@@ -10,8 +10,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/Event/Event_Channel.h"
 
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
@@ -19,8 +17,8 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Event_Service, 
-           Event_Service, 
+ACE_RCSID (Event_Service,
+           Event_Service,
            "$Id$")
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
@@ -38,7 +36,6 @@ Event_Service::Event_Service (void)
     sched_impl_ (0),
     ec_impl_ (0),
     scheduler_type_ (ES_SCHED_NONE),
-    event_service_type_ (ES_NEW),
     use_bidir_giop_ (0)
 {
 }
@@ -110,9 +107,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       // The old EC always needs a scheduler. If none is
       // specified, we default to a local scheduler
-      if (this->scheduler_type_ == ES_SCHED_LOCAL ||
-          (this->scheduler_type_ == ES_SCHED_NONE &&
-           this->event_service_type_ != ES_NEW))
+      if (this->scheduler_type_ == ES_SCHED_LOCAL)
         {
           // Create a local scheduler instance
           ACE_NEW_RETURN (this->sched_impl_,
@@ -144,57 +139,21 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                               1);
         }
 
-      switch (this->event_service_type_)
+      TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
+                                            root_poa.in ());
+
+      if (this->scheduler_type_ != ES_SCHED_NONE)
         {
-        case ES_NEW:
-          {
-            TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                                  root_poa.in ());
-
-            if (this->scheduler_type_ != ES_SCHED_NONE)
-              {
-                attr.scheduler = scheduler.in ();
-              }
-
-            TAO_EC_Event_Channel* ec;
-            ACE_NEW_RETURN (ec,
-                            TAO_EC_Event_Channel (attr),
-                            1);
-            this->ec_impl_ = ec;
-            ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
-          break;
-
-        case ES_OLD_REACTIVE:
-          {
-            ACE_NEW_RETURN (this->module_factory_,
-                            TAO_Reactive_Module_Factory,
-                            1);
-            ACE_NEW_RETURN (this->ec_impl_,
-                            ACE_EventChannel (scheduler.in (),
-                                              1,
-                                              ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                              this->module_factory_),
-                            1);
-          }
-          break;
-        case ES_OLD_MT:
-          {
-            ACE_NEW_RETURN (this->module_factory_,
-                            TAO_Default_Module_Factory,
-                            1);
-
-            ACE_NEW_RETURN (this->ec_impl_,
-                            ACE_EventChannel (scheduler.in (),
-                                              1,
-                                              ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                              this->module_factory_),
-                            1);
-          }
-
-          break;
+          attr.scheduler = scheduler.in ();
         }
+
+      TAO_EC_Event_Channel* ec_impl;
+      ACE_NEW_RETURN (ec_impl,
+                      TAO_EC_Event_Channel (attr),
+                      1);
+      this->ec_impl_ = ec_impl;
+      ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec;
 
@@ -357,7 +316,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:s:t:q:b"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:s:q:b"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -411,29 +370,6 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
             }
           break;
 
-        case 't':
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("NEW")) == 0)
-            {
-              this->event_service_type_ = ES_NEW;
-            }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("OLD_REACTIVE")) == 0)
-            {
-              this->event_service_type_ = ES_OLD_REACTIVE;
-            }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("OLD_MT")) == 0)
-            {
-              this->event_service_type_ = ES_OLD_MT;
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_LIB_TEXT("Unknown event service type <%s> ")
-                          ACE_LIB_TEXT("defaulting to NEW\n"),
-                          get_opt.opt_arg ()));
-              this->event_service_type_ = ES_NEW;
-            }
-          break;
-
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
@@ -442,7 +378,6 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
                       ACE_LIB_TEXT("-o ior_file_name ")
                       ACE_LIB_TEXT("-p pid_file_name ")
                       ACE_LIB_TEXT("-s <global|local|none> ")
-                      ACE_LIB_TEXT("-t <new|old_reactive|old_mt> ")
                       ACE_LIB_TEXT("-q servant_name for persistent IOR ")
                       ACE_LIB_TEXT("-b use bidir giop ")
                       ACE_LIB_TEXT("\n"),

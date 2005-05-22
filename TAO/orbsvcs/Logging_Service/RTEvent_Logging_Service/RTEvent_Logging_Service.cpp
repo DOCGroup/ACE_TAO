@@ -4,8 +4,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/OS_main.h"
@@ -27,13 +25,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 RTEvent_Logging_Service::RTEvent_Logging_Service (void)
-  : module_factory_ (0),
-    sched_impl_ (0),
+  : sched_impl_ (0),
     // ec_impl_ (0),
     service_name_ (0),
     ior_file_name_ (0),
     pid_file_name_ (0),
-    event_service_type_ (ES_NEW),
     global_scheduler_ (0),
     rtevent_log_factory_name_ ("RTEventLogFactory"),
     child_poa_name_ ("RTEventLog_ChildPOA"),
@@ -47,8 +43,6 @@ RTEvent_Logging_Service::~RTEvent_Logging_Service (void)
   //this->ec_impl_ = 0;
   //delete this->sched_impl_;
   //this->sched_impl_ = 0;
-  //delete this->module_factory_;
-  //this->module_factory_ = 0;
 }
 
 int
@@ -91,7 +85,7 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the Naming Service.\n"),
@@ -110,7 +104,7 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
 
       CosNaming::NamingContext_var context =
         naming_client_.get_context ();
-*/      
+*/
 
       RtecScheduler::Scheduler_var scheduler;
       // This is the name we (potentially) register the Scheduling
@@ -143,7 +137,7 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
               ACE_TRY_CHECK;
             }
           else
-          {       
+          {
               CORBA::Object_var tmp =
                 context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -157,51 +151,15 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
 
 
 /*
-      switch (this->event_service_type_)
-        {
-        case ES_NEW:
-          {
-            TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                                  root_poa.in ());
-            TAO_EC_Event_Channel* ec;
-            ACE_NEW_RETURN (ec,
-                            TAO_EC_Event_Channel (attr),
-                            1);
-            this->ec_impl_ = ec;
-            ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
-          break;
-
-        case ES_OLD_REACTIVE:
-          {
-            ACE_NEW_RETURN (this->module_factory_,
-                            TAO_Reactive_Module_Factory,
-                            1);
-            ACE_NEW_RETURN (this->ec_impl_,
-                            ACE_EventChannel (scheduler.in (),
-                                              1,
-                                              ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                              this->module_factory_),
-                            1);
-          }
-          break;
-        case ES_OLD_MT:
-          {
-            ACE_NEW_RETURN (this->module_factory_,
-                            TAO_Default_Module_Factory,
-                            1);
-
-            ACE_NEW_RETURN (this->ec_impl_,
-                            ACE_EventChannel (scheduler.in (),
-                                              1,
-                                              ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                              this->module_factory_),
-                            1);
-          }
-
-          break;
-        }
+      TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
+                                            root_poa.in ());
+      TAO_EC_Event_Channel* ec;
+      ACE_NEW_RETURN (ec,
+                      TAO_EC_Event_Channel (attr),
+                      1);
+      this->ec_impl_ = ec;
+      ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 */
       // Notice that we activate *this* object with the POA, but we
       // forward all the requests to the underlying EC
@@ -286,8 +244,6 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Registered with the naming service as %s\n", rtevent_log_factory_name_));
 
-
-
       ACE_DEBUG ((LM_DEBUG, "%s; running the RTEevent Logging Service\n", __FILE__));
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -318,7 +274,7 @@ RTEvent_Logging_Service::parse_args (int argc, char *argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, "n:o:p:s:t:");
+  ACE_Get_Opt get_opt (argc, argv, "n:o:p:s:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -360,29 +316,6 @@ RTEvent_Logging_Service::parse_args (int argc, char *argv [])
             }
           break;
 
-        case 't':
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "NEW") == 0)
-            {
-              this->event_service_type_ = ES_NEW;
-            }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OLD_REACTIVE") == 0)
-            {
-              this->event_service_type_ = ES_OLD_REACTIVE;
-            }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OLD_MT") == 0)
-            {
-              this->event_service_type_ = ES_OLD_MT;
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Unknown event service type <%s> "
-                          "defaulting to REACTIVE\n",
-                          get_opt.opt_arg ()));
-              this->event_service_type_ = ES_NEW;
-            }
-          break;
-
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
@@ -391,7 +324,6 @@ RTEvent_Logging_Service::parse_args (int argc, char *argv [])
                       "-o ior_file_name "
                       "-p pid_file_name "
                       "-s <global|local> "
-                      "-t <new|old_reactive|old_mt> "
                       "\n",
                       argv[0]));
           return -1;
@@ -400,8 +332,6 @@ RTEvent_Logging_Service::parse_args (int argc, char *argv [])
 
   return 0;
 }
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
