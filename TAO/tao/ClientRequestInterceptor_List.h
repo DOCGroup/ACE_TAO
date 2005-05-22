@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   Client_Interceptor_List.h
+ *  @file ClientRequestInterceptor_List.h
  *
  *  $Id$
  *
