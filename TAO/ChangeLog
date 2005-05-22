@@ -1,3 +1,41 @@
+Sun May 22 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.{cpp,h}:
+        * orbsvcs/Event_Service/Event_Service.{h,cpp}:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.{h,cpp}:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.{h,cpp}:
+        * orbsvcs/tests/Event/lib/Driver.{h,cpp}:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+          Removed support for the old rt event service, this will be removed
+          soon.
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+          Removed not needed includes
+
+        * orbsvcs/Event_Service/Event_Service.mpc:
+        * orbsvcs/tests/EC_Throughput/EC_Throughput.mpc:
+        * orbsvcs/examples/RtEC/Schedule/RtEC_Schedule.mpc:
+        * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+          Removed rtoldevent as base project
+
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+          Updated because we just only have one RTEvent implementation
+
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+          Removed workaround for very old Sun compiler
+
+        * orbsvcs/examples/RtEC/Schedule/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Supplier.cpp:
+          Removed empty explicit instantiation block
+
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+          Removed not needed includes of old rtevent files
+
 Sun May 22 10:33:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Root_POA.cpp (create_POA_i):
