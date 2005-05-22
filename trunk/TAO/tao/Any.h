@@ -116,19 +116,19 @@ namespace CORBA
     {
       // This signature reflects the change set out in
       // issue 154 of the 1.3 RTF.
-      to_object (Object_out obj);
+      explicit to_object (Object_out obj);
       Object_ptr &ref_;
     };
 
     struct TAO_Export to_abstract_base
     {
-      to_abstract_base (AbstractBase_ptr &obj);
+      explicit to_abstract_base (AbstractBase_ptr &obj);
       AbstractBase_ptr &ref_;
     };
 
     struct TAO_Export to_value
     {
-      to_value (ValueBase *&base);
+      explicit to_value (ValueBase *&base);
       ValueBase *&ref_;
     };
 
