@@ -586,10 +586,10 @@ protected:
                      PortableServer::POA::AdapterAlreadyExists,
                      PortableServer::POA::InvalidPolicy));
 
-  TAO_Root_POA *create_POA_i (const String &adapter_name,
-                         TAO_POA_Manager &poa_manager,
-                         const TAO_POA_Policy_Set &policies
-                         ACE_ENV_ARG_DECL)
+  PortableServer::POA_ptr create_POA_i (const String &adapter_name,
+                                        TAO_POA_Manager &poa_manager,
+                                        const TAO_POA_Policy_Set &policies
+                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::AdapterAlreadyExists,
                      PortableServer::POA::InvalidPolicy));
