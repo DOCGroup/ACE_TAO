@@ -39,7 +39,8 @@
 #include "tao/Adapter_Registry.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "Interceptor_List.h"
+# include "ClientRequestInterceptor_List.h"
+# include "ServerRequestInterceptor_List.h"
 # include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 

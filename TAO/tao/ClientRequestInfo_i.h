@@ -18,17 +18,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbconf.h"
+
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "tao/Invocation_Utils.h"
-#include "tao/PICurrent.h"
-#include "tao/PICurrent_Copy_Callback.h"
+#include "Invocation_Utils.h"
+#include "PICurrent.h"
+#include "PICurrent_Copy_Callback.h"
 
 class TAO_Service_Context;
 

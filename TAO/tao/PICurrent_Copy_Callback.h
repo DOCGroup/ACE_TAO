@@ -15,16 +15,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Functor.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
 #include "orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+#include "ace/Functor.h"
 
 namespace TAO
 {
