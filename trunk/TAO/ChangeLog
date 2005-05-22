@@ -38,12 +38,12 @@ Sat May 21 18:34:12 UTC 2005   Johnny Willemsen  <jwillemsen@remedy.nl>
           Use taoserver as base project to fix unresolved link errors
 
 Fri May 20 20:47:00 2005    Huang-Ming Huang <hh1@cse.wustl.edu>
- 
+
         * tao/MProfile.cpp:
         * tao/Profile.h:
         * tao/Profile.cpp
         * tao/Stub.cpp:
-  
+
           Removed the association of TAO_Profile to TAO_Stub. This allows an
           instance of TAO_Profile to be shared between different TAO_MProfile
           objects.
