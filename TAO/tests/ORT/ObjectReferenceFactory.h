@@ -37,8 +37,8 @@
  * @c IORInfo::current_factory attribute internals.
  */
 class ObjectReferenceFactory
-  : public virtual CORBA::DefaultValueRefCountBase
-  , public virtual OBV_ORT_Test::ObjectReferenceFactory
+  : public virtual OBV_ORT_Test::ObjectReferenceFactory
+  , public virtual CORBA::DefaultValueRefCountBase
 {
  public:
 
