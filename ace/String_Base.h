@@ -24,7 +24,6 @@
 
 #include "ace/Global_Macros.h"
 
-// Forward decl.
 class ACE_Allocator;
 
 /**
@@ -58,9 +57,12 @@ public:
 
   /**
    * Constructor that copies @a s into dynamically allocated memory.
-   * If @a release is non-0 then the @a ACE_Allocator is responsible for
-   * freeing this memory. Memory is _not_ allocated/freed if @a release
-   * is 0.
+   *
+   * if release == 1 then a new buffer is allocated internally, and
+   *   s is copied to the internal buffer.
+   * if release == 0 then the s buffer is used directly. If s == 0
+   *   then it will _not_ be used, and instead the internal buffer
+   *   is set to NULL_String_.
    *
    * @param s Zero terminated input string
    * @param the_allocator ACE_Allocator associated with string
@@ -74,9 +76,13 @@ public:
 
   /**
    * Constructor that copies @a len CHARs of @a s into dynamically
-   * allocated memory (will zero terminate the result).  If @a release
-   * is non-0 then the @a ACE_allocator is responsible for freeing this
-   * memory.  Memory is _not_ allocated/freed if @a release is 0.
+   * allocated memory (will zero terminate the result).
+   *
+   * if release == 1 then a new buffer is allocated internally.
+   *   s is copied to the internal buffer.
+   * if release == 0 then the s buffer is used directly. If s == 0
+   *   then it will _not_ be used, and instead the internal buffer
+   *   is set to NULL_String_.
    *
    * @param s Non-zero terminated input string
    * @param len Length of non-zero terminated input string
@@ -105,17 +111,20 @@ public:
    *  @param the_allocator ACE_Allocator associated with string
    *  @return ACE_String_Base containing CHAR 'c'
    */
-  ACE_String_Base (CHAR c,
-                   ACE_Allocator *the_allocator = 0);
+  ACE_String_Base (CHAR c, ACE_Allocator *the_allocator = 0);
 
   /**
-   *  Constructor that dynamically allocate @a len long of char array
-   *  and initialize it to @a c using @a alloc to allocate the memory.
+   *  Constructor that allocates a len long string.
    *
-   *  @param len Length of character array 'c'
-   *  @param c Input character array
+   *  Warning : This constructor was incorrectly documented in the past.
+   *  It simply calls resize(len, c).
+   *  It is probably not advisable to use the second parameter. See
+   *  resize() for more information.
+   *
+   *  @param len Amount of space to reserve for the string.
+   *  @param c The array is filled with c's
    *  @param the_allocator ACE_Allocator associated with string
-   *  @return ACE_String_Base containing character array 'c'
+   *  @return Empty ACE_String_Base with room for len CHARs
    */
   ACE_String_Base (size_t len,
                    CHAR c = 0,
@@ -161,8 +170,17 @@ public:
   ACE_String_Base < CHAR > &assign_nocopy (const ACE_String_Base < CHAR > &s);
 
   /**
-   * Copy @a s into this @a ACE_String_Base.  Memory is _not_
-   * allocated/freed if @a release is 0.
+   * Copy @a s into this @a ACE_String_Base.
+   *
+   * If release == 1 then a new buffer is allocated internally if the
+   *   existing one is not big enough to hold s. If the existing
+   *   buffer is big enough, then it will be used. This means that
+   *   set(*, 1) can be illegal when the string is constructed with a
+   *   const char*. (e.g. ACE_String_Base("test", 0, 0)).
+   *
+   * if release == 0 then the s buffer is used directly, and any
+   *   existing buffer is destroyed. If s == 0 then it will _not_ be
+   *   used, and instead the internal buffer is set to NULL_String_.
    *
    * @param s Null terminated input string
    * @param release Allocator responsible(1)/not reponsible(0) for
@@ -172,7 +190,16 @@ public:
 
   /**
    *  Copy @a len bytes of @a s (will zero terminate the result).
-   *  Memory is _not_ allocated/freed if @a release is 0.
+   *
+   * If release == 1 then a new buffer is allocated internally if the
+   *   existing one is not big enough to hold s. If the existing
+   *   buffer is big enough, then it will be used. This means that
+   *   set(*, *, 1) is illegal when the string is constructed with a
+   *   non-owned const char*. (e.g. ACE_String_Base("test", 0, 0))
+   *
+   * If release == 0 then the s buffer is used directly, and any
+   *   existing buffer is destroyed. If s == 0 then it will _not_ be
+   *   used, and instead the internal buffer is set to NULL_String_.
    *
    *  @param s Non-zero terminated input string
    *  @param len Length of input string 's'
@@ -183,6 +210,12 @@ public:
 
   /**
    * Clear this string. Memory is _not_ freed if <release> is 0.
+   *
+   * Warning: This method was incorrectly documented in the past, but
+   * the current implementation has been changed to match the documented
+   * behavior.
+   *
+   * Warning: clear(0) behaves like fast_clear() below.
    *
    * @param release Memory is freed if 1 or not if 0.
    */
@@ -199,6 +232,12 @@ public:
    *  - the buffer pointer is reset to the NULL_String_ and does not
    *    maintain a pointer to the caller-supplied buffer on return
    *  - the maximum string length is reset to 0.
+   *
+   * Warning : Calling clear(0) or fast_clear() can have unintended
+   *   side-effects if the string was constructed (or set()) with an
+   *   external buffer. The string will be disassociated with the buffer
+   *   and the next append() or +=() will cause a new buffer to be
+   *   allocated internally.
    */
   void fast_clear (void);
 
@@ -226,11 +265,39 @@ public:
   /**
    *  Concat operator (copies memory).
    *
-   *  @param s Input ACE_String_Base string to concatenate to another string.
+   *  @param s Input ACE_String_Base string to concatenate to this string.
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
   ACE_String_Base < CHAR > &operator += (const ACE_String_Base < CHAR > &s);
+
+  /**
+   *  Concat operator (copies memory).
+   *
+   *  @param s Input C string to concatenate to this string.
+   *  @return The combined string (input append to the end of the old). New
+   *    string is zero terminated.
+   */
+  ACE_String_Base < CHAR >& operator += (const CHAR* s);
+
+  /**
+   *  Concat operator (copies memory).
+   *
+   *  @param c Input CHAR to concatenate to this string.
+   *  @return The combined string (input append to the end of the old). New
+   *    string is zero terminated.
+   */
+  ACE_String_Base < CHAR >& operator += (const CHAR c);
+
+  /**
+   *  Append function (copies memory).
+   *
+   *  @param s Input CHAR array to concatenate to this string.
+   *  @param slen The length of the array.
+   *  @return The combined string (input append to the end of the old). New
+   *    string is zero terminated.
+   */
+  ACE_String_Base < CHAR >& append (const CHAR* s, size_t slen);
 
   /**
    *  Returns a hash value for this string.
@@ -375,12 +442,19 @@ public:
 
   /**
    * This method is designed for high-performance. Please use with
-   * care ;-) If the current size of the string is less than <len>,
-   * the string is resized to the new length. The data is zero'd
-   * out after this operation.
+   * care ;-)
    *
-   * @param len New string size
-   * @param c New input string
+   * Warning : This method was documented incorrectly in the past.
+   * The original intention was to change the length of the string to
+   * len, and to fill the whole thing with c CHARs.
+   * However, what was actually done was to set the length of the
+   * string to zero, and fill the buffer with c's. The buffer was
+   * also not null-terminated unless c happened to be zero.
+   * Rather than fix the method to work as documented, the code is
+   * left as is, but the second parameter should probably not be used.
+   *
+   * @param len The number of CHARs to reserve
+   * @param c The CHAR to use when filling the string.
    */
   void resize (size_t len, CHAR c = 0);
 
