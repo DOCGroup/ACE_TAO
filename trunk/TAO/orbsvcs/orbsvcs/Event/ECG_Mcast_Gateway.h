@@ -277,7 +277,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_ECG_Mcast_Gateway)
-ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_ECG_Mcast_Gateway)
+ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_ECG_Mcast_Gateway)
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_MCAST_GATEWAY_H */
