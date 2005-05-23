@@ -10,8 +10,8 @@
 //     real-time signals to post completions. The Real-time signal
 //     based completion strategy is implemented with
 //     ACE_POSIX_SIG_PROACTOR.
-//     (So, it can be used only if ACE_HAS_AIO_CALLS is defined and
-//      ACE_POSIX_AIOCB_PROACTOR is not defined)
+//     (So, it can be used only if both ACE_HAS_AIO_CALLS and
+//     ACE_HAS_POSIX_REALTIME_SIGNALS are defined.)
 //     Since it is faking results, you have to pay by knowing and
 //     using platform-specific implementation objects for Asynchronous
 //     Result classes.
@@ -194,7 +194,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Proactor1. SIGRTMIN Proactor. (default).
 
   // = Proactor2. SIGRTMAX Proactor.
-#if defined (ACE_HAS_AIO_CALLS) && !defined (ACE_POSIX_AIOCB_PROACTOR)
+#if defined (ACE_HAS_AIO_CALLS) && defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
 
   ACE_DEBUG ((LM_DEBUG, "Using ACE_POSIX_SIG_Proactor\n"));
 
@@ -219,9 +219,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_POSIX_SIG_Proactor posix_proactor (signal_set);
   // Get the Proactor interface out of it.
   ACE_Proactor proactor2 (&posix_proactor);
-#else /* ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR */
+#else /* ACE_HAS_AIO_CALLS && ACE_HAS_POSIX_REALTIME_SIGNALS */
   ACE_Proactor proactor2;
-#endif /* ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR */
+#endif /* ACE_HAS_AIO_CALLS && ACE_HAS_POSIX_REALTIME_SIGNALS */
 
   // = Create Tasks. One pool of threads to handle completions on
   //   SIGRTMIN and the other one to handle completions on SIGRTMAX.
