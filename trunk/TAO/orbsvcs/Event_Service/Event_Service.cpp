@@ -32,8 +32,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 // ****************************************************************
 
 Event_Service::Event_Service (void)
-  : module_factory_ (0),
-    sched_impl_ (0),
+  : sched_impl_ (0),
     ec_impl_ (0),
     scheduler_type_ (ES_SCHED_NONE),
     use_bidir_giop_ (0)
@@ -46,8 +45,6 @@ Event_Service::~Event_Service (void)
   this->ec_impl_ = 0;
   delete this->sched_impl_;
   this->sched_impl_ = 0;
-  delete this->module_factory_;
-  this->module_factory_ = 0;
 }
 
 int

@@ -71,9 +71,6 @@ private:
   enum Sched_type_t {ES_SCHED_NONE, ES_SCHED_GLOBAL, ES_SCHED_LOCAL};
 
 private:
-  /// The module factory for the EC.
-  TAO_Module_Factory *module_factory_;
-
   /// The Scheduler implementation.
   POA_RtecScheduler::Scheduler *sched_impl_;
 
