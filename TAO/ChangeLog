@@ -1,3 +1,16 @@
+Mon May 23 13:24:41 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/ImR_Client/ImplRepoA.cpp:
+        * tao/ImR_Client/ImplRepoC.h:
+        * tao/ImR_Client/ImplRepoC.inl:
+        * tao/ImR_Client/ImplRepoC.cpp:
+        * tao/ImR_Client/ImplRepoS.h:
+        * tao/ImR_Client/ImplRepoS.cpp:
+
+          Re-added the -GA option and updated the command in the pidl to save
+        footprint for static builds.
+
 Mon May 23 18:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.{h,cpp}:
