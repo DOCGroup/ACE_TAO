@@ -1,3 +1,8 @@
+Mon May 23 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+          No need to specify the type of the event service anymore
+
 Mon May 23 05:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/BCU.cpp BCU.h:
