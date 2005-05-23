@@ -270,7 +270,7 @@ int BasicLog_Test::display_records ()
 {
   DsLogAdmin::Iterator_var iter_out;
   DsLogAdmin::RecordList_var rec_list =
-    basicLog_->query ("TCL", "id > 0", iter_out);
+    basicLog_->query ("EXTENDED_TCL", "id > 0", iter_out);
 
   CORBA::ULong j = 0;
   for (; j < rec_list->length();++j)  //dhanvey added info
@@ -705,7 +705,7 @@ int BasicLog_Test::delete_records (CORBA::ULongLong /* numberOfRecords */)
               ACE_U64_TO_U32 (nrecords)));
 
   CORBA::Long retVal =
-    basicLog_->delete_records ("TCL", "id >= 0" ACE_ENV_ARG_PARAMETER);
+    basicLog_->delete_records ("EXTENDED_TCL", "id >= 0" ACE_ENV_ARG_PARAMETER);
 
   ACE_DEBUG ((LM_DEBUG,
               "Number of records in Log after delete = %d\n",
