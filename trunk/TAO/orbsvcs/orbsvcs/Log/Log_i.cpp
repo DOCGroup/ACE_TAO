@@ -13,7 +13,7 @@ ACE_RCSID (Log,
            Log_i,
            "$Id$")
 
-#define QUERY_LANG_SUPPORTED_BY_LOG "TCL"
+#define QUERY_LANG_SUPPORTED_BY_LOG "EXTENDED_TCL"
 
 TAO_Log_i::TAO_Log_i (DsLogAdmin::LogMgr_ptr factory,
                       DsLogAdmin::LogId id,
@@ -822,7 +822,7 @@ TAO_Log_i::delete_records (const char *grammar,
     this->match_i (constraint, 1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (count > 0)
+  if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
         this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -862,7 +862,7 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
         }
     }
 
-  if (count > 0)
+  if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
         this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1160,8 +1160,7 @@ TAO_Log_i::check_grammar (const char* grammar
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidGrammar))
 {
-  // Verify that the grammar is "TCL".
-  // The spec. asks for "extended TCL"
+  // Verify that the grammar is "EXTENDED_TCL".
   if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
     ACE_THROW (DsLogAdmin::InvalidGrammar ());
 }
@@ -1303,7 +1302,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
       }
     }
 
-  if (count > 0)
+  if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
         this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -1,7 +1,25 @@
+Sun May 22 22:10:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp (display_records)
+	(delete_records):
+
+	Changed query language parameter from "TCL" to "EXTENDED_TCL".
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (QUERY_LANG_SUPPORTED_BY_LOG):
+
+	Changed from "TCL" to "EXTENDED_TCL".
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records_by_id)
+	(TAO_Log_i::delete_records, TAO_Log_i::remove_old_records):
+
+	Don't bother checking whether current_size is less than max_size
+	if not log_full.  Avoids potentially costly calls into log store
+	(if/when we support strategized stores).
+
 Sun May 22 18:02:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records):
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records)
+	(TAO_Log_i::remove_old_records):
 
 	Like delete_records_by_id(), reset "log_full" if "current_size"
 	is less than "max_size".
