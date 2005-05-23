@@ -21,7 +21,7 @@ project(ECT Consumer): rteventexe, rtevent, rtsched, naming, iortable, messaging
   }
 }
 
-project(ECT Throughput): rteventexe, rtevent, rtsched, naming, iortable, messaging {
+project(ECT Throughput): rteventexe, rtevent_serv, rtsched, naming, iortable, messaging {
   exename = ECT_Throughput
 
   Source_Files {

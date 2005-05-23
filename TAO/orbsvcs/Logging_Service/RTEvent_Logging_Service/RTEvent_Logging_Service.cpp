@@ -115,7 +115,6 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
 
-
       if (1) // this->event_service_type_ == ES_OLD_REACTIVE
              // || this->event_service_type_ == ES_OLD_MT)
         {
