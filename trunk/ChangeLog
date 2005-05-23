@@ -1,3 +1,8 @@
+Mon May 23 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lib_Find.cpp:
+          Reverted change below, causes compile errors with some compilers
+
 Mon May 23 12:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Lib_Find.cpp:
