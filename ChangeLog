@@ -1,3 +1,11 @@
+Mon May 23 05:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/rtoldevent.mpb:
+          Removed this file
+
+        * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
+          Removed rtoldevent as base project
+
 Sun May 22 12:01:46 2005  Olli Savia  <ops@iki.fi>
 
         * ace/High_Res_Timer.cpp:
