@@ -1,3 +1,14 @@
+Sun May 22 17:01:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::scheduled):
+
+	Removed duplicate fetch of current time.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
+
+	Corrected calculation of purge time.  Arithmetic was being done on
+	time values without normalizing units first.
+
 Sun May 22 16:37:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
