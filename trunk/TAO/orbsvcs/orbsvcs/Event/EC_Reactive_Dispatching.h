@@ -19,7 +19,7 @@
 
 #include "EC_Dispatching.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +33,7 @@
  * The events are dispatched in FIFO ordering, using the invoking
  * thread to push the event to the consumer.
  */
-class TAO_RTEvent_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispatching
+class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispatching
 {
 public:
   /// The scheduler is used to find the range of priorities and similar

@@ -19,7 +19,7 @@
 
 #include "EC_Filter_Builder.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@ class TAO_EC_Event_Channel_Base;
  * (source/type based filtering + disjunctions, conjunctions, logical ands,
  * negations, and bitmasks) are constructed using this class.
  */
-class TAO_RTEvent_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_RTEvent_Serv_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
 {
 public:
   /// constructor.

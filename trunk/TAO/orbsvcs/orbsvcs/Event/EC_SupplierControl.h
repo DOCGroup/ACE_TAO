@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 class TAO_EC_ProxyPushConsumer;
 
@@ -40,7 +40,7 @@ namespace CORBA
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
  */
-class TAO_RTEvent_Export TAO_EC_SupplierControl
+class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl
 {
 public:
   /// Constructor.

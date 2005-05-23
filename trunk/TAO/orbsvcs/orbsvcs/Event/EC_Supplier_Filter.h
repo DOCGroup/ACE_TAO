@@ -20,7 +20,7 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,7 +62,7 @@ class TAO_EC_QOS_Info;
  * implementations of this class; as usual the EC_Factory will
  * create the right instance.
  */
-class TAO_RTEvent_Export TAO_EC_Supplier_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter
 {
 public:
   /// Destructor

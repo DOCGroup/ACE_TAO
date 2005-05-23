@@ -8,7 +8,7 @@
 #ifndef EC_CHANNEL_DESTROYER__H_
 #define EC_CHANNEL_DESTROYER__H_
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "EC_Event_Channel_Base.h"
 #include "ace/Auto_Functor.h"
 
@@ -17,7 +17,7 @@
  *
  * @brief Implements a functor for the TAO_EC_Channel_Destroyer class.
  */
-struct TAO_RTEvent_Export TAO_EC_Channel_Destroyer_Functor
+struct TAO_RTEvent_Serv_Export TAO_EC_Channel_Destroyer_Functor
 {
   typedef  TAO_EC_Event_Channel_Base * argument;
 

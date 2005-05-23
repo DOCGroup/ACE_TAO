@@ -19,7 +19,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ class TAO_EC_ProxyPushConsumer;
  * The creation of the right filter for each supplier controlled
  * by a Supplier_Filter_Builder.
  */
-class TAO_RTEvent_Export TAO_EC_Supplier_Filter_Builder
+class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter_Builder
 {
 public:
   /// Destructor...

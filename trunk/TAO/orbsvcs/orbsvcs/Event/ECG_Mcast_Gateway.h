@@ -18,7 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ECG_Defaults.h"
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "ECG_UDP_Receiver.h"
 #include "ECG_UDP_Out_Endpoint.h"
 #include "ace/Service_Object.h"
@@ -120,7 +120,7 @@ class ACE_Event_Handler;
  * Default configuration values (for either use case) can be found in
  * ECG_Defaults.h
  */
-class TAO_RTEvent_Export TAO_ECG_Mcast_Gateway
+class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_Gateway
   : public ACE_Service_Object
 {
 public:
@@ -179,7 +179,7 @@ public:
    * hard without exceptions and ACE+TAO are somewhat shy of
    * exceptions at this point.)
    */
-  struct TAO_RTEvent_Export Attributes
+  struct TAO_RTEvent_Serv_Export Attributes
   {
     Attributes (void);
 

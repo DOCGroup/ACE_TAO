@@ -20,7 +20,7 @@
 #include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +41,7 @@ class TAO_EC_ProxyPushSupplier_Set;
  * ConsumerAdmin to find all the consumers and pushes the event to
  * all of them.
  */
-class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
 public:
   /// Constructor
@@ -82,7 +82,7 @@ private:
  * used by all the suppliers (i.e. ProxyConsumers) of an event
  * channel.
  */
-class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
+class TAO_RTEvent_Serv_Export TAO_EC_Trivial_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
 {
 public:
   /// constructor....

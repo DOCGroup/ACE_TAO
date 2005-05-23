@@ -17,7 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "ECG_Adapters.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
@@ -32,7 +32,7 @@
  *
  *        NOT THREAD-SAFE.
  */
-class TAO_RTEvent_Export TAO_ECG_Simple_Mcast_EH
+class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Mcast_EH
   : public ACE_Event_Handler
   , public TAO_ECG_Handler_Shutdown
 {

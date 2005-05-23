@@ -47,7 +47,7 @@ template<class> class TAO_ESF_Worker;
  * an easy mechanism to extend the attributes without requiring
  * changes in the EC constructor.
  */
-class TAO_RTEvent_Export TAO_EC_Event_Channel_Attributes
+class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Attributes
 {
 public:
   /**
@@ -104,7 +104,7 @@ private:
  * ConsumerAdmin and Dispatching) and to provide a simpler
  * interface to the EC_Factory.
  */
-class TAO_RTEvent_Export TAO_EC_Event_Channel_Base
+class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Base
   : public POA_RtecEventChannelAdmin::EventChannel
   , public PortableServer::RefCountServantBase
 {

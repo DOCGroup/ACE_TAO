@@ -40,7 +40,7 @@
  * Since the class can be dynamically loaded the strategies can be
  * set in the service configurator file.
  */
-class TAO_RTEvent_Export TAO_EC_Default_Factory : public TAO_EC_Factory
+class TAO_RTEvent_Serv_Export TAO_EC_Default_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor
@@ -185,7 +185,7 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Default_Factory)
-ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_EC_Default_Factory)
+ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_Default_Factory)
 
 #include /**/ "ace/post.h"
 

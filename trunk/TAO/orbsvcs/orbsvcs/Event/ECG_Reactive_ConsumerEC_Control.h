@@ -37,7 +37,7 @@ class TAO_EC_Gateway_IIOP;
  * periodically wakeup and verify the state of the consumers
  * registered with the Event Channel.
  */
-class TAO_RTEvent_Export TAO_ECG_Reactive_ConsumerEC_Control_Adapter
+class TAO_RTEvent_Serv_Export TAO_ECG_Reactive_ConsumerEC_Control_Adapter
   : public ACE_Event_Handler
 {
 public:
@@ -61,7 +61,7 @@ private:
  * Defines the interface for the consumer event channel control strategy.
  * This strategy handles misbehaving or failing consumer event channels.
  */
-class TAO_RTEvent_Export TAO_ECG_Reactive_ConsumerEC_Control
+class TAO_RTEvent_Serv_Export TAO_ECG_Reactive_ConsumerEC_Control
   : public TAO_ECG_ConsumerEC_Control
 {
 public:

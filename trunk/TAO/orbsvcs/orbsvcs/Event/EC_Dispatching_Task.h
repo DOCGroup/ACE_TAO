@@ -25,12 +25,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventCommC.h"
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
 #include "ace/Lock_Adapter_T.h"
 
-class TAO_RTEvent_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
+class TAO_RTEvent_Serv_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 {
 public:
   TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
@@ -50,7 +50,7 @@ protected:
  * dispatching.
  *
  */
-class TAO_RTEvent_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
+class TAO_RTEvent_Serv_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   /// Constructor
@@ -77,7 +77,7 @@ private:
 
 // ****************************************************************
 
-class TAO_RTEvent_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
+class TAO_RTEvent_Serv_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   /// Constructor, it will allocate its own data block
@@ -96,7 +96,7 @@ public:
 
 // ****************************************************************
 
-class TAO_RTEvent_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
+class TAO_RTEvent_Serv_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
 {
 public:
   /// Constructor
@@ -108,7 +108,7 @@ public:
 
 // ****************************************************************
 
-class TAO_RTEvent_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
+class TAO_RTEvent_Serv_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
 {
 public:
   /// Constructor

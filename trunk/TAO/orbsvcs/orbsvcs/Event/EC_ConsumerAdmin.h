@@ -25,7 +25,7 @@
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
@@ -45,7 +45,7 @@ class TAO_EC_ProxyPushConsumer;
  * <H2>Locking</H2>
  * No provisions for locking, access must be serialized externally.
  */
-class TAO_RTEvent_Export TAO_EC_ConsumerAdmin
+class TAO_RTEvent_Serv_Export TAO_EC_ConsumerAdmin
   : public POA_RtecEventChannelAdmin::ConsumerAdmin
   , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushSupplier,RtecEventChannelAdmin::ProxyPushSupplier,TAO_EC_ProxyPushConsumer>
 {

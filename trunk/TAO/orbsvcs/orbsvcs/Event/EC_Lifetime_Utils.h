@@ -17,7 +17,7 @@
 #define TAO_EC_LIFETIME_UTILS_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
@@ -35,7 +35,7 @@
  * Can be told to deactivate a servant explicitly or can do so
  * automagically, in its destructor.
  */
-class TAO_RTEvent_Export TAO_EC_Object_Deactivator
+class TAO_RTEvent_Serv_Export TAO_EC_Object_Deactivator
 {
 public:
   /// Default constructor.  Deactivation info can be supplied later
@@ -115,7 +115,7 @@ private:
  * NOTE: deactivation does NOT happen automatically, and must be
  * explicitly initiated as described above.
  */
-class TAO_RTEvent_Export TAO_EC_Deactivated_Object
+class TAO_RTEvent_Serv_Export TAO_EC_Deactivated_Object
 {
 public:
 
@@ -142,7 +142,7 @@ protected:
  * Holds a reference to an ORB, and calls destroy() on it in the
  * destructor.
  */
-class TAO_RTEvent_Export TAO_EC_ORB_Holder
+class TAO_RTEvent_Serv_Export TAO_EC_ORB_Holder
 {
 public:
   /// Constructor. No-op.
@@ -178,7 +178,7 @@ private:
  * Holds a reference to an Event Channel, and calls destroy() on it in the
  * destructor.
  */
-class TAO_RTEvent_Export TAO_EC_Event_Channel_Holder
+class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Holder
 {
 public:
   /// Constructor. No-op.

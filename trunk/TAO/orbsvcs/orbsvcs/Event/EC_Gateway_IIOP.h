@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "EC_Gateway.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -60,7 +60,7 @@ class TAO_EC_Gateway_IIOP_Factory;
  * investigate if closer collaboration with its collocated EC could
  * be used to remove that copy.
  */
-class TAO_RTEvent_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
+class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
 {
 public:
   TAO_EC_Gateway_IIOP (void);

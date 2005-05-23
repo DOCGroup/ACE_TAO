@@ -25,7 +25,7 @@
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
@@ -39,7 +39,7 @@ class TAO_EC_ProxyPushSupplier;
  * <H2>Memory Management</H2>
  * It does not assume ownership of the TAO_EC_Event_Channel_Base object
  */
-class TAO_RTEvent_Export TAO_EC_SupplierAdmin
+class TAO_RTEvent_Serv_Export TAO_EC_SupplierAdmin
   : public POA_RtecEventChannelAdmin::SupplierAdmin
   , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
 {

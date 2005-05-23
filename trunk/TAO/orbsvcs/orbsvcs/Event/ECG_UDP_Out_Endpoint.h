@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ class ACE_INET_Addr;
  * datagram SAP; for instance we need to keep track of the request
  * id.
  */
-class TAO_RTEvent_Export TAO_ECG_UDP_Out_Endpoint
+class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Out_Endpoint
 {
 public:
   /// Constructor

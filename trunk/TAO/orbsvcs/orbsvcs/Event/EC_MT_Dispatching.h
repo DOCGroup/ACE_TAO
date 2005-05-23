@@ -33,7 +33,7 @@
  * threads.  It's main purpose is to decouple the suppliers from
  * the client execution time, specially in the collocated case.
  */
-class TAO_RTEvent_Export TAO_EC_MT_Dispatching : public TAO_EC_Dispatching
+class TAO_RTEvent_Serv_Export TAO_EC_MT_Dispatching : public TAO_EC_Dispatching
 {
 public:
   /// Constructor

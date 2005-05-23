@@ -8,7 +8,7 @@
 #ifndef EC_PROXY_DISCONNECTOR__H_
 #define EC_PROXY_DISCONNECTOR__H_
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecEventCommC.h"
 #include "ace/Auto_Functor.h"
 
@@ -17,7 +17,7 @@
  *
  * @brief Implements a functor for the TAO_EC_Supplier_Proxy_Disconnector class.
  */
-struct TAO_RTEvent_Export TAO_EC_Supplier_Proxy_Disconnect_Functor
+struct TAO_RTEvent_Serv_Export TAO_EC_Supplier_Proxy_Disconnect_Functor
 {
   typedef  RtecEventComm::PushSupplier_ptr argument;
 
@@ -45,7 +45,7 @@ typedef ACE_Utils::Auto_Functor<
  *
  * @brief Implements a functor for the TAO_EC_Consumer_Proxy_Disconnector class.
  */
-struct TAO_RTEvent_Export TAO_EC_Consumer_Proxy_Disconnect_Functor
+struct TAO_RTEvent_Serv_Export TAO_EC_Consumer_Proxy_Disconnect_Functor
 {
   typedef  RtecEventComm::PushConsumer_ptr argument;
 

@@ -56,7 +56,7 @@
  * }; // size (in CDR stream) = 32<BR>
  *
  */
-class TAO_RTEvent_Export TAO_ECG_UDP_Protocol
+class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Protocol
 {
 public:
   enum {

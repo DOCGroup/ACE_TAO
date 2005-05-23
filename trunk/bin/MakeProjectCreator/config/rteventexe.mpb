@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project: orbsvcsexe, rtevent, portableserver {
+project: orbsvcsexe, rtevent_skel {
 }

@@ -43,7 +43,7 @@ class TAO_EC_Reactive_ConsumerControl;
  * periodically wakeup and verify the state of the consumers
  * registered with the Event Channel.
  */
-class TAO_RTEvent_Export TAO_EC_ConsumerControl_Adapter : public ACE_Event_Handler
+class TAO_RTEvent_Serv_Export TAO_EC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -66,7 +66,7 @@ private:
  * Defines the interface for the consumer control strategy.
  * This strategy handles misbehaving or failing consumers.
  */
-class TAO_RTEvent_Export TAO_EC_Reactive_ConsumerControl : public TAO_EC_ConsumerControl
+class TAO_RTEvent_Serv_Export TAO_EC_Reactive_ConsumerControl : public TAO_EC_ConsumerControl
 {
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel
