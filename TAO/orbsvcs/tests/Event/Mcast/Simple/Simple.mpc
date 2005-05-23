@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*supplier): messaging, rteventexe, naming {
+project(*supplier): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
   includes += ../Common
@@ -23,7 +23,7 @@ project(*consumer): messaging, rteventexe, rtevent_serv, naming {
   }
 }
 
-project(*gateway-ec): messaging, rteventexe, naming {
+project(*gateway-ec): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
   includes += ../Common
