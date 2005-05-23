@@ -1,3 +1,8 @@
+Mon May 23 05:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.{h,cpp}:
+          Removed module_factory_, it was for the old ec
+
 Mon May 23 05:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
