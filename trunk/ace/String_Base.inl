@@ -34,14 +34,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
     release_ (0)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
-
-  size_t length;
-  if (s != 0)
-    length = ACE_OS::strlen (s);
-  else
-    length = 0;
-
-  this->set (s, length, release);
+  this->set (s, release);
 }
 
 template <class CHAR> ACE_INLINE
@@ -109,7 +102,8 @@ ACE_String_Base<CHAR>::~ACE_String_Base (void)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::~ACE_String_Base");
 
-  this->set (0, 0, 0);
+  if (this->buf_len_ != 0 && this->release_ != 0)
+      this->allocator_->free (this->rep_);
 }
 
 template <class CHAR> ACE_INLINE void
@@ -146,11 +140,9 @@ ACE_String_Base<CHAR>::assign_nocopy (const ACE_String_Base<CHAR> &s)
 template <class CHAR> ACE_INLINE void
 ACE_String_Base<CHAR>::set (const CHAR *s, int release)
 {
-  size_t length;
+  size_t length = 0;
   if (s != 0)
     length = ACE_OS::strlen (s);
-  else
-    length = 0;
 
   this->set (s, length, release);
 }
@@ -163,16 +155,10 @@ ACE_String_Base<CHAR>::length (void) const
 }
 
 template <class CHAR> ACE_INLINE void
-ACE_String_Base<CHAR>::clear (int release)
-{
-  this->set(0, 0, release);
-}
-
-template <class CHAR> ACE_INLINE void
 ACE_String_Base<CHAR>::fast_clear (void)
 {
   this->len_ = 0;
-  if (this->release_)
+  if (this->release_ != 0)
     {
       // String retains the original buffer.
       if (this->rep_ != &ACE_String_Base<CHAR>::NULL_String_)
@@ -241,7 +227,10 @@ template <class CHAR> ACE_INLINE int
 ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::compare");
-
+  
+  if (this->rep_ == s.rep_)
+    return 0;
+    
   // Pick smaller of the two lengths and perform the comparison.
   size_t smaller_length = ace_min (this->len_, s.len_);
 
@@ -261,7 +250,8 @@ template <class CHAR> ACE_INLINE bool
 ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator==");
-
+  if (this->len_ != s.len_)
+    return false;
   return compare (s) == 0;
 }
 
@@ -346,7 +336,8 @@ ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
 operator+ (const ACE_String_Base<CHAR> &s, const ACE_String_Base<CHAR> &t)
 {
-  ACE_String_Base<CHAR> temp (s);
+  ACE_String_Base<CHAR> temp (s.length() + t.length());
+  temp += s;
   temp += t;
   return temp;
 }
@@ -354,7 +345,12 @@ operator+ (const ACE_String_Base<CHAR> &s, const ACE_String_Base<CHAR> &t)
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
 operator+ (const CHAR *s, const ACE_String_Base<CHAR> &t)
 {
-  ACE_String_Base<CHAR> temp (s);
+  size_t slen = 0;
+  if (s != 0)
+    slen = ACE_OS::strlen (s);
+  ACE_String_Base<CHAR> temp (slen + t.length());
+  if (slen > 0) 
+    temp.append(s, slen);
   temp += t;
   return temp;
 }
@@ -362,8 +358,13 @@ operator+ (const CHAR *s, const ACE_String_Base<CHAR> &t)
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
 operator+ (const ACE_String_Base<CHAR> &s, const CHAR *t)
 {
-  ACE_String_Base<CHAR> temp (s);
-  temp += t;
+  size_t tlen = 0;
+  if (t != 0)
+    tlen = ACE_OS::strlen (t);
+  ACE_String_Base<CHAR> temp (s.length() + tlen);
+  temp += s;
+  if (tlen > 0)
+    temp.append(t, tlen);
   return temp;
 }
 
@@ -371,7 +372,8 @@ template <class CHAR> ACE_INLINE
 ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &t,
                                   const CHAR c)
 {
-  ACE_String_Base<CHAR> temp (t);
+  ACE_String_Base<CHAR> temp (t.length() + 1);
+  temp += t;
   temp += c;
   return temp;
 }
@@ -380,7 +382,30 @@ template <class CHAR> ACE_INLINE
 ACE_String_Base<CHAR> operator + (const CHAR c,
                                   const ACE_String_Base<CHAR> &t)
 {
-  ACE_String_Base<CHAR> temp (c);
+  ACE_String_Base<CHAR> temp (t.length() + 1);
+  temp += c;
   temp += t;
   return temp;
+}
+
+template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
+ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
+{
+  return this->append(s.rep_, s.len_);
+}
+
+template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
+ACE_String_Base<CHAR>::operator+= (const CHAR* s)
+{
+  size_t slen = 0;
+  if (s != 0)
+    slen = ACE_OS::strlen (s);
+  return this->append(s, slen);
+}
+
+template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
+ACE_String_Base<CHAR>::operator+= (const CHAR c)
+{
+  const size_t slen = 1;
+  return this->append(&c, slen);
 }
