@@ -631,7 +631,7 @@ ACE::strsplit_r (char *str,
 
   if (next_start != 0)
     {
-      const char *tok_loc = ACE_OS::strstr (next_start, token);
+      char *tok_loc = ACE_OS::strstr (next_start, token);
 
       if (tok_loc != 0)
         {
