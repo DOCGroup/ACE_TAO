@@ -1,3 +1,11 @@
+Sun May 22 18:02:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records):
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
+
+	Like delete_records_by_id(), reset "log_full" if "current_size"
+	is less than "max_size".
+
 Sun May 22 17:01:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::scheduled):
