@@ -61,9 +61,6 @@ public:
 private:
   void backup_file_name (char * file_path, int nfile);
 
-  /// \return newstr to allow in-line use
-  char* escape_string(char *& newstr, size_t & size, const ACE_CString & str);
-
 private:
   /// A stream representing our current output.
   FILE * output_;

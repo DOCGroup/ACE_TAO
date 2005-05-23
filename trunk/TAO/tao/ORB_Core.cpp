@@ -451,9 +451,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // explicit (and the whole objref is readable by mortals).
           // BEGIN COMMENTS FROM IIOP-1.4
           const ACE_TCHAR *opt = current_arg;
-          if (ACE_OS::strcasecmp (opt,
-                                  ACE_TEXT("URL")) == 0)
+          if (ACE_OS::strcasecmp (opt, ACE_TEXT("URL")) == 0)
             use_ior = false;
+          else if (ACE_OS::strcasecmp (opt, ACE_TEXT("IOR")) == 0)
+            use_ior = true;
 
           arg_shifter.consume_arg ();
         }

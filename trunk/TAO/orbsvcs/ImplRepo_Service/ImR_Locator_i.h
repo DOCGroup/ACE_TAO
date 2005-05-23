@@ -48,6 +48,9 @@ public:
   /// Run using the orb reference created during init()
   int run (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Shutdown the orb.
+  void shutdown (bool wait_for_completion ACE_ENV_ARG_DECL);
+
   int debug() const;
   // Note : See the IDL for descriptions of the operations.
 
@@ -70,33 +73,22 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
     ImplementationRepository::NotFound,
     ImplementationRepository::CannotActivate));
-  virtual void register_server (const char * name,
-    const ImplementationRepository::StartupOptions &options
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::AlreadyRegistered,
-    ImplementationRepository::NotFound));
-  virtual void reregister_server (const char * name,
-    const ImplementationRepository::StartupOptions &options
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::AlreadyRegistered,
-    ImplementationRepository::NotFound ));
-  virtual void remove_server (const char * name
-    ACE_ENV_ARG_DECL)
+  virtual void add_or_update_server (const char * name,
+    const ImplementationRepository::StartupOptions &options ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
-  virtual void shutdown_server (const char * name
-    ACE_ENV_ARG_DECL)
+  virtual void remove_server (const char * name ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
+  virtual void shutdown_server (const char * name ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
   virtual void find (const char * name,
-    ImplementationRepository::ServerInformation_out info
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
+    ImplementationRepository::ServerInformation_out info ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void list (
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list,
-    ImplementationRepository::ServerInformationIterator_out server_iterator
-    ACE_ENV_ARG_DECL)
+    ImplementationRepository::ServerInformationIterator_out server_iterator ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown(CORBA::Boolean activators, CORBA::Boolean servers ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Server->Locator
@@ -138,20 +130,13 @@ private:
     ImplementationRepository::NotFound,
     ImplementationRepository::CannotActivate));
 
-  void register_server_i (const char * name,
-    const ImplementationRepository::StartupOptions &options,
-    bool allow_updates
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::AlreadyRegistered,
-    ImplementationRepository::NotFound ));
-
   bool is_alive(Server_Info& info);
   int is_alive_i(Server_Info& info);
 
   // Set up the multicast related if 'm' is passed on the command
   // line.
   int setup_multicast (ACE_Reactor *reactor, const char *ior);
+  void teardown_multicast();
 
   void unregister_activator_i(const char* activator);
 
@@ -164,6 +149,7 @@ private:
 
   void connect_server(Server_Info& info);
 
+  PortableServer::POA_ptr findPOA(const char* name);
 private:
 
   // The class that handles the forwarding.

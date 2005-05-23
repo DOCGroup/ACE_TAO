@@ -15,8 +15,7 @@
  */
 //=============================================================================
 
-///FUZZ: disable check_for_include/
-#include <tao/ImR_Client/ServerObject.pidl>
+#include "ServerObject.pidl"
 
 module ImplementationRepository
 {
@@ -119,27 +118,11 @@ module ImplementationRepository
     void activate_server (in string server)
       raises (NotFound, CannotActivate);
 
-    /// Register the <options> to specify how the <server> should be
-    /// restarted when a client asks for it.
-    ///
-    /// The <AlreadyRegistered> exception is raised when <server> has
-    /// already been registered with the Implementation Repository.
+    /// Add/Update the the <server> 
     /// The <NotFound> exception is raised when the activator specified
     /// in the options is not registered.
-    void register_server (in string server,
-                          in StartupOptions options)
-      raises (AlreadyRegistered, NotFound);
-
-    /// Update the <options> to specify how the <server> should be
-    /// restarted when a client asks for it.  Will register the server
-    /// if not already registered.
-    /// The <AlreadyRegistered> exception is raised when <server> has
-    /// already been registered with a different activator.
-    /// The <NotFound> exception is raised when the activator specified
-    /// in the options is not registered.
-    void reregister_server (in string server,
-                            in StartupOptions options)
-                            raises(AlreadyRegistered, NotFound);
+    void add_or_update_server (in string server, in StartupOptions options)
+      raises(NotFound);
 
     /// Remove <server> from the Implementation Repository.
     ///
@@ -175,11 +158,7 @@ module ImplementationRepository
       raises (NotFound);
 
     /// Returns the startup information for a given <server>.
-    ///
-    /// The <NotFound> exception is raised when <server> is not found
-    /// in the Implementation Repository.
-    void find (in string server, out ServerInformation info)
-      raises (NotFound);
+    void find (in string server, out ServerInformation info);
 
     /// Returns at most <how_many> servers in <server_list>.  If there
     /// are additional servers, they can be received through the
@@ -189,5 +168,9 @@ module ImplementationRepository
     void list (in unsigned long how_many,
                out ServerInformationList server_list,
                out ServerInformationIterator server_iterator);
+
+    /// Shutdown the ImR, optionally shutting down registered
+    /// activators and servers first.
+    oneway void shutdown(in boolean activators, in boolean servers);
   };
 };

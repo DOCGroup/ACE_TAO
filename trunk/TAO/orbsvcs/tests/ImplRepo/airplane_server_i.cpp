@@ -83,24 +83,18 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
         return retval;
 
       // Get the POA from the ORB.
-      CORBA::Object_var poa_object =
+      CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA"
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // Check the POA object.
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Airplane_i::init(): Unable to initialize the POA.\n"),
-                          -1);
+      ACE_ASSERT(! CORBA::is_nil (obj.in ()));
 
       // Narrow the object to a POA.
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+      root_poa_ = PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_Manager.
-      this->poa_manager_ = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->poa_manager_ = this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // We now need to create a POA with the persistent and user_id policies,
@@ -110,17 +104,17 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       policies.length (2);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK
 
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->airplane_poa_ =
-        root_poa->create_POA (poa_name,
+        this->root_poa_->create_POA (poa_name,
                               this->poa_manager_.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
@@ -134,9 +128,7 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
           ACE_TRY_CHECK;
         }
 
-      ACE_NEW_RETURN (this->server_impl_,
-                      Airplane_i,
-                      -1);
+      ACE_NEW_RETURN (this->server_impl_, Airplane_i, -1);
 
       PortableServer::ObjectId_var server_id =
         PortableServer::string_to_ObjectId ("server");
@@ -146,34 +138,36 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var server_obj =
-        this->airplane_poa_->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
+      obj = this->airplane_poa_->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::String_var ior =
-        this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", ior.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The ImRified IOR is: <%s>\n", ior.in ()));
 
       TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(airplane_poa_.in());
-      server_obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
+      obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::String_var direct_ior =
-        this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var plain_ior =
+        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "The plain IOR is: <%s>\n", plain_ior.in ()));
 
-      CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
+      // Note : The IORTable will only be used for those clients who try to
+      // invoke indirectly using a simple object_key reference
+      // like "corbaloc::localhost:8888/airplane_server".
+      obj = this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
-      adapter->bind (poa_name, direct_ior.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind (poa_name, plain_ior.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-      // Make sure the POA manager is activated.
       this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -202,6 +196,9 @@ Airplane_Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      this->root_poa_->destroy(1, 1);
+      this->orb_->destroy();
     }
   ACE_CATCHANY
     {
@@ -217,19 +214,5 @@ Airplane_Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
 Airplane_Server_i::~Airplane_Server_i (void)
 {
-  ACE_TRY_NEW_ENV
-    {
-    if (!CORBA::is_nil (this->airplane_poa_.in ()))
-      {
-        this->airplane_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
-    }
-  ACE_CATCHANY
-    {
-      // ignore exceptions.
-    }
-  ACE_ENDTRY;
-
   delete this->server_impl_;
 }

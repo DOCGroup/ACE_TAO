@@ -52,7 +52,7 @@ public:
   Locator_Repository();
 
   /// Initializes the Server Repository
-  int init (Options::RepoMode rmode, const ACE_CString& name);
+  int init (const Options& opts);
 
   /// Add a new server to the Repository
   int add_server (const ACE_CString& name,

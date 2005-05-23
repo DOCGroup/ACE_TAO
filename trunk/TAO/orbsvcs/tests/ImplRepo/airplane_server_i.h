@@ -57,6 +57,8 @@ private:
   /// The ORB.
   CORBA::ORB_var orb_;
 
+  PortableServer::POA_var root_poa_;
+
   /// The POA for the Airplane Server.
   PortableServer::POA_var airplane_poa_;
 

@@ -197,7 +197,11 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Activator_Options& opts
 int
 ImR_Activator_i::init (Activator_Options& opts ACE_ENV_ARG_DECL)
 {
-  ACE_ARGV av(opts.cmdline());
+  ACE_CString cmdline = opts.cmdline();
+  // Must use IOR style objrefs, because URLs sometimes get mangled when passed
+  // to ACE_Process::spawn().
+  cmdline += "-ORBUseImR 0 -ORBObjRefStyle IOR ";
+  ACE_ARGV av(cmdline.c_str());
   int argc = av.argc();
 
   CORBA::ORB_var orb =
@@ -218,6 +222,8 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     if (debug_ > 1)
       ACE_DEBUG((LM_DEBUG, "ImR Activator: Shutting down...\n"));
 
+    this->process_mgr_.close();
+
     this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -227,7 +233,27 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
         this->registration_token_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
+  }
+  ACE_CATCH(CORBA::COMM_FAILURE, ex)
+  {
+    if (debug_ > 1)
+      ACE_DEBUG((LM_DEBUG, "ImR Activator: Unable to unregister from ImR.\n"));
+  }
+  ACE_CATCH(CORBA::TRANSIENT, ex)
+  {
+    if (debug_ > 1)
+      ACE_DEBUG((LM_DEBUG, "ImR Activator: Unable to unregister from ImR.\n"));
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR Activator: fini");
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
+  ACE_TRY
+  {
     this->orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -236,7 +262,7 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR_Activator_i::fini");
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR Activator: fini 2");
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
@@ -250,6 +276,19 @@ ImR_Activator_i::run (ACE_ENV_SINGLE_ARG_DECL)
   this->orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   return 0;
+}
+
+void
+ImR_Activator_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  shutdown(false ACE_ENV_ARG_PARAMETER);
+}
+
+void
+ImR_Activator_i::shutdown (bool wait_for_completion ACE_ENV_ARG_DECL)
+{
+  this->orb_->shutdown(wait_for_completion ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -272,6 +311,13 @@ ImR_Activator_i::start_server(const char* name,
   // hold the listen socket open, we force the child to inherit no
   // handles. This includes stdin, stdout, logs, etc.
   proc_opts.handle_inheritence (0);
+
+  proc_opts.setenv("TAO_USE_IMR", "1");
+  if (!CORBA::is_nil (this->locator_.in ()))
+  {
+    CORBA::String_var ior = orb_->object_to_string(locator_.in());
+    proc_opts.setenv("ImplRepoServiceIOR", ior.in());
+  }
 
   for (CORBA::ULong i = 0; i < env.length(); ++i) {
     proc_opts.setenv (env[i].name.in(), env[i].value.in());
