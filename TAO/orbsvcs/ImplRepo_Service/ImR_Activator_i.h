@@ -29,7 +29,7 @@
 
 class Activator_Options;
 
-// ace/Functor.h doesn't provide functors for every built in integer type. 
+// ace/Functor.h doesn't provide functors for every built in integer type.
 // Depending on the platform and what pid_t maps to, the functors may be missing.
 struct ACE_Hash_pid_t
 {
@@ -70,6 +70,9 @@ public:
    const ImplementationRepository::EnvironmentList & env ACE_ENV_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::CannotActivate));
 
+  void shutdown(ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Initialize the Server state - parsing arguments and waiting.
   int init (Activator_Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
@@ -78,6 +81,9 @@ public:
 
   /// Runs the orb.
   int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+  /// Shutdown the orb.
+  void shutdown (bool wait_for_completion ACE_ENV_ARG_DECL);
 
 private:
 

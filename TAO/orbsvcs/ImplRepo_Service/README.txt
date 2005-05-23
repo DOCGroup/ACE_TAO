@@ -509,7 +509,7 @@ The Implementation Repository supports start and stop but not pause.
 
 When the Activator is installed using ImR_Activator -c install, it is added
 with a dependency on a locator service. If you don't wish to also install
-the locator on the same machine, then you must use the -c install_no_locator
+the locator on the same machine, then you must use the -c install_no_imr
 option instead. 
 
 @subsection serviceopts Service Options

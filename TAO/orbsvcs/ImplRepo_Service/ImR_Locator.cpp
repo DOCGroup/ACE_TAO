@@ -3,11 +3,46 @@
 #include "ImR_Locator_i.h"
 #include "Locator_NT_Service.h"
 #include "Locator_Options.h"
+#include "orbsvcs/Shutdown_Utilities.h"
+
+class ImR_Locator_Shutdown : public Shutdown_Functor
+{
+public:
+  ImR_Locator_Shutdown(ImR_Locator_i& imr);
+
+  void operator() (int which_signal);
+private:
+  ImR_Locator_i& imr_;
+};
+
+ImR_Locator_Shutdown::ImR_Locator_Shutdown (ImR_Locator_i &imr)
+  : imr_(imr)
+{
+}
+
+void
+ImR_Locator_Shutdown::operator() (int /*which_signal*/)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+  {
+    this->imr_.shutdown(true ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR: ");
+  }
+  ACE_ENDTRY;
+}
 
 int
 run_standalone (Options& opts)
 {
   ImR_Locator_i server;
+
+  ImR_Locator_Shutdown killer (server);
+  Service_Shutdown kill_contractor(killer);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -81,7 +116,7 @@ run_service (void)
 static int
 run_service_command (Options& opts)
 {
-  if (opts.service_command() == Options::SC_NONE) 
+  if (opts.service_command() == Options::SC_NONE)
     return 0;
 
 #if defined (ACE_WIN32)
@@ -90,7 +125,7 @@ run_service_command (Options& opts)
   if (opts.service_command() == Options::SC_INSTALL)
     {
       const DWORD MAX_PATH_LENGTH = 4096;
-      char pathname[MAX_PATH_LENGTH]; 
+      char pathname[MAX_PATH_LENGTH];
 
       DWORD length = ACE_TEXT_GetModuleFileName(NULL, pathname, MAX_PATH_LENGTH);
       if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
@@ -111,19 +146,19 @@ run_service_command (Options& opts)
       } else {
         ACE_ERROR((LM_ERROR, "Error: Failed to install service. error:%d\n", errno));
       }
-      if (ret == 0) 
+      if (ret == 0)
         return 1;
     }
   else if (opts.service_command() == Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
       ACE_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
-      if (ret == 0) 
+      if (ret == 0)
         return 1; // If successfull, then we don't want to continue.
     }
-  else 
+  else
   {
-    ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n", 
+    ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n",
       opts.service_command()));
     return -1;
   }

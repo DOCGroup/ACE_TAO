@@ -30,20 +30,6 @@ Nestea_Server_i::Nestea_Server_i (const char * /*filename*/)
 
 Nestea_Server_i::~Nestea_Server_i (void)
 {
-  ACE_TRY_NEW_ENV
-    {
-      if (!CORBA::is_nil (this->nestea_poa_.in ()))
-        {
-          this->nestea_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      // ignore exceptions
-    }
-  ACE_ENDTRY;
-
   delete this->server_impl_;
 }
 
@@ -92,9 +78,17 @@ Nestea_Server_i::parse_args (void)
 // - Uses the IR helper class to alter the object
 // - Creates an IOR from the servant and outputs it to a file
 
+static void printEnvVars() {
+  char* useimr = ACE_OS::getenv("TAO_USE_IMR");
+  char* ior = ACE_OS::getenv("ImplRepoServiceIOR");
+  ACE_OS::printf("nestea_server: TAO_USE_IMR=%s\n", useimr != 0 ? useimr : "<null>");
+  ACE_OS::printf("nestea_server: ImplRepoServiceIOR=%s\n", ior != 0 ? ior : "<null>");
+}
+
 int
 Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
 {
+  printEnvVars();
   // Since the Implementation Repository keys off of the POA name, we need
   // to use the SERVER_NAME as the POA's name.
   const char *poa_name = SERVER_NAME;
@@ -116,24 +110,16 @@ Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
         return retval;
 
       // Get the POA from the ORB.
-      CORBA::Object_var poa_object =
+      CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA"
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      ACE_ASSERT(! CORBA::is_nil (obj.in ()));
 
-      // Check the POA object.
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nestea_i::init(): Unable to initialize the POA.\n"),
-                          -1);
-
-      // Narrow the object to a POA.
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+      this->root_poa_ = PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Get the POA_Manager.
-      this->poa_manager_ = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->poa_manager_ = this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // We now need to create a POA with the persistent and user_id policies,
@@ -143,17 +129,17 @@ Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       policies.length (2);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK
 
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->nestea_poa_ =
-        root_poa->create_POA (poa_name,
+        this->root_poa_->create_POA (poa_name,
                               this->poa_manager_.in (),
                               policies
                               ACE_ENV_ARG_PARAMETER);
@@ -179,47 +165,38 @@ Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var server_obj =
-        this->nestea_poa_->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
+      obj = this->nestea_poa_->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::String_var server_str =
-        this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior =
+        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", server_str.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", ior.in ()));
 
       TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(nestea_poa_.in());
-      server_obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
+      obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::String_var direct_ior =
-        this->orb_->object_to_string (server_obj.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var rawior =
+        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable"
-                                                ACE_ENV_ARG_PARAMETER);
+      obj = this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (CORBA::is_nil (adapter.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-        }
-      else
-        {
-          adapter->bind (poa_name, direct_ior.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+      ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
 
-      // Make sure the POA manager is activated.
+      adapter->bind (poa_name, rawior.in() ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
       this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->ior_output_file_)
         {
-          ACE_OS::fprintf (this->ior_output_file_, "%s", server_str.in ());
+          ACE_OS::fprintf (this->ior_output_file_, "%s", ior.in ());
           ACE_OS::fclose (this->ior_output_file_);
         }
     }
@@ -245,6 +222,9 @@ Nestea_Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
       ACE_Time_Value tv(SELF_DESTRUCT_SECS);
 
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
+
+      this->root_poa_->destroy(1, 1);
+      this->orb_->destroy();
     }
   ACE_CATCHANY
     {

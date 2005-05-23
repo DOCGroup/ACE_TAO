@@ -1,8 +1,141 @@
+Mon May 23 12:38:31 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/README.txt:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * tao/ImR_Client/ImR_Client.cpp:
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/ImR_Client/ImplRepoC.h:
+        * tao/ImR_Client/ImplRepoC.inl:
+        * tao/ImR_Client/ImplRepoC.cpp:
+        * tao/ImR_Client/ImplRepoS.h:
+        * tao/ImR_Client/ImplRepoS.cpp:
+
+          Several bug fixes and enhancments to the ImR.
+          Cleaned up the perl to use strict and compile without warnings.
+          Displayed a message that the poa was being registered with the
+        ImR even when -orbuseimr 0 was specified.
+          Stop printing the exception details for unexpected exceptions
+        that happen during a call to server->shutdown(). At least on
+        windows, we often get COMM_FAILURE or TRANSIENT, because the
+        socket is not shutdown gracefully by the server.
+          Don't print the exception when a TRANSIENT is received while
+        pinging the server. This is not an error. Not sure why we were
+        getting 'No usable profile in IOR' messages though, when we
+        expect a 'POA in holding state'.
+          Merge in changes to support ImplRepo_Service -e, which
+        will clear the repository on startup. This makes it easier to write
+        persistence tests, and might be useful in general.
+          Updated to automatically set the ImplRepoServiceIOR and
+        TAO_USE_IMR environment variables, obviating the need to pass
+        -orbuseimr or -orbinitref ImplRepoService=... when using an
+        Activator to start a server.
+          Add -orbuseimr 0 to the cmd line args, so that the TAO_USE_IMR=1
+        environment variable can be used safely.
+          Fix incorrect exception specifications in activator.
+          Fix command line help descriptions.
+          Combine add/update operations in the imr and imr util.
+          Support clean shutdown using ctrl-c as well as the
+        imr util shutdown-repo command.
+          Add detection of server process death, and an option to
+        notify the ImR when this happens, to the activator.
+          Fix some problems with exception macros and unused vars.
+          Fix bug with case-insensitive activator name and binary persistence.
+
+
+        * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
+        * orbsvcs/examples/ImR/Advanced/Manager.idl:
+        * orbsvcs/examples/ImR/Advanced/Manager_i.h:
+        * orbsvcs/examples/ImR/Advanced/Manager_i.cpp:
+        * orbsvcs/examples/ImR/Advanced/Messenger.idl:
+        * orbsvcs/examples/ImR/Advanced/Messenger_i.h:
+        * orbsvcs/examples/ImR/Advanced/Messenger_i.cpp:
+        * orbsvcs/examples/ImR/Advanced/README:
+        * orbsvcs/examples/ImR/Advanced/TestClient.h:
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestServer.h:
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+        * orbsvcs/examples/ImR/Advanced/client_main.cpp:
+        * orbsvcs/examples/ImR/Advanced/drivers/all:
+        * orbsvcs/examples/ImR/Advanced/drivers/defaults:
+        * orbsvcs/examples/ImR/Advanced/drivers/environment:
+        * orbsvcs/examples/ImR/Advanced/drivers/invocation:
+        * orbsvcs/examples/ImR/Advanced/drivers/persistence:
+        * orbsvcs/examples/ImR/Advanced/drivers/retry:
+        * orbsvcs/examples/ImR/Advanced/drivers/use_environment:
+        * orbsvcs/examples/ImR/Advanced/drivers/use_invocation:
+        * orbsvcs/examples/ImR/Advanced/drivers/use_persistence:
+        * orbsvcs/examples/ImR/Advanced/manager_main.cpp:
+        * orbsvcs/examples/ImR/Advanced/run_test.pl:
+        * orbsvcs/examples/ImR/Advanced/server_main.cpp:
+
+          Dave Giovannini's new test which provides greater
+        coverage of ImR features. Some tests are still failing, so
+        this is not ready to be enabled for nightly builds.
+
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+
+          Fixed bug in unregistration, and updated log messages
+        to show the name of the class and method being logged.
+
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+
+          Updated to use the new ACEXML_escape_string() function.
+
+        * orbsvcs/orbsvcs/Shutdown_Utilities.h:
+        * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+
+          Updated to work on Windows.
+
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+
+          Basic code cleanup to match latest 1.4a.
+          Some tests were not shutting down correctly, and were
+        activating the poa manager too soon.
+          Nestea test prints the contents of ImplRepoServiceIOR and TAO_USE_IMR.
+          Stop passing -orbuseimr 1 and imr_init_ref in the command lines
+        registered with the ImR.
+
+
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+
+          Use -ORBObjRefStyle URL so that the XML file has consistent
+        contents, and can be compared for equality. This should let this
+        test pass on more (all?) platforms.
+
+        * tao/ORB_Core.cpp:
+
+          Add missing support for -ORBObjRefStyle IOR.
+
+        * tao/ImR_Client/ImplRepoA.cpp:
+
+          Removed this file, because the idl command line wasn't set to generate it.
+
+
 Mon May 23 06:12:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
 
-	Fixed tipo introduced in last change.
+        Fixed tipo introduced in last change.
 
 Mon May 23 12:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -161,46 +294,46 @@ Mon May 23 05:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May 22 22:10:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp (display_records)
-	(delete_records):
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp (display_records)
+        (delete_records):
 
-	Changed query language parameter from "TCL" to "EXTENDED_TCL".
+        Changed query language parameter from "TCL" to "EXTENDED_TCL".
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (QUERY_LANG_SUPPORTED_BY_LOG):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (QUERY_LANG_SUPPORTED_BY_LOG):
 
-	Changed from "TCL" to "EXTENDED_TCL".
+        Changed from "TCL" to "EXTENDED_TCL".
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records_by_id)
-	(TAO_Log_i::delete_records, TAO_Log_i::remove_old_records):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records_by_id)
+        (TAO_Log_i::delete_records, TAO_Log_i::remove_old_records):
 
-	Don't bother checking whether current_size is less than max_size
-	if not log_full.  Avoids potentially costly calls into log store
-	(if/when we support strategized stores).
+        Don't bother checking whether current_size is less than max_size
+        if not log_full.  Avoids potentially costly calls into log store
+        (if/when we support strategized stores).
 
 Sun May 22 18:02:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records)
-	(TAO_Log_i::remove_old_records):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::delete_records)
+        (TAO_Log_i::remove_old_records):
 
-	Like delete_records_by_id(), reset "log_full" if "current_size"
-	is less than "max_size".
+        Like delete_records_by_id(), reset "log_full" if "current_size"
+        is less than "max_size".
 
 Sun May 22 17:01:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::scheduled):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::scheduled):
 
-	Removed duplicate fetch of current time.
+        Removed duplicate fetch of current time.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
 
-	Corrected calculation of purge time.  Arithmetic was being done on
-	time values without normalizing units first.
+        Corrected calculation of purge time.  Arithmetic was being done on
+        time values without normalizing units first.
 
 Sun May 22 16:37:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Sun May 22 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -242,18 +375,18 @@ Sun May 22 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May 22 10:33:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Root_POA.cpp (create_POA_i):
+        * tao/PortableServer/Root_POA.cpp (create_POA_i):
 
-	  Increment the reference count immediately after binding the
-	  child POA to children map.  Addresses a seg fault introduced by
-	  the leak fix described in ChangeLog entry "Sun May 22 00:00:31
-	  2005  Ossama Othman  <ossama@dre.vanderbilt.edu>".
+          Increment the reference count immediately after binding the
+          child POA to children map.  Addresses a seg fault introduced by
+          the leak fix described in ChangeLog entry "Sun May 22 00:00:31
+          2005  Ossama Othman  <ossama@dre.vanderbilt.edu>".
 
-	* tao/PortableServer/Root_POA.h (create_POA_i):
+        * tao/PortableServer/Root_POA.h (create_POA_i):
 
-	  No need to return a pointer to TAO_Root_POA.  Return a
-	  PortableServer::POA_ptr instead.  Allows implementation to be
-	  slightly simplified.
+          No need to return a pointer to TAO_Root_POA.  Return a
+          PortableServer::POA_ptr instead.  Allows implementation to be
+          slightly simplified.
 
 Sun May 22 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

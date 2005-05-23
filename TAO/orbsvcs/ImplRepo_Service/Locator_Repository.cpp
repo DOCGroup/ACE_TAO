@@ -6,6 +6,7 @@
 
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
+#include "ACEXML/common/XML_Util.h"
 
 ACE_RCSID (ImplRepo_Service, Locator_Repository, "$Id$")
 
@@ -216,11 +217,14 @@ static void saveAsXML(const ACE_CString& fname, Locator_Repository& repo) {
   for (; siit.next(sientry); siit.advance()) {
     Server_Info_Ptr& info = sientry->int_id_;
 
+    ACE_CString cmdline = ACEXML_escape_string(info->cmdline);
+    ACE_CString wdir = ACEXML_escape_string(info->dir);
+
     ACE_OS::fprintf(fp,"\t<%s", Locator_XMLHandler::SERVER_INFO_TAG);
     ACE_OS::fprintf(fp," name=\"%s\"", info->name.c_str());
     ACE_OS::fprintf(fp," activator=\"%s\"", info->activator.c_str());
-    ACE_OS::fprintf(fp," command_line=\"%s\"", info->cmdline.c_str());
-    ACE_OS::fprintf(fp," working_dir=\"%s\"", info->dir.c_str());
+    ACE_OS::fprintf(fp," command_line=\"%s\"", cmdline.c_str());
+    ACE_OS::fprintf(fp," working_dir=\"%s\"", wdir.c_str());
     ACE_CString amodestr = ImR_Utils::activationModeToString(info->activation_mode);
     ACE_OS::fprintf(fp," activation_mode=\"%s\"", amodestr.c_str());
     ACE_OS::fprintf(fp," start_limit=\"%d\"", info->start_limit);
@@ -232,7 +236,8 @@ static void saveAsXML(const ACE_CString& fname, Locator_Repository& repo) {
     {
       ACE_OS::fprintf(fp,"\t\t<%s", Locator_XMLHandler::ENVIRONMENT_TAG);
       ACE_OS::fprintf(fp," name=\"%s\"", info->env_vars[i].name.in());
-      ACE_OS::fprintf(fp," value=\"%s\"", info->env_vars[i].value.in());
+      ACE_CString val = ACEXML_escape_string(info->env_vars[i].value.in());
+      ACE_OS::fprintf(fp," value=\"%s\"", val.c_str());
       ACE_OS::fprintf(fp,"/>\n");
     }
 
@@ -263,10 +268,10 @@ Locator_Repository::Locator_Repository()
 }
 
 int
-Locator_Repository::init(Options::RepoMode rmode, const ACE_CString& name)
+Locator_Repository::init(const Options& opts)
 {
-  this->rmode_ = rmode;
-  this->fname_ = name;
+  this->rmode_ = opts.repository_mode();
+  this->fname_ = opts.persist_file_name();
 
   int err = 0;
   switch (this->rmode_) {
@@ -276,6 +281,10 @@ Locator_Repository::init(Options::RepoMode rmode, const ACE_CString& name)
     }
   case Options::REPO_HEAP_FILE:
     {
+      if (opts.repository_erase())
+      {
+        ACE_OS::unlink( this->fname_.c_str() );
+      }
       ACE_Configuration_Heap* heap = new ACE_Configuration_Heap();
       this->config_.reset(heap);
       err = heap->open(this->fname_.c_str());
@@ -288,6 +297,13 @@ Locator_Repository::init(Options::RepoMode rmode, const ACE_CString& name)
 #if defined (ACE_WIN32)
   case Options::REPO_REGISTRY:
     {
+      if (opts.repository_erase())
+      {
+        ACE_Configuration_Win32Registry config( HKEY_LOCAL_MACHINE );
+        ACE_Configuration_Section_Key root;
+        config.open_section( config.root_section(), "Software\\TAO", 0, root );
+        config.remove_section( root, "ImplementationRepository", 1 );
+      }
       HKEY root = ACE_Configuration_Win32Registry::
         resolve_key(HKEY_LOCAL_MACHINE, WIN32_REG_KEY);
       this->config_.reset(new ACE_Configuration_Win32Registry(root));
@@ -297,6 +313,10 @@ Locator_Repository::init(Options::RepoMode rmode, const ACE_CString& name)
 #endif
   case Options::REPO_XML_FILE:
     {
+      if (opts.repository_erase())
+      {
+        ACE_OS::unlink( this->fname_.c_str() );
+      }
       err = loadAsXML(this->fname_, *this);
       break;
     }

@@ -37,9 +37,9 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
 
 TAO_IOR_Multicast::~TAO_IOR_Multicast (void)
 {
-  if (this->mcast_dgram_.leave (this->mcast_addr_) == -1)
+  if (ior_.length() > 0 && this->mcast_dgram_.leave (this->mcast_addr_) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "leave"));
+    ACE_ERROR ((LM_ERROR, "%p\n", "~TAO_IOR_Multicast()"));
     }
 }
 
@@ -50,7 +50,7 @@ TAO_IOR_Multicast::init (const char *ior,
                          TAO_Service_ID service_id)
 {
   if (this->mcast_addr_.set (port, mcast_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::init() %p\n", "set"), -1);
   return common_init (ior, service_id);
 }
 
@@ -106,7 +106,7 @@ TAO_IOR_Multicast::common_init (const char *ior,
 
   if (this->response_addr_.set ((u_short) 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
+    "TAO_IOR_Multicast::common_init() %p\n",
                        "set"),
                       -1);
   else if (this->response_.open (this->response_addr_) == -1)
@@ -123,13 +123,13 @@ TAO_IOR_Multicast::common_init (const char *ior,
       if (this->mcast_dgram_.subscribe (this->mcast_addr_,
                                         1,
                                         ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "subscribe"),-1);
+      ACE_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "subscribe"),-1);
     }
   else
     {
       if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
+      "TAO_IOR_Multicast::common_init() %p\n",
                            "subscribe"),
                           -1);
     }
@@ -171,7 +171,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                       0);
   else if (ACE_NTOHS (header) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Header value < 1\n"),
+    "TAO_IOR_Multicast::handle_input() Header value < 1\n"),
                       0);
 
   // Receive full client multicast request.
@@ -214,7 +214,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       && ACE_OS::strcmp (service_name,
                          "MCASTServer") != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
         "IOR_Multicast::connect() Unknown service requested.\n"),0);
     }
 
@@ -256,7 +256,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) ior_: <%s>\n"
+    "(%P|%t) TAO_IOR_Multicast::handle_input() ior_: <%s>\n"
                 "sent to %s:%u.\n"
                 "result from send = %d\n",
                 this->ior_.c_str (),

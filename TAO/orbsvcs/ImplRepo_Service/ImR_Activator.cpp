@@ -5,10 +5,46 @@
 #include "ImR_Activator_i.h"
 #include "Activator_NT_Service.h"
 
+#include "orbsvcs/Shutdown_Utilities.h"
+
+class ImR_Activator_Shutdown : public Shutdown_Functor
+{
+public:
+  ImR_Activator_Shutdown(ImR_Activator_i& act);
+
+  void operator() (int which_signal);
+private:
+  ImR_Activator_i& act_;
+};
+
+ImR_Activator_Shutdown::ImR_Activator_Shutdown (ImR_Activator_i &act)
+  : act_(act)
+{
+}
+
+void
+ImR_Activator_Shutdown::operator() (int /*which_signal*/)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+  {
+    this->act_.shutdown(true ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR Activator: ");
+  }
+  ACE_ENDTRY;
+}
+
 int
 run_standalone (Activator_Options& opts)
 {
   ImR_Activator_i server;
+
+  ImR_Activator_Shutdown killer (server);
+  Service_Shutdown kill_contractor(killer);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -91,7 +127,7 @@ run_service_command (Activator_Options& opts)
     opts.service_command() == Activator_Options::SC_INSTALL_NO_LOCATOR)
     {
       const DWORD MAX_PATH_LENGTH = 4096;
-      char pathname[MAX_PATH_LENGTH]; 
+      char pathname[MAX_PATH_LENGTH];
 
       DWORD length = ACE_TEXT_GetModuleFileName(NULL, pathname, MAX_PATH_LENGTH);
       if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
@@ -127,19 +163,19 @@ run_service_command (Activator_Options& opts)
       } else {
         ACE_ERROR((LM_ERROR, "Error: Failed to install service.\n"));
       }
-      if (ret == 0) 
+      if (ret == 0)
         return 1;
     }
   else if (opts.service_command() == Activator_Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
       ACE_DEBUG ((LM_DEBUG, "ImR Activator: Service removed.\n"));
-      if (ret == 0) 
+      if (ret == 0)
         return 1; // If successfull, then we don't want to continue.
     }
-  else 
+  else
   {
-    ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n", 
+    ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n",
       opts.service_command()));
     return -1;
   }

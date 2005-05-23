@@ -54,8 +54,9 @@ private:
   /// The command line arguments.
   char **argv_;
 
-  /// The ORB.
   CORBA::ORB_var orb_;
+
+  PortableServer::POA_var root_poa_;
 
   /// The POA for the Nestea Server.
   PortableServer::POA_var nestea_poa_;

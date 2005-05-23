@@ -83,6 +83,9 @@ public:
 
   RepoMode repository_mode (void) const;
 
+  /// Do we wish to clear out the repository
+  bool repository_erase (void) const;
+
   /// Returns the timeout value for program starting.
   ACE_Time_Value startup_timeout (void) const;
 
@@ -106,6 +109,9 @@ private:
 
   // xml, heap, or registry
   RepoMode repo_mode_;
+
+  // do we clear out the repository on load
+  bool erase_repo_;
 
   /// Debug level.
   unsigned int debug_;

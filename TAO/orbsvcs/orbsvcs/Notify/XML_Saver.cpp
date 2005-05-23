@@ -2,6 +2,8 @@
 
 #include "XML_Saver.h"
 
+#include "ACEXML/common/XML_Util.h"
+
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -166,17 +168,14 @@ namespace TAO_Notify
       ACE_OS::fprintf (out, " %s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
     }
 
-    char * buffer = 0;
-    size_t buffer_size = 0;
+    const size_t BUF_SIZE = 512;
+    ACE_CString tmp(BUF_SIZE);
     for (size_t idx = 0; idx < attrs.size(); idx++)
     {
+      ACEXML_escape_string(attrs[idx].value, tmp);
       ACE_OS::fprintf (out, "%s%s%s%s%s", " ",
-        attrs[idx].name.c_str (),
-        "=\"",
-        escape_string(buffer, buffer_size, attrs[idx].value.c_str ()),
-        "\"");
+        attrs[idx].name.c_str (), "=\"", tmp.c_str(), "\"");
     }
-    delete [] buffer;
     ACE_OS::fprintf (out, ">\n");
     this->indent_ += "  ";
     return true;
@@ -195,60 +194,4 @@ namespace TAO_Notify
     ACE_OS::fprintf (out, "%s%s%s%s", indent_.c_str(), "</",
                      type.c_str(), ">\n");
   }
-
-  static const char escaped_amp[] = "&amp;";
-  static const char escaped_less[] = "&lt;";
-  static const char escaped_greater[] = "&gt;";
-  static const char escaped_apos[] = "&apos;";
-  static const char escaped_quote[] = "&quot;";
-
-  char *
-  XML_Saver::escape_string(char *& buffer, size_t & size, const ACE_CString & str)
-  {
-    size_t len = str.length ();
-    size_t needed = len * (sizeof(escaped_quote)-1) + 1;
-    if (needed > size)
-    {
-      delete [] buffer;
-      buffer = new char [needed];
-      size = needed;
-    }
-    size_t pos = 0; // position in output buffer
-    for (size_t stridx = 0; stridx < len; stridx++)
-    {
-      char curchar = str[stridx];
-      if (curchar == '&')
-      {
-        strcpy (&buffer[pos], escaped_amp);
-        pos += sizeof (escaped_amp) -1;
-      }
-      else if (curchar == '<')
-      {
-        strcpy (&buffer[pos], escaped_less);
-        pos += sizeof (escaped_less) -1;
-      }
-      else if (curchar == '>')
-      {
-        strcpy (&buffer[pos], escaped_greater);
-        pos += sizeof (escaped_greater) -1;
-      }
-      else if (curchar == '\'')
-      {
-        strcpy (&buffer[pos], escaped_apos);
-        pos += sizeof (escaped_apos) -1;
-      }
-      else if (curchar == '\"')
-      {
-        strcpy (&buffer[pos], escaped_quote);
-        pos += sizeof (escaped_quote) -1;
-      }
-      else
-      {
-        buffer[pos++] = curchar;
-      }
-    }
-    buffer[pos++] = '\0';
-    return buffer;
-  }
-
 } /* namespace TAO_Notify */

@@ -30,6 +30,7 @@ static const int DEFAULT_START_TIMEOUT = 60; // seconds
 
 Options::Options ()
 : repo_mode_ (REPO_NONE)
+, erase_repo_ (false)
 , debug_ (1)
 , multicast_ (false)
 , service_ (false)
@@ -163,6 +164,11 @@ Options::parse_args (int &argc, char *argv[])
           this->repo_mode_ = REPO_XML_FILE;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-e")) == 0)
+        {
+          this->erase_repo_ = true;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-t")) == 0)
         {
           shifter.consume_arg ();
@@ -241,11 +247,10 @@ Options::print_usage (void) const
               "  -l          Lock the database\n"
               "  -m          Turn on multicast\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
-              "  -s          Runs as a service (NT Only)\n"
               "  -p file     Use file for storing/loading settings\n"
               "  -x file     Use XML file for storing/loading setting\n"
               "  -r          Use the registry for storing/loading settings\n"
-              "  -t secs     Server startup timeout.(Default=0)\n"
+              "  -t secs     Server startup timeout.(Default=60s)\n"
               "  -v msecs     Server verification interval.(Default=10s)\n"
               ));
 }
@@ -473,6 +478,12 @@ Options::RepoMode
 Options::repository_mode (void) const
 {
   return this->repo_mode_;
+}
+
+bool
+Options::repository_erase (void) const
+{
+  return this->erase_repo_;
 }
 
 bool

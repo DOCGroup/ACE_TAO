@@ -59,7 +59,7 @@ foreach $i (@ARGV) {
 }
 
 my($client_args) = " $eventType $verbose -NoNameSvc -ORBInitRef NotifyEventChannelFactory=corbaloc::localhost:$notify_port/NotifyEventChannelFactory ";
-my($ns_args) = " -NoNameSvc -Boot -ORBSvcConf $svcconf -IORoutput $notify_ior -ORBEndpoint iiop://:$notify_port ";
+my($ns_args) = " -ORBObjRefStyle url -NoNameSvc -Boot -ORBSvcConf $svcconf -IORoutput $notify_ior -ORBEndpoint iiop://:$notify_port ";
 #my($ns_args_hidden) = " -NoNameSvc -Boot -ORBSvcConf $svcconf -IORoutput $notify_ior";
 # nuke the topology save files so we start clean
 unlink $save_xml;
