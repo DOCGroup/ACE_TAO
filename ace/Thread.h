@@ -141,21 +141,23 @@ public:
                          ACE_hthread_t thread_handles[] = 0,
                          ACE_Thread_Adapter *thread_adapter = 0);
 
-  /// Wait for one or more threads to exit and reap their exit status.
-  /// thr_join() returns successfully when the target thread terminates.
-  ///
-  /// If a  thr_join() call returns successfully with  a non-null
-  /// status  argument,  the  value  passed to thr_exit(3T) by the
-  /// terminating thread will be placed in the location referenced
-  /// by status.
-  ///
-  /// If the target thread ID is 0, thr_join() waits for any
-  /// undetached thread in the process to terminate on platforms that
-  /// support this capability (namely Solaris).
-  ///
-  /// If departed is not 0, it points to a location that is set
-  /// to the ID of the terminated thread if thr_join() returns
-  /// successfully.
+  /**
+   * Wait for one or more threads to exit and reap their exit status.
+   * thr_join() returns successfully when the target thread terminates.
+   *
+   * @param thread_id is the ACE_thread_t ID of the thread to wait for.
+   *                  If @a thread_id is 0, join() waits for any
+   *                  undetached thread in the process to terminate
+   *                  on platforms that support this capability
+   *                  (for example, Solaris).
+   * @param departed  points to a location that is set to the ID of the
+   *                  terminated thread if join() returns successfully.
+   *                  If @a departed is 0, it is ignored.
+   * @param status    Points to the location that receives the joined
+   *                  thread's exit value. If @a status is 0, it is ignored.
+   *
+   * @retval  0 for success; -1 (with errno set) for failure.
+   */
   static int join (ACE_thread_t thread_id,
                    ACE_thread_t *departed,
                    ACE_THR_FUNC_RETURN *status);
