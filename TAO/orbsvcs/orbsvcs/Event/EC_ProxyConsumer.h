@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
@@ -51,7 +51,7 @@ class TAO_EC_Supplier_Filter;
  * No provisions for locking, access must be serialized
  * externally.
  */
-class TAO_RTEvent_Export TAO_EC_ProxyPushConsumer
+class TAO_RTEvent_Serv_Export TAO_EC_ProxyPushConsumer
 {
 public:
   typedef RtecEventChannelAdmin::ProxyPushConsumer Interface;
@@ -190,7 +190,7 @@ private:
  * the reference count on the proxy and its filter, eliminating
  * the need to hold mutexes during long operations.
  */
-class TAO_RTEvent_Export TAO_EC_ProxyPushConsumer_Guard
+class TAO_RTEvent_Serv_Export TAO_EC_ProxyPushConsumer_Guard
 {
 public:
   /// Constructor

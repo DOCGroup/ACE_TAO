@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 /**
  * @class TAO_EC_Simple_AddrServer
@@ -32,7 +32,7 @@
  * type component to the ipaddr and uses a fixed port,
  * provided at initialization time.
  */
-class TAO_RTEvent_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin::AddrServer
+class TAO_RTEvent_Serv_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
 public:
   /// Constructor

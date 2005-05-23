@@ -34,7 +34,7 @@ class TAO_EC_Event_Channel_Base;
  * (source/type based filtering + disjunctions and conjunctions)
  * are constructed using this class.
  */
-class TAO_RTEvent_Export TAO_EC_Prefix_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_RTEvent_Serv_Export TAO_EC_Prefix_Filter_Builder : public TAO_EC_Filter_Builder
 {
 public:
   /// constructor.

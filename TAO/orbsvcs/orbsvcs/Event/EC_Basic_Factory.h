@@ -36,7 +36,7 @@
  * This object creates a single instance of the Supplier
  *
  */
-class TAO_RTEvent_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
+class TAO_RTEvent_Serv_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor

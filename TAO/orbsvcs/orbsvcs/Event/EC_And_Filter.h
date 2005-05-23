@@ -33,7 +33,7 @@
  * <H2>Memory Management</H2>
  * It assumes ownership of the children.
  */
-class TAO_RTEvent_Export TAO_EC_And_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_And_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor. It assumes ownership of both the array and the

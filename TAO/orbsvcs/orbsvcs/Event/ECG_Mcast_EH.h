@@ -28,7 +28,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "ECG_Adapters.h"
 #include "EC_Lifetime_Utils.h"
 #include "EC_Lifetime_Utils_T.h"
@@ -46,7 +46,7 @@
  * which reads the data, transforms it into event and pushes to the
  * Event Channel.
  */
-class TAO_RTEvent_Export TAO_ECG_Mcast_EH :
+class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_EH :
   public ACE_Event_Handler,
   public TAO_ECG_Handler_Shutdown
 {
@@ -208,7 +208,7 @@ private:
    * observer connection to the Event Channel, automatically
    * disconnecting from ec in its destructor, if necessary.
    */
-  class TAO_RTEvent_Export Observer_Disconnect_Command
+  class TAO_RTEvent_Serv_Export Observer_Disconnect_Command
   {
   public:
     Observer_Disconnect_Command (void);

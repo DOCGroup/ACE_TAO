@@ -18,7 +18,7 @@
 #include /**/ "ace/pre.h"
 #include "ace/CORBA_macros.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +41,7 @@ namespace CORBA
  * Defines the interface for the consumer control strategy.
  * This strategy handles misbehaving or failing consumers.
  */
-class TAO_RTEvent_Export TAO_EC_ConsumerControl
+class TAO_RTEvent_Serv_Export TAO_EC_ConsumerControl
 {
 public:
   /// Constructor.

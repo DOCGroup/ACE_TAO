@@ -18,8 +18,8 @@
 #include "EC_Gateway_IIOP_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Gateway_IIOP_Factory, 
+ACE_RCSID (Event,
+           EC_Gateway_IIOP_Factory,
            "$Id$")
 
 int
@@ -205,7 +205,7 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Gateway_IIOP_Factory,
                        &ACE_SVC_NAME (TAO_EC_Gateway_IIOP_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_RTEvent, TAO_EC_Gateway_IIOP_Factory)
+ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Gateway_IIOP_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -12,7 +12,7 @@
 #define TAO_ECG_ADDRESS_SERVER_BASE_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "EC_Lifetime_Utils.h"
 #include "ace/Auto_Ptr.h"
@@ -26,7 +26,7 @@
  * Adds init () virtual method so that all AddrServer implementations can be
  * initialized in the same fasion.
  */
-class TAO_RTEvent_Export TAO_ECG_Address_Server_Base :
+class TAO_RTEvent_Serv_Export TAO_ECG_Address_Server_Base :
   public virtual POA_RtecUDPAdmin::AddrServer,
   public virtual PortableServer::RefCountServantBase
 {

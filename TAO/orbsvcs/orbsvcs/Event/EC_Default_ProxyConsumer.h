@@ -33,7 +33,7 @@ class TAO_EC_Supplier_Filter;
  * @brief implements RtecEventChannelAdmin::ProxyPushConsumer interface.
  *
  */
-class TAO_RTEvent_Export TAO_EC_Default_ProxyPushConsumer :
+class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushConsumer :
   public POA_RtecEventChannelAdmin::ProxyPushConsumer,
   public TAO_EC_ProxyPushConsumer
 {

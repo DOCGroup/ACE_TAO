@@ -32,7 +32,7 @@
  * Implements the Timeout_Generator using an ACE_Reactor. Usually
  * the same reactor that is used by the ORB where the EC runs.
  */
-class TAO_RTEvent_Export TAO_EC_Reactive_Timeout_Generator
+class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Timeout_Generator
   : public TAO_EC_Timeout_Generator
 {
 public:

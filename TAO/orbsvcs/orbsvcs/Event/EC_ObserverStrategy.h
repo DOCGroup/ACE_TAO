@@ -32,7 +32,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 class ACE_Lock;
 class TAO_EC_Event_Channel_Base;
@@ -51,7 +51,7 @@ class TAO_EC_ProxyPushSupplier;
  * This behavior of the EC is strategized to avoid overhead when no gateways
  * are needed.
  */
-class TAO_RTEvent_Export TAO_EC_ObserverStrategy
+class TAO_RTEvent_Serv_Export TAO_EC_ObserverStrategy
 {
 public:
   /// Destructor
@@ -100,7 +100,7 @@ public:
  * This class keeps no information and simply ignores the messages
  * from the EC.
  */
-class TAO_RTEvent_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_RTEvent_Serv_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
 public:
   /// Constructor
@@ -148,7 +148,7 @@ public:
  * It assumes ownership of the @a lock, but not of the
  * Event_Channel.
  */
-class TAO_RTEvent_Export TAO_EC_Basic_ObserverStrategy :
+class TAO_RTEvent_Serv_Export TAO_EC_Basic_ObserverStrategy :
   public TAO_EC_ObserverStrategy
 {
 public:
@@ -278,7 +278,7 @@ protected:
  * It assumes ownership of the <lock>, but not of the
  * Event_Channel.
  */
-class TAO_RTEvent_Export TAO_EC_Reactive_ObserverStrategy :
+class TAO_RTEvent_Serv_Export TAO_EC_Reactive_ObserverStrategy :
   public TAO_EC_Basic_ObserverStrategy
 {
 public:

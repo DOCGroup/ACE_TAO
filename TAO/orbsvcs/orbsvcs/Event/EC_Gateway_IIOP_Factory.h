@@ -22,7 +22,7 @@
 #include "ace/Service_Object.h"
 #include "ace/SString.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 class TAO_ECG_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP;
@@ -34,7 +34,7 @@ class TAO_EC_Gateway_IIOP;
  *
  * Default configuration values can be found in ECG_Defaults.h
  */
-class TAO_RTEvent_Export TAO_EC_Gateway_IIOP_Factory
+class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP_Factory
   : public ACE_Service_Object
 {
 public:
@@ -97,7 +97,7 @@ protected:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Gateway_IIOP_Factory)
-ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_EC_Gateway_IIOP_Factory)
+ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_Gateway_IIOP_Factory)
 
 #if defined (__ACE_INLINE__)
 #include "EC_Gateway_IIOP_Factory.i"

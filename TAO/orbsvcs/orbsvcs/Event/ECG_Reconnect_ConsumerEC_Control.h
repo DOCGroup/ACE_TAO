@@ -36,7 +36,7 @@ class TAO_EC_Gateway_IIOP;
  * periodically wakeup and verify the state of the consumers
  * registered with the Event Channel.
  */
-class TAO_RTEvent_Export TAO_ECG_Reconnect_ConsumerEC_Control_Adapter
+class TAO_RTEvent_Serv_Export TAO_ECG_Reconnect_ConsumerEC_Control_Adapter
   : public ACE_Event_Handler
 {
 public:
@@ -65,7 +65,7 @@ private:
  * a restart of the consumer ec must be handled correctly, then the consumer
  * ec must use a persistent IOR.
  */
-class TAO_RTEvent_Export TAO_ECG_Reconnect_ConsumerEC_Control
+class TAO_RTEvent_Serv_Export TAO_ECG_Reconnect_ConsumerEC_Control
   : public TAO_ECG_ConsumerEC_Control
 {
 public:

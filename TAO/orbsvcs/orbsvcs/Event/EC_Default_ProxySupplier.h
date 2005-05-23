@@ -28,7 +28,7 @@
  * @brief Implement the ReliableEventChannelAdmin::ProxyPushSupplier
  *         interface
  */
-class TAO_RTEvent_Export TAO_EC_Default_ProxyPushSupplier :
+class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushSupplier :
   public POA_RtecEventChannelAdmin::ProxyPushSupplier,
   public TAO_EC_ProxyPushSupplier
 {

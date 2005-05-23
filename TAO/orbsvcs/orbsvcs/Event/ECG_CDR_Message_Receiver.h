@@ -139,7 +139,7 @@ private:
  * Once all the fragments have been received the message is sent
  * up to the calling classes, and the memory reclaimed.
  */
-class TAO_RTEvent_Export TAO_ECG_CDR_Message_Receiver
+class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Receiver
 {
 public:
   /// Initialization and termination methods.

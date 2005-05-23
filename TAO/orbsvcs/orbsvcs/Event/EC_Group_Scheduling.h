@@ -27,7 +27,7 @@
  *
  * @brief A scheduling strategy that preserves event groups.
  */
-class TAO_RTEvent_Export TAO_EC_Group_Scheduling : public TAO_EC_Scheduling_Strategy
+class TAO_RTEvent_Serv_Export TAO_EC_Group_Scheduling : public TAO_EC_Scheduling_Strategy
 {
 public:
   /// Constructor.
