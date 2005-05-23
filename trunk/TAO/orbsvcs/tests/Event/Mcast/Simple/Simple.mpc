@@ -12,7 +12,7 @@ project(*supplier): messaging, rteventexe, naming {
   }
 }
 
-project(*consumer): messaging, rteventexe, naming {
+project(*consumer): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_Lib
   libs     += ECMcastTests
   includes += ../Common
