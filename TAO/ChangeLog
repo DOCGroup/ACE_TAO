@@ -1,3 +1,8 @@
+Mon May 23 05:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+          Fixed casing of include
+
 Sun May 22 22:10:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp (display_records)
