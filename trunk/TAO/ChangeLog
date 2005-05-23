@@ -1,3 +1,10 @@
+Mon May 23 14:50:27 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
+
+          Changed from requires += exceptions to inheriting from exceptions. Hopefully
+        this will eliminate fuzz errors.
+
 Mon May 23 18:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:

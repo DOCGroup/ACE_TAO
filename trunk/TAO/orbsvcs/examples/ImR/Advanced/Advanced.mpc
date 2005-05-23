@@ -1,6 +1,5 @@
 //$Id$
-project(*Manager): orbsvcsexe, portableserver {
-  requires += exceptions
+project(*Manager): orbsvcsexe, portableserver, exceptions {
   Source_Files {
     manager_main.cpp
     Manager_i.cpp
@@ -13,8 +12,7 @@ project(*Manager): orbsvcsexe, portableserver {
   }
 }
 
-project(*Server): orbsvcsexe, portableserver, iortable {
-  requires += exceptions
+project(*Server): orbsvcsexe, portableserver, iortable, exceptions {
   Source_Files {
     server_main.cpp
     TestServer.cpp
@@ -25,8 +23,7 @@ project(*Server): orbsvcsexe, portableserver, iortable {
   }
 }
 
-project(*Client): orbsvcsexe {
-  requires += exceptions
+project(*Client): orbsvcsexe, exceptions {
   Source_Files {
     client_main.cpp
     TestClient.cpp
