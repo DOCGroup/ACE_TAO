@@ -6,21 +6,15 @@ ACE_RCSID(orbsvcs,
           Shutdown_Utilities,
           "$Id$")
 
-Shutdown_Functor::Shutdown_Functor (void)
-{
-}
-
-Shutdown_Functor::~Shutdown_Functor (void)
-{
-}
-
 Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf)
   : functor_(sf)
 {
   ACE_Sig_Set std_signals;
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
-  std_signals.sig_add (SIGINT);
   std_signals.sig_add (SIGTERM);
+  std_signals.sig_add (SIGINT);
+#elif defined(ACE_WIN32)
+  std_signals.sig_add (SIGINT);
 #endif
   this->set_signals (std_signals);
 }
@@ -45,12 +39,13 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
 {
   // iterate over all the signals in which_signals and register them...
   int did_register = 0;
-  for (int i = 1; i < ACE_NSIG; i++)
+  for (int i = 1; i < ACE_NSIG; ++i)
+  {
     if (which_signals.is_member (i))
       {
         if (this->shutdown_.register_handler (i, this) == -1)
           {
-#if defined(__TANDEM)            
+#if defined(__TANDEM)
 // Tandem NSK platform has no signal 10 so do not emit a warning for it
             if (i != 10)
 #endif
@@ -64,14 +59,18 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
         else
           did_register = 1;
       }
-
+  }
   if (! did_register)
+  {
     ACE_DEBUG ((LM_WARNING,
                 "WARNING: Service_Shutdown did not register any signals.\n"));
+  }
 }
 
 Service_Shutdown::~Service_Shutdown ()
 {
+  for (int i = 1; i < ACE_NSIG; ++i)
+    this->shutdown_.remove_handler(i);
 }
 
 int

@@ -180,9 +180,8 @@ Activator_Options::print_usage (void) const
               "              ('install' or 'remove' or 'install_no_imr')\n"
               "  -d level    Sets the debug level\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
-              "  -l          Notify the ImR Locator when a process exits\n"
-              "  -n name     Specify a name for the Activator\n"
-              "  -s          Runs as a service (NT Only)\n")
+              "  -l          Notify the ImR when a process exits\n"
+              "  -n name     Specify a name for the Activator\n")
              );
 }
 
@@ -219,6 +218,11 @@ Activator_Options::save_registry_options()
 
   err = ACE_TEXT_RegSetValueEx(key, "Name", 0, REG_SZ,
     (LPBYTE) this->name_.c_str(), this->name_.length() + 1);
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
+  DWORD tmpint = this->notify_imr_;
+  err = ACE_TEXT_RegSetValueEx(key, "NotifyImR", 0, REG_DWORD,
+    (LPBYTE) &tmpint , sizeof(tmpint));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
   err = ::RegCloseKey(key);
@@ -279,13 +283,14 @@ Activator_Options::load_registry_options ()
     this->name_ = tmpstr;
   }
 
-  DWORD tmpint = this->notify_imr_;
+  DWORD tmpint = 0;
   sz = sizeof(tmpint);
   err = ACE_TEXT_RegQueryValueEx(key, "NotifyImR", 0, &type,
     (LPBYTE) &tmpint , &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_DWORD);
   }
+  this->notify_imr_ = tmpint != 0;
 
   err = ::RegCloseKey(key);
   ACE_ASSERT(err == ERROR_SUCCESS);

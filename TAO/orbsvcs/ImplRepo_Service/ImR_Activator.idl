@@ -11,6 +11,8 @@ module ImplementationRepository
     // Tells the activator to launch a server with the given information.
     void start_server(in string name, in string cmdline,
       in string dir, in EnvironmentList env) raises(CannotActivate);
+
+    oneway void shutdown();
   };
 };
 

@@ -135,52 +135,6 @@ protected:
   ACE_CString server_name_;
 };
 
-
-/**
- * @class TAO_IMR_Op_Add
- *
- * @brief Add Operation
- *
- * Add is used to register information about a server with the IMR.
- */
-class TAO_IMR_Op_Add : public TAO_IMR_Op
-{
-public:
-  TAO_IMR_Op_Add (void);
-
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
-
-protected:
-  /// Sets one of the environment variables
-  void addenv (ACE_TCHAR *opt);
-
-  /// Prints a message about the usage.
-  void print_usage (void);
-
-  /// POA server name.
-  ACE_CString server_name_;
-
-  /// Command line.
-  ACE_CString command_line_;
-
-  /// Environment Variables.
-  ImplementationRepository::EnvironmentList environment_vars_;
-
-  /// Working directory.
-  ACE_CString working_dir_;
-
-  /// Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
-  ImplementationRepository::ActivationMode activation_;
-
-  /// Hostname where the activator is running.
-  ACE_CString activator_;
-
-  /// startup/ping Retry Count
-  int retry_count_;
-};
-
-
 /**
  * @class TAO_IMR_Op_Autostart
  *
@@ -300,24 +254,43 @@ protected:
   ACE_CString server_name_;
 };
 
-
 /**
- * @class TAO_IMR_Op_Update
- *
- * @brief Update Operation
- *
- * Update is used to update the information for a server registered
- * with the IMR.
+ * Shutdown the ImR and optionally any registered activators.
  */
-class TAO_IMR_Op_Update : public TAO_IMR_Op
+class TAO_IMR_Op_ShutdownRepo : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_Update(void);
+  TAO_IMR_Op_ShutdownRepo();
+  virtual int parse (int argc, ACE_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  void print_usage (void);
+
+  bool activators_;
+};
+
+/**
+ * @class TAO_IMR_Op_Register
+ *
+ * @brief Register Operation
+ *
+ * Register is used to update/add information for a server
+ * with the IMR.
+ */
+class TAO_IMR_Op_Register : public TAO_IMR_Op
+{
+public:
+  TAO_IMR_Op_Register(bool is_add);
 
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
+
+  /// Enables pre-registration checks
+  bool is_add_;
+
   /// Sets one environment variable.
   void addenv (ACE_TCHAR *opt);
 

@@ -163,11 +163,10 @@ Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::String_var direct_ior =
-        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ior_table->bind (name.c_str(), direct_ior.in () ACE_ENV_ARG_PARAMETER);
+      ior_table->bind (name.c_str(), ior.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 

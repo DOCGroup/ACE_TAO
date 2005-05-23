@@ -23,13 +23,13 @@ namespace TAO
     ImR_Client_Adapter_Impl::imr_notify_startup (
       TAO_Root_POA* poa ACE_ENV_ARG_DECL)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
-
       CORBA::Object_var imr = poa->orb_core ().implrepo_service ();
 
       if (CORBA::is_nil (imr.in ()))
           return;
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
 
       ImplementationRepository::Administration_var imr_locator;
 
@@ -167,11 +167,20 @@ namespace TAO
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, ex)
+      ACE_CATCH(CORBA::COMM_FAILURE, ex)
         {
           // At the moment we call this during ORB shutdown and the ORB is
           // configured to drop replies during shutdown (it does by default in
           // the LF model) we get a COMM_FAILURE exception which we ignore
+          if (TAO_debug_level > 0)
+            ACE_DEBUG((LM_DEBUG, "Ignoring COMM_FAILURE while unregistering from ImR.\n"));
+          ACE_UNUSED_ARG (ex);
+        }
+      ACE_CATCH(CORBA::TRANSIENT, ex)
+        {
+          // Similarly, there are cases where we could get a TRANSIENT.
+          if (TAO_debug_level > 0)
+            ACE_DEBUG((LM_DEBUG, "Ignoring TRANSIENT while unregistering from ImR.\n"));
           ACE_UNUSED_ARG (ex);
         }
       ACE_CATCHANY
