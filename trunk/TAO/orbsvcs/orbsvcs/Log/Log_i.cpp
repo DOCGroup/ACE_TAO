@@ -820,32 +820,9 @@ TAO_Log_i::delete_records (const char *grammar,
 
   CORBA::ULong count =
     this->match_i (constraint, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (count);
-
-  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-  return count;
-}
-
-CORBA::ULong
-TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
-                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong numdone (0);
-
-  for (CORBA::ULong i = 0; i < ids.length (); i++)
-    {
-      if (this->recordstore_.remove (ids [i]) == 0)
-        {
-          numdone++;
-        }
-    }
-
-  if (numdone > 0)
+  if (count > 0)
     {
       const CORBA::ULongLong current_size =
         this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -864,7 +841,47 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
   this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return numdone;
+  return count;
+}
+
+CORBA::ULong
+TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
+                                 ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong count (0);
+
+  for (CORBA::ULong i = 0; i < ids.length (); i++)
+    {
+      if (this->recordstore_.remove (ids [i]) == 0)
+        {
+          count++;
+        }
+    }
+
+  if (count > 0)
+    {
+      const CORBA::ULongLong current_size =
+        this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      const CORBA::ULongLong max_size =
+        this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (current_size < max_size)
+        {
+          avail_status_.log_full = 0;
+        }
+    }
+
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return count;
 }
 
 void
@@ -1285,6 +1302,23 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
               count++;
       }
     }
+
+  if (count > 0)
+    {
+      const CORBA::ULongLong current_size =
+        this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      const CORBA::ULongLong max_size =
+        this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (current_size < max_size)
+        {
+          avail_status_.log_full = 0;
+        }
+    }
+
   this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
