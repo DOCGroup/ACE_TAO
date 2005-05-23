@@ -302,7 +302,7 @@ namespace CIAO
     {
       PortableServer::ServantBase_var safe (servant);
 
-      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      servant->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       this->component_map_.unbind (oid.in ());
     }
