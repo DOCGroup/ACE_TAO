@@ -1,5 +1,5 @@
 // $Id$
-project(*Event_Sup): rtevent, rtsched, namingexe, utils {
+project(*Event_Sup): rtevent_skel, rtsched, namingexe, utils {
   exename = Event_Sup
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs
@@ -14,7 +14,7 @@ project(*Event_Sup): rtevent, rtsched, namingexe, utils {
   }
 }
 
-project(*Event_Con): rtevent, rtsched, namingexe {
+project(*Event_Con): rtevent_skel, rtsched, namingexe {
   exename = Event_Con
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs
@@ -28,7 +28,7 @@ project(*Event_Con): rtevent, rtsched, namingexe {
   }
 }
 
-project(*Logging_Sup): rtevent, rtsched, namingexe, utils {
+project(*Logging_Sup): rtevent_skel, rtsched, namingexe, utils {
   exename = Logging_Sup
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs
@@ -43,7 +43,7 @@ project(*Logging_Sup): rtevent, rtsched, namingexe, utils {
   }
 }
 
-project(*DualEC_Sup): rtevent, rtsched, namingexe, utils {
+project(*DualEC_Sup): rtevent_serv, rtsched, namingexe, utils {
   exename = DualEC_Sup
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs
