@@ -84,16 +84,22 @@ TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !STATIC
 TAO/orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:!MINIMUM !DISABLE_INTERCEPTORS
 TAO/orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:!MINIMUM !DISABLE_INTERCEPTORS
 TAO/orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl:!MINIMUM !DISABLE_INTERCEPTORS
-TAO/orbsvcs/tests/ImplRepo/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:  !MINIMUM !NO_IFR
 TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:  !MINIMUM !NO_IFR
 TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:  !MINIMUM !NO_IFR
 TAO/orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:  !MINIMUM !NO_IFR
 TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:  !MINIMUM !NO_IFR
+TAO/orbsvcs/tests/ImplRepo/run_test.pl both_ir: !MINIMUM
+TAO/orbsvcs/tests/ImplRepo/run_test.pl nestea_ir: !MINIMUM
+TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir: !MINIMUM
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ir: !MINIMUM
+TAO/orbsvcs/tests/ImplRepo/run_test.pl nt_service_ir: !MINIMUM Win32
+TAO/orbsvcs/tests/ImplRepo/run_test.pl shutdown: !MINIMUM
+TAO/orbsvcs/tests/ImplRepo/run_test.pl perclient: !MINIMUM
+TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl: !MINIMUM
-TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST Exceptions
+TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM
+TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST
 TAO/orbsvcs/tests/Log/Basic_Log_Test/run_test.pl: !NO_MESSAGING
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC !MINIMUM
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf: !ST !NOTIFY !NO_MESSAGING !MINIMUM
