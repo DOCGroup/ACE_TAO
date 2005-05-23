@@ -1,3 +1,8 @@
+Mon May 23 18:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.{h,cpp}:
+          Fixed service config macros
+
 Mon May 23 12:38:31 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
