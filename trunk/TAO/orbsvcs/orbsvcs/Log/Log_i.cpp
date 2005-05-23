@@ -1101,10 +1101,6 @@ TAO_Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   {
     if (weekly_intervals_.length () > 0)
     {
-      TimeBase::TimeT current_time;
-      ACE_Time_Value now = ACE_OS::gettimeofday ();
-      ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
-
       // work out when sunday is in nanoseconds.
       timeval t;
       t = (timeval) now;
@@ -1240,10 +1236,9 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
     return;
   }
 
-  TimeBase::TimeT time;
-  ORBSVCS_Time::Time_Value_to_TimeT (time, ACE_OS::gettimeofday ());
-
-  TimeBase::TimeT purge_time = time - this->max_record_life_;
+  TimeBase::TimeT purge_time;
+  ORBSVCS_Time::Time_Value_to_TimeT (purge_time,
+				     (ACE_OS::gettimeofday() - ACE_Time_Value(this->max_record_life_)));
 
   CORBA::ULongLong p_time = (CORBA::ULongLong) purge_time;
 
