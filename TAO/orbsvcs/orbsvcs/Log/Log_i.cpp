@@ -1306,11 +1306,11 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
     {
       const CORBA::ULongLong current_size =
         this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK;
 
       const CORBA::ULongLong max_size =
         this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK;
 
       if (current_size < max_size)
         {
