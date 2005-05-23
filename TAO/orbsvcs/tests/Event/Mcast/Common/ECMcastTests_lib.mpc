@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: rtevent {
+project: rtevent_serv {
   sharedname = ECMcastTests
   dynamicflags   = ECMCASTTESTS_BUILD_DLL
   Header_Files {

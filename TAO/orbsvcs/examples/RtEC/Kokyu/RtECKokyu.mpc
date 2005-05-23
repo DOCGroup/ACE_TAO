@@ -1,4 +1,4 @@
 // $Id$
-project: orbsvcsexe, rtkokyuevent {
-  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs/Sched
+project: orbsvcsexe, rtkokyuevent, rtevent_serv {
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/Sched
 }

@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, rtevent, rtsched {
+project : orbsvcsexe, rtevent_serv, rtsched {
 }

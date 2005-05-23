@@ -29,7 +29,7 @@ project(*Latency): eventperftestexe, strategies {
   }
 }
 
-project(*Latency_Server): eventperftestexe, strategies {
+project(*Latency_Server): eventperftestexe, rtevent_serv, strategies {
   exename   = Latency_Server
   Source_Files {
     Latency_Server.cpp
