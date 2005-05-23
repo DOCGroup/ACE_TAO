@@ -1,3 +1,25 @@
+Mon May 23 05:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/BCU.cpp BCU.h:
+        * orbsvcs/orbsvcs/Event/Debug_Macros.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/Event_Channel.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/Event_Manip.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/Fast_Reactor.h
+        * orbsvcs/orbsvcs/Event/GPlot_File.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/Local_ESTypes.{h,cpp}:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/Module_Factory.{h,cpp}:
+        * orbsvcs/orbsvcs/Event/old_event_export.h:
+        * orbsvcs/orbsvcs/Event/ReactorTask.{h,cpp}:
+        * orbsvcs/orbsvcs/Event/RT_Task.{cpp,h,i}:
+        * orbsvcs/orbsvcs/Event/Timer_Module.{h,cpp,i}:
+          Removed the old RTEvent implementation. This is already deprecated
+          for years. This fixes bugzilla bug 2047
+
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+          Removed the constants that are for the old ec
+
 Mon May 23 05:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Event_Service/Event_Service.{h,cpp}:
