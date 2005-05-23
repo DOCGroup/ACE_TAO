@@ -1,3 +1,10 @@
+Mon May 23 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/rtevent_serv.mpb:
+        * bin/MakeProjectCreator/config/rtevent_skel.mpb:
+          New files, the RTEvent service is being split in 3 libs so
+          we need some new base projects
+
 Mon May 23 05:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/rtoldevent.mpb:
