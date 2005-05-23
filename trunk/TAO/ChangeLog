@@ -1,3 +1,8 @@
+Mon May 23 18:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+          Updated for RTEvent library split
+
 Mon May 23 18:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
