@@ -25,21 +25,6 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
-/// This is the number of events a consumer can subscribe to.
-const int ACE_ES_MAX_SUBSCRIPTIONS = 32;
-
-// Max number of suppliers that a channel can handle.
-//const int ACE_ES_MAX_SUPPLIERS = 100;
-
-/// Max number of consumers that one supplier can have subscribed to
-/// one type of event (including source-only).  This restriction is
-/// very lightweight since subscription lists are dynamic.  This
-/// constant is only used for ACE_ES_Simple_Set in Event_Channel.* for
-/// disconnecting consumers.  Since these objects are allocated off the
-/// stack, we can increase this number without requiring more heap
-/// memory.
-const int ACE_ES_MAX_CONSUMERS_PER_SUPPLIER = 100;
-
 // = Predefined event types.  All application defined types should be
 // relative to ACE_ES_EVENT_UNDEFINED.
 const long ACE_ES_EVENT_ANY = 0;
@@ -59,7 +44,7 @@ const long ACE_ES_MASKED_TYPE_DESIGNATOR = 13;
 const long ACE_ES_NULL_DESIGNATOR = 14;
 const long ACE_ES_EVENT_UNDEFINED = 16;
 
-// = Predefined event sources.
+///  Predefined event sources.
 const long ACE_ES_EVENT_SOURCE_ANY = 0;
 
 /// The max number of priorities provided by the target platform.
@@ -89,38 +74,6 @@ const u_long ACE_Scheduler_MAX_SUB_PRIORITY =
 /// This is the minimum sub priority.
 const u_long ACE_Scheduler_MIN_SUB_PRIORITY =
       ACE_Message_Block::MB_NORMAL;
-
-#if defined(TAO_EC_USE_RECURSIVE_MUTEX)
-typedef TAO_SYNCH_RECURSIVE_MUTEX ACE_ES_MUTEX;
-typedef ACE_Guard<ACE_ES_RECURSIVE_MUTEX> ACE_ES_GUARD;
-#else
-typedef TAO_SYNCH_MUTEX ACE_ES_MUTEX;
-typedef ACE_Guard<ACE_ES_MUTEX> ACE_ES_GUARD;
-#endif
-
-typedef TAO_SYNCH_RW_MUTEX ACE_ES_RW_LOCK;
-typedef ACE_Write_Guard<ACE_ES_RW_LOCK> ACE_ES_WGUARD;
-typedef ACE_Read_Guard<ACE_ES_RW_LOCK> ACE_ES_RGUARD;
-
-// ************************************************************
-// Channel configuration parameters.
-
-/// ACE_ES_DISPATCHING_MODULE determines what Dispatching Module is
-/// used by the channel.  ACE_ES_Dispatching_Base is a null dispatcher
-/// that can be used to build an EFD.
-#define ACE_ES_DISPATCHING_MODULE ACE_ES_Priority_Dispatching
-//#define ACE_ES_DISPATCHING_MODULE ACE_ES_Dispatching_Base
-
-/// This is the number of threads spawned for *each* priority queue in
-/// the channel's Dispatching Module.  This is used by the channel when
-/// creating the dispatch module.
-const int THREADS_PER_DISPATCH_QUEUE = 1;
-
-/// This is the chunk size of the cached allocator for
-/// ACE_ES_Event_Container.
-const int ACE_ES_EVENT_CONTAINER_MEMORY_POOL = 1024;
-const int ACE_ES_EVENT_MEMORY_POOL = 1024;
-const int ACE_ES_DISPATCH_REQUEST_MEMORY_POOL = 1024;
 
 #include /**/ "ace/post.h"
 
