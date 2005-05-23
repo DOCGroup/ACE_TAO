@@ -1,3 +1,8 @@
+Mon May 23 18:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+          Updated for RTEvent library split
+
 Mon May 23 13:24:41 2005  Justin Michel  <michel_j@ociweb.com>
 
         * tao/ImR_Client/ImplRepo.pidl:
