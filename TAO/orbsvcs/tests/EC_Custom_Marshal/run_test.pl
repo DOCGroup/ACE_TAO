@@ -17,7 +17,7 @@ $status = 0;
 $NS = new PerlACE::Process ("../../Naming_Service/Naming_Service",
                             "-ORBNameServicePort $port -o $NS_ior");
 $ES = new PerlACE::Process ("../../Event_Service/Event_Service",
-                            "-ORBInitRef NameService=file://$NS_ior -t new");
+                            "-ORBInitRef NameService=file://$NS_ior");
 $C  = new PerlACE::Process ("ECM_Consumer", 
                             "-ORBInitRef NameService=file://$NS_ior");
 $S  = new PerlACE::Process ("ECM_Supplier",
