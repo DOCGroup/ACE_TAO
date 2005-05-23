@@ -1,3 +1,10 @@
+Sun May 22 21:23:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
+
+	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
+
+	  Modified the operation from <_ciao_passivate> to <ciao_passivate>
+	  due to my earlier interface changes.
+
 Sun May 22 11:29:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Base.cpp:
