@@ -20,8 +20,6 @@
 #include "orbsvcs/RtecSchedulerS.h"
 #include "ace/SString.h"
 
-class TAO_Module_Factory;
-
 /**
  * @class Event_Service
  *
