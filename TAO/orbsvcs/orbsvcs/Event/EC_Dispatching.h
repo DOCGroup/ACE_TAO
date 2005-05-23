@@ -19,7 +19,7 @@
 
 #include "orbsvcs/RtecEventCommC.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,7 @@ class TAO_EC_ProxyPushSupplier;
  * for each queue or can simply push the event to the consumer in
  * FIFO order.
  */
-class TAO_RTEvent_Export TAO_EC_Dispatching
+class TAO_RTEvent_Serv_Export TAO_EC_Dispatching
 {
 public:
   /// Destructor...

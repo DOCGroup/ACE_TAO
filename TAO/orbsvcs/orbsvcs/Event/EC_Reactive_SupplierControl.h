@@ -53,7 +53,7 @@ class TAO_EC_Reactive_SupplierControl;
  * COS Event services.
  *
  */
-class TAO_RTEvent_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
+class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -76,7 +76,7 @@ private:
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
  */
-class TAO_RTEvent_Export TAO_EC_Reactive_SupplierControl : public TAO_EC_SupplierControl
+class TAO_RTEvent_Serv_Export TAO_EC_Reactive_SupplierControl : public TAO_EC_SupplierControl
 {
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel

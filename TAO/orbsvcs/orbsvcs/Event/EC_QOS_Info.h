@@ -19,7 +19,7 @@
 
 #include "orbsvcs/RtecBaseC.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +35,7 @@
  * class encapsulates that information.
  * This first implementation is just a place-holder.
  */
-class TAO_RTEvent_Export TAO_EC_QOS_Info
+class TAO_RTEvent_Serv_Export TAO_EC_QOS_Info
 {
 public:
   /// Constructor

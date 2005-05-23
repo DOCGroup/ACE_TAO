@@ -948,7 +948,7 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Default_Factory,
                        &ACE_SVC_NAME (TAO_EC_Default_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_RTEvent, TAO_EC_Default_Factory)
+ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Default_Factory)
 
 // ****************************************************************
 

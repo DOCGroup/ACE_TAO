@@ -51,7 +51,7 @@ class TAO_EC_ProxyPushConsumer;
  * could short-circuit the filter() ---> push() cycle when the EC
  * is properly configured, we need to explore this...
  */
-class TAO_RTEvent_Export TAO_EC_ProxyPushSupplier : public TAO_EC_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_ProxyPushSupplier : public TAO_EC_Filter
 {
 public:
   typedef RtecEventChannelAdmin::ProxyPushSupplier Interface;

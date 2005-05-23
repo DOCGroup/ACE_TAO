@@ -16,7 +16,7 @@
 #define TAO_ECG_ADAPTERS_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecUDPAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,7 +34,7 @@ class ACE_SOCK_Dgram;
  *        by multicast and udp handlers in EC gateways, so the
  *        handlers can be notified of shutdown (usually by Event Receivers).
  */
-class TAO_RTEvent_Export TAO_ECG_Handler_Shutdown
+class TAO_RTEvent_Serv_Export TAO_ECG_Handler_Shutdown
 {
 public:
 
@@ -52,7 +52,7 @@ public:
  *        available on the dgram for reading, and to query them about
  *        event type to mcast group mappings.
  */
-class TAO_RTEvent_Export TAO_ECG_Dgram_Handler
+class TAO_RTEvent_Serv_Export TAO_ECG_Dgram_Handler
 {
 public:
 

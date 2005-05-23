@@ -44,7 +44,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #include "EC_Lifetime_Utils.h"
@@ -64,7 +64,7 @@ class TAO_ECG_UDP_Out_Endpoint;
  * consumer connection to the Event Channel, automatically disconnecting from
  * @a proxy in its destructor, if necessary.
  */
-class TAO_RTEvent_Export TAO_ECG_UDP_Sender_Disconnect_Command
+class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender_Disconnect_Command
 {
 public:
   TAO_ECG_UDP_Sender_Disconnect_Command (void);
@@ -94,7 +94,7 @@ private:
  * and forwards the events it receives from that EC using UDP.
  *
  */
-class TAO_RTEvent_Export TAO_ECG_UDP_Sender :
+class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
   public virtual PortableServer::RefCountServantBase,
   public virtual POA_RtecEventComm::PushConsumer,
   public TAO_EC_Deactivated_Object

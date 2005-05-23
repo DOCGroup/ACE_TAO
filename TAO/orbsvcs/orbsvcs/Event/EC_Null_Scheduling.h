@@ -29,7 +29,7 @@
  * @brief A scheduling strategy that separates event groups and
  * delivers one event at a time.
  */
-class TAO_RTEvent_Export TAO_EC_Null_Scheduling 
+class TAO_RTEvent_Serv_Export TAO_EC_Null_Scheduling
   : public TAO_EC_Scheduling_Strategy
 {
 public:

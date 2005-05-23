@@ -34,7 +34,7 @@
  * and that:
  * (event.header.source & source_mask) == source_value
  */
-class TAO_RTEvent_Export TAO_EC_Masked_Type_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_Masked_Type_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor.

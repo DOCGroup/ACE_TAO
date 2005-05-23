@@ -19,7 +19,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ class TAO_EC_ProxyPushSupplier;
  * TAO_EC_Filter_Builder follows the "Builder Pattern" (Gamma et
  * al.)
  */
-class TAO_RTEvent_Export TAO_EC_Filter_Builder
+class TAO_RTEvent_Serv_Export TAO_EC_Filter_Builder
 {
 public:
   /// destructor...
@@ -62,7 +62,7 @@ public:
  *
  * Simply creates a Null_Filter in every case.
  */
-class TAO_RTEvent_Export TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_RTEvent_Serv_Export TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_Builder
 {
 public:
   /// constructor.

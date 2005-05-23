@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -70,7 +70,7 @@
  * // Ensures the header ends at an 8-byte boundary.
  * }; // size (in CDR stream) = 32
  */
-class TAO_RTEvent_Export TAO_ECG_CDR_Message_Sender
+class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Sender
 {
 public:
 

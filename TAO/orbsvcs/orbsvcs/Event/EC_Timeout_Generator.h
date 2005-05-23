@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "EC_Timeout_Filter.h"
 
@@ -41,7 +41,7 @@ class TAO_EC_QOS_Info;
  * This class is the abstract base class to abstract this
  * strategies.
  */
-class TAO_RTEvent_Export TAO_EC_Timeout_Generator
+class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Generator
 {
 public:
   /// destructor
@@ -75,7 +75,7 @@ public:
  * dispatch events, but we want to receive them in EC_Filters,
  * this class is and adaptor for that purpose.
  */
-class TAO_RTEvent_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
+class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
 {
 public:
   /// Default construction.

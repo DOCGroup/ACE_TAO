@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -44,7 +44,7 @@
  * "*@230.100.0.2:2300 45@230.100.123.43:2300"
  *
  */
-class TAO_RTEvent_Export TAO_ECG_Complex_Address_Server :
+class TAO_RTEvent_Serv_Export TAO_ECG_Complex_Address_Server :
   public virtual POA_RtecUDPAdmin::AddrServer,
   public virtual PortableServer::RefCountServantBase
 {

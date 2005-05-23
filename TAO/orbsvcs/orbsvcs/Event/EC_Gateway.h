@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
@@ -38,7 +38,7 @@
  * strategies for EC distribution.
  *
  */
-class TAO_RTEvent_Export TAO_EC_Gateway 
+class TAO_RTEvent_Serv_Export TAO_EC_Gateway
   : public POA_RtecEventChannelAdmin::Observer
 {
 public:

@@ -36,7 +36,7 @@ class TAO_EC_ProxyPushSupplier;
  * This filter only accept events with a predefined type/source,
  * both the source and the type can be wildcards.
  */
-class TAO_RTEvent_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor.

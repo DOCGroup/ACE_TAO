@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,7 +59,7 @@ typedef TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushSupplier> TAO_EC_ProxyPushSuppl
  * Some implementations may require a different instance for the
  * EC_Factory for each instance of Event_Channel.
  */
-class TAO_RTEvent_Export TAO_EC_Factory : public ACE_Service_Object
+class TAO_RTEvent_Serv_Export TAO_EC_Factory : public ACE_Service_Object
 {
 public:
   /// destructor...

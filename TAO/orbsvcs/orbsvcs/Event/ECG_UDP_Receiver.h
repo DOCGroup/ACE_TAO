@@ -44,7 +44,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "ECG_Adapters.h"
 #include "EC_Lifetime_Utils.h"
@@ -64,7 +64,7 @@ class ACE_Reactor;
  * supplier connection to the Event Channel, automatically disconnecting from
  * @a proxy in its destructor, if necessary.
  */
-class TAO_RTEvent_Export TAO_ECG_UDP_Receiver_Disconnect_Command
+class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver_Disconnect_Command
 {
 public:
   TAO_ECG_UDP_Receiver_Disconnect_Command (void);
@@ -94,7 +94,7 @@ private:
  * This class connects as a supplier to an EventChannel, and supplies
  * to it all events it receives via UDP or Multicast.
  */
-class TAO_RTEvent_Export TAO_ECG_UDP_Receiver
+class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver
   : public virtual PortableServer::RefCountServantBase
   , public virtual POA_RtecEventComm::PushSupplier
   , public virtual TAO_EC_Deactivated_Object

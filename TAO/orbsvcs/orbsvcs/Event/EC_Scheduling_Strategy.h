@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "orbsvcs/RtecBaseC.h"
 #include "orbsvcs/RtecEventCommC.h"
@@ -42,7 +42,7 @@ class TAO_EC_QOS_Info;
  * event pushed by a supplier.
  * The base
  */
-class TAO_RTEvent_Export TAO_EC_Scheduling_Strategy
+class TAO_RTEvent_Serv_Export TAO_EC_Scheduling_Strategy
 {
 public:
   /// Destructor

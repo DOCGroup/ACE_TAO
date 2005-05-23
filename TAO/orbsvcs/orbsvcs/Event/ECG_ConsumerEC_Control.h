@@ -20,7 +20,7 @@
 
 #include "tao/Basic_Types.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 class TAO_EC_Gateway_IIOP;
 class TAO_EC_ProxyPushSupplier;
@@ -40,7 +40,7 @@ namespace CORBA
  * This strategy handles misbehaving or failing event channels that are consumer
  * of a gateway.
  */
-class TAO_RTEvent_Export TAO_ECG_ConsumerEC_Control
+class TAO_RTEvent_Serv_Export TAO_ECG_ConsumerEC_Control
 {
 public:
   /// Constructor.

@@ -19,7 +19,7 @@
 
 #include "orbsvcs/RtecEventCommC.h"
 
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,7 +46,7 @@ class TAO_EC_QOS_Info;
  * <H2>Memory Management</H2>
  * It does *not* assume ownership of its parent.
  */
-class TAO_RTEvent_Export TAO_EC_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_Filter
 {
 public:
   /// constructor...
@@ -173,7 +173,7 @@ private:
  * c) Event Channels that don't do filtering (such as CosEC
  * backends)
  */
-class TAO_RTEvent_Export TAO_EC_Null_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_Null_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor.

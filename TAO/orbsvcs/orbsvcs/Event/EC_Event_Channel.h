@@ -37,7 +37,7 @@
  * ConsumerAdmin and Dispatching) and to provide a simpler
  * interface to the EC_Factory.
  */
-class TAO_RTEvent_Export TAO_EC_Event_Channel :
+class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel :
   public TAO_EC_Event_Channel_Base
 {
 public:

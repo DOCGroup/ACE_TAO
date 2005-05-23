@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "EC_Filter.h"
-#include /**/ "event_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,7 @@
  * This filter only accept events with a predefined type/source,
  * both the source and the type can be wildcards.
  */
-class TAO_RTEvent_Export TAO_EC_Type_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Serv_Export TAO_EC_Type_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor.
