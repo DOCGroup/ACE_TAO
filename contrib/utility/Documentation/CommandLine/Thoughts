@@ -1,0 +1,8 @@
+
+@@ I should not assume that Utility::CommandLine is the only mechanism 
+   used to parse command line. Application developer may be using 
+   different components that employ different command line parsers. 
+   Thus it seem to me that I should use argv/argc as input/output
+   format.
+   
+$Id$
