@@ -9,7 +9,7 @@ project: zzip {
   // Support the alternative Borland Make project type
   specific(bmake) {
     unicode_flags += -DACE_USES_WCHAR
-    macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(LIBMODIFIER)\\")
+    macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(ILIBMODIFIER)\\")
     debug_macros += ACE_NO_INLINE=1
   }
 

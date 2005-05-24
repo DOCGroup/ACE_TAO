@@ -1,15 +1,29 @@
+Tue May 24 09:31:42 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Use $(ILIBMODIFIER) instead of $(LIBMODIFIER).
+
+        * tests/Pipe_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+
+          Added missing ACE_TEXT () around option strings.  This was causing
+          a very strange file to show up after the Process_Mutex_Test was
+          run in the Borland unicode build and the Pipe_Test didn't run at
+          all.
+
 Tue May 24 00:17:09 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/cidlc.mpb:
 
-			    Created a base project for cidlc & ccf project files.
+                            Created a base project for cidlc & ccf project files.
 
 Tue May 24 07:58:09 2005  Olli Savia  <ops@iki.fi>
 
         * ace/SSL/SSL_SOCK_Stream.h:
           Added include "ace/os_include/os_stdio.h" to fix compile
           problem on LynxOS. Thanks to Christine Ballard
-	  <christine.ballard at lmco dot com> for reporting the problem.
+          <christine.ballard at lmco dot com> for reporting the problem.
 
 Mon May 23 23:11:14 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 

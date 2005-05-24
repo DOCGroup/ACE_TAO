@@ -105,7 +105,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Process_Options options;
       options.command_line (ACE_TEXT ("%s -c%s"),
                             argv[0],
-                            close_pipe == 0 ? " -d" : "");
+                            close_pipe == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 
       ACE_exitcode status = 0;
 
