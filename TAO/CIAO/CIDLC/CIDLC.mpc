@@ -1,13 +1,11 @@
 //$Id$
 
-project(CIDLC) {
-  requires += cidl exceptions
+project(CIDLC): cidlc {
   exename = cidlc
-  includes += .. ../CCF
   after += IDL2 IDL3 CIDL CodeGenerationKit CompilerElements
   install = ../bin
-  libpaths += $(CIAO_ROOT)/CCF/CCF ../../../lib
   libs += CIDL IDL3 IDL2 CodeGenerationKit CompilerElements
+
   Source_Files {
     ExecutorMappingGenerator.cpp
     DescriptorGenerator.cpp
@@ -25,17 +23,4 @@ project(CIDLC) {
     cidlc.cpp
   }
 
-  specific(vc71) {
-    libs += boost_regex_debug boost_filesystem_debug
-  }
-
-  verbatim(gnuace, top) {
-    include ../CCF/Config.rules
-  }
-
-  verbatim(gnuace, local) {
-    LIBS += $(BOOST_LD_FLAGS)	\
-            -lboost_regex 	\
-            -lboost_filesystem
-  }
 }
