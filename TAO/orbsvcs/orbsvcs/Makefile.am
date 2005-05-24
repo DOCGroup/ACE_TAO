@@ -8,7 +8,7 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
 
-includedir = @includedir@/orbsvcs/orbsvcs
+includedir = @includedir@/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
@@ -3249,13 +3249,6 @@ RtecUDPAdmin-stamp: $(srcdir)/RtecUDPAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecUDPAdmin.idl
 	@touch $@
 
-RTEvent = \
-  Event_Utilities.cpp \
-  RtecDefaultEventDataC.cpp \
-  RtecEventChannelAdminC.cpp \
-  RtecEventCommC.cpp \
-  RtecUDPAdminC.cpp
-
 lib_LTLIBRARIES += libTAO_RTEvent.la
 
 libTAO_RTEvent_la_CPPFLAGS = \
@@ -3268,7 +3261,11 @@ libTAO_RTEvent_la_CPPFLAGS = \
   -DTAO_RTEVENT_BUILD_DLL
 
 libTAO_RTEvent_la_SOURCES = \
-  $(RTEvent)
+  Event_Utilities.cpp \
+  RtecDefaultEventDataC.cpp \
+  RtecEventChannelAdminC.cpp \
+  RtecEventCommC.cpp \
+  RtecUDPAdminC.cpp
 
 libTAO_RTEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -3303,12 +3300,6 @@ EXTRA_DIST += \
 
 if BUILD_CORBA_MESSAGING
 
-RTEvent = \
-  RtecDefaultEventDataS.cpp \
-  RtecEventChannelAdminS.cpp \
-  RtecEventCommS.cpp \
-  RtecUDPAdminS.cpp
-
 lib_LTLIBRARIES += libTAO_RTEvent_Skel.la
 
 libTAO_RTEvent_Skel_la_CPPFLAGS = \
@@ -3321,7 +3312,10 @@ libTAO_RTEvent_Skel_la_CPPFLAGS = \
   -DTAO_RTEVENT_SKEL_BUILD_DLL
 
 libTAO_RTEvent_Skel_la_SOURCES = \
-  $(RTEvent)
+  RtecDefaultEventDataS.cpp \
+  RtecEventChannelAdminS.cpp \
+  RtecEventCommS.cpp \
+  RtecUDPAdminS.cpp
 
 libTAO_RTEvent_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -3355,7 +3349,18 @@ EXTRA_DIST += \
 
 if BUILD_CORBA_MESSAGING
 
-RTEvent = \
+lib_LTLIBRARIES += libTAO_RTEvent_Serv.la
+
+libTAO_RTEvent_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_RTEVENT_SERV_BUILD_DLL
+
+libTAO_RTEvent_Serv_la_SOURCES = \
   Event/ECG_Adapters.cpp \
   Event/ECG_Address_Server_Base.cpp \
   Event/ECG_CDR_Message_Receiver.cpp \
@@ -3422,20 +3427,6 @@ RTEvent = \
   Event/EC_Trivial_Supplier_Filter.cpp \
   Event/EC_Type_Filter.cpp \
   Event/EC_UDP_Admin.cpp
-
-lib_LTLIBRARIES += libTAO_RTEvent_Serv.la
-
-libTAO_RTEvent_Serv_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_RTEVENT_SERV_BUILD_DLL
-
-libTAO_RTEvent_Serv_la_SOURCES = \
-  $(RTEvent)
 
 libTAO_RTEvent_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
