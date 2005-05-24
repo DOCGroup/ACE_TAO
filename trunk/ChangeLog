@@ -1,3 +1,9 @@
+Mon May 23 23:11:14 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * contrib/utility/*:
+
+          Added the utility library.
+
 Mon May 23 16:38:13 2005  Steve Huston  <shuston@riverace.com>
 
 	* examples/Reactor/Proactor/post_completions.cpp: Made use of the
