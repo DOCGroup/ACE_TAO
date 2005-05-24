@@ -1,3 +1,14 @@
+Tue May 24 11:59:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Time_Utilities.cpp:
+	* orbsvcs/orbsvcs/Time_Utilities.h:
+	* orbsvcs/orbsvcs/Time_Utilities.i:
+
+	  Updated comments to Doxygen format.
+
+	  Added new methods for converting absolute timestamps between
+	  ACE_Time_Value and TimeBase::TimeT.
+
 Tue May 24 10:32:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
