@@ -1,3 +1,9 @@
+Tue May 24 14:29:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
 Tue May 24 14:15:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/RTEvent.mpc:
