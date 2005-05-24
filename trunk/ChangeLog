@@ -1,10 +1,16 @@
+Tue May 24 00:17:09 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/cidlc.mpb:
+
+			    Created a base project for cidlc & ccf project files.
+
 Tue May 24 07:58:09 2005  Olli Savia  <ops@iki.fi>
 
         * ace/SSL/SSL_SOCK_Stream.h:
           Added include "ace/os_include/os_stdio.h" to fix compile
           problem on LynxOS. Thanks to Christine Ballard
-	  <christine.ballard at lmco dot com> for reporting the problem. 
-        
+	  <christine.ballard at lmco dot com> for reporting the problem.
+
 Mon May 23 23:11:14 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * contrib/utility/*:
