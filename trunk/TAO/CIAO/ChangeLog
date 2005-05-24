@@ -1,3 +1,13 @@
+Tue May 24 00:23:26 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * CCF/CCF/CIDL/CIDL.mpc:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+        * CCF/CCF/CompilerElements/CompilerElements.mpc:
+        * CCF/CCF/IDL2/IDL2.mpc:
+        * CCF/CCF/IDL3/IDL3.mpc:
+
+          Changed the mpc files to use the cidlc.mpb.
+
 Sun May 22 21:23:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
 	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp
@@ -98,7 +108,7 @@ Tue May 17 20:49:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIAO/tests/IDL3/ImpliedIDL/All/pass_through.idl:
         * CIAO/tests/IDL3/ImpliedIDL/All/include.idl:
         * CIAO/tests/IDL3/ImpliedIDL/All/README:
-        
+
           New files comprising a test for the tao_idl3_to_idl2
           executable. The test executes tao_idl3_to_idl2 on the
           listed IDL files, then executes the TAO IDL compiler on
