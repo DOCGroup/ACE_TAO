@@ -8,16 +8,16 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
 
-includedir = @includedir@/orbsvcs
+includedir = @includedir@/orbsvcs/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
-TAO_ROOT = $(top_srcdir)
-
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_ROOT = $(top_srcdir)
+
 
 ## Makefile.CosNaming.am
 
@@ -3173,123 +3173,187 @@ endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTEvent.am
 
-if BUILD_CORBA_MESSAGING
-
 BUILT_SOURCES += \
-  RtecDefaultEventDataS_T.inl \
   RtecDefaultEventDataC.inl \
-  RtecDefaultEventDataS.inl \
   RtecDefaultEventDataC.h \
-  RtecDefaultEventDataS.h \
-  RtecDefaultEventDataS_T.h \
   RtecDefaultEventDataC.cpp \
-  RtecDefaultEventDataS.cpp \
   RtecDefaultEventDataS_T.cpp
 
 CLEANFILES += \
   RtecDefaultEventData-stamp \
-  RtecDefaultEventDataS_T.inl \
   RtecDefaultEventDataC.inl \
-  RtecDefaultEventDataS.inl \
   RtecDefaultEventDataC.h \
-  RtecDefaultEventDataS.h \
-  RtecDefaultEventDataS_T.h \
   RtecDefaultEventDataC.cpp \
-  RtecDefaultEventDataS.cpp \
   RtecDefaultEventDataS_T.cpp
 
-RtecDefaultEventDataS_T.inl RtecDefaultEventDataC.inl RtecDefaultEventDataS.inl RtecDefaultEventDataC.h RtecDefaultEventDataS.h RtecDefaultEventDataS_T.h RtecDefaultEventDataC.cpp RtecDefaultEventDataS.cpp RtecDefaultEventDataS_T.cpp: RtecDefaultEventData-stamp
+RtecDefaultEventDataC.inl RtecDefaultEventDataC.h RtecDefaultEventDataC.cpp RtecDefaultEventDataS_T.cpp: RtecDefaultEventData-stamp
 
 RtecDefaultEventData-stamp: $(srcdir)/RtecDefaultEventData.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=orbsvcs/Event/event_export.h $(srcdir)/RtecDefaultEventData.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecDefaultEventData.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  RtecEventChannelAdminS_T.inl \
   RtecEventChannelAdminC.inl \
-  RtecEventChannelAdminS.inl \
   RtecEventChannelAdminC.h \
-  RtecEventChannelAdminS.h \
-  RtecEventChannelAdminS_T.h \
   RtecEventChannelAdminC.cpp \
-  RtecEventChannelAdminS.cpp \
   RtecEventChannelAdminS_T.cpp
 
 CLEANFILES += \
   RtecEventChannelAdmin-stamp \
-  RtecEventChannelAdminS_T.inl \
   RtecEventChannelAdminC.inl \
-  RtecEventChannelAdminS.inl \
   RtecEventChannelAdminC.h \
-  RtecEventChannelAdminS.h \
-  RtecEventChannelAdminS_T.h \
   RtecEventChannelAdminC.cpp \
-  RtecEventChannelAdminS.cpp \
   RtecEventChannelAdminS_T.cpp
 
-RtecEventChannelAdminS_T.inl RtecEventChannelAdminC.inl RtecEventChannelAdminS.inl RtecEventChannelAdminC.h RtecEventChannelAdminS.h RtecEventChannelAdminS_T.h RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminS_T.cpp: RtecEventChannelAdmin-stamp
+RtecEventChannelAdminC.inl RtecEventChannelAdminC.h RtecEventChannelAdminC.cpp RtecEventChannelAdminS_T.cpp: RtecEventChannelAdmin-stamp
 
 RtecEventChannelAdmin-stamp: $(srcdir)/RtecEventChannelAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=orbsvcs/Event/event_export.h $(srcdir)/RtecEventChannelAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventChannelAdmin.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  RtecEventCommS_T.inl \
   RtecEventCommC.inl \
-  RtecEventCommS.inl \
   RtecEventCommC.h \
-  RtecEventCommS.h \
-  RtecEventCommS_T.h \
   RtecEventCommC.cpp \
-  RtecEventCommS.cpp \
   RtecEventCommS_T.cpp
 
 CLEANFILES += \
   RtecEventComm-stamp \
-  RtecEventCommS_T.inl \
   RtecEventCommC.inl \
-  RtecEventCommS.inl \
   RtecEventCommC.h \
-  RtecEventCommS.h \
-  RtecEventCommS_T.h \
   RtecEventCommC.cpp \
-  RtecEventCommS.cpp \
   RtecEventCommS_T.cpp
 
-RtecEventCommS_T.inl RtecEventCommC.inl RtecEventCommS.inl RtecEventCommC.h RtecEventCommS.h RtecEventCommS_T.h RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommS_T.cpp: RtecEventComm-stamp
+RtecEventCommC.inl RtecEventCommC.h RtecEventCommC.cpp RtecEventCommS_T.cpp: RtecEventComm-stamp
 
 RtecEventComm-stamp: $(srcdir)/RtecEventComm.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=orbsvcs/Event/event_export.h $(srcdir)/RtecEventComm.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventComm.idl
 	@touch $@
 
 BUILT_SOURCES += \
-  RtecUDPAdminS_T.inl \
   RtecUDPAdminC.inl \
-  RtecUDPAdminS.inl \
   RtecUDPAdminC.h \
-  RtecUDPAdminS.h \
-  RtecUDPAdminS_T.h \
   RtecUDPAdminC.cpp \
-  RtecUDPAdminS.cpp \
   RtecUDPAdminS_T.cpp
 
 CLEANFILES += \
   RtecUDPAdmin-stamp \
-  RtecUDPAdminS_T.inl \
   RtecUDPAdminC.inl \
-  RtecUDPAdminS.inl \
   RtecUDPAdminC.h \
-  RtecUDPAdminS.h \
-  RtecUDPAdminS_T.h \
   RtecUDPAdminC.cpp \
-  RtecUDPAdminS.cpp \
   RtecUDPAdminS_T.cpp
 
-RtecUDPAdminS_T.inl RtecUDPAdminC.inl RtecUDPAdminS.inl RtecUDPAdminC.h RtecUDPAdminS.h RtecUDPAdminS_T.h RtecUDPAdminC.cpp RtecUDPAdminS.cpp RtecUDPAdminS_T.cpp: RtecUDPAdmin-stamp
+RtecUDPAdminC.inl RtecUDPAdminC.h RtecUDPAdminC.cpp RtecUDPAdminS_T.cpp: RtecUDPAdmin-stamp
 
 RtecUDPAdmin-stamp: $(srcdir)/RtecUDPAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=orbsvcs/Event/event_export.h $(srcdir)/RtecUDPAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecUDPAdmin.idl
 	@touch $@
+
+RTEvent = \
+  Event_Utilities.cpp \
+  RtecDefaultEventDataC.cpp \
+  RtecEventChannelAdminC.cpp \
+  RtecEventCommC.cpp \
+  RtecUDPAdminC.cpp
+
+lib_LTLIBRARIES += libTAO_RTEvent.la
+
+libTAO_RTEvent_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_RTEVENT_BUILD_DLL
+
+libTAO_RTEvent_la_SOURCES = \
+  $(RTEvent)
+
+libTAO_RTEvent_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_RTEvent_la_LIBADD = \
+  libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Event_Utilities.h \
+  Event_Utilities.i \
+  RtecDefaultEventData.idl \
+  RtecDefaultEventDataC.h \
+  RtecDefaultEventDataC.inl \
+  RtecEventChannelAdmin.idl \
+  RtecEventChannelAdminC.h \
+  RtecEventChannelAdminC.inl \
+  RtecEventComm.idl \
+  RtecEventCommC.h \
+  RtecEventCommC.inl \
+  RtecUDPAdmin.idl \
+  RtecUDPAdminC.h \
+  RtecUDPAdminC.inl
+
+EXTRA_DIST += \
+  RTEvent.rc
+
+
+## Makefile.RTEvent_Skel.am
+
+if BUILD_CORBA_MESSAGING
+
+RTEvent = \
+  RtecDefaultEventDataS.cpp \
+  RtecEventChannelAdminS.cpp \
+  RtecEventCommS.cpp \
+  RtecUDPAdminS.cpp
+
+lib_LTLIBRARIES += libTAO_RTEvent_Skel.la
+
+libTAO_RTEvent_Skel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_RTEVENT_SKEL_BUILD_DLL
+
+libTAO_RTEvent_Skel_la_SOURCES = \
+  $(RTEvent)
+
+libTAO_RTEvent_Skel_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_RTEvent_Skel_la_LIBADD = \
+  libTAO_RTEvent.la \
+  libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  RtecDefaultEventDataS.h \
+  RtecDefaultEventDataS.inl \
+  RtecEventChannelAdminS.h \
+  RtecEventChannelAdminS.inl \
+  RtecEventCommS.h \
+  RtecEventCommS.inl \
+  RtecUDPAdminS.h \
+  RtecUDPAdminS.inl
+
+endif BUILD_CORBA_MESSAGING
+
+EXTRA_DIST += \
+  RTEvent_Skel.rc
+
+
+## Makefile.RTEvent_Serv.am
+
+if BUILD_CORBA_MESSAGING
 
 RTEvent = \
   Event/ECG_Adapters.cpp \
@@ -3357,39 +3421,32 @@ RTEvent = \
   Event/EC_Timeout_Generator.cpp \
   Event/EC_Trivial_Supplier_Filter.cpp \
   Event/EC_Type_Filter.cpp \
-  Event/EC_UDP_Admin.cpp \
-  Event_Utilities.cpp \
-  RtecDefaultEventDataC.cpp \
-  RtecDefaultEventDataS.cpp \
-  RtecEventChannelAdminC.cpp \
-  RtecEventChannelAdminS.cpp \
-  RtecEventCommC.cpp \
-  RtecEventCommS.cpp \
-  RtecUDPAdminC.cpp \
-  RtecUDPAdminS.cpp
+  Event/EC_UDP_Admin.cpp
 
-lib_LTLIBRARIES += libTAO_RTEvent.la
+lib_LTLIBRARIES += libTAO_RTEvent_Serv.la
 
-libTAO_RTEvent_la_CPPFLAGS = \
+libTAO_RTEvent_Serv_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_RTEVENT_BUILD_DLL
+  -DTAO_RTEVENT_SERV_BUILD_DLL
 
-libTAO_RTEvent_la_SOURCES = \
+libTAO_RTEvent_Serv_la_SOURCES = \
   $(RTEvent)
 
-libTAO_RTEvent_la_LDFLAGS = \
+libTAO_RTEvent_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
-libTAO_RTEvent_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+libTAO_RTEvent_Serv_la_LIBADD = \
+  libTAO_RTEvent_Skel.la \
+  libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3499,46 +3556,12 @@ nobase_include_HEADERS += \
   Event/EC_Timeout_Generator.i \
   Event/EC_Trivial_Supplier_Filter.h \
   Event/EC_Type_Filter.h \
-  Event/EC_UDP_Admin.h \
-  Event_Utilities.h \
-  Event_Utilities.i \
-  RtecDefaultEventData.idl \
-  RtecDefaultEventDataC.h \
-  RtecDefaultEventDataC.inl \
-  RtecDefaultEventDataS.h \
-  RtecDefaultEventDataS_T.cpp \
-  RtecDefaultEventDataS_T.h \
-  RtecDefaultEventDataS_T.inl \
-  RtecDefaultEventDataS_T.inl \
-  RtecEventChannelAdmin.idl \
-  RtecEventChannelAdminC.h \
-  RtecEventChannelAdminC.inl \
-  RtecEventChannelAdminS.h \
-  RtecEventChannelAdminS_T.cpp \
-  RtecEventChannelAdminS_T.h \
-  RtecEventChannelAdminS_T.inl \
-  RtecEventChannelAdminS_T.inl \
-  RtecEventComm.idl \
-  RtecEventCommC.h \
-  RtecEventCommC.inl \
-  RtecEventCommS.h \
-  RtecEventCommS_T.cpp \
-  RtecEventCommS_T.h \
-  RtecEventCommS_T.inl \
-  RtecEventCommS_T.inl \
-  RtecUDPAdmin.idl \
-  RtecUDPAdminC.h \
-  RtecUDPAdminC.inl \
-  RtecUDPAdminS.h \
-  RtecUDPAdminS_T.cpp \
-  RtecUDPAdminS_T.h \
-  RtecUDPAdminS_T.inl \
-  RtecUDPAdminS_T.inl
+  Event/EC_UDP_Admin.h
 
 endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
-  RTEvent.rc
+  RTEvent_Serv.rc
 
 
 ## Makefile.FtRtEvent.am
@@ -3694,6 +3717,8 @@ libTAO_FtRtEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FtRtEvent_la_LIBADD = \
+  libTAO_RTEvent_Serv.la \
+  libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   libTAO_FTORB_Utils.la \
@@ -3813,6 +3838,8 @@ libTAO_FTRT_EventChannel_la_LDFLAGS = \
 libTAO_FTRT_EventChannel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   libTAO_FtRtEvent.la \
+  libTAO_RTEvent_Serv.la \
+  libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   libTAO_FTORB_Utils.la \
@@ -4522,6 +4549,8 @@ libTAO_RTCORBAEvent_la_LDFLAGS = \
 libTAO_RTCORBAEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
+  libTAO_RTEvent_Serv.la \
+  libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -4721,77 +4750,6 @@ EXTRA_DIST += \
   RTSched.rc
 
 
-## Makefile.RTOLDEvent.am
-
-if BUILD_CORBA_MESSAGING
-
-RTOLDEvent = \
-  Event/BCU.cpp \
-  Event/Dispatching_Modules.cpp \
-  Event/Event_Channel.cpp \
-  Event/Event_Manip.cpp \
-  Event/GPlot_File.cpp \
-  Event/Local_ESTypes.cpp \
-  Event/Memory_Pools.cpp \
-  Event/Module_Factory.cpp \
-  Event/RT_Task.cpp \
-  Event/ReactorTask.cpp \
-  Event/Timer_Module.cpp
-
-lib_LTLIBRARIES += libTAO_RTOLDEvent.la
-
-libTAO_RTOLDEvent_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_RTOLDEVENT_BUILD_DLL
-
-libTAO_RTOLDEvent_la_SOURCES = \
-  $(RTOLDEvent)
-
-libTAO_RTOLDEvent_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_RTOLDEvent_la_LIBADD = \
-  libTAO_RTSched.la \
-  libTAO_CosNaming.la \
-  libTAO_RTEvent.la \
-  libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  Event/BCU.h \
-  Event/Dispatching_Modules.h \
-  Event/Dispatching_Modules.i \
-  Event/Event_Channel.h \
-  Event/Event_Channel.i \
-  Event/Event_Manip.h \
-  Event/Event_Manip.i \
-  Event/GPlot_File.h \
-  Event/GPlot_File.i \
-  Event/Local_ESTypes.h \
-  Event/Memory_Pools.h \
-  Event/Memory_Pools.i \
-  Event/Module_Factory.h \
-  Event/RT_Task.h \
-  Event/RT_Task.i \
-  Event/ReactorTask.h \
-  Event/Timer_Module.h \
-  Event/Timer_Module.i
-
-endif BUILD_CORBA_MESSAGING
-
-EXTRA_DIST += \
-  RTOldEvent.rc
-
-
 ## Makefile.RTEventLogAdmin.am
 
 if BUILD_CORBA_MESSAGING
@@ -4856,8 +4814,9 @@ libTAO_RTEventLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   libTAO_DsLogAdmin_Skel.la \
   libTAO_DsLogAdmin.la \
-  libTAO_RTOLDEvent.la \
   libTAO_RTSched.la \
+  libTAO_RTEvent_Serv.la \
+  libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -4916,6 +4875,8 @@ libTAO_RTKokyuEvent_la_LIBADD = \
   $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
   libTAO_RTSched.la \
   libTAO_CosNaming.la \
+  libTAO_RTEvent_Serv.la \
+  libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -4969,6 +4930,8 @@ libTAO_RTSchedEvent_la_LDFLAGS = \
 libTAO_RTSchedEvent_la_LIBADD = \
   libTAO_RTSched.la \
   libTAO_CosNaming.la \
+  libTAO_RTEvent_Serv.la \
+  libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
