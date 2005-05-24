@@ -41,6 +41,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "imr_client_export.h"
+#include "ServerObjectC.h"
+
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
