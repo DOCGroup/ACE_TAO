@@ -358,7 +358,7 @@
 #define ACE_LACKS_GETIPNODEBYNAME
 
 // Enables use of POSIX termios struct
-#define ACE_USES_NEW_TERMIOS
+#define ACE_USES_NEW_TERMIOS_STRUCT
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in
