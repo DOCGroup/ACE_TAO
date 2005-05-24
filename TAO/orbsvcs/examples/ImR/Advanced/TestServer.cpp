@@ -331,43 +331,34 @@ void TestServer::pause(int milliseconds)
   }
 }
 
-//  TestServer::pause
-//  Pause processing by either sleep or timed run-loop
-//
 void TestServer::run()
 {
-  // Startup
   pause(startupPause_);
 
-  // Resolve initial references
+  // FUZZ: disable check_for_missing_rir_env
   CORBA::Object_var obj = orb_->resolve_initial_references("RootPOA");
   root_ = PortableServer::POA::_narrow(obj.in());
   mgr_ = root_->the_POAManager();
 
-  // Register w/ the manager
   if (registerWithManager() == false)
     return;
 
   cout << "* Server (" << serverID_ << "." << serverInstanceID_ << ") started." << endl;
 
-  // Create IOR Table
   if (useIORTable_ == true)
   {
+    // FUZZ: disable check_for_missing_rir_env
     CORBA::Object_var obj = orb_->resolve_initial_references("IORTable");
     iorTable_ = IORTable::Table::_narrow(obj.in());
   }
 
-  // Build Servant
   servant_.reset(new Messenger_i(orb_.in(), serverInstanceID_));
 
-  // Buile the POAs and Objs
   buildObjects();
 
-  // Activate
   pause(activatePause_);
   mgr_->activate();
 
-  // Run with a timeout for activity
   if (useItLoseItSecs_ > 0)
   {
     pause(runPause_);
@@ -379,7 +370,6 @@ void TestServer::run()
       && servant_->acknowledgeHit());
   }
 
-  // Report shutdown
   if (orb_->orb_core()->has_shutdown() != 0)
   {
     cout << "* Server (" << serverID_ << "."
