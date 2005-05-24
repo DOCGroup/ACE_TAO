@@ -1,3 +1,10 @@
+Tue May 24 07:58:09 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/SSL/SSL_SOCK_Stream.h:
+          Added include "ace/os_include/os_stdio.h" to fix compile
+          problem on LynxOS. Thanks to Christine Ballard
+	  <christine.ballard at lmco dot com> for reporting the problem. 
+        
 Mon May 23 23:11:14 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * contrib/utility/*:
@@ -6,19 +13,19 @@ Mon May 23 23:11:14 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Mon May 23 16:38:13 2005  Steve Huston  <shuston@riverace.com>
 
-	* examples/Reactor/Proactor/post_completions.cpp: Made use of the
-	  ACE_POSIX_SIG_Proactor-based test dependent on
-	  ACE_HAS_POSIX_REALTIME_SIGNALS, not ACE_POSIX_SIG_PROACTOR.
-	  ACE_POSIX_SIG_PROACTOR indicates a preference for that proactor
-	  implementation when one is not specified; it's not a capability
-	  indicator. The presence of the ACE_POSIX_SIG_Proactor implementation
-	  is based on the ACE_HAS_POSIX_REALTIME_SIGNALS setting, so that's
-	  what's used to decide whether to explicitly use
-	  ACE_POSIX_SIG_Proactor. This fixes a build error on Mac OS X Tiger
-	  with autoconfigure, as well as any other platform with AIO
-	  support that doesn't declare a Proactor implementation preference.
-	  Thanks to J.T. Conklin for raising this issue and working on testing
-	  fixes.
+        * examples/Reactor/Proactor/post_completions.cpp: Made use of the
+          ACE_POSIX_SIG_Proactor-based test dependent on
+          ACE_HAS_POSIX_REALTIME_SIGNALS, not ACE_POSIX_SIG_PROACTOR.
+          ACE_POSIX_SIG_PROACTOR indicates a preference for that proactor
+          implementation when one is not specified; it's not a capability
+          indicator. The presence of the ACE_POSIX_SIG_Proactor implementation
+          is based on the ACE_HAS_POSIX_REALTIME_SIGNALS setting, so that's
+          what's used to decide whether to explicitly use
+          ACE_POSIX_SIG_Proactor. This fixes a build error on Mac OS X Tiger
+          with autoconfigure, as well as any other platform with AIO
+          support that doesn't declare a Proactor implementation preference.
+          Thanks to J.T. Conklin for raising this issue and working on testing
+          fixes.
 
 Mon May 23 14:52:19 2005  Justin Michel  <michel_j@ociweb.com>
 
@@ -33,7 +40,7 @@ Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
 
           Added new ACEXML_escape_string() functions to allow replacement of
           illegal characters, (', ", &, <, >, etc.) with the escaped versions.
- 	  (&quot;, &lt;, etc.)
+          (&quot;, &lt;, etc.)
 
         * ACEXML/tests/util/test.cpp:
         * ACEXML/tests/util/util.mpc:
@@ -45,8 +52,8 @@ Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/String_Base.inl:
         * ace/String_Base.cpp:
 
-	  Fixed some documentation bugs, and added some new features to
-	  this class.
+          Fixed some documentation bugs, and added some new features to
+          this class.
           New efficient overloads for string concatenation.
           Fixed clear(1) to work as documented.
           Used a more optimal string growth when concatenating strings.
