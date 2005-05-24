@@ -153,13 +153,13 @@ run_main (int argc, ACE_TCHAR *argv[])
 #     endif
 
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      static const ACE_TCHAR* format = ACE_TEXT ("%ls -c -n %ls%s");
+      static const ACE_TCHAR* format = ACE_TEXT ("%ls -c -n %ls%ls");
 #else
       static const ACE_TCHAR* format = ACE_TEXT ("%s -c -n %s%s");
 #endif /* !ACE_WIN32 && ACE_USES_WCHAR */
       ACE_Process_Options options;
       options.command_line (format, argv[0], mutex_name,
-                            release_mutex == 0 ? " -d" : "");
+                            release_mutex == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 
       // Spawn <n_processes> child processes that will contend for the
       // lock.
