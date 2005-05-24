@@ -184,7 +184,7 @@
 #define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS 2
 
 // Enables use of POSIX termios struct
-#define ACE_USES_NEW_TERMIOS
+#define ACE_USES_NEW_TERMIOS_STRUCT
 
 // IRIX 6.5 supports AIO
 #define ACE_HAS_AIO_CALLS
