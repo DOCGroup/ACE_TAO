@@ -16,34 +16,28 @@ project(RTEvent) : orbsvcslib, core, svc_utils {
 
   // This could be simplified if the cpp files for RTEvent were
   // in their own directory.
-  Source_Files(ORBSVCS_COMPONENTS) {
-    RTEvent {
-      Event_Utilities.cpp
-      RtecDefaultEventDataC.cpp
-      RtecEventCommC.cpp
-      RtecEventChannelAdminC.cpp
-      RtecUDPAdminC.cpp
-    }
+  Source_Files {
+    Event_Utilities.cpp
+    RtecDefaultEventDataC.cpp
+    RtecEventCommC.cpp
+    RtecEventChannelAdminC.cpp
+    RtecUDPAdminC.cpp
   }
 
-  Header_Files (ORBSVCS_COMPONENTS) {
-    RTEvent {
-      Event_Utilities.h
-      RtecDefaultEventDataC.h
-      RtecEventCommC.h
-      RtecEventChannelAdminC.h
-      RtecUDPAdminC.h
-    }
+  Header_Files {
+    Event_Utilities.h
+    RtecDefaultEventDataC.h
+    RtecEventCommC.h
+    RtecEventChannelAdminC.h
+    RtecUDPAdminC.h
   }
 
-  Inline_Files (ORBSVCS_COMPONENTS) {
-    RTEvent {
-      Event_Utilities.i
-      RtecDefaultEventDataC.inl
-      RtecEventCommC.inl
-      RtecEventChannelAdminC.inl
-      RtecUDPAdminC.inl
-    }
+  Inline_Files {
+    Event_Utilities.i
+    RtecDefaultEventDataC.inl
+    RtecEventCommC.inl
+    RtecEventChannelAdminC.inl
+    RtecUDPAdminC.inl
   }
 
   Resource_Files{
