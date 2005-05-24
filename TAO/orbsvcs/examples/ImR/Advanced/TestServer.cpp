@@ -6,6 +6,7 @@
 #include "tao/Profile.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
@@ -497,9 +498,9 @@ void TestServer::buildObjects()
       else  // use IOR table
       {
         // Write out corbaloc
-        TAO_POA* tmp_poa = sub_poa->_tao_poa_downcast();
+        TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(sub_poa.in());
         // Make entry into ior table using the non IMRified object ref.
-        CORBA::Object_var obj = tmp_poa->id_to_reference(oid.in(), false);
+        CORBA::Object_var obj = tmp_poa->id_to_reference_i(oid.in(), false);
         CORBA::String_var ior = orb_->object_to_string(obj.in());
         string key = (poaName + "/" + objName);
         iorTable_->bind(key.c_str(), ior.in());
