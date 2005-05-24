@@ -1,17 +1,7 @@
 //$Id$
 
-project(CodeGenerationKit) {
-  requires += cidl exceptions
+project(CodeGenerationKit): cidlc {
   sharedname =
   staticname = CodeGenerationKit
-  includes += $(CIAO_ROOT)/CCF
   libout = ..
-  
-  specific(vc71) {
-    libs += boost_regex_debug boost_filesystem_debug
-  }
-
-  verbatim(gnuace, top) {
-    include ../../Config.rules
-  }
 }

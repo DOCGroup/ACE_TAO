@@ -1,11 +1,10 @@
 //$Id$
 
-project(IDL3) {
-  requires += cidl exceptions
+project(IDL3): cidlc {
   sharedname =
   staticname = IDL3
-  includes += $(CIAO_ROOT)/CCF
   libout = ..
+
   Source_Files {
         .
 	./SemanticGraph
@@ -13,13 +12,4 @@ project(IDL3) {
         ./SemanticAction/Impl
 
   }
-
-  specific(vc71) {
-    libs += boost_regex_debug boost_filesystem_debug
-  }
-
-  verbatim(gnuace, top) {
-    include ../../Config.rules
-  }
-
 }
