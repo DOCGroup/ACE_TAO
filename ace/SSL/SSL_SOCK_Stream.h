@@ -24,6 +24,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// This must be included before any <openssl> include on LynxOS
+#include "ace/os_include/os_stdio.h"
+
 #include <openssl/err.h>
 
 #include "SSL_SOCK.h"
