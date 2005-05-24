@@ -8,31 +8,25 @@ project(RTEvent_Skel) : orbsvcslib, core, rtevent, portableserver {
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    RTEvent {
-      RtecDefaultEventDataS.cpp
-      RtecEventCommS.cpp
-      RtecEventChannelAdminS.cpp
-      RtecUDPAdminS.cpp
-    }
+  Source_Files {
+    RtecDefaultEventDataS.cpp
+    RtecEventCommS.cpp
+    RtecEventChannelAdminS.cpp
+    RtecUDPAdminS.cpp
   }
 
-  Header_Files(ORBSVCS_COMPONENTS) {
-    RTEvent {
-      RtecDefaultEventDataS.h
-      RtecEventCommS.h
-      RtecEventChannelAdminS.h
-      RtecUDPAdminS.h
-    }
+  Header_Files {
+    RtecDefaultEventDataS.h
+    RtecEventCommS.h
+    RtecEventChannelAdminS.h
+    RtecUDPAdminS.h
   }
 
-  Inline_Files(ORBSVCS_COMPONENTS) {
-    RTEvent {
-      RtecDefaultEventDataS.inl
-      RtecEventCommS.inl
-      RtecEventChannelAdminS.inl
-      RtecUDPAdminS.inl
-    }
+  Inline_Files {
+    RtecDefaultEventDataS.inl
+    RtecEventCommS.inl
+    RtecEventChannelAdminS.inl
+    RtecUDPAdminS.inl
   }
 
   Template_Files {

@@ -1,3 +1,12 @@
+Tue May 24 14:15:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/RTEvent.mpc:
+	* orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+	* orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+
+	  Removed RTEvent MPC group.  This causes problems when project
+	  Makefile.am's are aggregated.
+
 Tue May 24 11:59:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Time_Utilities.cpp:
