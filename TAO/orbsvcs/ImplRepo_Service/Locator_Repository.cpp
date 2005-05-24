@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
