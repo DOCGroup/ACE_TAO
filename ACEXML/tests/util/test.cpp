@@ -24,7 +24,8 @@ static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
 {
   // Test 1 - Escape the strings using a new temporary string each iteration.
   ACE_Time_Value start = ACE_OS::gettimeofday();
-  for (int i = 0; i < iterations; ++i)
+  int i = 0;
+  for (i = 0; i < iterations; ++i)
   {
     ACEXML_String tmp = ACEXML_escape_string(test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
@@ -39,7 +40,7 @@ static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
   // be any faster than Test 1 as long as the compiler has return value optimization.
   ACEXML_String tmp;
   start = ACE_OS::gettimeofday();
-  for (int i = 0; i < iterations; ++i)
+  for (i = 0; i < iterations; ++i)
   {
     tmp = ACEXML_escape_string(test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
@@ -54,7 +55,7 @@ static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
   // the alternate form of ACEXML_escape_string() so that our temporary buffer is reused.
   tmp.clear(1);
   start = ACE_OS::gettimeofday();
-  for (int i = 0; i < iterations; ++i)
+  for (i = 0; i < iterations; ++i)
   {
     ACEXML_escape_string(test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
@@ -67,7 +68,7 @@ static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
 
   // Test 4 - Same as Test 3, except that the tmp buffer shouldn't have to resize.
   start = ACE_OS::gettimeofday();
-  for (int i = 0; i < iterations; ++i)
+  for (i = 0; i < iterations; ++i)
   {
     ACEXML_escape_string(test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
