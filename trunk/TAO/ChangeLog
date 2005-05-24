@@ -1,3 +1,17 @@
+Tue May 24 09:14:57 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/examples/ImR/Advanced/TestServer.h:
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+
+          This example was simply copied from 1.4a, and I forgot to make
+        the adjustments required by the POA refactoring.
+
+        * tao/ImR_Client/ImplRepoC.h:
+
+          The ImplRepo.pidl had #include ServerObject.pidl, but didn't include
+        ServerObjectC.h. For now, I manually added the include, but this isn't
+        a final solution.
+
 Mon May 23 14:50:27 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
