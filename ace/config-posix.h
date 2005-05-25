@@ -68,7 +68,7 @@
 # endif /* ACE_HAS_POSIX_MESSAGE_PASSING */
 #endif /* _POSIX_MESSAGE_PASSING */
 
-#if defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
+#if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
 #  define ACE_HAS_SNPRINTF
 #endif /* _XOPEN_SOURCE */
 

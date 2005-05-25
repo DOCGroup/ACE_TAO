@@ -1024,7 +1024,7 @@ ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 ACE_INLINE int
 ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
-# if (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)) || \
+# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
      (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
 

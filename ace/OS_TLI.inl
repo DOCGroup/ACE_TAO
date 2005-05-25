@@ -23,7 +23,7 @@ ACE_INLINE char *
 t_alloc (ACE_HANDLE handle, int struct_type, int fields)
 {
 #if defined (ACE_HAS_TLI)
-#  if (_XOPEN_SOURCE - 0 >= 500)
+#  if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
   // XPG5 changes t_alloc() return from char* to void*, so ACE_OSCALL_RETURN
   // doesn't compile correctly.
   char *result;

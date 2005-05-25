@@ -312,9 +312,9 @@
 
 #define ACE_MALLOC_ALIGN 8
 
-#if (_XOPEN_SOURCE >= 500) && !defined(_UNIX95)
+#if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) && !defined(_UNIX95)
 # define ACE_HAS_3_PARAM_WCSTOK
-#endif /* _XOPEN_SOURCE == 500 && !_UNIX95 */
+#endif /* (_XOPEN_SOURCE -0) >= 500 && !_UNIX95 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
