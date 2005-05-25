@@ -112,7 +112,7 @@ CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &
 }
 
 CORBA::TypeCode_ptr
-CORBA::UnknownUserException::_type (void) const
+CORBA::UnknownUserException::_tao_type (void) const
 {
   return CORBA::_tc_UnknownUserException;
 }
