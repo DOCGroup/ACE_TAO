@@ -48,7 +48,7 @@ class TAO_NotifyLogFactory_i;
  * EventChannel.
  */
 class TAO_Notify_LogConsumer :
-  public virtual POA_CosNotifyComm::StructuredPushConsumer,
+  public virtual POA_CosNotifyComm::PushConsumer,
   public PortableServer::RefCountServantBase
 {
 public:
@@ -78,9 +78,9 @@ protected:
       CosNotifyComm::InvalidEventType
     ));
 
-  // = StructuredPushSupplier methods
-  virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification
+  // = PushSupplier methods
+  virtual void push (
+      const CORBA::Any & event
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -88,7 +88,7 @@ protected:
       CosEventComm::Disconnected
      ));
 
-  virtual void disconnect_structured_push_consumer (
+  virtual void disconnect_push_consumer (
       ACE_ENV_SINGLE_ARG_DECL
       )
     ACE_THROW_SPEC ((
@@ -96,7 +96,7 @@ protected:
     ));
 
   /// ProxyPushSupplier used to connect to NotifyLog.
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
+  CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
 
   /// The ID of the proxySupplier.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
