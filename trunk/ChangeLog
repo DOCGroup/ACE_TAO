@@ -1,3 +1,20 @@
+Wed May 25 15:51:03 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_TLI.inl:
+        * ace/config-aix-4.x.h:
+        * ace/config-posix.h:
+          These files were using improper syntax to compare the value of
+          _XOPEN_SOURCE against a constant that caused compilation errors on
+          HP-UX 11.23 with HP aC++/ANSI C B3910B A.06.00.  For example:
+          #if defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
+          was changed to:
+          #if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
+
+          Thanks to Paul Koch <paul.koch@mci.com> for reporting this problem
+          and providing the solution.
+
 Wed May 25 20:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
@@ -6,9 +23,9 @@ Wed May 25 20:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 24 20:09:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/time.mpb:
+        * bin/MakeProjectCreator/config/time.mpb:
 
-	  Inherit from svc_utils.mpb.
+          Inherit from svc_utils.mpb.
 
 Tue May 24 20:46:28 2005  Olli Savia  <ops@iki.fi>
 
