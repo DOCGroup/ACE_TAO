@@ -20,3 +20,13 @@ $ACE_ROOT/Kokyu/Kokyu.dsw and build it.
 
 An mpc file has also been provided - $ACE_ROOT/Kokyu/Kokyu.mpc from
 which IDE specific build files can be generated.
+
+Parts of Kokyu have been instrumented with DSUI. To enable this instrumentation,
+first, you must have DSUI installed on your machine and the DATASTREAM_ROOT 
+environment variable set. Next, you must modify Kokyu's mpc file so that the 
+Kokyu project inherits from the dsui project, and the 'wrappers' lib must be 
+added to Kokyu's libs (this can't be done in the dsui project because of 
+ordering constraints) and $(DATASTREAM_ROOT)/include to the includes. Finally, 
+you must add the kokyu_dsui_vars.cpp file to the Kokyu project's source file 
+list and define the ACE_HAS_DSUI macro in Kokyu's dynamic flags. This should 
+enable Kokyu's DSUI instrumentation.
