@@ -8,6 +8,33 @@ Tue May 24 18:39:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	  Added XML_Util.h to Header_Files section.
 
+Tue May 24 09:18:34 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tests/util/test.cpp:
+
+          Fixed for loop scoping problem for non-standard compilers.
+
+Mon May 23 14:52:19 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tests/util/util.mpc:
+
+          Add missing $ Id tag.
+
+Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * common/XML_Util.h:
+        * common/XML_Util.cpp:
+
+          Added new ACEXML_escape_string() functions to allow replacement of
+          illegal characters, (', ", &, <, >, etc.) with the escaped versions.
+          (&quot;, &lt;, etc.)
+
+        * tests/util/test.cpp:
+        * tests/util/util.mpc:
+
+          This is a performance test used while making the above functions, and
+          testing performance with ACE_String_Base.
+
 Fri Apr 22 21:34:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* parser/parser/Parser.cpp (parse_entity_decl):

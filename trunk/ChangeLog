@@ -2,14 +2,8 @@ Tue May 24 20:46:28 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-irix6.x-common.h:
         * ace/config-linux-common.h:
-          Changed incorrect define ACE_USES_NEW_TERMIOS to 
+          Changed incorrect define ACE_USES_NEW_TERMIOS to
           ACE_USES_NEW_TERMIOS_STRUCT.
-
-Tue May 24 09:18:34 2005  Justin Michel  <michel_j@ociweb.com>
-
-        * ACEXML/tests/util/test.cpp:
-
-          Fixed for loop scoping problem for non-standard compilers.
 
 Tue May 24 09:31:42 2005  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -67,19 +61,6 @@ Mon May 23 14:52:19 2005  Justin Michel  <michel_j@ociweb.com>
           Add missing $ Id tag.
 
 Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
-
-        * ACEXML/common/XML_Util.h:
-        * ACEXML/common/XML_Util.cpp:
-
-          Added new ACEXML_escape_string() functions to allow replacement of
-          illegal characters, (', ", &, <, >, etc.) with the escaped versions.
-          (&quot;, &lt;, etc.)
-
-        * ACEXML/tests/util/test.cpp:
-        * ACEXML/tests/util/util.mpc:
-
-          This is a performance test used while making the above functions, and
-          testing performance with ACE_String_Base.
 
         * ace/String_Base.h:
         * ace/String_Base.inl:
