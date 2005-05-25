@@ -1,6 +1,4 @@
 //$Id$
-
-//Distributor_exec.cpp,v 1.1
 /*
  * @file Distributor_exec.cpp
  *
