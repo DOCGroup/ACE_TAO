@@ -36,7 +36,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XMLSchema/Types.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "ccd.hpp"
 
@@ -179,6 +179,226 @@ namespace CIAO
       private:
       char regulator__;
     };
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/Traversal.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct Config_Handlers_Export PackagedComponentImplementation : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PackagedComponentImplementation >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        referencedImplementation (Type&);
+
+        virtual void
+        referencedImplementation (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct Config_Handlers_Export ComponentPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentPackageDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        label_none (Type&);
+
+        virtual void
+        label_none (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        UUID_none (Type&);
+
+        virtual void
+        UUID_none (Type const&);
+
+        virtual void
+        realizes (Type&);
+
+        virtual void
+        realizes (Type const&);
+
+        virtual void
+        realizes_none (Type&);
+
+        virtual void
+        realizes_none (Type const&);
+
+        virtual void
+        configProperty (Type&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        configProperty_none (Type&);
+
+        virtual void
+        configProperty_none (Type const&);
+
+        virtual void
+        implementation (Type&);
+
+        virtual void
+        implementation (Type const&);
+
+        virtual void
+        implementation_none (Type&);
+
+        virtual void
+        implementation_none (Type const&);
+
+        virtual void
+        infoProperty (Type&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        infoProperty_none (Type&);
+
+        virtual void
+        infoProperty_none (Type const&);
+
+        virtual void
+        contentLocation (Type&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        virtual void
+        contentLocation_none (Type&);
+
+        virtual void
+        contentLocation_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include <XMLSchema/Writer.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct Config_Handlers_Export PackagedComponentImplementation : Traversal::PackagedComponentImplementation, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::PackagedComponentImplementation Type;
+        PackagedComponentImplementation (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        referencedImplementation (Type const&);
+
+        protected:
+        PackagedComponentImplementation ();
+      };
+
+      struct Config_Handlers_Export ComponentPackageDescription : Traversal::ComponentPackageDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::ComponentPackageDescription Type;
+        ComponentPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        realizes (Type const&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        implementation (Type const&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        protected:
+        ComponentPackageDescription ();
+      };
+    }
   }
 }
 

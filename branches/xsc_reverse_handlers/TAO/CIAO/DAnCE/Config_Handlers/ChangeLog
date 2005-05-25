@@ -1,3 +1,38 @@
+Wed May 25 15:27:22 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Basic_Deployment_Data.cpp
+	* Basic_Deployment_Data.hpp
+	* Basic_Deployment_Data.ipp
+	* Deployment.cpp
+	* Deployment.hpp
+	* Deployment.ipp
+	* ccd.cpp
+	* ccd.hpp
+	* ccd.ipp
+	* cdd.cpp
+	* cdd.hpp
+	* cdd.ipp
+	* cdp.cpp
+	* cdp.hpp
+	* cdp.ipp
+	* cid.cpp
+	* cid.hpp
+	* cid.ipp
+	* cpd.cpp
+	* cpd.hpp
+	* cpd.ipp
+	* iad.cpp
+	* iad.hpp
+	* iad.ipp
+	* pcd.cpp
+	* pcd.hpp
+	* pcd.ipp
+	* toplevel.cpp
+	* toplevel.hpp
+	* toplevel.ipp
+
+	Regenerated to support writer types.
+	
 Wed May 25 10:52:43 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* DP_Handler.cpp

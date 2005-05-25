@@ -35,7 +35,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XMLSchema/Types.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "pcd.hpp"
 
@@ -74,6 +74,102 @@ namespace CIAO
       private:
       char regulator__;
     };
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/Traversal.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct Config_Handlers_Export TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TopLevelPackageDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        package (Type&);
+
+        virtual void
+        package (Type const&);
+
+        virtual void
+        package_pre (Type&);
+
+        virtual void
+        package_pre (Type const&);
+
+        virtual void
+        package_next (Type&);
+
+        virtual void
+        package_next (Type const&);
+
+        virtual void
+        package_post (Type&);
+
+        virtual void
+        package_post (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include <XMLSchema/Writer.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct Config_Handlers_Export TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
+        TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        package_pre (Type const&);
+
+        virtual void
+        package_next (Type const&);
+
+        virtual void
+        package_post (Type const&);
+
+        protected:
+        TopLevelPackageDescription ();
+      };
+    }
   }
 }
 
