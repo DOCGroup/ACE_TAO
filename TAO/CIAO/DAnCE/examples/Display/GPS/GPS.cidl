@@ -1,0 +1,13 @@
+// $Id$  -*- IDL -*-
+
+#include "GPS.idl"
+
+composition session GPS_Impl
+{
+  home executor GPSHome_exec
+  {
+    implements HUDisplay::GPSHome;
+    manages GPS_exec;
+  };
+};
+
