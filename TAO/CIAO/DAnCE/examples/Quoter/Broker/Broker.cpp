@@ -2,7 +2,7 @@
 /*
  * @file broker.h
  *
- * @author Ming Xiong <xiongm@isis.vanderbilt.edu>
+ * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 
 #include "BrokerC.h"

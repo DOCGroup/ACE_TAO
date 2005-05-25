@@ -2,7 +2,7 @@
 /*
  * @file Distributor_exec.cpp
  *
- * @author Ming Xiong <xiongm@isis.vanderbilt.edu>
+ * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 
 #include "Distributor_exec.h"
