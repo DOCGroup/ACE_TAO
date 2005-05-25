@@ -1,3 +1,52 @@
+Tue May 24 19:57:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Event_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile.am:
+	* orbsvcs/tests/EC_Mcast/Makefile.am:
+	* orbsvcs/tests/EC_Multiple/Makefile.am:
+	* orbsvcs/tests/EC_Throughput/Makefile.am:
+	* orbsvcs/tests/Event/Basic/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+	* orbsvcs/tests/Event/Performance/Makefile.am:
+	* orbsvcs/tests/Event/lib/Makefile.am:
+	* orbsvcs/tests/FtRtEvent/Makefile.am:
+
+	  Regenerate for removal of RTOLDEvent and split of RTEvent
+	  libraries.
+
+	* orbsvcs/Time_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerate for change below.
+
+	* orbsvcs/orbsvcs/CosTime.mpc:
+
+	  Inherit from svc_utils.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+
+	  Use new ORBSVCS_Time::Time_Value_to_TimeT() method from the
+	  Svc_Utils library to convert timestamp to a TimeBase::TimeT.
+
+	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
+
+	  The specification requires that a structured or typed event
+	  should be stored as an Any as specified by the Notification
+	  Service, so connect to the channel as an Any consumer.
+
 Tue May 24 14:29:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:

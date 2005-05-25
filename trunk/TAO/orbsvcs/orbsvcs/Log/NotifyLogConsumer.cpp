@@ -21,26 +21,26 @@ void
 TAO_Notify_LogConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL)
 {
   // Activate the consumer with the default_POA_
-  CosNotifyComm::StructuredPushConsumer_var objref =
+  CosNotifyComm::PushConsumer_var objref =
     this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
-    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_ ACE_ENV_ARG_PARAMETER);
+    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
   // narrow
   this->proxy_supplier_ =
-    CosNotifyChannelAdmin::StructuredProxyPushSupplier::
+    CosNotifyChannelAdmin::ProxyPushSupplier::
     _narrow (proxysupplier.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
-  proxy_supplier_->connect_structured_push_consumer (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+  proxy_supplier_->connect_any_push_consumer (objref.in ()
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
@@ -49,7 +49,7 @@ void
 TAO_Notify_LogConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->proxy_supplier_->
-    disconnect_structured_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
+    disconnect_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -67,34 +67,26 @@ TAO_Notify_LogConsumer::offer_change
 }
 
 void
-TAO_Notify_LogConsumer::push_structured_event
-   (const CosNotification::StructuredEvent & notification
+TAO_Notify_LogConsumer::push
+   (const CORBA::Any& event
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
                    ))
 {
-  CORBA::Long val;
-
-  notification.remainder_of_body >>= val;
-
-  CORBA::Any any;
-
-  any <<= val;
-
   // create a record list...
   DsLogAdmin::RecordList recList (1);
   recList.length (1);
 
-  recList [0].info = any;
+  recList [0].info = event;
 
   this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_Notify_LogConsumer::disconnect_structured_push_consumer
+TAO_Notify_LogConsumer::disconnect_push_consumer
    (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
