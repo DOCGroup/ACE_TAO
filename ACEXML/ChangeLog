@@ -1,3 +1,13 @@
+Tue May 24 18:39:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* common/Makefile.am:
+
+	  Regenerate.
+
+	* common/common.mpc:
+
+	  Added XML_Util.h to Header_Files section.
+
 Fri Apr 22 21:34:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* parser/parser/Parser.cpp (parse_entity_decl):
