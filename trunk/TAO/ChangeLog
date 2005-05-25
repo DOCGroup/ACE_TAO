@@ -229,7 +229,7 @@ Mon May 23 06:12:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
 
-        Fixed tipo introduced in last change.
+	  Fixed typo introduced in last change.
 
 Mon May 23 12:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
