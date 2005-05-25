@@ -1,3 +1,10 @@
+Tue May 24 21:13:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.cpp (invoke_collocated_i):
+
+	  Updated ACE_ASSERT condition to reflect new thru POA case.
+	  Thanks to Lothar Werzinger for reporting the assertion.
+
 Tue May 24 19:57:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Event_Service/Makefile.am:
