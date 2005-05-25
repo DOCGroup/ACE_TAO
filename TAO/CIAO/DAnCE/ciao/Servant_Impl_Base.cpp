@@ -90,6 +90,10 @@ namespace CIAO
     Components::SessionComponent_var temp = this->get_executor ();
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 */
+
+   Components::SessionComponent_var temp = this->get_executor ();
+   temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+
     CORBA::Object_var objref =
       this->container_->get_objref (this);
 

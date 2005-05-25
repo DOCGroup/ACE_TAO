@@ -1,3 +1,13 @@
+Wed May 25 11:13:19 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+
+	  Added code to call ccm_remove () on the executor
+	  before removing the component.
+
+	  Thanks to Steven Baker <Steven_D_Baker@raytheon.com> for
+	  identifying the problem.
+
 Wed May 25 10:52:39 2005  Cassia Tatibana  <cassia@lindy.dre.vanderbilt.edu>
 
         * DAnCE/examples/Display/HUDisplay.idl:
