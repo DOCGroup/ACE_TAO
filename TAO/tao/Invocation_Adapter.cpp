@@ -160,7 +160,9 @@ namespace TAO
   {
     // To make a collocated call we must have a collocated proxy broker, the
     // invoke_i() will make sure that we only come here when we have one
-    ACE_ASSERT (cpb_ != 0);
+    ACE_ASSERT (cpb_ != 0
+                || (strat == TAO_CS_THRU_POA_STRATEGY
+                    && effective_target->_servant () != 0));
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
