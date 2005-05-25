@@ -41,9 +41,10 @@ TAO/orbsvcs/orbsvcs/AV
 TAO/orbsvcs/orbsvcs/ETCL
 TAO/orbsvcs/orbsvcs/RTCosScheduling
 TAO/orbsvcs/orbsvcs/RTEvent
+TAO/orbsvcs/orbsvcs/RTEvent_Skel
+TAO/orbsvcs/orbsvcs/RTEvent_Serv
 TAO/orbsvcs/orbsvcs/RTSched
 TAO/orbsvcs/orbsvcs/RTSchedEvent
-TAO/orbsvcs/orbsvcs/RTOLDEvent
 TAO/orbsvcs/orbsvcs/CosEvent
 TAO/orbsvcs/orbsvcs/CosEvent_Serv
 TAO/orbsvcs/orbsvcs/CosEvent_Skel
