@@ -1,3 +1,87 @@
+Wed May 25 10:52:39 2005  Cassia Tatibana  <cassia@lindy.dre.vanderbilt.edu>
+
+        * DAnCE/examples/Display/HUDisplay.idl:
+        * DAnCE/examples/Display/HUDisplay.mpc:
+        * DAnCE/examples/Display/HUDisplay_stub_export.h:
+        * DAnCE/examples/Display/HUDisplay_svnt_export.h:
+        * DAnCE/examples/Display/README.html:
+        * DAnCE/examples/Display/GPS/GPS.cidl:
+        * DAnCE/examples/Display/GPS/GPS.idl:
+        * DAnCE/examples/Display/GPS/GPS.mpc:
+        * DAnCE/examples/Display/GPS/GPSEI.idl:
+        * DAnCE/examples/Display/GPS/GPS_exec.cpp:
+        * DAnCE/examples/Display/GPS/GPS_exec.h:
+        * DAnCE/examples/Display/GPS/GPS_exec_export.h:
+        * DAnCE/examples/Display/GPS/GPS_stub_export.h:
+        * DAnCE/examples/Display/GPS/GPS_svnt_export.h:
+        * DAnCE/examples/Display/GPS/GPS_tracing_exec.cpp:
+        * DAnCE/examples/Display/GPS/GPS_tracing_exec.h:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay.cidl:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay.idl:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay.mpc:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay_exec.cpp:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay_exec.h:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay_exec_export.h:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay_stub_export.h:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay_svnt_export.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/AddNavUnitCmd.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/Command.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/DetailView.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/DetailView.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/DetailView_moc.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/MapView.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/MapView.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/MapView_moc.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec_exec_export.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec_export.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec_stub_export.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec_svnt_export.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_stub_export.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_svnt_export.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavUnit.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavUnit.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NodeItem.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NodeItem.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NodeItem_moc.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/QuitCmd.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/QuitCmd.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/RootPanel.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/RootPanel.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/RootPanel_moc.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/UpdatePositionCmd.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/Worker.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/Worker.h:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/trolltech.gif:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/worldmap1.gif:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/worldmap1.xpm:
+        * DAnCE/examples/Display/RateGen/RateGen.cidl:
+        * DAnCE/examples/Display/RateGen/RateGen.idl:
+        * DAnCE/examples/Display/RateGen/RateGen.mpc:
+        * DAnCE/examples/Display/RateGen/RateGen_exec.cpp:
+        * DAnCE/examples/Display/RateGen/RateGen_exec.h:
+        * DAnCE/examples/Display/RateGen/RateGen_exec_export.h:
+        * DAnCE/examples/Display/RateGen/RateGen_stub_export.h:
+        * DAnCE/examples/Display/RateGen/RateGen_svnt_export.h:
+        * DAnCE/examples/Display/RateGen/controller.cpp:
+        * DAnCE/examples/Display/descriptors/Deployment.xsd:
+        * DAnCE/examples/Display/descriptors/EM.ior:
+        * DAnCE/examples/Display/descriptors/GPS.ior:
+        * DAnCE/examples/Display/descriptors/Modified_Deployment.xsd:
+        * DAnCE/examples/Display/descriptors/NavDisplay.ior:
+        * DAnCE/examples/Display/descriptors/NavDisplayGUI.ior:
+        * DAnCE/examples/Display/descriptors/NodeManagerMap.dat:
+        * DAnCE/examples/Display/descriptors/RateGen.ior:
+        * DAnCE/examples/Display/descriptors/XMI.xsd:
+        * DAnCE/examples/Display/descriptors/basicNodeDaemon.pl:
+	* DAnCE/examples/Display/descriptors/flattened_deploymentplan.cdp:
+
+	Ported the Display example in CIAO to DAnCE.
+
 Tue May 24 22:23:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
 	* DAnCE/examples/Hello/step-by-step.html
