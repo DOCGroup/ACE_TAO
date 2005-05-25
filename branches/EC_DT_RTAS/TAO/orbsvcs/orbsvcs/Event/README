@@ -1,0 +1,9 @@
+Parts of the Event Channel have been instrumented with DSUI. To enable this 
+instrumentation, first, you must have DSUI installed on your machine and the 
+DATASTREAM_ROOT environment variable set. Next, you must modify the mpc file 
+for RTEvent so that the project inherits from the dsui project, and the 
+'wrappers' lib must be added to the RTEvent project's libs (this can't be done 
+in the dsui project because of ordering constraints) and $(DATASTREAM_ROOT)/include to the includes. Finally, you must add the kokyu_dsui_vars.cpp file to 
+the the RTEvent project's source file list and define the ACE_HAS_DSUI 
+macro in the RTEvent project's dynamic flags. This should enable Kokyu's DSUI 
+instrumentation.
