@@ -40,7 +40,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XMLSchema/Types.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -462,6 +462,656 @@ namespace CIAO
       private:
       char regulator__;
     };
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/Traversal.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct Config_Handlers_Export SubcomponentInstantiationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        package (Type&);
+
+        virtual void
+        package (Type const&);
+
+        virtual void
+        configProperty (Type&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        configProperty_none (Type&);
+
+        virtual void
+        configProperty_none (Type const&);
+
+        virtual void
+        selectRequirement (Type&);
+
+        virtual void
+        selectRequirement (Type const&);
+
+        virtual void
+        selectRequirement_none (Type&);
+
+        virtual void
+        selectRequirement_none (Type const&);
+
+        virtual void
+        reference (Type&);
+
+        virtual void
+        reference (Type const&);
+
+        virtual void
+        reference_none (Type&);
+
+        virtual void
+        reference_none (Type const&);
+
+        virtual void
+        id (Type&);
+
+        virtual void
+        id (Type const&);
+
+        virtual void
+        id_none (Type&);
+
+        virtual void
+        id_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct Config_Handlers_Export SubcomponentPropertyReference : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentPropertyReference >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        propertyName (Type&);
+
+        virtual void
+        propertyName (Type const&);
+
+        virtual void
+        instance (Type&);
+
+        virtual void
+        instance (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct Config_Handlers_Export AssemblyPropertyMapping : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::AssemblyPropertyMapping >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        externalName (Type&);
+
+        virtual void
+        externalName (Type const&);
+
+        virtual void
+        delegatesTo (Type&);
+
+        virtual void
+        delegatesTo (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct Config_Handlers_Export ComponentAssemblyDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentAssemblyDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        instance (Type&);
+
+        virtual void
+        instance (Type const&);
+
+        virtual void
+        instance_pre (Type&);
+
+        virtual void
+        instance_pre (Type const&);
+
+        virtual void
+        instance_next (Type&);
+
+        virtual void
+        instance_next (Type const&);
+
+        virtual void
+        instance_post (Type&);
+
+        virtual void
+        instance_post (Type const&);
+
+        virtual void
+        connection (Type&);
+
+        virtual void
+        connection (Type const&);
+
+        virtual void
+        connection_pre (Type&);
+
+        virtual void
+        connection_pre (Type const&);
+
+        virtual void
+        connection_next (Type&);
+
+        virtual void
+        connection_next (Type const&);
+
+        virtual void
+        connection_post (Type&);
+
+        virtual void
+        connection_post (Type const&);
+
+        virtual void
+        externalProperty (Type&);
+
+        virtual void
+        externalProperty (Type const&);
+
+        virtual void
+        externalProperty_none (Type&);
+
+        virtual void
+        externalProperty_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct Config_Handlers_Export MonolithicImplementationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::MonolithicImplementationDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        execParameter (Type&);
+
+        virtual void
+        execParameter (Type const&);
+
+        virtual void
+        execParameter_none (Type&);
+
+        virtual void
+        execParameter_none (Type const&);
+
+        virtual void
+        primaryArtifact (Type&);
+
+        virtual void
+        primaryArtifact (Type const&);
+
+        virtual void
+        primaryArtifact_pre (Type&);
+
+        virtual void
+        primaryArtifact_pre (Type const&);
+
+        virtual void
+        primaryArtifact_next (Type&);
+
+        virtual void
+        primaryArtifact_next (Type const&);
+
+        virtual void
+        primaryArtifact_post (Type&);
+
+        virtual void
+        primaryArtifact_post (Type const&);
+
+        virtual void
+        deployRequirement (Type&);
+
+        virtual void
+        deployRequirement (Type const&);
+
+        virtual void
+        deployRequirement_none (Type&);
+
+        virtual void
+        deployRequirement_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct Config_Handlers_Export ComponentImplementationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentImplementationDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        label_none (Type&);
+
+        virtual void
+        label_none (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        UUID_none (Type&);
+
+        virtual void
+        UUID_none (Type const&);
+
+        virtual void
+        implements (Type&);
+
+        virtual void
+        implements (Type const&);
+
+        virtual void
+        implements_none (Type&);
+
+        virtual void
+        implements_none (Type const&);
+
+        virtual void
+        assemblyImpl (Type&);
+
+        virtual void
+        assemblyImpl (Type const&);
+
+        virtual void
+        assemblyImpl_none (Type&);
+
+        virtual void
+        assemblyImpl_none (Type const&);
+
+        virtual void
+        monolithicImpl (Type&);
+
+        virtual void
+        monolithicImpl (Type const&);
+
+        virtual void
+        monolithicImpl_none (Type&);
+
+        virtual void
+        monolithicImpl_none (Type const&);
+
+        virtual void
+        configProperty (Type&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        configProperty_none (Type&);
+
+        virtual void
+        configProperty_none (Type const&);
+
+        virtual void
+        capability (Type&);
+
+        virtual void
+        capability (Type const&);
+
+        virtual void
+        capability_none (Type&);
+
+        virtual void
+        capability_none (Type const&);
+
+        virtual void
+        dependsOn (Type&);
+
+        virtual void
+        dependsOn (Type const&);
+
+        virtual void
+        dependsOn_none (Type&);
+
+        virtual void
+        dependsOn_none (Type const&);
+
+        virtual void
+        infoProperty (Type&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        infoProperty_none (Type&);
+
+        virtual void
+        infoProperty_none (Type const&);
+
+        virtual void
+        contentLocation (Type&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        virtual void
+        contentLocation_none (Type&);
+
+        virtual void
+        contentLocation_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include <XMLSchema/Writer.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct Config_Handlers_Export SubcomponentInstantiationDescription : Traversal::SubcomponentInstantiationDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::SubcomponentInstantiationDescription Type;
+        SubcomponentInstantiationDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        package (Type const&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        selectRequirement (Type const&);
+
+        virtual void
+        reference (Type const&);
+
+        virtual void
+        id (Type const&);
+
+        protected:
+        SubcomponentInstantiationDescription ();
+      };
+
+      struct Config_Handlers_Export SubcomponentPropertyReference : Traversal::SubcomponentPropertyReference, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::SubcomponentPropertyReference Type;
+        SubcomponentPropertyReference (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        propertyName (Type const&);
+
+        virtual void
+        instance (Type const&);
+
+        protected:
+        SubcomponentPropertyReference ();
+      };
+
+      struct Config_Handlers_Export AssemblyPropertyMapping : Traversal::AssemblyPropertyMapping, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::AssemblyPropertyMapping Type;
+        AssemblyPropertyMapping (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        externalName (Type const&);
+
+        virtual void
+        delegatesTo (Type const&);
+
+        protected:
+        AssemblyPropertyMapping ();
+      };
+
+      struct Config_Handlers_Export ComponentAssemblyDescription : Traversal::ComponentAssemblyDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::ComponentAssemblyDescription Type;
+        ComponentAssemblyDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        instance_pre (Type const&);
+
+        virtual void
+        instance_next (Type const&);
+
+        virtual void
+        instance_post (Type const&);
+
+        virtual void
+        connection_pre (Type const&);
+
+        virtual void
+        connection_next (Type const&);
+
+        virtual void
+        connection_post (Type const&);
+
+        virtual void
+        externalProperty (Type const&);
+
+        protected:
+        ComponentAssemblyDescription ();
+      };
+
+      struct Config_Handlers_Export MonolithicImplementationDescription : Traversal::MonolithicImplementationDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::MonolithicImplementationDescription Type;
+        MonolithicImplementationDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        execParameter (Type const&);
+
+        virtual void
+        primaryArtifact_pre (Type const&);
+
+        virtual void
+        primaryArtifact_next (Type const&);
+
+        virtual void
+        primaryArtifact_post (Type const&);
+
+        virtual void
+        deployRequirement (Type const&);
+
+        protected:
+        MonolithicImplementationDescription ();
+      };
+
+      struct Config_Handlers_Export ComponentImplementationDescription : Traversal::ComponentImplementationDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::ComponentImplementationDescription Type;
+        ComponentImplementationDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        implements (Type const&);
+
+        virtual void
+        assemblyImpl (Type const&);
+
+        virtual void
+        monolithicImpl (Type const&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        capability (Type const&);
+
+        virtual void
+        dependsOn (Type const&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        protected:
+        ComponentImplementationDescription ();
+      };
+    }
   }
 }
 
