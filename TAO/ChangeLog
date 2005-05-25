@@ -1,3 +1,13 @@
+Wed May 25 12:24:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/Unknown_User_Exception.h (_type):
+	* tao/DynamicInterface/Unknown_User_Exception.h (_type):
+
+	  Renamed this method to "_tao_type" since it is meant to be an
+	  override for the CORBA::Exception::_tao_type() base class
+	  method.  Addresses CORBA::UnknownUserException Any insertion
+	  problems.
+
 Tue May 24 21:13:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.cpp (invoke_collocated_i):

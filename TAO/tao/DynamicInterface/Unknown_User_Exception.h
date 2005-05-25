@@ -93,7 +93,7 @@ namespace CORBA
     virtual int _is_a (const char *type_id) const;
 
     /// This class has a specific typecode.
-    virtual CORBA::TypeCode_ptr _type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
 
   private:
     /// Holder for the actual exception.
