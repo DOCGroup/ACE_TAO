@@ -1,3 +1,10 @@
+Wed May 25 10:52:43 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* DP_Handler.cpp
+	* DP_Handler.h
+
+	Minor refactoring to add support for recerse mapping. 
+	
 Tue May 24 09:34:28 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	Created xsc_reverse_handlers branch to develop IDL->XSC mapping.
