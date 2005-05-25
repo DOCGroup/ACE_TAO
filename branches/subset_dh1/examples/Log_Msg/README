@@ -1,0 +1,65 @@
+This directory contains program(s) that demonstrate how to use ACE's
+Log_Msg class to record various information.
+
+        * test_callback.cpp: This program tests the Log_Msg
+          abstraction wrt writing to user defined callback objects.
+
+        * test_ostream.cpp: This program illustrates how the
+          ACE_Log_Msg abstraction can be used to write to 
+          stderr and to a file.  For even more sophisticated
+          use-cases of ACE_Log_Msg please see the 
+          $ACE_ROOT/netsvcs/clients/Logger/ examples.
+
+	* test_log_msg.cpp: This program tests various feature of the
+          Log_Msg facility.  It opens a log file and writes some
+          messages using different log priorities and output stream.  
+
+	  You can invoke the program with or without command
+	  parameters.  When invoked with any parameters like,
+
+		./Log_Msg foobar
+
+	  the log messages are direct to stdout (or, ostream in C++.)
+	  In this case, the program simulates an error EWOULDBLOCK and
+	  write an error log to stdout as,
+
+		would block
+		op_status and errnum work!
+
+	  When invoked without any parameters, except does the same
+	  test as above but logs to default log stream "stderr," the
+	  program also demonstrates logging messages/errors with
+	  different priority and changing the logging destination.  A
+	  sample output is,
+
+	    would block
+	    op_status and errnum work!
+	      3.141600,         hello = 10000
+	      6.283200,         world = 20000
+	      6.283200,         world = 20000
+	      9.424800,         world = 30000
+	     12.566400,         world = 40000
+	     15.708000,         world = 50000
+	    HEXDUMP 48 bytes
+	    01 00 00 00 02 00 00 00  04 00 00 00 08 00 00 00   ................
+	    10 00 00 00 20 00 00 00  40 00 00 00 80 00 00 00   .... ...@.......
+	    00 01 00 00 00 02 00 00  00 04 00 00 00 08 00 00   ................
+	    ./Log_Msg.EXE: (2710), badname: Function not implemented
+
+	  In this test, there are two lines containing "world` =
+	  20000."  That's because in the program, both stderr and
+	  stdout are "turned on" for logging before writing this log
+	  message.  The line containing "world = 30000" is written to
+	  stdout only.  Rest of the lines are all to the stderr.  You
+	  can examine this behavior by redirecting stderr and stdout
+	  to different files.  
+
+	  The HEXDUMP output shows how to take an arbitrary object and
+	  hexdump its content for debugging.  Finally, the program
+	  shows an ordinary use case of logging error messages using
+	  the ACE_ERROR macro.  
+
+	  If you look into the program, there is also a demonstration
+	  showing how to disable certain priorities of error message
+	  temporarily.  
+    

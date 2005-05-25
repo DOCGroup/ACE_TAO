@@ -1,0 +1,88 @@
+module AttributeTest
+{
+  interface I
+  {
+    attribute long a;
+    attribute string foo;
+  };
+};
+module InterfaceTest
+{
+  abstract interface AI;
+  local interface LI;
+  interface I;
+  abstract interface AI
+  {
+  };
+  interface I : ::InterfaceTest::AI
+  {
+  };
+  local interface LI : ::InterfaceTest::I, ::InterfaceTest::AI
+  {
+  };
+};
+module MemberTest
+{
+  typedef long Id;
+  struct S
+  {
+    long id;
+    string foo;
+    string bar;
+    string baz;
+  };
+};
+module ModuleTest
+{
+  module M
+  {
+    module N
+    {
+      typedef long L;
+    };
+  };
+  module M
+  {
+    typedef long L;
+  };
+  module N
+  {
+    typedef long L;
+  };
+};
+module OperationTest
+{
+  interface I
+  {
+    long f (in string a, out long b, inout octet c);
+  };
+};
+module Sequence
+{
+  typedef sequence<octet> OctetSeq;
+  typedef sequence<octet> RawSeq;
+  typedef sequence<string> StringSeq;
+  typedef sequence<string> StrSeq;
+};
+module StructTest
+{
+  struct S;
+  struct S
+  {
+    long m;
+  };
+};
+module TypeidTest
+{
+  interface I;
+  typeid ::TypeidTest::I "Foo";
+  typeprefix ::TypeidTest "Bar";
+};
+module TypedefTest
+{
+  interface I;
+  typedef ::TypedefTest::I J;
+  interface I
+  {
+  };
+};

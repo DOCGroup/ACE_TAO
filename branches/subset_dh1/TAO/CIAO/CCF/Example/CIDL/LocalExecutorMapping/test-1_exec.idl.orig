@@ -1,0 +1,33 @@
+#include <Components.idl>
+#include "test-0.idl"
+module M
+{
+  local interface CCM_I : I
+  {
+  };
+};
+module M1
+{
+  local interface CCM_Fool : Fool
+  {
+  };
+  local interface CCM_C1 : ::Components::EnterpriseComponent
+  {
+    ::M::CCM_I get_i ();
+    readonly attribute long l;
+  };
+  local interface CCM_C1_Context : ::Components::SessionContext
+  {
+  };
+  local interface CCM_H1Implicit
+  {
+    ::Components::EnterpriseComponent create () raises (::Components::CCMException);
+  };
+  local interface CCM_H1Explicit : ::Components::HomeExecutorBase
+  {
+    attribute ::M::I i;
+  };
+  local interface CCM_H1 : CCM_H1Explicit, CCM_H1Implicit
+  {
+  };
+};
