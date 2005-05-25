@@ -1,3 +1,8 @@
+Wed May 25 20:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+          Changed order of the projects.
+
 Wed May 25 12:24:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/Unknown_User_Exception.h (_type):
