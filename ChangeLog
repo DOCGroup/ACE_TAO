@@ -1,3 +1,9 @@
+Tue May 24 20:09:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/time.mpb:
+
+	  Inherit from svc_utils.mpb.
+
 Tue May 24 20:46:28 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-irix6.x-common.h:
@@ -23,7 +29,7 @@ Tue May 24 00:17:09 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/cidlc.mpb:
 
-                            Created a base project for cidlc & ccf project files.
+          Created a base project for cidlc & ccf project files.
 
 Tue May 24 07:58:09 2005  Olli Savia  <ops@iki.fi>
 
