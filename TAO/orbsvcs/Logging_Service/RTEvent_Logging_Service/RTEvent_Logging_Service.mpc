@@ -1,5 +1,5 @@
 // $Id$
 
-project: namingexe, core, rteventlogadmin, rtevent_serv {
+project: namingexe, core, rtevent_serv, rteventlogadmin {
   exename   = RTEvent_Logging_Service
 }
