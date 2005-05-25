@@ -1,10 +1,8 @@
 //$Id$
-
-//Distributor_exec.h,v 1.1
 /*
  * @file Distributor_exec.h
  *
- * @author Ming Xiong <xiongm@isis.vanderbilt.edu>
+ * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 
 

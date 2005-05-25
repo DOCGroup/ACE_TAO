@@ -2,7 +2,7 @@
 /*
  * @file Broker_exec.cpp
  *
- * @author Ming Xiong <xiongm@isis.vanderbilt.edu>
+ * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 
 #include "Broker_exec.h"

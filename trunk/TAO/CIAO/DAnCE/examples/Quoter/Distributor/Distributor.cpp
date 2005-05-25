@@ -2,7 +2,7 @@
 /*
  * @file Distributor.cpp
  *
- * @author Ming Xiong <xiongm@isis.vanderbilt.edu>
+ * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 
 
