@@ -1,3 +1,9 @@
+Wed May 25 20:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added new RTEvent_Skel and RTEvent_Serv libraries and removed
+          RTOldEvent
+
 Tue May 24 20:09:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/time.mpb:
