@@ -53,6 +53,7 @@ libACEXML_la_SOURCES = \
   XMLFilterImpl.cpp \
   XMLReader.cpp \
   XML_Codecs.cpp \
+  XML_Util.cpp \
   ZipCharStream.cpp
 
 libACEXML_la_LDFLAGS = \
@@ -103,6 +104,7 @@ nobase_include_HEADERS = \
   XML_Codecs.h \
   XML_Macros.h \
   XML_Types.h \
+  XML_Util.h \
   ZipCharStream.h
 
 pkgconfig_DATA = ACEXML.pc
