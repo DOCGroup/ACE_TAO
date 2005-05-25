@@ -1,3 +1,8 @@
+Wed May 25 20:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+          Use rtevent_serv as base project
+
 Wed May 25 20:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
