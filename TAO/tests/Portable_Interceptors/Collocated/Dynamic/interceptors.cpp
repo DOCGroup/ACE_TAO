@@ -238,6 +238,10 @@ Echo_Server_Request_Interceptor::receive_request (
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  PortableInterceptor::ObjectId_var test_oid =
+    ri->object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"\n",
               op.in ()));
