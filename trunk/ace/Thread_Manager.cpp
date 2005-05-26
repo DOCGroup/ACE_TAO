@@ -2112,6 +2112,37 @@ ACE_Thread_Manager::thread_all_list (ACE_thread_t thread_list[],
   return thread_count;
 }
 
+
+int
+ACE_Thread_Manager::thr_state (ACE_thread_t id,
+                               ACE_UINT32& state)
+{
+  ACE_TRACE ("ACE_Thread_Manager::thr_state");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  int self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
+
+  // If we're checking the state of our thread, try to get the cached
+  // value out of TSS to avoid lookup.
+  if (self_check)
+    {
+      ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
+      if (desc == 0)
+        return 0;               // Always return false.
+      state = desc->thr_state_;
+    }
+  else
+    {
+      // Not calling from self, have to look it up from the list.
+      ACE_FIND (this->find_thread (id), ptr);
+      if (ptr == 0)
+        return 0;
+      state = ptr->thr_state_;
+    }
+
+  return 1;
+}
+
 // Returns in task_list a list of ACE_Tasks in a group.
 
 ssize_t

@@ -160,6 +160,8 @@ protected:
  * @brief Basic information for thread descriptors.  These information
  * gets extracted out because we need it after a thread is
  * terminated.
+ *
+ * @internal
  */
 class ACE_Export ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
 {
@@ -876,6 +878,10 @@ public:
   /// Return a count of the current number of threads active in the
   /// <Thread_Manager>.
   size_t count_threads (void) const;
+
+  /// Get the state of the thread. Returns false if the thread is not
+  /// managed by this thread manager.
+  int thr_state (ACE_thread_t id, ACE_UINT32& state);
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /**
