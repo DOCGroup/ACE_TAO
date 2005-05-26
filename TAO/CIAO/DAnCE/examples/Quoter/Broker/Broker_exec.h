@@ -50,14 +50,14 @@ namespace StockBroker_Impl
     const char * stock_name
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                         Stock::Invalid_Stock));
+                     Stock::Invalid_Stock));
 
     virtual void
     stock_unsubscribe (
     const char * stock_name
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                         Stock::Invalid_Stock));
+                     Stock::Invalid_Stock));
 
         virtual void
     push_notify_in (
@@ -114,7 +114,7 @@ namespace StockBroker_Impl
     CIAO_GLUE_Stock::StockBroker_Context *context_;
 
     private:
-        std::set<std::string> subscribed_stock_list_;
+    std::set<std::string> subscribed_stock_list_;
   };
 
 
