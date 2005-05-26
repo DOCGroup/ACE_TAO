@@ -158,7 +158,6 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
   ACE_TRY
     {
     // @@TODO: Find out why below code throw Object_Not_Active exception.
-    /*
       // Deactivate this object
       PortableServer::ObjectId_var id =
         this->poa_->reference_to_id (this->manager_.in ()
@@ -168,7 +167,7 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-    */
+
       this->manager_ =
         Deployment::NodeApplicationManager::_nil ();
     }
