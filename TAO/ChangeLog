@@ -1,3 +1,9 @@
+Thu May 26 07:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/ImR_Client/ServerObject.pidl:
+          Updated regeneration instructions
+
 Thu May 26 07:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyPersistent.cpp:
