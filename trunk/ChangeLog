@@ -1,3 +1,9 @@
+Thu May 26 18:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.{h,cpp}:
+          Added thr_state method to ACE_Thread_Manager so that we are able
+          to retrieve the state of a certain thread.
+
 Thu May 26 07:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cygwin32.GNU:
