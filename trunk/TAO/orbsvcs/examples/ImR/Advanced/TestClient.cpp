@@ -134,15 +134,17 @@ void TestClient::run()
   cout << "* Client ended." << endl;
 }
 
+// Read in the stringified object references into an array
+// Warning: The file may contain many separate IORs separated by linefeeds.
 void TestClient::buildIORList()
 {
-  // Read in the strigified object references into an array
   ifstream iorFile("imr_test.ior");
-  while (true)
+  while (! iorFile.fail())
   {
     string ior;
-    iorFile >> ior;
-    if (ior.empty() == false)
+    std::getline(iorFile, ior, '\n');
+ 
+    if (ior.length() > 0)
       iors_.push_back(ior);
     else
       break;
@@ -248,7 +250,7 @@ int TestClient::svc()
   catch (CORBA::Exception& ex)
   {
     cerr << "CORBA client error with (" << threadNum << "." << i
-      << "." << objIter << "." << requestIter << "):" << currentIOR << endl;
+      << "." << objIter << "." << requestIter << "):" << currentIOR.c_str() << endl;
     ACE_PRINT_EXCEPTION(ex, "");
   }
   return 1;

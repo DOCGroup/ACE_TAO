@@ -217,7 +217,7 @@ ImR_Activator_i::init (Activator_Options& opts ACE_ENV_ARG_DECL)
 int
 ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_TRY
+  ACE_TRY_EX(try_block_1)
   {
     if (debug_ > 1)
       ACE_DEBUG((LM_DEBUG, "ImR Activator: Shutting down...\n"));
@@ -252,7 +252,7 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  ACE_TRY
+  ACE_TRY_EX(try_block_2)
   {
     this->orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
