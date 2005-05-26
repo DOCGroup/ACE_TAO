@@ -11,9 +11,7 @@
 # Chose your target CPU (by default we set it to pentiumpro. In your
 # platform_macros.GNU file you can override this to pentium, i486 or i386
 #
-ifndef TCPU
-  TCPU = pentiumpro
-endif
+TCPU ?= pentiumpro
 
 cygwin32 = 1
 

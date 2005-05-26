@@ -14,22 +14,10 @@ ifeq ($(RET),1)
 versioned_so = 1
 endif
 
-ifndef exceptions
-  exceptions = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
-
-ifeq (,$(debug))
-  debug = 1
-endif
-
-ifeq (,$(optimize))
-  optimize = 1
-endif
-
+exceptions ?= 1
+threads ?= 1
+debug ?= 1
+optimize ?= 1
 pipes ?= 1
 
 CC              = gcc
@@ -71,10 +59,10 @@ endif # RET
 
 CFLAGS  += $(PTHREAD_CFLAGS)
 LIBS += $(PTHREAD_LIBS)
- 
+
 endif # threads
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

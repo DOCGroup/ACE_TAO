@@ -28,25 +28,13 @@ else
   endif
 endif
 
-ifndef winsock2
-  winsock2 = 1
-endif
+winsock2 ?= 1
+exceptions ?= 0
+debug ?= 1
+optimize ?= 1
+threads ?= 1
+pipes ?= 1
 
-ifndef exceptions
-  exceptions = 0
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 1
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
-ifeq (,$(pipes))
-  pipes = 1
-endif
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
