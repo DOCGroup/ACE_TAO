@@ -1,3 +1,10 @@
+Thu May 26 14:46:53 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
+
+	Fixed a memory leak which would cause NodeManagers to leak 
+	when destroyed. 
+	
 Thu May 26 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/examples/Quoter/Broker/Broker.cpp:
