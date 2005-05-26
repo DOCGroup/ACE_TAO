@@ -1,3 +1,11 @@
+Thu May 26 17:07:34 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/String_Base.inl:
+        * ace/String_Base.cpp:
+
+          Move all non-trivial functions out of the .inl file. Hopefully this
+        will cause a net improvement to the footprint.
+
 Thu May 26 16:13:34 2005  Justin Michel  <michel_j@ociweb.com>
 
         * ace/config-win32-msvc-6.h:
