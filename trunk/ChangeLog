@@ -1,3 +1,15 @@
+Thu May 26 07:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cygwin32.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_osf1_3.2_cxx.GNU:
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU:
+        * include/makeinclude/platform_osf1_4.x_g++.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Simplified these files by using the ?= operator
+
 Wed May 25 15:51:03 2005  Steve Totten  <totten_s@ociweb.com>
 
         * ace/OS_NS_stdio.inl:
@@ -12,8 +24,8 @@ Wed May 25 15:51:03 2005  Steve Totten  <totten_s@ociweb.com>
           was changed to:
           #if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
 
-          Thanks to Paul Koch <paul.koch@mci.com> for reporting this problem
-          and providing the solution.
+          Thanks to Paul Koch <paul dot koch at mci dot com> for reporting
+          this problem and providing the solution.
 
 Wed May 25 20:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
