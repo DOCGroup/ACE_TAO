@@ -116,7 +116,7 @@ namespace TAO
   }
 
   template <typename InterceptorType>
-  Interceptor_List<InterceptorType>::TYPE &
+  typename Interceptor_List<InterceptorType>::TYPE &
   Interceptor_List<InterceptorType>::interceptors (void)
   {
     return this->interceptors_;
