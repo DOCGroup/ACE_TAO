@@ -82,7 +82,7 @@ public:
   virtual CORBA::Boolean _is_a (const char* logical_type_id
                                 ACE_ENV_ARG_DECL) = 0;
 
-  /// Default <_non_existent>: always returns false.
+  /// Default @c _non_existent: always returns false.
   virtual CORBA::Boolean _non_existent (
     ACE_ENV_SINGLE_ARG_DECL) = 0;
 
@@ -91,18 +91,29 @@ public:
       ACE_ENV_SINGLE_ARG_DECL
     ) = 0;
 
-  /// Default <_get_component>: always returns nil.
+  /// Default @c_get_component: always returns nil.
   virtual CORBA::Object_ptr _get_component (
     ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   //@{
   /**
-   * @name Reference Counting Hooks
-   *
-   * Reference counting hooks are no-ops by default.
+   * @name Reference Counting Operations
    */
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  /// Increase reference count by one.
+  virtual void _add_ref (
+    ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+  /**
+   * Decreases reference count by one; if the resulting reference
+   * count equals zero, _remove_ref invokes delete on its this pointer
+   * in order to destroy the servant.
+   */
+  virtual void _remove_ref (
+    ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+  /// Returns the current reference count value.
+  virtual CORBA::ULong _refcount_value (
+    ACE_ENV_SINGLE_ARG_DECL) const = 0;
   //@}
 
   /// This is an auxiliary method for _this() and _narrow().
@@ -130,7 +141,7 @@ protected:
   /// Copy constructor, protected so no instances can be created.
   TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &);
 
-  /// assignment operator.
+  /// Assignment operator.
   TAO_Abstract_ServantBase &operator= (const TAO_Abstract_ServantBase &);
 
   /// Dispatches a request to the object
@@ -149,11 +160,6 @@ protected:
                                             void *derived_this
                                             ACE_ENV_ARG_DECL) = 0;
 
-  /*
-  /// Register a CORBA IDL operation name.
-  virtual int _bind (const char *opname,
-                     const TAO_Skeleton skel_ptr) = 0;
-  */
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 
