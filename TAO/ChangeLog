@@ -1,3 +1,24 @@
+Thu May 26 10:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        According to the latest C++ mapping, reference counting is mandatory;
+        the RefCountServantBase class is now a legacy artifact. Thanks to
+        Frank Pilhofer <fpilhofe at mc dot com> for reporting this.
+        This fixes bugzilla [1952].
+
+        * tao/Abstract_Servant_Base.{h,cpp}:
+          Made the add_ref/remove_ref methods pure virtual and added
+          _refcount_value
+
+        * tao/PortableServer/Servant_Base.{h,cpp}:
+          Added reference counting to TAO_ServantBase and removed
+          TAO_RefCountServantBase
+
+        * tao/PortableServer/PS_ForwardC.h:
+          Make RefCountServantBase a noop struct
+
+        * tao/PortableServer/diffs/PS_Forward.diff:
+          Updated
+
 Thu May 26 09:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.h:
