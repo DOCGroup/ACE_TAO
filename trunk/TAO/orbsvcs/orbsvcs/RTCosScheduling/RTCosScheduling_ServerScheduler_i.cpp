@@ -79,7 +79,7 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
       ACE_TRY_CHECK;
 
       /// First, get a list of all interceptors currently registered
-      TAO_ServerRequestInterceptor_List::TYPE &interceptors =
+      TAO::ServerRequestInterceptor_List::TYPE &interceptors =
         orb_core->server_request_interceptors();
 
 

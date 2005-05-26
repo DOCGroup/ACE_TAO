@@ -64,7 +64,7 @@ namespace TAO
           //         interceptor.
 
           /// First, get a list of all interceptors currently registered
-          TAO_ClientRequestInterceptor_List::TYPE &interceptors =
+          TAO::ClientRequestInterceptor_List::TYPE &interceptors =
             orb_core->client_request_interceptors();
 
 
