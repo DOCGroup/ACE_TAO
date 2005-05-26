@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IORInterceptor_Adapter.h"
-#include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "tao/IORInterceptor/IORInterceptor.h"
 
 class TAO_Root_POA;
@@ -50,7 +49,7 @@ public:
   virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC (());
 
-  virtual TAO_IORInterceptor_List *interceptor_list (void)
+  virtual TAO::IORInterceptor_List *interceptor_list (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void establish_components (TAO_Root_POA *poa ACE_ENV_ARG_DECL)
@@ -63,7 +62,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void adapter_state_changed (
-      const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
+      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -76,7 +75,7 @@ public:
 
 private:
   /// List of IOR interceptors maintained
-  TAO_IORInterceptor_List ior_interceptor_list_;
+  TAO::IORInterceptor_List ior_interceptor_list_;
 };
 
 #include /**/ "ace/post.h"

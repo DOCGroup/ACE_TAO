@@ -85,8 +85,8 @@ namespace TAO
         --this->stack_size_;
 
         this->interceptors_[this->stack_size_]->receive_reply (
-        this->info_
-        ACE_ENV_ARG_PARAMETER);
+          this->info_
+          ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
 
@@ -121,8 +121,8 @@ namespace TAO
             --this->stack_size_;
 
             this->interceptors_[this->stack_size_]->receive_exception (
-            this->info_
-            ACE_ENV_ARG_PARAMETER);
+              this->info_
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           }
       }

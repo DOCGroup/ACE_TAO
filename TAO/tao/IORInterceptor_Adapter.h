@@ -24,6 +24,7 @@
 
 #include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
+#include "tao/Interceptor_List.h"
 
 namespace PortableInterceptor
 {
@@ -36,11 +37,15 @@ namespace PortableInterceptor
   class ObjectReferenceTemplate;
 }
 
-typedef
-ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*>
-    TAO_ObjectReferenceTemplate_Array;
+namespace TAO
+{
+  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor>
+    IORInterceptor_List;
 
-class TAO_IORInterceptor_List;
+  typedef ACE_Array_Base< ::PortableInterceptor::ObjectReferenceTemplate*>
+    ObjectReferenceTemplate_Array;
+}
+
 class TAO_Root_POA;
 
 /**
@@ -68,7 +73,7 @@ public:
       )
   ACE_THROW_SPEC (()) = 0;
 
-  virtual TAO_IORInterceptor_List *interceptor_list (void)
+  virtual TAO::IORInterceptor_List *interceptor_list (void)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Call the IORInterceptor::establish_components() method on all
@@ -89,7 +94,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual void adapter_state_changed (
-      const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
+      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
