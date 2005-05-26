@@ -1,3 +1,11 @@
+Thu May 26 08:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:
+          Retrieve the object_id in the receive_request. According to
+          Konstantinos Lykiardopoulos <klyk at intracom dot gr> this failed
+          with the 1.4.5 release of TAO but it works now again. Added this
+          as regression so that we don't have a problem in the future again
+
 Thu May 26 07:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImplRepo.pidl:
