@@ -304,15 +304,6 @@ protected:
   /// The tagged components
   TAO_Tagged_Components tagged_components_;
 
-  /// Client exposed policies of this profile.
-  //CORBA::PolicyList *policy_list_;
-
-  // NOTE: In this implementation it is assumed that the <policy_list>
-  // is exactly the same for each profile.
-  // So to save memory, each TAO_Profile has a pointer to the same
-  // PolicyList object. The life cycle of this object is managed
-  // by the TAO_MProfile class.
-
   /// Flag indicating whether the lazy decoding of the client exposed
   /// policies has taken place.
   CORBA::Boolean are_policies_parsed_;
