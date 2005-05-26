@@ -56,7 +56,7 @@ namespace TAO
     /// QApplication running reactor
     QApplication *qapp_;
 
-    /// for internal locking.
+    /// For internal locking.
     TAO_SYNCH_MUTEX lock_;
   };
 }
