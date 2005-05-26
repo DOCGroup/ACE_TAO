@@ -129,7 +129,7 @@ namespace StockDistributor_Impl
 
   ::Stock::StockInfo *
   StockQuoter_exec_i::get_stock_info (const char *stock_name
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Stock::Invalid_Stock))
@@ -140,7 +140,7 @@ namespace StockDistributor_Impl
       info->name = CORBA::string_dup ("MSFT");
       info->high = 10000;
       info->low = 0;
-          info->last = this->distributor_.msft_; // retrieve the current stock value
+      info->last = this->distributor_.msft_; // retrieve the current stock value
       return info._retn ();
     }
     else if (strcmp (stock_name, "IBM") == 0)
@@ -149,12 +149,12 @@ namespace StockDistributor_Impl
       info->name = CORBA::string_dup ("IBM");
       info->high = 10000;
       info->low = 0;
-          info->last = this->distributor_.ibm_; // retrieve the current stock value
+      info->last = this->distributor_.ibm_; // retrieve the current stock value
       return info._retn ();
     }
     else
     {
-          ACE_THROW_RETURN (Stock::Invalid_Stock (), 0);
+      ACE_THROW_RETURN (Stock::Invalid_Stock (), 0);
     }
   }
 
@@ -220,7 +220,7 @@ namespace StockDistributor_Impl
   StockDistributor_exec_i::get_push_quoter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
      ACE_THROW_SPEC ((CORBA::SystemException))
   {
-        return new StockQuoter_exec_i (*this);
+    return new StockQuoter_exec_i (*this);
   }
 
   void
