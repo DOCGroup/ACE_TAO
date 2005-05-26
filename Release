@@ -79,7 +79,8 @@ CONTROLLED_FILES = \
         tests \
 	Kokyu \
 	protocols \
-        websvcs
+        websvcs \
+  contrib
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
