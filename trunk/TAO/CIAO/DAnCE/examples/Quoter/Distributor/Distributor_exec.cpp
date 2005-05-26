@@ -30,7 +30,7 @@ namespace StockDistributor_Impl
       pulse_callback_ (callback)
   {
     // initialize the reactor
-        this->reactor (ACE_Reactor::instance ());
+    this->reactor (ACE_Reactor::instance ());
   }
 
   pulse_Generator::~pulse_Generator ()
@@ -65,12 +65,12 @@ namespace StockDistributor_Impl
                                           0,
                                           ACE_Time_Value (0, usec),
                                           ACE_Time_Value (0, usec)) == -1)
-        {
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to setup Timer\n"),
                           -1);
 
-        }
+    }
 
     this->active_ = 1;
     return 0;
@@ -81,8 +81,10 @@ namespace StockDistributor_Impl
   {
     // return if not valid.
     if (this->active_ == 0)
+	{
       return -1;
-        // cancle the timer
+	}
+    // cancle the timer
     this->reactor ()->cancel_timer (this);
     this->active_ = 0;
     return 0;
@@ -95,17 +97,18 @@ namespace StockDistributor_Impl
   }
 
   int
-  pulse_Generator::handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask)
+  pulse_Generator::handle_close (ACE_HANDLE,
+                                 ACE_Reactor_Mask)
   {
     return 0;
   }
 
   int
   pulse_Generator::handle_timeout (const ACE_Time_Value &,
-                                         const void *)
+                                   const void *)
   {
     // Notify the subscribers
-        this->pulse_callback_->push_notify_out ();
+    this->pulse_callback_->push_notify_out ();
     return 0;
   }
 
@@ -115,8 +118,8 @@ namespace StockDistributor_Impl
     // define the owner of the reactor thread
     this->reactor ()->owner (ACE_OS::thr_self ());
 
-        // run event loop to wait for event, and then dispatch them to corresponding handlers
-        this->reactor ()->run_reactor_event_loop ();
+    // run event loop to wait for event, and then dispatch them to corresponding handlers
+    this->reactor ()->run_reactor_event_loop ();
 
     return 0;
   }
@@ -202,7 +205,7 @@ namespace StockDistributor_Impl
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-        return this->rate_;
+    return this->rate_;
   }
 
   void
@@ -211,7 +214,7 @@ namespace StockDistributor_Impl
   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-        this->rate_ = rate;
+    this->rate_ = rate;
   }
 
   // Port operations.
@@ -251,15 +254,15 @@ namespace StockDistributor_Impl
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
-          this->context_ =
-                CIAO_GLUE_Stock::StockDistributor_Context::_narrow (ctx
-                                                            ACE_ENV_ARG_PARAMETER);
+    this->context_ =
+            CIAO_GLUE_Stock::StockDistributor_Context::_narrow (ctx
+                                                                ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-        if (this->context_ == 0)
-        {
+    if (this->context_ == 0)
+    {
       ACE_THROW (CORBA::INTERNAL ());
-        }
+    }
   }
 
   void
@@ -288,7 +291,7 @@ namespace StockDistributor_Impl
   ::Components::CCMException))
   {
     // Start the active object
-        this->pulser_.open ();
+    this->pulser_.open ();
   }
 
   void
@@ -298,8 +301,8 @@ namespace StockDistributor_Impl
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
-        // Deactivate the active object
-        this->pulser_.close ();
+    // Deactivate the active object
+    this->pulser_.close ();
   }
 
   void
