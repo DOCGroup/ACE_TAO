@@ -24,8 +24,11 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+// The std library that comes with VC6 is pre-standard, but
+// it's close enough that any discrepancies should be worked around
+// with individual hacks.
 # if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#   define ACE_HAS_STANDARD_CPP_LIBRARY    0
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # endif
 
 // The STL that comes with ACE uses the std namespace. Note however, it is not

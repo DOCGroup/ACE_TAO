@@ -1,3 +1,12 @@
+Thu May 26 16:13:34 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/config-win32-msvc-6.h:
+
+          The standard library that comes with vc6 is pre-standard c++, but
+        it's close enough for many things. Enabling its use should be more
+        portable. This was done long ago for the OCI versions of TAO (Since
+        1.2a), and was apparently overlooked until now.
+
 Thu May 26 15:22:10 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * Release:
