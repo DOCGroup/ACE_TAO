@@ -33,19 +33,18 @@ namespace StockBroker_Impl
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Stock::Invalid_Stock))
   {
-        if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
-        {
-          std::set<std::string>::iterator iter = this->subscribed_stock_list_.find (stock_name);
-          if (iter == this->subscribed_stock_list_.end ())
-          {
+    if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
+    {
+      std::set<std::string>::iterator iter = this->subscribed_stock_list_.find (stock_name);
+      if (iter == this->subscribed_stock_list_.end ())
+      {
         this->subscribed_stock_list_.insert (stock_name);
-          }
-        }
-        else
-        {
-          throw Stock::Invalid_Stock ();
-        }
-
+       }
+    }
+    else
+    {
+      ACE_THROW (Stock::Invalid_Stock ());
+    }
   }
 
   void
@@ -55,51 +54,49 @@ namespace StockBroker_Impl
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Stock::Invalid_Stock))
   {
-        if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
-        {
-          std::set<std::string>::iterator iter = this->subscribed_stock_list_.find (stock_name);
-          if (iter != this->subscribed_stock_list_.end ())
-          {
-            this->subscribed_stock_list_.erase (iter);
-          }
-
+    if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
+    {
+      std::set<std::string>::iterator iter = this->subscribed_stock_list_.find (stock_name);
+      if (iter != this->subscribed_stock_list_.end ())
+      {
+        this->subscribed_stock_list_.erase (iter);
+       }
     }
-        else
-        {
-          throw Stock::Invalid_Stock ();
-        }
+    else
+    {
+      ACE_THROW (Stock::Invalid_Stock ());
+    }
 
   }
 
 
   void
   StockBroker_exec_i::push_notify_in (Stock::StockName *ev
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
 
     ACE_DEBUG ((LM_INFO,
-                       "Broker - Got message from Distributor\n"));
+                "Broker - Got message from Distributor\n"));
 
     CORBA::String_var stock_name = CORBA::string_dup (ev->name ());
 
-        // Retrieve stock information if the stock name is in the subscribed_stock_list
-        if (this->subscribed_stock_list_.find (stock_name.in ()) != this->subscribed_stock_list_.end ())
-        {
-          Stock::StockQuoter_var quoter_obj = this->context_->get_connection_read_quoter (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+    // Retrieve stock information if the stock name is in the subscribed_stock_list
+    if (this->subscribed_stock_list_.find (stock_name.in ()) != this->subscribed_stock_list_.end ())
+    {
+      Stock::StockQuoter_var quoter_obj = this->context_->get_connection_read_quoter (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
 
       if (CORBA::is_nil (quoter_obj.in ()))
       ACE_THROW (CORBA::BAD_PARAM ());
 
       Stock::StockInfo_var info = quoter_obj->get_stock_info (stock_name.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+      ACE_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                 "Quoter - Current value of %s is %d\n",
+      ACE_DEBUG ((LM_DEBUG, "Quoter - Current value of %s is %d\n",
                              stock_name.in (),
-                                 info->last));
-        }
+                             info->last));
+    }
   }
 
   // Operations from Components::SessionComponent
