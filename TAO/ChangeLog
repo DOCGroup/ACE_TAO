@@ -1,3 +1,11 @@
+Thu May 26 09:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.h:
+          Removed commented out code
+
+        * tao/QtResource_Factory.h:
+          Doxygen improvement
+
 Thu May 26 08:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:
