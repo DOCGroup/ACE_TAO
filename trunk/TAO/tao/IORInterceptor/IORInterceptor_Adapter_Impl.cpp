@@ -32,7 +32,7 @@ void
 TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (())
 {
-  TAO_IORInterceptor_List::TYPE & i =
+  TAO::IORInterceptor_List::TYPE & i =
     this->ior_interceptor_list_.interceptors ();
 
   const size_t len = i.size ();
@@ -75,7 +75,7 @@ TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
   delete this;
 }
 
-TAO_IORInterceptor_List *
+TAO::IORInterceptor_List *
 TAO_IORInterceptor_Adapter_Impl::interceptor_list (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -88,7 +88,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IORInterceptor_List::TYPE & interceptors =
+  TAO::IORInterceptor_List::TYPE & interceptors =
     this->ior_interceptor_list_.interceptors ();
 
   const size_t interceptor_count = interceptors.size ();
@@ -172,7 +172,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  TAO_IORInterceptor_List::TYPE & interceptors =
+  TAO::IORInterceptor_List::TYPE & interceptors =
     this->ior_interceptor_list_.interceptors ();
 
   const size_t interceptor_count = interceptors.size ();
@@ -201,16 +201,40 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
-      const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
+      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->ior_interceptor_list_.adapter_state_changed (
-    array_obj_ref_template,
-    state
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO::IORInterceptor_List::TYPE interceptors =
+    this->ior_interceptor_list_.interceptors();
+
+  const size_t interceptor_count = interceptors.size ();
+
+  if (interceptor_count == 0)
+    return;
+
+  PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
+
+  seq_obj_ref_template.length (array_obj_ref_template.size());
+
+  for (size_t counter = 0; counter < array_obj_ref_template.size(); ++counter)
+    {
+      PortableInterceptor::ObjectReferenceTemplate *member =
+        array_obj_ref_template[counter];
+
+      CORBA::add_ref (member);
+
+      seq_obj_ref_template[counter] = member;
+    }
+
+  for (size_t i = 0; i < interceptor_count; ++i)
+    {
+      interceptors[i]->adapter_state_changed (seq_obj_ref_template,
+                                              state
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 void
@@ -223,7 +247,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
   /// Whenever the POAManager state is changed, the
   /// adapter_manager_state_changed method is to be invoked on all the IOR
   ///  Interceptors.
-  TAO_IORInterceptor_List::TYPE & interceptors =
+  TAO::IORInterceptor_List::TYPE & interceptors =
     this->ior_interceptor_list_.interceptors ();
 
   const size_t interceptor_count = interceptors.size ();

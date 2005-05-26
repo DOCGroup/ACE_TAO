@@ -560,7 +560,7 @@ TAO_ORB_Core::add_interceptor (
 
 // ------
 
-ACE_INLINE TAO_ClientRequestInterceptor_List::TYPE &
+ACE_INLINE TAO::ClientRequestInterceptor_List::TYPE &
 TAO_ORB_Core::client_request_interceptors (void)
 {
   return this->client_request_interceptors_.interceptors ();
@@ -571,7 +571,7 @@ TAO_ORB_Core::client_request_interceptors (void)
 //    there doesn't appear to be a way that only the RootPOA
 //    implementation has these server-side interceptor methods and
 //    attributes.  Leave them in the ORB Core for now.
-ACE_INLINE TAO_ServerRequestInterceptor_List::TYPE &
+ACE_INLINE TAO::ServerRequestInterceptor_List::TYPE &
 TAO_ORB_Core::server_request_interceptors (void)
 {
   return this->server_request_interceptors_.interceptors ();

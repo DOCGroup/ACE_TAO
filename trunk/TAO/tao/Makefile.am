@@ -75,7 +75,6 @@ libTAO_la_SOURCES = \
   ClientRequestInterceptorA.cpp \
   ClientRequestInterceptorC.cpp \
   ClientRequestInterceptor_Adapter.cpp \
-  ClientRequestInterceptor_List.cpp \
   Client_Strategy_Factory.cpp \
   CodecFactory.cpp \
   CodecFactory_ORBInitializer.cpp \
@@ -155,7 +154,6 @@ libTAO_la_SOURCES = \
   Incoming_Message_Queue.cpp \
   InterceptorA.cpp \
   InterceptorC.cpp \
-  Interceptor_List.cpp \
   InvalidSlotA.cpp \
   InvalidSlotC.cpp \
   Invocation_Adapter.cpp \
@@ -263,7 +261,6 @@ libTAO_la_SOURCES = \
   ServerRequestInfoC.cpp \
   ServerRequestInterceptorA.cpp \
   ServerRequestInterceptorC.cpp \
-  ServerRequestInterceptor_List.cpp \
   Server_Strategy_Factory.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
@@ -463,8 +460,6 @@ nobase_include_HEADERS = \
   ClientRequestInterceptorS.h \
   ClientRequestInterceptor_Adapter.h \
   ClientRequestInterceptor_Adapter.inl \
-  ClientRequestInterceptor_List.h \
-  ClientRequestInterceptor_List.inl \
   Client_Strategy_Factory.h \
   CodecFactory.h \
   CodecFactory_ORBInitializer.h \
@@ -596,6 +591,7 @@ nobase_include_HEADERS = \
   Interceptor.pidl \
   InterceptorC.h \
   InterceptorS.h \
+  Interceptor_List.cpp \
   Interceptor_List.h \
   InterfaceDef.pidl \
   InvalidName.pidl \
@@ -799,8 +795,6 @@ nobase_include_HEADERS = \
   ServerRequestInterceptor.pidl \
   ServerRequestInterceptorC.h \
   ServerRequestInterceptorS.h \
-  ServerRequestInterceptor_List.h \
-  ServerRequestInterceptor_List.inl \
   Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \
@@ -1824,8 +1818,7 @@ libTAO_IORInterceptor_la_SOURCES = \
   IORInterceptor/IORInfoC.cpp \
   IORInterceptor/IORInterceptorC.cpp \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp \
-  IORInterceptor/IORInterceptor_Adapter_Impl.cpp \
-  IORInterceptor/IORInterceptor_List.cpp
+  IORInterceptor/IORInterceptor_Adapter_Impl.cpp
 
 libTAO_IORInterceptor_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1847,8 +1840,6 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInterceptorC.h \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
-  IORInterceptor/IORInterceptor_List.h \
-  IORInterceptor/IORInterceptor_List.inl \
   IORInterceptor/iorinterceptor_export.h
 
 pkgconfig_DATA += TAO_IORInterceptor.pc

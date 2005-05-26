@@ -2071,7 +2071,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
       size_t len = 0;   // The length of the interceptor array.
       size_t ilen = 0;  // The incremental length of the interceptor array.
 
-      TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
+      TAO::ClientRequestInterceptor_List::TYPE &client_interceptors =
         this->client_request_interceptors_.interceptors ();
 
       len = client_interceptors.size ();
@@ -2095,7 +2095,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
           client_interceptors.size (ilen);
         }
 
-      TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
+      TAO::ServerRequestInterceptor_List::TYPE &server_interceptors =
         this->server_request_interceptors_.interceptors ();
 
       len = server_interceptors.size ();

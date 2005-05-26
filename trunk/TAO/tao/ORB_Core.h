@@ -39,8 +39,21 @@
 #include "tao/Adapter_Registry.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "ClientRequestInterceptor_List.h"
-# include "ServerRequestInterceptor_List.h"
+
+#include "tao/Interceptor_List.h"
+
+namespace TAO
+{
+  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
+    ClientRequestInterceptor_List;
+}
+
+namespace TAO
+{
+  typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor>
+    ServerRequestInterceptor_List;
+}
+
 # include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
@@ -889,12 +902,12 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
 
   /// Return the array of client-side interceptors specific to this
   /// ORB.
-  TAO_ClientRequestInterceptor_List::TYPE &
+  TAO::ClientRequestInterceptor_List::TYPE &
     client_request_interceptors (void);
 
   /// Return the array of server-side interceptors specific to this
   /// ORB.
-  TAO_ServerRequestInterceptor_List::TYPE &
+  TAO::ServerRequestInterceptor_List::TYPE &
     server_request_interceptors (void);
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -1235,10 +1248,10 @@ protected:
   TAO::PICurrent *pi_current_;
 
   /// Client request interceptor registry.
-  TAO_ClientRequestInterceptor_List client_request_interceptors_;
+  TAO::ClientRequestInterceptor_List client_request_interceptors_;
 
   /// Server request interceptor registry.
-  TAO_ServerRequestInterceptor_List server_request_interceptors_;
+  TAO::ServerRequestInterceptor_List server_request_interceptors_;
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// IORInterceptor adapter.

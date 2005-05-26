@@ -1,3 +1,40 @@
+Thu May 26 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Made the Interceptor_List a template which is now used instead of a
+        base class with derived specific list classes. This is now in the TAO
+        namespace instead of using a TAO_ prefix.
+
+        * tao/Interceptor_List.{h,cpp}:
+          The Interceptor_List is now a template
+
+        * tao/ClientRequestInterceptor_List.{h,cpp,inl}:
+        * tao/ServerRequestInterceptor_List.{h,cpp,inl}:
+        * tao/IORInterceptor/IORInterceptor_List.{h,cpp,inl}:
+          Removed these files, we have now template instantiations instead
+          of specific classes
+
+        * tao/ORB_Core.{h,cpp,i}:
+          Update for changes above.
+
+        * tao/IORInterceptor_Adapter.h:
+          Updated for interceptor list change
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+          Updated for interceptor_list change and also implemented
+          adapter_state_changed in this class because we don't have
+          a specific IORInterceptor list anymore where this was
+          implemented.
+
+        * tao/ClientRequestInterceptor_Adapter.{h,cpp,inl}:
+          Updated because of ClientInterceptorList change
+
+        * PortableServer/ServerInterceptorAdapter.h:
+          Updated because of ServerRequestInterceptor List change
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Updated for changes above
+
 Thu May 26 10:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         According to the latest C++ mapping, reference counting is mandatory;
