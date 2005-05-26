@@ -206,7 +206,8 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 */
 
-      if (factory_servant_->init (root_poa_.in (),
+      if (factory_servant_->init (orb_.in (),
+                                  root_poa_.in (),
                                   child_poa_name_,
                                   context.in ()
                                  ACE_ENV_ARG_PARAMETER) != 0)

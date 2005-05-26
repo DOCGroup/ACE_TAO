@@ -6,6 +6,7 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -15,19 +16,19 @@ ACE_RCSID (Log,
 
 #define QUERY_LANG_SUPPORTED_BY_LOG "EXTENDED_TCL"
 
-TAO_Log_i::TAO_Log_i (DsLogAdmin::LogMgr_ptr factory,
+TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
+                      DsLogAdmin::LogMgr_ptr factory,
                       DsLogAdmin::LogId id,
                       TAO_LogNotification *log_notifier,
                       DsLogAdmin::LogFullActionType log_full_action,
-                      CORBA::ULongLong max_size,
-                      ACE_Reactor *reactor)
+                      CORBA::ULongLong max_size)
   : factory_ (DsLogAdmin::LogMgr::_duplicate (factory)),
     log_full_action_ (log_full_action),
     logid_ (id),
     admin_state_ (DsLogAdmin::locked),
     forward_state_ (DsLogAdmin::off),
     op_state_ (DsLogAdmin::disabled),
-    reactor_ (reactor),
+    reactor_ (orb->orb_core()->reactor()),
     recordstore_ (max_size, id),
     max_rec_list_len_ (LOG_DEFAULT_MAX_REC_LIST_LEN)
 {
@@ -1254,7 +1255,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 
   TimeBase::TimeT purge_time;
   ORBSVCS_Time::Time_Value_to_TimeT (purge_time,
-				     (ACE_OS::gettimeofday() - ACE_Time_Value(this->max_record_life_)));
+                                     (ACE_OS::gettimeofday() - ACE_Time_Value(this->max_record_life_)));
 
   CORBA::ULongLong p_time = (CORBA::ULongLong) purge_time;
 

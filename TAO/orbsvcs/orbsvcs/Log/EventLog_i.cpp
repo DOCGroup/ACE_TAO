@@ -6,15 +6,15 @@ ACE_RCSID (Log,
            EventLog_i,
            "$Id$")
 
-TAO_EventLog_i::TAO_EventLog_i (TAO_LogMgr_i &logmgr_i,
+TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
+                                TAO_LogMgr_i &logmgr_i,
                                 DsLogAdmin::LogMgr_ptr factory,
                                 TAO_EventLogFactory_i *event_log_factory,
                                 TAO_LogNotification *log_notifier,
                                 DsLogAdmin::LogId id,
                                 DsLogAdmin::LogFullActionType log_full_action,
-                                CORBA::ULongLong max_size,
-                                ACE_Reactor *reactor)
-  : TAO_Log_i (factory, id, log_notifier, log_full_action, max_size, reactor),
+                                CORBA::ULongLong max_size)
+  : TAO_Log_i (orb, factory, id, log_notifier, log_full_action, max_size),
     logmgr_i_(logmgr_i)
 {
   ACE_UNUSED_ARG (event_log_factory);

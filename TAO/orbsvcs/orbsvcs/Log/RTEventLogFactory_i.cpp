@@ -33,13 +33,16 @@ TAO_RTEventLogFactory_i::~TAO_RTEventLogFactory_i()
 }
 
 int
-TAO_RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
+TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
+                               PortableServer::POA_ptr poa,
                                const char* child_poa_name,
                                CosNaming::NamingContext_ptr naming
                                ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (poa))
     return -1;
+
+  this->orb_ = CORBA::ORB::_duplicate(orb);
 
   this->naming_ = CosNaming::NamingContext::_duplicate (naming);
   // Save the naming context.
@@ -216,7 +219,8 @@ TAO_RTEventLogFactory_i::create_with_id (
   TAO_RTEventLog_i* event_log_i;
 
   ACE_NEW_THROW_EX (event_log_i,
-                    TAO_RTEventLog_i (*this,
+                    TAO_RTEventLog_i (this->orb_,
+                                      *this,
                                       this->log_mgr_.in (),
                                       this,
                                       this->notifier_,

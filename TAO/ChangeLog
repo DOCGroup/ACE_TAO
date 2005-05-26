@@ -1,4 +1,49 @@
-Wed May 25 20:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed May 25 23:42:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+
+	  Changed to pass the ORB pointer to the factories' activate()
+	  method.
+
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+	  Changed to pass the ORB pointer to the factory's init() method.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h
+
+	  Changed to stash away ORB pointer in the activate() method, and
+	  to pass it to the Log servant constructors.
+
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h
+
+	  Changed to stash away ORB pointer in the init() method, and to
+	  pass it to the RTEventLog servant constructor.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp
+	* orbsvcs/orbsvcs/Log/Log_i.h
+	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp
+	* orbsvcs/orbsvcs/Log/BasicLog_i.h
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp
+	* orbsvcs/orbsvcs/Log/EventLog_i.h
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.h
+
+	  Changed constructor to take an ORB pointer instead of a Reactor
+	  pointer.  The latter had defaulted to use the Reactor Singleton
+	  instance, but using the servant ORB's reactor ensures the event
+	  loop will be active.  Curiously, the old reactor pointer wasn't
+	  being used.  That will change soon, as we'll be adding timer
+	  handlers for database flush and compaction.
+	Wed May 25 20:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
           Use rtevent_serv as base project
