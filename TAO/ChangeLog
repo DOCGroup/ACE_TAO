@@ -1,3 +1,9 @@
+Thu May 26 16:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+          Updated for interceptor_list changes
+
 Thu May 26 14:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Interceptor_List.cpp:
