@@ -5,18 +5,12 @@
 CROSS-COMPILE = 1
 static_libs_only = 1
 
-ifeq (,$(debug))
-  debug = 1
-endif # ! debug
-ifeq (,$(optimize))
-  optimize = 1
-endif # ! optimize
-ifeq (,$(repo))
-  repo = 1
-endif # ! repo
+debug ?= 1
+optimize ?= 1
+repo ?= 1
 
 pipes ?= 1
- 
+
 CC      = i386-nto-gcc
 CXX     = i386-nto-g++
 
@@ -35,7 +29,7 @@ SOFLAGS += -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

@@ -11,15 +11,9 @@
 
 CROSS-COMPILE = 1
 
-ifndef debug
-  debug = 1
-endif # ! debug
-ifndef optimize
-  optimize = 1
-endif # ! optimize
-ifndef rtti
-  rtti =
-endif # ! rtti
+debug ?= 1
+optimize ?= 1
+rtti ?= 1
 
 shared_libs =
 static_libs = 1

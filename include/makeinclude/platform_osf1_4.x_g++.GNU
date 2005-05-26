@@ -2,25 +2,11 @@
 
 # This platform macros file is intended to work with Digital UNIX 4.x
 # (OSF/1 4.x) and GCC in version 2.7.2.1 (or newer).
-
-ifeq (,$(debug))
-  debug = 1
-endif
-
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(rtti))
-   rtti = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
-
-ifeq (,$(optimize))
-  optimize = 1
-endif
+debug ?= 1
+exceptions ?= 1
+rtti ?= 1
+threads ?= 1
+optimize ?= 1
 
 CC              = gcc
 CXX             = g++

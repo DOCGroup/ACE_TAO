@@ -2,28 +2,16 @@
 
 # This platform macros file is intended to work with Digital UNIX 3.2
 # (OSF/1 3.2g) with CXX 5.7 or later.
-
-ifeq (,$(debug))
-  debug = 1
-endif
+debug ?= 1
 
 # exceptions=1 is the default on this platform. exceptions=0 has not
 # been tested. See the bottom of this file for more. Turning off exceptions
 # on this platform can cause bad things to happen.
-
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
+exceptions ?= 1
 
 # We want to test with rtti=1
-
-ifeq (,$(rtti))
-   rtti = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
+rtti ?= 1
+threads ?= 1
 
 CC              = cxx
 CXX             = $(CC)
