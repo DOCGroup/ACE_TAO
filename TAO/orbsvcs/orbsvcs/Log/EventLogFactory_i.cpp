@@ -74,9 +74,12 @@ TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */
 }
 
 DsEventLogAdmin::EventLogFactory_ptr
-TAO_EventLogFactory_i::activate (PortableServer::POA_ptr poa
+TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
+                                 PortableServer::POA_ptr poa
                                  ACE_ENV_ARG_DECL)
 {
+  this->orb_ = CORBA::ORB::_duplicate(orb);
+
   this->poa_ = poa;
   this->event_channel_ = init (this->poa_.in () ACE_ENV_ARG_PARAMETER);
 
@@ -169,7 +172,8 @@ TAO_EventLogFactory_i::create_with_id (
   TAO_EventLog_i* event_log_i;
 
   ACE_NEW_THROW_EX (event_log_i,
-                    TAO_EventLog_i (*this,
+                    TAO_EventLog_i (this->orb_,
+                                    *this,
                                     this->log_mgr_.in (),
                                     this,
                                     this->notifier_,

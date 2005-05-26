@@ -13,9 +13,12 @@ TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i (void)
 }
 
 DsLogAdmin::BasicLogFactory_ptr
-TAO_BasicLogFactory_i::activate (PortableServer::POA_ptr poa
+TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
+                                 PortableServer::POA_ptr poa
                                  ACE_ENV_ARG_DECL)
 {
+  this->orb_ = CORBA::ORB::_duplicate(orb);
+
   PortableServer::ObjectId_var oid =
     poa->activate_object (this
                           ACE_ENV_ARG_PARAMETER);
@@ -86,7 +89,8 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   TAO_BasicLog_i* basic_log_i;
 
   ACE_NEW_THROW_EX (basic_log_i,
-                    TAO_BasicLog_i (*this,
+                    TAO_BasicLog_i (this->orb_,
+                                    *this,
                                     this->log_mgr_.in (),
                                     id,
                                     full_action,

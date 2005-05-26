@@ -54,9 +54,10 @@ public:
   /// Destructor.
   ~TAO_BasicLogFactory_i ();
 
-  /// Activate this servant with the POA passed in.
+  /// Activate this servant with the ORB and POA passed in.
   DsLogAdmin::BasicLogFactory_ptr
-    activate (PortableServer::POA_ptr poa
+    activate (CORBA::ORB_ptr orb,
+              PortableServer::POA_ptr poa
               ACE_ENV_ARG_DECL);
 
   /// Allows clients to create new BasicLog objects. Raises
@@ -83,9 +84,10 @@ public:
                      ));
 
 protected:
+  CORBA::ORB_ptr                orb_;
 
   /// Our object ref. after <active>ation.
-  DsLogAdmin::LogMgr_var log_mgr_;
+  DsLogAdmin::LogMgr_var        log_mgr_;
 
 };
 

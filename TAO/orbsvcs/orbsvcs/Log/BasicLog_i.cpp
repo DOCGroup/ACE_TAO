@@ -6,13 +6,13 @@ ACE_RCSID (Log,
            BasicLog_i,
            "$Id$")
 
-TAO_BasicLog_i::TAO_BasicLog_i (TAO_LogMgr_i &logmgr_i,
+TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
+                                TAO_LogMgr_i &logmgr_i,
                                 DsLogAdmin::LogMgr_ptr factory,
                                 DsLogAdmin::LogId id,
                                 DsLogAdmin::LogFullActionType log_full_action,
-                                CORBA::ULongLong max_size,
-                                ACE_Reactor *reactor)
-  : TAO_Log_i (factory, id, 0, log_full_action, max_size, reactor),
+                                CORBA::ULongLong max_size)
+  : TAO_Log_i (orb, factory, id, 0, log_full_action, max_size),
     logmgr_i_(logmgr_i)
 {
   // No-Op.

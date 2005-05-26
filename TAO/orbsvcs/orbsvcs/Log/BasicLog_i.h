@@ -54,12 +54,12 @@ class TAO_Log_Serv_Export TAO_BasicLog_i :
 public:
 
   /// Constructor.
-  TAO_BasicLog_i (TAO_LogMgr_i &logmgr_i,
+  TAO_BasicLog_i (CORBA::ORB_ptr orb,
+                  TAO_LogMgr_i &logmgr_i,
                   DsLogAdmin::LogMgr_ptr factory,
                   DsLogAdmin::LogId id,
                   DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-                  CORBA::ULongLong max_size = 0,
-                  ACE_Reactor *reactor = ACE_Reactor::instance ());
+                  CORBA::ULongLong max_size = 0);
 
   /// Duplicate the log.
   virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id

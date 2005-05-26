@@ -57,15 +57,15 @@ public:
   // = Initialization and Termination.
 
   /// Constructor.
-  TAO_NotifyLog_i (TAO_LogMgr_i &logmgr_i,
+  TAO_NotifyLog_i (CORBA::ORB_ptr orb,
+                   TAO_LogMgr_i &logmgr_i,
                    DsLogAdmin::LogMgr_ptr factory,
                    TAO_NotifyLogFactory_i *notify_log_factory,
                    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
                    TAO_LogNotification *log_notifier,
                    DsLogAdmin::LogId id,
                    DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-                   CORBA::ULongLong max_size = 0,
-                   ACE_Reactor *reactor = ACE_Reactor::instance ());
+                   CORBA::ULongLong max_size = 0);
 
   /// Destructor.
   ~TAO_NotifyLog_i ();

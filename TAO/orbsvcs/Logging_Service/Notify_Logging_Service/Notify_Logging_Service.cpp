@@ -82,21 +82,21 @@ Notify_Logging_Service::parse_args (int argc, char *argv[])
         {
         case 'n':
           service_name_ = get_opt.opt_arg();
-          break; 
- 
+          break;
+
         case 'o':
           ior_file_name_ = get_opt.opt_arg();
           break;
-  
+
         case 'p':
           pid_file_name_ = get_opt.opt_arg();
           break;
- 
+
         case 'x':
           bind_to_naming_service_ = 0;
           break;
 
-        case '?':              
+        case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
@@ -106,10 +106,10 @@ Notify_Logging_Service::parse_args (int argc, char *argv[])
                       "-x [disable naming service bind] "
                       "\n",
                       argv[0]));
-          return -1;            
-        }                       
+          return -1;
+        }
     }
-      
+
   return 0;
 }
 
@@ -141,7 +141,9 @@ Notify_Logging_Service::init (int argc, char *argv[]
                       CORBA::NO_MEMORY ());
 
   DsNotifyLogAdmin::NotifyLogFactory_var obj =
-    notify_log_factory_->activate (this->poa_.in () ACE_ENV_ARG_PARAMETER);
+    notify_log_factory_->activate (this->orb_.in (),
+                                   this->poa_.in ()
+                                   ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
 
@@ -152,16 +154,16 @@ Notify_Logging_Service::init (int argc, char *argv[]
   ACE_DEBUG ((LM_DEBUG,
               "The Notify Log Factory IOR is <%s>\n", str.in()));
 
-  if (ior_file_name_ != 0) 
+  if (ior_file_name_ != 0)
     {
       FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
-      if (iorf == 0) 
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "Cannot open output file for writing IOR: %s",
-			     ior_file_name_),
-			    -1);
-	}
+      if (iorf == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_file_name_),
+                            -1);
+        }
 
       ACE_OS::fprintf (iorf, "%s\n", str.in ());
       ACE_OS::fclose (iorf);
@@ -171,15 +173,15 @@ Notify_Logging_Service::init (int argc, char *argv[]
     {
       FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
       if (pidf != 0)
-	{
-	  ACE_OS::fprintf (pidf,
-			   "%ld\n",
-			   static_cast<long> (ACE_OS::getpid ()));
-	  ACE_OS::fclose (pidf);
-	}
+        {
+          ACE_OS::fprintf (pidf,
+                           "%ld\n",
+                           static_cast<long> (ACE_OS::getpid ()));
+          ACE_OS::fclose (pidf);
+        }
     }
 
-  if (bind_to_naming_service_) 
+  if (bind_to_naming_service_)
     {
       // Resolve the naming service.
       resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -194,13 +196,13 @@ Notify_Logging_Service::init (int argc, char *argv[]
       ACE_CHECK_RETURN (-1);
 
       this->naming_->rebind (name,
-			     obj.in ()
-			     ACE_ENV_ARG_PARAMETER);
+                             obj.in ()
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Registered with the naming service as: %s\n",
-		  this->service_name_));
+                  "Registered with the naming service as: %s\n",
+                  this->service_name_));
     }
 
   return 0;
@@ -260,7 +262,7 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (bind_to_naming_service_) 
+  if (bind_to_naming_service_)
     {
       CosNaming::Name name (1);
       name.length (1);
@@ -268,7 +270,7 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       this->naming_->unbind (name
-			     ACE_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
