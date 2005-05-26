@@ -57,39 +57,39 @@ Basic_Logging_Service::parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:x"));
   int opt;
-  
+
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
-    	{
-	case 'n':
-	  service_name_ = get_opt.opt_arg();
-	  break;
-		
-	case 'o':
-	  ior_file_name_ = get_opt.opt_arg();
-	  break;
+        {
+        case 'n':
+          service_name_ = get_opt.opt_arg();
+          break;
 
-	case 'p':
-	  pid_file_name_ = get_opt.opt_arg();
-	  break;
-	  
-	case 'x':
-	  bind_to_naming_service_ = 0;
-	  break;
+        case 'o':
+          ior_file_name_ = get_opt.opt_arg();
+          break;
 
-	case '?':
-	default:
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Usage: %s "
+        case 'p':
+          pid_file_name_ = get_opt.opt_arg();
+          break;
+
+        case 'x':
+          bind_to_naming_service_ = 0;
+          break;
+
+        case '?':
+        default:
+          ACE_DEBUG ((LM_DEBUG,
+                      "Usage: %s "
                       "-n service_name "
                       "-o ior_file_name "
                       "-p pid_file_name "
-		      "-x [disable naming service bind] "
-		      "\n",
-		      argv[0]));
-	  return -1;
-	}
+                      "-x [disable naming service bind] "
+                      "\n",
+                      argv[0]));
+          return -1;
+        }
     }
 
   return 0;
@@ -113,7 +113,8 @@ Basic_Logging_Service::startup (int argc, char *argv[]
   // Activate the basic log factory
   // CORBA::Object_var obj =
   DsLogAdmin::BasicLogFactory_var obj =
-    this->basic_log_factory_.activate (this->poa_.in ()
+    this->basic_log_factory_.activate (this->orb_.in (),
+                                       this->poa_.in ()
                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
@@ -129,12 +130,12 @@ Basic_Logging_Service::startup (int argc, char *argv[]
     {
       FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
       if (iorf == 0) {
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Cannot open output file for writing IOR: %s",
-			   ior_file_name_),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_file_name_),
+                          -1);
       }
-      
+
       ACE_OS::fprintf (iorf, "%s\n", str.in ());
       ACE_OS::fclose (iorf);
     }
@@ -143,15 +144,15 @@ Basic_Logging_Service::startup (int argc, char *argv[]
     {
       FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
       if (pidf != 0)
-	{
-	  ACE_OS::fprintf (pidf,
-			   "%ld\n",
-			   static_cast<long> (ACE_OS::getpid ()));
-	  ACE_OS::fclose (pidf);
-	}
+        {
+          ACE_OS::fprintf (pidf,
+                           "%ld\n",
+                           static_cast<long> (ACE_OS::getpid ()));
+          ACE_OS::fclose (pidf);
+        }
     }
-  
-  if (bind_to_naming_service_) 
+
+  if (bind_to_naming_service_)
     {
       // Resolve the naming service.
       this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -165,13 +166,13 @@ Basic_Logging_Service::startup (int argc, char *argv[]
       name[0].id = CORBA::string_dup (this->service_name_);
 
       this->naming_->rebind (name,
-			     obj.in ()
-			     ACE_ENV_ARG_PARAMETER);
+                             obj.in ()
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Registered with the naming service as: %s\n",
-		  this->service_name_));
+                  "Registered with the naming service as: %s\n",
+                  this->service_name_));
     }
 
   return 0;
@@ -229,7 +230,7 @@ Basic_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (bind_to_naming_service_) 
+  if (bind_to_naming_service_)
     {
       // Unbind from the naming service.
       CosNaming::Name name (1);
@@ -237,7 +238,7 @@ Basic_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       name[0].id = CORBA::string_dup (this->service_name_);
 
       this->naming_->unbind (name
-			     ACE_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
     }
 
   // Shutdown the ORB.

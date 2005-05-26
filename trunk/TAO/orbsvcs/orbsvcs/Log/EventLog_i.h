@@ -61,14 +61,14 @@ public:
   // = Initialization and Termination.
 
   /// Constructor.
-  TAO_EventLog_i (TAO_LogMgr_i &logmgr_i,
+  TAO_EventLog_i (CORBA::ORB_ptr orb,
+                  TAO_LogMgr_i &logmgr_i,
                   DsLogAdmin::LogMgr_ptr factory,
                   TAO_EventLogFactory_i *event_log_factory,
                   TAO_LogNotification *log_notifier,
                   DsLogAdmin::LogId id,
                   DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-                  CORBA::ULongLong max_size = 0,
-                  ACE_Reactor *reactor = ACE_Reactor::instance ());
+                  CORBA::ULongLong max_size = 0);
 
   /// Duplicate the log.
   virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id

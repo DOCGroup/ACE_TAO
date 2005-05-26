@@ -9,16 +9,16 @@ ACE_RCSID (Log,
 #define CA_FILTER "threshold > 10"
 #define TCL_GRAMMAR "TCL"
 
-TAO_NotifyLog_i::TAO_NotifyLog_i (TAO_LogMgr_i &logmgr_i,
+TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
+                                  TAO_LogMgr_i &logmgr_i,
                                   DsLogAdmin::LogMgr_ptr factory,
                                   TAO_NotifyLogFactory_i *notify_log_factory,
                                   CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
                                   TAO_LogNotification *log_notifier,
                                   DsLogAdmin::LogId id,
                                   DsLogAdmin::LogFullActionType log_full_action,
-                                  CORBA::ULongLong max_size,
-                                  ACE_Reactor *reactor)
-  : TAO_Log_i (factory, id, log_notifier, log_full_action, max_size, reactor),
+                                  CORBA::ULongLong max_size)
+  : TAO_Log_i (orb, factory, id, log_notifier, log_full_action, max_size),
   logmgr_i_(logmgr_i), notify_factory_ (CosNotifyChannelAdmin::EventChannelFactory::_duplicate (ecf))
 {
   ACE_UNUSED_ARG (notify_log_factory);

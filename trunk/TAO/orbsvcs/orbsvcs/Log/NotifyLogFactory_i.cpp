@@ -51,9 +51,12 @@ TAO_NotifyLogFactory_i::~TAO_NotifyLogFactory_i()
 }
 
 DsNotifyLogAdmin::NotifyLogFactory_ptr
-TAO_NotifyLogFactory_i::activate (PortableServer::POA_ptr poa
+TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
+                                  PortableServer::POA_ptr poa
                                   ACE_ENV_ARG_DECL)
 {
+  this->orb_ = CORBA::ORB::_duplicate(orb);
+
   DsNotifyLogAdmin::NotifyLogFactory_var v_return;
 
   PortableServer::ObjectId_var oid =
@@ -156,7 +159,8 @@ TAO_NotifyLogFactory_i::create_with_id (
   TAO_NotifyLog_i* notify_log_i;
 
   ACE_NEW_THROW_EX (notify_log_i,
-                    TAO_NotifyLog_i (*this,
+                    TAO_NotifyLog_i (this->orb_,
+                                     *this,
                                      this->log_mgr_.in (),
                                      this,
                                      this->notify_factory_.in (),

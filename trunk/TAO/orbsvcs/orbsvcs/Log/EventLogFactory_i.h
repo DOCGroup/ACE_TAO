@@ -67,9 +67,10 @@ public:
     init (PortableServer::POA_ptr poa
               ACE_ENV_ARG_DECL);
 
-  /// Activate this servant with the POA passed in.
+  /// Activate this servant with the ORB and POA passed in.
   DsEventLogAdmin::EventLogFactory_ptr
-    activate (PortableServer::POA_ptr poa
+    activate (CORBA::ORB_ptr orb,
+              PortableServer::POA_ptr poa
               ACE_ENV_ARG_DECL);
 
   /// Used to create an EventLog.
@@ -133,8 +134,11 @@ protected:
   /// The ConsumerAdmin that the EventLogFactory supports.
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
+  /// ORB.
+  CORBA::ORB_var                orb_;
+
   /// POA.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var       poa_;
 };
 
 #if defined(_MSC_VER)

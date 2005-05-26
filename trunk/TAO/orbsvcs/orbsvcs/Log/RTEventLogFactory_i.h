@@ -62,10 +62,11 @@ public:
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
   int
-  init (PortableServer::POA_ptr poa,
-          const char* child_poa_name,
-          CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ()
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  init (CORBA::ORB_ptr orb,
+        PortableServer::POA_ptr poa,
+        const char* child_poa_name,
+        CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ()
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Activate this servant with the POA passed in.
   RTEventLogAdmin::EventLogFactory_ptr
@@ -125,11 +126,14 @@ protected:
   /// The ConsumerAdmin that the EventLogFactory supports.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
+  /// ORB.
+  CORBA::ORB_var                orb_;
+
   /// The POA with which we activate all the RTEventLogs.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var       poa_;
 
   /// The naming context to use.
-  CosNaming::NamingContext_var naming_;
+  CosNaming::NamingContext_var  naming_;
 };
 
 #if defined(_MSC_VER)

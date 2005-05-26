@@ -45,12 +45,12 @@ class TAO_Log_Serv_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 public:
 
   /// Constructor.
-  TAO_Log_i (DsLogAdmin::LogMgr_ptr factory,
+  TAO_Log_i (CORBA::ORB_ptr orb,
+             DsLogAdmin::LogMgr_ptr factory,
              DsLogAdmin::LogId id,
              TAO_LogNotification *log_notifier,
              DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-             CORBA::ULongLong max_size = 0,
-             ACE_Reactor *reactor = ACE_Reactor::instance ());
+             CORBA::ULongLong max_size = 0);
 
   /// Destructor.
   ~TAO_Log_i ();

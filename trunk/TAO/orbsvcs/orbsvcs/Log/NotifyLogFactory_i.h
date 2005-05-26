@@ -57,9 +57,10 @@ public:
   /// Destructor.
   ~TAO_NotifyLogFactory_i ();
 
-  /// Activate this servant with the POA passed in.
+  /// Activate this servant with the ORB and POA passed in.
   DsNotifyLogAdmin::NotifyLogFactory_ptr
-    activate (PortableServer::POA_ptr poa
+    activate (CORBA::ORB_ptr orb,
+              PortableServer::POA_ptr poa
               ACE_ENV_ARG_DECL);
 
   /// Used to create an NotifyLog.
@@ -260,8 +261,11 @@ protected:
   /// The EventChannelFactory used to create an EventChannel.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 
+  /// ORB.
+  CORBA::ORB_var                orb_;
+
   /// POA.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var       poa_;
 };
 
 #if defined(_MSC_VER)
