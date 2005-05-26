@@ -30,7 +30,14 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ClientRequestInterceptor_List.h"
+#include "Interceptor_List.h"
+#include "ClientRequestInterceptorC.h"
+
+namespace TAO
+{
+  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
+    ClientRequestInterceptor_List;
+}
 
 class TAO_ClientRequestInfo;
 class TAO_ClientRequestInfo_i;
@@ -51,11 +58,10 @@ namespace TAO
    */
   class TAO_Export ClientRequestInterceptor_Adapter
   {
-
   public:
 
     ClientRequestInterceptor_Adapter (
-        TAO_ClientRequestInterceptor_List::TYPE & interceptors,
+        ClientRequestInterceptor_List::TYPE & interceptors,
         Invocation_Base *invocation
       );
 
@@ -103,7 +109,7 @@ namespace TAO
   private:
 
     /// Reference to the list of registered interceptors.
-    TAO_ClientRequestInterceptor_List::TYPE & interceptors_;
+    ClientRequestInterceptor_List::TYPE & interceptors_;
 
     /// Pointer to the GIOP invocation object for the current request.
     Invocation_Base * invocation_;
@@ -127,7 +133,6 @@ namespace TAO
      *       access in each interception point.
      */
     TAO_ClientRequestInfo * info_;
-
   };
 
 }

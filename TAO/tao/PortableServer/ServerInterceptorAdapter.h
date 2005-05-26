@@ -32,10 +32,16 @@
 #include "portableserver_export.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/ServerRequestInterceptor_List.h"
+#include "tao/Interceptor_List.h"
+#include "tao/ServerRequestInterceptorC.h"
+
+namespace TAO
+{
+  typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor>
+    ServerRequestInterceptor_List;
+}
 
 class TAO_ServerRequest;
-
 
 namespace TAO
 {
@@ -110,7 +116,7 @@ namespace TAO
   private:
 
     /// Reference to the list of registered interceptors.
-    TAO_ServerRequestInterceptor_List::TYPE & interceptors_;
+    TAO::ServerRequestInterceptor_List::TYPE & interceptors_;
 
     /// Cache the length of the interceptor list so that we don't have
     /// to compute it at each stage of the current interception.
