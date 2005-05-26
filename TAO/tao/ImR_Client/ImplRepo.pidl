@@ -6,11 +6,11 @@
  *
  * $Id$
  *
- * This file was used to generate the code in ImplRepo{C,S}.{h,inl,cpp}
+ * This file was used to generate the code in ImplRepo{A,C,S}.{h,inl,cpp}
  *
  * The command used to generate code from this file is:
  *
- *   tao_idl -GA -Ssi -Gp -Gd -Ge 1 -Sc -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=imr_client_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
+ *   tao_idl -GA -Ssi -Gp -Gd -Ge 1 -I$(TAO_ROOT) -Sc -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=imr_client_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
  *
  */
 //=============================================================================
@@ -118,7 +118,7 @@ module ImplementationRepository
     void activate_server (in string server)
       raises (NotFound, CannotActivate);
 
-    /// Add/Update the the <server> 
+    /// Add/Update the the <server>
     /// The <NotFound> exception is raised when the activator specified
     /// in the options is not registered.
     void add_or_update_server (in string server, in StartupOptions options)
