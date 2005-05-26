@@ -1,3 +1,10 @@
+Thu May 26 07:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+          Also add a process directive that uses the xml svc.conf way of specifying
+          this. This fixes bugzilla 2127. Thanks to Lothar Werzinger
+          <lothar at xcerla dot com> for reporting this.
+
 Wed May 25 23:42:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
@@ -43,7 +50,8 @@ Wed May 25 23:42:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	  loop will be active.  Curiously, the old reactor pointer wasn't
 	  being used.  That will change soon, as we'll be adding timer
 	  handlers for database flush and compaction.
-	Wed May 25 20:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+Wed May 25 20:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
           Use rtevent_serv as base project
