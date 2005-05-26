@@ -1,3 +1,8 @@
+Thu May 26 14:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Interceptor_List.cpp:
+          Fixed gnu warning
+
 Thu May 26 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Made the Interceptor_List a template which is now used instead of a
