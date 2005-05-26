@@ -5,35 +5,21 @@
 
 # Note that TAO has not been tested with debug=0 on this platform. So
 # you should be careful when turning off debug.
-
-ifeq (,$(debug))
-  debug = 1
-endif
+debug ?= 1
 
 # exceptions=1 is the default on this platform. exceptions=0 has not
 # been tested. See the bottom of this file for more. Turning off exceptions
 # on this platform can cause bad things to happen.
-
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
+exceptions ?= 1
 
 # We want to test with rtti=1
-
-ifeq (,$(rtti))
-   rtti = 1
-endif
-
-ifeq (,$(threads))
-  threads = 1
-endif
+rtti ?= 1
+threads ?= 1
 
 # Use of Standard C++ Library requires some flags to be added to the
 # compile line
 #
-ifeq (,$(stdcpplib))
-  stdcpplib = 1
-endif
+stdcpplib ?= 1
 
 CC              = cxx
 CXX             = $(CC)

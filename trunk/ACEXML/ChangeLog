@@ -1,3 +1,8 @@
+Thu May 26 07:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/XML_Util.h:
+          Fixed pragma once warning
+
 Tue May 24 18:39:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* common/Makefile.am:
