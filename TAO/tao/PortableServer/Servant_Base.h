@@ -34,6 +34,26 @@ class TAO_Operation_Table;
  *
  * The POA spec requires that all servants inherit from this class'
  * base class.
+ *
+ * An instance of a servant class derived from
+ * ServantBase initially has a reference count of
+ * one. Invoking _add_ref on the servant instance increases its
+ * reference count by one. Invoking _remove_ref on the servant
+ * instance decreases its reference count by one; if the
+ * resulting reference count equals zero, _remove_ref invokes
+ * delete on its this pointer in order to destroy the
+ * servant. For ORBs that operate in multi-threaded
+ * environments, the implementations of _add_ref and _remove_ref
+ * that the ServantBase class provides shall be
+ * thread-safe.
+ *
+ * Like ServantBase supports copy
+ * construction and the default assignment operation. Copy
+ * construction always sets the reference count of the new
+ * servant instance to one. The default assignment
+ * implementation merely returns *this and does not affect the
+ * reference count.
+ *
  */
 class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase
@@ -95,6 +115,26 @@ public:
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 
+  //@{
+  /**
+   * @name Reference Counting Operations
+   */
+  /// Increase reference count by one.
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+
+  /**
+   * Decreases reference count by one; if the resulting reference
+   * count equals zero, _remove_ref invokes delete on its this pointer
+   * in order to destroy the servant.
+   */
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+
+  /**
+   * Returns the current reference count value.
+   */
+  virtual CORBA::ULong _refcount_value (ACE_ENV_SINGLE_ARG_DECL) const;
+  //@}
+
 protected:
 
   /// Default constructor, only derived classes can be created.
@@ -117,80 +157,12 @@ protected:
                                              ACE_ENV_ARG_DECL);
 
 protected:
+  /// Reference counter.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
 
   /// The operation table for this servant.  It is initialized by the
   /// most derived class.
   TAO_Operation_Table * optable_;
-
-};
-
-/**
- * @class TAO_RefCountServantBase
- *
- * @brief Reference counting mix-in class.
- *
- * The RefCountServantBase mix-in class overrides the inherited
- * _add_ref and _remove_ref functions it inherits from
- * ServantBase, implementing them to provide true reference
- * counting. An instance of a servant class derived from
- * RefCountServantBase initially has a reference count of
- * one. Invoking _add_ref on the servant instance increases its
- * reference count by one. Invoking _remove_ref on the servant
- * instance decreases its reference count by one; if the
- * resulting reference count equals zero, _remove_ref invokes
- * delete on its this pointer in order to destroy the
- * servant. For ORBs that operate in multi-threaded
- * environments, the implementations of _add_ref and _remove_ref
- * that the RefCountServantBase class provides shall be
- * thread-safe.
- *
- * Like ServantBase, RefCountServantBase supports copy
- * construction and the default assignment operation. Copy
- * construction always sets the reference count of the new
- * servant instance to one. The default assignment
- * implementation merely returns *this and does not affect the
- * reference count.
- */
-class TAO_PortableServer_Export TAO_RefCountServantBase
-  : public virtual TAO_ServantBase
-{
-public:
-
-  /// Destructor.
-  ~TAO_RefCountServantBase (void);
-
-  /// Increase reference count by one.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-
-  /**
-   * Decreases reference count by one; if the resulting reference
-   * count equals zero, _remove_ref invokes delete on its this pointer
-   * in order to destroy the servant.
-   */
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
-
-  /**
-   * Returns the current reference count value.
-   */
-  virtual CORBA::ULong _refcount_value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
-
-protected:
-
-  /// Constructor: initial reference count is one.
-  TAO_RefCountServantBase (void);
-
-  /// Copy Constructor: Always sets the reference count of the new
-  /// servant instance to one.
-  TAO_RefCountServantBase (const TAO_RefCountServantBase &);
-
-  /// The default assignment implementation merely returns *this and
-  /// does not affect the reference count.
-  TAO_RefCountServantBase &operator= (const TAO_RefCountServantBase &);
-
-private:
-
-  /// Reference counter.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
 };
 
 class TAO_PortableServer_Export TAO_Servant_Hash

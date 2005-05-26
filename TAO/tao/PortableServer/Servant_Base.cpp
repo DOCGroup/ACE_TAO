@@ -46,12 +46,14 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 
 TAO_ServantBase::TAO_ServantBase (void)
   : TAO_Abstract_ServantBase ()
+  , ref_count_ (1)
   , optable_ (0)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
   : TAO_Abstract_ServantBase ()
+  , ref_count_ (1)
   , optable_ (rhs.optable_)
 {
 }
@@ -319,19 +321,14 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
   return;
 }
 
-
-TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
-{
-}
-
 void
-TAO_RefCountServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ++this->ref_count_;
 }
 
 void
-TAO_RefCountServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   const CORBA::ULong new_count = --this->ref_count_;
 
@@ -340,31 +337,9 @@ TAO_RefCountServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::ULong
-TAO_RefCountServantBase::_refcount_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+TAO_ServantBase::_refcount_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->ref_count_.value ();
-}
-
-TAO_RefCountServantBase::TAO_RefCountServantBase (void)
-  : TAO_Abstract_ServantBase ()
-    , TAO_ServantBase ()
-    , ref_count_ (1)
-{
-}
-
-TAO_RefCountServantBase::TAO_RefCountServantBase (
-    const TAO_RefCountServantBase &
-  )
-  : TAO_Abstract_ServantBase ()
-    , TAO_ServantBase ()
-    , ref_count_ (1)
-{
-}
-
-TAO_RefCountServantBase &
-TAO_RefCountServantBase::operator= (const TAO_RefCountServantBase &)
-{
-  return *this;
 }
 
 TAO_ServantBase_var::TAO_ServantBase_var (void)
