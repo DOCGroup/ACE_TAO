@@ -1,3 +1,18 @@
+Thu May 26 16:09:50 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          Functions with two or more try blocks must use ACE_TRY_EX.
+
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+
+          Use getline() instead of operator>> to read in lines of
+        text from a file into a std::string.
+          Use string::c_str() with operator<< instead of relying on
+        existence of ostream extraction operators for strings.
+        A more useful solution might be to provide insertion/extraction
+        operators for platforms that are missing them.
+
 Thu May 26 16:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
@@ -98,49 +113,49 @@ Thu May 26 07:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed May 25 23:42:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
 
-	  Changed to pass the ORB pointer to the factories' activate()
-	  method.
+          Changed to pass the ORB pointer to the factories' activate()
+          method.
 
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
-	  Changed to pass the ORB pointer to the factory's init() method.
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+          Changed to pass the ORB pointer to the factory's init() method.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.h
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h
 
-	  Changed to stash away ORB pointer in the activate() method, and
-	  to pass it to the Log servant constructors.
+          Changed to stash away ORB pointer in the activate() method, and
+          to pass it to the Log servant constructors.
 
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h
 
-	  Changed to stash away ORB pointer in the init() method, and to
-	  pass it to the RTEventLog servant constructor.
+          Changed to stash away ORB pointer in the init() method, and to
+          pass it to the RTEventLog servant constructor.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp
-	* orbsvcs/orbsvcs/Log/Log_i.h
-	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp
-	* orbsvcs/orbsvcs/Log/BasicLog_i.h
-	* orbsvcs/orbsvcs/Log/EventLog_i.cpp
-	* orbsvcs/orbsvcs/Log/EventLog_i.h
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.h
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.h
+        * orbsvcs/orbsvcs/Log/Log_i.cpp
+        * orbsvcs/orbsvcs/Log/Log_i.h
+        * orbsvcs/orbsvcs/Log/BasicLog_i.cpp
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp
+        * orbsvcs/orbsvcs/Log/EventLog_i.h
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.h
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h
 
-	  Changed constructor to take an ORB pointer instead of a Reactor
-	  pointer.  The latter had defaulted to use the Reactor Singleton
-	  instance, but using the servant ORB's reactor ensures the event
-	  loop will be active.  Curiously, the old reactor pointer wasn't
-	  being used.  That will change soon, as we'll be adding timer
-	  handlers for database flush and compaction.
+          Changed constructor to take an ORB pointer instead of a Reactor
+          pointer.  The latter had defaulted to use the Reactor Singleton
+          instance, but using the servant ORB's reactor ensures the event
+          loop will be active.  Curiously, the old reactor pointer wasn't
+          being used.  That will change soon, as we'll be adding timer
+          handlers for database flush and compaction.
 
 Wed May 25 20:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -154,101 +169,101 @@ Wed May 25 20:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed May 25 12:24:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/Unknown_User_Exception.h (_type):
-	* tao/DynamicInterface/Unknown_User_Exception.h (_type):
+        * tao/DynamicInterface/Unknown_User_Exception.h (_type):
+        * tao/DynamicInterface/Unknown_User_Exception.h (_type):
 
-	  Renamed this method to "_tao_type" since it is meant to be an
-	  override for the CORBA::Exception::_tao_type() base class
-	  method.  Addresses CORBA::UnknownUserException Any insertion
-	  problems.
+          Renamed this method to "_tao_type" since it is meant to be an
+          override for the CORBA::Exception::_tao_type() base class
+          method.  Addresses CORBA::UnknownUserException Any insertion
+          problems.
 
 Tue May 24 21:13:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Invocation_Adapter.cpp (invoke_collocated_i):
+        * tao/Invocation_Adapter.cpp (invoke_collocated_i):
 
-	  Updated ACE_ASSERT condition to reflect new thru POA case.
-	  Thanks to Lothar Werzinger for reporting the assertion.
+          Updated ACE_ASSERT condition to reflect new thru POA case.
+          Thanks to Lothar Werzinger for reporting the assertion.
 
 Tue May 24 19:57:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Event_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
-	* orbsvcs/tests/EC_MT_Mcast/Makefile.am:
-	* orbsvcs/tests/EC_Mcast/Makefile.am:
-	* orbsvcs/tests/EC_Multiple/Makefile.am:
-	* orbsvcs/tests/EC_Throughput/Makefile.am:
-	* orbsvcs/tests/Event/Basic/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
-	* orbsvcs/tests/Event/Performance/Makefile.am:
-	* orbsvcs/tests/Event/lib/Makefile.am:
-	* orbsvcs/tests/FtRtEvent/Makefile.am:
+        * orbsvcs/Event_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+        * orbsvcs/tests/EC_MT_Mcast/Makefile.am:
+        * orbsvcs/tests/EC_Mcast/Makefile.am:
+        * orbsvcs/tests/EC_Multiple/Makefile.am:
+        * orbsvcs/tests/EC_Throughput/Makefile.am:
+        * orbsvcs/tests/Event/Basic/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+        * orbsvcs/tests/Event/Performance/Makefile.am:
+        * orbsvcs/tests/Event/lib/Makefile.am:
+        * orbsvcs/tests/FtRtEvent/Makefile.am:
 
-	  Regenerate for removal of RTOLDEvent and split of RTEvent
-	  libraries.
+          Regenerate for removal of RTOLDEvent and split of RTEvent
+          libraries.
 
-	* orbsvcs/Time_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/Time_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerate for change below.
+          Regenerate for change below.
 
-	* orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
 
-	  Inherit from svc_utils.
+          Inherit from svc_utils.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
 
-	  Use new ORBSVCS_Time::Time_Value_to_TimeT() method from the
-	  Svc_Utils library to convert timestamp to a TimeBase::TimeT.
+          Use new ORBSVCS_Time::Time_Value_to_TimeT() method from the
+          Svc_Utils library to convert timestamp to a TimeBase::TimeT.
 
-	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
 
-	  The specification requires that a structured or typed event
-	  should be stored as an Any as specified by the Notification
-	  Service, so connect to the channel as an Any consumer.
+          The specification requires that a structured or typed event
+          should be stored as an Any as specified by the Notification
+          Service, so connect to the channel as an Any consumer.
 
 Tue May 24 14:29:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Tue May 24 14:15:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/RTEvent.mpc:
-	* orbsvcs/orbsvcs/RTEvent_Serv.mpc:
-	* orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Skel.mpc:
 
-	  Removed RTEvent MPC group.  This causes problems when project
-	  Makefile.am's are aggregated.
+          Removed RTEvent MPC group.  This causes problems when project
+          Makefile.am's are aggregated.
 
 Tue May 24 11:59:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Time_Utilities.cpp:
-	* orbsvcs/orbsvcs/Time_Utilities.h:
-	* orbsvcs/orbsvcs/Time_Utilities.i:
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.i:
 
-	  Updated comments to Doxygen format.
+          Updated comments to Doxygen format.
 
-	  Added new methods for converting absolute timestamps between
-	  ACE_Time_Value and TimeBase::TimeT.
+          Added new methods for converting absolute timestamps between
+          ACE_Time_Value and TimeBase::TimeT.
 
 Tue May 24 10:32:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Tue May 24 10:58:53 2005  Justin Michel  <michel_j@ociweb.com>
 
@@ -449,7 +464,7 @@ Mon May 23 06:12:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp (TAO_Log_i::remove_old_records):
 
-	  Fixed typo introduced in last change.
+          Fixed typo introduced in last change.
 
 Mon May 23 12:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
