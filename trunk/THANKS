@@ -26,9 +26,10 @@ Aniruddha Gokhale <a dot gokhale at vanderbilt dot edu>
 Priyanka Gontla <pgontla at ociweb dot com>
 Pradeep Gore <pradeep at cs dot wustl dot edu>
 Matthew P. Hampton <mph2 at cs dot wustl dot edu>
-Shawn Hannan <hannan at cs dot wustl dot edu>
 Tim Harrison <harrison at cs dot wustl dot edu>
 John Heitmann <jwh1 at cs dot wustl dot edu>
+James Hill <jhill at isis dot vanderbilt dot edu>
+Shawn Hannan <hannan at cs dot wustl dot edu>
 Don Hinton <dhinton at dre dot vanderbilt dot edu>
 Joe Hoffert <joeh at tango dot cs dot wustl dot edu>
 James Hu <jxh at cs dot wustl dot edu>
@@ -49,6 +50,7 @@ Balachandran Natarajan <bala at dre dot vanderbilt dot edu>
 Will Otte <wotte at dre dot vanderbilt dot edu>
 Kirthika Parameswaran <kirthika at cs dot wustl dot edu>
 Krishnakumar Pathayapura <krish at cs dot wustl dot edu>
+Stoyan Paunov <spaunov at isis dot vanderbilt dot edu>
 Carlos O'Ryan <coryan at uci dot edu>
 Ossama Othman <ossama at dre dot vanderbilt dot edu>
 Jeff Parsons <j dot parsons at vanderbilt dot edu>
@@ -57,13 +59,14 @@ Diego Sevilla Ruiz <dsevilla at ditec dot um dot es>
 Marina Spivak <marina at cs dot wustl dot edu>
 Venkita Subramonian  <venkita at cs dot wustl dot edu>
 Nagarajan Surendran <naga at cs dot wustl dot edu>
+Cassia Tatibana  <cassia@lindy.dre.vanderbilt.edu>
 Gabriele Trombetti <gabtromb at isis dot vanderbilt dot edu>
 Emre Turkay <turkaye at dre dot vanderbilt dot edu>
 Nanbor Wang <nanbor at cs dot wustl dot edu>
 Seth Widoff <sbw1 at cs dot wustl dot edu>
 Jules White <jules at dre dot vanderbilt dot edu>
 Torben Worm <tworm at cs dot wustl dot edu>
-
+Ming Xiong <xiongm at isis dot vanderbilt dot edu>
 
 I would also like to thank all the following people who have also
 contributed to ACE and TAO over the years:
@@ -1958,9 +1961,6 @@ Diana Ukleja <Diana_Ukleja at raytheon dot com>
 Shaun Cooley <scooley4241 at hotmail dot com>
 Aapo Mäkinen <aapo dot makinen at firstbeattechnologies dot com>
 Matt Emerson <mjemerson at isis dot vanderbilt dot edu>
-Ming Xiong <xiongm at isis dot vanderbilt dot edu>
-James Hill <jhill at isis dot vanderbilt dot edu>
-Stoyan Paunov <spaunov at isis dot vanderbilt dot edu>
 Sean Parker <supinlick at yahoo dot com>
 Mark Wilson <mwil at lle dot rochester dot edu>
 Joerg Rockel <joerg dot rockel at nokia dot com>
@@ -1985,7 +1985,9 @@ Raoul Gough <Raoul dot Gough at liffe dot com>
 Aaron <crackajazz at gmail dot com>
 Rohini Madhavan <ro_madhavan at sify dot com>
 Alan Balasuar <balasuar at gmail dot com>
-Will Chai <willchai@126.com>
+Will Chai <willchai at 126 dot com>
+Paul Koch <paul dot koch at mci dot com>
+Dave Giovannini <giovanninid at ociweb dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
