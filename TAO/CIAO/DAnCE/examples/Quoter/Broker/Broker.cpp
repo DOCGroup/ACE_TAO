@@ -1,6 +1,6 @@
 //$Id$
 /*
- * @file broker.h
+ * @file Broker.cpp
  *
  * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
