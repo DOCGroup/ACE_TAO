@@ -1,3 +1,10 @@
+Thu May 26 22:55:26 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+
+	  Added code to deactivate facets when component
+	  is getting removed.
+
 Thu May 26 20:41:04 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Home_Servant_Impl_T.cpp:
