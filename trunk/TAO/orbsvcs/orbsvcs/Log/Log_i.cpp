@@ -41,7 +41,7 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
   this->current_threshold_ = 0;
   this->thresholds_.length(1);
   this->thresholds_[0] = 100;
-
+  this->qostype_ = DsLogAdmin::QoSNone;
 }
 
 void
@@ -79,13 +79,24 @@ DsLogAdmin::QoSList*
 TAO_Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::QoSList* ret_val;
+  // @@ The current revision of the specification (formal/03-07-01)
+  // states that get_log_qos() returns a list of the QoS properties
+  // supported by the log, not the current value.  However, because
+  // that is inconsistent with both the Log Service's other get
+  // methods and the Notification Service's QoS get_qos methods, I
+  // have submitted a defect report to the OMG for clarification.
+  //    --jtc
+  
+  DsLogAdmin::QoSList_var ret_val;
   ACE_NEW_THROW_EX (ret_val,
-                    DsLogAdmin::QoSList (this->qoslist_),
+                    DsLogAdmin::QoSList (1),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  return ret_val;
+  ret_val->length(1);
+  ret_val[0] = qostype_;
+
+  return ret_val._retn ();
 }
 
 void
@@ -94,46 +105,72 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::UnsupportedQoS))
 {
-  // validate supported properties..
-
-  // implement after persistence is added.
-  DsLogAdmin::QoSList_var old_qos;
-  old_qos = get_log_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  CORBA::Boolean change = false;
-
-
+  // @@ The current revision of the specification (formal/03-07-01)
+  // does not clearly define the semantics to follow when the QoSList
+  // contains mutually exclusive, unsupported, or unknown properties.
+  // I have submitted a defect report to the OMG for clarification.
+  //
+  // In the mean time, the last known/supported property found in the
+  // QoSList takes presidence.  If any unknown/unsupported properties
+  // were found, an UnsupportedQoS exception is thrown.
+  //    --jtc
+  
+  DsLogAdmin::QoSType old_qos = this->qostype_;
+  DsLogAdmin::QoSType qostype = old_qos;
+  DsLogAdmin::QoSList denied;
+  
+  // validate properties..
   for (CORBA::ULong i = 0; i < qos.length (); ++i)
     {
-      DsLogAdmin::QoSType qostype = qos[i];
-      if (qostype == DsLogAdmin::QoSFlush ||
-          qostype == DsLogAdmin::QoSReliability)
+      qostype = qos[i];
+      if (qostype != DsLogAdmin::QoSNone &&
+	  qostype != DsLogAdmin::QoSFlush &&
+          qostype != DsLogAdmin::QoSReliability)
         {
-          DsLogAdmin::QoSList denied;
-          denied._allocate_buffer (2);
-          denied.length (0);
-
-          denied[0] = DsLogAdmin::QoSFlush;
-          denied[1] = DsLogAdmin::QoSReliability;
-
-          ACE_THROW (DsLogAdmin::UnsupportedQoS (denied));
+	  CORBA::ULong len = denied.length();
+	  denied.length(len + 1);
+	  denied[len] = qostype;
         }
     }
 
-  // store this list.
-  this->qoslist_ = qos;
+  // if there were any unknown/unsupported properties, thrown an
+  // exception.
+  if (denied.length() != 0)
+    {
+      ACE_THROW (DsLogAdmin::UnsupportedQoS (denied));
+    }
 
-  if (notifier_ && change)
+  if (qostype == old_qos)
+    return;
+  
+  this->qostype_ = qostype;
+
+  if (notifier_)
     {
       DsLogAdmin::Log_var log =
         this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
+      DsLogAdmin::QoSList_var old_qoslist;
+      ACE_NEW_THROW_EX (old_qoslist,
+			DsLogAdmin::QoSList (1),
+			CORBA::NO_MEMORY ());
+      ACE_CHECK;
+      old_qoslist->length(1);
+      old_qoslist[0] = old_qos;
+
+      DsLogAdmin::QoSList_var new_qoslist;
+      ACE_NEW_THROW_EX (new_qoslist,
+			DsLogAdmin::QoSList (1),
+			CORBA::NO_MEMORY ());
+      ACE_CHECK;
+      new_qoslist->length(1);
+      new_qoslist[0] = qostype;
+      
       notifier_->quality_of_service_value_change (log.in (),
                                                   logid_,
-                                                  old_qos.in (),
-                                                  qos
+                                                  old_qoslist.in (),
+                                                  new_qoslist.in ()
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

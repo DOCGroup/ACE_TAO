@@ -400,8 +400,8 @@ protected:
   /// A Sequence of the weekly intervals when the log is in operation.
   TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval> weekly_intervals_;
 
-  /// The QoS list of the log
-  DsLogAdmin::QoSList qoslist_;
+  /// The QoS type of the log
+  DsLogAdmin::QoSType qostype_;
 
   /// The reactor used for timing (startup and shutdown), etc
   ACE_Reactor *reactor_;

@@ -1,3 +1,15 @@
+Fri May 27 15:19:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+
+	  Changed class to store a single QoS property instead of list, as
+	  the currently specified properties are mutually exclusive.  This
+	  greatly simplifies the get_log_qos and set_log_qos methods.
+
+	  Changed set_log_qos to return all of the unknown/unsupported QoS
+	  properties when throwing the UnsupportedQoS exception.
+
 Fri May 27 17:01:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
@@ -14,7 +26,7 @@ Fri May 27 17:01:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  than its hostname.  However, all the IORs distributed by the
 	  client would use the hostname, and, thus, the server would not
 	  be able to find a match for the client's endpoint in its cache,
-	  and subsequently try to create a new one.  
+	  and subsequently try to create a new one.
 
 	  The change now creates an entry in the cache using, for the
 	  hostname portion of the key, the host name however the client
@@ -28,7 +40,7 @@ Fri May 27 17:01:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
           * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
           * tao/IIOP_Connection_Handler.cpp (process_listen_point_list):
-	
+
             When creating an IIOP Endpoint, passed in the value of the
             ORBDottedDecimal address value from the ORB_Core. This is a real
             stupid mistake :(. Added a debug statement. Thanks to Werner
@@ -66,11 +78,11 @@ Fri May 27 17:01:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
           expected results, and indicates whether each permutation
           succeeds or fails.  It also depends upon a new option to catior,
           found in the next entry.
-	  
+
         * orbsvcs/tests/Security/BiDirectional/server.conf:
 
           Removed some hardcoded paths to OCI personal home directories.
-	
+
         * utils/catior/catior.cpp:
 
 	  Added a "-x" option that works like "-f" except that it reads
