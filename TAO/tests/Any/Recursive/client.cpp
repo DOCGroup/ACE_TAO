@@ -78,7 +78,7 @@ perform_invocation (Test::Hello_ptr hello,
 
       T * my_foo = 0;
       if (!(my_any.in () >>= my_foo))
-        ACE_THROW (CORBA::INV_OBJREF ());
+        ACE_THROW (Test::Demarshaling_From_Any_Failed ());
 
 //       ACE_DEBUG ((LM_DEBUG, "Data dump:\n"));
 //       dump<T> (my_foo);
@@ -91,14 +91,16 @@ perform_invocation (Test::Hello_ptr hello,
                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      ACE_ASSERT (equal_tc);
+      if (!equal_tc)
+        ACE_THROW (Test::Recursive_Type_In_Any_Test_Failed ());
 
       CORBA::Boolean const equiv_tc =
         the_tc->equivalent (my_tc.in ()
                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      ACE_ASSERT (equiv_tc);
+      if (!equiv_tc)
+        ACE_THROW (Test::Recursive_Type_In_Any_Test_Failed ());
     }
 }
 
