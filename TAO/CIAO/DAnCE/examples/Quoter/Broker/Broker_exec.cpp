@@ -29,7 +29,7 @@ namespace StockBroker_Impl
   void
   StockBroker_exec_i::stock_subscribe (
   const char * stock_name
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Stock::Invalid_Stock))
   {
@@ -50,7 +50,7 @@ namespace StockBroker_Impl
   void
   StockBroker_exec_i::stock_unsubscribe (
   const char * stock_name
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Stock::Invalid_Stock))
   {
