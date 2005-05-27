@@ -135,7 +135,7 @@ namespace StockDistributor_Impl
 
   ::Stock::StockInfo *
   StockQuoter_exec_i::get_stock_info (const char *stock_name
-                                      ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Stock::Invalid_Stock))
