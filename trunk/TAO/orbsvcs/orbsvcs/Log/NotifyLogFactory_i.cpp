@@ -159,7 +159,7 @@ TAO_NotifyLogFactory_i::create_with_id (
   TAO_NotifyLog_i* notify_log_i;
 
   ACE_NEW_THROW_EX (notify_log_i,
-                    TAO_NotifyLog_i (this->orb_,
+                    TAO_NotifyLog_i (this->orb_.in (),
                                      *this,
                                      this->log_mgr_.in (),
                                      this,
