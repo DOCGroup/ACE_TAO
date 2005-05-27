@@ -1,8 +1,13 @@
+Fri May 27 12:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          When building for 64bit, make sure we enable the 64bit warnings
+
 Fri May 27 08:49:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
 
-          Fixed possible NULL-pointer assignment for VxWorks implementation 
+          Fixed possible NULL-pointer assignment for VxWorks implementation
           of ACE_OS::thr_sigsetmask().
 
 Fri May 27 00:40:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
