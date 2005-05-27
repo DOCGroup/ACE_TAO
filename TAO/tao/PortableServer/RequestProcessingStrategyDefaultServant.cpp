@@ -168,15 +168,14 @@ namespace TAO
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
-      if (servant != 0)
+      if (servant == 0)
         {
-          return servant;
+          servant = this->poa_->find_servant (system_id
+                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
         }
-      else
-        {
-          return this->poa_->find_servant (system_id
-                                           ACE_ENV_ARG_PARAMETER);
-        }
+
+      return servant;
     }
 
     PortableServer::Servant
