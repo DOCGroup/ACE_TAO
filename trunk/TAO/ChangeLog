@@ -1,3 +1,14 @@
+Fri May 27 15:54:44 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * docs/Options.html:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/params.cpp:
+
+          Reimplemented the -ORBPreferredInterfaces option to support wildcards.
+
 Fri May 27 15:30:21 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Activator_NT_Service.h:
