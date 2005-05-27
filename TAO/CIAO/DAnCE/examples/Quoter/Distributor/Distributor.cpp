@@ -69,9 +69,9 @@ int main (int argc, char* argv[])
     ACE_TRY_CHECK;
 
     if (parse_args (argc, argv) != 0)
-	{
+    {
       return -1;
-	}
+    }
 
     // create the factory object reference,
     CORBA::Object_var distributor_obj =
