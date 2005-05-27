@@ -19,7 +19,7 @@
 #define ACE_SOCK_SEQPACK_ASSOCIATION_H
 
 #include /**/ "ace/pre.h"
-#include "ace/config.h"
+#include "ace/config-all.h"
 #include "ace/ACE_export.h"
 
 #include "ace/SOCK_IO.h"

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/config.h"
+#include "ace/config-all.h"
 #include "ace/OS_main.h"
 
 #if !defined (ACE_LACKS_FORK)
