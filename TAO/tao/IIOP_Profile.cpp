@@ -100,8 +100,9 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       // Invalidate the object_addr_ until first access.
       this->endpoint_.object_addr_.set_type (-1);
 
-      this->count_ +=
-        this->endpoint_.preferred_interfaces (this->orb_core ());
+      const char* csv = this->orb_core()->orb_params()->preferred_interfaces();
+      bool enforce = this->orb_core()->orb_params()->enforce_pref_interfaces();
+      this->count_ += this->endpoint_.preferred_interfaces(csv, enforce);
 
       return 1;
     }

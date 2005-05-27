@@ -196,29 +196,64 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
 bool
 TAO_ORB_Parameters::preferred_interfaces (const char *s)
 {
-  ACE_CString tmp (s);
-
-  ssize_t index = 0;
-  int comma = 0;
-  while ((index = tmp.find (",", index)) != ACE_CString::npos)
+  // Validates that s contains one or more comma separated
+  // interfaces each consisting of a string with a single
+  // assignment separator ('=' or ':')
+  // Any other char is legal, although '*' and '?' will be
+  // treated as wildcards.
+  const char* p = s;
+  bool expect_assign = false;
+  bool expect_comma = false;
+  bool expect_char = true;
+  bool expect_wild = true;
+  bool found_remote = false;
+  while (*p != 0)
+  {
+    switch (*p)
     {
-      ++comma;
-      ++index;
+    case ':':
+    case '=':
+      if (! expect_assign)
+        return false;
+      found_remote = true;
+      expect_assign = false;
+      expect_char = true;
+      expect_comma = false;
+      expect_wild = true;
+      break;
+    case ',':
+      if (! expect_comma)
+        return false;
+      found_remote = false;
+      expect_assign = false;
+      expect_char = true;
+      expect_comma = false;
+      expect_wild = true;
+      break;
+    case '*':
+    case '?':
+      if (! expect_wild)
+        return false;
+      expect_assign = ! found_remote;
+      expect_char = true;
+      expect_comma = found_remote;
+      expect_wild = false;
+      break;
+    default:
+      if (! expect_char)
+        return false;
+      expect_assign = ! found_remote;
+      expect_char = true;
+      expect_comma = found_remote;
+      expect_wild = true;
+      break;
     }
-
-  index = 0;
-
-  int colon = 0;
-  while ((index = tmp.find (":", index)) != ACE_CString::npos)
-    {
-      ++colon;
-      ++index;
+    ++p;
     }
-
-  if (colon != (comma + 1))
+  if (!expect_comma || expect_assign)
     return false;
 
-  this->pref_network_ = tmp;
+  this->pref_network_ = s;
 
   return true;
 }

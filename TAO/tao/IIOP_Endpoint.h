@@ -122,7 +122,11 @@ private:
 
   /// Generate preferred interfaces from the options passed in by the
   /// user.
-  CORBA::ULong preferred_interfaces (TAO_ORB_Core *oc);
+  CORBA::ULong preferred_interfaces (const char* csvPreferred, bool enforce);
+
+  /// Chain a new duplicate of ourself with the specified
+  /// local preferred interface.
+  TAO_IIOP_Endpoint* add_local_endpoint(TAO_IIOP_Endpoint* ep, const char* local);
 
   /// Canonical copy constructor
   /**

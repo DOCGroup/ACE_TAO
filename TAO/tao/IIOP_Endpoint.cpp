@@ -19,6 +19,11 @@ ACE_RCSID (tao,
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
 
+#include "ace/Vector_T.h"
+#include "ace/ACE.h"
+#include "ace/INET_Addr.h"
+#include "ace/Sock_Connect.h"
+
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
@@ -64,8 +69,8 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       CORBA::Short priority)
-  : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
-  , host_ ()
+  : TAO_Endpoint (IOP::TAG_INTERNET_IOP, priority)
+  , host_ (host)
   , port_ (port)
   , is_encodable_ (true)
   , object_addr_set_ (false)
@@ -73,10 +78,6 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
   , preferred_path_ ()
   , next_ (0)
 {
-  if (host != 0)
-    this->host_ = host;
-
-  this->priority (priority);
 }
 
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
@@ -84,8 +85,7 @@ TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
-  : TAO_Endpoint (rhs.tag_,
-                  rhs.priority_)
+  : TAO_Endpoint (rhs.tag_, rhs.priority_)
   , host_ (rhs.host_)
   , port_ (rhs.port_)
   , is_encodable_ (rhs.is_encodable_)
@@ -173,9 +173,7 @@ TAO_IIOP_Endpoint::duplicate (void)
   TAO_IIOP_Endpoint *endpoint = 0;
 
   // @@ NOTE: Not exception safe..
-  ACE_NEW_RETURN (endpoint,
-                  TAO_IIOP_Endpoint (*this),
-                  0);
+  ACE_NEW_RETURN (endpoint, TAO_IIOP_Endpoint (*this), 0);
 
   return endpoint;
 }
@@ -230,92 +228,149 @@ TAO_IIOP_Endpoint::object_addr_i (void) const
     }
 }
 
-CORBA::ULong
-TAO_IIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
+static ACE_CString find_local(const ACE_Vector<ACE_CString>& local_ips,
+                              const ACE_CString& pattern)
 {
-  ACE_CString tmp (
-    oc->orb_params ()->preferred_interfaces ());
+  for (size_t i = 0; i < local_ips.size(); ++i)
+  {
+    ACE_CString ret = local_ips[i];
+    if (ACE::wild_match(ret.c_str(), pattern.c_str()))
+      return ret;
+  }
+  return "";
+}
 
-  ssize_t pos = 0;
+TAO_IIOP_Endpoint*
+TAO_IIOP_Endpoint::add_local_endpoint(TAO_IIOP_Endpoint* ep, const char* local)
+{
+  TAO_Endpoint* tmp = ep->duplicate();
+  ep->next_ = static_cast<TAO_IIOP_Endpoint*>(tmp);
+  ep->next_->is_encodable_ = true;
+  ep->next_->preferred_path_.host = CORBA::string_dup(local);
+  return ep->next_;
+}
 
-  pos = tmp.find (this->host_.in ());
+static void
+get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
+{
+  ACE_INET_Addr* tmp = 0;
+  size_t cnt = 0;
+  int err = ACE::get_ip_interfaces (cnt, tmp);
+  if (err != 0)
+    return;
+  // @@ Do we need to worry about IPv6 here?
+  ACE_TCHAR buf[32];
+  for (size_t i = 0; i < cnt; ++i)
+  {
+    int err = tmp[i].addr_to_string(buf, 32);
+    ACE_ASSERT(err == 0);
+    ACE_CString tmp(ACE_TEXT_ALWAYS_CHAR(buf));
+    ssize_t pos = tmp.find(':');
+    if (pos != ACE_CString::npos)
+      tmp = tmp.substr(0, pos);
+    local_ips.push_back(tmp);
+  }
+  delete[] tmp;
+}
 
-  TAO_IIOP_Endpoint *latest = this;
+// Given a comma separated list of preferred interface directives, which
+// are of the form <wild_remote>=<wild_local>, this function will retrieve
+// the list of preferred local ip addresses by matching wild_local against
+// the list of all local ip interfaces, for any directive where wild_remote
+// matches the host from our endpoint.
+static void find_preferred_interfaces (const ACE_CString& host,
+                                       const ACE_CString& csvPreferred,
+                                       ACE_Vector<ACE_CString>& preferred)
+{
+  ACE_Vector<ACE_CString> local_ips;
+  get_ip_interfaces(local_ips);
+  if (local_ips.size() == 0)
+    return;
 
-  CORBA::ULong count = 0;
+  // The outer loop steps through each preferred interface directive
+  // and chains a new endpoint if the remote interface matches the
+  // current endpoint.
+  size_t index = 0;
+  while (index < csvPreferred.length())
+  {
+    ssize_t comma = csvPreferred.find(',', index);
+    ssize_t assign = csvPreferred.find('=', index);
 
-  while (pos != ACE_CString::npos)
+    if (assign == ACE_CString::npos)
     {
-      // Do we have a "," or an '\0'?
-      ssize_t new_pos = tmp.find (",",
-                                  pos + 1);
+      assign = csvPreferred.find(':', index);
+      if (assign == ACE_CString::npos)
+      {
+        ACE_ASSERT(assign != ACE_CString::npos);
+        return;
+      }
+    }
 
-      // Length of the preferred path
-      int length = 0;
+    ACE_CString wild_local;
+    if (comma == ACE_CString::npos)
+      wild_local = csvPreferred.substr(assign + 1);
+    else
+      wild_local = csvPreferred.substr(assign + 1, comma - assign - 1);
+    ACE_CString wild_remote = csvPreferred.substr(index, assign - index);
 
-      if (new_pos == ACE_CString::npos)
-        length = tmp.length () - pos;
+    index = static_cast<size_t>(comma) + 1;
+
+    // For now, we just try to match against the host literally. In
+    // the future it might be worthwhile to resolve some aliases for
+    // this->host_ using DNS (and possibly reverse DNS) lookups. Then we
+    // could try matching against those too.
+    if (ACE::wild_match(host.c_str(), wild_remote.c_str(), false))
+    {
+      // If it's a match, then it means we need to use a
+      // local interface that matches wild_local.
+      ACE_CString local = find_local(local_ips, wild_local);
+      if (local.length() > 0)
+      {
+        preferred.push_back(local);
+      }
       else
-        length = new_pos - pos;
-
-      ACE_CString rem_tmp = tmp.substr (pos, length);
-
-      // Search for the ":"
-      ssize_t col_pos = rem_tmp.find (":");
-
-      if (col_pos == ACE_CString::npos)
-        {
-          pos = tmp.find (latest->host_.in (),
-                          pos + length);
-          continue;
-        }
-
-      ACE_CString path = rem_tmp.substr (col_pos + 1);
-
-      latest->preferred_path_.host =
-        CORBA::string_dup (path.c_str ());
-
-      if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Adding path [%s] "
-                    " as preferred path for [%s] \n",
-                    path.c_str (), this->host_.in ()));
-
-      pos = tmp.find (latest->host_.in (),
-                      pos + length);
-
-      if (pos != ACE_CString::npos)
-        {
-          TAO_Endpoint *tmp_ep =
-            latest->duplicate ();
-
-          latest->next_ = dynamic_cast<TAO_IIOP_Endpoint *> (tmp_ep);
-
-          if (latest->next_ == 0) return count;
-
-          latest->is_encodable_ = true;
-
-          latest = latest->next_;
-          ++count;
-        }
+      {
+        // There is no matching local interface, so we can skip
+        // to the next preferred interface directive.
+      }
     }
-
-  if (tmp.length () != 0 &&
-      !oc->orb_params ()->enforce_pref_interfaces ())
+    else
     {
-      TAO_Endpoint *tmp_ep = latest->duplicate ();
+      // The preferred interface directive is for a different
+      // remote endpoint.
+    }
+    if (comma == ACE_CString::npos)
+      break;
+  }
+}
 
-      latest->next_ =
-        dynamic_cast<TAO_IIOP_Endpoint *> (tmp_ep);
-
-      if (latest->next_ == 0) return count;
-
-      latest->is_encodable_ = true;
-
-      latest->next_->preferred_path_.host = (const char *) 0;
-      ++count;
+CORBA::ULong
+TAO_IIOP_Endpoint::preferred_interfaces (const char* csv, bool enforce)
+{
+  ACE_Vector<ACE_CString> preferred;
+  find_preferred_interfaces(this->host_.in(), csv, preferred);
+  CORBA::ULong count = preferred.size();
+  if (count > 0)
+  {
+    this->is_encodable_ = true;
+    this->preferred_path_.host = CORBA::string_dup(preferred[0].c_str());
+    TAO_IIOP_Endpoint* ep = this;
+    for (size_t i = 1; i < count; ++i)
+    {
+      ep = add_local_endpoint(ep, preferred[i].c_str());
     }
 
+    // If we're not enforcing the preferred interfaces, then we can just add
+    // a new non-preferred endpoint to the end with a default local addr.
+    if (! enforce)
+    {
+      ep = add_local_endpoint(ep, "");
+    }
+    else
+    {
+      --count;
+    }
+  }
   return count;
 }
 

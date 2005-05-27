@@ -459,34 +459,33 @@ more flexible address notations for IORs.</td>
       <tr>
         <td><code>-ORBPreferredInterfaces</code>
         <em>"targetNetwork:localNetwork,.."</em></td>
-        <td><a name="-ORBPreferredInterfaces"></a> This option allows
-        clients running on a multihomed host to pick a local
-        network/interface to communicate with a remote target. This
-        option looks for fully qualified interface names (either the
-        IP address or the DNS names) in the <em>targetNetwork</em> and
-        <em>localNetwork</em> parts. Multiple preferred tuples (a
-        tuple refers to a <em> target-to-local</em> network combo) can
-        be provided in the option using a comma seperated list. The
-        option doesn't yet support using jsut the network part of the
-        qualified name.
+        <td><a name="-ORBPreferredInterfaces"></a>  This option allows
+    clients running on a multihomed host to pick a local
+    network/interface to communicate with a remote target. 
+    When TAO attempts to establish a connection with a host
+    matching targetNetwork, then it will use the local ip address
+    matching localNetwork. Simple wildcards can be used for both
+    parameters, and multiple preferred interfaces can be specified
+    using comma separators. For example, for a machine with two network cards
+    identified by the ip addresses 192.168.1.10 and 192.168.1.20, you can 
+    use -ORBPreferredInterfaces *=*10,*=*20.
+    Or to force all communication on the loopback address to try to first
+    use the loopback address, use -ORBPreferredInterfaces 127.0.0.1=127* .
+    <em>targetNetwork</em> can use any string, and must typically match
+    with the value read from an IOR.
+    <em>localNetwork</em> must use a dotted decimal address, because it 
+    will be matched with the local ip interfaces.
         </tr>
       <tr>
         <td><code>-ORBEnforcePreferredInterfaces</code>
         <em>Yes/No</em></td>
-        <td><a name="-ORBEnforcePreferredInterfaces"></a> This option
-        specifies whether <CODE>-ORBPreferredInterfaces</CODE> option
-        needs to be enforced. The option is supposed to help with the following
-        usecase. It is possible that under some situations the
-        preferred local network may not have a route to the target
-        host/interface. The ORB can do one of the following. The ORB
-        coudl either choose a default local interface to send the
-        message or raise an exception to the application that
-        preferred interfaces are not usable. The option helps the ORB
-        decide on the course of action. If
-        <em> -ORBEnforcePreferredInterfaces</em> is set to true,
-        unusable preferred interfaces will make the ORB raise an
-        exception to the application. The defaul value for this option
-        is <em> no </em>.
+        <td><a name="-ORBEnforcePreferredInterfaces"></a> If this option is specified, then TAO will only try to use the interfaces
+    specified by the -ORBPreferredInterfaces option. By default, if a connection
+    cannot be made using a preferred interface, then TAO will attempt to use
+    the default interface. (INADDR_ANY)
+    Note : If none of the preferred interfaces apply to an outgoing connection
+    then they will not be enforced. Therefore, for this option to have any effect,
+    the connection through a legal preferred interface must fail.
         </tr>
       <tr>
         <td><code>-ORBLingerTimeout</code> <em>timeout</em></td>

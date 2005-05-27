@@ -143,14 +143,12 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   const ACE_INET_Addr &remote_address =
     iiop_endpoint->object_addr ();
 
-  bool pn =
-    iiop_endpoint->is_preferred_network ();
+  u_short port = 0;
+  const ACE_UINT32 ia_any = INADDR_ANY;
+  ACE_INET_Addr local_addr(port, ia_any);
 
-  ACE_INET_Addr local_addr;
-
-  if (pn)
-    local_addr.set ((u_short) 0,
-                    iiop_endpoint->preferred_network ());
+  if (iiop_endpoint->is_preferred_network ())
+    local_addr.set (port, iiop_endpoint->preferred_network ());
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
@@ -205,8 +203,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
-  TAO_Transport *transport =
-    svc_handler->transport ();
+  TAO_Transport *transport = svc_handler->transport ();
 
   if (result == -1)
     {
