@@ -31,24 +31,28 @@ namespace CIAO
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::~Servant_Impl (void)
   {
-    ACE_TRY_NEW_ENV
-    {
-      ::Components::SessionComponent_var scom =
-        ::Components::SessionComponent::_narrow (
-            this->executor_.in ()
-            ACE_ENV_ARG_PARAMETER
-          );
-      ACE_TRY_CHECK;
+  // **********************************************************************
+  /*
+            ACE_TRY_NEW_ENV
+            {
+              ::Components::SessionComponent_var scom =
+                ::Components::SessionComponent::_narrow (
+                    this->executor_.in ()
+                    ACE_ENV_ARG_PARAMETER
+                  );
+              ACE_TRY_CHECK;
 
-      if (! ::CORBA::is_nil (scom.in ()))
-        {
-          scom->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-        }
-    }
-    ACE_CATCHANY
-    {
-    }
-    ACE_ENDTRY;
+              if (! ::CORBA::is_nil (scom.in ()))
+                {
+                  scom->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+                }
+            }
+            ACE_CATCHANY
+            {
+            }
+            ACE_ENDTRY;
+   */
+   // *********************************************************************
 
     this->context_->_remove_ref ();
   }
