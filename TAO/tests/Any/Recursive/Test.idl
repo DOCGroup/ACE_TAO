@@ -6,6 +6,7 @@
 module Test
 {
   exception Recursive_Type_In_Any_Test_Failed {};
+  exception Demarshaling_From_Any_Failed {};
 
   struct RecursiveStruct;
   typedef sequence<RecursiveStruct> RecursiveStructSeq;
