@@ -1,3 +1,83 @@
+Fri May 27 17:01:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+
+	  Corrected a problem whereby, when listen points received in a
+	  bidirectional context get processed, the key for the entry made
+	  in the transport cache was created using the receiver's notion
+	  of whether dotted decimal addresses (-ORBDottedDecimalAddresses)
+	  should be used, rather than how the listen points were sent by
+	  the sender.  In doing so, when, for example, a CORBA server was
+	  using -ORBDottedDecimalAddresses and the client was not, the
+	  client's listen point got cached using its IP address rather
+	  than its hostname.  However, all the IORs distributed by the
+	  client would use the hostname, and, thus, the server would not
+	  be able to find a match for the client's endpoint in its cache,
+	  and subsequently try to create a new one.  
+
+	  The change now creates an entry in the cache using, for the
+	  hostname portion of the key, the host name however the client
+	  sent the hostname.  This should insure that a receiver of a
+	  bidirectional context will have the ability to find a match in
+	  the transport cache.
+
+	  This change supercedes the following changelog entry:
+
+	  Thu Sep 13 11:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+          * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          * tao/IIOP_Connection_Handler.cpp (process_listen_point_list):
+	
+            When creating an IIOP Endpoint, passed in the value of the
+            ORBDottedDecimal address value from the ORB_Core. This is a real
+            stupid mistake :(. Added a debug statement. Thanks to Werner
+            Buchert <w.buchert@medat.de> for reporting this problem.
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Transport.cpp:
+
+          Modified the IIOP Acceptor so that the behavior for the host
+          identifier (hostname or IP address) that appears in IIOP
+          profiles is consistent with the following:
+
+          1. value from "hostname_in_ior", if specified;
+          2. setting of -ORBDottedDecimalAddresses option
+          3. value for <hostname> used in -ORBEndpoint iiop://<hostname>
+          4. whatever TAO magically comes up with
+
+          The significant change here is that previous to this change,
+          numbers 1 and 2 were reversed, i.e., -ORBDottedDecimalAddresses
+          took precedence over hostname_in_ior.
+
+        * tests/IOR_Endpoint_Hostnames/IOR_Endpoint_Hostnames.mpc:
+        * tests/IOR_Endpoint_Hostnames/bogus.idl:
+        * tests/IOR_Endpoint_Hostnames/bogus_i.cpp:
+        * tests/IOR_Endpoint_Hostnames/bogus_i.h:
+        * tests/IOR_Endpoint_Hostnames/generate_ior.cpp:
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+        * tests/IOR_Endpoint_Hostnames/run_test.pl:
+
+          Added a new functionality/regression test for the change listed
+          above.  The run_test.pl prints out a matrix for permutations and
+          expected results, and indicates whether each permutation
+          succeeds or fails.  It also depends upon a new option to catior,
+          found in the next entry.
+	  
+        * orbsvcs/tests/Security/BiDirectional/server.conf:
+
+          Removed some hardcoded paths to OCI personal home directories.
+	
+        * utils/catior/catior.cpp:
+
+	  Added a "-x" option that works like "-f" except that it reads
+          the IOR from standard input (stdin or cin) rather than from a
+          file.  This makes catior much more like the unix "cat" command,
+          and enables it to be used in a pipeline.
+
 Fri May 27 15:54:44 2005  Justin Michel  <michel_j@ociweb.com>
 
         * docs/Options.html:

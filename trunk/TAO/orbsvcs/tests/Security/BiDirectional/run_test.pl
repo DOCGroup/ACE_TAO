@@ -19,7 +19,7 @@ $iter = 10;
 sub options () { 
   my $help = 0;       # handled locally 
   my $man = 0;        # handled locally
-  my $ssl = 1;        # handled locally
+  my $ssl = 0;        # handled locally
   my $dotdec = 0;     # handled locally
   my $debug;        # handled locally
   my $shost;        # handled locally
@@ -139,12 +139,12 @@ B<run_test.pl> [B<-help|?>] [B<-iter iterations>] [B<-chost host>]
 This is a test that exercises the birectional GIOP connection
 implementation in TAO over SSLIOP connection. Start the server like this
 
-$ server -ORBSvcConf server.conf -o <file.ior> -i <no_iterations>
-$ client -ORBSvcConf client.conf -k file://<file.ior> -x 
+  $ server -ORBSvcConf server.conf -o <file.ior> -i <no_iterations>
+  $ client -ORBSvcConf client.conf -k file://<file.ior> -x 
 
 Or, simply
 
-$ ./run_test.pl -ssl
+  $ ./run_test.pl -ssl
 
 The server starts up writing the IOR to the file. The client then starts
 up, creates its own object and passes the reference to the server. Then
