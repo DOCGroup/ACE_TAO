@@ -1,3 +1,10 @@
+Fri May 27 08:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+          Fixed conversion warnings
+
 Fri May 27 00:36:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Any/Recursive/Hello.cpp:
