@@ -111,6 +111,8 @@ namespace CIAO
 
     _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "removed the component\n"));
   }
 
   template <typename BASE_SKEL,
