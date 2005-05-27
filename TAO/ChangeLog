@@ -1,3 +1,24 @@
+Fri May 27 08:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+          Slightly modified this test to test reference_to_servant with
+          reference counting
+
+        * tests/POA/Deactivate_Object/server.cpp:
+          Added a call to reference_to_servant. This as a regression for
+          a bug where we didn't increment the reference count on the
+          servant before returning it.
+
+        * tao/PortableServer/Root_POA.cpp (reference_to_servant_i):
+          Increment the reference count on the servant before returning it.
+          Thanks to Konstantinos Lykiardopoulos <klyk at intracom dot gr>
+          and  Lothar Werzinger <lothar at xcerla dot com> for reporting
+          this problem.
+
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+          In system_id_to_servant() don't increment the refcount on the
+          servant, this is done by the POA.
+
 Fri May 27 08:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.cpp:
