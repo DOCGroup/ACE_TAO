@@ -71,9 +71,10 @@ namespace StockBroker_Impl
 
 
   void
-  StockBroker_exec_i::push_notify_in (Stock::StockName *ev
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  StockBroker_exec_i::push_notify_in (
+  Stock::StockName *ev
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
 
     ACE_DEBUG ((LM_INFO,
