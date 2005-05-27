@@ -39,7 +39,7 @@ namespace StockBroker_Impl
       if (iter == this->subscribed_stock_list_.end ())
       {
         this->subscribed_stock_list_.insert (stock_name);
-       }
+      }
     }
     else
     {
