@@ -33,6 +33,20 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT,
             typename COMP_SERV>
+  void
+  Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::deactivate (
+      const PortableServer::Servant servant
+      ACE_ENV_ARG_DECL_NOT_USED)
+  {
+    SERVANT *s = dynamic_cast<SERVANT *> (servant);
+    s->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  template <typename SERV,
+            typename EXEC,
+            typename CONTEXT,
+            typename COMP_SERV>
   PortableServer::Servant
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::activate (
       const PortableServer::ObjectId &oid

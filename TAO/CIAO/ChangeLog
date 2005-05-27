@@ -1,3 +1,16 @@
+Fri May 27 13:41:20 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Port_Activator.h:
+	* DAnCE/ciao/Port_Activator_T.cpp:
+	* DAnCE/ciao/Port_Activator_T.h:
+	* DAnCE/ciao/Servant_Activator.cpp:
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+
+	Added support for deactivating facets and event consumers
+	when a component is getting deactivated. This fixes
+        couple of memory leaks in the DAnCE deployment scenarios.
+
+
 Thu May 26 22:55:26 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Servant_Impl_Base.cpp:

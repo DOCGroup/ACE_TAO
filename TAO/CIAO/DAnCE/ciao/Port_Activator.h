@@ -64,6 +64,10 @@ namespace CIAO
         const PortableServer::ObjectId &oid
         ACE_ENV_ARG_DECL) = 0;
 
+    virtual void deactivate (
+        const PortableServer::Servant servant
+        ACE_ENV_ARG_DECL) = 0;
+
   protected:
     /// The object ID that is used to activate the servant within the
     /// POA.
