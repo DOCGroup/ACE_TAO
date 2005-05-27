@@ -122,6 +122,12 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // Create a profile for each acceptor endpoint.
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
+      // Skip if the host name
+      if (i > 0
+          && ACE_OS::strcmp(this->hosts_[i], this->hosts_[0]) == 0
+          && (this->addrs_[i].get_port_number() == this->addrs_[0].get_port_number()))
+        continue;
+
       TAO_IIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
                       TAO_IIOP_Profile (this->hosts_[i],
@@ -217,6 +223,9 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
        index < this->endpoint_count_;
        ++index)
     {
+      if (ACE_OS::strcmp(this->hosts_[index], this->hosts_[0]) == 0)
+        continue;
+
       TAO_IIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,
                       TAO_IIOP_Endpoint (this->hosts_[index],
@@ -270,6 +279,13 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          const char *address,
                          const char *options)
 {
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("IIOP_Acceptor::open, address==%s, options=%s\n"),
+                  address, options));
+    }
+      
   this->orb_core_ = orb_core;
 
   if (this->hosts_ != 0)
@@ -345,6 +361,14 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       specified_hostname = tmp_host;
     }
 
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("IIOP_Acceptor: specified host=%s:%d\n"),
+                  (specified_hostname==0 ? "<null>" : specified_hostname),
+                  addr.get_port_number ()));
+    }
+      
   this->endpoint_count_ = 1;  // Only one hostname to store
 
   ACE_NEW_RETURN (this->addrs_,
@@ -365,20 +389,14 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                       ACE_TEXT ("Overriding address in IOR with %s\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (this->hostname_in_ior_)));
         }
-      if (this->hostname (orb_core,
-                          addr,
-                          this->hosts_[0],
-                          this->hostname_in_ior_) != 0)
-        return -1;
+      specified_hostname = this->hostname_in_ior_;
     }
-  else
-    {
-      if (this->hostname (orb_core,
-                          addr,
-                          this->hosts_[0],
-                          specified_hostname) != 0)
-        return -1;
-    }
+
+  if (this->hostname (orb_core,
+                      addr,
+                      this->hosts_[0],
+                      specified_hostname) != 0)
+    return -1;
 
   // Copy the addr.  The port is (re)set in
   // TAO_IIOP_Acceptor::open_i().
@@ -562,7 +580,16 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              char *&host,
                              const char *specified_hostname)
 {
-  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
+  if (this->hostname_in_ior_ != 0)
+    {
+      if (TAO_debug_level >= 5)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - Overriding the hostname with <%s>\n"),
+                      this->hostname_in_ior_));
+      
+      host = CORBA::string_dup (this->hostname_in_ior_);
+    }
+  else if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
       // If dotted decimal addresses are enabled,
       // just return ours.
@@ -707,27 +734,11 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if_addrs[i].get_ip_address () == INADDR_LOOPBACK)
         continue;
 
-      if (this->hostname_in_ior_ != 0)
-        {
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Overriding address in IOR with %s\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (this->hostname_in_ior_)));
-            }
-          if (this->hostname (orb_core,
-                              if_addrs[i],
-                              this->hosts_[host_cnt],
-                              this->hostname_in_ior_) != 0)
-            return -1;
-        }
-      else
-        {
-          if (this->hostname (orb_core,
-                              if_addrs[i],
-                              this->hosts_[host_cnt]) != 0)
-            return -1;
-        }
+      if (this->hostname (orb_core,
+                          if_addrs[i],
+                          this->hosts_[host_cnt]) != 0)
+        return -1;
+
 
       // Copy the addr.  The port is (re)set in
       // TAO_IIOP_Acceptor::open_i().

@@ -352,8 +352,8 @@ TAO_IIOP_Transport::get_listen_point (
 
   // Get the hostname for the local address
   if (iiop_acceptor->hostname (this->orb_core_,
-                               local_addr,
-                               local_interface.out ()) == -1)
+                                      local_addr,
+                                      local_interface.out ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
@@ -379,6 +379,15 @@ TAO_IIOP_Transport::get_listen_point (
           IIOP::ListenPoint & point = listen_point_list[len];
           point.host = CORBA::string_dup (local_interface.in ());
           point.port = endpoint_addr[index].get_port_number ();
+
+          if (TAO_debug_level >= 5)
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO (%P:%t) Listen_Point_List[%d] = <%s:%d>"), 
+                        len,
+                        point.host.in (),
+                        point.port));
+          }
+          
         }
     }
 
