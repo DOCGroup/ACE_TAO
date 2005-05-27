@@ -1,7 +1,21 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. Integrate Real-time Event Channel into CIAO and DAnCE.
+. Integrate various Pub/Sub services into CIAO and DAnCE.
+
+. Static Configuration for DAnCE.
+
+. Target Manager implementation.
+
+. Support threading models in NodeApplication, such as thread pools
+  and the like.
+
+. Have more than one NodeApplicationManager within the NodeManager
+
+. Enhance DAnCE to support adding/removing components to/from the
+  existing running assembly without shutting down the running appliation.
+  This will allow the application developers to evolve their applications
+  on the fly without server down time.
 
 PLANNED MAJOR CHANGES FOR x.4.6
 ===============================
@@ -10,12 +24,10 @@ PLANNED MAJOR CHANGES FOR x.4.6
   Deployment and Configuration (D&C) specification. Such effort
   will allow application developers to use real-time CORBA features
   within their CCM appliation through meta-programming (via XML
-  metadata)
-
-. Enhance DAnCE to support adding/removing components to/from the
-  existing running assembly without shutting down the running appliation.
-  This will allow the application developers to evolve their applications
-  on the fly without server down time.
+  metadata). Particularly, we will add support for server-side 
+  RT policies, including extension for schema, container,
+  and NodeApplication.  Configuring client-side (receptacle) policies
+  to honor these server policies.
 
 . Enhance DAnCE to support configurable output of debugging information.
   Support for debugging information will be added at the level of both the
@@ -25,8 +37,13 @@ PLANNED MAJOR CHANGES FOR x.4.6
   their component-based applications, as well as allowing customization of
   the amount of debugging information logged
 
-. Add a Quoter example for DAnCE, which has been a consistent tutorial example
-  since TAO. Add the CIAO OEP/Display example for DAnCE.
+. Add more examples for CIAO, which include a Quoter example (a consistent
+  tutorial example since TAO :)) and GUI-based example.
+  
+. Add binding to the Naming Service.
+
+. Enhance DAnCE to support deploying multiple assemblies with the same
+  set of ExecutionManager and NodeMangers.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
 ======================================================

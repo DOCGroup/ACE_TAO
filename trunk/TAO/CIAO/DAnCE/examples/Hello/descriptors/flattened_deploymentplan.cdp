@@ -61,6 +61,19 @@
         </value>
       </value>
     </configProperty>
+
+    <configProperty>
+      <name>local_message</name>
+      <value>
+        <type>
+         <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>This is a test message passed in through XML.</string>
+        </value>
+      </value> 
+
+    </configProperty>
   </instance>
 
   <instance id="Hello-Receiver-idd">
