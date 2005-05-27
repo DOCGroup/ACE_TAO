@@ -212,16 +212,14 @@ main (int argc, char **argv)
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::Servant servant = 0;
-
       // Invoke id_to_servant(). Should retrieve default servant.
-      servant =
+      PortableServer::ServantBase_var servant =
         default_servant_poa->id_to_servant (id.in ()
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Assert correctness.
-      ACE_ASSERT (&test == servant);
+      ACE_ASSERT (&test == servant.in());
 
       // Invoke reference_to_servant(). Should retrieve default servant.
       servant =
@@ -230,7 +228,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Assert correctness.
-      ACE_ASSERT (&test == servant);
+      ACE_ASSERT (&test == servant.in());
 
       // Report success.
       ACE_DEBUG ((LM_DEBUG,

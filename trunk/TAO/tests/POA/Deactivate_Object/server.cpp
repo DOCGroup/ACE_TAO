@@ -52,6 +52,15 @@ main (int argc, char *argv[])
       PortableServer::ObjectId_var new_obj_id = root_poa->reference_to_id (obj_var.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Invoke reference_to_servant(). Should retrieve servant.
+      PortableServer::ServantBase_var servant =
+        root_poa->reference_to_servant (obj_var.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Assert correctness.
+      ACE_ASSERT (hello_impl == servant.in());
+
       root_poa->deactivate_object (new_obj_id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
