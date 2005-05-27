@@ -374,7 +374,7 @@ TAO_ServantBase_var::~TAO_ServantBase_var (void)
 {
   if (this->ptr_ != 0)
     {
-      // We shold not allow exceptions to pass through
+      // We should not allow exceptions to pass through
       ACE_TRY_NEW_ENV
         {
           this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
