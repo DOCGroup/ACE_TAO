@@ -1,3 +1,18 @@
+Thu May 26 21:09:22 2005  Gan Deng <gan.deng@vanderbilt.edu>
+	
+	* tools/Simple_Component_Server/Simple_Component_Server.mpc
+
+	  Put an empty IDL_Files segment in the 
+	  "Simple_Component_Server" project so the IDL
+	  file is not picked up automatically. Thanks to Will Chai
+          <willchai@126.com> for reporting this.
+
+	* NEWS
+	* DAnCE/NEWS
+
+	  Merged these two files and deleted the DAnCE/NEWS file,
+	  since these two files serve similar purposes.
+
 Thu May 26 14:46:53 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
