@@ -18,7 +18,7 @@
 #define ACE_SOCK_SEQPACK_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/config.h"
+#include "ace/config-all.h"
 #include "ace/ACE_export.h"
 
 #include "ace/SOCK_SEQPACK_Association.h"

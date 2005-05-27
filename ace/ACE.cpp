@@ -3232,7 +3232,7 @@ ACE::sock_error (int error)
       /* NOTREACHED */
     case WSAEDESTADDRREQ:
       return ACE_LIB_TEXT ("destination address required");
-      /* NOTREACHED */      
+      /* NOTREACHED */
     default:
       ACE_OS::sprintf (unknown_msg, ACE_LIB_TEXT ("unknown error: %d"), error);
       return unknown_msg;
@@ -3457,3 +3457,57 @@ ACE::strdelete (wchar_t *s)
   delete [] s;
 }
 #endif /* ACE_HAS_WCHAR */
+
+inline static bool equal_char(char a, char b, bool case_sensitive)
+{
+  if (case_sensitive)
+    return a == b;
+  return ACE_OS::ace_tolower(a) == ACE_OS::ace_tolower(b);
+}
+
+bool
+ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
+{
+  if (str == pat)
+    return true;
+  if (pat == 0 || str == 0)
+    return false;
+
+  bool star = false;
+  const char* s = str;
+  const char* p = pat;
+  while (*s != '\0')
+  {
+    if (*p == '*')
+    {
+      star = true;
+      pat = p;
+      while (*++pat == '*');
+
+      if (*pat == '\0')
+        return true;
+      p = pat;
+    }
+    else if (*p == '?')
+    {
+      ++s;
+      ++p;
+    }
+    else if (! equal_char(*s, *p, case_sensitive))
+    {
+      if (!star)
+        return false;
+      s = ++str;
+      p = pat;
+    }
+    else
+    {
+      ++s;
+      ++p;
+    }
+  }
+  if (*p == '*')
+    while (*++p == '*');
+
+  return *p == '\0';
+}

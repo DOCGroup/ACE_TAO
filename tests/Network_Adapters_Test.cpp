@@ -18,7 +18,7 @@
 // ============================================================================
 
 // We need this to be able to check for ACE_HAS_ICMP_SUPPORT
-#include "ace/config.h"
+#include "ace/config-all.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)
