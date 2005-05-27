@@ -14,7 +14,6 @@ namespace StockDistributor_Impl
 {
 
   // initialze the stock values
-
   CORBA::Long
   StockDistributor_exec_i::ibm_ = 100;
 
@@ -40,7 +39,8 @@ namespace StockDistributor_Impl
   int
   pulse_Generator::open ()
   {
-    return this->activate (); // convert the task into a active object that runs in separate thread
+    // convert the task into a active object that runs in separate thread
+    return this->activate (); 
   }
 
   int
@@ -48,7 +48,8 @@ namespace StockDistributor_Impl
   {
     this->reactor ()->end_reactor_event_loop ();
 
-    return this->wait (); // wait for all threads in the task to exit before it returns
+	// wait for all threads in the task to exit before it returns
+    return this->wait (); 
   }
 
   int
@@ -182,7 +183,9 @@ namespace StockDistributor_Impl
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->rate_ == 0 || this->pulser_.active())
-                ACE_THROW (CORBA::BAD_PARAM ());
+	{
+      ACE_THROW (CORBA::BAD_PARAM ());
+	}
 
     this->pulser_.start (this->rate_);
   }
@@ -193,7 +196,9 @@ namespace StockDistributor_Impl
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (! this->pulser_.active ())
+	{
       ACE_THROW (CORBA::BAD_INV_ORDER ());
+	}
 
     this->pulser_.stop ();
   }

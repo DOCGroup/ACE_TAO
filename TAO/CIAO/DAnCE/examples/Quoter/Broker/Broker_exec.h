@@ -59,7 +59,7 @@ namespace StockBroker_Impl
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Stock::Invalid_Stock));
 
-        virtual void
+    virtual void
     push_notify_in (
     ::Stock::StockName *ev
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -127,7 +127,7 @@ namespace StockBroker_Impl
    */
   class BROKER_EXEC_Export StockBrokerHome_exec_i
   : public virtual StockBrokerHome_Exec,
-  public virtual TAO_Local_RefCounted_Object
+    public virtual TAO_Local_RefCounted_Object
   {
     public:
     StockBrokerHome_exec_i (void);

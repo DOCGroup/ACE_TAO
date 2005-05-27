@@ -25,16 +25,16 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
       case 'k':
-       broker_ior = get_opts.opt_arg ();
-       break;
+        broker_ior = get_opts.opt_arg ();
+        break;
 
       case 's':
-       subscribe_name = get_opts.opt_arg ();
-       break;
+        subscribe_name = get_opts.opt_arg ();
+        break;
 
       case 'u':
-       unsubscribe_name = get_opts.opt_arg ();
-       break;
+        unsubscribe_name = get_opts.opt_arg ();
+        break;
 
       case '?':
       default:
@@ -74,8 +74,8 @@ int main (int argc, char* argv[])
 
     // downcast the object reference to the appropriate type
     Stock::StockBroker_var broker =
-      Stock::StockBroker::_narrow (broker_obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+    Stock::StockBroker::_narrow (broker_obj.in ()
+                                 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil (broker.in ()))
