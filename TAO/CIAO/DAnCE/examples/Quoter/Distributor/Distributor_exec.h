@@ -65,7 +65,7 @@ namespace StockDistributor_Impl
     StockDistributor_exec_i &distributor_;
   };
 
- class StockDistributor_exec_i;
+  class StockDistributor_exec_i;
 
   /**
   * @class pulse generator
@@ -217,9 +217,9 @@ namespace StockDistributor_Impl
 
     /// push event to all subscribers
     void push_notify_out ()
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+    ACE_THROW_SPEC ((
+	::CORBA::SystemException
+    ));
 
     private:
     /// pulse generation rate
