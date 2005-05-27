@@ -1500,8 +1500,29 @@ TAO_Root_POA::reference_to_servant_i (CORBA::Object_ptr reference
                         0);
     }
 
-  return this->active_policy_strategies_.request_processing_strategy()->
-    system_id_to_servant (system_id ACE_ENV_ARG_PARAMETER);
+  PortableServer::Servant servant =
+    this->active_policy_strategies_.request_processing_strategy()->
+      system_id_to_servant (system_id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (servant != 0)
+    {
+      // ATTENTION: Trick locking here, see class header for details
+      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
+      ACE_UNUSED_ARG (non_servant_upcall);
+
+      // The POA invokes _add_ref once on the Servant before returning
+      // it. If the application uses reference counting, the caller of
+      // id_to_servant is responsible for invoking _remove_ref once on
+      // the returned Servant when it is finished with it. A
+      // conforming caller need not invoke _remove_ref on the returned
+      // Servant if the type of the Servant uses the default reference
+      // counting inherited from ServantBase.
+      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
+
+  return servant;
 }
 
 bool
