@@ -1,3 +1,11 @@
+Fri May 27 10:26:34 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Interpret custom_types->dependent as an array instead of a string.
+          This is completely backward compatible since a string is just a
+          one element array in the template language.
+
 Fri May 27 12:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_ibm.GNU:
@@ -12,10 +20,10 @@ Fri May 27 08:49:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 Fri May 27 00:40:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Added new recursive type Any insertion/extraction test to the
-	  test suite.
+          Added new recursive type Any insertion/extraction test to the
+          test suite.
 
 Thu May 26 17:07:34 2005  Justin Michel  <michel_j@ociweb.com>
 
