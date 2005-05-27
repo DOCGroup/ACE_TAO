@@ -172,7 +172,7 @@ TAO_EventLogFactory_i::create_with_id (
   TAO_EventLog_i* event_log_i;
 
   ACE_NEW_THROW_EX (event_log_i,
-                    TAO_EventLog_i (this->orb_,
+                    TAO_EventLog_i (this->orb_.in (),
                                     *this,
                                     this->log_mgr_.in (),
                                     this,
