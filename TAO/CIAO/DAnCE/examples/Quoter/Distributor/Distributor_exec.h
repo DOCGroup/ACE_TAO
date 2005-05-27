@@ -43,10 +43,10 @@ namespace StockDistributor_Impl
   public virtual TAO_Local_RefCounted_Object
   {
     public:
-        StockQuoter_exec_i (StockDistributor_exec_i &distributor)
+    StockQuoter_exec_i (StockDistributor_exec_i &distributor)
                 :distributor_ (distributor)
-        {
-        }
+    {
+    }
 
     // Operations from ::Stock::StockQuoter
 
@@ -58,7 +58,8 @@ namespace StockDistributor_Impl
     ::CORBA::SystemException,
     ::Stock::Invalid_Stock));
 
-        /// User defined
+    /// User defined
+
     private:
     /// Maintains a handle to the distributor so that the quoter can refer to it for latest quote
     StockDistributor_exec_i &distributor_;
@@ -79,19 +80,19 @@ namespace StockDistributor_Impl
 
     ~pulse_Generator ();
 
-        /// Hook method that performs application-defined initialization activities
+    /// Hook method that performs application-defined initialization activities
     int open (void);
 
-        /// Hook method that performs application-defined destruction activites
+    /// Hook method that performs application-defined destruction activites
     int close (void);
 
-        /// appliation-defined method for starting the pulse-generation service
+    /// appliation-defined method for starting the pulse-generation service
     int start (CORBA::Long hertz);
 
-        /// application-defined method for stopping the pulse-generation service
+    /// application-defined method for stopping the pulse-generation service
     int stop (void);
 
-        /// Indicate whether the current object is active
+    /// Indicate whether the current object is active
     int active (void);
 
     /// Handle the timeout.
@@ -100,17 +101,17 @@ namespace StockDistributor_Impl
 
     /// Called when timer handler is removed.
     virtual int handle_close (ACE_HANDLE handle,
-                                ACE_Reactor_Mask close_mask);
+                              ACE_Reactor_Mask close_mask);
 
     /// Hook methods implemnting the task's service processing,
-        /// invoked by all threads activated by activate () method
+    /// invoked by all threads activated by activate () method
     virtual int svc (void);
 
   private:
     /// Tracking whether we are actively generating pulse or not.
     int active_;
 
-        /// Maintains a handle that actually process the event
+    /// Maintains a handle that actually process the event
     StockDistributor_exec_i *pulse_callback_;
 
   };
@@ -221,19 +222,19 @@ namespace StockDistributor_Impl
       ));
 
     private:
-      /// pulse generation rate
-      CORBA::Long rate_;
+    /// pulse generation rate
+    CORBA::Long rate_;
 
-          /// pulser object
-      pulse_Generator pulser_;
+    /// pulser object
+    pulse_Generator pulser_;
 
-          /// "real-time" stock value
-          static CORBA::Long msft_;
+    /// "real-time" stock value
+    static CORBA::Long msft_;
 
-          /// "real-tiime" stock value
-          static CORBA::Long ibm_;
+    /// "real-tiime" stock value
+    static CORBA::Long ibm_;
 
-          friend class StockQuoter_exec_i;
+    friend class StockQuoter_exec_i;
   };
 
 
