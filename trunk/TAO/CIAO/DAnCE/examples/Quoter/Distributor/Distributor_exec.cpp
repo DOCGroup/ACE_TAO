@@ -183,9 +183,9 @@ namespace StockDistributor_Impl
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->rate_ == 0 || this->pulser_.active())
-	{
+    {
       ACE_THROW (CORBA::BAD_PARAM ());
-	}
+    }
 
     this->pulser_.start (this->rate_);
   }
@@ -196,9 +196,9 @@ namespace StockDistributor_Impl
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (! this->pulser_.active ())
-	{
+    {
       ACE_THROW (CORBA::BAD_INV_ORDER ());
-	}
+    }
 
     this->pulser_.stop ();
   }

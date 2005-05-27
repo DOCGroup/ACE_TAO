@@ -88,9 +88,9 @@ namespace StockBroker_Impl
       ACE_CHECK;
 
       if (CORBA::is_nil (quoter_obj.in ()))
-	  {
+      {
         ACE_THROW (CORBA::BAD_PARAM ());
-	  }
+      }
 
       Stock::StockInfo_var info = quoter_obj->get_stock_info (stock_name.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -111,9 +111,8 @@ namespace StockBroker_Impl
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
-    this->context_ =
-                CIAO_GLUE_Stock::StockBroker_Context::_narrow (ctx
-                                                       ACE_ENV_ARG_PARAMETER);
+    this->context_ = CIAO_GLUE_Stock::StockBroker_Context::_narrow (ctx
+                                                                    ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (0 == this->context_)
