@@ -1,3 +1,17 @@
+Fri May 27 13:12:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Any/Recursive/Test.idl:
+
+	  Added new user exception to be used when reporting Any
+	  demarshaling errors.
+
+	* tests/Any/Recursive/client.cpp:
+
+	  Fixed unused argument warnings.
+
+	  Use the new user exception when report Any demarshaling
+	  failures, instead of CORBA::INV_OBJREF.
+
 Fri May 27 08:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Default_Servant/Default_Servant.cpp:
