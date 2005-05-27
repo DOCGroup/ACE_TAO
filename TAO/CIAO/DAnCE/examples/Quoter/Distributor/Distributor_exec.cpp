@@ -189,7 +189,7 @@ namespace StockDistributor_Impl
 
   void
   StockDistributor_exec_i::start (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->rate_ == 0 || this->pulser_.active())
@@ -202,7 +202,7 @@ namespace StockDistributor_Impl
 
   void
   StockDistributor_exec_i::stop (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (! this->pulser_.active ())
