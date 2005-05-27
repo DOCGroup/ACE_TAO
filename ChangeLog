@@ -1,3 +1,10 @@
+Fri May 27 00:40:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst:
+
+	  Added new recursive type Any insertion/extraction test to the
+	  test suite.
+
 Thu May 26 17:07:34 2005  Justin Michel  <michel_j@ociweb.com>
 
         * ace/String_Base.inl:

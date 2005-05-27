@@ -167,3 +167,4 @@ TAO/tests/Bug_1535_Regression/run_test.pl: !MINIMUM
 TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
 TAO/tests/CodeSets/simple/run_test.pl: !VxWorks !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl:
+TAO/tests/Any/Recursive/run_test.pl:
