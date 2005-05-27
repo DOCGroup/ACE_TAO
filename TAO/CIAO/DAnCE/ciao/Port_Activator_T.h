@@ -56,6 +56,10 @@ namespace CIAO
         const PortableServer::ObjectId &oid
         ACE_ENV_ARG_DECL);
 
+    void deactivate (
+        const PortableServer::Servant servant
+        ACE_ENV_ARG_DECL);
+
   private:
     /// The executor
     EXEC *executor_;

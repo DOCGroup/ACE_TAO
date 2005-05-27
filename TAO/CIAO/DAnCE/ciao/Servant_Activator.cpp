@@ -109,6 +109,8 @@ namespace CIAO
               // We should try avoiding making outbound calls with the
               // lock held. Oh well, let us get some sense of sanity in
               // CIAO to do think about these.
+              ACE_DEBUG ((LM_DEBUG, "Activating Port %s\n",
+                          str.in ()));
               return this->pa_[t]->activate (oid
                                              ACE_ENV_ARG_PARAMETER);
             }
@@ -119,15 +121,43 @@ namespace CIAO
   }
 
   void
-  Servant_Activator::etherealize (const PortableServer::ObjectId &,
+  Servant_Activator::etherealize (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr ,
-                                  PortableServer::Servant ,
+                                  PortableServer::Servant servant,
                                   CORBA::Boolean ,
                                   CORBA::Boolean
                                   ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    /// Need to investigate what needs to be handled here..
+    CORBA::String_var str =
+      PortableServer::ObjectId_to_string (oid);
+
+    const unsigned int sz = this->slot_index_;
+
+    Port_Activator *tmp = 0;
+
+    for (unsigned int t = 0; t != sz; ++t)
+      {
+        if (this->pa_.get (tmp, t) == -1)
+          {
+            ACE_DEBUG ((LM_DEBUG, "Could not get Port Activator\n"));
+            continue;
+          }
+
+        if (tmp == 0)
+          {
+            ACE_DEBUG ((LM_DEBUG, "Port Activator is NULL\n"));
+            continue;
+          }
+        if (ACE_OS::strcmp (tmp->name (),
+                            str.in ()) == 0)
+          {
+            ACE_DEBUG ((LM_DEBUG, "Deactivating Port %s\n",
+                        str.in ()));
+            this->pa_[t]->deactivate (servant
+                                      ACE_ENV_ARG_PARAMETER);
+          }
+      }
   }
 
   bool
