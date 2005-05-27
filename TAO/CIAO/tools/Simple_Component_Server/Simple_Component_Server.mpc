@@ -20,6 +20,9 @@ project (Simple_Component_Server) : ciao_server {
   libs += CIAO_Simple_Server_Stub
   exename = Simple_Component_Server
 
+  IDL_Files {
+  }
+
   Source_Files {
     Simple_ServerS.cpp
     Simple_Server_i.cpp
