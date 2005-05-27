@@ -4,7 +4,7 @@
 #ifndef i_pch_h
 #define i_pch_h
 
-#include "ace/config.h"
+#include "ace/config-all.h"
 #include "wx/wxprec.h"
 
 #ifdef WX_PRECOMP

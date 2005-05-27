@@ -15,7 +15,7 @@
 #ifndef Locator_NT_Service_H
 #define Locator_NT_Service_H
 
-#include "ace/config.h"
+#include "ace/config-all.h"
 
 #if defined (ACE_WIN32)
 
