@@ -371,13 +371,16 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
                       listen_point.host.in ()));
         }
 
-      // Construct an  IIOP_Endpoint object
-      // Construct an IIOP_Endpoint object.
+      // Construct an IIOP_Endpoint object using the host as provided
+      // in the listen point list.  We must use the host in that form
+      // because that's also how the ORB on the other side will
+      // advertise the host in an IOR.
       //
       // Note that the port in the ACE_INET_Addr is actually the SSL
       // port!
-      TAO_IIOP_Endpoint tmpoint (addr,
-        this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
+      TAO_IIOP_Endpoint tmpoint (listen_point.host.in (),
+                                 listen_point.port,
+                                 addr);
 
       // @@ This is broken.  Instead of just using the default CORBA
       // SecurityAssociation options, by not supplying SSLIOP::SSL

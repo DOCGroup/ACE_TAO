@@ -90,12 +90,24 @@ public:
    * A hostname may be forced by using specified_hostname.  This
    * is useful if the given address corresponds to more than one
    * hostname and the desired one cannot be determined in any
-   * other way.
+   * other way. 
+   * This method is used both when constructing IOR endpoints and LPL
+   * (listen point lists).
+   *
+   * The algorithm used is:
+   * - If hostname_in_ior_ has been set, it is used "as is";
+   * - else if use_dotted_decimal_addresses_ is set, the text representaion
+   *   of the IP is used;
+   * - else if specified_hostname is given, it used "as is";
+   * - else a reverse (address to name) lookup is used to obtain the
+   *   hostname or the IP if no reverse mapping exists.
    */
-  int hostname (TAO_ORB_Core *orb_core,
+  virtual int hostname (TAO_ORB_Core *orb_core,
                 ACE_INET_Addr &addr,
                 char *&host,
                 const char *specified_hostname = 0);
+
+protected:
 
   /**
    * Set the host name for the given address using the dotted decimal
@@ -103,8 +115,6 @@ public:
    */
   int dotted_decimal_address (ACE_INET_Addr &addr,
                               char *&host);
-
-protected:
 
   /**
    * Implement the common part of the open*() methods.  This method is

@@ -333,9 +333,12 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
                       ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
         }
 
-      // Construct an  IIOP_Endpoint object
-      TAO_IIOP_Endpoint endpoint (addr,
-        this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
+      // Construct an  IIOP_Endpoint object using the host as provided
+      // in the listen point list.  We must use host in that form because
+      // that's also how the ORB on the other side will advertise the host
+      // in an IOR.
+      TAO_IIOP_Endpoint endpoint (listen_point.host.in (),
+                                  listen_point.port, addr);
 
       // Construct a property object
       TAO_Base_Transport_Property prop (&endpoint);

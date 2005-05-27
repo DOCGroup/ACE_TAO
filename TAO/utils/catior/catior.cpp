@@ -466,7 +466,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
   int opt;
 
   ACE_Get_Opt get_opt (argcon.get_argc (), argcon.get_TCHAR_argv (),
-                       ACE_TEXT ("f:n:"));
+                       ACE_TEXT ("f:n:x"));
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -598,7 +598,117 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             ACE_OS::fclose (ifstr);
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
           }
-        break;
+          break;
+        case 'x':
+          {
+            //  Read the file into a CORBA::String_var.
+            ACE_DEBUG ((LM_DEBUG,
+                        "reading from stdin\n"));
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+            if (!cin.good ())
+              {
+                return -1;
+              }
+
+            int have_some_input = 0;
+            while (!cin.eof())
+              {
+                char ch;
+                ACE_CString aString;
+
+                while (!cin.eof ())
+                  {
+                    cin.get (ch);
+                    if (ch == '\n' || cin.eof ())
+                      break;
+                    aString += ch;
+                    have_some_input = 1;
+                  }
+#else
+            FILE* ifstr = stdin;
+
+            if (ifstr && !ferror (ifstr))
+              {
+                if (ifstr)
+                  ACE_OS::fclose (ifstr);
+                return -1;
+              }
+
+            int have_some_input = 0;
+            while (!feof (ifstr))
+              {
+                char ch;
+                ACE_CString aString;
+
+                while (!feof (ifstr))
+                  {
+                    ch = ACE_OS::fgetc (ifstr);
+                    if (ch == '\n' || ch == EOF)
+                      break;
+                    aString += ch;
+                    have_some_input = 1;
+                  }
+#endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
+
+                if (have_some_input == 0)
+                  break;
+                ACE_DEBUG ((LM_DEBUG,
+                            "\nhere is the IOR\n%s\n\n",
+                            aString.rep ()));
+
+                char* str;
+                if (aString.find ("IOR:") == 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "decoding an IOR:\n"));
+
+                    // Strip the IOR: off the string.
+                    ACE_CString prefix = "IOR:";
+                    size_t prefixLength = prefix.length ();
+
+                    ACE_CString subString =
+                      aString.substring (prefixLength,
+                                         aString.length () - prefixLength);
+                    subString[subString.length ()] = '\0';
+                    str = subString.rep ();
+                    b = catior (str ACE_ENV_ARG_PARAMETER);
+                  }
+                else if (aString.find ("iiop:") == 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "decoding an IIOP URL IOR\n"));
+
+                    ACE_CString prefix = "IIOP:";
+                    size_t prefixLength = prefix.length ();
+
+                    ACE_CString subString =
+                      aString.substring (prefixLength,
+                                         aString.length () - prefixLength);
+                    //subString[subString.length () - 1] = '\0';
+                    str = subString.rep ();
+                    b = catiiop (str ACE_ENV_ARG_PARAMETER);
+                  }
+                else if (aString.find (":IR:") > 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "decoding an POOP IOR\n"));
+
+                    str = aString.rep ();
+                    b = catpoop (str ACE_ENV_ARG_PARAMETER);
+                  }
+                else
+                  ACE_ERROR ((LM_ERROR,
+                             "Don't know how to decode this IOR\n"));
+              }
+            if (b == 1)
+              ACE_DEBUG ((LM_DEBUG,
+                          "catior returned true\n"));
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "catior returned false\n"));
+          }
+          break;
         case '?':
         case 'h':
         default:
