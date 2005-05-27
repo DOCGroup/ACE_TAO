@@ -212,7 +212,7 @@ namespace StockDistributor_Impl
     protected:
     CIAO_GLUE_Stock::StockDistributor_Context *context_;
 
-        /// User defined members
+    /// User defined members
     public:
 
     /// push event to all subscribers

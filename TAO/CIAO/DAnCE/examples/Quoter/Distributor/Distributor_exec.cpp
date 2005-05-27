@@ -57,7 +57,9 @@ namespace StockDistributor_Impl
   {
     // return if not valid
     if (hertz == 0 || this->active_ != 0)
+	{
       return -1;
+	}
 
     // calculate the interval time
     long usec = 1000000 / hertz;
@@ -82,9 +84,9 @@ namespace StockDistributor_Impl
   {
     // return if not valid.
     if (this->active_ == 0)
-	{
+    {
       return -1;
-	}
+    }
     // cancle the timer
     this->reactor ()->cancel_timer (this);
     this->active_ = 0;
@@ -167,7 +169,7 @@ namespace StockDistributor_Impl
   //==================================================================
 
   StockDistributor_exec_i::StockDistributor_exec_i (void)
-          :rate_ (0), pulser_ (this)
+    : rate_ (0), pulser_ (this)
   {
   }
 
@@ -226,17 +228,15 @@ namespace StockDistributor_Impl
 
   ::Stock::CCM_StockQuoter_ptr
   StockDistributor_exec_i::get_push_quoter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new StockQuoter_exec_i (*this);
   }
 
   void
   StockDistributor_exec_i::push_notify_out ()
-     ACE_THROW_SPEC ((
-       CORBA::SystemException
-     ))
- {
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
     this->msft_++;
     this->ibm_++;
 
