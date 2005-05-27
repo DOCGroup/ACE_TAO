@@ -1,3 +1,8 @@
+Fri May 27 08:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.cpp:
+          Fixed typo in comment
+
 Fri May 27 08:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
