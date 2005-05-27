@@ -32,14 +32,14 @@ ACE_RCSID(Reference_Counted_Servant, server, "$Id$")
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-  class reference_counted_test_i : public virtual PortableServer::RefCountServantBase,
-                                   public virtual test_i
-  {
-  public:
-    reference_counted_test_i (CORBA::ORB_ptr orb,
-                              PortableServer::POA_ptr poa);
-    // Constructor - takes a POA and a value parameter
-  };
+class reference_counted_test_i : public virtual PortableServer::RefCountServantBase,
+                                 public virtual test_i
+{
+public:
+  reference_counted_test_i (CORBA::ORB_ptr orb,
+                            PortableServer::POA_ptr poa);
+  // Constructor - takes a POA and a value parameter
+};
 
 reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
                                                     PortableServer::POA_ptr poa)
