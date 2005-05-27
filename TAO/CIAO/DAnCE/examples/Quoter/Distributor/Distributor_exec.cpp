@@ -57,9 +57,9 @@ namespace StockDistributor_Impl
   {
     // return if not valid
     if (hertz == 0 || this->active_ != 0)
-	{
+    {
       return -1;
-	}
+    }
 
     // calculate the interval time
     long usec = 1000000 / hertz;
