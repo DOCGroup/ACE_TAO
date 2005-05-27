@@ -65,7 +65,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    /*
     Components::FacetDescriptions_var facets =
       this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -74,22 +73,28 @@ namespace CIAO
     CORBA::ULong i = 0;
     for (i = 0; i < facet_len; ++i)
     {
-      PortableServer::ObjectId_var oid =
-        this->container_->the_facet_cons_POA ()->reference_to_id 
-              (facets[i]->facet_ref ()
-               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+      PortableServer::ObjectId_var id =
+        this->container_->the_facet_cons_POA ()->reference_to_id
+            (facets[i]->facet_ref () ACE_ENV_ARG_PARAMETER);
+      
       CIAO::Servant_Activator *sa =
         this->container_->ports_servant_activator ();
-      sa->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
 
-      this->container_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
+      sa->update_port_activator (id ACE_ENV_ARG_PARAMETER);
+
+      ACE_TRY
+        {
+          this->container_->the_facet_cons_POA ()->deactivate_object
+            (id ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Facet not active\n");
+        }
+      ACE_ENDTRY;
     }
-
-    Components::SessionComponent_var temp = this->get_executor ();
-    temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-   */
 
    Components::SessionComponent_var temp = this->get_executor ();
    temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
