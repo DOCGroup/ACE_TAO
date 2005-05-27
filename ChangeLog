@@ -1,3 +1,25 @@
+Fri May 27 15:32:15 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+
+          Added a new ACE::wild_match() function which is used to support the
+        TAO -ORBPreferredInterfaces option. wild_match was contributed by
+        Kevin Heifner <heifner_k@ociweb.com>.
+
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SOCK_SEQPACK_Connector.h:
+        * apps/drwho/Protocol_Manager.cpp:
+        * examples/APG/Reactor/Timers.cpp:
+        * tests/Network_Adapters_Test.cpp:
+
+          These files #included config.h which isn't safe, because
+        it won't necessarilly pick up the correct symbols. For example, I
+        caught this by trying to build ACE on Windows with __ACE_INLINE__ = 0.
+        The files that #included config.h directly saw that it was defined as 0, but
+        changing them to #include config-all.h instead, correctly saw that
+        the symbol was undefined.
+
 Fri May 27 10:26:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
