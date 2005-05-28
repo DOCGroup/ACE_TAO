@@ -191,7 +191,7 @@ protected:
     /// To store all created Component object.
     // @@Gan, see how this caching is duplicated..
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Components::CCMObject_ptr,
+                                    Components::CCMObject_var,
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> CCMComponent_Map;
