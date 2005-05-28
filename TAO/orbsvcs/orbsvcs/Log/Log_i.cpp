@@ -14,8 +14,6 @@ ACE_RCSID (Log,
            Log_i,
            "$Id$")
 
-#define QUERY_LANG_SUPPORTED_BY_LOG "EXTENDED_TCL"
-
 TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
                       DsLogAdmin::LogMgr_ptr factory,
                       DsLogAdmin::LogId id,
@@ -1198,8 +1196,10 @@ TAO_Log_i::check_grammar (const char* grammar
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidGrammar))
 {
-  // Verify that the grammar is "EXTENDED_TCL".
-  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
+  // Verify grammar 
+  if (ACE_OS::strcmp (grammar, "TCL") != 0 &&
+      ACE_OS::strcmp (grammar, "ETCL") != 0 &&
+      ACE_OS::strcmp (grammar, "EXTENDED_TCL") != 0)
     ACE_THROW (DsLogAdmin::InvalidGrammar ());
 }
 
