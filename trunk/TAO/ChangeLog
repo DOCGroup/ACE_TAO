@@ -1,3 +1,10 @@
+Sat May 28 08:59:32 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+
+          Now there is an mpb file in ACE_MPC for the boost related
+          settings. Changed the mpc base project accordingly.
+
 Fri May 27 20:14:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (check_grammar):
