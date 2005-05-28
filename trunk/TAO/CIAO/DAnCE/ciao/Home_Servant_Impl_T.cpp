@@ -58,7 +58,7 @@ namespace CIAO
            this->objref_map_.begin ();
          iter != end; ++iter)
       {
-        this->remove_component ((*iter).int_id_);
+        this->remove_component (((*iter).int_id_).in ());
       }
   }
 
@@ -92,15 +92,15 @@ namespace CIAO
                                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    Components::CCMObject_ptr ccm_obj_ptr = Components::CCMObject::_nil ();
-    if (objref_map_.find (oid.in (), ccm_obj_ptr) != 0)
+    Components::CCMObject_var ccm_obj_var = Components::CCMObject::_nil ();
+    if (objref_map_.find (oid.in (), ccm_obj_var) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
         return;
       }
 
     COMP_VAR _ciao_comp =
-      COMP::_narrow (ccm_obj_ptr
+      COMP::_narrow (ccm_obj_var.in ()
                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
