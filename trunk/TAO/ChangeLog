@@ -1,3 +1,10 @@
+Fri May 27 20:14:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (check_grammar):
+
+	  Changed to accept TCL, ETCL, and EXTENDED_TCL like the
+	  Notification Service.
+
 Fri May 27 15:19:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp:
