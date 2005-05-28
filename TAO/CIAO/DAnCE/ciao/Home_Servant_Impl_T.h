@@ -103,7 +103,7 @@ namespace CIAO
     EXEC_VAR executor_;
 
     typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
-                                    Components::CCMObject_ptr,
+                                    Components::CCMObject_var,
                                     TAO_ObjectId_Hash,
                                     ACE_Equal_To<PortableServer::ObjectId>,
                                     ACE_SYNCH_MUTEX>

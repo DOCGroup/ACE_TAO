@@ -1,3 +1,14 @@
+Fri May 27 23:35:23 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Container_Impl.cpp:
+	* DAnCE/ciao/Container_Impl.h:
+	* DAnCE/ciao/Home_Servant_Impl_T.cpp:
+	* DAnCE/ciao/Home_Servant_Impl_T.h:
+
+	Changed the structure of the utility maps that maintain
+	the component references, to use "_var" instead of "_ptr"
+	in order to facilitate effective memory destructions.
+
 Fri May 27 20:26:33 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * CCF/CCF/CCF.sln:
