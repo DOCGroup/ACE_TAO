@@ -4,8 +4,8 @@ Fri May 27 15:32:15 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/ACE.cpp:
 
           Added a new ACE::wild_match() function which is used to support the
-        TAO -ORBPreferredInterfaces option. wild_match was contributed by
-        Kevin Heifner <heifner_k@ociweb.com>.
+          TAO -ORBPreferredInterfaces option. wild_match was contributed by
+          Kevin Heifner <heifner_k@ociweb.com>.
 
         * ace/SOCK_SEQPACK_Association.h:
         * ace/SOCK_SEQPACK_Connector.h:
@@ -13,12 +13,13 @@ Fri May 27 15:32:15 2005  Justin Michel  <michel_j@ociweb.com>
         * examples/APG/Reactor/Timers.cpp:
         * tests/Network_Adapters_Test.cpp:
 
-          These files #included config.h which isn't safe, because
-        it won't necessarilly pick up the correct symbols. For example, I
-        caught this by trying to build ACE on Windows with __ACE_INLINE__ = 0.
-        The files that #included config.h directly saw that it was defined as 0, but
-        changing them to #include config-all.h instead, correctly saw that
-        the symbol was undefined.
+          These files #included config.h which isn't safe, because it
+ 	  won't necessarilly pick up the correct symbols. For example, I
+ 	  caught this by trying to build ACE on Windows with
+ 	  __ACE_INLINE__ = 0.  The files that #included config.h directly
+ 	  saw that it was defined as 0, but changing them to #include
+ 	  config-all.h instead, correctly saw that the symbol was
+ 	  undefined.
 
 Fri May 27 10:26:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -53,16 +54,16 @@ Thu May 26 17:07:34 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/String_Base.cpp:
 
           Move all non-trivial functions out of the .inl file. Hopefully this
-        will cause a net improvement to the footprint.
+          will cause a net improvement to the footprint.
 
 Thu May 26 16:13:34 2005  Justin Michel  <michel_j@ociweb.com>
 
         * ace/config-win32-msvc-6.h:
 
-          The standard library that comes with vc6 is pre-standard c++, but
-        it's close enough for many things. Enabling its use should be more
-        portable. This was done long ago for the OCI versions of TAO (Since
-        1.2a), and was apparently overlooked until now.
+          The standard library that comes with vc6 is pre-standard c++,
+ 	  but it's close enough for many things. Enabling its use should
+ 	  be more portable. This was done long ago for the OCI versions of
+ 	  TAO (Since 1.2a), and was apparently overlooked until now.
 
 Thu May 26 15:22:10 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
@@ -186,11 +187,10 @@ Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/String_Base.cpp:
 
           Fixed some documentation bugs, and added some new features to
-          this class.
-          New efficient overloads for string concatenation.
-          Fixed clear(1) to work as documented.
-          Used a more optimal string growth when concatenating strings.
-          Performance optimizations for string concatenation.
+ 	  this class.  New efficient overloads for string concatenation.
+  	  Fixed clear(1) to work as documented.  Used a more optimal
+ 	  string growth when concatenating strings.  Performance
+ 	  optimizations for string concatenation.
 
         * tests/SString_Test.cpp:
 
@@ -793,17 +793,17 @@ Mon May 16 08:44:14 2005  Chad Elliott  <elliott_c@ociweb.com>
         * ace/OS_NS_Thread.cpp:
 
           Fixed an issue that arose within the static builds on Windows.
-          The ACE_Thread_Mutex static data member of the
-          TSS_Cleanup_Instance class was being used (in the
-          TSS_Cleanup_Instance constructor) before it was statically
-          initialized.  I have switched it (and the condition variable
-          associated with it) to a pointer that is allocated the first time
-          into the TSS_Cleanup_Instance constructor.
+  	  The ACE_Thread_Mutex static data member of the
+ 	  TSS_Cleanup_Instance class was being used (in the
+ 	  TSS_Cleanup_Instance constructor) before it was statically
+ 	  initialized.  I have switched it (and the condition variable
+ 	  associated with it) to a pointer that is allocated the first
+ 	  time into the TSS_Cleanup_Instance constructor.
 
         * ace/Process_Manager.cpp:
 
           Committing a change from Justin Michel <michel_j@ociweb.com>.
-          The close() method failed to unregister the reactor on Windows.
+  	  The close() method failed to unregister the reactor on Windows.
 
         * ace/ace.mpc:
 
