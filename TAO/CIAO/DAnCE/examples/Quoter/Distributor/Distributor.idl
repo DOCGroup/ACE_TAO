@@ -12,7 +12,7 @@ module Stock
   interface Trigger {
     /// Start the real-time monitoring service
     void start ();
-        /// Stop the real-time monitoring service
+    /// Stop the real-time monitoring service
     void stop ();
   };
 
