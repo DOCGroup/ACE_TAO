@@ -34,8 +34,6 @@
  */
 class TAO_Export TAO_Cleanup_Func_Registry
 {
-  friend class TAO_ORBInitInfo;
-  friend class TAO_ORB_Core_TSS_Resources;
   friend class TAO_ORB_Core;
 
 public:
