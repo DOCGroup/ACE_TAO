@@ -156,7 +156,7 @@ ACE_Array_Base<T>::max_size (size_t new_size)
 {
   if (new_size > this->max_size_)
     {
-      T *tmp;
+      T *tmp = 0;
 
       ACE_ALLOCATOR_RETURN (tmp,
                             (T *) this->allocator_->malloc (new_size * sizeof (T)),
