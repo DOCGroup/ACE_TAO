@@ -106,17 +106,17 @@ else    # Visual Age 5 and 6
   SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
   ifeq ($(XLCVERSION),0x0500)
     TEMPINCDIR  = tempinc
-    CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qonce -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_PRAGMA
+    CCFLAGS    += -qflag=w:w -qonce -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_PRAGMA
   else
     ifeq ($(XLCVERSION),0x0600)
       TEMPINCDIR = tempinc
-# This is just for the workaround for aio, above. Without it, the compiler
-# warns that __C99_RESTRICT is reserved. When that workaround is gone, this
-# ifeq can be removed also. -qflag=w:w is what we want in the end.
+      # This is just for the workaround for aio, above. Without it, the compiler
+      # warns that __C99_RESTRICT is reserved. When that workaround is gone, this
+      # ifeq can be removed also. -qflag=w:w is what we want in the end.
       ifeq (502,$(AIX_VERS))
-        CCFLAGS    += -qflag=e:e -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
+        CCFLAGS    += -qflag=e:e -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
       else
-        CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
+        CCFLAGS    += -qflag=w:w -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
       endif
     else
       CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
@@ -128,7 +128,17 @@ else    # Visual Age 5 and 6
     DLD     += -q64
     CCFLAGS += -q64 -qwarn64
     ARFLAGS := -X64 $(ARFLAGS)
+
+    # This option results in a crash of TAO when building 64bit with Visual Age 6. No idea
+    # why but don't use it when using Visual Age 6.
+    ifneq ($(XLCVERSION),0x0600)
+      CCFLAGS += -qstaticinline
+    endif
+  else
+    # Using 32bit the staticinline option works.
+    CCFLAGS += -qstaticinline
   endif
+  CCFLAGS += -qfuncsect
 endif
 
 # The Visual Age preprocessor is not usable with the TAO_IDL compiler.
