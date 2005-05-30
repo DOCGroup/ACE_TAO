@@ -97,21 +97,21 @@ namespace XSCRT
 {
   struct IdentityProvider
   {
-    virtual ~IdentityProvider (void) {}
-
-    virtual bool before (IdentityProvider const&) const = 0;
+    virtual bool
+    before (IdentityProvider const&) const = 0;
   };
 
   class Type
   {
   public:
-    virtual ~Type ()
+    virtual
+    ~Type ()
     {
     }
 
   protected:
     Type ()
-      : container_ (0)
+        : container_ (0)
     {
     }
 

@@ -35,7 +35,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XMLSchema/Types.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -117,6 +117,150 @@ namespace CIAO
       private:
       char regulator__;
     };
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/Traversal.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct Config_Handlers_Export Domain : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Domain >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        sharedResource (Type&);
+
+        virtual void
+        sharedResource (Type const&);
+
+        virtual void
+        sharedResource_none (Type&);
+
+        virtual void
+        sharedResource_none (Type const&);
+
+        virtual void
+        node (Type&);
+
+        virtual void
+        node (Type const&);
+
+        virtual void
+        node_pre (Type&);
+
+        virtual void
+        node_pre (Type const&);
+
+        virtual void
+        node_next (Type&);
+
+        virtual void
+        node_next (Type const&);
+
+        virtual void
+        node_post (Type&);
+
+        virtual void
+        node_post (Type const&);
+
+        virtual void
+        infoProperty (Type&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        infoProperty_none (Type&);
+
+        virtual void
+        infoProperty_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include <XMLSchema/Writer.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct Config_Handlers_Export Domain : Traversal::Domain, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::Domain Type;
+        Domain (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        sharedResource (Type const&);
+
+        virtual void
+        node_pre (Type const&);
+
+        virtual void
+        node_next (Type const&);
+
+        virtual void
+        node_post (Type const&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        protected:
+        Domain ();
+      };
+    }
   }
 }
 

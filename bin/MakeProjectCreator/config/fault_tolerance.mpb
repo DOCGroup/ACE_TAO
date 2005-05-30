@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : naming, notification, portablegroup, messaging, ftorb {
-  after     += FaultTolerance
-  libs      += TAO_FaultTolerance
-  tagchecks += FaultTolerance
-}
