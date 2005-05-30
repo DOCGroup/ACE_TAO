@@ -65,85 +65,76 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    // Removing Facets
-    Components::FacetDescriptions_var facets =
-      this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    const CORBA::ULong facet_len = facets->length ();
-    CORBA::ULong i = 0;
-    for (i = 0; i < facet_len; ++i)
+    ACE_TRY
     {
-      PortableServer::ObjectId_var facet_id =
-        this->container_->the_facet_cons_POA ()->reference_to_id
-            (facets[i]->facet_ref () ACE_ENV_ARG_PARAMETER);
-      
-      ACE_TRY
-        {
-          this->container_->the_facet_cons_POA ()->deactivate_object
-            (facet_id ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Facet not active\n");
-        }
-      ACE_ENDTRY;
+      // Removing Facets
+      Components::FacetDescriptions_var facets =
+        this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      CIAO::Servant_Activator *sa =
-        this->container_->ports_servant_activator ();
-      sa->update_port_activator (facet_id ACE_ENV_ARG_PARAMETER);
+      const CORBA::ULong facet_len = facets->length ();
+      CORBA::ULong i = 0;
+      for (i = 0; i < facet_len; ++i)
+      {
+        PortableServer::ObjectId_var facet_id =
+          this->container_->the_facet_cons_POA ()->reference_to_id
+              (facets[i]->facet_ref () ACE_ENV_ARG_PARAMETER);
+        
+        this->container_->the_facet_cons_POA ()->deactivate_object
+          (facet_id ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        CIAO::Servant_Activator *sa =
+          this->container_->ports_servant_activator ();
+        sa->update_port_activator (facet_id ACE_ENV_ARG_PARAMETER);
+      }
+
+      // Removed Facets
+
+      // Removing Consumers
+      Components::ConsumerDescriptions_var consumers =
+        this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      const CORBA::ULong consumer_len = consumers->length ();
+      CORBA::ULong j = 0;
+      for (j = 0; j < consumer_len; ++j)
+      {
+        PortableServer::ObjectId_var cons_id =
+          this->container_->the_facet_cons_POA ()->reference_to_id
+              (consumers[j]->consumer () ACE_ENV_ARG_PARAMETER);
+
+        this->container_->the_facet_cons_POA ()->deactivate_object
+          (cons_id ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        CIAO::Servant_Activator *sa =
+          this->container_->ports_servant_activator ();
+        sa->update_port_activator (cons_id ACE_ENV_ARG_PARAMETER);
+      }
+
+      Components::SessionComponent_var temp = this->get_executor ();
+      temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+      CORBA::Object_var objref =
+        this->container_->get_objref (this);
+
+      Components::CCMObject_var ccmobjref =
+        Components::CCMObject::_narrow (objref.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      PortableServer::ObjectId_var oid;
+
+      this->container_->uninstall_component ( ccmobjref.in (),
+                                              oid.out ()
+                                              ACE_ENV_ARG_PARAMETER);
+      this->home_servant_->update_component_map (oid);
     }
-
-  // Removed Facets
-
-  // Removing Consumers
-    Components::ConsumerDescriptions_var consumers =
-      this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    const CORBA::ULong consumer_len = consumers->length ();
-    CORBA::ULong j = 0;
-    for (j = 0; j < consumer_len; ++j)
+    ACE_CATCHANY
     {
-      PortableServer::ObjectId_var cons_id =
-        this->container_->the_facet_cons_POA ()->reference_to_id
-            (consumers[j]->consumer () ACE_ENV_ARG_PARAMETER);
-
-      ACE_TRY
-        {
-          this->container_->the_facet_cons_POA ()->deactivate_object
-            (cons_id ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Consumer not active\n");
-        }
-      ACE_ENDTRY;
-
-      CIAO::Servant_Activator *sa =
-        this->container_->ports_servant_activator ();
-      sa->update_port_activator (cons_id ACE_ENV_ARG_PARAMETER);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Port not active\n");
     }
-
-    Components::SessionComponent_var temp = this->get_executor ();
-    temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-    CORBA::Object_var objref =
-      this->container_->get_objref (this);
-
-    Components::CCMObject_var ccmobjref =
-      Components::CCMObject::_narrow (objref.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-    PortableServer::ObjectId_var oid;
-
-    this->container_->uninstall_component ( ccmobjref.in (),
-                                            oid.out ()
-                                            ACE_ENV_ARG_PARAMETER);
-    this->home_servant_->update_component_map (oid);
+    ACE_ENDTRY;
   }
 
   ::Components::ConnectionDescriptions *

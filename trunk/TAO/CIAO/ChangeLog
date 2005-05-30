@@ -1,3 +1,12 @@
+Mon May 30 12:19:42 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Port_Activator_T.cpp:
+	* DAnCE/ciao/Servant_Activator.cpp:
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+
+	  Made use of ACE_ENV macros to fix Debian Full Reactor
+	  build errors.
+
 Fri May 27 23:35:23 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Impl.cpp:
