@@ -120,7 +120,7 @@ public:
 
   // Called by lookup_by_name_local, to check for declaration
   // in a previous opening of this module.
-  AST_Decl *look_in_previous (Identifier *e, bool ignore_fwd = false);
+  virtual AST_Decl *look_in_previous (Identifier *e, bool ignore_fwd = false);
 
   // Accessor to the member.
   ACE_Unbounded_Set<AST_Decl *> &previous (void);

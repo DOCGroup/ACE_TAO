@@ -1427,7 +1427,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
 }
 
 AST_Decl *
-UTL_Scope::look_in_previous (Identifier *)
+UTL_Scope::look_in_previous (Identifier *, bool /*ignore_fwd */)
 {
   return 0;
 }
