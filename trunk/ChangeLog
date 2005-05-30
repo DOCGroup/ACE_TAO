@@ -1,3 +1,10 @@
+Mon May 30 08:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Don't use -qstaticinline in a 64bit build with Visual Age 6. When
+          this option is specified TAO crashes strangely. Seems a problem
+          in the Visual Age compiler in 64bit mode.
+
 Sun May 29 17:49:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/compiler.m4:
