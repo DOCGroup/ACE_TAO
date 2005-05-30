@@ -1722,7 +1722,7 @@ AssignFromExtractedEmitter::traverse (SemanticGraph::Union& u)
 void
 AssignFromExtractedEmitter::traverse (SemanticGraph::UnboundedSequence&)
 {
-  os << STRS[EXTRACT];
+  os << "*" << STRS[EXTRACT];
 }
 
 void
