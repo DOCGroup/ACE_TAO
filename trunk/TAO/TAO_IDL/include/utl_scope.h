@@ -241,7 +241,8 @@ public:
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
-  virtual AST_Decl *look_in_previous (Identifier *);
+  virtual AST_Decl *look_in_previous (Identifier *e,
+                                      bool ignore_fwd = false);
 
   // How many entries are used?
   virtual unsigned long nmembers (void);
