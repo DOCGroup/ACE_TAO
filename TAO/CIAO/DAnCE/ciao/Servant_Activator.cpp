@@ -126,7 +126,7 @@ namespace CIAO
                                   PortableServer::Servant servant,
                                   CORBA::Boolean ,
                                   CORBA::Boolean
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var str =
