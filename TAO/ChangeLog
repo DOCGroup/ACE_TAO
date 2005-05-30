@@ -1,3 +1,8 @@
+Mon May 30 12:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Cleanup_Func_Registry.h:
+          Removed not needed friend classes
+
 Sat May 28 08:59:32 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
