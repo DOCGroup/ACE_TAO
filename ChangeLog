@@ -1,3 +1,13 @@
+Sun May 29 17:49:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/compiler.m4:
+
+	  Disable the use of gcc's symbol visibility on MacOSX, since it
+	  requires features of the ELF object file format not present in
+	  Mach-O.  Longer term we need a feature check that explicitly
+	  tests for proper operation of symbol visibility instead of a
+	  list of systems where it's disabled.
+
 Fri May 27 15:32:15 2005  Justin Michel  <michel_j@ociweb.com>
 
         * ace/ACE.h:

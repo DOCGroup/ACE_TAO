@@ -374,12 +374,19 @@ dnl @todo Clean up / consolidate these conditionals
    dnl Take advantage of visibility attributes when using g++ 4.0 or
    dnl better.
    if test "$ACE_GXX_MAJOR_VERSION" -ge 4; then
-     AC_MSG_NOTICE([enabling GNU G++ visibility attribute support])
-     ACE_GXX_VISIBILITY_FLAGS="-fvisibility=hidden -fvisibility-inlines-hidden"
-     ACE_CXXFLAGS="$ACE_CXXFLAGS $ACE_GXX_VISIBILITY_FLAGS"
-     AC_DEFINE([ACE_HAS_CUSTOM_EXPORT_MACROS])
-     AC_DEFINE([ACE_Proper_Export_Flag],
-               [__attribute__ ((visibility("default")))])
+     case "$host_os" in
+       darwin*)
+	 ;; 
+     
+       *)
+	 AC_MSG_NOTICE([enabling GNU G++ visibility attribute support])
+	 ACE_GXX_VISIBILITY_FLAGS="-fvisibility=hidden -fvisibility-inlines-hidden"
+	 ACE_CXXFLAGS="$ACE_CXXFLAGS $ACE_GXX_VISIBILITY_FLAGS"
+	 AC_DEFINE([ACE_HAS_CUSTOM_EXPORT_MACROS])
+	 AC_DEFINE([ACE_Proper_Export_Flag],
+		   [__attribute__ ((visibility("default")))])
+	 ;;
+     esac
    else
      case `$CXX --version` in
        2.9*)
