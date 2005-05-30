@@ -1,3 +1,14 @@
+Mon May 30 18:27:22 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Fixed discrepancies in the signature of look_in_previous()
+          between the no-op UTL_Scope version and the AST_Module
+          version. These discrepancies were causing warnings with
+          the Borland compiler.
+
 Mon May 30 10:23:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (get_log_qos, set_log_qos):
