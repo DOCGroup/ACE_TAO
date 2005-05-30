@@ -1,3 +1,9 @@
+Mon May 30 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.cpp:
+          The Borland preview compiler is the only Borland compiler capable
+          of handling the reinterpret cast
+
 Mon May 30 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
