@@ -85,12 +85,13 @@ TAO_Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
   // have submitted a defect report to the OMG for clarification.
   //    --jtc
   
-  DsLogAdmin::QoSList_var ret_val;
-  ACE_NEW_THROW_EX (ret_val,
+  DsLogAdmin::QoSList* ret_ptr;
+  ACE_NEW_THROW_EX (ret_ptr,
                     DsLogAdmin::QoSList (1),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  DsLogAdmin::QoSList_var ret_val = ret_ptr;
   ret_val->length(1);
   ret_val[0] = qostype_;
 
@@ -149,19 +150,23 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
         this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      DsLogAdmin::QoSList_var old_qoslist;
-      ACE_NEW_THROW_EX (old_qoslist,
+      DsLogAdmin::QoSList* old_qoslist_ptr;
+      ACE_NEW_THROW_EX (old_qoslist_ptr,
 			DsLogAdmin::QoSList (1),
 			CORBA::NO_MEMORY ());
       ACE_CHECK;
+
+      DsLogAdmin::QoSList_var old_qoslist = old_qoslist_ptr;
       old_qoslist->length(1);
       old_qoslist[0] = old_qos;
 
-      DsLogAdmin::QoSList_var new_qoslist;
-      ACE_NEW_THROW_EX (new_qoslist,
+      DsLogAdmin::QoSList* new_qoslist_ptr;
+      ACE_NEW_THROW_EX (new_qoslist_ptr,
 			DsLogAdmin::QoSList (1),
 			CORBA::NO_MEMORY ());
       ACE_CHECK;
+
+      DsLogAdmin::QoSList_var new_qoslist = new_qoslist_ptr;
       new_qoslist->length(1);
       new_qoslist[0] = qostype;
       
