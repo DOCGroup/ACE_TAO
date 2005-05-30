@@ -1,3 +1,11 @@
+Mon May 30 10:23:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (get_log_qos, set_log_qos):
+
+	  Fixed compilation on systems where new() does not throw an
+	  exception on failure (i.e. ACE_NEW_THROWS_EXCEPTIONS is not
+	  set).
+
 Mon May 30 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2088/*:
