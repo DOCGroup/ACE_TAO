@@ -1,3 +1,15 @@
+Mon May 30 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2088/*:
+          Added a regression for bugzilla bug 2088. When an ORBInitializer
+          throws an exception, this should be ignored and the next
+          ORBInitializer should be called. Previously an exception was
+          propagated back to the caller of ORB::init(). See also 21.7.3.1
+          of the corba spec.
+
+        * tao/ORBInitializer_Registry.cpp:
+          Fixed bug 2088, catch exceptions locally.
+
 Mon May 30 12:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Cleanup_Func_Registry.h:
