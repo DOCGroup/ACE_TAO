@@ -43,7 +43,7 @@ namespace CIAO
       bool read_process_file (const char *file);
 
     private:
-      auto_ptr< ::Deployment::DeploymentPlan> idl_dp_;
+      ACE_Auto_Ptr< ::Deployment::DeploymentPlan> idl_dp_;
     };
   }
 }
