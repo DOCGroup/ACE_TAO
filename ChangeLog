@@ -1,9 +1,14 @@
+Mon May 30 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/Portable_Interceptors/Bug_2088/run_test.pl
+
 Mon May 30 09:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.x_diab.GNU:
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
 
-          Removed these files since these platform configurations are 
+          Removed these files since these platform configurations are
           not supported anymore with the current ACE/TAO releases.
           The currently supported platform configuration is the
           'platform_vxworks5.5.x.GNU'.
