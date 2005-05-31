@@ -215,7 +215,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PolicyC.cpp
     PolicyFactoryA.cpp
     PolicyFactoryC.cpp
-    PolicyFactory_Registry.cpp
     PollableC.cpp
     PortableInterceptorA.cpp
     PortableInterceptorC.cpp
@@ -562,7 +561,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Pluggable_Messaging.h
     Pluggable_Messaging_Utils.h
     PolicyC.h
-    PolicyFactory_Registry.h
     PolicyFactory_Registry_Adapter.h
     PolicyFactoryS.h
     Policy_ForwardC.h

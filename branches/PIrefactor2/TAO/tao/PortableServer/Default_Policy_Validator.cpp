@@ -3,6 +3,7 @@
 #include "Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
+#include "tao/PolicyFactory_Registry_Adapter.h"
 #include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
@@ -125,18 +126,33 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
 CORBA::Boolean
 TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
+  bool result = false;
+
   // Check known POA policies, or if given PolicyType has a
   // corresponding PolicyFactory.  The PolicyFactory check is mandated
   // by the CORBA specification.
-  return
-    (type == PortableServer::THREAD_POLICY_ID
+  if (type == PortableServer::THREAD_POLICY_ID
      || type == PortableServer::LIFESPAN_POLICY_ID
      || type == PortableServer::ID_UNIQUENESS_POLICY_ID
      || type == PortableServer::ID_ASSIGNMENT_POLICY_ID
      || type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID
      || type == PortableServer::SERVANT_RETENTION_POLICY_ID
-     || type == PortableServer::REQUEST_PROCESSING_POLICY_ID
-     || this->orb_core_.policy_factory_registry ()->factory_exists (type));
+     || type == PortableServer::REQUEST_PROCESSING_POLICY_ID)
+    {
+      result = true;
+    }
+  else
+    {
+      TAO::PolicyFactory_Registry_Adapter *registry =
+        this->orb_core_.policy_factory_registry ();
+
+      if (registry != 0)
+        {
+          result = registry->factory_exists (type);
+        }
+    }
+
+  return result;
 }
 
 void

@@ -25,7 +25,6 @@
 #include "tao/Collocation_Strategy.h"
 #include "tao/params.h"
 #include "tao/ORB_Constants.h"
-#include "tao/PolicyFactory_Registry.h"
 #include "tao/Parser_Registry.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/Service_Callbacks.h"
@@ -46,10 +45,7 @@ namespace TAO
 {
   typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
     ClientRequestInterceptor_List;
-}
 
-namespace TAO
-{
   typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor>
     ServerRequestInterceptor_List;
 }
@@ -80,7 +76,6 @@ class TAO_Profile;
 
 class TAO_Endpoint_Selector_Factory;
 class TAO_Message_State_Factory;
-class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
 class TAO_BiDir_Adapter;
 
@@ -120,6 +115,7 @@ class TAO_Policy_Validator;
 namespace TAO
 {
   class GUIResource_Factory;
+  class PolicyFactory_Registry_Adapter;
 }
 
 namespace CORBA
@@ -265,7 +261,7 @@ public:
 
   /// Return pointer to the policy factory registry associated with
   /// this ORB core.
-  TAO_PolicyFactory_Registry *policy_factory_registry (void);
+  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry (void);
 
   /// Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
@@ -1235,7 +1231,7 @@ protected:
   CORBA::ULong refcount_;
 
   /// Registry containing all registered policy factories.
-  TAO_PolicyFactory_Registry policy_factory_registry_;
+  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   /// Cached pointer/reference to the PICurrent object.

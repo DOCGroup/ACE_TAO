@@ -5,6 +5,7 @@
 #include "ORB.h"
 #include "CodecFactory.h"
 #include "SystemException.h"
+#include "PolicyFactory_Registry_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent.h"
@@ -271,12 +272,20 @@ TAO_ORBInitInfo::register_policy_factory (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_PolicyFactory_Registry *registry =
+  TAO::PolicyFactory_Registry_Adapter *registry =
     this->orb_core_->policy_factory_registry ();
 
-  registry->register_policy_factory (type,
-                                     policy_factory
-                                      ACE_ENV_ARG_PARAMETER);
+  if (registry != 0)
+    {
+      registry->register_policy_factory (type,
+                                         policy_factory
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  else
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 }
 
 size_t

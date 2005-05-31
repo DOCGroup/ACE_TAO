@@ -31,6 +31,7 @@
 #include "Adapter_Factory.h"
 #include "Adapter.h"
 #include "GUIResource_Factory.h"
+#include "PolicyFactory_Registry_Adapter.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 # include "ClientRequestInfo.h"
@@ -177,7 +178,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     transport_sync_strategy_ (0),
     refcount_ (1),
-    policy_factory_registry_ (),
+    policy_factory_registry_ (0),
 #if (TAO_HAS_INTERCEPTORS == 1)
     pi_current_ (0),
     client_request_interceptors_ (),
