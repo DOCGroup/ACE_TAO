@@ -1,3 +1,11 @@
+Tue May 31 22:46:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        
+          Eliminated unused arguments.
+
 Mon May 30 15:22:16 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/XML_File_Intf.h:

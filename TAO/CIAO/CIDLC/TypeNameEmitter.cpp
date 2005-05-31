@@ -1176,7 +1176,7 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Union& u)
 }
 
 void
-AceCheckReturnEmitter::traverse (SemanticGraph::UnboundedSequence& s)
+AceCheckReturnEmitter::traverse (SemanticGraph::UnboundedSequence&)
 {
   os << STRS[ACE_CR] << " (0);";
 }
@@ -1188,13 +1188,13 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Interface& i)
 }
 
 void
-AceCheckReturnEmitter::traverse (SemanticGraph::ValueType& v)
+AceCheckReturnEmitter::traverse (SemanticGraph::ValueType&)
 {
   os << STRS[ACE_CR] << " (0);";
 }
 
 void
-AceCheckReturnEmitter::traverse (SemanticGraph::EventType& e)
+AceCheckReturnEmitter::traverse (SemanticGraph::EventType&)
 {
   os << STRS[ACE_CR] << " (0);";
 }
@@ -1323,7 +1323,7 @@ NullRHSEmitter::traverse (Any&)
 }
 
 void
-NullRHSEmitter::traverse (SemanticGraph::Enum& e)
+NullRHSEmitter::traverse (SemanticGraph::Enum&)
 {
   os << ";";
 }
@@ -1363,7 +1363,7 @@ NullRHSEmitter::traverse (SemanticGraph::Union& u)
 }
 
 void
-NullRHSEmitter::traverse (SemanticGraph::UnboundedSequence& s)
+NullRHSEmitter::traverse (SemanticGraph::UnboundedSequence&)
 {
   os << "= 0;";
 }
@@ -1375,13 +1375,13 @@ NullRHSEmitter::traverse (SemanticGraph::Interface& i)
 }
 
 void
-NullRHSEmitter::traverse (SemanticGraph::ValueType& v)
+NullRHSEmitter::traverse (SemanticGraph::ValueType&)
 {
   os << "= 0;";
 }
 
 void
-NullRHSEmitter::traverse (SemanticGraph::EventType& e)
+NullRHSEmitter::traverse (SemanticGraph::EventType&)
 {
   os << "= 0;";
 }

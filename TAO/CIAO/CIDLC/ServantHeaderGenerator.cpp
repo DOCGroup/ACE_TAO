@@ -286,7 +286,7 @@ namespace
     }
     
     virtual void
-    post (SemanticGraph::ReadWriteAttribute& a)
+    post (SemanticGraph::ReadWriteAttribute&)
     {
       os << ";" << endl << endl;
     }
@@ -422,7 +422,7 @@ namespace
     }
 
     virtual void
-    post (SemanticGraph::ReadAttribute& a)
+    post (SemanticGraph::ReadAttribute&)
     {
       os << ";" << endl << endl;
     }
