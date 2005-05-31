@@ -40,11 +40,29 @@ ACE_Tokens::ACE_Tokens (void)
   ACE_TRACE ("ACE_Tokens::ACE_Tokens");
 }
 
+ACE_Tokens::~ACE_Tokens (void)
+{
+}
+
 void
 ACE_Tokens::make_owner (ACE_TPQ_Entry *caller)
 {
   this->waiters_.remove (caller);
   this->waiters_.enqueue (caller, 0);
+}
+
+ACE_Token_Proxy_Queue *
+ACE_Tokens::waiters ()
+{
+  ACE_TRACE ("ACE_Tokens::waiters");
+  return &this->waiters_;
+}
+
+int
+ACE_Tokens::no_of_waiters ()
+{
+  ACE_TRACE ("ACE_Tokens::no_of_waiters");
+  return this->waiters_.size ();
 }
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
@@ -160,6 +178,9 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
                     (ACE_TCHAR *) id,
                     ACE_MAXCLIENTIDLEN);
 }
+
+ACE_TSS_TPQ_Entry::~ACE_TSS_TPQ_Entry (void)
+{
 
 void
 ACE_TSS_TPQ_Entry::dump (void) const
@@ -666,6 +687,22 @@ ACE_Mutex_Token::is_owner (const ACE_TCHAR *id)
     return 1;
   else
     return 0;
+}
+
+int
+ACE_Mutex_Token::type (void) const
+{
+  ACE_TRACE ("ACE_Mutex_Token::type");
+  return (int) ACE_Tokens::MUTEX;
+}
+
+// ************************************************************
+
+int
+ACE_RW_Token::type (void) const
+{
+  ACE_TRACE ("ACE_RW_Token::type");
+  return (int) ACE_Tokens::RWLOCK;
 }
 
 void
@@ -1412,6 +1449,45 @@ ACE_Token_Proxy::token_acquired (ACE_TPQ_Entry *e)
   return;
 }
 
+int
+ACE_Token_Proxy::type (void) const
+{
+  ACE_TRACE ("ACE_Token_Proxy::type");
+  return 0;
+}
+
+int
+ACE_Token_Proxy::acquire_read (int notify,
+                               void (*sleep_hook)(void *),
+                               ACE_Synch_Options &options)
+{
+  return this->acquire (notify,
+                        sleep_hook,
+                        options);
+}
+
+int
+ACE_Token_Proxy::acquire_write (int notify,
+                                void (*sleep_hook)(void *),
+                                ACE_Synch_Options &options)
+{
+  return this->acquire (notify,
+                        sleep_hook,
+                        options);
+}
+
+int
+ACE_Token_Proxy::tryacquire_read (void (*sleep_hook)(void *))
+{
+  return this->tryacquire (sleep_hook);
+}
+
+int
+ACE_Token_Proxy::tryacquire_write (void (*sleep_hook)(void *))
+{
+  return this->tryacquire (sleep_hook);
+}
+
 ACE_Token_Name::ACE_Token_Name (const ACE_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Name::ACE_Token_Name");
@@ -1447,6 +1523,104 @@ ACE_Token_Name::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
+
+// ************************************************************
+
+ACE_Token_Proxy *
+ACE_Local_Mutex::clone (void) const
+{
+  ACE_Token_Proxy *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Local_Mutex (token_->name (),
+                                   ignore_deadlock_,
+                                   debug_),
+                  0);
+  return temp;
+}
+
+ACE_Tokens *
+ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
+{
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Mutex_Token (name),
+                  0);
+  return temp;
+}
+
+ACE_Local_Mutex::~ACE_Local_Mutex (void)
+{
+}
+
+// ************************************************************
+
+ACE_Local_RLock::~ACE_Local_RLock (void)
+{
+}
+
+ACE_Tokens *
+ACE_Local_RLock::create_token (const ACE_TCHAR *name)
+{
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_RW_Token (name),
+                  0);
+  return temp;
+}
+
+int
+ACE_Local_RLock::type (void) const
+{
+  return ACE_RW_Token::READER;
+}
+
+ACE_Token_Proxy *
+ACE_Local_RLock::clone (void) const
+{
+  ACE_Token_Proxy *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Local_RLock (token_->name (),
+                                   ignore_deadlock_,
+                                   debug_),
+                  0);
+  return temp;
+}
+
+// ************************************************************
+
+ACE_Local_WLock::~ACE_Local_WLock (void)
+{
+}
+
+ACE_Tokens *
+ACE_Local_WLock::create_token (const ACE_TCHAR *name)
+{
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_RW_Token (name),
+                  0);
+  return temp;
+}
+
+int
+ACE_Local_WLock::type (void) const
+{
+  return ACE_RW_Token::WRITER;
+}
+
+ACE_Token_Proxy *
+ACE_Local_WLock::clone (void) const
+{
+  ACE_Token_Proxy *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Local_WLock (token_->name (),
+                                   ignore_deadlock_,
+                                   debug_),
+                  0);
+  return temp;
+}
+
+// ************************************************************
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

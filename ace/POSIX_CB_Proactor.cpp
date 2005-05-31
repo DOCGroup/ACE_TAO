@@ -30,6 +30,12 @@ ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor (void)
   this->close ();
 }
 
+ACE_POSIX_Proactor::Proactor_Type
+ACE_POSIX_CB_Proactor::get_impl_type (void)
+{
+  return PROACTOR_CB;
+}
+
 void ACE_POSIX_CB_Proactor::aio_completion_func (sigval_t cb_data)
 {
   ACE_POSIX_CB_Proactor * impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);

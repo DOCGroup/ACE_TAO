@@ -4,54 +4,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_select.h"
 
-template <class STREAM> ssize_t
-ACE_Streambuf_T<STREAM>::send (char *buf, ssize_t len)
-{
-  return peer_->send_n (buf,len);
-}
-
-template <class STREAM> ssize_t
-ACE_Streambuf_T<STREAM>::recv (char *buf,
-                               ssize_t len,
-                               ACE_Time_Value *tv)
-{
-  return this->recv (buf, len, 0, tv);
-}
-
-template <class STREAM> ssize_t
-ACE_Streambuf_T<STREAM>::recv (char *buf,
-                               ssize_t len,
-                               int flags,
-                               ACE_Time_Value * tv)
-{
-  this->timeout_ = 0;
-  errno = ESUCCESS;
-  ssize_t rval = peer_->recv (buf, len, flags, tv);
-  if (errno == ETIME)
-    this->timeout_ = 1;
-  return rval;
-}
-
-template <class STREAM> ssize_t
-ACE_Streambuf_T<STREAM>::recv_n (char *buf,
-                                 ssize_t len,
-                                 int flags,
-                                 ACE_Time_Value *tv)
-{
-  this->timeout_ = 0;
-  errno = ESUCCESS;
-  ssize_t rval = peer_->recv_n (buf, len, flags, tv);
-  if (errno == ETIME)
-    this->timeout_ = 1;
-  return rval;
-}
-
-template <class STREAM> ACE_HANDLE
-ACE_Streambuf_T<STREAM>::get_handle (void)
-{
-  return peer_ ? peer_->get_handle () : 0;
-}
-
 template <class STREAM> ACE_INLINE int
 ACE_IOStream<STREAM>::eof (void) const
 {

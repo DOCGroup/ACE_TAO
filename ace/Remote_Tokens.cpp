@@ -2,15 +2,20 @@
 // $Id$
 
 #include "ace/Remote_Tokens.h"
+
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 #include "ace/Singleton.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Remote_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
-ACE_RCSID(ace, Remote_Tokens, "$Id$")
+ACE_RCSID (ace,
+           Remote_Tokens,
+           "$Id$")
+
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #define ACE_TSS_CONNECTION_MUTEX ACE_Thread_Mutex
@@ -398,6 +403,28 @@ ACE_Remote_Token_Proxy::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
+ACE_Token_Proxy *
+ACE_Remote_Mutex::clone (void) const
+{
+  ACE_Token_Proxy *temp;
+  ACE_NEW_RETURN (temp,
+                  ACE_Remote_Mutex (this->name (),
+			                              ignore_deadlock_,
+			                              debug_),
+                  0);
+  return temp;
+}
+
+ACE_Tokens *
+ACE_Remote_Mutex::create_token (const ACE_TCHAR *name)
+{
+  ACE_Tokens *temp;
+  ACE_NEW_RETURN (temp,
+                  ACE_Mutex_Token (name),
+                  0);
+  return temp;
+}
+
 void
 ACE_Remote_Mutex::dump (void) const
 {
@@ -411,6 +438,34 @@ ACE_Remote_Mutex::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
+ACE_Tokens *
+ACE_Remote_RLock::create_token (const ACE_TCHAR *name)
+{
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_RW_Token (name),
+                  0);
+  return temp;
+}
+
+int
+ACE_Remote_RLock::type (void) const
+{
+  return ACE_RW_Token::READER;
+}
+
+ACE_Token_Proxy *
+ACE_Remote_RLock::clone (void) const
+{
+  ACE_Token_Proxy *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Remote_RLock (this->name (),
+			            ignore_deadlock_,
+			            debug_),
+                  0);
+  return temp;
+}
+
 void
 ACE_Remote_RLock::dump (void) const
 {
@@ -422,6 +477,35 @@ ACE_Remote_RLock::dump (void) const
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
+}
+
+
+ACE_Tokens *
+ACE_Remote_WLock::create_token (const ACE_TCHAR *name)
+{
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_RW_Token (name),
+                  0);
+  return temp;
+}
+
+int
+ACE_Remote_WLock::type (void) const
+{
+  return ACE_RW_Token::WRITER;
+}
+
+ACE_Token_Proxy *
+ACE_Remote_WLock::clone (void) const
+{
+  ACE_Token_Proxy *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Remote_WLock (this->name (),
+                                    ignore_deadlock_,
+                                    debug_),
+                  0);
+  return temp;
 }
 
 void

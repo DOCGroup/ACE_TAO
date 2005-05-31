@@ -12,7 +12,32 @@
 #include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Thread_Manager, "$Id$")
+
+ACE_RCSID (ace,
+           Thread_Manager,
+           "$Id$")
+
+
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+
+ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
+{
+  this->do_apply ();
+}
+
+ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func (void)
+{
+  this->do_apply ();
+}
+
+void
+ACE_At_Thread_Exit_Func::apply (void)
+{
+  this->func_ (this->object_, this->param_);
+}
+
+#endif  /* ! ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Control)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)

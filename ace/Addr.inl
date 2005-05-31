@@ -2,20 +2,8 @@
 //
 // $Id$
 
-// Addr.i
-
 // Return the address of the address.
 
-ACE_INLINE void *
-ACE_Addr::get_addr (void) const
-{
-  return 0;
-}
-
-ACE_INLINE void
-ACE_Addr::set_addr (void *, int)
-{
-}
 
 ACE_INLINE bool
 ACE_Addr::operator == (const ACE_Addr &sap) const

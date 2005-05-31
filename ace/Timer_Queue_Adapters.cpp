@@ -6,10 +6,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#ifndef ACE_TIMER_QUEUE_ADAPTERS_C
-# define ACE_TIMER_QUEUE_ADAPTERS_C
-
-ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
+#ifndef ACE_TIMER_QUEUE_ADAPTERS_CPP
+#define ACE_TIMER_QUEUE_ADAPTERS_CPP
 
 # if !defined (__ACE_INLINE__)
 #  include "ace/Timer_Queue_Adapters.inl"
@@ -319,6 +317,27 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
   return 0;
 }
 
+template<class TQ> int
+ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
+                                              int ,
+                                              int ,
+                                              long priority,
+                                              int grp_id,
+                                              ACE_Task_Base *task,
+                                              ACE_hthread_t thread_handles[],
+                                              void *stack[],
+                                              size_t stack_size[],
+                                              ACE_thread_t thread_names[])
+{
+  // Macros to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (thread_handles);
+
+  // Make sure that we only allow a single thread to be spawned for
+  // our adapter.  Otherwise, too many weird things can happen.
+  return ACE_Task_Base::activate (flags, 1, 0, priority, grp_id, task, 0,
+                                  stack, stack_size, thread_names);
+}
+
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
-#endif /* ACE_TIMER_QUEUE_ADAPTERS_C*/
+#endif /* ACE_TIMER_QUEUE_ADAPTERS_CPP */

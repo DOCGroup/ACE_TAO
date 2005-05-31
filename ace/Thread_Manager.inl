@@ -1,7 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Thread_Manager.i
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 ACE_INLINE
@@ -50,12 +50,6 @@ ACE_At_Thread_Exit::do_apply (void)
 }
 
 ACE_INLINE
-ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
-{
-  this->do_apply ();
-}
-
-ACE_INLINE
 ACE_At_Thread_Exit_Func::ACE_At_Thread_Exit_Func (void *object,
                                                   ACE_CLEANUP_FUNC func,
                                                   void *param)
@@ -63,18 +57,6 @@ ACE_At_Thread_Exit_Func::ACE_At_Thread_Exit_Func (void *object,
     func_(func),
     param_(param)
 {
-}
-
-ACE_INLINE
-ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func (void)
-{
-  this->do_apply ();
-}
-
-ACE_INLINE void
-ACE_At_Thread_Exit_Func::apply ()
-{
-  func_ (object_, param_);
 }
 #endif /* ! ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
