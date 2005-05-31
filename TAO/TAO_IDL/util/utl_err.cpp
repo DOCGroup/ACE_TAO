@@ -205,6 +205,9 @@ error_string (UTL_Error::ErrorCode c)
       return "";
     case UTL_Error::EIDL_IGNORE_IDL3_ERROR:
       return "improper use of -Sm option with ";
+    case UTL_Error::EIDL_TC_SUPPRESSION_WARNING:
+      /* More intelligible message printed by warning routine */
+      return "";
   }
 
   return 0;
@@ -1388,6 +1391,17 @@ UTL_Error::ignore_idl3_error (AST_Decl *d)
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::tc_suppression_warning (AST_Decl *d)
+{
+  this->warning1 (EIDL_TC_SUPPRESSION_WARNING, d);
+  ACE_ERROR ((LM_ERROR,
+              "-St option ignored for "));
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              ". Type code required to raise IDL exception.\n"));
 }
 
 

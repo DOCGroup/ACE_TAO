@@ -137,6 +137,7 @@ public:
     EIDL_ILLEGAL_INFIX,         // Illegal infix operator in expression
     EIDL_LOCAL_REMOTE_MISMATCH, // Local type used in remote operation
     EIDL_IGNORE_IDL3_ERROR,     // -Sm option used with component or home decl
+    EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
     EIDL_OK                     // No error
   };
 
@@ -333,6 +334,9 @@ public:
                               
   // Improper use of -Sm option.
   void ignore_idl3_error (AST_Decl *d);
+  
+  // Improper use of -St option.
+  void tc_suppression_warning (AST_Decl *d);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

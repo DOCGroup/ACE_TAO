@@ -721,12 +721,12 @@ also receives other options that are specific to it. <p>
   <tr><a name="St">
     <td><tt>-St</tt></td>
 
-    <td>Suppress generation of the TypeCodes</td>
+    <td>Suppress generation of typecodes</td>
 
     <td>Also suppresses the generation of the Any operators, since they need the
-        associated typecode. User exceptions also need the generated typecode, and
-        a user exception in an IDL file compiled with this option will cause a
-        C++ compilation error.</td>
+        associated typecode. IDL operations that may raise a user-defined exception
+        require the exception's typecode, so this option is ignored for user
+        exception typecode generation, and a warning message is output.</td>
   </tr>
 
   <tr><a name="Sc">
@@ -744,7 +744,7 @@ also receives other options that are specific to it. <p>
         that modified the AST and is launched just before the code generating
         visitors. There is a new tool in CIAO that converts the entire IDL file
         into one containing explicit declarations of the implied IDL types.
-        For such a file, we don't want the preprocessing visitor to bve launched,
+        For such a file, we don't want the preprocessing visitor to be launched,
         so this command line option will suppress it.</td>
   </tr>
 

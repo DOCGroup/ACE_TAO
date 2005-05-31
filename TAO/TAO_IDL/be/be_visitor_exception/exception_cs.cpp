@@ -119,9 +119,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   // Assign each individual member.
   ctx = *this->ctx_;
-  be_visitor_exception_ctor_assign visitor (&ctx);
+  be_visitor_exception_ctor_assign ca_visitor (&ctx);
 
-  if (node->accept (&visitor) == -1)
+  if (node->accept (&ca_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_cs::"
@@ -325,30 +325,31 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
-  if (be_global->tc_support ())
-    {
-      *os << "// TAO extension - the virtual _type method." << be_nl;
-      *os << "CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
+  // No check for typecode suppression here, since the typecode is
+  // required in generated code for an operation that raises the
+  // exception. We have already output a warning message when
+  // launching the stub header typecode visitor.
+  *os << "// TAO extension - the virtual _type method." << be_nl;
+  *os << "CORBA::TypeCode_ptr " << node->name ()
+      << "::_tao_type (void) const" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
       *os << "}";
-    }
+      
+  // No check for typecode suppression here, since the typecode is
+  // required in generated code for an operation that raises the
+  // exception. We have already output a warning message when
+  // launching the stub header typecode visitor.
+  ctx = *this->ctx_;
+  TAO::be_visitor_struct_typecode tc_visitor (&ctx);
 
-  if (be_global->tc_support ())
+  if (tc_visitor.visit_exception (node) == -1)
     {
-      ctx = *this->ctx_;
-      // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      TAO::be_visitor_struct_typecode visitor (&ctx);
-
-      if (visitor.visit_exception (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_cs::"
-                             "visit_exception - "
-                             "TypeCode definition failed\n"),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          "(%N:%l) be_visitor_exception_cs::"
+                          "visit_exception - "
+                          "TypeCode definition failed\n"),
+                        -1);
     }
 
   node->cli_stub_gen (I_TRUE);
