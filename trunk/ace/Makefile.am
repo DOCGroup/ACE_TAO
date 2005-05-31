@@ -511,7 +511,6 @@ nobase_include_HEADERS = \
   Framework_Component_T.h \
   Free_List.cpp \
   Free_List.h \
-  Free_List.inl \
   Functor.h \
   Functor.inl \
   Functor_String.h \
@@ -648,7 +647,6 @@ nobase_include_HEADERS = \
   Message_Queue.inl \
   Message_Queue_T.cpp \
   Message_Queue_T.h \
-  Message_Queue_T.inl \
   Method_Object.h \
   Method_Request.h \
   Metrics_Cache.h \
@@ -771,7 +769,6 @@ nobase_include_HEADERS = \
   PI_Malloc.inl \
   POSIX_Asynch_IO.h \
   POSIX_CB_Proactor.h \
-  POSIX_CB_Proactor.inl \
   POSIX_Proactor.h \
   POSIX_Proactor.inl \
   Pagefile_Memory_Pool.h \
@@ -870,7 +867,6 @@ nobase_include_HEADERS = \
   SString.inl \
   SStringfwd.h \
   SUN_Proactor.h \
-  SUN_Proactor.inl \
   SV_Message.h \
   SV_Message.inl \
   SV_Message_Queue.h \

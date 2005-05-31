@@ -92,9 +92,5 @@ protected:
   ACE_SYNCH_SEMAPHORE sema_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/POSIX_CB_Proactor.inl"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__  */
 #endif /* ACE_POSIX_CB_PROACTOR_H*/

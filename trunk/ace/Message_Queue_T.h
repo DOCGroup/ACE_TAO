@@ -1224,10 +1224,6 @@ protected:
   ACE_Message_Queue<ACE_SYNCH_USE> queue_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Message_Queue_T.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Message_Queue_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

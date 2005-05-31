@@ -1,3 +1,28 @@
+Tue May 31 11:49:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Free_List.inl:
+	* ace/Message_Queue_T.inl:
+	* ace/POSIX_CB_Proactor.inl:
+	* ace/SUN_Proactor.inl:
+
+	  Removed these empty inline files.
+
+	* ace/Free_List.cpp:
+	* ace/Free_List.h:
+	* ace/Message_Queue_T.cpp:
+	* ace/Message_Queue_T.h:
+	* ace/POSIX_CB_Proactor.cpp:
+	* ace/POSIX_CB_Proactor.h:
+	* ace/SUN_Proactor.cpp:
+	* ace/SUN_Proactor.h:
+
+	  Removed include directives for removed inline files.
+
+	* ace/Timer_Queue_Adapters.cpp (activate):
+
+	  Moved method definition out of ACE_HAS_DEFERRED_TIMER_COMMANDS
+	  block.  Fixes "unresolved symbol" link-time errors.
+
 Tue May 31 10:39:10 2005  Justin Michel  <michel_j@ociweb.com>
 
         * ace/String_Base.inl:

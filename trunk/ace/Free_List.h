@@ -134,10 +134,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &))
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Free_List.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Free_List.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

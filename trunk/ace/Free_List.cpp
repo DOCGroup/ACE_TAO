@@ -10,10 +10,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Free_List.inl"
-#endif /* __ACE_INLINE__ */
-
 
 // Empty constructor
 
