@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentPackageDescription
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Receiver Package</label>
+  <UUID>a5923ef4-9c62-4458-9fa4-869b53d834ca</UUID>
+  <realizes href="Receiver.ccd"/>
+  <implementation>
+    <name>Receiver</name>
+    <referencedImplementation href="Receiver.cid"/>
+  </implementation>
+</Deployment:ComponentPackageDescription>

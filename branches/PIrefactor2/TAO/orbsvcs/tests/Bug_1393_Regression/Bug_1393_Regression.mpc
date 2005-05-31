@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client): taoclient, ifr_client {
+  exename = client
+  IDL_Files {
+  }
+
+  Source_Files  {
+    client.cpp
+  }
+}
