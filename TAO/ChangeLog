@@ -1,3 +1,23 @@
+Tue May 31 19:28:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Since the typecode of a user-defined IDL exception is required
+          by any IDL operation that raises it, changed the logic of the
+          -St option to be ignored for user exceptions. An informative
+          message is also output for each user exception encountered if
+          the -St option is used. Formerly, the simultaneous appearance
+          of -St and user exceptions would be made apparent only by a
+          C++ compile failure.
+          
+        * docs/compiler.html:
+        
+          Updated IDL compiler documentation to reflect the above change.
+
 Tue May 31 10:08:27 2005  Justin Michel  <michel_j@ociweb.com>
 
         * tao/IIOP_Endpoint.cpp:
