@@ -1,3 +1,9 @@
+Tue May 31 21:45:10 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* NEWS:
+
+	  Updated RMCast-related information.
+
 Tue May 31 11:49:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Free_List.inl:
