@@ -877,19 +877,11 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
           // Build up a 128 bit address.  An IPv4-mapped IPv6 address
           // is defined as 0:0:0:0:0:ffff:IPv4_address.  This is defined
           // in RFC 1884 */
-          struct {
-            ACE_UINT16 prefix[5];
-            ACE_UINT16 ffff;
-            ACE_UINT32 addr;
-          } newaddress = {
-            { 0,0,0,0,0 },
-            0xffff,
-            ip4
-          };
-
-          ACE_OS::memcpy (&this->inet_addr_.in6_.sin6_addr,
-                          &newaddress,
-                          sizeof (newaddress));
+          ACE_OS::memset (&this->inet_addr_.in6_.sin6_addr, 0, 16);
+          this->inet_addr_.in6_.sin6_addr.s6_addr[10] =
+            this->inet_addr_.in6_.sin6_addr.s6_addr[11] = 0xff;
+          ACE_OS::memcpy
+            (&this->inet_addr_.in6_.sin6_addr.s6_addr[12], &ip4, 4);
         }
 #endif /* ACE_HAS_IPV6 */
       return 0;
