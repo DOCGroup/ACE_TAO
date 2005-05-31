@@ -24,6 +24,7 @@ ACE_RCSID (tao,
 #include "IFR_Client_Adapter.h"
 #include "CodecFactory_ORBInitializer.h"
 #include "TypeCodeFactory_Adapter.h"
+#include "PolicyFactory_Registry_Adapter.h"
 #include "debug.h"
 #include "CDR.h"
 #include "SystemException.h"
