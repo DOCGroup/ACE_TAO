@@ -2,13 +2,14 @@
 // This initializes an ORB, a POA, an Object within that POA, and
 // obtains and prints an IOR for that Object.
 //
-
-ACE_RCSID (IOR_Endpoint_Hostnames, generate_ior, "$Id$")
+// $Id$
 
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #include "bogus_i.h"
+
+ACE_RCSID (IOR_Endpoint_Hostnames, generate_ior, "$Id$")
 
 int
 main (int argc, char *argv[])

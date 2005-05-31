@@ -1,9 +1,16 @@
+Mon May 30 22:11:35 2005  Chris Cleeland  <cleeland@ociweb.com>
+
+        * tests/IOR_Endpoint_Hostnames/bogus_i.cpp:
+        * tests/IOR_Endpoint_Hostnames/generate_ior.cpp:
+
+	  Fix ACE_RCSID macro usage that prevented compilation.
+
 Mon May 30 18:27:22 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Fixed discrepancies in the signature of look_in_previous()
           between the no-op UTL_Scope version and the AST_Module
           version. These discrepancies were causing warnings with
@@ -11,11 +18,11 @@ Mon May 30 18:27:22 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May 30 10:23:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (get_log_qos, set_log_qos):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (get_log_qos, set_log_qos):
 
-	  Fixed compilation on systems where new() does not throw an
-	  exception on failure (i.e. ACE_NEW_THROWS_EXCEPTIONS is not
-	  set).
+          Fixed compilation on systems where new() does not throw an
+          exception on failure (i.e. ACE_NEW_THROWS_EXCEPTIONS is not
+          set).
 
 Mon May 30 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -43,50 +50,50 @@ Sat May 28 08:59:32 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Fri May 27 20:14:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (check_grammar):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (check_grammar):
 
-	  Changed to accept TCL, ETCL, and EXTENDED_TCL like the
-	  Notification Service.
+          Changed to accept TCL, ETCL, and EXTENDED_TCL like the
+          Notification Service.
 
 Fri May 27 15:19:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
 
-	  Changed class to store a single QoS property instead of list, as
-	  the currently specified properties are mutually exclusive.  This
-	  greatly simplifies the get_log_qos and set_log_qos methods.
+          Changed class to store a single QoS property instead of list, as
+          the currently specified properties are mutually exclusive.  This
+          greatly simplifies the get_log_qos and set_log_qos methods.
 
-	  Changed set_log_qos to return all of the unknown/unsupported QoS
-	  properties when throwing the UnsupportedQoS exception.
+          Changed set_log_qos to return all of the unknown/unsupported QoS
+          properties when throwing the UnsupportedQoS exception.
 
 Fri May 27 17:01:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
         * tao/IIOP_Connection_Handler.cpp:
 
-	  Corrected a problem whereby, when listen points received in a
-	  bidirectional context get processed, the key for the entry made
-	  in the transport cache was created using the receiver's notion
-	  of whether dotted decimal addresses (-ORBDottedDecimalAddresses)
-	  should be used, rather than how the listen points were sent by
-	  the sender.  In doing so, when, for example, a CORBA server was
-	  using -ORBDottedDecimalAddresses and the client was not, the
-	  client's listen point got cached using its IP address rather
-	  than its hostname.  However, all the IORs distributed by the
-	  client would use the hostname, and, thus, the server would not
-	  be able to find a match for the client's endpoint in its cache,
-	  and subsequently try to create a new one.
+          Corrected a problem whereby, when listen points received in a
+          bidirectional context get processed, the key for the entry made
+          in the transport cache was created using the receiver's notion
+          of whether dotted decimal addresses (-ORBDottedDecimalAddresses)
+          should be used, rather than how the listen points were sent by
+          the sender.  In doing so, when, for example, a CORBA server was
+          using -ORBDottedDecimalAddresses and the client was not, the
+          client's listen point got cached using its IP address rather
+          than its hostname.  However, all the IORs distributed by the
+          client would use the hostname, and, thus, the server would not
+          be able to find a match for the client's endpoint in its cache,
+          and subsequently try to create a new one.
 
-	  The change now creates an entry in the cache using, for the
-	  hostname portion of the key, the host name however the client
-	  sent the hostname.  This should insure that a receiver of a
-	  bidirectional context will have the ability to find a match in
-	  the transport cache.
+          The change now creates an entry in the cache using, for the
+          hostname portion of the key, the host name however the client
+          sent the hostname.  This should insure that a receiver of a
+          bidirectional context will have the ability to find a match in
+          the transport cache.
 
-	  This change supercedes the following changelog entry:
+          This change supercedes the following changelog entry:
 
-	  Thu Sep 13 11:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+          Thu Sep 13 11:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
           * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
           * tao/IIOP_Connection_Handler.cpp (process_listen_point_list):
@@ -135,7 +142,7 @@ Fri May 27 17:01:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * utils/catior/catior.cpp:
 
-	  Added a "-x" option that works like "-f" except that it reads
+          Added a "-x" option that works like "-f" except that it reads
           the IOR from standard input (stdin or cin) rather than from a
           file.  This makes catior much more like the unix "cat" command,
           and enables it to be used in a pipeline.
