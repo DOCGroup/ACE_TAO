@@ -833,7 +833,7 @@ namespace
     }
 
     virtual void
-    names_post (Type& t)
+    names_post (Type&)
     {
       os << "}";
     }
