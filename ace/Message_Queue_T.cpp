@@ -13,10 +13,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Message_Queue_T.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Notification_Strategy.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)

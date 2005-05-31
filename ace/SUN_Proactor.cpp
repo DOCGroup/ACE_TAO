@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ace/SUN_Proactor.h"
@@ -9,9 +8,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/SUN_Proactor.inl"
-#endif /* __ACE_INLINE__ */
+
+ACE_RCSID (ace,
+           POSIX_CB_Proactor,
+           "$Id$")
+
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
   : ACE_POSIX_AIOCB_Proactor (max_aio_operations,
