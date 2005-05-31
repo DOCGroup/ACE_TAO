@@ -1,3 +1,11 @@
+Tue May 31 18:46:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/INET_Addr.cpp (set_address): When needing to plug in an
+	  IPv4-mapped IPv6 address, avoid any possibility of compiler struct
+	  member non-contiguous alignment. Use the ip6 address type and
+	  plug the values in where they go. Thanks to Robert Iakobashvili
+	  <coroberti at gmail dot com> for this idea.
+
 Tue May 31 21:45:10 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* NEWS:
