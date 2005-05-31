@@ -1,3 +1,9 @@
+Tue May 31 18:51:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_signal.inl (sigaction): Added "::" qualifer to references
+	  to "struct sigaction" to distinguish it from sigaction in the
+	  ACE_OS namespace. This was tripping up HP aC++ in certain use cases.
+
 Tue May 31 18:46:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/INET_Addr.cpp (set_address): When needing to plug in an
@@ -47,7 +53,7 @@ Tue May 31 10:39:10 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/String_Base.cpp:
 
           Move operator+=() methods from .inl to .cpp in an effort to
-        reduce footprint.
+          reduce footprint.
 
 Mon May 30 18:10:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
