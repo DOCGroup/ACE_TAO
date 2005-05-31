@@ -1,3 +1,12 @@
+Tue May 31 09:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry.cpp:
+          Reverted my change of Mon May 30 13:14:12 UTC 2005. With my change
+          we are 3.0.3 corba compliant but this is not usable for our users.
+          The draft 3.1 seems to describe the wanted behaviour better. I keep
+          the regression test in the archive, the bugzilla entry is reopened.
+          We will look at bug 2088 again
+
 Mon May 30 22:19:54 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Transport.h (post_connect_hook):
@@ -15,12 +24,12 @@ Mon May 30 22:19:54 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  tear down the connection, and return a false to the
 	  invoker. There  are no pre_connect_hooks () since the  transport
 	  doesn't exist before a connection establishment. :-). A default
-	  noop implementation has been provided. 
+	  noop implementation has been provided.
 
 	* tao/Transport_Connector.cpp:
 
 	  Invoke post_connect_hook () after grabbing a connection from
-	  cache. 
+	  cache.
 
 Mon May 30 22:11:35 2005  Chris Cleeland  <cleeland@ociweb.com>
 
@@ -200,7 +209,7 @@ Fri May 27 15:30:21 2005  Justin Michel  <michel_j@ociweb.com>
 	  __ACE_INLINE__ = 0. The files that #included config.h directly
 	  saw that it was defined as 0, but changing them to #include
 	  config-all.h instead, correctly saw that the symbol was
-	  undefined. 
+	  undefined.
 
 Fri May 27 13:12:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
@@ -277,7 +286,7 @@ Thu May 26 16:09:50 2005  Justin Michel  <michel_j@ociweb.com>
 	  operator<< instead of relying on existence of ostream extraction
 	  operators for strings. A more useful solution might be to
 	  provide insertion/extraction operators for platforms that are
-	  missing them. 
+	  missing them.
 
 Thu May 26 16:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
