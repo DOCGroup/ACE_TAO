@@ -221,7 +221,6 @@ TAO_UIPMC_Acceptor::hostname (TAO_ORB_Core *,
   return this->dotted_decimal_address (addr, host);
 }
 
-#if 0
 int
 TAO_UIPMC_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                             char *&host)
@@ -241,7 +240,6 @@ TAO_UIPMC_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   host = CORBA::string_dup (tmp);
   return 0;
 }
-#endif
 
 CORBA::ULong
 TAO_UIPMC_Acceptor::endpoint_count (void)
