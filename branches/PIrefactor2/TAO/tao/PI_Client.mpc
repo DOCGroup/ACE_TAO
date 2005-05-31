@@ -1,0 +1,32 @@
+//$Id$
+project : taolib, core {
+  sharedname   = TAO_PI_Client
+  dynamicflags = TAO_PI_CLIENT_BUILD_DLL
+
+  Source_Files {
+    PI_Client
+  }
+
+  Header_Files {
+    PI_Client
+  }
+
+  Inline_Files {
+    PI_Client
+  }
+
+  Template_Files {
+    PI_Client
+  }
+
+  Resource_Files {
+    PI_Client
+  }
+
+  PIDL_Files {
+    PI_Client
+  }
+
+  Pkgconfig_Files {
+  }
+}

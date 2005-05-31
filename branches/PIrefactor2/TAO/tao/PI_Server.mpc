@@ -1,0 +1,32 @@
+//$Id$
+project : taolib, core {
+  sharedname   = TAO_PI_Server
+  dynamicflags = TAO_PI_SERVER_BUILD_DLL
+
+  Source_Files {
+    PI_Server
+  }
+
+  Header_Files {
+    PI_Server
+  }
+
+  Inline_Files {
+    PI_Server
+  }
+
+  Template_Files {
+    PI_Server
+  }
+
+  Resource_Files {
+    PI_Server
+  }
+
+  PIDL_Files {
+    PI_Server
+  }
+
+  Pkgconfig_Files {
+  }
+}
