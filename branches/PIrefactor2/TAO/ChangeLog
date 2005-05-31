@@ -1,3 +1,18 @@
+ChangeLogTag: Tue May 31 12:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp,i}:
+          Load the PolicyFactory Registry when needed
+
+        * tao/PI_Client/PolicyFactory_Registry.h:
+          Added svc conf macros
+
+        * tao/PI_Client/PI_Client.{h,cpp}:
+          New files with static initializer for static builds.
+
+          The PolicyFactory_Registry is now loaded on demand when needed from the
+          PI_Client library. In a static build the end user must include
+          tao/PI_Client/PI_Client.h to pre load the PI stuff.
+
 ChangeLogTag: Tue May 31 11:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Client/PolicyFactory_Registry.{h,cpp}:
