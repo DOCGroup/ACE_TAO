@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : acelib, ace_tk {
+  requires += ace_tkreactor
+  after    += ACE_TkReactor
+  libs     += ACE_TkReactor
+}
