@@ -824,6 +824,7 @@ nobase_include_HEADERS = \
   Refcountable.inl \
   Refcounted_Auto_Ptr.h \
   Refcounted_Auto_Ptr.inl \
+  Refcounted_Auto_Ptr.cpp \
   Registry.h \
   Registry_Name_Space.h \
   Remote_Name_Space.h \

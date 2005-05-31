@@ -24,7 +24,7 @@ template <class CHAR>
 
 // Default constructor.
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR>::ACE_String_Base (ACE_Allocator *the_allocator)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
@@ -37,7 +37,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (ACE_Allocator *the_allocator)
 
 // Constructor that actually copies memory.
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
                                         ACE_Allocator *the_allocator,
                                         int release)
@@ -51,7 +51,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
   this->set (s, release);
 }
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR>::ACE_String_Base (CHAR c,
                                         ACE_Allocator *the_allocator)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
@@ -67,7 +67,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (CHAR c,
 
 // Constructor that actually copies memory.
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
                                         size_t len,
                                         ACE_Allocator *the_allocator,
@@ -85,7 +85,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
 
 // Copy constructor.
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR>::ACE_String_Base (const ACE_String_Base<CHAR> &s)
   : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
     len_ (0),
@@ -98,7 +98,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const ACE_String_Base<CHAR> &s)
   this->set (s.rep_, s.len_, 1);
 }
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR>::ACE_String_Base (size_t len, CHAR c, ACE_Allocator *the_allocator)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
@@ -111,7 +111,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (size_t len, CHAR c, ACE_Allocator *the_a
   this->resize (len, c);
 }
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR>::~ACE_String_Base (void)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::~ACE_String_Base");
@@ -293,7 +293,7 @@ ACE_String_Base<CHAR>::clear (int release)
 }
 
 // Assignment operator (does copy memory).
-template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
+template <class CHAR> ACE_String_Base<CHAR> &
 ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator=");
@@ -307,7 +307,7 @@ ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
   return *this;
 }
 
-template <class CHAR> ACE_INLINE void
+template <class CHAR> void
 ACE_String_Base<CHAR>::set (const CHAR *s, int release)
 {
   size_t length = 0;
@@ -317,7 +317,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s, int release)
   this->set (s, length, release);
 }
 
-template <class CHAR> ACE_INLINE void
+template <class CHAR> void
 ACE_String_Base<CHAR>::fast_clear (void)
 {
   this->len_ = 0;
@@ -337,7 +337,7 @@ ACE_String_Base<CHAR>::fast_clear (void)
 
 // Get a copy of the underlying representation.
 
-template <class CHAR> ACE_INLINE CHAR *
+template <class CHAR> CHAR *
 ACE_String_Base<CHAR>::rep (void) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::rep");
@@ -349,7 +349,7 @@ ACE_String_Base<CHAR>::rep (void) const
   return new_string;
 }
 
-template <class CHAR> ACE_INLINE int
+template <class CHAR> int
 ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::compare");
@@ -371,7 +371,7 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 
 // Comparison operator.
 
-template <class CHAR> ACE_INLINE bool
+template <class CHAR> bool
 ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator==");
@@ -380,7 +380,7 @@ ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
   return compare (s) == 0;
 }
 
-template <class CHAR> ACE_INLINE ssize_t
+template <class CHAR> ssize_t
 ACE_String_Base<CHAR>::find (const CHAR *s, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
@@ -392,7 +392,7 @@ ACE_String_Base<CHAR>::find (const CHAR *s, size_t pos) const
     return pointer - this->rep_;
 }
 
-template <class CHAR> ACE_INLINE ssize_t
+template <class CHAR> ssize_t
 ACE_String_Base<CHAR>::find (CHAR c, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
@@ -403,7 +403,7 @@ ACE_String_Base<CHAR>::find (CHAR c, size_t pos) const
     return pointer - this->rep_;
 }
 
-template <class CHAR> ACE_INLINE ssize_t
+template <class CHAR> ssize_t
 ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
 {
   if (pos == npos || pos > static_cast<ssize_t> (this->len_))
@@ -416,7 +416,7 @@ ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
   return ACE_String_Base<CHAR>::npos;
 }
 
-template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
+template <class CHAR> ACE_String_Base<CHAR>
 operator+ (const ACE_String_Base<CHAR> &s, const ACE_String_Base<CHAR> &t)
 {
   ACE_String_Base<CHAR> temp (s.length() + t.length());
@@ -425,7 +425,7 @@ operator+ (const ACE_String_Base<CHAR> &s, const ACE_String_Base<CHAR> &t)
   return temp;
 }
 
-template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
+template <class CHAR> ACE_String_Base<CHAR>
 operator+ (const CHAR *s, const ACE_String_Base<CHAR> &t)
 {
   size_t slen = 0;
@@ -438,7 +438,7 @@ operator+ (const CHAR *s, const ACE_String_Base<CHAR> &t)
   return temp;
 }
 
-template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
+template <class CHAR> ACE_String_Base<CHAR>
 operator+ (const ACE_String_Base<CHAR> &s, const CHAR *t)
 {
   size_t tlen = 0;
@@ -451,7 +451,7 @@ operator+ (const ACE_String_Base<CHAR> &s, const CHAR *t)
   return temp;
 }
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &t,
                                   const CHAR c)
 {
@@ -461,7 +461,7 @@ ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &t,
   return temp;
 }
 
-template <class CHAR> ACE_INLINE
+template <class CHAR>
 ACE_String_Base<CHAR> operator + (const CHAR c,
                                   const ACE_String_Base<CHAR> &t)
 {
@@ -471,7 +471,7 @@ ACE_String_Base<CHAR> operator + (const CHAR c,
   return temp;
 }
 
-template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
+template <class CHAR> ACE_String_Base<CHAR> &
 ACE_String_Base<CHAR>::operator+= (const CHAR* s)
 {
   size_t slen = 0;

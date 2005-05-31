@@ -1,7 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Task.i
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Task_Base::thr_mgr (void) const
@@ -50,42 +50,6 @@ ACE_Task_Base::is_writer (void) const
 {
   ACE_TRACE ("ACE_Task_Base::is_writer");
   return (ACE_BIT_DISABLED (this->flags_, ACE_Task_Flags::ACE_READER));
-}
-
-// Default ACE_Task service routine
-
-ACE_INLINE int
-ACE_Task_Base::svc (void)
-{
-  ACE_TRACE ("ACE_Task_Base::svc");
-  return 0;
-}
-
-// Default ACE_Task open routine
-
-ACE_INLINE int
-ACE_Task_Base::open (void *)
-{
-  ACE_TRACE ("ACE_Task_Base::open");
-  return 0;
-}
-
-// Default ACE_Task close routine
-
-ACE_INLINE int
-ACE_Task_Base::close (u_long)
-{
-  ACE_TRACE ("ACE_Task_Base::close");
-  return 0;
-}
-
-// Default ACE_Task put routine.
-
-ACE_INLINE int
-ACE_Task_Base::put (ACE_Message_Block *, ACE_Time_Value *)
-{
-  ACE_TRACE ("ACE_Task_Base::put");
-  return 0;
 }
 
 // Get the current group id.

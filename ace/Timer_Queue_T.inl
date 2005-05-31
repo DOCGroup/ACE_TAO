@@ -1,6 +1,7 @@
+// -*- C++ -*-
+//
 // $Id$
 
-/* -*- C++ -*- */
 
 template <class TYPE> ACE_INLINE void
 ACE_Timer_Node_T<TYPE>::set (const TYPE &type,

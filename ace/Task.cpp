@@ -7,11 +7,11 @@
 #include "ace/Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Task, "$Id$")
 
-ACE_Task_Base::~ACE_Task_Base (void)
-{
-}
+ACE_RCSID (ace,
+           Task,
+           "$Id$")
+
 
 ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
   : thr_count_ (0),
@@ -19,6 +19,55 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
     flags_ (0),
     grp_id_ (-1)
 {
+}
+
+ACE_Task_Base::~ACE_Task_Base (void)
+{
+}
+
+// Default ACE_Task service routine
+
+int
+ACE_Task_Base::svc (void)
+{
+  ACE_TRACE ("ACE_Task_Base::svc");
+  return 0;
+}
+
+// Default ACE_Task open routine
+
+int
+ACE_Task_Base::open (void *)
+{
+  ACE_TRACE ("ACE_Task_Base::open");
+  return 0;
+}
+
+// Default ACE_Task close routine
+
+int
+ACE_Task_Base::close (u_long)
+{
+  ACE_TRACE ("ACE_Task_Base::close");
+  return 0;
+}
+
+// Forward the call to close() so that existing applications don't
+// break.
+
+int
+ACE_Task_Base::module_closed (void)
+{
+  return this->close (1);
+}
+
+// Default ACE_Task put routine.
+
+int
+ACE_Task_Base::put (ACE_Message_Block *, ACE_Time_Value *)
+{
+  ACE_TRACE ("ACE_Task_Base::put");
+  return 0;
 }
 
 // Wait for all threads running in a task to exit.
@@ -222,13 +271,4 @@ ACE_Task_Base::svc_run (void *args)
   thr_mgr_ptr->at_exit (t, 0, 0);
 #endif
   return status;
-}
-
-// Forward the call to close() so that existing applications don't
-// break.
-
-int
-ACE_Task_Base::module_closed (void)
-{
-  return this->close (1);
 }

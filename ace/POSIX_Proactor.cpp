@@ -590,6 +590,13 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
   return 0;
 }
 
+ACE_POSIX_Proactor::Proactor_Type
+ACE_POSIX_Proactor::get_impl_type (void)
+{
+  return PROACTOR_POSIX;
+} 
+
+
 /**
  * @class ACE_AIOCB_Notify_Pipe_Manager
  *
@@ -819,6 +826,13 @@ ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor (void)
 {
   this->close();
 }
+
+ACE_POSIX_Proactor::Proactor_Type
+ACE_POSIX_AIOCB_Proactor::get_impl_type (void)
+{
+  return PROACTOR_AIOCB;
+} 
+
 
 int
 ACE_POSIX_AIOCB_Proactor::close (void)
@@ -1679,6 +1693,12 @@ ACE_POSIX_SIG_Proactor::~ACE_POSIX_SIG_Proactor (void)
 
   // @@ Enable the masked signals again.
 }
+
+ACE_POSIX_Proactor::Proactor_Type
+ACE_POSIX_SIG_Proactor::get_impl_type (void)
+{
+  return PROACTOR_SIG;
+} 
 
 int
 ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)

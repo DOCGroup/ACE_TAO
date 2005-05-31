@@ -12,6 +12,7 @@
 
 #ifndef ACE_REFCOUNTED_AUTO_PTR_H
 #define ACE_REFCOUNTED_AUTO_PTR_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Auto_Ptr.h"
@@ -189,5 +190,14 @@ private:
 
 #include "ace/Refcounted_Auto_Ptr.inl"
 
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ace/Refcounted_Auto_Ptr.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Refcounted_Auto_Ptr.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_REFCOUNTED_AUTO_PTR_H */

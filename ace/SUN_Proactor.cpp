@@ -310,4 +310,10 @@ ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
   return 2;
 }
 
+ACE_POSIX_Proactor::Proactor_Type
+ACE_SUN_Proactor::get_impl_type (void)
+{
+  return PROACTOR_SUN;
+} 
+
 #endif /* ACE_HAS_AIO_CALLS && sun */
