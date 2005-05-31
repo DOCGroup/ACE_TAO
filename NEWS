@@ -5,10 +5,21 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Create lightweight ACE_Hash_Manager for use in TAO
 
-PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.6
+PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.7
 ====================================================
 
 . Support for shared libraries with VxWorks
+
+. RMCast
+  - Support for message fragmentation. This will allow
+    for messages larger than 64K.
+  - Support for flow control.
+  - Timed recv() in RMCast::Socket.
+  - Per-instance configurable protocol parameters (e.g., message
+    retention time, NAK timeout, etc).
+
+USER VISIBLE CHANGES BETWEEN ACE-5.4.5 and ACE-5.4.6
+====================================================
 
 . RMCast
   - Reactor-compatible interface.
