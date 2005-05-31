@@ -1,6 +1,6 @@
 Tue May 31 18:51:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_signal.inl (sigaction): Added "::" qualifer to references
+	* ace/OS_NS_signal.inl (sigaction): Added "::" qualifier to references
 	  to "struct sigaction" to distinguish it from sigaction in the
 	  ACE_OS namespace. This was tripping up HP aC++ in certain use cases.
 
