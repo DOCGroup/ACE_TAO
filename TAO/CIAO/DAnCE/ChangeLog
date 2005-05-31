@@ -1,0 +1,5 @@
+Tue May 31 08:06:19 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	Created branch to add support for deploying multiple
+	assemblies into the DAnCE Toolchain
+	
