@@ -1,69 +1,77 @@
+Tue May 31 10:39:10 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/String_Base.inl:
+        * ace/String_Base.cpp:
+
+          Move operator+=() methods from .inl to .cpp in an effort to
+        reduce footprint.
+
 Mon May 30 18:10:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Addr.cpp:
-	* ace/Addr.inl:
-	* ace/Event_Handler_T.cpp:
-	* ace/Event_Handler_T.inl:
-	* ace/Free_List.cpp:
-	* ace/Free_List.inl:
-	* ace/Hashable.cpp:
-	* ace/Hashable.inl:
-	* ace/IOStream_T.cpp:
-	* ace/IOStream_T.inl:
-	* ace/Local_Tokens.cpp:
-	* ace/Local_Tokens.inl:
-	* ace/Lock_Adapter_T.cpp:
-	* ace/Lock_Adapter_T.inl:
-	* ace/Malloc_T.cpp:
-	* ace/Malloc_T.inl:
-	* ace/Map_T.cpp:
-	* ace/Map_T.inl:
-	* ace/Message_Block.cpp:
-	* ace/Message_Block.inl:
-	* ace/Message_Queue.cpp:
-	* ace/Message_Queue.inl:
-	* ace/Message_Queue_T.cpp:
-	* ace/Message_Queue_T.inl:
-	* ace/POSIX_CB_Proactor.cpp:
-	* ace/POSIX_CB_Proactor.inl:
-	* ace/POSIX_Proactor.cpp:
-	* ace/POSIX_Proactor.inl:
-	* ace/Refcounted_Auto_Ptr.h:
-	* ace/Refcounted_Auto_Ptr.inl:
-	* ace/Refcounted_Auto_Ptr.cpp:
-	* ace/Remote_Tokens.cpp:
-	* ace/Remote_Tokens.inl:
-	* ace/Reverse_Lock_T.cpp:
-	* ace/Reverse_Lock_T.inl:
-	* ace/SUN_Proactor.cpp:
-	* ace/SUN_Proactor.inl:
-	* ace/Shared_Memory_MM.cpp:
-	* ace/Shared_Memory_MM.inl:
-	* ace/Shared_Memory_SV.cpp:
-	* ace/Shared_Memory_SV.inl:
-	* ace/Strategies_T.cpp:
-	* ace/Strategies_T.inl:
-	* ace/Task.cpp:
-	* ace/Task.inl:
-	* ace/Thread_Manager.cpp:
-	* ace/Thread_Manager.inl:
-	* ace/Timer_Queue_Adapters.cpp:
-	* ace/Timer_Queue_Adapters.inl:
-	* ace/Timer_Queue_T.inl:
+        * ace/Addr.cpp:
+        * ace/Addr.inl:
+        * ace/Event_Handler_T.cpp:
+        * ace/Event_Handler_T.inl:
+        * ace/Free_List.cpp:
+        * ace/Free_List.inl:
+        * ace/Hashable.cpp:
+        * ace/Hashable.inl:
+        * ace/IOStream_T.cpp:
+        * ace/IOStream_T.inl:
+        * ace/Local_Tokens.cpp:
+        * ace/Local_Tokens.inl:
+        * ace/Lock_Adapter_T.cpp:
+        * ace/Lock_Adapter_T.inl:
+        * ace/Malloc_T.cpp:
+        * ace/Malloc_T.inl:
+        * ace/Map_T.cpp:
+        * ace/Map_T.inl:
+        * ace/Message_Block.cpp:
+        * ace/Message_Block.inl:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue.inl:
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.inl:
+        * ace/POSIX_CB_Proactor.cpp:
+        * ace/POSIX_CB_Proactor.inl:
+        * ace/POSIX_Proactor.cpp:
+        * ace/POSIX_Proactor.inl:
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+        * ace/Refcounted_Auto_Ptr.cpp:
+        * ace/Remote_Tokens.cpp:
+        * ace/Remote_Tokens.inl:
+        * ace/Reverse_Lock_T.cpp:
+        * ace/Reverse_Lock_T.inl:
+        * ace/SUN_Proactor.cpp:
+        * ace/SUN_Proactor.inl:
+        * ace/Shared_Memory_MM.cpp:
+        * ace/Shared_Memory_MM.inl:
+        * ace/Shared_Memory_SV.cpp:
+        * ace/Shared_Memory_SV.inl:
+        * ace/Strategies_T.cpp:
+        * ace/Strategies_T.inl:
+        * ace/Task.cpp:
+        * ace/Task.inl:
+        * ace/Thread_Manager.cpp:
+        * ace/Thread_Manager.inl:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_Adapters.inl:
+        * ace/Timer_Queue_T.inl:
 
-	  Moved inlined virtual methods out of line.  Addresses
-	  RTTI-related problems when using g++ 4.0's
-	  "-fvisibility-inlines-hidden" command line option.
+          Moved inlined virtual methods out of line.  Addresses
+          RTTI-related problems when using g++ 4.0's
+          "-fvisibility-inlines-hidden" command line option.
 
-	* ace/String_Base.cpp:
+        * ace/String_Base.cpp:
 
-	  Removed "ACE_INLINE" macros.  They should not be used in this
-	  out-of-line source file.
+          Removed "ACE_INLINE" macros.  They should not be used in this
+          out-of-line source file.
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Added Refcounted_Auto_Ptr.cpp to the list of template files.
+          Added Refcounted_Auto_Ptr.cpp to the list of template files.
 
 Mon May 30 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -100,13 +108,13 @@ Mon May 30 08:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May 29 17:49:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/compiler.m4:
+        * m4/compiler.m4:
 
-	  Disable the use of gcc's symbol visibility on MacOSX, since it
-	  requires features of the ELF object file format not present in
-	  Mach-O.  Longer term we need a feature check that explicitly
-	  tests for proper operation of symbol visibility instead of a
-	  list of systems where it's disabled.
+          Disable the use of gcc's symbol visibility on MacOSX, since it
+          requires features of the ELF object file format not present in
+          Mach-O.  Longer term we need a feature check that explicitly
+          tests for proper operation of symbol visibility instead of a
+          list of systems where it's disabled.
 
 Fri May 27 15:32:15 2005  Justin Michel  <michel_j@ociweb.com>
 

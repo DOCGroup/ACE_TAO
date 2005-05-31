@@ -480,4 +480,20 @@ ACE_String_Base<CHAR>::operator+= (const CHAR* s)
   return this->append(s, slen);
 }
 
+template <class CHAR> ACE_String_Base<CHAR> &
+ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::operator+=(const ACE_String_Base<CHAR> &)");
+  return this->append(s.rep_, s.len_);
+}
+
+template <class CHAR> ACE_String_Base<CHAR> &
+ACE_String_Base<CHAR>::operator+= (const CHAR c)
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::operator+=(const CHAR)");
+  const size_t slen = 1;
+  return this->append(&c, slen);
+}
+
+
 #endif  /* ACE_STRING_BASE_CPP */
