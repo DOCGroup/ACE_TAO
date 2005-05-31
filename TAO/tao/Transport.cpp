@@ -209,6 +209,12 @@ TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
   ACE_NOTSUP_RETURN (-1);
 }
 
+bool
+TAO_Transport::post_connect_hook (void)
+{
+  return true;
+}
+
 void
 TAO_Transport::close_connection (void)
 {

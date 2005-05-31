@@ -318,7 +318,6 @@ public:
    */
   void provide_handler (TAO::Connection_Handler_Set &handlers);
 
-
   /// Add event handlers corresponding to transports that have RW wait
   /// strategy to the handlers set.
   /**
@@ -443,6 +442,21 @@ public:
   /// list would have the protocol specific details of the
   /// ListenPoints
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
+
+  /// Hooks that can be overridden in concrete transports.
+  /**
+   * These hooks are invoked just after connection establishment (or
+   * after a connection is fetched from cache). The
+   * return value signifies whether the invoker should proceed  with
+   * post connection establishment activities. Protocols like SSLIOP
+   * need this to verify whether connections already established have
+   * valid certificates. There are no pre_connect_hooks () since the
+   * transport doesn't exist before a connection establishment. :-)
+   *
+   *
+   * @@NOTE: The methods are not made const with a reason.
+   */
+  virtual bool post_connect_hook (void);
 
   /// Memory management routines.
   /*
