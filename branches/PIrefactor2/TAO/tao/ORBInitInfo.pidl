@@ -25,7 +25,7 @@
 #include <StringSeq.pidl>
 #include <IOP_Codec.pidl>
 #include <PI_Forward.pidl>
-#include <Policy.pidl>
+#include <Policy_Forward.pidl>
 
 module PortableInterceptor {
 
