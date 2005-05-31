@@ -99,18 +99,9 @@ TAO::ORBInitializer_Registry::pre_init (
   size_t const initializer_count (this->initializers_.size ());
   for (size_t i = 0; i < initializer_count; ++i)
     {
-      ACE_TRY
-        {
-          this->initializers_[i]->pre_init (info
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHALL
-        {
-          // Ignore errors from pre_init, just continue with the next
-          // initializer
-        }
-      ACE_ENDTRY;
+      this->initializers_[i]->pre_init (info
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -126,18 +117,9 @@ TAO::ORBInitializer_Registry::post_init (
   size_t const initializer_count (this->initializers_.size ());
   for (size_t i = 0; i < initializer_count; ++i)
     {
-      ACE_TRY
-        {
-          this->initializers_[i]->post_init (info
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHALL
-        {
-          // Ignore errors from post_init, just continue with the next
-          // initializer
-        }
-      ACE_ENDTRY;
+      this->initializers_[i]->post_init (info
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
