@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Config.h"
 #include "tao/Basic_Types.h"
 
 #include "ace/Map_Manager.h"
@@ -111,6 +112,9 @@ private:
   TABLE factories_;
 
 };
+
+ACE_STATIC_SVC_DECLARE (TAO_PolicyFactory_Registry)
+ACE_FACTORY_DECLARE (TAO_PI_CLIENT, TAO_PolicyFactory_Registry)
 
 #include /**/ "ace/post.h"
 

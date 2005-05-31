@@ -235,13 +235,6 @@ TAO_ORB_Core::parser_registry (void)
   return &this->parser_registry_;
 }
 
-ACE_INLINE TAO::PolicyFactory_Registry_Adapter *
-TAO_ORB_Core::policy_factory_registry (void)
-{
-  return this->policy_factory_registry_;
-}
-
-
 ACE_INLINE TAO_Codeset_Manager *
 TAO_ORB_Core::codeset_manager()
 {

@@ -116,7 +116,8 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_name_ ("Valuetype_Adapter"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_ ("dynamic TAO_Object_Adapter_Factory Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()")
+    poa_factory_directive_ ("dynamic TAO_Object_Adapter_Factory Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()"),
+    policy_factory_registry_name_ ("PolicyFactory_Registry")
 {
 }
 
@@ -1329,6 +1330,12 @@ TAO_ORB_Core::valuetype_adapter_name (void)
   return TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_name_.c_str();
 }
 
+void
+TAO_ORB_Core::policy_factory_registry_name (const char *name)
+{
+  TAO_ORB_Core_Static_Resources::instance ()->policy_factory_registry_name_ = name;
+}
+
 TAO_Resource_Factory *
 TAO_ORB_Core::resource_factory (void)
 {
@@ -1384,6 +1391,34 @@ TAO_ORB_Core::collocation_resolver (void)
     (TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_.c_str());
 
   return *this->collocation_resolver_;
+}
+
+TAO::PolicyFactory_Registry_Adapter *
+TAO_ORB_Core::policy_factory_registry (void)
+{
+  // Check if there is a cached reference.
+  if (this->policy_factory_registry_ != 0)
+    return this->policy_factory_registry_;
+
+  TAO_ORB_Core_Static_Resources* static_resources =
+    TAO_ORB_Core_Static_Resources::instance ();
+
+  // If not, lookup it up.
+  this->policy_factory_registry_ =
+    ACE_Dynamic_Service<TAO::PolicyFactory_Registry_Adapter>::instance
+    (TAO_ORB_Core_Static_Resources::instance ()->policy_factory_registry_name_.c_str());
+
+  if (policy_factory_registry_ == 0)
+    {
+      ACE_Service_Config::process_directive (
+        ACE_TEXT_CHAR_TO_TCHAR (
+        "dynamic TAO_PolicyFactory_Registry_Adapter Service_Object * TAO_PI_CLIENT:_make_TAO_PolicyFactory_Registry()"));
+      policy_factory_registry_ =
+        ACE_Dynamic_Service<TAO::PolicyFactory_Registry_Adapter>::instance
+          (TAO_ORB_Core_Static_Resources::instance ()->policy_factory_registry_name_.c_str());
+    }
+
+  return this->policy_factory_registry_;
 }
 
 TAO_Stub_Factory *

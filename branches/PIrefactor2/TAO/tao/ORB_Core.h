@@ -304,7 +304,7 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static
-TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
                                                   ACE_ENV_ARG_DECL);
   //@}
 
@@ -476,6 +476,8 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   /// Gets the value of TAO_ORB_Core::valuetype_adapter_name.
   static const char *valuetype_adapter_name (void);
 
+  /// Sets the value of TAO_ORB_Core::policy_factory_registry_name.
+  static void policy_factory_registry_name (const char *name);
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
@@ -1414,6 +1416,15 @@ public:
    * poa_factory_name_ dynamically.
    */
   ACE_CString poa_factory_directive_;
+
+  /**
+   * Name of the service object for functions that make calls on
+   * the Policy Factory Registry. The default value is
+   * "Policy_Factory_Registry".
+   * If TAO_PI_CLient is linked, policy_factory_registry_name() will be
+   * called to set the value to "Concrete_Policy_Factory_Registry".
+   */
+  ACE_CString policy_factory_registry_name_;
 
 private:
 
