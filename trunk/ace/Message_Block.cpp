@@ -1266,6 +1266,16 @@ ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy (void)
 }
 
 void
+ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
+                                                 const ACE_Message_Block & mb)
+{
+  // Convert absolute time passed in tv to negative time
+  // to deadline of mb with respect to that absolute time.
+  priority -= mb.msg_deadline_time ();
+}
+  // dynamic priority conversion function based on time to deadline
+
+void
 ACE_Deadline_Message_Strategy::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -1296,6 +1306,17 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_b
 ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy (void)
 {
 }
+
+void
+ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
+                                               const ACE_Message_Block & mb)
+{
+  // Convert absolute time passed in tv to negative
+  // laxity of mb with respect to that absolute time.
+  priority += mb.msg_execution_time ();
+  priority -= mb.msg_deadline_time ();
+}
+  // dynamic priority conversion function based on laxity
 
 void
 ACE_Laxity_Message_Strategy::dump (void) const

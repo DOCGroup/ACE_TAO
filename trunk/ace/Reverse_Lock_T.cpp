@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_REVERSE_LOCK_T_C
-#define ACE_REVERSE_LOCK_T_C
+#ifndef ACE_REVERSE_LOCK_T_CPP
+#define ACE_REVERSE_LOCK_T_CPP
 
 #include "ace/Reverse_Lock_T.h"
 
@@ -9,15 +9,82 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Reverse_Lock_T, "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Reverse_Lock_T.inl"
 #endif /* __ACE_INLINE__ */
+
 
 template <class ACE_LOCKING_MECHANISM>
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
 {
 }
 
-#endif /* ACE_REVERSE_LOCK_T_C */
+// Explicitly destroy the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::remove (void)
+{
+  return this->lock_.remove ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire (void)
+{
+  return this->lock_.release ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+// Acquire the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::release (void)
+{
+  if (this->acquire_method_ == ACE_Acquire_Method::ACE_READ)
+    return this->lock_.acquire_read ();
+  else if (this->acquire_method_ == ACE_Acquire_Method::ACE_WRITE)
+    return this->lock_.acquire_write ();
+  else
+    return this->lock_.acquire ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire_read (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire_write (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_read (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write_upgrade (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+#endif /* ACE_REVERSE_LOCK_T_CPP */

@@ -624,35 +624,3 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
   return status;
 }
   // returns the priority status of the message
-
-
-
-/////////////////////////////////////////
-// class ACE_Deadline_Message_Strategy //
-/////////////////////////////////////////
-
-ACE_INLINE void
-ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
-                                                 const ACE_Message_Block & mb)
-{
-  // Convert absolute time passed in tv to negative time
-  // to deadline of mb with respect to that absolute time.
-  priority -= mb.msg_deadline_time ();
-}
-  // dynamic priority conversion function based on time to deadline
-
-
-///////////////////////////////////////
-// class ACE_Laxity_Message_Strategy //
-///////////////////////////////////////
-
-ACE_INLINE void
-ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
-                                               const ACE_Message_Block & mb)
-{
-  // Convert absolute time passed in tv to negative
-  // laxity of mb with respect to that absolute time.
-  priority += mb.msg_execution_time ();
-  priority -= mb.msg_deadline_time ();
-}
-  // dynamic priority conversion function based on laxity

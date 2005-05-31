@@ -1,8 +1,5 @@
 // $Id$
 
-#if !defined (ACE_MESSAGE_QUEUE_C)
-#define ACE_MESSAGE_QUEUE_C
-
 #include "ace/Message_Queue.h"
 #include "ace/Log_Msg.h"
 
@@ -10,7 +7,10 @@
 #include "ace/Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Message_Queue, "$Id$")
+
+ACE_RCSID (ace,
+           Message_Queue,
+           "$Id$")
 
 
 ACE_Message_Queue_Base::~ACE_Message_Queue_Base (void)
@@ -142,6 +142,88 @@ ACE_Message_Queue_Vx::close (void)
   // queue.
 
   return ::msgQDelete (msgq ());
+}
+
+
+int
+ACE_Message_Queue_Vx::is_empty_i (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::is_empty_i");
+  return ::msgQNumMsgs (msgq ()) == 0;
+}
+
+int
+ACE_Message_Queue_Vx::is_full_i (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::is_full_i");
+  return ::msgQNumMsgs (msgq ()) >= max_messages_;
+}
+
+size_t
+ACE_Message_Queue_Vx::high_water_mark (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::high_water_mark");
+  ACE_NOTSUP_RETURN ((size_t) -1);
+}
+
+void
+ACE_Message_Queue_Vx::high_water_mark (size_t)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::high_water_mark");
+  ACE_NOTSUP;
+}
+
+size_t
+ACE_Message_Queue_Vx::low_water_mark (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::low_water_mark");
+  // Don't need to guard, because this is fixed.
+
+  ACE_NOTSUP_RETURN ((size_t) -1);
+}
+
+void
+ACE_Message_Queue_Vx::low_water_mark (size_t)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::low_water_mark");
+  ACE_NOTSUP;
+}
+
+size_t
+ACE_Message_Queue_Vx::message_bytes (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_bytes");
+  ACE_NOTSUP_RETURN ((size_t) -1);
+}
+
+size_t
+ACE_Message_Queue_Vx::message_length (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_length");
+  ACE_NOTSUP_RETURN ((size_t) -1);
+}
+
+int
+ACE_Message_Queue_Vx::message_count (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_count");
+  // Don't need to guard, because this is a system call.
+
+  return ::msgQNumMsgs (msgq ());
+}
+
+void
+ACE_Message_Queue_Vx::message_bytes (size_t)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_bytes");
+  ACE_NOTSUP;
+}
+
+void
+ACE_Message_Queue_Vx::message_length (size_t)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_length");
+  ACE_NOTSUP;
 }
 
 int
@@ -523,5 +605,3 @@ ACE_Message_Queue_NT::dump (void) const
 }
 
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
-
-#endif /* ACE_MESSAGE_QUEUE_C */

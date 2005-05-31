@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_IOSTREAM_T_C
-#define ACE_IOSTREAM_T_C
+#ifndef ACE_IOSTREAM_T_CPP
+#define ACE_IOSTREAM_T_CPP
 
 #include "ace/IOStream_T.h"
 #include "ace/OS_Memory.h"
@@ -9,8 +9,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_RCSID(ace, IOStream_T, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
@@ -46,6 +44,54 @@ ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer,
 #if !defined (ACE_LACKS_LINEBUFFERED_STREAMBUF)
   this->linebuffered (0);
 #endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
+}
+
+template <class STREAM> ssize_t
+ACE_Streambuf_T<STREAM>::send (char *buf, ssize_t len)
+{
+  return peer_->send_n (buf,len);
+}
+
+template <class STREAM> ssize_t
+ACE_Streambuf_T<STREAM>::recv (char *buf,
+                               ssize_t len,
+                               ACE_Time_Value *tv)
+{
+  return this->recv (buf, len, 0, tv);
+}
+
+template <class STREAM> ssize_t
+ACE_Streambuf_T<STREAM>::recv (char *buf,
+                               ssize_t len,
+                               int flags,
+                               ACE_Time_Value * tv)
+{
+  this->timeout_ = 0;
+  errno = ESUCCESS;
+  ssize_t rval = peer_->recv (buf, len, flags, tv);
+  if (errno == ETIME)
+    this->timeout_ = 1;
+  return rval;
+}
+
+template <class STREAM> ssize_t
+ACE_Streambuf_T<STREAM>::recv_n (char *buf,
+                                 ssize_t len,
+                                 int flags,
+                                 ACE_Time_Value *tv)
+{
+  this->timeout_ = 0;
+  errno = ESUCCESS;
+  ssize_t rval = peer_->recv_n (buf, len, flags, tv);
+  if (errno == ETIME)
+    this->timeout_ = 1;
+  return rval;
+}
+
+template <class STREAM> ACE_HANDLE
+ACE_Streambuf_T<STREAM>::get_handle (void)
+{
+  return peer_ ? peer_->get_handle () : 0;
 }
 
 // The typical constructor.  This will initiailze your STREAM and then
@@ -194,4 +240,4 @@ operator<< (STREAM &stream,
 
 #endif /* ACE_HAS_STRING_CLASS */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
-#endif /* ACE_IOSTREAM_T_C */
+#endif /* ACE_IOSTREAM_T_CPP */

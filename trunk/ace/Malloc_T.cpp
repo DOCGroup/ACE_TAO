@@ -1,8 +1,7 @@
-// Malloc_T.cpp
 // $Id$
 
-#ifndef ACE_MALLOC_T_C
-#define ACE_MALLOC_T_C
+#ifndef ACE_MALLOC_T_CPP
+#define ACE_MALLOC_T_CPP
 
 #include "ace/Malloc_T.h"
 
@@ -17,7 +16,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(ace, Malloc_T, "$Id$")
 
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
@@ -57,6 +55,48 @@ ACE_Cached_Allocator<T, ACE_LOCK>::~ACE_Cached_Allocator (void)
   delete [] this->pool_;
 }
 
+template <class T, class ACE_LOCK> void *
+ACE_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > sizeof (T))
+    return 0;
+
+  // addr() call is really not absolutely necessary because of the way
+  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
+  return this->free_list_.remove ()->addr ();
+}
+
+template <class T, class ACE_LOCK> void *
+ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
+                                           char initial_value)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > sizeof (T))
+    return 0;
+
+  // addr() call is really not absolutely necessary because of the way
+  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
+  void *ptr = this->free_list_.remove ()->addr ();
+  ACE_OS::memset (ptr, initial_value, sizeof (T));
+  return ptr;
+}
+
+template <class T, class ACE_LOCK> void *
+ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t,
+                                           size_t,
+                                           char)
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
+template <class T, class ACE_LOCK> void
+ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
+{
+  if (ptr != 0)
+    this->free_list_.add ((ACE_Cached_Mem_Pool_Node<T> *) ptr) ;
+}
+
 template <class ACE_LOCK>
 ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
   (size_t n_chunks, size_t chunk_size)
@@ -87,7 +127,152 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Dynamic_Cached_Allocator (void)
   chunk_size_ = 0;
 }
 
+template <class ACE_LOCK> void *
+ACE_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > chunk_size_)
+    return 0;
+
+  // addr() call is really not absolutely necessary because of the way
+  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
+  return this->free_list_.remove ()->addr ();
+}
+
+template <class ACE_LOCK> void *
+ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
+                                                char initial_value)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > chunk_size_)
+    return 0;
+
+  // addr() call is really not absolutely necessary because of the way
+  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
+  void *ptr = this->free_list_.remove ()->addr ();
+  ACE_OS::memset (ptr, initial_value, chunk_size_);
+  return ptr;
+}
+
+template <class ACE_LOCK> void *
+ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
+template <class ACE_LOCK> void
+ACE_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
+{
+  if (ptr != 0)
+    this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
+}
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Malloc_T)
+
+template <class MALLOC> void *
+ACE_Allocator_Adapter<MALLOC>::malloc (size_t nbytes)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::malloc");
+  return this->allocator_.malloc (nbytes);
+}
+
+template <class MALLOC> void *
+ACE_Allocator_Adapter<MALLOC>::calloc (size_t nbytes,
+                                       char initial_value)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::calloc");
+  return this->allocator_.calloc (nbytes, initial_value);
+}
+
+template <class MALLOC> void *
+ACE_Allocator_Adapter<MALLOC>::calloc (size_t n_elem,
+                                       size_t elem_size,
+                                       char initial_value)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::calloc");
+  return this->allocator_.calloc (n_elem, elem_size, initial_value);
+}
+
+template <class MALLOC> MALLOC &
+ACE_Allocator_Adapter<MALLOC>::alloc (void)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::allocator");
+  return this->allocator_;
+}
+
+template <class MALLOC> void
+ACE_Allocator_Adapter<MALLOC>::free (void *ptr)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::free");
+  this->allocator_.free (ptr);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::remove (void)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::remove");
+  return this->allocator_.remove ();
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::trybind (const char *name,
+                                        void *&pointer)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::trybind");
+  return this->allocator_.trybind (name, pointer);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::bind (const char *name,
+                                     void *pointer,
+                                     int duplicates)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::bind");
+  return this->allocator_.bind (name, pointer, duplicates);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::find (const char *name,
+                                     void *&pointer)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::find");
+  return this->allocator_.find (name, pointer);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::find (const char *name)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::find");
+  return this->allocator_.find (name);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::unbind (const char *name, void *&pointer)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::unbind");
+  return this->allocator_.unbind (name, pointer);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::unbind (const char *name)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::unbind");
+  return this->allocator_.unbind (name);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::sync (ssize_t len, int flags)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::sync");
+  return this->allocator_.sync (len, flags);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::sync (void *addr, size_t len, int flags)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::sync");
+  return this->allocator_.sync (addr, len, flags);
+}
 
 template <class MALLOC> int
 ACE_Allocator_Adapter<MALLOC>::protect (ssize_t len, int flags)
