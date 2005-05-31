@@ -1,17 +1,23 @@
+Tue May 31 10:08:27 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tao/IIOP_Endpoint.cpp:
+
+          Add ACE_UNUSED_ARG for variable only used in assert.
+
 Tue May 31 09:19:10 2005  Chris Cleeland  <cleeland@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp (dotted_decimal_address):
 
-	  Removed '#if 0' bracketing around this method.  I don't know why
-	  this method was removed in the first place, but the originator
-	  of that change is unavailable for consultation for the next
-	  week, so I will err on the side of making things compile.
-	
+          Removed '#if 0' bracketing around this method.  I don't know why
+          this method was removed in the first place, but the originator
+          of that change is unavailable for consultation for the next
+          week, so I will err on the side of making things compile.
+ 
         * tests/IOR_Endpoint_Hostnames/IOR_Endpoint_Hostnames.mpc:
         * tests/IOR_Endpoint_Hostnames/bogus_i.h:
 
-	  Fixed fuzz build errors related to RCS Id strings and MSC
-	  version checks, etc.
+          Fixed fuzz build errors related to RCS Id strings and MSC
+          version checks, etc.
 
 Tue May 31 09:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
