@@ -43,7 +43,6 @@ Mon May 30 18:10:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/Shared_Memory_SV.inl:
 	* ace/Strategies_T.cpp:
 	* ace/Strategies_T.inl:
-	* ace/String_Base.cpp:
 	* ace/Task.cpp:
 	* ace/Task.inl:
 	* ace/Thread_Manager.cpp:
@@ -55,6 +54,11 @@ Mon May 30 18:10:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Moved inlined virtual methods out of line.  Addresses
 	  RTTI-related problems when using g++ 4.0's
 	  "-fvisibility-inlines-hidden" command line option.
+
+	* ace/String_Base.cpp:
+
+	  Removed "ACE_INLINE" macros.  They should not be used in this
+	  out-of-line source file.
 
 	* ace/Makefile.am:
 	* ace/ace.mpc:
