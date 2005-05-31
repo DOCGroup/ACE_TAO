@@ -264,6 +264,7 @@ get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
   {
     int err = tmp[i].addr_to_string(buf, 32);
     ACE_ASSERT(err == 0);
+    ACE_UNUSED_ARG(err);
     ACE_CString tmp(ACE_TEXT_ALWAYS_CHAR(buf));
     ssize_t pos = tmp.find(':');
     if (pos != ACE_CString::npos)
