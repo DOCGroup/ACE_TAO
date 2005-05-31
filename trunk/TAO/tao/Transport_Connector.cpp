@@ -242,7 +242,7 @@ TAO_Transport*
 TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         TAO_Transport_Descriptor_Interface *desc,
                         ACE_Time_Value *timeout
-                        ACE_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL)
 {
   if (desc == 0 ||
       (this->set_validate_endpoint (desc->endpoint ()) == -1))
@@ -278,6 +278,19 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     "TAO (%P|%t) - Transport_Connector::connect, "
                     "opening Transport[%d] in TAO_CLIENT_ROLE\n",
                     t->id ()));
+
+      // Call post connect hook. If the post_connect_hook () returns
+      // false, just purge the entry.
+      if (!t->post_connect_hook ())
+        {
+          (void) t->purge_entry ();
+
+          // Call connect again
+          return this->connect (r,
+                                desc,
+                                timeout
+                                ACE_ENV_ARG_PARAMETER);
+        }
 
       return t;
     }

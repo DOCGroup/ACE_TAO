@@ -1,3 +1,27 @@
+Mon May 30 22:19:54 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport.h (post_connect_hook):
+	* tao/Transport.cpp:
+
+	  Added post_connect_hook () method which is invoked just after
+	  connection establishment (or after a connection is fetched from
+	  cache). The return value signifies whether the invoker should
+	  proceed with post connection establishment
+	  activities or not. There are a wide range of use cases, for
+	  example protocols like SSLIOP  need this to verify whether
+	  connections already established have valid
+	  certificates. Validation of certificates/credentials can be done
+	  inside this  method. Implementations of this method can even
+	  tear down the connection, and return a false to the
+	  invoker. There  are no pre_connect_hooks () since the  transport
+	  doesn't exist before a connection establishment. :-). A default
+	  noop implementation has been provided. 
+
+	* tao/Transport_Connector.cpp:
+
+	  Invoke post_connect_hook () after grabbing a connection from
+	  cache. 
+
 Mon May 30 22:11:35 2005  Chris Cleeland  <cleeland@ociweb.com>
 
         * tests/IOR_Endpoint_Hostnames/bogus_i.cpp:
@@ -156,7 +180,8 @@ Fri May 27 15:54:44 2005  Justin Michel  <michel_j@ociweb.com>
         * tao/IIOP_Profile.cpp:
         * tao/params.cpp:
 
-          Reimplemented the -ORBPreferredInterfaces option to support wildcards.
+          Reimplemented the -ORBPreferredInterfaces option to support
+	  wildcards.
 
 Fri May 27 15:30:21 2005  Justin Michel  <michel_j@ociweb.com>
 
@@ -169,12 +194,13 @@ Fri May 27 15:30:21 2005  Justin Michel  <michel_j@ociweb.com>
         * tao/TypeCode_Value_Field.h:
         * utils/wxNamingViewer/pch.h:
 
-          These files #included config.h which isn't safe, because
-        it won't necessarilly pick up the correct symbols. For example, I
-        caught this by trying to build ACE on Windows with __ACE_INLINE__ = 0.
-        The files that #included config.h directly saw that it was defined as 0, but
-        changing them to #include config-all.h instead, correctly saw that
-        the symbol was undefined.
+          These files #included config.h which isn't safe, because it
+	  won't necessarilly pick up the correct symbols. For example, I
+	  caught this by trying to build ACE on Windows with
+	  __ACE_INLINE__ = 0. The files that #included config.h directly
+	  saw that it was defined as 0, but changing them to #include
+	  config-all.h instead, correctly saw that the symbol was
+	  undefined. 
 
 Fri May 27 13:12:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
@@ -247,11 +273,11 @@ Thu May 26 16:09:50 2005  Justin Michel  <michel_j@ociweb.com>
         * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
 
           Use getline() instead of operator>> to read in lines of
-        text from a file into a std::string.
-          Use string::c_str() with operator<< instead of relying on
-        existence of ostream extraction operators for strings.
-        A more useful solution might be to provide insertion/extraction
-        operators for platforms that are missing them.
+          text from a file into a std::string. Use string::c_str() with
+	  operator<< instead of relying on existence of ostream extraction
+	  operators for strings. A more useful solution might be to
+	  provide insertion/extraction operators for platforms that are
+	  missing them. 
 
 Thu May 26 16:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -347,9 +373,9 @@ Thu May 26 07:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu May 26 07:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyPersistent.cpp:
-          Also add a process directive that uses the xml svc.conf way of specifying
-          this. This fixes bugzilla 2127. Thanks to Lothar Werzinger
-          <lothar at xcerla dot com> for reporting this.
+          Also add a process directive that uses the xml svc.conf way of
+	  specifying this. This fixes bugzilla 2127. Thanks to Lothar
+	  Werzinger <lothar at xcerla dot com> for reporting this.
 
 Wed May 25 23:42:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
