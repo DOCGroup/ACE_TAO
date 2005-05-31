@@ -1,4 +1,34 @@
+ChangeLogTag: Tue May 31 11:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/PI_Client/PolicyFactory_Registry.{h,cpp}:
+          New files, must be worked more on this but this will be the
+          concrete implementation
+
+        * tao/PolicyFactory_Registry.{h,cpp}:
+          Removed these files, they moved to the PI_Client lib
+
+        * tao/tao.mpc:
+          Removed PolicyFactory_Registry.{h,cpp}
+
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/ORBInitInfo.cpp:
+        * tao/ORB_Core.{h,cpp,i}:
+          Use the new PolicyFactory_Registry adapter
+
+        * tao/PI_Client.mpc:
+          New MPC file for PI_Client
+
+        * tao/PI_Server.mpc:
+          New MPC file for PI_Server
+
+        * tao/PI_Client/pi_client_export.h:
+          New export file for PI_Client library
+
+        * tao/PI_Server/pi_server_export.h:
+          New export file for PI_Server library
+
+        * tao/tao.mpc:
+          Added new PolicyFactory_Registry_Adapter.h file.
 
         * tao/ORB_Core.cpp:
           Include new PolicyFactory_Registry_Adapter.h
