@@ -979,7 +979,7 @@ NullReturnEmitter::traverse (SemanticGraph::Union& u)
 }
 
 void
-NullReturnEmitter::traverse (SemanticGraph::UnboundedSequence& s)
+NullReturnEmitter::traverse (SemanticGraph::UnboundedSequence&)
 {
   os << "return 0;";
 }
@@ -991,13 +991,13 @@ NullReturnEmitter::traverse (SemanticGraph::Interface& i)
 }
 
 void
-NullReturnEmitter::traverse (SemanticGraph::ValueType& v)
+NullReturnEmitter::traverse (SemanticGraph::ValueType&)
 {
   os << "return 0;";
 }
 
 void
-NullReturnEmitter::traverse (SemanticGraph::EventType& e)
+NullReturnEmitter::traverse (SemanticGraph::EventType&)
 {
   os << "return 0;";
 }
