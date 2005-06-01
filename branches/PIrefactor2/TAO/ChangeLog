@@ -1,4 +1,26 @@
 
+        * tao/PI_Client/CodecFactory_ORBInitializer.{h,cpp}:
+        * tao/PI_Client/ORBInitializer.pidl:
+        * tao/PI_Client/ORBInitializer_Registry.{h,cpp}
+        * tao/PI_Client/ORBInitializerA.cpp:
+        * tao/PI_Client/ORBInitializerC.{h,cpp}:
+        * tao/PI_Client/ORBInitializerS.h:
+        * tao/PI_Client/ORBInitInfo.{h,cpp,inl}:
+        * tao/PI_Client/ORBInitInfo.pidl:
+        * tao/PI_Client/ORBInitInfoA.cpp:
+        * tao/PI_Client/ORBInitInfoC.{h,cpp}:
+        * tao/PI_Client/ORBInitInfoS.h
+        * tao/PI_Client/PICurrent_ORBInitializer.{h,cpp}:
+          New files, they are moved from the TAO lib, just put them now
+          in cvs so that I don't loose changes
+
+        * tao/PI_Client/PolicyFactory_Registry.{cpp,h}:
+
+        * tao/PI_Client/PI_Client.cpp
+
+        * tao/PortableServer/POA_Current_Impl.cpp:
+          Removed include of ORBInitializer_Registry.h, not needed
+
         * tao/ORBInitInfo.pidl:
           Include Policy_Forward.pidl instead of Policy.pidl
 

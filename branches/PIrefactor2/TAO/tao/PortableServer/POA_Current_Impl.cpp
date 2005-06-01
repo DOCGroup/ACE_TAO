@@ -23,7 +23,6 @@
 #include "tao/MProfile.h"
 #include "tao/debug.h"
 #include "tao/PortableInterceptor.h"
-#include "tao/ORBInitializer_Registry.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"

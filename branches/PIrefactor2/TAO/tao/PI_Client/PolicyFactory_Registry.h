@@ -29,25 +29,6 @@
 #include "ace/CORBA_macros.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
 
-//-- Forward Declarations--
-namespace CORBA
-{
-  typedef ULong PolicyType;
-
-  class Policy;
-  typedef Policy *Policy_ptr;
-
-  class Any;
-
-  class Environment;
-}
-
-namespace PortableInterceptor
-{
-  class PolicyFactory;
-  typedef PolicyFactory *PolicyFactory_ptr;
-}
-
 /**
  * @class TAO_PolicyFactory_Registry
  *
