@@ -1,3 +1,7 @@
+ChangeLogTag: Wed Jun  1 14:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer.cpp:
+          Load the PI_Client libary explicitly if needed
 
         * tao/ORBInitializer.cpp:
           USe ORBInitializer_Registry_Adapter
