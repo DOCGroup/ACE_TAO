@@ -19,12 +19,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Improve CORBA compliance by fixing bugzilla bugs 1917, 1271, 1951,
   and 2043
 
-PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.6
-============================================
-
 . (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
-
-  . ONGOING - ETA 2/30 -- currently targeted for TAO 1.4.6.
 
 . (OCI) Tag Alternate IIOP Address
 
