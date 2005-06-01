@@ -225,13 +225,13 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     this->process_mgr_.close();
 
     this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_TRY_CHECK_EX(try_block_1);
 
     if (! CORBA::is_nil(this->locator_.in()) && this->registration_token_ != 0)
     {
       this->locator_->unregister_activator (name_.c_str(),
         this->registration_token_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK(try_block_1);
     }
   }
   ACE_CATCH(CORBA::COMM_FAILURE, ex)
@@ -247,7 +247,7 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR Activator: fini");
-    ACE_RE_THROW;
+    ACE_RE_THROW_EX(try_block_1);
   }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -255,7 +255,7 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   ACE_TRY_EX(try_block_2)
   {
     this->orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_TRY_CHECK_EX(try_block_2);
 
     if (debug_ > 0)
       ACE_DEBUG((LM_DEBUG, "ImR Activator: Shut down successfully.\n"));
@@ -263,7 +263,7 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR Activator: fini 2");
-    ACE_RE_THROW;
+    ACE_RE_THROW_EX(try_block_2);
   }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
