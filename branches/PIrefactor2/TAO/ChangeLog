@@ -1,4 +1,13 @@
 
+        * tao/ORBInitializer.{h,cpp}:
+          New file, contains the PortableInterceptor::register_orb_initializer
+          method. This will try to load the PI_Client lib and use the
+          ORBInitializer_Registry_Adapter interface to register the
+          initializer to the registry. Will provide the implementation later
+
+        * tao/ORBInitializer_Registry_Adapter.h:
+          ORBInitializer registry adapter class
+
         * tao/PI_Client/CodecFactory_ORBInitializer.{h,cpp}:
         * tao/PI_Client/ORBInitializer.pidl:
         * tao/PI_Client/ORBInitializer_Registry.{h,cpp}
