@@ -15,6 +15,9 @@ ACE_RCSID (IOR_Endpoint_Hostnames, list_interfaces, "$Id$")
 int
 main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   // network interfaces.
   ACE_INET_Addr *if_addrs = 0;
   size_t if_cnt = 0;
