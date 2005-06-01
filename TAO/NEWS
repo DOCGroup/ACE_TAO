@@ -6,9 +6,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Johnny/Ossama) Location Forwarding fixes
 
-. (JTC/Ossama) autoconf support for TAO
-
-  . ONGOING - ETA unknown
+. (JTC/Ossama) autoconf support for TAO tests and examples
 
 . Subset PortableInterceptors and Anys to separate libraries
 
