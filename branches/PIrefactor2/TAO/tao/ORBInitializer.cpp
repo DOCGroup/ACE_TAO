@@ -1,10 +1,12 @@
 #include "ORBInitializer.h"
+#include "ORBInitializer_Registry_Adapter.h"
 #include "PortableInterceptorC.h"
 #include "ORB.h"
 #include "ORB_Constants.h"
 #include "TAO_Singleton_Manager.h"
 #include "SystemException.h"
 
+#include "ace/Dynamic_Service.h"
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
@@ -41,13 +43,18 @@ PortableInterceptor::register_orb_initializer (
     ACE_CHECK;
   }
 
-  // Make sure the following is done after the global ORB
-  // initialization since we need to have exceptions initialized.
-    // @todo
-  // use the adapter
-//  TAO::ORBInitializer_Registry::instance ()->register_orb_initializer (
- ///   init
- //   ACE_ENV_ARG_PARAMETER);
+  // If not, lookup it up.
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_ =
+    ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
+    ("ORBInitializer_Registry");
+// @todo, do something special if 0??
+  if (orbinitializer_registry_ == 0)
+    {
+      orbinitializer_registry_->register_orb_initializer (
+        init
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 

@@ -43,23 +43,24 @@ namespace TAO
   class ORBInitializer_Registry_Adapter
     : public ACE_Service_Object
   {
-    /// Register an ORBInitializer with the underlying ORBInitializer
-    /// array.
-    virtual void register_orb_initializer (
-      PortableInterceptor::ORBInitializer_ptr init
-      ACE_ENV_ARG_DECL) = 0;
+    public:
+      /// Register an ORBInitializer with the underlying ORBInitializer
+      /// array.
+      virtual void register_orb_initializer (
+        PortableInterceptor::ORBInitializer_ptr init
+        ACE_ENV_ARG_DECL) = 0;
 
-    /// Begin initialization of all registered ORBInitializers before
-    /// the ORB itself is initialized.
-    virtual void pre_init (
-      PortableInterceptor::ORBInitInfo_ptr info
-      ACE_ENV_ARG_DECL) = 0;
+      /// Begin initialization of all registered ORBInitializers before
+      /// the ORB itself is initialized.
+      virtual void pre_init (
+        PortableInterceptor::ORBInitInfo_ptr info
+        ACE_ENV_ARG_DECL) = 0;
 
-    /// Complete initialization of all registered ORBInitializers after
-    /// the ORB has been initialized.
-    virtual void post_init (
-      PortableInterceptor::ORBInitInfo_ptr info
-      ACE_ENV_ARG_DECL) = 0;
+      /// Complete initialization of all registered ORBInitializers after
+      /// the ORB has been initialized.
+      virtual void post_init (
+        PortableInterceptor::ORBInitInfo_ptr info
+        ACE_ENV_ARG_DECL) = 0;
   };
 }
 
