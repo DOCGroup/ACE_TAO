@@ -1,3 +1,11 @@
+Wed Jun  1 08:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Increment refcount on the servant in the id_to_servant method.
+
+        * tests/POA/Identity/Identity.cpp:
+          Use ServantBase_var to store the servant pointer
+
 Wed Jun  1 02:50:28 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Muxing/Receiver.h:
@@ -6,16 +14,16 @@ Wed Jun  1 02:50:28 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  since reference is on by default. Please see  "Thu May 26
 	  10:17:12 UTC 2005  Johnny Willemsen
 	  <jwillemsen@remedy.nl>". Many tests need to be changed
-	  similarly. 
-	
+	  similarly.
+
 	* tests/Muxing/svc.conf:
 
 	  Added -ORBConnectionCacheMax option to the test.
 
 Tue May 31 22:43:10 2005    <cleeland_c@ociweb.com>
 
-	* tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main): 
-	* tests/IOR_Endpoint_Hostnames/generate_ior.cpp (main): 
+	* tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main):
+	* tests/IOR_Endpoint_Hostnames/generate_ior.cpp (main):
 
 	  Fixed warnings related to unused args or variables.
 
@@ -26,7 +34,7 @@ Tue May 31 19:28:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
-        
+
           Since the typecode of a user-defined IDL exception is required
           by any IDL operation that raises it, changed the logic of the
           -St option to be ignored for user exceptions. An informative
@@ -34,9 +42,9 @@ Tue May 31 19:28:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           the -St option is used. Formerly, the simultaneous appearance
           of -St and user exceptions would be made apparent only by a
           C++ compile failure.
-          
+
         * docs/compiler.html:
-        
+
           Updated IDL compiler documentation to reflect the above change.
 
 Tue May 31 10:08:27 2005  Justin Michel  <michel_j@ociweb.com>
@@ -53,7 +61,7 @@ Tue May 31 09:19:10 2005  Chris Cleeland  <cleeland@ociweb.com>
           this method was removed in the first place, but the originator
           of that change is unavailable for consultation for the next
           week, so I will err on the side of making things compile.
- 
+
         * tests/IOR_Endpoint_Hostnames/IOR_Endpoint_Hostnames.mpc:
         * tests/IOR_Endpoint_Hostnames/bogus_i.h:
 
