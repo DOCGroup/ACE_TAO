@@ -1,3 +1,17 @@
+Wed Jun  1 02:50:28 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Muxing/Receiver.h:
+
+	  Removed inheritance from PortableServer::RefcountServantBase
+	  since reference is on by default. Please see  "Thu May 26
+	  10:17:12 UTC 2005  Johnny Willemsen
+	  <jwillemsen@remedy.nl>". Many tests need to be changed
+	  similarly. 
+	
+	* tests/Muxing/svc.conf:
+
+	  Added -ORBConnectionCacheMax option to the test.
+
 Tue May 31 22:43:10 2005    <cleeland_c@ociweb.com>
 
 	* tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main): 

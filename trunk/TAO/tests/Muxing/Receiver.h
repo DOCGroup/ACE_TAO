@@ -18,8 +18,7 @@
  * Simply print count how many bytes were received.
  */
 class Receiver
-  : public virtual POA_Test::Receiver
-  , public virtual PortableServer::RefCountServantBase
+  : public POA_Test::Receiver
 {
 public:
   /// Constructor
