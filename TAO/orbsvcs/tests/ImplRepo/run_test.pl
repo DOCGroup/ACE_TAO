@@ -697,7 +697,8 @@ sub persistent_ir_test
 
     # Copy the server to a path with spaces to ensure that these
     # work corrrectly.
-    copy ($A_SVR->Executable(), $P_SVR->Executable()); 
+    copy ($A_SVR->Executable(), $P_SVR->Executable());
+    chmod (0755, $P_SVR->Executable());
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \"" 
