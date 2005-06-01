@@ -1,3 +1,9 @@
+Wed Jun  1 09:26:14 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          More fixes for exception macros.
+
 Wed Jun  1 08:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Root_POA.cpp:
@@ -8,24 +14,24 @@ Wed Jun  1 08:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun  1 02:50:28 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Muxing/Receiver.h:
+        * tests/Muxing/Receiver.h:
 
-	  Removed inheritance from PortableServer::RefcountServantBase
-	  since reference is on by default. Please see  "Thu May 26
-	  10:17:12 UTC 2005  Johnny Willemsen
-	  <jwillemsen@remedy.nl>". Many tests need to be changed
-	  similarly.
+          Removed inheritance from PortableServer::RefcountServantBase
+          since reference is on by default. Please see  "Thu May 26
+          10:17:12 UTC 2005  Johnny Willemsen
+          <jwillemsen@remedy.nl>". Many tests need to be changed
+          similarly.
 
-	* tests/Muxing/svc.conf:
+        * tests/Muxing/svc.conf:
 
-	  Added -ORBConnectionCacheMax option to the test.
+          Added -ORBConnectionCacheMax option to the test.
 
 Tue May 31 22:43:10 2005    <cleeland_c@ociweb.com>
 
-	* tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main):
-	* tests/IOR_Endpoint_Hostnames/generate_ior.cpp (main):
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main):
+        * tests/IOR_Endpoint_Hostnames/generate_ior.cpp (main):
 
-	  Fixed warnings related to unused args or variables.
+          Fixed warnings related to unused args or variables.
 
 Tue May 31 19:28:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
