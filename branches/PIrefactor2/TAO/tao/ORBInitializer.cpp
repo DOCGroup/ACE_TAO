@@ -6,6 +6,7 @@
 #include "TAO_Singleton_Manager.h"
 #include "SystemException.h"
 
+#include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -48,7 +49,18 @@ PortableInterceptor::register_orb_initializer (
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
     ("ORBInitializer_Registry");
 // @todo, do something special if 0??
+
   if (orbinitializer_registry_ == 0)
+    {
+      ACE_Service_Config::process_directive (
+        ACE_TEXT_CHAR_TO_TCHAR (
+        "dynamic ORBInitializer_Registry Service_Object * TAO_PI_CLIENT:_make_ORBInitializer_Registry()"));
+      orbinitializer_registry_ =
+        ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
+          ("ORBInitializer_Registry");
+    }
+
+  if (orbinitializer_registry_ != 0)
     {
       orbinitializer_registry_->register_orb_initializer (
         init
