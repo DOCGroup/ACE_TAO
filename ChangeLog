@@ -1,3 +1,9 @@
+Wed Jun  1 18:33:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Reordered some
+	  #include directives so files needed by ace/Connector.h are in before
+	  ace/Connector.h. Fixes optimized autoconf build on AIX.
+
 Wed Jun  1 12:19:27 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_signal.inl: Reverted:
