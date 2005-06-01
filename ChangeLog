@@ -1,3 +1,12 @@
+Wed Jun  1 12:19:27 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_signal.inl: Reverted:
+	  Tue May 31 18:51:31 2005  Steve Huston  <shuston@riverace.com>
+	  It broke builds on Linux and BSD, at least, with compile errors like:
+	  `::' does not have a class or union named `sigaction'
+	  I think this is probably an issue of including files in the wrong
+	  order and it only trips up HP-UX, but I'm not sure.
+
 Wed Jun  1 07:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
