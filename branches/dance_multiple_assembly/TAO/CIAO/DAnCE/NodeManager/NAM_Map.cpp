@@ -21,24 +21,24 @@ namespace CIAO
   
   bool
   NAM_Map::insert_nam (const ACE_CString &str,
-                       ::PortableServer::ObjectId_ptr oid)
+                       const PortableServer::ObjectId &oid)
   {
-    return (this->map_.bind (str, oid) == 0)
+    return (this->map_.bind (str, oid) == 0);
   }
   
-  ::PortableServer::ObjectId_ptr
+  ::PortableServer::ObjectId
   NAM_Map::get_nam (const ACE_CString &str)
   {
-    MAP::ENTRY entry;
+    MAP::ENTRY *entry;
     
     if (this->map_.find (str, entry) != 0)
-      return ::PortableServer::ObjectId::_nil ();
+      return ::PortableServer::ObjectId ();
     
-    return ::PortableServer::ObjectId::duplicate (entry.int_id.in ());
+    return entry->int_id_.in ();
   }
   
   bool 
-  NAM_Map::remove_nam (const PortableServer::ObjectId_ptr oid)
+  NAM_Map::remove_nam (const PortableServer::ObjectId &oid)
   {
     for (Iterator i = this->map_.begin ();
          i != this->map_.end ();

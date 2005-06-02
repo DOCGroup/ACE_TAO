@@ -27,5 +27,6 @@ project(Node_Daemon): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dn
     NodeDaemonS.cpp
     NodeDaemon_Impl.cpp
     Node_Daemon.cpp
+    NAM_Map.cpp
   }
 }

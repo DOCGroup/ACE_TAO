@@ -14,10 +14,19 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
     name_ (CORBA::string_dup (name)),
     nodeapp_location_ (CORBA::string_dup (nodapp_loc)),
     callback_poa_ (PortableServer::POA::_nil ()),
-    spawn_delay_ (spawn_delay),
-    manager_ (Deployment::NodeApplicationManager::_nil ())
+    spawn_delay_ (spawn_delay)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+}
+
+CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
+{
+
+}
+
+void
+CIAO::NodeDaemon_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
   ACE_TRY
     {
       //create the call back poa for NAM.
@@ -36,18 +45,11 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeDaemon_Impl::constructor\t\n");
-      // @@ This is bogus and will not work with emulated exceptions
-      // -- Bala
+                           "NodeDaemon_Impl::init\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
-}
-
-CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
-{
-
+  ACE_CHECK; 
 }
 
 PortableServer::POA_ptr
@@ -100,7 +102,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 {
   ACE_TRY
     {
-      if (!this->map_.is_available (plan.uuid.in ()))
+      if (!this->map_.is_available (plan.UUID.in ()))
         {
           
           //Implementation undefined.
@@ -116,7 +118,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
           //@@ Note: after the init call the servant ref count would
           //   become 2. so we can leave the safeservant along and be
           //   dead. Also note that I added
-          CORBA::ObjectId_var oid  =
+          PortableServer::ObjectId_var oid  =
             app_mgr->init (this->nodeapp_location_,
                            this->spawn_delay_,
                            plan,
@@ -124,7 +126,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           
-          this->map_.insert_nam (plan.uuid.in (), oid.in ());
+          this->map_.insert_nam (plan.UUID.in (), oid.in ());
           
           /*
           if (CORBA::is_nil (this->manager_.in ()))
@@ -139,13 +141,14 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
         }
 
       CORBA::Object_var obj = 
-        this->poa_->id_to_reference (this->map_.get_nam (plan.uuid.in ()));
+        this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+      ACE_TRY_CHECK;
       
       // narrow should return a nil reference if it fails.
       return
         Deployment::NodeApplicationManager::_narrow (obj.in ());
     }
-  ACE_CATCH (PortableServer::ObjectNotActive)
+  ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {
       ACE_THROW (Deployment::StartError ());
     }
@@ -181,20 +184,20 @@ CIAO::NodeDaemon_Impl::destroyManager
       
       this->map_.remove_nam (id);
     }
-  ACE_CATCH (PortableServer::WrongAdapter)
+  ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
       ACE_ERROR ((LM_ERROR, 
                   "NodeDaemon_Impl::destroyManager: EXCEPTION -  "
                   "Invalid reference passed to destroyManager\n"));
       
-      ACE_THROW (Deployment::InvalidReference);
+      ACE_THROW (::Deployment::InvalidReference ());
     }
-  ACE_CATCH (PortableServer::ObjectNotActive)
+  ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "NodeDaemon_Impl::destroyManager: EXCEPTION - "
                   " asked to destroy an already inactive object.\n"));
-      ACE_THROW (Deployment::InvalidReference);
+      ACE_THROW (::Deployment::InvalidReference ());
     }
   ACE_CATCHANY
     {
