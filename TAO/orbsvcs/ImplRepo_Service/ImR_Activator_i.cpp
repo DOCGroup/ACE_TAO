@@ -231,7 +231,7 @@ ImR_Activator_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->locator_->unregister_activator (name_.c_str(),
         this->registration_token_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK(try_block_1);
+      ACE_TRY_CHECK_EX(try_block_1);
     }
   }
   ACE_CATCH(CORBA::COMM_FAILURE, ex)
