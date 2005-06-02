@@ -711,7 +711,8 @@ nobase_include_HEADERS += \
   TimeBaseS_T.h \
   TimeBaseS_T.inl \
   Time_Utilities.h \
-  Time_Utilities.i
+  Time_Utilities.i \
+  svc_utils_export.h
 
 pkgconfig_DATA += TAO_Svc_Utils.pc
 
