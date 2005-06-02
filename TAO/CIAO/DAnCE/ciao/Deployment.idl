@@ -95,7 +95,7 @@ module Deployment {
     NodeApplicationManager preparePlan (in DeploymentPlan plan)
       raises (StartError, PlanError);
     void destroyManager (in NodeApplicationManager appManager)
-      raises (StopError);
+      raises (StopError, InvalidReference);
   };
 
   interface RepositoryManager {

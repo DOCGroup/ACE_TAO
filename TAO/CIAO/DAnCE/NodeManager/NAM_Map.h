@@ -16,7 +16,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ciao/DeploymentC.h"
 #include "ace/SString.h"
-
+#include "tao/PortableServer/PortableServer.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -41,14 +41,14 @@ namespace CIAO
     
     /// Insert a NAM OID into the collection
     bool insert_nam (const ACE_CString &str,
-                     ::PortableServer::ObjectId_ptr oid);
+                     const PortableServer::ObjectId &oid);
                 
     /// Get a specified NAM.  
-    ::PortableServer::ObjectId_ptr
+    ::PortableServer::ObjectId
     get_nam (const ACE_CString &str);
     
     /// Remove a nam from the map, given its oid.
-    bool remove_nam (const PortableServer::ObjectId_ptr oid);
+    bool remove_nam (const PortableServer::ObjectId &oid);
     
   private:
     typedef
