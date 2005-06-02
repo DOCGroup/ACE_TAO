@@ -21,6 +21,10 @@ project(Svc_Utils) : orbsvcslib, core, portableserver {
     IOR_Multicast.cpp
   }
 
+  Header_Files {
+    svc_utils_export.h
+  }
+
   Template_Files {
   }
 
