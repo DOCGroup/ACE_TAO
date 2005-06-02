@@ -120,7 +120,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
 
   if (buffer[j - 1] == delim) j--;
   buffer[j] ='\0';
-  return buffer;
+  return string(buffer);
 }
 
 TestServer::TestServer(CORBA::ORB_ptr orb, int argc, char* argv[])
