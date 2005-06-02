@@ -1,3 +1,9 @@
+Thu Jun  2 09:10:38 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/IOR_Endpoint_Hostnames/generate_ior.cpp (main): Added
+	  explicit OrbId to ORB_init() call to fix errors on emulated
+	  exception builds.
+
 Thu Jun  2 07:04:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
