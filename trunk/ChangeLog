@@ -1,3 +1,8 @@
+Thu Jun  2 13:58:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Local_Tokens.cpp (~ACE_TSS_TPQ_Entry): Replaced missing '}' from:
+	  Mon May 30 18:10:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
 Wed Jun  1 18:33:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Reordered some
