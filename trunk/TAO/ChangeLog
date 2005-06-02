@@ -2,8 +2,8 @@ Thu Jun  2 09:19:50 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 
-        Exception macro fix. Thanks to jmegq@radiance.com for the
-        report and fix. This fixes bug #2135.
+          Exception macro fix. Thanks to jmegq@radiance.com for the
+          report and fix. This fixes bug #2135.
 
 Wed Jun  1 14:05:31 2005  Justin Michel  <michel_j@ociweb.com>
 
