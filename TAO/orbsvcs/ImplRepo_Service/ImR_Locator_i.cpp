@@ -257,6 +257,7 @@ ImR_Locator_i::shutdown(CORBA::Boolean activators, CORBA::Boolean servers ACE_EN
       ACE_TRY
       {
         acts[i]->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
         acts[i] = ImplementationRepository::Activator::_nil();
       }
       ACE_CATCHANY
@@ -920,6 +921,7 @@ ImR_Locator_i::findPOA(const char* name)
   {
     bool activate_it = false;
     return root_poa_->find_POA(name, activate_it ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {// Ignore
