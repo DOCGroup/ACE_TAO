@@ -98,33 +98,35 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                    Deployment::StartError,
                    Deployment::PlanError))
 {
-  // Return cached manager
   ACE_TRY
     {
-      if (CORBA::is_nil (this->manager_.in ()))
+      if (!this->map_.is_available (plan.uuid.in ()))
         {
+          
           //Implementation undefined.
           CIAO::NodeApplicationManager_Impl *app_mgr;
           ACE_NEW_THROW_EX (app_mgr,
-                            CIAO::NodeApplicationManager_Impl (
-                              this->orb_.in (),
-                              this->poa_.in ()),
+                            CIAO::NodeApplicationManager_Impl (this->orb_.in (),
+                                                               this->poa_.in ()),
                             CORBA::NO_MEMORY ());
           ACE_TRY_CHECK;
-
+          
           PortableServer::ServantBase_var safe (app_mgr);
-
+          
           //@@ Note: after the init call the servant ref count would
           //   become 2. so we can leave the safeservant along and be
           //   dead. Also note that I added
-          this->manager_ =
+          CORBA::ObjectId_var oid  =
             app_mgr->init (this->nodeapp_location_,
                            this->spawn_delay_,
                            plan,
                            this->callback_poa_.in ()
                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
+          
+          this->map_.insert_nam (plan.uuid.in (), oid.in ());
+          
+          /*
           if (CORBA::is_nil (this->manager_.in ()))
             {
               ACE_ERROR ((LM_ERROR,
@@ -133,43 +135,66 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                           "is nil\n"));
               ACE_TRY_THROW (Deployment::StartError ());
             }
+          */
         }
+
+      CORBA::Object_var obj = 
+        this->poa_->id_to_reference (this->map_.get_nam (plan.uuid.in ()));
+      
+      // narrow should return a nil reference if it fails.
+      return
+        Deployment::NodeApplicationManager::_narrow (obj.in ());
+    }
+  ACE_CATCH (PortableServer::ObjectNotActive)
+    {
+      ACE_THROW (Deployment::StartError ());
     }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "NodeDaemon_Impl::preparePlan\t\n");
-    ACE_RE_THROW;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "NodeDaemon_Impl::preparePlan\t\n");
+      ACE_RE_THROW;
+    }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
-
-  // Duplicate this reference to the caller
-  return
-    Deployment::NodeApplicationManager::_duplicate (this->manager_.in ());
 }
 
 void
-CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
-                                       ACE_ENV_ARG_DECL)
+CIAO::NodeDaemon_Impl::destroyManager 
+        (Deployment::NodeApplicationManager_ptr manager
+         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StopError))
+                   Deployment::StopError,
+                   Deployment::InvalidReference))
 {
   ACE_TRY
     {
-    // @@TODO: Find out why below code throw Object_Not_Active exception.
       // Deactivate this object
       PortableServer::ObjectId_var id =
-        this->poa_->reference_to_id (this->manager_.in ()
+        this->poa_->reference_to_id (manager
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      this->manager_ =
-        Deployment::NodeApplicationManager::_nil ();
+      
+      this->map_.remove_nam (id);
+    }
+  ACE_CATCH (PortableServer::WrongAdapter)
+    {
+      ACE_ERROR ((LM_ERROR, 
+                  "NodeDaemon_Impl::destroyManager: EXCEPTION -  "
+                  "Invalid reference passed to destroyManager\n"));
+      
+      ACE_THROW (Deployment::InvalidReference);
+    }
+  ACE_CATCH (PortableServer::ObjectNotActive)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "NodeDaemon_Impl::destroyManager: EXCEPTION - "
+                  " asked to destroy an already inactive object.\n"));
+      ACE_THROW (Deployment::InvalidReference);
     }
   ACE_CATCHANY
     {

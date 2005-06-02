@@ -118,7 +118,7 @@ namespace CIAO
     int spawn_delay_;
 
     // Cache reference of last NodeAppManager
-    Deployment::NodeApplicationManager_var manager_;
+    // Deployment::NodeApplicationManager_var manager_;
   };
 }
 
