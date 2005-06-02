@@ -1,3 +1,9 @@
+Thu Jun  2 14:04:23 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Fix exception macros.
+
 Thu Jun  2 11:06:05 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
