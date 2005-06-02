@@ -1,18 +1,25 @@
+Thu Jun  2 11:06:05 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+
+          Add an explicit constructor to work around BCB6 compiler
+        warnings about implicit char* to string conversion.
+
 Thu Jun  2 09:10:38 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/IOR_Endpoint_Hostnames/generate_ior.cpp (main): Added
-	  explicit OrbId to ORB_init() call to fix errors on emulated
-	  exception builds.
+        * tests/IOR_Endpoint_Hostnames/generate_ior.cpp (main): Added
+          explicit OrbId to ORB_init() call to fix errors on emulated
+          exception builds.
 
 Thu Jun  2 07:04:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
 
-	  Add svc_utils_export.h to Header File section.
+          Add svc_utils_export.h to Header File section.
 
 Thu Jun  2 09:19:50 2005  Simon McQueen  <sm@prismtech.com>
 
