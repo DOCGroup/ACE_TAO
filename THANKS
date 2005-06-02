@@ -493,7 +493,7 @@ Achim Stindt <stindt at conbis dot de>
 Fredrik Lindahl <fredrik dot lindahl at ausys dot se>
 Joseph Weihs <joseph-w at Orbotech dot Co dot IL>
 Serge Kolgan <skolgan at trigraph dot com>
-James Megquier <jmegq at bbn dot com>
+James Megquier <jmegquier at gmail dot com>
 Martin Krumpolec <krumpolec at asset dot sk>
 Michael Thomas <Michael dot Thomas at Australia dot Boeing dot com>
 Vicentini Emanuele <arena dot sci dot univr dot it>
@@ -1988,7 +1988,6 @@ Alan Balasuar <balasuar at gmail dot com>
 Will Chai <willchai at 126 dot com>
 Paul Koch <paul dot koch at mci dot com>
 Dave Giovannini <giovanninid at ociweb dot com>
-<jmegq at radiance dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
