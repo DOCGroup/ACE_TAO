@@ -129,6 +129,45 @@ recursive_struct_test (CORBA::ORB_ptr /* orb */,
 }
 
 void
+recursive_union_test (CORBA::ORB_ptr /* orb */,
+                      Test::Hello_ptr /* hello */
+                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_DEBUG ((LM_INFO,
+              "Executing recursive union test\n"));
+
+  ACE_DEBUG ((LM_WARNING,
+              "  Currently unimplemented.\n"));
+}
+
+
+void
+indirectly_recursive_valuetype_test (CORBA::ORB_ptr /* orb */,
+                                     Test::Hello_ptr /* hello */
+                                     ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_DEBUG ((LM_INFO,
+              "Executing indirectly recursive valuetype test\n"));
+
+  ACE_DEBUG ((LM_WARNING,
+              "  Currently unimplemented.\n"));
+}
+
+void
+directly_recursive_valuetype_test (CORBA::ORB_ptr /* orb */,
+                                   Test::Hello_ptr /* hello */
+                                   ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_DEBUG ((LM_INFO,
+              "Executing directly recursive valuetype test\n"));
+
+  ACE_DEBUG ((LM_WARNING,
+              "  Currently unimplemented.\n"));
+}
+
+#if TAO_HAS_MINIMUM_CORBA == 0
+
+void
 recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
                                        Test::Hello_ptr hello
                                        ACE_ENV_ARG_DECL)
@@ -184,18 +223,6 @@ recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
 }
 
 void
-recursive_union_test (CORBA::ORB_ptr /* orb */,
-                      Test::Hello_ptr /* hello */
-                      ACE_ENV_ARG_DECL_NOT_USED)
-{
-  ACE_DEBUG ((LM_INFO,
-              "Executing recursive union test\n"));
-
-  ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
-}
-
-void
 recursive_union_typecodefactory_test (CORBA::ORB_ptr /* orb */,
                                       Test::Hello_ptr /* hello */
                                       ACE_ENV_ARG_DECL_NOT_USED)
@@ -207,23 +234,11 @@ recursive_union_typecodefactory_test (CORBA::ORB_ptr /* orb */,
               "  Currently unimplemented.\n"));
 }
 
-
 void
-indirectly_recursive_valuetype_test (CORBA::ORB_ptr /* orb */,
-                                     Test::Hello_ptr /* hello */
-                                     ACE_ENV_ARG_DECL)
-{
-  ACE_DEBUG ((LM_INFO,
-              "Executing indirectly recursive valuetype test\n"));
-
-  ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
-}
-
-void
-indirectly_recursive_valuetype_typecodefactory_test (CORBA::ORB_ptr /* orb */,
-                                                     Test::Hello_ptr /* hello */
-                                                     ACE_ENV_ARG_DECL)
+indirectly_recursive_valuetype_typecodefactory_test (
+  CORBA::ORB_ptr /* orb */,
+  Test::Hello_ptr /* hello */
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_INFO,
               "Executing indirectly recursive valuetype via "
@@ -234,21 +249,9 @@ indirectly_recursive_valuetype_typecodefactory_test (CORBA::ORB_ptr /* orb */,
 }
 
 void
-directly_recursive_valuetype_test (CORBA::ORB_ptr /* orb */,
-                                   Test::Hello_ptr /* hello */
-                                   ACE_ENV_ARG_DECL)
-{
-  ACE_DEBUG ((LM_INFO,
-              "Executing directly recursive valuetype test\n"));
-
-  ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
-}
-
-void
 directly_recursive_valuetype_typecodefactory_test (CORBA::ORB_ptr /* orb */,
                                                    Test::Hello_ptr /* hello */
-                                                   ACE_ENV_ARG_DECL)
+                                                   ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_INFO,
               "Executing directly recursive valuetype via "
@@ -257,6 +260,8 @@ directly_recursive_valuetype_typecodefactory_test (CORBA::ORB_ptr /* orb */,
   ACE_DEBUG ((LM_WARNING,
               "  Currently unimplemented.\n"));
 }
+
+#endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 
 /**
@@ -336,16 +341,18 @@ main (int argc, char *argv[])
                                  Test::Hello_ptr
                                  ACE_ENV_ARG_DECL);
 
-      static test_func tests[] =
+      static test_func const tests[] =
         {
-          recursive_struct_test,
-          recursive_struct_typecodefactory_test,
-          recursive_union_test,
-          recursive_union_typecodefactory_test,
-          indirectly_recursive_valuetype_test,
-          indirectly_recursive_valuetype_typecodefactory_test,
-          directly_recursive_valuetype_test,
-          directly_recursive_valuetype_typecodefactory_test
+          recursive_struct_test
+          , recursive_union_test
+          , indirectly_recursive_valuetype_test
+          , directly_recursive_valuetype_test
+#if TAO_HAS_MINIMUM_CORBA == 0
+          , recursive_struct_typecodefactory_test
+          , recursive_union_typecodefactory_test
+          , indirectly_recursive_valuetype_typecodefactory_test
+          , directly_recursive_valuetype_typecodefactory_test
+#endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
         };
 
       static size_t const test_count = sizeof (tests) / sizeof (test_func);
