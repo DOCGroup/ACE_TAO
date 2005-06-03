@@ -91,9 +91,9 @@ Server_Request_Interceptor::receive_request_service_contexts (
 
       FT::TagFTGroupTaggedComponent group_component;
 
-      cdr >> group_component.component_version;
-      cdr >> group_component.group_domain_id.inout ();
-      cdr >> group_component.object_group_id;
+      //cdr >> group_component.component_version;
+      //cdr >> group_component.group_domain_id.inout ();
+      //cdr >> group_component.object_group_id;
       cdr >> group_component.object_group_ref_version;
 
       if (group_component.object_group_ref_version != 5)
@@ -149,9 +149,9 @@ Server_Request_Interceptor::receive_request (
 
       FT::TagFTGroupTaggedComponent group_component;
 
-      cdr >> group_component.component_version;
-      cdr >> group_component.group_domain_id.inout ();
-      cdr >> group_component.object_group_id;
+      //cdr >> group_component.component_version;
+      //cdr >> group_component.group_domain_id.inout ();
+      //cdr >> group_component.object_group_id;
       cdr >> group_component.object_group_ref_version;
 
       if (group_component.object_group_ref_version != 5)

@@ -1,3 +1,11 @@
+Fri Jun  3 14:49:14 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+
+          This test was trying to use the old (and superior :-) ) form
+          of the FT service context and was subsequently failing to
+          extract the group version correctly. Fixed.
+
 Thu Jun  2 14:04:23 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
