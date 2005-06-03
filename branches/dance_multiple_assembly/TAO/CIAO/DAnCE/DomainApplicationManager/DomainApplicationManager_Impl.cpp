@@ -5,7 +5,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
-
 //#include "Config_Handlers/DnC_Dump.h"
 
 #if !defined (__ACE_INLINE__)
@@ -206,8 +205,15 @@ split_plan (void)
     ACE_NEW_RETURN (tmp_plan,
                     ::Deployment::DeploymentPlan,
                     0);
-
-    tmp_plan->UUID = CORBA::string_dup (this->plan_.UUID.in ());
+    
+    // Construct the UUID for the child plan.  
+    // Currently, this UUID consists of:
+    // The global UUID for the parent plan + the name of the node the
+    // child plan is to be installed on. 
+    ACE_CString child_uuid (this->plan_.UUID.in ());
+    child_uuid += this->node_manager_names_[i];
+    
+    tmp_plan->UUID = CORBA::string_dup (child_uuid.c_str ());
 
     tmp_plan->implementation.length (0);
     tmp_plan->instance.length (0);
@@ -256,7 +262,7 @@ split_plan (void)
       // Get the child plan.
       ::Deployment::DeploymentPlan_var &child_plan =
           (entry->int_id_).child_plan_;
-
+      
       // Fill in the contents of the child plan entry.
 
       // Append the "MonolithicDeploymentDescriptions implementation"
@@ -266,9 +272,8 @@ split_plan (void)
       const ::Deployment::MonolithicDeploymentDescription & my_implementation =
         (this->plan_.implementation)[my_instance.implementationRef];
 
-      //Deployment::DnC_Dump::dump (this->plan_);
+      //      Deployment::DnC_Dump::dump (this->plan_);
       //Deployment::DnC_Dump::dump ( (this->plan_.implementation)[my_instance.implementationRef]);
-
       //ACE_DEBUG ((LM_DEBUG, "My implementation"));
       //Deployment::DnC_Dump::dump (my_implementation);
 
@@ -360,14 +365,14 @@ startLaunch (const ::Deployment::Properties & configProperty,
           ACE_Hash_Map_Entry
             <ACE_CString,
             Chained_Artifacts> *entry;
-
+          
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
-
+          
           ::Deployment::NodeApplicationManager_ptr my_nam =
             (entry->int_id_).node_application_manager_.in ();
-
+          
           if (CORBA::is_nil (my_nam))
             {
               ACE_DEBUG ((LM_DEBUG, "While starting launch, the DomainApplicationManager\
@@ -661,9 +666,12 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
           ::Deployment::NodeManager_var my_node_manager =
              (entry->int_id_).node_manager_;
-
-          // Since we have the first arg is not used by NM anyway.
-          my_node_manager->destroyManager (0 ACE_ENV_ARG_PARAMETER);
+          
+          ::Deployment::NodeApplicationManager_var my_nam = 
+              (entry->int_id_).node_application_manager_;
+          
+          my_node_manager->destroyManager (my_nam.in ()
+                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

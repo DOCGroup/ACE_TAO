@@ -44,11 +44,11 @@ namespace CIAO
          i != this->map_.end ();
          ++i)
       {
-        //if ( (*iter).int_id_ == oid
+        if ((*i).int_id_ == oid)
+          return this->map_.unbind ((*i).ext_id_) == 0;
       }
     return false;
   }
-  
 }
 
       

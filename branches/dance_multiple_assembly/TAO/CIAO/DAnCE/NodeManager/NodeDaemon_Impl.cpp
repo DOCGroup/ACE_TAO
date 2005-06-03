@@ -104,6 +104,12 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
     {
       if (!this->map_.is_available (plan.UUID.in ()))
         {
+          if (CIAO::debug_level () > 10)
+            {
+              ACE_DEBUG ((LM_DEBUG, "NM:prepare_plan: "
+                          "creating a new NAM with UUID: %s\n",
+                          plan.UUID.in ()));
+            }
           
           //Implementation undefined.
           CIAO::NodeApplicationManager_Impl *app_mgr;
@@ -139,6 +145,16 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
             }
           */
         }
+      else
+        {
+          if (CIAO::debug_level () > 10)
+            {
+              ACE_DEBUG ((LM_DEBUG, "NM:prepare_plan: reusing an old NAM "
+                          "with UUID: %s\n",
+                          plan.UUID.in ()));
+            }
+        }
+      
 
       CORBA::Object_var obj = 
         this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
@@ -169,7 +185,7 @@ CIAO::NodeDaemon_Impl::destroyManager
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError,
                    Deployment::InvalidReference))
-{
+{  
   ACE_TRY
     {
       // Deactivate this object
@@ -177,12 +193,22 @@ CIAO::NodeDaemon_Impl::destroyManager
         this->poa_->reference_to_id (manager
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+      
+      ACE_DEBUG ((LM_DEBUG, "After r_t_i\n"));
+      
+      if (!this->map_.remove_nam (id))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "NodeDaemon_Impl::destroyManager: "
+                      "Unable to remove object from map!\n"));
+        }
+      
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      this->map_.remove_nam (id);
+      ACE_DEBUG ((LM_DEBUG, "After d_o\n"));
+      
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
@@ -206,4 +232,6 @@ CIAO::NodeDaemon_Impl::destroyManager
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
+  
+
 }
