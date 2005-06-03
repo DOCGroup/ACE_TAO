@@ -17,6 +17,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 #include "ace/Message_Block.h"
+#include "ace/Null_Condition.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Proactor.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Service_Object.h"
