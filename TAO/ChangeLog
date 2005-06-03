@@ -1,3 +1,11 @@
+Fri Jun  3 10:21:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Any/Recursive/client.cpp:
+
+	  Fixed unused argument warnings in emulated exception builds.
+
+	  Fixed syntax errors in minimum CORBA builds.
+
 Fri Jun  3 09:17:13 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main):
