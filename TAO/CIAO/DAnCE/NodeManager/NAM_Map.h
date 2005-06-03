@@ -2,7 +2,8 @@
  * @file NAM_Map.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
- * Map of NodeApplicationManagers
+ * Map of NodeApplicationManagers, inspired by the DAM_Map
+ * class.
  *
  * $Id$
  */
@@ -58,9 +59,10 @@ namespace CIAO
                              ACE_Equal_To<ACE_CString>,
                              ACE_Null_Mutex> MAP;
     
-    typedef MAP::iterator Iterator;
-    
+    typedef MAP::iterator Iterator;    
+
     MAP map_;
+    
   };
 }
 
