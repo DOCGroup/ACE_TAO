@@ -1,3 +1,14 @@
+Fri Jun  3 09:17:13 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main):
+
+	  Since this code was copied from
+	  TAO_IIOP_Acceptor::probe_interfaces(), update this code to look
+	  like the code there.  This was also in response to seemingly
+	  nonsense complaints on one platform in the line containing
+	  ACE_static_cast(), so hopefully the change to static_cast<>
+	  remedies that as well.
+
 Fri Jun  3 14:49:14 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
@@ -17,7 +28,7 @@ Thu Jun  2 11:06:05 2005  Justin Michel  <michel_j@ociweb.com>
         * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
 
           Add an explicit constructor to work around BCB6 compiler
-        warnings about implicit char* to string conversion.
+          warnings about implicit char* to string conversion.
 
 Thu Jun  2 09:10:38 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
