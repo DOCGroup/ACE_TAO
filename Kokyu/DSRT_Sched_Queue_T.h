@@ -15,6 +15,7 @@
 #include "DSRT_Dispatch_Item_T.h"
 #include "ace/RB_Tree.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

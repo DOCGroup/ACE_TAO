@@ -496,21 +496,21 @@ protected:
   static CHAR NULL_String_;
 };
 
-template < class CHAR > ACE_INLINE
+template < class CHAR >
   ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &,
                                        const ACE_String_Base < CHAR > &);
-template < class CHAR > ACE_INLINE
+template < class CHAR >
   ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &,
                                        const CHAR *);
-template < class CHAR > ACE_INLINE
+template < class CHAR >
   ACE_String_Base < CHAR > operator + (const CHAR *,
                                        const ACE_String_Base < CHAR > &);
 
-template < class CHAR > ACE_INLINE
+template < class CHAR >
   ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &t,
                                        const CHAR c);
 
-template < class CHAR > ACE_INLINE
+template < class CHAR >
   ACE_String_Base < CHAR > operator + (const CHAR c,
                                        const ACE_String_Base < CHAR > &t);
 

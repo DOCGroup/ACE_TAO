@@ -1,3 +1,15 @@
+Fri Jun  3 13:42:18 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/String_Base.h: Removed ACE_INLINE from the operator+ functions.
+	  The functions are defined in String_Base.cpp. Fixes compile errors
+	  on Solaris autoconf build.
+
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Added missing
+	  #include for ace/Null_Mutex.h and ace/Null_Condition.h since this
+	  example uses ACE_Task<ACE_NULL_SYNCH>.
+
+	* Kokyu/DSRT_Sched_Queue_T.h: Added missing #include "ace/Null_Mutex.h"
+
 Thu Jun  2 13:58:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Local_Tokens.cpp (~ACE_TSS_TPQ_Entry): Replaced missing '}' from:
