@@ -58,9 +58,9 @@ main (int argc, char *argv[])
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    endpoint_count = ACE_static_cast(unsigned long, if_cnt);
+    endpoint_count = static_cast<unsigned long> (if_cnt);
   else
-    endpoint_count = ACE_static_cast(unsigned long, if_cnt - lo_cnt);
+    endpoint_count = static_cast<unsigned long> (if_cnt - lo_cnt);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
