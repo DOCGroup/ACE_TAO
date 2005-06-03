@@ -133,17 +133,6 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
           ACE_TRY_CHECK;
           
           this->map_.insert_nam (plan.UUID.in (), oid.in ());
-          
-          /*
-          if (CORBA::is_nil (this->manager_.in ()))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "CIAO.NodeDaemon (%P|%t) -- ",
-                          "preparePlan: NodeApplicationManager ref",
-                          "is nil\n"));
-              ACE_TRY_THROW (Deployment::StartError ());
-            }
-          */
         }
       else
         {
@@ -194,8 +183,6 @@ CIAO::NodeDaemon_Impl::destroyManager
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      ACE_DEBUG ((LM_DEBUG, "After r_t_i\n"));
-      
       if (!this->map_.remove_nam (id))
         {
           ACE_ERROR ((LM_ERROR,
@@ -206,9 +193,6 @@ CIAO::NodeDaemon_Impl::destroyManager
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      ACE_DEBUG ((LM_DEBUG, "After d_o\n"));
-      
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
