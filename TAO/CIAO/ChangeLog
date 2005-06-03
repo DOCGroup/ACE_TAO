@@ -1,3 +1,10 @@
+Thu Jun  2 22:56:11 UTC 2005  Gan Deng <gan.deng@vanderbilt.edu>
+
+	* DAnCE/examples/Quoter/README.html
+
+	  Added a link to the CoSMIC quoter tutorial page hosted by
+	  Ming Xiong.
+
 Tue May 31 22:46:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecutorMappingGenerator.cpp:
