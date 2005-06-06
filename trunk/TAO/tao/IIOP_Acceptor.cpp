@@ -124,8 +124,8 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
     {
       // Skip if the host name
       if (i > 0
-          && ACE_OS::strcmp(this->hosts_[i], this->hosts_[0]) == 0
-          && (this->addrs_[i].get_port_number() == this->addrs_[0].get_port_number()))
+          && (this->addrs_[i].get_port_number() == this->addrs_[0].get_port_number())
+          && ACE_OS::strcmp(this->hosts_[i], this->hosts_[0]) == 0)
         continue;
 
       TAO_IIOP_Profile *pfile = 0;
@@ -223,7 +223,9 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
        index < this->endpoint_count_;
        ++index)
     {
-      if (ACE_OS::strcmp(this->hosts_[index], this->hosts_[0]) == 0)
+      if (index > 0 &&
+          this->addrs_[index].get_port_number() == this->addrs_[0].get_port_number() &&
+          ACE_OS::strcmp(this->hosts_[index], this->hosts_[0]) == 0)
         continue;
 
       TAO_IIOP_Endpoint *endpoint = 0;
