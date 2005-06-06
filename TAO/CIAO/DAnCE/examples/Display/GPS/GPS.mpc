@@ -19,7 +19,7 @@ project(GPS_DnC_stub): ciao_client_dnc {
 }
 
 project(GPS_DnC_svnt) : ciao_servant_dnc {
-  after += GPS_DnC_svnt GPS_DnC_stub
+  after += GPS_DnC_svnt GPS_DnC_stub HUDisplay_DnC_svnt
   sharedname  = GPS_DnC_svnt
   libs    += GPS_DnC_stub HUDisplay_DnC_stub HUDisplay_DnC_svnt
   libpaths += ..

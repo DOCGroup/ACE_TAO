@@ -1,9 +1,16 @@
+Mon Jun  6 12:33:16 2005  Simon McQueen  <sm@prismtech.com>
+
+        * DAnCE/examples/Display/GPS/GPS.mpc:
+
+          Added HUDisplay_DnC_svnt to after tag for project GPS_DnC_svnt
+          to fix build error on BCB 6 dynamic build.
+
 Thu Jun  2 22:56:11 UTC 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
 	* DAnCE/examples/Quoter/README.html
 
 	  Added a link to the CoSMIC quoter tutorial page hosted by
-	  Ming Xiong. 
+	  Ming Xiong.
 
 	* NEWS
 
@@ -14,7 +21,7 @@ Tue May 31 22:46:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ExecutorMappingGenerator.cpp:
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/TypeNameEmitter.cpp:
-        
+
           Eliminated unused arguments.
 
 Mon May 30 15:22:16 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
