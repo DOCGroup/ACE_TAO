@@ -1,3 +1,14 @@
+Mon Jun  6 16:48:21 2005    <cleeland_c@ociweb.com>
+
+	* tao/IIOP_Acceptor.cpp (create_new_profile): Reverse the order of
+	  comparisons so that port numbers get compared first.  This
+	  should make comparisons marginally faster when hostnames are
+	  ridiculously long if the ports don't match.
+
+	* tao/IIOP_Acceptor.cpp (create_shared_profile): Make port numbers
+	  a part of the comparison so that RTCORBA connections work
+	  properly.
+
 Mon Jun  6 02:10:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCode.cpp (equivalent):
