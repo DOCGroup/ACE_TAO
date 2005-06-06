@@ -1,3 +1,14 @@
+Mon Jun  6 02:10:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode.cpp (equivalent):
+
+	  Pass the unaliased TypeCode to the subclass equivalent_i()
+	  template method instead of the potentially aliased one.  Fixes
+	  equivalence failures between an aliased TypeCode and unaliased
+	  TypeCode.  Thanks to Jiang Wei <jiangwei_1976 at yahoo dot com
+	  dot cn> for reporting the problem and providing a simple test
+	  case.  [Bug 2140]
+
 Fri Jun  3 10:21:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Any/Recursive/client.cpp:
