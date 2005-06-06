@@ -1,43 +1,49 @@
+Mon Jun  6 18:05:52 2005  unknown  <michel_j@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Escape more strings written to the xml file. This should fix bug 2129.
+
 Mon Jun  6 16:48:21 2005    <cleeland_c@ociweb.com>
 
-	* tao/IIOP_Acceptor.cpp (create_new_profile): Reverse the order of
-	  comparisons so that port numbers get compared first.  This
-	  should make comparisons marginally faster when hostnames are
-	  ridiculously long if the ports don't match.
+        * tao/IIOP_Acceptor.cpp (create_new_profile): Reverse the order of
+          comparisons so that port numbers get compared first.  This
+          should make comparisons marginally faster when hostnames are
+          ridiculously long if the ports don't match.
 
-	* tao/IIOP_Acceptor.cpp (create_shared_profile): Make port numbers
-	  a part of the comparison so that RTCORBA connections work
-	  properly.
+        * tao/IIOP_Acceptor.cpp (create_shared_profile): Make port numbers
+          a part of the comparison so that RTCORBA connections work
+          properly.
 
 Mon Jun  6 02:10:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCode.cpp (equivalent):
+        * tao/TypeCode.cpp (equivalent):
 
-	  Pass the unaliased TypeCode to the subclass equivalent_i()
-	  template method instead of the potentially aliased one.  Fixes
-	  equivalence failures between an aliased TypeCode and unaliased
-	  TypeCode.  Thanks to Jiang Wei <jiangwei_1976 at yahoo dot com
-	  dot cn> for reporting the problem and providing a simple test
-	  case.  [Bug 2140]
+          Pass the unaliased TypeCode to the subclass equivalent_i()
+          template method instead of the potentially aliased one.  Fixes
+          equivalence failures between an aliased TypeCode and unaliased
+          TypeCode.  Thanks to Jiang Wei <jiangwei_1976 at yahoo dot com
+          dot cn> for reporting the problem and providing a simple test
+          case.  [Bug 2140]
 
 Fri Jun  3 10:21:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Any/Recursive/client.cpp:
+        * tests/Any/Recursive/client.cpp:
 
-	  Fixed unused argument warnings in emulated exception builds.
+          Fixed unused argument warnings in emulated exception builds.
 
-	  Fixed syntax errors in minimum CORBA builds.
+          Fixed syntax errors in minimum CORBA builds.
 
 Fri Jun  3 09:17:13 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp (main):
 
-	  Since this code was copied from
-	  TAO_IIOP_Acceptor::probe_interfaces(), update this code to look
-	  like the code there.  This was also in response to seemingly
-	  nonsense complaints on one platform in the line containing
-	  ACE_static_cast(), so hopefully the change to static_cast<>
-	  remedies that as well.
+          Since this code was copied from
+          TAO_IIOP_Acceptor::probe_interfaces(), update this code to look
+          like the code there.  This was also in response to seemingly
+          nonsense complaints on one platform in the line containing
+          ACE_static_cast(), so hopefully the change to static_cast<>
+          remedies that as well.
 
 Fri Jun  3 14:49:14 2005  Simon McQueen  <sm@prismtech.com>
 

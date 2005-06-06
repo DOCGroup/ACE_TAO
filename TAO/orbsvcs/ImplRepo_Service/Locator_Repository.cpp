@@ -218,19 +218,23 @@ static void saveAsXML(const ACE_CString& fname, Locator_Repository& repo) {
   for (; siit.next(sientry); siit.advance()) {
     Server_Info_Ptr& info = sientry->int_id_;
 
+    ACE_CString name = ACEXML_escape_string(info->name);
+    ACE_CString activator = ACEXML_escape_string(info->activator);
     ACE_CString cmdline = ACEXML_escape_string(info->cmdline);
     ACE_CString wdir = ACEXML_escape_string(info->dir);
+    ACE_CString partial_ior = ACEXML_escape_string(info->partial_ior);
+    ACE_CString ior = ACEXML_escape_string(info->ior);
 
     ACE_OS::fprintf(fp,"\t<%s", Locator_XMLHandler::SERVER_INFO_TAG);
-    ACE_OS::fprintf(fp," name=\"%s\"", info->name.c_str());
-    ACE_OS::fprintf(fp," activator=\"%s\"", info->activator.c_str());
+    ACE_OS::fprintf(fp," name=\"%s\"", name.c_str());
+    ACE_OS::fprintf(fp," activator=\"%s\"", activator.c_str());
     ACE_OS::fprintf(fp," command_line=\"%s\"", cmdline.c_str());
     ACE_OS::fprintf(fp," working_dir=\"%s\"", wdir.c_str());
     ACE_CString amodestr = ImR_Utils::activationModeToString(info->activation_mode);
     ACE_OS::fprintf(fp," activation_mode=\"%s\"", amodestr.c_str());
     ACE_OS::fprintf(fp," start_limit=\"%d\"", info->start_limit);
-    ACE_OS::fprintf(fp," partial_ior=\"%s\"", info->partial_ior.c_str());
-    ACE_OS::fprintf(fp," ior=\"%s\"", info->ior.c_str());
+    ACE_OS::fprintf(fp," partial_ior=\"%s\"", partial_ior.c_str());
+    ACE_OS::fprintf(fp," ior=\"%s\"", ior.c_str());
     ACE_OS::fprintf(fp,">\n");
 
     for (CORBA::ULong i = 0; i < info->env_vars.length(); ++i)
