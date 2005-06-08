@@ -1,0 +1,13 @@
+//  -*- MPC -*-
+// $Id$
+
+project(ACEXML_Parser): acelib, core {
+  sharedname    = ACEXML_Parser
+  after        += ACEXML
+  libs         += ACEXML
+  dynamicflags += ACEXML_PARSER_BUILD_DLL
+
+  Pkgconfig_Files {
+    ACEXML_Parser.pc.in
+  }
+}
