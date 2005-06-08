@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, messaging {
+  Source_Files {
+    Service.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, portableserver, messaging {
+  Source_Files {
+    Crashed_Callback.cpp
+    client.cpp
+  }
+}
+

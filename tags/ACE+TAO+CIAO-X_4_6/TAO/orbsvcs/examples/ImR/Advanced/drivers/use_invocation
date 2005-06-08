@@ -1,0 +1,12 @@
+- use_invocation
+
+do invoke_stats
+do start_imr
+do write_iors
+do start_activator
+do register_server
+do start_server
+do launch_client
+do kill_server
+do kill_activator
+do kill_imr
