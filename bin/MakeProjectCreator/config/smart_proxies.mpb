@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib {
-  after    += SmartProxies
-  libs     += TAO_SmartProxies
-  idlflags += -Gsp
-}
