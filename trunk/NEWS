@@ -21,10 +21,12 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.7
 USER VISIBLE CHANGES BETWEEN ACE-5.4.5 and ACE-5.4.6
 ====================================================
 
-. RMCast
-  - Reactor-compatible interface.
-  - Message unavailability reporting.
-  - Protocol documentation.
+. Updated RMCast to include
+   - Reactor-compatible interface.
+   - Message unavailability reporting.
+   - Protocol documentation.
+
+. Added support for 64bit Visual Age on AIX
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
 ====================================================
