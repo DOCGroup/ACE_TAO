@@ -1,2 +1,0 @@
-AirFrameDevice corbaloc:iiop:localhost:10000/NodeManager
-TimerDevice  corbaloc:iiop:localhost:20000/NodeManager
