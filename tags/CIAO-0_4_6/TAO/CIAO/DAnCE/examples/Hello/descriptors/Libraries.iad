@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Common Libraries</label>
+  <UUID>6bae4fcd-c71c-44b4-a0d4-0e4199ce1a49</UUID>
+  <location>$ACE_ROOT/lib/libACE</location>
+  <location>$ACE_ROOT/lib/libTAO</location>
+  <location>$ACE_ROOT/lib/libCIAO_DnC_Client</location>
+</Deployment:ImplementationArtifactDescription>
