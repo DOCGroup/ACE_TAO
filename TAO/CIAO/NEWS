@@ -24,7 +24,7 @@ PLANNED MAJOR CHANGES FOR CIAO-0.4.7
   Deployment and Configuration (D&C) specification. Such effort
   will allow application developers to use real-time CORBA features
   within their CCM appliation through meta-programming (via XML
-  metadata). Particularly, we will add support for server-side 
+  metadata). Particularly, we will add support for server-side
   RT policies, including extension for schema, container,
   and NodeApplication.  Configuring client-side (receptacle) policies
   to honor these server policies.
@@ -45,13 +45,18 @@ PLANNED MAJOR CHANGES FOR CIAO-0.4.7
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.5 and CIAO-0.4.6
 ======================================================
 
-. Added more examples for CIAO, which include a Quoter example (a consistent
-  tutorial example since TAO :)) and GUI-based example.
+. Added more examples for CIAO, including a new Quoter example that is
+  similar to the one in TAO, as well as GUI-based example.
 
-. Added support for handle component activation/passivation in the
-  assembly level. 
+. Added support for handle component activation/passivation in D&C
+  assemblies.
 
-. some bug fixes.
+. Added a test for the tool that converts IDL3 into equivalent IDL2.
+
+. Fixed CIDL compiler bug in code generation for sequence type
+  attributes of components.
+
+. Fixed a number of minor bugs.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
 ======================================================
