@@ -942,9 +942,13 @@ Key_List::output_binary_search_function (void)
 
   // Logic to handle the Binary Search.
 
-  ACE_OS::printf ("int first = 0, last = 0, middle;\n");
-  ACE_OS::printf ("%s*base = 0;\n",struct_tag);
-  ACE_OS::printf ("do {/* null */} while (&base == 0); // Silence warnings about unused variables...");
+  ACE_OS::printf ("int first = 0, last = 0, middle = 0;\n");
+
+  if (option[DUP] && total_duplicates > 0)
+    {
+      ACE_OS::printf ("%s*base = 0;\n",struct_tag);
+    }
+
   ACE_OS::printf ("\nlast = %d;\n",total_keys - 1);
   ACE_OS::printf ("while (last >= first)\n");
   ACE_OS::printf ("\t{\n");
