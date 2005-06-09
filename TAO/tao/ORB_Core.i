@@ -124,11 +124,12 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
 }
 
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE TAO_Service_Callbacks::Profile_Equivalence
 TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
                                      const TAO_Profile *that_p)
 {
-  CORBA::Boolean retval = 1;
+  TAO_Service_Callbacks::Profile_Equivalence retval 
+    = TAO_Service_Callbacks::DONT_KNOW;
 
   if (this->ft_service_.service_callback ())
     {

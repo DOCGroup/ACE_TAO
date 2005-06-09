@@ -700,17 +700,27 @@ TAO_Profile::parse_string (const char *ior
 CORBA::Boolean
 TAO_Profile::is_equivalent (const TAO_Profile *other)
 {
-  return
-    other != 0
-    && this->tag () == other->tag ()
-    && this->version_ == other->version ()
-    && this->endpoint_count () == other->endpoint_count ()
-    && this->object_key () == other->object_key ()
-    && this->do_is_equivalent (other)
-    && this->is_equivalent_hook (other);
+  CORBA::Boolean result = 0;
+  if (other)
+    {
+      TAO_Service_Callbacks::Profile_Equivalence callback
+        = this->is_equivalent_hook (other);
+      switch (callback)
+        {
+          case TAO_Service_Callbacks::DONT_KNOW:
+            return this->tag () == other->tag ()
+                && this->version_ == other->version ()
+                && this->endpoint_count () == other->endpoint_count ()
+                && this->object_key () == other->object_key ()
+                && this->do_is_equivalent (other);
+          case TAO_Service_Callbacks::EQUIVALENT:
+            result = 1;
+        }
+    }       
+  return result;
 }
 
-CORBA::Boolean
+TAO_Service_Callbacks::Profile_Equivalence
 TAO_Profile::is_equivalent_hook (const TAO_Profile *other)
 {
   // Allow services to apply their own definition of "equivalence."
@@ -832,13 +842,13 @@ TAO_Unknown_Profile::do_is_equivalent (const TAO_Profile* other_profile)
   return (CORBA::Boolean) (op == 0 ? 0 : this->body_ == op->body_);
 }
 
-CORBA::Boolean
+TAO_Service_Callbacks::Profile_Equivalence
 TAO_Unknown_Profile::is_equivalent_hook (const TAO_Profile * /* other */)
 {
   // Override the default implementation since we don't need the
   // additional checks it performs.
 
-  return 1;
+  return TAO_Service_Callbacks::DONT_KNOW;
 }
 
 CORBA::ULong
