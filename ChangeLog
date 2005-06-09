@@ -1,3 +1,10 @@
+Thu Jun  9 11:12:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Reactor.cpp (register_handler): When registering for one or more
+	  signals, set the event handler's reactor() pointer to the registered
+	  reactor. Makes this behavior consistent with all other registration
+	  types.
+
 Thu Jun  9 16:18:32 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Link.cpp:
