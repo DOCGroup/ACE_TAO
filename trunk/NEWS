@@ -28,6 +28,31 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.5 and ACE-5.4.6
 
 . Added support for 64bit Visual Age on AIX
 
+. Improved g++ 4.0 support.  A number of RTTI related problems have been
+  fixed.
+
+. Smaller footprint.
+
+. Fixed memory leaks ACE_DLL and ACE_Log_Msg classes.
+
+. The ACE::ICMP_Socket and ACE::Ping_Socket classes were moved out of
+  the ACE namespace and "flattened" to ACE_ICMP_Socket and
+  ACE_Ping_Socket to be consistent with the rest of ACE.
+
+. ACE_INET_Addr::set_address() - fixed a possible struct member
+  alignment issue when building an IPv4-mapped IPv6 address.
+
+. Added a new ACE::wild_match() function to match a string based on
+  wildcards.
+
+. Added efficient overloads for string concatenation to the
+  ACE_String_Base class.
+
+. Added support for the use of pthread_getschedparam on MacOS X.
+
+. Fixed an issue with static initialization of TSS related classes on
+  static builds for Windows.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
 ====================================================
 
