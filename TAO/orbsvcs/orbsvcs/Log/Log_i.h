@@ -261,6 +261,7 @@ public:
                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::LogFull,
+                     DsLogAdmin::LogOffDuty,
                      DsLogAdmin::LogLocked,
                      DsLogAdmin::LogDisabled));
 
@@ -271,6 +272,7 @@ public:
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::LogFull,
+                     DsLogAdmin::LogOffDuty,
                      DsLogAdmin::LogLocked,
                      DsLogAdmin::LogDisabled));
 
