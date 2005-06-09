@@ -65,7 +65,18 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.5 and TAO-1.4.6
   $(TAO_ROOT)/docs/Options.html and bugzilla #2123 for usage.
 
 . Increment the refcount on the servant in the id_to_servant and
-  reference_to_servant methods of the POA
+  reference_to_servant methods of the POA.
+
+. Improved g++ 4.0 support.  A number of RTTI related problems have been
+  fixed, in addition to removal of duplicate internal ORB related
+  singleton instances.
+
+. Fixed assertion that occured in some thru-POA collocated calls.
+
+. Fixed CORBA::UnknownUserException Any insertion problem.
+
+. Fixed TypeCode equivalence failure when comparing aliased and
+  unaliased TypeCodes of the same type.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.4 and TAO-1.4.5
 ====================================================
