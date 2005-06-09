@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project (*Client) : taoclient {
+   exename    = test
+   Source_Files {
+      testC.cpp
+      test.cpp
+   }
+}

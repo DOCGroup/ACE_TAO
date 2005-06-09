@@ -1,3 +1,19 @@
+Thu Jun  9 15:33:52 2005  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+
+          Change valuetype acessor declaration to return a pointer
+          rather than a _ptr.
+
+          This fixes bugzilla #2144.
+
+        * tests/Bug_2144_Regression/Bug_2144_Regression.mpc:
+        * tests/Bug_2144_Regression/README:
+        * tests/Bug_2144_Regression/test.cpp:
+        * tests/Bug_2144_Regression/test.idl:
+
+          Regression test for the above.
+
 Thu Jun  9 07:24:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
