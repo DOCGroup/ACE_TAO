@@ -101,6 +101,7 @@ TAO/tests/POA/Non_Servant_Upcalls/run_test.pl: !SUNCC5_1
 TAO/tests/POA/MT_Servant_Locator/run_test.pl: !MINIMUM !ST
 TAO/tests/POA/Nested_Non_Servant_Upcalls/run_test.pl: !MINIMUM !ST
 TAO/tests/POA/Deactivate_Object/run_test.pl
+TAO/tests/POA/Reference_Counting/run_test.pl
 TAO/tests/POA/Current/run_test.pl:
 TAO/tests/POA/wait_for_completion/run_test.pl:
 TAO/tests/IORManipulation/run_test.pl:
