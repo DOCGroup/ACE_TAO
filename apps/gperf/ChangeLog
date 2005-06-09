@@ -1,3 +1,9 @@
+Thu Jun  9 18:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * src/Key_List.cpp:
+          Only generate the base pointer when it is used. Fixes bugzilla 2099.
+          Thanks to Frank Pilhofer <fp@mc.com>
+
 Sat Apr 30 10:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * src/Key_List.cpp:
