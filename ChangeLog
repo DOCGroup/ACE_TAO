@@ -1,3 +1,11 @@
+Thu Jun  9 18:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event.h:
+          Doxygen improvements
+
+        * bin/MakeProjectCreator/config/codecfactory.mpb:
+          New base project for the new codecfactory for TAO
+
 Thu Jun  9 18:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

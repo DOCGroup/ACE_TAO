@@ -224,7 +224,7 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO-FT - Got a primary component \n"));
+                  ACE_TEXT ("TAO_FT (%P|%t) - Got a primary component\n")));
     }
 
   return true;
