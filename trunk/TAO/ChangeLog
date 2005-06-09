@@ -1,3 +1,16 @@
+Thu Jun  9 18:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/ChangeLog:
+          Removed this file, we have a main changelog
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+          Minor formatting issues. Fixes bugzilla bug 2139. Thanks to
+          <jmegq at radiance dot com>
+
 Thu Jun  9 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Reference_Counting/*
