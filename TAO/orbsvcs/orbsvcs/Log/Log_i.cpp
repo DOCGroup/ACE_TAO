@@ -930,6 +930,7 @@ TAO_Log_i::write_records (const DsLogAdmin::Anys &records
                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::LogFull,
+                   DsLogAdmin::LogOffDuty,
                    DsLogAdmin::LogLocked,
                    DsLogAdmin::LogDisabled))
 {
@@ -949,10 +950,11 @@ TAO_Log_i::write_records (const DsLogAdmin::Anys &records
 void
 TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::LogFull,
-                     DsLogAdmin::LogLocked,
-                     DsLogAdmin::LogDisabled))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::LogFull,
+                   DsLogAdmin::LogOffDuty,
+                   DsLogAdmin::LogLocked,
+                   DsLogAdmin::LogDisabled))
 {
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
