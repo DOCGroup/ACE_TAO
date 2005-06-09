@@ -33,6 +33,10 @@ project(Security) : orbsvcslib, corba_messaging, core, portableserver, intercept
     }
   }
 
+  Header_Files {
+    Security/security_export.h   
+  }
+
   Template_Files {
   }
 }
