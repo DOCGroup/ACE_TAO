@@ -84,7 +84,7 @@ namespace TAO
         ACE_CHECK;
 
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_FT (%P|%t): %s called for %s \n",
+                    ACE_TEXT ("TAO_FT (%P|%t) - %s called for %s\n"),
                     this->name_,
                     op.in ()));
       }
@@ -300,7 +300,7 @@ namespace TAO
         ftrsc.retention_id = ++this->retention_id_;
 
       //  ACE_DEBUG ((LM_DEBUG,
-      //    "(%P|%t) Retention id [%d]\n",
+      //    ACE_TEXT ("TAO_FT (%P|%t) - Retention id [%d]\n"),
       //    ftrsc.retention_id));
         tss->retention_id_ = ftrsc.retention_id;
         tss->clean_flag_ = false;
@@ -377,8 +377,8 @@ namespace TAO
         if (TAO_debug_level > 3)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) TAO_FT - Using default value",
-                        " of 15 seconds \n"));
+                        ACE_TEXT ("TAO_FT (%P|%t) - Using default value")
+			ACE_TEXT ("of 15 seconds\n")));
           }
         t = 15 * 1000000;
       }
