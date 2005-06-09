@@ -146,9 +146,6 @@ private:
   /// The ORB_TYPE component value
   CONV_FRAME::CodeSetComponentInfo code_sets_;
 
-  //  CORBA::Short tao_priority_;
-  // The TAO_PRIORITY priorities
-
   /// The rest of the components, to be compliant we cannot drop a
   /// bunch of them.
   IOP::MultipleComponentProfile components_;
