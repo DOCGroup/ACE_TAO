@@ -1,3 +1,7 @@
+Thu Jun  9 11:47:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Pipe_Test.cpp: Fixed wide-char text issues.
+
 Thu Jun  9 11:12:39 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Reactor.cpp (register_handler): When registering for one or more

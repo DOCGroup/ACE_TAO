@@ -36,7 +36,8 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "usage: %n [-d (don't close pipes)] [-c (child process)] [-i (iterations)] \n"));
+              ACE_TEXT ("usage: %n [-d (don't close pipes)] ")
+              ACE_TEXT ("[-c (child process)] [-i (iterations)] \n")));
   ACE_OS::exit (1);
 }
 
@@ -70,7 +71,7 @@ static void
 open (ACE_Pipe &pipe,
       const char *name)
 {
-  ACE_DEBUG ((LM_DEBUG, "opening %s\n", name));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
   ACE_ASSERT (pipe.open () != -1);
   ACE_ASSERT (pipe.read_handle () != ACE_INVALID_HANDLE
               && pipe.write_handle () != ACE_INVALID_HANDLE);
@@ -102,8 +103,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_START_TEST (ACE_TEXT("Pipe_Test"));
       ACE_INIT_LOG (ACE_TEXT("Pipe_Test-children"));
 
+#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+      const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -c%s");
+#  else
+      const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -c%ls");
+#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
       ACE_Process_Options options;
-      options.command_line (ACE_TEXT ("%s -c%s"),
+      options.command_line (cmdline_fmt,
                             argv[0],
                             close_pipe == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 
@@ -115,7 +121,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
           ACE_ASSERT (server.spawn (options) != -1);
 
-          ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n",
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server forked with pid = %d.\n"),
                       server.getpid ()));
 
           // Wait for the process we just created to exit.
@@ -125,9 +131,9 @@ run_main (int argc, ACE_TCHAR *argv[])
           if (WIFEXITED (status) != 0
               && WEXITSTATUS (status) != 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Child of server %d finished with error "
-                          "exit status %d\n",
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Child of server %d finished with error ")
+                          ACE_TEXT ("exit status %d\n"),
                           server.getpid (),
                           WEXITSTATUS (status)));
 
@@ -136,7 +142,8 @@ run_main (int argc, ACE_TCHAR *argv[])
               exit (WEXITSTATUS (status));
             }
 
-          ACE_DEBUG ((LM_DEBUG, "Server %d finished\n", server.getpid ()));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server %d finished\n"),
+                      server.getpid ()));
         }
       ACE_END_TEST;
     }
