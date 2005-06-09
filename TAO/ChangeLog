@@ -1,3 +1,11 @@
+Thu Jun  9 07:24:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
+	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp (push):
+
+	  Catch log service exceptions and rethrow the corresponding
+	  system exception.
+
 Thu Jun  9 07:11:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (write_records, write_recordlist):

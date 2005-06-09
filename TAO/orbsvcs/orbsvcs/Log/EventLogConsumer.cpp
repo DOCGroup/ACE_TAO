@@ -37,10 +37,52 @@ ACE_THROW_SPEC ((
 
   recList [0].info = data;
 
-  // log the RecordList.
-  this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK;
+  // @@ The current revision of the specification (formal/03-07-01)
+  // states:
+  //
+  // * When a push operation is invoked and a log is full, then a
+  //   NO_RESOURCE (sic) SystemException is raised with a LOGFULL
+  //   minor code.
+  //
+  // * When a push operation is invoked on a log that is off-duty,
+  //   then a NO_RESOURCE (sic) SystemException is raised with a
+  //   LOGOFFDUTY minor code.
+  //
+  // * When a push operation is invoked on a log that is locked, then
+  //   a NO_PERMISSIONS (sic) SystemException is raised with a LOGLOCKED
+  //   minor code.
+  //
+  // * When a push operation is invoked on a log that is disabled,
+  //   then a TRANSIENT SystemException is raised with a LOGDISABLED
+  //   minor code.
+  //
+  // But neither the Telecom Logging or the CORBA specification define
+  // the values for these minor codes.
+  //
+  // I have submitted a defect report to the OMG for clarification.
+  //    --jtc
+  ACE_TRY 
+    {
+      // log the RecordList.
+      this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
+    }
+  ACE_CATCH (DsLogAdmin::LogFull, ex)
+    {
+      ACE_THROW (CORBA::NO_RESOURCES ());
+    }
+  ACE_CATCH (DsLogAdmin::LogOffDuty, ex)
+    {
+      ACE_THROW (CORBA::NO_RESOURCES ());
+    }
+  ACE_CATCH (DsLogAdmin::LogLocked, ex)
+    {
+      ACE_THROW (CORBA::NO_PERMISSION ());
+    }
+  ACE_CATCH (DsLogAdmin::LogDisabled, ex)
+    {
+      ACE_THROW (CORBA::TRANSIENT ());
+    }
+  ACE_ENDTRY;
 }
 
 void
