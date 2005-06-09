@@ -181,6 +181,15 @@ namespace ACE_RMCast
         ACE_Time_Value t (timeout);
         ssize_t r = rsock_.recv (data, 4, addr, MSG_PEEK, &t);
 
+
+        // Check for cancellation request.
+        //
+        {
+          Lock l (mutex_);
+          if (stop_)
+            return;
+        }
+
         if (r == -1)
         {
           if (errno != ETIME)
@@ -190,14 +199,6 @@ namespace ACE_RMCast
         {
           size = static_cast<size_t> (r);
           break;
-        }
-
-        // Check for cancellation request.
-        //
-        {
-          Lock l (mutex_);
-          if (stop_)
-            return;
         }
       }
 

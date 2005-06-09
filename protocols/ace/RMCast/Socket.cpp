@@ -5,6 +5,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "ace/Unbounded_Queue.h"
 
@@ -36,10 +37,10 @@ namespace ACE_RMCast
     send_ (void const* buf, size_t s);
 
     ssize_t
-    recv_ (void* buf, size_t s);
+    recv_ (void* buf, size_t s, ACE_Time_Value const* timeout);
 
     ssize_t
-    size_ ();
+    size_ (ACE_Time_Value const* timeout);
 
     ACE_HANDLE
     get_handle_ () const;
@@ -132,12 +133,31 @@ namespace ACE_RMCast
   }
 
   ssize_t Socket_Impl::
-  recv_ (void* buf, size_t s)
+  recv_ (void* buf, size_t s, ACE_Time_Value const* timeout)
   {
+    ACE_Time_Value abs_time;
+
+    if (timeout)
+      abs_time = ACE_OS::gettimeofday () + *timeout;
+
     Lock l (mutex_);
 
     while (queue_.is_empty ())
-      cond_.wait ();
+    {
+      if (timeout)
+      {
+        if (cond_.wait (&abs_time) != -1)
+          break;
+      }
+      else
+      {
+        if (cond_.wait () != -1)
+          break;
+      }
+
+      return -1; // errno is already set
+    }
+
 
     Message_ptr m;
 
@@ -175,12 +195,30 @@ namespace ACE_RMCast
   }
 
   ssize_t Socket_Impl::
-  size_ ()
+  size_ (ACE_Time_Value const* timeout)
   {
+    ACE_Time_Value abs_time;
+
+    if (timeout)
+      abs_time = ACE_OS::gettimeofday () + *timeout;
+
     Lock l (mutex_);
 
     while (queue_.is_empty ())
-      cond_.wait ();
+    {
+      if (timeout)
+      {
+        if (cond_.wait (&abs_time) != -1)
+          break;
+      }
+      else
+      {
+        if (cond_.wait () != -1)
+          break;
+      }
+
+      return -1; // errno is already set
+    }
 
     // I can't get the head of the queue without actually dequeuing
     // the element.
@@ -241,7 +279,7 @@ namespace ACE_RMCast
 
         if (ACE_OS::write (signal_pipe_.write_handle (), &c, 1) != 1)
         {
-          perror ("write: ");
+          // perror ("write: ");
           abort ();
         }
 
@@ -275,13 +313,25 @@ namespace ACE_RMCast
   ssize_t Socket::
   recv (void* buf, size_t s)
   {
-    return impl_->recv_ (buf, s);
+    return impl_->recv_ (buf, s, 0);
+  }
+
+  ssize_t Socket::
+  recv (void* buf, size_t s, ACE_Time_Value const& timeout)
+  {
+    return impl_->recv_ (buf, s, &timeout);
   }
 
   ssize_t Socket::
   size ()
   {
-    return impl_->size_ ();
+    return impl_->size_ (0);
+  }
+
+  ssize_t Socket::
+  size (ACE_Time_Value const& timeout)
+  {
+    return impl_->size_ (&timeout);
   }
 
   ACE_HANDLE Socket::
