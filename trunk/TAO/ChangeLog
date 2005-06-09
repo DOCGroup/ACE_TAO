@@ -1,3 +1,8 @@
+Thu Jun  9 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Reference_Counting/*
+          New reference counting test, regression for bug 2142
+
 Thu Jun  9 15:33:52 2005  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
