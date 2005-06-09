@@ -559,7 +559,7 @@ be_visitor_union_branch_public_ci::visit_valuetype (be_valuetype *node)
   // Get method.
   *os << "// Retrieve the member." << be_nl
       << "ACE_INLINE" << be_nl
-      << bt->name () << "_ptr " << be_nl
+      << bt->name () << "* " << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->u_." << ub->local_name () << "_->ptr ();" << be_uidt_nl
