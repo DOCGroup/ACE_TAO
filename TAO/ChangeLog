@@ -1,3 +1,13 @@
+Thu Jun  9 07:05:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerate.
+
+	* orbsvcs/orbsvcs/Security.mpc:
+
+          Add security_export.h to Header File section.
+
 Thu Jun  9 12:54:41 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
