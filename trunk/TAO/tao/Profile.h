@@ -23,6 +23,7 @@
 
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Refcounted_ObjectKey.h"
+#include "tao/Service_Callbacks.h"
 
 class ACE_Lock;
 class TAO_MProfile;
@@ -275,7 +276,8 @@ protected:
    * method in that it has a default implementation that may or not be
    * applicable to all TAO_Profile subclasses.
    */
-  virtual CORBA::Boolean is_equivalent_hook (const TAO_Profile * other);
+  virtual TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
+                                            const TAO_Profile * other);
 
   CORBA::ULong hash_service_i (CORBA::ULong m);
 
@@ -389,7 +391,8 @@ public:
 protected:
 
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile);
-  virtual CORBA::Boolean is_equivalent_hook (const TAO_Profile* other_profile);
+  virtual TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
+                                           const TAO_Profile* other_profile);
 
 private:
   virtual void create_profile_body (TAO_OutputCDR &encap) const;

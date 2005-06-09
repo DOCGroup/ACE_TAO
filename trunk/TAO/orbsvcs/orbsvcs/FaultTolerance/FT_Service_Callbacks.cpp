@@ -66,12 +66,10 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 
 }
 
-CORBA::Boolean
+TAO_Service_Callbacks::Profile_Equivalence
 TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
                                                  const TAO_Profile *that_p)
 {
-  // At this point we assume that all the checks for other things
-  // within the profiles have been satisfied
   const TAO_Tagged_Components &this_comp =
     this_p->tagged_components ();
 
@@ -81,54 +79,58 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
   IOP::TaggedComponent this_tc, that_tc;
   this_tc.tag = that_tc.tag = IOP::TAG_FT_GROUP;
 
-  if ((this_comp.get_component (this_tc) == 1) &&
-      (that_comp.get_component (that_tc) == 1))
+  if (this_comp.get_component (this_tc) == 1)
     {
-
-      TAO_InputCDR this_cdr (reinterpret_cast<const char*> (this_tc.component_data.get_buffer ()),
+      if (that_comp.get_component (that_tc) == 1)
+        {
+          TAO_InputCDR this_cdr (reinterpret_cast<const char*> (this_tc.component_data.get_buffer ()),
                              this_tc.component_data.length ());
 
-      TAO_InputCDR that_cdr (reinterpret_cast<const char*> (that_tc.component_data.get_buffer ()),
+          TAO_InputCDR that_cdr (reinterpret_cast<const char*> (that_tc.component_data.get_buffer ()),
                              that_tc.component_data.length ());
 
-      CORBA::Boolean this_byte_order;
-      CORBA::Boolean that_byte_order;
+          CORBA::Boolean this_byte_order;
+          CORBA::Boolean that_byte_order;
 
-      if (this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0 ||
-          that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0)
-        {
-          // return no equivalent
-          return 0;
+          if (this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0 ||
+              that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0)
+            {
+              // Have tags but full of garbage - not equivalent
+              return TAO_Service_Callbacks::NOT_EQUIVALENT;
+            }
+
+          this_cdr.reset_byte_order (static_cast<int> (this_byte_order));
+          that_cdr.reset_byte_order (static_cast<int> (that_byte_order));
+
+
+          FT::TagFTGroupTaggedComponent this_group_component;
+          FT::TagFTGroupTaggedComponent that_group_component;
+
+          this_cdr >> this_group_component;
+          that_cdr >> that_group_component;
+
+          // check if domain id and group id are the same
+          if ((ACE_OS::strcmp (this_group_component.group_domain_id,
+                               that_group_component.group_domain_id) == 0) &&
+              (this_group_component.object_group_id ==
+               that_group_component.object_group_id))
+             {
+               // Both have matching tags - true
+               return TAO_Service_Callbacks::EQUIVALENT;
+             }
         }
 
-      this_cdr.reset_byte_order (static_cast<int> (this_byte_order));
-      that_cdr.reset_byte_order (static_cast<int> (that_byte_order));
-
-
-      FT::TagFTGroupTaggedComponent this_group_component;
-      FT::TagFTGroupTaggedComponent that_group_component;
-
-      this_cdr >> this_group_component;
-      that_cdr >> that_group_component;
-
-      // check if domain id and group id are the same
-      if ((ACE_OS::strcmp (this_group_component.group_domain_id,
-                           that_group_component.group_domain_id) == 0) &&
-          (this_group_component.object_group_id ==
-           that_group_component.object_group_id))
-         {
-           return 1;
-         }
+      return TAO_Service_Callbacks::NOT_EQUIVALENT;
     }
-  // If both the profiles did not have a tag group component then they
-  // are equivalent.
-  else if ((this_comp.get_component (this_tc) == 0) &&
-           (that_comp.get_component (that_tc) == 0))
+  else
     {
-      return 1;
+      if (that_comp.get_component (that_tc) == 1)
+        {
+          return TAO_Service_Callbacks::NOT_EQUIVALENT;
+        }
     }
 
-  return 0;
+  return TAO_Service_Callbacks::DONT_KNOW;
 }
 
 CORBA::ULong

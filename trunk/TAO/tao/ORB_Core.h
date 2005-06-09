@@ -835,7 +835,8 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   /**
    * For details on how this is used please see the FT service
    */
-  CORBA::Boolean is_profile_equivalent (const TAO_Profile *this_p,
+  TAO_Service_Callbacks::Profile_Equivalence is_profile_equivalent (
+                                        const TAO_Profile *this_p,
                                         const TAO_Profile *that_p);
 
   /// Hook for the services to determine the <hash> value of a

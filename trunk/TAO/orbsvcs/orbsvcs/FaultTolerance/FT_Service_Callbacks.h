@@ -50,7 +50,8 @@ public:
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
 
   /// Check for equivalency of the two profiles
-  virtual CORBA::Boolean is_profile_equivalent (const TAO_Profile *,
+  virtual TAO_Service_Callbacks::Profile_Equivalence is_profile_equivalent (
+                                                const TAO_Profile *,
                                                 const TAO_Profile *);
   /// Calculate the hash
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
