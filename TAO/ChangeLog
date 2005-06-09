@@ -1,3 +1,37 @@
+Thu Jun  9 12:54:41 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/Service_Callbacks.cpp:
+        * tao/Service_Callbacks.h:
+
+          Changed the signature of the service callbacks is_equivalent
+          hook so that a service can completely override the default
+          profile comparison mechanism as required by the FT spec.
+
+          This fixes bugzilla # 2137.
+
+        * orbsvcs/tests/Bug_2137_Regression/Bug_2137_Regression.mpc:
+        * orbsvcs/tests/Bug_2137_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2137_Regression/ep1.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep1_d1_g1_v1.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep1_d1_g1_v2.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep1_d1_g2_v1.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep1_d2_g1_v1.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep2.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep2_d1_g1_v1.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep2_d1_g1_v2.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep2_d1_g2_v1.ior:
+        * orbsvcs/tests/Bug_2137_Regression/ep2_d2_g1_v1.ior:
+        * orbsvcs/tests/Bug_2137_Regression/README:
+        * orbsvcs/tests/Bug_2137_Regression/run_test.pl:
+
+          Committed regression test for the above.
+
 Thu Jun  9 09:31:28 2005  Simon McQueen  <sm@prismtech.com>
 
         * NEWS:

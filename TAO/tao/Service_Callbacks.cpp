@@ -42,11 +42,11 @@ TAO_Service_Callbacks::reset_profile_flags (void)
 }
 
 
-CORBA::Boolean
+TAO_Service_Callbacks::Profile_Equivalence
 TAO_Service_Callbacks::is_profile_equivalent (const TAO_Profile *,
                                               const TAO_Profile *)
 {
-  return 0;
+  return DONT_KNOW;
 }
 
 CORBA::ULong

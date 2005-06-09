@@ -58,6 +58,14 @@ class TAO_Export TAO_Service_Callbacks
 {
 
 public:
+  
+  enum Profile_Equivalence
+  {
+    EQUIVALENT,
+    NOT_EQUIVALENT,
+    DONT_KNOW
+  };
+    
 
   /// Dtor
   virtual ~TAO_Service_Callbacks (void);
@@ -80,8 +88,8 @@ public:
 
 
   /// Check for equivalency of the two profiles
-  virtual CORBA::Boolean is_profile_equivalent (const TAO_Profile *,
-                                                const TAO_Profile *);
+  virtual Profile_Equivalence is_profile_equivalent (const TAO_Profile *,
+                                                     const TAO_Profile *);
 
   /// Calculate the hash value..
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
