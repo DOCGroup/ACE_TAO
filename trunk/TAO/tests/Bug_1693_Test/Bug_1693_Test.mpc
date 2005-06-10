@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client): taoclient {
+project(*Client): taoclient, codecfactory {
   Source_Files {
     testC.cpp
     client.cpp

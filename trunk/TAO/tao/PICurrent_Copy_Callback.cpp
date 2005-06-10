@@ -2,8 +2,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PICurrent.h"
-
+#include "PICurrent_Impl.h"
 
 ACE_RCSID (tao,
            PICurrent_Copy_Callback,

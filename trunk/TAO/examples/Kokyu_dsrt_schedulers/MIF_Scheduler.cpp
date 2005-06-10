@@ -4,6 +4,7 @@
 #include "Kokyu_qosC.h"
 #include "utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "tao/ORB_Constants.h"
 
 MIF_Sched_Param_Policy::MIF_Sched_Param_Policy ()

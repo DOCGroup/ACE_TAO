@@ -44,13 +44,8 @@
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
-#include "tao/Object.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Any.h"
-#include "tao/Objref_VarOut_T.h"
 
 #include "tao/PI_ForwardC.h"
-#include "tao/CurrentC.h"
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/ORBInitializerC.h"
 #include "tao/ORBInitInfoC.h"
@@ -58,9 +53,9 @@
 #include "tao/ClientRequestInfoC.h"
 #include "tao/ServerRequestInfoC.h"
 #include "tao/PolicyFactoryC.h"
-#include "tao/ORBInitInfoC.h"
 #include "tao/ClientRequestInterceptorC.h"
 #include "tao/ServerRequestInterceptorC.h"
+#include "tao/PICurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -136,120 +131,6 @@ namespace PortableInterceptor
   // be\be_visitor_constant/constant_ch.cpp:52
   
   const PortableInterceptor::ReplyStatus UNKNOWN = 5;
-  
-  // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
-
-#if !defined (_PORTABLEINTERCEPTOR_CURRENT__VAR_OUT_CH_)
-#define _PORTABLEINTERCEPTOR_CURRENT__VAR_OUT_CH_
-  
-  class Current;
-  typedef Current *Current_ptr;
-  
-  typedef
-    TAO_Objref_Var_T<
-        Current
-      >
-    Current_var;
-  
-  typedef
-    TAO_Objref_Out_T<
-        Current
-      >
-    Current_out;
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_ch.cpp:54
-
-#if !defined (_PORTABLEINTERCEPTOR_CURRENT_CH_)
-#define _PORTABLEINTERCEPTOR_CURRENT_CH_
-  
-  class TAO_Export Current
-    : public virtual ::CORBA::Current
-  {
-  public:
-    typedef Current_ptr _ptr_type;
-    typedef Current_var _var_type;
-    
-    // The static operations.
-    static Current_ptr _duplicate (Current_ptr obj);
-    
-    static void _tao_release (Current_ptr obj);
-    
-    static Current_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
-    static Current_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
-    static Current_ptr _nil (void)
-    {
-      return static_cast<Current_ptr> (0);
-    }
-    
-    static void _tao_any_destructor (void *);
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_ch.cpp:46
-    
-    virtual CORBA::Any * get_slot (
-        ::PortableInterceptor::SlotId id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ::PortableInterceptor::InvalidSlot
-      )) = 0;
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void set_slot (
-        ::PortableInterceptor::SlotId id,
-        const ::CORBA::Any & data
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ::PortableInterceptor::InvalidSlot
-      )) = 0;
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:210
-    
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
-    virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
-  protected:
-    // Abstract or local interface only.
-    Current (void);
-    
-    virtual ~Current (void);
-  
-  private:
-    // Private and unimplemented for concrete interfaces.
-    Current (const Current &);
-    
-    void operator= (const Current &);
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_Current;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -262,35 +143,7 @@ namespace PortableInterceptor
 // Traits specializations.
 namespace TAO
 {
-
-#if !defined (_PORTABLEINTERCEPTOR_CURRENT__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_CURRENT__TRAITS_CH_
-  
-  template<>
-  struct TAO_Export Objref_Traits< ::PortableInterceptor::Current>
-  {
-    static ::PortableInterceptor::Current_ptr duplicate (
-        ::PortableInterceptor::Current_ptr
-      );
-    static void release (
-        ::PortableInterceptor::Current_ptr
-      );
-    static ::PortableInterceptor::Current_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::PortableInterceptor::Current_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::Current_ptr); // copying
-TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::Current_ptr *); // non-copying
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::Current_ptr &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

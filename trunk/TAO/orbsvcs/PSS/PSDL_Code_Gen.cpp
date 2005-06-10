@@ -5,6 +5,7 @@
 #include "PSDL_Datastore.h"
 #include "tao/OctetSeqC.h"
 #include "tao/Any.h"
+#include "tao/CodecFactory/CodecFactory.h"
 
 ACE_RCSID (PSS, PSDL_Code_Gen, "$Id$")
 

@@ -23,7 +23,7 @@
 #include "tao/RTCORBA/Linear_Priority_Mapping.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
-
+#include "tao/CodecFactory/CodecFactory.h"
 
 namespace TAO {
 

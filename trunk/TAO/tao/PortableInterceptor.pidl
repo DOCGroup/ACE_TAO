@@ -35,7 +35,6 @@
 #define _PORTABLE_INTERCEPTOR_IDL_
 
 #include <PI_Forward.pidl>
-#include <Current.pidl>
 #include <Messaging_SyncScope.pidl>
 
 #include <ORBInitializer.pidl>
@@ -44,9 +43,9 @@
 #include <ClientRequestInfo.pidl>
 #include <ServerRequestInfo.pidl>
 #include <PolicyFactory.pidl>
-#include <ORBInitInfo.pidl>
 #include <ClientRequestInterceptor.pidl>
 #include <ServerRequestInterceptor.pidl>
+#include <PICurrent.pidl>
 
 module PortableInterceptor {
 
@@ -65,12 +64,6 @@ module PortableInterceptor {
   const ReplyStatus LOCATION_FORWARD = 3;
   const ReplyStatus TRANSPORT_RETRY = 4;
   const ReplyStatus UNKNOWN = 5;
-
-  local interface Current : CORBA::Current
-  {
-    any get_slot (in SlotId id) raises (InvalidSlot);
-    void set_slot (in SlotId id, in any data) raises (InvalidSlot);
-  };
 };
 
 #endif  /* _PORTABLE_INTERCEPTOR_IDL_ */
