@@ -715,8 +715,11 @@ TAO_Profile::is_equivalent (const TAO_Profile *other)
                 && this->do_is_equivalent (other);
           case TAO_Service_Callbacks::EQUIVALENT:
             result = 1;
+            break;
+          case TAO_Service_Callbacks::NOT_EQUIVALENT:
+            break;
         }
-    }       
+    }
   return result;
 }
 
