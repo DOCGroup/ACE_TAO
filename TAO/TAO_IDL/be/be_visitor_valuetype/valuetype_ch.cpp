@@ -269,22 +269,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Support for marshalling.
-  if (!node->is_abstract () && !is_an_amh_exception_holder)
+  if (!node->is_abstract () || is_an_amh_exception_holder)
     {
       *os << "virtual CORBA::Boolean "
           << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
       *os << "virtual CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
     }
-
-  if (is_an_amh_exception_holder)
-    {
-      *os << "virtual CORBA::Boolean "
-          << "_tao_marshal_v (TAO_OutputCDR &) const {return 1;}" << be_nl;
-      *os << "virtual CORBA::Boolean "
-          << "_tao_unmarshal_v (TAO_InputCDR &) {return 1;}" << be_nl;
-    }
-
 
   // Private member:
 
@@ -330,11 +321,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             {
               *os << "virtual CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
-                  << " (TAO_OutputCDR &) const {return 1;}"
+                  << " (TAO_OutputCDR &) const;"
                   << be_nl << be_nl;
               *os << "virtual CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name ()
-                  << " (TAO_InputCDR &) {return 1;}";
+                  << " (TAO_InputCDR &);";
             }
           else
             {

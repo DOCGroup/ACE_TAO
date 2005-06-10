@@ -1,12 +1,17 @@
+// -*- C++ -*-
+//
 //$Id$
 
 ACE_INLINE CORBA::Boolean
-TAO_GIOP_Message_Generator_Parser_Impl::
-    check_revision (CORBA::Octet incoming_major,
-                    CORBA::Octet incoming_minor)
+TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
+  CORBA::Octet incoming_major,
+  CORBA::Octet incoming_minor)
 {
-  CORBA::UShort version_as_whole_num = incoming_major << 8 | incoming_minor;
-  CORBA::UShort max_allowable_version = TAO_DEF_GIOP_MAJOR << 8 | TAO_DEF_GIOP_MINOR;
+  CORBA::UShort const version_as_whole_num =
+    incoming_major << 8 | incoming_minor;
+
+  static CORBA::UShort const max_allowable_version =
+    TAO_DEF_GIOP_MAJOR << 8 | TAO_DEF_GIOP_MINOR;
 
   // If it's greater than the max, we know it's not allowed.
   if (version_as_whole_num > max_allowable_version)
