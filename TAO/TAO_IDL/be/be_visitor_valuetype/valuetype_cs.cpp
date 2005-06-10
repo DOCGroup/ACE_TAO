@@ -193,6 +193,47 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       *os << "}" << be_nl << be_nl;
     }
+  else if (is_an_amh_exception_holder)
+    {
+      // @@ Do not inline.  They're virtual.  Inlining virtual
+      // functions, including virtual destructors, wreaks havoc with
+      // g++ >= 4.0 RTTI support when the
+      // "-fvisibility-inlines-hidden" command line option is used.
+
+      // The virtual _tao_marshal_v method.
+      *os << "CORBA::Boolean" << be_nl
+          << node->name () << "::_tao_marshal_v (TAO_OutputCDR &) const"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return 1;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      // The virtual _tao_unmarshal_v method.
+      *os << "CORBA::Boolean" << be_nl
+          << node->name () << "::_tao_unmarshal_v (TAO_InputCDR &)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return 1;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+
+      if (!node->opt_accessor () && !node->is_abstract ())
+        {
+          *os << "CORBA::Boolean" << be_nl
+              << node->name () << "::_tao_marshal__" << node->flat_name ()
+              << " (TAO_OutputCDR &) const" << be_nl
+              << "{" << be_idt_nl
+              << "return 1;" << be_uidt_nl
+              << "}" << be_nl << be_nl;
+
+          *os << "CORBA::Boolean" << be_nl
+              << node->name () << "::_tao_unmarshal__" << node->flat_name ()
+              << " (TAO_InputCDR &)" << be_nl
+              << "{" << be_idt_nl
+              << "return 1;" << be_uidt_nl
+              << "}" << be_nl << be_nl;
+        }
+    }
 
   // The static T::_tao_unmarshal method
 
