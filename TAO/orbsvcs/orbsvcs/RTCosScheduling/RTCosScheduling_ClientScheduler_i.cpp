@@ -18,6 +18,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/CodecFactory/CodecFactory.h"
 
 namespace TAO
 {

@@ -4,6 +4,7 @@
 #include "FOO_IORInterceptor.h"
 
 #include "tao/ORB_Constants.h"
+#include "tao/CodecFactory/CodecFactory.h"
 
 ACE_RCSID (IORInterceptor,
            FOO_IORInterceptor_ORBInitializer,

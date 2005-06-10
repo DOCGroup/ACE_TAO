@@ -25,10 +25,4 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "PortableInterceptorC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/String_TypeCode_Static.h"
-#include "tao/CDR.h"
-#include "tao/Any.h"
+// Skeleton file generation suppressed with command line option -SS

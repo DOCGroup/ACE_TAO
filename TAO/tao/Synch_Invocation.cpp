@@ -15,6 +15,10 @@
 #include "ORB_Core.h"
 #include "Service_Context.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+# include "PortableInterceptorC.h"
+#endif /*TAO_HAS_INTERCEPTORS */
+
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Countdown_Time.h"

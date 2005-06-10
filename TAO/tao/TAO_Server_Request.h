@@ -30,7 +30,7 @@
 #include "Service_Context.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "PICurrent.h"
+#include "PICurrent_Impl.h"
 #include "PICurrent_Copy_Callback.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
