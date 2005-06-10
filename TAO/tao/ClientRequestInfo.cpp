@@ -9,10 +9,10 @@ ACE_RCSID (tao,
            ClientRequestInfo,
            "$Id$")
 
-
 #include "ClientRequestInfo_i.h"
 #include "Any.h"
 #include "PolicyC.h"
+#include "PortableInterceptorC.h"
 
 # if !defined (__ACE_INLINE__)
 #   include "ClientRequestInfo.inl"
