@@ -2205,6 +2205,8 @@ TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
     loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 void
 TAO_ORB_Core::resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -2225,6 +2227,8 @@ TAO_ORB_Core::resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL)
 
   this->pi_current_ = dynamic_cast <TAO::PICurrent *> (pi);
 }
+
+#endif
 
 
 void
