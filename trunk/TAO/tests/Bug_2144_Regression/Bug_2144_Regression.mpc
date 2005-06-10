@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (*Client) : taoclient {
+project (*Client) : taoclient, valuetype {
    exename    = test
    Source_Files {
       testC.cpp
