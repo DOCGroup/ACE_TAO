@@ -1,3 +1,8 @@
+Thu Jun 10 08:40:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * tao/orbsvcs/tests/Bug_2137_Regression/client.cpp
+          Corrected const char * problem.
+
 Thu Jun  9 18:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Tagged_Components.h:
