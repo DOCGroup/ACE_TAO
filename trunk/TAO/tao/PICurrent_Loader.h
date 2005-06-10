@@ -17,15 +17,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "Object_Loader.h"
+#include "tao/Object_Loader.h"
+
 #include "ace/Service_Config.h"
 
 class TAO_Export TAO_PICurrent_Loader

@@ -12,17 +12,20 @@
 // =================================================================
 
 #include "PICurrent_Loader.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "PICurrent.h"
 
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
+
 ACE_RCSID (tao,
            PICurrent_Loader,
            "$Id$")
 
-#if TAO_HAS_INTERCEPTORS == 1
 
 CORBA::Object_ptr
 TAO_PICurrent_Loader::create_object (
