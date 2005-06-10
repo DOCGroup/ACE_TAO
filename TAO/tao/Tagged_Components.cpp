@@ -288,14 +288,15 @@ TAO_Tagged_Components::remove_component_i (IOP::ComponentId tag)
 }
 
 int
-TAO_Tagged_Components::get_component (IOP::TaggedComponent& component) const
+TAO_Tagged_Components::get_component (IOP::TaggedComponent& component,
+                                      CORBA::ULong start) const
 {
-  for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
+  for (CORBA::ULong i = start; i != this->components_.length (); ++i)
     {
       if (component.tag == this->components_[i].tag)
         {
           component = this->components_[i];
-          return 1;
+          return i+1;
         }
     }
 

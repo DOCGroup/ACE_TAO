@@ -169,6 +169,10 @@ public:
   int single_read_optimization (void) const;
   void single_read_optimization (int x);
 
+  /// Create shared profiles without priority
+  int shared_profile (void) const;
+  void shared_profile (int x);
+
   /// Mutators and accessors for rt_collocation_resolver
   bool disable_rt_collocation_resolver (void) const;
   void disable_rt_collocation_resolver (bool);
@@ -271,6 +275,9 @@ private:
 
   /// Single read optimization.
   int single_read_optimization_;
+
+  /// Shared Profile - Use the same profile for multiple endpoints
+  int shared_profile_;
 
   /// Preferred network interfaces as a string
   ACE_CString pref_network_;

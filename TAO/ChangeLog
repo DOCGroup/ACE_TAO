@@ -1,3 +1,29 @@
+Fri Jun 10 07:51:36 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Options.html:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/ORB_Core.cpp:
+        * tao/Tagged_Components.cpp:
+        * tao/Tagged_Components.h:
+        * tao/params.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+        * tests/AlternateIIOP:
+        * utils/catior/catior.cpp:
+
+          Added support for TAG_ALTERNATE_IIOP_ADDRESS to combine many
+          endpoints into a single profile when not using RTCORBA. This may
+          be overridden by using the ORB_init argument
+          -ORBUseSharedProfiles 0. It is enabled by default. Unlike the
+          TAO-specific TAO_TAG_ENDPOINTS, the TAG_ALTERNATE_IIOP_ADDRESS
+          component contains a single host:port pair, but many such
+          components may be added to a profile to carry as many endpoints
+          as required.
+
+
 Fri Jun 10 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CodecFactory/*:

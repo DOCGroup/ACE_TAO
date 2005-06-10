@@ -85,6 +85,20 @@ public:
   void add_endpoint (TAO_IIOP_Endpoint *endp);
 
 protected:
+  /**
+   * Helper method for encode_endpoints to deal with RT requests.
+   *
+   * Encodes this profile's endpoints into a tagged component.
+   * This is done only if RTCORBA is enabled, since currently this is
+   * the only case when we have more than one endpoint per profile.
+   * Returns 0 on success and -1 on failure.
+   *
+   * Endpoints are transmitted using TAO-proprietory tagged component.
+   * Component tag is TAO_TAG_ENDPOINTS and component data is an
+   * encapsulation of a sequence of structs, each representing a
+   * single endpoint.  Data format is specified in iiop_endpoins.pidl.
+   */
+  int encode_endpoints_for_rt (void);
 
   /// Template methods. Please see Profile.h for the documentation.
   virtual int decode_profile (TAO_InputCDR &cdr);
