@@ -60,9 +60,10 @@
 #define TAO_OBJID_NOTIFICATIONSERVICE "NotificationService"
 #define TAO_OBJID_TYPEDNOTIFICATIONSERVICE "TypedNotificationService"
 #define TAO_OBJID_COMPONENTHOMEFINDER "ComponentHomeFinder"
-#define TAO_OBJID_PSS "PSS"
-#define TAO_OBJID_CODECFACTORY "CodecFactory"
-#define TAO_OBJID_PICurrent "PICurrent"
+#define TAO_OBJID_PSS                 "PSS"
+#define TAO_OBJID_CODECFACTORY        "CodecFactory"
+#define TAO_OBJID_PICurrent           "PICurrent"
+#define TAO_OBJID_POAMANAGERFACTORY   "POAManagerFactory"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -98,9 +99,6 @@ enum TAO_MCAST_SERVICEID
 
 /// No. of services locatable through multicast.
 #define TAO_NO_OF_MCAST_SERVICES 4
-
-
-
 
 #include /**/ "ace/post.h"
 #endif /*TAO_OBJECTID_H*/

@@ -32,6 +32,11 @@
 #include "Adapter.h"
 #include "GUIResource_Factory.h"
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+#include "Policy_Manager.h"
+#include "Policy_Current.h"
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 #if (TAO_HAS_INTERCEPTORS == 1)
 # include "ClientRequestInfo.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
@@ -132,6 +137,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     use_implrepo_ (0),
     imr_endpoints_in_ior_ (1),
     typecode_factory_ (CORBA::Object::_nil ()),
+    codec_factory_ (CORBA::Object::_nil ()),
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
@@ -1189,6 +1195,8 @@ TAO_ORB_Core::fini (void)
 
   CORBA::release (this->typecode_factory_);
 
+  CORBA::release (this->codec_factory_);
+
   CORBA::release (this->dynany_factory_);
 
   CORBA::release (this->ior_manip_factory_);
@@ -2000,6 +2008,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       this->object_ref_table_.destroy ();
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+      CORBA::release (this->pi_current_);
       this->pi_current_ = 0;  // For the sake of consistency.
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
@@ -2169,6 +2178,46 @@ TAO_ORB_Core::resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL)
   this->typecode_factory_ =
     loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
+
+void
+TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
+  if (loader == 0)
+    {
+      ACE_Service_Config::process_directive (ACE_TEXT("dynamic CodecFactory Service_Object *")
+                                             ACE_TEXT("TAO_CodecFactory:_make_TAO_CodecFactory_Loader()"));
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
+    }
+  this->codec_factory_ =
+    loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_ORB_Core::resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("PICurrent_Loader");
+  if (loader == 0)
+    {
+      ACE_Service_Config::process_directive (ACE_TEXT("dynamic PICurrent_Loader Service_Object *")
+                                             ACE_TEXT("TAO:_make_TAO_PICurrent_Loader()"));
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("PICurrent_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
+    }
+  CORBA::Object_ptr pi =
+    loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->pi_current_ = dynamic_cast <TAO::PICurrent *> (pi);
+}
+
 
 void
 TAO_ORB_Core::resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL)
@@ -2426,8 +2475,8 @@ ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
 
-  ACE_Allocator *dblock_allocator;
-  ACE_Allocator *buffer_allocator;
+  ACE_Allocator *dblock_allocator = 0;
+  ACE_Allocator *buffer_allocator = 0;
 
   dblock_allocator =
     this->input_cdr_dblock_allocator ();
@@ -2588,8 +2637,8 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
 void
 TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
 {
-  TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_ = hook;
   // Saving the hook pointer so that we can use it later when needed.
+  TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_ = hook;
 
   return;
 }

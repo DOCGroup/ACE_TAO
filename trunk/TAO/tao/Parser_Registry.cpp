@@ -11,8 +11,8 @@
 #include "tao/Parser_Registry.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Parser_Registry, 
+ACE_RCSID (tao,
+           Parser_Registry,
            "$Id$")
 
 TAO_Parser_Registry::TAO_Parser_Registry (void)
@@ -73,6 +73,3 @@ TAO_Parser_Registry::match_parser (const char *ior_string)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

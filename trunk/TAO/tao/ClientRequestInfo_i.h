@@ -29,8 +29,9 @@
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 #include "Invocation_Utils.h"
-#include "PICurrent.h"
+#include "PICurrent_Impl.h"
 #include "PICurrent_Copy_Callback.h"
+#include "PIForwardRequestC.h"
 
 class TAO_Service_Context;
 
@@ -43,6 +44,19 @@ namespace CORBA
 {
   class AbstractBase;
   typedef AbstractBase *AbstractBase_ptr;
+}
+
+namespace Dynamic
+{
+  class ParameterList;
+  class ExceptionList;
+  typedef CORBA::StringSeq RequestContext;
+  typedef CORBA::StringSeq ContextList;
+}
+
+namespace Messaging
+{
+  typedef CORBA::Short SyncScope;
 }
 
 /**

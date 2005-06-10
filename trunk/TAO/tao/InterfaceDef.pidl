@@ -14,8 +14,6 @@
 #ifndef TAO_CORBA_INTERFACEDEF_PIDL
 #define TAO_CORBA_INTERFACEDEF_PIDL
 
-#include <InterfaceDef.pidl>
-
 #pragma prefix "omg.org"
 
 module CORBA

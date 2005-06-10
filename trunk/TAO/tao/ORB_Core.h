@@ -41,6 +41,10 @@
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/Interceptor_List.h"
+#include "tao/PICurrent_Impl.h"
+#include "tao/PICurrent.h"
+#include "tao/ClientRequestInterceptorC.h"
+#include "tao/ServerRequestInterceptorC.h"
 
 namespace TAO
 {
@@ -54,7 +58,6 @@ namespace TAO
     ServerRequestInterceptor_List;
 }
 
-# include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
 #include "ace/Thread_Manager.h"
@@ -751,6 +754,12 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   /// Resolve the TypeCodeFactory DLL.
   CORBA::Object_ptr resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Resolve the PICurrent.
+  CORBA::Object_ptr resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Resolve the CodecFactory DLL.
+  CORBA::Object_ptr resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Resolve the Dynamic Any Factory
   CORBA::Object_ptr resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -1005,8 +1014,14 @@ protected:
                                        ACE_Allocator *dblock_allocator,
                                        ACE_Lock *lock);
 
-  /// Obtain and cache the dynamic any factory object reference.
+  /// Obtain and cache the typecode factory object reference.
   void resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Obtain and cache the picurrent factory object reference.
+  void resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Obtain and cache the codec factory object reference.
+  void resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL);
@@ -1076,6 +1091,9 @@ protected:
 
   /// The cached IOR for the TypeCodeFactory DLL.
   CORBA::Object_ptr typecode_factory_;
+
+  /// The cached IOR for the CodecFactory DLL.
+  CORBA::Object_ptr codec_factory_;
 
   /// The cached object reference for the DynAnyFactory.
   CORBA::Object_ptr dynany_factory_;

@@ -30,7 +30,7 @@
 
 module IOP
 {
-    local interface Codec {
+  local interface Codec {
     exception InvalidTypeForEncoding {};
     exception FormatMismatch {};
     exception TypeMismatch {};

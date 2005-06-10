@@ -19,10 +19,10 @@ ACE_RCSID (tao,
 #include "ORBInitInfo.h"
 #include "ORBInitializer_Registry.h"
 #include "TAO_Singleton_Manager.h"
+#include "Policy_Current.h"
 #include "Policy_Manager.h"
 #include "Valuetype_Adapter.h"
 #include "IFR_Client_Adapter.h"
-#include "CodecFactory_ORBInitializer.h"
 #include "TypeCodeFactory_Adapter.h"
 #include "debug.h"
 #include "CDR.h"
@@ -30,7 +30,8 @@ ACE_RCSID (tao,
 #include "default_environment.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
+# include "PICurrent_Loader.h"  /* @@ This should go away! */
+# include "PICurrent.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
@@ -1133,6 +1134,11 @@ CORBA::ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     return this->orb_core ()->resolve_typecodefactory (ACE_ENV_SINGLE_ARG_PARAMETER);
 
+  else if (ACE_OS::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
+    return this->orb_core ()->resolve_codecfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
+    return this->orb_core ()->resolve_picurrent (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   // -----------------------------------------------------------------
 
@@ -1349,51 +1355,6 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
 
       ACE_THROW (CORBA::INITIALIZE ());
     }
-
-  // Register the CodecFactory ORBInitializer.
-  PortableInterceptor::ORBInitializer_ptr tmp_cf_initializer;
-  ACE_NEW_THROW_EX (tmp_cf_initializer,
-                    TAO_CodecFactory_ORBInitializer,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  PortableInterceptor::ORBInitializer_var cf_initializer =
-    tmp_cf_initializer;
-
-  PortableInterceptor::register_orb_initializer (cf_initializer.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // -------------------------------------------------------------
-  // @@ These ORB initializer instantiations should go away.  They
-  //    should be registered via the service configurator, for
-  //    example.
-
-#if TAO_HAS_INTERCEPTORS == 1
-  PortableInterceptor::ORBInitializer_ptr temp_pi_initializer =
-    PortableInterceptor::ORBInitializer::_nil ();
-  PortableInterceptor::ORBInitializer_var pi_initializer;
-
-  // Register the PICurrent ORBInitializer.
-  ACE_NEW_THROW_EX (temp_pi_initializer,
-                    TAO_PICurrent_ORBInitializer,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  pi_initializer = temp_pi_initializer;
-
-  PortableInterceptor::register_orb_initializer (pi_initializer.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 const ACE_CString &
@@ -1658,7 +1619,10 @@ CORBA::ORB_init (int &argc,
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
 #if TAO_HAS_INTERCEPTORS == 1
-  oc->pi_current ()->initialize (orb_init_info_temp->slot_count ());
+  TAO::PICurrent *pi = oc->pi_current ();
+
+  if (pi != 0)
+   pi->initialize (orb_init_info_temp->slot_count ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   // Invalidate the ORBInitInfo instance to prevent future
@@ -1697,8 +1661,6 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
   ACE_CHECK_RETURN (0);
 
   if (!CORBA::is_nil (obj) && obj->_is_local ())
-    // @@ The CCM spec says one minor code, and the CORBA spec says
-    //    another.  Which is the correct one?
     ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 4,
                                       CORBA::COMPLETED_NO),
                       0);
