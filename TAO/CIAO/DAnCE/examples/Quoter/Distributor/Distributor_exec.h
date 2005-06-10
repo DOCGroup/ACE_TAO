@@ -81,10 +81,10 @@ namespace StockDistributor_Impl
     ~pulse_Generator ();
 
     /// Hook method that performs application-defined initialization activities
-    int open (void);
+    int open_h (void);
 
     /// Hook method that performs application-defined destruction activites
-    int close (void);
+    int close_h (void);
 
     /// appliation-defined method for starting the pulse-generation service
     int start (CORBA::Long hertz);
