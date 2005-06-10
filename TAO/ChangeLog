@@ -1,3 +1,17 @@
+Fri Jun 10 13:00:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PICurrent_Loader.h:
+
+	  Include "tao/orbconf.h" to pull in default TAO_HAS_INTERCEPTORS
+	  preprocessor symbol definition.  Fixes link-time errors related
+	  to missing static constructor definition.
+
+	* tao/PICurrent_Loader.cpp:
+
+	  Reorganized include directives so that interceptor related
+	  headers are not included when compile-time interceptor support
+	  is not enabled.
+
 Fri Jun 10 12:51:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
