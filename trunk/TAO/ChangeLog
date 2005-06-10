@@ -1,3 +1,9 @@
+Fri Jun 10 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.{h,i}:
+          Fixed compile errors when interceptors are disabled
+
 Fri Jun 10 17:21:28 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2137_Regression/run_test.pl:
@@ -65,7 +71,6 @@ Fri Jun 10 07:51:36 2005  Phil Mesnier  <mesnier_p@ociweb.com>
           component contains a single host:port pair, but many such
           components may be added to a profile to carry as many endpoints
           as required.
-
 
 Fri Jun 10 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
