@@ -44,7 +44,7 @@ check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expecte
         orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      char* expected_result_string = (expected_result ? "true" : "false");
+      const char* expected_result_string = (expected_result ? "true" : "false");
 
       if ((object1->_is_equivalent (object2.in ())) != expected_result)
         {
