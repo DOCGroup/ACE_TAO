@@ -23,6 +23,10 @@ ACE_RCSID (tao,
 
 namespace TAO
 {
+  Invocation_Adapter::~Invocation_Adapter (void)
+  {
+  }
+
   void
   Invocation_Adapter::invoke (TAO::Exception_Data *ex_data,
                               unsigned long ex_count

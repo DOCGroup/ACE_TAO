@@ -74,20 +74,6 @@ CORBA::Object::_narrow (CORBA::Object_ptr obj
   return CORBA::Object::_duplicate (obj);
 }
 
-ACE_INLINE
-TAO_Stub *
-CORBA::Object::_stubobj (void) const
-{
-  return this->protocol_proxy_;
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::Object::marshal (TAO_OutputCDR &cdr)
-{
-  return (cdr << this);
-}
-
 ACE_INLINE CORBA::Boolean
 CORBA::Object::is_evaluated (void) const
 {

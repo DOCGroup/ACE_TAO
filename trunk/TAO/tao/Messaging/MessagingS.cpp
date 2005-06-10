@@ -292,6 +292,8 @@ Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
 POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl::_TAO_ReplyHandler_Direct_Proxy_Impl (void)
 {}
 
+POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl::~_TAO_ReplyHandler_Direct_Proxy_Impl (void)
+{}
 
 
 //

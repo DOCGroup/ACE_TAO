@@ -24,7 +24,10 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Collocation_Strategy.h"
-#include "tao/Pseudo_VarOut_T.h"
+
+
+template<typename T> class TAO_Pseudo_Var_T;
+template <typename T, typename T_var> class TAO_Pseudo_Out_T;
 
 namespace CORBA
 {
@@ -46,7 +49,7 @@ namespace TAO
 
   public:
 
-    virtual ~Collocation_Proxy_Broker (void) {}
+    virtual ~Collocation_Proxy_Broker (void);
 
     virtual Collocation_Strategy get_strategy (CORBA::Object_ptr obj
                                                ACE_ENV_ARG_DECL) = 0;
