@@ -2,7 +2,7 @@ Fri Jun 10 09:59:17 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/default_client.cpp:
 
-          Assure that all TAO related options are consistently case
+          Ensure that all TAO related options are consistently case
           insensitive.
 
 Fri Jun 10 13:16:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
