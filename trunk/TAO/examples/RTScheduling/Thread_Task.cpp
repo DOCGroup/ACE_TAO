@@ -7,6 +7,16 @@
 #include "ace/High_Res_Timer.h"
 
 Thread_Task::Thread_Task (void)
+ : start_time_ (0),
+   load_ (0),
+   iter_ (0),
+   count_ (0),
+   importance_ (0),
+   dt_creator_ (0),
+   base_time_ (0),
+   dist_ (0),
+   job_name_ (0),
+   task_stats_ (0)
 {
 }
 
