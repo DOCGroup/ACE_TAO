@@ -167,8 +167,7 @@ run_main (int, ACE_TCHAR *[])
   int retval = 0;
 
 // Protection against this test being run on platforms not supporting Dlls.
-#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
-    defined (__hpux)
+#if defined(ACE_HAS_DYNAMIC_LINKING)
 
   ACE_DLL dll;
 
@@ -184,7 +183,7 @@ run_main (int, ACE_TCHAR *[])
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
-#endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
+#endif /* ACE_HAS_DYNAMIC_LINKING */
 
   ACE_END_TEST;
   return retval == 0 ? 0 : 1;
