@@ -68,20 +68,20 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-	CORBA::ORB_init (argc,
+        CORBA::ORB_init (argc,
                          argv,
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Obtain a reference to the CodecFactory.
+      // Obtain a reference to the LoadManager.
       CORBA::Object_var obj =
-	orb->resolve_initial_references ("LoadManager"
+        orb->resolve_initial_references ("LoadManager"
 					 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosLoadBalancing::LoadManager_var lm =
-	CosLoadBalancing::LoadManager::_narrow (obj.in ()
+        CosLoadBalancing::LoadManager::_narrow (obj.in ()
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
