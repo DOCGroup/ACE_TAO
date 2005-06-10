@@ -314,7 +314,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  CORBA::Octet *seq_buf = CORBA::OctetSeq::allocbuf (sizeof (guid_length));
+  CORBA::Octet *seq_buf = CORBA::OctetSeq::allocbuf (guid_length);
   ACE_OS::memcpy (seq_buf,
                   guid->get_buffer (),
                   guid_length);
@@ -329,10 +329,10 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
     }
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (int));
+  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
   ACE_OS::memcpy (int_buf,
                   &importance,
-                  sizeof (int));
+                  sizeof (importance));
 
   int j = 0;
   for (;i < cxt_data_length;i++)
@@ -431,10 +431,10 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
           int_buf [j] = serv_cxt->context_data [i++];
         }
 
-      int importance;
+      int importance = 0;
       ACE_OS::memcpy (&importance,
                       int_buf,
-                      sizeof (int));
+                      sizeof (importance));
 
       guid_out.ptr () = guid;
       sched_param_out.ptr () = DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance);
@@ -559,10 +559,10 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
   ACE_CHECK;
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (int));
+  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
   ACE_OS::memcpy (int_buf,
                   &importance,
-                  sizeof (int));
+                  sizeof (importance));
 
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
@@ -611,10 +611,10 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr
   ACE_CHECK;
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (int));
+  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
   ACE_OS::memcpy (int_buf,
                   &importance,
-                  sizeof (int));
+                  sizeof (importance));
 
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
@@ -657,10 +657,10 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr
   ACE_CHECK;
 
   int importance = sched_param_var->importance ();
-  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (int));
+  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (importance));
   ACE_OS::memcpy (int_buf,
                   &importance,
-                  sizeof (int));
+                  sizeof (importance));
 
   RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
