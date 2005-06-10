@@ -5319,7 +5319,7 @@ nobase_include_HEADERS += \
   SecurityS_T.h \
   SecurityS_T.inl \
   SecurityS_T.inl \
-  security_export.h
+  Security/security_export.h
 
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
