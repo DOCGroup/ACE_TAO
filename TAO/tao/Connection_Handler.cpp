@@ -381,18 +381,24 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 }
 
 int
+TAO_Connection_Handler::set_dscp_codepoint (CORBA::Boolean)
+{
+  return 0;
+}
+
+int
 TAO_Connection_Handler::release_os_resources (void)
 {
   return 0;
 }
 
 void
-TAO_Connection_Handler::pre_io_hook (int & )
+TAO_Connection_Handler::pre_io_hook (int &)
 {
 }
 
 void
-TAO_Connection_Handler::pos_io_hook (int & )
+TAO_Connection_Handler::pos_io_hook (int &)
 {
 }
 

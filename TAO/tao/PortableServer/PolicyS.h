@@ -247,7 +247,7 @@ namespace POA_CORBA
   public:
     _TAO_Policy_Direct_Proxy_Impl (void);
 
-    virtual ~_TAO_Policy_Direct_Proxy_Impl (void) {}
+    virtual ~_TAO_Policy_Direct_Proxy_Impl (void);
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24

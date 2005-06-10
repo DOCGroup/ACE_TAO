@@ -13,9 +13,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 
-#if !defined (__ACE_INLINE__)
-#include "Asynch_Invocation_Adapter.inl"
-#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Messaging,
            Asynch_Invocation_Adapter,
@@ -24,13 +21,14 @@ ACE_RCSID (Messaging,
 
 namespace TAO
 {
-  Asynch_Invocation_Adapter::Asynch_Invocation_Adapter (CORBA::Object *target,
-                                                        Argument **args,
-                                                        int arg_number,
-                                                        const char *operation,
-                                                        int op_len,
-                                                        Collocation_Proxy_Broker *p,
-                                                        Invocation_Mode m)
+  Asynch_Invocation_Adapter::Asynch_Invocation_Adapter (
+    CORBA::Object *target,
+    Argument **args,
+    int arg_number,
+    const char *operation,
+    int op_len,
+    Collocation_Proxy_Broker *p,
+    Invocation_Mode m)
     : Invocation_Adapter (target,
                           args,
                           arg_number,
@@ -39,17 +37,17 @@ namespace TAO
                           p,
                           TAO_TWOWAY_INVOCATION,
                           m)
-      , safe_rd_ ()
+    , safe_rd_ ()
   {
   }
 
   void
   Asynch_Invocation_Adapter::invoke (
-      Messaging::ReplyHandler_ptr reply_handler_ptr,
-      const TAO_Reply_Handler_Skeleton &reply_handler_skel
-      ACE_ENV_ARG_DECL)
+    Messaging::ReplyHandler_ptr reply_handler_ptr,
+    const TAO_Reply_Handler_Skeleton &reply_handler_skel
+    ACE_ENV_ARG_DECL)
   {
-    TAO_Stub *stub =
+    TAO_Stub * stub =
       this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -78,12 +76,14 @@ namespace TAO
         // If we have an allocator, use it, else use the heap.
         if (ami_allocator)
           {
-            ACE_NEW_MALLOC (rd,
-                            static_cast<TAO_Asynch_Reply_Dispatcher *> (ami_allocator->malloc (sizeof (TAO_Asynch_Reply_Dispatcher))),
-                            TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
-                                                         reply_handler_ptr,
-                                                         stub->orb_core (),
-                                                         ami_allocator));
+            ACE_NEW_MALLOC (
+              rd,
+              static_cast<TAO_Asynch_Reply_Dispatcher *> (
+                ami_allocator->malloc (sizeof (TAO_Asynch_Reply_Dispatcher))),
+              TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
+                                           reply_handler_ptr,
+                                           stub->orb_core (),
+                                           ami_allocator));
           }
         else
           {
@@ -102,22 +102,22 @@ namespace TAO
         this->safe_rd_.reset (rd);
       }
 
-    Invocation_Adapter::invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+    this->invoke (0, 0 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
 
   Invocation_Status
   Asynch_Invocation_Adapter::invoke_twoway (
-      TAO_Operation_Details &op,
-      CORBA::Object_var &effective_target,
-      Profile_Transport_Resolver &r,
-      ACE_Time_Value *&max_wait_time
-      ACE_ENV_ARG_DECL)
+    TAO_Operation_Details &op,
+    CORBA::Object_var &effective_target,
+    Profile_Transport_Resolver &r,
+    ACE_Time_Value *&max_wait_time
+    ACE_ENV_ARG_DECL)
   {
     // Simple sanity check
-    if (this->mode_ != TAO_ASYNCHRONOUS_CALLBACK_INVOCATION ||
-        this->type_ != TAO_TWOWAY_INVOCATION)
+    if (this->mode_ != TAO_ASYNCHRONOUS_CALLBACK_INVOCATION
+        || this->type_ != TAO_TWOWAY_INVOCATION)
       {
         ACE_THROW_RETURN (CORBA::INTERNAL (
             CORBA::SystemException::_tao_minor_code (

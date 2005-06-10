@@ -334,6 +334,9 @@ CORBA__TAO_Policy_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
 POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_TAO_Policy_Direct_Proxy_Impl (void)
 {}
 
+POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::~_TAO_Policy_Direct_Proxy_Impl (void)
+{}
+
 // TAO_IDL - Generated from 
 // be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
 

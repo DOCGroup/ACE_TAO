@@ -188,7 +188,7 @@ namespace POA_Messaging
   public:
     _TAO_ReplyHandler_Direct_Proxy_Impl (void);
     
-    virtual ~_TAO_ReplyHandler_Direct_Proxy_Impl (void) {}
+    virtual ~_TAO_ReplyHandler_Direct_Proxy_Impl (void);
   };
   
   //

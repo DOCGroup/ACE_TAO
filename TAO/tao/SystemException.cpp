@@ -213,6 +213,12 @@ CORBA::SystemException::_tao_errno (int errno_value)
     }
 }
 
+CORBA::Exception *
+CORBA::SystemException::_tao_duplicate (void) const
+{
+  return 0;
+}
+
 CORBA::ULong
 CORBA::SystemException::_tao_minor_code (u_int location,
                                          int errno_value)

@@ -385,6 +385,18 @@ UTF16_BOM_Translator::write_wchar_array (ACE_OutputCDR & cdr,
   return this->write_wchar_array_i (cdr, x, length);
 }
 
+ACE_CDR::ULong
+UTF16_BOM_Translator::ncs (void)
+{
+  return 0x00010109;
+}
+
+ACE_CDR::ULong
+UTF16_BOM_Translator::tcs (void)
+{
+  return 0x00010109;
+}
+
 ACE_CDR::Boolean
 UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
                                            const ACE_CDR::WChar *x,

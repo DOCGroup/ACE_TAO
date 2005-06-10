@@ -157,6 +157,13 @@ CORBA::Object::_tao_any_destructor (void *x)
   CORBA::release (tmp);
 }
 
+// virtual -- do not inline
+CORBA::Boolean
+CORBA::Object::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
 /*static*/ CORBA::Boolean
 CORBA::Object::marshal (CORBA::Object_ptr x,
                         TAO_OutputCDR &cdr)
@@ -234,6 +241,12 @@ CORBA::Boolean
 CORBA::Object::_is_local (void) const
 {
   return this->is_local_;
+}
+
+TAO_Stub *
+CORBA::Object::_stubobj (void) const
+{
+  return this->protocol_proxy_;
 }
 
 TAO_Stub *
