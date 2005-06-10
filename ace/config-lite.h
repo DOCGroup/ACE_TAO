@@ -130,6 +130,12 @@
 #   endif
 # endif /* ACE_HAS_PROCESS_SPAWN */
 
+# if !defined (ACE_HAS_DYNAMIC_LINKING)
+#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || defined (ACE_WIN32) || defined (ACE_VXWORKS) || defined (__hpux)
+#     define ACE_HAS_DYNAMIC_LINKING 1
+#   endif
+# endif /* ACE_HAS_DYNAMIC_LINKING */
+
 // =========================================================================
 // RCSID Macros
 // =========================================================================
