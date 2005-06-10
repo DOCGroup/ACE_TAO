@@ -42,8 +42,10 @@ public:
       NO_UNBIND
     };
 
-  /// Set and get status
+  /// Get status
   int status (void) const;
+
+  /// Set status
   void status (int status);
 
 private:

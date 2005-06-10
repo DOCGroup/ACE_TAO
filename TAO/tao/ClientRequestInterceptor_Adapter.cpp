@@ -9,6 +9,7 @@
 #include "ClientRequestInfo.h"
 #include "Invocation_Base.h"
 #include "ORB_Core.h"
+#include "PortableInterceptorC.h"
 
 ACE_RCSID (tao,
            ClientInterceptorAdapter,
@@ -164,8 +165,8 @@ namespace TAO
   }
 
   void
-  ClientRequestInterceptor_Adapter:: receive_other (TAO_ClientRequestInfo_i *ri
-                                                    ACE_ENV_ARG_DECL)
+  ClientRequestInterceptor_Adapter::receive_other (TAO_ClientRequestInfo_i *ri
+                                                   ACE_ENV_ARG_DECL)
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.

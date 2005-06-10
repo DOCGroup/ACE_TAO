@@ -10,18 +10,19 @@
  */
 //=============================================================================
 
-#ifndef TAO_CODEC_FACTORY_H
-#define TAO_CODEC_FACTORY_H
+#ifndef TAO_CODEC_FACTORY_IMPL_H
+#define TAO_CODEC_FACTORY_IMPL_H
 
 #include /**/ "ace/pre.h"
 
-#include "IOP_CodecC.h"
+#include "codecfactory_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "LocalObject.h"
+#include "tao/LocalObject.h"
+#include "tao/IOP_CodecC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -29,7 +30,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 /**
  * @class TAO_CodecFactory
@@ -39,7 +39,7 @@
  * This class can be used to create Codec (coder/decoder) of a given
  * type, such as a CDR encapsulation Codec.
  */
-class TAO_Export TAO_CodecFactory
+class TAO_CodecFactory_Export TAO_CodecFactory
   : public virtual IOP::CodecFactory,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -79,4 +79,4 @@ private:
 
 #include /**/ "ace/post.h"
 
-#endif  /* TAO_CODEC_FACTORY_H */
+#endif  /* TAO_CODEC_FACTORY_IMPL_H */

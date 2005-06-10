@@ -240,9 +240,7 @@ private:
 
 };
 
-
 // -------------------------------------------------------------------
-
 
 /**
  * @class TAO_ClientRequestInfo_Guard
@@ -277,7 +275,6 @@ private:
   TAO_ClientRequestInfo_i * previous_info_;
 
 };
-
 
 # if defined (__ACE_INLINE__)
 #  include "ClientRequestInfo.inl"

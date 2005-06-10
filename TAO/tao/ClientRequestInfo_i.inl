@@ -3,6 +3,7 @@
 // $Id$
 
 #include "SystemException.h"
+#include "PortableInterceptorC.h"
 
 ACE_INLINE void
 TAO_ClientRequestInfo_i::exception (CORBA::Exception *exception)

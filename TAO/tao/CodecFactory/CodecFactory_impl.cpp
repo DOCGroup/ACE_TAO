@@ -2,10 +2,10 @@
 //
 // $Id$
 
-#include "CodecFactory.h"
+#include "CodecFactory_impl.h"
 #include "CDR_Encaps_Codec.h"
-#include "SystemException.h"
-#include "ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (TAO_CodecFactory,
            CodecFactory,

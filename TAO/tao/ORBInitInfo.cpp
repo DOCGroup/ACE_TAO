@@ -3,8 +3,11 @@
 #include "ORBInitInfo.h"
 #include "ORB_Core.h"
 #include "ORB.h"
-#include "CodecFactory.h"
 #include "SystemException.h"
+#include "Object_Loader.h"
+
+#include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent.h"
@@ -117,21 +120,25 @@ TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->codec_factory_.in ()))
     {
-      // A new instance must be allocated since the application code
-      // may have registered an ORBInitializer that requires a
-      // CodecFactory before the CodecFactory is itself registered
-      // with the ORB.
-      IOP::CodecFactory_ptr codec_factory;
-      ACE_NEW_THROW_EX (codec_factory,
-                        TAO_CodecFactory (this->orb_core_),
-                          CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
-                              0,
-                              ENOMEM),
-                            CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
+      TAO_Object_Loader *loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
 
-      this->codec_factory_ = codec_factory;
+      if (loader == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic CodecFactory Service_Object *")
+                                                 ACE_TEXT("TAO_CodecFactory:_make_TAO_CodecFactory_Loader()"));
+          loader =
+            ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
+        }
+
+      if (loader != 0)
+        {
+          CORBA::Object_ptr cf =
+            loader->create_object (this->orb_core_->orb (), 0, 0 ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
+
+          this->codec_factory_ = IOP::CodecFactory::_narrow (cf);
+        }
     }
 
   return IOP::CodecFactory::_duplicate (this->codec_factory_.in ());
@@ -351,11 +358,3 @@ const char* TAO_ORBInitInfo::_interface_repository_id (void) const
   return "IDL:TAO_ORBInitInfo:1.0";
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Objref_Var_T<TAO_ORBInitInfo>;
-template class TAO_Objref_Out_T<TAO_ORBInitInfo>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Objref_Var_T<TAO_ORBInitInfo>
-# pragma instantiate TAO_Objref_Out_T<TAO_ORBInitInfo>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

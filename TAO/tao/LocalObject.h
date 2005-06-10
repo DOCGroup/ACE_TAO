@@ -168,6 +168,10 @@ namespace CORBA
     /// Decrement the reference count.
     virtual void _remove_ref (void);
 
+    virtual CORBA::ORB_ptr _get_orb (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
+
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.

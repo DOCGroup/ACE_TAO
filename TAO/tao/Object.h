@@ -103,7 +103,7 @@ namespace CORBA
      * @name Spec defined methods
      *
      * These methods are defined here since they are required by the
-     * CORBA  spec in a form specified by the C++ mapping.
+     * CORBA spec in a form specified by the C++ mapping.
      */
     //@{
     /// Increment the ref count.
@@ -231,6 +231,10 @@ namespace CORBA
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+    virtual CORBA::ORB_ptr _get_orb (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
+
     /**
      * @name Reference Count Managment
      *
@@ -301,8 +305,6 @@ namespace CORBA
 
     /// Set the proxy broker.
     virtual void _proxy_broker (TAO::Object_Proxy_Broker *proxy_broker);
-
-
 
   public:
 

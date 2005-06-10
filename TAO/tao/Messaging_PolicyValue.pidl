@@ -36,7 +36,7 @@ module Messaging
   typedef sequence<PolicyValue> PolicyValueSeq;
 
   const IOP::ComponentId TAG_POLICIES      = 2;
-  const IOP::ServiceId INVOCATION_POLICIES = 2;
+  const IOP::ServiceId INVOCATION_POLICIES = 7;
 };
 
 #endif /* TAO_MESSAGING_POLICYVALUE_PIDL */
