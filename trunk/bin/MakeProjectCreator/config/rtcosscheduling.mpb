@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : rtportableserver, orbsvcslib {
+project : rtportableserver, interceptors, codecfactory, orbsvcslib {
   after     += RTCosScheduling
   libs      += TAO_RTCosScheduling
   tagchecks += RTCosScheduling
