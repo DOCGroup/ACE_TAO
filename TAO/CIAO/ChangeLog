@@ -28,18 +28,13 @@ Mon Jun  6 12:33:16 2005  Simon McQueen  <sm@prismtech.com>
           Added HUDisplay_DnC_svnt to after tag for project GPS_DnC_svnt
           to fix build error on BCB 6 dynamic build.
 
->>>>>>> 1.1310
+
 Thu Jun  2 22:56:11 UTC 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
         * DAnCE/examples/Quoter/README.html
 
-<<<<<<< ChangeLog
           Added a link to the CoSMIC quoter tutorial page hosted by
           Ming Xiong.
-=======
-	  Added a link to the CoSMIC quoter tutorial page hosted by
-	  Ming Xiong.
->>>>>>> 1.1310
 
         * NEWS
 
