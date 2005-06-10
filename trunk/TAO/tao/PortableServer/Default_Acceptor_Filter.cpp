@@ -2,6 +2,8 @@
 
 #include "Default_Acceptor_Filter.h"
 #include "tao/Transport_Acceptor.h"
+#include "tao/MProfile.h"
+#include "tao/Profile.h"
 
 ACE_RCSID(PortableServer,
           Default_Acceptor_Filter,
@@ -34,8 +36,18 @@ TAO_Default_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &)
+TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 {
-  // No encoding required.
+  // if -ORBUseSharedProfile is set, there may be multiple endpoints
+  // per profile, even without priority.
+  for (CORBA::ULong i = 0;
+       i < mprofile.profile_count ();
+       ++i)
+    {
+      TAO_Profile *profile = mprofile.get_profile (i);
+      if (profile->encode_endpoints () == -1)
+        return -1;
+    }
+
   return 0;
 }

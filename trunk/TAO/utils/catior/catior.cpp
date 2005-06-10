@@ -783,8 +783,6 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   return 1;
 }
 
-// alternate endpoints arent supported yet
-#if 0
 static CORBA::Boolean
 cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
@@ -794,14 +792,15 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
-  TAG_ALTERNATE_IIOP_Endpoint_Info ei;
-  if ((stream2  >> ei) == 0)
+  CORBA::String_var host;
+  CORBA::Short port;
+  if ((stream2  >> host.out()) == 0 ||
+      (stream2 >> port) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"cannot extract endpoint info\n"),0);
   ACE_DEBUG ((LM_DEBUG,
-              "%I endpoint: %s:%u\n",ei.host.in(),(unsigned short)ei.port));
+              "%I endpoint: %s:%u\n",host.in(),port));
   return 1;
 }
-#endif
 
 static CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {
@@ -1128,14 +1127,11 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_codeset_info(stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
-// TAG_ALTERNATE_IIOP_ADDRESS not supported yet
-#if 0
       } else if (tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS) {
         ACE_DEBUG ((LM_DEBUG,"%d (TAG_ALTERNATE_IIOP_ADDRESS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_tag_alternate_endpoints (stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
-#endif
       } else if (tag == TAO_TAG_ENDPOINTS) {
         ACE_DEBUG ((LM_DEBUG,"%d (TAO_TAG_ENDPOINTS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));

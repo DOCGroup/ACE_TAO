@@ -389,6 +389,68 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 int
 TAO_IIOP_Profile::encode_endpoints (void)
 {
+  // Create a data structure and fill it with endpoint info for wire
+  // transfer both for RT requests and non-RT.
+  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
+
+  if (endpoint->priority () != TAO_INVALID_PRIORITY)
+    {
+      // RT requests
+      if (this->encode_endpoints_for_rt () == -1)
+	return -1;
+    }
+
+  // encode IOP::TAG_ALTERNATE_IIOP_ADDRESS tag if there are more
+  // than one endpoints to listen to.
+  for (CORBA::ULong i = 1;
+       i < this->count_;
+       ++i)
+    {
+      // The first endpoint is the actual endpoint. The rest of the
+      // endpoints are the alternate endpoints. So, neglect the first
+      // endpoint for TAG_ALTERNATE_IIOP_ADDRESS
+      endpoint = endpoint->next_;
+
+      // Encode the data structure. - The CORBA specification does not
+      // mandate a particular container for the endpoints, only that
+      // it is encoded as host first, then port.
+      TAO_OutputCDR out_cdr;
+
+      if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+	   == 0)
+	  || (out_cdr << endpoint->host() == 0)
+          || (out_cdr << endpoint->port() == 0))
+	return -1;
+
+      IOP::TaggedComponent tagged_component;
+      tagged_component.tag = IOP::TAG_ALTERNATE_IIOP_ADDRESS;
+
+      size_t length = out_cdr.total_length ();
+      tagged_component.component_data.length (ACE_static_cast(CORBA::ULong,
+                                                              length));
+      CORBA::Octet *buf =
+	tagged_component.component_data.get_buffer ();
+
+      for (const ACE_Message_Block *iterator = out_cdr.begin ();
+	   iterator != 0;
+	   iterator = iterator->cont ())
+	{
+	  size_t i_length = iterator->length ();
+	  ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+
+	  buf += i_length;
+	}
+
+      // Add component with encoded endpoint data to this profile's
+      // TaggedComponents.
+      tagged_components_.set_component (tagged_component);
+    }
+  return  0;
+}
+
+int
+TAO_IIOP_Profile::encode_endpoints_for_rt (void)
+{
   CORBA::ULong actual_count = 0;
 
   const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
@@ -492,6 +554,46 @@ TAO_IIOP_Profile::decode_endpoints (void)
 
           this->add_endpoint (endpoint);
         }
+    }
+
+  // Now decode if there are any TAG_ALTERNATE_IIOP_ADDRESS
+  // components.
+
+  tagged_component.tag = IOP::TAG_ALTERNATE_IIOP_ADDRESS;
+  for (CORBA::ULong index =
+         this->tagged_components_.get_component (tagged_component);
+       index > 0;
+       index =
+         this->tagged_components_.get_component (tagged_component,index))
+    {
+      const CORBA::Octet *buf =
+        tagged_component.component_data.get_buffer ();
+
+      TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+                           tagged_component.component_data.length ());
+
+      // Extract the Byte Order.
+      CORBA::Boolean byte_order;
+      if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+        return -1;
+
+      in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+
+      CORBA::String_var host;
+      CORBA::Short port;
+
+      if ((in_cdr >> host.out()) == 0 ||
+          (in_cdr >> port) == 0)
+        return -1;
+
+      TAO_IIOP_Endpoint *endpoint = 0;
+      ACE_NEW_RETURN (endpoint,
+                      TAO_IIOP_Endpoint (host.in(),
+                                         port,
+                                         TAO_INVALID_PRIORITY),
+                      -1);
+
+      this->add_endpoint (endpoint);
     }
 
   return 0;
