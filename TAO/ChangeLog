@@ -1,3 +1,20 @@
+Fri Jun 10 13:16:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_extern (FE_generate_UUID):
+        
+          Added arguments (which were passed by default value before) to
+          the generateUUID() call on the ACE UUID_GENERATOR singleton.
+          These arguments trigger the inclusion of the thread id in the
+          formation of the uuid, along with the process id and timestamp
+          that were already being used. In some experiments we have done
+          with the Visual Studio 2005 beta (which can take advantage of
+          multiple processors to do parallel builds), the process id 
+          and timestamp alone were apparently not enough to ensure a
+          unique id when creating one for use in the temporary file name,
+          and multiple threads corresponding to multiple builds in the
+          same directory were trying to open temporary files with the
+          same name.
+
 Fri Jun 10 08:21:47 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
