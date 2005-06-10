@@ -1,3 +1,8 @@
+Fri Jun 10 16:03:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+		* tests/DLL_Test.cpp:
+		  Updated to use new 'ACE_HAS_DYNAMIC_LINKING' macro.
+
 Fri Jun 10 16:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 		* ace/config-lite.h:
