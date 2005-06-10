@@ -37,14 +37,14 @@ namespace StockDistributor_Impl
   }
 
   int
-  pulse_Generator::open ()
+  pulse_Generator::open_h ()
   {
     // convert the task into a active object that runs in separate thread
     return this->activate (); 
   }
 
   int
-  pulse_Generator::close ()
+  pulse_Generator::close_h ()
   {
     this->reactor ()->end_reactor_event_loop ();
 
@@ -303,7 +303,7 @@ namespace StockDistributor_Impl
   ::Components::CCMException))
   {
     // Start the active object
-    this->pulser_.open ();
+    this->pulser_.open_h ();
   }
 
   void
@@ -314,7 +314,7 @@ namespace StockDistributor_Impl
   ::Components::CCMException))
   {
     // Deactivate the active object
-    this->pulser_.close ();
+    this->pulser_.close_h ();
   }
 
   void
