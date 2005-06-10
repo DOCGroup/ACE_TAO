@@ -81,6 +81,7 @@ libTAO_la_SOURCES = \
   Codeset_Manager.cpp \
   Codeset_Translator_Factory.cpp \
   Collocated_Invocation.cpp \
+  Collocation_Proxy_Broker.cpp \
   Collocation_Resolver.cpp \
   Connect_Strategy.cpp \
   Connection_Handler.cpp \
@@ -190,6 +191,7 @@ libTAO_la_SOURCES = \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
   NVList.cpp \
+  New_Leader_Generator.cpp \
   ORB.cpp \
   ORBInitInfo.cpp \
   ORBInitInfoA.cpp \
@@ -1169,6 +1171,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/ThreadStrategySingle.cpp \
   PortableServer/ThreadStrategySingleFactoryImpl.cpp \
   PortableServer/UB_String_SArguments.cpp \
+  PortableServer/Upcall_Command.cpp \
   PortableServer/Upcall_Wrapper.cpp
 
 libTAO_PortableServer_la_LDFLAGS = \
@@ -1640,7 +1643,6 @@ nobase_include_HEADERS += \
   Messaging/AMH_Response_Handler.h \
   Messaging/Asynch_Invocation.h \
   Messaging/Asynch_Invocation_Adapter.h \
-  Messaging/Asynch_Invocation_Adapter.inl \
   Messaging/Asynch_Reply_Dispatcher.h \
   Messaging/Asynch_Timeout_Handler.h \
   Messaging/Connection_Timeout_Policy_i.h \

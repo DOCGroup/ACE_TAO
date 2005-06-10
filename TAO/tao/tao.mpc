@@ -51,6 +51,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Codeset_Manager.cpp
     Codeset_Translator_Factory.cpp
     Collocated_Invocation.cpp
+    Collocation_Proxy_Broker.cpp
     Collocation_Resolver.cpp
     Connect_Strategy.cpp
     Connection_Handler.cpp
@@ -167,6 +168,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     MProfile.cpp
     Muxed_TMS.cpp
     NVList.cpp
+    New_Leader_Generator.cpp
     Object.cpp
     Object_KeyC.cpp
     Object_Loader.cpp

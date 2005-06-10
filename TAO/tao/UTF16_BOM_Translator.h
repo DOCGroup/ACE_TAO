@@ -62,8 +62,8 @@ public:
   virtual ACE_CDR::Boolean write_wchar_array (ACE_OutputCDR &,
                                              const ACE_CDR::WChar *,
                                              ACE_CDR::ULong);
-  virtual ACE_CDR::ULong ncs () {return 0x00010109;}
-  virtual ACE_CDR::ULong tcs () {return 0x00010109;}
+  virtual ACE_CDR::ULong ncs (void);
+  virtual ACE_CDR::ULong tcs (void);
 
 private:
   ACE_CDR::Boolean read_wchar_array_i (ACE_InputCDR &,

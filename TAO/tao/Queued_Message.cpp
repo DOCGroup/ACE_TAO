@@ -24,6 +24,18 @@ TAO_Queued_Message::~TAO_Queued_Message (void)
 {
 }
 
+TAO_Queued_Message *
+TAO_Queued_Message::next (void) const
+{
+  return this->next_;
+}
+
+TAO_Queued_Message *
+TAO_Queued_Message::prev (void) const
+{
+  return this->prev_;
+}
+
 void
 TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
                                       TAO_Queued_Message *&tail)

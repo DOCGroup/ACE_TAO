@@ -46,7 +46,7 @@ class TAO_Export TAO_GIOP_Message_Generator_Parser
 {
 public:
 
-  virtual ~TAO_GIOP_Message_Generator_Parser (void) {}
+  virtual ~TAO_GIOP_Message_Generator_Parser (void);
 
   /// Write the request header in to @a msg
   virtual int write_request_header (

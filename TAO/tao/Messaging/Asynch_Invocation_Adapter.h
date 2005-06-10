@@ -10,8 +10,10 @@
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
+
 #ifndef TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H
 #define TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Messaging/messaging_export.h"
@@ -53,7 +55,8 @@ namespace TAO
    * IDL compiler.
    *
    */
-  class TAO_Messaging_Export Asynch_Invocation_Adapter : public Invocation_Adapter
+  class TAO_Messaging_Export Asynch_Invocation_Adapter
+    : public Invocation_Adapter
   {
   public:
     Asynch_Invocation_Adapter (
@@ -69,9 +72,6 @@ namespace TAO
                  const TAO_Reply_Handler_Skeleton &reply_handler_skel
                  ACE_ENV_ARG_DECL);
 
-    virtual void invoke (TAO::Exception_Data *ex,
-                         unsigned long ex_count
-                         ACE_ENV_ARG_DECL);
   protected:
 
     /**
@@ -102,9 +102,6 @@ namespace TAO
 } // End namespace TAO
 
 
-#if defined (__ACE_INLINE__)
-#include "Asynch_Invocation_Adapter.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
+
 #endif /*TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H*/
