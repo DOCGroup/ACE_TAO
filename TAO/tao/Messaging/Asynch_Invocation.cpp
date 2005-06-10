@@ -13,7 +13,7 @@
 #include "tao/ORB_Constants.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PortableInterceptorC.h"
+# include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
 ACE_RCSID (Messaging,
