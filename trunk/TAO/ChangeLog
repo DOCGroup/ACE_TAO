@@ -1,3 +1,20 @@
+Fri Jun 10 12:51:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+	  Generate out of line virtual methods.  Inlined ones prevent RTTI
+	  from working when enabling hidden symbols with g++ 4.0's
+	  visibility support.
+
+	* tao/GIOP_Message_Generator_Parser_Impl.inl (check_revision):
+
+	  Made "max_allowable_version" variable a static constant instead
+	  of a non-const variable.  Reduces run-time overhead since this
+	  value may be computed at compile-time.
+
 Fri Jun 10 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
