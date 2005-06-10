@@ -131,12 +131,14 @@ FE_new_UTL_Indenter (void)
 ACE_CString
 FE_generate_UUID (void)
 {
-  ACE_Utils::UUID* uuid =
-    ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
-    
-  const ACE_CString *tmp = uuid->to_string ();
-  ACE_CString retval = *tmp;
-  delete uuid;
+  ACE_Utils::UUID uuid;
   
-  return retval;
+  // The 0xc0 arg triggers use of the thread id in creating the UUID,
+  // useful when the IDL compiler is run by multiple threads in the
+  // same process.
+  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid, 
+                                                        0x0001,
+                                                        0xc0);
+    
+  return *uuid.to_string ();
 }
