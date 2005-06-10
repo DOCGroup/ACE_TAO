@@ -34,6 +34,8 @@ use File::Find ();
 use File::Basename;
 use FileHandle;
 
+print "You should consider using clone_build_tree.pl found with MPC\n";
+
 $usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] <build name>\n";
 $directory_mode = 0777;   #### Will be modified by umask, also.
 $verbose = 0;

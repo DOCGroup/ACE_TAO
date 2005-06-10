@@ -1,3 +1,21 @@
+Fri Jun 10 06:43:25 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Interpret flag_overrides of the custom_types->dependent setting
+          as an array instead of a string.  This makes things consistent
+          with non-overridden values of dependent.
+
+        * bin/create_ace_build:
+        * bin/create_ace_build.pl:
+
+          Inform users about using $MPC_ROOT/clone_build_tree.pl instead of
+          these scripts.
+
+        * bin/depgen.pl:
+
+          Simplified/collapsed duplicated code from the VMS additions.
+
 Thu Jun  9 18:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Event.h:
@@ -13,22 +31,22 @@ Thu Jun  9 18:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun  9 11:47:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Pipe_Test.cpp: Fixed wide-char text issues.
+        * tests/Pipe_Test.cpp: Fixed wide-char text issues.
 
 Thu Jun  9 11:12:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Reactor.cpp (register_handler): When registering for one or more
-	  signals, set the event handler's reactor() pointer to the registered
-	  reactor. Makes this behavior consistent with all other registration
-	  types.
+        * ace/Reactor.cpp (register_handler): When registering for one or more
+          signals, set the event handler's reactor() pointer to the registered
+          reactor. Makes this behavior consistent with all other registration
+          types.
 
 Thu Jun  9 16:18:32 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Socket.cpp:
-	* protocols/ace/RMCast/Socket.h:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Socket.h:
 
-	  Implemented timed recv() and size().
+          Implemented timed recv() and size().
 
 Thu Jun  9 13:16:53 2005  Simon McQueen  <sm@prismtech.com>
 
@@ -54,35 +72,35 @@ Wed Jun  8 11:21:50 2005  Simon McQueen  <sm@prismtech.com>
 
 Fri Jun  3 13:42:18 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/String_Base.h: Removed ACE_INLINE from the operator+ functions.
-	  The functions are defined in String_Base.cpp. Fixes compile errors
-	  on Solaris autoconf build.
+        * ace/String_Base.h: Removed ACE_INLINE from the operator+ functions.
+          The functions are defined in String_Base.cpp. Fixes compile errors
+          on Solaris autoconf build.
 
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Added missing
-	  #include for ace/Null_Mutex.h and ace/Null_Condition.h since this
-	  example uses ACE_Task<ACE_NULL_SYNCH>.
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Added missing
+          #include for ace/Null_Mutex.h and ace/Null_Condition.h since this
+          example uses ACE_Task<ACE_NULL_SYNCH>.
 
-	* Kokyu/DSRT_Sched_Queue_T.h: Added missing #include "ace/Null_Mutex.h"
+        * Kokyu/DSRT_Sched_Queue_T.h: Added missing #include "ace/Null_Mutex.h"
 
 Thu Jun  2 13:58:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Local_Tokens.cpp (~ACE_TSS_TPQ_Entry): Replaced missing '}' from:
-	  Mon May 30 18:10:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+        * ace/Local_Tokens.cpp (~ACE_TSS_TPQ_Entry): Replaced missing '}' from:
+          Mon May 30 18:10:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Wed Jun  1 18:33:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Reordered some
-	  #include directives so files needed by ace/Connector.h are in before
-	  ace/Connector.h. Fixes optimized autoconf build on AIX.
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Reordered some
+          #include directives so files needed by ace/Connector.h are in before
+          ace/Connector.h. Fixes optimized autoconf build on AIX.
 
 Wed Jun  1 12:19:27 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_signal.inl: Reverted:
-	  Tue May 31 18:51:31 2005  Steve Huston  <shuston@riverace.com>
-	  It broke builds on Linux and BSD, at least, with compile errors like:
-	  `::' does not have a class or union named `sigaction'
-	  I think this is probably an issue of including files in the wrong
-	  order and it only trips up HP-UX, but I'm not sure.
+        * ace/OS_NS_signal.inl: Reverted:
+          Tue May 31 18:51:31 2005  Steve Huston  <shuston@riverace.com>
+          It broke builds on Linux and BSD, at least, with compile errors like:
+          `::' does not have a class or union named `sigaction'
+          I think this is probably an issue of including files in the wrong
+          order and it only trips up HP-UX, but I'm not sure.
 
 Wed Jun  1 07:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -92,52 +110,52 @@ Wed Jun  1 07:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 31 18:51:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_signal.inl (sigaction): Added "::" qualifier to references
-	  to "struct sigaction" to distinguish it from sigaction in the
-	  ACE_OS namespace. This was tripping up HP aC++ in certain use cases.
+        * ace/OS_NS_signal.inl (sigaction): Added "::" qualifier to references
+          to "struct sigaction" to distinguish it from sigaction in the
+          ACE_OS namespace. This was tripping up HP aC++ in certain use cases.
 
 Tue May 31 18:46:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/INET_Addr.cpp (set_address): When needing to plug in an
-	  IPv4-mapped IPv6 address, avoid any possibility of compiler struct
-	  member non-contiguous alignment. Use the ip6 address type and
-	  plug the values in where they go. Thanks to Robert Iakobashvili
-	  <coroberti at gmail dot com> for this idea.
+        * ace/INET_Addr.cpp (set_address): When needing to plug in an
+          IPv4-mapped IPv6 address, avoid any possibility of compiler struct
+          member non-contiguous alignment. Use the ip6 address type and
+          plug the values in where they go. Thanks to Robert Iakobashvili
+          <coroberti at gmail dot com> for this idea.
 
 Tue May 31 21:45:10 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated RMCast-related information.
+          Updated RMCast-related information.
 
 Tue May 31 11:49:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Free_List.inl:
-	* ace/Message_Queue_T.inl:
-	* ace/POSIX_CB_Proactor.inl:
-	* ace/SUN_Proactor.inl:
+        * ace/Free_List.inl:
+        * ace/Message_Queue_T.inl:
+        * ace/POSIX_CB_Proactor.inl:
+        * ace/SUN_Proactor.inl:
 
-	  Removed these empty inline files.
+          Removed these empty inline files.
 
-	* ace/Free_List.cpp:
-	* ace/Free_List.h:
-	* ace/Message_Queue_T.cpp:
-	* ace/Message_Queue_T.h:
-	* ace/POSIX_CB_Proactor.cpp:
-	* ace/POSIX_CB_Proactor.h:
-	* ace/SUN_Proactor.cpp:
-	* ace/SUN_Proactor.h:
+        * ace/Free_List.cpp:
+        * ace/Free_List.h:
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/POSIX_CB_Proactor.cpp:
+        * ace/POSIX_CB_Proactor.h:
+        * ace/SUN_Proactor.cpp:
+        * ace/SUN_Proactor.h:
 
-	  Removed include directives for removed inline files.
+          Removed include directives for removed inline files.
 
-	* ace/Timer_Queue_Adapters.cpp (activate):
+        * ace/Timer_Queue_Adapters.cpp (activate):
 
-	  Moved method definition out of ACE_HAS_DEFERRED_TIMER_COMMANDS
-	  block.  Fixes "unresolved symbol" link-time errors.
+          Moved method definition out of ACE_HAS_DEFERRED_TIMER_COMMANDS
+          block.  Fixes "unresolved symbol" link-time errors.
 
-	* ace/Makefile.am (nobase_include_HEADERS):
+        * ace/Makefile.am (nobase_include_HEADERS):
 
-	  Removed newly removed inline file.
+          Removed newly removed inline file.
 
 Tue May 31 10:39:10 2005  Justin Michel  <michel_j@ociweb.com>
 
@@ -273,12 +291,12 @@ Fri May 27 15:32:15 2005  Justin Michel  <michel_j@ociweb.com>
         * tests/Network_Adapters_Test.cpp:
 
           These files #included config.h which isn't safe, because it
- 	  won't necessarilly pick up the correct symbols. For example, I
- 	  caught this by trying to build ACE on Windows with
- 	  __ACE_INLINE__ = 0.  The files that #included config.h directly
- 	  saw that it was defined as 0, but changing them to #include
- 	  config-all.h instead, correctly saw that the symbol was
- 	  undefined.
+          won't necessarilly pick up the correct symbols. For example, I
+          caught this by trying to build ACE on Windows with
+          __ACE_INLINE__ = 0.  The files that #included config.h directly
+          saw that it was defined as 0, but changing them to #include
+          config-all.h instead, correctly saw that the symbol was
+          undefined.
 
 Fri May 27 10:26:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -320,9 +338,9 @@ Thu May 26 16:13:34 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/config-win32-msvc-6.h:
 
           The standard library that comes with vc6 is pre-standard c++,
- 	  but it's close enough for many things. Enabling its use should
- 	  be more portable. This was done long ago for the OCI versions of
- 	  TAO (Since 1.2a), and was apparently overlooked until now.
+          but it's close enough for many things. Enabling its use should
+          be more portable. This was done long ago for the OCI versions of
+          TAO (Since 1.2a), and was apparently overlooked until now.
 
 Thu May 26 15:22:10 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
@@ -446,10 +464,10 @@ Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/String_Base.cpp:
 
           Fixed some documentation bugs, and added some new features to
- 	  this class.  New efficient overloads for string concatenation.
-  	  Fixed clear(1) to work as documented.  Used a more optimal
- 	  string growth when concatenating strings.  Performance
- 	  optimizations for string concatenation.
+          this class.  New efficient overloads for string concatenation.
+          Fixed clear(1) to work as documented.  Used a more optimal
+          string growth when concatenating strings.  Performance
+          optimizations for string concatenation.
 
         * tests/SString_Test.cpp:
 
@@ -1052,17 +1070,17 @@ Mon May 16 08:44:14 2005  Chad Elliott  <elliott_c@ociweb.com>
         * ace/OS_NS_Thread.cpp:
 
           Fixed an issue that arose within the static builds on Windows.
-  	  The ACE_Thread_Mutex static data member of the
- 	  TSS_Cleanup_Instance class was being used (in the
- 	  TSS_Cleanup_Instance constructor) before it was statically
- 	  initialized.  I have switched it (and the condition variable
- 	  associated with it) to a pointer that is allocated the first
- 	  time into the TSS_Cleanup_Instance constructor.
+          The ACE_Thread_Mutex static data member of the
+          TSS_Cleanup_Instance class was being used (in the
+          TSS_Cleanup_Instance constructor) before it was statically
+          initialized.  I have switched it (and the condition variable
+          associated with it) to a pointer that is allocated the first
+          time into the TSS_Cleanup_Instance constructor.
 
         * ace/Process_Manager.cpp:
 
           Committing a change from Justin Michel <michel_j@ociweb.com>.
-  	  The close() method failed to unregister the reactor on Windows.
+          The close() method failed to unregister the reactor on Windows.
 
         * ace/ace.mpc:
 
