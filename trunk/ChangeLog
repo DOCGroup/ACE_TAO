@@ -1,28 +1,33 @@
+Fri Jun 10 18:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/rtcosscheduling.mpb:
+          Added missing base projexts. Thanks for JT for reporting this
+
 Fri Jun 10 16:03:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-		* tests/DLL_Test.cpp:
-		  Updated to use new 'ACE_HAS_DYNAMIC_LINKING' macro.
+        * tests/DLL_Test.cpp:
+          Updated to use new 'ACE_HAS_DYNAMIC_LINKING' macro.
 
 Fri Jun 10 16:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-		* ace/config-lite.h:
-		  Introduced new macro 'ACE_HAS_DYNAMIC_LINKING' to enable more
-		  generalized testing for platforms supporting dynamic linking
-		  than 'ACE_HAS_SVR4_DYNAMIC_LINKING' supports (which excludes
-		  WIN32, VxWorks and HPUX which *do* support dynamic linking).
+        * ace/config-lite.h:
+ ÿÿÿÿÿÿÿ  Introduced new macro 'ACE_HAS_DYNAMIC_LINKING' to enable more
+          generalized testing for platforms supporting dynamic linking
+          than 'ACE_HAS_SVR4_DYNAMIC_LINKING' supports (which excludes
+          WIN32, VxWorks and HPUX which *do* support dynamic linking).
 
 Fri Jun 10 15:53:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-		* ace/OS_main.h:
-		* ace/OS_main.cpp:
-		  Changed implementation of 'ace_main' entrypoints for VxWorks to
+        * ace/OS_main.h:
+        * ace/OS_main.cpp:
+          Changed implementation of 'ace_main' entrypoints for VxWorks to
           support shared library builds without resulting in 'undefined symbol'
           messages for 'ace_main_i'.
 
 Fri Jun 10 15:47:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-		* ace/OS_NS_dlfcn.inl:
-		  Fixed VxWorks implementation of dlopen().
+        * ace/OS_NS_dlfcn.inl:
+          Fixed VxWorks implementation of dlopen().
 
 Fri Jun 10 07:55:32 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
