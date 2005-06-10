@@ -2,22 +2,24 @@
 
 //=============================================================================
 /**
- *  @file   Policy_Manager.h
+ *  @file   Policy_Current.h
  *
  *  $Id$
  *
  * An implementation for the CORBA::PolicyManager interface.
+ *
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
 
 
-#ifndef TAO_POLICY_MANAGER_H
-#define TAO_POLICY_MANAGER_H
+#ifndef TAO_POLICY_CURRENT_H
+#define TAO_POLICY_CURRENT_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Guard_T.h"
+
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,25 +31,26 @@
 
 #include "tao/PolicyC.h"
 #include "tao/LocalObject.h"
-#include "tao/Policy_Set.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_Policy_Current_Impl;
 
-class TAO_Export TAO_Policy_Manager :
-  public CORBA::PolicyManager,
+class TAO_Export TAO_Policy_Current :
+  public CORBA::PolicyCurrent,
   public TAO_Local_RefCounted_Object
 {
 public:
-  /// constructor
-  TAO_Policy_Manager (void);
+  /// Constructor
+  TAO_Policy_Current (void);
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_policy (
+      CORBA::PolicyType policy
+      ACE_ENV_ARG_DECL);
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
@@ -61,18 +64,17 @@ public:
       )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void set_policy_overrides (const CORBA::PolicyList & policies,
-                                     CORBA::SetOverrideType set_add
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void set_policy_overrides (
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::InvalidPolicies));
 
-private:
-  /// Protect access
-  TAO_SYNCH_MUTEX mutex_;
-
-  /// The implementation.
-  TAO_Policy_Set impl_;
+  // = Set and get the implementation.
+  TAO_Policy_Current_Impl &implementation (void) const;
+  TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 };
 
 #if defined(_MSC_VER)
@@ -80,11 +82,11 @@ private:
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "tao/Policy_Manager.i"
+# include "tao/Policy_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_POLICY_MANAGER_H */
+#endif /* TAO_POLICY_CURRENT_H */

@@ -7,7 +7,8 @@
 #include "SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "RequestInfo_Util.h"
+# include "PortableInterceptorC.h"
+# include "RequestInfo_Util.h"
 #endif /*TAO_HAS_INTERCEPTORS*/
 
 #if !defined (__ACE_INLINE__)

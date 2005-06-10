@@ -15,13 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IOP_CodecC.h"
+#include "codecfactory_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "LocalObject.h"
+#include "tao/IOP_CodecC.h"
+#include "tao/LocalObject.h"
 
 /**
  * @class TAO_CDR_Encaps_Codec
@@ -39,7 +40,7 @@
  * ORB core since it uses interpretive marshaling rather than compiled
  * marshaling.
  */
-class TAO_Export TAO_CDR_Encaps_Codec
+class TAO_CodecFactory_Export TAO_CDR_Encaps_Codec
   : public virtual IOP::Codec,
     public virtual TAO_Local_RefCounted_Object
 {

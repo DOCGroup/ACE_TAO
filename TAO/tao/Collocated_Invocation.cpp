@@ -6,6 +6,9 @@
 #include "Stub.h"
 #include "operation_details.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+# include "PortableInterceptorC.h"
+#endif /*TAO_HAS_INTERCEPTORS */
 
 ACE_RCSID (tao,
            Collocated_Invocation,

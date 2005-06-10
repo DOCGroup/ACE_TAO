@@ -208,6 +208,14 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+CORBA::ORB_ptr
+CORBA::LocalObject::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
+}
+
 // ****************************************************************
 
 void
