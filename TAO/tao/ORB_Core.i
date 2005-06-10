@@ -128,7 +128,7 @@ ACE_INLINE TAO_Service_Callbacks::Profile_Equivalence
 TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
                                      const TAO_Profile *that_p)
 {
-  TAO_Service_Callbacks::Profile_Equivalence retval 
+  TAO_Service_Callbacks::Profile_Equivalence retval
     = TAO_Service_Callbacks::DONT_KNOW;
 
   if (this->ft_service_.service_callback ())
@@ -378,6 +378,8 @@ TAO_ORB_Core::resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL)
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -391,6 +393,7 @@ TAO_ORB_Core::resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL)
   return CORBA::Object::_duplicate (this->pi_current_);
 }
 
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL)

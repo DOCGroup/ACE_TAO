@@ -754,8 +754,10 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   /// Resolve the TypeCodeFactory DLL.
   CORBA::Object_ptr resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL);
 
+#if TAO_HAS_INTERCEPTORS == 1
   /// Resolve the PICurrent.
   CORBA::Object_ptr resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   /// Resolve the CodecFactory DLL.
   CORBA::Object_ptr resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL);
