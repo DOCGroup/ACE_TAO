@@ -1,3 +1,10 @@
+Thu Jun  4 14:36:00 UTC 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Quoter/Distributor/Distributor_exec.h
+        * DAnCE/examples/Quoter/Distributor/Distributor_exec.cpp
+
+          Fixed a virtual hiding warning reported on WinXP_BCB6_Pro_Dynamic_Debug
+
 Thu Jun  9 09:31:28 2005  Simon McQueen  <sm@prismtech.com>
 
         * NEWS:
@@ -21,16 +28,22 @@ Mon Jun  6 12:33:16 2005  Simon McQueen  <sm@prismtech.com>
           Added HUDisplay_DnC_svnt to after tag for project GPS_DnC_svnt
           to fix build error on BCB 6 dynamic build.
 
+>>>>>>> 1.1310
 Thu Jun  2 22:56:11 UTC 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
-	* DAnCE/examples/Quoter/README.html
+        * DAnCE/examples/Quoter/README.html
 
+<<<<<<< ChangeLog
+          Added a link to the CoSMIC quoter tutorial page hosted by
+          Ming Xiong.
+=======
 	  Added a link to the CoSMIC quoter tutorial page hosted by
 	  Ming Xiong.
+>>>>>>> 1.1310
 
-	* NEWS
+        * NEWS
 
-	  Updated NEWS file.
+          Updated NEWS file.
 
 Tue May 31 22:46:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -58,23 +71,23 @@ Mon May 30 17:59:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May 30 12:19:42 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/Port_Activator_T.cpp:
-	* DAnCE/ciao/Servant_Activator.cpp:
-	* DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Port_Activator_T.cpp:
+        * DAnCE/ciao/Servant_Activator.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
 
-	  Made use of ACE_ENV macros to fix Debian Full Reactor
-	  build errors.
+          Made use of ACE_ENV macros to fix Debian Full Reactor
+          build errors.
 
 Fri May 27 23:35:23 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/Container_Impl.cpp:
-	* DAnCE/ciao/Container_Impl.h:
-	* DAnCE/ciao/Home_Servant_Impl_T.cpp:
-	* DAnCE/ciao/Home_Servant_Impl_T.h:
+        * DAnCE/ciao/Container_Impl.cpp:
+        * DAnCE/ciao/Container_Impl.h:
+        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Home_Servant_Impl_T.h:
 
-	Changed the structure of the utility maps that maintain
-	the component references, to use "_var" instead of "_ptr"
-	in order to facilitate effective memory destructions.
+        Changed the structure of the utility maps that maintain
+        the component references, to use "_var" instead of "_ptr"
+        in order to facilitate effective memory destructions.
 
 Fri May 27 20:26:33 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
@@ -95,71 +108,71 @@ Fri May 27 20:26:33 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Fri May 27 13:41:20 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/Port_Activator.h:
-	* DAnCE/ciao/Port_Activator_T.cpp:
-	* DAnCE/ciao/Port_Activator_T.h:
-	* DAnCE/ciao/Servant_Activator.cpp:
-	* DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Port_Activator.h:
+        * DAnCE/ciao/Port_Activator_T.cpp:
+        * DAnCE/ciao/Port_Activator_T.h:
+        * DAnCE/ciao/Servant_Activator.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
 
-	Added support for deactivating facets and event consumers
-	when a component is getting deactivated. This fixes
+        Added support for deactivating facets and event consumers
+        when a component is getting deactivated. This fixes
         couple of memory leaks in the DAnCE deployment scenarios.
 
 
 Thu May 26 22:55:26 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
 
-	  Added code to deactivate facets when component
-	  is getting removed.
+          Added code to deactivate facets when component
+          is getting removed.
 
 Thu May 26 20:41:04 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/Home_Servant_Impl_T.cpp:
-	* DAnCE/ciao/Servant_Impl_Base.cpp:
-	* DAnCE/ciao/Servant_Impl_T.cpp:
-	* DAnCE/ciao/Servant_Impl_T.h:
+        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_T.h:
 
-	Added support for the component servants to inherit
-	from RefCountServantBase, to allow freeing up of
-	servants in a more standard and effective manner.
+        Added support for the component servants to inherit
+        from RefCountServantBase, to allow freeing up of
+        servants in a more standard and effective manner.
 
-	Added support functions in Servant_Impl_T class to
-	clean up the component executor memory.
+        Added support functions in Servant_Impl_T class to
+        clean up the component executor memory.
 
-	Added support functions in Home_Servant_Impl_T and
-	Servant_Impl_Base classes to uninstall components
-	by executing operations like ccm_remove () in the
-	right order.
+        Added support functions in Home_Servant_Impl_T and
+        Servant_Impl_Base classes to uninstall components
+        by executing operations like ccm_remove () in the
+        right order.
 
-	Finally fixed couple of memory leaks with respect
-	to cleaning up component servants and component
-	executors.
+        Finally fixed couple of memory leaks with respect
+        to cleaning up component servants and component
+        executors.
 
-	Thanks to Steve Baker <Steve_D_Baker@Raytheon.com>
-	for reporting the problem.
+        Thanks to Steve Baker <Steve_D_Baker@Raytheon.com>
+        for reporting the problem.
 
 Thu May 26 21:09:22 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
-	* tools/Simple_Component_Server/Simple_Component_Server.mpc
+        * tools/Simple_Component_Server/Simple_Component_Server.mpc
 
-	  Put an empty IDL_Files segment in the
-	  "Simple_Component_Server" project so the IDL
-	  file is not picked up automatically. Thanks to Will Chai
+          Put an empty IDL_Files segment in the
+          "Simple_Component_Server" project so the IDL
+          file is not picked up automatically. Thanks to Will Chai
           <willchai@126.com> for reporting this.
 
-	* NEWS
-	* DAnCE/NEWS
+        * NEWS
+        * DAnCE/NEWS
 
-	  Merged these two files and deleted the DAnCE/NEWS file,
-	  since these two files serve similar purposes.
+          Merged these two files and deleted the DAnCE/NEWS file,
+          since these two files serve similar purposes.
 
 Thu May 26 14:46:53 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp
 
-	Fixed a memory leak which would cause NodeManagers to leak
-	when destroyed.
+        Fixed a memory leak which would cause NodeManagers to leak
+        when destroyed.
 
 Thu May 26 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
