@@ -63,7 +63,7 @@
 
 // Rename "main ()" on platforms that don't allow it to be called "main ()".
 
-#   if defined (ACE_PSOSIM) 
+#   if defined (ACE_PSOSIM)
          || (defined (ACE_PSOS) && defined (ACE_PSOS_LACKS_ARGC_ARGV))
 
 #     define main \
@@ -75,8 +75,26 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 int \
 ace_main_i
 
+#   elif defined (ACE_VXWORKS)
+
+typedef int (*ace_main_proc_ptr)(int, char *[]);
+
+extern ace_main_proc_ptr vx_ace_main_i_ptr;
+
+#     define main \
+ace_os_main_i (int, char *[]); \
+int ace_main_i(int, char *[]); \
+int \
+ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
+{ \
+  vx_ace_main_i_ptr = ace_main_i; \
+  return ace_os_main_i (argc, argv); /* what the user calls "main" */ \
+} \
+int \
+ace_main_i
+
 #   elif !defined (ACE_WIN32)
-   
+
 #     define main \
 ace_os_main_i (int, char *[]); \
 int \

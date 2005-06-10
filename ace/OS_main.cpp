@@ -26,8 +26,10 @@ ACE_RCSID(ace, OS_main, "$Id$")
 
 #  if !defined (ACE_WIN32)
 
+#    if !defined (ACE_VXWORKS)
 /* forward declaration */
 extern int ace_main_i (int, char *[]);
+#    endif
 
 #    if defined (ACE_PSOSIM)
 // PSOSIM root lacks the standard argc, argv command line parameters,
@@ -35,7 +37,7 @@ extern int ace_main_i (int, char *[]);
 // NOTE: ACE_MAIN must be defined to give the return type as well as the
 // name of the entry point.
 
-ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ 
+ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
 {
   int argc = 1;                            /* dummy arg count */
   char *argv[] = {"psosim"};               /* dummy arg list */
@@ -58,7 +60,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
 // Ignore return value from user main as well.  NOTE: ACE_MAIN must be
 // defined to give the return type as well as the name of the entry point
 
-ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ 
+ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
 {
   int argc = 1;                           /* dummy arg count */
   char *argv[] = {"root"};                /* dummy arg list */
@@ -68,11 +70,21 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
 
 #    endif /* ACE_PSOSIM */
 
+#    if defined (ACE_VXWORKS)
+ace_main_proc_ptr vx_ace_main_i_ptr = 0;
+
 int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
-{ 
-  ACE_MAIN_OBJECT_MANAGER 
-  return ace_main_i (argc, argv);           /* what the user calls "main" */ 
+{
+  ACE_MAIN_OBJECT_MANAGER
+  return vx_ace_main_i_ptr ? (*vx_ace_main_i_ptr) (argc, argv) : (-1);   /* what the user calls "main" */
 }
+#    else /* !ACE_VXWORKS */
+int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
+{
+  ACE_MAIN_OBJECT_MANAGER
+  return ace_main_i (argc, argv);           /* what the user calls "main" */
+}
+#    endif
 
 #  elif !defined (ACE_HAS_WINCE)
 
@@ -83,11 +95,11 @@ int ACE_Main_Base::run (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_Export int
-ace_os_wmain_i (ACE_Main_Base &mbase, int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., main */ 
+ace_os_wmain_i (ACE_Main_Base &mbase, int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., main */
 {
   ACE_MAIN_OBJECT_MANAGER
   return mbase.run (argc, argv);           /* what the user calls "main" */
-} 
+}
 #    else /* ! (ACE_WIN32 && ACE_USES_WCHAR) */
 int ACE_Main_Base::run (int argc, char *argv[])
 {
@@ -95,11 +107,11 @@ int ACE_Main_Base::run (int argc, char *argv[])
 }
 
 ACE_Export int
-ace_os_main_i (ACE_Main_Base &mbase, int argc, char *argv[]) /* user's entry point, e.g., main */ 
+ace_os_main_i (ACE_Main_Base &mbase, int argc, char *argv[]) /* user's entry point, e.g., main */
 {
   ACE_MAIN_OBJECT_MANAGER
   return mbase.run (argc, argv);           /* what the user calls "main" */
-} 
+}
 #    endif /* ACE_WIN32 && ACE_USES_WCHAR */
 
 #  else /* ACE_HAS_WINCE */

@@ -1,3 +1,11 @@
+Fri Jun 10 15:53:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+		* ace/OS_main.h:
+		* ace/OS_main.cpp:
+		  Changed implementation of 'ace_main' entrypoints for VxWorks to
+          support shared library builds without resulting in 'undefined symbol'
+          messages for 'ace_main_i'.
+
 Fri Jun 10 15:47:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 		* ace/OS_NS_dlfcn.inl:
