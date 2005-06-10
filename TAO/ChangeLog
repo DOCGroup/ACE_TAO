@@ -1,3 +1,126 @@
+Fri Jun 10 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CodecFactory/*:
+          New CodecFactory library. When users want to use the CodecFactory
+          they have to include tao/CodecFactory/CodecFactory.h
+
+        * tao/Bind_Dispatcher_Guard.h:
+          Doxygen improvement
+
+        * tao/IOP_IOR.pidl:
+          Updated numbers for reliable multicast as mentioned in omg document
+          03-01-11
+
+        * tao/CDR_Encaps_Codec.{h,cpp}:
+        * tao/CodecFactory.{h,cpp}:
+          These files are moved to the CodecFactory library
+
+        * tao/CodecFactory.mpc:
+          New MPC file for the CodecFactory library
+
+        * tao/ClientRequestInfo_i.h:
+        * tao/ClientRequestInterceptor_Adapter.{h,cpp}:
+        * tao/Collocated_Invocation.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/PICurrent_Copy_Callback.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TSS_Resources.h:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/PortableServer/ServerRequestInfo.h:
+          Changed includes and added some more forward declarations because
+          of reduced header dependencies
+
+        * tao/Tagged_Components.h:
+          Removed commented out code
+
+        * tao/tao.mpc:
+          Updated for all these changes
+
+        * tao/ClientRequestInfo_i.i:
+          Added needed include
+
+        * tao/CodecFactory_ORBInitializer.{h,cpp}:
+          Removed, we don't use an ORBInitializer anymore for the CodecFactory
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.{h,cpp,i}:
+          Changed the way we retrieve the CodecFactory and PICurrent. Instead
+          of an ORBInitializer we try to load them using svc.conf
+
+        * tao/ORBInitInfo.cpp:
+          Use svc.conf to get the CodecFactory instead of allocating a new
+          instance here
+
+        * tao/Parser_Registry.cpp:
+          Removed empty explicit template instantiation block
+
+        * tao/PICurrent.{h,cpp,inl}:
+        * tao/PICurrent_Impl.{h,cpp,inl}:
+          Moved TAO::PICurrent_Impl to its own file
+
+        * tao/PICurrent.pidl:
+        * tao/PICurrentA.cpp:
+        * tao/PICurrentC.{h,cpp}:
+        * tao/PICurrentS.h:
+          Moved PICurrent to its own file
+
+        * tao/PICurrent_Loader.{h,cpp}:
+          Use svc.conf to get PICurrent
+
+        * tao/PICurrent_ORBInitializer.{h,cpp}:
+          Removed these files
+
+        * tao/Policy_Manager.{h,cpp,i}:
+        * tao/Policy_Current.{h,cpp,inl}:
+        * tao/Policy_Current_Impl.{h,cpp,inl}:
+          Moved Policy_Current and Policy_Current_Impl to their own files
+
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.{h,cpp}:
+        * tao/PortableInterceptorS.h:
+          Moved PICurrent out of this file and regenerated
+
+        * tao/Services_Activate.cpp:
+          Removed explicit templates
+
+        * tao/ServicesS_T.h:
+          Removed
+
+        * tao/orbconf.h:
+          Added deablfine for RootPOAManager name, will be used later
+
+        * tao/objectid.h:
+          Added define for POAManagerFactory
+
+        * tao/LocalObject.{h,cpp}:
+          Override _get_orb to throw a no implement with minor code 8
+
+        * tao/Object.{h,cpp}:
+          Added _get_orb()
+
+        * docs/libraries.html:
+          Added codecfactory
+
+        * tests/Bug_1693_Test/Bug_1693_Test.mpc:
+        * tests/Bug_1693_Test/client.cpp:
+        * tests/Codec/client.cpp:
+        * tests/Codec/Codec.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * orbsvcs/PSS/PSDL_Code_Gen.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling.mpc:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+          Updated because of new CodecFactory library
+
 Fri Jun 10 10:15:17 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2144_Regression/Bug_2144_Regression.mpc:
