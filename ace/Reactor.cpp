@@ -527,15 +527,11 @@ ACE_Reactor::register_handler (int signum,
                                ACE_Event_Handler **old_sh,
                                ACE_Sig_Action *old_disp)
 {
-  int result = this->implementation ()->register_handler (signum,
-                                                          new_sh,
-                                                          new_disp,
-                                                          old_sh,
-                                                          old_disp);
-  if (result == 0)
-    // Assign this reactor to the event handler.
-    new_sh->reactor (this);
-  return result;
+  return this->implementation ()->register_handler (signum,
+                                                    new_sh,
+                                                    new_disp,
+                                                    old_sh,
+                                                    old_disp);
 }
 
 int
@@ -543,13 +539,9 @@ ACE_Reactor::register_handler (const ACE_Sig_Set &sigset,
                                ACE_Event_Handler *new_sh,
                                ACE_Sig_Action *new_disp)
 {
-  int result = this->implementation ()->register_handler (sigset,
-                                                          new_sh,
-                                                          new_disp);
-  if (result == 0)
-    // Assign this reactor to the event handler.
-    new_sh->reactor (this);
-  return result;
+  return this->implementation ()->register_handler (sigset,
+                                                    new_sh,
+                                                    new_disp);
 }
 
 int
