@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Policy_Manager.h"
+#include "tao/Policy_Current_Impl.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

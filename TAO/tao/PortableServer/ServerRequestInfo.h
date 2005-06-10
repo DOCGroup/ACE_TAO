@@ -31,6 +31,8 @@
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
 #include "tao/TAO_Server_Request.h"
+#include "tao/PIForwardRequestC.h"
+#include "tao/PortableInterceptorC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

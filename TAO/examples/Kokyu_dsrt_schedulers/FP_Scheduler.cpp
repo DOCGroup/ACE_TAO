@@ -4,6 +4,7 @@
 #include "Kokyu_qosC.h"
 #include "utils.h"
 #include "tao/ORB_Constants.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
 FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy ()
