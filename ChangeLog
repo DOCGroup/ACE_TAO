@@ -1,3 +1,11 @@
+Fri Jun 10 16:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+		* ace/config-lite.h:
+		  Introduced new macro 'ACE_HAS_DYNAMIC_LINKING' to enable more
+		  generalized testing for platforms supporting dynamic linking
+		  than 'ACE_HAS_SVR4_DYNAMIC_LINKING' supports (which excludes
+		  WIN32, VxWorks and HPUX which *do* support dynamic linking).
+
 Fri Jun 10 15:53:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 		* ace/OS_main.h:
