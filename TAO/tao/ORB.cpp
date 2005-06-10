@@ -1137,8 +1137,10 @@ CORBA::ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
     return this->orb_core ()->resolve_codecfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
 
+#if TAO_HAS_INTERCEPTORS == 1
   else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
     return this->orb_core ()->resolve_picurrent (ACE_ENV_SINGLE_ARG_PARAMETER);
+#endif
 
   // -----------------------------------------------------------------
 
