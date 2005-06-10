@@ -48,7 +48,7 @@ namespace StockDistributor_Impl
   {
     this->reactor ()->end_reactor_event_loop ();
 
-	// wait for all threads in the task to exit before it returns
+    // wait for all threads in the task to exit before it returns
     return this->wait (); 
   }
 
