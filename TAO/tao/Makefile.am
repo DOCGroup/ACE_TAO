@@ -58,7 +58,6 @@ libTAO_la_SOURCES = \
   BoundsC.cpp \
   Buffering_Constraint_Policy.cpp \
   CDR.cpp \
-  CDR_Encaps_Codec.cpp \
   CONV_FRAMEA.cpp \
   CONV_FRAMEC.cpp \
   CORBALOC_Parser.cpp \
@@ -76,8 +75,6 @@ libTAO_la_SOURCES = \
   ClientRequestInterceptorC.cpp \
   ClientRequestInterceptor_Adapter.cpp \
   Client_Strategy_Factory.cpp \
-  CodecFactory.cpp \
-  CodecFactory_ORBInitializer.cpp \
   Codeset_Manager.cpp \
   Codeset_Translator_Factory.cpp \
   Collocated_Invocation.cpp \
@@ -215,8 +212,11 @@ libTAO_la_SOURCES = \
   OctetSeqA.cpp \
   OctetSeqC.cpp \
   PICurrent.cpp \
+  PICurrentA.cpp \
+  PICurrentC.cpp \
   PICurrent_Copy_Callback.cpp \
-  PICurrent_ORBInitializer.cpp \
+  PICurrent_Impl.cpp \
+  PICurrent_Loader.cpp \
   PIForwardRequestA.cpp \
   PIForwardRequestC.cpp \
   PI_ForwardC.cpp \
@@ -230,6 +230,8 @@ libTAO_la_SOURCES = \
   PolicyFactoryA.cpp \
   PolicyFactoryC.cpp \
   PolicyFactory_Registry.cpp \
+  Policy_Current.cpp \
+  Policy_Current_Impl.cpp \
   Policy_ForwardA.cpp \
   Policy_ForwardC.cpp \
   Policy_Manager.cpp \
@@ -431,7 +433,6 @@ nobase_include_HEADERS = \
   Buffering_Constraint_Policy.i \
   CDR.h \
   CDR.i \
-  CDR_Encaps_Codec.h \
   CONV_FRAME.pidl \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
@@ -463,8 +464,6 @@ nobase_include_HEADERS = \
   ClientRequestInterceptor_Adapter.h \
   ClientRequestInterceptor_Adapter.inl \
   Client_Strategy_Factory.h \
-  CodecFactory.h \
-  CodecFactory_ORBInitializer.h \
   Codeset_Manager.h \
   Codeset_Translator_Factory.h \
   Codeset_Translator_Factory_T.cpp \
@@ -704,8 +703,13 @@ nobase_include_HEADERS = \
   OctetSeqS.h \
   PICurrent.h \
   PICurrent.inl \
+  PICurrent.pidl \
+  PICurrentC.h \
+  PICurrentS.h \
   PICurrent_Copy_Callback.h \
-  PICurrent_ORBInitializer.h \
+  PICurrent_Impl.h \
+  PICurrent_Impl.inl \
+  PICurrent_Loader.h \
   PIForwardRequest.pidl \
   PIForwardRequestC.h \
   PIForwardRequestS.h \
@@ -727,6 +731,10 @@ nobase_include_HEADERS = \
   PolicyFactoryS.h \
   PolicyFactory_Registry.h \
   PolicyS.h \
+  Policy_Current.h \
+  Policy_Current.inl \
+  Policy_Current_Impl.h \
+  Policy_Current_Impl.inl \
   Policy_Forward.pidl \
   Policy_ForwardC.h \
   Policy_ForwardS.h \
@@ -804,7 +812,6 @@ nobase_include_HEADERS = \
   Services.pidl \
   ServicesC.h \
   ServicesS.h \
-  ServicesS_T.h \
   Services_Activate.h \
   ShortSeq.pidl \
   ShortSeqC.h \
@@ -1032,6 +1039,45 @@ TAO_BiDirGIOP.pc: ${top_builddir}/config.status ${srcdir}/BiDir_GIOP/TAO_BiDirGI
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDirGIOP.pc.in \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
+
+
+## Makefile.CodecFactory.am
+
+lib_LTLIBRARIES += libTAO_CodecFactory.la
+
+libTAO_CodecFactory_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_CODECFACTORY_BUILD_DLL
+
+libTAO_CodecFactory_la_SOURCES = \
+  CodecFactory/CDR_Encaps_Codec.cpp \
+  CodecFactory/CodecFactory.cpp \
+  CodecFactory/CodecFactory_impl.cpp
+
+libTAO_CodecFactory_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CodecFactory_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CodecFactory/CDR_Encaps_Codec.h \
+  CodecFactory/CodecFactory.h \
+  CodecFactory/CodecFactory_impl.h \
+  CodecFactory/codecfactory_export.h
+
+pkgconfig_DATA += TAO_CodecFactory.pc
+
+TAO_CodecFactory.pc: ${top_builddir}/config.status ${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
+
+EXTRA_DIST += \
+  CodecFactory/TAO_CodecFactory.pc.in \
+  CodecFactory/TAO_CodecFactory.rc
 
 
 ## Makefile.PortableServer.am
@@ -2393,7 +2439,7 @@ libTAO_FlResource_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FlResource_la_LIBADD = \
-  $(ACE_BUILDDIR)/ace//libACE_FlReactor.la \
+  $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2431,7 +2477,7 @@ libTAO_QtResource_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_QtResource_la_LIBADD = \
-  $(ACE_BUILDDIR)/ace//libACE_QtReactor.la \
+  $(ACE_BUILDDIR)/ace/libACE_QtReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
   -lqt-mt
@@ -2466,7 +2512,7 @@ libTAO_TkResource_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_TkResource_la_LIBADD = \
-  $(ACE_BUILDDIR)/ace//libACE_TkReactor.la \
+  $(ACE_BUILDDIR)/ace/libACE_TkReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2501,7 +2547,7 @@ libTAO_XtResource_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_XtResource_la_LIBADD = \
-  $(ACE_BUILDDIR)/ace//libACE_XtReactor.la \
+  $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
