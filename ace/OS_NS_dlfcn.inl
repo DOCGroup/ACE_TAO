@@ -178,14 +178,15 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   if (filehandle != ACE_INVALID_HANDLE)
     {
       ACE_OS::last_error(0);
-      ACE_OSCALL ( ::loadModule (filehandle, mode ), MODULE *, 0, handle);
+      ACE_OSCALL ( ::loadModule (filehandle, LOAD_GLOBAL_SYMBOLS|LOAD_COMMON_MATCH_ALL ), MODULE *, 0, handle);
       int loaderror = ACE_OS::last_error();
       ACE_OS::close (filehandle);
 
       if ( (loaderror != 0) && (handle != 0) )
         {
           // ouch something went wrong most likely unresolved externals
-          ::unldByModuleId ( handle, 0 );
+		  if (handle)
+          	::unldByModuleId ( handle, 0 );
           handle = 0;
         }
     }

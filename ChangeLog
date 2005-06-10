@@ -1,3 +1,8 @@
+Fri Jun 10 15:47:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+		* ace/OS_NS_dlfcn.inl:
+		  Fixed VxWorks implementation of dlopen().
+
 Fri Jun 10 07:55:32 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
