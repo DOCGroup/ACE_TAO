@@ -1019,8 +1019,10 @@ protected:
   /// Obtain and cache the typecode factory object reference.
   void resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL);
 
+#if TAO_HAS_INTERCEPTORS == 1
   /// Obtain and cache the picurrent factory object reference.
   void resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL);
+#endif /* TAO_HAS_INTERCEPTORS */
 
   /// Obtain and cache the codec factory object reference.
   void resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL);

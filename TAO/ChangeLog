@@ -2,6 +2,7 @@ Fri Jun 10 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
         * tao/ORB_Core.{h,i}:
+        * tao/PICurrent_Loader.{h,cpp}:
           Fixed compile errors when interceptors are disabled
 
 Fri Jun 10 17:21:28 2005  Simon McQueen  <sm@prismtech.com>

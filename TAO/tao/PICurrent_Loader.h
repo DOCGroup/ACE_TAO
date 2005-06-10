@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "Object_Loader.h"
 #include "ace/Service_Config.h"
 
@@ -57,6 +59,8 @@ static int
 TAO_Requires_PICurrent_Initializer = TAO_PICurrent_Loader::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include /**/ "ace/post.h"
 
