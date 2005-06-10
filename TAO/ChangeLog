@@ -1,3 +1,16 @@
+Fri Jun 10 08:21:47 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+        * examples/RTScheduling/Thread_Task.cpp:
+
+          Addressed data initialization and memcpy issues which mainly
+          showed up in a 64-bit Solaris build.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+
+          Use ACE_SCOPE_THREAD on AIX and MacOS X instead of
+          ACE_SCOPE_PROCESS since it's not supported.
+
 Fri Jun 10 07:51:36 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/Options.html:
@@ -209,26 +222,26 @@ Thu Jun  9 15:33:52 2005  Simon McQueen  <sm@prismtech.com>
 
 Thu Jun  9 07:24:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
-	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp (push):
+        * orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
+        * orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp (push):
 
-	  Catch log service exceptions and rethrow the corresponding
-	  system exception.
+          Catch log service exceptions and rethrow the corresponding
+          system exception.
 
 Thu Jun  9 07:11:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (write_records, write_recordlist):
-	* orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (write_records, write_recordlist):
+        * orbsvcs/orbsvcs/Log/Log_i.h:
 
-	  Add DsLogAdmin::LogOffDuty to exception specification.
+          Add DsLogAdmin::LogOffDuty to exception specification.
 
 Thu Jun  9 07:05:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
 
           Add security_export.h to Header File section.
 
