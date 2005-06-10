@@ -179,6 +179,18 @@ TAO_ORB_Parameters::single_read_optimization (int x)
   this->single_read_optimization_ = x;
 }
 
+ACE_INLINE int
+TAO_ORB_Parameters::shared_profile (void) const
+{
+  return this->shared_profile_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::shared_profile (int x)
+{
+  this->shared_profile_ = x;
+}
+
 ACE_INLINE bool
 TAO_ORB_Parameters::disable_rt_collocation_resolver (void) const
 {

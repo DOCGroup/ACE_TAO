@@ -845,6 +845,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), -1);
         }
+       else if ((current_arg = arg_shifter.get_the_parameter
+                 (ACE_LIB_TEXT("-ORBUseSharedProfile"))))
+         {
+           this->orb_params ()->shared_profile
+             (ACE_OS::atoi (current_arg));
+
+           arg_shifter.consume_arg ();
+         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBSingleReadOptimization"))))
         {
