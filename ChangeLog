@@ -1,3 +1,8 @@
+Sat Jun 11 11:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
+          Added codecfactory as base
+
 Fri Jun 10 18:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/rtcosscheduling.mpb:
