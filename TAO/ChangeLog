@@ -1,3 +1,9 @@
+Sat Jun 11 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PolicyFactory_Registry.cpp:
+          Fixed memory leak at the moment the registering of a policy
+          factory fails
+
 Sat Jun 11 12:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Linear_Priority/run_test.pl:
