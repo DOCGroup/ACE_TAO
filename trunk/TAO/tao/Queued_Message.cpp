@@ -3,12 +3,8 @@
 
 #include "Queued_Message.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Queued_Message.inl"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao, 
-           Queued_Message, 
+ACE_RCSID (tao,
+           Queued_Message,
            "$Id$")
 
 TAO_Queued_Message::TAO_Queued_Message (ACE_Allocator *alloc,
