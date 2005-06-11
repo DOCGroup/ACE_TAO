@@ -1,3 +1,15 @@
+Sat Jun 11 12:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Linear_Priority/run_test.pl:
+          When the server can't be started end this test directly
+
+        * tao/RTCORBA/RT_ORBInitializer.{h,cpp}:
+          Changed the way we register the PolicyFactory. Don't store it as
+          member in the ORBInitializer, this gives problems now we start
+          loading the PI stuff on demand. The order of destruction seems to
+          be changed causing crashes in the RTCorba tests. This fixes these
+          crashes
+
 Sat Jun 11 11:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Queued_Message.{h,inl,cpp}:
@@ -29,8 +41,8 @@ Fri Jun 10 13:07:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/Queued_Message.cpp:
 	* tao/Queued_Message.inl:
 	* tao/SystemException.cpp:
-	* tao/SystemException.h:
-	* tao/UTF16_BOM_Translator.cpp:
+        * tao/SystemException.h:
+        * tao/UTF16_BOM_Translator.cpp:
 	* tao/UTF16_BOM_Translator.h:
 	* tao/Messaging/MessagingS.cpp:
 	* tao/Messaging/MessagingS.h:
