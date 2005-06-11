@@ -50,16 +50,22 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   const int result = this->factories_.bind (type,
                                             factory);
 
-  if (result == 1)
+  if (result != 0)
     {
-      // PolicyFactory of given type already exists.
-      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
-                                       CORBA::COMPLETED_NO));
-    }
-  else if (result == -1)
-    {
-      // Could not add PolicyFactory due to internal bind failures.
-      ACE_THROW (CORBA::INTERNAL ());
+      // Release the duplicated factory to prevent a memory leak
+      CORBA::release (factory);
+
+      if (result == 1)
+        {
+          // PolicyFactory of given type already exists.
+          ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
+                                           CORBA::COMPLETED_NO));
+        }
+      else
+        {
+          // Could not add PolicyFactory due to internal bind failures.
+          ACE_THROW (CORBA::INTERNAL ());
+        }
     }
 }
 
