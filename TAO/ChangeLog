@@ -1,3 +1,45 @@
+Sat Jun 11 23:45:07 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be_include/be_visitor_sequence.h:
+
+          Removed includes of unused files.
+
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+
+          Fixed incorrect visitor names in error messages.
+
+        * TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be_include/be_visitor_argument/post_invoke_cs.h:
+        * TAO_IDL/be_include/be_visitor_argument/post_marshal_ss.h:
+        * TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_assign_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_is.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_marshal_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_invoke_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_invoke_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
+        * TAO_IDL/be_include/be_visitor_sequence/elemtype.h:
+
+          Removed visitors that are no longer used. Thanks to Gary Maxey
+          <gary.maxey@hp.com> for pointing out most of them.
+
 Sat Jun 11 14:43:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
