@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoserver, kokyu_dsrt_schedulers {
+project: taoserver, kokyu_dsrt_schedulers, codecfactory {
 }
