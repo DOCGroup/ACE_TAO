@@ -109,6 +109,7 @@ TAO_Notify_LogConsumer::push
     {
       // log the RecordList.
       this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (DsLogAdmin::LogFull, ex)
     {

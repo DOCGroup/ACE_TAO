@@ -1,3 +1,11 @@
+Sat Jun 11 14:43:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
+	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp (push):
+
+	  Add ACE_TRY_CATCH after call to write_recordlist() for emulated
+	  exception builds.
+
 Sat Jun 11 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PolicyFactory_Registry.cpp:
