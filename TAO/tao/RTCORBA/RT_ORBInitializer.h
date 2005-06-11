@@ -26,8 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "RT_PolicyFactory.h"
-
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
@@ -79,12 +77,6 @@ private:
                                   ACE_ENV_ARG_DECL);
 
 private:
-
-  /// Instance of the RTCORBA policy factory.
-  /// The RTCORBA policy factory is stateless and reentrant, so share
-  /// a single instance between all ORBs.
-  TAO_RT_PolicyFactory policy_factory_;
-
   /// Priority mapping type.
   int priority_mapping_type_;
 

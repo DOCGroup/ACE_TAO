@@ -84,7 +84,9 @@ sub run_server
     else {
         $SV = new PerlACE::Process ("server", @_);
     }
-    $SV->Spawn ();
+    if ($SV->Spawn () == -1) {
+    exit 1;
+    }
 
     if (PerlACE::waitforfile_timed ($iorfile, 10) == -1)
     {
