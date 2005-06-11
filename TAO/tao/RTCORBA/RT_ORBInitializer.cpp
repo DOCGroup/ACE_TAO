@@ -12,6 +12,7 @@ ACE_RCSID (RTCORBA,
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #include "RT_Policy_i.h"
+#include "RT_PolicyFactory.h"
 #include "RT_Protocols_Hooks.h"
 #include "Priority_Mapping_Manager.h"
 #include "Network_Priority_Mapping_Manager.h"
@@ -232,11 +233,17 @@ TAO_RT_ORBInitializer::register_policy_factories (
   ACE_ENV_ARG_DECL)
 {
   // Register the RTCORBA policy factories.
+  PortableInterceptor::PolicyFactory_ptr tmp;
+  ACE_NEW_THROW_EX (tmp,
+                    TAO_RT_PolicyFactory,
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO::VMCID,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
 
-  // The RTCORBA policy factory is stateless and reentrant, so share a
-  // single instance between all ORBs.
-  PortableInterceptor::PolicyFactory_ptr policy_factory =
-    &(this->policy_factory_);
+  PortableInterceptor::PolicyFactory_var policy_factory = tmp;
 
   // Bind the same policy factory to all RTCORBA related policy
   // types since a single policy factory is used to create each of
@@ -260,7 +267,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
       ACE_TRY
         {
           info->register_policy_factory (*i,
-                                         policy_factory
+                                         policy_factory.in ()
                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
