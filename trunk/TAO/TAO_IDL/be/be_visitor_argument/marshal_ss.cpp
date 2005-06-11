@@ -48,7 +48,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_argument - "
                          "Bad argument type\n"),
                         -1);
@@ -86,7 +86,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_argument - "
                          "Bad substate\n"),
                         -1);
@@ -95,7 +95,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_argument - "
                          "cannot accept visitor\n"),
                         -1);
@@ -128,7 +128,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_argument - "
                          "Bad substate\n"),
                         -1);
@@ -173,7 +173,7 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_array - "
                          "Bad substate\n"),
                         -1);
@@ -214,7 +214,7 @@ int be_visitor_args_marshal_ss::visit_enum (be_enum *)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_enum - "
                          "Bad substate\n"),
                         -1);
@@ -255,7 +255,7 @@ int be_visitor_args_marshal_ss::visit_interface (be_interface *)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_interface - "
                          "Bad substate\n"),
                         -1);
@@ -296,7 +296,7 @@ int be_visitor_args_marshal_ss::visit_interface_fwd (be_interface_fwd *)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_interface_fwd - "
                          "Bad substate\n"),
                         -1);
@@ -337,7 +337,7 @@ int be_visitor_args_marshal_ss::visit_valuetype (be_valuetype *)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_valuetype - "
                          "Bad substate\n"),
                         -1);
@@ -378,7 +378,7 @@ int be_visitor_args_marshal_ss::visit_valuetype_fwd (be_valuetype_fwd *)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_valuetype_fwd - "
                          "Bad substate\n"),
                         -1);
@@ -432,7 +432,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
               break;
             default:
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_args_compiled_marshal_ss::"
+                                 "be_visitor_args_marshal_ss::"
                                  "visit_predefined_type - "
                                  "Bad predefined type\n"),
                                 -1);
@@ -538,7 +538,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_array - "
                          "Bad substate\n"),
                         -1);
@@ -581,7 +581,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_interface - "
                          "Bad substate\n"),
                         -1);
@@ -669,7 +669,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_string - "
                          "Bad substate\n"),
                         -1);
@@ -715,7 +715,7 @@ int be_visitor_args_marshal_ss::visit_structure (be_structure *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_structure - "
                          "Bad substate\n"),
                         -1);
@@ -761,7 +761,7 @@ int be_visitor_args_marshal_ss::visit_union (be_union *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_union - "
                          "Bad substate\n"),
                         -1);
@@ -777,7 +777,7 @@ int be_visitor_args_marshal_ss::visit_typedef (be_typedef *node)
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
+                         "be_visitor_args_marshal_ss::"
                          "visit_typedef - "
                          "accept on primitive type failed\n"),
                         -1);

@@ -53,7 +53,6 @@
 #include "be_visitor_sequence/cdr_op_ch.cpp"
 #include "be_visitor_sequence/cdr_op_cs.cpp"
 #include "be_visitor_sequence/buffer_type.cpp"
-#include "be_visitor_sequence/elemtype.cpp"
 #include "be_visitor_sequence/sequence_base.cpp"
 #include "be_visitor_sequence/sequence_ch.cpp"
 #include "be_visitor_sequence/sequence_cs.cpp"

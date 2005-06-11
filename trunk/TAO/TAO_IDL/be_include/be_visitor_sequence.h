@@ -13,7 +13,6 @@
 #include "be_visitor_sequence/sequence_cs.h"
 #include "be_visitor_sequence/sequence_base.h"
 #include "be_visitor_sequence/buffer_type.h"
-#include "be_visitor_sequence/elemtype.h"
 #include "be_visitor_sequence/any_op_ch.h"
 #include "be_visitor_sequence/any_op_cs.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
