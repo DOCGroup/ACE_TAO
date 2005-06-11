@@ -208,10 +208,6 @@ private:
   TAO_Queued_Message *prev_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "Queued_Message.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_QUEUED_MESSAGE_H */
