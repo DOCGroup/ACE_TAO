@@ -1,3 +1,23 @@
+Sun Jun 12 12:48:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Fixed problem with GXX version detection when default Make
+          shell is CMD.EXE and problems with different version reports
+          with non-standard GCC implementations (like VxWorks:-).
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Fixed problem with ACE version detection when default Make
+          shell is CMD.EXE.
+
+        * include/makeinclude/rules.local.GNU:
+          Fixed problem with creation of .depend files when default Make
+          shell is CMD.EXE.
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Changed to implement support for creation of shared libs for
+          VxWorks targets.
+
 Sat Jun 11 11:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
@@ -16,7 +36,7 @@ Fri Jun 10 16:03:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 Fri Jun 10 16:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-lite.h:
- ÿÿÿÿÿÿÿ  Introduced new macro 'ACE_HAS_DYNAMIC_LINKING' to enable more
+          Introduced new macro 'ACE_HAS_DYNAMIC_LINKING' to enable more
           generalized testing for platforms supporting dynamic linking
           than 'ACE_HAS_SVR4_DYNAMIC_LINKING' supports (which excludes
           WIN32, VxWorks and HPUX which *do* support dynamic linking).
