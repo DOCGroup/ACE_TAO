@@ -35,6 +35,7 @@ namespace CORBA
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+  class Environment;
 }
 
 namespace TAO
