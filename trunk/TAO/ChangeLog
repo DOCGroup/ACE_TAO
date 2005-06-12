@@ -1,3 +1,8 @@
+Sun Jun 12 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocation_Proxy_Broker.h:
+          Added forward declaration of environment
+
 Sun Jun 12 13:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security/Security_ORBInitializer.{h,cpp}:
