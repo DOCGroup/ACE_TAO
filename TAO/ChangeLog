@@ -1,3 +1,11 @@
+Sun Jun 12 13:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.{h,cpp}:
+        * tao/RTCORBA/RT_ORBInitializer.{h,cpp}:
+          Updated the way the policyfactory is registered in a way that things
+          are not dependent on the destruction order and we only have one
+          instance of the factory in runtime
+
 Sun Jun 12 12:37:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * rules.tao.GNU:
@@ -43,8 +51,8 @@ Sat Jun 11 23:45:07 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
         * TAO_IDL/be_include/be_visitor_sequence/elemtype.h:
 
-          Removed from the repository visitors that are no longer used. 
-          Thanks to Gary Maxey <gary.maxey@hp.com> for pointing out 
+          Removed from the repository visitors that are no longer used.
+          Thanks to Gary Maxey <gary.maxey@hp.com> for pointing out
           most of them.
 
 Sat Jun 11 14:43:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
