@@ -157,18 +157,23 @@ shr.o: $(VSHOBJS)
 .INTERMEDIATE: shr.o
 endif # aix_build
 
-ifeq (1,$(aix_build))
+ifeq ($(VXWORKSLINK),true)
+$(VSHLIB): $(basename $(notdir $(PRJ_FILE))).out
+	-$(RM) $@
+	-$(LN_S)  $(PROJECT_OUT) $@
+else # !VXWORKSLINK
+  ifeq (1,$(aix_build))
 $(VSHLIB): shr.o
 	$(AR) $(ARFLAGS) $@ $?
-  ifneq (,$(RANLIB))
+    ifneq (,$(RANLIB))
 	-$(RANLIB) $@
-  endif # RANLIB
-else # ! aix_build
+    endif # RANLIB
+  else # ! aix_build
 $(VSHLIB): $(VSHOBJS)
-  ifdef PRELIB
+    ifdef PRELIB
 	$(PRELIB)
-  endif # PRELIB
-  ifdef ibmcxx_build
+    endif # PRELIB
+    ifdef ibmcxx_build
     # This is required to get AIX IBM C/C++ to instantiate and compile the needed
     # templates before building the library.
 	if test -s ./$(TEMPINCDIR)/*.C; \
@@ -176,35 +181,36 @@ $(VSHLIB): $(VSHOBJS)
 		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \
 	fi
-  endif # ibmcxx_build
-  ifdef SHLIBBUILD
+    endif # ibmcxx_build
+    ifdef SHLIBBUILD
 	$(SHLIBBUILD)
-  else # ! SHLIBBUILD
-    ifdef ibmcxx_build
+    else # ! SHLIBBUILD
+      ifdef ibmcxx_build
 	if test -s ./$(TEMPINCDIR)/*.$(OBJEXT); \
         then \
 		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(TEMPINCDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
         else \
 		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
 	fi
-    else # !ibmcxx_build
-      ifdef kylix
+      else # !ibmcxx_build
+        ifdef kylix
 	$(SOLINK.cc) $(LDFLAGS) $^, $@,, $(ACE_SHLIBS) $(LIBS) $(BORINITSHAREDOBJ)
-      else # ! kylix
-        ifeq (1,$(ace_lib_prelink))
+        else # ! kylix
+          ifeq (1,$(ace_lib_prelink))
           #### Attempt a link (which will fail), to add template instantiations
           #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $^ $(LDFLAGS) $(ACE_NUL_STDERR)
-        endif # ace_lib_prelink
-        ifeq ($(split),1)
+          endif # ace_lib_prelink
+          ifeq ($(split),1)
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-        else # ! split
+          else # ! split
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-        endif  # split
-      endif  # kylix
-    endif  # ibmcxx_build
-  endif  # SHLIBBUILD
-endif  # aix_build
+          endif  # split
+        endif  # kylix
+      endif  # ibmcxx_build
+    endif  # SHLIBBUILD
+  endif  # aix_build
+endif # VXWORKSLINK
 ifneq ($(SOVERSION),)
 	-$(RM) $(VSHLIB_NO_VER)
 	-$(LN_S) $@ $(VSHLIB_NO_VER)

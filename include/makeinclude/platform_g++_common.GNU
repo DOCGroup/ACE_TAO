@@ -11,7 +11,16 @@ else
 endif
 
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
-GXX_4_OR_BETTER := $(shell major_version=`echo $(CXX_VERSION) | sed -e 's/\..*$$//'`; if test "$$major_version" -gt 3; then echo 1; else echo 0; fi)
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e "s/[^0-9\.]//g" | sed -e "s/\..*$$//")
+else
+CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+endif
+ifeq ($(findstring $(CXX_MAJOR_VERSION),1 2 3),$(CXX_MAJOR_VERSION))
+GXX_4_OR_BETTER := 0
+else
+GXX_4_OR_BETTER := 1
+endif
 
 # If no option has been specified, try to enable templates based on the
 # version of the compiler.
