@@ -32,7 +32,7 @@ ifeq (,$(findstring -I$(TAO_ROOT),$(INCLDIRS)))
 endif
 
 ifeq ($(templates),explicit)
-  default: 
+  default:
 	echo "ERROR: Explicit templates are not possible to be used with TAO"
 endif # templates
 
@@ -230,9 +230,15 @@ endif
 # minor and beta) to run, but applications with dependencies on libraries
 # with different minor or major or beta versions to fail.
 #
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+TAO_MAJOR_VERSION := $(shell awk "/TAO_MAJOR_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
+TAO_MINOR_VERSION := $(shell awk "/TAO_MINOR_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
+TAO_BETA_VERSION := $(shell awk "/TAO_BETA_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
+else
 TAO_MAJOR_VERSION := $(shell awk '/TAO_MAJOR_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 TAO_MINOR_VERSION := $(shell awk '/TAO_MINOR_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 TAO_BETA_VERSION := $(shell awk '/TAO_BETA_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
+endif
 # Version number of the libraries
 #
 ifeq ($(versioned_so),1)
