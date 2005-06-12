@@ -762,7 +762,6 @@ nobase_include_HEADERS = \
   Pseudo_VarOut_T.h \
   Pseudo_VarOut_T.inl \
   Queued_Message.h \
-  Queued_Message.inl \
   Reactive_Connect_Strategy.h \
   Reactive_Flushing_Strategy.h \
   Recursive_Type_TypeCode.cpp \

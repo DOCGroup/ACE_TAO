@@ -1,3 +1,46 @@
+Sun Jun 12 14:24:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i, match_i, remove_old_records):
+
+	  Simplify iterating over record store by using ACE_Hash_Map's
+	  STL-like API.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
+
+	  Changed from LOG_HASH_MAP_ITER to LOG_RECORD_STORE_ITER.
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h (TAO_LogRecordStore):
+
+	  Added LOG_RECORD_STORE_ENTRY typedef.
+
+	* orbsvcs/orbsvcs/Log/Iterator_i.cpp: (TAO_Iterator_i):
+	* orbsvcs/orbsvcs/Log/Iterator_i.h (TAO_Iterator_i):
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
+
+	  Removed max_store_size argument from constructor.
+	  Removed (unused) max_store_size member variable.
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+
+	  Changed constructor to directly assign log record's .info field
+	  to property list value binding instead of stashing it in an the
+	  Any.  This allows the value to be queried via ETCL constraints.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (remove_old_records):
+
+	  Changed conditional in constraint as it was casing new, not old,
+	  records to be deleted.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (validate_capacity_alarm_thresholds):
+	* orbsvcs/orbsvcs/Log/Log_i.h (valdiate_capacity_alarm_thresholds):
+
+	  Move validate_capacity_alarm_thresholds method from public to
+	  protected visibility.
+
+	* tao/Makefile.am:
+
+	  Updated to remove Queued_Message.inl.
+
 Sun Jun 12 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocation_Proxy_Broker.h:

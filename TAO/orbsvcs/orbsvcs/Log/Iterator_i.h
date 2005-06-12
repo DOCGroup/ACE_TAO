@@ -51,7 +51,6 @@ public:
   TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE &store,
                   CORBA::ULong start,
                   const char *constraint,
-                  CORBA::ULong max_store_size,
                   CORBA::ULong max_rec_list_len
                   );
 
@@ -76,9 +75,6 @@ private:
 
   /// Constraint.
   const char *constraint_;
-
-  /// Max entries in the storage.
-  CORBA::ULong max_store_size_;
 
   /// Max rec list length.
   CORBA::ULong max_rec_list_len_;

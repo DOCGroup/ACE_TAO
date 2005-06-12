@@ -111,6 +111,8 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Don't want to be tied to hash maps!.
   typedef LOG_RECORD_HASH_MAP_ITER LOG_RECORD_STORE_ITER;
   typedef LOG_RECORD_HASH_MAP LOG_RECORD_STORE;
+  typedef LOG_RECORD_HASH_MAP_ENTRY LOG_RECORD_STORE_ENTRY;
+	
 
   /// Get the underlying storage.
   /// @@ return a const ref? we don't want anyone to modify the storage.

@@ -11,12 +11,10 @@ ACE_RCSID (Log,
 TAO_Iterator_i::TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE &store,
                                 CORBA::ULong start,
                                 const char *constraint,
-                                CORBA::ULong max_store_size,
                                 CORBA::ULong max_rec_list_len
                                 )
   :iter_ (store),
    constraint_ (constraint),
-   max_store_size_ (max_store_size),
    max_rec_list_len_ (max_rec_list_len)
 {
   // Advance the iterator to the starting point.

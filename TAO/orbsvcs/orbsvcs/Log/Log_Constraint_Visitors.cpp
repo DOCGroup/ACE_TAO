@@ -56,7 +56,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   CORBA::Any* value3;
   ACE_NEW (value3, CORBA::Any);
 
-  *value3 <<= this->rec_.info;
+  *value3 = this->rec_.info;
 
   if (value3 != 0)
     {
