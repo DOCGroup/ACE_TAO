@@ -239,27 +239,28 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   ACE_Auto_Array_Ptr <ACE_TCHAR> auto_name (ACE::ldname (sym_name));
-    // handle_ can be invalid especially when ACE_DLL_Handle resigned ownership
-    // BTW. Handle lifecycle management is a little crazy in ACE
-  if ( this->handle_ != ACE_SHLIB_INVALID_HANDLE )
-  {
-    void *sym =  ACE_OS::dlsym (this->handle_, auto_name.get ());
+  // handle_ can be invalid especially when ACE_DLL_Handle resigned ownership
+  // BTW. Handle lifecycle management is a little crazy in ACE
+  if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+    {
+      void *sym =  ACE_OS::dlsym (this->handle_, auto_name.get ());
 
-    // Linux says that the symbol could be null and that it isn't an error.
-    // So you should check the error message also, but since null symbols
-    // won't do us much good anyway, let's still report an error.
-    if (!sym && ignore_errors != 1)
-      {
-        if (ACE::debug ())
-          ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("ACE_DLL_Handle::symbol (\"%s\") \"%s\".\n"),
-                      auto_name.get (),
-                      this->error ()->c_str ()));
+      // Linux says that the symbol could be null and that it isn't an
+      // error.  So you should check the error message also, but since
+      // null symbols won't do us much good anyway, let's still report
+      // an error.
+      if (!sym && ignore_errors != 1)
+        {
+          if (ACE::debug ())
+            ACE_ERROR ((LM_ERROR,
+                        ACE_LIB_TEXT ("ACE_DLL_Handle::symbol (\"%s\") \"%s\".\n"),
+                        auto_name.get (),
+                        this->error ()->c_str ()));
 
-        return 0;
-      }
-    return sym;
-  }
+          return 0;
+        }
+      return sym;
+    }
   return 0;
 }
 
