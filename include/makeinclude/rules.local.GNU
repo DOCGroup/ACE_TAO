@@ -402,7 +402,7 @@ ORIGdepend.local: $(MAKEFILE)
 ifneq ($(MAKEFILE),$(DEPENDENCY_FILE))
 $(DEPENDENCY_FILE):
 ifeq ($(vxworks_ntbuild),1)
-	copy NUL $(DEPENDENCY_FILE)
+	copy NUL "$(DEPENDENCY_FILE)"
 else
 	touch $(DEPENDENCY_FILE)
 endif
