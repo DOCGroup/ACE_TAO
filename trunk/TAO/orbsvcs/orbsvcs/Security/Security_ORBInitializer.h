@@ -86,7 +86,7 @@ namespace TAO
 
       /// PolicyFactory that is used to create all security related
       /// policies capable of being created via ORB::create_policy().
-      TAO::Security::PolicyFactory policy_factory_;
+      PortableInterceptor::PolicyFactory_var policy_factory_;
 
     };
 
