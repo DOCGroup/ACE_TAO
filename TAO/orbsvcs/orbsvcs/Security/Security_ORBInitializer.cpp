@@ -161,10 +161,20 @@ TAO::Security::ORBInitializer::register_policy_factories (
 {
   // Register the security policy factories.
 
-  // The security policy factory is stateless and reentrant, so share a
-  // single instance between all ORBs.
-  PortableInterceptor::PolicyFactory_ptr policy_factory =
-    &(this->policy_factory_);
+  if (CORBA::is_nil (this->policy_factory_.in ()))
+    {
+      PortableInterceptor::PolicyFactory_ptr policy_factory;
+      ACE_NEW_THROW_EX (policy_factory,
+                        TAO::Security::PolicyFactory,
+                          CORBA::NO_MEMORY (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO::VMCID,
+                              ENOMEM),
+                            CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->policy_factory_ = policy_factory;
+    }
 
   // Bind the same policy factory to all security related policy
   // types since a single policy factory is used to create each of
@@ -174,51 +184,51 @@ TAO::Security::ORBInitializer::register_policy_factories (
 
   type = ::Security::SecQOPPolicy;
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = ::Security::SecMechanismsPolicy;
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = ::Security::SecInvocationCredentialsPolicy;
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = ::Security::SecFeaturePolicy;   // Deprecated
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = ::Security::SecDelegationDirectivePolicy;
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = ::Security::SecEstablishTrustPolicy;
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 
   type = SecurityLevel3::ContextEstablishmentPolicyType;
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 
   type = SecurityLevel3::ObjectCredentialsPolicyType;
   info->register_policy_factory (type,
-                                 policy_factory
+                                 this->policy_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

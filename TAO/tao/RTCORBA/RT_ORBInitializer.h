@@ -77,6 +77,13 @@ private:
                                   ACE_ENV_ARG_DECL);
 
 private:
+  /// Instance of the RTCorba policy factory.
+  /**
+   * The RTCorba policy factory is stateless and reentrant, so share
+   * a single instance between all ORBs.
+   */
+  PortableInterceptor::PolicyFactory_var policy_factory_;
+
   /// Priority mapping type.
   int priority_mapping_type_;
 
