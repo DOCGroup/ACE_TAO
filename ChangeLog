@@ -1,3 +1,10 @@
+Sun Jun 12 14:53:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Logging_Strategy.cpp (parse_args):
+
+	  Update comment to make it clear value is being converted from
+	  number of KB to number of bytes.
+
 Sun Jun 12 12:48:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
