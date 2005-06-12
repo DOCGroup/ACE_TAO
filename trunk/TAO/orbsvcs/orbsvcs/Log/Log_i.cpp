@@ -639,16 +639,6 @@ TAO_Log_i::query_i (const char *constraint,
   TAO_LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
-  // Create an iterator
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter (store);
-
-  CORBA::ULong len = static_cast<CORBA::ULong> (store.current_size ());
-
-  // How many entries?
-
-  // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
-
   DsLogAdmin::RecordList* rec_list;
   // Figure out the length of the list.
 
@@ -658,21 +648,17 @@ TAO_Log_i::query_i (const char *constraint,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong count = 0; // count of matches found.
-  CORBA::Boolean done = 0; // flag to end "for" operation.
-  CORBA::ULong i = 0;
-  for (;
-       i < len && count < how_many;
-       ++i)
-    {
-      if (iter.next (hash_entry) == -1 || iter.advance () == -1)
-        {
-          done = 1;
-          break;
-        }
+  // Create iterators
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store.begin());
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end (store.end());
 
+  CORBA::ULong count = 0;	// count of matches found.
+  CORBA::ULong pos = 0;		// position
+
+  for ( ; ((iter != iter_end) && (count < how_many)); ++iter, ++pos)
+    {
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator (hash_entry->int_id_);
+      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
@@ -680,16 +666,16 @@ TAO_Log_i::query_i (const char *constraint,
         if (TAO_debug_level > 0)
 #if defined (ACE_LACKS_LONGLONG_T)
                ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
-                      ACE_U64_TO_U32 (hash_entry->int_id_.id),
-                      ACE_U64_TO_U32 (hash_entry->int_id_.time)));
+                      ACE_U64_TO_U32 ((*iter).int_id_.id),
+                      ACE_U64_TO_U32 ((*iter).int_id_.time)));
 
 #else
                ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
-                      hash_entry->int_id_.id,
-                      hash_entry->int_id_.time));
+                      (*iter).int_id_.id,
+                      (*iter).int_id_.time));
 #endif
 
-        (*rec_list)[count] = hash_entry->int_id_;
+        (*rec_list)[count] = (*iter).int_id_;
         // copy the log record.
         count++;
       }
@@ -697,15 +683,14 @@ TAO_Log_i::query_i (const char *constraint,
 
   rec_list->length (count);
 
-  if (i < len && done == 0) // There are more records to process.
+  if (iter != iter_end)		// There are more records to process.
     {
       // Create an iterator to pass out.
       TAO_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
                         TAO_Iterator_i (store,
-                                        i,
+                                        pos,
                                         constraint,
-                                        len,
                                         how_many),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (rec_list);
@@ -794,32 +779,23 @@ TAO_Log_i::match_i (const char *constraint,
   TAO_LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
-  // Create an iterator
-  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
-
-  CORBA::ULong len = static_cast<CORBA::ULong> (store.current_size ());
-  // How many entries?
-
-  // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
+  // Create iterators
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store.begin());
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end (store.end());
 
   CORBA::ULong count = 0; // count of matches found.
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for ( ; iter != iter_end; ++iter)
     {
-      if (iter.next (hash_entry) == -1 || iter.advance () == -1)
-        {
-          break;
-        }
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator (hash_entry->int_id_);
+      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
           if (delete_rec == 1)
             {
-              if (this->recordstore_.remove (hash_entry->int_id_.id) == 0)
+              if (this->recordstore_.remove ((*iter).int_id_.id) == 0)
                 count++;
             }
           else
@@ -1129,25 +1105,6 @@ TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
   // just have this map to its sync method
 }
 
-
-CORBA::Boolean
-TAO_Log_i::validate_capacity_alarm_thresholds (
-    const DsLogAdmin::CapacityAlarmThresholdList & threshs
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  for (CORBA::ULong i = 0; i < threshs.length (); i++)
-    if (threshs[i] > 100)
-      return false;
-
-  if (threshs.length () != 0)
-    for (CORBA::ULong i = 0; i < threshs.length () - 1; i++)
-      if (threshs[i] >= threshs[i +1])
-        return false;
-
-  return true;
-}
-
 CORBA::Boolean
 TAO_Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -1308,7 +1265,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   double temp1 =
     static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (p_time));
 
-  ACE_OS::sprintf (out, "time > %.0f", temp1);
+  ACE_OS::sprintf (out, "time < %.0f", temp1);
 
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (out
@@ -1319,32 +1276,23 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   TAO_LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
-  // Create an iterator
-  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
-
-  CORBA::ULong len = static_cast<CORBA::ULong> (store.current_size ());
-  // How many entries?
-
-  // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
+  // Create iterators
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store.begin());
+  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end (store.end());
 
   CORBA::ULong count = 0; // count of matches found.
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for ( ; iter != iter_end; ++iter)
     {
-      if (iter.next (hash_entry) == -1 || iter.advance () == -1)
-        {
-          break;
-        }
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator (hash_entry->int_id_);
+      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
-      {
-            if (this->recordstore_.remove (hash_entry->int_id_.id) == 0)
-              count++;
-      }
+	{
+	  if (this->recordstore_.remove ((*iter).int_id_.id) == 0)
+	    count++;
+	}
     }
 
   if (avail_status_.log_full && count > 0)
@@ -1441,6 +1389,24 @@ TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
              && this->thresholds_[this->current_threshold_] <= percent)
         ++this->current_threshold_;
     }
+}
+
+CORBA::Boolean
+TAO_Log_i::validate_capacity_alarm_thresholds (
+    const DsLogAdmin::CapacityAlarmThresholdList & threshs
+    ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  for (CORBA::ULong i = 0; i < threshs.length (); i++)
+    if (threshs[i] > 100)
+      return false;
+
+  if (threshs.length () != 0)
+    for (CORBA::ULong i = 0; i < threshs.length () - 1; i++)
+      if (threshs[i] >= threshs[i +1])
+        return false;
+
+  return true;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

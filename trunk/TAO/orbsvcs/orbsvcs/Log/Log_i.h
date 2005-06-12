@@ -313,12 +313,6 @@ public:
                      DsLogAdmin::UnsupportedQoS));
   //@}
 
-  /// Check that valid threshold values have been given.
-  static CORBA::Boolean validate_capacity_alarm_thresholds (
-    const DsLogAdmin::CapacityAlarmThresholdList & threshs
-   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
 protected:
 
   DsLogAdmin::RecordList* query_i (const char *constraint,
@@ -358,6 +352,12 @@ protected:
 
   /// Reset capacity alarm threshold.
   void reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Check that valid threshold values have been given.
+  static CORBA::Boolean validate_capacity_alarm_thresholds (
+    const DsLogAdmin::CapacityAlarmThresholdList & threshs
+   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
