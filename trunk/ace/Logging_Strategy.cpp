@@ -183,7 +183,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
         case 'm':
           // Maximum logfile size (in KB).  Must be a non-zero value.
           this->max_size_ = ACE_OS::strtoul (get_opt.opt_arg (), 0, 10);
-          this->max_size_ <<= 10;       // convert to KB
+          this->max_size_ <<= 10;       // convert from KB to bytes.
           break;
         case 'n':
           delete [] this->program_name_;
