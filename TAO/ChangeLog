@@ -1,3 +1,10 @@
+Sun Jun 12 23:38:02 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/GIOP_Message_Base.h (process_request, process_locate_request):
+	   
+	  Made the above calls virtual since it makes it easier to do
+	  implementation inheritance, and override behaviours. 
+
 Sun Jun 12 14:24:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i, match_i, remove_old_records):
