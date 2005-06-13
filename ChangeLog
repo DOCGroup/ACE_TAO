@@ -1,3 +1,8 @@
+Mon Jun 13 18:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+          Fixed compile errors
+
 Mon Jun 13 13:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
