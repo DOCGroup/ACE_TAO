@@ -1,3 +1,11 @@
+Mon Jun 13 13:44:41 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+
+          Fixed a typo.
+
 Thu Jun  4 14:36:00 UTC 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/examples/Quoter/Distributor/Distributor_exec.h
