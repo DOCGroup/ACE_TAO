@@ -1,3 +1,11 @@
+Mon Jun 13 09:32:38 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Profile.cpp:
+        * tao/Tagged_Component.cpp:
+        * tao/Tagged_Component.h:
+
+          Reverted the change to TAO_Tagged_Component::get_component.
+
 Mon Jun 13 12:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Client_Propagated/client.cpp:
