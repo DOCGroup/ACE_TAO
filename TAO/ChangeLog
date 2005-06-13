@@ -1,3 +1,8 @@
+Mon Jun 13 18:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h:
+          Converted comments to doxygen style
+
 Mon Jun 13 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
