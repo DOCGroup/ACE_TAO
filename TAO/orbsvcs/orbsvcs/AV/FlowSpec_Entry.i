@@ -136,7 +136,12 @@ ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_peer_addr (ACE_Addr *peer_addr)
 {
+  if (this->delete_peer_addr_)
+    delete this->peer_addr_;
+
+  this->delete_peer_addr_ = false;
   this->peer_addr_ = peer_addr;
+
   if (this->handler_ != 0)
     this->handler_->set_remote_address (peer_addr);
   return 0;

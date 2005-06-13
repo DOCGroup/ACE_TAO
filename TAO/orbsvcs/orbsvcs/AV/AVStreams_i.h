@@ -1,4 +1,4 @@
-// -*- C++
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -65,6 +65,11 @@ class TAO_AV_Export AV_Null_MediaCtrl
 {
 public:
   AV_Null_MediaCtrl (void);
+
+protected:
+
+  virtual ~AV_Null_MediaCtrl (void);
+	
 };
 
 /**
@@ -81,9 +86,6 @@ class TAO_AV_Export TAO_Basic_StreamCtrl
 public:
   /// Default Constructor
   TAO_Basic_StreamCtrl (void);
-
-  /// Destructor.
-  virtual ~TAO_Basic_StreamCtrl (void);
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
@@ -151,6 +153,10 @@ public:
                      AVStreams::notSupported));
 
 protected:
+
+  /// Destructor.
+  virtual ~TAO_Basic_StreamCtrl (void);
+
 
   /// The Virtual Devices for this stream
   AVStreams::VDev_var vdev_a_;
