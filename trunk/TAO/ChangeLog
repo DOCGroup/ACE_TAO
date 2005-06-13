@@ -1,3 +1,26 @@
+Mon Jun 13 12:10:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+          Changed to interpret "position" as the index in the complete
+          sequence of records that match the constraint instead of the
+          index in the sequence of all records.
+
+          Changed TAO_Iterator_i constructor to take new "current" and
+          "end" iterator parameters.  This allows us to avoid scanning
+          and skipping records returned as part of the initial query().
+
+          Simplify iterating over record store by using ACE_Hash_Map's
+          STL-like API.
+
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+
+          Change type of constraint member variable to CORBA::String_var
+          so we don't dereference a dangling char * in get().
+
 Mon Jun 13 18:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h:
@@ -66,7 +89,7 @@ Sun Jun 12 23:09:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp (TAO_Log_Constraint_Visitor):
 
-	  Add policy list bindings for each item in the log record's
+	  Add property list bindings for each item in the log record's
 	  attribute list.
 
 Sun Jun 12 23:38:02 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>

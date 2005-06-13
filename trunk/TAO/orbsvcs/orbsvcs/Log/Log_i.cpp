@@ -635,14 +635,12 @@ TAO_Log_i::query_i (const char *constraint,
   // meet the constraints.
 
 
-  // get the underlying storage.
+  // Get the underlying storage.
   TAO_LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
-  DsLogAdmin::RecordList* rec_list;
-  // Figure out the length of the list.
-
   // Allocate the list of <how_many> length.
+  DsLogAdmin::RecordList* rec_list;
   ACE_NEW_THROW_EX (rec_list,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());
@@ -653,9 +651,8 @@ TAO_Log_i::query_i (const char *constraint,
   TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end (store.end());
 
   CORBA::ULong count = 0;	// count of matches found.
-  CORBA::ULong pos = 0;		// position
 
-  for ( ; ((iter != iter_end) && (count < how_many)); ++iter, ++pos)
+  for ( ; ((iter != iter_end) && (count < how_many)); ++iter)
     {
       // Use an evaluator.
       TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
@@ -688,10 +685,11 @@ TAO_Log_i::query_i (const char *constraint,
       // Create an iterator to pass out.
       TAO_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
-                        TAO_Iterator_i (store,
-                                        pos,
+                        TAO_Iterator_i (iter,
+					iter_end,
+                                        count,
                                         constraint,
-                                        how_many),
+                                        this->max_rec_list_len_),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (rec_list);
 
