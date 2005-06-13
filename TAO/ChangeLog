@@ -1,3 +1,8 @@
+Mon Jun 13 08:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Asynch_Invocation_Adapter.{h,cpp}:
+          Fixed ambiguity warnings with Borland.
+
 Sun Jun 12 23:09:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp (TAO_Log_Constraint_Visitor):
