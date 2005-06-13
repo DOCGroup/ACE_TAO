@@ -41,7 +41,7 @@ ACE_UINT32 const microsec_clock_scale_factor = ACE_High_Res_Timer::global_scale_
 
 // forward declations of functions. Bodies follow main() to improve
 // file readability.
-HIST runTest(ACE_SOCK_Stream &);
+ACE_SCTP::HIST runTest(ACE_SOCK_Stream &);
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
@@ -95,7 +95,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                       1);
 
   // run the test
-  HIST testResultsHistogram = 0;
+  ACE_SCTP::HIST testResultsHistogram = 0;
   // connection is closed by runTest* functions
   testResultsHistogram = runTest(dataStream);
 
@@ -104,13 +104,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // can access. So the histogram created in one of the *_test() functions
   // will be reported out by the report() call
   if (testResultsHistogram)
-    report();
+    ACE_SCTP::report();
 
   return 0;
 }
 
 // create a histogram to store test results
-HIST createHistogram(ACE_CDR::ULong messageSize){
+ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
   // The histogram created below lives beyond the scope of this
   // function. So the memory allocated here cannot be cleaned up when
   // this function goes out of scope. Unfortunately the histogram
@@ -122,7 +122,7 @@ HIST createHistogram(ACE_CDR::ULong messageSize){
           "ACE", messageSize);
 
   // actually create the histogram
-  HIST createdHist = histogram(histName,
+  ACE_SCTP::HIST createdHist = ACE_SCTP::histogram(histName,
                                Options_Manager::histogram_bin_count,
                                Options_Manager::histogram_min_bin,
                                Options_Manager::histogram_max_bin);
@@ -154,7 +154,7 @@ int sendHeader(ACE_SOCK_Stream & stream) {
 
 // conduct the UnMarshalled Octet performance test using separate
 // send_n calls with Nagle's algorithm disabled
-HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Stream & stream){
+ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Stream & stream){
 
   ACE_CDR::ULong const testIterations = Options_Manager::test_iterations;
 
@@ -218,7 +218,7 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
   }
 
   // AFTER PRIMING THE PUMP CREATE THE HISTOGRAM
-  HIST aceStream_hist = 0;
+  ACE_SCTP::HIST aceStream_hist = 0;
   aceStream_hist = createHistogram(msgLen);
   if (0 == aceStream_hist)
     ACE_ERROR_RETURN((LM_ERROR,
@@ -292,7 +292,7 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
 
 // sends the test information to the server and calls the correct test
 // function.
-HIST runTest(ACE_SOCK_Stream & stream)
+ACE_SCTP::HIST runTest(ACE_SOCK_Stream & stream)
 {
 
   size_t msgLen = 1;
