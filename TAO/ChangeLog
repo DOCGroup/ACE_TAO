@@ -1,6 +1,15 @@
 Mon Jun 13 11:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
+        * tests/Portable_Interceptors/Bug_2088/Bug_2088.mpc:
+        * tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
+        * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
+        * tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc:
+        * tests/Portable_Interceptors/PICurrent/PI_PICurrent.mpc:
+        * tests/Portable_Interceptors/PolicyFactory/PI_PolicyFactory.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc:
           Use interceptors as base project instead of the requires
           interceptors
 
