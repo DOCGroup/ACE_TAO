@@ -7,6 +7,7 @@
 #include "PortableGroup_ORBInitializer.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (PortableGroup,
            PortableGroup_Loader,
