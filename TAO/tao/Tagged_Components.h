@@ -92,11 +92,8 @@ public:
   void set_component (IOP::TaggedComponent& component);
 
   /// Get a copy of the component identified by <component.tag>, return
-  /// 0 if the component is not present. The optional start value allows
-  /// repeated queries for the same tagged component to step through the
-  /// list.
-  int get_component (IOP::TaggedComponent& component,
-                     CORBA::ULong start = 0) const;
+  /// 0 if the component is not present.
+  int get_component (IOP::TaggedComponent& component) const;
 
   /// Remove a component, if present. Return number of components
   /// removed.
