@@ -239,6 +239,7 @@ protected:
   ACE_CString entry_;
 
   int is_multicast_;
+  bool delete_peer_addr_;
   ACE_Addr *peer_addr_;
   char** local_sec_addr_;
   int num_local_sec_addrs_;

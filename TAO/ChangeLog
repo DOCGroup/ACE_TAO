@@ -1,3 +1,19 @@
+Mon Jun 13 05:07:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+
+	  Made public destructors protected since the objects in question
+	  are reference counted, i.e. memory management should be
+	  performed through the reference counting mechanism, not operator
+	  delete();
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h (TAO_FlowSpec_Entry):
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
+
+	  Fixed a memory leak.
+
 Mon Jun 13 09:32:38 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Profile.cpp:
