@@ -31,12 +31,14 @@
 #include <string.h>
 #include "ace/os_include/os_math.h"
 #include "hist.h"
+namespace ACE_SCTP
+{
 
 hist_t *head_hist, *tail_hist;
 
 hist_t *histogram(char *name, unsigned int num_bins, double first,
                   double last) {
-  hist_t *hist;
+  ACE_SCTP::hist_t *hist;
   if ((hist = (hist_t *)malloc(sizeof(hist_t))) == 0) {
     fprintf(stderr, "unable to allocate memory for histogram : %s", name);
     exit(-1);
@@ -300,4 +302,5 @@ double histfloor(double x) {
   return((long long)x);
 #endif
 
+}
 }
