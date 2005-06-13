@@ -426,8 +426,8 @@ TAO_IIOP_Profile::encode_endpoints (void)
       tagged_component.tag = IOP::TAG_ALTERNATE_IIOP_ADDRESS;
 
       size_t length = out_cdr.total_length ();
-      tagged_component.component_data.length (ACE_static_cast(CORBA::ULong,
-                                                              length));
+      tagged_component.component_data.length
+        (static_cast<CORBA::ULong>(length));
       CORBA::Octet *buf =
 	tagged_component.component_data.get_buffer ();
 
@@ -559,25 +559,23 @@ TAO_IIOP_Profile::decode_endpoints (void)
   // Now decode if there are any TAG_ALTERNATE_IIOP_ADDRESS
   // components.
 
-  tagged_component.tag = IOP::TAG_ALTERNATE_IIOP_ADDRESS;
-  for (CORBA::ULong index =
-         this->tagged_components_.get_component (tagged_component);
-       index > 0;
-       index =
-         this->tagged_components_.get_component (tagged_component,index))
+  IOP::MultipleComponentProfile& tc = this->tagged_components_.components();
+  for (CORBA::ULong index = 0; index < tc.length(); index++)
     {
+      if (tc[index].tag != IOP::TAG_ALTERNATE_IIOP_ADDRESS)
+        continue;
       const CORBA::Octet *buf =
-        tagged_component.component_data.get_buffer ();
+        tc[index].component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
-                           tagged_component.component_data.length ());
+      TAO_InputCDR in_cdr (reinterpret_cast<const char*>(buf),
+                           tc[index].component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return -1;
 
-      in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+      in_cdr.reset_byte_order (static_cast<int>(byte_order));
 
       CORBA::String_var host;
       CORBA::Short port;
