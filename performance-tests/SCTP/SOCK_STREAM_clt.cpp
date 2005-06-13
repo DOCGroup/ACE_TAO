@@ -109,8 +109,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   return 0;
 }
 
-// create a histogram to store test results
-ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
+  // create a histogram to store test results
+  ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
+
   // The histogram created below lives beyond the scope of this
   // function. So the memory allocated here cannot be cleaned up when
   // this function goes out of scope. Unfortunately the histogram
@@ -128,7 +129,7 @@ ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
                                Options_Manager::histogram_max_bin);
 
   // set the maximum number of outliers to maintain in the histogram
-  set_outer(Options_Manager::histogram_num_outliers, createdHist);
+  ACE_SCTP::set_outer(Options_Manager::histogram_num_outliers, createdHist);
 
   return (createdHist);
 }
@@ -276,7 +277,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
       / microsec_clock_scale_factor;
 
     // record the message latency in the histogram
-    record(messageLatency_usec, aceStream_hist);
+    ACE_SCTP::record(messageLatency_usec, aceStream_hist);
   }
 
   // THE HEADER MESSAGE SENT TO THE SERVER CONTAINED THE NUMBER OF
