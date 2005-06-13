@@ -8,22 +8,18 @@ ACE_RCSID (Log,
            Iterator_i,
            "$Id$")
 
-TAO_Iterator_i::TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE &store,
+TAO_Iterator_i::TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter,
+				TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                                 CORBA::ULong start,
                                 const char *constraint,
                                 CORBA::ULong max_rec_list_len
                                 )
-  :iter_ (store),
+  :iter_ (iter),
+   iter_end_ (iter_end),
+   current_position_(start),
    constraint_ (constraint),
    max_rec_list_len_ (max_rec_list_len)
 {
-  // Advance the iterator to the starting point.
-  for (CORBA::ULong i = 0;
-       i < start && iter_.advance () != -1;
-       ++i)
-    {
-      ;
-    }
 }
 
 TAO_Iterator_i::~TAO_Iterator_i (void)
@@ -58,18 +54,14 @@ TAO_Iterator_i::get (CORBA::ULong position,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
-  how_many = how_many ? 0 : 1;
-
-  if (how_many > this->max_rec_list_len_ - position)
-    ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
-
-  CORBA::ULong i = 0;
-  // move the iterator to "position"
-  for (;
-       i < position && iter_.advance () != -1;
-       ++i)
+  if (position < current_position_) 
     {
-      ;
+      ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
+    }
+
+  if (how_many == 0) 
+    {
+      how_many = this->max_rec_list_len_;
     }
 
   // Use an Interpreter to build an expression tree.
@@ -80,47 +72,39 @@ TAO_Iterator_i::get (CORBA::ULong position,
   // Sequentially iterate over all the records and pick the ones that
   // meet the constraints.
 
-  // Iterate over and populate the list.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
-
-  DsLogAdmin::RecordList* rec_list = 0;
-  // Figure out the length of the list.
-
-  // Allocate the list of <max_rec_list_len_> length.
+  // Allocate the list of <how_many> length.
+  DsLogAdmin::RecordList* rec_list;
   ACE_NEW_THROW_EX (rec_list,
-                    DsLogAdmin::RecordList (this->max_rec_list_len_),
+                    DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong count = 0;
+  CORBA::ULong current_position = this->current_position_;
 
-  CORBA::Boolean done = 0;
-
-  for ( i = 0;
-        i < how_many && count < this->max_rec_list_len_;
-        ++i)
+  for ( ; 
+       ((this->iter_ != this->iter_end_) && (count < how_many));
+       ++this->iter_)
     {
-      if (iter_.next (hash_entry) == -1 || iter_.advance () == -1)
-        {
-          done = 1;
-          break;
-        }
-
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor visitor (hash_entry->int_id_);
+      TAO_Log_Constraint_Visitor visitor ((*this->iter_).int_id_);
 
       // Does it match the constraint?
       if (interpreter.evaluate (visitor) == 1)
-      {
-        (*rec_list)[count] = hash_entry->int_id_;
-        // copy the log record.
-        count++;
-      }
+	{
+          if (++current_position >= position) 
+	    {
+	      (*rec_list)[count] = (*this->iter_).int_id_;
+	      // copy the log record.
+	      count++;
+            }
+	}
     }
 
   rec_list->length (count);
+  this->current_position_ = current_position;
 
-  if (done == 1)
+  if (this->iter_ == this->iter_end_)
     {
       // destroy this object..
       this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
