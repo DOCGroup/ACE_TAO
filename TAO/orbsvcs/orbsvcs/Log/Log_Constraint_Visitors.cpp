@@ -63,6 +63,22 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
       // @@ Where's the error check?
       this->property_lookup_.bind (name3, value3);
     }
+
+  // Bind an entry for each item in the record's attribute list.
+  CORBA::Long len = this->rec_.attr_list.length();
+  for (CORBA::Long i = 0; i < len; ++i) 
+    {
+      const char* name = this->rec_.attr_list[i].name;
+ 
+      CORBA::Any* value;
+      ACE_NEW(value, CORBA::Any);
+ 
+      if (value != 0) 
+	{
+	  *value = this->rec_.attr_list[i].value;
+	  this->property_lookup_.bind (name, value);
+	}
+    }
 }
 
 CORBA::Boolean

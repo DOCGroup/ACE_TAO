@@ -1,9 +1,16 @@
+Sun Jun 12 23:09:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp (TAO_Log_Constraint_Visitor):
+
+	  Add policy list bindings for each item in the log record's
+	  attribute list.
+
 Sun Jun 12 23:38:02 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/GIOP_Message_Base.h (process_request, process_locate_request):
-	   
+
 	  Made the above calls virtual since it makes it easier to do
-	  implementation inheritance, and override behaviours. 
+	  implementation inheritance, and override behaviours.
 
 Sun Jun 12 14:24:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -39,7 +46,7 @@ Sun Jun 12 14:24:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	  records to be deleted.
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (validate_capacity_alarm_thresholds):
-	* orbsvcs/orbsvcs/Log/Log_i.h (valdiate_capacity_alarm_thresholds):
+	* orbsvcs/orbsvcs/Log/Log_i.h (validate_capacity_alarm_thresholds):
 
 	  Move validate_capacity_alarm_thresholds method from public to
 	  protected visibility.
