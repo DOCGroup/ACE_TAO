@@ -69,7 +69,7 @@ public:
 protected:
 
   virtual ~AV_Null_MediaCtrl (void);
-	
+
 };
 
 /**

@@ -31,7 +31,7 @@ TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
     return 0;
 
   if (ACE_OS::strcmp (flow_string,"") == 0)
-	return 0;
+        return 0;
 
   this->use_flow_protocol_ = 1;
   // do some flow protocol processing.
@@ -185,9 +185,9 @@ TAO_FlowSpec_Entry::get_local_control_addr (void)
 }
 
 ACE_INLINE
-int 
+int
 TAO_FlowSpec_Entry::set_local_sec_addr (char** local_sec_addr,
-					int size)
+                                        int size)
 {
   this->local_sec_addr_ = local_sec_addr;
   this->num_local_sec_addrs_ = size;
@@ -195,23 +195,23 @@ TAO_FlowSpec_Entry::set_local_sec_addr (char** local_sec_addr,
 }
 
 ACE_INLINE
-char** 
+char**
 TAO_FlowSpec_Entry::get_local_sec_addr (void)
 {
   return this->local_sec_addr_;
 }
 
 ACE_INLINE
-int 
+int
 TAO_FlowSpec_Entry::num_local_sec_addrs (void)
 {
   return this->num_local_sec_addrs_;
 }
 
 ACE_INLINE
-int 
+int
 TAO_FlowSpec_Entry::set_peer_sec_addr (char** peer_sec_addr,
-				       int size)
+                                       int size)
 {
   this->peer_sec_addr_ = peer_sec_addr;
   this->num_peer_sec_addrs_ = size;
@@ -219,14 +219,14 @@ TAO_FlowSpec_Entry::set_peer_sec_addr (char** peer_sec_addr,
 }
 
 ACE_INLINE
-char** 
+char**
 TAO_FlowSpec_Entry::get_peer_sec_addr (void)
 {
   return this->peer_sec_addr_;
 }
 
 ACE_INLINE
-int 
+int
 TAO_FlowSpec_Entry::num_peer_sec_addrs (void)
 {
   return this->num_peer_sec_addrs_;

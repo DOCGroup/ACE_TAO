@@ -33,7 +33,7 @@ public:
   TAO_Tokenizer (const char *string,char delimiter);
 
   /// destructor.
-  ~TAO_Tokenizer ();
+  ~TAO_Tokenizer (void);
 
   /// parses the string and tokenizes it.
   int parse (const char *string,char delimiter);
@@ -159,7 +159,7 @@ public:
   int set_peer_sec_addr (char** peer_sec_addr, int size);
   char** get_peer_sec_addr (void);
   int num_peer_sec_addrs (void);
-  
+
   int set_local_addr (ACE_Addr *local_addr);
   ACE_Addr *get_local_addr (void);
   char *get_local_addr_str (void);
@@ -271,7 +271,7 @@ public:
                  TAO_AV_FORMAT = 2,
                  TAO_AV_FLOW_PROTOCOL = 3,
                  TAO_AV_ADDRESS = 4,
-		 TAO_AV_PEER_ADDR = 5};
+                 TAO_AV_PEER_ADDR = 5};
 
   /// default constructor.
   TAO_Forward_FlowSpec_Entry (void);
