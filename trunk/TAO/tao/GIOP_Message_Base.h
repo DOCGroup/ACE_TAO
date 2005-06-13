@@ -146,19 +146,20 @@ public:
                                          CORBA::Octet minor) const;
 
   virtual TAO_OutputCDR &out_stream (void);
+
 protected:
 
   /// Processes the GIOP_REQUEST messages
-  int process_request (TAO_Transport *transport,
-                       TAO_InputCDR &input,
-                       TAO_OutputCDR &output,
-                       TAO_GIOP_Message_Generator_Parser *);
+  virtual int process_request (TAO_Transport *transport,
+                               TAO_InputCDR &input,
+                               TAO_OutputCDR &output,
+                               TAO_GIOP_Message_Generator_Parser *);
 
   /// Processes the GIOP_LOCATE_REQUEST messages
-  int process_locate_request (TAO_Transport *transport,
-                              TAO_InputCDR &input,
-                              TAO_OutputCDR &output,
-                              TAO_GIOP_Message_Generator_Parser *);
+  virtual int process_locate_request (TAO_Transport *transport,
+                                      TAO_InputCDR &input,
+                                      TAO_OutputCDR &output,
+                                      TAO_GIOP_Message_Generator_Parser *);
 
   /// Set the state
   void set_state (CORBA::Octet major,
@@ -178,8 +179,6 @@ protected:
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
   TAO_Pluggable_Message_Type message_type (
                                const TAO_GIOP_Message_State &state) const;
-
-private:
 
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can
