@@ -2,9 +2,7 @@
 //
 // $Id$
 
-project(*Server): taoserver, iorinterceptor {
-  requires += interceptors
-
+project(*Server): taoserver, iorinterceptor, interceptors {
   Source_Files {
     testC.cpp
     Policy.cpp
