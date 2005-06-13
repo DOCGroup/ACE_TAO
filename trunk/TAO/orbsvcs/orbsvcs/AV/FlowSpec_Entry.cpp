@@ -32,6 +32,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
    use_flow_protocol_ (0),
    entry_ (),
    is_multicast_ (0),
+   delete_peer_addr_ (false),
    peer_addr_ (0),
    local_sec_addr_ (0),
    num_local_sec_addrs_ (0),
@@ -72,6 +73,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    use_flow_protocol_ (0),
    entry_ (),
    is_multicast_ (0),
+   delete_peer_addr_ (false),
    peer_addr_ (0),
    local_sec_addr_ (0),
    num_local_sec_addrs_ (0),
@@ -136,6 +138,9 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
 // Destructor.
 TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
 {
+  if (this->delete_peer_addr_)
+    delete this->peer_addr_;
+
   if (this->clean_up_address_)
     delete address_;
   if (this->clean_up_control_address_)
@@ -587,6 +592,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 			  ACE_INET_Addr (tokenizer [TAO_AV_PEER_ADDR]),
 			  0);
 	}
+      this->delete_peer_addr_ = true;
       this->peer_addr_ = addr;
 
       char buf [BUFSIZ];

@@ -59,6 +59,10 @@ AV_Null_MediaCtrl::AV_Null_MediaCtrl (void)
 {
 }
 
+AV_Null_MediaCtrl::~AV_Null_MediaCtrl (void)
+{
+}
+
 
 // ----------------------------------------------------------------------
 // TAO_Basic_StreamCtrl
