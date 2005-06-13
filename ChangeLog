@@ -1,3 +1,11 @@
+Mon Jun 13 13:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/pi.mpb:
+          New base project for the new PI library we will add soon to the
+          archive. This PortableInterceptor libray will contain the
+          ORBInitializer Registry, Policy Factory Registry and ORBInitInfo
+          in the first version
+
 Mon Jun 13 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/SCTP/hist.{h,cpp}:
