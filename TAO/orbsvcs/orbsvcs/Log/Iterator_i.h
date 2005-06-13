@@ -48,7 +48,8 @@ public:
   // = Initialization and Termination methods.
 
   /// Constructor.
-  TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE &store,
+  TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter,
+	          TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                   CORBA::ULong start,
                   const char *constraint,
                   CORBA::ULong max_rec_list_len
@@ -70,8 +71,14 @@ public:
 
 private:
 
-  /// Storage.
+  /// Current Iterator.
   TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
+
+  /// End Iterator.
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_end_;
+
+  /// Position.
+  CORBA::ULong current_position_;
 
   /// Constraint.
   const char *constraint_;
