@@ -102,10 +102,19 @@ namespace TAO
         this->safe_rd_.reset (rd);
       }
 
-    this->invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+    Invocation_Adapter::invoke (0, 0 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
+  void
+  Asynch_Invocation_Adapter::invoke (
+    TAO::Exception_Data *ex,
+    unsigned long ex_count
+    ACE_ENV_ARG_DECL)
+  {
+    Invocation_Adapter::invoke (ex, ex_count  ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
 
   Invocation_Status
   Asynch_Invocation_Adapter::invoke_twoway (

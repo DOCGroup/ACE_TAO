@@ -72,13 +72,10 @@ namespace TAO
                  const TAO_Reply_Handler_Skeleton &reply_handler_skel
                  ACE_ENV_ARG_DECL);
 
+    virtual void invoke (TAO::Exception_Data *ex,
+                         unsigned long ex_count
+                         ACE_ENV_ARG_DECL);
   protected:
-
-    /**
-    virtual void invoke_collocated (TAO_Stub *,
-                                    TAO_Operation_Details &op
-                                    ACE_ENV_ARG_DECL);
-    **/
 
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
