@@ -1,3 +1,10 @@
+Mon Jun 13 10:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
+        * bin/MakeProjectCreator/config/kokyu_dsrt_scheduler.mpb:
+          Moved the codecfactory from the server to the normal project,
+          also the clients need it
+
 Sun Jun 12 14:53:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Logging_Strategy.cpp (parse_args):
