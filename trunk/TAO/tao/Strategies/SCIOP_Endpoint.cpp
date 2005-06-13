@@ -11,7 +11,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 #include "ace/OS_NS_stdio.h"
-#include "ORB_Core.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (Strategies,
            SCIOP_Endpoint,
