@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client): taoclient {
-  requires += interceptors
+project(*Client): taoclient, interceptors {
   Source_Files {
     Client_ORBInitializer.cpp
     client.cpp

@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver {
-  requires += interceptors
+project(*Server): taoserver, interceptors {
   Source_Files {
     test_i.cpp
     interceptors.cpp
@@ -13,8 +12,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
-  requires += interceptors
+project(*Client): taoclient, interceptors {
   Source_Files {
     testC.cpp
     interceptors.cpp

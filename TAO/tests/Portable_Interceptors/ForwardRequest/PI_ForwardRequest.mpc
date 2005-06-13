@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, valuetype {
-  requires += interceptors
+project(*Server): taoserver, valuetype, interceptors {
   idlflags += -DCORBA3 -I$(TAO_ROOT)
 
   Source_Files {
@@ -13,8 +12,7 @@ project(*Server): taoserver, valuetype {
   }
 }
 
-project(*Client): taoclient, valuetype {
-  requires += interceptors
+project(*Client): taoclient, valuetype, interceptors {
   idlflags += -DCORBA3 -I$(TAO_ROOT)
 
   Source_Files {

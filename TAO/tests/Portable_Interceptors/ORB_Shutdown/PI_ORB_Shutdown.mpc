@@ -2,9 +2,7 @@
 //
 // $Id$
 
-project(*Server): taoserver {
-  requires += interceptors
-
+project(*Server): taoserver, interceptors {
   Source_Files {
     test_i.cpp
     Server_ORBInitializer.cpp
