@@ -38,15 +38,15 @@ class FTRT_ClientORB_Interceptor
     public virtual TAO_Local_RefCounted_Object
 {
 public:
+  /// ctor.
   FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth);
-  // ctor.
 
+  /// dtor.
   virtual ~FTRT_ClientORB_Interceptor ();
-  // dtor.
 
+  /// Canonical name of the interceptor.
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Canonical name of the interceptor.
 
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
