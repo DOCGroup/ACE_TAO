@@ -1,3 +1,8 @@
+Mon Jun 13 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+          Include ORBInitializer_Registry.h, needed for the upcoming PI library
+
 Mon Jun 13 05:07:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
