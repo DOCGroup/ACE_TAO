@@ -4,6 +4,7 @@
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 #include "Client_ORBInitializer.h"
+#include "tao/ORBInitializer_Registry.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Get_Opt.h"
