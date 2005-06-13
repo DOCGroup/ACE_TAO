@@ -1,3 +1,9 @@
+Mon Jun 13 11:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
+          Use interceptors as base project instead of the requires
+          interceptors
+
 Mon Jun 13 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SCIOP_Endpoint.cpp:
