@@ -1,3 +1,8 @@
+Tue Jun 14 17:52:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Thread_Manager.h: Improved documentation for the task_list()
+	  and task_all_list() methods.
+
 Tue Jun 14 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
