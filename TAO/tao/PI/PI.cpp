@@ -1,5 +1,5 @@
 #include "PI.h"
-#include "ORBInitializer_Registry.h"
+#include "ORBInitializer_Registry_Impl.h"
 #include "PolicyFactory_Loader.h"
 
 ACE_RCSID (PI,
