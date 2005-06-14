@@ -1,3 +1,10 @@
+Mon Jun 13 17:18:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+
+          Change type of constraint member variable to CORBA::String_var
+          so we don't dereference a dangling char * in get().
+
 Mon Jun 13 12:10:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
@@ -14,12 +21,6 @@ Mon Jun 13 12:10:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Simplify iterating over record store by using ACE_Hash_Map's
           STL-like API.
-
-        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
-        * orbsvcs/orbsvcs/Log/Iterator_i.h:
-
-          Change type of constraint member variable to CORBA::String_var
-          so we don't dereference a dangling char * in get().
 
 Mon Jun 13 18:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
