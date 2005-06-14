@@ -81,7 +81,7 @@ private:
   CORBA::ULong current_position_;
 
   /// Constraint.
-  const char *constraint_;
+  CORBA::String_var constraint_;
 
   /// Max rec list length.
   CORBA::ULong max_rec_list_len_;
