@@ -222,6 +222,7 @@ libACE_la_SOURCES = \
   Reactor.cpp \
   Reactor_Impl.cpp \
   Reactor_Notification_Strategy.cpp \
+  Reactor_Timer_Interface.cpp \
   Read_Buffer.cpp \
   Recursive_Thread_Mutex.cpp \
   Recyclable.cpp \
