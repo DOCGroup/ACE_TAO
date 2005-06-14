@@ -1425,11 +1425,13 @@ TAO_ORB_Core::policy_factory_registry_i (void)
       loader =
         ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance (
           "PolicyFactory_Loader");
-      if (loader == 0)
-        ACE_THROW (CORBA::INTERNAL ());
     }
-  this->policy_factory_registry_ =
-    loader->create ();
+
+  if (loader != 0)
+    {
+      this->policy_factory_registry_ =
+        loader->create ();
+    }
 
   return this->policy_factory_registry_;
 }
