@@ -19,6 +19,7 @@
 #if defined (ACE_HAS_SCTP)
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Service_Config.h"
 #include "Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Acceptor.h"
@@ -37,11 +38,8 @@ typedef ACE_Hash_Map_Manager <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Seconda
 typedef ACE_Hash_Map_Entry <ACE_CString,Interface_Seq> Secondary_Addr_Map_Entry;
 typedef ACE_Hash_Map_Iterator <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map_Iterator;
 
-//Secondary_Addr_Map sec_addr_map_;
-
 /**
  * @class TAO_AV_SCTP_SEQ_Factory
- * @brief
  */
 class TAO_AV_Export TAO_AV_SCTP_SEQ_Factory : public TAO_AV_Transport_Factory
 {
@@ -119,7 +117,6 @@ protected:
 
 /**
  * @class TAO_AV_SCTP_SEQ_Flow_Handler
- * @brief
  */
 class TAO_AV_SCTP_SEQ_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
@@ -144,7 +141,6 @@ class TAO_AV_SCTP_SEQ_Acceptor;
 
 /**
  * @class TAO_AV_SCTP_SEQ_Base_Acceptor
- * @brief
  */
 class TAO_AV_SCTP_SEQ_Base_Acceptor  :public ACE_Acceptor <TAO_AV_SCTP_SEQ_Flow_Handler,ACE_SOCK_SEQPACK_ACCEPTOR>
 {
@@ -199,7 +195,6 @@ class TAO_AV_SCTP_SEQ_Connector;
 
 /**
  * @class TAO_AV_Base_Connector
- * @brief
  */
 class TAO_AV_SCTP_SEQ_Base_Connector  : public ACE_Connector <TAO_AV_SCTP_SEQ_Flow_Handler,ACE_SOCK_SEQPACK_CONNECTOR>
 {
