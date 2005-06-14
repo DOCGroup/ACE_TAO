@@ -1,3 +1,10 @@
+Tue Jun 14 11:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.h:
+          Added missing include of CodecFactory.h
+
 Tue Jun 14 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
