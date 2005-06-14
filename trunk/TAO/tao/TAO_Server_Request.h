@@ -28,6 +28,7 @@
 
 #include "Tagged_Profile.h"
 #include "Service_Context.h"
+#include "Object.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent_Impl.h"
@@ -42,10 +43,6 @@ namespace CORBA
 {
   class ORB;
   typedef ORB *ORB_ptr;
-
-  class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
 }
 
 class TAO_Operation_Details;
