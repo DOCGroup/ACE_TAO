@@ -931,7 +931,7 @@ main (int argc, char *argv[])
       // Make sure we can support multiple priorities that are
       // required for this test.
       if (!check_supported_priorities (orb.in ()))
-        return -1;
+        return 2;
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
