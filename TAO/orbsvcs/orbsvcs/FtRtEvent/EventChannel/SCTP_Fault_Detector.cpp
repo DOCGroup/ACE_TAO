@@ -7,6 +7,7 @@
 #include "FTEC_Fault_Listener.h"
 
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_sys_socket.h"
 
 ACE_RCSID (EventChannel,
            SCTP_Fault_Detector,
@@ -80,7 +81,7 @@ int SCTP_Fault_Detector::parse_conf(int argc, char** argv)
 
   for (int curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
-      ACE_LIB_TEXT("-HeartBeat")) == 0)
+      ACE_TEXT("-HeartBeat")) == 0)
     {
       curarg++;
       if (curarg < argc)
