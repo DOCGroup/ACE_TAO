@@ -159,7 +159,7 @@ main (int argc, char **argv)
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
-        return -1;
+        return 2;
 
       // The following finds out the lowest priority for this
       // scheduling policy.  This will give us the biggest range on NT
