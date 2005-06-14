@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTCosScheduling_Server): rtcosscheduling, rt_server, orbsvcsexe {
-  requires += interceptors
+project(RTCosScheduling_Server): rtcosscheduling, rt_server, orbsvcsexe, interceptors {
   after    += commonlib
   libs     += testSched_Common
   libpaths += .
@@ -19,7 +18,6 @@ project(RTCosScheduling_Server): rtcosscheduling, rt_server, orbsvcsexe {
 project(RTCosScheduling_Client): rtcosscheduling, rt_client, orbsvcsexe {
   after    += commonlib
   after    += RTCosScheduling_Server
-  requires += interceptors
   libs     += testSched_Common
   libpaths += .
   exename   = client

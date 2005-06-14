@@ -7,9 +7,8 @@
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/PolicyC.h"
 
-
-ACE_RCSID (FaultTolerance, 
-           FT_ClientPolicyFactory, 
+ACE_RCSID (FaultTolerance,
+           FT_ClientPolicyFactory,
            "$Id$")
 
 
@@ -23,8 +22,8 @@ TAO_FT_ClientPolicyFactory::create_policy (
 {
 
   if (type ==  FT::REQUEST_DURATION_POLICY)
-    return  TAO_FT_Request_Duration_Policy::create (val
-                                                    ACE_ENV_ARG_PARAMETER);
+    return TAO_FT_Request_Duration_Policy::create (val
+                                                   ACE_ENV_ARG_PARAMETER);
   else if (type == FT::HEARTBEAT_POLICY)
     return TAO_FT_Heart_Beat_Policy::create (val
                                              ACE_ENV_ARG_PARAMETER);

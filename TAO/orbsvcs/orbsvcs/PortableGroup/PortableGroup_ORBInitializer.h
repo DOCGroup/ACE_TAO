@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -38,9 +38,6 @@ class TAO_PortableGroup_Export TAO_PortableGroup_ORBInitializer :
   public virtual TAO_Local_RefCounted_Object
 {
 public:
-
-  TAO_PortableGroup_ORBInitializer ();
-
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -15,7 +15,6 @@ ACE_RCSID (Security,
 #include "orbsvcs/SecurityLevel2C.h"
 #include "orbsvcs/SecurityLevel3C.h"
 
-
 #include "tao/ORB_Constants.h"
 
 CORBA::Policy_ptr

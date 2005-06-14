@@ -7,7 +7,7 @@ project(*Server): rt_server {
   }
 }
 
-project(*Client): rt_client {
+project(*Client): rt_client, interceptors {
   Source_Files {
     testC.cpp
     interceptors.cpp

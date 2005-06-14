@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/// RTCORBA ORB initializer.
+/// FT ORB initializer.
 class TAO_FT_ClientORB_Export TAO_FT_ClientORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object

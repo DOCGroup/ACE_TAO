@@ -89,9 +89,6 @@ TAO_FT_ClientORBInitializer::register_policy_factories (
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   */
-
-  // Transfer ownership of the policy factory to the registry.
-  (void) policy_factory._retn ();
 }
 
 

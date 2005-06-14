@@ -25,7 +25,7 @@ sched_policy_name (int sched_policy)
   return name;
 }
 
-void
+bool
 check_supported_priorities (CORBA::ORB_ptr orb)
 {
   int sched_policy =
@@ -46,6 +46,8 @@ check_supported_priorities (CORBA::ORB_ptr orb)
                   "Check svc.conf options\n",
                   sched_policy_name (sched_policy)));
 
-      ACE_OS::exit (2);
+      return false;
     }
+
+  return true;
 }

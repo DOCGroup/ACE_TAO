@@ -11,10 +11,6 @@ ACE_RCSID (EventChannel,
            FTEC_ORBInitializer,
            "$Id$")
 
-FTEC_ORBInitializer::FTEC_ORBInitializer ()
-{
-}
-
 void
 FTEC_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr

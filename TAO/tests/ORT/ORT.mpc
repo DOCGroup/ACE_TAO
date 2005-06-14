@@ -1,9 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Test_ORT_Server): taoserver, objreftemplate, iorinterceptor {
-  requires += interceptors
-
+project(Test_ORT_Server): taoserver, objreftemplate, iorinterceptor, interceptors {
   IDL_Files {
     ORT_test.idl
     ObjectReferenceFactory.idl
@@ -23,8 +21,7 @@ project(Test_ORT_Server): taoserver, objreftemplate, iorinterceptor {
 }
 
 
-project(Test_ORT_Client): taoclient {
-  requires += interceptors
+project(Test_ORT_Client): taoclient, interceptors {
   after += Test_ORT_Server
 
   IDL_Files {

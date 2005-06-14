@@ -8,14 +8,11 @@
 #include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if TAO_HAS_INTERCEPTORS == 1
-
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -44,8 +41,6 @@ public:
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include /**/ "ace/post.h"
 

@@ -3,9 +3,6 @@
 // $Id$
 
 #include "Echo_Collocated_ORBInitializer.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-
 #include "interceptors.h"
 
 #include "ace/OS_NS_string.h"
@@ -70,4 +67,3 @@ Echo_Collocated_ORBInitializer::post_init (
 
 }
 
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */

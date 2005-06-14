@@ -8,12 +8,9 @@
 #include "tao/PolicyC.h"
 
 
-ACE_RCSID (FaultTolerance, 
-           FT_ServerPolicyFactory, 
+ACE_RCSID (FaultTolerance,
+           FT_ServerPolicyFactory,
            "$Id$")
-
-
-
 
 CORBA::Policy_ptr
 TAO_FT_ServerPolicyFactory::create_policy (

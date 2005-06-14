@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IORInterceptor/IORInterceptor.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
