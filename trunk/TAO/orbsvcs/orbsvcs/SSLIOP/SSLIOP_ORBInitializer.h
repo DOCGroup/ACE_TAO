@@ -25,7 +25,7 @@
 #include "orbsvcs/CSIIOPC.h"
 #include "orbsvcs/SecurityC.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

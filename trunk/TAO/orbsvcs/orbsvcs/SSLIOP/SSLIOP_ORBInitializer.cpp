@@ -20,6 +20,7 @@ ACE_RCSID (SSLIOP,
 #include "tao/Exception.h"
 #include "tao/ORBInitInfo.h"
 #include "tao/debug.h"
+#include "tao/PI/ORBInitInfo.h"
 
 #include "ace/Auto_Ptr.h"
 
