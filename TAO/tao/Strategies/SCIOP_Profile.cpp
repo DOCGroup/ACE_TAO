@@ -10,6 +10,7 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "tao/StringSeqC.h"
 #include "sciop_endpointsC.h"
 
 ACE_RCSID(Strategies,
