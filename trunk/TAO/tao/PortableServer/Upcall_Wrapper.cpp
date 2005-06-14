@@ -14,6 +14,7 @@
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
+#include "tao/Argument.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
