@@ -15,13 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-/**
- *  Note - Before making this file with Makefile.RTCosScheduling, please make
- *  sure that you first comment out the following line from the
- *  RTCosSchedulingS.h file:
- *  //#include "tao/PortableServer/PortableServerS.h"
- */
-
 #include "ace/Map_T.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,6 +25,7 @@
 #include <orbsvcs/RTCosScheduling/RTCosScheduling_export.h>
 #include "RTCosScheduling_PCP_Manager.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "tao/LocalObject.h"
 
 
