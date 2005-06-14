@@ -797,11 +797,27 @@ public:
   int num_threads_in_task (ACE_Task_Base *task);
 
   /**
-   * Returns in <task_list> a list of up to <n> <ACE_Tasks> in a
-   * group.  The caller must allocate the memory for <task_list>.  In
-   * case of an error, -1 is returned. If no requested values are
-   * found, 0 is returned, otherwise correct number of retrieved
-   * values are returned.
+   * Returns a list of ACE_Task_Base pointers corresponding to the tasks
+   * that have active threads in a specified thread group.
+   *
+   * @param grp_id    The thread group ID to obtain task pointers for.
+   *
+   * @param task_list is a pointer to an array to receive the list of pointers.
+   *                  The caller is responsible for supplying an array with at
+   *                  least @arg n entries.
+   *
+   * @param n         The maximum number of ACE_Task_Base pointers to write
+   *                  in @arg task_list.
+   *
+   * @retval  If successful, the number of pointers returned, which will be
+   *          no greater than @arg n. Returns -1 on error.
+   *
+   * @note    This method has no way to indicate if there are more than
+   *          @arg n ACE_Task_Base pointers available. Therefore, it may be
+   *          wise to guess a larger value of @arg n than one thinks in cases
+   *          where the exact number of tasks is not known.
+   *
+   * @sa      num_tasks_in_group(), task_all_list()
    */
   ssize_t task_list (int grp_id,
                      ACE_Task_Base *task_list[],
@@ -850,11 +866,25 @@ public:
                             size_t n);
 
   /**
-   * Returns in <task_list> a list of up to <n> <ACE_Tasks>.  The
-   * caller must allocate the memory for <task_list>.  In case of an
-   * error, -1 is returned. If no requested values are found, 0 is
-   * returned, otherwise correct number of retrieved values are
-   * returned.
+   * Returns a list of ACE_Task_Base pointers corresponding to the tasks
+   * that have active threads managed by this instance.
+   *
+   * @param task_list is a pointer to an array to receive the list of pointers.
+   *                  The caller is responsible for supplying an array with at
+   *                  least @arg n entries.
+   *
+   * @param n         The maximum number of ACE_Task_Base pointers to write
+   *                  in @arg task_list.
+   *
+   * @retval  If successful, the number of pointers returned, which will be
+   *          no greater than @arg n. Returns -1 on error.
+   *
+   * @note    This method has no way to indicate if there are more than
+   *          @arg n ACE_Task_Base pointers available. Therefore, it may be
+   *          wise to guess a larger value of @arg n than one thinks in cases
+   *          where the exact number of tasks is not known.
+   *
+   * @sa      count_threads()
    */
   ssize_t task_all_list (ACE_Task_Base *task_list[],
                          size_t n);
