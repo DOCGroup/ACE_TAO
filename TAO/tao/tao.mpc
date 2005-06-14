@@ -473,7 +473,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IOPC.h
     IOP_IORC.h
     IOPS.h
-    IOPS_T.h
     IORInterceptor_Adapter_Factory.h
     IORInterceptor_Adapter.h
     IOR_Parser.h
