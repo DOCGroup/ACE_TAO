@@ -1,3 +1,8 @@
+Tue Jun 14 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Fixed problem with emulated exceptions
+
 Tue Jun 14 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IOPS_T.h:
