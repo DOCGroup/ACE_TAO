@@ -1,3 +1,13 @@
+Tue Jun 14 13:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+          Corrected include
+
+Tue Jun 14 13:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.{h,cpp}:
+          Updated includes
+
 Tue Jun 14 12:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.h:
