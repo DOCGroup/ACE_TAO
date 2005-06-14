@@ -16,8 +16,8 @@ ACE_RCSID (tao,
 #include "Dynamic_Adapter.h"
 #include "Profile.h"
 #include "default_ports.h"
-#include "ORBInitInfo.h"
-#include "ORBInitializer_Registry.h"
+#include "ORBInitializer_Registry_Adapter.h"
+#include "PolicyFactory_Registry_Adapter.h"
 #include "TAO_Singleton_Manager.h"
 #include "Policy_Current.h"
 #include "Policy_Manager.h"
@@ -1575,29 +1575,22 @@ CORBA::ORB_init (int &argc,
                         CORBA::ORB::_nil ());
     }
 
-  // Run the registered ORB initializers, and initialize the ORB_Core.
-  TAO_ORBInitInfo * orb_init_info_temp = 0;
-  ACE_NEW_THROW_EX (orb_init_info_temp,
-                    TAO_ORBInitInfo (oc.get (),
-                                     command_line.get_argc(),
-                                     command_line.get_ASCII_argv()),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
-  // This ORBInitInfo instance is only valid for the duration of this
-  // ORB's initialization.
-  PortableInterceptor::ORBInitInfo_var orb_init_info =
-    orb_init_info_temp;
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry =
+    oc.get ()->get_orbinitializer_registry ();
 
-  // Call the ORBInitializer::pre_init() on each registered ORB
-  // initializer.
-  TAO::ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  PortableInterceptor::SlotId slotid = 0;
+
+  if (orbinitializer_registry != 0)
+    {
+
+      orbinitializer_registry->pre_init (oc.get (),
+                                         command_line.get_argc(),
+                                         command_line.get_ASCII_argv(),
+                                         slotid
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+    }
 
   // Initialize the ORB Core instance.
   result = oc->init (command_line.get_argc(),
@@ -1605,32 +1598,23 @@ CORBA::ORB_init (int &argc,
                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
-  // Check for errors and return nil pseudo-reference on error.
-  if (result == -1)
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                          CORBA::SystemException::_tao_minor_code (
-                            0,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        CORBA::ORB::_nil ());
+  if (orbinitializer_registry != 0)
+    {
 
-  // Call the ORBInitializer::post_init() on each registered ORB
-  // initializer.
-  TAO::ORBInitializer_Registry::instance ()->post_init (orb_init_info.in ()
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+      orbinitializer_registry->post_init (oc.get (),
+                                          command_line.get_argc(),
+                                          command_line.get_ASCII_argv(),
+                                          slotid
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
 #if TAO_HAS_INTERCEPTORS == 1
-  TAO::PICurrent *pi = oc->pi_current ();
+      TAO::PICurrent *pi = oc->pi_current ();
 
-  if (pi != 0)
-   pi->initialize (orb_init_info_temp->slot_count ());
+      if (pi != 0)
+        pi->initialize (slotid);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-  // Invalidate the ORBInitInfo instance to prevent future
-  // modifications to the ORB.  This behavior complies with the
-  // PortableInterceptor specification.
-  orb_init_info_temp->invalidate ();
+    }
 
   if (TAO_debug_level > 2)
     {
@@ -1851,12 +1835,20 @@ CORBA::ORB::create_policy (CORBA::PolicyType type,
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
+  TAO::PolicyFactory_Registry_Adapter *adapter =
+    this->orb_core_->policy_factory_registry ();
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::Policy::_nil ());
+    }
+
   // Attempt to obtain the policy from the policy factory registry.
-  return
-    this->orb_core_->policy_factory_registry ()->create_policy (
-      type,
-      val
-      ACE_ENV_ARG_PARAMETER);
+  return adapter->create_policy (
+          type,
+          val
+          ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Policy_ptr
@@ -1866,11 +1858,19 @@ CORBA::ORB::_create_policy (CORBA::PolicyType type
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
+  TAO::PolicyFactory_Registry_Adapter *adapter =
+    this->orb_core_->policy_factory_registry ();
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::Policy::_nil ());
+    }
+
   // Attempt to obtain the policy from the policy factory registry.
-  return
-    this->orb_core_->policy_factory_registry ()->_create_policy (
-      type
-      ACE_ENV_ARG_PARAMETER);
+  return adapter->_create_policy (
+          type
+          ACE_ENV_ARG_PARAMETER);
 }
 
 // Destringify OMG-specified "IOR" string.

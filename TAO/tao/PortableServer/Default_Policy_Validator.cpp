@@ -3,6 +3,7 @@
 #include "Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
+#include "tao/PolicyFactory_Registry_Adapter.h"
 #include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
@@ -136,7 +137,8 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
      || type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID
      || type == PortableServer::SERVANT_RETENTION_POLICY_ID
      || type == PortableServer::REQUEST_PROCESSING_POLICY_ID
-     || this->orb_core_.policy_factory_registry ()->factory_exists (type));
+     || (this->orb_core_.policy_factory_registry () != 0 &&
+         this->orb_core_.policy_factory_registry ()->factory_exists (type)));
 }
 
 void

@@ -23,7 +23,7 @@
 #define _ORBINITINFO_PIDL_
 
 #include <StringSeq.pidl>
-#include <IOP_Codec.pidl>
+#include <tao/CodecFactory/IOP_Codec_include.pidl>
 #include <PI_Forward.pidl>
 #include <Policy.pidl>
 

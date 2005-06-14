@@ -29,6 +29,5 @@
 #define TAO_IOP_PIDL
 
 #include "IOP_IOR.pidl"
-#include "IOP_Codec.pidl"
 
 #endif  /* TAO_IOP_PIDL */

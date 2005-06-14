@@ -58,6 +58,10 @@ TAO_Requires_CodecFactory_Initializer = TAO_CodecFactory_Loader::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
+#define TAO_CODECFACTORY_SAFE_INCLUDE
+#include "IOP_CodecC.h"
+#undef TAO_CODECFACTORY_SAFE_INCLUDE
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_CODECFACTORY_H */

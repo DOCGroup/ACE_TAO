@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOP_CodecC.h"
+#include "IOP_Codec_includeC.h"
 #include "tao/LocalObject.h"
 
 /**

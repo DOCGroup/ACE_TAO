@@ -130,8 +130,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
-    IOP_CodecA.cpp
-    IOP_CodecC.cpp
     IOP_IORA.cpp
     IOP_IORC.cpp
     IOPC.cpp
@@ -183,17 +181,12 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     OctetSeqC.cpp
     operation_details.cpp
     ORB.cpp
+    ORBInitializer_Registry.cpp
     orb_typesA.cpp
     orb_typesC.cpp
     ORB_Core.cpp
     ORB_Core_Auto_Ptr.cpp
     ORB_Table.cpp
-    ORBInitializer_Registry.cpp
-    ORBInitializerA.cpp
-    ORBInitializerC.cpp
-    ORBInitInfo.cpp
-    ORBInitInfoA.cpp
-    ORBInitInfoC.cpp
     ParameterModeA.cpp
     ParameterModeC.cpp
     params.cpp
@@ -218,11 +211,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Policy_Validator.cpp
     PolicyA.cpp
     PolicyC.cpp
-    PolicyFactoryA.cpp
-    PolicyFactoryC.cpp
-    PolicyFactory_Registry.cpp
+    PolicyFactory_Registry_Adapter.cpp
     PollableC.cpp
-    PortableInterceptorA.cpp
     PortableInterceptorC.cpp
     PredefinedType_Seq_Tmplinst.cpp
     Principal.cpp
@@ -481,7 +471,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Invocation_Endpoint_Selectors.h
     Invocation_Utils.h
     IOPC.h
-    IOP_CodecC.h
     IOP_IORC.h
     IOPS.h
     IOPS_T.h
@@ -544,10 +533,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ORB_Core.h
     ORB.h
     ORBInitializer_Registry.h
-    ORBInitializerC.h
-    ORBInitializerS.h
-    ORBInitInfo.h
-    ORBInitInfoS.h
+    ORBInitializer_Registry_Adapter.h
     ORB_Table.h
     orb_typesC.h
     orb_typesS.h
@@ -567,8 +553,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Pluggable_Messaging.h
     Pluggable_Messaging_Utils.h
     PolicyC.h
-    PolicyFactory_Registry.h
-    PolicyFactoryS.h
+    PolicyFactory_Registry_Adapter.h
     Policy_ForwardC.h
     Policy_ForwardS.h
     Policy_Current.h

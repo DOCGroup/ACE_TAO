@@ -88,7 +88,7 @@ PortableInterceptor::PolicyFactory::PolicyFactory (void)
 PortableInterceptor::PolicyFactory::~PolicyFactory (void)
 {}
 
-void
+void 
 PortableInterceptor::PolicyFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyFactory *_tao_tmp_pointer =
@@ -106,10 +106,10 @@ PortableInterceptor::PolicyFactory::_narrow (
     {
       return PolicyFactory::_nil ();
     }
-
+  
   PolicyFactory_ptr proxy =
     dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-
+  
   return PolicyFactory::_duplicate (proxy);
 }
 
@@ -123,10 +123,10 @@ PortableInterceptor::PolicyFactory::_unchecked_narrow (
     {
       return PolicyFactory::_nil ();
     }
-
+  
   PolicyFactory_ptr proxy =
     dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-
+  
   return PolicyFactory::_duplicate (proxy);
 }
 
@@ -137,7 +137,7 @@ PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 

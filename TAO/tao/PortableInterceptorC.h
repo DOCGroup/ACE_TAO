@@ -47,12 +47,9 @@
 
 #include "tao/PI_ForwardC.h"
 #include "tao/Messaging_SyncScopeC.h"
-#include "tao/ORBInitializerC.h"
-#include "tao/ORBInitInfoC.h"
 #include "tao/InvalidSlotC.h"
 #include "tao/ClientRequestInfoC.h"
 #include "tao/ServerRequestInfoC.h"
-#include "tao/PolicyFactoryC.h"
 #include "tao/ClientRequestInterceptorC.h"
 #include "tao/ServerRequestInterceptorC.h"
 #include "tao/PICurrentC.h"

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : portableserver {
+project : portableserver, pi {
   after += Utils
   libs  += TAO_Utils
 }

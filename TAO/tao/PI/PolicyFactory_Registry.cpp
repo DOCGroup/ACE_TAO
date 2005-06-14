@@ -1,11 +1,10 @@
 #include "PolicyFactory_Registry.h"
-#include "PortableInterceptorC.h"
-#include "ORB_Constants.h"
-#include "SystemException.h"
-#include "PolicyC.h"
+#include "PolicyFactoryC.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "tao/PolicyC.h"
 
-
-ACE_RCSID (tao,
+ACE_RCSID (PI,
            PolicyFactory_Registry,
            "$Id$")
 
@@ -118,21 +117,3 @@ TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType & type) const
   return (this->factories_.find (type) == 0);
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Map_Entry<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr>;
-template class ACE_Map_Iterator_Base<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
-template class ACE_Map_Manager<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Map_Entry<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr>
-#pragma instantiate ACE_Map_Iterator_Base<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Manager<CORBA::PolicyType, PortableInterceptor::PolicyFactory_ptr, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
