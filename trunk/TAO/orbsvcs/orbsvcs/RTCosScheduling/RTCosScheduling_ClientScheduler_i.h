@@ -15,13 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-/**
- *  Note - Before making this file with Makefile.RTCosScheduling, please make
- *  sure that you first comment out the following line from the
- *  RTCosSchedulingS.h file:
- *  //#include "tao/PortableServer/PortableServerS.h"
- */
-
 #include "ace/Map_T.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,6 +35,7 @@
 #include <orbsvcs/RTCosScheduling/RTCosScheduling_export.h>
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "tao/RTCORBA/Linear_Priority_Mapping.h"
 
 
@@ -216,8 +210,6 @@ class TAO_RTCosScheduling_Export RTCosScheduling_ClientScheduler_i :
 #if defined (__BORLANDC__)
 #pragma option pop
 #endif /* __BORLANDC__ */
-
-
 
 #include /**/ "ace/post.h"
 #endif  /* CLIENT_SCHEDULER_I */
