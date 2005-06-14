@@ -1,4 +1,4 @@
-#include "ORBInitializer_Registry.h"
+#include "ORBInitializer_Registry_Impl.h"
 #include "ORBInitInfo.h"
 
 #include "tao/ORB.h"
