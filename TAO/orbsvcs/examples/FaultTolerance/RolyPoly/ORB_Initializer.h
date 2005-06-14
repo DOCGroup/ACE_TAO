@@ -6,7 +6,7 @@
 #define ORB_INITIALIZER_H
 
 #include "tao/LocalObject.h"
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 class ORB_Initializer :
   public virtual PortableInterceptor::ORBInitializer,
