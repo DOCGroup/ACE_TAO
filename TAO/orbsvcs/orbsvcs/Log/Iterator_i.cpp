@@ -104,7 +104,7 @@ TAO_Iterator_i::get (CORBA::ULong position,
   rec_list->length (count);
   this->current_position_ = current_position;
 
-  if (this->iter_ == this->iter_end_)
+  if (count == 0 && this->iter_ == this->iter_end_)
     {
       // destroy this object..
       this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
