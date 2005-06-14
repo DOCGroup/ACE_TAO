@@ -4,6 +4,7 @@
 #define MUF_SCHEDULER_H
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "MUF_SchedulingC.h"
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
@@ -85,7 +86,7 @@ public TAO_Local_RefCounted_Object
 {
  public:
 
-  MUF_Scheduler (CORBA::ORB_ptr orb, 
+  MUF_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,
                  int ace_sched_scope);
