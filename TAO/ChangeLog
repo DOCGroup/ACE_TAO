@@ -1,3 +1,9 @@
+Tue Jun 14 14:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Server_Request.h:
+          Added forward declaration of CORBA::Object. This is not pulled in
+          when interceptors are disabled
+
 Tue Jun 14 14:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/check_supported_priorities.cpp
