@@ -1,3 +1,13 @@
+Tue Jun 14 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/IO_Cntl_Msg.{h,cpp,inl}:
+          Moved methods implemented in the header file to a new inl file.
+          Fixes warnings in the Cygwin build
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Added IO_Cntl_Msg.cpp
+
 Tue Jun 14 11:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
