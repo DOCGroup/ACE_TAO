@@ -371,7 +371,7 @@ href="../bin/MakeProjectCreator/config/acedefaults.mpb"> this base
 project </a> file.</P>
 
 <OL>
-  <LI>Make sure ACE is built (For Visual C++ 6.0, use ace.dsw). <P>
+  <LI>Make sure ACE is built (For Visual C++ 6.0, use ACE.dsw). <P>
 
   <LI>First make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
       Directories in Tools|Options.  This is needed if using the TAO_IDL
@@ -406,11 +406,11 @@ MPC. Please report such bugs to the tao-users newsgroups.
 
 To build TAO using C++Builder please follow the
 <A HREF="../ACE-INSTALL.html#borland">ACE installation notes</A>, with the
-difference being that you should run:<BR>
+difference being that you first build ACE and then you 
+give the following command in the $ACE_ROOT\TAO directory:<BR>
 <BLOCKQUOTE><CODE>
 make -f Makefile.bor
 </CODE></BLOCKQUOTE><P>
-from the $ACE_ROOT\TAO directory instead of $ACE_ROOT\ace.<P>
 
 For more detailed information on building and using TAO with Borland's
 C++ Builder environment, please see the <A
