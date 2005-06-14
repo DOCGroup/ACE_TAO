@@ -1,3 +1,8 @@
+Tue Jun 14 07:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
+          Added missing include
+
 Mon Jun 13 17:27:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Iterator_i.cpp (get):
