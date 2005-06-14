@@ -42,6 +42,10 @@ namespace CORBA
 {
   class ORB;
   typedef ORB *ORB_ptr;
+
+  class Object;
+  typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
 }
 
 class TAO_Operation_Details;

@@ -1,3 +1,31 @@
+Tue Jun 14 14:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/check_supported_priorities.cpp
+        * tests/RTCORBA/common_args.cpp
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/test.cpp
+        * tests/RTCORBA/Banded_Connections/client.cpp
+        * tests/RTCORBA/Banded_Connections/server.cpp
+        * tests/RTCORBA/Client_Propagated/Client_ORBInitializer.h
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc
+        * tests/RTCORBA/Client_Propagated/client.cpp
+        * tests/RTCORBA/Client_Propagated/server.cpp
+        * tests/RTCORBA/Collocation/Collocation.cpp
+        * tests/RTCORBA/Linear_Priority/client.cpp
+        * tests/RTCORBA/Linear_Priority/server.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
+        * tests/RTCORBA/Policy_Combinations/client.cpp
+        * tests/RTCORBA/Policy_Combinations/server.cpp
+        * tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp
+        * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp
+        * tests/RTCORBA/Server_Declared/server.cpp
+        * tests/RTCORBA/Thread_Pool/client.cpp
+        * tests/RTCORBA/Thread_Pool/server.cpp
+          Return 2 instead of -1 when the check_support_priorities fail.
+          The test scripts expect then a return value of 2
+
 Tue Jun 14 14:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
