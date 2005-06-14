@@ -273,10 +273,6 @@ public:
   /// yet
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry (void);
 
-  /// Return pointer to the orb initializer registry associated with
-  /// this ORB core. Doesn't load the PI library when it is not loaded yet
-  TAO::ORBInitializer_Registry_Adapter *get_orbinitializer_registry (void);
-
   /// Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
 
