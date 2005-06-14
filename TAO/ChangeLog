@@ -1,8 +1,15 @@
+Tue Jun 14 10:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+          Added missing includes
+
 Tue Jun 14 10:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
-          Added missing include
+          Added missing includes
 
 Tue Jun 14 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
