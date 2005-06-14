@@ -6,8 +6,8 @@ Tue Jun 14 12:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Jun 14 12:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitializer_Registry.{h,cpp}:
-          Renamed to ORBInitializer_Registry_Impl. This prevents confusion
-          if we have the file in the tao or tao/PI directory
+          Renamed to ORBInitializer_Registry_Impl.{h,cpp} This prevents
+          confusion if we have the file in the tao or tao/PI directory
 
         * tao/PI/PI.cpp:
           Updated include
