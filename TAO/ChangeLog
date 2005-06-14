@@ -1,3 +1,10 @@
+Mon Jun 13 17:27:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Iterator_i.cpp (get):
+
+	  Change to return a zero-length sequence before destroying
+	  iterator as required by the spec.
+
 Mon Jun 13 17:18:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Iterator_i.h:
