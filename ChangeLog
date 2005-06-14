@@ -1,3 +1,12 @@
+Tue Jun 14 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor_Timer_Interface.{h,cpp}:
+          Moved destructor to a new cpp file to fix Cygwin warnings
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Added Reactor_Timer_Interface.cpp
+
 Tue Jun 14 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/IO_Cntl_Msg.{h,cpp,inl}:
