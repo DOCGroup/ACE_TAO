@@ -1,3 +1,16 @@
+Tue Jun 14 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1693_Test/client.cpp:
+        * tests/RTCORBA/Thread_Pool/client.cpp:
+        * tests/Codec/client.cpp:
+          Fixed compile errors
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.{h,cpp}:
+          Changed the way we use the ORBInitializer registry. When it is
+          requested from the ORB_Core, get it from the service config
+          registry but in a static build don't try to load it on demand
+
 Tue Jun 14 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/*:
