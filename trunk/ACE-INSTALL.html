@@ -1254,8 +1254,8 @@ variables
       Set the environment variable below to build a unicode version of ACE<br>
       <code>set UNICODE=1</code><br>
       <br>
-Set the environment variable below to build a version of ACE with
-Codeguard support. Should only be used when DEBUG is also set<br>
+      Set the environment variable below to build a version of ACE with
+      Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CODEGUARD=1</code><br>
       <br>
       Set the environment variable below to build a version of ACE using the
@@ -1265,10 +1265,10 @@ Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CBX=1</code><br>
       <br>
       You can then start the build with the command
-      <br><code>make -f Makefile.bor</code><br>
+      <br><code>make -f Makefile.bor all</code><br>
       <br>
       You may also enable the options by passing them as command line options to make, for example:<br>
-      <code>make -f Makefile.bor -DDEBUG</code><br>
+      <code>make -f Makefile.bor -DDEBUG all</code><br>
       <br>
   </li><li>Optionally install the ACE header files, libraries and executables
 for use
@@ -1283,6 +1283,8 @@ see <a href="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.c
 for more detailed information on building and using ACE+TAO with Borland C++
 Builder. <p>
 
+Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bor all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
+
 The Borland C++ Builder 4.0/5.0/6.0 port has been done by <a href="mailto:jody@atdesk.com">Jody Hagins</a>, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
 
 <b>ACE TESTS</b></p><p>
@@ -1290,13 +1292,13 @@ The Borland C++ Builder 4.0/5.0/6.0 port has been done by <a href="mailto:jody@a
 Before you can build the tests you need to build the protocols directory. 
 Change the directory to ACE_ROOT\protocols and start the build with: </p><p>
 </p><blockquote><code>
-make -f Makefile.bor
+make -f Makefile.bor all
 </code></blockquote><p>
 
 The tests are located in ACE_ROOT\tests, change to this directory. 
 You build then the tests with the following command:</p><p>
 </p><blockquote><code>
-make -f Makefile.bor
+make -f Makefile.bor all
 </code></blockquote><p>
 
 Once you build all the tests, you can run the automated test script using:</p><p>
