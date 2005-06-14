@@ -1,3 +1,9 @@
+Tue Jun 14 14:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Server_Request.h:
+          Just include Object.h to get CORBA::Object instead of a forward
+          declaration, we get else problems in an inline build.
+
 Tue Jun 14 14:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SCIOP_Profile.cpp:
