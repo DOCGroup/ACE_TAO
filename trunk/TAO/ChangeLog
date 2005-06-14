@@ -1,3 +1,9 @@
+Tue Jun 14 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Added include of tao/Argument.h, this is not pulled in when
+          interceptors are disabled
+
 Tue Jun 14 14:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Server_Request.h:
