@@ -110,6 +110,7 @@ libACE_la_SOURCES = \
   ICMP_Socket.cpp \
   INET_Addr.cpp \
   IOStream.cpp \
+  IO_Cntl_Msg.cpp \
   IO_SAP.cpp \
   IPC_SAP.cpp \
   Init_ACE.cpp \
@@ -556,6 +557,7 @@ nobase_include_HEADERS = \
   IOStream_T.h \
   IOStream_T.inl \
   IO_Cntl_Msg.h \
+  IO_Cntl_Msg.inl \
   IO_SAP.h \
   IO_SAP.inl \
   IPC_SAP.h \

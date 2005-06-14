@@ -51,33 +51,33 @@ public:
 
   // = Initialization method.
   /// Initialize the control message.
-  ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c) { this->cmd_ = c; }
+  ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c);
 
   // = Get/set methods
 
   /// Get command.
-  ACE_IO_Cntl_Cmds cmd (void) { return this->cmd_; }
+  ACE_IO_Cntl_Cmds cmd (void);
 
   /// Set command.
-  void cmd (ACE_IO_Cntl_Cmds c) { this->cmd_ = c; }
+  void cmd (ACE_IO_Cntl_Cmds c);
 
   /// Get count.
-  size_t count (void) { return this->count_; }
+  size_t count (void);
 
   /// Set count.
-  void count (size_t c) { this->count_ = c; }
+  void count (size_t c);
 
   /// Get error.
-  int error (void) { return this->error_; }
+  int error (void);
 
   /// Set error.
-  void error (int e) { this->error_ = e; }
+  void error (int e);
 
   /// Get return value.
-  int rval (void) { return this->rval_; }
+  int rval (void);
 
   /// Set return value.
-  void rval (int r) { this->rval_ = r; }
+  void rval (int r);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -98,6 +98,10 @@ private:
   /// Return value
   int rval_;
 };
+
+#if defined (__ACE_INLINE__)
+#include "ace/IO_Cntl_Msg.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
