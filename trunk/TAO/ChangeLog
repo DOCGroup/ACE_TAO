@@ -1,3 +1,11 @@
+Tue Jun 14 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOPS_T.h:
+          Removed, not included by IOPS.h anymore
+
+        * tao/tao.mpc:
+          Removed tao/tao.mpc
+
 Tue Jun 14 10:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
