@@ -58,7 +58,7 @@ CORBA::Policy_ptr
 TAO_FT_Request_Duration_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_FT_Request_Duration_Policy* tmp;
+  TAO_FT_Request_Duration_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Request_Duration_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -112,12 +112,12 @@ CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val
                                   ACE_ENV_ARG_DECL)
 {
-  FT::HeartbeatPolicyValue *value;
+  FT::HeartbeatPolicyValue *value = 0;
   if ((val >>= value) == 0)
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
                       CORBA::Policy::_nil ());
 
-  TAO_FT_Heart_Beat_Policy *tmp;
+  TAO_FT_Heart_Beat_Policy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_FT_Heart_Beat_Policy (value->heartbeat,
                                               value->heartbeat_interval,
@@ -142,7 +142,7 @@ CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_FT_Heart_Beat_Policy * tmp;
+  TAO_FT_Heart_Beat_Policy * tmp = 0;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));

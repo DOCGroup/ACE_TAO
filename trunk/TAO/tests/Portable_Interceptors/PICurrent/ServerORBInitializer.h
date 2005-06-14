@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

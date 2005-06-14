@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Collocated): taoserver {
+project(*Collocated): taoserver, interceptors {
   exename = collocated
-  requires += interceptors
   Source_Files {
     testC.cpp
     testS.cpp

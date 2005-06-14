@@ -4,6 +4,7 @@
 #include "FT_Endpoint_Selector_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
+#include "tao/ORBInitializer_Registry.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(FaultTolerance, FT_ClientService_Activate, "$Id$")

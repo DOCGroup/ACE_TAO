@@ -1,3 +1,245 @@
+Tue Jun 14 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/*:
+          New PI library. Contains ORBInitializer registry, ORBInitInfo and
+          PolicyFactory. This will be extended in the future with more classes
+          but this is the first step. If you use any of these classes in
+          your app, add the include of tao/PI/PI.h to your application code.
+          This will make sure the service config registry is filled with
+          the loadable modules.
+
+        * tao/BiDir_GIOP.mpc:
+          The BiDir library uses a PolicyFactory so it must link with the PI
+          library
+
+        * tao/Interceptor_List.{h,cpp}:
+          Changed the list to return a value indicating whether it was possible
+          to add the interceptor or not. The caller in the PI or IORInterceptor
+          library will then throw the correct exception. This way the list
+          template can stay in the TAO lib because the exception DuplicateName
+          is now in the PI library
+
+        * tao/IORInterceptor.mpc:
+          Added PI as base project
+
+        * tao/IORInterceptor_Adapter.{h,cpp}:
+          Removed throw clause from add_interceptor method. The clause was
+          not correct also, it could throw a DuplicateName exception also.
+          This way we are not dependent on the PI library. Also the adapter
+          doesn't need to be derived from ACE_Service_Object, this class
+          is not loaded, the factory that creates it is.
+
+        * tao/IORInterceptor_Adapter_Factory.{h,cpp}:
+          Removed destructor, it is not needed
+
+        * tao/ORB.cpp:
+          Updated to use the new ORBInitializer Factory adapter and Policy
+          Factory adapter
+
+        * tao/ORB_Core.{h,cpp,i}:
+          Updated for new adapters and interceptor list changes. Also added
+          a get_orbinitializer_registry which returns the current pointer
+          without trying to load the PI library. This is used by the ORB
+          to call alls orbinitializers. When the library is not loaded yet,
+          no user code caused this so we don't have to do this also
+
+        * tao/ORBInitializer.pidl:
+        * tao/ORBInitializerA.cpp:
+        * tao/ORBInitializerC.{h,cpp,inl}:
+        * tao/ORBInitializerS.h:
+        * tao/ORBInitInfo.pidl:
+        * tao/ORBInitInfoA.cpp:
+        * tao/ORBInitInfoC.{h,cpp,inl}:
+        * tao/ORBInitInfoS.h:
+        * tao/ORBInitInfo.{h,cpp,inl}:
+        * tao/PolicyFactory.pidl:
+        * tao/PolicyFactory_Registry.{h,cpp}:
+        * tao/PolicyFactoryA.cpp:
+        * tao/PolicyFactoryC.{h,cpp,inl}:
+          Moved to the PI library
+
+        * tao/IOP_Codec.pidl:
+        * tao/IOP_CodecA.cpp:
+        * tao/IOP_CodecC.{h,cpp,inl}:
+          Moved to the CodecFactory library
+
+        * tao/IOP.pidl:
+          Removed include of IOP_Codec.pidl
+
+        * tao/ORBInitializer_Registry.{h,cpp}:
+          Removed all code except register_orb_initializer, which now tries
+          to load the ORBInitializer Registry on demand. The code is moved to
+          the PI library
+
+        * tao/PI.mpc:
+          New file
+
+        * tao/PolicyFactory_Registry_Adapter.{h,cpp}:
+          New adapter for PolicyFactory_Registry
+
+        * tao/PolicyFactory_Registry_Factory.h:
+          New factory for creating a PolicyFactory for each ORB
+
+        * tao/PortableInterceptor.pidl:
+          Removed files that moved to the PI library
+
+        * tao/PortableInterceptorA.cpp:
+          Removed, empty
+
+        * tao/PortableInterceptorC.{cpp,h}:
+          Regenerated
+
+        * tao/PortableServer.mpc:
+        * tao/RTCORBA.mpc:
+        * tao/Utils.mpc
+          Based on the new PI. These all use something of the PI library.
+          Because of this only a client gets benefits from this, but the
+          server will be handled in the next iteration
+
+        * tao/tao.mpc:
+          Updated for all changes
+
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+          Added include of ORBInitializer_Registry.h
+
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.{h,cpp}:
+        * tao/BiDir_GIOP/BiDir_PolicyFactory.h:
+          Include tao/PI/PI.h
+
+        * tao/CodecFactory/CodecFactory.h:
+          Include IOP_CodecC.h
+
+        * tao/CodecFactory/IOP_CodecC.{h,cpp}:
+        * tao/CodecFactory/IOP_CodecA.cpp:
+        * tao/CodecFactory/IOP_CodecS.h:
+          Files moved from the tao lib
+
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+        * tao/CodecFactory/IOP_Codec_includeC.h:
+        * tao/CodecFactory/IOP_Codec_includeS.h:
+          New files for apps that include IOP_Codec.pidl in the past, they
+          should now use this pidl file
+
+        * tao/CodecFactory/CDR_Encaps_Codec.h:
+        * tao/CodecFactory/CodecFactory.h:
+        * tao/CodecFactory/CodecFactory_imp.h:
+          Updated for moving of IOP_Codec.pidl
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.{h,cpp}:
+          Updated for interceptor list change
+
+        * tao/Messaging/Messaging_ORBInitializer.h:
+        * tao/Messaging/Messaging_PolicyFactory.h:
+        * tao/PortableServer/PortableServer_ORBInitializer.{h,cpp}:
+        * tao/PortableServer/PortableServer_PolicyFactory.h:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_PolicyFactory.h
+        * tao/RTScheduling/RTScheduling_Initializer.{h,cpp}:
+        * tao/Utils/RIR_Narrow.h:
+          Changed includes to include tao/PI/PI.h
+
+        * tao/docs/libraries.html:
+          Added PI
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc
+        * orbsvcs/examples/LoadBalancing/ORBInitializer.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ORBInitializer.h
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.h
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.h
+        * orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp
+        * orbsvcs/orbsvcs/Security/Security_PolicyFactory.h
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/ORBInitializer.cpp
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/ORBInitializer.h
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ORBInitializer.h
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_ORBInitializer.h
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc
+        * tests/Bug_1495_Regression/Bug_1495.mpc
+        * tests/Bug_1495_Regression/Client_ORBInitializer.h
+        * tests/Bug_1495_Regression/Server_ORBInitializer.h
+        * tests/ORT/ORT.mpc
+        * tests/ORT/ServerORBInitializer.h
+        * tests/Portable_Interceptors/AMI/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/AMI/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Benchmark/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Benchmark/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_2088/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/Echo_Collocated_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Collocated/Dynamic/Echo_Collocated_ORBInitializer.h
+        * tests/Portable_Interceptors/Collocated/Dynamic/PI_Dynamic.mpc
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_ORBInitializer.h
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc
+        * tests/Portable_Interceptors/Dynamic/Echo_Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Dynamic/Echo_Server_ORBInitializer.h
+        * tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_Client_ORBInitializer.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor_ORBInitializer.h
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/PICurrent/ClientORBInitializer.h
+        * tests/Portable_Interceptors/PICurrent/ServerORBInitializer.cpp
+        * tests/Portable_Interceptors/PICurrent/ServerORBInitializer.h
+        * tests/Portable_Interceptors/PICurrent/client.cpp
+        * tests/Portable_Interceptors/PolicyFactory/PolicyFactory.h
+        * tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.h
+          Updated for the new PI library
+
+        * tests/RTCORBA/check_supported_priorities.cpp
+        * tests/RTCORBA/common_args.cpp
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/test.cpp
+        * tests/RTCORBA/Banded_Connections/client.cpp
+        * tests/RTCORBA/Banded_Connections/server.cpp
+        * tests/RTCORBA/Client_Propagated/Client_ORBInitializer.h
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc
+        * tests/RTCORBA/Client_Propagated/client.cpp
+        * tests/RTCORBA/Client_Propagated/server.cpp
+        * tests/RTCORBA/Collocation/Collocation.cpp
+        * tests/RTCORBA/Linear_Priority/client.cpp
+        * tests/RTCORBA/Linear_Priority/server.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp
+        * tests/RTCORBA/Policy_Combinations/client.cpp
+        * tests/RTCORBA/Policy_Combinations/server.cpp
+        * tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp
+        * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp
+        * tests/RTCORBA/Server_Declared/server.cpp
+        * tests/RTCORBA/Thread_Pool/client.cpp
+        * tests/RTCORBA/Thread_Pool/server.cpp
+          Instead of doing an ACE_OS::exit() when the needed priorities
+          are not available, return from the main with a -1. Will reduce
+          the number of memory leaks reported by valgrind a lot.
+
 Tue Jun 14 07:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -pe*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,6 +22,11 @@
 
 class TAO_FTEC_Event_Channel_Impl;
 
+namespace PortableInterceptor
+{
+  class ORBInitInfo;
+  typedef ORBInitInfo *ORBInitInfo_ptr;
+}
 
 /**
  * @class Request_Context_Repository

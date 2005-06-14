@@ -63,11 +63,11 @@ int main(int, char**)
       poaManager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TestMonitorable_i* monitorable_i;
+      TestMonitorable_i* monitorable_i = 0;
       ACE_NEW_RETURN (monitorable_i, TestMonitorable_i, 1);
       PortableServer::ServantBase_var monitorable_var = monitorable_i;
 
-      TestMonitorable_i* m2;
+      TestMonitorable_i* m2 = 0;
       ACE_NEW_RETURN (m2, TestMonitorable_i, 1);
       PortableServer::ServantBase_var m2_var = m2;
 

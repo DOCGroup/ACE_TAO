@@ -9,6 +9,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_errno.h"
 
+#include "tao/ORBInitializer_Registry.h"
 #include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID (LoadBalancing,
