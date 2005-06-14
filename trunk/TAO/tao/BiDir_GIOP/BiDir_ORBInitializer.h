@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -47,7 +47,7 @@ public:
 
 private:
 
-  ///< Register Messaging policy factories.
+  ///< Register BiDir policy factories.
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info
          ACE_ENV_ARG_DECL);

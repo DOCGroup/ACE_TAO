@@ -1,16 +1,17 @@
 // $Id$
 
 #include "ORBInitInfo.h"
-#include "ORB_Core.h"
-#include "ORB.h"
-#include "SystemException.h"
-#include "Object_Loader.h"
+#include "tao/ORB_Core.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
+#include "tao/Object_Loader.h"
+#include "tao/PolicyFactory_Registry_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "PICurrent.h"
+#include "tao/PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 ACE_RCSID (TAO,
@@ -57,13 +58,14 @@ TAO::Objref_Traits<TAO_ORBInitInfo>::marshal (
 }
 
 TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
-                                  int  argc ,
-                                  char *argv[])
+                                  int argc,
+                                  char *argv[],
+                                  PortableInterceptor::SlotId slotid)
   : orb_core_ (orb_core),
     argc_ (argc),
     argv_ (argv),
     codec_factory_ (),
-    slot_count_ (0)
+    slot_count_ (slotid)
 {
 }
 
@@ -197,8 +199,13 @@ TAO_ORBInitInfo::add_client_request_interceptor (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_core_->add_interceptor (interceptor
-                                     ACE_ENV_ARG_PARAMETER);
+  int retval = this->orb_core_->add_interceptor (interceptor
+                                                 ACE_ENV_ARG_PARAMETER);
+
+  if (retval == -1)
+    {
+      ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
+    }
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_THROW (CORBA::NO_IMPLEMENT (
@@ -220,8 +227,13 @@ TAO_ORBInitInfo::add_server_request_interceptor (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_core_->add_interceptor (interceptor
-                                     ACE_ENV_ARG_PARAMETER);
+  int retval = this->orb_core_->add_interceptor (interceptor
+                                                 ACE_ENV_ARG_PARAMETER);
+
+  if (retval == -1)
+    {
+      ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
+    }
 
 #else
   ACE_UNUSED_ARG (interceptor);
@@ -278,8 +290,13 @@ TAO_ORBInitInfo::register_policy_factory (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_PolicyFactory_Registry *registry =
+  TAO::PolicyFactory_Registry_Adapter *registry =
     this->orb_core_->policy_factory_registry ();
+
+  if (registry == 0)
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 
   registry->register_policy_factory (type,
                                      policy_factory
@@ -324,6 +341,15 @@ TAO_ORBInitInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW (CORBA::OBJECT_NOT_EXIST (0,
                                           CORBA::COMPLETED_NO));
     }
+}
+
+CORBA::ORB_ptr
+TAO_ORBInitInfo::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+
+  return CORBA::ORB::_duplicate (this->orb_core_->orb ());
 }
 
 TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_narrow (

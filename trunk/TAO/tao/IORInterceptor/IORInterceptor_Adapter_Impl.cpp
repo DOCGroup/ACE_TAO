@@ -4,6 +4,7 @@
 #include "IORInfo.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
+#include "tao/PI/PI.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 
@@ -21,11 +22,16 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::IORInterceptor_ptr i
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->ior_interceptor_list_.add_interceptor (i
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  int retval =
+    this->ior_interceptor_list_.add_interceptor (i
+                                                 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+  if (retval == -1)
+    {
+      ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
+    }
 }
 
 void

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PolicyFactoryC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 /// Policy factory for all PortableServer related policies.

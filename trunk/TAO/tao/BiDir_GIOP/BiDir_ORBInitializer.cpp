@@ -40,8 +40,6 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
   /// Register the BiDir policy factories.
   PortableInterceptor::PolicyFactory_ptr temp_factory =
     PortableInterceptor::PolicyFactory::_nil ();
-  PortableInterceptor::PolicyFactory_var policy_factory;
-
   /// This policy factory is used for all BiDir related policies.
   ACE_NEW_THROW_EX (temp_factory,
                     TAO_BiDir_PolicyFactory,
@@ -52,7 +50,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  policy_factory = temp_factory;
+  PortableInterceptor::PolicyFactory_var policy_factory = temp_factory;
 
   /// Bind the same policy factory to all BiDir related policy
   /// types since a single policy factory is used to create each of

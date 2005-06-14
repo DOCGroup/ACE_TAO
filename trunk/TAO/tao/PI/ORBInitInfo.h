@@ -15,13 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ORBInitInfoC.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "LocalObject.h"
+#include "ORBInitInfoC.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -53,7 +54,7 @@ typedef TAO_Objref_Out_T<TAO_ORBInitInfo>
  * This class encapsulates the data passed to ORBInitializers during
  * ORB initialization.
  */
-class TAO_Export TAO_ORBInitInfo
+class TAO_PI_Export TAO_ORBInitInfo
   : public virtual PortableInterceptor::ORBInitInfo,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -62,7 +63,8 @@ public:
   /// Constructor.
   TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                    int argc,
-                   char *argv[]);
+                   char *argv[],
+                   PortableInterceptor::SlotId slotid);
 
   /**
    * @name PortableInterceptor::ORBInitInfo Methods
@@ -151,6 +153,10 @@ public:
       PortableInterceptor::PolicyFactory_ptr policy_factory
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::ORB_ptr _get_orb (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
   //@}
 
   /**
@@ -271,7 +277,7 @@ namespace TAO
 {
   // Hand crafted. Not forward declared, but used by PortableServer.
   template<>
-  struct TAO_Export Objref_Traits<TAO_ORBInitInfo>
+  struct TAO_PI_Export Objref_Traits<TAO_ORBInitInfo>
   {
     static TAO_ORBInitInfo_ptr duplicate (
         TAO_ORBInitInfo_ptr

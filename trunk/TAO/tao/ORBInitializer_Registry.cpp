@@ -1,11 +1,13 @@
 #include "ORBInitializer_Registry.h"
+#include "ORBInitializer_Registry_Adapter.h"
 #include "PortableInterceptorC.h"
 #include "ORB.h"
-#include "TAO_Singleton.h"
 #include "ORB_Constants.h"
 #include "TAO_Singleton_Manager.h"
 #include "SystemException.h"
 
+#include "ace/Service_Config.h"
+#include "ace/Dynamic_Service.h"
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
@@ -42,106 +44,37 @@ PortableInterceptor::register_orb_initializer (
     ACE_CHECK;
   }
 
-  // Make sure the following is done after the global ORB
-  // initialization since we need to have exceptions initialized.
+  // If not, lookup it up.
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_ =
+    ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
+    ("ORBInitializer_Registry");
 
-  TAO::ORBInitializer_Registry::instance ()->register_orb_initializer (
-    init
-    ACE_ENV_ARG_PARAMETER);
-}
-
-// ------------------------------------------------------------------
-
-TAO::ORBInitializer_Registry::ORBInitializer_Registry (void)
-  : lock_ (),
-    initializers_ ()
-{
-}
-
-void
-TAO::ORBInitializer_Registry::register_orb_initializer (
-  PortableInterceptor::ORBInitializer_ptr init
-  ACE_ENV_ARG_DECL)
-{
-  if (!CORBA::is_nil (init))
+  if (orbinitializer_registry_ == 0)
     {
-      ACE_GUARD (TAO_SYNCH_MUTEX,
-                 guard,
-                 this->lock_);
+      ACE_Service_Config::process_directive (
+        ACE_TEXT_CHAR_TO_TCHAR (
+        "dynamic ORBInitializer_Registry Service_Object * TAO_PI:_make_ORBInitializer_Registry()"));
+      orbinitializer_registry_ =
+        ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
+          ("ORBInitializer_Registry");
+    }
 
-      // Increase the length of the ORBInitializer array by one.
-      size_t const cur_len = this->initializers_.size ();
-      size_t const new_len = cur_len + 1;
-      if (this->initializers_.size (new_len) != 0)
-        ACE_THROW (CORBA::INTERNAL ());
-
-      // Add the given ORBInitializer to the sequence.
-      this->initializers_[cur_len] =
-        PortableInterceptor::ORBInitializer::_duplicate (init);
+  if (orbinitializer_registry_ != 0)
+    {
+      orbinitializer_registry_->register_orb_initializer (
+        init
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA::INV_OBJREF (
-                 CORBA::SystemException::_tao_minor_code (
-                   0,
-                   EINVAL),
-                 CORBA::COMPLETED_NO));
-}
-
-void
-TAO::ORBInitializer_Registry::pre_init (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
-{
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
-
-  size_t const initializer_count (this->initializers_.size ());
-  for (size_t i = 0; i < initializer_count; ++i)
     {
-      this->initializers_[i]->pre_init (info
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ERROR: ORBInitializer Registry unable to find the ")
+                  ACE_TEXT ("ORBInitializer Registry instance")));
+
+      ACE_THROW (CORBA::INTERNAL ());
     }
 }
 
-void
-TAO::ORBInitializer_Registry::post_init (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
-{
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
 
-  size_t const initializer_count (this->initializers_.size ());
-  for (size_t i = 0; i < initializer_count; ++i)
-    {
-      this->initializers_[i]->post_init (info
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-}
-
-TAO::ORBInitializer_Registry *
-TAO::ORBInitializer_Registry::instance (void)
-{
-  return
-    TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX>::instance ();
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
-template class ACE_Array_Base<PortableInterceptor::ORBInitializer_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Array_Base<PortableInterceptor::ORBInitializer_var>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
-template TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

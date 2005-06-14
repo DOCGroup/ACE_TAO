@@ -25,9 +25,7 @@
 #include "tao/Collocation_Strategy.h"
 #include "tao/params.h"
 #include "tao/ORB_Constants.h"
-#include "tao/PolicyFactory_Registry.h"
 #include "tao/Parser_Registry.h"
-#include "tao/ORBInitializer_Registry.h"
 #include "tao/Service_Callbacks.h"
 #include "tao/Fault_Tolerance_Service.h"
 #include "tao/Cleanup_Func_Registry.h"
@@ -57,6 +55,8 @@ namespace TAO
   typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor>
     ServerRequestInterceptor_List;
 }
+
+class TAO_ClientRequestInfo;
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
@@ -112,17 +112,15 @@ class TAO_Delayed_Buffering_Sync_Strategy;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-#if TAO_HAS_INTERCEPTORS == 1
-class TAO_ClientRequestInfo;
-#endif  /* TAO_HAS_INTERCEPTORS == 1  */
-
-
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
+
 namespace TAO
 {
   class GUIResource_Factory;
+  class PolicyFactory_Registry_Adapter;
+  class ORBInitializer_Registry_Adapter;
 }
 
 namespace CORBA
@@ -268,7 +266,16 @@ public:
 
   /// Return pointer to the policy factory registry associated with
   /// this ORB core.
-  TAO_PolicyFactory_Registry *policy_factory_registry (void);
+  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry (void);
+
+  /// Return pointer to the orb initializer registry associated with
+  /// this ORB core. Tries to load the PI library if it is not loaded
+  /// yet
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry (void);
+
+  /// Return pointer to the orb initializer registry associated with
+  /// this ORB core. Doesn't load the PI library when it is not loaded yet
+  TAO::ORBInitializer_Registry_Adapter *get_orbinitializer_registry (void);
 
   /// Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
@@ -311,7 +318,7 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static
-TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
                                                   ACE_ENV_ARG_DECL);
   //@}
 
@@ -903,12 +910,12 @@ TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
   void pi_current (TAO::PICurrent *current);
 
   /// Register a client request interceptor.
-  void add_interceptor (
+  int add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
   /// Register a server request interceptor.
-  void add_interceptor (
+  int add_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
@@ -1053,6 +1060,14 @@ protected:
   int set_endpoint_helper (const ACE_CString &lane,
                            const ACE_CString &endpoints
                            ACE_ENV_ARG_DECL);
+
+  /// Return pointer to the policy factory registry associated with
+  /// this ORB core.
+  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_i (void);
+
+  /// Return pointer to the orb initializer registry associated with
+  /// this ORB core.
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_i (void);
 
 private:
 
@@ -1258,7 +1273,10 @@ protected:
   CORBA::ULong refcount_;
 
   /// Registry containing all registered policy factories.
-  TAO_PolicyFactory_Registry policy_factory_registry_;
+  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_;
+
+  /// Registry containing all orb initializers
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   /// Cached pointer/reference to the PICurrent object.

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "IOP_CodecC.h"
+#include "CodecFactory.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
@@ -83,7 +83,7 @@ TAO::Objref_Traits<IOP::Codec>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (void)
@@ -178,7 +178,7 @@ CORBA::TypeCode_ptr IOP::Codec::InvalidTypeForEncoding::_tao_type (void) const
   return ::IOP::Codec::_tc_InvalidTypeForEncoding;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::FormatMismatch::FormatMismatch (void)
@@ -273,7 +273,7 @@ CORBA::TypeCode_ptr IOP::Codec::FormatMismatch::_tao_type (void) const
   return ::IOP::Codec::_tc_FormatMismatch;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::TypeMismatch::TypeMismatch (void)
@@ -374,7 +374,7 @@ IOP::Codec::Codec (void)
 IOP::Codec::~Codec (void)
 {}
 
-void 
+void
 IOP::Codec::_tao_any_destructor (void *_tao_void_pointer)
 {
   Codec *_tao_tmp_pointer =
@@ -392,10 +392,10 @@ IOP::Codec::_narrow (
     {
       return Codec::_nil ();
     }
-  
+
   Codec_ptr proxy =
     dynamic_cast<Codec_ptr> (_tao_objref);
-  
+
   return Codec::_duplicate (proxy);
 }
 
@@ -409,10 +409,10 @@ IOP::Codec::_unchecked_narrow (
     {
       return Codec::_nil ();
     }
-  
+
   Codec_ptr proxy =
     dynamic_cast<Codec_ptr> (_tao_objref);
-  
+
   return Codec::_duplicate (proxy);
 }
 
@@ -423,7 +423,7 @@ IOP::Codec::_duplicate (Codec_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -473,10 +473,10 @@ IOP::Codec::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 IOP::Encoding::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -522,7 +522,7 @@ TAO::Objref_Traits<IOP::CodecFactory>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (void)
@@ -623,7 +623,7 @@ IOP::CodecFactory::CodecFactory (void)
 IOP::CodecFactory::~CodecFactory (void)
 {}
 
-void 
+void
 IOP::CodecFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   CodecFactory *_tao_tmp_pointer =
@@ -641,10 +641,10 @@ IOP::CodecFactory::_narrow (
     {
       return CodecFactory::_nil ();
     }
-  
+
   CodecFactory_ptr proxy =
     dynamic_cast<CodecFactory_ptr> (_tao_objref);
-  
+
   return CodecFactory::_duplicate (proxy);
 }
 
@@ -658,10 +658,10 @@ IOP::CodecFactory::_unchecked_narrow (
     {
       return CodecFactory::_nil ();
     }
-  
+
   CodecFactory_ptr proxy =
     dynamic_cast<CodecFactory_ptr> (_tao_objref);
-  
+
   return CodecFactory::_duplicate (proxy);
 }
 
@@ -672,7 +672,7 @@ IOP::CodecFactory::_duplicate (CodecFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

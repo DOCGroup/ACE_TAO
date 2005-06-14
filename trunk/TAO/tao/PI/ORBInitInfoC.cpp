@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:291
+// be\be_codegen.cpp:291
 
 
 #include "ORBInitInfoC.h"
@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -47,7 +47,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::ORBInitInfo.
 
@@ -83,7 +83,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::marshal (
 }
 
 // TAO_IDL - Generated from 
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (void)
   : CORBA::UserException (
@@ -176,7 +176,7 @@ void PortableInterceptor::ORBInitInfo::DuplicateName::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_ctor.cpp:66
+// be\be_visitor_exception/exception_ctor.cpp:66
 
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (
     const char * _tao_name
@@ -196,7 +196,7 @@ CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::DuplicateName::_tao_type (
 }
 
 // TAO_IDL - Generated from 
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (void)
   : CORBA::UserException (

@@ -236,13 +236,6 @@ TAO_ORB_Core::parser_registry (void)
   return &this->parser_registry_;
 }
 
-ACE_INLINE TAO_PolicyFactory_Registry *
-TAO_ORB_Core::policy_factory_registry (void)
-{
-  return &this->policy_factory_registry_;
-}
-
-
 ACE_INLINE TAO_Codeset_Manager *
 TAO_ORB_Core::codeset_manager()
 {
@@ -414,6 +407,30 @@ TAO_ORB_Core::server_id (void) const
   return this->server_id_.c_str();
 }
 
+ACE_INLINE TAO::ORBInitializer_Registry_Adapter *
+TAO_ORB_Core::orbinitializer_registry ()
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    0);
+  if (orbinitializer_registry_ == 0)
+    {
+      return this->orbinitializer_registry_i ();
+    }
+  return this->orbinitializer_registry_;
+}
+
+ACE_INLINE TAO::PolicyFactory_Registry_Adapter *
+TAO_ORB_Core::policy_factory_registry ()
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    0);
+  if (policy_factory_registry_ == 0)
+    {
+      return this->policy_factory_registry_i ();
+    }
+  return this->policy_factory_registry_;
+}
+
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -571,22 +588,22 @@ TAO_ORB_Core::pi_current (TAO::PICurrent *current)
   this->pi_current_ = current;
 }
 
-ACE_INLINE void
+ACE_INLINE int
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ClientRequestInterceptor_ptr interceptor
    ACE_ENV_ARG_DECL)
 {
-  this->client_request_interceptors_.add_interceptor (interceptor
-                                                       ACE_ENV_ARG_PARAMETER);
+  return this->client_request_interceptors_.add_interceptor (interceptor
+                                                             ACE_ENV_ARG_PARAMETER);
 }
 
-ACE_INLINE void
+ACE_INLINE int
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ServerRequestInterceptor_ptr interceptor
    ACE_ENV_ARG_DECL)
 {
-  this->server_request_interceptors_.add_interceptor (interceptor
-                                                       ACE_ENV_ARG_PARAMETER);
+  return this->server_request_interceptors_.add_interceptor (interceptor
+                                                             ACE_ENV_ARG_PARAMETER);
 }
 
 // ------

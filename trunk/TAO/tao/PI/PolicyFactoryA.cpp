@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "ORBInitializerC.h"
+#include "PolicyFactoryC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode_Static.h"
@@ -35,31 +35,31 @@
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
-  _tao_tc_PortableInterceptor_ORBInitializer (
+  _tao_tc_PortableInterceptor_PolicyFactory (
     CORBA::tk_local_interface,
-    "IDL:omg.org/PortableInterceptor/ORBInitializer:1.0",
-    "ORBInitializer");
+    "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0",
+    "PolicyFactory");
   
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr const _tc_ORBInitializer =
-    &_tao_tc_PortableInterceptor_ORBInitializer;
+  ::CORBA::TypeCode_ptr const _tc_PolicyFactory =
+    &_tao_tc_PortableInterceptor_PolicyFactory;
 }
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
   template<>
   CORBA::Boolean
-  Any_Impl_T<PortableInterceptor::ORBInitializer>::to_object (
+  Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
       CORBA::Object_ptr &_tao_elem
     ) const
   {
@@ -72,14 +72,14 @@ namespace TAO
 {
   template<>
   CORBA::Boolean
-  Any_Impl_T<PortableInterceptor::ORBInitializer>::marshal_value (TAO_OutputCDR &)
+  Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
   {
     return false;
   }
   
   template<>
   CORBA::Boolean
-  Any_Impl_T<PortableInterceptor::ORBInitializer>::demarshal_value (TAO_InputCDR &)
+  Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
   {
     return false;
   }
@@ -89,11 +89,11 @@ namespace TAO
 void
 operator<<= (
     CORBA::Any &_tao_any,
-    PortableInterceptor::ORBInitializer_ptr _tao_elem
+    PortableInterceptor::PolicyFactory_ptr _tao_elem
   )
 {
-  PortableInterceptor::ORBInitializer_ptr _tao_objptr =
-    PortableInterceptor::ORBInitializer::_duplicate (_tao_elem);
+  PortableInterceptor::PolicyFactory_ptr _tao_objptr =
+    PortableInterceptor::PolicyFactory::_duplicate (_tao_elem);
   _tao_any <<= &_tao_objptr;
 }
 
@@ -101,13 +101,13 @@ operator<<= (
 void
 operator<<= (
     CORBA::Any &_tao_any,
-    PortableInterceptor::ORBInitializer_ptr *_tao_elem
+    PortableInterceptor::PolicyFactory_ptr *_tao_elem
   )
 {
-  TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::insert (
+  TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::insert (
       _tao_any,
-      PortableInterceptor::ORBInitializer::_tao_any_destructor,
-      PortableInterceptor::_tc_ORBInitializer,
+      PortableInterceptor::PolicyFactory::_tao_any_destructor,
+      PortableInterceptor::_tc_PolicyFactory,
       *_tao_elem
     );
 }
@@ -115,14 +115,14 @@ operator<<= (
 CORBA::Boolean
 operator>>= (
     const CORBA::Any &_tao_any,
-    PortableInterceptor::ORBInitializer_ptr &_tao_elem
+    PortableInterceptor::PolicyFactory_ptr &_tao_elem
   )
 {
   return
-    TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::extract (
+    TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::extract (
         _tao_any,
-        PortableInterceptor::ORBInitializer::_tao_any_destructor,
-        PortableInterceptor::_tc_ORBInitializer,
+        PortableInterceptor::PolicyFactory::_tao_any_destructor,
+        PortableInterceptor::_tc_PolicyFactory,
         _tao_elem
       );
 }

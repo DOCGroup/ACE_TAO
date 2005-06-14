@@ -4,7 +4,7 @@
 #include "PortableServer_PolicyFactory.h"
 #include "PortableServer.h"
 #include "POA_Current.h"
-#include "tao/ORBInitInfo.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
