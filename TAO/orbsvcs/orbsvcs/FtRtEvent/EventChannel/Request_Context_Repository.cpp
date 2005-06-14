@@ -5,6 +5,7 @@
 #include "../Utils/UUID.h"
 
 #include "tao/TypeCode.h"
+#include "tao/PI/PI.h"
 #include "tao/IOP_IORC.h"
 #include "ace/TSS_T.h"
 

@@ -1,3 +1,11 @@
+Tue Jun 14 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/interceptors.mpb:
+        * bin/MakeProjectCreator/config/portableserver.mpb:
+        * bin/MakeProjectCreator/config/rtcorba.mpb:
+        * bin/MakeProjectCreator/config/utils.mpb:
+          Added pi as base project
+
 Mon Jun 13 13:50:53 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:

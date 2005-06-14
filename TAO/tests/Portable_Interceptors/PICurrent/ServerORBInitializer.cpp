@@ -3,7 +3,7 @@
 #include "ServerORBInitializer.h"
 #include "ServerRequestInterceptor.h"
 #include "ClientRequestInterceptor2.h"
-#include "tao/ORBInitInfo.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 
 ACE_RCSID (PICurrent,

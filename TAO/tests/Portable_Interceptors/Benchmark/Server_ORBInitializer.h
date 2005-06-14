@@ -7,7 +7,7 @@
 #define TAO_SERVER_ORB_INITIALIZER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

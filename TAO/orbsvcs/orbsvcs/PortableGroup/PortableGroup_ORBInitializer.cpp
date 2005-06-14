@@ -5,7 +5,7 @@
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORBInitInfo.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 
 
@@ -16,10 +16,6 @@ ACE_RCSID (PortableGroup,
 
 static const char pg_poa_factory_name[] = "TAO_PG_POA";
 static const char pg_poa_factory_directive[] = "dynamic TAO_PG_POA Service_Object * TAO_PortableGroup:_make_TAO_PG_Object_Adapter_Factory()";
-
-TAO_PortableGroup_ORBInitializer::TAO_PortableGroup_ORBInitializer (void)
-{
-}
 
 void
 TAO_PortableGroup_ORBInitializer::pre_init (
@@ -46,7 +42,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
     }
 
   // Set a new request dispatcher in the ORB.
-  PortableGroup_Request_Dispatcher *rd;
+  PortableGroup_Request_Dispatcher *rd = 0;
   ACE_NEW_THROW_EX (rd,
                     PortableGroup_Request_Dispatcher (),
                     CORBA::NO_MEMORY (

@@ -13,7 +13,7 @@
 #define FTEC_ORBINITIALIZER__H_
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -25,8 +25,6 @@ class FTEC_ORBInitializer
   , public virtual TAO_Local_RefCounted_Object
 {
 public:
-  FTEC_ORBInitializer ();
-
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));

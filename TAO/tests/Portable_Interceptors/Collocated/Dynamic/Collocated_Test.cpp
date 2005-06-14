@@ -50,7 +50,6 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-#if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
@@ -63,7 +62,6 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =

@@ -380,8 +380,3 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
   ACE_CHECK;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<CORBA::ULong>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<CORBA::ULong>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

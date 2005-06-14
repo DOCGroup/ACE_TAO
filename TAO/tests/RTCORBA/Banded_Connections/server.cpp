@@ -367,7 +367,8 @@ main (int argc, char *argv[])
 
       // Make sure we can support multiple priorities that are required
       // for this test.
-      check_supported_priorities (orb.in ());
+      if (!check_supported_priorities (orb.in ()))
+        return -1;
 
       // Get the RTORB.
       CORBA::Object_var object =

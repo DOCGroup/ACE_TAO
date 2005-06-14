@@ -4,7 +4,7 @@
 #define SERVICE_CONTEXT_MANIPULATION_COLLOCATED_ORBINITIALIZER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

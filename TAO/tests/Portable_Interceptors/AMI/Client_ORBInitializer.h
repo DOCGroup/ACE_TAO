@@ -10,7 +10,7 @@
 #define Client_ORBInitializer__h_
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
 class Client_ORBInitializer

@@ -2,8 +2,6 @@
 
 #include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
 
-//#include "orbsvcs/CosLoadBalancingC.h"
-
 #include "tao/ORB_Constants.h"
 
 

@@ -24,7 +24,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
