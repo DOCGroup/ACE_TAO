@@ -1435,12 +1435,6 @@ TAO_ORB_Core::policy_factory_registry_i (void)
 }
 
 TAO::ORBInitializer_Registry_Adapter *
-TAO_ORB_Core::get_orbinitializer_registry (void)
-{
-  return this->orbinitializer_registry_;
-}
-
-TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry_i (void)
 {
   // If not, lookup it up.
@@ -1448,6 +1442,10 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
     ("ORBInitializer_Registry");
 
+#if !defined (TAO_AS_STATIC_LIBS)
+      // In case we build shared, try to load the PI Client library, in a
+      // static build we just can't do this, so don't try it, lower layers
+      // output an error then.
   if (orbinitializer_registry_ == 0)
     {
       ACE_Service_Config::process_directive (
@@ -1457,6 +1455,7 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
           ("ORBInitializer_Registry");
     }
+#endif /* !TAO_AS_STATIC_LIBS */
 
   return this->orbinitializer_registry_;
 }

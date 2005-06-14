@@ -1577,7 +1577,7 @@ CORBA::ORB_init (int &argc,
 
 
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry =
-    oc.get ()->get_orbinitializer_registry ();
+    oc.get ()->orbinitializer_registry ();
 
   PortableInterceptor::SlotId slotid = 0;
 
