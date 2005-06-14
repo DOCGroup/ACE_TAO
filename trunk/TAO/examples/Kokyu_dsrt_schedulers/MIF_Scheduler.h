@@ -4,6 +4,7 @@
 #define MIF_SCHEDULER_H
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "MIF_SchedulingC.h"
 #include "tao/LocalObject.h"
 #include "Kokyu_dsrt.h"
@@ -69,7 +70,7 @@ public TAO_Local_RefCounted_Object
 {
  public:
 
-  MIF_Scheduler (CORBA::ORB_ptr orb, 
+  MIF_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,
                  int ace_sched_scope);

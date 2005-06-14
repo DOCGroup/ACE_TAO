@@ -4,6 +4,7 @@
 #define FIXED_PRIORITY_SCHEDULER_H
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/CodecFactory/CodecFactory.h"
 #include "tao/LocalObject.h"
 #include "FP_SchedulingC.h"
 #include "Kokyu_dsrt.h"
@@ -77,7 +78,7 @@ public TAO_Local_RefCounted_Object
 {
  public:
 
-  Fixed_Priority_Scheduler (CORBA::ORB_ptr orb, 
+  Fixed_Priority_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,
                  int ace_sched_scope);
