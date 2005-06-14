@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   ORBInitializer_Registry.h
+ *  @file   ORBInitializer_Registry_Impl.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 // ===================================================================
 
-#ifndef TAO_PI_ORB_INITIALIZER_REGISTRY_H
-#define TAO_PI_ORB_INITIALIZER_REGISTRY_H
+#ifndef TAO_PI_ORB_INITIALIZER_REGISTRY_IMPL_H
+#define TAO_PI_ORB_INITIALIZER_REGISTRY_IMPL_H
 
 #include /**/ "ace/pre.h"
 
@@ -95,4 +95,4 @@ ACE_FACTORY_DECLARE (TAO_PI, ORBInitializer_Registry)
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_PI_ORB_INITIALIZER_REGISTRY_H */
+#endif /* TAO_PI_ORB_INITIALIZER_REGISTRY_IMPL_H */
