@@ -95,6 +95,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     INET_Addr.cpp
     Init_ACE.cpp
     IO_SAP.cpp
+    IO_Cntl_Msg.cpp
     IOStream.cpp
     IPC_SAP.cpp
     Lib_Find.cpp
