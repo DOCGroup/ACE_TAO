@@ -1,3 +1,10 @@
+Tue Jun 14 14:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SCIOP_Profile.cpp:
+          Include tao/StringSeqC.h to get StringSeq. It seems the refactoring
+          of some PI reveales a lot of includes which are previously
+          gotten for free.
+
 Tue Jun 14 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Upcall_Wrapper.cpp:
