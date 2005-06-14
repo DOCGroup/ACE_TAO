@@ -3,7 +3,7 @@
 // cvs-id    : $Id$
 
 #include "tao/corba.h"
-#include "tao/ORBInitInfo.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 
 #include "ORB_Initializer.h"
