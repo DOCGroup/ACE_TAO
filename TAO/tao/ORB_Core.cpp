@@ -31,6 +31,9 @@
 #include "Adapter_Factory.h"
 #include "Adapter.h"
 #include "GUIResource_Factory.h"
+#include "PolicyFactory_Registry_Adapter.h"
+#include "PolicyFactory_Registry_Factory.h"
+#include "ORBInitializer_Registry_Adapter.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "Policy_Manager.h"
@@ -183,7 +186,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     transport_sync_strategy_ (0),
     refcount_ (1),
-    policy_factory_registry_ (),
+    policy_factory_registry_ (0),
+    orbinitializer_registry_ (0),
 #if (TAO_HAS_INTERCEPTORS == 1)
     pi_current_ (0),
     client_request_interceptors_ (),
@@ -254,6 +258,11 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->transport_sync_strategy_;
 
   delete this->request_dispatcher_;
+
+  delete this->policy_factory_registry_;
+
+  // Don't delete, is a process wide singleton shared by all orbs
+  orbinitializer_registry_ = 0;
 
   CORBA::release (this->orb_);
 }
@@ -1399,6 +1408,57 @@ TAO_ORB_Core::collocation_resolver (void)
     (TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_.c_str());
 
   return *this->collocation_resolver_;
+}
+
+TAO::PolicyFactory_Registry_Adapter *
+TAO_ORB_Core::policy_factory_registry_i (void)
+{
+
+  TAO_PolicyFactory_Registry_Factory *loader =
+    ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance (
+      "PolicyFactory_Loader");
+  if (loader == 0)
+    {
+      ACE_Service_Config::process_directive (
+        ACE_TEXT("dynamic TAO_PolicyFactory_Registry_Factory Service_Object *")
+        ACE_TEXT("TAO_PI:_make_PolicyFactory_Loader()"));
+      loader =
+        ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance (
+          "PolicyFactory_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::INTERNAL ());
+    }
+  this->policy_factory_registry_ =
+    loader->create ();
+
+  return this->policy_factory_registry_;
+}
+
+TAO::ORBInitializer_Registry_Adapter *
+TAO_ORB_Core::get_orbinitializer_registry (void)
+{
+  return this->orbinitializer_registry_;
+}
+
+TAO::ORBInitializer_Registry_Adapter *
+TAO_ORB_Core::orbinitializer_registry_i (void)
+{
+  // If not, lookup it up.
+  this->orbinitializer_registry_ =
+    ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
+    ("ORBInitializer_Registry");
+
+  if (orbinitializer_registry_ == 0)
+    {
+      ACE_Service_Config::process_directive (
+        ACE_TEXT_CHAR_TO_TCHAR (
+        "dynamic ORBInitializer_Registry Service_Object * TAO_PI:_make_ORBInitializer_Registry()"));
+      orbinitializer_registry_ =
+        ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
+          ("ORBInitializer_Registry");
+    }
+
+  return this->orbinitializer_registry_;
 }
 
 TAO_Stub_Factory *

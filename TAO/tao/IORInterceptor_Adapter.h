@@ -15,7 +15,7 @@
 #define TAO_IORINTERCEPTOR_ADAPTER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
 #include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -57,7 +57,7 @@ class TAO_Root_POA;
  * interfaces IORInfo and IORInterceptor. This is a base class for
  * the actual implementation in the TAO_IORInterceptor library.
  */
-class TAO_Export TAO_IORInterceptor_Adapter : public ACE_Service_Object
+class TAO_Export TAO_IORInterceptor_Adapter
 {
 public:
   virtual ~TAO_IORInterceptor_Adapter (void);
@@ -65,8 +65,7 @@ public:
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor
       ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    ) = 0;
 
   virtual void destroy_interceptors (
       ACE_ENV_SINGLE_ARG_DECL

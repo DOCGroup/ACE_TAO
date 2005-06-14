@@ -13,7 +13,7 @@ ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORBInitInfo.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -92,7 +92,7 @@ void
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  Server_Interceptor *server_interceptor;
+  Server_Interceptor *server_interceptor = 0;
   ACE_NEW_THROW_EX (server_interceptor,
                     Server_Interceptor (this->current_),
                     CORBA::NO_MEMORY (

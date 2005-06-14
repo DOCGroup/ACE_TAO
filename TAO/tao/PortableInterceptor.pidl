@@ -22,7 +22,7 @@
  * The command used to generate code is:
  *
  *  tao_idl
- *     -o orig -Gp -Gd -Ge 1 -GA -Sc -SS -Sci
+ *     -o orig -Gp -Gd -Ge 1 -Sc -SS -Sci
  *          -Wb,export_include="tao/TAO_Export.h"
  *          -Wb,export_macro=TAO_Export
  *          -Wb,pre_include="ace/pre.h"
@@ -37,12 +37,9 @@
 #include <PI_Forward.pidl>
 #include <Messaging_SyncScope.pidl>
 
-#include <ORBInitializer.pidl>
-#include <ORBInitInfo.pidl>
 #include <InvalidSlot.pidl>
 #include <ClientRequestInfo.pidl>
 #include <ServerRequestInfo.pidl>
-#include <PolicyFactory.pidl>
 #include <ClientRequestInterceptor.pidl>
 #include <ServerRequestInterceptor.pidl>
 #include <PICurrent.pidl>

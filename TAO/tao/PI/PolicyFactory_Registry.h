@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
 // ===================================================================
 
@@ -15,38 +16,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Basic_Types.h"
-
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/CORBA_macros.h"
-
-//-- Forward Declarations--
-namespace CORBA
-{
-  typedef ULong PolicyType;
-
-  class Policy;
-  typedef Policy *Policy_ptr;
-
-  class Any;
-
-  class Environment;
-}
-
-namespace PortableInterceptor
-{
-  class PolicyFactory;
-  typedef PolicyFactory *PolicyFactory_ptr;
-}
-
-class TAO_ORB_Core;
+#include "tao/Basic_Types.h"
+#include "tao/PolicyFactory_Registry_Adapter.h"
 
 /**
  * @class TAO_PolicyFactory_Registry
@@ -56,7 +36,8 @@ class TAO_ORB_Core;
  * ORB-specific registry that contains all portable interceptor
  * policy factories.
  */
-class TAO_Export TAO_PolicyFactory_Registry
+class TAO_PI_Export TAO_PolicyFactory_Registry
+  : public TAO::PolicyFactory_Registry_Adapter
 {
 public:
 

@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_IOPC_H_
-#define _TAO_IDL_ORIG_IOPC_H_
+#ifndef _TAO_IDL_ORIG_IOP_CODEC_INCLUDEC_H_
+#define _TAO_IDL_ORIG_IOP_CODEC_INCLUDEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -40,16 +40,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/CodecFactory/codecfactory_export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 
-#include "tao/IOP_IORC.h"
+#include "tao/CodecFactory/CodecFactory.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_CodecFactory_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)

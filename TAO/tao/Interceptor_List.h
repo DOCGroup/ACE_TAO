@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Array_Base.h"
-#include "ORBInitInfoC.h"
 
 namespace PortableInterceptor
 {
@@ -53,22 +52,19 @@ namespace TAO
     /// Constructor.
     Interceptor_List (void);
 
-    /// Register an interceptor.
-    void add_interceptor (InterceptorType_ptr_type i
-                          ACE_ENV_ARG_DECL);
+    /**
+     * Register an interceptor.
+     * @retval 0 Interceptor added without problems
+     * @retval -1 Interceptor not added because of a duplicate name
+     */
+    int add_interceptor (
+      InterceptorType_ptr_type i
+      ACE_ENV_ARG_DECL);
 
     /// Return reference to the underlying Portable Interceptor array.
     TYPE & interceptors (void);
 
   protected:
-
-    /// Register an in interceptor with interceptor list.
-    size_t add_interceptor_i (
-        PortableInterceptor::Interceptor_ptr interceptor
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ORBInitInfo::DuplicateName));
 
     /// Return the interceptor in sequence element @a index.
     PortableInterceptor::Interceptor_ptr interceptor (size_t index);

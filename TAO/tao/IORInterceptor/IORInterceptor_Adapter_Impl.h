@@ -42,9 +42,9 @@ class TAO_IORInterceptor_Export TAO_IORInterceptor_Adapter_Impl
 public:
   virtual ~TAO_IORInterceptor_Adapter_Impl (void);
 
-  virtual void add_interceptor (PortableInterceptor::IORInterceptor_ptr interceptor
-                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void add_interceptor (
+      PortableInterceptor::IORInterceptor_ptr interceptor
+      ACE_ENV_ARG_DECL);
 
   virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC (());
