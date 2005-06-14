@@ -15,11 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Time_Value.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Time_Value.h"
 
 class ACE_Event_Handler;
 
