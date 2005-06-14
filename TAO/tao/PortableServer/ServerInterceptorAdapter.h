@@ -32,8 +32,8 @@
 #include "portableserver_export.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/Interceptor_List.h"
 #include "tao/ServerRequestInterceptorC.h"
+#include "tao/Interceptor_List.h"
 
 namespace TAO
 {

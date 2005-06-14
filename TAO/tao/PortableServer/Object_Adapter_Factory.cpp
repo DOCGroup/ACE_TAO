@@ -4,6 +4,7 @@
 #include "Object_Adapter.h"
 #include "PortableServer_ORBInitializer.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORBInitializer_Registry.h"
 
 TAO_Object_Adapter_Factory::TAO_Object_Adapter_Factory (void)
 {
