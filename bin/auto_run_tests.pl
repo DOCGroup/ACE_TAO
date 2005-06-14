@@ -120,7 +120,7 @@ foreach my $test_lst (@file_list) {
               }
           }
 
-        ### Genrate the -ExeSubDir and -Config options
+        ### Generate the -ExeSubDir and -Config options
         my $inherited_options = " -ExeSubDir $PerlACE::Process::ExeSubDir ";
 
         foreach my $config ($config_list->my_config_list ()) {
