@@ -1,10 +1,20 @@
 // IO_Cntl_Msg.cpp
 // $Id$
 
+#include "ace/IO_Cntl_Msg.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/IO_Cntl_Msg.inl"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(ace, IO_Cntl_Msg, "$Id$")
+
 #if 0
 // This is not meant to be used, it's just a place holder...
 
-ACE_RCSID(ace, IO_Cntl_Msg, "$Id$")
+#if !defined (__ACE_INLINE__)
+#include "ace/Intrusive_List.inl"
+#endif /* __ACE_INLINE__ */
 
 // Forward decl
 template <class SYNCH> class ACE_Module;
