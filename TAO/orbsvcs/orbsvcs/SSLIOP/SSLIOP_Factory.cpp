@@ -6,13 +6,11 @@
 
 #include "orbsvcs/Security/Security_ORBInitializer.h"  /// @todo should go away
 
-//#include "orbsvcs/CSIIOPC.h"
-
 #include "tao/debug.h"
+#include "tao/ORBInitializer_Registry.h"
 
 #include "ace/SSL/sslconf.h"
 #include "ace/SSL/SSL_Context.h"
-
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Factory,
@@ -20,20 +18,20 @@ ACE_RCSID (SSLIOP,
 
 
 // An SSL session id seed value. Needs not be too unique, just somewhat
-// different. See the OpenSSL manual 
-static const unsigned char session_id_context_[] = 
+// different. See the OpenSSL manual
+static const unsigned char session_id_context_[] =
   "$Id$";
 
 // Protocol name prefix
 static const char *prefix_[] = {"iiop", "ssliop"};
 
 // An OS-dependent path separator character
-static const char *TAO_PATH_SEPARATOR_STRING = 
-#if defined(ACE_WIN32)        
+static const char *TAO_PATH_SEPARATOR_STRING =
+#if defined(ACE_WIN32)
   ACE_TEXT (";");
 #else
   ACE_TEXT (":");
-#endif 
+#endif
 
 namespace TAO
 {
@@ -144,20 +142,20 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   // problems may occur later on due to lack of initialization of the
   // underlying SSL library (e.g. OpenSSL), which occurs when an
   // ACE_SSL_Context is instantiated.
-  
+
   // The code is cleaner this way anyway.
   ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
   ACE_ASSERT (ssl_ctx != 0);
 
-  size_t session_id_len = 
-    (sizeof session_id_context_ >= SSL_MAX_SSL_SESSION_ID_LENGTH) 
-      ? SSL_MAX_SSL_SESSION_ID_LENGTH 
+  size_t session_id_len =
+    (sizeof session_id_context_ >= SSL_MAX_SSL_SESSION_ID_LENGTH)
+      ? SSL_MAX_SSL_SESSION_ID_LENGTH
       : sizeof session_id_context_;
-  
-  // Note that this function returns 1, if the operation succeded. 
+
+  // Note that this function returns 1, if the operation succeded.
   // See SSL_CTX_set_session_id_context(3)
-  if( 1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context(), 
-                                             session_id_context_, 
+  if( 1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context(),
+                                             session_id_context_,
                                              session_id_len))
   {
     if (TAO_debug_level > 0)
@@ -310,7 +308,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
               (void) parse_x509_file (argv[curarg], &ca_file);
             }
         }
-      
+
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    "-SSLCApath") == 0)
         {
@@ -320,7 +318,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
               ca_dir = argv[curarg];
             }
         }
-      
+
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    "-SSLrand") == 0)
         {
@@ -338,7 +336,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   {
     short errors = 0;
     char *file_name = 0;
-    const char *path = ACE_OS::strtok_r (rand_path, 
+    const char *path = ACE_OS::strtok_r (rand_path,
                                          TAO_PATH_SEPARATOR_STRING,
                                          &file_name);
     while ( path != 0)
@@ -346,7 +344,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
       if( -1 == ssl_ctx->seed_file (path, -1))
       {
         errors++;
-        
+
         if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Failed to load ")
@@ -359,15 +357,15 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
                         ACE_TEXT ("TAO (%P|%t) Loaded ")
                         ACE_TEXT ("more entropy from <%s>\n"), path));
       }
-      
+
       path = ACE_OS::strtok_r (0, TAO_PATH_SEPARATOR_STRING, &file_name);
     }
-    
-    if (errors > 0) 
+
+    if (errors > 0)
       return -1;
   }
 
-  // Load any trusted certificates explicitely rather than relying on 
+  // Load any trusted certificates explicitely rather than relying on
   // previously set SSL_CERT_FILE and/or SSL_CERT_PATH environment variable
   if (ca_file != 0 || ca_dir != 0)
     {
@@ -377,12 +375,12 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
             ACE_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) Unable to load ")
                         ACE_TEXT ("CA certs from %s%s%s\n"),
-                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ") 
-                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV) 
+                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ")
+                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV)
                                                     ACE_TEXT (" env var (if any)")),
                         ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ") 
-                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV) 
+                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ")
+                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV)
                                                   ACE_TEXT (" env var (if any)"))));
 
           return -1;
@@ -393,16 +391,16 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("Trusted Certificates from %s%s%s\n"),
-                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ") 
-                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV) 
+                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ")
+                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV)
                                                     ACE_TEXT (" env var (if any)")),
                         ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ") 
-                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV) 
+                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ")
+                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV)
                                                   ACE_TEXT (" env var (if any)"))));
         }
     }
-  
+
   // Load in the DH params.  If there was a file explicitly specified,
   // then we do that here, otherwise we load them in from the cert file.
   // Note that we only do this on the server side, I think so we might
