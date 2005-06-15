@@ -13,8 +13,8 @@
 
 extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
-class TAO_RTScheduler_Export Client_Interceptor:
-public  PortableInterceptor::ClientRequestInterceptor
+class TAO_RTScheduler_Export Client_Interceptor :
+  public  PortableInterceptor::ClientRequestInterceptor
 {
 public:
 
@@ -54,8 +54,8 @@ public:
 
 };
 
-class TAO_RTScheduler_Export Server_Interceptor:
-public PortableInterceptor::ServerRequestInterceptor
+class TAO_RTScheduler_Export Server_Interceptor :
+  public PortableInterceptor::ServerRequestInterceptor
 {
 
 public:

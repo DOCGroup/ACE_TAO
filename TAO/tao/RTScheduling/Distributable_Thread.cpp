@@ -30,7 +30,7 @@ RTScheduling::DistributableThread_ptr
 TAO_DistributableThread_Factory::create_DT (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  TAO_DistributableThread* DT;
+  TAO_DistributableThread* DT = 0;
 
   ACE_NEW_THROW_EX (DT,
                     TAO_DistributableThread,
