@@ -1,3 +1,10 @@
+Wed Jun 15 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POA_Current_Impl.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+          Removed several not needed includes
+
 Wed Jun 15 11:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/Param_Test.mpc:
