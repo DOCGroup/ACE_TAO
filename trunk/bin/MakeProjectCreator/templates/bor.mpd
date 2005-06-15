@@ -36,7 +36,7 @@ LIBFILES = \
 <%foreach(lit_libs)%>
 	<%lit_lib%>.lib \
 <%endfor%>
-<%foreach(libs)%>
+<%foreach(reverse(libs))%>
 	<%lib%>$(LIB_DECORATOR).lib \
 <%endfor%>
 	$(DUMMY_VALUE_NOT_ENDING_IN_BACKSLASH)
