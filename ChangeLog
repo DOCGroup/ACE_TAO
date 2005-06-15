@@ -1,3 +1,10 @@
+Wed Jun 15 09:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Reversed the order in which the libs are generated. This make sure
+          we first get the static created for ACE, then for TAO, etc. Fixes
+          the problems in the CBX static build
+
 Tue Jun 14 17:52:39 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Thread_Manager.h: Improved documentation for the task_list()
