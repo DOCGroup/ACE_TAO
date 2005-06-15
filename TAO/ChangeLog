@@ -1,3 +1,9 @@
+Tue Jun 14 21:35:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PolicyFactory_Registry_Adapter.cpp:
+
+	  Removed stray semi-colon.
+
 Tue Jun 14 20:57:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From Lothar Werzinger <lothar@xcerla.com>
