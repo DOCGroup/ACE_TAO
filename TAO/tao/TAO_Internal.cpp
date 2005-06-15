@@ -386,6 +386,14 @@ namespace
         rtscheduler_loader->init (0, 0);
       }
 
+    ACE_Service_Object * const messaging_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance ("Messaging_Loader");
+
+    if (messaging_loader != 0)
+      {
+        messaging_loader->init (0, 0);
+      }
+
     // @@ What the heck do these things do and do we need to avoid
     //    calling them if we're not invoking the svc.conf file?
     // @@ They are needed for platforms that have no file system,

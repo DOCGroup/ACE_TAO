@@ -33,10 +33,6 @@
 #endif /* _MSC_VER */
 
 
-/// Forward Declarations
-class TAO_Messaging_PolicyFactory;
-
-
 /// Messaging ORB initializer.
 class TAO_Messaging_Export TAO_Messaging_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,

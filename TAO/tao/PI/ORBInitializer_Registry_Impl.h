@@ -37,15 +37,6 @@ namespace TAO
    *
    * @brief Global list that contains all portable interceptor ORB
    *        initializers.
-   *
-   * @note This class should be instantiated via its instance()
-   *       method.  Normally this would be enforced by making the
-   *       constructor protected but that forces a friend declaration
-   *       containing a template type (TAO_Singleton) with a static
-   *       member to be introduced.  In turn, this potentially
-   *       introduces problems in MS Windows DLL environments due to
-   *       the occurance of multiple singleton instances.  There
-   *       should only be one!
    */
   class TAO_PI_Export ORBInitializer_Registry
     : public ORBInitializer_Registry_Adapter
