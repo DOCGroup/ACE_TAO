@@ -49,6 +49,7 @@ PortableInterceptor::register_orb_initializer (
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
     ("ORBInitializer_Registry");
 
+#if !defined (TAO_AS_STATIC_LIBS)
   if (orbinitializer_registry_ == 0)
     {
       ACE_Service_Config::process_directive (
@@ -58,6 +59,7 @@ PortableInterceptor::register_orb_initializer (
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
           ("ORBInitializer_Registry");
     }
+#endif /* !TAO_AS_STATIC_LIBS */
 
   if (orbinitializer_registry_ != 0)
     {
