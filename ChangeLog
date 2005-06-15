@@ -1,3 +1,8 @@
+Wed Jun 15 09:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Use uniq for libpaths so that we don't generate things twice
+
 Wed Jun 15 09:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
