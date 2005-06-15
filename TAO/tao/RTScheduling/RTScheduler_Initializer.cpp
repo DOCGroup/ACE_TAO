@@ -73,12 +73,12 @@ void
 
   CORBA::Object_var safe_current = current_obj;
 
-    info->register_initial_reference ("RTScheduler_Current",
-                                      current_obj
-                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+  info->register_initial_reference ("RTScheduler_Current",
+                                    current_obj
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  Client_Interceptor *client_interceptor;
+  Client_Interceptor *client_interceptor = 0;
   ACE_NEW_THROW_EX (client_interceptor,
                     Client_Interceptor,
                     CORBA::NO_MEMORY (
@@ -88,7 +88,10 @@ void
                         CORBA::COMPLETED_NO));
   ACE_CHECK;
 
- info->add_client_request_interceptor (client_interceptor
+  PortableInterceptor::ClientRequestInterceptor_var safe_client =
+    client_interceptor;
+
+  info->add_client_request_interceptor (client_interceptor
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -102,7 +105,10 @@ void
                         CORBA::COMPLETED_NO));
   ACE_CHECK;
 
- info->add_server_request_interceptor (server_interceptor
+  PortableInterceptor::ServerRequestInterceptor_var safe_server =
+    server_interceptor;
+
+  info->add_server_request_interceptor (server_interceptor
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
