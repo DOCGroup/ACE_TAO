@@ -1,3 +1,11 @@
+Tue Jun 14 20:57:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Lothar Werzinger <lothar@xcerla.com>
+	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp (init_new_naming):
+
+	  Register with the ORB's resolve_initial_references() mechanism.
+	  Primarily useful for dynamically loaded Name Services.
+
 Tue Jun 14 14:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Server_Request.h:
