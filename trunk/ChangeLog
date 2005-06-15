@@ -1,3 +1,8 @@
+Wed Jun 15 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Removed reverse, with this no static initializers where called
+
 Wed Jun 15 09:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
