@@ -1,3 +1,12 @@
+Wed Jun 15 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTScheduling/Distributable_Thread.cpp:
+        * tao/RTScheduling/Request_Interceptor.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+          Fixed some potential memory leaks when things go wrong and some
+          minor formatting changes
+
 Wed Jun 15 09:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORBInitializer_Registry.cpp:
