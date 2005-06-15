@@ -1,3 +1,10 @@
+Wed Jun 15 14:46:00 2005  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * DAnCE/examples/Hello/step-by-step.html: 
+          
+          Fixed a typo regarding name of script "run_NodeDaemons.pl" and
+          one other sentence fragement.
+
 Mon Jun 13 13:44:41 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
