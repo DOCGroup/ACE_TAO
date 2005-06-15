@@ -400,12 +400,12 @@ TAO_Naming_Server::init_with_orb (int argc,
       if (iorf == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-			     ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
-			     this->ior_file_name_,
-			     errno,
-			     ACE_LIB_TEXT("TAO_Naming_Server::init_with_orb")),
-			    -1);
-	}
+                             ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
+                             this->ior_file_name_,
+                             errno,
+                             ACE_LIB_TEXT("TAO_Naming_Server::init_with_orb")),
+                            -1);
+        }
 
       CORBA::String_var str = this->naming_service_ior ();
 
@@ -447,12 +447,12 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // In lieu of a fully implemented service configurator version
           // of this Reader and Writer, let's just take something off the
           // command line for now.
-	  TAO_Naming_Service_Persistence_Factory* pf = 0;
+          TAO_Naming_Service_Persistence_Factory* pf = 0;
           ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
           auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
-	  // This instance will either get deleted after recreate all or,
-	  // in the case of a servant activator's use, on destruction of the
-	  // activator.
+          // This instance will either get deleted after recreate all or,
+          // in the case of a servant activator's use, on destruction of the
+          // activator.
 
           // Was a location specified?
           if (persistence_location == 0)
@@ -493,8 +493,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-	  if (this->use_servant_activator_)
-	    persFactory.release();
+          if (this->use_servant_activator_)
+            persFactory.release();
         }
       else if (persistence_location != 0)
         //
@@ -659,9 +659,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         // set a timeout on the orb
         //
         CORBA::Object_var orbPolicyManagerObj =
-	  orb->resolve_initial_references ("ORBPolicyManager"
-			                   ACE_ENV_ARG_PARAMETER);
-	ACE_TRY_CHECK;
+          orb->resolve_initial_references ("ORBPolicyManager"
+                                           ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
         CORBA::PolicyManager_var orbPolicyManager =
           CORBA::PolicyManager::_narrow (orbPolicyManagerObj.in ());
