@@ -2,12 +2,11 @@
 // $Id$
 
 #include "Messaging.h"
-#include "Messaging_ORBInitializer.h"
+#include "Messaging_Loader.h"
 
 #include "tao/Exception_Data.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-#include "tao/ORBInitializer_Registry.h"
 #include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
@@ -21,52 +20,10 @@ ACE_RCSID (Messaging,
 int
 TAO_Messaging_Initializer::init (void)
 {
-
-  static int called_once = 0;
-
-  if (called_once != 0)
-    return 0;
-  called_once = 1;
-
-  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-    PortableInterceptor::ORBInitializer::_nil ();
-  PortableInterceptor::ORBInitializer_var orb_initializer;
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      /// Register the Messaging ORBInitializer.
-
-      ACE_NEW_THROW_EX (temp_orb_initializer,
-                        TAO_Messaging_ORBInitializer,
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
-
-      orb_initializer = temp_orb_initializer;
-
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "(%P | %t) Caught exception:");
-        }
-      return -1;
-    }
-  ACE_ENDTRY;
-
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Messaging_Loader);
 
   return 0;
 }
-
 
 void TAO_Messaging_Helper::
 exception_holder_raise (TAO::Exception_Data *exception_data,

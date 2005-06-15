@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): messaging, taoexe, portableserver, minimum_corba {
+project(*Server): taoserver, minimum_corba {
   idlflags += -GA
 
   Source_Files {
@@ -10,7 +10,7 @@ project(*Server): messaging, taoexe, portableserver, minimum_corba {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinterface {
+project(*Client): taoserver, minimum_corba, dynamicinterface {
   exename  = client
 
   idlflags += -GA
@@ -60,7 +60,7 @@ project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinter
   }
 }
 
-project(*Anyop): messaging, taoexe, portableserver, minimum_corba {
+project(*Anyop): taoserver, minimum_corba {
   idlflags += -GA
 
   Source_Files {
