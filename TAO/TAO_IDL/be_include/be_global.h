@@ -385,6 +385,12 @@ public:
   idl_bool gen_inline_constants (void) const;
   // Return the flag.
 
+  void gen_dcps_type_support (idl_bool value);
+  // Set the flag.
+
+  idl_bool gen_dcps_type_support (void) const;
+  // Return the flag.
+
   void gen_tmplinst (idl_bool value);
   // Set the flag.
 
@@ -577,6 +583,11 @@ private:
   idl_bool gen_inline_constants_;
   // Flag to indicate whether we are using an inline form of constant
   // generation that pleases the C++ compiler better on some platforms.
+
+  idl_bool gen_dcps_type_support_;
+  // Flag to indicate whether we are supporting DDS DCPS type definitions.
+  // Includes Serializer operators (like TAO_Input/OutuptCDR).
+
 
   idl_bool gen_tmplinst_;
   // Flag to indicate if we are generating explicit template instantiations

@@ -1534,3 +1534,81 @@ IDL_GlobalData::path_cmp (const char *s, const char *t)
   return ACE_OS::strcmp (s, t);
 #endif /* defined (WIN32) */
 }
+
+void 
+IDL_GlobalData::add_dcps_data_type(const char* id)
+{
+  // Check if the type already exists.
+  DCPS_Data_Type_Info* newinfo ;
+  if (this->dcps_type_info_map_.find( id, newinfo) != 0)
+    {
+      // No existing entry, add one.
+
+      // trailing space required!!
+      char* foo_type;
+      ACE_NEW (foo_type, char [ACE_OS::strlen (id) + 2]);
+      ACE_OS::sprintf (foo_type, "%s ", id);
+      
+      UTL_ScopedName* t1 = idl_global->string_to_scoped_name(foo_type);
+      // chained with null Identifier required!!
+      UTL_ScopedName* target = new UTL_ScopedName(new Identifier(""),t1);
+
+      newinfo = new DCPS_Data_Type_Info();
+      newinfo->name_ = target;
+
+      // Add the newly formed entry to the map.
+      if (this->dcps_type_info_map_.bind( id, newinfo) != 0)
+        {
+          ACE_ERROR((LM_ERROR,
+                     ACE_TEXT("(%P|%t) Unable to insert type into DCPS type container: %s.\n"),
+                     id
+                   ));
+          return ;
+        }
+    }
+  else
+    {
+      ACE_ERROR((LM_WARNING,ACE_TEXT("(%P|%t) Duplicate DCPS type defined: %s.\n"),id));
+    }
+
+}
+
+idl_bool 
+IDL_GlobalData::add_dcps_data_key(const char* id, const char* key)
+{
+  // Search the map for the type.
+  DCPS_Data_Type_Info* newinfo ;
+  if (this->dcps_type_info_map_.find( id, newinfo) == 0)
+    {
+       // Add the new key field to the type.
+       newinfo->key_list_.enqueue_tail(key);
+       return true;
+    }
+  else
+    {
+      ACE_ERROR((LM_ERROR,
+        "missing previous #pragma DCPS_DATA_TYPE n"));
+    }
+  return false;
+}
+
+IDL_GlobalData::DCPS_Data_Type_Info* 
+IDL_GlobalData::is_dcps_type(UTL_ScopedName* target)
+{
+  // Traverse the entire map.
+  DCPS_Type_Info_Map::ENTRY* entry ;
+  for (DCPS_Type_Info_Map::ITERATOR current( this->dcps_type_info_map_) ;
+       current.next(entry) ;
+       current.advance())
+    {
+      // Look for our Identifier.
+      if (0 == entry->int_id_->name_->compare( target))
+        {
+          // Found it!
+          return entry->int_id_ ;
+        }
+    }
+
+  // No joy.
+  return 0;
+}

@@ -1,3 +1,43 @@
+Wed Jun 15 12:36:04 MST 2005  Trevor Fields  <fields_t@ociweb.com>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_enum.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_visitor_typedef.cpp:
+        * TAO_IDL/be/be_visitor_union.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_visitor_array.h:
+        * TAO_IDL/be_include/be_visitor_enum.h:
+        * TAO_IDL/be_include/be_visitor_field.h:
+        * TAO_IDL/be_include/be_visitor_module.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_sequence.h:
+        * TAO_IDL/be_include/be_visitor_structure.h:
+        * TAO_IDL/be_include/be_visitor_typedef.h:
+        * TAO_IDL/be_include/be_visitor_union.h:
+        * TAO_IDL/be_include/be_visitor_union_branch.h:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Adding idl support for the new DDS DCPS implementation over TAO. 
+
 Wed Jun 15 17:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocation_Proxy_Broker.h:

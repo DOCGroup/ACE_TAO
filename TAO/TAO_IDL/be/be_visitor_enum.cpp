@@ -32,6 +32,8 @@
 #include "be_visitor_enum/any_op_cs.cpp"
 #include "be_visitor_enum/cdr_op_ch.cpp"
 #include "be_visitor_enum/cdr_op_cs.cpp"
+#include "be_visitor_enum/serializer_op_ch.cpp"
+#include "be_visitor_enum/serializer_op_cs.cpp"
 
 ACE_RCSID (be, 
            be_visitor_enum, 

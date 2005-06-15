@@ -80,6 +80,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_tie_classes_ (I_TRUE),
     gen_smart_proxies_ (I_FALSE),
     gen_inline_constants_ (I_TRUE),
+    gen_dcps_type_support_ (I_FALSE),
     gen_tmplinst_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
@@ -892,6 +893,17 @@ BE_GlobalData::gen_inline_constants (void) const
 {
   return this->gen_inline_constants_;
 }
+void
+BE_GlobalData::gen_dcps_type_support (idl_bool val)
+{
+  this->gen_dcps_type_support_ = val;
+}
+
+idl_bool
+BE_GlobalData::gen_dcps_type_support (void) const
+{
+  return this->gen_dcps_type_support_;
+}
 
 void
 BE_GlobalData::gen_tmplinst (idl_bool val)
@@ -1432,8 +1444,41 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'd')
           {
+            if (av[i][3] == 'c')
+              {
+                if (av[i][4] == 'p' && av[i][5] =='s' && '\0' == av[i][6])
+                  {
+                    // DDS DCSP type support
+                    be_global->gen_dcps_type_support (I_TRUE);
+                  }
+                else
+                  {
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: I don't understand ")
+                        ACE_TEXT ("the '%s' option\n"),
+                        av[i]
+                      ));
+
+                    ACE_OS::exit (99);
+                  }
+              }
+            else if ('\0' == av[i][3])
+              {
             // generating Direct collocated stubs.
             be_global->gen_direct_collocation (1);
+          }
+           else
+             {
+               ACE_ERROR ((
+                   LM_ERROR,
+                   ACE_TEXT ("IDL: I don't understand ")
+                   ACE_TEXT ("the '%s' option\n"),
+                   av[i]
+                 ));
+
+               ACE_OS::exit (99);
+             }
           }
         else if (av[i][2] == 'I')
           {
