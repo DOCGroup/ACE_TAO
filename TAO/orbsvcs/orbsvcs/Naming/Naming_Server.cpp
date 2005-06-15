@@ -534,6 +534,14 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
         }
 
+      // Register with the ORB's resolve_initial_references()
+      // mechanism.  Primarily useful for dynamically loaded Name
+      // Services.
+      orb->register_initial_reference ("NameService",
+                                       this->naming_context_.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       // Set the ior of the root Naming Context.
       this->naming_service_ior_=
         orb->object_to_string (this->naming_context_.in ()
