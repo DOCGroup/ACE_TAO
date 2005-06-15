@@ -392,6 +392,27 @@ public:
 
   virtual void             reset_flag_seen (void);
 
+  // = Methods supporting DDS DCPS data type/key definition (from #pragma)
+  typedef ACE_Unbounded_Queue<ACE_TString> DCPS_Key_List;
+  struct DCPS_Data_Type_Info {
+    UTL_ScopedName *name_;
+    DCPS_Key_List   key_list_;
+  };
+  typedef ACE_Unbounded_Queue_Iterator<ACE_TString> DCPS_Data_Type_Info_Iter;
+
+  typedef ACE_Hash_Map_Manager_Ex< const char*,
+                                   DCPS_Data_Type_Info*,
+                                   ACE_Hash<char*>,
+                                   ACE_Equal_To<char*>,
+                                   ACE_Null_Mutex>        DCPS_Type_Info_Map ;
+
+  // FE calls when #pragma DCPS_DATA_TYPE is processed
+  virtual void add_dcps_data_type(const char* id);
+  // FE calls when #pragma DCPS_DATA_KEY is processed
+  virtual idl_bool add_dcps_data_key(const char* id, const char* key);
+  // returns null if not matching; otherwise pointer to the info
+  virtual DCPS_Data_Type_Info* is_dcps_type(UTL_ScopedName* target);
+
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are
   //   "#include"d in the main IDL file, not the ones after CC
@@ -639,6 +660,8 @@ private:
   bool ignore_idl3_;
   // Need this for eventtypes left over after running idl3_to_idl2,
   // we don't want to try to generate another event consumer.
+  DCPS_Type_Info_Map dcps_type_info_map_ ;
+  // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
 };
 
 

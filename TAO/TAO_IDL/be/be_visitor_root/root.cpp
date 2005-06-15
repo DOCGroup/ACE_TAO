@@ -391,6 +391,48 @@ int be_visitor_root::visit_root (be_root *node)
       }
     }
 
+  if (be_global->gen_dcps_type_support ())
+    {
+  // Make another pass over the entire tree and generate the 
+  // Serializer operators.
+  ctx = *this->ctx_;
+  status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH);
+        be_visitor_root_cdr_op visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CS:
+      {
+        ctx.state (TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS);
+        be_visitor_root_cdr_op visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CI:
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_IH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+    case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
+      break; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_root - "
+                           "Bad context state\n"),
+                          -1);
+      }
+    }
+    }
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -549,6 +591,18 @@ be_visitor_root::visit_enum (be_enum *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_enum_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_enum_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       return 0; // nothing to be done
     }
@@ -616,6 +670,12 @@ be_visitor_root::visit_exception (be_exception *node)
       {
         be_visitor_exception_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        return 0; // nothing to be done for DCPS
         break;
       }
     default:
@@ -713,6 +773,12 @@ be_visitor_root::visit_interface (be_interface *node)
       {
         be_visitor_interface_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        return 0; // nothing to be done for DCPS
         break;
       }
     default:
@@ -829,6 +895,11 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        return 0; // nothing to be done for DCPS
+        break;
+      }
     default:
       return 0; // nothing to be done
     }
@@ -884,6 +955,12 @@ be_visitor_root::visit_valuetype (be_valuetype *node)
       {
         be_visitor_valuetype_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        return 0; // nothing to be done for DCPS
         break;
       }
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
@@ -961,6 +1038,11 @@ be_visitor_root::visit_valuetype_fwd (be_valuetype_fwd *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        return 0; // nothing to be done
+        break;
+      }
     default:
       return 0; // nothing to be done
     }
@@ -1030,6 +1112,12 @@ be_visitor_root::visit_component (be_component *node)
       {
         be_visitor_component_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        return 0; // nothing to be done for DCPS
         break;
       }
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
@@ -1105,6 +1193,11 @@ be_visitor_root::visit_component_fwd (be_component_fwd *node)
       {
         be_visitor_component_fwd_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        return 0; // nothing to be done for DCPS
         break;
       }
     default:
@@ -1225,6 +1318,13 @@ be_visitor_root::visit_module (be_module *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_module_serializer_op visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1297,6 +1397,18 @@ be_visitor_root::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_structure_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_structure_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_structure_serializer_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -1402,6 +1514,18 @@ be_visitor_root::visit_union (be_union *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_union_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_union_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       return 0; // nothing to be done
     }
@@ -1501,6 +1625,18 @@ be_visitor_root::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_typedef_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_typedef_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_typedef_serializer_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

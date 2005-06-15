@@ -1401,6 +1401,13 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // Conditionally included.
 
+  // DDS/DCPS marshaling.
+  this->gen_cond_file_include (
+      be_global->gen_dcps_type_support (),
+      "dds/DCPS/Serializer.h",
+      this->client_header_
+    );
+
   // Non-abstract interface or keyword 'Object'.
   this->gen_cond_file_include (
       idl_global->non_local_iface_seen_
@@ -1576,8 +1583,13 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // Includes whatever arg helper template classes that may be needed.
   this->gen_stub_arg_file_includes (this->client_stubs_);
 
+  // strlen() for DCPS marshaling or
   // strcmp() is used with interfaces and exceptions.
-  if (idl_global->interface_seen_
+  if ((be_global->gen_dcps_type_support ()
+	  && (idl_global->string_seen_ 
+	      || idl_global->string_seq_seen_
+		  || idl_global->wstring_seq_seen_) )
+	  || idl_global->interface_seen_
       || idl_global->exception_seen_
       || idl_global->union_seen_)
     {

@@ -671,6 +671,32 @@ idl_store_pragma (char *buf)
           d->typeid_set (I_TRUE);
         }
     }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_TYPE", 14) == 0)
+    {
+      char *foo_type = idl_get_pragma_string (buf);
+      idl_global->add_dcps_data_type(foo_type);
+    }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+
+      // split up data type and key strings
+      char *foo_type = tmp;
+      while (*tmp && !isspace(*tmp))
+        tmp++;
+      while (isspace(*tmp)) 
+        {
+          *tmp = '\0';
+          tmp++;
+        }
+      char *key = tmp;
+
+      if (!idl_global->add_dcps_data_key(foo_type, key)) 
+        {
+          ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%s\" not found for key \"%s\"\n",
+            foo_type, key));
+        }
+    }
 }
 
 /*
