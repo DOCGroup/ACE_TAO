@@ -1,3 +1,34 @@
+Wed Jun 15 11:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/Param_Test.mpc:
+          Simplified this MPC file, server anyop are not using messaging
+
+        * tao/RTScheduling/RTScheduler_Loader.h:
+          Removed not needed forward declaration
+
+        * tao/Messaging/Messaging_ORBInitializer.h:
+          Removed not needed forward declaration
+
+        * tao/Messaging/Messaging_Loader.{h,cpp}:
+        * tao/Messaging/Messaging.cpp:
+          We have an initialisation problem in the Messaging library, it
+          registers it ORBInitializer in a static object but the
+          ORBInitializer_Registry then doesn't need to be loaded yet.
+          Added a Messaging_Loader, this loader is just add to the
+          service config registry in the static object, from TAO_Internal
+          we then intialize the Message_Loader when it is available,
+          which then will register the ORBInitializer. Maybe this problem
+          exists with more libs, the regression tests will show it.
+
+        * tao/TAO_Internal.cpp:
+          Initialise the Messaging Loader when available
+
+        * tao/PI/ORBInitializer_Registry_Impl.h:
+          Removed old documentation
+
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          Initialise pointer with 0
+
 Wed Jun 15 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduling/Distributable_Thread.cpp:
