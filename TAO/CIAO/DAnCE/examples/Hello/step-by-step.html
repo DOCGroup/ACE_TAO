@@ -69,7 +69,7 @@ Writing all those files could be troublesome to a new CCM user. The best way of 
 <hr>
 
 <h3>The Entry Point</h3>
-After both components are implemented we still need a small program to initialize the process. In Sender.idl there is a Sender specific interface with a single method in it created for this purpose. Hence there is a CORBA client application called <code>starter</code>. The <code>starter</code> will make a invocation on a supported interface called <code>trigger</code> on the Sender component to get the whole distributed application started. The <code>starter</code> will first the Sender component object reference through the ior string. Please see the the last part of <code>Hello/Sender/Sender.mpc</code> file for details.
+After both components are implemented we still need a small program to initialize the process. In Sender.idl there is a Sender specific interface with a single method in it created for this purpose. Hence there is a CORBA client application called <code>starter</code>. The <code>starter</code> will make a invocation on a supported interface called <code>trigger</code> on the Sender component to get the whole distributed application started. The <code>starter</code> will first obtain the Sender component object reference through the ior string supplied as a command argument. Please see the the last part of <code>Hello/Sender/Sender.mpc</code> file for details.
 
 <hr>
 
@@ -116,7 +116,7 @@ Finally you are ready to test the application you have made.
 <br><br>
 
 <UL>
-  <LI> Go into the <em> descriptors </em> directory Start NodeManagers (NodeDameon) by running <code> runNodeDaemons.pl </code>
+  <LI> Go into the <em> descriptors </em> directory Start NodeManagers (NodeDameon) by running <code> run_NodeDaemons.pl </code>
   
   <LI> Start the execution manager:
   <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
