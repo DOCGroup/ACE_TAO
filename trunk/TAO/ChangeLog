@@ -1,3 +1,17 @@
+Wed Jun 15 10:46:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/PortableServer/TAO_PortableServer.pc.in:
+
+	  Added TAO_PI to list of required libraries.
+
+	* tao/PI.mpc:
+
+	  Added Pkgconfig_Files definition.
+
+	* tao/PI/TAO_PI.pc.in:
+
+	  New file, pkg-config *.pc template for TAO_PI library.
+
 Wed Jun 15 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.cpp:

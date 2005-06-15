@@ -3,9 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: TAO_PortableServer
-Description: TAO PortableServer Library
-Requires: TAO_PI, TAO
+Name: TAO_PI
+Description: TAO PI Library
+Requires: TAO_CodecFactory, TAO
 Version: @VERSION@
-Libs: -L${libdir} -lTAO_PortableServer
+Libs: -L${libdir} -lPI
 Cflags: -I${includedir}

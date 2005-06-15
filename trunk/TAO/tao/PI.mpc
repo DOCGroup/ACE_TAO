@@ -28,5 +28,6 @@ project : taolib, codecfactory, core {
   }
 
   Pkgconfig_Files {
+    PI/TAO_PI.pc.in
   }
 }
