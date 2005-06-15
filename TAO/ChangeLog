@@ -1,3 +1,8 @@
+Wed Jun 15 08:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+          Fixed conversion warning
+
 Tue Jun 14 21:35:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PolicyFactory_Registry_Adapter.cpp:
