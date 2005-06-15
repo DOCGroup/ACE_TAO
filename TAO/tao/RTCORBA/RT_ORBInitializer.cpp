@@ -122,7 +122,7 @@ TAO_RT_ORBInitializer::pre_init (
   ACE_CHECK;
 
   // Create the initial priority mapping instance.
-  TAO_Network_Priority_Mapping *npm;
+  TAO_Network_Priority_Mapping *npm = 0;
   switch (this->network_priority_mapping_type_)
     {
     default:

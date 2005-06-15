@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    RTScheduler_Loader.h
+ *  @file    Messaging_Loader.h
  *
  *  $Id$
  *
@@ -17,31 +17,31 @@
 #define TAO_RTSCHEDULER_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "rtscheduler_export.h"
+#include "messaging_export.h"
+
+#include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
-#include "ace/Service_Config.h"
-
-class TAO_RTScheduler_Export TAO_RTScheduler_Loader : public ACE_Service_Object
+class TAO_Messaging_Export TAO_Messaging_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_RTScheduler_Loader (void);
+  TAO_Messaging_Loader (void);
 
   /// Destructor.
-  virtual ~TAO_RTScheduler_Loader (void);
+  virtual ~TAO_Messaging_Loader (void);
 
-  /// Initialize the RTScheduler loader hooks.
+  /// Initialize the Messaging loader hooks.
   virtual int init (int argc,
                     ACE_TCHAR* []);
 };
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTScheduler, TAO_RTScheduler_Loader)
-ACE_FACTORY_DECLARE (TAO_RTScheduler, TAO_RTScheduler_Loader)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Messaging, TAO_Messaging_Loader)
+ACE_FACTORY_DECLARE (TAO_Messaging, TAO_Messaging_Loader)
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RTSCHEDULER_LOADER_H */
