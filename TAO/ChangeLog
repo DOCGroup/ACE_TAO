@@ -1,3 +1,9 @@
+Wed Jun 15 09:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry.cpp:
+          Don't try to load the ORBInitializer registry in a static
+          build
+
 Wed Jun 15 08:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
