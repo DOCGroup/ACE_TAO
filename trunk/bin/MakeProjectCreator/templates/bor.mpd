@@ -22,7 +22,7 @@ OBJFILES = \
 <%if(libpaths)%>
 
 LFLAGS = \
-<%foreach(uniq(libpaths))%>
+<%foreach(libpaths)%>
         -L"<%libpath%>" \
         -j"<%libpath%>" <%fornotlast(" \\")%>
 <%endfor%>
