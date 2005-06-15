@@ -2,9 +2,11 @@
 
 #include "PolicyFactory_Registry_Adapter.h"
 
-ACE_RCSID( tao,
+
+ACE_RCSID (tao,
            PolicyFactory_Registry_Adapter,
-           "$Id$");
+           "$Id$")
+
 
 namespace TAO
 {
