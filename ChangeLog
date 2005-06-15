@@ -1,3 +1,10 @@
+Wed Jun 15 07:36:14 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          Removed the use of uniq for libpaths.  This was a work-around for
+          a bug in MPC which has been fixed.
+
 Wed Jun 15 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
@@ -17,8 +24,8 @@ Wed Jun 15 09:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 14 17:52:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Thread_Manager.h: Improved documentation for the task_list()
-	  and task_all_list() methods.
+        * ace/Thread_Manager.h: Improved documentation for the task_list()
+          and task_all_list() methods.
 
 Tue Jun 14 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -101,10 +108,10 @@ Mon Jun 13 10:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 12 14:53:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Logging_Strategy.cpp (parse_args):
+        * ace/Logging_Strategy.cpp (parse_args):
 
-	  Update comment to make it clear value is being converted from
-	  number of KB to number of bytes.
+          Update comment to make it clear value is being converted from
+          number of KB to number of bytes.
 
 Sun Jun 12 12:48:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -144,10 +151,10 @@ Fri Jun 10 16:03:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 Fri Jun 10 16:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-lite.h:
-	  Introduced new macro 'ACE_HAS_DYNAMIC_LINKING' to enable more
- 	  generalized testing for platforms supporting dynamic linking
- 	  than 'ACE_HAS_SVR4_DYNAMIC_LINKING' supports (which excludes
- 	  WIN32, VxWorks and HPUX which *do* support dynamic linking).
+          Introduced new macro 'ACE_HAS_DYNAMIC_LINKING' to enable more
+          generalized testing for platforms supporting dynamic linking
+          than 'ACE_HAS_SVR4_DYNAMIC_LINKING' supports (which excludes
+          WIN32, VxWorks and HPUX which *do* support dynamic linking).
 
 Fri Jun 10 15:53:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
