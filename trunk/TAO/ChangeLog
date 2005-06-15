@@ -1,3 +1,8 @@
+Wed Jun 15 17:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocation_Proxy_Broker.h:
+          Added include to get size_t. This should fix the LynxOS build
+
 Wed Jun 15 10:46:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/PortableServer/TAO_PortableServer.pc.in:
