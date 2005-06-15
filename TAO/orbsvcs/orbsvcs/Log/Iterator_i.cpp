@@ -54,18 +54,18 @@ TAO_Iterator_i::get (CORBA::ULong position,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
-  if (position < current_position_) 
+  if (position < current_position_)
     {
       ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
     }
 
-  if (how_many == 0) 
+  if (how_many == 0)
     {
       how_many = this->max_rec_list_len_;
     }
 
   // Use an Interpreter to build an expression tree.
-  TAO_Log_Constraint_Interpreter interpreter (constraint_
+  TAO_Log_Constraint_Interpreter interpreter (constraint_.in ()
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -82,7 +82,7 @@ TAO_Iterator_i::get (CORBA::ULong position,
   CORBA::ULong count = 0;
   CORBA::ULong current_position = this->current_position_;
 
-  for ( ; 
+  for ( ;
        ((this->iter_ != this->iter_end_) && (count < how_many));
        ++this->iter_)
     {
@@ -92,7 +92,7 @@ TAO_Iterator_i::get (CORBA::ULong position,
       // Does it match the constraint?
       if (interpreter.evaluate (visitor) == 1)
 	{
-          if (++current_position >= position) 
+          if (++current_position >= position)
 	    {
 	      (*rec_list)[count] = (*this->iter_).int_id_;
 	      // copy the log record.
