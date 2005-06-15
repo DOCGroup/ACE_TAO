@@ -5,6 +5,7 @@ Tue Jun 14 20:57:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Register with the ORB's resolve_initial_references() mechanism.
 	  Primarily useful for dynamically loaded Name Services.
+	  [Bug 2150]
 
 Tue Jun 14 14:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
