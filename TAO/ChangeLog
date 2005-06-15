@@ -1,3 +1,45 @@
+Wed Jun 15 13:46:48 MST 2005  Trevor Fields  <fields_t@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_array/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_module/serializer_op.cpp:
+        * TAO_IDL/be/be_visitor_root/serializer_op.cpp:
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_typedef/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_array/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_array/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_enum/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_enum/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_field/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_field/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_module/serializer_op.h:
+        * TAO_IDL/be_include/be_visitor_root/serializer_op.h:
+        * TAO_IDL/be_include/be_visitor_sequence/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_sequence/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_structure/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_structure/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_typedef/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_typedef/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_union/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/serializer_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/serializer_op_cs.h:
+
+          Addin additional files for providing serialization for sending
+          in DDS.       
+
 Wed Jun 15 12:36:04 MST 2005  Trevor Fields  <fields_t@ociweb.com>
 
         * TAO_IDL/be/be_codegen.cpp:
