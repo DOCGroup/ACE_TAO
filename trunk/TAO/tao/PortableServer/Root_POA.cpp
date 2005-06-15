@@ -14,7 +14,6 @@
 #include "Default_Acceptor_Filter.h"
 #include "ORT_Adapter.h"
 #include "ORT_Adapter_Factory.h"
-#include "Policy_Creator_T.h"
 #include "POA_Current_Impl.h"
 #include "Servant_Upcall.h"
 #include "AdapterActivatorC.h"

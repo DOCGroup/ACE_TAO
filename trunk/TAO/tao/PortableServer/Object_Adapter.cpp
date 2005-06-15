@@ -33,8 +33,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
 
-#include "Policy_Creator_T.h"
-
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
