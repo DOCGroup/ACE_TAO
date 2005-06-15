@@ -146,6 +146,35 @@ sub is_vxworks_test()
     return $PerlACE::VxWorks_Test;
 }
 
+sub add_path {
+  my $name   = shift;
+  my $value  = shift;
+  if (defined $ENV{$name}) {
+    # $Config{'path_sep'} gives '/' or '\'  we want ':' or ';'
+    #$ENV{$name} .= $Config{'path_sep'} . $value
+    if ($^O eq "MSWin32") {
+      $ENV{$name} .= ';' . $value
+    }
+    else {
+      $ENV{$name} .= ';' . $value
+    }
+  }
+  else {
+    $ENV{$name} = $value;
+  }
+}
+
+sub add_lib_path {
+  my($value) = shift;
+
+  # Set the library path supporting various platforms.
+  add_path('PATH', $value);
+  add_path('LD_LIBRARY_PATH', $value);
+  add_path('LIBPATH', $value);
+  add_path('SHLIB_PATH', $value);
+
+}
+
 $sleeptime = 5;
 
 1;
