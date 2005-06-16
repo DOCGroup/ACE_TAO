@@ -19,6 +19,19 @@ TAO::ORBInitializer_Registry::ORBInitializer_Registry (void)
 {
 }
 
+int
+TAO::ORBInitializer_Registry::fini (void)
+{
+  // Release all initializers in the array
+  size_t const initializer_count (this->initializers_.size ());
+  for (size_t i = 0; i < initializer_count; ++i)
+    {
+      CORBA::release (this->initializers_[i]);
+    }
+
+  return 0;
+}
+
 void
 TAO::ORBInitializer_Registry::register_orb_initializer (
   PortableInterceptor::ORBInitializer_ptr init
