@@ -44,6 +44,10 @@ namespace TAO
     public:
       ORBInitializer_Registry (void);
 
+      /// Service config fini method, release all ORBInitializers at this
+      /// moment
+      virtual int fini (void);
+
       /// Register an ORBInitializer with the underlying ORBInitializer
       /// array.
       virtual void register_orb_initializer (

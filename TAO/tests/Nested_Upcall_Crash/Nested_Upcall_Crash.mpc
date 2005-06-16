@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): messaging, taoexe, portableserver {
+project(*Server): taoserver, messaging {
   Source_Files {
     Clock_Ticks.cpp
     Server_Peer.cpp
@@ -9,13 +9,15 @@ project(*Server): messaging, taoexe, portableserver {
   }
 }
 
-project(*Scavenger): messaging, taoexe, portableserver {
+project(*Scavenger): taoserver, messaging {
+  exename = scavanger
   Source_Files {
     scavenger.cpp
   }
 }
 
-project(*Client): messaging, taoexe, portableserver {
+project(*Client): taoserver, messaging {
+  exename = client
   Source_Files {
     Clock_Ticks.cpp
     Client_Peer.cpp
