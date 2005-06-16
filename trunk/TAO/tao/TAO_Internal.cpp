@@ -367,6 +367,14 @@ namespace
         adapter_factory->init (0, 0);
       }
 
+    ACE_Service_Object * const messaging_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance ("Messaging_Loader");
+
+    if (messaging_loader != 0)
+      {
+        messaging_loader->init (0, 0);
+      }
+
     // Handle RTCORBA library special case.  Since RTCORBA needs
     // its init method call to register several hooks, call it
     // here if it hasn't already been called.
@@ -384,14 +392,6 @@ namespace
     if (rtscheduler_loader != 0)
       {
         rtscheduler_loader->init (0, 0);
-      }
-
-    ACE_Service_Object * const messaging_loader =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance ("Messaging_Loader");
-
-    if (messaging_loader != 0)
-      {
-        messaging_loader->init (0, 0);
       }
 
     // @@ What the heck do these things do and do we need to avoid
@@ -420,16 +420,3 @@ namespace
   }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<ACE_Service_Object>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate ACE_Dynamic_Service<ACE_Service_Object>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
-#  if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Env_Value<u_int>;
-#  elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#    pragma instantiate ACE_Env_Value<u_int>
-#  endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* TAO_DEBUG && !ACE_HAS_WINCE */
