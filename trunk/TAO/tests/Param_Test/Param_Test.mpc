@@ -12,7 +12,6 @@ project(*Server): taoserver, minimum_corba {
 
 project(*Client): taoserver, minimum_corba, dynamicinterface {
   exename  = client
-
   idlflags += -GA
 
   Source_Files {
@@ -61,6 +60,7 @@ project(*Client): taoserver, minimum_corba, dynamicinterface {
 }
 
 project(*Anyop): taoserver, minimum_corba {
+  exename = anyop
   idlflags += -GA
 
   Source_Files {

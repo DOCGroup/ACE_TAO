@@ -1,3 +1,8 @@
+Thu Jun 16 06:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/Param_Test.mpc:
+          Set exename for anyop
+
 Wed Jun 15 13:46:48 MST 2005  Trevor Fields  <fields_t@ociweb.com>
 
         * TAO_IDL/be/be_visitor_array/serializer_op_ch.cpp:
@@ -38,7 +43,7 @@ Wed Jun 15 13:46:48 MST 2005  Trevor Fields  <fields_t@ociweb.com>
         * TAO_IDL/be_include/be_visitor_union_branch/serializer_op_cs.h:
 
           Addin additional files for providing serialization for sending
-          in DDS.       
+          in DDS.
 
 Wed Jun 15 12:36:04 MST 2005  Trevor Fields  <fields_t@ociweb.com>
 
@@ -78,7 +83,7 @@ Wed Jun 15 12:36:04 MST 2005  Trevor Fields  <fields_t@ociweb.com>
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
 
-          Adding idl support for the new DDS DCPS implementation over TAO. 
+          Adding idl support for the new DDS DCPS implementation over TAO.
 
 Wed Jun 15 17:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
