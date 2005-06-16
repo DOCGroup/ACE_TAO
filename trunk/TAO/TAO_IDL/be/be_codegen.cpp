@@ -311,7 +311,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                            << "\"";
       *this->client_stubs_ << "\n#endif /* !defined INLINE */";
     }
-
+    
   return 0;
 }
 
@@ -1600,12 +1600,16 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   if (be_global->gen_amh_classes () == I_TRUE)
     {
-      *this->client_stubs_ << be_nl;
-
       // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
     }
+
+  // Needed by HPUX when optimize=1.
+#if defined (HPUX)  
+  this->gen_standard_include (this->client_stubs_,
+                              "ace/SString.h");
+#endif /* HPUX */
 }
 
 void
