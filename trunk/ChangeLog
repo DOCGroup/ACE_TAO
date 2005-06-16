@@ -1,5 +1,17 @@
 Thu Jun 16 07:38:57 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* ace/Process.cpp (running): Only try to "kill" a process if
+	  the PID is valid.  Thanks to Howard Finer <hfiner at sonusnet
+ 	  dot com> for contributing this.
+
+	* ace/SOCK_Stream.cpp (close): Added a call to ACE_OS::shutdown()
+	  to force exit from ongoing operations.  Thanks to Howard Finer
+ 	  <hfiner at sonusnet dot com> for contributing this.
+
+	* ace/Pipe.h (ACE_Pipe): Updated the documentation for this class
+	  to clarify why it uses sockets on Windows.  Thanks to Dave
+ 	  Varnell <Dave.Varvell@ni.com> for prompting this.
+
 	* ace/INET_Addr.cpp (set): Changed the test of
 	
 	  if (port_number < 0)
