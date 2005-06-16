@@ -24,28 +24,6 @@
 namespace Sender_Impl
 {
   //==================================================================
-  // Facet Executor Implementation Class:   ReadMessage_exec_i
-  //==================================================================
-
-  ReadMessage_exec_i::ReadMessage_exec_i (void)
-  {
-  }
-
-  ReadMessage_exec_i::~ReadMessage_exec_i (void)
-  {
-  }
-
-  // Operations from ::Minimum::ReadMessage
-
-  void
-  ReadMessage_exec_i::foo (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Your code here.
-  }
-
-  //==================================================================
   // Component Executor Implementation Class:   Sender_exec_i
   //==================================================================
 
@@ -70,15 +48,6 @@ namespace Sender_Impl
   // Attribute operations.
 
   // Port operations.
-
-  ::Minimum::CCM_ReadMessage_ptr
-  Sender_exec_i::get_push_message (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Your code here.
-    return ::Minimum::CCM_ReadMessage::_nil ();
-  }
 
   // Operations from Components::SessionComponent
 
