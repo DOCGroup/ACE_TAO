@@ -31,6 +31,10 @@ ACE_SOCK_Stream::close (void)
   // fork() works.
   this->close_writer ();
 #endif /* ACE_WIN32 */
+
+  // Shutdown the socket to force exit from ongoing operations
+  ACE_OS::shutdown (this->get_handle (), SHUT_RDWR);
+
   // Close down the socket.
   return ACE_SOCK::close ();
 }

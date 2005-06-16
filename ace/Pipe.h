@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //==========================================================================
 
@@ -27,11 +27,11 @@
 /**
  * @class ACE_Pipe
  *
- * @brief Provides a bidirectional "pipe" abstraction that is portable
- * to Windows NT, SVR4 UNIX, and BSD UNIX.
+ * @brief Provides a portable bidirectional "pipe" abstraction.
  *
- * Uses "name" for lookup in the ACE service repository. Obtains
- * the object and returns it as the appropriate type.
+ * This class is designed to work with select()-based demuxers, such
+ * as the ACE_Select_Reactor, which is why it uses sockets on Windows
+ * rather than Win32 pipes (which aren't select()'able). 
  */
 class ACE_Export ACE_Pipe
 {
