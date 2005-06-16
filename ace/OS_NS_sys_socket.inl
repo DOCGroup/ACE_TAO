@@ -131,8 +131,8 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 #else
 #  if defined (HPUX)
   // HP-UX, at least with current BSD socket semantics, will not abort
-  // an in-progress operation on a socket that is close()ed. But it will
-  // for one that is shutdown()ed.
+  // an in-progress operation on a socket that is close()ed. But it
+  // will for one that is shutdown()ed.
   ACE_OS::shutdown (handle, SHUT_RDWR);
 #  endif /* HPUX */
   ACE_OSCALL_RETURN (::close (handle), int, -1);
