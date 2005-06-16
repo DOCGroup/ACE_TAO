@@ -1,3 +1,12 @@
+Thu Jun 16 18:54:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added conditional (for HPUX compiler only) code generation of
+          include of ace/SString.h in the stub source file, apparently
+          necessary when the HP compiler has optimize=1. Thanks to
+          Kris Dekeyser <Kris.Dekeyser@lms.be> for reporting the problem.
+
 Thu Jun 16 17:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Internal.cpp:
