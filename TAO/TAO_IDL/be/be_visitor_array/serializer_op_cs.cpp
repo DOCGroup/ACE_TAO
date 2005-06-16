@@ -835,7 +835,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
               }
             *os << "ACE_UNUSED_ARG(_tao_array);" << be_nl;
             char buff[15];
-            ACE_OS::sprintf(buff, "%d", str->max_size ()->ev ()->u.ulval);
+            ACE_OS::sprintf(buff, "%ld", str->max_size ()->ev ()->u.ulval);
             *os << "return _dcps_max_marshaled_size_ulong () + (" << buff;
             }
             break;
