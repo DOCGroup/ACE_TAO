@@ -1,3 +1,16 @@
+Thu Jun 16 07:38:57 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/INET_Addr.cpp (set): Changed the test of
+	
+	  if (port_number < 0)
+	  
+	  to 
+	  
+	  if (port_number == -1)
+	  
+	  to fix problems reported by Vemund Handeland
+ 	  <vemund.handeland@fantoft.no>
+
 Wed Jun 15 12:36:04 MST 2005  Trevor Fields  <fields_t@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:
