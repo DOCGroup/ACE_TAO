@@ -90,20 +90,23 @@ BE_cleanup (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::Contained_var result =
-        be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (!CORBA::is_nil (result.in ()))
+      if (be_global->repository ())
         {
-          CORBA::ModuleDef_var scope =
-            CORBA::ModuleDef::_narrow (result.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+          CORBA::Contained_var result =
+            be_global->repository ()->lookup_id (be_global->holding_scope_name ()
+                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          scope->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (!CORBA::is_nil (result.in ()))
+            {
+              CORBA::ModuleDef_var scope =
+                CORBA::ModuleDef::_narrow (result.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              scope->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
     }
   ACE_CATCHANY
@@ -176,7 +179,7 @@ BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
       );
     }
 
-  CORBA::Repository_var repo = 
+  CORBA::Repository_var repo =
     CORBA::Repository::_narrow (object.in ()
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -205,7 +208,7 @@ BE_produce (void)
     {
       int status = BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (status != 0)
         {
           return;
