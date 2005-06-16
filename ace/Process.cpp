@@ -442,6 +442,9 @@ ACE_Process::running (void) const
                                         &code);
     return result && code == STILL_ACTIVE;
 #else
+  if (ACE_INVALID_PID == this->getpid ())
+    return 0;
+  else
     return ACE_OS::kill (this->getpid (),
                          0) == 0
       || errno != ESRCH;
