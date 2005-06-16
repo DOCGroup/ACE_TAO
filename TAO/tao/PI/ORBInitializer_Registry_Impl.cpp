@@ -26,7 +26,7 @@ TAO::ORBInitializer_Registry::fini (void)
   size_t const initializer_count (this->initializers_.size ());
   for (size_t i = 0; i < initializer_count; ++i)
     {
-      CORBA::release (this->initializers_[i]);
+      this->initializers_[i] = PortableInterceptor::ORBInitializer::_nil();
     }
 
   return 0;
