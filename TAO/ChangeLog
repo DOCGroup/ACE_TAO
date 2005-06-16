@@ -1,3 +1,8 @@
+Thu Jun 16 17:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          Do the initialisation of the messaging loader earlier
+
 Thu Jun 16 16:47:42 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/IFR_Service/be_produce.cpp:
