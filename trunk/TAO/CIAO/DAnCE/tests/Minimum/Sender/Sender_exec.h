@@ -34,22 +34,6 @@
 
 namespace Sender_Impl
 {
-  class SENDER_EXEC_Export ReadMessage_exec_i
-  : public virtual ::Minimum::CCM_ReadMessage,
-  public virtual TAO_Local_RefCounted_Object
-  {
-    public:
-    ReadMessage_exec_i (void);
-    virtual ~ReadMessage_exec_i (void);
-
-    // Operations from ::Minimum::ReadMessage
-
-    virtual void
-    foo (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  };
-
   class SENDER_EXEC_Export Sender_exec_i
   : public virtual Sender_Exec,
   public virtual TAO_Local_RefCounted_Object
@@ -68,11 +52,6 @@ namespace Sender_Impl
     // Attribute operations.
 
     // Port operations.
-
-    virtual ::Minimum::CCM_ReadMessage_ptr
-    get_push_message (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
