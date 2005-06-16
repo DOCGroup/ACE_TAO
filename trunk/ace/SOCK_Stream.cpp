@@ -30,14 +30,6 @@ ACE_SOCK_Stream::close (void)
   // this will cause subtle problems on UNIX due to the way that
   // fork() works.
   this->close_writer ();
-#else
-#if 0
-  // Commenting this out for now since I think it will cause subtle
-  // problems on UNIX due to the way that fork() works.
-
-  // Shutdown the socket to force exit from ongoing operations
-  ACE_OS::shutdown (this->get_handle (), SHUT_RDWR);
-#endif /* 0 */
 #endif /* ACE_WIN32 */
 
   // Close down the socket.
