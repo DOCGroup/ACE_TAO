@@ -1,3 +1,12 @@
+Thu Jun 16 14:23:08 MST 2005  Trevor Fields  <fields_t@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+
+          Fix warning about unsigned long arg.
+
 Thu Jun 16 18:54:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

@@ -1016,7 +1016,7 @@ be_visitor_union_branch_serializer_op_cs::visit_string (be_string *node)
         ACE_OS::sprintf(tmp_size_name, "tmp_string_size%d", tmp_counter++);
 
         char buff[15];
-        ACE_OS::sprintf(buff, "%d", node->max_size ()->ev ()->u.ulval);
+        ACE_OS::sprintf(buff, "%ld", node->max_size ()->ev ()->u.ulval);
         *os << "size_t " << tmp_size_name 
             << " = _dcps_max_marshaled_size_ulong () + " << buff << ";" << be_nl
             << "if (" << tmp_size_name << ")" << be_idt_nl

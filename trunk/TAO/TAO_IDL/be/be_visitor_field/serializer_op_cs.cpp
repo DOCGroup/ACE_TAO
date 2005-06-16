@@ -776,7 +776,7 @@ be_visitor_field_serializer_op_cs::visit_string (be_string *node)
       break;
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
       char buff[15];
-      ACE_OS::sprintf(buff, "%d", node->max_size ()->ev ()->u.ulval);
+      ACE_OS::sprintf(buff, "%ld", node->max_size ()->ev ()->u.ulval);
       *os << "_dcps_max_marshaled_size_ulong () + " << buff;
       break;
     case TAO_CodeGen::TAO_FIND_SIZE: 

@@ -909,7 +909,7 @@ switch (this->ctx_->sub_state ())
                  *os << "// bounded seq of bounded strings" << be_nl;
 
             char buff[15];
-            ACE_OS::sprintf(buff, "%d", max_size);
+            ACE_OS::sprintf(buff, "%ld", max_size);
             *os << "return _dcps_max_marshaled_size_ulong () + " << be_nl
                 << " _tao_sequence.maximum() * ";
             *os << "(_dcps_max_marshaled_size_ulong () + " << buff << ");";
