@@ -1,3 +1,10 @@
+Thu Jun 16 16:47:42 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/IFR_Service/be_produce.cpp:
+
+          Check repository ptr is not null before use in BE_cleanup.
+          This fixes bug #2154.
+
 Thu Jun 16 07:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitializer_Registry_Impl.{h,cpp}:
