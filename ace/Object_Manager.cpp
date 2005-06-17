@@ -584,10 +584,6 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 }
 #endif /* ACE_MT_SAFE */
 
-// NOTE:  this function needs to appear _after_ the
-// get_singleton_lock () functions in order to compile with
-// g++ 2.7.2.3.
-//
 // Clean up an ACE_Object_Manager.  There can be instances of this object
 // other than The Instance.  This can happen if (on Win32) the ACE DLL
 // causes one to be created, or if a user creates one for some reason.
