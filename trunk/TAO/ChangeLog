@@ -1,3 +1,11 @@
+Fri Jun 17 08:49:09 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+
+          Use _retn () instead of out () for the return value from
+          _get_component ().
+          This fixes bug #2155.
+
 Thu Jun 16 14:23:08 MST 2005  Trevor Fields  <fields_t@ociweb.com>
 
         * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
@@ -10,7 +18,7 @@ Thu Jun 16 14:23:08 MST 2005  Trevor Fields  <fields_t@ociweb.com>
 Thu Jun 16 18:54:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Added conditional (for HPUX compiler only) code generation of
           include of ace/SString.h in the stub source file, apparently
           necessary when the HP compiler has optimize=1. Thanks to
