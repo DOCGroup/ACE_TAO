@@ -274,22 +274,72 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     }
 
   if (TAO_OBV_GIOP_Flags::has_no_type_info (value_tag))
-  {
-     factory = orb_core->orb ()->lookup_value_factory (repo_id);
-  }
+    {
+      factory = orb_core->orb ()->lookup_value_factory (repo_id);
+    }
   else
-  {
-     CORBA::String_var repo_id_stream;
+    {
+      CORBA::String_var repo_id_stream;
 
-     // It would be more efficient not to copy the string %!)
-     if (!strm.read_string (repo_id_stream.inout ()))
-     {
-        return false;
-     }
+      CORBA::ULong length;
 
-     factory =
-      orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
-  }
+      if (!strm.read_ulong (length))
+        {
+          return 0;
+        }
+
+      // 'length' may not be the repo id length - it could be the 
+      // FFFFFFF indirection marker instead
+      if (TAO_OBV_GIOP_Flags::is_indirection_tag (length))
+        {
+          CORBA::Long offset;
+
+          // Read the negative byte offset
+          if (!strm.read_long (offset) || offset >= 0)
+            {
+              return 0;
+            }
+
+          // Cribbed from tc_demarshal_indirection in Typecode_CDR_Extraction.cpp
+          TAO_InputCDR indir_stream (strm.rd_ptr () + offset - sizeof (CORBA::Long),
+                                    (-offset) + sizeof (CORBA::Long),
+                                    strm.byte_order ());
+
+          if (!indir_stream.good_bit ())
+            {
+              return 0;
+            }
+
+          indir_stream.read_string(repo_id_stream.inout ());
+        }
+      else
+        {
+          if (length > 0 && length <= strm.length ())
+            {
+              ACE_NEW_RETURN (repo_id_stream.inout (),
+                              ACE_CDR::Char[length],
+                              0);
+              if (!strm.read_char_array (repo_id_stream.inout (), length))
+                {
+                  return 0;
+                }
+            }
+          else if (length == 0)
+            {
+              ACE_NEW_RETURN (repo_id_stream.inout (),
+                              ACE_CDR::Char[1],
+                              0);
+              ACE_OS::strcpy (const_cast <char *&> (repo_id_stream.inout ()), "");
+            }
+          else
+            {
+              return 0;
+            }
+        }
+
+      factory =
+        orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
+    }
 
   if (factory == 0) // %! except.!
     {
