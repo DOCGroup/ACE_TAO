@@ -967,9 +967,9 @@ CORBA::ORB::resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-CORBA::ORB::resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::ORB::resolve_poa_current (void)
 {
-  return this->orb_core_->poa_current (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->orb_core_->poa_current (void);
 }
 
 CORBA::Object_ptr
