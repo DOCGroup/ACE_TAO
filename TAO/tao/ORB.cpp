@@ -967,13 +967,13 @@ CORBA::ORB::resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-CORBA::ORB::resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::ORB::resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return this->orb_core_->poa_current ();
+  return this->orb_core_->poa_current (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-CORBA::ORB::resolve_policy_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::ORB::resolve_policy_manager (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -995,7 +995,7 @@ CORBA::ORB::resolve_policy_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::Object_ptr
-CORBA::ORB::resolve_policy_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::ORB::resolve_policy_current (void)
 {
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -1110,47 +1110,65 @@ CORBA::ORB::resolve_initial_references (const char *name,
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  CORBA::Object_var result = CORBA::Object::_nil ();
+
   if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
-    return this->resolve_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->resolve_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
-    return this->resolve_poa_current (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->resolve_poa_current ();
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
-    return this->resolve_policy_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->resolve_policy_manager ();
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
-    return this->resolve_policy_current (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->resolve_policy_current ();
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
-    return this->orb_core ()->resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->orb_core ()->resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORTABLE) == 0)
-    return this->orb_core ()->resolve_ior_table (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->orb_core ()->resolve_ior_table (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
-    return this->orb_core ()->resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->orb_core ()->resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
-    return this->orb_core ()->resolve_typecodefactory (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
-    return this->orb_core ()->resolve_codecfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    {
+      result = this->orb_core ()->resolve_codecfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
 #if TAO_HAS_INTERCEPTORS == 1
   else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
-    return this->orb_core ()->resolve_picurrent (ACE_ENV_SINGLE_ARG_PARAMETER);
+    {
+      result = this->orb_core ()->resolve_picurrent (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
 #endif
 
   // -----------------------------------------------------------------
 
-  // Search the object reference table.  This search must occur before
-  // the InitRef table search, since it may contain local objects.
-  CORBA::Object_var result =
-    this->orb_core ()->object_ref_table ().resolve_initial_references (
-      name
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  if (!CORBA::is_nil (result.in ()))
+    {
+      // Search the object reference table.  This search must occur before
+      // the InitRef table search, since it may contain local objects.
+      result =
+        this->orb_core ()->object_ref_table ().resolve_initial_references (
+          name
+          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
 
   if (!CORBA::is_nil (result.in ()))
     return result._retn ();

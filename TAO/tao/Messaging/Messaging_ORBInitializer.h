@@ -64,16 +64,6 @@ private:
   void register_policy_factories (
     PortableInterceptor::ORBInitInfo_ptr info
     ACE_ENV_ARG_DECL);
-
-private:
-
-  /// Instance of the Messaging policy factory.
-  /**
-   * The Messaging policy factory is stateless and reentrant, so share
-   * a single instance between all ORBs.
-   */
-  PortableInterceptor::PolicyFactory_var policy_factory_;
-
 };
 
 #if defined(_MSC_VER)

@@ -51,22 +51,19 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
 {
   // Register the Messaging policy factories.
 
-  // The Messaging policy factory is stateless and reentrant, so share a
-  // single instance between all ORBs.
-  if (CORBA::is_nil (this->policy_factory_.in ()))
-    {
-      PortableInterceptor::PolicyFactory_ptr policy_factory;
-      ACE_NEW_THROW_EX (policy_factory,
-                        TAO_Messaging_PolicyFactory,
-                          CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO::VMCID,
-                              ENOMEM),
-                            CORBA::COMPLETED_NO));
-      ACE_CHECK;
+  PortableInterceptor::PolicyFactory_ptr policy_factory_ptr;
+  ACE_NEW_THROW_EX (policy_factory_ptr,
+                    TAO_Messaging_PolicyFactory,
+                      CORBA::NO_MEMORY (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO::VMCID,
+                          ENOMEM),
+                        CORBA::COMPLETED_NO));
+  ACE_CHECK;
 
-      this->policy_factory_ = policy_factory;
-    }
+
+  PortableInterceptor::PolicyFactory_var policy_factory =
+    policy_factory_ptr;
 
   // Bind the same policy factory to all Messaging related policy
   // types since a single policy factory is used to create each of
@@ -122,7 +119,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
       ACE_TRY
         {
           info->register_policy_factory (*i,
-                                         this->policy_factory_.in ()
+                                         policy_factory.in ()
                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
