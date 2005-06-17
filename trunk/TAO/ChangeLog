@@ -1,3 +1,8 @@
+Fri Jun 17 11:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_ORB/client.cpp:
+          Fixed process_directive call
+
 Fri Jun 17 09:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
