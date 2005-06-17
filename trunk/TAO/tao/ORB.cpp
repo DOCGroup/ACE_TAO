@@ -1159,7 +1159,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   // -----------------------------------------------------------------
 
-  if (!CORBA::is_nil (result.in ()))
+  if (CORBA::is_nil (result.in ()))
     {
       // Search the object reference table.  This search must occur before
       // the InitRef table search, since it may contain local objects.
