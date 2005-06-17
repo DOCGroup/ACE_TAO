@@ -1,3 +1,11 @@
+Fri Jun 17 09:56:44 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Valuetype/ValueBase.cpp:
+
+          Add support for stream encoded repository ID indirection as per
+          "15.3.4.3 Scope of the Indirections" in 02-06-33.
+          This fixes bug #2156.
+
 Fri Jun 17 08:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORBInitializer_Registry.cpp:
