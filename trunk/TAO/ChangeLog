@@ -1,3 +1,8 @@
+Fri Jun 17 17:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+          Fixed resolve_initial_references of the CodecFactory
+
 Fri Jun 17 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server/*:
