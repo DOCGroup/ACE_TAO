@@ -1,3 +1,8 @@
+Fri Jun 17 09:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+          Corrected wrong compare in resolve_initial_references
+
 Fri Jun 17 09:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/Param_Test.mpc:
