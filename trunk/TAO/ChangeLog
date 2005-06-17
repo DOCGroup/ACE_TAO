@@ -2,6 +2,7 @@ Fri Jun 17 09:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_ORB/client.cpp:
         * tests/DLL_ORB/server.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
           Use the new macro ACE_DYNAMIC_SERVICE_DIRECTIVE to load the
           libraries
 
