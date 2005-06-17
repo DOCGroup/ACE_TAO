@@ -1,14 +1,22 @@
+Fri Jun 17 15:40:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/orbsvcs.rc:
+	* orbsvcs/orbsvcs/orbsvcs_export.h:
+
+	  Remove stray bits left over from when orbsvcs was a single
+	  library.
+
 Fri Jun 17 19:09:56 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Reverted the change of
-          
+
           Thu Jun 16 18:54:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           It seems this problem is appearing in other places besides
           generated code, and that making lots of modifications to
-          TAO code to work around what is essentially an HP compiler 
+          TAO code to work around what is essentially an HP compiler
           bug is not the right approach. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for advice on this matter.
 
