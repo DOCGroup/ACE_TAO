@@ -35,6 +35,14 @@ class TAO_Object_Adapter;
 class TAO_RT_Collocation_Resolver;
 struct TAO_Active_Object_Map_Entry;
 
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+}
+
 namespace TAO
 {
   namespace Portable_Server

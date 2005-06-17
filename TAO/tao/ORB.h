@@ -597,14 +597,10 @@ namespace CORBA
     CORBA::Object_ptr resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL);
 
     /// Resolve the Policy Manager for this ORB.
-    CORBA::Object_ptr resolve_policy_manager (
-        ACE_ENV_SINGLE_ARG_DECL
-      );
+    CORBA::Object_ptr resolve_policy_manager (void);
 
     /// Resolve the Policy Current for this thread.
-    CORBA::Object_ptr resolve_policy_current (
-        ACE_ENV_SINGLE_ARG_DECL
-      );
+    CORBA::Object_ptr resolve_policy_current (void);
 
   private:
 

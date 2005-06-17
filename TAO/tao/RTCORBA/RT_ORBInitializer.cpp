@@ -37,7 +37,12 @@ ACE_RCSID (RTCORBA,
 #include "ace/Sched_Params.h"
 
 static const char *rt_poa_factory_name = "TAO_RT_Object_Adapter_Factory";
-static const char *rt_poa_factory_directive = "dynamic TAO_RT_Object_Adapter_Factory Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
+static const char *rt_poa_factory_directive =
+  ACE_DYNAMIC_SERVICE_DIRECTIVE(
+    "TAO_RT_Object_Adapter_Factory",
+    "TAO_RTPortableServer",
+    "_make_TAO_RT_Object_Adapter_Factory",
+    "");
 
 TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
                                               int network_priority_mapping_type,
