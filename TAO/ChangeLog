@@ -1,3 +1,39 @@
+Fri Jun 17 08:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/ORB_Core.cpp:
+          Use the new macro ACE_DYNAMIC_SERVICE_DIRECTIVE to load the
+          libraries
+
+        * tao/Messaging/Messaging.cpp:
+          Return the value of the process_directive call
+
+        * tao/Messaging/Messaging_ORBInitializer.{h,cpp}:
+          Don't keep a PolicyFactory as member, just create an instance for
+          each ORB. Keeping an instance can cause crashes when the unloading
+          of the DLL already has happened before the PolicyFactory registry
+          is destructed.
+
+        * tao/PortableServer/Servant_Upcall.h:
+          Added forward declaration of CORBA::Object. Need it soon because
+          of even more subsetting
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB.{h,cpp}:
+          Changed the way we throw an InvalidName exception from
+          resolve_initial_references. Instead of throwing it from each
+          resolve_x_method, just let those methods return a nil object
+          and then throw the exception at the end of
+          resolve_initial_references when then the object reference is nil.
+          This reduces some needs for exception emulation macros but more
+          important it guarantees that we always throw the exception instad
+          of returning a nil reference. During testing I found that a rir
+          of POACurrent returned a nil reference when the PortableServer
+          library was not loaded instead of throwing an exception.
+
 Fri Jun 17 08:49:09 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
