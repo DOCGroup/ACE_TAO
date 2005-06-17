@@ -27,7 +27,9 @@ main (int, char *[])
   //
   // In the process of doing this, the Test CORBA object will be
   // activated, and the ORB will be run.
-  if (ACE_Service_Config::process_directive ("dynamic Server_Module Service_Object * Test_Server_Module:_make_Test_Server_Module() \"\"") != 0)
+  if (ACE_Service_Config::process_directive (
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("Server_Module",
+          "Test_Server_Module", "_make_Test_Server_Module", "")) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
