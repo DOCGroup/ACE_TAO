@@ -1,3 +1,10 @@
+Fri Jun 17 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server/*:
+          First commit of the PI_Server library. Will contain the parts
+          of the PortableServer that are dependent on PortableInterceptors.
+          These files will be used soon when the MPC files are updated
+
 Fri Jun 17 11:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_ORB/client.cpp:
