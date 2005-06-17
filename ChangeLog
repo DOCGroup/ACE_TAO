@@ -1,3 +1,9 @@
+Fri Jun 17 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/pi_server.mpb:
+          New base project for pi_server. Will contain all needed portable
+          interceptor functionality specific for the server side
+
 Fri Jun 17 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Object_Manager.cpp:
