@@ -1,3 +1,9 @@
+Fri Jun 17 09:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/Param_Test.mpc:
+          Added explicit after so that we don't compile the same idl file
+          at the same time multiple times
+
 Fri Jun 17 09:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.{h,cpp}:
