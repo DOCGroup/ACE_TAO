@@ -53,8 +53,10 @@ PortableInterceptor::register_orb_initializer (
   if (orbinitializer_registry_ == 0)
     {
       ACE_Service_Config::process_directive (
-        ACE_TEXT_CHAR_TO_TCHAR (
-        "dynamic ORBInitializer_Registry Service_Object * TAO_PI:_make_ORBInitializer_Registry()"));
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
+                                      "TAO_PI",
+                                      "_make_ORBInitializer_Registry",
+                                      ""));
       orbinitializer_registry_ =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
           ("ORBInitializer_Registry");

@@ -1,3 +1,16 @@
+Fri Jun 17 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.cpp:
+          Removed comment about very old gcc version
+
+        * ace/Service_Config.h:
+          Added new ACE_DYNAMIC_SERVICE_DIRECTIVE macro that makes it possible
+          to load a service using a process_directive call that works with the
+          normal service configurator and the xml based one. Thanks to
+          Lothar Werzinger <lothar at xcerla dot com> for providing this
+          new macro. We will use it then in TAO to load the services on
+          demand.
+
 Thu Jun 16 07:38:57 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/SOCK_Stream.cpp (close): Removed the call to this->close_writer()
@@ -14,13 +27,13 @@ Thu Jun 16 07:38:57 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
  	  Varnell <Dave.Varvell@ni.com> for prompting this.
 
 	* ace/INET_Addr.cpp (set): Changed the test of
-	
+
 	  if (port_number < 0)
-	  
-	  to 
-	  
+
+	  to
+
 	  if (port_number == -1)
-	  
+
 	  to fix problems reported by Vemund Handeland
  	  <vemund.handeland@fantoft.no>
 

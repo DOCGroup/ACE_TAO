@@ -20,9 +20,7 @@ ACE_RCSID (Messaging,
 int
 TAO_Messaging_Initializer::init (void)
 {
-  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Messaging_Loader);
-
-  return 0;
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Messaging_Loader);
 }
 
 void TAO_Messaging_Helper::

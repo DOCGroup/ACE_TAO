@@ -69,19 +69,9 @@ namespace TAO
       if (adapter == 0)
         {
           ACE_Service_Config::process_directive (
-#if !defined ACE_HAS_XML_SVC_CONF
-            ACE_TEXT("dynamic ImR_Client_Adapter Service_Object *")
-            ACE_TEXT("TAO_ImR_Client:_make_ImR_Client_Adapter_Impl()")
-#else
-            ACE_TEXT("<ACE_Svc_Conf>")
-            ACE_TEXT("<dynamic id=\"ImR_Client_Adapter\" type=\"Service_Object\">")
-            ACE_TEXT("<initializer path=\"TAO_ImR_Client\"")
-            ACE_TEXT(" init=\"_make_ImR_Client_Adapter_Impl\"")
-            ACE_TEXT(" params=\"\"/>")
-            ACE_TEXT("</dynamic>")
-            ACE_TEXT("</ACE_Svc_Conf>")
-#endif
-            );
+            ACE_DYNAMIC_SERVICE_DIRECTIVE(
+              "ImR_Client_Adapter", "TAO_ImR_Client",
+              "_make_ImR_Client_Adapter_Impl", ""));
 
           adapter =
             ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
