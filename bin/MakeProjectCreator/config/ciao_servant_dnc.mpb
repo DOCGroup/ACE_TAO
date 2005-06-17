@@ -19,6 +19,7 @@ project : ciao_component_dnc {
     commandflags      = $(CIDLC_FLAGS)
     inputext          = .cidl
     source_outputext  = _svnt.cpp
+    header_outputext  = _svnt.h
     generic_outputext = E.idl
     keyword cidlflags = commandflags
   }
