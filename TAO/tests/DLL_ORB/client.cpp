@@ -32,7 +32,7 @@ main (int, char *[])
           "Client_Module",
           "Test_Client_Module",
           "_make_Test_Client_Module",
-          "-k file://test.ior") != 0))
+          "-k file://test.ior")) != 0)
     {
 
       ACE_ERROR_RETURN ((LM_ERROR,
