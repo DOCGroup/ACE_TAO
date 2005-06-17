@@ -1,3 +1,8 @@
+Fri Jun 17 09:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1551_Regression/test.mpc:
+          Simplified this mpc file
+
 Fri Jun 17 09:56:44 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/Valuetype/ValueBase.cpp:
