@@ -1,3 +1,28 @@
+Fri Jun 17 17:22:13 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Acknowledge.h:
+	* protocols/ace/RMCast/Fragment.cpp:
+	* protocols/ace/RMCast/Fragment.h:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Protocol.cpp:
+	* protocols/ace/RMCast/Protocol.h:
+	* protocols/ace/RMCast/Reassemble.cpp:
+	* protocols/ace/RMCast/Reassemble.h:
+	* protocols/ace/RMCast/Retransmit.cpp:
+	* protocols/ace/RMCast/Retransmit.h:
+	* protocols/ace/RMCast/Simulator.h:
+	* protocols/ace/RMCast/Socket.cpp:
+	* protocols/ace/RMCast/Socket.h:
+
+	  Implemented message fragmentation.
+
+	* protocols/examples/RMCast/Send_Msg/Protocol.h:
+	* protocols/tests/RMCast/Protocol.h:
+	* protocols/tests/RMCast/Sender.cpp:
+
+	  Changed to send messages that would require fragmentation.
+
 Fri Jun 17 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/pi_server.mpb:

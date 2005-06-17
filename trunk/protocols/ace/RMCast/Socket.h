@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // file      : ace/RMCast/Socket.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$

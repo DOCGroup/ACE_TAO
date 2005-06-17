@@ -5,8 +5,8 @@
 #ifndef ACE_RMCAST_ACKNOWLEDGE_H
 #define ACE_RMCAST_ACKNOWLEDGE_H
 
-#include <ace/Hash_Map_Manager.h>
-#include <ace/Thread_Manager.h>
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Thread_Manager.h"
 
 #include "Stack.h"
 #include "Protocol.h"
@@ -217,7 +217,7 @@ namespace ACE_RMCast
     track_queue (Address const& addr, Queue& q, Messages& msgs);
 
     Profile_ptr
-    create_nrtm ();
+    create_nrtm (u32 max_elem);
 
     static ACE_THR_FUNC_RETURN
     track_thunk (void* obj);
@@ -232,9 +232,6 @@ namespace ACE_RMCast
     bool stop_;
     ACE_Thread_Manager tracker_mgr_;
   };
-
-
-
 }
 
 #endif  // ACE_RMCAST_ACKNOWLEDGE_H

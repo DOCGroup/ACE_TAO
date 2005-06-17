@@ -2,8 +2,8 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include <ace/Time_Value.h>       // ACE_Time_Value
-#include <ace/OS_NS_sys_socket.h>
+#include "ace/Time_Value.h"        // ACE_Time_Value
+#include "ace/OS_NS_sys_socket.h"
 
 #include "Link.h"
 
@@ -118,12 +118,19 @@ namespace ACE_RMCast
         }
         else
         {
-          hold_ = m;
+          if ((rand () % 5) != 0)
+          {
+            send_ (m);
+          }
+          else
+          {
+            hold_ = m;
 
-          // Make a copy in M so that the reliable loop below
-          // won't add FROM and TO to HOLD_.
-          //
-          m = Message_ptr (new Message (*hold_));
+            // Make a copy in M so that the reliable loop below
+            // won't add FROM and TO to HOLD_.
+            //
+            m = hold_->clone ();
+          }
         }
       }
     }
@@ -144,6 +151,14 @@ namespace ACE_RMCast
     ostream os (m->size (), 1); // Always little-endian.
 
     os << *m;
+
+    if (os.length () > max_packet_size)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "packet length (%d) exceeds max_poacket_size (%d)\n",
+                  os.length (), max_packet_size));
+      abort ();
+    }
 
     ssock_.send (os.buffer (), os.length (), addr_);
 
@@ -283,6 +298,10 @@ namespace ACE_RMCast
         else if (id == NoData::id)
           {
             m->add (Profile_ptr (new NoData (hdr, is)));
+          }
+        else if (id == Part::id)
+          {
+            m->add (Profile_ptr (new Part (hdr, is)));
           }
         else
           {

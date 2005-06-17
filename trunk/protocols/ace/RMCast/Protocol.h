@@ -29,6 +29,17 @@ namespace ACE_RMCast
   typedef ACE_CDR::ULong u32;
   typedef ACE_CDR::ULongLong u64;
 
+  // Protocol parameters
+  //
+  //
+  u32 const max_packet_size = 1460; // MTU (1500) - IP-header - UDP-header
+  u32 const max_service_size = 40;  // service profiles (Part, SN, etc) sizes
+                                    // plus message size.
+  u32 const max_payload_size = max_packet_size - max_service_size;
+
+  //
+  //
+  //
   typedef ACE_INET_Addr Address;
 
   struct AddressHasher
@@ -107,6 +118,12 @@ namespace ACE_RMCast
     {
     }
 
+    Profile_ptr
+    clone ()
+    {
+      return clone_ ();
+    }
+
   protected:
     Profile (u16 id)
         : header_ (id, 0)
@@ -117,6 +134,14 @@ namespace ACE_RMCast
         : header_ (h)
     {
     }
+
+    virtual Profile_ptr
+    clone_ () = 0;
+
+  private:
+    Profile&
+    operator= (Profile const&);
+
   public:
     u16
     id () const
@@ -206,10 +231,10 @@ namespace ACE_RMCast
     return ss;
   }
 
-  //
-  //
-  //
 
+  //
+  //
+  //
   class Message;
 
   typedef
@@ -224,16 +249,28 @@ namespace ACE_RMCast
     {
     }
 
+    Message_ptr
+    clone ()
+    {
+      return new Message (*this);
+    }
+
+  protected:
     Message (Message const& m)
         : profiles_ (4)
     {
       for (Profiles::const_iterator i (m.profiles_); !i.done (); i.advance ())
       {
-        // Shallow copy of profiles.
+        // Shallow copy of profiles. This implies that profiles are not
+        // modified as they go up/down the stack.
         //
         profiles_.bind ((*i).ext_id_, (*i).int_id_);
       }
     }
+
+  private:
+    Message&
+    operator= (Message const&);
 
   public:
     bool
@@ -249,6 +286,18 @@ namespace ACE_RMCast
       profiles_.bind (id, p);
 
       return true;
+    }
+
+    void
+    replace (Profile_ptr p)
+    {
+      profiles_.rebind (p->id (), p);
+    }
+
+    void
+    remove (u16 id)
+    {
+      profiles_.unbind (id);
     }
 
     Profile const*
@@ -336,6 +385,25 @@ namespace ACE_RMCast
       size (calculate_size ());
     }
 
+    From_ptr
+    clone ()
+    {
+      return From_ptr (static_cast<From*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new From (*this);
+    }
+
+    From (From const& from)
+        : Profile (from),
+          address_ (from.address_)
+    {
+    }
+
   public:
     Address const&
     address () const
@@ -401,6 +469,25 @@ namespace ACE_RMCast
       size (calculate_size ());
     }
 
+    To_ptr
+    clone ()
+    {
+      return To_ptr (static_cast<To*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new To (*this);
+    }
+
+    To (To const& to)
+        : Profile (to),
+          address_ (to.address_)
+    {
+    }
+
   public:
     Address const&
     address () const
@@ -449,22 +536,56 @@ namespace ACE_RMCast
 
   public:
     Data (Header const& h, istream& is)
-        : Profile (h), buf_ (0), size_ (h.size ())
+        : Profile (h),
+          buf_ (0),
+          size_ (h.size ()),
+          capacity_ (size_)
     {
       if (size_)
       {
-        buf_ = reinterpret_cast<char*> (operator new (size_));
+        buf_ = reinterpret_cast<char*> (operator new (capacity_));
         is.read_char_array (buf_, size_);
       }
     }
 
-    Data (void const* buf, size_t s)
-        : Profile (id), buf_ (0), size_ (s)
+    Data (void const* buf, size_t s, size_t capacity = 0)
+        : Profile (id),
+          buf_ (0),
+          size_ (s),
+          capacity_ (capacity < size_ ? size_ : capacity)
     {
       if (size_)
       {
-        buf_ = reinterpret_cast<char*> (operator new (size_));
+        buf_ = reinterpret_cast<char*> (operator new (capacity_));
         ACE_OS::memcpy (buf_, buf, size_);
+      }
+
+      Profile::size (calculate_size ());
+    }
+
+    Data_ptr
+    clone ()
+    {
+      return Data_ptr (static_cast<Data*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new Data (*this);
+    }
+
+    Data (Data const& d)
+        : Profile (d),
+          buf_ (0),
+          size_ (d.size_),
+          capacity_ (d.capacity_)
+    {
+      if (size_)
+      {
+        buf_ = reinterpret_cast<char*> (operator new (capacity_));
+        ACE_OS::memcpy (buf_, d.buf_, size_);
       }
 
       Profile::size (calculate_size ());
@@ -477,10 +598,33 @@ namespace ACE_RMCast
       return buf_;
     }
 
+    char*
+    buf ()
+    {
+      return buf_;
+    }
+
     size_t
     size () const
     {
       return size_;
+    }
+
+    void
+    size (size_t s)
+    {
+      if (s > capacity_)
+        abort ();
+
+      size_ = s;
+
+      Profile::size (calculate_size ());
+    }
+
+    size_t
+    capacity () const
+    {
+      return capacity_;
     }
 
   public:
@@ -499,6 +643,7 @@ namespace ACE_RMCast
   private:
     char* buf_;
     size_t size_;
+    size_t capacity_;
   };
 
 
@@ -526,6 +671,25 @@ namespace ACE_RMCast
         : Profile (id), n_ (n)
     {
       size (calculate_size ());
+    }
+
+    SN_ptr
+    clone ()
+    {
+      return SN_ptr (static_cast<SN*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new SN (*this);
+    }
+
+    SN (SN const& sn)
+        : Profile (sn),
+          n_ (sn.n_)
+    {
     }
 
   public:
@@ -590,6 +754,10 @@ namespace ACE_RMCast
 
       size_t addr_size (ss.total_length ());
 
+
+      is >> addr;
+      is >> port;
+
       // num_of_sns = (size - addr_size) / sn_size
       //
       for (unsigned long i (0); i < ((h.size () - addr_size) / sn_size); ++i)
@@ -597,9 +765,6 @@ namespace ACE_RMCast
         is >> sn;
         sns_.push_back (sn);
       }
-
-      is >> addr;
-      is >> port;
 
 
       address_ = Address (port, addr);
@@ -609,6 +774,26 @@ namespace ACE_RMCast
         : Profile (id), address_ (src)
     {
       size (calculate_size ());
+    }
+
+    NAK_ptr
+    clone ()
+    {
+      return NAK_ptr (static_cast<NAK*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new NAK (*this);
+    }
+
+    NAK (NAK const& nak)
+        : Profile (nak),
+          address_ (nak.address_),
+          sns_ (nak.sns_)
+    {
     }
 
   public:
@@ -648,10 +833,49 @@ namespace ACE_RMCast
     }
 
   public:
+    // Count max number of elements that will fit into NAK profile
+    // with size <= max_size.
+    //
+    static u32
+    max_count (u32 max_size)
+    {
+      u32 n (0);
+
+      sstream ss;
+
+      Profile::Header hdr (0, 0);
+      ss << hdr;
+
+      u32 addr (0);
+      u16 port (0);
+      ss << addr << port;
+
+      while (true)
+      {
+        u64 sn (0);
+        ss << sn;
+
+        if (ss.total_length () <= max_size)
+          ++n;
+
+        if (ss.total_length () >= max_size)
+          break;
+      }
+
+      return n;
+    }
+
+  public:
     virtual void
     serialize_body (ostream& os) const
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
+
+      u32 addr (address_.get_ip_address ());
+      u16 port (address_.get_port_number ());
+
+      os << addr;
+      os << port;
 
       // Stone age iteration.
       //
@@ -661,19 +885,18 @@ namespace ACE_RMCast
         i.next (psn);
         os << *psn;
       }
-
-
-      u32 addr (address_.get_ip_address ());
-      u16 port (address_.get_port_number ());
-
-      os << addr;
-      os << port;
     }
 
     virtual void
     serialize_body (sstream& ss) const
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
+
+      u32 addr (0);
+      u16 port (0);
+
+      ss << addr;
+      ss << port;
 
       // Stone age iteration.
       //
@@ -682,13 +905,6 @@ namespace ACE_RMCast
         u64 sn (0);
         ss << sn;
       }
-
-
-      u32 addr (0);
-      u16 port (0);
-
-      ss << addr;
-      ss << port;
     }
 
   private:
@@ -734,7 +950,6 @@ namespace ACE_RMCast
         is >> addr;
         is >> port;
 
-
         map_.bind (Address (port, addr), sn);
       }
     }
@@ -743,6 +958,28 @@ namespace ACE_RMCast
         : Profile (id), map_ (10)
     {
       size (calculate_size ());
+    }
+
+    NRTM_ptr
+    clone ()
+    {
+      return NRTM_ptr (static_cast<NRTM*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new NRTM (*this);
+    }
+
+    NRTM (NRTM const& nrtm)
+        : Profile (nrtm)
+    {
+      for (Map::const_iterator i (nrtm.map_); !i.done (); i.advance ())
+      {
+        map_.bind ((*i).ext_id_, (*i).int_id_);
+      }
     }
 
   public:
@@ -771,6 +1008,40 @@ namespace ACE_RMCast
     }
 
   public:
+    // Count max number of elements that will fit into NRTM profile
+    // with size <= max_size.
+    //
+    static u32
+    max_count (u32 max_size)
+    {
+      u32 n (0);
+
+      sstream ss;
+
+      Profile::Header hdr (0, 0);
+      ss << hdr;
+
+      while (true)
+      {
+        u32 addr (0);
+        u16 port (0);
+        u64 sn (0);
+
+        ss << sn;
+        ss << addr;
+        ss << port;
+
+        if (ss.total_length () <= max_size)
+          ++n;
+
+        if (ss.total_length () >= max_size)
+          break;
+      }
+
+      return n;
+    }
+
+  public:
     virtual void
     serialize_body (ostream& os) const
     {
@@ -783,6 +1054,7 @@ namespace ACE_RMCast
         os << sn;
         os << addr;
         os << port;
+
       }
     }
 
@@ -839,6 +1111,24 @@ namespace ACE_RMCast
       Profile::size (0);
     }
 
+    NoData_ptr
+    clone ()
+    {
+      return NoData_ptr (static_cast<NoData*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new NoData (*this);
+    }
+
+    NoData (NoData const& no_data)
+        : Profile (no_data)
+    {
+    }
+
   public:
     virtual void
     serialize_body (ostream&) const
@@ -849,6 +1139,101 @@ namespace ACE_RMCast
     serialize_body (sstream&) const
     {
     }
+  };
+
+  //
+  //
+  //
+  struct Part;
+
+  typedef
+  ACE_Refcounted_Auto_Ptr<Part, ACE_Null_Mutex>
+  Part_ptr;
+
+  struct Part : Profile
+  {
+    static u16 const id;
+
+  public:
+    Part (Header const& h, istream& is)
+        : Profile (h)
+    {
+      is >> num_;
+      is >> of_;
+      is >> total_size_;
+    }
+
+    Part (u32 num, u32 of, u64 total_size)
+        : Profile (id),
+          num_ (num),
+          of_ (of),
+          total_size_ (total_size)
+    {
+      size (calculate_size ());
+    }
+
+    Part_ptr
+    clone ()
+    {
+      return Part_ptr (static_cast<Part*> (clone_ ().release ()));
+    }
+
+  protected:
+    virtual Profile_ptr
+    clone_ ()
+    {
+      return new Part (*this);
+    }
+
+    Part (Part const& part)
+        : Profile (part),
+          num_ (part.num_),
+          of_ (part.of_),
+          total_size_ (part.total_size_)
+    {
+    }
+
+  public:
+    u32
+    num () const
+    {
+      return num_;
+    }
+
+    u32
+    of () const
+    {
+      return of_;
+    }
+
+    u64
+    total_size () const
+    {
+      return total_size_;
+    }
+
+  public:
+    virtual void
+    serialize_body (ostream& os) const
+    {
+      os << num_;
+      os << of_;
+      os << total_size_;
+    }
+
+    virtual void
+    serialize_body (sstream& ss) const
+    {
+      ss << num_;
+      ss << of_;
+      ss << total_size_;
+    }
+
+
+  private:
+    u32 num_;
+    u32 of_;
+    u64 total_size_;
   };
 
 }
