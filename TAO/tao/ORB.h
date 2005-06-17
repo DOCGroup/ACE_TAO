@@ -594,7 +594,7 @@ namespace CORBA
     ~ORB (void);
 
     /// Resolve the POA current.
-    CORBA::Object_ptr resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL);
+    CORBA::Object_ptr resolve_poa_current (void);
 
     /// Resolve the Policy Manager for this ORB.
     CORBA::Object_ptr resolve_policy_manager (void);

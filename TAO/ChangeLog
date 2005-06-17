@@ -1,3 +1,9 @@
+Fri Jun 17 09:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+          Fixed typo in exename, wanted to commit this yesterday but couldn't
+          reach cvs
+
 Fri Jun 17 09:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_ORB/client.cpp:
