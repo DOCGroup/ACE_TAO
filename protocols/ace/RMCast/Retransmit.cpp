@@ -14,7 +14,9 @@ namespace ACE_RMCast
 
   Retransmit::
   Retransmit ()
-      : cond_ (mutex_), stop_ (false)
+      : cond_ (mutex_),
+        sn_ (1),
+        stop_ (false)
   {
   }
 
@@ -43,13 +45,12 @@ namespace ACE_RMCast
   void Retransmit::
   send (Message_ptr m)
   {
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    if (m->find (Data::id) != 0)
     {
-      u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
+      m->add (Profile_ptr (new SN (sn_)));
 
       Lock l (mutex_);
-
-      queue_.bind (sn, Descr (Data_ptr (new Data (*data))));
+      queue_.bind (sn_++, Descr (m->clone ()));
     }
 
     out_->send (m);
@@ -73,8 +74,7 @@ namespace ACE_RMCast
           u64* psn;
           j.next (psn);
 
-          Message_ptr m (new Message);
-          m->add (Profile_ptr (new SN (*psn)));
+          Message_ptr m;
 
           Queue::ENTRY* pair;
 
@@ -82,7 +82,7 @@ namespace ACE_RMCast
           {
             //cerr << 5 << "PRTM " << to << " " << pair->ext_id_ << endl;
 
-            m->add (pair->int_id_.data ());
+            m = pair->int_id_.message ();
 
             pair->int_id_.reset ();
           }
@@ -90,6 +90,8 @@ namespace ACE_RMCast
           {
             //cerr << 4 << "message " << *psn << " not available" << endl;
 
+            m = Message_ptr (new Message);
+            m->add (Profile_ptr (new SN (*psn)));
             m->add (Profile_ptr (new NoData));
           }
 
