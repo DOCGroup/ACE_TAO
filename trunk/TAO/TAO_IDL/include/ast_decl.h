@@ -153,6 +153,7 @@ public:
       , NT_home                     // Denotes a CORBA component home
       , NT_eventtype                // Denotes a CCM event source or sink
       , NT_eventtype_fwd            // Denotes a forward declared CCM event
+      , NT_valuebox                 // Denotes an value box
   };
 
   // Operations.

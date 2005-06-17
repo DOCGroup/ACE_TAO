@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
+#include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
 #include "ast_eventtype.h"
@@ -1036,6 +1037,12 @@ UTL_Scope::fe_add_interface (AST_Interface *)
 
 AST_InterfaceFwd *
 UTL_Scope::fe_add_interface_fwd (AST_InterfaceFwd *)
+{
+  return 0;
+}
+
+AST_ValueBox *
+UTL_Scope::fe_add_valuebox (AST_ValueBox *)
 {
   return 0;
 }

@@ -29,6 +29,7 @@ class AST_PredefinedType;
 class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
+class AST_ValueBox;
 class AST_ValueType;
 class AST_ValueTypeFwd;
 class AST_Component;
@@ -187,6 +188,9 @@ public:
 
   virtual int visit_native (AST_Native *node) = 0;
   // Visit a native.
+
+  virtual int visit_valuebox (AST_ValueBox *node) = 0;
+  // Visit a valuebox.
 };
 
 #endif /* TAO_IDL_FE_DLL_AST_VISITOR_H */

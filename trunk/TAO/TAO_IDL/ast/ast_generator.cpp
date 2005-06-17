@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of every AST class.
 
 #include "ast_root.h"
+#include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
 #include "ast_eventtype.h"
@@ -897,6 +898,18 @@ AST_Generator::create_factory (UTL_ScopedName *n)
   AST_Factory *retval = 0;
   ACE_NEW_RETURN (retval,
                   AST_Factory (n),
+                  0);
+
+  return retval;
+}
+
+AST_ValueBox *
+AST_Generator::create_valuebox (UTL_ScopedName *n,
+                                AST_Type *boxed_type)
+{
+  AST_ValueBox *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_ValueBox (n, boxed_type),
                   0);
 
   return retval;
