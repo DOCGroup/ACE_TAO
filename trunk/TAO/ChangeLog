@@ -1,3 +1,17 @@
+Fri Jun 17 19:09:56 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Reverted the change of
+          
+          Thu Jun 16 18:54:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          It seems this problem is appearing in other places besides
+          generated code, and that making lots of modifications to
+          TAO code to work around what is essentially an HP compiler 
+          bug is not the right approach. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for advice on this matter.
+
 Fri Jun 17 17:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:

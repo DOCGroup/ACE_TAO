@@ -1604,12 +1604,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
     }
-
-  // Needed by HPUX when optimize=1.
-#if defined (HPUX)  
-  this->gen_standard_include (this->client_stubs_,
-                              "ace/SString.h");
-#endif /* HPUX */
 }
 
 void
