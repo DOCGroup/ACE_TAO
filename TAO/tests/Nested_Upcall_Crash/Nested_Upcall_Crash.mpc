@@ -10,7 +10,7 @@ project(*Server): taoserver, messaging {
 }
 
 project(*Scavenger): taoserver, messaging {
-  exename = scavanger
+  exename = scavenger
   Source_Files {
     scavenger.cpp
   }
