@@ -177,9 +177,9 @@ namespace TAO
         ACE_RE_THROW;
       }
     ACE_ENDTRY;
-    ACE_CHECK_RETURN (_tao_retval.out ());
+    ACE_CHECK_RETURN (_tao_retval._retn ());
 
-    return _tao_retval.out ();
+    return _tao_retval._retn ();
   }
 
   CORBA::InterfaceDef_ptr
