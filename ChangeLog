@@ -1,3 +1,10 @@
+Fri Jun 17 17:37:53 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+
+          Added header_outputext to clean up the generated header files on
+          request.
+
 Fri Jun 17 17:22:13 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.cpp:
