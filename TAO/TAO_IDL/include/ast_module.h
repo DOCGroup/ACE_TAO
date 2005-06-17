@@ -179,6 +179,8 @@ private:
 
   virtual AST_Native *fe_add_native (AST_Native *n);
 
+  virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
+
   idl_bool pd_has_nested_valuetype;
 
   ACE_Unbounded_Set<AST_Decl *> previous_;

@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_module.h"
 #include "ast_predefined_type.h"
+#include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
 #include "ast_eventtype.h"
@@ -345,6 +346,54 @@ AST_Module::fe_add_interface (AST_Interface *t)
                            t->local_name ());
   return t;
 }
+
+
+// Add this AST_ValueBox node (a value type declaration) to this scope.
+AST_ValueBox *
+AST_Module::fe_add_valuebox (AST_ValueBox *t)
+{
+  AST_Decl *predef = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+    {
+      if (!can_be_redefined (predef))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      predef);
+
+          return 0;
+        }
+      else if (referenced (predef, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      predef);
+
+          return 0;
+        }
+      else if (t->has_ancestor (predef))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     predef);
+
+          return 0;
+        }
+    }
+
+  // Add it to scope
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols
+  this->add_to_referenced (t,
+                           I_FALSE,
+                           t->local_name ());
+  return t;
+}
+
 
 // Add this AST_ValueType node (a value type declaration) to this scope.
 AST_ValueType *

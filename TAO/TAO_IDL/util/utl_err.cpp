@@ -208,6 +208,8 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_TC_SUPPRESSION_WARNING:
       /* More intelligible message printed by warning routine */
       return "";
+    case UTL_Error::EIDL_ILLEGAL_VALUETYPE:
+      return "valuetype not allowed as type of boxed value type";
   }
 
   return 0;
@@ -604,6 +606,8 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax after declarator in declarators list";
   case IDL_GlobalData::PS_PragmaPrefixSyntax:
     return "Illegal syntax for #pragma prefix";
+  case IDL_GlobalData::PS_ValueBoxDeclSeen:
+    return "Missing boxed valuetype identifier following VALUETYPE keyword";
   default:
     return "Some syntax error";
   }

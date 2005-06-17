@@ -93,6 +93,7 @@ class AST_PredefinedType;
 class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
+class AST_ValueBox;
 class AST_ValueType;
 class AST_ValueTypeFwd;
 class AST_EventType;
@@ -428,6 +429,8 @@ private:
   virtual AST_Native *fe_add_native (AST_Native *n);
 
   virtual AST_Factory *fe_add_factory (AST_Factory *f);
+
+  virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
 };
 
 // Active iterator for a UTL_Scope node

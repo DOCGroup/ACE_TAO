@@ -335,6 +335,10 @@ public:
 
   // Create a node representing an OBV factory construct.
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
+
+  // Create a node representing a valuebox.
+  virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,
+                                         AST_Type *boxed_type);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH
