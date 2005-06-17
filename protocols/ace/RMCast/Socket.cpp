@@ -15,11 +15,11 @@
 #include "Protocol.h"
 #include "Bits.h"
 
-#include "Link.h"
-#include "Simulator.h"
-#include "Retransmit.h"
+#include "Fragment.h"
+#include "Reassemble.h"
 #include "Acknowledge.h"
-
+#include "Retransmit.h"
+#include "Link.h"
 
 #include "Socket.h"
 
@@ -52,8 +52,6 @@ namespace ACE_RMCast
   private:
     bool loop_;
 
-    u64 sn_; //@@ lock?
-
     Mutex mutex_;
     Condition cond_;
 
@@ -61,9 +59,10 @@ namespace ACE_RMCast
 
     ACE_Pipe signal_pipe_;
 
+    ACE_Auto_Ptr<Fragment> fragment_;
+    ACE_Auto_Ptr<Reassemble> reassemble_;
     ACE_Auto_Ptr<Acknowledge> acknowledge_;
     ACE_Auto_Ptr<Retransmit> retransmit_;
-    ACE_Auto_Ptr<Simulator> simulator_;
     ACE_Auto_Ptr<Link> link_;
   };
 
@@ -71,31 +70,33 @@ namespace ACE_RMCast
   Socket_Impl::
   Socket_Impl (Address const& a, bool loop, bool simulator)
       : loop_ (loop),
-        sn_ (1),
         cond_ (mutex_)
   {
     signal_pipe_.open ();
 
+    fragment_.reset (new Fragment ());
+    reassemble_.reset (new Reassemble ());
     acknowledge_.reset (new Acknowledge ());
     retransmit_.reset (new Retransmit ());
-    simulator_.reset (new Simulator ());
     link_.reset (new Link (a, simulator));
 
     // Start IN stack from top to bottom.
     //
     in_start (0);
-    acknowledge_->in_start (this);
+    fragment_->in_start (this);
+    reassemble_->in_start (fragment_.get ());
+    acknowledge_->in_start (reassemble_.get ());
     retransmit_->in_start (acknowledge_.get ());
-    simulator_->in_start (retransmit_.get ());
-    link_->in_start (simulator_.get ());
+    link_->in_start (retransmit_.get ());
 
     // Start OUT stack from bottom up.
     //
     link_->out_start (0);
-    simulator_->out_start (link_.get ());
-    retransmit_->out_start (simulator_.get ());
+    retransmit_->out_start (link_.get ());
     acknowledge_->out_start (retransmit_.get ());
-    out_start (acknowledge_.get ());
+    reassemble_->out_start (acknowledge_.get ());
+    fragment_->out_start (reassemble_.get ());
+    out_start (fragment_.get ());
   }
 
   Socket_Impl::
@@ -104,17 +105,19 @@ namespace ACE_RMCast
     // Stop OUT stack from top to bottom.
     //
     out_stop ();
+    fragment_->out_stop ();
+    reassemble_->out_stop ();
     acknowledge_->out_stop ();
     retransmit_->out_stop ();
-    simulator_->out_stop ();
     link_->out_stop ();
 
     // Stop IN stack from bottom up.
     //
     link_->in_stop ();
-    simulator_->in_stop ();
     retransmit_->in_stop ();
     acknowledge_->in_stop ();
+    reassemble_->in_stop ();
+    fragment_->in_stop ();
     in_stop ();
   }
 
@@ -124,7 +127,6 @@ namespace ACE_RMCast
   {
     Message_ptr m (new Message);
 
-    m->add (Profile_ptr (new SN (sn_++)));
     m->add (Profile_ptr (new Data (buf, s)));
 
     // Qualification is for VC6 and VxWorks.

@@ -5,8 +5,8 @@
 #ifndef ACE_RMCAST_RETRANSMIT_H
 #define ACE_RMCAST_RETRANSMIT_H
 
-#include <ace/Hash_Map_Manager.h>
-#include <ace/Thread_Manager.h>
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Thread_Manager.h"
 
 #include "Stack.h"
 #include "Protocol.h"
@@ -38,12 +38,12 @@ namespace ACE_RMCast
       // Shouldn't be available but ACE_Hash_Map needs it.
       //
       Descr ()
-          : data_ (), count_ (0)
+          : msg_ (), count_ (0)
       {
       }
 
-      Descr (Data_ptr d)
-          : data_ (d), count_ (0)
+      Descr (Message_ptr msg)
+          : msg_ (msg), count_ (0)
       {
       }
 
@@ -59,17 +59,14 @@ namespace ACE_RMCast
         count_ = 0;
       }
 
-      // It would be logical to return data_ptr but ACE ref_auto_ptr
-      // hasn't learned how to convert between pointers yet.
-      //
-      Profile_ptr
-      data () const
+      Message_ptr
+      message () const
       {
-        return Profile_ptr (new Data (*data_));
+        return msg_->clone ();
       }
 
     private:
-      Data_ptr data_;
+      Message_ptr msg_;
       unsigned long count_;
     };
 
@@ -88,6 +85,8 @@ namespace ACE_RMCast
     Queue queue_;
     Mutex mutex_;
     Condition cond_;
+
+    u64 sn_;
 
     bool stop_;
     ACE_Thread_Manager tracker_mgr_;

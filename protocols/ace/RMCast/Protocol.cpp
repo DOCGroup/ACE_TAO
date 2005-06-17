@@ -13,4 +13,5 @@ namespace ACE_RMCast
   u16 const NAK::   id = 0x0005;
   u16 const NRTM::  id = 0x0006;
   u16 const NoData::id = 0x0007;
+  u16 const Part::  id = 0x0008;
 }

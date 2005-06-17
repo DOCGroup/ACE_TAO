@@ -39,7 +39,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     // Keep running in case retransmissions are needed.
     //
-    ACE_OS::sleep (ACE_Time_Value (50, 0));
+    ACE_OS::sleep (ACE_Time_Value (60, 0));
 
     return 0;
   }
