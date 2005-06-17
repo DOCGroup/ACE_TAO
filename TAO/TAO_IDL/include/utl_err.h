@@ -138,6 +138,7 @@ public:
     EIDL_LOCAL_REMOTE_MISMATCH, // Local type used in remote operation
     EIDL_IGNORE_IDL3_ERROR,     // -Sm option used with component or home decl
     EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
+    EIDL_ILLEGAL_VALUETYPE,     // Valuetype not allowed for box value type
     EIDL_OK                     // No error
   };
 

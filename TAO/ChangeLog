@@ -1,3 +1,22 @@
+Fri Jun 17 23:45:00 UTC 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/include/ast_decl.h
+        * TAO_IDL/include/ast_generator.h
+        * TAO_IDL/include/ast_module.h
+        * TAO_IDL/include/ast_valuebox.h
+        * TAO_IDL/include/ast_visitor.h
+        * TAO_IDL/include/idl_global.h
+        * TAO_IDL/include/utl_err.h
+        * TAO_IDL/include/utl_scope.h
+        * TAO_IDL/util/utl_err.cpp
+        * TAO_IDL/util/utl_scope.cpp
+        * TAO_IDL/ast/ast_generator.cpp
+        * TAO_IDL/ast/ast_module.cpp
+        * TAO_IDL/ast/ast_redef.cpp
+        * TAO_IDL/ast/ast_valuebox.cpp
+          Changes and additions to IDL compiler front-end for
+          valuebox support.
+        
 Fri Jun 17 15:40:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/orbsvcs.rc:

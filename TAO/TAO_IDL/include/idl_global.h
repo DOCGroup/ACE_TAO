@@ -263,6 +263,7 @@ public:
     , PS_DeclsDeclSeen          // Seen complete decl in decls list
     , PS_NativeSeen             // Seen a native declaration
     , PS_PragmaPrefixSyntax     // Could not parse the #pragma prefix
+    , PS_ValueBoxDeclSeen       // Seen complete valuebox declaration
   };
 
   // flags for types of declarations seen while parsing.
