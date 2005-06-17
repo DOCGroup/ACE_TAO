@@ -1146,6 +1146,11 @@ CORBA::ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     {
+      result = this->orb_core ()->resolve_typecodefactory (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+  else if (ACE_OS::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
+    {
       result = this->orb_core ()->resolve_codecfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
