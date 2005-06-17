@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Bug_1551_Server): taoserver, ami, iortable, portableserver {
-  exename = server
+project(Bug_1551_Server): taoserver, ami, iortable {
   Source_Files {
     Hello.cpp
     Server_Task.cpp
