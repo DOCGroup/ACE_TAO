@@ -1,3 +1,33 @@
+Fri Jun 17 19:02:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+	  Moved code for the IOR file and pid file output.  It had been
+	  mistakenly added inside a commented out section of the code.
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+	  From documentation available on-line, VisiBroker's and Orbix's
+	  log service implementations support using corbaloc IORs and
+	  resolve_initial_references() to obtain the log factory object
+	  reference.  Changed TAO's implementation to support the same by
+	  registering the factory IORs in the IORTable:
+
+	    * "BasicLogService" for the Basic_Logging_Service
+	    * "EventLogService" for the Event_Logging_Service
+	    * "NotifyLogService" for the Notify_Logging_Service
+	    * "RTEventLogService" for the RTEvent_Logging_Service
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+
+	  Changed to inherit from iortable.
+
 Fri Jun 17 23:45:00 UTC 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/include/ast_decl.h
@@ -16,7 +46,7 @@ Fri Jun 17 23:45:00 UTC 2005  Gary Maxey <gary.maxey@hp.com>
         * TAO_IDL/ast/ast_valuebox.cpp
           Changes and additions to IDL compiler front-end for
           valuebox support.
-        
+
 Fri Jun 17 15:40:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/orbsvcs.rc:

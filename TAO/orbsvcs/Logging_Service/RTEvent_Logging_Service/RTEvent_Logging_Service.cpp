@@ -6,6 +6,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
+#include "tao/IORTable/IORTable.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 
@@ -172,29 +173,6 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
         this->orb_->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->ior_file_name_ != 0)
-        {
-          FILE *output_file= ACE_OS::fopen (this->ior_file_name_, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               this->ior_file_name_),
-                              1);
-          ACE_OS::fprintf (output_file, "%s", str.in ());
-          ACE_OS::fclose (output_file);
-        }
-
-      if (this->pid_file_name_ != 0)
-        {
-          FILE *pidf = fopen (this->pid_file_name_, "w");
-          if (pidf != 0)
-            {
-              ACE_OS::fprintf (pidf,
-                               "%ld\n",
-                               static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pidf);
-            }
-        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "The EC IOR is <%s>\n", str.in ()));
@@ -225,13 +203,51 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
 
       ACE_TRY_CHECK;
       CORBA::String_var
-        str = orb_->object_to_string (factory_.in ()
+        ior = orb_->object_to_string (factory_.in ()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "RTEvent_Logging_Service: The RTEventLog Factory IOR is <%s>\n",
-                  str.in ()));
+                  ior.in ()));
+
+      if (true) 
+        {
+	  CORBA::Object_var table_object = 
+	  this->orb_->resolve_initial_references ("IORTable");
+	  ACE_CHECK_RETURN (-1);
+
+	  IORTable::Table_var adapter = 
+	    IORTable::Table::_narrow (table_object.in ());
+	  ACE_CHECK_RETURN (-1);
+
+	  adapter->bind("RTEventLogService", ior.in ())
+	  ACE_CHECK_RETURN (-1);
+        }
+
+      if (this->ior_file_name_ != 0)
+        {
+          FILE *output_file= ACE_OS::fopen (this->ior_file_name_, "w");
+          if (output_file == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               this->ior_file_name_),
+                              1);
+          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
+        }
+
+      if (this->pid_file_name_ != 0)
+        {
+          FILE *pidf = fopen (this->pid_file_name_, "w");
+          if (pidf != 0)
+            {
+              ACE_OS::fprintf (pidf,
+                               "%ld\n",
+                               static_cast<long> (ACE_OS::getpid ()));
+              ACE_OS::fclose (pidf);
+            }
+        }
 
       CosNaming::Name name (1);
       name.length (1);
