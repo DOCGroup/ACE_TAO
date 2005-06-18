@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, event, ec_use_typed_events, portableserver, minimum_corba {
-  after     += CosEvent_Skel
-  libs      += TAO_CosEvent_Skel
-}

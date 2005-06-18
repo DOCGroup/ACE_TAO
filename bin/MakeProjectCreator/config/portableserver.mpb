@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taolib, pi {
-  after   += PortableServer
-  libs    += TAO_PortableServer
-}
