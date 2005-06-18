@@ -1,6 +1,7 @@
 #include "Basic_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Log/BasicLogFactory_i.h"
+#include "tao/IORTable/IORTable.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -99,9 +100,6 @@ int
 Basic_Logging_Service::startup (int argc, char *argv[]
                           ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "\nStarting up the Telecom Log Service...\n"));
-
   // initalize the ORB.
   this->init_ORB (argc, argv
                   ACE_ENV_ARG_PARAMETER);
@@ -119,12 +117,23 @@ Basic_Logging_Service::startup (int argc, char *argv[]
   ACE_CHECK_RETURN (-1);
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
-  CORBA::String_var str =
+  CORBA::String_var ior =
     this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "The Basic Log Factory IOR is <%s>\n", str.in ()));
+  if (true) 
+    {
+      CORBA::Object_var table_object = 
+	this->orb_->resolve_initial_references ("IORTable");
+      ACE_CHECK_RETURN (-1);
+
+      IORTable::Table_var adapter = 
+	IORTable::Table::_narrow (table_object.in ());
+      ACE_CHECK_RETURN (-1);
+
+      adapter->bind("BasicLogService", ior.in ())
+      ACE_CHECK_RETURN (-1);
+    }
 
   if (ior_file_name_ != 0)
     {
@@ -136,7 +145,7 @@ Basic_Logging_Service::startup (int argc, char *argv[]
                           -1);
       }
 
-      ACE_OS::fprintf (iorf, "%s\n", str.in ());
+      ACE_OS::fprintf (iorf, "%s\n", ior.in ());
       ACE_OS::fclose (iorf);
     }
 

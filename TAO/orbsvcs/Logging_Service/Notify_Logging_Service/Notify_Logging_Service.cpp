@@ -1,9 +1,9 @@
 #include "Notify_Logging_Service.h"
-
-#include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Dynamic_Service.h"
+//#include "ace/Arg_Shifter.h"
 #include "tao/debug.h"
+#include "tao/IORTable/IORTable.h"
 #include "orbsvcs/Notify/Service.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -128,9 +128,6 @@ Notify_Logging_Service::init (int argc, char *argv[]
   this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\nStarting up the Notification Logging Service...\n"));
-
   // Activate the factory
   this->notify_factory_ =
     notify_service_->create (this->poa_.in ()
@@ -147,12 +144,23 @@ Notify_Logging_Service::init (int argc, char *argv[]
 
   ACE_CHECK_RETURN (-1);
 
-  CORBA::String_var str =
+  CORBA::String_var ior =
     this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "The Notify Log Factory IOR is <%s>\n", str.in()));
+  if (true) 
+    {
+      CORBA::Object_var table_object = 
+	this->orb_->resolve_initial_references ("IORTable");
+      ACE_CHECK_RETURN (-1);
+
+      IORTable::Table_var adapter = 
+	IORTable::Table::_narrow (table_object.in ());
+      ACE_CHECK_RETURN (-1);
+
+      adapter->bind("NotifyLogService", ior.in ())
+      ACE_CHECK_RETURN (-1);
+    }
 
   if (ior_file_name_ != 0)
     {
@@ -165,7 +173,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
                             -1);
         }
 
-      ACE_OS::fprintf (iorf, "%s\n", str.in ());
+      ACE_OS::fprintf (iorf, "%s\n", ior.in ());
       ACE_OS::fclose (iorf);
     }
 
