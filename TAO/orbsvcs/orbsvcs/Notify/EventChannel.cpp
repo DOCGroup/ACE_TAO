@@ -92,7 +92,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  this->admin_properties_.reset (admin_properties);
+  this->admin_properties_ = admin_properties;
 
   // create the event manager. @@ use factory
   ACE_NEW_THROW_EX (this->event_manager_,
@@ -160,7 +160,7 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent * parent
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  this->admin_properties_.reset (admin_properties);
+  this->admin_properties_ = admin_properties;
 
   // create the event manager. @@ use factory
   ACE_NEW_THROW_EX (this->event_manager_,
