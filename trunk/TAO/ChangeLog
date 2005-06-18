@@ -1,3 +1,8 @@
+Sat Jun 18 15:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+          Fixed crashing of notication service in mt configuration
+
 Fri Jun 17 19:54:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
