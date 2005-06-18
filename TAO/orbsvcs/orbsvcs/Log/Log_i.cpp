@@ -662,7 +662,7 @@ TAO_Log_i::query_i (const char *constraint,
       {
         if (TAO_debug_level > 0)
 #if defined (ACE_LACKS_LONGLONG_T)
-               ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
+               ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %d, Time = %d\n",
                       ACE_U64_TO_U32 ((*iter).int_id_.id),
                       ACE_U64_TO_U32 ((*iter).int_id_.time)));
 

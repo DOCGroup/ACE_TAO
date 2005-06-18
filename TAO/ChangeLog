@@ -1,3 +1,23 @@
+Fri Jun 17 19:54:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
+
+	  Changed the maximum number of records that can be returned by
+	  query() without using an iterator from 30 to 100.  This should
+	  probably be a parameter that is set specified when the service
+	  is started, but until it is, 100 is a more reasonable default.
+
+	  From documentation available on line, the Orbix log service
+	  implementation defaults to 100 records, the VisiBroker
+	  implementation defaults to 1000.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
+
+	  The ACE_LACKS_LONGLONG_T case cast the 64 bit log record fields
+	  "id" and "time" to 32 bits, but the format directive still used
+	  %Q.  Changed to "%d".
+
 Fri Jun 17 19:02:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
