@@ -1,3 +1,11 @@
+Sat Jun 18 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBA_String.{h,inl}:
+          Added missing operator = (const WChar*) to WString_out. Thanks to
+          Jean-Marc Prud'Homme <jprudhomme at interstarinc dot com> for
+          reporting this and deliver the patch. This fixes bugzilla bug
+          2159
+
 Sat Jun 18 15:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
