@@ -31,7 +31,7 @@
 #include "ace/Null_Mutex.h"
 #include "log_serv_export.h"
 
-#define LOG_DEFAULT_MAX_REC_LIST_LEN 30
+#define LOG_DEFAULT_MAX_REC_LIST_LEN 100
 
 /**
  * @class TAO_LogRecordStore

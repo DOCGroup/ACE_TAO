@@ -36,7 +36,7 @@
 
 #define PERSISTENT_LOG_FILE_NAME "LOG.DATA"
 
-#define LOG_DEFAULT_MAX_REC_LIST_LEN 30
+#define LOG_DEFAULT_MAX_REC_LIST_LEN 100
 
 /**
  * @class TAO_LogRecordStore
