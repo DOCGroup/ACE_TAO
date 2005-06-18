@@ -110,16 +110,16 @@ CORBA::String_out::operator= (const CORBA::String_out &s)
 }
 
 ACE_INLINE CORBA::String_out &
-CORBA::String_out::operator= (char *s)
+CORBA::String_out::operator= (char *p)
 {
-  this->ptr_ = s;
+  this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE CORBA::String_out &
-CORBA::String_out::operator= (const char *s)
+CORBA::String_out::operator= (const char *p)
 {
-  this->ptr_ = CORBA::string_dup (s);
+  this->ptr_ = CORBA::string_dup (p);
   return *this;
 }
 
@@ -245,9 +245,16 @@ CORBA::WString_out::operator= (const CORBA::WString_out &s)
 }
 
 ACE_INLINE CORBA::WString_out &
-CORBA::WString_out::operator= (CORBA::WChar *s)
+CORBA::WString_out::operator= (CORBA::WChar *p)
 {
-  this->ptr_ = s;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE CORBA::WString_out &
+CORBA::WString_out::operator= (const CORBA::WChar *p)
+{
+  this->ptr_ = CORBA::wstring_dup (p);
   return *this;
 }
 
