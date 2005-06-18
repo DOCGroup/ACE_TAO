@@ -1,0 +1,8 @@
+// $Id$
+
+project (*) : ciao_client, rtcorba, exceptions {
+  after += DiffServ_Sender_stub DiffServ_Receiver_stub
+  includes += ../Sender
+  includes += ../Receiver
+  libs += DiffServ_Sender_stub DiffServ_Receiver_stub DiffServ_stub
+}

@@ -1,0 +1,10 @@
+# -- E X A M P L E conf. file --
+
+# Note! priority values are for Linux
+
+static RT_ORB_Loader "-ORBSchedPolicy SCHED_FIFO -ORBScopePolicy PROCESS -ORBPriorityMapping direct"
+
+static FP_DT_Creator "-GuidSeed 0 -DT_Count 4  -DT_Task -Importance 5 -Start_Time 0 -Iter 3 -Load 5 -JobName job_1 -DT_Task -Importance 8 -Start_Time 0 -Iter 5 -Load 5 -DT_Task -Importance 10 -Start_Time 0 -Iter 3 -Load 5  -DT_Task -Importance 4 -Start_Time 2 -Iter 5 -Load 5 -JobName job_2 -OutFile schedule_client.dat -LogFile log_client"
+
+
+
