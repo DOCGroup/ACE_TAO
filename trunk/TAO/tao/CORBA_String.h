@@ -273,6 +273,9 @@ namespace CORBA
     /// Assignment from a string.
     WString_out &operator= (CORBA::WChar *p);
 
+    /// Assignment from a constant CORBA::WChar*.
+    WString_out& operator= (const CORBA::WChar *p);
+
     /// Cast.
     operator CORBA::WChar *&();
 
