@@ -1,3 +1,44 @@
+Mon Jun 20 12:21:00 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/be_include/be_generator.h
+        * TAO_IDL/be_include/be_valuebox.h
+        * TAO_IDL/be_include/be_visitor.h
+        * TAO_IDL/be_include/be_visitor_valuebox.h
+        * TAO_IDL/be_include/be_visitor_module/module.h
+        * TAO_IDL/be_include/be_visitor_root/root.h
+        * TAO_IDL/be_include/be_visitor_valuebox/any_op_ch.h
+        * TAO_IDL/be_include/be_visitor_valuebox/any_op_cs.h
+        * TAO_IDL/be_include/be_visitor_valuebox/cdr_op_ch.h
+        * TAO_IDL/be_include/be_visitor_valuebox/cdr_op_cs.h
+        * TAO_IDL/be_include/be_visitor_valuebox/field_ch.h
+        * TAO_IDL/be_include/be_visitor_valuebox/field_ci.h
+        * TAO_IDL/be_include/be_visitor_valuebox/union_member_ci.h
+        * TAO_IDL/be_include/be_visitor_valuebox/valuebox.h
+        * TAO_IDL/be_include/be_visitor_valuebox/valuebox_ch.h
+        * TAO_IDL/be_include/be_visitor_valuebox/valuebox_ci.h
+        * TAO_IDL/be_include/be_visitor_valuebox/valuebox_cs.h
+        * TAO_IDL/be/be_generator.cpp
+        * TAO_IDL/be/be_valuebox.cpp
+        * TAO_IDL/be/be_visitor.cpp
+        * TAO_IDL/be/be_visitor_root.cpp
+        * TAO_IDL/be/be_visitor_module.cpp
+        * TAO_IDL/be/be_visitor_valuebox.cpp
+        * TAO_IDL/be/be_visitor_module/module.cpp
+        * TAO_IDL/be/be_visitor_root/root.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuebox/cdr_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/field_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/union_member_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp
+          Changes and additions to IDL compiler back-end for
+          valuebox support.
+
 Mon Jun 20 09:18:00 2005  Gary Maxey <gary.maxey@hp.com>
         * orbsvcs/IFR_Service/ifr_visitor.cpp
         * orbsvcs/IFR_Service/ifr_visitor.h
