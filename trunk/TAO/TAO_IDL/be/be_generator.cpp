@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_root.h"
 #include "be_predefined_type.h"
 #include "be_module.h"
+#include "be_valuebox.h"
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"
@@ -248,6 +249,19 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
     {
       retval->prefix (const_cast<char *> (ScopeAsDecl (d->defined_in ())->prefix ()));
     }
+
+  return retval;
+}
+
+AST_ValueBox *
+be_generator::create_valuebox (UTL_ScopedName *n,
+                               AST_Type *boxed_type)
+{
+  be_valuebox *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_valuebox (boxed_type,
+                               n),
+                  0);
 
   return retval;
 }
