@@ -132,7 +132,7 @@ Event_Logging_Service::startup (int argc, char *argv[]
 	IORTable::Table::_narrow (table_object.in ());
       ACE_CHECK_RETURN (-1);
 
-      adapter->bind("EventLogService", ior.in ())
+      adapter->bind("EventLogService", ior.in ());
       ACE_CHECK_RETURN (-1);
     }
 
