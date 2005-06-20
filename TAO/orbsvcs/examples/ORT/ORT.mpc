@@ -1,5 +1,6 @@
 // $Id$
-project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, minimum_corba {
+
+project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, pi_server, minimum_corba {
   source_files {
     GatewayC.cpp
     GatewayS.cpp
@@ -39,5 +40,8 @@ project(*Client) : orbsvcsexe, event, minimum_corba {
     sum_serverC.cpp
   }
 }
+
+
+
 
 
