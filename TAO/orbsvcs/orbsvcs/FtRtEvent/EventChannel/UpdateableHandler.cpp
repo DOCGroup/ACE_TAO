@@ -4,7 +4,7 @@
 #include "Update_Manager.h"
 #include "AMI_Primary_Replication_Strategy.h"
 #include "../Utils/resolve_init.h"
-#include "tao/PortableServer/PS_CurrentC.h"
+#include "tao/PI_Server/PI_Server.h"
 
 ACE_RCSID (EventChannel,
            UpdateableHandler,

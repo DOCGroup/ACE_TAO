@@ -8,7 +8,7 @@ project(*Client) : taoclient, minimum_corba {
   }
 }
 
-project(*Server) : taoserver, minimum_corba {
+project(*Server) : taoserver, pi_server, minimum_corba {
   source_files {
     File_i.cpp
     server.cpp

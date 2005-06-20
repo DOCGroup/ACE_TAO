@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : iortable, svc_utils, typecodefactory, minimum_corba {
+project : iortable, svc_utils, typecodefactory, pi_server, minimum_corba {
   after     += IFRService
   libs      += TAO_IFRService
   tagchecks += IFRService

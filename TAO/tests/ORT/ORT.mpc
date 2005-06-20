@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Test_ORT_Server): taoserver, objreftemplate, iorinterceptor, interceptors {
+project(Test_ORT_Server): taoserver, objreftemplate, iorinterceptor, pi_server, interceptors {
   IDL_Files {
     ORT_test.idl
     ObjectReferenceFactory.idl
