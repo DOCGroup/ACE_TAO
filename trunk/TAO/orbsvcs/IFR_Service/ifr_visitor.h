@@ -65,7 +65,10 @@ public:
   // Visit interface.
 
   virtual int visit_interface_fwd (AST_InterfaceFwd *node);
-  // Visit a forward interface declaration.
+  // Visit a forward interface declaration
+
+  virtual int visit_valuebox (AST_ValueBox *node);
+  // Visit valuebox.
 
   virtual int visit_valuetype (AST_ValueType *node);
   // Visit valuetype.

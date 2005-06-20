@@ -26,6 +26,7 @@
 #include "ast_string.h"
 #include "ast_structure.h"
 #include "ast_union.h"
+#include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
 #include "utl_identifier.h"
@@ -585,6 +586,13 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 
   return 0;
 }
+
+int
+ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
+{
+  return 0;
+}
+
 
 int
 ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
