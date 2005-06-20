@@ -108,8 +108,7 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   PortableServer::POA_var poa =
-    poa_current_impl->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    poa_current_impl->get_POA ();
 
   CORBA::PolicyList_var client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
@@ -210,8 +209,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
     }
 
   PortableServer::POA_var poa =
-    poa_current_impl->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    poa_current_impl->get_POA ();
 
   return this->_primary_interface (poa_current_impl->object_id (),
                                    poa.in ()
