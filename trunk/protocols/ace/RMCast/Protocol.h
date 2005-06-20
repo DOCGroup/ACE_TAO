@@ -32,8 +32,8 @@ namespace ACE_RMCast
   // Protocol parameters
   //
   //
-  u32 const max_packet_size = 1460; // MTU (1500) - IP-header - UDP-header
-  u32 const max_service_size = 40;  // service profiles (Part, SN, etc) sizes
+  u32 const max_packet_size = 1470; // MTU (1500) - IP-header - UDP-header
+  u32 const max_service_size = 60;  // service profiles (Part, SN, etc), sizes
                                     // plus message size.
   u32 const max_payload_size = max_packet_size - max_service_size;
 
@@ -243,6 +243,10 @@ namespace ACE_RMCast
 
   class Message
   {
+    typedef
+    ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>
+    Profiles;
+
   public:
     Message ()
         : profiles_ (4)
@@ -310,6 +314,16 @@ namespace ACE_RMCast
       return e->int_id_.get ();
     }
 
+    typedef
+    Profiles::const_iterator
+    ProfileIterator;
+
+    ProfileIterator
+    begin () const
+    {
+      return ProfileIterator (profiles_);
+    }
+
   public:
     size_t
     size () const
@@ -344,10 +358,7 @@ namespace ACE_RMCast
       return os;
     }
 
-    typedef
-    ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>
-    Profiles;
-
+  private:
     Profiles profiles_;
   };
 
@@ -848,7 +859,8 @@ namespace ACE_RMCast
 
       u32 addr (0);
       u16 port (0);
-      ss << addr << port;
+      ss << addr;
+      ss << port;
 
       while (true)
       {
