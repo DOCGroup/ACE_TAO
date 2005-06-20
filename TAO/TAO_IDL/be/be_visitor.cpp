@@ -72,6 +72,11 @@ int be_visitor::visit_interface_fwd (be_interface_fwd *)
   return 0;
 }
 
+int be_visitor::visit_valuebox (be_valuebox *)
+{
+  return 0;
+}
+
 int be_visitor::visit_valuetype (be_valuetype *)
 {
   return 0;

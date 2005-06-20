@@ -102,6 +102,10 @@ public:
                                                   idl_bool local,
                                                   idl_bool abstract);
 
+  // Create a node representing a boxed value type
+  virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,
+                                         AST_Type *boxed_type);
+
   virtual AST_ValueType *create_valuetype (UTL_ScopedName *n,
                                            AST_Interface **inherits,
                                            long n_inherits,

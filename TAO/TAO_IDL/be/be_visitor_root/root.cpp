@@ -917,6 +917,81 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_root::visit_valuebox (be_valuebox *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      {
+        be_visitor_valuebox_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CI:
+      {
+        be_visitor_valuebox_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CS:
+      {
+        be_visitor_valuebox_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+      {
+        be_visitor_valuebox_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+      {
+        be_visitor_valuebox_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      {
+        be_visitor_valuebox_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      {
+        be_visitor_valuebox_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      {
+        break;
+      }
+    default:
+      return 0;    // nothing to do.
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_valuebox - "
+                         "failed to accept visitor\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
 be_visitor_root::visit_valuetype (be_valuetype *node)
 {
   // Instantiate a visitor context with a copy of our context. This info
