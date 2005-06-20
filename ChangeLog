@@ -1,3 +1,15 @@
+Mon Jun 20 11:36:21 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_sys_socket.inl (closesocket): Removed the
+	  ACE_OS::shutdown() call in an HP-UX block. Calling shutdown breaks
+	  an often-used idiom in UNIX programming of forking a new process
+	  to handle a connection and closing the handle in the parent. Doing
+	  a shutdown() before close() initiates a TCP close even though there
+	  are multiple handles to the same socket. Thanks to Doug Schmidt
+	  and Howard Finer for the exchange that led to this change. This
+	  reverts a change made earlier:
+	  Thu Jan  1 17:56:31 2004  Steve Huston  <shuston@riverace.com>
+
 Mon Jun 20 09:46:24 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
