@@ -1,12 +1,19 @@
+Mon Jun 20 09:18:00 2005  Gary Maxey <gary.maxey@hp.com>
+        * orbsvcs/IFR_Service/ifr_visitor.cpp
+        * orbsvcs/IFR_Service/ifr_visitor.h
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h
+          Add visitors for valuebox support.
+        
 Mon Jun 20 08:51:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 
-	  Added missing semi-colon; bug was hidden by use of emulated
-	  exception macros.
+          Added missing semi-colon; bug was hidden by use of emulated
+          exception macros.
 
 Mon Jun 20 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -129,53 +136,53 @@ Sat Jun 18 15:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jun 17 19:54:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
-	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
 
-	  Changed the maximum number of records that can be returned by
-	  query() without using an iterator from 30 to 100.  This should
-	  probably be a parameter that is set specified when the service
-	  is started, but until it is, 100 is a more reasonable default.
+          Changed the maximum number of records that can be returned by
+          query() without using an iterator from 30 to 100.  This should
+          probably be a parameter that is set specified when the service
+          is started, but until it is, 100 is a more reasonable default.
 
-	  From documentation available on line, the Orbix log service
-	  implementation defaults to 100 records, the VisiBroker
-	  implementation defaults to 1000.
+          From documentation available on line, the Orbix log service
+          implementation defaults to 100 records, the VisiBroker
+          implementation defaults to 1000.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
 
-	  The ACE_LACKS_LONGLONG_T case cast the 64 bit log record fields
-	  "id" and "time" to 32 bits, but the format directive still used
-	  %Q.  Changed to "%d".
+          The ACE_LACKS_LONGLONG_T case cast the 64 bit log record fields
+          "id" and "time" to 32 bits, but the format directive still used
+          %Q.  Changed to "%d".
 
 Fri Jun 17 19:02:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 
-	  Moved code for the IOR file and pid file output.  It had been
-	  mistakenly added inside a commented out section of the code.
+          Moved code for the IOR file and pid file output.  It had been
+          mistakenly added inside a commented out section of the code.
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 
-	  From documentation available on-line, VisiBroker's and Orbix's
-	  log service implementations support using corbaloc IORs and
-	  resolve_initial_references() to obtain the log factory object
-	  reference.  Changed TAO's implementation to support the same by
-	  registering the factory IORs in the IORTable:
+          From documentation available on-line, VisiBroker's and Orbix's
+          log service implementations support using corbaloc IORs and
+          resolve_initial_references() to obtain the log factory object
+          reference.  Changed TAO's implementation to support the same by
+          registering the factory IORs in the IORTable:
 
-	    * "BasicLogService" for the Basic_Logging_Service
-	    * "EventLogService" for the Event_Logging_Service
-	    * "NotifyLogService" for the Notify_Logging_Service
-	    * "RTEventLogService" for the RTEvent_Logging_Service
+            * "BasicLogService" for the Basic_Logging_Service
+            * "EventLogService" for the Event_Logging_Service
+            * "NotifyLogService" for the Notify_Logging_Service
+            * "RTEventLogService" for the RTEvent_Logging_Service
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
 
-	  Changed to inherit from iortable.
+          Changed to inherit from iortable.
 
 Fri Jun 17 23:45:00 UTC 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -198,11 +205,11 @@ Fri Jun 17 23:45:00 UTC 2005  Gary Maxey <gary.maxey@hp.com>
 
 Fri Jun 17 15:40:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/orbsvcs.rc:
-	* orbsvcs/orbsvcs/orbsvcs_export.h:
+        * orbsvcs/orbsvcs/orbsvcs.rc:
+        * orbsvcs/orbsvcs/orbsvcs_export.h:
 
-	  Remove stray bits left over from when orbsvcs was a single
-	  library.
+          Remove stray bits left over from when orbsvcs was a single
+          library.
 
 Fri Jun 17 19:09:56 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -456,17 +463,17 @@ Wed Jun 15 17:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun 15 10:46:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/PortableServer/TAO_PortableServer.pc.in:
+        * tao/PortableServer/TAO_PortableServer.pc.in:
 
-	  Added TAO_PI to list of required libraries.
+          Added TAO_PI to list of required libraries.
 
-	* tao/PI.mpc:
+        * tao/PI.mpc:
 
-	  Added Pkgconfig_Files definition.
+          Added Pkgconfig_Files definition.
 
-	* tao/PI/TAO_PI.pc.in:
+        * tao/PI/TAO_PI.pc.in:
 
-	  New file, pkg-config *.pc template for TAO_PI library.
+          New file, pkg-config *.pc template for TAO_PI library.
 
 Wed Jun 15 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -528,18 +535,18 @@ Wed Jun 15 08:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 14 21:35:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PolicyFactory_Registry_Adapter.cpp:
+        * tao/PolicyFactory_Registry_Adapter.cpp:
 
-	  Removed stray semi-colon.
+          Removed stray semi-colon.
 
 Tue Jun 14 20:57:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Lothar Werzinger <lothar@xcerla.com>
-	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp (init_new_naming):
+        From Lothar Werzinger <lothar@xcerla.com>
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp (init_new_naming):
 
-	  Register with the ORB's resolve_initial_references() mechanism.
-	  Primarily useful for dynamically loaded Name Services.
-	  [Bug 2150]
+          Register with the ORB's resolve_initial_references() mechanism.
+          Primarily useful for dynamically loaded Name Services.
+          [Bug 2150]
 
 Tue Jun 14 14:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -923,10 +930,10 @@ Tue Jun 14 07:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 13 17:27:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Iterator_i.cpp (get):
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp (get):
 
-	  Change to return a zero-length sequence before destroying
-	  iterator as required by the spec.
+          Change to return a zero-length sequence before destroying
+          iterator as required by the spec.
 
 Mon Jun 13 17:18:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -964,19 +971,19 @@ Mon Jun 13 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 13 05:07:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
 
-	  Made public destructors protected since the objects in question
-	  are reference counted, i.e. memory management should be
-	  performed through the reference counting mechanism, not operator
-	  delete();
+          Made public destructors protected since the objects in question
+          are reference counted, i.e. memory management should be
+          performed through the reference counting mechanism, not operator
+          delete();
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h (TAO_FlowSpec_Entry):
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h (TAO_FlowSpec_Entry):
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
 
-	  Fixed a memory leak.
+          Fixed a memory leak.
 
 Mon Jun 13 09:32:38 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -1018,60 +1025,60 @@ Mon Jun 13 08:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 12 23:09:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp (TAO_Log_Constraint_Visitor):
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp (TAO_Log_Constraint_Visitor):
 
-	  Add property list bindings for each item in the log record's
-	  attribute list.
+          Add property list bindings for each item in the log record's
+          attribute list.
 
 Sun Jun 12 23:38:02 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/GIOP_Message_Base.h (process_request, process_locate_request):
+        * tao/GIOP_Message_Base.h (process_request, process_locate_request):
 
-	  Made the above calls virtual since it makes it easier to do
-	  implementation inheritance, and override behaviours.
+          Made the above calls virtual since it makes it easier to do
+          implementation inheritance, and override behaviours.
 
 Sun Jun 12 14:24:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i, match_i, remove_old_records):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (query_i, match_i, remove_old_records):
 
-	  Simplify iterating over record store by using ACE_Hash_Map's
-	  STL-like API.
+          Simplify iterating over record store by using ACE_Hash_Map's
+          STL-like API.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
 
-	  Changed from LOG_HASH_MAP_ITER to LOG_RECORD_STORE_ITER.
+          Changed from LOG_HASH_MAP_ITER to LOG_RECORD_STORE_ITER.
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h (TAO_LogRecordStore):
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h (TAO_LogRecordStore):
 
-	  Added LOG_RECORD_STORE_ENTRY typedef.
+          Added LOG_RECORD_STORE_ENTRY typedef.
 
-	* orbsvcs/orbsvcs/Log/Iterator_i.cpp: (TAO_Iterator_i):
-	* orbsvcs/orbsvcs/Log/Iterator_i.h (TAO_Iterator_i):
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp: (TAO_Iterator_i):
+        * orbsvcs/orbsvcs/Log/Iterator_i.h (TAO_Iterator_i):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (query_i):
 
-	  Removed max_store_size argument from constructor.
-	  Removed (unused) max_store_size member variable.
+          Removed max_store_size argument from constructor.
+          Removed (unused) max_store_size member variable.
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
 
-	  Changed constructor to directly assign log record's .info field
-	  to property list value binding instead of stashing it in an the
-	  Any.  This allows the value to be queried via ETCL constraints.
+          Changed constructor to directly assign log record's .info field
+          to property list value binding instead of stashing it in an the
+          Any.  This allows the value to be queried via ETCL constraints.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (remove_old_records):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (remove_old_records):
 
-	  Changed conditional in constraint as it was casing new, not old,
-	  records to be deleted.
+          Changed conditional in constraint as it was casing new, not old,
+          records to be deleted.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (validate_capacity_alarm_thresholds):
-	* orbsvcs/orbsvcs/Log/Log_i.h (validate_capacity_alarm_thresholds):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (validate_capacity_alarm_thresholds):
+        * orbsvcs/orbsvcs/Log/Log_i.h (validate_capacity_alarm_thresholds):
 
-	  Move validate_capacity_alarm_thresholds method from public to
-	  protected visibility.
+          Move validate_capacity_alarm_thresholds method from public to
+          protected visibility.
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Updated to remove Queued_Message.inl.
+          Updated to remove Queued_Message.inl.
 
 Sun Jun 12 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1137,11 +1144,11 @@ Sat Jun 11 23:45:07 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sat Jun 11 14:43:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
-	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp (push):
+        * orbsvcs/orbsvcs/Log/EventLogConsumer.cpp (push):
+        * orbsvcs/orbsvcs/Log/NotifyLogConsumer.cpp (push):
 
-	  Add ACE_TRY_CATCH after call to write_recordlist() for emulated
-	  exception builds.
+          Add ACE_TRY_CATCH after call to write_recordlist() for emulated
+          exception builds.
 
 Sat Jun 11 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1168,88 +1175,88 @@ Sat Jun 11 11:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jun 10 14:58:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Fri Jun 10 13:07:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Collocation_Proxy_Broker.cpp:
-	* tao/Collocation_Proxy_Broker.h:
-	* tao/Connection_Handler.cpp:
-	* tao/Connection_Handler.inl:
-	* tao/GIOP_Message_Generator_Parser.cpp:
-	* tao/GIOP_Message_Generator_Parser.h:
-	* tao/Invocation_Adapter.cpp:
-	* tao/Invocation_Adapter.inl:
-	* tao/New_Leader_Generator.cpp:
-	* tao/New_Leader_Generator.h:
-	* tao/Object.cpp:
-	* tao/Object.i:
-	* tao/Policy_Manager.cpp:
-	* tao/Policy_Manager.i:
-	* tao/Queued_Message.cpp:
-	* tao/Queued_Message.inl:
-	* tao/SystemException.cpp:
+        * tao/Collocation_Proxy_Broker.cpp:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.inl:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.inl:
+        * tao/New_Leader_Generator.cpp:
+        * tao/New_Leader_Generator.h:
+        * tao/Object.cpp:
+        * tao/Object.i:
+        * tao/Policy_Manager.cpp:
+        * tao/Policy_Manager.i:
+        * tao/Queued_Message.cpp:
+        * tao/Queued_Message.inl:
+        * tao/SystemException.cpp:
         * tao/SystemException.h:
         * tao/UTF16_BOM_Translator.cpp:
-	* tao/UTF16_BOM_Translator.h:
-	* tao/Messaging/MessagingS.cpp:
-	* tao/Messaging/MessagingS.h:
-	* tao/PortableServer/PolicyS.cpp:
-	* tao/PortableServer/PolicyS.h:
-	* tao/PortableServer/Upcall_Command.cpp:
-	* tao/PortableServer/Upcall_Command.h:
+        * tao/UTF16_BOM_Translator.h:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/Messaging/MessagingS.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/Upcall_Command.cpp:
+        * tao/PortableServer/Upcall_Command.h:
 
-	  Moved inlined virtual methods out of line.  Inlinging them
-	  causes RTTI issues when using g++ 4.0's hidden symbol
-	  visibility.
+          Moved inlined virtual methods out of line.  Inlinging them
+          causes RTTI issues when using g++ 4.0's hidden symbol
+          visibility.
 
-	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
-	* tao/Messaging/Asynch_Invocation_Adapter.h (invoke):
-	* tao/Messaging/Asynch_Invocation_Adapter.inl:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h (invoke):
+        * tao/Messaging/Asynch_Invocation_Adapter.inl:
 
-	  Removed unnecessary virtual function override.  All it was
-	  forward the call to the base class implementation.
+          Removed unnecessary virtual function override.  All it was
+          forward the call to the base class implementation.
 
-	  Removed empty inline source file.
+          Removed empty inline source file.
 
-	* tao/Makefile.am:
-	* tao/tao.mpc:
+        * tao/Makefile.am:
+        * tao/tao.mpc:
 
-	  Updated source file lists.
+          Updated source file lists.
 
 Fri Jun 10 13:00:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PICurrent_Loader.h:
+        * tao/PICurrent_Loader.h:
 
-	  Include "tao/orbconf.h" to pull in default TAO_HAS_INTERCEPTORS
-	  preprocessor symbol definition.  Fixes link-time errors related
-	  to missing static constructor definition.
+          Include "tao/orbconf.h" to pull in default TAO_HAS_INTERCEPTORS
+          preprocessor symbol definition.  Fixes link-time errors related
+          to missing static constructor definition.
 
-	* tao/PICurrent_Loader.cpp:
+        * tao/PICurrent_Loader.cpp:
 
-	  Reorganized include directives so that interceptor related
-	  headers are not included when compile-time interceptor support
-	  is not enabled.
+          Reorganized include directives so that interceptor related
+          headers are not included when compile-time interceptor support
+          is not enabled.
 
 Fri Jun 10 12:51:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
-	  Generate out of line virtual methods.  Inlined ones prevent RTTI
-	  from working when enabling hidden symbols with g++ 4.0's
-	  visibility support.
+          Generate out of line virtual methods.  Inlined ones prevent RTTI
+          from working when enabling hidden symbols with g++ 4.0's
+          visibility support.
 
-	* tao/GIOP_Message_Generator_Parser_Impl.inl (check_revision):
+        * tao/GIOP_Message_Generator_Parser_Impl.inl (check_revision):
 
-	  Made "max_allowable_version" variable a static constant instead
-	  of a non-const variable.  Reduces run-time overhead since this
-	  value may be computed at compile-time.
+          Made "max_allowable_version" variable a static constant instead
+          of a non-const variable.  Reduces run-time overhead since this
+          value may be computed at compile-time.
 
 Fri Jun 10 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
