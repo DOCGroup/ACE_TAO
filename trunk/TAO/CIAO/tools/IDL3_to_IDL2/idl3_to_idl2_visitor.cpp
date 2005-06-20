@@ -216,6 +216,12 @@ idl3_to_idl2_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int 
+idl3_to_idl2_visitor::visit_valuebox (AST_ValueBox *)
+{
+  return 0;
+}
+
+int 
 idl3_to_idl2_visitor::visit_valuetype (AST_ValueType *node)
 {
   if (node->imported ())
