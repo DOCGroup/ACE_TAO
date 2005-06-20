@@ -5,7 +5,6 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/PortableServer/Object_Adapter.h"
-#include "tao/PortableServer/POA_Current.h"
 #include "tao/ORB_Core.h"
 #include "RT_Servant_Dispatcher.h"
 #include "RT_Policy_Validator.h"
@@ -22,10 +21,6 @@ TAO_RT_Object_Adapter_Factory::TAO_RT_Object_Adapter_Factory (void)
 TAO_Adapter*
 TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
 {
-  // Setup the POA_Current object in the ORB
-  CORBA::Object_var current = new TAO::Portable_Server::POA_Current;
-  orb_core->poa_current (current.in ());
-
   if (!orb_core->orb_params ()->disable_rt_collocation_resolver ())
     {
       // Set the name of the collocation resolver to be RT_Collocation_Resolver.
