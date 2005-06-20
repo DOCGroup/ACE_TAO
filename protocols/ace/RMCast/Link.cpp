@@ -157,6 +157,14 @@ namespace ACE_RMCast
       ACE_ERROR ((LM_ERROR,
                   "packet length (%d) exceeds max_poacket_size (%d)\n",
                   os.length (), max_packet_size));
+
+      for (Message::ProfileIterator i (m->begin ()); !i.done (); i.advance ())
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "profile id: %d; size: %d\n",
+                    (*i).ext_id_, (*i).int_id_->size ()));
+      }
+
       abort ();
     }
 

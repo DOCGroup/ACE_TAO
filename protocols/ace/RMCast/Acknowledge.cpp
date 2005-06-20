@@ -330,17 +330,20 @@ namespace ACE_RMCast
   {
     if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
     {
-      u32 max_size (max_payload_size - data->size ());
-      u32 max_elem (NRTM::max_count (max_size));
-
-      if (max_elem > 0)
+      if (max_payload_size > data->size ())
       {
-        Lock l (mutex_);
+        u32 max_size (max_payload_size - data->size ());
+        u32 max_elem (NRTM::max_count (max_size));
 
-        Profile_ptr nrtm (create_nrtm (max_elem));
+        if (max_elem > 0)
+        {
+          Lock l (mutex_);
 
-        if (nrtm.get ())
-          m->add (nrtm);
+          Profile_ptr nrtm (create_nrtm (max_elem));
+
+          if (nrtm.get ())
+            m->add (nrtm);
+        }
       }
 
       nrtm_timer_ = nrtm_timeout; // Reset timer.
