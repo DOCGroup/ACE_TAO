@@ -77,6 +77,12 @@ ifr_visitor::visit_interface_fwd (AST_InterfaceFwd *)
 }
 
 int 
+ifr_visitor::visit_valuebox (AST_ValueBox *)
+{
+  return 0;
+}
+
+int 
 ifr_visitor::visit_valuetype (AST_ValueType *)
 {
   return 0;
