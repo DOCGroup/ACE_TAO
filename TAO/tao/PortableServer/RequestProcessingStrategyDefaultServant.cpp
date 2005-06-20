@@ -274,7 +274,7 @@ namespace TAO
           if (poa_current_impl != 0 &&
               servant == poa_current_impl->servant ())
             {
-              return poa_current_impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+              return poa_current_impl->get_object_id ();
             }
         }
 
