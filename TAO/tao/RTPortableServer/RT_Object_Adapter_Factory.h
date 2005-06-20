@@ -15,7 +15,7 @@
 
 #include "rtportableserver_export.h"
 
-#include "tao/PortableServer/Object_Adapter_Factory.h"
+#include "tao/Adapter_Factory.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -26,7 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_RTPortableServer_Export TAO_RT_Object_Adapter_Factory : public TAO_Object_Adapter_Factory
+class TAO_RTPortableServer_Export TAO_RT_Object_Adapter_Factory
+  : public TAO_Adapter_Factory
 {
 public:
   /// Constructor

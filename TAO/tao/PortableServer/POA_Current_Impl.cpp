@@ -67,17 +67,13 @@ namespace TAO
     }
 
     PortableServer::POA_ptr
-    POA_Current_Impl::get_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
+    POA_Current_Impl::get_POA (void)
     {
       return PortableServer::POA::_duplicate (this->poa_);
     }
 
     PortableServer::ObjectId *
-    POA_Current_Impl::get_object_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
+    POA_Current_Impl::get_object_id (void)
     {
       PortableServer::ObjectId *objid = 0;
 
@@ -89,9 +85,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    POA_Current_Impl::get_servant (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
+    POA_Current_Impl::get_servant (void)
     {
       return this->servant_;
     }
