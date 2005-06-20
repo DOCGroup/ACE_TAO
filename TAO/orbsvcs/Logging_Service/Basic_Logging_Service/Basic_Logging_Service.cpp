@@ -131,7 +131,7 @@ Basic_Logging_Service::startup (int argc, char *argv[]
 	IORTable::Table::_narrow (table_object.in ());
       ACE_CHECK_RETURN (-1);
 
-      adapter->bind("BasicLogService", ior.in ())
+      adapter->bind("BasicLogService", ior.in ());
       ACE_CHECK_RETURN (-1);
     }
 
