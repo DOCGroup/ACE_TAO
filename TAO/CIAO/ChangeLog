@@ -1,4 +1,14 @@
+Mon Jun 20 18:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/examples/Display/NavDisplayGUI_exec/DetailView_moc.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/MapView_moc.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NodeItem_moc.cpp:
+        * DAnCE/examples/Display/NavDisplayGUI_exec/RootPanel_moc.cpp:
+          Removed these files, these are generated and shouldn't be in the
+          archive
+
 Mon Jun 20 09:29:00 2005  Gary Maxey <gary.maxey@hp.com>
+
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h
           Add visitor for valuebox support.
