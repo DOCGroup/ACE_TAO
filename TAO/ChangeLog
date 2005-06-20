@@ -1,3 +1,9 @@
+Mon Jun 20 11:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+          Fixed emulated exception errors related to the fact that
+          POA_Current_Impl doesn't use them anymore
+
 Mon Jun 20 10:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server.mpc:
