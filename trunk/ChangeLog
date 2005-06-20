@@ -1,3 +1,20 @@
+Mon Jun 20 10:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/portableserver.mpb:
+          The portableserver library is not dependent on pi anymore.
+          The new pi_server library is dependent.
+
+        * bin/MakeProjectCreator/config/ftrtevent.mpb:
+        * bin/MakeProjectCreator/config/ftrteventchannel.mpb:
+        * bin/MakeProjectCreator/config/ifrservice.mpb:
+          These projects use functionality of pi_server, so added that
+          as base project
+
+        * bin/MakeProjectCreator/config/rtportableserver.mpb:
+        * bin/MakeProjectCreator/config/messaging.mpb:
+          Added pi as base project, this was implicitly in the past because
+          portableserver was based on pi.
+
 Fri Jun 17 17:37:53 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:

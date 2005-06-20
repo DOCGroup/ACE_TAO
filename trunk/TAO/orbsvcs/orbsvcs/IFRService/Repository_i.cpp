@@ -13,7 +13,6 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/SString.h"
 
-
 ACE_RCSID (IFR_Service,
            Repository_i,
            "$Id$")

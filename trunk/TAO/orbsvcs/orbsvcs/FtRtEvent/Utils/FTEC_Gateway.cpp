@@ -4,7 +4,7 @@
 #include "resolve_init.h"
 #include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
-#include "tao/PortableServer/PS_CurrentC.h"
+#include "tao/PI_Server/PI_Server.h"
 
 ACE_RCSID (Utils,
            FTEC_Gateway,
