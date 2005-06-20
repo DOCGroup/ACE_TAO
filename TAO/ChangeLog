@@ -1,3 +1,9 @@
+Mon Jun 20 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+          Fixed emulated exception errors related to the fact that
+          POA_Current_Impl doesn't use them anymore
+
 Mon Jun 20 11:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
