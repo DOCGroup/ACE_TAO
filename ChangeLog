@@ -1,3 +1,8 @@
+Mon Jun 20 16:45:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.cpp: Added explicit template instantiations for
+	  ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX>.
+
 Mon Jun 20 11:36:21 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_sys_socket.inl (closesocket): Removed the
