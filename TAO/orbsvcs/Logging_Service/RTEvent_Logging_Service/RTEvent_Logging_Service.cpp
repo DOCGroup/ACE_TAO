@@ -221,7 +221,7 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
 	    IORTable::Table::_narrow (table_object.in ());
 	  ACE_CHECK_RETURN (-1);
 
-	  adapter->bind("RTEventLogService", ior.in ())
+	  adapter->bind("RTEventLogService", ior.in ());
 	  ACE_CHECK_RETURN (-1);
         }
 

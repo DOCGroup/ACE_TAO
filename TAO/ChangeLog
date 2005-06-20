@@ -1,3 +1,13 @@
+Mon Jun 20 08:51:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+	  Added missing semi-colon; bug was hidden by use of emulated
+	  exception macros.
+
 Mon Jun 20 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent.mpc:

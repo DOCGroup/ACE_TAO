@@ -158,7 +158,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
 	IORTable::Table::_narrow (table_object.in ());
       ACE_CHECK_RETURN (-1);
 
-      adapter->bind("NotifyLogService", ior.in ())
+      adapter->bind("NotifyLogService", ior.in ());
       ACE_CHECK_RETURN (-1);
     }
 
