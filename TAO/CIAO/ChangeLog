@@ -1,3 +1,8 @@
+Mon Jun 20 09:29:00 2005  Gary Maxey <gary.maxey@hp.com>
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h
+          Add visitor for valuebox support.
+
 Sun Jun 19 20:18:50 2005  Ming Xiong  <mxiong@tango.dre.vanderbilt.edu>
 
         * NEWS:
