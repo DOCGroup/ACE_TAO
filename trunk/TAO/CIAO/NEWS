@@ -19,7 +19,13 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 PLANNED MAJOR CHANGES FOR CIAO-0.4.7
 ===============================
-
+. Add a component packaging tool to DAnCE. This tool will allow 
+  component packagers to create from deployment plan archived 
+  packages that wrap up all relevant component properties, 
+  descriptors and implementation artifacts.The component packages
+  generated from this tool will be distributed to Repository 
+  Manager.
+ 
 . Integrate Real-time QoS support to CIAO based on OMG's new
   Deployment and Configuration (D&C) specification. Such effort
   will allow application developers to use real-time CORBA features
