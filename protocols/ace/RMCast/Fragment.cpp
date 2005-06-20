@@ -28,7 +28,7 @@ namespace ACE_RMCast
         return;
       }
 
-      char const* p (data->buf ());
+      char const* p = data->buf ();
       size_t size (data->size ());
 
       // Need fragmentation.

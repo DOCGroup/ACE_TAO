@@ -56,9 +56,9 @@ namespace ACE_RMCast
           if (part->num () == 1)
             abort ();
 
-          Data const* data (static_cast<Data const*> (m->find (Data::id)));
+          Data const* data = static_cast<Data const*> (m->find (Data::id));
 
-          Data_ptr& new_data (e->int_id_);
+          Data_ptr& new_data = e->int_id_;
 
           ACE_OS::memcpy (new_data->buf () + new_data->size (),
                           data->buf (),

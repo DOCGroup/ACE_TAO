@@ -1,3 +1,13 @@
+Mon Jun 20 15:35:42 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Fragment.cpp:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Protocol.h:
+	* protocols/ace/RMCast/Reassemble.cpp:
+
+	  Made code VC6-compatible.
+
 Mon Jun 20 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/bidir_giop.mpb:
