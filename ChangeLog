@@ -1,3 +1,9 @@
+Mon Jun 20 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/bidir_giop.mpb:
+          Added pi as base project, this was implicitly in the past because
+          portableserver was based on pi.
+
 Mon Jun 20 10:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/portableserver.mpb:
