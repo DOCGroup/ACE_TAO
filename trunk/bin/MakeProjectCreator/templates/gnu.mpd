@@ -451,7 +451,7 @@ endif
 endif
 
 <%foreach(custom_types)%>
-<%if(custom_types->libpath)%>
+<%if(custom_type->libpath)%>
 DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
 LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
 SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
