@@ -1,3 +1,17 @@
+Mon Jun 20 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+          Reverted change to add ami as base project and added -GC again to
+          one set of IDL files.
+
+        * orbsvcs/ImplRepo_Service/Forwarder.{h,cpp}:
+        * orbsvcs/examples/ORT/Gateway_i.h:
+          Corrected includes
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
+          Added pi_server as base project
+
 Mon Jun 20 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Dynamic_Implementation.cpp:
