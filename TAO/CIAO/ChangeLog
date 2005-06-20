@@ -1,8 +1,8 @@
 Sun Jun 19 20:18:50 2005  Ming Xiong  <mxiong@tango.dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated NEWS on upcoming support for Component Packaging
+          Updated NEWS on upcoming support for Component Packaging
 
 Thu Jun 16 21:46:10 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -10,14 +10,14 @@ Thu Jun 16 21:46:10 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
         * DAnCE/examples/Quoter/descriptors/Modified_Deployment.xsd
         * docs/schema/Modified_Deployment.xsd
 
-	  Modified the <InstanceDeploymentDescription> element type
-	  to allow having unbounded number of <configProperty> elements.
-	  Thanks Will Chai <willchai@126.com> to report this problem.
+          Modified the <InstanceDeploymentDescription> element type
+          to allow having unbounded number of <configProperty> elements.
+          Thanks Will Chai <willchai@126.com> to report this problem.
 
 Wed Jun 15 14:46:00 2005  Gautam Thaker  <gthaker@atl.lmco.com>
 
-        * DAnCE/examples/Hello/step-by-step.html: 
-          
+        * DAnCE/examples/Hello/step-by-step.html:
+
           Fixed a typo regarding name of script "run_NodeDaemons.pl" and
           one other sentence fragement.
 
