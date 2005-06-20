@@ -1,12 +1,19 @@
+Mon Jun 20 09:46:24 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a long standing bug where the libpath set in a Define_Custom
+          was not utilized.
+
 Mon Jun 20 15:35:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Acknowledge.cpp:
-	* protocols/ace/RMCast/Fragment.cpp:
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Protocol.h:
-	* protocols/ace/RMCast/Reassemble.cpp:
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Fragment.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
 
-	  Made code VC6-compatible.
+          Made code VC6-compatible.
 
 Mon Jun 20 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -40,28 +47,28 @@ Fri Jun 17 17:37:53 2005  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Fri Jun 17 17:22:13 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Acknowledge.cpp:
-	* protocols/ace/RMCast/Acknowledge.h:
-	* protocols/ace/RMCast/Fragment.cpp:
-	* protocols/ace/RMCast/Fragment.h:
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Protocol.cpp:
-	* protocols/ace/RMCast/Protocol.h:
-	* protocols/ace/RMCast/Reassemble.cpp:
-	* protocols/ace/RMCast/Reassemble.h:
-	* protocols/ace/RMCast/Retransmit.cpp:
-	* protocols/ace/RMCast/Retransmit.h:
-	* protocols/ace/RMCast/Simulator.h:
-	* protocols/ace/RMCast/Socket.cpp:
-	* protocols/ace/RMCast/Socket.h:
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Acknowledge.h:
+        * protocols/ace/RMCast/Fragment.cpp:
+        * protocols/ace/RMCast/Fragment.h:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Protocol.cpp:
+        * protocols/ace/RMCast/Protocol.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
+        * protocols/ace/RMCast/Reassemble.h:
+        * protocols/ace/RMCast/Retransmit.cpp:
+        * protocols/ace/RMCast/Retransmit.h:
+        * protocols/ace/RMCast/Simulator.h:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Socket.h:
 
-	  Implemented message fragmentation.
+          Implemented message fragmentation.
 
-	* protocols/examples/RMCast/Send_Msg/Protocol.h:
-	* protocols/tests/RMCast/Protocol.h:
-	* protocols/tests/RMCast/Sender.cpp:
+        * protocols/examples/RMCast/Send_Msg/Protocol.h:
+        * protocols/tests/RMCast/Protocol.h:
+        * protocols/tests/RMCast/Sender.cpp:
 
-	  Changed to send messages that would require fragmentation.
+          Changed to send messages that would require fragmentation.
 
 Fri Jun 17 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -84,29 +91,29 @@ Fri Jun 17 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 16 07:38:57 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/SOCK_Stream.cpp (close): Removed the call to this->close_writer()
-	  since that functionality was done by ACE_SOCK::close(), which
- 	  delegates to ACE_OS::closesocket(), which handles this
- 	  automatically.
+        * ace/SOCK_Stream.cpp (close): Removed the call to this->close_writer()
+          since that functionality was done by ACE_SOCK::close(), which
+          delegates to ACE_OS::closesocket(), which handles this
+          automatically.
 
-	* ace/Process.cpp (running): Only try to "kill" a process if
-	  the PID is valid.  Thanks to Howard Finer <hfiner at sonusnet
- 	  dot com> for contributing this.
+        * ace/Process.cpp (running): Only try to "kill" a process if
+          the PID is valid.  Thanks to Howard Finer <hfiner at sonusnet
+          dot com> for contributing this.
 
-	* ace/Pipe.h (ACE_Pipe): Updated the documentation for this class
-	  to clarify why it uses sockets on Windows.  Thanks to Dave
- 	  Varnell <Dave.Varvell@ni.com> for prompting this.
+        * ace/Pipe.h (ACE_Pipe): Updated the documentation for this class
+          to clarify why it uses sockets on Windows.  Thanks to Dave
+          Varnell <Dave.Varvell@ni.com> for prompting this.
 
-	* ace/INET_Addr.cpp (set): Changed the test of
+        * ace/INET_Addr.cpp (set): Changed the test of
 
-	  if (port_number < 0)
+          if (port_number < 0)
 
-	  to
+          to
 
-	  if (port_number == -1)
+          if (port_number == -1)
 
-	  to fix problems reported by Vemund Handeland
- 	  <vemund.handeland@fantoft.no>
+          to fix problems reported by Vemund Handeland
+          <vemund.handeland@fantoft.no>
 
 Wed Jun 15 12:36:04 MST 2005  Trevor Fields  <fields_t@ociweb.com>
 
