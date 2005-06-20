@@ -1,3 +1,83 @@
+Mon Jun 20 10:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server.mpc:
+          New MPC file to build the new PI_Server library
+
+        * examples/POA/DSI/Database_i.h:
+        * examples/POA/Default_Servant/File_i.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/tests/FtRtEvent/PushConsumer.cpp:
+        * orbsvcs/tests/FtRtEvent/PushSupplier.cpp:
+        * orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+        * tests/File_IO/File_i.cpp:
+        * tests/ORT/ServerRequestInterceptor.h:
+        * tests/POA/Current/Current.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+        * tests/POA/Policies/Policies.cpp:
+          Added include of tao/PI_Server/PI_Server.h because of the
+          pi_server refactoring. This is needed because these files
+          use functionality that is now in the pi_server lib
+
+        * tests/File_IO/File_IO.mpc:
+        * tests/ORT/ORT.mpc:
+        * tests/POA/Current/Current.mpc:
+        * tests/POA/Persistent_ID/Persistent_ID.mpc:
+        * tests/POA/Policies/Policies.mpc:
+        * tests/Portable_Interceptors/AMI/PI_AMI.mpc:
+        * tests/Collocation_Opportunities/Collocation_Opportunities.mpc:
+        * examples/POA/DSI/POA_DSI.mpc:
+        * examples/POA/Default_Servant/POA_Default_Servant.mpc:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
+          Added pi_server as base project
+
+        * tao/Messaging.mpc:
+          Added pi as base project, messaging needs pi stuff
+
+        * tao/PortableServer.mpc:
+          PortableServer is not dependent on pi anymore
+
+        * tao/TAO_Internal.cpp:
+          If the PI_Server_Loader is available, initialize it, this way
+          we get the needed services available
+
+        * tao/PortableServer/Object_Adapter_Factory.{cpp,h}:
+          No need to register the ORBInitializer, this is now in the pi_server
+          library
+
+        * tao/PortableServer/POA_Current_Impl.{h,cpp}:
+          Removed exception throw spec and environment macros. These are
+          coming from POA::Curent but are not used here and just make
+          things dependent on IDL generated code which it doesn't need
+          to be.
+
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.{h,cpp}:
+          No need to register POA::Current, this is in the pi_server lib.
+          Also the adapter can be derived from TAO_Adapter_Factory
+
+        * tao/PortableServer/POA_Current.cpp
+        * tao/PortableServer/POA_Current.h
+        * tao/PortableServer/POA_Current.inl
+        * tao/PortableServer/PS_Current.pidl
+        * tao/PortableServer/PS_CurrentA.cpp
+        * tao/PortableServer/PS_CurrentC.cpp
+        * tao/PortableServer/PS_CurrentC.h
+        * tao/PortableServer/Policy_Creator_T.h
+        * tao/PortableServer/PortableServer_ORBInitializer.cpp
+        * tao/PortableServer/PortableServer_ORBInitializer.h
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp
+        * tao/PortableServer/PortableServer_PolicyFactory.h
+          Removed these files, they are now in the pi_server library.
+          If you included one of these files or used the functionality
+          of the classes in one of these files, include
+          tao/PI_Server/PI_Server.h and link the new pi_server library.
+
 Sat Jun 18 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBA_String.{h,inl}:

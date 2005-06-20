@@ -18,7 +18,7 @@
 #include "tao/Object_KeyC.h"
 #include "tao/ORB_Constants.h"
 
-#include "tao/PortableServer/POA_Current.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 
 /**
