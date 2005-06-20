@@ -21,12 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PS_CurrentC.h"
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
+#include "PS_ForwardC.h"
 
 namespace TAO
 {
@@ -35,16 +30,11 @@ namespace TAO
     class Non_Servant_Upcall;
     class Servant_Upcall;
   }
+
+  class ObjectKey;
 }
 
-// ****************************************************************
-
-// Forward declaration
-class TAO_Root_POA;
-class TAO_POA_Manager;
 class TAO_TSS_Resources;
-class TAO_Transport;
-class TAO_Servant_Dispatcher;
 
 namespace TAO
 {
@@ -74,9 +64,7 @@ namespace TAO
 
       /// Return pointer to the invoking POA.  Raises the
       /// <CORBA::NoContext> exception.
-      PortableServer::POA_ptr get_POA (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::Current::NoContext));
+      PortableServer::POA_ptr get_POA (void);
 
       /**
        * Return pointer to the object id through which this was invoked.
@@ -84,18 +72,14 @@ namespace TAO
        * the guise of multiple object ids.  This has _out semantics Raises
        * the <CORBA::NoContext> exception.
        */
-      PortableServer::ObjectId *get_object_id (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::Current::NoContext));
+      PortableServer::ObjectId *get_object_id (void);
 
       /**
        * Returns a reference to the servant that hosts the object in whose
        * context it is called. If called outside the context of the POA
        * dispatched operation, a NoContext exception is raised
        */
-      PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::Current::NoContext));
+      PortableServer::Servant get_servant (void);
 
       /// Set the POA implementation.
       void poa (::TAO_Root_POA *);
@@ -181,10 +165,6 @@ namespace TAO
     };
   }
 }
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 # include "POA_Current_Impl.inl"

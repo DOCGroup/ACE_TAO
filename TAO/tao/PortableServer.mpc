@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core, pi {
+project : taolib, core {
   sharedname   = TAO_PortableServer
   dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
 

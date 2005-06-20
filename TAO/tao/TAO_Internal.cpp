@@ -367,6 +367,14 @@ namespace
         adapter_factory->init (0, 0);
       }
 
+    ACE_Service_Object * const pi_server_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance ("PI_Server_Loader");
+
+    if (pi_server_loader != 0)
+      {
+        pi_server_loader->init (0, 0);
+      }
+
     ACE_Service_Object * const messaging_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance ("Messaging_Loader");
 
