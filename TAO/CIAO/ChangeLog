@@ -1,3 +1,9 @@
+Sun Jun 19 20:18:50 2005  Ming Xiong  <mxiong@tango.dre.vanderbilt.edu>
+
+	* NEWS:
+
+	  Updated NEWS on upcoming support for Component Packaging
+
 Thu Jun 16 21:46:10 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DAnCE/examples/Display/descriptors/Modified_Deployment.xsd
