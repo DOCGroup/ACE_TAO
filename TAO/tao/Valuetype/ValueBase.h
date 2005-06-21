@@ -102,6 +102,13 @@ namespace CORBA
                                               const char * const repo_id);
     CORBA::Boolean _tao_unmarshal_post (TAO_InputCDR &strm);
 
+    /// Check repository id for value box type against what is
+    /// in the CDR stream.
+    static CORBA::Boolean _tao_validate_box_type (
+                                  TAO_InputCDR &strm,
+                                  const char * const repo_id_expected,
+                                  CORBA::Boolean & null_object);
+
   public:  // otherwise these cannot be called from a static function
 
     /// during marshal jump to the most derived part
