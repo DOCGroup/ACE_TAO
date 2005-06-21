@@ -21,11 +21,8 @@ is comprised of two local interfaces, a ClientScheduler and a ServerScheduler.
 <br>&nbsp;
 <h3>
 Build Issues:</h3>
-Run tao_idl -I $TAO_ROOT/ RTCosScheduling.pidl. Some versions of TAO incorrectly
-include the line #include "tao/PortableServer/PortableServerS.h"
-<br>in RTCosSchedulingS.h when making the IDL.&nbsp; Before running make
-on your program, please check if this line was included in RTCosSchedulingS.h,
-and if so, comment it out. Run make -f Makefile.RTCosScheduling from ../
+Run tao_idl -I $TAO_ROOT/ RTCosScheduling.pidl. 
+Run make -f Makefile.RTCosScheduling from ../
 <br>&nbsp;
 <h3>
 Synopsis:</h3>
