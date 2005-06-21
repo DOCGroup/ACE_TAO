@@ -1,3 +1,10 @@
+Tue Jun 21 11:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.h:
+          Added a todo for client_request_interceptors and
+          server_request_interceptors methods that these should be removed
+          when RTCosScheduling doesn't use them anymore
+
 Tue Jun 21 10:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Interceptor_List.{h,cpp}:
