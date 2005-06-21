@@ -33,7 +33,7 @@ be_visitor_valuebox::~be_visitor_valuebox (void)
 
 // This method must be overridden by the derived valuebox visitors.
 int
-be_visitor_valuebox::visit_valuebox (be_valuebox *node)
+be_visitor_valuebox::visit_valuebox (be_valuebox *)
 {
   return -1;
 }
