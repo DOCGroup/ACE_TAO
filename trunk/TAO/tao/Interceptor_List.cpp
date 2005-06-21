@@ -11,6 +11,7 @@ ACE_RCSID (tao,
 #include "tao/ORB_Constants.h"
 #include "ace/os_include/os_stddef.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Log_Msg.h"
 
 namespace TAO
 {
@@ -107,5 +108,48 @@ namespace TAO
   Interceptor_List<InterceptorType>::interceptors (void)
   {
     return this->interceptors_;
+  }
+
+  template <typename InterceptorType>
+  void
+  Interceptor_List<InterceptorType>::destroy_interceptors (
+    ACE_ENV_SINGLE_ARG_DECL)
+  {
+    const size_t len = this->interceptors_.size ();
+    size_t ilen = len;
+
+    ACE_TRY
+      {
+        for (size_t k = 0; k < len; ++k)
+          {
+            // Destroy the interceptors in reverse order in case the
+            // array list is only partially destroyed and another
+            // invocation occurs afterwards.
+            --ilen;
+
+            this->interceptor (k)->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            // Since Interceptor::destroy() can throw an exception,
+            // decrease the size of the interceptor array incrementally
+            // since some interceptors may not have been destroyed yet.
+            // Note that this size reduction is fast since no memory is
+            // actually deallocated.
+            this->interceptors_.size (ilen);
+          }
+      }
+    ACE_CATCHALL
+      {
+        // Exceptions should not be propagated beyond this call.
+        if (TAO_debug_level > 3)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Exception in ")
+                        ACE_TEXT ("Interceptor_List")
+                        ACE_TEXT ("::destroy_interceptors () \n")));
+          }
+      }
+    ACE_ENDTRY;
+    ACE_CHECK;
   }
 }

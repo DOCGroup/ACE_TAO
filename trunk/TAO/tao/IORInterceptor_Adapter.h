@@ -69,11 +69,7 @@ public:
 
   virtual void destroy_interceptors (
       ACE_ENV_SINGLE_ARG_DECL
-      )
-  ACE_THROW_SPEC (()) = 0;
-
-  virtual TAO::IORInterceptor_List *interceptor_list (void)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      ) = 0;
 
   /// Call the IORInterceptor::establish_components() method on all
   /// registered IORInterceptors.

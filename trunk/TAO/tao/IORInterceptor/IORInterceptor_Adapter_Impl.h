@@ -46,11 +46,7 @@ public:
       PortableInterceptor::IORInterceptor_ptr interceptor
       ACE_ENV_ARG_DECL);
 
-  virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC (());
-
-  virtual TAO::IORInterceptor_List *interceptor_list (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
 
   virtual void establish_components (TAO_Root_POA *poa ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));

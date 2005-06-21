@@ -64,6 +64,8 @@ namespace TAO
     /// Return reference to the underlying Portable Interceptor array.
     TYPE & interceptors (void);
 
+    void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+
   protected:
 
     /// Return the interceptor in sequence element @a index.

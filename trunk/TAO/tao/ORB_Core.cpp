@@ -2142,63 +2142,18 @@ TAO_ORB_Core::check_shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC (())
 {
 
   ACE_TRY
     {
 #if TAO_HAS_INTERCEPTORS == 1
-      size_t len = 0;   // The length of the interceptor array.
-      size_t ilen = 0;  // The incremental length of the interceptor array.
+      this->client_request_interceptors_.destroy_interceptors (
+          ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      TAO::ClientRequestInterceptor_List::TYPE &client_interceptors =
-        this->client_request_interceptors_.interceptors ();
-
-      len = client_interceptors.size ();
-      ilen = len;
-
-      for (size_t i = 0; i < len; ++i)
-        {
-          // Destroy the interceptors in reverse order in case the array
-          // list is only partially destroyed and another invocation
-          // occurs afterwards.
-          --ilen;
-
-          client_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          // Since Interceptor::destroy() can throw an exception, decrease
-          // the size of the interceptor array incrementally since some
-          // interceptors may not have been destroyed yet.  Note that this
-          // size reduction is fast since no memory is actually
-          // deallocated.
-          client_interceptors.size (ilen);
-        }
-
-      TAO::ServerRequestInterceptor_List::TYPE &server_interceptors =
-        this->server_request_interceptors_.interceptors ();
-
-      len = server_interceptors.size ();
-      ilen = len;
-
-      for (size_t j = 0; j < len; ++j)
-        {
-          // Destroy the interceptors in reverse order in case the array
-          // list is only partially destroyed and another invocation
-          // occurs afterwards.
-          --ilen;
-
-          server_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          // Since Interceptor::destroy() can throw an exception, decrease
-          // the size of the interceptor array incrementally since some
-          // interceptors may not have been destroyed yet.  Note that this
-          // size reduction is fast since no memory is actually
-          // deallocated.
-          server_interceptors.size (ilen);
-        }
-
+      this->server_request_interceptors_.destroy_interceptors (
+          ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       if (this->ior_interceptor_adapter_ != 0)
