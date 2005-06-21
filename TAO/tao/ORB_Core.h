@@ -38,11 +38,11 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/Interceptor_List.h"
 #include "tao/PICurrent_Impl.h"
 #include "tao/PICurrent.h"
 #include "tao/ClientRequestInterceptorC.h"
 #include "tao/ServerRequestInterceptorC.h"
+#include "tao/Interceptor_List.h"
 
 namespace TAO
 {
@@ -1047,8 +1047,7 @@ protected:
   /// Helper method that invokes Interceptor::destroy() on all
   /// registered interceptors when ORB::destroy() is called. Prevents
   /// exceptions from propagating up the call chain.
-  void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC (());
+  void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
