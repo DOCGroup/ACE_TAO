@@ -75,6 +75,9 @@ public:
   virtual int visit_union (be_union *node);
   // visit a union
 
+  virtual int visit_valuebox (be_valuebox *node);
+  // visit a valuetype
+
   virtual int visit_valuetype (be_valuetype *node);
   // visit a valuetype
 

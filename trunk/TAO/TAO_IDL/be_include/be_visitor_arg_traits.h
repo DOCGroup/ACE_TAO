@@ -73,6 +73,8 @@ public:
 
   virtual int visit_home (be_home *node);
 
+  virtual int visit_valuebox (be_valuebox *node);
+
 private:
 
   idl_bool generated (be_decl *node) const;

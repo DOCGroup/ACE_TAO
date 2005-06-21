@@ -387,22 +387,7 @@ int be_visitor_args_arglist::visit_typedef (be_typedef *node)
 
 int be_visitor_args_arglist::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      *os << this->type_name (node) << " *";
-      break;
-    case AST_Argument::dir_INOUT:
-      *os << this->type_name (node) << " *&";
-      break;
-    case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out");
-      break;
-    }
-
-  return 0;
+  return this->emit_common (node);
 }
 
 int be_visitor_args_arglist::visit_valuetype_fwd (be_valuetype_fwd *node)
@@ -443,5 +428,28 @@ be_visitor_args_arglist::visit_home (
   return this->visit_interface (node);
 }
 
+int be_visitor_args_arglist::visit_valuebox (be_valuebox *node)
+{
+  return this->emit_common (node);
+}
 
 
+int be_visitor_args_arglist::emit_common (be_type *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+      *os << this->type_name (node) << " *";
+      break;
+    case AST_Argument::dir_INOUT:
+      *os << this->type_name (node) << " *&";
+      break;
+    case AST_Argument::dir_OUT:
+      *os << this->type_name (node, "_out");
+      break;
+    }
+
+  return 0;
+}

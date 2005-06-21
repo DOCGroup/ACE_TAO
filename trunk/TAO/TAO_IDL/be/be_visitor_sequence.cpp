@@ -33,6 +33,7 @@
 #include "be_union_fwd.h"
 #include "be_type.h"
 #include "be_typedef.h"
+#include "be_valuebox.h"
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"

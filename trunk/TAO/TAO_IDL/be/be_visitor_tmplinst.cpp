@@ -25,6 +25,7 @@
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
+#include "be_valuebox.h"
 #include "be_valuetype.h"
 #include "be_array.h"
 #include "be_attribute.h"

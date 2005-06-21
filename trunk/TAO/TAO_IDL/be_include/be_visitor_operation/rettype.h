@@ -96,6 +96,9 @@ public:
 
   int visit_home (be_home *node);
   // visit a component home node
+
+  int visit_valuebox (be_valuebox *node);
+  // visit a valuebox node
 };
 
 #endif /* _BE_VISITOR_OPERATION_RETTYPE_H_ */

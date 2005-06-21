@@ -241,56 +241,19 @@ int be_visitor_exception_ctor::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
+int be_visitor_exception_ctor::visit_valuebox (be_valuebox *node)
+{
+  return this->emit_common (node);
+}
+
 int be_visitor_exception_ctor::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    {
-      *os << "const " << bt->nested_type_name (this->ctx_->scope (), " *");
-    }
-  else
-    {
-      *os << "const " << bt->name () << " *";
-    }
-
-  return 0;
+  return this->emit_common (node);
 }
 
 int be_visitor_exception_ctor::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    {
-      *os << "const " << bt->nested_type_name (this->ctx_->scope (), " *");
-    }
-  else
-    {
-      *os << "const " << bt->name () << " *";
-    }
-
-  return 0;
+  return this->emit_common (node);
 }
 
 int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
@@ -466,5 +429,31 @@ int be_visitor_exception_ctor::visit_typedef (be_typedef *node)
     }
 
   this->ctx_->alias (0);
+  return 0;
+}
+
+int be_visitor_exception_ctor::emit_common (be_type *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    {
+      *os << "const " << bt->nested_type_name (this->ctx_->scope (), " *");
+    }
+  else
+    {
+      *os << "const " << bt->name () << " *";
+    }
+
   return 0;
 }

@@ -402,7 +402,25 @@ be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_union_branch_cdr_op_cs::visit_valuebox (be_valuebox *node)
+{
+  return this->emit_valuetype_common (node);
+}
+
+int
 be_visitor_union_branch_cdr_op_cs::visit_valuetype (be_valuetype *node)
+{
+  return this->emit_valuetype_common (node);
+}
+
+int
+be_visitor_union_branch_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->emit_valuetype_common (node);
+}
+
+int
+be_visitor_union_branch_cdr_op_cs::emit_valuetype_common (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -413,7 +431,7 @@ be_visitor_union_branch_cdr_op_cs::visit_valuetype (be_valuetype *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
-                         "visit_valuetype - "
+                         "emit_valuetype_common  - "
                          "cannot retrieve union_branch node\n"),
                         -1);
     }
@@ -448,62 +466,7 @@ be_visitor_union_branch_cdr_op_cs::visit_valuetype (be_valuetype *node)
       // Error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
-                         "visit_valuetype - "
-                         "bad sub state\n"),
-                        -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_union_branch_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Retrieve the union_branch node.
-  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
-
-  if (!f)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
-                         "visit_valuetype_fwd - "
-                         "cannot retrieve union_branch node\n"),
-                        -1);
-    }
-
-  // Check what is the code generations substate. Are we generating code for
-  // the in/out operators for our parent or for us?
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << node->name () << "_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
-          << "if (result)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
-          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
-          << "}" << be_uidt;
-
-      break;
-
-    case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result  = strm << _tao_union."
-          << f->local_name () << " ();";
-      break;
-
-    case TAO_CodeGen::TAO_CDR_SCOPE:
-      // Nothing to be done because an interface cannot be forward declared
-      // inside a union.
-      break;
-
-    default:
-      // Error.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
-                         "visit_valuetype_fwd - "
+                         "emit_valuetype_common - "
                          "bad sub state\n"),
                         -1);
     }

@@ -15,6 +15,7 @@
 #include "be_root.h"
 #include "be_module.h"
 #include "be_interface.h"
+#include "be_valuebox.h"
 #include "be_valuetype.h"
 #include "be_interface_fwd.h"
 #include "be_valuetype_fwd.h"
@@ -176,6 +177,55 @@ be_visitor_arg_traits::visit_interface_fwd (be_interface_fwd *node)
                          "(%N:%l) be_visitor_arg_traits::"
                          "visit_interface_fwd - code generation failed\n"),
                         -1);
+    }
+
+  this->generated (node, I_TRUE);
+  return 0;
+}
+
+int
+be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
+{
+  if (this->generated (node))
+    {
+      return 0;
+    }
+
+  if (node->seen_in_operation ())
+    {
+      TAO_OutStream & os = *this->ctx_->stream ();
+
+      std::string guard_suffix =
+        std::string (this->S_) + std::string ("arg_traits");
+
+      // This should be generated even for imported nodes. The ifdef
+      // guard prevents multiple declarations.
+      os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+
+      os << be_nl << be_nl
+         << "template<>" << be_nl
+         << "class "
+         << this->S_ << "Arg_Traits<"
+         << node->name () << ">" << be_idt_nl
+         << ": public" << be_idt << be_idt_nl
+         << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
+         << node->name () << " *," << be_nl
+         << node->name () << "_var," << be_nl
+         << node->name () << "_out";
+
+      // The SArgument classes don't need the traits parameter (yet?)
+      if (ACE_OS::strlen (this->S_) == 0)
+        {
+          os << "," << be_nl
+             << "TAO::Value_Traits<" << node->name () << ">";
+        }
+
+      os << be_uidt_nl
+         << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+         << "{" << be_nl
+         << "};";
+
+      os.gen_endif ();
     }
 
   this->generated (node, I_TRUE);

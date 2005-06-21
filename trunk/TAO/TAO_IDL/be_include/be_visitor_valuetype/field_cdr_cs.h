@@ -57,6 +57,9 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward type
 
+  virtual int visit_valuebox (be_valuebox *node);
+  // visit valuebox type
+
   virtual int visit_valuetype (be_valuetype *node);
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
@@ -92,6 +95,10 @@ public:
   // visit union type
 
   const char *pre_, *post_;
+
+private:
+  int valuetype_common (be_type *);
+
 };
 
 class be_visitor_valuetype_field_cdr_decl : public be_visitor_scope

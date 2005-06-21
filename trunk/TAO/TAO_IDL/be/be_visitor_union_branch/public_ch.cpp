@@ -299,6 +299,49 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
+{
+  be_decl *ub = this->ctx_->node ();
+  be_decl *bu = this->ctx_->scope ();
+  be_type *bt;
+
+  // Check if we are visiting this via a visit to a typedef node.
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_ch::"
+                         "visit_valuebox - "
+                         "bad context information\n"),
+                        -1);
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  // Set method.
+  *os << be_nl << be_nl
+      << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu, "*")
+      << ");" << be_nl;
+  // Get method.
+  *os << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
+      << " (void) const;";
+
+  return 0;
+}
+
+int
 be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
 {
   be_decl *ub = this->ctx_->node ();

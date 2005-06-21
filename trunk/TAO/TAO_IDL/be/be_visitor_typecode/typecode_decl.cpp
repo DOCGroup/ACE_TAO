@@ -135,6 +135,12 @@ be_visitor_typecode_decl::visit_union (be_union *node)
 }
 
 int
+be_visitor_typecode_decl::visit_valuebox (be_valuebox *node)
+{
+  return this->visit_type (node);
+}
+
+int
 be_visitor_typecode_decl::visit_valuetype (be_valuetype *node)
 {
   return this->visit_type (node);

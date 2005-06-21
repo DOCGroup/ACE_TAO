@@ -47,6 +47,7 @@ public:
   virtual int visit_enum (be_enum *node);
   virtual int visit_interface (be_interface *node);
   virtual int visit_interface_fwd (be_interface_fwd *node);
+  virtual int visit_valuebox (be_valuebox *node);
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_predefined_type (be_predefined_type *node);
@@ -58,6 +59,9 @@ public:
 
   virtual int explicit_default (void);
   // extra code generation for an explicit default case
+
+ private:
+  int emit_valuetype_common (be_type *node);
 };
 
 #endif /*  _BE_VISITOR_UNION_BRANCH_CDR_OP_CS_H_ */

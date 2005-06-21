@@ -332,7 +332,13 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_valuetype_field_cdr_cs::visit_valuetype (be_valuetype *)
+be_visitor_valuetype_field_cdr_cs::visit_valuebox (be_valuebox * node)
+{
+  return this->valuetype_common (node);
+}
+
+int
+be_visitor_valuetype_field_cdr_cs::valuetype_common (be_type *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -374,6 +380,12 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype (be_valuetype *)
     }
 
   return 0;
+}
+
+int
+be_visitor_valuetype_field_cdr_cs::visit_valuetype (be_valuetype * node)
+{
+  return this->valuetype_common (node);
 }
 
 int

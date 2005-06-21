@@ -103,6 +103,12 @@ public:
 
   virtual int visit_home (be_home *node);
   // visit home
+
+  virtual int visit_valuebox (be_valuebox *node);
+  // visit valuebox
+
+ private:
+  int emit_common (be_type *node);
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_ARGLIST_H_ */
