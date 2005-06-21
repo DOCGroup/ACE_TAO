@@ -1,3 +1,21 @@
+Tue Jun 21 10:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Interceptor_List.{h,cpp}:
+          Added destroy_interceptors method that goes through the list of
+          interceptors and calls destroy on each interceptor
+
+        * tao/IORInterceptor_Adapter.h:
+          Removed empty throw spec from destroy_interceptors and removed the
+          interceptor_list method which returns the list build up, this is
+          internal data which the outside doesn't need to have.
+
+        * tao/ORB_Core.{h,cpp} (destroy_interceptors):
+          Use the new destoy_interceptors of the Interceptor_List template
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.{h,cpp}:
+          Use the new destoy_interceptors of the Interceptor_List template
+          and removed interceptor_list method
+
 Tue Jun 21 08:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORBInitializer_Registry_Adapter.h:
