@@ -26,6 +26,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Log/LogRecordStore.h"
+#include "ace/Event_Handler.h"
+#include "ace/Reactor.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -41,14 +43,16 @@
  */
 class TAO_Log_Serv_Export TAO_Iterator_i :
   public POA_DsLogAdmin::Iterator,
-  public virtual PortableServer::RefCountServantBase
+  public virtual PortableServer::RefCountServantBase,
+  public ACE_Event_Handler
 {
 public:
 
   // = Initialization and Termination methods.
 
   /// Constructor.
-  TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter,
+  TAO_Iterator_i (ACE_Reactor* reactor,
+		  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter,
 	          TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                   CORBA::ULong start,
                   const char *constraint,
@@ -85,6 +89,17 @@ private:
 
   /// Max rec list length.
   CORBA::ULong max_rec_list_len_;
+
+  /// Reactor
+  ACE_Reactor* reactor_;
+
+  /// Timeout
+  static ACE_Time_Value timeout_;
+
+  /// Timer ID
+  long timer_id_;
+
+  virtual int handle_timeout (const ACE_Time_Value&, const void *);
 };
 
 #if defined(_MSC_VER)
