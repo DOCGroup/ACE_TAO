@@ -1,3 +1,28 @@
+Mon Jun 20 21:49:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+	* orbsvcs/orbsvcs/Log/Iterator_i.h:
+
+	  Added iterator inactivity timer that causes the iterator to self
+	  destruct after 1 hour of inactivity.  This should probably be a
+	  parameter that is specified when the service is started.
+
+	* orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+	* orbsvcs/orbsvcs/Log/Iterator_i.h:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+	  Pass reactor to Iterator constructor.
+
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+	  Removed the debug messages that indicated the log service was
+	  starting, and the name the ior was registered with the naming
+	  service.  TAO's other ORBservice implementations don't output
+	  this sort of mundane information.
+
 Mon Jun 20 12:21:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be_include/be_generator.h
@@ -45,7 +70,7 @@ Mon Jun 20 09:18:00 2005  Gary Maxey <gary.maxey@hp.com>
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp
         * orbsvcs/IFR_Service/ifr_adding_visitor.h
           Add visitors for valuebox support.
-        
+
 Mon Jun 20 08:51:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
@@ -181,9 +206,9 @@ Fri Jun 17 19:54:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Log/LogRecordStore_persist.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
 
           Changed the maximum number of records that can be returned by
-          query() without using an iterator from 30 to 100.  This should
-          probably be a parameter that is set specified when the service
-          is started, but until it is, 100 is a more reasonable default.
+	  query() without using an iterator from 30 to 100.  This should
+	  probably be a parameter that is specified when the service is
+	  started, but until it is, 100 is a more reasonable default.
 
           From documentation available on line, the Orbix log service
           implementation defaults to 100 records, the VisiBroker

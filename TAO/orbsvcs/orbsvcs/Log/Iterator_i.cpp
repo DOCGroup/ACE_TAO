@@ -8,44 +8,40 @@ ACE_RCSID (Log,
            Iterator_i,
            "$Id$")
 
-TAO_Iterator_i::TAO_Iterator_i (TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter,
+// iterator inactivity timeout
+ACE_Time_Value
+TAO_Iterator_i::timeout_(60 * 60);
+
+TAO_Iterator_i::TAO_Iterator_i (ACE_Reactor* reactor,
+				TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter,
 				TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                                 CORBA::ULong start,
                                 const char *constraint,
                                 CORBA::ULong max_rec_list_len
                                 )
-  :iter_ (iter),
-   iter_end_ (iter_end),
-   current_position_(start),
-   constraint_ (constraint),
-   max_rec_list_len_ (max_rec_list_len)
+  : iter_ (iter),
+    iter_end_ (iter_end),
+    current_position_(start),
+    constraint_ (constraint),
+    max_rec_list_len_ (max_rec_list_len),
+    reactor_ (reactor)
 {
+   if (this->timeout_ != ACE_Time_Value::zero) 
+     {
+       this->timer_id_ = this->reactor_->schedule_timer (this, 0, this->timeout_);
+     }
 }
+
 
 TAO_Iterator_i::~TAO_Iterator_i (void)
 {
-  // Do nothing
+  // cancel timer
+  if (this->timer_id_ != -1)
+    {
+      this->reactor_->cancel_timer (this->timer_id_); 
+    }
 }
 
-void
-TAO_Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  PortableServer::POA_ptr poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Goodbye cruel world...
-  // deactivate from the poa.
-  poa->deactivate_object (oid.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  return;
-}
 
 DsLogAdmin::RecordList*
 TAO_Iterator_i::get (CORBA::ULong position,
@@ -54,6 +50,13 @@ TAO_Iterator_i::get (CORBA::ULong position,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
+  // reset timer
+  if (this->timer_id_ != -1) 
+    {
+      this->reactor_->cancel_timer (this->timer_id_);
+      this->timer_id_ = this->reactor_->schedule_timer (this, 0, this->timeout_);
+    }
+
   if (position < current_position_)
     {
       ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
@@ -112,4 +115,33 @@ TAO_Iterator_i::get (CORBA::ULong position,
     }
 
   return rec_list;
+}
+
+
+void
+TAO_Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::POA_ptr poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var oid =
+    poa->servant_to_id (this
+                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Goodbye cruel world...
+  // deactivate from the poa.
+  poa->deactivate_object (oid.in ()
+                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  return;
+}
+
+
+int
+TAO_Iterator_i::handle_timeout(const ACE_Time_Value&, const void*)
+{
+  this->destroy();
+  return 0;
 }

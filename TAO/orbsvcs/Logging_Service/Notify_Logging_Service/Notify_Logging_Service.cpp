@@ -207,10 +207,6 @@ Notify_Logging_Service::init (int argc, char *argv[]
                              obj.in ()
                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Registered with the naming service as: %s\n",
-                  this->service_name_));
     }
 
   return 0;
@@ -237,10 +233,6 @@ Notify_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 int
 Notify_Logging_Service::run ()
 {
-  if (TAO_debug_level > 0 )
-    ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Logging Service\n",
-                __FILE__));
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {

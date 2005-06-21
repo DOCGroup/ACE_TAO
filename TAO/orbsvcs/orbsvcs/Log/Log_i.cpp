@@ -685,7 +685,8 @@ TAO_Log_i::query_i (const char *constraint,
       // Create an iterator to pass out.
       TAO_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
-                        TAO_Iterator_i (iter,
+                        TAO_Iterator_i (this->reactor_,
+					iter,
 					iter_end,
                                         count,
                                         constraint,
