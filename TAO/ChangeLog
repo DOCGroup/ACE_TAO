@@ -1,3 +1,8 @@
+Tue Jun 21 13:38:23 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tao/Valuetype/Value_VarOut_T.cpp
+          Added missing add_ref in TAO_Value_Var_T assignment operator
+
 Tue Jun 21 13:35:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be_include/be_visitor_arg_traits.h
