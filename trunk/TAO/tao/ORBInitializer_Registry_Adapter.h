@@ -15,12 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Service_Object.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
 
 namespace PortableInterceptor
@@ -39,7 +40,7 @@ namespace TAO
    * Class that offers an interface to the ORB to load and manipulate
    * ORBInitializer_Registry
    */
-  class ORBInitializer_Registry_Adapter
+  class TAO_Export ORBInitializer_Registry_Adapter
     : public ACE_Service_Object
   {
     public:
