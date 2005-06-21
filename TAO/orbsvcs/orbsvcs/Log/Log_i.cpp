@@ -14,6 +14,16 @@ ACE_RCSID (Log,
            Log_i,
            "$Id$")
 
+
+// Log Compaction Interval
+const ACE_Time_Value
+TAO_Log_i::log_compaction_interval_ = ACE_Time_Value(60);
+
+// Log Flush Interval
+const ACE_Time_Value
+TAO_Log_i::log_flush_interval_ = ACE_Time_Value(5 * 60);
+
+
 TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
                       DsLogAdmin::LogMgr_ptr factory,
                       DsLogAdmin::LogId id,
@@ -28,8 +38,11 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
     op_state_ (DsLogAdmin::disabled),
     reactor_ (orb->orb_core()->reactor()),
     recordstore_ (max_size, id),
-    max_rec_list_len_ (LOG_DEFAULT_MAX_REC_LIST_LEN)
+    max_rec_list_len_ (LOG_DEFAULT_MAX_REC_LIST_LEN),
+    log_compaction_handler_(reactor_, this, log_compaction_interval_),
+    log_flush_handler_(reactor_, this, log_flush_interval_)
 {
+  // TODO: get log parameters from (persistent?) store.
   avail_status_.off_duty = 0;
   avail_status_.log_full = 0;
   interval_.start = 0;
@@ -40,6 +53,18 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
   this->thresholds_.length(1);
   this->thresholds_[0] = 100;
   this->qostype_ = DsLogAdmin::QoSNone;
+
+  // These won't actually be scheduled until/unless the log parameters
+  // are fetched from the persistent store.
+  if (this->max_record_life_ != 0)
+    {
+      this->log_compaction_handler_.schedule ();
+    }
+
+  if (this->qostype_ == DsLogAdmin::QoSFlush)
+    {
+      this->log_flush_handler_.schedule ();
+    }
 }
 
 void
@@ -144,6 +169,11 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
   
   this->qostype_ = qostype;
 
+  if (this->qostype_ == DsLogAdmin::QoSFlush)
+    this->log_flush_handler_.schedule ();
+  else
+    this->log_flush_handler_.cancel ();
+
   if (notifier_)
     {
       DsLogAdmin::Log_var log =
@@ -200,8 +230,10 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life
 
   this->max_record_life_ = life;
 
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  if (this->max_record_life_ != 0)
+    this->log_compaction_handler_.schedule();
+  else
+    this->log_compaction_handler_.cancel();
 
   if (notifier_)
     {
@@ -263,9 +295,6 @@ CORBA::ULongLong
 TAO_Log_i::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   return this->recordstore_.get_current_size ();
 }
 
@@ -273,9 +302,6 @@ CORBA::ULongLong
 TAO_Log_i::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   return this->recordstore_.get_n_records ();
 }
 
@@ -623,9 +649,6 @@ TAO_Log_i::query_i (const char *constraint,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidConstraint))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint
                                               ACE_ENV_ARG_PARAMETER);
@@ -766,9 +789,6 @@ TAO_Log_i::match_i (const char *constraint,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidConstraint))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint
                                               ACE_ENV_ARG_PARAMETER);
@@ -865,9 +885,6 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   CORBA::ULong count (0);
 
   for (CORBA::ULong i = 0; i < ids.length (); i++)
@@ -931,9 +948,6 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
                    DsLogAdmin::LogLocked,
                    DsLogAdmin::LogDisabled))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   // Check if the log is on duty
   // @@ Wait for Comittee ruling on the proper behavior
   DsLogAdmin::AvailabilityStatus avail_stat =
@@ -1017,9 +1031,6 @@ TAO_Log_i::set_record_attribute (DsLogAdmin::RecordId id,
                    DsLogAdmin::InvalidRecordId,
                    DsLogAdmin::InvalidAttribute))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   // TODO: validate attributes here.
 
   DsLogAdmin::LogRecord rec;
@@ -1046,9 +1057,6 @@ TAO_Log_i::set_records_attribute (const char *grammar,
                      DsLogAdmin::InvalidConstraint,
                      DsLogAdmin::InvalidAttribute))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   DsLogAdmin::Iterator_var iter_out;
 
   DsLogAdmin::RecordList_var rec_list =
@@ -1074,9 +1082,6 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidRecordId))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   DsLogAdmin::LogRecord rec;
   if (this->recordstore_.retrieve (id, rec) == -1)
     {
@@ -1093,15 +1098,11 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
   return nvlist;
 }
 
-// @@ Should I just raise the exception?
 void
 TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::UnsupportedQoS))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-  // @@ Perhaps later use a MMAP_Memory_Pool as the backing store, and
-  // just have this map to its sync method
 }
 
 CORBA::Boolean
@@ -1171,9 +1172,6 @@ TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   const DsLogAdmin::LogFullActionType log_full_action =
     this->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -1318,9 +1316,6 @@ void
 TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   CORBA::ULongLong max_size = this->recordstore_.get_max_size ();
   if (max_size != 0 && this->thresholds_.length () > 0)
     {
