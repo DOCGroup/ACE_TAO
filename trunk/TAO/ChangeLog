@@ -1,3 +1,42 @@
+Tue Jun 21 14:41:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+
+	  Add missing "int" return type to method definitions.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+
+	  Added flush and compaction handlers to class.  The flush handler
+	  is scheduled when the QoS is set to QoSFlush.  The compaction
+	  handler is scheduled when the max record life is set.
+
+	  Removed explicit calls to remove_old_records(), that is now done
+	  via the compaction handler.
+
+	* orbvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Added Log_Flush_Handler.cpp and Log_Compaction_Handler.cpp to
+	  the DsLogAdmin_Serv project's list of Source Files.
+
+	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
+
+	  New files.  Added TAO_Log_Flush_Handler class that manages an
+	  interval timer that calls flush() on the log when it fires.  The
+	  interval is currently set to 300 seconds.  This should probably
+	  be a parameter that is specified when the service is started.
+
+	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
+
+	  New files.  Added TAO_Log_Compaction_Handler class that manages
+	  an interval timer that calls remove_old_records() on the log
+	  when it fires.  The interval is currently set to 60 seconds.
+	  This should probably be a parameter that is specified when the
+	  service is started.
+
 Tue Jun 21 14:27:12 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tao/Valuetype/ValueBase.h
@@ -30,7 +69,7 @@ Tue Jun 21 13:35:00 2005  Gary Maxey <gary.maxey@hp.com>
         * TAO_IDL/be_include/be_visitor_sequence/sequence_base.h
         * TAO_IDL/be_include/be_visitor_tmplinst/arg_tmplinst.h
         * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h
-        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h 
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h
         * TAO_IDL/be_include/be_visitor_typecode/alias_typecode.h
         * TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h
         * TAO_IDL/be_include/be_visitor_typedef/typedef_ch.h

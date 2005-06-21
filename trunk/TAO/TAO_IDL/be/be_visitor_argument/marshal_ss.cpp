@@ -606,7 +606,7 @@ be_visitor_args_marshal_ss::visit_home (
   return this->visit_interface (node);
 }
 
-
+int
 be_visitor_args_marshal_ss::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();

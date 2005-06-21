@@ -392,6 +392,7 @@ be_visitor_field_cdr_op_cs::visit_component_fwd (be_component_fwd *node)
   return this->visit_interface_fwd (node);
 }
 
+int
 be_visitor_field_cdr_op_cs::visit_valuebox (be_valuebox *)
 {
   return this->emit_valuetype_common ();
