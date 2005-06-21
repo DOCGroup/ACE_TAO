@@ -1,3 +1,8 @@
+Tue Jun 21 08:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry_Adapter.h:
+          Added export macro.
+
 Mon Jun 20 23:17:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
