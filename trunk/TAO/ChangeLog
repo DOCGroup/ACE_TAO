@@ -1,3 +1,9 @@
+Tue Jun 21 16:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/releasenotes/rtc10_sched.html:
+          Removed remark about generated include of PortableServerS.h,
+          that is not valid anymore.
+
 Tue Jun 21 08:06:00 2005  Gary Maxey <gary.maxey@hp.com>
         * TAO_IDL/be/be_visitor_valuebox/field_ch.cpp
         * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp
