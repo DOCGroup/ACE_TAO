@@ -72,6 +72,7 @@ TAO_Value_Var_T<T>::operator= (T * p)
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
   this->ptr_ = p;
+  TAO::Value_Traits<T>::add_ref (p);
   return *this;
 }
 
