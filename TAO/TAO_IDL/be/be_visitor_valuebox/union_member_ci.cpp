@@ -406,7 +406,7 @@ be_visitor_valuebox_union_member_ci::visit_string (be_string *node)
 
   *os << "// Modifier to set the member." << be_nl;
 
-  char *string_type;
+  const char *string_type = "";
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";

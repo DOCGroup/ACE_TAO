@@ -1,3 +1,13 @@
+Tue Jun 21 08:06:00 2005  Gary Maxey <gary.maxey@hp.com>
+        * TAO_IDL/be/be_visitor_valuebox/field_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/union_member_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp
+          Minor changes to deal with warnings on some compilers.
+
 Tue Jun 21 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTScheduling/Current/Thread_Task.cpp:

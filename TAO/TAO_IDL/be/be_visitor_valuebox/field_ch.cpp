@@ -254,14 +254,14 @@ be_visitor_valuebox_field_ch::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_valuebox_field_ch::visit_valuetype (be_valuetype *node)
+be_visitor_valuebox_field_ch::visit_valuetype (be_valuetype *)
 {
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
 
 int
-be_visitor_valuebox_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
+be_visitor_valuebox_field_ch::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   // Valuetype is not a valid component of a valuebox
   return 0;
@@ -391,7 +391,7 @@ be_visitor_valuebox_field_ch::visit_string (be_string *node)
   this->emit_member_set (field, bt, "", "");
   this->emit_member_set (field, bt, "const ", "");
 
-  char *string_type;
+  const char *string_type = "";
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";

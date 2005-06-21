@@ -164,9 +164,6 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
-
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
@@ -379,8 +376,8 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  char *string_type;
-  char *char_type;
+  const char *string_type;
+  const char *char_type;
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";
@@ -476,9 +473,6 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
-  
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -580,9 +574,6 @@ int
 be_visitor_valuebox_ch::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
@@ -692,9 +683,6 @@ be_visitor_valuebox_ch::emit_for_predef_enum(be_type *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
-  
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -818,9 +806,6 @@ be_visitor_valuebox_ch::emit_boxed_access (be_decl *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
-
   *os << "// access to the boxed value for method signatures" << be_nl;
 
   // Access to the boxed value for method signatures
@@ -842,9 +827,6 @@ void
 be_visitor_valuebox_ch::emit_accessor_modifier (be_decl *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Retrieve the node being visited by this be_visitor_valuebox_ch.
-  be_decl * vb_node = this->ctx_->node ();
 
   *os << "// accessors and modifier" << be_nl;
 
