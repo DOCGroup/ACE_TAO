@@ -99,8 +99,10 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
       Log/LogMgr_i.cpp
       Log/LogNotification.cpp
       Log/LogRecordStore.cpp
+      Log/Log_Compaction_Handler.cpp
       Log/Log_Constraint_Interpreter.cpp
       Log/Log_Constraint_Visitors.cpp
+      Log/Log_Flush_Handler.cpp
       Log/Log_i.cpp
     }
   }

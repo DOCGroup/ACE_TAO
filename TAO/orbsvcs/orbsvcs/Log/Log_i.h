@@ -26,6 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/Log/Log_Compaction_Handler.h"
+#include "orbsvcs/Log/Log_Flush_Handler.h"
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
@@ -416,6 +418,18 @@ protected:
 
   /// For sending Log Generated events.
   TAO_LogNotification* notifier_;
+
+  /// Log Compaction Handler
+  TAO_Log_Compaction_Handler	log_compaction_handler_;
+
+  /// Log Compaction Interval
+  static const ACE_Time_Value	log_compaction_interval_;
+
+  /// Log Flush Handler
+  TAO_Log_Flush_Handler		log_flush_handler_;
+
+  /// Log Flush Interval
+  static const ACE_Time_Value	log_flush_interval_;
 };
 
 #include /**/ "ace/post.h"
