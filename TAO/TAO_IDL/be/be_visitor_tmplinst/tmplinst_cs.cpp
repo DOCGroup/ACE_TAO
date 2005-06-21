@@ -163,6 +163,89 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
 }
 
 int
+be_visitor_tmplinst_cs::visit_valuebox (be_valuebox *node)
+{
+  if (this->this_mode_generated (node))
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // For arg/return type helper template classes.
+  if (node->seen_in_operation ())
+    {
+      os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
+
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << " TAO::Arg_Traits<" << this->linebreak_ << be_idt << be_idt_nl
+          << "::" << node->name () << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Object_Arg_Traits_T<" << this->linebreak_
+          << be_idt << be_idt_nl
+          << "::" << node->name () << " *," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_var," << this->linebreak_ << be_nl
+          << "::" << node->name () << "_out," << this->linebreak_ << be_nl
+          << "TAO::Objref_Traits<" << node->name () << "> "
+          << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os->gen_endif ();
+    }
+
+  if (node->imported () || !node->is_defined ())
+    {
+      this->this_mode_generated (node, I_TRUE);
+      return 0;
+    }
+
+  // For _var and _out template classes.
+  *os << be_nl << be_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO::Value_Traits<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << this->linebreak_ << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+  *os << be_nl << be_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO_Value_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << this->linebreak_ << be_nl
+      << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO_Value_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << this->linebreak_ << be_nl
+      << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+  // For Any impl template class.
+  if (be_global->any_support ())
+    {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Any_Impl_T<" << this->linebreak_ << be_idt << be_idt_nl
+          << node->name () << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
+    }
+
+  this->this_mode_generated (node, I_TRUE);
+  return 0;
+}
+
+int
 be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
 {
   if (this->this_mode_generated (node))

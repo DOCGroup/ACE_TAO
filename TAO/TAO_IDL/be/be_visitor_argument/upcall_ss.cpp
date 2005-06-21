@@ -135,194 +135,27 @@ int be_visitor_args_upcall_ss::visit_enum (be_enum *)
 
 int be_visitor_args_upcall_ss::visit_interface (be_interface *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".in ()";
-        }
-
-      break;
-    case AST_Argument::dir_INOUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".inout ()";
-        }
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".out ()";
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common ();
 }
 
 int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  return this->emit_common ();
+}
 
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".in ()";
-        }
-
-      break;
-    case AST_Argument::dir_INOUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".inout ()";
-        }
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".out ()";
-        }
-
-      break;
-    }
-
-  return 0;
+int be_visitor_args_upcall_ss::visit_valuebox (be_valuebox *)
+{
+  return this->emit_common ();
 }
 
 int be_visitor_args_upcall_ss::visit_valuetype (be_valuetype *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".in ()";
-        }
-
-      break;
-    case AST_Argument::dir_INOUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".inout ()";
-        }
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".out ()";
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common ();
 }
 
 int be_visitor_args_upcall_ss::visit_valuetype_fwd (be_valuetype_fwd *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".in ()";
-        }
-
-      break;
-    case AST_Argument::dir_INOUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".inout ()";
-        }
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (this->ctx_->state ()
-            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".out ()";
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common ();
 }
 
 int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
@@ -444,122 +277,17 @@ int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
 
 int be_visitor_args_upcall_ss::visit_string (be_string *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".in ()";
-        }
-
-      break;
-    case AST_Argument::dir_INOUT:
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-          {
-        *os << arg->local_name () << ".inout ()";
-        }
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        {
-          *os << arg->local_name ();
-        }
-      else
-        {
-          *os << arg->local_name () << ".out ()";
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common ();
 }
 
 int be_visitor_args_upcall_ss::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << arg->local_name ();
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (node->size_type () == AST_Type::VARIABLE)
-        {
-          if (this->ctx_->state ()
-              == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-            {
-              *os << arg->local_name ();
-            }
-          else
-            {
-              *os << arg->local_name () << ".out ()";
-            }
-        }
-      else
-        {
-          *os << arg->local_name ();
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common2 (node);
 }
 
 int be_visitor_args_upcall_ss::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << arg->local_name ();
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (node->size_type () == AST_Type::VARIABLE)
-        {
-          if (this->ctx_->state ()
-                == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-            {
-              *os << arg->local_name ();
-            }
-          else
-            {
-              *os << arg->local_name () << ".out ()";
-            }
-        }
-      else
-        {
-          *os << arg->local_name ();
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common2 (node);
 }
 
 int be_visitor_args_upcall_ss::visit_typedef (be_typedef *node)
@@ -611,4 +339,86 @@ be_visitor_args_upcall_ss::visit_eventtype_fwd (
   return this->visit_valuetype_fwd (node);
 }
 
+int be_visitor_args_upcall_ss::emit_common (void)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+      if (this->ctx_->state ()
+            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        {
+          *os << arg->local_name ();
+        }
+      else
+        {
+          *os << arg->local_name () << ".in ()";
+        }
+
+      break;
+    case AST_Argument::dir_INOUT:
+      if (this->ctx_->state ()
+            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        {
+          *os << arg->local_name ();
+        }
+      else
+        {
+          *os << arg->local_name () << ".inout ()";
+        }
+
+      break;
+    case AST_Argument::dir_OUT:
+      if (this->ctx_->state ()
+            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        {
+          *os << arg->local_name ();
+        }
+      else
+        {
+          *os << arg->local_name () << ".out ()";
+        }
+
+      break;
+    }
+
+  return 0;
+}
+
+int be_visitor_args_upcall_ss::emit_common2 (be_type *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << arg->local_name ();
+
+      break;
+    case AST_Argument::dir_OUT:
+      if (node->size_type () == AST_Type::VARIABLE)
+        {
+          if (this->ctx_->state ()
+              == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+            {
+              *os << arg->local_name ();
+            }
+          else
+            {
+              *os << arg->local_name () << ".out ()";
+            }
+        }
+      else
+        {
+          *os << arg->local_name ();
+        }
+
+      break;
+    }
+
+  return 0;
+}

@@ -59,6 +59,9 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward type
 
+  virtual int visit_valuebox (be_valuebox *node);
+  // visit valuebox type
+
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);
 
@@ -93,6 +96,8 @@ public:
   idl_bool in_obv_space_;
 private:
   const char *pre_op_;
+
+  int valuetype_common (be_type *node);
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FIELD_CS_H_ */

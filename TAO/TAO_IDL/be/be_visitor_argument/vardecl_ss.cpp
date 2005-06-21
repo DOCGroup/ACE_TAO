@@ -146,131 +146,28 @@ int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
 
 int be_visitor_args_vardecl_ss::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << bt->name () << "_var " << arg->local_name () << ";";
-
-      break;
-    case AST_Argument::dir_OUT:
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";";
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common (node);
 }
 
 int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << bt->name () << "_var " << arg->local_name () << ";";
-
-      break;
-    case AST_Argument::dir_OUT:
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";";
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common (node);
 }
 
 
+int be_visitor_args_vardecl_ss::visit_valuebox (be_valuebox *node)
+{
+  return this->emit_common (node);
+}
+
 int be_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << bt->name () << "_var " << arg->local_name () << ";";
-
-      break;
-    case AST_Argument::dir_OUT:
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";";
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common (node);
 }
 
 int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << bt->name () << "_var " << arg->local_name () << ";";
-
-      break;
-    case AST_Argument::dir_OUT:
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";";
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common (node);
 }
 
 int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
@@ -427,81 +324,12 @@ int be_visitor_args_vardecl_ss::visit_string (be_string *node)
 
 int be_visitor_args_vardecl_ss::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << bt->name () << " " << arg->local_name () << ";";
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (node->size_type () == be_type::VARIABLE)
-        {
-          *os << bt->name () << "_var "
-              << arg->local_name () << ";";
-        }
-      else
-        {
-          *os << bt->name () << " " << arg->local_name () << ";";
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common2 (node);
 }
 
 int be_visitor_args_vardecl_ss::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      *os << bt->name () << " " << arg->local_name () << ";";
-
-      break;
-    case AST_Argument::dir_OUT:
-      if (node->size_type () == be_type::VARIABLE)
-        {
-          *os << bt->name () << "_var "
-              << arg->local_name () << ";";
-
-        }
-      else
-        {
-          *os << bt->name () << " " << arg->local_name () << ";";
-        }
-
-      break;
-    }
-
-  return 0;
+  return this->emit_common2 (node);
 }
 
 int be_visitor_args_vardecl_ss::visit_typedef (be_typedef *node)
@@ -554,3 +382,77 @@ be_visitor_args_vardecl_ss::visit_eventtype_fwd (
 }
 
 
+int
+be_visitor_args_vardecl_ss::emit_common (be_type *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << bt->name () << "_var " << arg->local_name () << ";";
+
+      break;
+    case AST_Argument::dir_OUT:
+      *os << bt->name () << "_var "
+          << arg->local_name () << ";";
+
+      break;
+    }
+
+  return 0;
+}
+
+
+
+int
+be_visitor_args_vardecl_ss::emit_common2 (be_type *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << bt->name () << " " << arg->local_name () << ";";
+
+      break;
+    case AST_Argument::dir_OUT:
+      if (node->size_type () == be_type::VARIABLE)
+        {
+          *os << bt->name () << "_var "
+              << arg->local_name () << ";";
+        }
+      else
+        {
+          *os << bt->name () << " " << arg->local_name () << ";";
+        }
+
+      break;
+    }
+
+  return 0;
+}

@@ -55,6 +55,9 @@ public:
   int visit_interface_fwd (be_interface_fwd *node);
   // visit an interface node
 
+  int visit_valuebox (be_valuebox *node);
+  // visit a valuebox node
+
   int visit_valuetype (be_valuetype *node);
   // visit valuetype
 

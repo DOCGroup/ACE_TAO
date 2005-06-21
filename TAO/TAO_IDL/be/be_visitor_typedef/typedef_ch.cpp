@@ -577,6 +577,42 @@ be_visitor_typedef_ch::visit_union (be_union *node)
 }
 
 int
+be_visitor_typedef_ch::visit_valuebox (be_valuebox *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
+
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  // Typedef the object.
+  *os << "typedef " << bt->nested_type_name (scope) << " "
+      << tdef->nested_type_name (scope) << ";" << be_nl;
+
+  // Typedef the _var.
+  *os << "typedef " << bt->nested_type_name (scope, "_var")
+      << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
+
+  // typedef the _out
+  *os << "typedef " << bt->nested_type_name (scope, "_out")
+      << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+
+  return 0;
+}
+
+int
 be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

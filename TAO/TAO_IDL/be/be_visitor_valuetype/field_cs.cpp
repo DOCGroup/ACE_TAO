@@ -400,7 +400,13 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
+be_visitor_valuetype_field_cs::visit_valuebox (be_valuebox *node)
+{
+  return this->valuetype_common (node);
+}
+
+int
+be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
@@ -465,6 +471,12 @@ be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
   *os << "}";
 
   return 0;
+}
+
+int
+be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
+{
+  return this->valuetype_common (node);
 }
 
 int

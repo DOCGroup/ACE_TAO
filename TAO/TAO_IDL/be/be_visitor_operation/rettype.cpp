@@ -377,4 +377,23 @@ be_visitor_operation_rettype::visit_home (be_home *node)
   return this->visit_interface (node);
 }
 
+int
+be_visitor_operation_rettype::visit_valuebox (be_valuebox *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
+  if (this->ctx_->alias ())
+    {
+      // A typedefed return type.
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  *os << "::" << bt->name () << " *";
+
+  return 0;
+}

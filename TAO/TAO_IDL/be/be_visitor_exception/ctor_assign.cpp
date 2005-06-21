@@ -193,72 +193,22 @@ int be_visitor_exception_ctor_assign::visit_interface_fwd (
 }
 
 int
+be_visitor_exception_ctor_assign::visit_valuebox (be_valuebox *node)
+{
+  return this->emit_valuetype_common (node);
+}
+
+int
 be_visitor_exception_ctor_assign::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
-
-  *os << be_nl;
-
-  if (this->ctx_->exception ()) // Special constructor.
-    {
-      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "const_cast<" << be_idt << be_idt_nl
-          << node->name () << " *> (" << be_nl
-          << "_tao_" << bd->local_name () << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
-          << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_"
-          << bd->local_name () << ";";
-    }
-  else
-    {
-      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "const_cast<" << be_idt << be_idt_nl
-          << node->name () << " *> (" << be_nl
-          << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
-          << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_excp."
-          << bd->local_name () << ".in ();";
-    }
-
-  return 0;
+  return this->emit_valuetype_common (node);
 }
 
 int be_visitor_exception_ctor_assign::visit_valuetype_fwd (
     be_valuetype_fwd *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
-
-  *os << be_nl;
-
-  if (this->ctx_->exception ()) // Special constructor.
-    {
-      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "const_cast<" << be_idt << be_idt_nl
-          << node->name () << " *> (" << be_nl
-          << "_tao_" << bd->local_name () << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
-          << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_"
-          << bd->local_name () << ";";
-    }
-  else
-    {
-      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "const_cast<" << be_idt << be_idt_nl
-          << node->name () << " *> (" << be_nl
-          << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
-          << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_excp."
-          << bd->local_name () << ".in ();";
-    }
-
-  return 0;
+  return this->emit_valuetype_common (node);
 }
 
 int be_visitor_exception_ctor_assign::visit_predefined_type (
@@ -436,5 +386,39 @@ int be_visitor_exception_ctor_assign::visit_typedef (be_typedef *node)
     }
 
   this->ctx_->alias (0);
+  return 0;
+}
+
+int
+be_visitor_exception_ctor_assign::emit_valuetype_common (be_type *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_decl *bd = this->ctx_->node ();
+
+  *os << be_nl;
+
+  if (this->ctx_->exception ()) // Special constructor.
+    {
+      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+          << "const_cast<" << be_idt << be_idt_nl
+          << node->name () << " *> (" << be_nl
+          << "_tao_" << bd->local_name () << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+      *os << "this->" << bd->local_name () << " = _tao_"
+          << bd->local_name () << ";";
+    }
+  else
+    {
+      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+          << "const_cast<" << be_idt << be_idt_nl
+          << node->name () << " *> (" << be_nl
+          << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
+      *os << "this->" << bd->local_name () << " = _tao_excp."
+          << bd->local_name () << ".in ();";
+    }
+
   return 0;
 }

@@ -485,7 +485,25 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_union_branch_public_ci::visit_valuebox (be_valuebox *node)
+{
+  return this->emit_valuetype_common (node);
+}
+
+int
 be_visitor_union_branch_public_ci::visit_valuetype (be_valuetype *node)
+{
+  return this->emit_valuetype_common (node);
+}
+
+int
+be_visitor_union_branch_public_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->emit_valuetype_common (node);
+}
+
+int
+be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
 {
   be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
   be_union *bu = this->ctx_->be_scope_as_union ();
@@ -505,7 +523,7 @@ be_visitor_union_branch_public_ci::visit_valuetype (be_valuetype *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
-                         "visit_valuetype - "
+                         "emit_valuetype_common - "
                          "bad context information\n"),
                         -1);
     }
@@ -560,90 +578,6 @@ be_visitor_union_branch_public_ci::visit_valuetype (be_valuetype *node)
   *os << "// Retrieve the member." << be_nl
       << "ACE_INLINE" << be_nl
       << bt->name () << "* " << be_nl
-      << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
-      << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_->ptr ();" << be_uidt_nl
-      << "}";
-
-  return 0;
-}
-
-int
-be_visitor_union_branch_public_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
-{
-  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
-  be_union *bu = this->ctx_->be_scope_as_union ();
-  be_type *bt;
-
-  // Check if we are visiting this node via a visit to a typedef node.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  if (!ub || !bu)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_branch_public_ci::"
-                         "visit_valuetype_fwd - "
-                         "bad context information\n"),
-                        -1);
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Set method.
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  *os << "// Accessor to set the member." << be_nl
-      << "ACE_INLINE" << be_nl
-      << "void" << be_nl
-      << bu->name () << "::" << ub->local_name () << " (" << bt->name ()
-      << " *val)" << be_nl
-      << "{" << be_idt_nl
-      << "// Set the discriminant value." << be_nl
-      << "this->_reset (";
-
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      ub->gen_label_value (os);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
-      ub->gen_label_value (os);
-    }
-  // Default label.
-  else
-    {
-      ub->gen_default_label_value (os, bu);
-
-      *os << ", 0);" << be_nl
-          << "this->disc_ = ";
-
-      ub->gen_default_label_value (os, bu);
-    }
-
-  *os << ";" << be_nl
-      << "CORBA::add_ref (val);" << be_nl
-      << "typedef "
-      << bt->nested_type_name (bu, "_var")
-      << " OBJECT_FIELD;" << be_nl
-      << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->u_." << ub->local_name () << "_," << be_nl
-      << "OBJECT_FIELD (val)" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  // Get method.
-  *os << "// Retrieve the member." << be_nl
-      << "ACE_INLINE" << be_nl
-      << bt->name () << "_ptr " << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->u_." << ub->local_name () << "_->ptr ();" << be_uidt_nl

@@ -43,6 +43,14 @@ namespace TAO
      */
     virtual int visit_typedef (be_typedef * node);
 
+    /// Visit a valuebox.
+    virtual int visit_valuebox (be_valuebox * node);
+
+  private:
+    int common (be_type * node,
+                be_type * base,
+                const char * tctype);
+
   };
 
 }

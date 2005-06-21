@@ -121,6 +121,47 @@ be_visitor_arg_tmplinst::visit_home (be_home *node)
 }
 
 int
+be_visitor_arg_tmplinst::visit_valuebox (be_valuebox *node)
+{
+  if (this->this_mode_and_dir_generated (node))
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO::";
+
+  this->gen_direction (os);
+
+  *os << "_Object_" << this->S_ << "Argument_T<" << this->linebreak_
+      << be_idt << be_idt_nl
+      << node->name () << " *";
+
+  switch (this->dir_)
+    {
+      case _tao_OUT:
+        *os << "," << this->linebreak_ << be_nl
+            << node->name () << "_out";
+        break;
+      case _tao_RET:
+        *os << "," << this->linebreak_ << be_nl
+            << node->name () << "_var";
+        break;
+      default:
+        break;
+    }
+
+  *os << this->linebreak_ << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+  this->this_mode_and_dir_generated (node, I_TRUE);
+  return 0;
+}
+
+int
 be_visitor_arg_tmplinst::visit_valuetype (be_valuetype *node)
 {
   if (this->this_mode_and_dir_generated (node))
