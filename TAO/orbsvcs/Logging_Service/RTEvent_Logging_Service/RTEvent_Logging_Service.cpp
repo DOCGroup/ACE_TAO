@@ -207,10 +207,6 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "RTEvent_Logging_Service: The RTEventLog Factory IOR is <%s>\n",
-                  ior.in ()));
-
       if (true) 
         {
 	  CORBA::Object_var table_object = 
@@ -257,10 +253,6 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Registered with the naming service as %s\n", rtevent_log_factory_name_));
-
-      ACE_DEBUG ((LM_DEBUG, "%s; running the RTEevent Logging Service\n", __FILE__));
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

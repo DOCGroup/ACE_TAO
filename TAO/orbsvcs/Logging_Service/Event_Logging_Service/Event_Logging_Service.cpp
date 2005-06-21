@@ -179,10 +179,6 @@ Event_Logging_Service::startup (int argc, char *argv[]
                              obj.in ()
                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Registered with the naming service as: %s\n",
-                  this->service_name_));
     }
 
   return 0;
@@ -209,8 +205,6 @@ Event_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 int
 Event_Logging_Service::run (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: Running the Telecom EventLog Service\n", __FILE__));
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
