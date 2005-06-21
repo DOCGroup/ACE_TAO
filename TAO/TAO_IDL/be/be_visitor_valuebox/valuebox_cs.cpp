@@ -97,7 +97,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   be_type *bt = be_type::narrow_from_decl (at);
   bool is_array = false;
 
-  char * unmarshal_arg;
+  const char * unmarshal_arg;
   be_predefined_type *bpt = be_predefined_type::narrow_from_decl (bt);
   if (bpt != 0)
     {

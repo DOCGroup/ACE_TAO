@@ -217,7 +217,7 @@ be_visitor_valuebox_ci::visit_interface (be_interface *node)
 int
 be_visitor_valuebox_ci::visit_predefined_type (be_predefined_type *node)
 {
-  char *marshal_arg;
+  const char *marshal_arg;
   bool is_any = false;
 
   switch (node->pt())
@@ -305,8 +305,8 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   
-  char *string_type;
-  char *char_type;
+  const char *string_type;
+  const char *char_type;
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";
