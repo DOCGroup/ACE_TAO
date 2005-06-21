@@ -1,3 +1,10 @@
+TUe Jun 21 18:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Removed -a8 and -b from the compiler flags, this are the defaults
+          for the compiler, so no need to explicitly specify them. Thanks to
+          Chad about informing me that -b is the default.
+
 Tue Jun 21 07:30:58 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.mpb:
