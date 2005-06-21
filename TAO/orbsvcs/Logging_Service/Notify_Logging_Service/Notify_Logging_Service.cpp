@@ -148,14 +148,15 @@ Notify_Logging_Service::init (int argc, char *argv[]
     this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (true) 
+  if (true)
     {
-      CORBA::Object_var table_object = 
-	this->orb_->resolve_initial_references ("IORTable");
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      IORTable::Table_var adapter = 
-	IORTable::Table::_narrow (table_object.in ());
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in ());
       ACE_CHECK_RETURN (-1);
 
       adapter->bind("NotifyLogService", ior.in ());

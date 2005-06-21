@@ -207,18 +207,19 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (true) 
+      if (true)
         {
-	  CORBA::Object_var table_object = 
-	  this->orb_->resolve_initial_references ("IORTable");
-	  ACE_CHECK_RETURN (-1);
+          CORBA::Object_var table_object =
+          this->orb_->resolve_initial_references ("IORTable"
+                                                  ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
 
-	  IORTable::Table_var adapter = 
-	    IORTable::Table::_narrow (table_object.in ());
-	  ACE_CHECK_RETURN (-1);
+          IORTable::Table_var adapter =
+            IORTable::Table::_narrow (table_object.in ());
+          ACE_CHECK_RETURN (-1);
 
-	  adapter->bind("RTEventLogService", ior.in ());
-	  ACE_CHECK_RETURN (-1);
+          adapter->bind("RTEventLogService", ior.in ());
+          ACE_CHECK_RETURN (-1);
         }
 
       if (this->ior_file_name_ != 0)
