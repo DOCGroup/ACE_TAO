@@ -102,6 +102,12 @@ be_visitor_sequence_base::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_sequence_base::visit_valuebox (be_valuebox *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_base::visit_valuetype (be_valuetype *node)
 {
   return this->visit_node (node);

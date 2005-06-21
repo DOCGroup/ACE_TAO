@@ -238,6 +238,12 @@ be_visitor_array_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_array_cdr_op_cs::visit_valuebox (be_valuebox *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_array_cdr_op_cs::visit_valuetype (be_valuetype *node)
 {
   return this->visit_node (node);
@@ -644,6 +650,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
               case AST_Decl::NT_wstring:
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
+              case AST_Decl::NT_valuebox:
                 *os << ".out ()";
                 break;
               case AST_Decl::NT_pre_defined:
@@ -729,6 +736,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
               case AST_Decl::NT_wstring:
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
+              case AST_Decl::NT_valuebox:
                 *os << ".in ()";
                 break;
               case AST_Decl::NT_pre_defined:

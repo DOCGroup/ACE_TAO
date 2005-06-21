@@ -36,6 +36,8 @@ public:
 
   virtual int visit_interface (be_interface *node);
 
+  virtual int visit_valuebox (be_valuebox *node);
+
   virtual int visit_valuetype (be_valuetype *node);
 
   virtual int visit_operation (be_operation *node);

@@ -321,6 +321,7 @@ be_sequence::managed_type (void)
           case AST_Decl::NT_component_fwd:
             this->mt_ = be_sequence::MNG_OBJREF;
             break;
+          case AST_Decl::NT_valuebox:
           case AST_Decl::NT_valuetype:
           case AST_Decl::NT_valuetype_fwd:
           case AST_Decl::NT_eventtype:

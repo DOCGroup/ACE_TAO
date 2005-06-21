@@ -56,6 +56,9 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit an interface forward node
 
+  virtual int visit_valuebox (be_valuebox *node);
+  // visit a valuebox
+
   virtual int visit_valuetype (be_valuetype *node);
   // visit a valuetype
 
@@ -84,6 +87,10 @@ protected:
 
   int visit_node (be_type *);
   // helper that does the common job
+
+  int emit_common (be_type *node);
+  // helper that does the common job
+
 };
 
 #endif /* _BE_VISITOR_ARRAY_ARRAY_H_*/

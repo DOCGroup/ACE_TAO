@@ -59,6 +59,9 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
 
+  virtual int visit_valuebox (be_valuebox *node);
+  // visit valuebox
+
   virtual int visit_valuetype (be_valuetype *node);
   // visit valuetype
 
@@ -94,6 +97,10 @@ public:
 
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   // visit a forward declared eventtype node
+
+ private:
+  int emit_common (void);
+  int emit_common2 (be_type *node);
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_UPCALL_SS_H_ */

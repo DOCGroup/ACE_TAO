@@ -24,6 +24,25 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 {
   be_type * const base = be_type::narrow_from_decl (node->base_type ());
 
+
+  return this->common (node, base, "tk_alias");
+
+}
+
+
+int
+TAO::be_visitor_alias_typecode::visit_valuebox (be_valuebox * node)
+{
+  be_type * const base = be_type::narrow_from_decl (node->boxed_type ());
+
+  return this->common (node, base, "tk_value_box");
+}
+
+int
+TAO::be_visitor_alias_typecode::common (be_type * node,
+                                        be_type * base,
+                                        const char * tctype)
+{
   TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl
@@ -40,7 +59,7 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) be_visitor_alias_typecode")
-                         ACE_TEXT ("::visit_typedef) - ")
+                         ACE_TEXT ("::common) - ")
                          ACE_TEXT ("failed to generate base typecode\n")),
                         -1);
     }
@@ -52,15 +71,15 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
     << "                            TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-    << "CORBA::tk_alias," << be_nl
+    << "CORBA::" << tctype << "," << be_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
     << "&";
 
   if (this->gen_base_typecode_name (base) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                       ACE_TEXT ("visit_sequence - problem generating base ")
+                       ACE_TEXT ("(%N:%l) be_visitor_alias_typecode::")
+                       ACE_TEXT ("common - problem generating base ")
                        ACE_TEXT ("TypeCode name.\n")),
                        -1);
 

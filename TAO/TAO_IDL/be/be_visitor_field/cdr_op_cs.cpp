@@ -392,47 +392,15 @@ be_visitor_field_cdr_op_cs::visit_component_fwd (be_component_fwd *node)
   return this->visit_interface_fwd (node);
 }
 
+be_visitor_field_cdr_op_cs::visit_valuebox (be_valuebox *)
+{
+  return this->emit_valuetype_common ();
+}
+
 int
 be_visitor_field_cdr_op_cs::visit_valuetype (be_valuetype *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f = this->ctx_->be_node_as_field ();
-
-  if (!f)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_cdr_op_cs::"
-                         "visit_valuetype - "
-                         "cannot retrieve field node\n"),
-                        -1);
-    }
-
-  // Check what is the code generations substate. Are we generating code for
-  // the in/out operators for our parent or for us?
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
-
-      break;
-    case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
-
-      break;
-    case TAO_CodeGen::TAO_CDR_SCOPE:
-      // Nothing to be done because a valuetype cannot be declared inside a
-      // structure.
-      break;
-    default:
-      // Error.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_cdr_op_cs::"
-                         "visit_valuetype - "
-                         "bad sub state\n"),
-                        -1);
-    }
-
-  return 0;
+  return this->emit_valuetype_common ();
 }
 
 int
@@ -444,16 +412,27 @@ be_visitor_field_cdr_op_cs::visit_eventtype (be_eventtype *node)
 int
 be_visitor_field_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  return this->emit_valuetype_common ();
+}
 
-  // Retrieve the field node.
+int
+be_visitor_field_cdr_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+
+int
+be_visitor_field_cdr_op_cs::emit_valuetype_common (void)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
   be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
-                         "visit_valuetype_fwd - "
+                         "emit_common - "
                          "cannot retrieve field node\n"),
                         -1);
     }
@@ -478,7 +457,7 @@ be_visitor_field_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *)
       // Error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
-                         "visit_valuetype_fwd - "
+                         "emit_common - "
                          "bad sub state\n"),
                         -1);
     }
@@ -486,11 +465,6 @@ be_visitor_field_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   return 0;
 }
 
-int
-be_visitor_field_cdr_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
-{
-  return this->visit_valuetype_fwd (node);
-}
 
 // Visit predefined type.
 int

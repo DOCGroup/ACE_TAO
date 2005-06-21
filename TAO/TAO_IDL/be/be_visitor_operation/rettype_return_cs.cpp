@@ -80,6 +80,16 @@ be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *)
 }
 
 int
+be_visitor_operation_rettype_return_cs::visit_valuebox (be_valuebox *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "_tao_retval._retn ()";
+
+  return 0;
+}
+
+int
 be_visitor_operation_rettype_return_cs::visit_valuetype (be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream ();

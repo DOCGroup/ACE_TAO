@@ -60,6 +60,9 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
 
+  virtual int visit_valuebox (be_valuebox *node);
+  // visit valuebox
+
   virtual int visit_valuetype (be_valuetype *node);
   // visit valuetype
 
@@ -83,6 +86,9 @@ public:
 
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef type
+
+private:
+  int emit_common (be_type *node);
 
 };
 
