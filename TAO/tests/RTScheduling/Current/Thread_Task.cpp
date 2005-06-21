@@ -43,10 +43,10 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
           ACE_TRY_CHECK_EX(ESS_out_of_cxt);
         }
       ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "End Scheduling Segment is out of context - Expected Exception\n"));
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            "End Scheduling Segment is out of context - Expected Exception\n"));
+        }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -66,10 +66,10 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
           ACE_TRY_CHECK_EX(USS_out_of_cxt);
         }
       ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Update Scheduling Segment is out of context - Expected Exception\n"));
-	}
+        {
+        ACE_DEBUG ((LM_DEBUG,
+              "Update Scheduling Segment is out of context - Expected Exception\n"));
+        }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
