@@ -373,6 +373,81 @@ CORBA::ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
 }
 
 
+CORBA::Boolean
+CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
+                                          const char * const repo_id_expected,
+                                          CORBA::Boolean & null_object)
+{
+  CORBA::ULong value_tag;
+
+  // todo: no handling for indirection yet
+
+  if (!strm.read_ulong (value_tag))
+    {
+      return false;
+    }
+
+  if (TAO_OBV_GIOP_Flags::is_null_ref (value_tag))
+    { // ok, null reference unmarshaled
+      null_object = true;
+      return true;
+    }
+  null_object = false;
+
+  if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("!CORBA::ValueBase::_tao_validate_box_type ")
+                  ACE_TEXT ("not value_tag\n")));
+      return false;
+    }
+
+  if (TAO_OBV_GIOP_Flags::has_codebase_url (value_tag))
+    { // Demarshal the codebase url (but we won't be using it).
+
+      CORBA::String_var codebase_url;
+
+      if (!strm.read_string (codebase_url.inout ()))
+        {
+          return false;
+        }
+    }
+
+  if (TAO_OBV_GIOP_Flags::has_no_type_info (value_tag))
+    { // No type information so assume it is the correct type.
+      return true;
+    }
+
+  if (TAO_OBV_GIOP_Flags::has_single_type_info (value_tag))
+    { // Demarshal the repository id and check if it is the expected one.
+
+     CORBA::String_var repo_id_stream;
+
+     if (!strm.read_string (repo_id_stream.inout ()))
+     {
+        return false;
+     }
+
+     if (!strcmp(repo_id_stream, repo_id_expected))
+       {  // Repository ids matched as expected
+        return true;
+       }
+     else
+       { // Unequal repository ids
+         return false;
+       }
+    }
+
+  if (TAO_OBV_GIOP_Flags::has_list_type_info (value_tag))
+    { // Don't know how to handle a repository id list.  It does not
+      // make sense for a value box anyway.
+      return false;
+    }
+
+  return false;
+}
+
+
 // ================== Typecode initializations ==================
 
 namespace TAO

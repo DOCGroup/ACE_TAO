@@ -1,3 +1,9 @@
+Tue Jun 21 14:27:12 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tao/Valuetype/ValueBase.h
+        * tao/Valuetype/ValueBase.cpp
+	  Added support method for valuebox demarshalling.
+
 Tue Jun 21 13:38:23 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tao/Valuetype/Value_VarOut_T.cpp
