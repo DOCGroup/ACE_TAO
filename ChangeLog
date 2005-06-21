@@ -1,19 +1,26 @@
+Mon Jun 20 20:07:45 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Support for the bug fix where the 'postcommand' wouldn't be
+          applied if there was more than one output file per input file.
+
 Mon Jun 20 16:45:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_IO.cpp: Added explicit template instantiations for
-	  ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX>.
+        * ace/Asynch_IO.cpp: Added explicit template instantiations for
+          ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX>.
 
 Mon Jun 20 11:36:21 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_sys_socket.inl (closesocket): Removed the
-	  ACE_OS::shutdown() call in an HP-UX block. Calling shutdown breaks
-	  an often-used idiom in UNIX programming of forking a new process
-	  to handle a connection and closing the handle in the parent. Doing
-	  a shutdown() before close() initiates a TCP close even though there
-	  are multiple handles to the same socket. Thanks to Doug Schmidt
-	  and Howard Finer for the exchange that led to this change. This
-	  reverts a change made earlier:
-	  Thu Jan  1 17:56:31 2004  Steve Huston  <shuston@riverace.com>
+        * ace/OS_NS_sys_socket.inl (closesocket): Removed the
+          ACE_OS::shutdown() call in an HP-UX block. Calling shutdown breaks
+          an often-used idiom in UNIX programming of forking a new process
+          to handle a connection and closing the handle in the parent. Doing
+          a shutdown() before close() initiates a TCP close even though there
+          are multiple handles to the same socket. Thanks to Doug Schmidt
+          and Howard Finer for the exchange that led to this change. This
+          reverts a change made earlier:
+          Thu Jan  1 17:56:31 2004  Steve Huston  <shuston@riverace.com>
 
 Mon Jun 20 09:46:24 2005  Chad Elliott  <elliott_c@ociweb.com>
 
