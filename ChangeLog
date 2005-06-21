@@ -1,3 +1,9 @@
+Tue Jun 21 07:30:58 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.mpb:
+
+          Set libpaths to '.' since libout is set to '.' as well.
+
 Mon Jun 20 20:07:45 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
