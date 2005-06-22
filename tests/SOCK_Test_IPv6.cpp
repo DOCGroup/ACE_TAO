@@ -26,6 +26,10 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
+#if !defined (ACE_LACKS_FORK)
+# include "ace/OS_NS_unistd.h"
+#endif
+
 #if defined (ACE_HAS_IPV6)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
