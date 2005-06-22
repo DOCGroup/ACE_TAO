@@ -8,6 +8,7 @@ ACE_RCSID (RTCORBA,
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Transport_Cache_Manager.h"

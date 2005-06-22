@@ -12,6 +12,7 @@ ACE_RCSID (tao,
 #endif /* __ACE_INLINE__ */
 
 #include "ORB_Core.h"
+#include "ORB_Core_TSS_Resources.h"
 #include "TAO_Server_Request.h"
 #include "PICurrent_Copy_Callback.h"
 #include "SystemException.h"

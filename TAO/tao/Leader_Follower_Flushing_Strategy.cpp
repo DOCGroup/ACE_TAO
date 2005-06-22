@@ -6,9 +6,10 @@
 #include "tao/Leader_Follower.h"
 #include "tao/Transport.h"
 #include "tao/Queued_Message.h"
+#include "tao/ORB_Core.h"
 
-ACE_RCSID (tao, 
-           Leader_Follower_Flushing_Strategy, 
+ACE_RCSID (tao,
+           Leader_Follower_Flushing_Strategy,
            "$Id$")
 
 int

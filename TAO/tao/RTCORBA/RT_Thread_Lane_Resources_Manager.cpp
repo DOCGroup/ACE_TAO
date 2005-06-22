@@ -9,6 +9,7 @@ ACE_RCSID (RTCORBA,
            "$Id$")
 
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/RTCORBA/Thread_Pool.h"
