@@ -13,6 +13,7 @@
 #define TAO_TLS_COMPACTION_HANDLER_H
 
 #include "ace/Event_Handler.h"
+#include "ace/Time_Value.h"
 #include "log_serv_export.h"
 
 // forward decls
