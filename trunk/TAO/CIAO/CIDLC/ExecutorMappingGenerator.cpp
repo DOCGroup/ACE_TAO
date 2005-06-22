@@ -1484,7 +1484,7 @@ namespace
     virtual void
     name (Type& m)
     {
-      os << m.name ();
+      os << "CIDL_" << m.name ();
     }
 
     virtual void

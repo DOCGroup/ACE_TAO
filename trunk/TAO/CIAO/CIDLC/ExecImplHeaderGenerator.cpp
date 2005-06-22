@@ -73,15 +73,14 @@ namespace
   struct ModuleEmitter : Traversal::Module, EmitterBase
   {
     ModuleEmitter (Context& c)
-        : EmitterBase (c)
+      : EmitterBase (c)
     {
     }
 
     virtual void
     pre (Type& t)
     {
-      os << endl
-         << "namespace " << t.name () << "{";
+      os << "namespace " << t.name () << "{";
     }
 
     virtual void
@@ -101,8 +100,7 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << endl
-         << "namespace " << t.name () << "{";
+      os << STRS[CIDL_NS] << t.name () << "{";
     }
 
     virtual void
@@ -699,10 +697,13 @@ namespace
     post (Type& t)
     {
       os << "protected:" << endl
+/*
          << "CIAO_GLUE"
          << regex::perl_s (t.scoped_name ().scope_name ().str (),
                            "/::/_/")
-         << "::" << t.name () << "_Context *context_;" << endl
+         << "::"
+*/
+         << t.name () << "_Context *context_;" << endl
          << "};";
     }
     
@@ -1241,7 +1242,7 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
     os << "#include \"" << export_include << "\"" << endl;
   }
 
-  os << "#include \"tao/LocalObject.h\"" << endl;
+  os << "#include \"tao/LocalObject.h\"" << endl << endl;
 }
 
 void
