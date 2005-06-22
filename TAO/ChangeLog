@@ -1,3 +1,16 @@
+Wed Jun 22 12:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
+          Added checks in the destroy that start and end interception
+          point calls must not be zero. If they are zero there is a bug
+          in TAO
+
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+          Explicitly destroy the ORB. When this is not done explicitly the
+          destroy operation of the registered interceptors is not called and
+          then our checks are not triggered in the destoy operation of the
+          registered interceptors
+
 Wed Jun 22 10:27:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
         * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:
