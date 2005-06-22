@@ -112,15 +112,6 @@ public:
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
 
-  /// Used to write records to the log.
-  void write_recordlist (const DsLogAdmin::RecordList & list
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::LogFull,
-        DsLogAdmin::LogLocked
-      ));
-
  protected:
   /// Used to access the hash map that holds all the Logs created.
   TAO_LogMgr_i &logmgr_i_;

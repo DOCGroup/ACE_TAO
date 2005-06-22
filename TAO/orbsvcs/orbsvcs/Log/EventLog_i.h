@@ -102,16 +102,6 @@ public:
                 CORBA::SystemException
         ));
 
-  /// Used to write records to the log.
-  void write_recordlist (const DsLogAdmin::RecordList & list
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::LogFull,
-        DsLogAdmin::LogLocked,
-        DsLogAdmin::LogDisabled
-      ));
-
 protected:
 
   /// Destructor

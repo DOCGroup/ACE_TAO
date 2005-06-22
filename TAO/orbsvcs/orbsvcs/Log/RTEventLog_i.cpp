@@ -140,17 +140,6 @@ TAO_RTEventLog_i::for_suppliers (
   return this->event_channel_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-void
-TAO_RTEventLog_i::write_recordlist (const DsLogAdmin::RecordList & list
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::LogFull,
-                   DsLogAdmin::LogLocked
-  ))
-{
-  TAO_Log_i::write_recordlist (list ACE_ENV_ARG_PARAMETER);
-}
-
 RtecEventChannelAdmin::Observer_Handle
 TAO_RTEventLog_i::append_observer (
        RtecEventChannelAdmin::Observer_ptr observer
