@@ -806,7 +806,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
             ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
         }
     }
-  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) 
+  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER)
            || ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
     {
       // If we are closing down logger, redirect logging to stderr.
@@ -2528,6 +2528,9 @@ ACE_Log_Msg::msg_ostream (void) const
 void
 ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, int delete_ostream)
 {
+  if (this->ostream_ == m)
+    return;
+
   if (this->delete_ostream_)
     {
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
