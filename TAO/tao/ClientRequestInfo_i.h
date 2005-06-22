@@ -230,16 +230,8 @@ public:
   /// Change the exception status.
   void exception (CORBA::Exception *exception);
 
-  /// Set the flag that states whether or not a response is expected.
-  /// For example, no response is expected in a one-way operation.
-  // @@@@@ Need to go
-  void response_expected (CORBA::Boolean flag);
-
   /// Set the status of the received reply.
   void reply_status (TAO::Invocation_Status s);
-
-  // @@@@ NEEd to go
-  void reply_status (int s);
 
   /// Extract the forward object reference from the
   /// PortableInterceptor::ForwardRequest exception, and set the reply
