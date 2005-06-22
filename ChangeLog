@@ -1,3 +1,13 @@
+Wed Jun 22 19:11:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Log_Msg.cpp (msg_ostream):
+
+	  Close, do not delete, the file stream in the
+	  ACE_LACKS_IOSTREAM_TOTALLY case, as is done in the
+	  ~ACE_Log_Msg() destructor. Addresses memory management issues.
+	  Thanks to J.T. Conklin and Mark Callaghan for pointing out the
+	  problem and suggesting a fix.
+
 Wed Jun 22 19:55:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread{.h .inl}:
