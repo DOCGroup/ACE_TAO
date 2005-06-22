@@ -1,4 +1,15 @@
-TUe Jun 21 18:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Jun 22 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Fixed compile errors on Linux when ACE_HAS_IPV6 has been defined
+
+        * include/makeinclude/compiler.bor:
+          No need anymore to include ace_flags.bor
+
+        * include/makeinclude/ace_flags.bor:
+          Removed this file, not needed anymore
+
+Tue Jun 21 18:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
           Removed -a8 and -b from the compiler flags, this are the defaults
