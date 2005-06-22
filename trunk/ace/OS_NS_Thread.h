@@ -120,7 +120,7 @@ typedef DWORD ACE_OS_thread_key_t;
 extern "C" {
   typedef struct
   {
-    ACE_TCHAR* name_;
+    char* name_;
     ACE_HANDLE fd_[2];
   } ACE_sema_t;
 };
