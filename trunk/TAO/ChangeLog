@@ -1,3 +1,10 @@
+Wed Jun 22 10:27:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/union_member_ci.cpp:
+
+          Added ACE_UNUSED_ARG() to the above files.
+
 Tue Jun 21 17:50:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Interceptor_List.cpp:
