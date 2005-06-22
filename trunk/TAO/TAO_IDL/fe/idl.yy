@@ -79,6 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_operation.h"
 #include "ast_generator.h"
 #include "ast_module.h"
+#include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
 #include "ast_eventtype.h"
@@ -956,13 +957,50 @@ value_box_decl
         : value_decl type_spec /* in this order %!?*/
         {
 // value_box_decl : value_decl type_spec
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("error in %s line %d\n"),
-                      idl_global->filename ()->get_string (),
-                      idl_global->lineno ()));
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
-                      ACE_TEXT (" boxes yet\n")));
+        idl_global->set_parse_state (IDL_GlobalData::PS_ValueBoxDeclSeen);
+              
+        UTL_Scope *s = idl_global->scopes ().top_non_null ();
+        UTL_ScopedName n ($1,
+                          0);
+
+        if (s != 0 && $2 != 0)
+          {
+            /*
+             * Get the type_spec associated with the valuebox
+             */ 
+            AST_Type *tp = 0;
+            AST_Typedef *td
+              = AST_Typedef::narrow_from_decl ($2);
+
+            if (td == 0)
+              {
+                tp = AST_Type::narrow_from_decl ($2);
+              }
+            else
+              {
+                tp = td->primitive_base_type ();
+              }
+
+            if (tp == 0)
+              { // The <type_spec> given is a valid type
+                idl_global->err ()->not_a_type ($2);
+              }
+
+            else if (tp->node_type() == AST_Decl::NT_valuetype)
+              { // valuetype is not allowed as <type_spec> for boxed value
+                idl_global->err ()->error0 (UTL_Error::EIDL_ILLEGAL_VALUETYPE);
+              }
+
+            else
+              {
+                /*
+                 * Add the valuebox to its definition scope
+                 */
+                AST_ValueBox *vb = idl_global->gen ()->create_valuebox (&n,
+                                                                        tp);
+                (void) s->fe_add_valuebox (vb);
+              }
+          }
         }
         ;
 
