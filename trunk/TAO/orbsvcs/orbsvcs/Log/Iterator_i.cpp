@@ -142,6 +142,15 @@ TAO_Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 int
 TAO_Iterator_i::handle_timeout(const ACE_Time_Value&, const void*)
 {
-  this->destroy();
+  ACE_TRY_NEW_ENV
+    {
+      this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+
   return 0;
 }

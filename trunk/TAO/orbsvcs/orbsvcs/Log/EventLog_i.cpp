@@ -135,14 +135,3 @@ TAO_EventLog_i::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-void
-TAO_EventLog_i::write_recordlist (const DsLogAdmin::RecordList & list
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::LogFull,
-                   DsLogAdmin::LogLocked,
-                   DsLogAdmin::LogDisabled))
-{
-  TAO_Log_i::write_recordlist (list ACE_ENV_ARG_PARAMETER);
-}

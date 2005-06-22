@@ -759,13 +759,13 @@ TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
   char uint64_formating[32];
 
 #if defined (ACE_LACKS_LONGLONG_T)
-         ACE_OS::sprintf (uint64_formating,
-                          "%u",
-                          ACE_U64_TO_U32 (from_time));
+  ACE_OS::sprintf (uint64_formating,
+		   "%u",
+		   ACE_U64_TO_U32 (from_time));
 #else
-         ACE_OS::sprintf (uint64_formating,
-                          ACE_UINT64_FORMAT_SPECIFIER,
-                          from_time);
+  ACE_OS::sprintf (uint64_formating,
+		   ACE_UINT64_FORMAT_SPECIFIER,
+		   from_time);
 #endif
 
   if (how_many >= 0)
@@ -1061,19 +1061,45 @@ TAO_Log_i::set_records_attribute (const char *grammar,
 
   DsLogAdmin::RecordList_var rec_list =
     this->query (grammar,
-                  constraint,
-                   iter_out
-                   ACE_ENV_ARG_PARAMETER);
+		 constraint,
+		 iter_out
+		 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  for (CORBA::ULong i = 0; i < rec_list->length (); ++i)
-  {
-    this->set_record_attribute (rec_list[i].id,
-                                attr_list
-                                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-  }
-  return rec_list->length ();
+  CORBA::ULong count = rec_list->length ();
+
+  for (CORBA::ULong i = 0; i < count; ++i)
+    {
+      this->set_record_attribute (rec_list[i].id,
+				  attr_list
+				  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
+
+  // if iterator is not nil, process remainder of sequence
+  if (!CORBA::is_nil (iter_out.in ())) 
+    {
+      CORBA::ULong len;
+      do 
+        {
+	  rec_list = iter_out->get (count, 0 ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK_RETURN (0);
+
+	  len = rec_list->length ();
+	  for (CORBA::ULong i = 0; i < len; ++i) 
+	    {
+	      this->set_record_attribute (rec_list[i].id,
+					  attr_list
+					  ACE_ENV_ARG_PARAMETER);
+	      ACE_CHECK_RETURN (0);
+	    }
+
+	  count += len;
+	}
+      while (len != 0);
+    }
+    
+  return count;
 }
 
 DsLogAdmin::NVList*

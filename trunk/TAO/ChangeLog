@@ -1,3 +1,32 @@
+Wed Jun 22 08:23:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Iterator_i.cpp (handle_timeout):
+
+	  Catch and squelch any exceptions that might be thrown by
+	  destroy().  Thanks to Don Sharp for pointing out this
+	  issue.
+
+	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
+	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
+
+	  #include "ace/Time_Value.h", needed by no-inline builds.  Thanks
+	  to Simon Massey for pointing out this issue.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (set_records_attribute):
+
+	  Changed method to process any excess records returned by the
+	  query iterator.
+
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+
+	  Removed write_recordlist() method, as it just called
+	  write_recordlist() on the base class.
+
 Wed Jun 22 14:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.{h,cpp,i}:
