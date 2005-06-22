@@ -32,6 +32,28 @@ Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULong e_count =
     this->ending_interception_point_count_.value ();
 
+  if (s_count == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) ERROR: Interceptor %d \"%s\"\n"
+                  "(%P) The number of starting interception point calls "
+                  "is zero\n", s_count,
+                  this->name_.in ()));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+  if (e_count == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) ERROR: Interceptor %d \"%s\"\n"
+                  "(%P) The number of ending interception point calls"
+                  "is zero\n",
+                  e_count, this->name_.in ()));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
   if (s_count != e_count)
     {
       ACE_ERROR ((LM_ERROR,
