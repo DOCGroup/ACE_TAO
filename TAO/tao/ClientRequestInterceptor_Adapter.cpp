@@ -9,6 +9,7 @@
 #include "ClientRequestInfo.h"
 #include "Invocation_Base.h"
 #include "ORB_Core.h"
+#include "ORB_Core_TSS_Resources.h"
 #include "PortableInterceptorC.h"
 
 ACE_RCSID (tao,
