@@ -1,3 +1,30 @@
+Wed Jun 22 14:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp,i}:
+        * tao/ORB_Core_TSS_Resources.{h,cpp}:
+          Moved TAO_ORB_Core_TSS_Resources to its own file. Makes it much easier
+          to just see where things are used.
+
+        * tao/tao.mpc:
+          Added new files
+
+        * tao/Leader_Follower.{h,cpp,i}:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/LF_Connect_Strategy.cpp:
+        * tao/LF_Event.cpp LF_Strategy_Complete.cpp:
+        * tao/ORB.cpp:
+        * tao/PICurrent.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Transport.cpp:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/ClientRequestInterceptor_Adapter.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Added missing includes now we get less for free from ORB_Core
+
 Wed Jun 22 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ClientRequestInfo_i.{h,cpp,inl}:
