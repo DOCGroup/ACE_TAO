@@ -67,8 +67,7 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << endl
-         << "namespace " << t.name () << "{";
+      os << "namespace " << t.name () << "{";
     }
 
     virtual void
@@ -88,8 +87,7 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << endl
-         << "namespace " << t.name () << "{";
+      os << STRS[CIDL_NS] << t.name () << "{";
     }
 
     virtual void
@@ -715,10 +713,13 @@ namespace
          << STRS[EXCP_CE] << "))" << endl
          << "{"
          << "this->context_ =" << endl
+/*
          << "CIAO_GLUE"
          << regex::perl_s (t.scoped_name ().scope_name ().str (),
                            "/::/_/")
-         << "::" << t.name () << "_Context::_narrow (" << endl
+         << "::"
+*/
+         << t.name () << "_Context::_narrow (" << endl
          << "ctx" << endl
          << STRS[ENV_ARG] <<");"
          << "ACE_CHECK;" << endl;
@@ -1294,7 +1295,7 @@ ExecImplSourceEmitter::pre (TranslationUnit&)
                              + "/");
 
   os << "#include \"" << file_name << "\"" << endl
-     << "#include \"ciao/CIAO_common.h\"" << endl;
+     << "#include \"ciao/CIAO_common.h\"" << endl << endl;
 }
 
 void

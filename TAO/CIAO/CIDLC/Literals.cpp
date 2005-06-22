@@ -66,7 +66,7 @@ namespace StringLiterals
     "::Components::ConsumerDescriptions",                 // COMP_CD
 
     // This could change - don't want it scattered all over.
-    "namespace CIAO_GLUE",                                // GLUE_NS
+    "namespace CIDL_",                                    // CIDL_NS
 
     // Commonly used base class.
     "public virtual PortableServer::RefCountServantBase", // INH_RCSB
