@@ -1,3 +1,10 @@
+Tue Jun 21 17:50:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Interceptor_List.cpp:
+
+	  Include "tao/debug.h" to pull in TAO_debug_level global variable
+	  declaration.
+
 Tue Jun 21 14:41:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
