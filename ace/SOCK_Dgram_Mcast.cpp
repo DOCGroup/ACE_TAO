@@ -7,6 +7,10 @@
 #include "ace/os_include/net/os_if.h"
 #include "ace/os_include/arpa/os_inet.h"
 
+#if defined (__linux__) && defined (ACE_HAS_IPV6)
+#include "ace/OS_NS_sys_socket.h"
+#endif
+
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Mcast.inl"
 #endif /* __ACE_INLINE__ */

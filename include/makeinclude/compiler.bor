@@ -40,8 +40,6 @@ OBJ_EXT = obj
 LIB_EXT = lib
 !endif
 
-!include <$(ACE_ROOT)\include\makeinclude\ace_flags.bor>
-
 #
 # Build tools
 #
