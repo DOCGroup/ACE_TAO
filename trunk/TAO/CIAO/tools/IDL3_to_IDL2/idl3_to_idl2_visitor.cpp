@@ -26,6 +26,7 @@
 #include "ast_union_branch.h"
 #include "ast_union_fwd.h"
 #include "ast_union_label.h"
+#include "ast_valuebox.h"
 #include "ast_valuetype_fwd.h"
 #include "ast_native.h"
 #include "utl_exceptlist.h"
@@ -216,8 +217,33 @@ idl3_to_idl2_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int 
-idl3_to_idl2_visitor::visit_valuebox (AST_ValueBox *)
+idl3_to_idl2_visitor::visit_valuebox (AST_ValueBox *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+    
+  *os << be_nl << be_nl
+      << "valuetype " << node->local_name ();
+      
+  AST_Type *bt = node->boxed_type ();
+      
+  // Keep output statements separate because of side effects.
+  
+  if (bt->node_type () == AST_Decl::NT_array)
+    {
+      this->gen_anonymous_array (bt, node);
+    }
+  else
+    {
+      *os << this->type_name (bt);
+    }
+   
+  *os << ";";
+    
+  this->check_id_and_version (node);
+
   return 0;
 }
 
