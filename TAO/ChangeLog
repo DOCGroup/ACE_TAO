@@ -1,3 +1,10 @@
+Wed Jun 22 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ClientRequestInfo_i.{h,cpp,inl}:
+          Removed reply_status and response_expected methods, they had a
+          comment that they need to go and they are not used in the TAO
+          libs so it is now time to zap them
+
 Wed Jun 22 12:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
