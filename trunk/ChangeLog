@@ -1,3 +1,8 @@
+Wed Jun 22 09:25:12 2005  Gary Maxey  <gary.maxey@hp.com>
+
+        * ace/config-lite.h:
+          Added __TANDEM platform to ACE_UNUSED_ARG macro
+
 Wed Jun 22 12:24:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-posix.h:
