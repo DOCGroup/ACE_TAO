@@ -97,6 +97,26 @@ namespace
     std::ostream& os;
   };
   
+  struct ModuleEmitter : Traversal::Module, EmitterBase
+  {
+    ModuleEmitter (Context& c)
+      : EmitterBase (c)
+    {
+    }
+
+    virtual void
+    pre (Type& t)
+    {
+      os << "namespace " << t.name () << "{";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << "}";
+    }
+  };
+
   struct FlatNameEmitter : Traversal::Type
   {
     FlatNameEmitter (std::ostream& os_)
@@ -941,12 +961,6 @@ namespace
     {
       if (i.context ().count ("facet_src_gen")) return;
 
-      // Open a namespace.
-      os << STRS[GLUE_NS]
-         << regex::perl_s (i.scoped_name ().scope_name ().str (),
-                           "/::/_/")
-         << "{";
-
       os << "template <typename T>" << endl
          << i.name () << "_Servant_T<T>::" << i.name ()
          << "_Servant_T (" << endl
@@ -1045,7 +1059,7 @@ namespace
          << "}" << endl;
 
       // Close the CIAO_GLUE namespace.
-      os << "}";
+//      os << "}";
 
       i.context ().set ("facet_src_gen", true);
     }
@@ -1661,10 +1675,6 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << STRS[GLUE_NS]
-         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         << "{";
-
       os << t.name () << "_Context::"
          << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
@@ -1784,7 +1794,7 @@ namespace
     post (Type&)
     {
       // Namespace closer.
-      os << "}";
+//      os << "}";
     }
   };
 
@@ -2341,6 +2351,7 @@ namespace
       virtual void
       traverse (SemanticGraph::Type& t)
       {
+/*
         os << "CIAO_GLUE";
 
         ScopedName scope (t.scoped_name ().scope_name ());
@@ -2352,8 +2363,9 @@ namespace
             os << "_" << i->str ();
           }
         }
-
-        os << "::" << t.name () << "_Servant";
+*/
+        os //<< "::" 
+           << t.name () << "_Servant";
       }
 
     private:
@@ -3172,10 +3184,6 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << STRS[GLUE_NS]
-         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         << "{";
-
       ScopedName scoped (t.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
@@ -3772,7 +3780,7 @@ namespace
     post (Type&)
     {
       // Namespace closer.
-      os << "}";
+//      os << "}";
     }
   };
 
@@ -4095,10 +4103,6 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << STRS[GLUE_NS]
-         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         << "{";
-
       os << t.name () << "_Servant::"
          << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
@@ -4319,7 +4323,7 @@ namespace
     post (Type& t)
     {
       // Namespace closer.
-      os << "}";
+//      os << "}";
 
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant"
@@ -4347,9 +4351,10 @@ namespace
          << "}"
          << "return new" << endl;
 
-      os << "CIAO_GLUE"
-         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         << "::" << t.name () << "_Servant (" << endl
+      os //<< "CIAO_GLUE"
+         //<< regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+         //<< "::" 
+         << t.name () << "_Servant (" << endl
          << "x.in ()," << endl
          << "ins_name," << endl
          << "c);" << endl
@@ -4377,7 +4382,7 @@ namespace
     {
       ctx.composition_name (t.name ().str ());
     
-      os << "namespace " << t.name () << "{";
+      os << STRS[CIDL_NS] << t.name () << "{";
     }
 
     virtual void
@@ -4457,7 +4462,7 @@ ServantSourceEmitter::generate (TranslationUnit& u)
 
   //--
   Traversal::Root root;
-  includes.node_traverser (region);
+//  includes.node_traverser (region);
   contains_root.node_traverser (root);
 
   // Layer 3
@@ -4466,7 +4471,7 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   root.edge_traverser (defines);
 
   //--
-  Traversal::Module module;
+  ModuleEmitter module (c);
   CompositionEmitter composition (c);
   defines.node_traverser (module);
   defines.node_traverser (composition);

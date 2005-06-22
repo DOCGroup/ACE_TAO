@@ -41,7 +41,7 @@ namespace StringLiterals
     COMP_EC,
     COMP_SC,
     COMP_CD,
-    GLUE_NS,
+    CIDL_NS,
     INH_RCSB,
     TYPE_ID,
     TYPE_PREFIX,
@@ -51,9 +51,9 @@ namespace StringLiterals
     VAR_SIZE,
     EXTRACT,
     EXTRACT_TMP,
-	ACE_UA,
-	ACE_CR,
-	ACE_TR,
+	  ACE_UA,
+	  ACE_CR,
+	  ACE_TR,
     SIZE
   };
 

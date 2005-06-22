@@ -73,6 +73,26 @@ namespace
     std::ostream& os;
   };
 
+  struct ModuleEmitter : Traversal::Module, EmitterBase
+  {
+    ModuleEmitter (Context& c)
+      : EmitterBase (c)
+    {
+    }
+
+    virtual void
+    pre (Type& t)
+    {
+      os << "namespace " << t.name () << "{";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << "}";
+    }
+  };
+
   struct OperationEmitter : Traversal::Operation, EmitterBase
   {
     OperationEmitter (Context& c)
@@ -481,13 +501,8 @@ namespace
 
       ScopedName scoped (i.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
-
-      // Open a namespace.
-      os << STRS[GLUE_NS]
-         << regex::perl_s (i.scoped_name ().scope_name ().str (),
-                           "/::/_/")
-         << "{"
-         << "template <typename T>" << endl
+     
+      os << "template <typename T>" << endl
          << "class " << i.name () << "_Servant_T" << endl
          << ": public virtual POA_" << stripped << "," << endl
          << STRS[INH_RCSB] << endl
@@ -569,7 +584,7 @@ namespace
          << i.name () << "_Servant;";
 
       // Close the CIAO_GLUE namespace.
-      os << "}";
+//      os << "}";
 
       i.context ().set ("facet_hdr_gen", true);
     }
@@ -886,11 +901,7 @@ namespace
 
         component_emitter.traverse (t);
       }
-
-      os << STRS[GLUE_NS]
-         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         << "{";
-         
+       
       os << "class " << t.name () << "_Servant;" << endl;
 
       string swap_option = cl_.get_value ("custom-container", "");
@@ -1035,7 +1046,7 @@ namespace
       os << "};";
 
       // Namespace closer.
-      os << "}";
+//      os << "}";
     }
     
   private:
@@ -1423,10 +1434,6 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << STRS[GLUE_NS]
-          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-          << "{";
-
       ScopedName scoped (t.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
@@ -1691,7 +1698,7 @@ namespace
       os << "};";
 
       // Namespace closer.
-      os << "}";
+//      os << "}";
     }
   };
 
@@ -1907,10 +1914,7 @@ namespace
   public:
     virtual void pre (Type& t)
     {
-      os << STRS[GLUE_NS]
-         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         << "{"
-         << "class " << ctx.export_macro () << " " << t.name ()
+      os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Servant" << endl
          << "  : public virtual CIAO::";
          
@@ -2217,7 +2221,7 @@ namespace
     virtual void post (Type&)
     {
       // Namespace closer.
-      os << "}";
+//      os << "}";
     }
 
   private:
@@ -2240,8 +2244,7 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << endl
-         << "namespace " << t.name () << "{";
+      os << STRS[CIDL_NS] << t.name () << "{";
     }
 
     virtual void
@@ -2266,8 +2269,7 @@ namespace
       os << "#include \""
          << regex::perl_s (qi.file ().string (),
                            "/(\\.(idl|cidl|cdl))?$/S.h/")
-         << "\""
-         << endl;
+         << "\"" << endl << endl;
     }
 
     virtual void
@@ -2415,7 +2417,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 
   included_region.edge_traverser (quote_includes);
   included_region.edge_traverser (bracket_includes);
-  included_region.edge_traverser (contains_root);
+//  included_region.edge_traverser (contains_root);
 
   //--
   Traversal::Root root;
@@ -2430,7 +2432,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   root.edge_traverser (defines);
 
   //--
-  Traversal::Module module;
+  ModuleEmitter module (c);
   CompositionEmitter composition (c);
   defines.node_traverser (module);
   defines.node_traverser (composition);
