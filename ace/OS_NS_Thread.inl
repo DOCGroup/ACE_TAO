@@ -12,6 +12,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 
+#if defined (ACE_USES_FIFO_SEM)
+#  include "ace/OS_NS_sys_stat.h"
+#  include "ace/OS_NS_sys_select.h"
+#  include "ace/Handle_Set.h"
+# endif /* ACE_USES_FIFO_SEM */
+
 #if defined (ACE_HAS_PRIOCNTL)
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
@@ -523,300 +529,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #endif /* !ACE_LACKS_COND_T */
 
 ACE_INLINE int
-ACE_OS::event_destroy (ACE_event_t *event)
+ACE_OS::mutex_lock (ACE_mutex_t *m,
+                    const ACE_Time_Value *timeout)
 {
-#if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*event), ace_result_), int, -1);
-#elif defined (ACE_HAS_THREADS)
-  int r1 = ACE_OS::mutex_destroy (&event->lock_);
-  int r2 = ACE_OS::cond_destroy (&event->condition_);
-  return r1 != 0 || r2 != 0 ? -1 : 0;
-#else
-  ACE_UNUSED_ARG (event);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_init (ACE_mutex_t *m,
-                    int lock_scope,
-                    const char *name,
-                    ACE_mutexattr_t *attributes,
-                    LPSECURITY_ATTRIBUTES sa,
-                    int lock_type)
-{
-  // ACE_OS_TRACE ("ACE_OS::mutex_init");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (sa);
-
-  pthread_mutexattr_t l_attributes;
-  if (attributes == 0)
-    attributes = &l_attributes;
-  int result = 0;
-  int attr_init = 0;  // have we initialized the local attributes.
-
-  // Only do these initializations if the <attributes> parameter
-  // wasn't originally set.
-  if (attributes == &l_attributes)
-    {
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
-      if (::pthread_mutexattr_create (attributes) == 0)
-#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
-      if (ACE_ADAPT_RETVAL (::pthread_mutexattr_init (attributes), result) == 0)
-#   else /* draft 6 */
-      if (::pthread_mutexattr_init (attributes) == 0)
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-        {
-          result = 0;
-          attr_init = 1; // we have initialized these attributes
-        }
-      else
-        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
-    }
-
-  if (result == 0 && lock_scope != 0)
-    {
-#   if defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
-#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-      (void) ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes,
-                                                               lock_scope),
-                               result);
-#     endif /* _POSIX_THREAD_PROCESS_SHARED && !ACE_LACKS_MUTEXATTR_PSHARED */
-#   else /* Pthreads draft 6 */
-#     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-      if (::pthread_mutexattr_setpshared (attributes, lock_scope) != 0)
-        result = -1;
-#     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
-#   endif /* ACE_HAS_PTHREADS_DRAFT7 || ACE_HAS_PTHREADS_STD */
-    }
-
-  if (result == 0 && lock_type != 0)
-    {
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-      if (::pthread_mutexattr_setkind_np (attributes, lock_type) != 0)
-        result = -1;
-#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-#   elif defined (ACE_HAS_RECURSIVE_MUTEXES)
-      (void) ACE_ADAPT_RETVAL (::pthread_mutexattr_settype (attributes,
-                                                            lock_type),
-                               result);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-    }
-
-  if (result == 0)
-    {
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
-      if (::pthread_mutex_init (m, *attributes) == 0)
-#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
-      if (ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
-#   else
-      if (::pthread_mutex_init (m, attributes) == 0)
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-        result = 0;
-      else
-        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
-    }
-
-  // Only do the deletions if the <attributes> parameter wasn't
-  // originally set.
-  if (attributes == &l_attributes && attr_init)
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
-    ::pthread_mutexattr_delete (&l_attributes);
-#   else
-    ::pthread_mutexattr_destroy (&l_attributes);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-
-  return result;
-# elif defined (ACE_HAS_STHREADS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (lock_type);
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m,
-                                                     lock_scope,
-                                                     attributes),
-                                       result),
-                     int, -1);
-# elif defined (ACE_HAS_WTHREADS)
-  m->type_ = lock_scope;
-
-  SECURITY_ATTRIBUTES sa_buffer;
-  SECURITY_DESCRIPTOR sd_buffer;
-  switch (lock_scope)
-    {
-    case USYNC_PROCESS:
-#   if defined (ACE_HAS_WINCE)
-      // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
-      m->proc_mutex_ =
-        ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
-                          (sa, &sa_buffer, &sd_buffer),
-                        FALSE,
-                        ACE_Ascii_To_Wide (name).wchar_rep ());
-#   else /* ACE_HAS_WINCE */
-      m->proc_mutex_ =
-        ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
-                          (sa, &sa_buffer, &sd_buffer),
-                        FALSE,
-                        name);
-#   endif /* ACE_HAS_WINCE */
-      if (m->proc_mutex_ == 0)
-        ACE_FAIL_RETURN (-1);
-      else
-        {
-          // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
-          ACE_OS::set_errno_to_last_error ();
-          return 0;
-        }
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_init (&m->thr_mutex_,
-                                        lock_type,
-                                        name,
-                                        attributes);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-
-# elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (lock_scope);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (lock_type);
-#   if defined (ACE_PSOS_HAS_MUTEX)
-
-    u_long flags = MU_LOCAL;
-    u_long ceiling = 0;
-
-#     if defined (ACE_HAS_RECURSIVE_MUTEXES)
-    flags |= MU_RECURSIVE;
-#     else /* ! ACE_HAS_RECURSIVE_MUTEXES */
-    flags |= MU_NONRECURSIVE;
-#     endif /* ACE_HAS_RECURSIVE_MUTEXES */
-
-#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
-
-    flags |= MU_PRIOR;
-
-#       if defined (ACE_PSOS_HAS_PRIO_INHERIT_MUTEX)
-    flags |= MU_PRIO_INHERIT;
-#       elif defined (ACE_PSOS_HAS_PRIO_PROTECT_MUTEX)
-    ceiling =  PSOS_TASK_MAX_PRIORITY;
-    flags |= MU_PRIO_PROTECT;
-#       else
-    flags |= MU_PRIO_NONE;
-#       endif /* ACE_PSOS_HAS_PRIO_INHERIT_MUTEX */
-
-#     else /* ! ACE_PSOS_HAS_PRIO_MUTEX */
-
-    flags |= MU_FIFO | MU_PRIO_NONE;
-
-#     endif
-
-    // Fake a pSOS name - it can be any 4-byte value, not necessarily needing
-    // to be ASCII. So use the mutex pointer passed in. That should identify
-    // each one uniquely.
-    union { ACE_mutex_t *p; char n[4]; } m_name;
-    m_name.p = m;
-
-    int result;
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_create (m_name.n,
-                                                      flags,
-                                                      ceiling,
-                                                      m),
-                                         result),
-                       int, -1);
-
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_create ((char *) name,
-                                                    1,
-                                                    SM_LOCAL | SM_PRIOR,
-                                                    m),
-                                       result),
-                     int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (lock_type);
-
-  return (*m = ::semMCreate (lock_scope)) == 0 ? -1 : 0;
-# endif /* ACE_HAS_PTHREADS */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (lock_scope);
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (lock_type);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
-
-ACE_INLINE int
-ACE_OS::event_init (ACE_event_t *event,
-                    int manual_reset,
-                    int initial_state,
-                    int type,
-                    const char *name,
-                    void *arg,
-                    LPSECURITY_ATTRIBUTES sa)
-{
-#if defined (ACE_WIN32)
-  ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (arg);
-  SECURITY_ATTRIBUTES sa_buffer;
-  SECURITY_DESCRIPTOR sd_buffer;
-# if defined (ACE_HAS_WINCE)
-  // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
-  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes_r
-                             (sa, &sa_buffer, &sd_buffer),
-                           manual_reset,
-                           initial_state,
-                           ACE_Ascii_To_Wide (name).wchar_rep ());
-# else /* ACE_HAS_WINCE */
-  *event = ::CreateEventA (ACE_OS::default_win32_security_attributes_r
-                             (sa, &sa_buffer, &sd_buffer),
-                           manual_reset,
-                           initial_state,
-                           name);
-# endif /* ACE_HAS_WINCE */
-  if (*event == 0)
-    ACE_FAIL_RETURN (-1);
-  else
-    return 0;
-#elif defined (ACE_HAS_THREADS)
-  ACE_UNUSED_ARG (sa);
-  event->manual_reset_ = manual_reset;
-  event->is_signaled_ = initial_state;
-  event->auto_event_signaled_ = false;
-  event->waiting_threads_ = 0;
-
-  int result = ACE_OS::cond_init (&event->condition_,
-                                  static_cast<short> (type),
-                                  name,
-                                  arg);
-  if (result == 0)
-    result = ACE_OS::mutex_init (&event->lock_,
-                                 type,
-                                 name,
-                                 (ACE_mutexattr_t *) arg);
-  return result;
-#else
-  ACE_UNUSED_ARG (event);
-  ACE_UNUSED_ARG (manual_reset);
-  ACE_UNUSED_ARG (initial_state);
-  ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (arg);
-  ACE_UNUSED_ARG (sa);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
+  return timeout == 0 ? ACE_OS::mutex_lock (m) : ACE_OS::mutex_lock (m, *timeout);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -835,10 +551,10 @@ ACE_OS::event_init (ACE_event_t *event,
   SECURITY_ATTRIBUTES sa_buffer;
   SECURITY_DESCRIPTOR sd_buffer;
   *event = ::CreateEventW (ACE_OS::default_win32_security_attributes_r
-                             (sa, &sa_buffer, &sd_buffer),
-                           manual_reset,
-                           initial_state,
-                           name);
+      (sa, &sa_buffer, &sd_buffer),
+  manual_reset,
+  initial_state,
+  name);
   if (*event == 0)
     ACE_FAIL_RETURN (-1);
 
@@ -854,817 +570,6 @@ ACE_OS::event_init (ACE_event_t *event,
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
-
-ACE_INLINE int
-ACE_OS::event_pulse (ACE_event_t *event)
-{
-#if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::PulseEvent (*event), ace_result_), int, -1);
-#elif defined (ACE_HAS_THREADS)
-  int result = 0;
-  int error = 0;
-
-  // grab the lock first
-  if (ACE_OS::mutex_lock (&event->lock_) == 0)
-    {
-      // Manual-reset event.
-      if (event->manual_reset_ == 1)
-        {
-          // Wakeup all waiters.
-          if (ACE_OS::cond_broadcast (&event->condition_) != 0)
-            {
-              result = -1;
-              error = errno;
-            }
-        }
-      // Auto-reset event: wakeup one waiter.
-      else if (ACE_OS::cond_signal (&event->condition_) != 0)
-        {
-          result = -1;
-          error = errno;
-        }
-
-      // Reset event.
-      event->is_signaled_ = 0;
-
-      // Now we can let go of the lock.
-      ACE_OS::mutex_unlock (&event->lock_);
-
-      if (result == -1)
-        // Reset errno in case mutex_unlock() also fails...
-        errno = error;
-    }
-  else
-    result = -1;
-  return result;
-#else
-  ACE_UNUSED_ARG (event);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::event_reset (ACE_event_t *event)
-{
-#if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ResetEvent (*event), ace_result_), int, -1);
-#elif defined (ACE_HAS_THREADS)
-  int result = 0;
-
-  // Grab the lock first.
-  if (ACE_OS::mutex_lock (&event->lock_) == 0)
-    {
-      // Reset event.
-      event->is_signaled_ = 0;
-      event->auto_event_signaled_ = false;
-
-      // Now we can let go of the lock.
-      ACE_OS::mutex_unlock (&event->lock_);
-    }
-  else
-    result = -1;
-  return result;
-#else
-  ACE_UNUSED_ARG (event);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::event_signal (ACE_event_t *event)
-{
-#if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEvent (*event), ace_result_), int, -1);
-#elif defined (ACE_HAS_THREADS)
-  int result = 0;
-  int error = 0;
-
-  // grab the lock first
-  if (ACE_OS::mutex_lock (&event->lock_) == 0)
-    {
-      // Manual-reset event.
-      if (event->manual_reset_ == 1)
-        {
-          // wakeup all
-          if (ACE_OS::cond_broadcast (&event->condition_) != 0)
-            {
-              result = -1;
-              error = errno;
-            }
-
-          // signal event
-          event->is_signaled_ = 1;
-        }
-      // Auto-reset event
-      else
-        {
-          if (event->waiting_threads_ == 0)
-            // No waiters: signal event.
-            event->is_signaled_ = 1;
-          // Waiters: wakeup one waiter.
-          else if (ACE_OS::cond_signal (&event->condition_) != 0)
-            {
-              result = -1;
-              error = errno;
-            }
-
-          event->auto_event_signaled_ = true;
-        }
-
-      // Now we can let go of the lock.
-      ACE_OS::mutex_unlock (&event->lock_);
-
-      if (result == -1)
-        // Reset errno in case mutex_unlock() also fails...
-        errno = error;
-    }
-  else
-    result = -1;
-  return result;
-#else
-  ACE_UNUSED_ARG (event);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::event_timedwait (ACE_event_t *event,
-                         ACE_Time_Value *timeout,
-                         int use_absolute_time)
-{
-#if defined (ACE_WIN32)
-  DWORD result;
-
-  if (timeout == 0)
-    // Wait forever
-    result = ::WaitForSingleObject (*event, INFINITE);
-  else if (timeout->sec () == 0 && timeout->usec () == 0)
-    // Do a "poll".
-    result = ::WaitForSingleObject (*event, 0);
-  else
-    {
-      // Wait for upto <relative_time> number of milliseconds.  Note
-      // that we must convert between absolute time (which is passed
-      // as a parameter) and relative time (which is what
-      // WaitForSingleObjects() expects).
-      // <timeout> parameter is given in absolute or relative value
-      // depending on parameter <use_absolute_time>.
-      int msec_timeout;
-      if (use_absolute_time)
-        {
-          // Time is given in absolute time, we should use
-          // gettimeofday() to calculate relative time
-          ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-
-          // Watchout for situations where a context switch has caused
-          // the current time to be > the timeout.  Thanks to Norbert
-          // Rapp <NRapp@nexus-informatics.de> for pointing this.
-          if (relative_time < ACE_Time_Value::zero)
-            msec_timeout = 0;
-          else
-            msec_timeout = relative_time.msec ();
-        }
-       else
-         // time is given in relative time, just convert it into
-         // milliseconds and use it
-         msec_timeout = timeout->msec ();
-      result = ::WaitForSingleObject (*event, msec_timeout);
-    }
-
-  switch (result)
-    {
-    case WAIT_OBJECT_0:
-      return 0;
-    case WAIT_TIMEOUT:
-      errno = ETIME;
-      return -1;
-    default:
-      // This is a hack, we need to find an appropriate mapping...
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
-#elif defined (ACE_HAS_THREADS)
-  int result = 0;
-  int error = 0;
-
-  // grab the lock first
-  if (ACE_OS::mutex_lock (&event->lock_) == 0)
-    {
-      if (event->is_signaled_ == 1)
-        // event is currently signaled
-        {
-          if (event->manual_reset_ == 0)
-            {
-              // AUTO: reset state
-              event->is_signaled_ = 0;
-              event->auto_event_signaled_ = false;
-            }
-        }
-      else
-        // event is currently not signaled
-        {
-          event->waiting_threads_++;
-
-          ACE_Time_Value absolute_timeout = *timeout;
-
-          // cond_timewait() expects absolute time, check
-          // <use_absolute_time> flag.
-          if (use_absolute_time == 0)
-            absolute_timeout += ACE_OS::gettimeofday ();
-
-          while (event->is_signaled_ == 0 &&
-                 event->auto_event_signaled_ == false)
-            {
-              if (ACE_OS::cond_timedwait (&event->condition_,
-                                          &event->lock_,
-                                          &absolute_timeout) != 0)
-                {
-                  result = -1;
-                  error = errno;
-                  break;
-                }
-            }
-
-          // Reset the auto_event_signaled_ to false now that we have
-          // woken up.
-          if (event->auto_event_signaled_ == true)
-            event->auto_event_signaled_ = false;
-
-          event->waiting_threads_--;
-        }
-
-      // Now we can let go of the lock.
-      ACE_OS::mutex_unlock (&event->lock_);
-
-      if (result == -1)
-        // Reset errno in case mutex_unlock() also fails...
-        errno = error;
-    }
-  else
-    result = -1;
-  return result;
-#else
-  ACE_UNUSED_ARG (event);
-  ACE_UNUSED_ARG (timeout);
-  ACE_UNUSED_ARG (use_absolute_time);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::event_wait (ACE_event_t *event)
-{
-#if defined (ACE_WIN32)
-  switch (::WaitForSingleObject (*event, INFINITE))
-    {
-    case WAIT_OBJECT_0:
-      return 0;
-    default:
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
-#elif defined (ACE_HAS_THREADS)
-  int result = 0;
-  int error = 0;
-
-  // grab the lock first
-  if (ACE_OS::mutex_lock (&event->lock_) == 0)
-    {
-      if (event->is_signaled_ == 1)
-        // Event is currently signaled.
-        {
-          if (event->manual_reset_ == 0)
-            // AUTO: reset state
-            event->is_signaled_ = 0;
-        }
-      else // event is currently not signaled
-        {
-          event->waiting_threads_++;
-
-          while (event->is_signaled_ == 0 &&
-                 event->auto_event_signaled_ == false)
-            {
-              if (ACE_OS::cond_wait (&event->condition_,
-                                     &event->lock_) != 0)
-                {
-                  result = -1;
-                  error = errno;
-                  // Something went wrong...
-                  break;
-              }
-            }
-
-          // Reset it since we have woken up.
-          if (event->auto_event_signaled_ == true)
-            event->auto_event_signaled_ = false;
-
-          event->waiting_threads_--;
-        }
-
-      // Now we can let go of the lock.
-      ACE_OS::mutex_unlock (&event->lock_);
-
-      if (result == -1)
-        // Reset errno in case mutex_unlock() also fails...
-        errno = error;
-    }
-  else
-    result = -1;
-  return result;
-#else
-  ACE_UNUSED_ARG (event);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_destroy (ACE_mutex_t *m)
-{
-  ACE_OS_TRACE ("ACE_OS::mutex_destroy");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
-#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-  ACE_OSCALL_RETURN (::pthread_mutex_destroy (m), int, -1);
-#   else
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m),
-                                       result), int, -1);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6*/
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), result), int, -1);
-# elif defined (ACE_HAS_WTHREADS)
-  switch (m->type_)
-    {
-    case USYNC_PROCESS:
-      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (m->proc_mutex_),
-                                              ace_result_),
-                            int, -1);
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_destroy (&m->thr_mutex_);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_delete (*m), result),
-                     int, -1);
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_delete (*m), result),
-                     int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
-  return ::semDelete (*m) == OK ? 0 : -1;
-# endif /* Threads variety case */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
-
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE int
-ACE_OS::mutex_init (ACE_mutex_t *m,
-                    int lock_scope,
-                    const wchar_t *name,
-                    ACE_mutexattr_t *attributes,
-                    LPSECURITY_ATTRIBUTES sa,
-                    int lock_type)
-{
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
-  m->type_ = lock_scope;
-  SECURITY_ATTRIBUTES sa_buffer;
-  SECURITY_DESCRIPTOR sd_buffer;
-  switch (lock_scope)
-    {
-    case USYNC_PROCESS:
-      m->proc_mutex_ =
-        ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
-                          (sa, &sa_buffer, &sd_buffer),
-                        FALSE,
-                        name);
-      if (m->proc_mutex_ == 0)
-        ACE_FAIL_RETURN (-1);
-      else
-        return 0;
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_init (&m->thr_mutex_,
-                                        lock_type,
-                                        name,
-                                        attributes);
-    }
-
-  errno = EINVAL;
-  return -1;
-#else /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
-  return ACE_OS::mutex_init (m,
-                             lock_scope,
-                             ACE_Wide_To_Ascii (name).char_rep (),
-                             attributes,
-                             sa,
-                             lock_type);
-#endif /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
-}
-#endif /* ACE_HAS_WCHAR */
-
-ACE_INLINE int
-ACE_OS::mutex_lock (ACE_mutex_t *m)
-{
-  // ACE_OS_TRACE ("ACE_OS::mutex_lock");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
-  // Note, don't use "::" here since the following call is often a macro.
-#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-  ACE_OSCALL_RETURN (pthread_mutex_lock (m), int, -1);
-#   else
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), result),
-                     int, -1);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), result), int, -1);
-# elif defined (ACE_HAS_WTHREADS)
-  switch (m->type_)
-    {
-    case USYNC_PROCESS:
-      switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
-        {
-          //
-          // Timeout can't occur, so don't bother checking...
-          //
-        case WAIT_OBJECT_0:
-        case WAIT_ABANDONED:
-          // We will ignore abandonments in this method
-          // Note that we still hold the lock
-          return 0;
-        default:
-          // This is a hack, we need to find an appropriate mapping...
-          ACE_OS::set_errno_to_last_error ();
-          return -1;
-        }
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_lock (&m->thr_mutex_);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_lock (*m, MU_WAIT, 0),
-                                       result),
-                     int, -1);
-#   else /* ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_p (*m, SM_WAIT, 0),
-                                       result),
-                     int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
-  return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
-# endif /* Threads variety case */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_lock (ACE_mutex_t *m,
-                    int &abandoned)
-{
-  ACE_OS_TRACE ("ACE_OS::mutex_lock");
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
-  abandoned = 0;
-  switch (m->type_)
-    {
-    case USYNC_PROCESS:
-      switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
-        {
-          //
-          // Timeout can't occur, so don't bother checking...
-          //
-        case WAIT_OBJECT_0:
-          return 0;
-        case WAIT_ABANDONED:
-          abandoned = 1;
-          return 0;  // something goofed, but we hold the lock ...
-        default:
-          // This is a hack, we need to find an appropriate mapping...
-          ACE_OS::set_errno_to_last_error ();
-          return -1;
-        }
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_lock (&m->thr_mutex_);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (abandoned);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS and ACE_HAS_WTHREADS */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_lock (ACE_mutex_t *m,
-                    const ACE_Time_Value &timeout)
-{
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_MUTEX_TIMEOUTS)
-
-#  if defined (ACE_HAS_PTHREADS)
-  int result;
-
-  // "timeout" should be an absolute time.
-
-  timespec_t ts = timeout;  // Calls ACE_Time_Value::operator timespec_t().
-
-  // Note that the mutex should not be a recursive one, i.e., it
-  // should only be a standard mutex or an error checking mutex.
-
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts), result), int, -1, result);
-
-  // We need to adjust this to make the errno values consistent.
-  if (result == -1 && errno == ETIMEDOUT)
-    errno = ETIME;
-  return result;
-
-#  elif defined (ACE_HAS_WTHREADS)
-  // Note that we must convert between absolute time (which is passed
-  // as a parameter) and relative time (which is what the system call
-  // expects).
-  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
-
-  switch (m->type_)
-    {
-    case USYNC_PROCESS:
-      switch (::WaitForSingleObject (m->proc_mutex_,
-                                     relative_time.msec ()))
-        {
-        case WAIT_OBJECT_0:
-        case WAIT_ABANDONED:
-          // We will ignore abandonments in this method
-          // Note that we still hold the lock
-          return 0;
-        case WAIT_TIMEOUT:
-          errno = ETIME;
-          return -1;
-        default:
-          // This is a hack, we need to find an appropriate mapping...
-          ACE_OS::set_errno_to_last_error ();
-          return -1;
-        }
-    case USYNC_THREAD:
-      ACE_NOTSUP_RETURN (-1);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-
-#  elif defined (ACE_PSOS)
-
-  // Note that we must convert between absolute time (which is
-  // passed as a parameter) and relative time (which is what
-  // the system call expects).
-  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
-
-  u_long ticks = relative_time.sec() * KC_TICKS2SEC +
-                 relative_time.usec () * KC_TICKS2SEC /
-                   ACE_ONE_SECOND_IN_USECS;
-  if (ticks == 0)
-    ACE_OSCALL_RETURN (::sm_p (*m, SM_NOWAIT, 0), int, -1); // no timeout
-  else
-    ACE_OSCALL_RETURN (::sm_p (*m, SM_WAIT, ticks), int, -1);
-
-#  elif defined (VXWORKS)
-
-  // Note that we must convert between absolute time (which is passed
-  // as a parameter) and relative time (which is what the system call
-  // expects).
-  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
-
-  int ticks_per_sec = ::sysClkRateGet ();
-
-  int ticks = relative_time.sec() * ticks_per_sec +
-              relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
-  if (::semTake (*m, ticks) == ERROR)
-    {
-      if (errno == S_objLib_OBJ_TIMEOUT)
-        // Convert the VxWorks errno to one that's common for to ACE
-        // platforms.
-        errno = ETIME;
-      else if (errno == S_objLib_OBJ_UNAVAILABLE)
-        errno = EBUSY;
-      return -1;
-    }
-  else
-    return 0;
-#  endif /* ACE_HAS_PTHREADS */
-
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (timeout);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS && ACE_HAS_MUTEX_TIMEOUTS */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_lock (ACE_mutex_t *m,
-                    const ACE_Time_Value *timeout)
-{
-  return timeout == 0 ? ACE_OS::mutex_lock (m) : ACE_OS::mutex_lock (m, *timeout);
-}
-
-ACE_INLINE int
-ACE_OS::mutex_trylock (ACE_mutex_t *m)
-{
-  ACE_OS_TRACE ("ACE_OS::mutex_trylock");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
-  // Note, don't use "::" here since the following call is often a macro.
-#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-  int status = pthread_mutex_trylock (m);
-  if (status == 1)
-    status = 0;
-  else if (status == 0) {
-    status = -1;
-    errno = EBUSY;
-  }
-  return status;
-#   else
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), result),
-                     int, -1);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), result), int, -1);
-# elif defined (ACE_HAS_WTHREADS)
-  switch (m->type_)
-    {
-    case USYNC_PROCESS:
-      {
-        // Try for 0 milliseconds - i.e. nonblocking.
-        switch (::WaitForSingleObject (m->proc_mutex_, 0))
-          {
-          case WAIT_OBJECT_0:
-            return 0;
-          case WAIT_ABANDONED:
-            // We will ignore abandonments in this method.  Note that
-            // we still hold the lock.
-            return 0;
-          case WAIT_TIMEOUT:
-            errno = EBUSY;
-            return -1;
-          default:
-            ACE_OS::set_errno_to_last_error ();
-            return -1;
-          }
-      }
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_trylock (&m->thr_mutex_);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_lock (*m, MU_NOWAIT, 0),
-                                       result),
-                      int, -1);
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-   switch (::sm_p (*m, SM_NOWAIT, 0))
-   {
-     case 0:
-       return 0;
-     case ERR_NOSEM:
-       errno = EBUSY;
-       // intentional fall through
-     default:
-       return -1;
-   }
-#   endif /* ACE_PSOS_HAS_MUTEX */
-
-# elif defined (VXWORKS)
-  if (::semTake (*m, NO_WAIT) == ERROR)
-    if (errno == S_objLib_OBJ_UNAVAILABLE)
-      {
-        // couldn't get the semaphore
-        errno = EBUSY;
-        return -1;
-      }
-    else
-      // error
-      return -1;
-  else
-    // got the semaphore
-    return 0;
-# endif /* Threads variety case */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_trylock (ACE_mutex_t *m, int &abandoned)
-{
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
-  abandoned = 0;
-  switch (m->type_)
-    {
-    case USYNC_PROCESS:
-      {
-        // Try for 0 milliseconds - i.e. nonblocking.
-        switch (::WaitForSingleObject (m->proc_mutex_, 0))
-          {
-          case WAIT_OBJECT_0:
-            return 0;
-          case WAIT_ABANDONED:
-            abandoned = 1;
-            return 0;  // something goofed, but we hold the lock ...
-          case WAIT_TIMEOUT:
-            errno = EBUSY;
-            return -1;
-          default:
-            ACE_OS::set_errno_to_last_error ();
-            return -1;
-          }
-      }
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_trylock (&m->thr_mutex_);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (abandoned);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS and ACE_HAS_WTHREADS */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_unlock (ACE_mutex_t *m)
-{
-  ACE_OS_TRACE ("ACE_OS::mutex_unlock");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
-  // Note, don't use "::" here since the following call is often a macro.
-#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-  ACE_OSCALL_RETURN (pthread_mutex_unlock (m), int, -1);
-#   else
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), result),
-                     int, -1);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), result), int, -1);
-# elif defined (ACE_HAS_WTHREADS)
-  switch (m->type_)
-    {
-    case USYNC_PROCESS:
-      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseMutex (m->proc_mutex_),
-                                              ace_result_),
-                            int, -1);
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_unlock (&m->thr_mutex_);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_unlock (*m), result),
-                     int, -1);
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_v (*m), result),
-                     int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
-  return ::semGive (*m) == OK ? 0 : -1;
-# endif /* Threads variety case */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
 
 ACE_INLINE int
 ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t identifier, int cmd, void *arg)
@@ -1899,29 +804,29 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
     result = -1;
   else
-    {
+  {
       // If there's no contention, just grab the lock immediately
       // (since this is the common case we'll optimize for it).
-      if (m->nesting_level_ == 0)
-        m->owner_id_ = t_id;
+    if (m->nesting_level_ == 0)
+      m->owner_id_ = t_id;
       // If we already own the lock, then increment the nesting level
       // and return.
-      else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
-        {
+    else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+    {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
-          while (m->nesting_level_ > 0)
-            ACE_OS::cond_wait (&m->lock_available_,
-                               &m->nesting_mutex_);
+      while (m->nesting_level_ > 0)
+        ACE_OS::cond_wait (&m->lock_available_,
+                            &m->nesting_mutex_);
 
           // At this point the nesting_mutex_ is held...
-          m->owner_id_ = t_id;
-        }
+      m->owner_id_ = t_id;
+    }
 
       // At this point, we can safely increment the nesting_level_ no
       // matter how we got here!
-      m->nesting_level_++;
-    }
+    m->nesting_level_++;
+  }
 
   {
     // Save/restore errno.
@@ -1950,23 +855,23 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
     result = -1;
   else
-    {
+  {
       // If there's no contention, just grab the lock immediately.
-      if (m->nesting_level_ == 0)
-        {
-          m->owner_id_ = t_id;
-          m->nesting_level_ = 1;
-        }
+    if (m->nesting_level_ == 0)
+    {
+      m->owner_id_ = t_id;
+      m->nesting_level_ = 1;
+    }
       // If we already own the lock, then increment the nesting level
       // and proceed.
-      else if (ACE_OS::thr_equal (t_id, m->owner_id_))
-        m->nesting_level_++;
-      else
-        {
-          errno = EBUSY;
-          result = -1;
-        }
+    else if (ACE_OS::thr_equal (t_id, m->owner_id_))
+      m->nesting_level_++;
+    else
+    {
+      errno = EBUSY;
+      result = -1;
     }
+  }
 
   {
     // Save/restore errno.
@@ -1997,36 +902,36 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
     result = -1;
   else
-    {
+  {
 #    if !defined (ACE_NDEBUG)
       if (m->nesting_level_ == 0
           || ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
-        {
-          errno = EINVAL;
-          result = -1;
-        }
+{
+  errno = EINVAL;
+  result = -1;
+}
       else
 #    endif /* ACE_NDEBUG */
-        {
-          m->nesting_level_--;
-          if (m->nesting_level_ == 0)
-            {
+{
+  m->nesting_level_--;
+  if (m->nesting_level_ == 0)
+  {
               // This may not be strictly necessary, but it does put
               // the mutex into a known state...
-              m->owner_id_ = ACE_OS::NULL_thread;
+    m->owner_id_ = ACE_OS::NULL_thread;
 
               // Inform a waiter that the lock is free.
-              if (ACE_OS::cond_signal (&m->lock_available_) == -1)
-                result = -1;
-            }
-        }
-    }
-
-  {
-    // Save/restore errno.
-    ACE_Errno_Guard error (errno);
-    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+    if (ACE_OS::cond_signal (&m->lock_available_) == -1)
+      result = -1;
   }
+}
+  }
+
+{
+    // Save/restore errno.
+  ACE_Errno_Guard error (errno);
+  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+}
   return result;
 #  endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -2460,6 +1365,17 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
       s->sema_ = 0;
       return result;
     }
+# elif defined (ACE_USES_FIFO_SEM)
+  int r0 = 0;
+  if (s->name_)
+    {
+      r0 = ACE_OS::unlink (s->name_);       /* if we created FIFO */
+      ACE_OS::free (s->name_);
+      s->name_ = 0;
+    }
+  int r1 = ACE_OS::close (s->fd_[0]);      /* ignore error */
+  int r2 = ACE_OS::close (s->fd_[1]);      /* ignore error */
+  return r0 != 0 || r1 != 0 || r2 != 0 ? -1 : 0;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   int result;
@@ -2612,6 +1528,66 @@ ACE_OS::sema_init (ACE_sema_t *s,
                                      type != USYNC_THREAD,
                                      count), int, -1);
     }
+
+#elif defined (ACE_USES_FIFO_SEM)
+  int             flags = 0;
+  mode_t          mode = S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP;
+
+  if (type == USYNC_THREAD)
+    {
+      // Create systemwide unique name for semaphore
+      ACE_TCHAR   uname[ACE_UNIQUE_NAME_LEN];
+      ACE_OS::unique_name ((const void *) s,
+                            uname,
+                            ACE_UNIQUE_NAME_LEN);
+      name = &uname[0];
+    }
+
+  s->name_ = 0;
+  s->fd_[0] = s->fd_[1] = ACE_INVALID_HANDLE;
+
+  if (ACE_OS::mkfifo (name, mode) < 0)
+    {
+      if (errno != EEXIST)    /* already exists OK else ERR */
+        return -1;
+      // check if this is a real FIFO, not just some other existing file
+      ACE_stat fs;
+      if (ACE_OS::stat (name, &fs))
+        return -1;
+      if (!S_ISFIFO(fs.st_mode))
+        {
+          // existing file is not a FIFO
+          errno = EEXIST;
+          return -1;
+        }
+    }
+  else
+    {
+      s->name_ = ACE_OS::strdup (name);
+    }
+
+
+  if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
+      || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
+    return(-1);
+
+  /* turn off nonblocking for fd_[0] */
+  if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
+    return(-1);
+
+  flags &= ~O_NONBLOCK;
+  if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
+    return(-1);
+
+  if (s->name_ && count)
+    {
+      char    c = 1;
+      for(u_int i=0; i<count ;++i)
+        if (ACE_OS::write (s->fd_[1], &c, sizeof(char)) != 1)
+          return(-1);
+    }
+
+  return(0);
 #elif defined (ACE_HAS_THREADS)
 #  if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
@@ -2802,6 +1778,12 @@ ACE_OS::sema_post (ACE_sema_t *s)
   ACE_OS_TRACE ("ACE_OS::sema_post");
 # if defined (ACE_HAS_POSIX_SEM)
   ACE_OSCALL_RETURN (::sem_post (s->sema_), int, -1);
+# elif defined (ACE_USES_FIFO_SEM)
+  char    c = 1;
+
+  if (ACE_OS::write (s->fd_[1], &c, sizeof(char)) == 1)
+    return(0);
+  return(-1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   int result;
@@ -2888,6 +1870,27 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
 # if defined (ACE_HAS_POSIX_SEM)
   // POSIX semaphores set errno to EAGAIN if trywait fails
   ACE_OSCALL_RETURN (::sem_trywait (s->sema_), int, -1);
+# elif defined (ACE_USES_FIFO_SEM)
+  char  c;
+  int     rc, flags;
+
+  /* turn on nonblocking for s->fd_[0] */
+  if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
+    return(-1);
+  flags |= O_NONBLOCK;
+  if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
+    return(-1);
+
+  rc = ACE_OS::read (s->fd_[0], &c, sizeof(char));
+
+  /* turn off nonblocking for fd_[0] */
+  if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) >= 0)
+  {
+    flags &= ~O_NONBLOCK;
+    ACE_OS::fcntl (s->fd_[0], F_SETFL, flags);
+  }
+
+  return rc == 1 ? 0 : (-1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   // STHREADS semaphores set errno to EBUSY if trywait fails.
@@ -3000,6 +2003,11 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   ACE_OS_TRACE ("ACE_OS::sema_wait");
 # if defined (ACE_HAS_POSIX_SEM)
   ACE_OSCALL_RETURN (::sem_wait (s->sema_), int, -1);
+# elif defined (ACE_USES_FIFO_SEM)
+  char c;
+  if (ACE_OS::read (s->fd_[0], &c, sizeof(char)) == 1)
+    return(0);
+  return(-1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   int result;
@@ -3108,9 +2116,48 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 {
   ACE_OS_TRACE ("ACE_OS::sema_wait");
 # if defined (ACE_HAS_POSIX_SEM)
+#   if defined (ACE_HAS_POSIX_SEM_TIMEOUT)
+  timespec_t ts;
+  ts = tv; // Calls ACE_Time_Value::operator timespec_t().
+  ACE_OSCALL_RETURN (::sem_timedwait (s->sema_, &ts), int, -1);
+#   else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
+#   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT */
+# elif defined (ACE_USES_FIFO_SEM)
+  int rc;
+  ACE_Time_Value now = ACE_OS::gettimeofday ();
+
+  while (tv > now)
+    {
+      ACE_Time_Value timeout = tv;
+      timeout -= now;
+
+      ACE_Handle_Set  fds_;
+
+      fds_.set_bit (s->fd_[0]);
+      if ((rc = ACE_OS::select (ACE_Handle_Set::MAXSIZE, fds_, 0, 0, timeout)) != 1)
+        {
+          if (rc == 0)
+            // make sure errno is set right (select() sets ETIME)
+            errno = ETIMEDOUT;
+          return (-1);
+        }
+
+      // try to read the signal *but* do *not* block
+      if (ACE_OS::sema_trywait(s) == 0)
+        return (0);
+
+      // we were woken for input but someone beat us to it
+      // so we wait again if there is still time
+      now = ACE_OS::gettimeofday ();
+    }
+
+  // make sure errno is set right
+  errno = ETIMEDOUT;
+
+  return(-1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (s);
