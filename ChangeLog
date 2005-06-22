@@ -1,4 +1,9 @@
-Tue Jun 22 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Jun 22 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SOCK_Test_IPv6.cpp:
+          Fixed compile errors on Linux when ACE_HAS_IPV6 has been defined
+
+Wed Jun 22 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Dgram_Mcast.cpp:
           Fixed compile errors on Linux when ACE_HAS_IPV6 has been defined
