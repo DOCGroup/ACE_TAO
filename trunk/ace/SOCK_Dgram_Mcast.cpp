@@ -312,7 +312,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           while (intf[index].if_index != 0 || intf[index].if_name != 0)
             {
               if (this->join (mcast_addr, reuse_addr,
-                              intf[index].if_name) == 0)
+                              ACE_TEXT_CHAR_TO_TCHAR(intf[index].if_name)) == 0)
                 ++nr_subscribed;
 
               ++index;
@@ -665,7 +665,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
           while (intf[index].if_index != 0 || intf[index].if_name != 0)
             {
-              if (this->leave (mcast_addr, intf[index].if_name) == 0)
+              if (this->leave (mcast_addr, ACE_TEXT_CHAR_TO_TCHAR(intf[index].if_name)) == 0)
                 ++nr_unsubscribed;
 
               ++index;
@@ -1021,7 +1021,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
   if (net_if != 0)
     {
-      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (net_if);
+      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR(net_if));
     }
   else
     lmreq.ipv6mr_interface = 0;

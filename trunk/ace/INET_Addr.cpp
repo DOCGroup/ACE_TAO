@@ -387,7 +387,7 @@ ACE_INET_Addr::set (const char port_name[],
 
   int address_family = PF_UNSPEC;
 #  if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strcmp (protocol, ACE_LIB_TEXT ("tcp6")) == 0)
+  if (ACE_OS::strcmp (ACE_TEXT_CHAR_TO_TCHAR(protocol), ACE_LIB_TEXT ("tcp6")) == 0)
     address_family = AF_INET6;
 #  endif /* ACE_HAS_IPV6 */
 
