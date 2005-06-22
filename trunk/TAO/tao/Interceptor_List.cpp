@@ -2,13 +2,11 @@
 
 #include "tao/Interceptor_List.h"
 
-ACE_RCSID (tao,
-           Interceptor_List,
-           "$Id$")
-
 #include "tao/InterceptorC.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
+#include "tao/debug.h"
+
 #include "ace/os_include/os_stddef.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
