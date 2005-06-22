@@ -115,6 +115,18 @@ typedef DWORD ACE_OS_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 # endif /* ACE_WIN32 */
 
+# if !defined (ACE_HAS_POSIX_SEM) && defined (ACE_USES_FIFO_SEM)
+
+extern "C" {
+  typedef struct
+  {
+    ACE_TCHAR* name_;
+    ACE_HANDLE fd_[2];
+  } ACE_sema_t;
+};
+
+#endif /* !ACE_HAS_POSIX_SEM && ACE_USES_FIFO_SEM */
+
 # if defined (ACE_HAS_THREADS)
 
 #   if defined (ACE_HAS_STHREADS)
@@ -153,7 +165,7 @@ typedef mutex_t ACE_mutex_t;
 #     if !defined (ACE_LACKS_RWLOCK_T)
 typedef rwlock_t ACE_rwlock_t;
 #     endif /* !ACE_LACKS_RWLOCK_T */
-#     if !defined (ACE_HAS_POSIX_SEM)
+#     if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_USES_FIFO_SEM)
 typedef sema_t ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
 
@@ -696,7 +708,7 @@ typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
 typedef int ACE_recursive_thread_mutex_t;
 typedef int ACE_recursive_mutex_state;
-#   if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+#   if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS) && !defined (ACE_USES_FIFO_SEM)
 typedef int ACE_sema_t;
 #   endif /* !ACE_HAS_POSIX_SEM && !ACE_PSOS */
 typedef int ACE_rwlock_t;
@@ -1263,10 +1275,10 @@ namespace ACE_OS {
 
   //@{ @name A set of wrappers for auto-reset and manual events.
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int event_destroy (ACE_event_t *event);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int event_init (ACE_event_t *event,
                   int manual_reset = 0,
                   int initial_state = 0,
@@ -1286,21 +1298,21 @@ namespace ACE_OS {
                   LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int event_pulse (ACE_event_t *event);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int event_reset (ACE_event_t *event);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int event_signal (ACE_event_t *event);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int event_timedwait (ACE_event_t *event,
                        ACE_Time_Value *timeout,
                        int use_absolute_time = 1);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int event_wait (ACE_event_t *event);
 
   //@}
@@ -1314,10 +1326,10 @@ namespace ACE_OS {
 
   //@{ @name A set of wrappers for mutex locks.
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_destroy (ACE_mutex_t *m);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_init (ACE_mutex_t *m,
                   int lock_scope = ACE_DEFAULT_SYNCH_TYPE,
                   const char *name = 0,
@@ -1326,7 +1338,7 @@ namespace ACE_OS {
                   int lock_type = 0);
 
 #if defined (ACE_HAS_WCHAR)
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_init (ACE_mutex_t *m,
                   int lock_scope,
                   const wchar_t *name,
@@ -1337,12 +1349,12 @@ namespace ACE_OS {
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_lock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
   /// mutexes, <abandoned> is set to 1 and 0 is returned.
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_lock (ACE_mutex_t *m,
                   int &abandoned);
 
@@ -1355,7 +1367,7 @@ namespace ACE_OS {
    * Note that the mutex should not be a recursive one, i.e., it
    * should only be a standard mutex or an error checking mutex.
    */
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_lock (ACE_mutex_t *m,
                   const ACE_Time_Value &timeout);
 
@@ -1378,16 +1390,16 @@ namespace ACE_OS {
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_trylock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
   /// mutexes, <abandoned> is set to 1 and 0 is returned.
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_trylock (ACE_mutex_t *m,
                      int &abandoned);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   int mutex_unlock (ACE_mutex_t *m);
 
   //@}
@@ -1815,6 +1827,48 @@ namespace ACE_OS {
 } /* namespace ACE_OS */
 
 #if !defined (ACE_WIN32)
+
+extern "C"
+{
+  typedef struct
+  {
+    /// Object type.
+    int type_;
+
+    /// Protect critical section.
+    ACE_mutex_t lock_;
+
+    /// Keeps track of waiters.
+/*
+#if (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))) && \
+  defined (ACE_HAS_PTHREADS) && (!defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED))
+    ACE_sema_t semaphore_;
+#else
+*/
+    ACE_cond_t condition_;
+//#endif
+
+    /// Specifies if this is an auto- or manual-reset event.
+    int manual_reset_;
+
+    /// "True" if signaled.
+    int is_signaled_;
+
+    /// Special bool for auto_events alone
+    /**
+     * The semantics of auto events forces us to introduce this extra
+     * variable to ensure that the thread is not woken up
+     * spuriously. Please see event_wait and event_timedwait () to see
+     * how this is used for auto_events. Theoretically this is a hack
+     * that needs revisiting after x.4
+     */
+    bool auto_event_signaled_;
+
+    /// Number of waiting threads.
+    unsigned long waiting_threads_;
+  } ACE_eventdata_t;
+};
+
 /**
  * @class ACE_event_t
  *
@@ -1831,31 +1885,14 @@ class ACE_Export ACE_event_t
   friend int ACE_OS::event_reset(ACE_event_t*);
 protected:
 
-  /// Protect critical section.
-  ACE_mutex_t lock_;
+  /// Event name if process shared.
+  ACE_TCHAR* name_;
 
-  /// Keeps track of waiters.
-  ACE_cond_t condition_;
+  /// Event data
+  ACE_eventdata_t* eventdata_;
 
-  /// Specifies if this is an auto- or manual-reset event.
-  int manual_reset_;
-
-  /// "True" if signaled.
-  int is_signaled_;
-
-  /// Special bool for auto_events alone
-  /**
-   * The semantics of auto events forces us to introduce this extra
-   * variable to ensure that the thread is not woken up
-   * spuriously. Please see event_wait and event_timedwait () to see
-   * how this is used for auto_events. Theoretically this is a hack
-   * that needs revisiting after x.4
-   */
-  bool auto_event_signaled_;
-
-  /// Number of waiting threads.
-  unsigned long waiting_threads_;
 };
+
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
