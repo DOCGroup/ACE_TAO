@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "tao/ORB_Core_TSS_Resources.h"
+
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
 {

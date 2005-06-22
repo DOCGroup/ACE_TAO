@@ -5,6 +5,7 @@
 #include "RT_POA.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"
 #include "tao/IIOP_Transport.h"

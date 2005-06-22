@@ -4,6 +4,7 @@
 
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Core_TSS_Resources.h"
 #include "debug.h"
 
 ACE_RCSID(tao,

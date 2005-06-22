@@ -5,6 +5,7 @@
 #include "tao/Leader_Follower.h"
 #include "tao/Transport.h"
 #include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (tao,
            Wait_On_Leader_Follower,

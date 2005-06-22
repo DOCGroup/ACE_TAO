@@ -3,6 +3,7 @@
 #include "LF_Follower.h"
 #include "Leader_Follower.h"
 #include "Transport.h"
+#include "ORB_Core.h"
 #include "ace/Synch_Options.h"
 
 ACE_RCSID(tao,
