@@ -288,6 +288,7 @@ be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
 int
 be_visitor_valuebox_field_ci::visit_valuetype (be_valuetype *node)
 {
+  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
@@ -295,6 +296,7 @@ be_visitor_valuebox_field_ci::visit_valuetype (be_valuetype *node)
 int
 be_visitor_valuebox_field_ci::visit_eventtype (be_eventtype *node)
 {
+  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
@@ -302,6 +304,7 @@ be_visitor_valuebox_field_ci::visit_eventtype (be_eventtype *node)
 int
 be_visitor_valuebox_field_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
+  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
@@ -309,6 +312,7 @@ be_visitor_valuebox_field_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
 int
 be_visitor_valuebox_field_ci::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
+  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
