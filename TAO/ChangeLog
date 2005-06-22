@@ -1,3 +1,11 @@
+Wed Jun 22 18:49:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB_Core.h:
+        
+          Added include of ORB_Core_TSS_Resources.h, so when the
+          ACE_TSS_TYPE tss_resources_ member is declared, there 
+          will be knowledge of a default constructor.
+
 Wed Jun 22 11:34:12 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/fe/y.tab.cpp

@@ -35,6 +35,7 @@
 #include "tao/Object.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/Adapter_Registry.h"
+#include "tao/ORB_Core_TSS_Resources.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
