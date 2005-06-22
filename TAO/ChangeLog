@@ -6,6 +6,7 @@ Wed Jun 22 12:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           in TAO
 
         * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+        * tests/Portable_Interceptors/PICurrent/client.cpp:
           Explicitly destroy the ORB. When this is not done explicitly the
           destroy operation of the registered interceptors is not called and
           then our checks are not triggered in the destoy operation of the
