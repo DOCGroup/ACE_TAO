@@ -1,3 +1,9 @@
+Wed Jun 22 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/build_core_exe.bor:
+        * include/makeinclude/build_core_library.bor:
+          Removed these files, not used anymore
+
 Wed Jun 22 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SOCK_Test_IPv6.cpp:
