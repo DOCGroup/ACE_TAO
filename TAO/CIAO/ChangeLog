@@ -1,3 +1,8 @@
+Wed Jun 22 10:59:00 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp
+          Updated visitor for valuebox support.
+
 Mon Jun 20 18:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/examples/Display/NavDisplayGUI_exec/DetailView_moc.cpp:
