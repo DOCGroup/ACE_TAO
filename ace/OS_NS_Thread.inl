@@ -1546,7 +1546,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   s->name_ = 0;
   s->fd_[0] = s->fd_[1] = ACE_INVALID_HANDLE;
 
-  if (ACE_OS::mkfifo (name, mode) < 0)
+  if (ACE_OS::mkfifo (ACE_TEXT_CHAR_TO_TCHAR(name), mode) < 0)
     {
       if (errno != EEXIST)    /* already exists OK else ERR */
         return -1;
