@@ -1435,13 +1435,13 @@ ACE_OS::sema_init (ACE_sema_t *s,
   if (type == USYNC_PROCESS)
     {
       // Let's see if it already exists.
-      ACE_HANDLE fd = ACE_OS::shm_open (name,
+      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR(name),
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (name,
+            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR(name),
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
           else
@@ -1536,7 +1536,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   if (type == USYNC_THREAD)
     {
       // Create systemwide unique name for semaphore
-      ACE_TCHAR   uname[ACE_UNIQUE_NAME_LEN];
+      char   uname[ACE_UNIQUE_NAME_LEN];
       ACE_OS::unique_name ((const void *) s,
                             uname,
                             ACE_UNIQUE_NAME_LEN);

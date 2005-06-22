@@ -1821,8 +1821,14 @@ namespace ACE_OS {
    */
   extern ACE_Export
   void unique_name (const void *object,
-                    ACE_TCHAR *name,
+                    char *name,
                     size_t length);
+#if defined (ACE_USES_WCHAR)
+  extern ACE_Export
+  void unique_name (const void *object,
+                    wchar_t *name,
+                    size_t length);
+#endif /* ACE_HAS_WCHAR */
 
 } /* namespace ACE_OS */
 
@@ -1886,7 +1892,7 @@ class ACE_Export ACE_event_t
 protected:
 
   /// Event name if process shared.
-  ACE_TCHAR* name_;
+  char* name_;
 
   /// Event data
   ACE_eventdata_t* eventdata_;

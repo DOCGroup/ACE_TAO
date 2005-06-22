@@ -1,3 +1,16 @@
+Wed Jun 22 19:16:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_sys_mman.inl:
+        * ace/OS_NS_Thread{.h .inl .cpp}:
+        * ace/INET_Addr.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Fixed wchar problems in arguments and variables.
+
+        * ace/config-linux-common.h:
+          Undef ACE_HAS_SHMOPEN after having included config-posix.h as
+          there are some things to check out here before really using
+          ::shm_open()!
+
 Wed Jun 22 09:25:12 2005  Gary Maxey  <gary.maxey@hp.com>
 
         * ace/config-lite.h:

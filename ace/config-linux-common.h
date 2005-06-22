@@ -38,6 +38,12 @@
 
 #include "ace/config-posix.h"
 
+// Temporary fix because >2.6 kernels do have shm_open but there is a problem
+// with that somewhere which needs to be fixed when I have time.
+#if defined (ACE_HAS_SHMOPEN)
+# undef ACE_HAS_SHMOPEN
+#endif
+
 #if defined (ACE_HAS_POSIX_SEM)
 #  include <linux/version.h>
 #  if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0))

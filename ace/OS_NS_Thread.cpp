@@ -2675,8 +2675,7 @@ ACE_OS::event_destroy (ACE_event_t *event)
       ACE_OS::munmap (event->eventdata_,
                       sizeof (ACE_eventdata_t));
       ACE_OS::unlink (event->name_);
-      ACE_OS::free (
-          static_cast<void *> (const_cast<ACE_TCHAR *> (event->name_)));
+      ACE_OS::free (event->name_);
       return r1 != 0 || r2 != 0 ? -1 : 0;
     }
     else
@@ -2757,14 +2756,14 @@ ACE_OS::event_init (ACE_event_t *event,
   if (type == USYNC_PROCESS)
   {
     int owner = 0;
-      // Let's see if the shared memory entity already exists.
-    ACE_HANDLE fd = ACE_OS::shm_open (name,
+    // Let's see if the shared memory entity already exists.
+    ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR(name),
                                       O_RDWR | O_CREAT | O_EXCL,
                                       ACE_DEFAULT_FILE_PERMS);
     if (fd == ACE_INVALID_HANDLE)
     {
       if (errno == EEXIST)
-        fd = ACE_OS::shm_open (name,
+        fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR(name),
                                O_RDWR | O_CREAT,
                                ACE_DEFAULT_FILE_PERMS);
       else
@@ -2772,7 +2771,7 @@ ACE_OS::event_init (ACE_event_t *event,
     }
     else
     {
-          // We own this shared memory object!  Let's set its size.
+      // We own this shared memory object!  Let's set its size.
       if (ACE_OS::ftruncate (fd,
           sizeof (ACE_eventdata_t)) == -1)
       {
@@ -2784,11 +2783,11 @@ ACE_OS::event_init (ACE_event_t *event,
 
     evtdata =
         (ACE_eventdata_t *) ACE_OS::mmap (0,
-    sizeof (ACE_eventdata_t),
-    PROT_RDWR,
-    MAP_SHARED,
-    fd,
-    0);
+                                          sizeof (ACE_eventdata_t),
+                                          PROT_RDWR,
+                                          MAP_SHARED,
+                                          fd,
+                                          0);
     ACE_OS::close (fd);
     if (evtdata == MAP_FAILED)
     {
@@ -5015,7 +5014,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 
 void
 ACE_OS::unique_name (const void *object,
-                     ACE_TCHAR *name,
+                     char *name,
                      size_t length)
 {
   // The process ID will provide uniqueness between processes on the
@@ -5023,7 +5022,28 @@ ACE_OS::unique_name (const void *object,
   // uniqueness between other "live" objects in the same process. The
   // uniqueness of this name is therefore only valid for the life of
   // <object>.
-  ACE_TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
+  char temp_name[ACE_UNIQUE_NAME_LEN];
+  ACE_OS::sprintf (temp_name,
+                   "%p%d",
+                   object,
+                   static_cast <int> (ACE_OS::getpid ()));
+  ACE_OS::strsncpy (name,
+                    temp_name,
+                    length);
+}
+
+#if defined (ACE_USES_WCHAR)
+void
+ACE_OS::unique_name (const void *object,
+                     wchar_t *name,
+                     size_t length)
+{
+  // The process ID will provide uniqueness between processes on the
+  // same machine. The "this" pointer of the <object> will provide
+  // uniqueness between other "live" objects in the same process. The
+  // uniqueness of this name is therefore only valid for the life of
+  // <object>.
+  wchar_t temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
                    ACE_LIB_TEXT ("%p%d"),
                    object,
@@ -5032,7 +5052,7 @@ ACE_OS::unique_name (const void *object,
                     temp_name,
                     length);
 }
-
+#endif /* ACE_HAS_WCHAR */
 
 #if defined (VXWORKS)
 # include /**/ <usrLib.h>   /* for ::sp() */
