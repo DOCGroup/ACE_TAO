@@ -136,6 +136,12 @@
 #   endif
 # endif /* ACE_HAS_DYNAMIC_LINKING */
 
+# if defined (ACE_USES_FIFO_SEM)
+#   if defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_MKFIFO) || defined (ACE_LACKS_FCNTL)
+#     undef ACE_USES_FIFO_SEM
+#   endif
+# endif /* ACE_USES_FIFO_SEM */
+
 // =========================================================================
 // RCSID Macros
 // =========================================================================

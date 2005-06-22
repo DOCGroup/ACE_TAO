@@ -1,3 +1,36 @@
+Wed Jun 22 12:24:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-posix.h:
+          Added test to set new macro ACE_HAS_POSIX_SEM_TIMEOUT when supported.
+
+        * ace/config-linux-common.h:
+          Added include for config-posix.h to test for more supported POSIX
+          functionality.
+          Added special test for Linux kernels < 2.6 because these falsely
+          report certain POSIX support while not having that in reality
+          (f.i. ACE_HAS_POSIX_SEM with ACE_HAS_POSIX_SEM_TIMEOUT).
+
+        * ace/config-lite.h:
+          Added test to undef (new) macro ACE_USES_FIFO_SEM (see below) when
+          other macro settings invalidate this one.
+
+        * ace/os_include/os_pthread.h:
+          Extended test to prevent definition of ACE_sema_t when ACE_USES_FIFO_SEM
+          is defined.
+
+        * ace/OS_NS_Thread{.h .inl .cpp}:
+          Added new implementation of ACE_OS::sema_XXX methods based on FIFOs
+          (derived from W. Richard Stevens, UNIX Network Programming V2)
+          active when !ACE_HAS_POSIX_SEM && ACE_USES_FIFO_SEM.
+          Offshoot of customer request for process shareable solution for Linux
+          2.4.xx kernels.
+
+          Outlined most ACE_OS::mutex_XXX and ACE_OS::event_XXX methods resulting
+          in a) ~7 Kb footprint reduction (Linux 2.6) and b) lessened dependency
+          complexities allowing later introduction of another Event platform
+          emulation.
+
+
 Wed Jun 22 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/build_core_exe.bor:

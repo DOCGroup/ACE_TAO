@@ -36,6 +36,18 @@
 #  endif  /* !ACE_HAS_CLOCK_GETTIME */
 #endif  /* _POSIX_C_SOURCE >= 199309L */
 
+#include "ace/config-posix.h"
+
+#if defined (ACE_HAS_POSIX_SEM)
+#  include <linux/version.h>
+#  if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0))
+    // Linux versions < 2.6 may define all the right POSIX macros
+    // but they lack the actual runtime support for this stuff
+#    undef ACE_HAS_POSIX_SEM
+#    define ACE_USES_FIFO_SEM
+#  endif  /* (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0)) */
+#endif /* ACE_HAS_POSIX_SEM */
+
 // First the machine specific part
 
 #if defined (__powerpc__)
