@@ -24,7 +24,15 @@
 
 #include "ace/Array_Base.h"
 
+
+#include "ace/Array_Base.h"
+
 class TAO_ORB_Core;
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "PICurrent_Impl.h"
+class TAO_ClientRequestInfo;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 /**
  * @class TAO_ORB_Core_TSS_Resources
