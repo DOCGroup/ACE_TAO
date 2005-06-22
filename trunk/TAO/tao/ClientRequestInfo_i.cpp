@@ -634,9 +634,4 @@ TAO_ClientRequestInfo_i::reply_status (TAO::Invocation_Status invoke_status)
     }
 }
 
-void
-TAO_ClientRequestInfo_i::reply_status (int )
-{
-}
-
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
