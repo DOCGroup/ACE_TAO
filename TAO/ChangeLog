@@ -1,3 +1,10 @@
+Wed Jun 22 11:34:12 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/fe/y.tab.cpp
+        * TAO_IDL/fe/idl.yy
+	
+          Added valuebox support
+
 Wed Jun 22 08:23:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Iterator_i.cpp (handle_timeout):
