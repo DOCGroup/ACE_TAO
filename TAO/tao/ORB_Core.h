@@ -38,7 +38,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PICurrent_Impl.h"
 #include "tao/PICurrent.h"
 #include "tao/ClientRequestInterceptorC.h"
 #include "tao/ServerRequestInterceptorC.h"
@@ -55,8 +54,6 @@ namespace TAO
   typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor>
     ServerRequestInterceptor_List;
 }
-
-class TAO_ClientRequestInfo;
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
