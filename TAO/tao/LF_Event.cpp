@@ -3,13 +3,14 @@
 #include "LF_Event.h"
 #include "LF_Follower.h"
 #include "Leader_Follower.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/LF_Event.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           LF_Event, 
+ACE_RCSID (tao,
+           LF_Event,
            "$Id$")
 
 TAO_LF_Event::TAO_LF_Event (void)

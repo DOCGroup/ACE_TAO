@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB_Core.h"
 #include "tao/New_Leader_Generator.h"
 #include "tao/LF_Follower.h"
 #include "ace/Reverse_Lock_T.h"
@@ -30,7 +29,9 @@
 
 class TAO_LF_Event;
 class TAO_Transport;
-// class TAO_LF_Follower;
+class TAO_ORB_Core;
+class ACE_Reactor;
+class TAO_ORB_Core_TSS_Resources;
 
 /**
  * @class TAO_Leader_Follower

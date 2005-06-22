@@ -73,6 +73,7 @@ class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 
+class TAO_ORB_Core_TSS_Resources;
 class TAO_TSS_Resources;
 class TAO_Leader_Follower;
 class TAO_LF_Strategy;
@@ -142,73 +143,6 @@ namespace PortableInterceptor
   class IORInterceptor;
   typedef IORInterceptor *IORInterceptor_ptr;
 }
-// ****************************************************************
-
-/**
- * @class TAO_ORB_Core_TSS_Resources
- *
- * @brief The TSS resoures of an ORB core.
- *
- * This class is used by the ORB_Core to store the resources
- * potentially bound to a thread in TSS storage. The members are public
- * because only the ORB Core is expected to access them.
- */
-class TAO_Export TAO_ORB_Core_TSS_Resources
-{
-public:
-
-  /// Constructor
-  TAO_ORB_Core_TSS_Resources (void);
-
-  /// destructor
-  ~TAO_ORB_Core_TSS_Resources (void);
-
-private:
-
-  /// The ORB Core TSS resources should not be copied
-  ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core_TSS_Resources (const TAO_ORB_Core_TSS_Resources&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_ORB_Core_TSS_Resources&))
-
-public:
-
-  /**
-   * @todo
-   * The rest of the resources are not currently in use, just a plan
-   * for the future...
-   */
-  /// Counter for how (nested) calls this thread has made to run the
-  /// event loop.
-  int event_loop_thread_;
-
-  /// Counter for how many times this thread has become a client
-  /// leader.
-  int client_leader_thread_;
-
-  /// Lane for this thread.
-  void *lane_;
-
-  /// Generic container for thread-specific objects.
-  ACE_Array_Base<void *> ts_objects_;
-
-  // Set to true by the wait_on_lf_no_nested_upcall wait strategy
-  // @CJC@  maybe we should use allocate_tss_slot_id() instead?
-  bool upcalls_temporarily_suspended_on_this_thread_;
-
-  /// Pointer to the ORB core.  Needed to get access to the TSS
-  /// cleanup functions for the TSS objects stored in the TSS object
-  /// array in this class.
-  TAO_ORB_Core *orb_core_;
-
-#if TAO_HAS_INTERCEPTORS == 1
-  /// The thread-specific portion of the PICurrent object.
-  TAO::PICurrent_Impl pi_current_;
-
-  /// The PortableInterceptor::ClientRequestInfo object for the
-  /// current thread.
-  TAO_ClientRequestInfo *client_request_info_;
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-};
-
 
 // ****************************************************************
 /**

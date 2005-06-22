@@ -3,6 +3,8 @@
 
 // ****************************************************************
 
+#include "ORB_Core_TSS_Resources.h"
+
 ACE_INLINE
 TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core,
                                           TAO_New_Leader_Generator *new_leader_generator)

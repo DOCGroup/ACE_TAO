@@ -11,6 +11,7 @@ ACE_RCSID (tao,
 #include "IOR_Parser.h"
 #include "Stub.h"
 #include "ORB_Core.h"
+#include "ORB_Core_TSS_Resources.h"
 #include "TAO_Internal.h"
 #include "NVList.h"
 #include "Dynamic_Adapter.h"

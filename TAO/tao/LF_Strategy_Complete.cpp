@@ -4,13 +4,15 @@
 #include "tao/LF_Strategy_Complete.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
+#include "ace/Guard_T.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/LF_Strategy_Complete.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           LF_Strategy_Complete, 
+ACE_RCSID (tao,
+           LF_Strategy_Complete,
            "$Id$")
 
 TAO_LF_Strategy_Complete::~TAO_LF_Strategy_Complete (void)

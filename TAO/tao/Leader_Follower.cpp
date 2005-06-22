@@ -11,6 +11,7 @@
 #include "tao/debug.h"
 #include "tao/Transport.h"
 #include "tao/GUIResource_Factory.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Leader_Follower.i"

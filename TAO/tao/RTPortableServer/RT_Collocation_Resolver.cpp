@@ -9,6 +9,7 @@ ACE_RCSID(RTPortableServer,
           "$Id$")
 
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/PortableServer/Servant_Upcall.h"

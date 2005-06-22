@@ -186,6 +186,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     orb_typesC.cpp
     ORB_Core.cpp
     ORB_Core_Auto_Ptr.cpp
+    ORB_Core_TSS_Resources.cpp
     ORB_Table.cpp
     ParameterModeA.cpp
     ParameterModeC.cpp
@@ -529,6 +530,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     orbconf.h
     ORB_Constants.h
     ORB_Core_Auto_Ptr.h
+    ORB_Core_TSS_Resources.h
     ORB_Core.h
     ORB.h
     ORBInitializer_Registry.h
