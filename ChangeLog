@@ -1,3 +1,9 @@
+Wed Jun 22 20:29:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.h:
+
+	  Removed extra semi-colon.  Fixes g++ 4.0 builds.
+
 Wed Jun 22 19:11:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* THANKS:
