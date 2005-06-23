@@ -1,3 +1,16 @@
+Thu Jun 23 09:52:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/union_member_ci.cpp:
+
+          Replaced ACE_UNUSED_ARG() with native C++ unnamed parameters
+          in responce to Ossama's request that the macro is only used
+          in places where normal practices are not available.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Removed unused arg.
+
 Wed Jun 22 18:49:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB_Core.h:
