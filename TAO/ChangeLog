@@ -1,3 +1,11 @@
+Thu Jun 23 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp}:
+        * tao/ORB_Core_TSS_Resources.{h,cpp}:
+          Moved ORB_Core_TSS_Resources back to its own file. Problem was
+          easier then on first sight, orbconf.h was not includes so the
+          TSS file was build without interceptor support
+
 Thu Jun 23 12:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.{h,cpp}:
