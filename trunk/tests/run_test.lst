@@ -18,6 +18,7 @@
 ACE_Init_Test: MSVC
 ACE_Test
 Arg_Shifter_Test
+Array_Map_Test
 Atomic_Op_Test
 Auto_IncDec_Test
 Barrier_Test

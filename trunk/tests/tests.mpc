@@ -91,6 +91,13 @@ project(Arg Shifter Test) : acetest {
   }
 }
 
+project(Array Map Test) : acetest {
+  exename = Array_Map_Test
+  Source_Files {
+    Array_Map_Test.cpp
+  }
+}
+
 project(ARGV Test) : acetest {
   exename = ARGV_Test
   Source_Files {

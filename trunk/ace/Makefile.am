@@ -362,6 +362,9 @@ nobase_include_HEADERS = \
   Array_Base.cpp \
   Array_Base.h \
   Array_Base.inl \
+  Array_Map.cpp \
+  Array_Map.h \
+  Array_Map.inl \
   Asynch_Acceptor.cpp \
   Asynch_Acceptor.h \
   Asynch_Connector.cpp \
