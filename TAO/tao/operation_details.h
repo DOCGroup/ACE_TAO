@@ -145,7 +145,7 @@ public:
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
   //@}
 
-  /// Accessors for the argumet list
+  /// Accessors for the argument list
   TAO::Argument ** args (void) const;
   CORBA::ULong args_num (void) const ;
 
