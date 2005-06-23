@@ -1,3 +1,31 @@
+Thu Jun 23 12:10:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Array_Map.h:
+	* ace/Array_Map.inl:
+	* ace/Array_Map.cpp:
+
+	  Map implementation that focuses on small footprint and fast
+          iteration.  Search times are, however, linear (O(n)) meaning
+	  that this map isn't suitable for large data sets that will be
+	  searched in performance critical areas of code.  Iteration over
+	  large data sets, however, is faster than linked list-based maps,
+	  for example, since spatial locality is maximized through the use
+	  of contiguous arrays as the underlying storage.
+
+	* ace/Makefile.am:
+	* ace/ace.mpc:
+
+	  Added new Array_Map.* source files.
+
+	* tests/Array_Map_Test.cpp:
+
+	  Regression test for ACE_Array_Map.
+
+	* tests/run_test.lst:
+	* tests/tests.mpc:
+
+	  Added new Array_Map_Test regression test.
+
 Thu Jun 23 07:49:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Logging_Strategy.cpp (init):
