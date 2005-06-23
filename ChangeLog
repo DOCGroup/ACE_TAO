@@ -1,3 +1,9 @@
+Thu Jun 23 10:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * man/Makefile.am:
+        * man/man3/Makefile.am:
+          Removed these files because are also not part of the release
+
 Wed Jun 22 20:29:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.h:
