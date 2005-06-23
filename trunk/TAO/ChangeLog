@@ -1,3 +1,12 @@
+Thu Jun 23 08:21:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp (handle_timeout):
+	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.cpp (handle_timeout):
+
+	  Catch and squelch any exceptions that might be thrown.  Also
+	  fixes emulated exception builds.  Thanks to Simon Massey for
+	  pointing out this issue.
+
 Thu Jun 23 14:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/operation_details.{h,cpp}:
