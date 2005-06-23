@@ -3,6 +3,7 @@
 #include "ImR_Locator_i.h"
 #include "utils.h"
 #include "Iterator.h"
+#include "INS_Locator.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
@@ -58,10 +59,12 @@ createPersistentPOA(PortableServer::POA_ptr root_poa, const char* poa_name ACE_E
 
 ImR_Locator_i::ImR_Locator_i (void)
   : forwarder_(*this)
-  , ins_locator_(*this)
+  , ins_locator_(0)
   , debug_(0)
   , read_only_(false)
 {
+  ACE_NEW(ins_locator_,
+          INS_Locator(*this));
 }
 
 ImR_Locator_i::~ImR_Locator_i (void)
@@ -135,7 +138,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
   ACE_CHECK_RETURN (-1);
   ior_table->bind ("ImR", ior.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  ior_table->set_locator (&this->ins_locator_ ACE_ENV_ARG_PARAMETER);
+  ior_table->set_locator (this->ins_locator_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Set up multicast support (if enabled)

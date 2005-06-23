@@ -8,10 +8,10 @@
 
 #include "Adapter_Activator.h"
 #include "Forwarder.h"
-#include "INS_Locator.h"
 #include "Locator_Options.h"
 #include "Locator_Repository.h"
 #include "AsyncStartupWaiter_i.h"
+#include "tao/IORTable/IORTable.h"
 
 #include "orbsvcs/IOR_Multicast.h"
 
@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Reactor;
+class INS_Locator;
 
 // Gets a request from a client and depending on the POA name,
 // requests an activator to take care of activating the
@@ -159,7 +160,7 @@ private:
   ImR_Adapter adapter_;
 
   /// The locator interface for the IORTable
-  INS_Locator ins_locator_;
+  IORTable::Locator_var ins_locator_;
 
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;

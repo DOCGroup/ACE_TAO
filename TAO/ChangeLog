@@ -1,11 +1,19 @@
+Thu Jun 23 11:02:11 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Use an IORTable::Locator_var instead of an INS_Locator to avoid a
+          deletion of a stack variable.
+
 Thu Jun 23 08:21:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp (handle_timeout):
-	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.cpp (handle_timeout):
+        * orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp (handle_timeout):
+        * orbsvcs/orbsvcs/Log/Log_Flush_Handler.cpp (handle_timeout):
 
-	  Catch and squelch any exceptions that might be thrown.  Also
-	  fixes emulated exception builds.  Thanks to Simon Massey for
-	  pointing out this issue.
+          Catch and squelch any exceptions that might be thrown.  Also
+          fixes emulated exception builds.  Thanks to Simon Massey for
+          pointing out this issue.
 
 Thu Jun 23 14:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -59,32 +67,32 @@ Wed Jun 22 11:34:12 2005  Gary Maxey <gary.maxey@hp.com>
 
 Wed Jun 22 08:23:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Iterator_i.cpp (handle_timeout):
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp (handle_timeout):
 
-	  Catch and squelch any exceptions that might be thrown by
-	  destroy().  Thanks to Don Sharp for pointing out this
-	  issue.
+          Catch and squelch any exceptions that might be thrown by
+          destroy().  Thanks to Don Sharp for pointing out this
+          issue.
 
-	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
-	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
+        * orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
+        * orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
 
-	  #include "ace/Time_Value.h", needed by no-inline builds.  Thanks
-	  to Simon Massey for pointing out this issue.
+          #include "ace/Time_Value.h", needed by no-inline builds.  Thanks
+          to Simon Massey for pointing out this issue.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (set_records_attribute):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (set_records_attribute):
 
-	  Changed method to process any excess records returned by the
-	  query iterator.
+          Changed method to process any excess records returned by the
+          query iterator.
 
-	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLog_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
 
-	  Removed write_recordlist() method, as it just called
-	  write_recordlist() on the base class.
+          Removed write_recordlist() method, as it just called
+          write_recordlist() on the base class.
 
 Wed Jun 22 14:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -143,55 +151,55 @@ Wed Jun 22 10:27:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
 Tue Jun 21 17:50:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Interceptor_List.cpp:
+        * tao/Interceptor_List.cpp:
 
-	  Include "tao/debug.h" to pull in TAO_debug_level global variable
-	  declaration.
+          Include "tao/debug.h" to pull in TAO_debug_level global variable
+          declaration.
 
 Tue Jun 21 14:41:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
 
-	  Add missing "int" return type to method definitions.
+          Add missing "int" return type to method definitions.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
 
-	  Added flush and compaction handlers to class.  The flush handler
-	  is scheduled when the QoS is set to QoSFlush.  The compaction
-	  handler is scheduled when the max record life is set.
+          Added flush and compaction handlers to class.  The flush handler
+          is scheduled when the QoS is set to QoSFlush.  The compaction
+          handler is scheduled when the max record life is set.
 
-	  Removed explicit calls to remove_old_records(), that is now done
-	  via the compaction handler.
+          Removed explicit calls to remove_old_records(), that is now done
+          via the compaction handler.
 
-	* orbvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Added Log_Flush_Handler.cpp and Log_Compaction_Handler.cpp to
-	  the DsLogAdmin_Serv project's list of Source Files.
+          Added Log_Flush_Handler.cpp and Log_Compaction_Handler.cpp to
+          the DsLogAdmin_Serv project's list of Source Files.
 
-	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.cpp:
-	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
+        * orbsvcs/orbsvcs/Log/Log_Flush_Handler.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
 
-	  New files.  Added TAO_Log_Flush_Handler class that manages an
-	  interval timer that calls flush() on the log when it fires.  The
-	  interval is currently set to 300 seconds.  This should probably
-	  be a parameter that is specified when the service is started.
+          New files.  Added TAO_Log_Flush_Handler class that manages an
+          interval timer that calls flush() on the log when it fires.  The
+          interval is currently set to 300 seconds.  This should probably
+          be a parameter that is specified when the service is started.
 
-	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp:
-	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
+        * orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
 
-	  New files.  Added TAO_Log_Compaction_Handler class that manages
-	  an interval timer that calls remove_old_records() on the log
-	  when it fires.  The interval is currently set to 60 seconds.
-	  This should probably be a parameter that is specified when the
-	  service is started.
+          New files.  Added TAO_Log_Compaction_Handler class that manages
+          an interval timer that calls remove_old_records() on the log
+          when it fires.  The interval is currently set to 60 seconds.
+          This should probably be a parameter that is specified when the
+          service is started.
 
 Tue Jun 21 14:27:12 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tao/Valuetype/ValueBase.h
         * tao/Valuetype/ValueBase.cpp
-	  Added support method for valuebox demarshalling.
+          Added support method for valuebox demarshalling.
 
 Tue Jun 21 13:38:23 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -334,38 +342,38 @@ Tue Jun 21 08:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 20 23:17:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
         * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
         * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 
           Fixed fuzz build errors related to missing ACE_ENV_ARG_PARAMETER
-	  in call to resolve_initial_references().
+          in call to resolve_initial_references().
 
 Mon Jun 20 21:49:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Iterator_i.cpp:
-	* orbsvcs/orbsvcs/Log/Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
 
-	  Added iterator inactivity timer that causes the iterator to self
-	  destruct after 1 hour of inactivity.  This should probably be a
-	  parameter that is specified when the service is started.
+          Added iterator inactivity timer that causes the iterator to self
+          destruct after 1 hour of inactivity.  This should probably be a
+          parameter that is specified when the service is started.
 
-	* orbsvcs/orbsvcs/Log/Iterator_i.cpp:
-	* orbsvcs/orbsvcs/Log/Iterator_i.h:
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
 
-	  Pass reactor to Iterator constructor.
+          Pass reactor to Iterator constructor.
 
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
         * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
         * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 
-	  Removed the debug messages that indicated the log service was
-	  starting, and the name the ior was registered with the naming
-	  service.  TAO's other ORBservice implementations don't output
-	  this sort of mundane information.
+          Removed the debug messages that indicated the log service was
+          starting, and the name the ior was registered with the naming
+          service.  TAO's other ORBservice implementations don't output
+          this sort of mundane information.
 
 Mon Jun 20 12:21:00 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -550,9 +558,9 @@ Fri Jun 17 19:54:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Log/LogRecordStore_persist.h (LOG_DEFAULT_MAX_REC_LIST_LEN):
 
           Changed the maximum number of records that can be returned by
-	  query() without using an iterator from 30 to 100.  This should
-	  probably be a parameter that is specified when the service is
-	  started, but until it is, 100 is a more reasonable default.
+          query() without using an iterator from 30 to 100.  This should
+          probably be a parameter that is specified when the service is
+          started, but until it is, 100 is a more reasonable default.
 
           From documentation available on line, the Orbix log service
           implementation defaults to 100 records, the VisiBroker
