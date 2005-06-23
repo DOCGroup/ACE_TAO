@@ -588,7 +588,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int
-ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
+ifr_adding_visitor::visit_valuebox (AST_ValueBox *)
 {
   return 0;
 }

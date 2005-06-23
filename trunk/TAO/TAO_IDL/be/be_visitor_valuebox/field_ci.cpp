@@ -286,33 +286,29 @@ be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_valuebox_field_ci::visit_valuetype (be_valuetype *node)
+be_visitor_valuebox_field_ci::visit_valuetype (be_valuetype *)
 {
-  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
 
 int
-be_visitor_valuebox_field_ci::visit_eventtype (be_eventtype *node)
+be_visitor_valuebox_field_ci::visit_eventtype (be_eventtype *)
 {
-  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
 
 int
-be_visitor_valuebox_field_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
+be_visitor_valuebox_field_ci::visit_valuetype_fwd (be_valuetype_fwd *)
 {
-  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
 
 int
-be_visitor_valuebox_field_ci::visit_eventtype_fwd (be_eventtype_fwd *node)
+be_visitor_valuebox_field_ci::visit_eventtype_fwd (be_eventtype_fwd *)
 {
-  ACE_UNUSED_ARG( node );
   // Valuetype is not a valid component of a valuebox
   return 0;
 }
