@@ -1,3 +1,16 @@
+Thu Jun 23 07:49:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Logging_Strategy.cpp (init):
+
+	  Changed to not delete output stream when wipeout_logfile_ is
+	  set, as that may result in a double delete when ownership of
+	  the new stream is transferred to this->log_msg_.
+
+	  Changed to not delete existing output stream if a new one is
+	  not been created.
+
+	  Thanks to Mark Callaghan and Ossama Othman for assistance.
+
 Thu Jun 23 12:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-posix.h:
