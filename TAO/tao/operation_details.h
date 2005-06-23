@@ -138,10 +138,10 @@ public:
    * the list of parameters passed by the operation, exceptions
    * declared for the operation, and the result when available.
    */
-  bool exception_list (Dynamic::ExceptionList &);
 #if TAO_HAS_INTERCEPTORS == 1
-  bool parameter_list (Dynamic::ParameterList &);
-  bool result (CORBA::Any *);
+  bool exception_list (Dynamic::ExceptionList &exception_list);
+  bool parameter_list (Dynamic::ParameterList &param_list);
+  bool result (CORBA::Any *any);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
   //@}
 
