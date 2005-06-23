@@ -4,6 +4,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/Reactor.h"
 #include "ace/Thread.h"
+#include "ace/OS_NS_errno.h"
+
 /************************************************************/
 
 ACE_INLINE int
@@ -449,14 +451,20 @@ ACE_WFMO_Reactor::reset_timer_interval
 {
   ACE_TRACE ("ACE_WFMO_Reactor::reset_timer_interval");
 
-  long result = this->timer_queue_->reset_interval
-    (timer_id,
-     interval);
+  if (0 != this->timer_queue_)
+    {
+      long result = this->timer_queue_->reset_interval
+        (timer_id,
+         interval);
 
-  // Wakeup the owner thread so that it gets the latest timer values
-  this->notify ();
+      // Wakeup the owner thread so that it gets the latest timer values
+      this->notify ();
 
-  return result;
+      return result;
+    }
+
+  errno = ESHUTDOWN;
+  return -1;
 }
 
 ACE_INLINE long
@@ -467,16 +475,22 @@ ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_WFMO_Reactor::schedule_timer");
 
-  long result = this->timer_queue_->schedule
-    (handler,
-     arg,
-     timer_queue_->gettimeofday () + delay_time,
-     interval);
+  if (0 != this->timer_queue_)
+    {
+      long result = this->timer_queue_->schedule
+        (handler,
+         arg,
+         timer_queue_->gettimeofday () + delay_time,
+         interval);
 
-  // Wakeup the owner thread so that it gets the latest timer values
-  this->notify ();
+      // Wakeup the owner thread so that it gets the latest timer values
+      this->notify ();
 
-  return result;
+      return result;
+    }
+
+  errno = ESHUTDOWN;
+  return -1;
 }
 
 ACE_INLINE int
@@ -484,7 +498,9 @@ ACE_WFMO_Reactor::cancel_timer (ACE_Event_Handler *handler,
                                 int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::cancel_timer");
-  return this->timer_queue_->cancel (handler, dont_call_handle_close);
+  if (0 != this->timer_queue_)
+    return this->timer_queue_->cancel (handler, dont_call_handle_close);
+  return 0;
 }
 
 ACE_INLINE int
@@ -493,7 +509,9 @@ ACE_WFMO_Reactor::cancel_timer (long timer_id,
                                 int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::cancel_timer");
-  return this->timer_queue_->cancel (timer_id, arg, dont_call_handle_close);
+  if (0 != this->timer_queue_)
+    return this->timer_queue_->cancel (timer_id, arg, dont_call_handle_close);
+  return 0;
 }
 
 ACE_INLINE int
