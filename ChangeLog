@@ -1,52 +1,57 @@
+Thu Jun 23 22:24:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Fixed typo (ACE_HAS_SHMOPEN should be ACE_HAS_SHM_OPEN).
+
 Thu Jun 23 17:14:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dev_Poll_Reactor.cpp (schedule_timer, reset_timer_interval):
-	* ace/Select_Reactor_T.cpp (schedule_timer, reset_timer_interval):
-	* ace/WFMO_Reactor.inl (cancel_timer, schedule_timer, reset_timer_interval):
-	  If timer_queue_ is 0, don't attempt to call through it. Instead,
-	  return -1 with errno ESHUTDOWN for scheduling; return 0 for cancel.
+        * ace/Dev_Poll_Reactor.cpp (schedule_timer, reset_timer_interval):
+        * ace/Select_Reactor_T.cpp (schedule_timer, reset_timer_interval):
+        * ace/WFMO_Reactor.inl (cancel_timer, schedule_timer, reset_timer_interval):
+          If timer_queue_ is 0, don't attempt to call through it. Instead,
+          return -1 with errno ESHUTDOWN for scheduling; return 0 for cancel.
 
 Thu Jun 23 12:10:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Array_Map.h:
-	* ace/Array_Map.inl:
-	* ace/Array_Map.cpp:
+        * ace/Array_Map.h:
+        * ace/Array_Map.inl:
+        * ace/Array_Map.cpp:
 
-	  Map implementation that focuses on small footprint and fast
-          iteration.  Search times are, however, linear (O(n)) meaning
-	  that this map isn't suitable for large data sets that will be
-	  searched in performance critical areas of code.  Iteration over
-	  large data sets, however, is faster than linked list-based maps,
-	  for example, since spatial locality is maximized through the use
-	  of contiguous arrays as the underlying storage.
+          Map implementation that focuses on small footprint and fast
+                iteration.  Search times are, however, linear (O(n)) meaning
+          that this map isn't suitable for large data sets that will be
+          searched in performance critical areas of code.  Iteration over
+          large data sets, however, is faster than linked list-based maps,
+          for example, since spatial locality is maximized through the use
+          of contiguous arrays as the underlying storage.
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Added new Array_Map.* source files.
+          Added new Array_Map.* source files.
 
-	* tests/Array_Map_Test.cpp:
+        * tests/Array_Map_Test.cpp:
 
-	  Regression test for ACE_Array_Map.
+          Regression test for ACE_Array_Map.
 
-	* tests/Makefile.am:
-	* tests/run_test.lst:
-	* tests/tests.mpc:
+        * tests/Makefile.am:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
 
-	  Added new Array_Map_Test regression test.
+          Added new Array_Map_Test regression test.
 
 Thu Jun 23 07:49:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Logging_Strategy.cpp (init):
+        * ace/Logging_Strategy.cpp (init):
 
-	  Changed to not delete output stream when wipeout_logfile_ is
-	  set, as that may result in a double delete when ownership of
-	  the new stream is transferred to this->log_msg_.
+          Changed to not delete output stream when wipeout_logfile_ is
+          set, as that may result in a double delete when ownership of
+          the new stream is transferred to this->log_msg_.
 
-	  Changed to not delete existing output stream if a new one is
-	  not been created.
+          Changed to not delete existing output stream if a new one is
+          not been created.
 
-	  Thanks to Mark Callaghan and Ossama Othman for assistance.
+          Thanks to Mark Callaghan and Ossama Othman for assistance.
 
 Thu Jun 23 12:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 

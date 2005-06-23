@@ -40,8 +40,8 @@
 
 // Temporary fix because >2.6 kernels do have shm_open but there is a problem
 // with that somewhere which needs to be fixed when I have time.
-#if defined (ACE_HAS_SHMOPEN)
-# undef ACE_HAS_SHMOPEN
+#if defined (ACE_HAS_SHM_OPEN)
+# undef ACE_HAS_SHM_OPEN
 #endif
 
 #if defined (ACE_HAS_POSIX_SEM)
