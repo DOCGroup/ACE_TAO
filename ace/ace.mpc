@@ -285,6 +285,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Acceptor.cpp
     Active_Map_Manager_T.cpp
     Array_Base.cpp
+    Array_Map.cpp
     Asynch_Acceptor.cpp
     Asynch_Connector.cpp
     Atomic_Op_T.cpp

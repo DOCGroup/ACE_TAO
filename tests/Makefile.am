@@ -120,6 +120,20 @@ Arg_Shifter_Test_SOURCES = \
 Arg_Shifter_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
+## Makefile.Array_Map_Test.am 
+noinst_PROGRAMS += Array_Map_Test
+
+Array_Map_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Array_Map_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Array_Map_Test.cpp
+
+Array_Map_Test_LDADD = \
+ libTest_Output.la $(top_builddir)/ace/libACE.la
+
 ## Makefile.Atomic_Op_Test.am 
 noinst_PROGRAMS += Atomic_Op_Test
 
