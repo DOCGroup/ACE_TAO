@@ -17,7 +17,7 @@
 #include "ace/DLL.h"
 #include "ciao/CCM_EventC.h"
 
-namespace Sender_Impl
+namespace CIDL_Sender_Impl
 {
   class SENDER_EXEC_Export Sender_exec_i :
       public virtual Sender_Exec,
@@ -186,9 +186,10 @@ namespace Sender_Impl
 
   };
 
+  extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  createSenderHome_Impl (void);
 }
 
-extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-createSenderHome_Impl (void);
-
 #endif /* SENDER_EXEC_H */
+
+

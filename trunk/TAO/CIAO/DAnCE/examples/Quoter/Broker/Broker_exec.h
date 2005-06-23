@@ -24,7 +24,7 @@
 
 #include "tao/LocalObject.h"
 
-namespace StockBroker_Impl
+namespace CIDL_StockBroker_Impl
 {
 
   /**
@@ -111,7 +111,7 @@ namespace StockBroker_Impl
     ::Components::CCMException));
 
     protected:
-    CIAO_GLUE_Stock::StockBroker_Context *context_;
+    StockBroker_Context *context_;
 
     private:
     std::set<std::string> subscribed_stock_list_;
