@@ -342,7 +342,6 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
           // Create a new ofstream to direct output to the file.
           if (wipeout_logfile_)
             {
-              delete output_file;
               ACE_NEW_RETURN
                 (output_file,
                  ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_)),
@@ -361,7 +360,8 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 
           if (output_file->rdstate () != ios::goodbit)
             {
-              delete output_file;
+	      if (delete_ostream) 
+                delete output_file;
               return -1;
             }
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
