@@ -1,3 +1,11 @@
+Thu Jun 23 17:14:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Dev_Poll_Reactor.cpp (schedule_timer, reset_timer_interval):
+	* ace/Select_Reactor_T.cpp (schedule_timer, reset_timer_interval):
+	* ace/WFMO_Reactor.inl (cancel_timer, schedule_timer, reset_timer_interval):
+	  If timer_queue_ is 0, don't attempt to call through it. Instead,
+	  return -1 with errno ESHUTDOWN for scheduling; return 0 for cancel.
+
 Thu Jun 23 12:10:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Array_Map.h:
