@@ -45,27 +45,30 @@
 # endif /* ACE_HAS_SHM_OPEN */
 #endif /* _POSIX_SHARED_MEMORY_OBJECTS */
 
+// Check if threading enabled/disable through platform_macros
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
 // Allow the user to disable use of threads by setting ACE_HAS_THREADS to 0
 // before including this file. The platform config (not macros) file can
 // often detect that the compiler was invoked with or without threads support
 // and set this accordingly.
-#if defined (ACE_HAS_THREADS) && (ACE_HAS_THREADS == 0)
-# undef ACE_HAS_THREADS
-#else
-# if defined(_POSIX_THREADS) && (_POSIX_THREADS-0 != -1 )
-#  if !defined(ACE_HAS_THREADS)
-#   define ACE_HAS_THREADS
-#  endif /* ACE_HAS_THREADS */
+# if defined (ACE_HAS_THREADS) && (ACE_HAS_THREADS == 0)
+#   undef ACE_HAS_THREADS
+# else
+#   if defined(_POSIX_THREADS) && (_POSIX_THREADS-0 != -1 )
+#   if !defined(ACE_HAS_THREADS)
+#     define ACE_HAS_THREADS
+#   endif /* ACE_HAS_THREADS */
 
-#  if !defined(ACE_HAS_PTHREADS)
-#   define ACE_HAS_PTHREADS
-#  endif /* ACE_HAS_PTHREADS */
+#   if !defined(ACE_HAS_PTHREADS)
+#     define ACE_HAS_PTHREADS
+#   endif /* ACE_HAS_PTHREADS */
 
-#  if !defined(ACE_HAS_PTHREADS_STD)
-#   define ACE_HAS_PTHREADS_STD
-#  endif /* ACE_HAS_PTHREADS_STD */
-# endif /* _POSIX_THREADS */
-#endif /* ACE_HAS_THREADS */
+#   if !defined(ACE_HAS_PTHREADS_STD)
+#     define ACE_HAS_PTHREADS_STD
+#   endif /* ACE_HAS_PTHREADS_STD */
+#   endif /* _POSIX_THREADS */
+# endif /* ACE_HAS_THREADS */
+#endif /* !ACE_MT_SAFE */
 
 #if defined(_POSIX_MESSAGE_PASSING) && (_POSIX_MESSAGE_PASSING-0 != -1 )
 # if !defined(ACE_HAS_POSIX_MESSAGE_PASSING)

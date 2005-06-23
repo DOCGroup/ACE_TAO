@@ -1,3 +1,8 @@
+Thu Jun 23 12:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-posix.h:
+          Fixed problems for single threading builds.
+
 Thu Jun 23 10:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * man/Makefile.am:
@@ -6,28 +11,28 @@ Thu Jun 23 10:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun 22 20:29:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.h:
 
-	  Removed extra semi-colon.  Fixes g++ 4.0 builds.
+          Removed extra semi-colon.  Fixes g++ 4.0 builds.
 
 Wed Jun 22 19:11:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Mark Callaghan to the Hall of Fame.
+          Added Mark Callaghan to the Hall of Fame.
 
-	* ace/Log_Msg.cpp (msg_ostream):
+        * ace/Log_Msg.cpp (msg_ostream):
 
-	  Close, do not delete, the file stream in the
-	  ACE_LACKS_IOSTREAM_TOTALLY case, as is done in the
-	  ~ACE_Log_Msg() destructor. Addresses memory management issues.
-	  Thanks to J.T. Conklin and Mark Callaghan for pointing out the
-	  problem and suggesting the fix.
+          Close, do not delete, the file stream in the
+          ACE_LACKS_IOSTREAM_TOTALLY case, as is done in the
+          ~ACE_Log_Msg() destructor. Addresses memory management issues.
+          Thanks to J.T. Conklin and Mark Callaghan for pointing out the
+          problem and suggesting the fix.
 
-	  Do not reset the ostream_ and delete_ostream_ attributes if
-	  the pointer to ostream_ is equal to the ostream argument passed
-	  to this method.  Prevents premature destruction of the ostream.
-	  Thanks to Mark Callaghan for suggesting this fix.
+          Do not reset the ostream_ and delete_ostream_ attributes if
+          the pointer to ostream_ is equal to the ostream argument passed
+          to this method.  Prevents premature destruction of the ostream.
+          Thanks to Mark Callaghan for suggesting this fix.
 
 Wed Jun 22 19:55:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
