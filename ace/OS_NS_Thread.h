@@ -1873,7 +1873,7 @@ extern "C"
     /// Number of waiting threads.
     unsigned long waiting_threads_;
   } ACE_eventdata_t;
-};
+}
 
 /**
  * @class ACE_event_t
