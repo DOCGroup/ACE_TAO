@@ -14,7 +14,7 @@
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace Sender_Impl
+namespace CIDL_Sender_Impl
 {
   /**
    * @class Sender_exec_i
@@ -159,9 +159,10 @@ namespace Sender_Impl
                        Components::CCMException));
   };
 
+  extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  createSenderHome_Impl (void);
 }
 
-extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-createSenderHome_Impl (void);
-
 #endif /* SENDER_EXEC_H */
+
+

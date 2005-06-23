@@ -10,7 +10,7 @@
 #include "ace/Reactor.h"
 
 
-namespace StockDistributor_Impl
+namespace CIDL_StockDistributor_Impl
 {
 
   // initialze the stock values
@@ -267,8 +267,8 @@ namespace StockDistributor_Impl
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
-    this->context_ = CIAO_GLUE_Stock::StockDistributor_Context::_narrow (ctx
-                                                                         ACE_ENV_ARG_PARAMETER);
+    this->context_ = StockDistributor_Context::_narrow (ctx
+                                                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (this->context_ == 0)

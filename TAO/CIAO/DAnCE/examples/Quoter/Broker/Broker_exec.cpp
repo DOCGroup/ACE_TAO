@@ -9,7 +9,7 @@
 #include "ciao/CIAO_common.h"
 
 
-namespace StockBroker_Impl
+namespace CIDL_StockBroker_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   StockBroker_exec_i
@@ -112,8 +112,8 @@ namespace StockBroker_Impl
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
-    this->context_ = CIAO_GLUE_Stock::StockBroker_Context::_narrow (ctx
-                                                                    ACE_ENV_ARG_PARAMETER);
+    this->context_ = StockBroker_Context::_narrow (ctx
+                                                   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (0 == this->context_)

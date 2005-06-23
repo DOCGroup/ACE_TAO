@@ -19,7 +19,7 @@
 #include "RoundTrip_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace RoundTrip_Impl
+namespace CIDL_RoundTrip_Impl
 {
 
   /**
@@ -29,7 +29,7 @@ namespace RoundTrip_Impl
    */
   class NODEAPPTEST_ROUNDTRIP_EXEC_Export RoundTrip_exec_i
     : public virtual NodeAppTest::LatencyTest,
-      public virtual RoundTrip_Impl::RoundTrip_Exec,
+      public virtual RoundTrip_Exec,
       public virtual TAO_Local_RefCounted_Object
   {
 
@@ -110,7 +110,7 @@ namespace RoundTrip_Impl
     }
 
     virtual CORBA::Long cube_long (CORBA::Long data 
-		    	           ACE_ENV_ARG_DECL)
+		    	                         ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
@@ -120,7 +120,7 @@ namespace RoundTrip_Impl
    * RoundTrip home executor implementation class.
    */
   class NODEAPPTEST_ROUNDTRIP_EXEC_Export RoundTripHome_exec_i :
-    public virtual RoundTrip_Impl::RoundTripHome_Exec,
+    public virtual RoundTripHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
@@ -145,9 +145,8 @@ namespace RoundTrip_Impl
 
   };
 
+  extern "C" NODEAPPTEST_ROUNDTRIP_EXEC_Export
+  ::Components::HomeExecutorBase_ptr createRoundTripHome_Impl (void);
 }
-
-extern "C" NODEAPPTEST_ROUNDTRIP_EXEC_Export
-::Components::HomeExecutorBase_ptr createRoundTripHome_Impl (void);
 
 #endif /* NODEAPP_ROUNDTRIPGEN_EXEC_H */
