@@ -15,10 +15,9 @@
 #include "Sender_exec_2_export.h"
 #include "tao/LocalObject.h"
 
-namespace Sender_Impl
+namespace CIDL_Sender_Impl
 {
   class SenderSwap_exec_i;
-
 
   class SENDER_EXEC_2_Export Sender_exec_2_i :
       public virtual Sender_Exec,
@@ -127,9 +126,8 @@ namespace Sender_Impl
     Sender_exec_2_i& component_;
   };
 
+  extern "C" SENDER_EXEC_2_Export ::Components::EnterpriseComponent_ptr
+  createSenderExec_Impl (SenderSwap_exec_i *p);
 }
-
-extern "C" SENDER_EXEC_2_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (Sender_Impl::SenderSwap_exec_i *p);
 
 #endif /* SENDER_EXEC_H */

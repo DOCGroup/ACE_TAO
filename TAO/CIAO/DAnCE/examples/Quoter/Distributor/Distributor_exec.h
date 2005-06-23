@@ -26,7 +26,7 @@
 
 #include "tao/LocalObject.h"
 
-namespace StockDistributor_Impl
+namespace CIDL_StockDistributor_Impl
 {
   class StockDistributor_exec_i;
 
@@ -210,7 +210,7 @@ namespace StockDistributor_Impl
     ::Components::CCMException));
 
     protected:
-    CIAO_GLUE_Stock::StockDistributor_Context *context_;
+    StockDistributor_Context *context_;
 
     /// User defined members
     public:
