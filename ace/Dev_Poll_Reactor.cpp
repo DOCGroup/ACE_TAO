@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_errno.h"
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Signal.h"
 
@@ -2015,11 +2016,15 @@ ACE_Dev_Poll_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-  return this->timer_queue_->schedule (
-           event_handler,
-           arg,
-           this->timer_queue_->gettimeofday () + delay,
-           interval);
+  if (0 != this->timer_queue_)
+    return this->timer_queue_->schedule
+      (event_handler,
+       arg,
+       this->timer_queue_->gettimeofday () + delay,
+       interval);
+
+  errno = ESHUTDOWN;
+  return -1;
 }
 
 int
@@ -2030,7 +2035,11 @@ ACE_Dev_Poll_Reactor::reset_timer_interval (long timer_id,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-  return this->timer_queue_->reset_interval (timer_id, interval);
+  if (0 != this->timer_queue_)
+    return this->timer_queue_->reset_interval (timer_id, interval);
+
+  errno = ESHUTDOWN;
+  return -1;
 }
 
 int

@@ -15,6 +15,7 @@
 #include "ace/Signal.h"
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_stat.h"
 
@@ -785,11 +786,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   ACE_TRACE ("ACE_Select_Reactor_T::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  return this->timer_queue_->schedule
-    (handler,
-     arg,
-     timer_queue_->gettimeofday () + delay_time,
-     interval);
+  if (0 != this->timer_queue_)
+    return this->timer_queue_->schedule
+      (handler,
+       arg,
+       timer_queue_->gettimeofday () + delay_time,
+       interval);
+
+  errno = ESHUTDOWN;
+  return -1;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -800,7 +805,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::reset_timer_interval
   ACE_TRACE ("ACE_Select_Reactor_T::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  return this->timer_queue_->reset_interval (timer_id, interval);
+  if (0 != this->timer_queue_)
+    return this->timer_queue_->reset_interval (timer_id, interval);
+
+  errno = ESHUTDOWN;
+  return -1;
 }
 
 // Main event loop driver that blocks for <max_wait_time> before
