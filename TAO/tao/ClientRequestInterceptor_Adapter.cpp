@@ -23,27 +23,16 @@ namespace TAO
   }
 
   void
-  ClientRequestInterceptor_Adapter::send_request (TAO_ClientRequestInfo_i *ri
+  ClientRequestInterceptor_Adapter::send_request (TAO_ClientRequestInfo *ri
                                                   ACE_ENV_ARG_DECL)
   {
     // This method implements one of the "starting" client side
     // interception point.
     ACE_TRY
       {
-        // Only perform the TSS access if interceptors were registered
-        // with the ORB.
-        if (this->len_ > 0)
+        for (size_t i = 0 ; i < this->interceptors_.size (); ++i)
           {
-            TAO_ORB_Core *orb_core = this->invocation_->orb_core ();
-            this->info_ =
-              orb_core->get_tss_resources ()->client_request_info_;
-          }
-
-        TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
-
-        for (size_t i = 0 ; i < this->len_; ++i)
-          {
-            this->interceptors_[i]->send_request (this->info_
+            this->interceptors_[i]->send_request (ri
                                                   ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -64,7 +53,7 @@ namespace TAO
   }
 
   void
-  ClientRequestInterceptor_Adapter::receive_reply (TAO_ClientRequestInfo_i *ri
+  ClientRequestInterceptor_Adapter::receive_reply (TAO_ClientRequestInfo *ri
                                                    ACE_ENV_ARG_DECL)
   {
     // This is an "ending" interception point so we only process the
@@ -73,8 +62,6 @@ namespace TAO
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
     // interception point.
-
-    TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
 
     // Unwind the stack.
     const size_t len = this->stack_size_;
@@ -87,7 +74,7 @@ namespace TAO
         --this->stack_size_;
 
         this->interceptors_[this->stack_size_]->receive_reply (
-          this->info_
+          ri
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
@@ -98,7 +85,7 @@ namespace TAO
   }
 
   void
-  ClientRequestInterceptor_Adapter::receive_exception (TAO_ClientRequestInfo_i *ri
+  ClientRequestInterceptor_Adapter::receive_exception (TAO_ClientRequestInfo *ri
                                                        ACE_ENV_ARG_DECL)
   {
     // This is an "ending" interception point so we only process the
@@ -110,8 +97,6 @@ namespace TAO
 
     ACE_TRY
       {
-        TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
-
         // Unwind the flow stack.
         const size_t len = this->stack_size_;
         for (size_t i = 0; i < len; ++i)
@@ -123,7 +108,7 @@ namespace TAO
             --this->stack_size_;
 
             this->interceptors_[this->stack_size_]->receive_exception (
-              this->info_
+              ri
               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           }
@@ -166,7 +151,7 @@ namespace TAO
   }
 
   void
-  ClientRequestInterceptor_Adapter::receive_other (TAO_ClientRequestInfo_i *ri
+  ClientRequestInterceptor_Adapter::receive_other (TAO_ClientRequestInfo *ri
                                                    ACE_ENV_ARG_DECL)
   {
     // This is an "ending" interception point so we only process the
@@ -178,8 +163,6 @@ namespace TAO
 
     ACE_TRY
       {
-        TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
-
         // Unwind the stack.
         const size_t len = this->stack_size_;
         for (size_t i = 0; i < len; ++i)
@@ -191,7 +174,7 @@ namespace TAO
           --this->stack_size_;
 
           this->interceptors_[this->stack_size_]->receive_other (
-            this->info_
+            ri
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -207,7 +190,7 @@ namespace TAO
 
   void
   ClientRequestInterceptor_Adapter::process_forward_request (
-      TAO_ClientRequestInfo_i *ri,
+      TAO_ClientRequestInfo *ri,
       PortableInterceptor::ForwardRequest &exc
       ACE_ENV_ARG_DECL)
   {

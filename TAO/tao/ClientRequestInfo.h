@@ -33,37 +33,43 @@
 
 #include "tao/ClientRequestInfoC.h"
 #include "tao/ORB_Constants.h"
+#include "Invocation_Utils.h"
+#include "PIForwardRequestC.h"
+#include "PICurrent_Impl.h"
+#include "PICurrent_Copy_Callback.h"
 
-class TAO_ClientRequestInfo_i;
+class TAO_Service_Context;
+
+namespace TAO
+{
+  class Invocation_Base;
+}
+
+namespace Dynamic
+{
+  class ParameterList;
+  class ExceptionList;
+  typedef CORBA::StringSeq RequestContext;
+  typedef CORBA::StringSeq ContextList;
+}
+
+namespace Messaging
+{
+  typedef CORBA::Short SyncScope;
+}
 
 /**
  * @class TAO_ClientRequestInfo
  *
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
- *
- * This class forwards all method calls to the underlying
- * ClientRequestInfo implementation.
- * @par
- * An instance of this class is placed in TSS, where as the underlying
- * implementation is instantiated on the stack during each CORBA
- * request.  During each request invocation, a pointer to the stack
- * instantiated implementation is placed in the instance of this
- * class.
- * @par
- * This may seem unnecessary.  However, it is necessary to avoid
- * instantiating an object that inherits from CORBA::Object in the
- * critical path.  Such an instantiation would cause a lock to be
- * initialized (not acquired) in the critical path, which can degrade
- * performance significantly.
  */
 class TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
-
-  TAO_ClientRequestInfo (void);
+  TAO_ClientRequestInfo (TAO::Invocation_Base *invocation);
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
@@ -211,13 +217,27 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Set the ClientRequestInfo implementation which this class
-  /// forwards all method call to.
-  void info (TAO_ClientRequestInfo_i *info);
+  /**
+   * @name Stub helper methods
+   *
+   * The following methods are used in the implementation of the
+   * Stubs, they are not part of the ClientRequestInfo interface, but
+   * an extension used internally by TAO.
+   */
+  //@{
 
-  /// Get the ClientRequestInfo implementation which this class
-  /// forwards all method call to.
-  TAO_ClientRequestInfo_i * info (void) const;
+  /// Change the exception status.
+  void exception (CORBA::Exception *exception);
+
+  /// Set the status of the received reply.
+  void reply_status (TAO::Invocation_Status s);
+
+  /// Extract the forward object reference from the
+  /// PortableInterceptor::ForwardRequest exception, and set the reply
+  /// status flag accordingly.
+  void forward_reference (PortableInterceptor::ForwardRequest &exc);
+  //@}
+
 
 private:
 
@@ -225,48 +245,49 @@ private:
   /// context of a request.
   void check_validity (ACE_ENV_SINGLE_ARG_DECL);
 
-private:
+  /// Setup thread scope and request scope
+  /// PortableInterceptor::Current objects.
+  void setup_picurrent (void);
 
-  /// Pointer to the object that actually implements the
-  /// ClientRequestInfo functionality.
-  TAO_ClientRequestInfo_i * info_;
+  /// Helper method to get the request and response service contexts.
+  IOP::ServiceContext *get_service_context_i (
+      TAO_Service_Context &service_context_list,
+      IOP::ServiceId id
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  /// Pointer to the invocation object.
+  TAO::Invocation_Base *invocation_;
+
+  /// Pointer to the caught exception.
+  CORBA::Exception *caught_exception_;
+
+  /// Reply status for the current request.
+  PortableInterceptor::ReplyStatus reply_status_;
+
+  /// The "Request Scope Current" (RSC) object, as required by
+  /// Portable Interceptors.
+  TAO::PICurrent_Impl rs_pi_current_;
+
+  /// Callback object to be executed when shallow copied slot table
+  /// must be deep copied.
+  /**
+   * This callback object deep copies the slot table from the TSC to
+   * the RSC.
+   * @par
+   * As an optimization, the TSC's slot table is initially only
+   * shallowed copied to the RSC.  If the TSC's slot table will be
+   * modified, e.g. via PICurrent::set_slot(), it's slot table must be
+   * deep copied to the RSC before actually modifying that slot
+   * table.  This is necessary since the RSC is read-only on the
+   * client side, meaning that changes in the TSC that occur after
+   * instantiation of the RSC must not be reflected in the RSC.
+   */
+  TAO::PICurrent_Copy_Callback copy_callback_;
 };
 
 // -------------------------------------------------------------------
-
-/**
- * @class TAO_ClientRequestInfo_Guard
- *
- * @brief Guard for exception safe TAO_ClientRequestInfo_i pointer
- *        swapping.
- *
- * This class is used to ensure the swapping of
- * TAO_ClientRequestInfo_i pointers in a TAO_ClientRequestInfo object
- * is performed in an exception-safe manner when interception points
- * are being invoked.
- */
-class TAO_ClientRequestInfo_Guard
-{
-public:
-
-  /// Constructor.
-  TAO_ClientRequestInfo_Guard (TAO_ClientRequestInfo *info,
-                               TAO_ClientRequestInfo_i *ri);
-
-  /// Destructor.
-  ~TAO_ClientRequestInfo_Guard (void);
-
-private:
-
-  /// Pointer to the TAO_ClientRequestInfo object upon which pointer
-  /// swaps will occur.
-  TAO_ClientRequestInfo * info_;
-
-  /// Pointer to the TAO_ClientRequestInfo_i object that was
-  /// previously stored in the TAO_ClientRequestInfo object.
-  TAO_ClientRequestInfo_i * previous_info_;
-
-};
 
 # if defined (__ACE_INLINE__)
 #  include "ClientRequestInfo.inl"

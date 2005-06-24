@@ -29,7 +29,6 @@ class TAO_ORB_Core;
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent_Impl.h"
-class TAO_ClientRequestInfo;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 /**
@@ -90,10 +89,6 @@ public:
 #if TAO_HAS_INTERCEPTORS == 1
   /// The thread-specific portion of the PICurrent object.
   TAO::PICurrent_Impl pi_current_;
-
-  /// The PortableInterceptor::ClientRequestInfo object for the
-  /// current thread.
-  TAO_ClientRequestInfo *client_request_info_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 

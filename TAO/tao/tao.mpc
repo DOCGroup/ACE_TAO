@@ -44,7 +44,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInfo.cpp
     ClientRequestInfoA.cpp
     ClientRequestInfoC.cpp
-    ClientRequestInfo_i.cpp
     ClientRequestInterceptor_Adapter.cpp
     ClientRequestInterceptorA.cpp
     ClientRequestInterceptorC.cpp
@@ -370,7 +369,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInfo.h
     ClientRequestInfoC.h
     ClientRequestInfoS.h
-    ClientRequestInfo_i.h
     ClientRequestInterceptor_Adapter.h
     ClientRequestInterceptorC.h
     ClientRequestInterceptorS.h
