@@ -1349,6 +1349,10 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       // Include files from the Valuetype library.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueBase.h");
+
+      // Valuebox needs CDR for _tao_marshal_v code in .inl file
+      this->gen_standard_include (this->client_header_,
+                                  "tao/CDR.h");
     }
 
   if (idl_global->valuetype_seen_)
@@ -1378,7 +1382,8 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                               "tao/ORB.h");
 
   this->gen_cond_file_include (
-      idl_global->operation_seen_ || idl_global->valuefactory_seen_,
+      idl_global->operation_seen_ || idl_global->valuefactory_seen_
+         || idl_global->valuebase_seen_,
       "tao/SystemException.h",
       this->client_header_
     );
