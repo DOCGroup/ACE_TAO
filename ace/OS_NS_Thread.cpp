@@ -2861,11 +2861,11 @@ ACE_OS::event_init (ACE_event_t *event,
       char   sem_name[128];
       ACE_OS::strncpy (sem_name, name, sizeof(sem_name)-(1+sizeof("._ACE_SEM_")));
       ACE_OS::strcat (sem_name, "._ACE_SEM_");
-      int result = ACE_OS::sema_init(&event->semaphore_,
-                                      0,
-                                      type,
-                                      sem_name,
-                                      arg);
+      return ACE_OS::sema_init(&event->semaphore_,
+                               0,
+                               type,
+                               sem_name,
+                               arg);
 # endif
     }
 
