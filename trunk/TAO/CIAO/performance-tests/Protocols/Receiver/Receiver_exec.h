@@ -7,7 +7,7 @@
 #include "ace/Sample_History.h"
 #include "ace/Array.h"
 
-namespace ReceiverImpl
+namespace CIDL_ReceiverImpl
 {
   class RECEIVER_EXEC_Export ReceiverExec_i :
     public virtual ReceiverExec,
@@ -113,7 +113,9 @@ namespace ReceiverImpl
              Components::CCMException);
   };
 
+  extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  createReceiverHome_Impl (void);
 }
 
-extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
-createReceiverHome_Impl (void);
+
+

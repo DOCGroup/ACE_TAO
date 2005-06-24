@@ -552,27 +552,29 @@ Worker::run (void)
   this->test_->end_test ();
 }
 
-SenderImpl::SenderExec_i::SenderExec_i (void)
+CIDL_SenderImpl::SenderExec_i::SenderExec_i (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::SenderExec_i\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::SenderExec_i\n"));
 }
 
 void
-SenderImpl::SenderExec_i::start (::CORBA::ULong iterations,
-                                 ::CORBA::ULong invocation_rate,
-                                 ::CORBA::Boolean count_missed_end_deadlines,
-                                 ::CORBA::Boolean do_dump_history,
-                                 ::CORBA::Boolean print_missed_invocations,
-                                 ::CORBA::ULong message_size,
-                                 ::CORBA::ULong test_protocol_tag,
-                                 ::CORBA::Boolean print_statistics,
-                                 ::CORBA::ULong number_of_connection_attempts,
-                                 ::CORBA::Boolean enable_diffserv_code_points,
-                                 ::CORBA::Short priority,
-                                 ::Protocols::Sender_Controller::Test_Type test_type)
+CIDL_SenderImpl::SenderExec_i::start (
+    ::CORBA::ULong iterations,
+    ::CORBA::ULong invocation_rate,
+    ::CORBA::Boolean count_missed_end_deadlines,
+    ::CORBA::Boolean do_dump_history,
+    ::CORBA::Boolean print_missed_invocations,
+    ::CORBA::ULong message_size,
+    ::CORBA::ULong test_protocol_tag,
+    ::CORBA::Boolean print_statistics,
+    ::CORBA::ULong number_of_connection_attempts,
+    ::CORBA::Boolean enable_diffserv_code_points,
+    ::CORBA::Short priority,
+    ::Protocols::Sender_Controller::Test_Type test_type
+  )
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::start\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::start\n"));
 
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 
@@ -637,80 +639,82 @@ SenderImpl::SenderExec_i::start (::CORBA::ULong iterations,
 }
 
 void
-SenderImpl::SenderExec_i::shutdown (void)
+CIDL_SenderImpl::SenderExec_i::shutdown (void)
   throw (CORBA::SystemException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::shutdown\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::shutdown\n"));
   this->orb_->shutdown ();
 }
 
 void
-SenderImpl::SenderExec_i::set_session_context (Components::SessionContext_ptr ctx)
+CIDL_SenderImpl::SenderExec_i::set_session_context (
+    Components::SessionContext_ptr ctx
+  )
   throw (CORBA::SystemException,
          Components::CCMException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::set_session_context\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::set_session_context\n"));
 
   this->context_ =
-    SenderImpl::SenderExec_Context::_narrow (ctx);
+    CIDL_SenderImpl::SenderExec_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     throw CORBA::INTERNAL ();
 }
 
 void
-SenderImpl::SenderExec_i::ccm_activate (void)
+CIDL_SenderImpl::SenderExec_i::ccm_activate (void)
   throw (CORBA::SystemException,
          Components::CCMException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::ccm_activate\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_activate\n"));
 }
 
 void
-SenderImpl::SenderExec_i::ccm_passivate (void)
+CIDL_SenderImpl::SenderExec_i::ccm_passivate (void)
   throw (CORBA::SystemException,
          Components::CCMException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::ccm_passivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_passivate\n"));
 }
 
 void
-SenderImpl::SenderExec_i::ccm_remove (void)
+CIDL_SenderImpl::SenderExec_i::ccm_remove (void)
   throw (CORBA::SystemException,
          Components::CCMException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::ccm_remove\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_remove\n"));
 }
 
 
 void
-SenderImpl::SenderExec_i::ciao_preactivate (void)
+CIDL_SenderImpl::SenderExec_i::ciao_preactivate (void)
   throw (CORBA::SystemException,
          Components::CCMException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::ccm_preactivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_preactivate\n"));
 }
 
 void
-SenderImpl::SenderExec_i::ciao_postactivate (void)
+CIDL_SenderImpl::SenderExec_i::ciao_postactivate (void)
   throw (CORBA::SystemException,
          Components::CCMException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderExec_i::ccm_postactivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_postactivate\n"));
 }
 
 ::Components::EnterpriseComponent_ptr
-SenderImpl::SenderHomeExec_i::create (void)
+CIDL_SenderImpl::SenderHomeExec_i::create (void)
   throw (CORBA::SystemException,
          Components::CCMException)
 {
-  ACE_DEBUG ((LM_DEBUG, "SenderImpl::SenderHome_exec::create\n"));
-  return new SenderImpl::SenderExec_i;
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderHome_exec::create\n"));
+  return new CIDL_SenderImpl::SenderExec_i;
 }
 
 extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
 createSenderHome_Impl (void)
 {
   ACE_DEBUG ((LM_DEBUG, "createSenderHome_Impl\n"));
-  return new SenderImpl::SenderHomeExec_i;
+  return new CIDL_SenderImpl::SenderHomeExec_i;
 }
