@@ -19,22 +19,6 @@ ACE_RCSID (TAO,
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv)
   : invocation_ (inv),
-    // abstract_target_ (0),
-    caught_exception_ (0),
-    reply_status_ (-1),
-    rs_pi_current_ (),
-    copy_callback_ ()
-{
-  this->setup_picurrent ();
-}
-
-TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
-    TAO::Invocation_Base *inv,
-    CORBA::AbstractBase_ptr /* abstract_target */,
-    CORBA::Boolean
-  )
-  : invocation_ (inv),
-    // abstract_target_ (abstract_target), // No need to duplicate.
     caught_exception_ (0),
     reply_status_ (-1),
     rs_pi_current_ (),
@@ -82,23 +66,6 @@ CORBA::Object_ptr
 TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /*if (CORBA::is_nil (this->target_))
-    {
-
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            CORBA::Object::_nil ());
-        }
-
-      return adapter->abstractbase_to_object (this->abstract_target_);
-      }*/
-
   return CORBA::Object::_duplicate (this->invocation_->target ());
 }
 
