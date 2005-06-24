@@ -34,7 +34,7 @@
 
 ACE_RCSID(tests, Process_Semaphore_Test, "Process_Semaphore_Test.cpp,v 4.42 2003/12/26 21:59:35 shuston Exp")
 
-#if !defined (ACE_LACKS_FORK)
+#if !defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 static int iterations = 10;
 static int child_process = 0;
 static const char *sema_ping_name = "ACE_Ping_Semaphore";
@@ -164,7 +164,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
-#else  /* ! ACE_LACKS_FORK */
+#elif defined (ACE_HAS_THREADS)
 
   parse_args (argc, argv);
 
@@ -214,7 +214,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_END_TEST;
     }
-#endif /* ! ACE_LACKS_FORK */
+#else /* !ACE_LACKS_FORK && !ACE_HAS_THREADS */
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
+  ACE_START_TEST (ACE_TEXT ("Process_Semaphore_Test"));
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("threading is not supported on this platform\n")));
+  ACE_END_TEST;
+#endif /* ! ACE_LACKS_FORK  && !ACE_HAS_THREADS */
 
   return 0;
 }
