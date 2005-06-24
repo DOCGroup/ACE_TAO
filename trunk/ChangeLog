@@ -1,3 +1,10 @@
+Fri Jun 24 11:02:06 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Fixed this module to work with the ACE_TEST_WINDOW environment
+          variable that I added some time back.
+
 Fri Jun 23 13:36:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
