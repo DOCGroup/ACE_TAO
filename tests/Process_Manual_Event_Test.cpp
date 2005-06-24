@@ -28,7 +28,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_dirent.h"
 
-#if !defined (ACE_LACKS_FORK)
+#if !defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 static int iterations = 10;
 static int child_process = 0;
 static const char *event_ping_name = "ACE_Ping_Event";
@@ -155,7 +155,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
-#else  /* ! ACE_LACKS_FORK */
+#elif defined (ACE_HAS_THREADS)
 
   parse_args (argc, argv);
 
@@ -205,7 +205,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_END_TEST;
     }
-#endif /* ! ACE_LACKS_FORK */
+#else /* !ACE_LACKS_FORK && !ACE_HAS_THREADS */
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
+  ACE_START_TEST (ACE_TEXT ("Process_Manual_Event_Test"));
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("threading is not supported on this platform\n")));
+  ACE_END_TEST;
+#endif /* ! ACE_LACKS_FORK  && !ACE_HAS_THREADS */
 
   return 0;
 }
