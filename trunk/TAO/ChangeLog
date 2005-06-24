@@ -1,3 +1,8 @@
+Fri Jun 24 07:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.h:
+          Added missing include for single threaded builds
+
 Thu Jun 23 11:02:11 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
