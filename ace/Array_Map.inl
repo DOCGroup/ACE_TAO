@@ -5,7 +5,7 @@
 template<typename Key, typename Value>
 ACE_INLINE
 ACE_Array_Map<Key, Value>::ACE_Array_Map (
-  ACE_Array_Map<Key, Value>::size_type s)
+  typename ACE_Array_Map<Key, Value>::size_type s)
   : size_ (0)
   , capacity_ (s)
   , nodes_ (s == 0 ? 0 : new value_type[s])
@@ -14,7 +14,7 @@ ACE_Array_Map<Key, Value>::ACE_Array_Map (
 
 template<typename Key, typename Value>
 ACE_INLINE ACE_Array_Map<Key, Value> &
-ACE_Array_Map<Key, Value>::operator= (ACE_Array_Map const & map)
+ACE_Array_Map<Key, Value>::operator= (ACE_Array_Map<Key, Value> const & map)
 {
   // Strongly exception-safe assignment.
 
@@ -103,7 +103,7 @@ ACE_Array_Map<Key, Value>::empty (void) const
 template<typename Key, typename Value>
 ACE_INLINE typename ACE_Array_Map<Key, Value>::size_type
 ACE_Array_Map<Key, Value>::count (
-  ACE_Array_Map<Key, Value>::key_type const & k)
+  typename ACE_Array_Map<Key, Value>::key_type const & k)
 {
   return
     (this->find (k) == this->end () ? 0 : 1); // Only one datum per key.
@@ -112,7 +112,7 @@ ACE_Array_Map<Key, Value>::count (
 template<typename Key, typename Value>
 ACE_INLINE typename ACE_Array_Map<Key, Value>::data_type &
 ACE_Array_Map<Key, Value>::operator[] (
-  ACE_Array_Map<Key, Value>::key_type const & k)
+  typename ACE_Array_Map<Key, Value>::key_type const & k)
 {
   return (*((this->insert (value_type (k, data_type ()))).first)).second;
 }
