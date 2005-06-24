@@ -1871,7 +1871,7 @@ extern "C"
     /// Signal count
     unsigned long signal_count_;
   } ACE_eventdata_t;
-};
+}
 
 /**
  * @class ACE_event_t
