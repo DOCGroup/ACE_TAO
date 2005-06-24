@@ -6,7 +6,7 @@
 
 class Custom_Network_Priority_Mapping;
 
-namespace SenderImpl
+namespace CIDL_SenderImpl
 {
   class SENDER_EXEC_Export SenderExec_i :
     public virtual SenderExec,
@@ -76,7 +76,7 @@ namespace SenderImpl
              Components::CCMException);
   };
 
+  extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  createSenderHome_Impl (void);
 }
 
-extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-createSenderHome_Impl (void);

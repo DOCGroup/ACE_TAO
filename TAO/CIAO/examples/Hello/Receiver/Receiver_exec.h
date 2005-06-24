@@ -15,7 +15,7 @@
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace Receiver_Impl
+namespace CIDL_Receiver_Impl
 {
 
   /**
@@ -100,9 +100,9 @@ namespace Receiver_Impl
                        Components::CCMException));
   };
 
+  extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  createReceiverHome_Impl (void);
 }
 
-extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
-createReceiverHome_Impl (void);
-
 #endif /* RECEIVER_EXEC_H */
+
