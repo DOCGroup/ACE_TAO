@@ -107,9 +107,5 @@ namespace TAO
   };
 }
 
-#if defined (__ACE_INLINE__)
-#  include "DII_Invocation.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

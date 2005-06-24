@@ -16,8 +16,8 @@
 */
 //=============================================================================
 
-#ifndef TAO_GIOP_SERVER_REQUEST_H
-#define TAO_GIOP_SERVER_REQUEST_H
+#ifndef TAO_SERVER_REQUEST_H
+#define TAO_SERVER_REQUEST_H
 
 #include /**/ "ace/pre.h"
 #include "ace/SString.h"
@@ -336,4 +336,4 @@ private:
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_GIOP_SERVER_REQUEST_H */
+#endif /* TAO_SERVER_REQUEST_H */

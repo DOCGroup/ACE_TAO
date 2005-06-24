@@ -57,8 +57,6 @@ namespace CORBA
   class Environment;
 }
 
-class TAO_GIOP_Twoway_Invocation;
-
 /**
  * @class TAO_Dynamic_Adapter
  *
