@@ -1,3 +1,16 @@
+Fri Jun 24 19:42:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        
+          For local interfaces, changed generated code for _narrow()
+          and _unchecked_narrow() methods. For local interfaces, all
+          that needs to be done is return a duplicate of a
+          dynamic_cast<>, for both methods. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out the opportunity to
+          shrink generated code, and to Ossama Othman
+          <ossama@dre.vanderbilt.edu> for an informative discussion on
+          the possible benefits of inlining these methods.
+
 Fri Jun 24 13:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ClientRequestInfo.{cpp,inl}:
