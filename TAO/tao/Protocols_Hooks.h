@@ -34,7 +34,6 @@ namespace CORBA
 }
 
 class TAO_ORB_Core;
-class TAO_GIOP_Invocation;
 class TAO_Resource_Factory;
 class TAO_Service_Context;
 class TAO_Acceptor_Registry;

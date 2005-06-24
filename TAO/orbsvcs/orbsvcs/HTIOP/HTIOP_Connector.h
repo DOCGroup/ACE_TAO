@@ -41,8 +41,6 @@ namespace ACE
   }
 }
 
-class TAO_GIOP_Invocation;
-
 // ****************************************************************
 
 namespace TAO

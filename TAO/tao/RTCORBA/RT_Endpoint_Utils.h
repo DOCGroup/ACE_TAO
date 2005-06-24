@@ -27,8 +27,6 @@
 
 #include "tao/Policy_ForwardC.h"
 
-class TAO_GIOP_Invocation;
-
 namespace TAO
 {
   class Profile_Transport_Resolver;
@@ -43,7 +41,7 @@ namespace TAO
 class TAO_RTCORBA_Export TAO_RT_Endpoint_Utils
 {
 public:
-  static 
+  static
   CORBA::Policy *policy (TAO_Cached_Policy_Type type,
                          TAO::Profile_Transport_Resolver &r
                          ACE_ENV_ARG_DECL);

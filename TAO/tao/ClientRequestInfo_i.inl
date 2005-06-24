@@ -26,7 +26,7 @@ TAO_ClientRequestInfo_i::forward_reference (
   // LOCATION_FORWARD reply, so we do not set the exception status.
   //
   // The forward object reference is not handled here.  Rather, it is
-  // handled by the TAO_GIOP_Invocation object so that its profiles
+  // handled by the TAO::Invocation_Base object so that its profiles
   // can be added to the list of forward profiles.
 
   this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
