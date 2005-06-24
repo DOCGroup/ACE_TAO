@@ -1,3 +1,20 @@
+Fri Jun 23 10:20:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Made sure ETIME is always returned on timeouts of
+          ACE_OS::sema_timedwait and not ETIMEDOUT.
+
+        * tests/Semaphore_Test.cpp:
+          Extended platform coverage of timeout tests.
+
+        * tests/Auto_Event_Test.cpp:
+        * tests/Manual_Event_Test.cpp:
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added new tests.
+
 Fri Jun 23 09:17:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/INET_Addr_Test_IPV6.cpp:

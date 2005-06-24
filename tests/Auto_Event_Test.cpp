@@ -6,19 +6,19 @@
 //    tests
 //
 // = FILENAME
-//    Semaphore Test
+//    Auto_Event Test
 //
 // = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Thread_Semaphore>
+//    This test verifies the functionality of the <ACE_Auto_Event>
 //    implementation.
 //
 // = AUTHOR
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
+//    Martin Corino <mcorino@remedy.nl>
 //
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Thread_Semaphore.h"
+#include "ace/Auto_Event.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
@@ -26,7 +26,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Semaphore_Test, "$Id$")
+ACE_RCSID(tests, Auto_Event_Test, "$Id$")
 
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
@@ -42,9 +42,9 @@ static int test_result = 0;
 
 #if defined (ACE_HAS_THREADS)
 
-// Semaphore used in the tests.  Start it "locked" (i.e., its initial
-// count is 0).
-static ACE_Thread_Semaphore s ((unsigned int) 0);
+// Event used in the tests.  Start it "unsignalled" (i.e., its initial
+// state is 0).
+static ACE_Auto_Event evt ((unsigned int) 0);
 
 // Default number of iterations.
 static int n_iterations = 10;
@@ -52,10 +52,6 @@ static int n_iterations = 10;
 // Number of worker threads.
 static size_t n_workers = 10;
 
-// Amount to release the semaphore.
-static u_int n_release_count = 3;
-
-#if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
 // Number of timeouts.
 static size_t timeouts = 0;
 
@@ -82,7 +78,7 @@ test_timeout (void)
 
   wait.sec (wait.sec () + wait_secs);
 
-  if (s.acquire (wait) == -1)
+  if (evt.wait (&wait) == -1)
     ACE_ASSERT (errno == ETIME);
 
   ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
@@ -105,30 +101,26 @@ test_timeout (void)
   ++wait_secs;
   return status;
 }
-#endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 
 // Explain usage and exit.
 static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
+              ACE_TEXT ("usage: %n [-w n_workers] [-n iteration_count]\n")));
   ACE_OS::exit (1);
 }
 
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("s:w:n:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("w:n:"));
 
   int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
     {
-    case 's':
-      n_release_count = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
     case 'w':
       n_workers = ACE_OS::atoi (get_opt.opt_arg ());
       break;
@@ -151,11 +143,10 @@ worker (void *)
        iterations <= n_iterations;
        iterations++)
     {
-#if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
       ACE_Time_Value wait (0,
                            iterations * 1000 * 100);  // Wait 'iter' msec
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
-      if (s.acquire (tv) == -1)
+      if (evt.wait (&tv) == -1)
       {
           // verify that we have ETIME
           ACE_ASSERT(ACE_OS::last_error() == ETIME);
@@ -176,15 +167,9 @@ worker (void *)
           // Hold the lock for a while.
           ACE_OS::sleep (ACE_Time_Value (0,
                                          (ACE_OS::rand () % 1000) * 1000));
-          s.release ();
-        }
-#else
-      s.acquire ();
-      // Hold the lock for a while.
-      ACE_OS::sleep (ACE_Time_Value (0,
-                                     (ACE_OS::rand () % 1000) * 1000));
-      s.release ();
-#endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
+          evt.signal ();
+      }
+
       ACE_Thread::yield ();
     }
 
@@ -193,25 +178,20 @@ worker (void *)
 
 #endif /* ACE_HAS_THREADS */
 
-// Test semaphore functionality.
+// Test event functionality.
 
 int run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Semaphore_Test"));
+  ACE_START_TEST (ACE_TEXT ("Auto_Event_Test"));
 
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
   ACE_OS::srand (ACE_OS::time (0L));
 
-#  if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
   //Test timed waits.
   for (size_t i = 0; i < test_timeout_count; i++)
     if (test_timeout () != 0)
       test_result = 1;
-#  endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
-
-  // Release the semaphore a certain number of times.
-  s.release (n_release_count);
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
@@ -223,17 +203,18 @@ int run_main (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("spawn_n")),
                       1);
 
+  // Release the first worker.
+  evt.signal ();
+
   ACE_Thread_Manager::instance ()->wait ();
 
-#  if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
   size_t percent = (timeouts * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Worker threads timed out %d percent of the time\n"),
               percent));
-#  endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Semaphore Test successful\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Auto_Event Test successful\n")));
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

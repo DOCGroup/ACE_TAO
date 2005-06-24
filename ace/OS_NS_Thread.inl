@@ -2121,9 +2121,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_OS_TRACE ("ACE_OS::sema_wait");
 # if defined (ACE_HAS_POSIX_SEM)
 #   if defined (ACE_HAS_POSIX_SEM_TIMEOUT)
+  int rc;
   timespec_t ts;
   ts = tv; // Calls ACE_Time_Value::operator timespec_t().
-  ACE_OSCALL_RETURN (::sem_timedwait (s->sema_, &ts), int, -1);
+  ACE_OSCALL (::sem_timedwait (s->sema_, &ts), int, -1, rc);
+  if (rc == -1 && errno == ETIMEDOUT)
+    errno = ETIME;  /* POSIX returns ETIMEDOUT but we need ETIME */
+  return rc;
 #   else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (tv);
@@ -2144,8 +2148,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       if ((rc = ACE_OS::select (ACE_Handle_Set::MAXSIZE, fds_, 0, 0, timeout)) != 1)
         {
           if (rc == 0)
-            // make sure errno is set right (select() sets ETIME)
-            errno = ETIMEDOUT;
+            errno = ETIME;
+          else if (rc == -1 && errno == EINTR)
+            errno = ETIME;
           return (-1);
         }
 

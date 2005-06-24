@@ -112,6 +112,13 @@ project(Atomic Op Test) : acetest {
   }
 }
 
+project(Auto Event Test) : acetest {
+  exename = Auto_Event_Test
+  Source_Files {
+    Auto_Event_Test.cpp
+  }
+}
+
 project(Auto IncDec Test) : acetest {
   exename = Auto_IncDec_Test
   Source_Files {
@@ -376,6 +383,13 @@ project(Malloc Test) : acetest {
   }
 }
 
+project(Manual_Event Test) : acetest {
+  exename = Manual_Event_Test
+  Source_Files {
+    Manual_Event_Test.cpp
+  }
+}
+
 project(Map Test) : acetest {
   exename = Map_Test
   Source_Files {
@@ -551,10 +565,24 @@ project(Proactor Timer Test) : acetest {
   }
 }
 
+project(Process Manual Event Test) : acetest {
+  exename = Process_Manual_Event_Test
+  Source_Files {
+    Process_Manual_Event_Test.cpp
+  }
+}
+
 project(Process Mutex Test) : acetest {
   exename = Process_Mutex_Test
   Source_Files {
     Process_Mutex_Test.cpp
+  }
+}
+
+project(Process Semaphore Test) : acetest {
+  exename = Process_Semaphore_Test
+  Source_Files {
+    Process_Semaphore_Test.cpp
   }
 }
 

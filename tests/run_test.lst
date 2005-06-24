@@ -20,6 +20,7 @@ ACE_Test
 Arg_Shifter_Test
 Array_Map_Test
 Atomic_Op_Test
+Auto_Event_Test
 Auto_IncDec_Test
 Barrier_Test
 Basic_Types_Test
@@ -96,7 +97,9 @@ Proactor_Scatter_Gather_Test: !chorus !VxWorks !LynxOS
 Proactor_Test: !chorus !VxWorks !LynxOS
 Proactor_Timer_Test: !chorus !VxWorks !LynxOS
 Process_Manager_Test: !chorus !VxWorks
+Process_Manual_Event_Test: !chorus !VxWorks !LynxOS
 Process_Mutex_Test: !chorus !VxWorks !LynxOS
+Process_Semaphore_Test: !chorus !VxWorks !LynxOS
 RB_Tree_Test
 Reactor_Dispatch_Order_Test
 Reactor_Exceptions_Test
