@@ -37,7 +37,6 @@ class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
 class TAO_Sync_Strategy;
-class TAO_GIOP_Invocation;
 class TAO_Policy_Set;
 class TAO_Profile;
 

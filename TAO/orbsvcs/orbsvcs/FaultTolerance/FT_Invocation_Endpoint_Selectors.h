@@ -29,7 +29,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/ORB_Constants.h"
 
-class TAO_GIOP_Invocation;
 class TAO_Profile;
 
 /**
