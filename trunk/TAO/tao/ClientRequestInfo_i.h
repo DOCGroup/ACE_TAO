@@ -259,9 +259,6 @@ protected:
   /// Pointer to the invocation object.
   TAO::Invocation_Base *invocation_;
 
-  /// Reference to the abstract interface target.
-  // CORBA::AbstractBase_ptr abstract_target_;
-
   /// Pointer to the caught exception.
   CORBA::Exception *caught_exception_;
 

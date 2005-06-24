@@ -121,7 +121,7 @@ public:
   ///  Char/Wchar in to the Object Reference.
   void set_codeset (TAO_Tagged_Components& ) const;
 
-  /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
+  /// Called from an object of TAO::Invocation_Base to set TCS on the
   /// Transport
   void set_tcs (TAO_Profile &theProfile, TAO_Transport &);
 

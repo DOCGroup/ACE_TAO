@@ -35,7 +35,6 @@
 #include "tao/ORB_Constants.h"
 
 class TAO_ClientRequestInfo_i;
-class TAO_GIOP_Invocation;
 
 /**
  * @class TAO_ClientRequestInfo
@@ -220,9 +219,6 @@ public:
   /// forwards all method call to.
   TAO_ClientRequestInfo_i * info (void) const;
 
-  /// Accessor to underlying invocation_
-  TAO_GIOP_Invocation *invocation ();
-
 private:
 
   /// Check if this ClientRequestInfo object is called within the
@@ -234,10 +230,6 @@ private:
   /// Pointer to the object that actually implements the
   /// ClientRequestInfo functionality.
   TAO_ClientRequestInfo_i * info_;
-
-  /// Pointer to the GIOP invocation object.
-  TAO_GIOP_Invocation *invocation_;
-
 };
 
 // -------------------------------------------------------------------

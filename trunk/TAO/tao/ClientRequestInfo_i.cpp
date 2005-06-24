@@ -106,31 +106,6 @@ CORBA::Object_ptr
 TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /*if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
-    {
-      // TAO_GIOP_Invocation::forward_reference() already duplicates
-      // the reference before returning it so there is no need to
-      // duplicate it here.
-      return this->invocation_->forwarded_reference ();
-    }
-
-  if (CORBA::is_nil (this->target_))
-    {
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            CORBA::Object::_nil ());
-        }
-
-      return adapter->abstractbase_to_object (this->abstract_target_);
-    }
-  */
-
   return CORBA::Object::_duplicate (this->invocation_->effective_target ());
 }
 
@@ -538,7 +513,7 @@ TAO_ClientRequestInfo_i::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::Object::_nil ());
     }
 
-  // TAO_GIOP_Invocation::forward_reference() already duplicates the
+  // TAO::Invocation_Base::forward_reference() already duplicates the
   // reference before returning it so there is no need to duplicate it
   // here.
   return this->invocation_->forwarded_reference ();

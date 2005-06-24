@@ -40,11 +40,6 @@ TAO::ServerRequestInfo::request_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   // For 64-bit platforms, only the lower 32 bits are used.  Hopefully
   // that will be enough to ensure uniqueness.
 
-  // This is basically the same trick used in
-  // TAO_GIOP_Invocation::generate_request_id().  However, no right
-  // shifting of 64 bit addresses is performed since the
-  // TAO_ServerRequest object is not large enough to allow that trick.
-
   CORBA::ULong id = 0;
 
   // Note that we reinterpret_cast to an "unsigned long" instead of
