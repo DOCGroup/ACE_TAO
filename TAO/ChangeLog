@@ -1,3 +1,16 @@
+Fri Jun 24 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Server_Request.h:
+          Corrected ifdef guards in this file to match the real filename
+
+        * tao/Dynamic_Adapter.h:
+          Removed forward declaration of TAO_GIOP_Twoway_Invocation
+
+        * tao/DynamicInterface/DII_Invocation.{h,cpp,inl}:
+          The inl file has some constructors that are ifdef'd with #if 0.
+          These used a base class that is not there, so zapped them and
+          because the inl file is now empty, removed that from the archive
+
 Fri Jun 24 06:56:11 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
