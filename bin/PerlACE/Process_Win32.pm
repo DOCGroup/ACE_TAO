@@ -190,6 +190,7 @@ sub Spawn ()
         }
     }
 
+    my $state = 0;
     my $cmdline = "";
     my $executable = "";
 
@@ -251,8 +252,9 @@ sub Spawn ()
         $cmdline = "cmd /C start /B /WAIT $self->{WINCE_CTL} $pocket_device_opts -m NAME=start_test.cmd;WAIT=401000; -e"
     }
     elsif (defined $ENV{'ACE_TEST_WINDOW'}) {
-      $executable = $ENV{'ACE_TEST_WINDOW'};
-      $cmdline = $self->Executable () . ' ' . $self->CommandLine();
+      $state = ($ENV{'ACE_TEST_WINDOW'} =~ /\/k/i ? CREATE_NEW_CONSOLE : DETACHED_PROCESS);
+      $executable = $ENV{'ComSpec'};
+      $cmdline = $ENV{'ACE_TEST_WINDOW'} . ' ' . $self->CommandLine();
     }
     else {
         $executable = $self->Executable ();
@@ -265,7 +267,7 @@ sub Spawn ()
                             $executable,
                             $cmdline,
                             0,
-                            0,
+                            $state,
                             '.');
 
     my $status = 0;
