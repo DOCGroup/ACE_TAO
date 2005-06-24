@@ -136,6 +136,18 @@ main (int argc, char *argv[])
                       " (request = %d, response = %d)\n",
                       request_count, response_count));
         }
+
+      if (request_count == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: No requests handled "));
+        }
+
+      if (response_count == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: No response handled "));
+        }
     }
   ACE_CATCHANY
     {
@@ -178,6 +190,18 @@ test_synchronous (Test::Echo_ptr echo
                  "count (request = %d, reply = %d)\n",
                  total_request_count, total_reply_count));
       exit_status = 1;
+    }
+
+  if (total_request_count == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: No synchronouse requests handled "));
+    }
+
+  if (total_reply_count == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: No synchronouse requests handled "));
     }
 }
 
