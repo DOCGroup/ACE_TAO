@@ -1,3 +1,8 @@
+Fri Jun 23 19:58:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Added include for non-inline builds.
+
 Fri Jun 23 19:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.h:
