@@ -123,7 +123,7 @@ extern "C" {
     char* name_;
     ACE_HANDLE fd_[2];
   } ACE_sema_t;
-};
+}
 
 #endif /* !ACE_HAS_POSIX_SEM && ACE_USES_FIFO_SEM */
 
