@@ -63,8 +63,13 @@ ImR_Locator_i::ImR_Locator_i (void)
   , debug_(0)
   , read_only_(false)
 {
-  ACE_NEW(ins_locator_,
+  // Visual C++ 6.0 is not smart enough to do a direct assignment
+  // while allocating the INS_Locator.  So, we have to do it in
+  // two steps.
+  INS_Locator* locator;
+  ACE_NEW(locator,
           INS_Locator(*this));
+  ins_locator_ = locator;
 }
 
 ImR_Locator_i::~ImR_Locator_i (void)
