@@ -141,7 +141,7 @@ document</a>.</p><p>
         TAO service offerings. Besides the standard DOC group platforms
         we also support AIX, Borland C++ Builder 6, CBuilderX 1.0, MinGW,
         Cygwin, VxWorks 5.5.1 & 6.0, OpenVMS 7.3-2 & 8.2, Linux 64bit Alpha, Tru64,
-        SuSE Linux, HPUX 11i 32/64 bit on PA-RISC, and 
+        SuSE Linux, HPUX 11i 32/64 bit on PA-RISC, and
         HPUX 11i v2 on Itanium.
     </td>
     <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
@@ -306,7 +306,7 @@ global.features</a> file.
       config-aix-4.3.x.h ACE config file. Beware, however, that it hasn't
       been tested.</p><p>
 
-      The Visual Age 6.0.0.3 and 6.0.0.4 do have some bugs that makes 
+      The Visual Age 6.0.0.3 and 6.0.0.4 do have some bugs that makes
       them unusable for building TAO. We have tested with 6.0.0.12 and
       had no problems with that version.</p><p>
 
@@ -604,25 +604,25 @@ global.features</a> file.
       and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
 
-      At this moment <a href="http://www.theaceorb.nl">Remedy IT</a> is upgrading 
+      At this moment <a href="http://www.theaceorb.nl">Remedy IT</a> is upgrading
       and stabilizing ACE/TAO support for Tornado 2.2/VxWorks 5.5.1.
-      Since the existing support for previous VxWorks version has been unsupported 
-      and broken for some time and most (potential) users seem to have upgraded to 
+      Since the existing support for previous VxWorks version has been unsupported
+      and broken for some time and most (potential) users seem to have upgraded to
       VxWorks 5.5.1 no backporting effort is done. See also <a href="#vxworks">here</a>.
       </p><p>
-      
+
       Tornado 2.2/VxWorks 5.5.1 support IP multicast.  That is not enabled
       by default in ACE for VxWorks, because it depends on your
       kernel configuration.  To enable it, add
       <code>#define ACE_HAS_IP_MULTICAST</code> to your
       <code>ace/config.h</code>.</p><p>
 
-      NOTE: In order for the ACE Broadcast and Multicast tests to work the VxWorks kernel 
+      NOTE: In order for the ACE Broadcast and Multicast tests to work the VxWorks kernel
       should receive the packages it sends out locally. By default this is not supported.
       To enable this behaviour you need to include the IFF_SIMPLEX flag for your required
       NIC driver. See the following Windriver <a href="https://secure.windriver.com/cgi-bin/windsurf/techtips/public/viewSum.cgi?4542">SPR 4542</a>
       for more information.</p><p>
-      
+
       In addition to all of the other benefits of ACE, it helps work
       around some deficiencies with VxWorks. The problems are:</p>
 
@@ -1083,8 +1083,8 @@ installed, autotool support may be bootstrapped into your workspace by
 doing the following:
     <blockquote>
       <code>
-	cd ACE_wrappers<br>
-	autoreconf -I m4 --install --force<br>
+        cd ACE_wrappers<br>
+        autoreconf -I m4 --install --force<br>
       </code>
     </blockquote>
 After doing so, you will be able to run the <code>configure</code>
@@ -1308,13 +1308,13 @@ The Borland C++ Builder 4.0/5.0/6.0 port has been done by <a href="mailto:jody@a
 
 <b>ACE TESTS</b></p><p>
 
-Before you can build the tests you need to build the protocols directory. 
+Before you can build the tests you need to build the protocols directory.
 Change the directory to ACE_ROOT\protocols and start the build with: </p><p>
 </p><blockquote><code>
 make -f Makefile.bor all
 </code></blockquote><p>
 
-The tests are located in ACE_ROOT\tests, change to this directory. 
+The tests are located in ACE_ROOT\tests, change to this directory.
 You build then the tests with the following command:</p><p>
 </p><blockquote><code>
 make -f Makefile.bor all
@@ -1829,7 +1829,7 @@ applications that use it.  Please see below for more information on
 <a href="#VxWorks/NT">building ACE on NT hosts for VxWorks targets</a>.<p>
 
 A few notes on VxWorks builds (thanks to
-<a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a> and 
+<a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a> and
 <a href="http://www.theaceorb.nl">Remedy IT</a> for these notes):</p>
 <p>
 </p><ul>
@@ -1837,14 +1837,14 @@ A few notes on VxWorks builds (thanks to
       are done on a workstation creating object modules which are
       downloaded and loaded into the VxWorks target system.<p>
   </p></li><li>C++ object modules must be post-processed by a VxWorks
-      utility called "munch" to set up calls to static constructors and destructors. 
+      utility called "munch" to set up calls to static constructors and destructors.
       ACE integrates the makefile includes/rules files
-      distributed with VxWorks to achieve maximum compatibility and reuse the target 
+      distributed with VxWorks to achieve maximum compatibility and reuse the target
       specifications and buildcommands defined by Windriver itself.
       The original ACE support for VxWorks included a perl script called
       <a href="bin/ace_ld">$ACE_ROOT/bin/ace_ld</a>,
       which was called from the Makefiles, replacing
-      the traditional <code>ld</code> step. Although this script is currently still 
+      the traditional <code>ld</code> step. Although this script is currently still
       available it is not used anymore.<BR>
       You must have perl installed to use <code>ace_ld</code>.  If perl is not on your path, you'll
       have to set <code>PERL_PATH</code> to the full path (including
@@ -1953,7 +1953,7 @@ without spawning another thread by using:<p>
 spaef ace_main, "arg1" [, ...]
 </code></pre>
 
-ACE also provides the function <code>vx_execae</code> which is capable of running 
+ACE also provides the function <code>vx_execae</code> which is capable of running
 <code>ace_main</code> in a separate thread, wait for the task to finish and return
 the return code from <code>ace_main</code>:
 
@@ -1967,18 +1967,18 @@ You could call this from the VxWorks shell like:
 my_rc = vx_execae ace_main, "-o server.ior -ORBDottedDecimalAddresses 1"
 </code></pre><p>
 
-When <code>prio</code>, <code>opt</code> or <code>stacksz</code> are omitted or specified 
+When <code>prio</code>, <code>opt</code> or <code>stacksz</code> are omitted or specified
 as <code>0</code> default values will be used. See the VxWorks shell documentation for the
 defaults for <code>prio</code> and <code>opt</code>. For <code>stacksz</code> the default is
 <code>ACE_NEEDS_HUGE_THREAD_STACKSIZE</code>.
 The <code>arguments</code> string will be parsed and passed on to <code>ace_main</code> as
 a regular <code>argc</code> and <code>argv</code>.</p><p>
 
-Be aware of the fact that when you execute <code>ace_main</code> directly from the VxWorks 
+Be aware of the fact that when you execute <code>ace_main</code> directly from the VxWorks
 shell argc will be zero and argv* will also be zero. Using <code>argv[0]</code> will not return
 the program name, but will result in a crash.<br>
-The ACE helper functions <code>spa</code>, <code>spaef</code> and <code>vx_execae</code> prevent 
-this problem by building a regular <code>argc</code> and <code>argv</code> which also contain a 
+The ACE helper functions <code>spa</code>, <code>spaef</code> and <code>vx_execae</code> prevent
+this problem by building a regular <code>argc</code> and <code>argv</code> which also contain a
 valid <code>argv[0]</code> element.</p>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
@@ -2044,7 +2044,7 @@ It is possible to generate a script to execute all ACE tests. You can do this by
 </a></p><blockquote><code></code><pre><a name="vxworksscript">% perl run_test.pl -v -o > run_test.vxworks
 </a></pre></blockquote>
 
-The ACE tests write their output files in a directory named 
+The ACE tests write their output files in a directory named
 <code>log/</code>, below the current (<code>tests</code>) directory.<br/>
 </p>
 <p>
@@ -2059,7 +2059,7 @@ If you also issue the command 'cd {path to ACE}/ACE_wrappers/tests' you can exec
 generated one button testscript like: '&lt; run_test.vxworks'.
 </p>
 <p>
-Running the ACE tests automatically from the ACE autobuild tool using Target Server and Host 
+Running the ACE tests automatically from the ACE autobuild tool using Target Server and Host
 shell options is also supported.
 </p>
 <p>
@@ -2295,27 +2295,27 @@ Control Panel-&gt; System -&gt; Environment)</p>
 <p>PERL_PATH=/perl/bin/perl.exe</p>
 
 <b><p>Directories of importance</p>
-</b><p>C:\Corba 	&lt;-- Ace_wrappers (uzipped)</p>
-<p>C:\tornado 	&lt;-- Tornado installed</p>
-<p>C:\Perl 	&lt;-- Perl installed</p>
-<p>C:\Cygwin  	&lt;-- Cygwin installed</p>
+</b><p>C:\Corba         &lt;-- Ace_wrappers (uzipped)</p>
+<p>C:\tornado   &lt;-- Tornado installed</p>
+<p>C:\Perl      &lt;-- Perl installed</p>
+<p>C:\Cygwin    &lt;-- Cygwin installed</p>
 <p>C:\bin        &lt;-- Copy these files,</p>
-<p>		 Ace.dll, 	&lt;-- After you build Ace</p>
-<p>		gperf.exe     	&lt;-- After you build gperf</p>
-<p>		Cygwin1.dll, 	&lt;-- After you install Cygwin</p>
-<p>		perl.exe,      	&lt;-- After you install Perl</p>
-<p>		rm.exe		&lt;-- After you install Cygwin</p>
-<p>		sh.exe		&lt;-- After you install Cygwin</p>
-<p>		true		&lt;-- After you install Cygwin</p>
+<p>              Ace.dll,       &lt;-- After you build Ace</p>
+<p>             gperf.exe       &lt;-- After you build gperf</p>
+<p>             Cygwin1.dll,    &lt;-- After you install Cygwin</p>
+<p>             perl.exe,       &lt;-- After you install Perl</p>
+<p>             rm.exe          &lt;-- After you install Cygwin</p>
+<p>             sh.exe          &lt;-- After you install Cygwin</p>
+<p>             true            &lt;-- After you install Cygwin</p>
 <b><p>Create Files</p>
 </b><p>1) C:\Corba\ACE_Wrappers\ace\config.h</p>
 <p>with entry</p>
 <p>#if defined (_MSC_VER) || (__BORLANDC__)</p>
-<p>	#include "ace/config-win32.h"</p>
-<p>	#undef ACE_HAS_EXCEPTIONS</p>
+<p>     #include "ace/config-win32.h"</p>
+<p>     #undef ACE_HAS_EXCEPTIONS</p>
 <p>#else</p>
-<p>	#include "ace/config-vxworks5.x.h"</p>
-<p>	#define ACE_HAS_IP_MULTICAST </p>
+<p>     #include "ace/config-vxworks5.x.h"</p>
+<p>     #define ACE_HAS_IP_MULTICAST </p>
 <p>#endif</p>
 
 <p>2) C:\Corba\ACE_wrappers\include\makeinclude\platform_macros.GNU</p>
@@ -2612,7 +2612,7 @@ libraries.
     <h5> Applications with build system using MPC.</h5>
     In general, it is better to create specific base projects for using ACE GUI support in such application.
     Base projects provided by ACE <code>ACE_wrappers/bin/MakeProjectCreator/[ace,tao]_[gui][reactor,resource].mpb</code>
-    may be an examples of how to do this. 
+    may be an examples of how to do this.
     <h5> Internal ACE applications like tests or examples.</h5>
     MPC project for internal ACE application using GUI support should be derived from
     <code>ace_[gui]reactor.mpb</code> base projects. To employ TAO support for GUI one should derive
@@ -3096,7 +3096,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Fri Jun 24 11:42:19 PDT 2005
+Last modified: Fri Jun 24 11:44:57 PDT 2005
 <!-- hhmts end -->
 
 
