@@ -1,3 +1,9 @@
+Fri Jun 24 09:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ClientRequestInfo_i.{h,cpp}:
+          No need to have virtual methods, this is not a base and removed
+          the destructor using an Abstract base, it is not used
+
 Fri Jun 24 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h
