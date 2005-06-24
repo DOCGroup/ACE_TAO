@@ -40,12 +40,6 @@ namespace TAO
   class Invocation_Base;
 }
 
-namespace CORBA
-{
-  class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
-}
-
 namespace Dynamic
 {
   class ParameterList;
@@ -72,13 +66,8 @@ public:
   /// Constructor from concrete interface.
   TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation);
 
-  /// Constructor from abstract interface.
-  TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,
-                           CORBA::AbstractBase_ptr abstract_target,
-                           CORBA::Boolean response_expected = 1);
-
   /// Destructor.
-  virtual ~TAO_ClientRequestInfo_i (void);
+  ~TAO_ClientRequestInfo_i (void);
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
@@ -92,12 +81,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the list of arguments passed to the current operation.
-  virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
+  Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the list of exceptions the current operation is capable
   /// of throwing.
-  virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
+  Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   Dynamic::ContextList * contexts (
@@ -111,7 +100,7 @@ public:
   /// Return the result of the current request.  If there is no return
   /// value then an Any with tk_void TypeCode is returned.  This is
   /// method is not valid for oneway operations.
-  virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
+  CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns true for a two-way operation, and false otherwise.
