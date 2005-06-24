@@ -1,3 +1,9 @@
+Fri Jun 23 08:49:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-aix-4.x.h:
+          Fixed problems by incorrectly reported ACE_HAS_POSIX_SEM_TIMEOUT
+          by config-posix.h.
+
 Fri Jun 24 07:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:

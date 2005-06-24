@@ -98,6 +98,10 @@
 // Pick up all the detectable settings.
 #include "ace/config-posix.h"
 
+#if defined (ACE_HAS_POSIX_SEM_TIMEOUT)
+# undef ACE_HAS_POSIX_SEM_TIMEOUT
+#endif /* ACE_HAS_POSIX_SEM_TIMEOUT */
+
 // AIX shared libs look strangely like archive libs until you look inside
 // them.
 #if defined (ACE_DLL_SUFFIX)
