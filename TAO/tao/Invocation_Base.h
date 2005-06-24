@@ -25,7 +25,7 @@
 #include "tao/Invocation_Utils.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/ClientRequestInfo_i.h"
+#include "tao/ClientRequestInfo.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -221,7 +221,7 @@ namespace TAO
     /// The client requestor adapter and the request info object for
     /// making calls on all the registered interceptors.
     ClientRequestInterceptor_Adapter adapter_;
-    TAO_ClientRequestInfo_i req_info_;
+    TAO_ClientRequestInfo req_info_;
 
 
 #endif /*TAO_HAS_INTERCEPTORS*/
