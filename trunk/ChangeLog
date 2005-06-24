@@ -1,4 +1,9 @@
-Fri Jun 24 11:36:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Fri Jun 24 11:42:43 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ACE-INSTALL.html:
+
+	  Added notes about testing and developing autotool support, and
+	  how to bootstrap that support into a workspace.
 
 	* ace/Array_Map.cpp:
 	* ace/Array_Map.inl:

@@ -986,8 +986,9 @@ using the standard <a href="PROBLEM-REPORT-FORM">problem-report-form</a>.</p>
 <p>
 The kit has been bootstrapped so you do not need to install the GNU
 Autotools (autoconf, automake, libtool) unless you want to participate
-in testing and developing this process further. To simply configure
-and build ACE, do:
+in <a href="#autoconf_development">testing and developing</a> this
+process further or if you are working directly off of sources in the
+ACE CVS repository. To simply configure and build ACE, do:
 </p><ol>
   <li><code>cd</code> to the top-level <code>ACE_wrappers</code> directory.</li>
   <li>Create a subdirectory to hold your build's configuration and built
@@ -1000,7 +1001,7 @@ and build ACE, do:
       section. The configure script takes care of creating all files
       and links that are needed.</li>
   <li>Configure ACE for your platform by issuing the following command:
-       <pre>       ../configure [options]
+c       <pre>       ../configure [options]
        </pre>
       <code>options</code> can be a variable setting (such as setting
       <code>CXX</code> to your C++ compiler command) any standard GNU
@@ -1070,6 +1071,24 @@ and build ACE, do:
   <li>Build ACE by typing <code>make</code>.
   </li><li>(Optional) Install ACE by typing <code>make install</code>.
 </li></ol>
+
+<h5><a name="autoconf_development">Testing and Developing GNU Autotool
+Support in ACE</a></h5>
+<p>
+In order to test and develop the GNU Autotool support in ACE or
+bootstrap autotool support into ACE when working directly off of ACE
+sources in the CVS repository, you must have recent versions of GNU
+Autoconf, Automake and Libtool installed on your host.  Once
+installed, autotool support may be bootstrapped into your workspace by
+doing the following:
+    <blockquote>
+      <code>
+	cd ACE_wrappers<br>
+	autoreconf -I m4 --install --force<br>
+      </code>
+    </blockquote>
+After doing so, you will be able to run the <code>configure</code>
+script.
 
 <h5><a name="unix_traditional">Using the Traditional ACE/GNU Configuration</a></h5>
 <p>
@@ -3077,7 +3096,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Sun Mar  6 15:14:01 CET 2005
+Last modified: Fri Jun 24 11:42:19 PDT 2005
 <!-- hhmts end -->
 
 
