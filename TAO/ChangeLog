@@ -1,3 +1,21 @@
+Fri Jun 24 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.h
+        * tao/ClientRequestInfo.cpp
+        * tao/ClientRequestInfo.h
+        * tao/ClientRequestInfo_i.cpp
+        * tao/ClientRequestInfo_i.h
+        * tao/ClientRequestInfo_i.inl
+        * tao/Codeset_Manager.h
+        * tao/Protocols_Hooks.h
+        * tao/Stub.h
+        * tao/PortableServer/ServerRequestInfo.cpp
+        * tao/RTCORBA/RT_Endpoint_Utils.h
+          Removed TAO_GIOP_Invocation forward declaration and remarks
+          about this. This class doesn't exist anymore already for a long
+          time
+
 Fri Jun 24 07:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.h:
