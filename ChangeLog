@@ -1,3 +1,8 @@
+Fri Jun 23 19:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Removed extra semi-colon.
+
 Fri Jun 23 19:36:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Process_Manual_Event_Test.cpp:
