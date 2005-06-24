@@ -335,7 +335,7 @@ spawn (void)
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
-      switch (ACE_OS::fork ("child"))
+      switch (ACE_OS::fork (ACE_TEXT("child")))
         {
         case -1:
           ACE_ERROR ((LM_ERROR,

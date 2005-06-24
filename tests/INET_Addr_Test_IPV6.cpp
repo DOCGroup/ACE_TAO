@@ -139,7 +139,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 #if defined (__linux__)
       // test a link local address to make sure the set_interface method works
       ACE_INET_Addr link_local_addr (80, LINK_LOCAL_ADDR);
-      if (0 != ACE_OS::strcmp (link_local_addr.get_host_addr (),
+      if (0 != ACE_OS::strcmp (ACE_TEXT_CHAR_TO_TCHAR(link_local_addr.get_host_addr ()),
                                LINK_LOCAL_ADDR))
         {
           ACE_ERROR ((LM_ERROR,
