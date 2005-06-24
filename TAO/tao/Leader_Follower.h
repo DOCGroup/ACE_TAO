@@ -26,6 +26,7 @@
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Intrusive_List.h"
 #include "ace/Intrusive_List_Node.h"
+#include "ace/OS_NS_Thread.h"
 
 class TAO_LF_Event;
 class TAO_Transport;
