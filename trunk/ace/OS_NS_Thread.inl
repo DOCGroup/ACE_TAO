@@ -1369,7 +1369,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   int r0 = 0;
   if (s->name_)
     {
-      r0 = ACE_OS::unlink (s->name_);       /* if we created FIFO */
+      r0 = ACE_OS::unlink (s->name_);
       ACE_OS::free (s->name_);
       s->name_ = 0;
     }
@@ -1530,6 +1530,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
     }
 
 #elif defined (ACE_USES_FIFO_SEM)
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
+  ACE_UNUSED_ARG (sa);
   int             flags = 0;
   mode_t          mode = S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP;
 
@@ -1545,6 +1548,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 
   s->name_ = 0;
   s->fd_[0] = s->fd_[1] = ACE_INVALID_HANDLE;
+  bool creator = false;
 
   if (ACE_OS::mkfifo (ACE_TEXT_CHAR_TO_TCHAR(name), mode) < 0)
     {
@@ -1561,11 +1565,10 @@ ACE_OS::sema_init (ACE_sema_t *s,
           return -1;
         }
     }
-  else
-    {
-      s->name_ = ACE_OS::strdup (name);
-    }
+    else
+      creator = true; // remember we created it for initialization at end
 
+  s->name_ = ACE_OS::strdup (name);
 
   if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
       || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
@@ -1579,7 +1582,8 @@ ACE_OS::sema_init (ACE_sema_t *s,
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
     return(-1);
 
-  if (s->name_ && count)
+  //if (s->name_ && count)
+  if (creator && count)
     {
       char    c = 1;
       for(u_int i=0; i<count ;++i)
