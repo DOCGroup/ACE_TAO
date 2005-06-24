@@ -583,15 +583,14 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
   if (node->is_local ())
     {
-      *os << "if (CORBA::is_nil (_tao_objref))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << node->local_name () << "_ptr proxy =" << be_idt_nl
-          << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref);"
-          << be_uidt_nl << be_nl
-          << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
+      *os << "return " << node->local_name () << "::_duplicate ("
+          << be_idt << be_idt_nl
+          << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref)"
+          << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
+          
+      return true;
     }
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
