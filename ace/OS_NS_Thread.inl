@@ -15,6 +15,7 @@
 #if defined (ACE_USES_FIFO_SEM)
 #  include "ace/OS_NS_sys_stat.h"
 #  include "ace/OS_NS_sys_select.h"
+#  include "ace/OS_NS_fcntl.h"
 #  include "ace/Handle_Set.h"
 # endif /* ACE_USES_FIFO_SEM */
 
