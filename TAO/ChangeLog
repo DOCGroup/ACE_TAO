@@ -1,3 +1,29 @@
+Fri Jun 24 11:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ClientRequestInfo.{h,cpp,inl}:
+        * tao/ClientRequestInfo_i.{h,cpp,inl}:
+          Moved the implementation from ClientRequestInfo_i to
+          ClientRequestInfo. The ClientRequestInfo was split into
+          two parts, this is causing problems with the PI refactoring
+          and after checking with Ossama we decided to merge these
+          two again. This maybe has a small performance impact
+          at the moment no interceptors are registered but that
+          will be resolved soon with the PI refactoring itself.
+
+        * tao/ClientRequestInterceptor_Adapter.{h,cpp}:
+          Updated to use TAO_ClientRequestInfo
+
+        * tao/Invocation_Base.{h,cpp}:
+          Updated to use TAO_ClientRequestInfo
+
+        * tao/ORB_Core_TSS_Resources.{h,cpp}:
+          No need anymore to store TAO_ClientRequestInfo in TSS.
+          This decouples the ClientRequestInfo from the ORB TSS which was the
+          main reason to do this.
+
+        * tao/tao.mpc:
+          Removed the ClientRequestInfo_i.{h,cpp,inl} files
+
 Fri Jun 24 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/AMI/client.cpp:
