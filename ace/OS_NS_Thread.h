@@ -1828,8 +1828,7 @@ namespace ACE_OS {
   void unique_name (const void *object,
                     wchar_t *name,
                     size_t length);
-#endif /* ACE_HAS_WCHAR */
-
+#endif /* ACE_USES_WCHAR */
 } /* namespace ACE_OS */
 
 #if !defined (ACE_WIN32)
@@ -1844,15 +1843,11 @@ extern "C"
     /// Protect critical section.
     ACE_mutex_t lock_;
 
+#if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     /// Keeps track of waiters.
-/*
-#if (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))) && \
-  defined (ACE_HAS_PTHREADS) && (!defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED))
-    ACE_sema_t semaphore_;
-#else
-*/
     ACE_cond_t condition_;
-//#endif
+#endif
 
     /// Specifies if this is an auto- or manual-reset event.
     int manual_reset_;
@@ -1872,8 +1867,11 @@ extern "C"
 
     /// Number of waiting threads.
     unsigned long waiting_threads_;
+
+    /// Signal count
+    unsigned long signal_count_;
   } ACE_eventdata_t;
-}
+};
 
 /**
  * @class ACE_event_t
@@ -1897,6 +1895,11 @@ protected:
   /// Event data
   ACE_eventdata_t* eventdata_;
 
+#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
+  (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+  /// Keeps track of waiters.
+  ACE_sema_t semaphore_;
+#endif
 };
 
 #endif /* ACE_WIN32 */
