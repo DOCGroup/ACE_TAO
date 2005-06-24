@@ -41,14 +41,14 @@ int run_main (int argc, ACE_TCHAR *argv[])
   size_t i, j;
   sockaddr_in6 *pointer6;
 
-  const char *primary_ipv6 = "3ffe::123:4567:89ab:cdef";
+  const ACE_TCHAR *primary_ipv6 = ACE_TEXT("3ffe::123:4567:89ab:cdef");
 
-  const char *secondary_ipv6[] = {
+  const ACE_TCHAR *secondary_ipv6[] = {
     ACE_IPV6_LOCALHOST,
-    "fe80::0123:4567:89ab:cdef",
-    "fec0::0123:4567:89ab:cdef",
-    "3ffe::1:0123:4567:89ab:cdef",
-    "2002:3e02:5473::"
+    ACE_TEXT("fe80::0123:4567:89ab:cdef"),
+    ACE_TEXT("fec0::0123:4567:89ab:cdef"),
+    ACE_TEXT("3ffe::1:0123:4567:89ab:cdef"),
+    ACE_TEXT("2002:3e02:5473::")
   };
 
   // The port will always be this
@@ -96,7 +96,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
     }
 
     // Check the primary address
-    if (0 != ACE_OS::strcmp (addr.get_host_addr(), primary_ipv6))
+    if (0 != ACE_OS::strcmp (ACE_TEXT_CHAR_TO_TCHAR(addr.get_host_addr()), primary_ipv6))
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s failed get_host_addr() check\n")
@@ -118,7 +118,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
       }
 
       // Pass the in_out array to the accessor
-      addr.get_secondary_addresses(in_out, i); 
+      addr.get_secondary_addresses(in_out, i);
 
       // Check that the in_out array matches stay_out array
       for (j = 0; j < i; ++j) {
@@ -146,7 +146,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
       // Check that the primary address in the in_out_sockaddr array
       // matches the primary address reported by the superclass
-      if (ACE_OS::memcmp(in_out_sockaddr6, addr.get_addr(), 
+      if (ACE_OS::memcmp(in_out_sockaddr6, addr.get_addr(),
                          sizeof(sockaddr_in6))) {
 
           ACE_ERROR ((LM_ERROR,
@@ -163,7 +163,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
            j < i + 1;
            ++j, ++pointer6) {
 
-        if (ACE_OS::memcmp(pointer6, stay_out[j-1].get_addr(), 
+        if (ACE_OS::memcmp(pointer6, stay_out[j-1].get_addr(),
                            sizeof(sockaddr_in6))) {
 
           ACE_ERROR ((LM_ERROR,

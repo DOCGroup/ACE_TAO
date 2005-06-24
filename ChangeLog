@@ -1,3 +1,11 @@
+Fri Jun 23 09:17:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/INET_Addr_Test_IPV6.cpp:
+        * tests/Multihomed_INET_Addr_Test_IPV6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SOCK_Test_IPV6.cpp:
+          Fixed WCHAR compile problems.
+
 Fri Jun 23 08:49:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread{.h .cpp .inl}:
