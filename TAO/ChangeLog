@@ -1,3 +1,8 @@
+Fri Jun 24 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AMI/client.cpp:
+          Added some more checks to see if things are gone fine.
+
 Fri Jun 24 09:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ClientRequestInfo_i.{h,cpp}:
