@@ -1,3 +1,9 @@
+Fri Jun 23 13:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+          Fixes for compile errors on Linux 64bit.
+
 Fri Jun 23 10:20:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.inl:

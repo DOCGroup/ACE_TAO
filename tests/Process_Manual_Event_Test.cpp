@@ -20,10 +20,12 @@
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/Manual_Event.h"
+#include "ace/Time_Value.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_dirent.h"
 
 #if !defined (ACE_LACKS_FORK)

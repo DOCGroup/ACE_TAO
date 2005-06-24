@@ -20,10 +20,11 @@
 #include "ace/Mutex.h"
 #include "ace/Process.h"
 #if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_USES_FIFO_SEM) || defined (ACE_HAS_WTHREADS)
-#  include "ace/Time_Value.h"
-#  include "ace/Semaphore.h"
+# include "ace/Time_Value.h"
+# include "ace/OS_NS_sys_time.h"
+# include "ace/Semaphore.h"
 #else
-#  include "ace/Process_Semaphore.h"
+# include "ace/Process_Semaphore.h"
 #endif
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
