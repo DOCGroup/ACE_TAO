@@ -1,3 +1,8 @@
+Sat Jun 25 06:39:03 2005  Gary Maxey <gary.maxey@hp.com>
+	
+        * TAO/tao/Valuetype/StringValueC.inl
+          Change to avoid warnings by some compilers
+
 Sat Jun 25 06:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/AdapterActivatorC.cpp:
