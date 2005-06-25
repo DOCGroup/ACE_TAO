@@ -153,7 +153,7 @@ CORBA::StringValue::_tao_obv_static_repository_id ()
 }
 
 ACE_INLINE CORBA::Boolean 
-CORBA::StringValue::_tao_unmarshal_v (TAO_InputCDR & strm)
+CORBA::StringValue::_tao_unmarshal_v (TAO_InputCDR & )
 {
   return 1;
 }
@@ -287,7 +287,7 @@ CORBA::WStringValue::_tao_obv_static_repository_id ()
 }
 
 ACE_INLINE CORBA::Boolean 
-CORBA::WStringValue::_tao_unmarshal_v (TAO_InputCDR & strm)
+CORBA::WStringValue::_tao_unmarshal_v (TAO_InputCDR & )
 {
   return 1;
 }
