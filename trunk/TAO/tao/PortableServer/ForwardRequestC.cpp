@@ -41,7 +41,7 @@
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -49,7 +49,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::ForwardRequest::ForwardRequest (void)
@@ -133,7 +133,7 @@ void PortableServer::ForwardRequest::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -146,7 +146,7 @@ void PortableServer::ForwardRequest::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
