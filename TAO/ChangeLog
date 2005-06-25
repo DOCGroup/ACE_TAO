@@ -1,3 +1,10 @@
+Fri Jun 24 22:50:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Fri Jun 24 13:15:03 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be/be_codegen.cpp
@@ -12,7 +19,7 @@ Fri Jun 24 13:15:03 2005  Gary Maxey <gary.maxey@hp.com>
 Fri Jun 24 19:42:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-        
+
           For local interfaces, changed generated code for _narrow()
           and _unchecked_narrow() methods. For local interfaces, all
           that needs to be done is return a duplicate of a
