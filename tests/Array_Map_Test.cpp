@@ -292,8 +292,18 @@ index_operator_test (void)
 
       letter = letters + letters_len - 1;
       word = words + words_len - 1;
+
+#if defined (_MSC_VER) && (_MSC_VER <= 1200)
+      // MSVC++ 6 doesn't use the const rbegin/rend() methods without
+      // making the map object const.  *sigh*
+      const_reverse_iterator const rlast =
+	const_cast<Map const &> (phonetic).rend ();
+      for (const_reverse_iterator r =
+	     const_cast<Map const &> (phonetic).rbegin ();
+#else
       const_reverse_iterator const rlast = phonetic.rend ();
       for (const_reverse_iterator r = phonetic.rbegin ();
+#endif  /* _MSC_VER <= 1200 */
            r != rlast;
            ++r, --letter, --word)
         {
