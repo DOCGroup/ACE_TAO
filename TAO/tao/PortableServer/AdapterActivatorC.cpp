@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -90,7 +90,7 @@ PortableServer::AdapterActivator::AdapterActivator (void)
 PortableServer::AdapterActivator::~AdapterActivator (void)
 {}
 
-void
+void 
 PortableServer::AdapterActivator::_tao_any_destructor (void *_tao_void_pointer)
 {
   AdapterActivator *_tao_tmp_pointer =
@@ -104,15 +104,9 @@ PortableServer::AdapterActivator::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return AdapterActivator::_nil ();
-    }
-
-  AdapterActivator_ptr proxy =
-    dynamic_cast<AdapterActivator_ptr> (_tao_objref);
-
-  return AdapterActivator::_duplicate (proxy);
+  return AdapterActivator::_duplicate (
+      dynamic_cast<AdapterActivator_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::AdapterActivator_ptr
@@ -121,15 +115,9 @@ PortableServer::AdapterActivator::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return AdapterActivator::_nil ();
-    }
-
-  AdapterActivator_ptr proxy =
-    dynamic_cast<AdapterActivator_ptr> (_tao_objref);
-
-  return AdapterActivator::_duplicate (proxy);
+  return AdapterActivator::_duplicate (
+      dynamic_cast<AdapterActivator_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::AdapterActivator_ptr
@@ -139,7 +127,7 @@ PortableServer::AdapterActivator::_duplicate (AdapterActivator_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 

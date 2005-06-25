@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -102,15 +102,9 @@ PortableServer::IdAssignmentPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return IdAssignmentPolicy::_nil ();
-    }
-  
-  IdAssignmentPolicy_ptr proxy =
-    dynamic_cast<IdAssignmentPolicy_ptr> (_tao_objref);
-  
-  return IdAssignmentPolicy::_duplicate (proxy);
+  return IdAssignmentPolicy::_duplicate (
+      dynamic_cast<IdAssignmentPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::IdAssignmentPolicy_ptr
@@ -119,15 +113,9 @@ PortableServer::IdAssignmentPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return IdAssignmentPolicy::_nil ();
-    }
-  
-  IdAssignmentPolicy_ptr proxy =
-    dynamic_cast<IdAssignmentPolicy_ptr> (_tao_objref);
-  
-  return IdAssignmentPolicy::_duplicate (proxy);
+  return IdAssignmentPolicy::_duplicate (
+      dynamic_cast<IdAssignmentPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::IdAssignmentPolicy_ptr
