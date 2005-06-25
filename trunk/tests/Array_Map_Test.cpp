@@ -297,9 +297,9 @@ index_operator_test (void)
       // MSVC++ 6 doesn't use the const rbegin/rend() methods without
       // making the map object const.  *sigh*
       const_reverse_iterator const rlast =
-	const_cast<Map const &> (phonetic).rend ();
+        const_cast<Map const &> (phonetic).rend ();
       for (const_reverse_iterator r =
-	     const_cast<Map const &> (phonetic).rbegin ();
+             const_cast<Map const &> (phonetic).rbegin ();
 #else
       const_reverse_iterator const rlast = phonetic.rend ();
       for (const_reverse_iterator r = phonetic.rbegin ();
