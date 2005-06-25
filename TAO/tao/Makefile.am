@@ -70,7 +70,6 @@ libTAO_la_SOURCES = \
   ClientRequestInfo.cpp \
   ClientRequestInfoA.cpp \
   ClientRequestInfoC.cpp \
-  ClientRequestInfo_i.cpp \
   ClientRequestInterceptorA.cpp \
   ClientRequestInterceptorC.cpp \
   ClientRequestInterceptor_Adapter.cpp \
@@ -142,8 +141,6 @@ libTAO_la_SOURCES = \
   IIOP_Profile.cpp \
   IIOP_Transport.cpp \
   IOPC.cpp \
-  IOP_CodecA.cpp \
-  IOP_CodecC.cpp \
   IOP_IORA.cpp \
   IOP_IORC.cpp \
   IORInterceptor_Adapter.cpp \
@@ -190,14 +187,10 @@ libTAO_la_SOURCES = \
   NVList.cpp \
   New_Leader_Generator.cpp \
   ORB.cpp \
-  ORBInitInfo.cpp \
-  ORBInitInfoA.cpp \
-  ORBInitInfoC.cpp \
-  ORBInitializerA.cpp \
-  ORBInitializerC.cpp \
   ORBInitializer_Registry.cpp \
   ORB_Core.cpp \
   ORB_Core_Auto_Ptr.cpp \
+  ORB_Core_TSS_Resources.cpp \
   ORB_Table.cpp \
   Object.cpp \
   ObjectIdListA.cpp \
@@ -227,9 +220,7 @@ libTAO_la_SOURCES = \
   Pluggable_Messaging_Utils.cpp \
   PolicyA.cpp \
   PolicyC.cpp \
-  PolicyFactoryA.cpp \
-  PolicyFactoryC.cpp \
-  PolicyFactory_Registry.cpp \
+  PolicyFactory_Registry_Adapter.cpp \
   Policy_Current.cpp \
   Policy_Current_Impl.cpp \
   Policy_ForwardA.cpp \
@@ -238,7 +229,6 @@ libTAO_la_SOURCES = \
   Policy_Set.cpp \
   Policy_Validator.cpp \
   PollableC.cpp \
-  PortableInterceptorA.cpp \
   PortableInterceptorC.cpp \
   PredefinedType_Seq_Tmplinst.cpp \
   Principal.cpp \
@@ -456,8 +446,6 @@ nobase_include_HEADERS = \
   ClientRequestInfo.pidl \
   ClientRequestInfoC.h \
   ClientRequestInfoS.h \
-  ClientRequestInfo_i.h \
-  ClientRequestInfo_i.inl \
   ClientRequestInterceptor.pidl \
   ClientRequestInterceptorC.h \
   ClientRequestInterceptorS.h \
@@ -579,9 +567,6 @@ nobase_include_HEADERS = \
   IOP.pidl \
   IOPC.h \
   IOPS.h \
-  IOPS_T.h \
-  IOP_Codec.pidl \
-  IOP_CodecC.h \
   IOP_IOR.pidl \
   IOP_IORC.h \
   IORInterceptor_Adapter.h \
@@ -659,20 +644,14 @@ nobase_include_HEADERS = \
   Null_RefCount_Policy.h \
   ORB.h \
   ORB.i \
-  ORBInitInfo.h \
-  ORBInitInfo.inl \
-  ORBInitInfo.pidl \
-  ORBInitInfoC.h \
-  ORBInitInfoS.h \
-  ORBInitializer.pidl \
-  ORBInitializerC.h \
-  ORBInitializerS.h \
   ORBInitializer_Registry.h \
+  ORBInitializer_Registry_Adapter.h \
   ORB_Constants.h \
   ORB_Core.h \
   ORB_Core.i \
   ORB_Core_Auto_Ptr.h \
   ORB_Core_Auto_Ptr.inl \
+  ORB_Core_TSS_Resources.h \
   ORB_Table.h \
   ORB_Table.inl \
   Object.h \
@@ -726,10 +705,7 @@ nobase_include_HEADERS = \
   Policy.pidl \
   PolicyC.h \
   PolicyC.inl \
-  PolicyFactory.pidl \
-  PolicyFactoryC.h \
-  PolicyFactoryS.h \
-  PolicyFactory_Registry.h \
+  PolicyFactory_Registry_Adapter.h \
   PolicyS.h \
   Policy_Current.h \
   Policy_Current.inl \
@@ -994,6 +970,112 @@ EXTRA_DIST = \
   tao.rc
 
 
+## Makefile.CodecFactory.am
+
+lib_LTLIBRARIES += libTAO_CodecFactory.la
+
+libTAO_CodecFactory_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_CODECFACTORY_BUILD_DLL
+
+libTAO_CodecFactory_la_SOURCES = \
+  CodecFactory/CDR_Encaps_Codec.cpp \
+  CodecFactory/CodecFactory.cpp \
+  CodecFactory/CodecFactory_impl.cpp \
+  CodecFactory/IOP_CodecA.cpp \
+  CodecFactory/IOP_CodecC.cpp
+
+libTAO_CodecFactory_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CodecFactory_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CodecFactory/CDR_Encaps_Codec.h \
+  CodecFactory/CodecFactory.h \
+  CodecFactory/CodecFactory_impl.h \
+  CodecFactory/IOP_Codec.pidl \
+  CodecFactory/IOP_CodecC.h \
+  CodecFactory/IOP_CodecS.h \
+  CodecFactory/IOP_Codec_include.pidl \
+  CodecFactory/IOP_Codec_includeC.h \
+  CodecFactory/IOP_Codec_includeS.h \
+  CodecFactory/codecfactory_export.h
+
+pkgconfig_DATA += TAO_CodecFactory.pc
+
+TAO_CodecFactory.pc: ${top_builddir}/config.status ${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
+
+EXTRA_DIST += \
+  CodecFactory/TAO_CodecFactory.pc.in \
+  CodecFactory/TAO_CodecFactory.rc
+
+
+## Makefile.PI.am
+
+lib_LTLIBRARIES += libTAO_PI.la
+
+libTAO_PI_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_PI_BUILD_DLL
+
+libTAO_PI_la_SOURCES = \
+  PI/ORBInitInfo.cpp \
+  PI/ORBInitInfoA.cpp \
+  PI/ORBInitInfoC.cpp \
+  PI/ORBInitializerA.cpp \
+  PI/ORBInitializerC.cpp \
+  PI/ORBInitializer_Registry_Impl.cpp \
+  PI/PI.cpp \
+  PI/PolicyFactoryA.cpp \
+  PI/PolicyFactoryC.cpp \
+  PI/PolicyFactory_Loader.cpp \
+  PI/PolicyFactory_Registry.cpp
+
+libTAO_PI_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_PI_la_LIBADD = \
+  libTAO_CodecFactory.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  PI/ORBInitInfo.h \
+  PI/ORBInitInfo.inl \
+  PI/ORBInitInfo.pidl \
+  PI/ORBInitInfoC.h \
+  PI/ORBInitInfoS.h \
+  PI/ORBInitializer.pidl \
+  PI/ORBInitializerC.h \
+  PI/ORBInitializerS.h \
+  PI/ORBInitializer_Registry_Impl.h \
+  PI/PI.h \
+  PI/PolicyFactory.pidl \
+  PI/PolicyFactoryC.h \
+  PI/PolicyFactoryS.h \
+  PI/PolicyFactory_Loader.h \
+  PI/PolicyFactory_Registry.h \
+  PI/pi_export.h
+
+pkgconfig_DATA += TAO_PI.pc
+
+TAO_PI.pc: ${top_builddir}/config.status ${srcdir}/PI/TAO_PI.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/PI/TAO_PI.pc.in
+
+EXTRA_DIST += \
+  PI/TAO_PI.pc.in
+
+
 ## Makefile.BiDir_GIOP.am
 
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
@@ -1017,6 +1099,8 @@ libTAO_BiDirGIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_BiDirGIOP_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1038,45 +1122,6 @@ TAO_BiDirGIOP.pc: ${top_builddir}/config.status ${srcdir}/BiDir_GIOP/TAO_BiDirGI
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDirGIOP.pc.in \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
-
-
-## Makefile.CodecFactory.am
-
-lib_LTLIBRARIES += libTAO_CodecFactory.la
-
-libTAO_CodecFactory_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_CODECFACTORY_BUILD_DLL
-
-libTAO_CodecFactory_la_SOURCES = \
-  CodecFactory/CDR_Encaps_Codec.cpp \
-  CodecFactory/CodecFactory.cpp \
-  CodecFactory/CodecFactory_impl.cpp
-
-libTAO_CodecFactory_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_CodecFactory_la_LIBADD = \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  CodecFactory/CDR_Encaps_Codec.h \
-  CodecFactory/CodecFactory.h \
-  CodecFactory/CodecFactory_impl.h \
-  CodecFactory/codecfactory_export.h
-
-pkgconfig_DATA += TAO_CodecFactory.pc
-
-TAO_CodecFactory.pc: ${top_builddir}/config.status ${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
-
-EXTRA_DIST += \
-  CodecFactory/TAO_CodecFactory.pc.in \
-  CodecFactory/TAO_CodecFactory.rc
 
 
 ## Makefile.PortableServer.am
@@ -1154,12 +1199,9 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/POAManagerA.cpp \
   PortableServer/POAManagerC.cpp \
   PortableServer/POA_Cached_Policies.cpp \
-  PortableServer/POA_Current.cpp \
   PortableServer/POA_Current_Impl.cpp \
   PortableServer/POA_Guard.cpp \
   PortableServer/POA_Policy_Set.cpp \
-  PortableServer/PS_CurrentA.cpp \
-  PortableServer/PS_CurrentC.cpp \
   PortableServer/PS_ForwardA.cpp \
   PortableServer/PS_ForwardC.cpp \
   PortableServer/PolicyS.cpp \
@@ -1167,8 +1209,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/PortableServerA.cpp \
   PortableServer/PortableServerC.cpp \
   PortableServer/PortableServer_Functions.cpp \
-  PortableServer/PortableServer_ORBInitializer.cpp \
-  PortableServer/PortableServer_PolicyFactory.cpp \
   PortableServer/PortableServer_WFunctions.cpp \
   PortableServer/Regular_POA.cpp \
   PortableServer/RequestProcessingPolicy.cpp \
@@ -1320,30 +1360,23 @@ nobase_include_HEADERS += \
   PortableServer/POAManagerC.h \
   PortableServer/POA_Cached_Policies.h \
   PortableServer/POA_Cached_Policies.i \
-  PortableServer/POA_Current.h \
-  PortableServer/POA_Current.inl \
   PortableServer/POA_Current_Impl.h \
   PortableServer/POA_Current_Impl.inl \
   PortableServer/POA_Guard.h \
   PortableServer/POA_Policy_Set.h \
   PortableServer/POA_Policy_Set.i \
-  PortableServer/PS_Current.pidl \
-  PortableServer/PS_CurrentC.h \
   PortableServer/PS_Forward.pidl \
   PortableServer/PS_ForwardC.h \
   PortableServer/PolicyS.h \
   PortableServer/PolicyS_T.cpp \
   PortableServer/PolicyS_T.h \
   PortableServer/PolicyS_T.inl \
-  PortableServer/Policy_Creator_T.h \
   PortableServer/Policy_Strategy.h \
   PortableServer/PortableServer.h \
   PortableServer/PortableServer.pidl \
   PortableServer/PortableServerC.h \
   PortableServer/PortableServerS.h \
   PortableServer/PortableServer_Functions.h \
-  PortableServer/PortableServer_ORBInitializer.h \
-  PortableServer/PortableServer_PolicyFactory.h \
   PortableServer/PortableServer_WFunctions.h \
   PortableServer/PortableServer_include.pidl \
   PortableServer/PortableServer_includeC.h \
@@ -1663,6 +1696,7 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/MessagingA.cpp \
   Messaging/MessagingC.cpp \
   Messaging/MessagingS.cpp \
+  Messaging/Messaging_Loader.cpp \
   Messaging/Messaging_No_ImplA.cpp \
   Messaging/Messaging_No_ImplC.cpp \
   Messaging/Messaging_ORBInitializer.cpp \
@@ -1680,6 +1714,8 @@ libTAO_Messaging_la_LDFLAGS = \
 
 libTAO_Messaging_la_LIBADD = \
   libTAO_Valuetype.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO_PortableServer.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -1699,6 +1735,7 @@ nobase_include_HEADERS += \
   Messaging/MessagingS_T.cpp \
   Messaging/MessagingS_T.h \
   Messaging/MessagingS_T.inl \
+  Messaging/Messaging_Loader.h \
   Messaging/Messaging_No_Impl.pidl \
   Messaging/Messaging_No_ImplC.h \
   Messaging/Messaging_ORBInitializer.h \
@@ -1755,6 +1792,8 @@ libTAO_DynamicInterface_la_LDFLAGS = \
 
 libTAO_DynamicInterface_la_LIBADD = \
   libTAO_Messaging.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO_PortableServer.la \
   libTAO_Valuetype.la \
   libTAO.la \
@@ -1767,7 +1806,6 @@ nobase_include_HEADERS += \
   DynamicInterface/DII_Arguments.inl \
   DynamicInterface/DII_CORBA_methods.h \
   DynamicInterface/DII_Invocation.h \
-  DynamicInterface/DII_Invocation.inl \
   DynamicInterface/DII_Invocation_Adapter.h \
   DynamicInterface/DII_Reply_Dispatcher.h \
   DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -1871,6 +1909,8 @@ libTAO_IORInterceptor_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_IORInterceptor_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO_ObjRefTemplate.la \
   libTAO_Valuetype.la \
   libTAO_PortableServer.la \
@@ -2034,6 +2074,48 @@ EXTRA_DIST += \
   ImR_Client/TAO_ImR_Client.pc.in
 
 
+## Makefile.PI_Server.am
+
+lib_LTLIBRARIES += libTAO_PI_Server.la
+
+libTAO_PI_Server_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_PI_SERVER_BUILD_DLL
+
+libTAO_PI_Server_la_SOURCES = \
+  PI_Server/PI_Server.cpp \
+  PI_Server/PI_Server_Loader.cpp \
+  PI_Server/POA_Current.cpp \
+  PI_Server/PS_CurrentA.cpp \
+  PI_Server/PS_CurrentC.cpp \
+  PI_Server/PortableServer_ORBInitializer.cpp \
+  PI_Server/PortableServer_PolicyFactory.cpp
+
+libTAO_PI_Server_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_PI_Server_la_LIBADD = \
+  libTAO_PortableServer.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  PI_Server/PI_Server.h \
+  PI_Server/PI_Server_Loader.h \
+  PI_Server/POA_Current.h \
+  PI_Server/POA_Current.inl \
+  PI_Server/PS_Current.pidl \
+  PI_Server/PS_CurrentC.h \
+  PI_Server/Policy_Creator_T.h \
+  PI_Server/PortableServer_ORBInitializer.h \
+  PI_Server/PortableServer_PolicyFactory.h \
+  PI_Server/pi_server_export.h
+
 ## Makefile.RTCORBA.am
 
 if BUILD_RT_CORBA
@@ -2082,6 +2164,8 @@ libTAO_RTCORBA_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_RTCORBA_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2167,6 +2251,8 @@ libTAO_RTPortableServer_la_LDFLAGS = \
 libTAO_RTPortableServer_la_LIBADD = \
   libTAO_PortableServer.la \
   libTAO_RTCORBA.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2230,6 +2316,8 @@ libTAO_RTScheduler_la_LDFLAGS = \
 libTAO_RTScheduler_la_LIBADD = \
   libTAO_PortableServer.la \
   libTAO_RTCORBA.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2630,6 +2718,8 @@ libTAO_Utils_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_Utils_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO_PortableServer.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
