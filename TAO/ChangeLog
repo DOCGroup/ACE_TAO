@@ -1,3 +1,11 @@
+Sat Jun 25 06:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AdapterActivatorC.cpp:
+        * tao/PortableServer/ForwardRequestC.cpp:
+        * tao/PortableServer/IdAssignmentPolicyC.cpp:
+          Regenerated to see what the footprint results are from the latest idl
+          compiler change
+
 Fri Jun 24 23:11:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Messaging/TAO_Messaging.pc.in:
