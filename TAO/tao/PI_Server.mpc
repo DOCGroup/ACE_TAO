@@ -28,5 +28,6 @@ project : taolib, pi, portableserver, core {
   }
 
   Pkgconfig_Files {
+    PI_Server/TAO_PI_Server.pc.in
   }
 }

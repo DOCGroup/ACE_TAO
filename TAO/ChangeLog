@@ -1,3 +1,19 @@
+Fri Jun 24 23:11:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Messaging/TAO_Messaging.pc.in:
+	* tao/RTPortableServer/TAO_RTPortableServer.pc.in:
+
+	  Update with current list of dependencies based on values from
+	  MPC base project files.
+
+	* tao/PI_Server.mpc:
+
+          Added Pkgconfig_Files definition.
+
+	* tao/PI_Server/TAO_PI_Server.pc.in:
+
+          New file, pkg-config *.pc template for TAO_PI_Server library.
+
 Fri Jun 24 22:50:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/Makefile.am:
