@@ -79,7 +79,12 @@ ACE_Array_Map<Key, Value>::swap (ACE_Array_Map<Key, Value> & map)
 }
 
 template<typename Key, typename Value>
+#if defined (_MSC_VER) && (_MSC_VER <= 1200)
+// MSVC++ 6 doesn't like the typename qualification.
+std::pair<ACE_Array_Map<Key, Value>::iterator, bool>
+#else
 std::pair<typename ACE_Array_Map<Key, Value>::iterator, bool>
+#endif  /* _MSC_VER <= 1200 */
 ACE_Array_Map<Key, Value>::insert (
   typename ACE_Array_Map<Key, Value>::value_type const & x)
 {

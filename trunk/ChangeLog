@@ -1,3 +1,26 @@
+Sat Jun 25 01:42:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Array_Map.h:
+
+	  MSVC++ 6's reverse_iterator adapter implementation is not
+	  standard's compliant.  Adjusted reverse_iterator template
+	  parameters accordingly for this one case (i.e. _MSC_VER <=
+	  1200).
+
+	* ace/Array_Map.cpp (insert):
+
+	  MSVC++ 6 doesn't like the "typename" qualification in the first
+	  template argument to the std::pair<> return type.  Removed it in
+	  for the _MSC_VER <= 1200 case.
+
+	* tests/Array_Map_Test.cpp:
+
+	  MSVC++ 6 doesn't pick up the const rbegin/rend() methods without
+	  making the map object const, despite the fact the return value
+	  is assigned to a const_reverse_iterator.  Work around the
+	  problem by casting the non-const map instance to a reference to
+	  a const map when _MSC_VER <= 1200.
+
 Fri Jun 24 22:49:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* protocols/ace/RMCast/Makefile.am:
