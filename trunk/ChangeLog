@@ -1,3 +1,9 @@
+Fri Jun 24 22:49:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* protocols/ace/RMCast/Makefile.am:
+
+	  Regenerated.
+
 Fri Jun 23 19:58:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
