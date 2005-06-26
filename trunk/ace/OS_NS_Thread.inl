@@ -1569,7 +1569,18 @@ ACE_OS::sema_init (ACE_sema_t *s,
     else
       creator = true; // remember we created it for initialization at end
 
-  s->name_ = ACE_OS::strdup (name);
+  // for processshared semaphores remember who we are to be able to remove
+  // the FIFO when we're done with it
+  if (type == USYNC_PROCESS)
+    {
+      s->name_ = ACE_OS::strdup (name);
+      if (s->name_ == 0)
+        {
+          if (creator)
+            ACE_OS::unlink (name);
+          return -1;
+        }
+    }
 
   if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
       || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
@@ -1590,6 +1601,17 @@ ACE_OS::sema_init (ACE_sema_t *s,
       for(u_int i=0; i<count ;++i)
         if (ACE_OS::write (s->fd_[1], &c, sizeof(char)) != 1)
           return(-1);
+    }
+
+  // In the case of processscope semaphores we can already unlink the FIFO now that
+  // we completely set it up (the opened handles will keep it active until we close
+  // thos down). This way we're protected against unexpected crashes as far as removal
+  // is concerned.
+  // Unfortunately this does not work for processshared FIFOs since as soon as we
+  // have unlinked the semaphore no other process will be able to open it anymore.
+  if (type == USYNC_THREAD)
+    {
+      ACE_OS::unlink (name);
     }
 
   return(0);
@@ -1785,8 +1807,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
   ACE_OSCALL_RETURN (::sem_post (s->sema_), int, -1);
 # elif defined (ACE_USES_FIFO_SEM)
   char    c = 1;
-
-  if (ACE_OS::write (s->fd_[1], &c, sizeof(char)) == 1)
+  if (ACE_OS::write (s->fd_[1], &c, sizeof(char)) == sizeof(char))
     return(0);
   return(-1);
 # elif defined (ACE_HAS_THREADS)
@@ -1886,6 +1907,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
     return(-1);
 
+  // read sets errno to EAGAIN if no input
   rc = ACE_OS::read (s->fd_[0], &c, sizeof(char));
 
   /* turn off nonblocking for fd_[0] */
@@ -2148,15 +2170,16 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       fds_.set_bit (s->fd_[0]);
       if ((rc = ACE_OS::select (ACE_Handle_Set::MAXSIZE, fds_, 0, 0, timeout)) != 1)
         {
-          if (rc == 0)
-            errno = ETIME;
-          else if (rc == -1 && errno == EINTR)
-            errno = ETIME;
-          return (-1);
+          if (rc == 0 || (errno != EINTR && errno != EAGAIN))
+          {
+            if (rc == 0)
+              errno = ETIME;
+            return (-1);
+          }
         }
 
       // try to read the signal *but* do *not* block
-      if (ACE_OS::sema_trywait(s) == 0)
+      if (rc == 1 && ACE_OS::sema_trywait(s) == 0)
         return (0);
 
       // we were woken for input but someone beat us to it
@@ -2165,7 +2188,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
 
   // make sure errno is set right
-  errno = ETIMEDOUT;
+  errno = ETIME;
 
   return(-1);
 # elif defined (ACE_HAS_THREADS)

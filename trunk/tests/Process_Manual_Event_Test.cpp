@@ -28,7 +28,11 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_dirent.h"
 
-#if !defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
+#if !defined (ACE_LACKS_FORK) && \
+  (defined (ACE_WIN32) || \
+   (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED)) || \
+   defined (ACE_USES_FIFO_SEM) || \
+   (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
 static int iterations = 10;
 static int child_process = 0;
 static const char *event_ping_name = "ACE_Ping_Event";
@@ -155,7 +159,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
-#elif defined (ACE_HAS_THREADS)
+#elif defined (ACE_WIN32) || \
+       (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED)) || \
+       defined (ACE_USES_FIFO_SEM) || \
+       (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
 
   parse_args (argc, argv);
 
@@ -205,15 +212,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_END_TEST;
     }
-#else /* !ACE_LACKS_FORK && !ACE_HAS_THREADS */
+#else /* !ACE_LACKS_FORK */
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
   ACE_START_TEST (ACE_TEXT ("Process_Manual_Event_Test"));
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threading is not supported on this platform\n")));
+              ACE_TEXT ("Process shared events are not supported on this platform\n")));
   ACE_END_TEST;
-#endif /* ! ACE_LACKS_FORK  && !ACE_HAS_THREADS */
+#endif /* ! ACE_LACKS_FORK  */
 
   return 0;
 }

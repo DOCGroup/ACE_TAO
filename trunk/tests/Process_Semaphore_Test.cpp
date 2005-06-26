@@ -19,7 +19,9 @@
 #include "test_config.h"
 #include "ace/Mutex.h"
 #include "ace/Process.h"
-#if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_USES_FIFO_SEM) || defined (ACE_HAS_WTHREADS)
+#if defined (ACE_WIN32) || \
+      defined (ACE_USES_FIFO_SEM) || \
+      (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
 # include "ace/Time_Value.h"
 # include "ace/OS_NS_sys_time.h"
 # include "ace/Semaphore.h"
@@ -34,7 +36,7 @@
 
 ACE_RCSID(tests, Process_Semaphore_Test, "Process_Semaphore_Test.cpp,v 4.42 2003/12/26 21:59:35 shuston Exp")
 
-#if !defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
+#if !defined (ACE_LACKS_FORK)
 static int iterations = 10;
 static int child_process = 0;
 static const char *sema_ping_name = "ACE_Ping_Semaphore";
@@ -75,7 +77,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static void
 acquire_release (void)
 {
-#if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_USES_FIFO_SEM) || defined (ACE_HAS_WTHREADS)
+#if defined (ACE_WIN32) || \
+      defined (ACE_USES_FIFO_SEM) || \
+      (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
   ACE_Semaphore sema_ping (0, USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (sema_ping_name));
   ACE_Semaphore sema_pong (0, USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (sema_pong_name));
 #else
@@ -103,7 +107,9 @@ acquire_release (void)
                     ACE_TEXT ("(%P) Pong\n")));
     }
 
-#if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_USES_FIFO_SEM) || defined (ACE_HAS_WTHREADS)
+#if defined (ACE_WIN32) || \
+      defined (ACE_USES_FIFO_SEM) || \
+      (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P) Testing timeouts\n")));
 
@@ -134,7 +140,9 @@ acquire_release (void)
       sema_pong.release ();
     }
 
-#if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_USES_FIFO_SEM) || defined (ACE_HAS_WTHREADS)
+#if defined (ACE_WIN32) || \
+      defined (ACE_USES_FIFO_SEM) || \
+      (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P) Testing timeouts\n")));
 
@@ -164,7 +172,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
-#elif defined (ACE_HAS_THREADS)
+#else
 
   parse_args (argc, argv);
 
@@ -214,15 +222,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_END_TEST;
     }
-#else /* !ACE_LACKS_FORK && !ACE_HAS_THREADS */
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
-  ACE_START_TEST (ACE_TEXT ("Process_Semaphore_Test"));
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threading is not supported on this platform\n")));
-  ACE_END_TEST;
-#endif /* ! ACE_LACKS_FORK  && !ACE_HAS_THREADS */
+#endif /* ! ACE_LACKS_FORK */
 
   return 0;
 }
