@@ -27,9 +27,9 @@
 #  define ACE_HAS_POSIX_SEM
 # endif /* ACE_HAS_POSIX_SEM */
 # if defined(ACE_HAS_POSIX_SEM)
-#  if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && (defined (_POSIX_TIMEOUTS) || ((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600))
+#  if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && defined (_POSIX_TIMEOUTS)
 #    define ACE_HAS_POSIX_SEM_TIMEOUT
-#  endif /* ACE_HAS_POSIX_SEM_TIMEOUT && (_POSIX_TIMEOUTS || ((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600)) */
+#  endif /* ACE_HAS_POSIX_SEM_TIMEOUT && _POSIX_TIMEOUTS */
 # endif /* ACE_HAS_POSIX_SEM */
 #endif /* ACE_HAS_POSIX_SEM */
 

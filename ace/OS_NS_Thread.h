@@ -1837,17 +1837,21 @@ extern "C"
 {
   typedef struct
   {
-    /// Object type.
-    int type_;
-
+#if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     /// Protect critical section.
     ACE_mutex_t lock_;
+#endif
 
 #if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     /// Keeps track of waiters.
     ACE_cond_t condition_;
 #endif
+
+    /// Object type.
+    int type_;
 
     /// Specifies if this is an auto- or manual-reset event.
     int manual_reset_;
@@ -1895,8 +1899,15 @@ protected:
   /// Event data
   ACE_eventdata_t* eventdata_;
 
-#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
+#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_MUTEXATTR_PSHARED)) && \
   (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    /// Protect critical section.
+  ACE_sema_t lock_;
+#endif
+
+#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
+  (defined (ACE_USES_FIFO_SEM) || \
+    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
   /// Keeps track of waiters.
   ACE_sema_t semaphore_;
 #endif

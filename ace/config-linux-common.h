@@ -44,14 +44,33 @@
 # undef ACE_HAS_SHM_OPEN
 #endif
 
+#include <linux/version.h>
+
 #if defined (ACE_HAS_POSIX_SEM)
-#  include <linux/version.h>
-#  if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0))
-    // Linux versions < 2.6 may define all the right POSIX macros
-    // but they lack the actual runtime support for this stuff
-#    undef ACE_HAS_POSIX_SEM
-#    define ACE_USES_FIFO_SEM
-#  endif  /* (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0)) */
+
+# if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0))
+    // Linux versions < 2.6 may define the right POSIX macro
+    // but they lack the full runtime support for this stuff so
+    // it's better not to use them
+#   undef ACE_HAS_POSIX_SEM
+# endif
+
+# if defined (ACE_USES_FIFO_SEM)
+#   if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0))
+      // Don't use this for Linux >= 2.6 since this has complete
+      // POSIX semaphores which are more efficient
+#     undef ACE_USES_FIFO_SEM
+#   endif  /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0)) */
+# endif /* ACE_USES_FIFO_SEM */
+
+# if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0))
+    // Linux versions >= 2.6 may not define the right POSIX macro
+    // but they have the actual runtime support for this stuff
+#   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600))
+#     define ACE_HAS_POSIX_SEM_TIMEOUT
+#   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600)) */
+# endif
+
 #endif /* ACE_HAS_POSIX_SEM */
 
 // First the machine specific part

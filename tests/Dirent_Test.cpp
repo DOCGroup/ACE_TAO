@@ -237,7 +237,7 @@ dirent_count (const ACE_TCHAR *dir_path,
             file_count++;
           break;
 
-        default: // Must be a directory.
+        case S_IFDIR:
           ACE_DEBUG ((LM_DEBUG, "%*sentering subdirectory %s\n",
                       recursion_level * RECURSION_INDENT,
                       ACE_TEXT (""),
@@ -275,6 +275,10 @@ dirent_count (const ACE_TCHAR *dir_path,
 # endif
 #endif /* !ACE_LACKS_CHDIR */
             }
+          break;
+
+        default: // Must be some other type of file (PIPE/FIFO/device)
+          file_count++;
           break;
         }
     }
