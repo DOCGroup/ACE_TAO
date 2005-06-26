@@ -2652,18 +2652,25 @@ ACE_OS::event_destroy (ACE_event_t *event)
   {
     if (event->name_)
     {
-              // Only destroy the event data if we're the ones who initialized
-              // it.
+      // Only destroy the event data if we're the ones who initialized
+      // it.
 
       int r1, r2;
-              // first destroy the mutex so locking after this will return errors
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+      // first destroy the mutex so locking after this will return errors
       while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
               && errno == EBUSY)
       {
         ACE_OS::thr_yield ();
       }
+# else
+      r1 = ACE_OS::sema_destroy(&event->lock_);
+# endif
+
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       // now fix event to manual reset, raise signal and broadcast until is's
       // possible to destroy the condition
       event->eventdata_->manual_reset_ = 1;
@@ -2687,8 +2694,13 @@ ACE_OS::event_destroy (ACE_event_t *event)
     {
       ACE_OS::munmap (event->eventdata_,
                       sizeof (ACE_eventdata_t));
+#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_MUTEXATTR_PSHARED)) && \
+  (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+      ACE_OS::sema_destroy(&event->lock_);
+# endif
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       return 0;
 # else
       return ACE_OS::sema_destroy(&event->semaphore_);
@@ -2698,15 +2710,22 @@ ACE_OS::event_destroy (ACE_event_t *event)
   else
   {
     int r1, r2;
-          // first destroy the mutex so locking after this will return errors
-    while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
-            && errno == EBUSY)
-    {
-      ACE_OS::thr_yield ();
-    }
+    // first destroy the mutex so locking after this will return errors
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+      // first destroy the mutex so locking after this will return errors
+      while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
+              && errno == EBUSY)
+      {
+        ACE_OS::thr_yield ();
+      }
+# else
+      r1 = ACE_OS::sema_destroy(&event->lock_);
+# endif
 
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     // now fix event to manual reset, raise signal and broadcast until is's
     // possible to destroy the condition
     event->eventdata_->manual_reset_ = 1;
@@ -2789,7 +2808,7 @@ ACE_OS::event_init (ACE_event_t *event,
     {
           // We own this shared memory object!  Let's set its size.
       if (ACE_OS::ftruncate (fd,
-          sizeof (ACE_eventdata_t)) == -1)
+                             sizeof (ACE_eventdata_t)) == -1)
       {
         ACE_OS::close (fd);
         return(-1);
@@ -2829,44 +2848,77 @@ ACE_OS::event_init (ACE_event_t *event,
       event->eventdata_->signal_count_ = 0;
 
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       int result = ACE_OS::cond_init (&event->eventdata_->condition_,
                                        static_cast<short> (type),
                                        name,
                                        arg);
 # else
       char   sem_name[128];
-      ACE_OS::strncpy (sem_name, name, sizeof(sem_name)-(1+sizeof("._ACE_SEM_")));
-      ACE_OS::strcat (sem_name, "._ACE_SEM_");
-      int result = ACE_OS::sema_init(&event->semaphore_,
+      ACE_OS::strncpy (sem_name, name, sizeof(sem_name)-(1+sizeof("._ACE_EVTSEM_")));
+      ACE_OS::strcat (sem_name, "._ACE_EVTSEM_");
+      int result = ACE_OS::sema_init (&event->semaphore_,
                                       0,
                                       type,
                                       sem_name,
                                       arg);
 # endif
       if (result == 0)
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
         result = ACE_OS::mutex_init (&event->eventdata_->lock_,
                                       type,
                                       name,
                                       (ACE_mutexattr_t *) arg);
-
+# else
+        {
+          char   lck_name[128];
+          ACE_OS::strncpy (lck_name, name, sizeof(lck_name)-(1+sizeof("._ACE_EVTLCK_")));
+          ACE_OS::strcat (lck_name, "._ACE_EVTLCK_");
+          result = ACE_OS::sema_init (&event->lock_,
+                                      1,              /* as owner initially unlock */
+                                      type,
+                                      lck_name,
+                                      arg);
+        }
+# endif
       return result;
     }
     else
     {
+      int result = 0;
+
       event->name_ = 0;
       event->eventdata_ = evtdata;
 #if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
-  (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+  (defined (ACE_USES_FIFO_SEM) || \
+    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
       char   sem_name[128];
-      ACE_OS::strncpy (sem_name, name, sizeof(sem_name)-(1+sizeof("._ACE_SEM_")));
-      ACE_OS::strcat (sem_name, "._ACE_SEM_");
-      return ACE_OS::sema_init(&event->semaphore_,
-                               0,
-                               type,
-                               sem_name,
-                               arg);
+      ACE_OS::strncpy (sem_name, name, sizeof(sem_name)-(1+sizeof("._ACE_EVTSEM_")));
+      ACE_OS::strcat (sem_name, "._ACE_EVTSEM_");
+      result = ACE_OS::sema_init(&event->semaphore_,
+                                  0,
+                                  type,
+                                  sem_name,
+                                  arg);
 # endif
+
+#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_MUTEXATTR_PSHARED)) && \
+  (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+      if (result == 0)
+      {
+        char   lck_name[128];
+        ACE_OS::strncpy (lck_name, name, sizeof(lck_name)-(1+sizeof("._ACE_EVTLCK_")));
+        ACE_OS::strcat (lck_name, "._ACE_EVTLCK_");
+        result = ACE_OS::sema_init (&event->lock_,
+                                    0,
+                                    type,
+                                    lck_name,
+                                    arg);
+      }
+# endif
+      return result;
     }
 
     return(0);
@@ -2886,7 +2938,8 @@ ACE_OS::event_init (ACE_event_t *event,
     event->eventdata_->signal_count_ = 0;
 
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     int result = ACE_OS::cond_init (&event->eventdata_->condition_,
                                      static_cast<short> (type),
                                      name,
@@ -2899,10 +2952,19 @@ ACE_OS::event_init (ACE_event_t *event,
                                     arg);
 # endif
     if (result == 0)
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       result = ACE_OS::mutex_init (&event->eventdata_->lock_,
                                     type,
                                     name,
                                     (ACE_mutexattr_t *) arg);
+# else
+      result = ACE_OS::sema_init (&event->lock_,
+                                  1,              /* as owner initially unlock */
+                                  type,
+                                  name,
+                                  arg);
+# endif
 
     return result;
   }
@@ -2928,7 +2990,12 @@ ACE_OS::event_pulse (ACE_event_t *event)
   int error = 0;
 
   // grab the lock first
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
   if (ACE_OS::mutex_lock (&event->eventdata_->lock_) == 0)
+# else
+  if (ACE_OS::sema_wait (&event->lock_) == 0)
+# endif
   {
     if (event->eventdata_->waiting_threads_ > 0)
     {
@@ -2937,7 +3004,8 @@ ACE_OS::event_pulse (ACE_event_t *event)
       {
         // Wakeup all waiters.
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
         if (ACE_OS::cond_broadcast (&event->eventdata_->condition_) != 0)
         {
           result = -1;
@@ -2964,7 +3032,8 @@ ACE_OS::event_pulse (ACE_event_t *event)
       else
       {
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
         if (ACE_OS::cond_signal (&event->eventdata_->condition_) != 0)
 # else
         if (ACE_OS::sema_post(&event->semaphore_) != 0)
@@ -2982,8 +3051,12 @@ ACE_OS::event_pulse (ACE_event_t *event)
     event->eventdata_->is_signaled_ = 0;
 
     // Now we can let go of the lock.
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     ACE_OS::mutex_unlock (&event->eventdata_->lock_);
-
+# else
+    ACE_OS::sema_post (&event->lock_);
+# endif
     if (result == -1)
       // Reset errno in case mutex_unlock() also fails...
       errno = error;
@@ -3006,14 +3079,24 @@ ACE_OS::event_reset (ACE_event_t *event)
   int result = 0;
 
   // Grab the lock first.
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
   if (ACE_OS::mutex_lock (&event->eventdata_->lock_) == 0)
+# else
+  if (ACE_OS::sema_wait (&event->lock_) == 0)
+# endif
   {
     // Reset event.
     event->eventdata_->is_signaled_ = 0;
     event->eventdata_->auto_event_signaled_ = false;
 
     // Now we can let go of the lock.
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     ACE_OS::mutex_unlock (&event->eventdata_->lock_);
+# else
+    ACE_OS::sema_post (&event->lock_);
+# endif
   }
   else
     result = -1;
@@ -3034,14 +3117,20 @@ ACE_OS::event_signal (ACE_event_t *event)
   int error = 0;
 
   // grab the lock first
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
   if (ACE_OS::mutex_lock (&event->eventdata_->lock_) == 0)
+# else
+  if (ACE_OS::sema_wait (&event->lock_) == 0)
+# endif
   {
     // Manual-reset event.
     if (event->eventdata_->manual_reset_ == 1)
     {
       // wakeup all
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       if (ACE_OS::cond_broadcast (&event->eventdata_->condition_) != 0)
       {
         result = -1;
@@ -3067,7 +3156,8 @@ ACE_OS::event_signal (ACE_event_t *event)
         event->eventdata_->is_signaled_ = 1;
       // Waiters: wakeup one waiter.
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       else if (ACE_OS::cond_signal (&event->eventdata_->condition_) != 0)
 # else
       else if (ACE_OS::sema_post(&event->semaphore_) != 0)
@@ -3081,7 +3171,12 @@ ACE_OS::event_signal (ACE_event_t *event)
     }
 
     // Now we can let go of the lock.
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     ACE_OS::mutex_unlock (&event->eventdata_->lock_);
+# else
+    ACE_OS::sema_post (&event->lock_);
+# endif
 
     if (result == -1)
       // Reset errno in case mutex_unlock() also fails...
@@ -3089,6 +3184,7 @@ ACE_OS::event_signal (ACE_event_t *event)
   }
   else
     result = -1;
+
   return result;
 #else
   ACE_UNUSED_ARG (event);
@@ -3157,7 +3253,12 @@ ACE_OS::event_timedwait (ACE_event_t *event,
   int error = 0;
 
   // grab the lock first
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
   if (ACE_OS::mutex_lock (&event->eventdata_->lock_) == 0)
+# else
+  if (ACE_OS::sema_wait (&event->lock_) == 0)
+# endif
   {
     if (event->eventdata_->is_signaled_ == 1)
     // event is currently signaled
@@ -3185,10 +3286,11 @@ ACE_OS::event_timedwait (ACE_event_t *event,
              event->eventdata_->auto_event_signaled_ == false)
       {
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
         if (ACE_OS::cond_timedwait (&event->eventdata_->condition_,
-            &event->eventdata_->lock_,
-            &absolute_timeout) != 0)
+                                    &event->eventdata_->lock_,
+                                    &absolute_timeout) != 0)
         {
           result = -1;
           error = errno;
@@ -3201,7 +3303,12 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           break;
         }
 # else
-        if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) !=0)
+#   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+      (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+        if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) != 0)
+#   else
+        if (ACE_OS::sema_post (&event->lock_) != 0)
+#   endif
         {
           event->eventdata_->waiting_threads_--;
           return -1;
@@ -3223,7 +3330,12 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           signalled = true;
         }
 
-        if (ACE_OS::mutex_lock (&event->eventdata_->lock_) !=0)
+#   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+      (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+        if (ACE_OS::mutex_lock (&event->eventdata_->lock_) != 0)
+#   else
+        if (ACE_OS::sema_wait (&event->lock_) != 0)
+#   endif
         {
           event->eventdata_->waiting_threads_--;  // yes, I know it's not save
           return -1;
@@ -3254,7 +3366,12 @@ ACE_OS::event_timedwait (ACE_event_t *event,
     }
 
     // Now we can let go of the lock.
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
     ACE_OS::mutex_unlock (&event->eventdata_->lock_);
+# else
+    ACE_OS::sema_post (&event->lock_);
+# endif
 
     if (result == -1)
       // Reset errno in case mutex_unlock() also fails...
@@ -3288,7 +3405,12 @@ ACE_OS::event_wait (ACE_event_t *event)
   int error = 0;
 
   // grab the lock first
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
   if (ACE_OS::mutex_lock (&event->eventdata_->lock_) == 0)
+# else
+  if (ACE_OS::sema_wait (&event->lock_) == 0)
+# endif
   {
     if (event->eventdata_->is_signaled_ == 1)
     // Event is currently signaled.
@@ -3305,7 +3427,8 @@ ACE_OS::event_wait (ACE_event_t *event)
              event->eventdata_->auto_event_signaled_ == false)
       {
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
         if (ACE_OS::cond_wait (&event->eventdata_->condition_,
                                &event->eventdata_->lock_) != 0)
         {
@@ -3320,7 +3443,12 @@ ACE_OS::event_wait (ACE_event_t *event)
           break;
         }
 # else
-        if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) !=0)
+#   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+      (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+        if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) != 0)
+#   else
+        if (ACE_OS::sema_post (&event->lock_) != 0)
+#   endif
         {
           event->eventdata_->waiting_threads_--;
           return -1;
@@ -3339,7 +3467,12 @@ ACE_OS::event_wait (ACE_event_t *event)
           signalled = true;
         }
 
-        if (ACE_OS::mutex_lock (&event->eventdata_->lock_) !=0)
+#   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+      (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+        if (ACE_OS::mutex_lock (&event->eventdata_->lock_) != 0)
+#   else
+        if (ACE_OS::sema_wait (&event->lock_) != 0)
+#   endif
         {
           event->eventdata_->waiting_threads_--;
           return -1;
@@ -3369,7 +3502,12 @@ ACE_OS::event_wait (ACE_event_t *event)
   }
 
   // Now we can let go of the lock.
-  ACE_OS::mutex_unlock (&event->eventdata_->lock_);
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    ACE_OS::mutex_unlock (&event->eventdata_->lock_);
+# else
+    ACE_OS::sema_post (&event->lock_);
+# endif
 
   if (result == -1)
     // Reset errno in case mutex_unlock() also fails...

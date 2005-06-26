@@ -1,31 +1,62 @@
+Sun Jun 26 22:29:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-posix.h:
+          Made test for POSIX_SEM TIMEOUTS more specific.
+
+        * ace/config-linux-common.h:
+          Added check to fix detection of POSIX_SEM TIMEOUTS for Linux
+          >= 2.6 because of crippled POSIX macros (moved here from
+          config-posix.h).
+          Made implementation of FIFO based Semaphores for Linux < 2.6
+          user selectable instead of default (default now back to
+          situation before I added FIFO based Semaphores).
+
+        * ace/OS_NS_Thread{.h .cpp .inl}:
+          Added support for Process shared Events when Process shared
+          pthread mutexes are not supported but FIFO Sems are configured.
+          Fixed several issues concerning correct errno handling in
+          case of timeouts.
+
+        * tests/run_test.lst:
+          Added missing Manual_Event_Test.
+
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+          Improved protection against non-supporting builds.
+
+        * tests/Dirent_Test.cpp:
+          Made this test a little less braindead so it does not recognize
+          FIFOs and PIPEs as directories anymore and tries chdir() on
+          them which is quite annoying.
+
 Sat Jun 25 01:42:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Array_Map.h:
+        * ace/Array_Map.h:
 
-	  MSVC++ 6's reverse_iterator adapter implementation is not
-	  standard's compliant.  Adjusted reverse_iterator template
-	  parameters accordingly for this one case (i.e. _MSC_VER <=
-	  1200).
+          MSVC++ 6's reverse_iterator adapter implementation is not
+          standard's compliant.  Adjusted reverse_iterator template
+          parameters accordingly for this one case (i.e. _MSC_VER <=
+          1200).
 
-	* ace/Array_Map.cpp (insert):
+        * ace/Array_Map.cpp (insert):
 
-	  MSVC++ 6 doesn't like the "typename" qualification in the first
-	  template argument to the std::pair<> return type.  Removed it in
-	  for the _MSC_VER <= 1200 case.
+          MSVC++ 6 doesn't like the "typename" qualification in the first
+          template argument to the std::pair<> return type.  Removed it in
+          for the _MSC_VER <= 1200 case.
 
-	* tests/Array_Map_Test.cpp:
+        * tests/Array_Map_Test.cpp:
 
-	  MSVC++ 6 doesn't pick up the const rbegin/rend() methods without
-	  making the map object const, despite the fact the return value
-	  is assigned to a const_reverse_iterator.  Work around the
-	  problem by casting the non-const map instance to a reference to
-	  a const map when _MSC_VER <= 1200.
+          MSVC++ 6 doesn't pick up the const rbegin/rend() methods without
+          making the map object const, despite the fact the return value
+          is assigned to a const_reverse_iterator.  Work around the
+          problem by casting the non-const map instance to a reference to
+          a const map when _MSC_VER <= 1200.
 
 Fri Jun 24 22:49:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* protocols/ace/RMCast/Makefile.am:
+        * protocols/ace/RMCast/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Fri Jun 23 19:58:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
