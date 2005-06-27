@@ -8,7 +8,7 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
 
-includedir = @includedir@/orbsvcs
+includedir = @includedir@/orbsvcs/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
@@ -19,26 +19,39 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.CosNaming.am
+## Makefile.CosNaming_IDL.am
 
 BUILT_SOURCES = \
+  CosNamingS_T.inl \
   CosNamingC.inl \
+  CosNamingS.inl \
   CosNamingC.h \
+  CosNamingS.h \
+  CosNamingS_T.h \
   CosNamingC.cpp \
+  CosNamingS.cpp \
   CosNamingS_T.cpp
 
 CLEANFILES = \
   CosNaming-stamp \
+  CosNamingS_T.inl \
   CosNamingC.inl \
+  CosNamingS.inl \
   CosNamingC.h \
+  CosNamingS.h \
+  CosNamingS_T.h \
   CosNamingC.cpp \
+  CosNamingS.cpp \
   CosNamingS_T.cpp
 
-CosNamingC.inl CosNamingC.h CosNamingC.cpp CosNamingS_T.cpp: CosNaming-stamp
+CosNamingS_T.inl CosNamingC.inl CosNamingS.inl CosNamingC.h CosNamingS.h CosNamingS_T.h CosNamingC.cpp CosNamingS.cpp CosNamingS_T.cpp: CosNaming-stamp
 
 CosNaming-stamp: $(srcdir)/CosNaming.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h $(srcdir)/CosNaming.idl
 	@touch $@
+
+
+## Makefile.CosNaming.am
 
 lib_LTLIBRARIES = libTAO_CosNaming.la
 
@@ -63,7 +76,6 @@ libTAO_CosNaming_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS = \
-  CosNaming.idl \
   CosNamingC.h \
   CosNamingC.inl \
   Naming/Naming_Client.h \
@@ -613,7 +625,6 @@ BUILT_SOURCES += \
   RtecBaseS.inl \
   RtecBaseC.h \
   RtecBaseS.h \
-  RtecBaseS_T.h \
   RtecBaseC.cpp \
   RtecBaseS.cpp \
   RtecBaseS_T.cpp
@@ -625,12 +636,11 @@ CLEANFILES += \
   RtecBaseS.inl \
   RtecBaseC.h \
   RtecBaseS.h \
-  RtecBaseS_T.h \
   RtecBaseC.cpp \
   RtecBaseS.cpp \
   RtecBaseS_T.cpp
 
-RtecBaseS_T.inl RtecBaseC.inl RtecBaseS.inl RtecBaseC.h RtecBaseS.h RtecBaseS_T.h RtecBaseC.cpp RtecBaseS.cpp RtecBaseS_T.cpp: RtecBase-stamp
+RtecBaseS_T.inl RtecBaseC.inl RtecBaseS.inl RtecBaseC.h RtecBaseS.h RtecBaseC.cpp RtecBaseS.cpp RtecBaseS_T.cpp: RtecBase-stamp
 
 RtecBase-stamp: $(srcdir)/RtecBase.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/RtecBase.idl
@@ -642,7 +652,6 @@ BUILT_SOURCES += \
   TimeBaseS.inl \
   TimeBaseC.h \
   TimeBaseS.h \
-  TimeBaseS_T.h \
   TimeBaseC.cpp \
   TimeBaseS.cpp \
   TimeBaseS_T.cpp
@@ -654,12 +663,11 @@ CLEANFILES += \
   TimeBaseS.inl \
   TimeBaseC.h \
   TimeBaseS.h \
-  TimeBaseS_T.h \
   TimeBaseC.cpp \
   TimeBaseS.cpp \
   TimeBaseS_T.cpp
 
-TimeBaseS_T.inl TimeBaseC.inl TimeBaseS.inl TimeBaseC.h TimeBaseS.h TimeBaseS_T.h TimeBaseC.cpp TimeBaseS.cpp TimeBaseS_T.cpp: TimeBase-stamp
+TimeBaseS_T.inl TimeBaseC.inl TimeBaseS.inl TimeBaseC.h TimeBaseS.h TimeBaseC.cpp TimeBaseS.cpp TimeBaseS_T.cpp: TimeBase-stamp
 
 TimeBase-stamp: $(srcdir)/TimeBase.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/TimeBase.idl
@@ -700,7 +708,6 @@ nobase_include_HEADERS += \
   RtecBaseC.inl \
   RtecBaseS.h \
   RtecBaseS_T.cpp \
-  RtecBaseS_T.h \
   RtecBaseS_T.inl \
   Shutdown_Utilities.h \
   TimeBase.idl \
@@ -708,7 +715,6 @@ nobase_include_HEADERS += \
   TimeBaseC.inl \
   TimeBaseS.h \
   TimeBaseS_T.cpp \
-  TimeBaseS_T.h \
   TimeBaseS_T.inl \
   Time_Utilities.h \
   Time_Utilities.i \
@@ -846,6 +852,8 @@ libTAO_CosEvent_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -1175,6 +1183,8 @@ libTAO_PortableGroup_la_LDFLAGS = \
 
 libTAO_PortableGroup_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
@@ -1375,6 +1385,8 @@ libTAO_CosLoadBalancing_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
@@ -1525,6 +1537,8 @@ libTAO_CosNaming_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -2327,6 +2341,8 @@ libTAO_CosTrading_la_LDFLAGS = \
 
 libTAO_CosTrading_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -2446,6 +2462,8 @@ libTAO_CosTrading_Serv_la_LDFLAGS = \
 
 libTAO_CosTrading_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   libTAO_CosTrading_Skel.la \
@@ -2685,8 +2703,10 @@ DsLogAdmin = \
   Log/LogMgr_i.cpp \
   Log/LogNotification.cpp \
   Log/LogRecordStore.cpp \
+  Log/Log_Compaction_Handler.cpp \
   Log/Log_Constraint_Interpreter.cpp \
   Log/Log_Constraint_Visitors.cpp \
+  Log/Log_Flush_Handler.cpp \
   Log/Log_i.cpp
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin_Serv.la
@@ -2723,8 +2743,10 @@ nobase_include_HEADERS += \
   Log/LogMgr_i.h \
   Log/LogNotification.h \
   Log/LogRecordStore.h \
+  Log/Log_Compaction_Handler.h \
   Log/Log_Constraint_Interpreter.h \
   Log/Log_Constraint_Visitors.h \
+  Log/Log_Flush_Handler.h \
   Log/Log_i.h
 
 pkgconfig_DATA += TAO_DsLogAdmin_Serv.pc
@@ -2822,6 +2844,8 @@ libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_DsLogAdmin_Serv.la \
   libTAO_Svc_Utils.la \
@@ -3100,6 +3124,8 @@ libTAO_FTORB_Utils_la_LDFLAGS = \
 libTAO_FTORB_Utils_la_LIBADD = \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -3161,6 +3187,8 @@ libTAO_FTRT_ClientORB_la_LDFLAGS = \
 
 libTAO_FTRT_ClientORB_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -3326,6 +3354,8 @@ libTAO_RTEvent_Skel_la_LIBADD = \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -3438,6 +3468,8 @@ libTAO_RTEvent_Serv_la_LIBADD = \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -3710,6 +3742,7 @@ libTAO_FtRtEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FtRtEvent_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   libTAO_RTEvent_Serv.la \
   libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
@@ -3717,6 +3750,8 @@ libTAO_FtRtEvent_la_LIBADD = \
   libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -3831,6 +3866,7 @@ libTAO_FTRT_EventChannel_la_LDFLAGS = \
 libTAO_FTRT_EventChannel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   libTAO_FtRtEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   libTAO_RTEvent_Serv.la \
   libTAO_RTEvent_Skel.la \
   libTAO_RTEvent.la \
@@ -3838,6 +3874,8 @@ libTAO_FTRT_EventChannel_la_LIBADD = \
   libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -3929,6 +3967,8 @@ libTAO_FT_ClientORB_la_LIBADD = \
   libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -3995,6 +4035,8 @@ libTAO_FT_ServerORB_la_LIBADD = \
   libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -4201,6 +4243,8 @@ libTAO_FaultTolerance_la_LIBADD = \
   libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -4432,6 +4476,9 @@ libTAO_IFRService_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_IFRService_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -4547,6 +4594,8 @@ libTAO_RTCORBAEvent_la_LIBADD = \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -4621,6 +4670,8 @@ libTAO_RTCosScheduling_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4813,6 +4864,8 @@ libTAO_RTEventLogAdmin_la_LIBADD = \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
@@ -4873,6 +4926,8 @@ libTAO_RTKokyuEvent_la_LIBADD = \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -4928,6 +4983,8 @@ libTAO_RTSchedEvent_la_LIBADD = \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -4992,6 +5049,8 @@ libTAO_RT_Notification_la_LIBADD = \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5021,8 +5080,6 @@ BUILT_SOURCES += \
   CSIC.inl \
   CSIS.inl \
   CSIC.h \
-  CSIS.h \
-  CSIS_T.h \
   CSIC.cpp
 
 CLEANFILES += \
@@ -5031,11 +5088,9 @@ CLEANFILES += \
   CSIC.inl \
   CSIS.inl \
   CSIC.h \
-  CSIS.h \
-  CSIS_T.h \
   CSIC.cpp
 
-CSIS_T.inl CSIC.inl CSIS.inl CSIC.h CSIS.h CSIS_T.h CSIC.cpp: CSI-stamp
+CSIS_T.inl CSIC.inl CSIS.inl CSIC.h CSIC.cpp: CSI-stamp
 
 CSI-stamp: $(srcdir)/CSI.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSI.idl
@@ -5046,8 +5101,6 @@ BUILT_SOURCES += \
   CSIIOPC.inl \
   CSIIOPS.inl \
   CSIIOPC.h \
-  CSIIOPS.h \
-  CSIIOPS_T.h \
   CSIIOPC.cpp
 
 CLEANFILES += \
@@ -5056,11 +5109,9 @@ CLEANFILES += \
   CSIIOPC.inl \
   CSIIOPS.inl \
   CSIIOPC.h \
-  CSIIOPS.h \
-  CSIIOPS_T.h \
   CSIIOPC.cpp
 
-CSIIOPS_T.inl CSIIOPC.inl CSIIOPS.inl CSIIOPC.h CSIIOPS.h CSIIOPS_T.h CSIIOPC.cpp: CSIIOP-stamp
+CSIIOPS_T.inl CSIIOPC.inl CSIIOPS.inl CSIIOPC.h CSIIOPC.cpp: CSIIOP-stamp
 
 CSIIOP-stamp: $(srcdir)/CSIIOP.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSIIOP.idl
@@ -5071,8 +5122,6 @@ BUILT_SOURCES += \
   GSSUPC.inl \
   GSSUPS.inl \
   GSSUPC.h \
-  GSSUPS.h \
-  GSSUPS_T.h \
   GSSUPC.cpp
 
 CLEANFILES += \
@@ -5081,11 +5130,9 @@ CLEANFILES += \
   GSSUPC.inl \
   GSSUPS.inl \
   GSSUPC.h \
-  GSSUPS.h \
-  GSSUPS_T.h \
   GSSUPC.cpp
 
-GSSUPS_T.inl GSSUPC.inl GSSUPS.inl GSSUPC.h GSSUPS.h GSSUPS_T.h GSSUPC.cpp: GSSUP-stamp
+GSSUPS_T.inl GSSUPC.inl GSSUPS.inl GSSUPC.h GSSUPC.cpp: GSSUP-stamp
 
 GSSUP-stamp: $(srcdir)/GSSUP.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/GSSUP.idl
@@ -5097,7 +5144,6 @@ BUILT_SOURCES += \
   SecurityS.inl \
   SecurityC.h \
   SecurityS.h \
-  SecurityS_T.h \
   SecurityC.cpp \
   SecurityS.cpp \
   SecurityS_T.cpp
@@ -5109,12 +5155,11 @@ CLEANFILES += \
   SecurityS.inl \
   SecurityC.h \
   SecurityS.h \
-  SecurityS_T.h \
   SecurityC.cpp \
   SecurityS.cpp \
   SecurityS_T.cpp
 
-SecurityS_T.inl SecurityC.inl SecurityS.inl SecurityC.h SecurityS.h SecurityS_T.h SecurityC.cpp SecurityS.cpp SecurityS_T.cpp: Security-stamp
+SecurityS_T.inl SecurityC.inl SecurityS.inl SecurityC.h SecurityS.h SecurityC.cpp SecurityS.cpp SecurityS_T.cpp: Security-stamp
 
 Security-stamp: $(srcdir)/Security.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/Security.idl
@@ -5126,7 +5171,6 @@ BUILT_SOURCES += \
   SecurityLevel1S.inl \
   SecurityLevel1C.h \
   SecurityLevel1S.h \
-  SecurityLevel1S_T.h \
   SecurityLevel1C.cpp \
   SecurityLevel1S.cpp \
   SecurityLevel1S_T.cpp
@@ -5138,12 +5182,11 @@ CLEANFILES += \
   SecurityLevel1S.inl \
   SecurityLevel1C.h \
   SecurityLevel1S.h \
-  SecurityLevel1S_T.h \
   SecurityLevel1C.cpp \
   SecurityLevel1S.cpp \
   SecurityLevel1S_T.cpp
 
-SecurityLevel1S_T.inl SecurityLevel1C.inl SecurityLevel1S.inl SecurityLevel1C.h SecurityLevel1S.h SecurityLevel1S_T.h SecurityLevel1C.cpp SecurityLevel1S.cpp SecurityLevel1S_T.cpp: SecurityLevel1-stamp
+SecurityLevel1S_T.inl SecurityLevel1C.inl SecurityLevel1S.inl SecurityLevel1C.h SecurityLevel1S.h SecurityLevel1C.cpp SecurityLevel1S.cpp SecurityLevel1S_T.cpp: SecurityLevel1-stamp
 
 SecurityLevel1-stamp: $(srcdir)/SecurityLevel1.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel1.idl
@@ -5155,7 +5198,6 @@ BUILT_SOURCES += \
   SecurityLevel2S.inl \
   SecurityLevel2C.h \
   SecurityLevel2S.h \
-  SecurityLevel2S_T.h \
   SecurityLevel2C.cpp \
   SecurityLevel2S.cpp \
   SecurityLevel2S_T.cpp
@@ -5167,12 +5209,11 @@ CLEANFILES += \
   SecurityLevel2S.inl \
   SecurityLevel2C.h \
   SecurityLevel2S.h \
-  SecurityLevel2S_T.h \
   SecurityLevel2C.cpp \
   SecurityLevel2S.cpp \
   SecurityLevel2S_T.cpp
 
-SecurityLevel2S_T.inl SecurityLevel2C.inl SecurityLevel2S.inl SecurityLevel2C.h SecurityLevel2S.h SecurityLevel2S_T.h SecurityLevel2C.cpp SecurityLevel2S.cpp SecurityLevel2S_T.cpp: SecurityLevel2-stamp
+SecurityLevel2S_T.inl SecurityLevel2C.inl SecurityLevel2S.inl SecurityLevel2C.h SecurityLevel2S.h SecurityLevel2C.cpp SecurityLevel2S.cpp SecurityLevel2S_T.cpp: SecurityLevel2-stamp
 
 SecurityLevel2-stamp: $(srcdir)/SecurityLevel2.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel2.idl
@@ -5183,8 +5224,6 @@ BUILT_SOURCES += \
   SecurityLevel3C.inl \
   SecurityLevel3S.inl \
   SecurityLevel3C.h \
-  SecurityLevel3S.h \
-  SecurityLevel3S_T.h \
   SecurityLevel3C.cpp
 
 CLEANFILES += \
@@ -5193,11 +5232,9 @@ CLEANFILES += \
   SecurityLevel3C.inl \
   SecurityLevel3S.inl \
   SecurityLevel3C.h \
-  SecurityLevel3S.h \
-  SecurityLevel3S_T.h \
   SecurityLevel3C.cpp
 
-SecurityLevel3S_T.inl SecurityLevel3C.inl SecurityLevel3S.inl SecurityLevel3C.h SecurityLevel3S.h SecurityLevel3S_T.h SecurityLevel3C.cpp: SecurityLevel3-stamp
+SecurityLevel3S_T.inl SecurityLevel3C.inl SecurityLevel3S.inl SecurityLevel3C.h SecurityLevel3C.cpp: SecurityLevel3-stamp
 
 SecurityLevel3-stamp: $(srcdir)/SecurityLevel3.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel3.idl
@@ -5249,6 +5286,8 @@ libTAO_Security_la_LDFLAGS = \
 
 libTAO_Security_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -5260,17 +5299,11 @@ nobase_include_HEADERS += \
   CSIIOP.idl \
   CSIIOPC.h \
   CSIIOPC.inl \
-  CSIIOPS.h \
-  CSIIOPS_T.h \
   CSIIOPS_T.inl \
-  CSIS.h \
-  CSIS_T.h \
   CSIS_T.inl \
   GSSUP.idl \
   GSSUPC.h \
   GSSUPC.inl \
-  GSSUPS.h \
-  GSSUPS_T.h \
   GSSUPS_T.inl \
   Security.idl \
   Security/CSI_Utils.h \
@@ -5290,6 +5323,7 @@ nobase_include_HEADERS += \
   Security/Security_Current_Impl.h \
   Security/Security_ORBInitializer.h \
   Security/Security_PolicyFactory.h \
+  Security/security_export.h \
   SecurityC.h \
   SecurityC.inl \
   SecurityLevel1.idl \
@@ -5297,7 +5331,6 @@ nobase_include_HEADERS += \
   SecurityLevel1C.inl \
   SecurityLevel1S.h \
   SecurityLevel1S_T.cpp \
-  SecurityLevel1S_T.h \
   SecurityLevel1S_T.inl \
   SecurityLevel1S_T.inl \
   SecurityLevel2.idl \
@@ -5305,21 +5338,16 @@ nobase_include_HEADERS += \
   SecurityLevel2C.inl \
   SecurityLevel2S.h \
   SecurityLevel2S_T.cpp \
-  SecurityLevel2S_T.h \
   SecurityLevel2S_T.inl \
   SecurityLevel2S_T.inl \
   SecurityLevel3.idl \
   SecurityLevel3C.h \
   SecurityLevel3C.inl \
-  SecurityLevel3S.h \
-  SecurityLevel3S_T.h \
   SecurityLevel3S_T.inl \
   SecurityS.h \
   SecurityS_T.cpp \
-  SecurityS_T.h \
   SecurityS_T.inl \
-  SecurityS_T.inl \
-  Security/security_export.h
+  SecurityS_T.inl
 
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
@@ -5417,6 +5445,8 @@ libTAO_SSLIOP_la_LIBADD = \
   libTAO_Security.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
   -lssl \
