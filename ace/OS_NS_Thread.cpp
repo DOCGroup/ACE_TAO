@@ -2877,10 +2877,12 @@ ACE_OS::event_init (ACE_event_t *event,
           ACE_OS::strncpy (lck_name, name, sizeof(lck_name)-(1+sizeof("._ACE_EVTLCK_")));
           ACE_OS::strcat (lck_name, "._ACE_EVTLCK_");
           result = ACE_OS::sema_init (&event->lock_,
-                                      1,              /* as owner initially unlock */
+                                      0,
                                       type,
                                       lck_name,
                                       arg);
+          if (result == 0)
+            result = ACE_OS::sema_post(&event->lock_);    /* initially unlock */
         }
 # endif
       return result;
@@ -2960,10 +2962,12 @@ ACE_OS::event_init (ACE_event_t *event,
                                     (ACE_mutexattr_t *) arg);
 # else
       result = ACE_OS::sema_init (&event->lock_,
-                                  1,              /* as owner initially unlock */
+                                  0,
                                   type,
                                   name,
                                   arg);
+    if (result == 0)
+      result = ACE_OS::sema_post(&event->lock_);    /* initially unlock */
 # endif
 
     return result;
