@@ -847,6 +847,24 @@ public:
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
+  /// Return the array of client-side interceptors specific to this
+  /// ORB.
+  /**
+   * @todo This method has to be removed when the RTCosScheduling doesn't
+   * use it anymore.
+   */
+  TAO::ClientRequestInterceptor_List::TYPE &
+    client_request_interceptors (void);
+
+  /// Return the array of server-side interceptors specific to this
+  /// ORB.
+  /**
+   * @todo This method has to be removed when the RTCosScheduling doesn't
+   * use it anymore.
+   */
+  TAO::ServerRequestInterceptor_List::TYPE &
+    server_request_interceptors (void);
+
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// Register an IOR interceptor.
