@@ -17,14 +17,14 @@ Policy_Verifier::~Policy_Verifier (void)
   // No Op.
 }
 
-void
+bool
 Policy_Verifier::init (int argc,
                        char *argv[]
                        ACE_ENV_ARG_DECL)
 {
   this->orb_ =
     CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (false);
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -36,7 +36,7 @@ Policy_Verifier::init (int argc,
         {
           this->rt_poa_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (false);
           this->priority_bands_ =
             this->rt_poa_properties_->priority_bands ().length ();
         }
@@ -44,7 +44,7 @@ Policy_Verifier::init (int argc,
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (false);
         }
       else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {
@@ -54,7 +54,7 @@ Policy_Verifier::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK;
+              ACE_CHECK_RETURN (false);
             }
           this->rt_poa_properties_->ior_source (arg);
           ACE_OS::strcpy (this->base_object_ref_, "file://");
@@ -69,7 +69,7 @@ Policy_Verifier::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK;
+              ACE_CHECK_RETURN (false);
             }
           this->rt_object_properties_->ior_source (arg);
           ACE_OS::strcpy (this->overridden_object_ref_, "file://");
@@ -86,37 +86,38 @@ Policy_Verifier::init (int argc,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Configuration file missing!\n")));
-      return;
+      return false;
     }
 
   // Get the Object references.
   CORBA::Object_var object = this->orb_->string_to_object (this->base_object_ref_
                                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (false);
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
-    return;
+    return false;
 
   this->base_object_ = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (false);
 
   if (!Policy_Verifier::check_reference (this->base_object_.in (),
                                          "Unable to convert the IOR to the proper object reference.\n"))
-    return;
+    return false;
 
   object = this->orb_->string_to_object (this->overridden_object_ref_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (false);
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
-    return;
+    return false;
 
   this->overridden_object_ = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (false);
 
   if (!Policy_Verifier::check_reference (this->overridden_object_.in (),
                                          "Unable to convert the IOR to the proper object reference.\n"))
-    return;
+    return false;
 
+  return true;
 }
 
 void

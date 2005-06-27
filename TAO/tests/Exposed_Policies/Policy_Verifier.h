@@ -40,7 +40,7 @@ public:
   Policy_Verifier (void);
   ~Policy_Verifier (void);
 
-  void init (int argc,
+  bool init (int argc,
              char *argv[]
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
