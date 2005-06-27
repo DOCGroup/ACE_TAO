@@ -378,7 +378,7 @@ namespace TAO
           {
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO_FT (%P|%t) - Using default value")
-			ACE_TEXT ("of 15 seconds\n")));
+			ACE_TEXT ("of 1.5 seconds\n")));
           }
         t = 15 * 1000000;
       }

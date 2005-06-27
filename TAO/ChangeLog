@@ -1,3 +1,9 @@
+Mon Jun 27 12:19:01 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp (TAO): Changed
+	  the comment to "Using default value of 1.5 seconds".  Thanks to
+ 	  Simon Massey and Bala for resolving this.
+
 Mon Jun 27 11:09:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Exposed_Policies/Policy_Verifier.h:
