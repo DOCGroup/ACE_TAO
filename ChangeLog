@@ -1,3 +1,9 @@
+Mon Jun 27 12:26:15 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Malloc_T.h: Updated the ACE_Malloc_T documentation to 
+	  mention the limitations with find()/bind().  Thanks to Hanson Lu
+ 	  <suf_lu@yahoo.com> for reporting this.
+
 Mon Jun 27 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/rtcosscheduling.mpb:

@@ -417,7 +417,14 @@ class ACE_Malloc_FIFO_Iterator_T;
  * MEMORY_POOL strategies and different types of ACE_LOCK
  * strategies that support the @a ACE_Thread_Mutex and @a
  * ACE_Process_Mutex constructor API.
- */
+ *
+ * Note that the @a bind() and @a find() methods use linear search, so
+ * it's not a good idea to use them for managing a large number of
+ * entities.  If you need to manage a large number of entities, it's
+ * recommended that you @a bind() an @ ACE_Hash_Map_Manager that
+ * resides in shared memory, use @a find() to locate it, and then
+ * store/retrieve the entities in the hash map.
+ * */
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 class ACE_Malloc_T
 {
