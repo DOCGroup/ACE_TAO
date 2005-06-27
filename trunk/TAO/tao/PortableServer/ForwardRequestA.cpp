@@ -35,28 +35,25 @@
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:74
+// be\be_visitor_typecode/struct_typecode.cpp:87
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableServer_ForwardRequest[] =
   {
     { "forward_reference", &CORBA::_tc_Object }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
-                             CORBA::TypeCode_ptr const *,
-                             TAO::TypeCode::Struct_Field<char const *,
-                                                         CORBA::TypeCode_ptr const *> const *,
-                             TAO::Null_RefCount_Policy>
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
   _tao_tc_PortableServer_ForwardRequest (
     CORBA::tk_except,
     "IDL:omg.org/PortableServer/ForwardRequest:2.3",
     "ForwardRequest",
     _tao_fields_PortableServer_ForwardRequest,
     1);
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ForwardRequest =
@@ -65,8 +62,10 @@ namespace PortableServer
 
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+// TAO_IDL - Generated from 
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -77,12 +76,12 @@ namespace TAO
     )
   {
     CORBA::String_var id;
-
+    
     if (!(cdr >> id.out ()))
       {
         return false;
       }
-
+    
     ACE_TRY_NEW_ENV
       {
         this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -93,7 +92,7 @@ namespace TAO
         return false;
       }
     ACE_ENDTRY;
-
+    
     return true;
   }
 }

@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -90,7 +90,7 @@ PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
 PortableServer::RequestProcessingPolicy::~RequestProcessingPolicy (void)
 {}
 
-void
+void 
 PortableServer::RequestProcessingPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestProcessingPolicy *_tao_tmp_pointer =
@@ -104,15 +104,9 @@ PortableServer::RequestProcessingPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestProcessingPolicy::_nil ();
-    }
-
-  RequestProcessingPolicy_ptr proxy =
-    dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref);
-
-  return RequestProcessingPolicy::_duplicate (proxy);
+  return RequestProcessingPolicy::_duplicate (
+      dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::RequestProcessingPolicy_ptr
@@ -121,15 +115,9 @@ PortableServer::RequestProcessingPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestProcessingPolicy::_nil ();
-    }
-
-  RequestProcessingPolicy_ptr proxy =
-    dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref);
-
-  return RequestProcessingPolicy::_duplicate (proxy);
+  return RequestProcessingPolicy::_duplicate (
+      dynamic_cast<RequestProcessingPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::RequestProcessingPolicy_ptr
@@ -139,7 +127,7 @@ PortableServer::RequestProcessingPolicy::_duplicate (RequestProcessingPolicy_ptr
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -205,12 +193,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::RequestProcessin
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-
+  
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::RequestProcessingPolicyValue> (_tao_temp);
     }
-
+  
   return _tao_success;
 }
 

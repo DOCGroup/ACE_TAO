@@ -82,7 +82,7 @@ TAO::Objref_Traits<PortableServer::POAManager>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
@@ -183,7 +183,7 @@ PortableServer::POAManager::POAManager (void)
 PortableServer::POAManager::~POAManager (void)
 {}
 
-void 
+void
 PortableServer::POAManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   POAManager *_tao_tmp_pointer =
@@ -197,15 +197,8 @@ PortableServer::POAManager::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return POAManager::_nil ();
-    }
-  
-  POAManager_ptr proxy =
-    dynamic_cast<POAManager_ptr> (_tao_objref);
-  
-  return POAManager::_duplicate (proxy);
+  return POAManager::_duplicate (
+    dynamic_cast<POAManager_ptr> (_tao_objref));
 }
 
 PortableServer::POAManager_ptr
@@ -214,15 +207,7 @@ PortableServer::POAManager::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return POAManager::_nil ();
-    }
-  
-  POAManager_ptr proxy =
-    dynamic_cast<POAManager_ptr> (_tao_objref);
-  
-  return POAManager::_duplicate (proxy);
+  return POAManager::_duplicate (dynamic_cast<POAManager_ptr> (_tao_objref));
 }
 
 PortableServer::POAManager_ptr
@@ -232,7 +217,7 @@ PortableServer::POAManager::_duplicate (POAManager_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

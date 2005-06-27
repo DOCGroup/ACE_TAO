@@ -38,7 +38,7 @@
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -46,7 +46,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/ServantLocator:2.3",
     "ServantLocator");
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantLocator =
@@ -56,7 +56,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -79,7 +79,7 @@ namespace TAO
   {
     return false;
   }
-
+  
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableServer::ServantLocator>::demarshal_value (TAO_InputCDR &)

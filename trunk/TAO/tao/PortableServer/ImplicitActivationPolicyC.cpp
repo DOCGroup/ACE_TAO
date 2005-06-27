@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -90,7 +90,7 @@ PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
 PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
 {}
 
-void
+void 
 PortableServer::ImplicitActivationPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ImplicitActivationPolicy *_tao_tmp_pointer =
@@ -104,15 +104,9 @@ PortableServer::ImplicitActivationPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ImplicitActivationPolicy::_nil ();
-    }
-
-  ImplicitActivationPolicy_ptr proxy =
-    dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-
-  return ImplicitActivationPolicy::_duplicate (proxy);
+  return ImplicitActivationPolicy::_duplicate (
+      dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ImplicitActivationPolicy_ptr
@@ -121,15 +115,9 @@ PortableServer::ImplicitActivationPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ImplicitActivationPolicy::_nil ();
-    }
-
-  ImplicitActivationPolicy_ptr proxy =
-    dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref);
-
-  return ImplicitActivationPolicy::_duplicate (proxy);
+  return ImplicitActivationPolicy::_duplicate (
+      dynamic_cast<ImplicitActivationPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ImplicitActivationPolicy_ptr
@@ -139,7 +127,7 @@ PortableServer::ImplicitActivationPolicy::_duplicate (ImplicitActivationPolicy_p
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -205,12 +193,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ImplicitActivati
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-
+  
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ImplicitActivationPolicyValue> (_tao_temp);
     }
-
+  
   return _tao_success;
 }
 

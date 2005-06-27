@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -102,15 +102,9 @@ Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RelativeRoundtripTimeoutPolicy::_nil ();
-    }
-  
-  RelativeRoundtripTimeoutPolicy_ptr proxy =
-    dynamic_cast<RelativeRoundtripTimeoutPolicy_ptr> (_tao_objref);
-  
-  return RelativeRoundtripTimeoutPolicy::_duplicate (proxy);
+  return RelativeRoundtripTimeoutPolicy::_duplicate (
+      dynamic_cast<RelativeRoundtripTimeoutPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
@@ -119,15 +113,9 @@ Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RelativeRoundtripTimeoutPolicy::_nil ();
-    }
-  
-  RelativeRoundtripTimeoutPolicy_ptr proxy =
-    dynamic_cast<RelativeRoundtripTimeoutPolicy_ptr> (_tao_objref);
-  
-  return RelativeRoundtripTimeoutPolicy::_duplicate (proxy);
+  return RelativeRoundtripTimeoutPolicy::_duplicate (
+      dynamic_cast<RelativeRoundtripTimeoutPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr

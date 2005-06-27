@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -89,7 +89,7 @@ PortableServer::ServantManager::ServantManager (void)
 PortableServer::ServantManager::~ServantManager (void)
 {}
 
-void
+void 
 PortableServer::ServantManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantManager *_tao_tmp_pointer =
@@ -103,15 +103,9 @@ PortableServer::ServantManager::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantManager::_nil ();
-    }
-
-  ServantManager_ptr proxy =
-    dynamic_cast<ServantManager_ptr> (_tao_objref);
-
-  return ServantManager::_duplicate (proxy);
+  return ServantManager::_duplicate (
+      dynamic_cast<ServantManager_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ServantManager_ptr
@@ -120,15 +114,9 @@ PortableServer::ServantManager::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantManager::_nil ();
-    }
-
-  ServantManager_ptr proxy =
-    dynamic_cast<ServantManager_ptr> (_tao_objref);
-
-  return ServantManager::_duplicate (proxy);
+  return ServantManager::_duplicate (
+      dynamic_cast<ServantManager_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ServantManager_ptr
@@ -138,7 +126,7 @@ PortableServer::ServantManager::_duplicate (ServantManager_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
