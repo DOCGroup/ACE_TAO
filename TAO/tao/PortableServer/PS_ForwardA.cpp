@@ -33,7 +33,7 @@
 #include "tao/Any.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:50
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,

@@ -32,12 +32,18 @@
 #include "tao/Objref_TypeCode_Static.h"
 #include "tao/Value_TypeCode_Static.h"
 #include "tao/TypeCode_Value_Field.h"
+#include "tao/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/value_typecode.cpp:50
+// be\be_visitor_typecode/value_typecode.cpp:61
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
 
 static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_ExceptionHolder[] =
   {
@@ -46,12 +52,10 @@ static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> con
     { "marshaled_exception", &CORBA::_tc_OctetSeq, CORBA::PUBLIC_MEMBER }
     
   };
-
 static TAO::TypeCode::Value<char const *,
-                            CORBA::TypeCode_ptr const *,
-                            TAO::TypeCode::Value_Field<char const *,
-                                                       CORBA::TypeCode_ptr const *> const *,
-                            TAO::Null_RefCount_Policy>
+                     CORBA::TypeCode_ptr const *,
+                     TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                     TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_ExceptionHolder (
     CORBA::tk_value,
     "IDL:omg.org/Messaging/ExceptionHolder:1.0",
@@ -70,7 +74,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -88,7 +92,7 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 namespace TAO
 {
@@ -148,7 +152,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {

@@ -1,5 +1,15 @@
+Mon Jun 27 07:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO/tao/*C.{h,cpp,inl}:
+        * TAO/tao/*A.cpp:
+        * TAO/tao/PortableServer/*C.{h,cpp,inl}:
+        * TAO/tao/PortableServer/*A.cpp:
+        * TAO/tao/Messaging/*C.{h,cpp,inl}:
+        * TAO/tao/Messaging*A.cpp:
+          Regenerated
+
 Sat Jun 25 06:39:03 2005  Gary Maxey <gary.maxey@hp.com>
-	
+
         * TAO/tao/Valuetype/StringValueC.inl
           Change to avoid warnings by some compilers
 
