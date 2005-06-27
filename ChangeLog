@@ -1,6 +1,16 @@
+Mon Jun 27 20:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Codecs.cpp:
+        * ace/Configuration.cpp:
+        * ace/DLL_Manager.cpp:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/OS_NS_stdlib.cpp:
+        * ace/Service_Config.cpp:
+          Within the ACE lib ACE_LIB_TEXT must be used instead of ACE_TEXT
+
 Mon Jun 27 12:26:15 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Malloc_T.h: Updated the ACE_Malloc_T documentation to 
+	* ace/Malloc_T.h: Updated the ACE_Malloc_T documentation to
 	  mention the limitations with find()/bind().  Thanks to Hanson Lu
  	  <suf_lu@yahoo.com> for reporting this.
 
