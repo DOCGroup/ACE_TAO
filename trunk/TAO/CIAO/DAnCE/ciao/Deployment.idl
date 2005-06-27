@@ -114,4 +114,61 @@ module Deployment {
       raises (NoSuchName);
   };
 
+
+//***************************************new_RepositoryManager ONWARDS*****************************************
+
+
+	typedef sequence<octet> Artifact;
+	typedef sequence<octet> Package;
+
+	exception NoPlan {
+	};
+
+	enum Platform {
+		Win32,
+		Unix,
+		Linux,
+		Solaris,
+		Vxworks,
+		UNDEF
+	};
+
+	struct Implementation
+	{
+		Platform the_platform;
+		string name;
+		Artifact the_implementation;
+	};
+
+	typedef sequence<Implementation> Implementations;
+
+	interface new_RepositoryManager 
+	{
+		void installPackage (in string installationName, in Package the_package, in boolean replace)
+	      raises (NameExists, PackageError);
+
+		DeploymentPlan	retrievePlan (in string packageName)
+			raises (NoPlan);
+
+	    Package findPackageByName (in string name)
+	      raises (NoSuchName);
+	
+		Implementation findImplementationByName (in string implementation_name, in string package_name)
+	      raises (NoSuchName);
+
+	    Package findPackageByUUID (in string UUID)
+	      raises (NoSuchName);
+	
+	    Implementation findImplementationByUUID (in string UUID)
+	      raises (NoSuchName);
+	
+
+	    //::CORBA::StringSeq findNamesByType (in string type);
+	    //::CORBA::StringSeq getAllTypes ();
+
+		::CORBA::StringSeq getAllPackageNames ();
+	    
+		void deletePackage (in string installationName)
+	      raises (NoSuchName);
+	};
 };
