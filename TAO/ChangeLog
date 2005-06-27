@@ -1,3 +1,11 @@
+Mon Jun 27 09:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTCosScheduling.mpc:
+          Added requires dummy_label. The RTCosScheduling library uses
+          a non compliant way to register its interceptors. This is
+          causing problems with the PI refactory so disable the building
+          of this lib until that has been fixed. See also bugzilla 2163.
+
 Mon Jun 27 09:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_visitor_operation/ami_cs.h:
