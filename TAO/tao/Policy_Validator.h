@@ -42,7 +42,7 @@ namespace CORBA
  * @brief An abstract class for plugging in different Policy Validator
  *  mechanisms.
  *
- *  This class was moved form the PortableServer library. The Portable
+ *  This class was moved from the PortableServer library. The Portable
  *  Serever library used this abstraction to add policy validators to
  *  for the policies in the POA. This class seems so much useful for
  *  passing policy information between different loaded libraries.
