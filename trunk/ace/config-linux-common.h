@@ -36,42 +36,31 @@
 #  endif  /* !ACE_HAS_CLOCK_GETTIME */
 #endif  /* _POSIX_C_SOURCE >= 199309L */
 
-#include "ace/config-posix.h"
+#if defined (ACE_HAS_LINUX_NPTL)
+# include "ace/config-posix.h"
 
-// Temporary fix because >2.6 kernels do have shm_open but there is a problem
-// with that somewhere which needs to be fixed when I have time.
-#if defined (ACE_HAS_SHM_OPEN)
-# undef ACE_HAS_SHM_OPEN
-#endif
-
-#include <linux/version.h>
-
-#if defined (ACE_HAS_POSIX_SEM)
-
-# if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0))
-    // Linux versions < 2.6 may define the right POSIX macro
-    // but they lack the full runtime support for this stuff so
-    // it's better not to use them
-#   undef ACE_HAS_POSIX_SEM
+  // Temporary fix because NPTL kernels do have shm_open but there is a problem
+  // with shm_open/shm_unlink pairing in ACE which  needs to be fixed when I have time.
+# if defined (ACE_HAS_SHM_OPEN)
+#   undef ACE_HAS_SHM_OPEN
 # endif
 
+# include <linux/version.h>
+
 # if defined (ACE_USES_FIFO_SEM)
-#   if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0))
-      // Don't use this for Linux >= 2.6 since this has complete
-      // POSIX semaphores which are more efficient
-#     undef ACE_USES_FIFO_SEM
-#   endif  /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0)) */
+    // Don't use this for Linux NPTL since this has complete
+    // POSIX semaphores which are more efficient
+#   undef ACE_USES_FIFO_SEM
 # endif /* ACE_USES_FIFO_SEM */
 
-# if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0))
-    // Linux versions >= 2.6 may not define the right POSIX macro
+# if defined (ACE_HAS_POSIX_SEM)
+    // Linux NPTL may not define the right POSIX macro
     // but they have the actual runtime support for this stuff
 #   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600))
 #     define ACE_HAS_POSIX_SEM_TIMEOUT
 #   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600)) */
-# endif
-
-#endif /* ACE_HAS_POSIX_SEM */
+# endif /* ACE_HAS_POSIX_SEM */
+#endif /* ACE_HAS_LINUX_NPTL */
 
 // First the machine specific part
 
