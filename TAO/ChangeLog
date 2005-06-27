@@ -1,3 +1,9 @@
+Mon Jun 27 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/ValueBase.cpp:
+          Fixed implicit conversion warning and use ACE_OS::strcmp instead of
+          strcmp directly
+
 Mon Jun 27 07:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO/tao/*C.{h,cpp,inl}:
