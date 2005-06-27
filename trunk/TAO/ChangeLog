@@ -1,3 +1,10 @@
+Mon Jun 27 14:54:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Mon Jun 27 13:54:27 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be/be_util.cpp
