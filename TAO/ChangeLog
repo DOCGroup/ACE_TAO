@@ -1,3 +1,17 @@
+Mon Jun 27 11:09:34 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Exposed_Policies/Policy_Verifier.h:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/client.cpp:
+
+          Modified this test to not run if the initialization failed.  This
+          avoids a core dump.
+
+        * tests/Exposed_Policies/run_test.pl:
+
+          Remove the ior files before running the server and cut the wait
+          times in half.
+
 Mon Jun 27 09:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling.mpc:
@@ -49,26 +63,26 @@ Sat Jun 25 06:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jun 24 23:11:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Messaging/TAO_Messaging.pc.in:
-	* tao/RTPortableServer/TAO_RTPortableServer.pc.in:
+        * tao/Messaging/TAO_Messaging.pc.in:
+        * tao/RTPortableServer/TAO_RTPortableServer.pc.in:
 
-	  Update with current list of dependencies based on values from
-	  MPC base project files.
+          Update with current list of dependencies based on values from
+          MPC base project files.
 
-	* tao/PI_Server.mpc:
+        * tao/PI_Server.mpc:
 
           Added Pkgconfig_Files definition.
 
-	* tao/PI_Server/TAO_PI_Server.pc.in:
+        * tao/PI_Server/TAO_PI_Server.pc.in:
 
           New file, pkg-config *.pc template for TAO_PI_Server library.
 
 Fri Jun 24 22:50:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/Makefile.am:
-	* tao/Makefile.am:
+        * TAO_IDL/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Fri Jun 24 13:15:03 2005  Gary Maxey <gary.maxey@hp.com>
 
