@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:291
+// be\be_codegen.cpp:291
 
 
 #include "InvalidSlotC.h"
@@ -39,7 +39,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -48,7 +48,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::InvalidSlot::InvalidSlot (void)
   : CORBA::UserException (
@@ -153,7 +153,7 @@ CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_tao_type (void) const
 }
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

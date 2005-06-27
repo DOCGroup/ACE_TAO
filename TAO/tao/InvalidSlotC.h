@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:153
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_INVALIDSLOTC_H_
 #define _TAO_IDL_ORIG_INVALIDSLOTC_H_
@@ -59,13 +59,13 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_INVALIDSLOT_CH_)
 #define _PORTABLEINTERCEPTOR_INVALIDSLOT_CH_
@@ -102,25 +102,25 @@ namespace PortableInterceptor
       );
     
     // TAO_IDL - Generated from
-    // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/exception_ch.cpp:127
+    // be\be_visitor_exception/exception_ch.cpp:129
     
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_InvalidSlot;
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module PortableInterceptor
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_traits.cpp:61
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO
@@ -128,7 +128,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/any_op_ch.cpp:52
+// be\be_visitor_exception/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::InvalidSlot &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::InvalidSlot*); // noncopying version
@@ -136,13 +136,13 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::InvalidSlot *&);
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_exception/cdr_op_ch.cpp:52
+// be\be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::InvalidSlot &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::InvalidSlot &);
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:955
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

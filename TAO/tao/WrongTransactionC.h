@@ -65,7 +65,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_CORBA_WRONGTRANSACTION_CH_)
 #define _CORBA_WRONGTRANSACTION_CH_
@@ -102,7 +102,7 @@ namespace CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:127
+    // be\be_visitor_exception/exception_ch.cpp:129
     
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };

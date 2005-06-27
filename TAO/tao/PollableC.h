@@ -315,7 +315,7 @@ namespace CORBA
     
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:51
+    // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_CORBA_POLLABLESET_NOPOSSIBLEPOLLABLE_CH_)
 #define _CORBA_POLLABLESET_NOPOSSIBLEPOLLABLE_CH_
@@ -350,13 +350,20 @@ namespace CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:127
+      // be\be_visitor_exception/exception_ch.cpp:129
+      
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
+    
+    // TAO_IDL - Generated from
+    // be\be_visitor_typecode/typecode_decl.cpp:44
+    
+    static ::CORBA::TypeCode_ptr const _tc_NoPossiblePollable;
 
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:51
+    // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_CORBA_POLLABLESET_UNKNOWNPOLLABLE_CH_)
 #define _CORBA_POLLABLESET_UNKNOWNPOLLABLE_CH_
@@ -391,8 +398,15 @@ namespace CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:127
+      // be\be_visitor_exception/exception_ch.cpp:129
+      
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
+    
+    // TAO_IDL - Generated from
+    // be\be_visitor_typecode/typecode_decl.cpp:44
+    
+    static ::CORBA::TypeCode_ptr const _tc_UnknownPollable;
 
 #endif /* end #if !defined */
     
@@ -489,27 +503,6 @@ namespace CORBA
 namespace TAO
 {
 
-#if !defined (_CORBA_POLLABLESET__TRAITS_CH_)
-#define _CORBA_POLLABLESET__TRAITS_CH_
-  
-  template<>
-  struct TAO_Export Objref_Traits< ::CORBA::PollableSet>
-  {
-    static ::CORBA::PollableSet_ptr duplicate (
-        ::CORBA::PollableSet_ptr
-      );
-    static void release (
-        ::CORBA::PollableSet_ptr
-      );
-    static ::CORBA::PollableSet_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::PollableSet_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
 #if !defined (_CORBA_POLLABLE__TRAITS_CH_)
 #define _CORBA_POLLABLE__TRAITS_CH_
   
@@ -546,6 +539,27 @@ namespace TAO
     static ::CORBA::DIIPollable_ptr nil (void);
     static CORBA::Boolean marshal (
         ::CORBA::DIIPollable_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_POLLABLESET__TRAITS_CH_)
+#define _CORBA_POLLABLESET__TRAITS_CH_
+  
+  template<>
+  struct TAO_Export Objref_Traits< ::CORBA::PollableSet>
+  {
+    static ::CORBA::PollableSet_ptr duplicate (
+        ::CORBA::PollableSet_ptr
+      );
+    static void release (
+        ::CORBA::PollableSet_ptr
+      );
+    static ::CORBA::PollableSet_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::PollableSet_ptr p,
         TAO_OutputCDR & cdr
       );
   };
