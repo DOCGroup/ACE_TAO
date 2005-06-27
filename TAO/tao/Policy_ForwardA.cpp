@@ -37,7 +37,7 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:50
 
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
@@ -57,12 +57,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:50
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:925
+// be\be_visitor_typecode/typecode_defn.cpp:937
 
 namespace CORBA
 {
@@ -91,6 +91,7 @@ namespace TAO
 
 
 #endif /* _TAO_TYPECODE_CORBA_PolicyList_GUARD */
+
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
@@ -109,12 +110,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:50
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:925
+// be\be_visitor_typecode/typecode_defn.cpp:937
 
 
 #ifndef _TAO_TYPECODE_CORBA_PolicyTypeSeq_GUARD
@@ -138,6 +139,7 @@ namespace TAO
 
 
 #endif /* _TAO_TYPECODE_CORBA_PolicyTypeSeq_GUARD */
+
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
@@ -156,7 +158,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/enum_typecode.cpp:34
+// be\be_visitor_typecode/enum_typecode.cpp:34
 
 static char const * const _tao_enumerators_CORBA_SetOverrideType[] =
   {
@@ -183,7 +185,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.
@@ -242,7 +244,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.
@@ -301,7 +303,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_enum/any_op_cs.cpp:52
+// be\be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,

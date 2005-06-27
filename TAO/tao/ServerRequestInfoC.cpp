@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:291
+// be\be_codegen.cpp:291
 
 
 #include "ServerRequestInfoC.h"
@@ -39,7 +39,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -48,7 +48,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::ServerRequestInfo.
 
@@ -103,15 +103,9 @@ PortableInterceptor::ServerRequestInfo::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServerRequestInfo::_nil ();
-    }
-  
-  ServerRequestInfo_ptr proxy =
-    dynamic_cast<ServerRequestInfo_ptr> (_tao_objref);
-  
-  return ServerRequestInfo::_duplicate (proxy);
+  return ServerRequestInfo::_duplicate (
+      dynamic_cast<ServerRequestInfo_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::ServerRequestInfo_ptr
@@ -120,15 +114,9 @@ PortableInterceptor::ServerRequestInfo::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServerRequestInfo::_nil ();
-    }
-  
-  ServerRequestInfo_ptr proxy =
-    dynamic_cast<ServerRequestInfo_ptr> (_tao_objref);
-  
-  return ServerRequestInfo::_duplicate (proxy);
+  return ServerRequestInfo::_duplicate (
+      dynamic_cast<ServerRequestInfo_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::ServerRequestInfo_ptr

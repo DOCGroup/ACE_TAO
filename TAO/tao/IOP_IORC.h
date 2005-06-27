@@ -651,17 +651,17 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
   
-  const IOP::ProfileId TAG_UIPMC = 1413566220U;
+  const IOP::ProfileId TAG_UIPMC = 3U;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
   
-  const IOP::ComponentId TAG_GROUP = 1413566211U;
+  const IOP::ComponentId TAG_GROUP = 39U;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
   
-  const IOP::ComponentId TAG_GROUP_IIOP = 1413566212U;
+  const IOP::ComponentId TAG_GROUP_IIOP = 40U;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66

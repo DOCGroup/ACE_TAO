@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_PI_FORWARDREQUESTC_H_
-#define _TAO_IDL_ORIG_PI_FORWARDREQUESTC_H_
+#ifndef _TAO_IDL_ORIG_PIFORWARDREQUESTC_H_
+#define _TAO_IDL_ORIG_PIFORWARDREQUESTC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -66,7 +66,7 @@ namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_FORWARDREQUEST_CH_)
 #define _PORTABLEINTERCEPTOR_FORWARDREQUEST_CH_
@@ -111,7 +111,7 @@ namespace PortableInterceptor
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:127
+    // be\be_visitor_exception/exception_ch.cpp:129
     
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };

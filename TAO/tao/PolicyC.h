@@ -117,7 +117,7 @@ namespace CORBA
   const CORBA::PolicyErrorCode UNSUPPORTED_POLICY_VALUE = 4;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_CORBA_POLICYERROR_CH_)
 #define _CORBA_POLICYERROR_CH_
@@ -162,7 +162,7 @@ namespace CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:127
+    // be\be_visitor_exception/exception_ch.cpp:129
     
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
@@ -175,7 +175,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_CORBA_INVALIDPOLICIES_CH_)
 #define _CORBA_INVALIDPOLICIES_CH_
@@ -220,7 +220,7 @@ namespace CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:127
+    // be\be_visitor_exception/exception_ch.cpp:129
     
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
@@ -628,27 +628,6 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_POLICYCURRENT__TRAITS_CH_)
-#define _CORBA_POLICYCURRENT__TRAITS_CH_
-  
-  template<>
-  struct TAO_Export Objref_Traits< ::CORBA::PolicyCurrent>
-  {
-    static ::CORBA::PolicyCurrent_ptr duplicate (
-        ::CORBA::PolicyCurrent_ptr
-      );
-    static void release (
-        ::CORBA::PolicyCurrent_ptr
-      );
-    static ::CORBA::PolicyCurrent_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::PolicyCurrent_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
 #if !defined (_CORBA_POLICYMANAGER__TRAITS_CH_)
 #define _CORBA_POLICYMANAGER__TRAITS_CH_
   
@@ -664,6 +643,27 @@ namespace TAO
     static ::CORBA::PolicyManager_ptr nil (void);
     static CORBA::Boolean marshal (
         ::CORBA::PolicyManager_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_POLICYCURRENT__TRAITS_CH_)
+#define _CORBA_POLICYCURRENT__TRAITS_CH_
+  
+  template<>
+  struct TAO_Export Objref_Traits< ::CORBA::PolicyCurrent>
+  {
+    static ::CORBA::PolicyCurrent_ptr duplicate (
+        ::CORBA::PolicyCurrent_ptr
+      );
+    static void release (
+        ::CORBA::PolicyCurrent_ptr
+      );
+    static ::CORBA::PolicyCurrent_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::PolicyCurrent_ptr p,
         TAO_OutputCDR & cdr
       );
   };

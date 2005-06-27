@@ -522,7 +522,7 @@ namespace TAO
     /**
      * @see @CORBA::TypeCode::tao_marshal() description for details.
      */
-    
+
     TAO_Export bool marshal (TAO_OutputCDR & cdr,
                              CORBA::TypeCode_ptr tc,
                              CORBA::ULong offset);

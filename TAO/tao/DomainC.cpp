@@ -52,7 +52,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // TAO specific stuff.
 namespace CORBA
@@ -102,7 +102,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-
+  
   template<>
   class  Arg_Traits<CORBA::Policy>
     : public
@@ -119,7 +119,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-
+  
   template<>
   class  Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -173,7 +173,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -193,15 +193,15 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-
+  
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
       CORBA_DomainManager_setup_collocation ();
     }
-
-  TAO::Arg_Traits< CORBA::Policy>::ret_val _tao_retval;
+  
+  TAO::Arg_Traits< ::CORBA::Policy>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
-
+  
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
@@ -401,7 +401,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::InterfaceDef>::in_arg_val _tao_object_type (object_type);
+  TAO::Arg_Traits< ::CORBA::InterfaceDef>::in_arg_val _tao_object_type (object_type);
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_constr_policy (constr_policy);
   
   TAO::Argument *_the_tao_operation_signature [] =

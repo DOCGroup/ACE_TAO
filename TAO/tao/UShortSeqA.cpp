@@ -35,12 +35,12 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:50
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:925
+// be\be_visitor_typecode/typecode_defn.cpp:937
 
 
 #ifndef _TAO_TYPECODE_CORBA_UShortSeq_GUARD
@@ -64,6 +64,7 @@ namespace TAO
 
 
 #endif /* _TAO_TYPECODE_CORBA_UShortSeq_GUARD */
+
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
@@ -82,7 +83,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 
 // Copying insertion.

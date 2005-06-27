@@ -31,6 +31,12 @@
 
 #include "PollableC.h"
 #include "tao/CDR.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode_Static.h"
+#include "tao/Objref_TypeCode_Static.h"
+#include "tao/Struct_TypeCode_Static.h"
+#include "tao/TypeCode_Struct_Field.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -38,7 +44,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -94,15 +100,9 @@ CORBA::Pollable::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Pollable::_nil ();
-    }
-  
-  Pollable_ptr proxy =
-    dynamic_cast<Pollable_ptr> (_tao_objref);
-  
-  return Pollable::_duplicate (proxy);
+  return Pollable::_duplicate (
+      dynamic_cast<Pollable_ptr> (_tao_objref)
+    );
 }
 
 CORBA::Pollable_ptr
@@ -111,15 +111,9 @@ CORBA::Pollable::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Pollable::_nil ();
-    }
-  
-  Pollable_ptr proxy =
-    dynamic_cast<Pollable_ptr> (_tao_objref);
-  
-  return Pollable::_duplicate (proxy);
+  return Pollable::_duplicate (
+      dynamic_cast<Pollable_ptr> (_tao_objref)
+    );
 }
 
 CORBA::Pollable_ptr
@@ -227,15 +221,9 @@ CORBA::DIIPollable::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return DIIPollable::_nil ();
-    }
-  
-  DIIPollable_ptr proxy =
-    dynamic_cast<DIIPollable_ptr> (_tao_objref);
-  
-  return DIIPollable::_duplicate (proxy);
+  return DIIPollable::_duplicate (
+      dynamic_cast<DIIPollable_ptr> (_tao_objref)
+    );
 }
 
 CORBA::DIIPollable_ptr
@@ -244,15 +232,9 @@ CORBA::DIIPollable::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return DIIPollable::_nil ();
-    }
-  
-  DIIPollable_ptr proxy =
-    dynamic_cast<DIIPollable_ptr> (_tao_objref);
-  
-  return DIIPollable::_duplicate (proxy);
+  return DIIPollable::_duplicate (
+      dynamic_cast<DIIPollable_ptr> (_tao_objref)
+    );
 }
 
 CORBA::DIIPollable_ptr
@@ -434,7 +416,29 @@ void CORBA::PollableSet::NoPossiblePollable::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
+// TAO extension - the virtual _type method.
+CORBA::TypeCode_ptr CORBA::PollableSet::NoPossiblePollable::_tao_type (void) const
+{
+  return ::CORBA::PollableSet::_tc_NoPossiblePollable;
+}
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:87
+
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_CORBA_PollableSet_NoPossiblePollable = 0;
+static TAO::TypeCode::Struct<char const *,
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_PollableSet_NoPossiblePollable (
+    CORBA::tk_except,
+    "IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0",
+    "NoPossiblePollable",
+    _tao_fields_CORBA_PollableSet_NoPossiblePollable,
+    0);
+  
+::CORBA::TypeCode_ptr const CORBA::PollableSet::_tc_NoPossiblePollable =
+  &_tao_tc_CORBA_PollableSet_NoPossiblePollable;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -518,7 +522,29 @@ void CORBA::PollableSet::UnknownPollable::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
+// TAO extension - the virtual _type method.
+CORBA::TypeCode_ptr CORBA::PollableSet::UnknownPollable::_tao_type (void) const
+{
+  return ::CORBA::PollableSet::_tc_UnknownPollable;
+}
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:87
+
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_CORBA_PollableSet_UnknownPollable = 0;
+static TAO::TypeCode::Struct<char const *,
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_PollableSet_UnknownPollable (
+    CORBA::tk_except,
+    "IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0",
+    "UnknownPollable",
+    _tao_fields_CORBA_PollableSet_UnknownPollable,
+    0);
+  
+::CORBA::TypeCode_ptr const CORBA::PollableSet::_tc_UnknownPollable =
+  &_tao_tc_CORBA_PollableSet_UnknownPollable;
 
 CORBA::PollableSet::PollableSet (void)
 {}
@@ -532,15 +558,9 @@ CORBA::PollableSet::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PollableSet::_nil ();
-    }
-  
-  PollableSet_ptr proxy =
-    dynamic_cast<PollableSet_ptr> (_tao_objref);
-  
-  return PollableSet::_duplicate (proxy);
+  return PollableSet::_duplicate (
+      dynamic_cast<PollableSet_ptr> (_tao_objref)
+    );
 }
 
 CORBA::PollableSet_ptr
@@ -549,15 +569,9 @@ CORBA::PollableSet::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PollableSet::_nil ();
-    }
-  
-  PollableSet_ptr proxy =
-    dynamic_cast<PollableSet_ptr> (_tao_objref);
-  
-  return PollableSet::_duplicate (proxy);
+  return PollableSet::_duplicate (
+      dynamic_cast<PollableSet_ptr> (_tao_objref)
+    );
 }
 
 CORBA::PollableSet_ptr

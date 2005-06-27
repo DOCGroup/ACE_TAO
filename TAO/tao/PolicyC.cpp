@@ -47,7 +47,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -422,7 +422,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       CORBA_Policy_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::Policy>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::Policy>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -653,15 +653,9 @@ CORBA::PolicyManager::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyManager::_nil ();
-    }
-  
-  PolicyManager_ptr proxy =
-    dynamic_cast<PolicyManager_ptr> (_tao_objref);
-  
-  return PolicyManager::_duplicate (proxy);
+  return PolicyManager::_duplicate (
+      dynamic_cast<PolicyManager_ptr> (_tao_objref)
+    );
 }
 
 CORBA::PolicyManager_ptr
@@ -670,15 +664,9 @@ CORBA::PolicyManager::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyManager::_nil ();
-    }
-  
-  PolicyManager_ptr proxy =
-    dynamic_cast<PolicyManager_ptr> (_tao_objref);
-  
-  return PolicyManager::_duplicate (proxy);
+  return PolicyManager::_duplicate (
+      dynamic_cast<PolicyManager_ptr> (_tao_objref)
+    );
 }
 
 CORBA::PolicyManager_ptr
@@ -794,15 +782,9 @@ CORBA::PolicyCurrent::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyCurrent::_nil ();
-    }
-  
-  PolicyCurrent_ptr proxy =
-    dynamic_cast<PolicyCurrent_ptr> (_tao_objref);
-  
-  return PolicyCurrent::_duplicate (proxy);
+  return PolicyCurrent::_duplicate (
+      dynamic_cast<PolicyCurrent_ptr> (_tao_objref)
+    );
 }
 
 CORBA::PolicyCurrent_ptr
@@ -811,15 +793,9 @@ CORBA::PolicyCurrent::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyCurrent::_nil ();
-    }
-  
-  PolicyCurrent_ptr proxy =
-    dynamic_cast<PolicyCurrent_ptr> (_tao_objref);
-  
-  return PolicyCurrent::_duplicate (proxy);
+  return PolicyCurrent::_duplicate (
+      dynamic_cast<PolicyCurrent_ptr> (_tao_objref)
+    );
 }
 
 CORBA::PolicyCurrent_ptr

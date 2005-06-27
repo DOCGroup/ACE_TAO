@@ -39,7 +39,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -103,15 +103,9 @@ PortableInterceptor::ServerRequestInterceptor::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServerRequestInterceptor::_nil ();
-    }
-  
-  ServerRequestInterceptor_ptr proxy =
-    dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref);
-  
-  return ServerRequestInterceptor::_duplicate (proxy);
+  return ServerRequestInterceptor::_duplicate (
+      dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
@@ -120,15 +114,9 @@ PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServerRequestInterceptor::_nil ();
-    }
-  
-  ServerRequestInterceptor_ptr proxy =
-    dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref);
-  
-  return ServerRequestInterceptor::_duplicate (proxy);
+  return ServerRequestInterceptor::_duplicate (
+      dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr

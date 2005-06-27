@@ -45,6 +45,7 @@
 #include "tao/Environment.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Any.h"
+#include "tao/TypeCode.h"
 #include "tao/VarOut_T.h"
 
 #include "tao/ParameterModeC.h"

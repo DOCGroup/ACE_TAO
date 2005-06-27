@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:153
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_PI_FORWARDC_H_
 #define _TAO_IDL_ORIG_PI_FORWARDC_H_
@@ -62,110 +62,110 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:413
+  // be\be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * ServerId;
   typedef CORBA::String_var ServerId_var;
   typedef CORBA::String_out ServerId_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServerId;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:413
+  // be\be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * ORBId;
   typedef CORBA::String_var ORBId_var;
   typedef CORBA::String_out ORBId_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ORBId;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:472
+  // be\be_visitor_typedef/typedef_ch.cpp:472
   
   typedef CORBA::StringSeq AdapterName;
   typedef CORBA::StringSeq_var AdapterName_var;
   typedef CORBA::StringSeq_out AdapterName_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_AdapterName;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:472
+  // be\be_visitor_typedef/typedef_ch.cpp:472
   
   typedef CORBA::OctetSeq ObjectId;
   typedef CORBA::OctetSeq_var ObjectId_var;
   typedef CORBA::OctetSeq_out ObjectId_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ObjectId;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:379
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Long AdapterManagerId;
   typedef CORBA::Long_out AdapterManagerId_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_AdapterManagerId;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:379
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short AdapterState;
   typedef CORBA::Short_out AdapterState_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_AdapterState;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:379
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::ULong SlotId;
   typedef CORBA::ULong_out SlotId_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_SlotId;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:379
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short ReplyStatus;
   typedef CORBA::Short_out ReplyStatus_out;
   
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ReplyStatus;
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module PortableInterceptor
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_traits.cpp:61
+// be\be_visitor_traits.cpp:61
 
 // Traits specializations.
 namespace TAO
@@ -173,7 +173,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:955
+// be\be_codegen.cpp:955
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
