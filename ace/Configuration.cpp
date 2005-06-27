@@ -1641,7 +1641,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
   result = base;
 
   for (const ACE_TCHAR* separator;
-       (separator = ACE_OS::strchr (sub_section, ACE_TEXT ('\\'))) != 0;
+       (separator = ACE_OS::strchr (sub_section, ACE_LIB_TEXT ('\\'))) != 0;
        )
     {
       ACE_TString simple_section (sub_section, separator - sub_section);

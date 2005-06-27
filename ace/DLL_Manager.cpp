@@ -131,7 +131,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                             ACE_LIB_TEXT ("ACE_DLL_Handle::open: Trying to open DLL %s with %s name\n"),
                             this->dll_name_,
                             name->c_str ()));
-              
+
               // The ACE_SHLIB_HANDLE object is obtained.
               this->handle_ = ACE_OS::dlopen (name->c_str (),
                                               open_mode);
@@ -334,7 +334,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 
   // 2. Locate the file suffix, if there is one. Move the '.' and the
   // suffix to base_suffix.
-  if ((pos = base_file.rfind (ACE_TEXT ('.'))) != ACE_TString::npos)
+  if ((pos = base_file.rfind (ACE_LIB_TEXT ('.'))) != ACE_TString::npos)
     {
       base_suffix = base_file.substr (static_cast<size_t>(pos));
       base_file = base_file.substr (0, static_cast<ssize_t>(pos));
