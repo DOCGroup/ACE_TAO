@@ -89,3 +89,6 @@ tao_tkresource    = 1
 // Use FlResources for TAO
 tao_flresource    = 1
 
+//Use the ZIP_Wrapper feature for when using the ZIP wrapper classes
+ZIP_Wrapper = 0
+
