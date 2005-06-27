@@ -1,3 +1,10 @@
+Mon Jun 27 09:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_visitor_operation/ami_cs.h:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+          Removed gen_marshal_and_invoke method. It wasn't used and contained
+          a lot of generation of old code that we don't use anymore
+
 Mon Jun 27 09:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Policy_Validator.h:
