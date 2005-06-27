@@ -19,18 +19,11 @@
 //
 //============================================================================
 
-#ifndef HTTP_OPTIONS_H
-#define HTTP_OPTIONS_H
+#ifndef RM_OPTIONS_H
+#define RM_OPTIONS_H
 
 #include "ace/Get_Opt.h"
-#include "ace/String_Base.h"
-#include "ace/OS_NS_string.h"				//for ACE_CString 
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/ARGV.h"
+#include "ace/SString.h"		//for ACE_CString 			
 
 class Options
 {
@@ -72,4 +65,4 @@ protected:
   void usage (void);
 };
 
-#endif /* HTTP_OPTIONS_H */
+#endif /* RM_OPTIONS_H */

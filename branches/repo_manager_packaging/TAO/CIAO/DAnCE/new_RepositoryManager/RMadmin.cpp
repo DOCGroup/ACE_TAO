@@ -1,10 +1,10 @@
 // $Id$
 
-/**
+/***
  * @file RMClient.cpp
  *
- * @auther Stoyan <s.paunov@vanderbilt.edu
- */
+ * @author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
+ **/
 
 #include "new_RepositoryManagerC.h"
 #include "Options.h"
@@ -22,7 +22,7 @@ using namespace std;
 const char * ior = "file://RepositoryManagerDeamon.ior";
 
 
-//=============================COUPLE OF HELPER METHORS==================================
+///=============================COUPLE OF HELPER METHORS==================================
 CORBA::Octet* read_from_disk (
 	const char* full_path,
 	size_t &length
@@ -33,20 +33,18 @@ int write_to_disk (
 	const CORBA::Octet* buffer, 
 	size_t length
 	);
-//========================================================================================
+///========================================================================================
 
 
+///main function that provides a sample interface for RM clients
 
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-		                                        argv,
-					                                  ""
-					                                  ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 
+											""ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 

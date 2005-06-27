@@ -30,6 +30,14 @@
 // TAO_IDL - Generated from 
 // .\be\be_codegen.cpp:939
 
+
+///====================================================================
+//@filename: new_RepositoryManager_Impl.cpp
+//@Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
+//
+
+
+
 #include "new_RepositoryManager_Impl.h"
 
 #include "ace/OS_NS_fcntl.h"	  //for open
@@ -77,6 +85,8 @@ CIAO_new_RepositoryManagerDaemon_i::~CIAO_new_RepositoryManagerDaemon_i (void)
 	this->packages_.unbind_all ();
 }
 
+
+//shutdown method to shut down the orb gracefully
 void CIAO_new_RepositoryManagerDaemon_i::shutdown (
     
   )
@@ -88,10 +98,10 @@ void CIAO_new_RepositoryManagerDaemon_i::shutdown (
 	
 	this->packages_.unbind_all ();
 	
-	this->the_orb_->shutdown (1);
-
-	ACE_OS::exit (0);
+	this->the_orb_->shutdown (0);
 }
+
+//This method allow you to install a package into the RM
 
 void CIAO_new_RepositoryManagerDaemon_i::installPackage (
     const char * installationName,
@@ -125,11 +135,17 @@ void CIAO_new_RepositoryManagerDaemon_i::installPackage (
 	this->packages_.bind (ACE_CString (installationName), path);
 }
 
+//This method parse the depoyment plan in a package and return the 
+//corresponding structure. You need to provide the name of the 
+//package whose deployment plan you want to get . If no plan is
+//found in the package, an exception is thrown
+
 ::Deployment::DeploymentPlan * CIAO_new_RepositoryManagerDaemon_i::retrievePlan (
     const char * packageName
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+    CORBA::SystemException,
+	::Deployment::NoPlan
   ))
 {
   // Add your implementation here
@@ -171,19 +187,18 @@ void CIAO_new_RepositoryManagerDaemon_i::installPackage (
 
 	//there is not deployment plan in the package
 	if (!found)
-		ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-						   ACE_TEXT ("[RM::retrievePlan] no DeploymentPlan in package!\n")),
-                           0);
+	{
+		ACE_TEXT ("[RM::retrievePlan] no DeploymentPlan in package!\n");
+		ACE_THROW (Deployment::NoPlan ());
+	}
 
 	//read the Deployment plan from the package
 	ACE_Message_Block file (0,0);
 	if (!zip.get_file( const_cast<char*> (path.c_str ()), const_cast<char*> (plan_name.c_str ()), file))
-		ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-						   ACE_TEXT ("[RM::retrievePlan] Unable to retrieve file!\n")),
-                           0);
-
+	{
+		ACE_TEXT ("[RM::retrievePlan] Unable to retrieve file!\n");
+		ACE_THROW (CORBA::INTERNAL ());
+	}
 
 	//if file is 0 length XERCESC Fails!!!
 
@@ -200,17 +215,20 @@ void CIAO_new_RepositoryManagerDaemon_i::installPackage (
 
 	//write the file to disk
 	if(!this->write_to_disk (const_cast<char*> (local_file.c_str ()), file))
-		ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-						   ACE_TEXT ("[RM::retrievePlan] DeploymentPlan preparation failule!\n")),
-                           0);
+	{
+		ACE_TEXT ("[RM::retrievePlan] DeploymentPlan preparation failule!\n");
+		ACE_THROW (CORBA::INTERNAL ());
+	}
 
 	//parse the Deployment plan and return the resulting data structure
 	CIAO::Config_Handlers::XML_Helper the_helper;
 	xercesc::DOMDocument *doc;
 
 	if (!(doc = the_helper.create_dom (local_file.c_str ())))
-		return 0;
+	{
+		ACE_TEXT ("[RM::retrievePlan] XML_Helper failed us!\n");
+		ACE_THROW (CORBA::INTERNAL ());
+	}
 
 	CIAO::Config_Handlers::DeploymentPlan dp = CIAO::Config_Handlers::deploymentPlan (doc);
 	CIAO::Config_Handlers::DP_Handler dp_handler (dp);
@@ -222,6 +240,10 @@ void CIAO_new_RepositoryManagerDaemon_i::installPackage (
 	//before it returns it so we are safe to return the return value
 	return dp_handler.plan ();
 }
+
+
+//find a package and return it if installed in the RM
+//else throw an exception
 
 ::Deployment::Package * CIAO_new_RepositoryManagerDaemon_i::findPackageByName (
     const char * name
@@ -254,6 +276,11 @@ void CIAO_new_RepositoryManagerDaemon_i::installPackage (
 
 	  return package;
 }
+
+
+//find an implementation (.dll, .so) by its name and return it if installed in the RM
+//else throw an exception. You need to specify the package in which the RM
+//is to look for the implementation
 
 ::Deployment::Implementation * CIAO_new_RepositoryManagerDaemon_i::findImplementationByName (
      const char * implementation_name, 
@@ -314,6 +341,7 @@ void CIAO_new_RepositoryManagerDaemon_i::installPackage (
 	return impl;
 }
 
+
 ::Deployment::Package * CIAO_new_RepositoryManagerDaemon_i::findPackageByUUID (
     const char * UUID
   )
@@ -337,6 +365,8 @@ void CIAO_new_RepositoryManagerDaemon_i::installPackage (
   // Add your implementation here
 	ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
+
+//get the names of all packages currently installed in the RM
 
 ::CORBA::StringSeq * CIAO_new_RepositoryManagerDaemon_i::getAllPackageNames (
     
@@ -393,6 +423,12 @@ void CIAO_new_RepositoryManagerDaemon_i::deletePackage (
 	remove (path.c_str ());
 }
 
+//==========================================HELPER METHODS========================================================
+
+
+//This function attempts to write a sequence of bytes to
+//a specified location. A -1 is returned in the case of an error
+//and a 1 upon success
 
 int CIAO_new_RepositoryManagerDaemon_i::write_to_disk (
 	const char* full_path, 
@@ -422,6 +458,10 @@ int CIAO_new_RepositoryManagerDaemon_i::write_to_disk (
 	return 1;
 }
 
+
+//This function attempts to read a sequence of bytes into an
+//ACE_Message_Block from a specified location. A -1 is returned 
+//in the case of an error and a 1 upon success
 
 int CIAO_new_RepositoryManagerDaemon_i::write_to_disk 
 	(const char* full_path, 
@@ -457,6 +497,9 @@ int CIAO_new_RepositoryManagerDaemon_i::write_to_disk
 	return 1;
 }
 
+//This function attempts to read a sequence of bytes from a specified 
+//location and returns an octet sequence. A -1 is returned 
+//in the case of an error and a 1 upon success
 
 CORBA::Octet* CIAO_new_RepositoryManagerDaemon_i::read_from_disk (
 	const char* full_path,
