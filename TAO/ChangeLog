@@ -1,3 +1,11 @@
+Mon Jun 27 13:08:01 2005  Gary Maxey <gary.maxey@hp.com>
+	
+        * tao/Valuetype/ValueBase.cpp:
+	  Added missing copy constructor implementation
+
+        * TAO/tao/Valuetype/StringValueC.inl
+          Change to avoid warnings by some compilers
+
 Mon Jun 27 12:19:01 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp (TAO): Changed

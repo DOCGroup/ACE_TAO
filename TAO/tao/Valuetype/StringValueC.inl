@@ -45,6 +45,7 @@ CORBA::StringValue::StringValue (CORBA::Char * val)
 
 ACE_INLINE 
 CORBA::StringValue::StringValue (const CORBA::StringValue& val)
+  : DefaultValueRefCountBase (val)
 {
   this->_pd_value = val._pd_value;
 }
@@ -179,6 +180,7 @@ CORBA::WStringValue::WStringValue (CORBA::WChar * val)
 
 ACE_INLINE 
 CORBA::WStringValue::WStringValue (const CORBA::WStringValue& val)
+  : DefaultValueRefCountBase (val)
 {
   this->_pd_value = val._pd_value;
 }
