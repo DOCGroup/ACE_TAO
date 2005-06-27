@@ -41,7 +41,7 @@
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ForwardRequest[] =
   {
     { "forward", &CORBA::_tc_Object }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -53,7 +53,7 @@ static TAO::TypeCode::Struct<char const *,
     "ForwardRequest",
     _tao_fields_PortableInterceptor_ForwardRequest,
     1);
-
+  
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_ForwardRequest =
@@ -62,7 +62,7 @@ namespace PortableInterceptor
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -74,12 +74,12 @@ namespace TAO
     )
   {
     CORBA::String_var id;
-
+    
     if (!(cdr >> id.out ()))
       {
         return false;
       }
-
+    
     ACE_TRY_NEW_ENV
       {
         this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -90,7 +90,7 @@ namespace TAO
         return false;
       }
     ACE_ENDTRY;
-
+    
     return true;
   }
 }

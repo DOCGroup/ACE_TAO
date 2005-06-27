@@ -45,6 +45,7 @@
 #include "tao/Environment.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Any.h"
+#include "tao/TypeCode.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"

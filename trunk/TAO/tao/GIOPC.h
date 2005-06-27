@@ -203,21 +203,21 @@ namespace GIOP
     typedef TargetAddress_var _var_type;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_union_branch/public_ch.cpp:514
+    // be\be_visitor_union_branch/public_ch.cpp:557
     
     void object_key (const CORBA::OctetSeq &);
     const CORBA::OctetSeq &object_key (void) const;
     CORBA::OctetSeq &object_key (void);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_union_branch/public_ch.cpp:622
+    // be\be_visitor_union_branch/public_ch.cpp:665
     
     void profile (const IOP::TaggedProfile &);
     const IOP::TaggedProfile &profile (void) const;
     IOP::TaggedProfile &profile (void);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_union_branch/public_ch.cpp:622
+    // be\be_visitor_union_branch/public_ch.cpp:665
     
     void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);
     const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const;
@@ -234,13 +234,13 @@ namespace GIOP
     union
     {
       // TAO_IDL - Generated from
-      // be\be_visitor_union_branch/private_ch.cpp:412
+      // be\be_visitor_union_branch/private_ch.cpp:451
       CORBA::OctetSeq *object_key_;
       // TAO_IDL - Generated from
-      // be\be_visitor_union_branch/private_ch.cpp:487
+      // be\be_visitor_union_branch/private_ch.cpp:526
       IOP::TaggedProfile *profile_;
       // TAO_IDL - Generated from
-      // be\be_visitor_union_branch/private_ch.cpp:487
+      // be\be_visitor_union_branch/private_ch.cpp:526
       ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
     } u_;
     
