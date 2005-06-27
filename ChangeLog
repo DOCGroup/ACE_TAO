@@ -1,3 +1,11 @@
+Mon Jun 27 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/rtcosscheduling.mpb:
+          Added requires dummy_label. The RTCosScheduling library uses
+          a non compliant way to register its interceptors. This is
+          causing problems with the PI refactory so disable the building
+          of this lib until that has been fixed. See also bugzilla 2163.
+
 Mon Jun 27 08:21:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:

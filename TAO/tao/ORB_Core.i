@@ -608,23 +608,4 @@ TAO_ORB_Core::add_interceptor (
                                                              ACE_ENV_ARG_PARAMETER);
 }
 
-// ------
-
-ACE_INLINE TAO::ClientRequestInterceptor_List::TYPE &
-TAO_ORB_Core::client_request_interceptors (void)
-{
-  return this->client_request_interceptors_.interceptors ();
-}
-
-// @@ It would be nice to move these to the PortableServer library,
-//    perhaps to the RootPOA.  However, there is no "RootPOA" class so
-//    there doesn't appear to be a way that only the RootPOA
-//    implementation has these server-side interceptor methods and
-//    attributes.  Leave them in the ORB Core for now.
-ACE_INLINE TAO::ServerRequestInterceptor_List::TYPE &
-TAO_ORB_Core::server_request_interceptors (void)
-{
-  return this->server_request_interceptors_.interceptors ();
-}
-
 #endif /* TAO_HAS_INTERCEPTORS */
