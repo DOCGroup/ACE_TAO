@@ -1,57 +1,63 @@
+Mon Jun 27 07:04:01 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.mpc:
+
+          Switch to using the existing zlib and zzip base projects.
+
 Sun Jun 26 23:53:23 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
-	* TAO/CIAO/DAnCE/new_RepositoryManager/Modified_Deployment.xsd
-	* TAO/CIAO/DAnCE/new_RepositoryManager/Options.cpp
-	* TAO/CIAO/DAnCE/new_RepositoryManager/Options.h
-	* TAO/CIAO/DAnCE/new_RepositoryManager/README.txt
-	* TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
-	* TAO/CIAO/DAnCE/new_RepositoryManager/RepositoryManager.cpp
-	* TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
-	* TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.h
-	* TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.idl
-	* TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
-	* TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
-	* TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
-	* TAO/CIAO/DAnCE/new_RepositoryManager/packages/inconsistent.cpk
-	* TAO/CIAO/DAnCE/new_RepositoryManager/packages/package.cpk
+        * TAO/CIAO/DAnCE/new_RepositoryManager/Modified_Deployment.xsd
+        * TAO/CIAO/DAnCE/new_RepositoryManager/Options.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/Options.h
+        * TAO/CIAO/DAnCE/new_RepositoryManager/README.txt
+        * TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/RepositoryManager.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.idl
+        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
+        * TAO/CIAO/DAnCE/new_RepositoryManager/packages/inconsistent.cpk
+        * TAO/CIAO/DAnCE/new_RepositoryManager/packages/package.cpk
 
-	Added these files to the head. The files are implementing the repository 
-	manager.
+        Added these files to the head. The files are implementing the repository
+        manager.
 
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/Modified_Deployment.xsd
-	needed for the retrievePlan function that retrieves the Deployment plan	
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/Modified_Deployment.xsd
+        needed for the retrievePlan function that retrieves the Deployment plan
 
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/Options.cpp
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/Options.h
-	options class for the RMadmin.cpp
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/Options.cpp
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/Options.h
+        options class for the RMadmin.cpp
 
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/README.txt
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/README.txt
 
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
-	a sample client program. You can use it as an example on how to use the RM
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
+        a sample client program. You can use it as an example on how to use the RM
 
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.h
-	The ZIP Wrapper class that allows read access to ZIP packages and CCM packages
-	that have the cpk extension.
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+        The ZIP Wrapper class that allows read access to ZIP packages and CCM packages
+        that have the cpk extension.
 
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/RepositoryManager.cpp
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.idl
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
-	The Repository Manager implementation files
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/RepositoryManager.cpp
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.idl
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
+        The Repository Manager implementation files
 
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/packages/inconsistent.cpk
-	-- TAO/CIAO/DAnCE/new_RepositoryManager/packages/package.cpk
-	couple of sample packages that I created manually to test the RM.
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/packages/inconsistent.cpk
+        -- TAO/CIAO/DAnCE/new_RepositoryManager/packages/package.cpk
+        couple of sample packages that I created manually to test the RM.
 
 
 Fri Jun 24 14:36:02 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/CIAO_common.h: 
+        * DAnCE/ciao/CIAO_common.h:
 
-	  Added definition for CIAO_TRACE.
+          Added definition for CIAO_TRACE.
 
 Fri Jun 24 14:21:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -69,11 +75,11 @@ Fri Jun 24 14:21:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/RTCCM/DiffServ/Receiver/Receiver_exec.h:
         * tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
         * tests/RTCCM/DiffServ/Sender/Sender_exec.h:
-        
+
           More fixes to hand-written executor code to bring the file up
           to date with the recent changes in generated code. These were
           overlooked in
-          
+
           Wed Jun 22 23:20:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 22 23:20:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -106,7 +112,7 @@ Wed Jun 22 23:20:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIAO/DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:
         * CIAO/DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
         * CIAO/docs/releasenotes/index.html:
-        
+
           Eliminated generation of the CIAO_GLUE_-prefixed namespace
           and replaced it with a namespace constructed from the
           composition local name and a CIDL_ prefix. Whereas the
@@ -117,13 +123,13 @@ Wed Jun 22 23:20:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           Will Otte <wotte@dre.vanderbilt.edu>, where the composition
           was declared inside several nested modules, and the generated
           code would not compile. The new namespace encloses
-          
+
             - the component servant
             - the home servant
             - the facet servants, if any
             - the executor interface in the executor IDL file
             - optionally generated executor impl classes
-            
+
           Minor changes were required to existing executor impl
           files as a result of the changes to generated code.
 

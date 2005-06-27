@@ -1,13 +1,13 @@
 // $Id$
 
 
-project (new_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions, ZIP_Wrapper {
+project (new_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions, zzip, zlib {
 
   exename = RepositoryManagerDeamon
   after    += XSC_Config_Handlers
   libs     += XSC_Config_Handlers
   libs     += CIAO_DnC_Server
-  requires += ZIP_Wrapper	
+  requires += zzip zlib
 
   IDL_Files {
     new_RepositoryManager.idl
