@@ -10,6 +10,7 @@
 #include "tao/Alias_TypeCode_Static.h"
 #include "tao/Value_TypeCode_Static.h"
 #include "tao/CDR.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ValueBase.inl"
@@ -288,7 +289,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
           return 0;
         }
 
-      // 'length' may not be the repo id length - it could be the 
+      // 'length' may not be the repo id length - it could be the
       // FFFFFFF indirection marker instead
       if (TAO_OBV_GIOP_Flags::is_indirection_tag (length))
         {
@@ -428,7 +429,7 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
         return false;
      }
 
-     if (!strcmp(repo_id_stream, repo_id_expected))
+     if (!ACE_OS::strcmp (repo_id_stream.in (), repo_id_expected))
        {  // Repository ids matched as expected
         return true;
        }
