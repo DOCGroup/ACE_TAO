@@ -47,6 +47,7 @@
 
 #include "ace/Hash_Map_Manager.h"			//for the ACE_Hash_Map_Manager
 #include "ace/Null_Mutex.h"					//for ACE_Null_Mutex
+#include "ace/RW_Mutex.h"					//for ACE_RW_Mutex
 #include "ace/OS_NS_string.h"				//for ACE_CString
 #include "ace/SString.h"
 
@@ -55,21 +56,24 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+namespace
+{
 ///DIRECTORY WHERE THE PACKAGES WILL BE STORED LOCALLY
 const static char* RM_STORAGE_PATH = "./RepositoryDir";
-
+}
 
 class  CIAO_new_RepositoryManagerDaemon_i : public virtual POA_CIAO::new_RepositoryManagerDaemon, public virtual PortableServer::RefCountServantBase
 {
 public:
 
-  //Constructor 
+  /// Constructor 
   CIAO_new_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb);
   
-  //Destructor 
+  /// Destructor 
   virtual ~CIAO_new_RepositoryManagerDaemon_i (void);
   
+
+  /// shutdown method to shut down the orb gracefully
   virtual
   void shutdown (
       
@@ -78,6 +82,7 @@ public:
       CORBA::SystemException
     ));
   
+  /// This method allow you to install a package into the RM
   virtual
   void installPackage (
       const char * installationName,
@@ -89,15 +94,22 @@ public:
       ::Deployment::NameExists,
       ::Deployment::PackageError
     ));
-  
+
+  /// This method parse the depoyment plan in a package and return the 
+  /// corresponding structure. You need to provide the name of the 
+  /// package whose deployment plan you want to get . If no plan is
+  /// found in the package, an exception is thrown
   virtual
   ::Deployment::DeploymentPlan * retrievePlan (
       const char * packageName
     )
     ACE_THROW_SPEC ((
-      CORBA::SystemException
+      CORBA::SystemException,
+	  ::Deployment::NoPlan
     ));
   
+  /// find a package and return it if installed in the RM
+  /// else throw an exception
   virtual
   ::Deployment::Package * findPackageByName (
       const char * name
@@ -107,6 +119,9 @@ public:
       ::Deployment::NoSuchName
     ));
   
+  /// find an implementation (.dll, .so) by its name and return it if installed in the RM
+  /// else throw an exception. You need to specify the package in which the RM
+  /// is to look for the implementation
   virtual
   ::Deployment::Implementation * findImplementationByName (
       const char * implementation_name,
@@ -117,6 +132,7 @@ public:
       ::Deployment::NoSuchName
     ));
   
+  /// not implemented
   virtual
   ::Deployment::Package * findPackageByUUID (
       const char * UUID
@@ -126,6 +142,7 @@ public:
       ::Deployment::NoSuchName
     ));
   
+  ///not implemented
   virtual
   ::Deployment::Implementation * findImplementationByUUID (
       const char * UUID
@@ -135,6 +152,7 @@ public:
       ::Deployment::NoSuchName
     ));
   
+  /// get the names of all packages currently installed in the RM
   virtual
   ::CORBA::StringSeq * getAllPackageNames (
       
@@ -143,6 +161,8 @@ public:
       CORBA::SystemException
     ));
   
+  /// Find out if the package was installed in the repository,
+  /// delete it if found or throw and exception otherwise
   virtual
   void deletePackage (
       const char * installationName
@@ -188,11 +208,14 @@ public:
     /// Key:	Package name of CString type or
     /// Value:	The location of the local copy of the package
 
+	///Based on the synchronization needed we can parametrize this with either 
+	///ACE_Null_Mutex or ACE_RW_Mutex
+
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     ACE_CString,
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> RepositoryDatabase;
+                                    ACE_RW_Mutex> RepositoryDatabase;
 
 
 	typedef RepositoryDatabase::iterator RepositoryDatabase_Iterator;

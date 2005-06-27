@@ -1,5 +1,15 @@
 // $Id$
 
+///====================================================================
+//@filename: ZIP_Wrapper.cpp
+//@Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
+//
+//@Purpose: to provide a wrapper around ZZIPlib for easy handling of
+//			ZIP archives. This wrapper can me used as an auxiliary 
+//			class that allows a program to become ZIP-aware
+
+
+
 #include "ace/Containers_T.h"		//for ACE_Double_Linked_List
 #include "ace/Message_Block.h"		//for ACE_Message_Block
 
