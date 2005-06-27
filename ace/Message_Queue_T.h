@@ -385,12 +385,7 @@ public:
   virtual void notification_strategy (ACE_Notification_Strategy *s);
 
   /// Returns a reference to the lock used by the <ACE_Message_Queue>.
-  virtual ACE_SYNCH_MUTEX_T &lock (void)
-    {
-      // The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
-      // header file      (j.russell.noseworthy@objectsciences.com)
-      return this->lock_;
-    }
+  virtual ACE_SYNCH_MUTEX_T &lock (void);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -1206,12 +1201,7 @@ public:
   virtual void notification_strategy (ACE_Notification_Strategy *s);
 
   /// Returns a reference to the lock used by the <ACE_Message_Queue_Ex>.
-  virtual ACE_SYNCH_MUTEX_T &lock (void)
-    {
-      // The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
-      // header file      (j.russell.noseworthy@objectsciences.com)
-      return this->queue_.lock ();
-    }
+  virtual ACE_SYNCH_MUTEX_T &lock (void);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
