@@ -1,3 +1,13 @@
+Mon Jun 27 21:54:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Made inclusion of config-posix.h user selectable by defining
+          ACE_HAS_LINUX_NPTL rather than including it by default since
+          there are too many problems with that with the differences
+          in the various Linux distros.
+          Only with a Linux distro having the latest NPTL implemented
+          (SuSE 9.3) have I been able to effectively use POSIX macros.
+
 Mon Jun 27 20:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Codecs.cpp:
@@ -10,9 +20,9 @@ Mon Jun 27 20:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 27 12:26:15 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Malloc_T.h: Updated the ACE_Malloc_T documentation to
-	  mention the limitations with find()/bind().  Thanks to Hanson Lu
- 	  <suf_lu@yahoo.com> for reporting this.
+        * ace/Malloc_T.h: Updated the ACE_Malloc_T documentation to
+          mention the limitations with find()/bind().  Thanks to Hanson Lu
+          <suf_lu@yahoo.com> for reporting this.
 
 Mon Jun 27 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
