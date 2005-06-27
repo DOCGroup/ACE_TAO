@@ -1,3 +1,8 @@
+Mon Jun 27 09:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Policy_Validator.h:
+          Fixed small typo in comment
+
 Mon Jun 27 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueBase.cpp:
