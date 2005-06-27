@@ -1,3 +1,9 @@
+Mon Jun 27 16:25:52 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/examples/Swapping/Sender/Sender_exec.cpp:
+        
+          Fixed cut-and-paste error.
+
 Mon Jun 27 07:04:01 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * DAnCE/new_RepositoryManager/new_RepositoryManager.mpc:

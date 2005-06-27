@@ -76,7 +76,7 @@ namespace CIDL_Sender_Impl
   void
   Sender_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     omponents::CCMException))
+                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Sender_exec_i::ciao_preactivate\n"));
