@@ -403,7 +403,7 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
     reinterpret_cast<ACE_XML_Svc_Conf::Factory> (tmp);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to resolve factory: %p\n"),
+                       ACE_LIB_TEXT ("Unable to resolve factory: %p\n"),
                        xmldll.error ()),
                       0);
 
