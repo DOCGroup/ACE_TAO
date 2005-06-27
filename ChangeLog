@@ -1,3 +1,9 @@
+Mon Jun 28 06:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_T.{h,cpp}:
+          Initialise pointers with 0 and removed work around for Sun CC 5.1,
+          we don't support that compiler already for years
+
 Sun Jun 27 01:03:12 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/global.features
@@ -5,12 +11,12 @@ Sun Jun 27 01:03:12 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 	* MPC/config/ZIP_Wrapper.mpb
 
 	added a new feature to MPC regarding the ZIP_Wrappers used by
-	the Repository Manager. I added this feature to make sure the RM 
+	the Repository Manager. I added this feature to make sure the RM
 	would not be compiled unless the proper ZIP libraries are in place.
 	Please check the README in CIAO/DAnCE/new_RepositoryManager
 
 
-Sun Jun 26 22:29:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+Sun Jun 27 22:29:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-posix.h:
           Made test for POSIX_SEM TIMEOUTS more specific.
