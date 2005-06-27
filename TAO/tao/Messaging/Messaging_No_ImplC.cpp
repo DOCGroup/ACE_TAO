@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -102,15 +102,9 @@ Messaging::RebindPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RebindPolicy::_nil ();
-    }
-  
-  RebindPolicy_ptr proxy =
-    dynamic_cast<RebindPolicy_ptr> (_tao_objref);
-  
-  return RebindPolicy::_duplicate (proxy);
+  return RebindPolicy::_duplicate (
+      dynamic_cast<RebindPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RebindPolicy_ptr
@@ -119,15 +113,9 @@ Messaging::RebindPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RebindPolicy::_nil ();
-    }
-  
-  RebindPolicy_ptr proxy =
-    dynamic_cast<RebindPolicy_ptr> (_tao_objref);
-  
-  return RebindPolicy::_duplicate (proxy);
+  return RebindPolicy::_duplicate (
+      dynamic_cast<RebindPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RebindPolicy_ptr
@@ -260,15 +248,9 @@ Messaging::RequestPriorityPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestPriorityPolicy::_nil ();
-    }
-  
-  RequestPriorityPolicy_ptr proxy =
-    dynamic_cast<RequestPriorityPolicy_ptr> (_tao_objref);
-  
-  return RequestPriorityPolicy::_duplicate (proxy);
+  return RequestPriorityPolicy::_duplicate (
+      dynamic_cast<RequestPriorityPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RequestPriorityPolicy_ptr
@@ -277,15 +259,9 @@ Messaging::RequestPriorityPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestPriorityPolicy::_nil ();
-    }
-  
-  RequestPriorityPolicy_ptr proxy =
-    dynamic_cast<RequestPriorityPolicy_ptr> (_tao_objref);
-  
-  return RequestPriorityPolicy::_duplicate (proxy);
+  return RequestPriorityPolicy::_duplicate (
+      dynamic_cast<RequestPriorityPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RequestPriorityPolicy_ptr
@@ -405,15 +381,9 @@ Messaging::ReplyPriorityPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ReplyPriorityPolicy::_nil ();
-    }
-  
-  ReplyPriorityPolicy_ptr proxy =
-    dynamic_cast<ReplyPriorityPolicy_ptr> (_tao_objref);
-  
-  return ReplyPriorityPolicy::_duplicate (proxy);
+  return ReplyPriorityPolicy::_duplicate (
+      dynamic_cast<ReplyPriorityPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::ReplyPriorityPolicy_ptr
@@ -422,15 +392,9 @@ Messaging::ReplyPriorityPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ReplyPriorityPolicy::_nil ();
-    }
-  
-  ReplyPriorityPolicy_ptr proxy =
-    dynamic_cast<ReplyPriorityPolicy_ptr> (_tao_objref);
-  
-  return ReplyPriorityPolicy::_duplicate (proxy);
+  return ReplyPriorityPolicy::_duplicate (
+      dynamic_cast<ReplyPriorityPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::ReplyPriorityPolicy_ptr
@@ -550,15 +514,9 @@ Messaging::RequestStartTimePolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestStartTimePolicy::_nil ();
-    }
-  
-  RequestStartTimePolicy_ptr proxy =
-    dynamic_cast<RequestStartTimePolicy_ptr> (_tao_objref);
-  
-  return RequestStartTimePolicy::_duplicate (proxy);
+  return RequestStartTimePolicy::_duplicate (
+      dynamic_cast<RequestStartTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RequestStartTimePolicy_ptr
@@ -567,15 +525,9 @@ Messaging::RequestStartTimePolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestStartTimePolicy::_nil ();
-    }
-  
-  RequestStartTimePolicy_ptr proxy =
-    dynamic_cast<RequestStartTimePolicy_ptr> (_tao_objref);
-  
-  return RequestStartTimePolicy::_duplicate (proxy);
+  return RequestStartTimePolicy::_duplicate (
+      dynamic_cast<RequestStartTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RequestStartTimePolicy_ptr
@@ -695,15 +647,9 @@ Messaging::RequestEndTimePolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestEndTimePolicy::_nil ();
-    }
-  
-  RequestEndTimePolicy_ptr proxy =
-    dynamic_cast<RequestEndTimePolicy_ptr> (_tao_objref);
-  
-  return RequestEndTimePolicy::_duplicate (proxy);
+  return RequestEndTimePolicy::_duplicate (
+      dynamic_cast<RequestEndTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RequestEndTimePolicy_ptr
@@ -712,15 +658,9 @@ Messaging::RequestEndTimePolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RequestEndTimePolicy::_nil ();
-    }
-  
-  RequestEndTimePolicy_ptr proxy =
-    dynamic_cast<RequestEndTimePolicy_ptr> (_tao_objref);
-  
-  return RequestEndTimePolicy::_duplicate (proxy);
+  return RequestEndTimePolicy::_duplicate (
+      dynamic_cast<RequestEndTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RequestEndTimePolicy_ptr
@@ -840,15 +780,9 @@ Messaging::ReplyStartTimePolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ReplyStartTimePolicy::_nil ();
-    }
-  
-  ReplyStartTimePolicy_ptr proxy =
-    dynamic_cast<ReplyStartTimePolicy_ptr> (_tao_objref);
-  
-  return ReplyStartTimePolicy::_duplicate (proxy);
+  return ReplyStartTimePolicy::_duplicate (
+      dynamic_cast<ReplyStartTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::ReplyStartTimePolicy_ptr
@@ -857,15 +791,9 @@ Messaging::ReplyStartTimePolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ReplyStartTimePolicy::_nil ();
-    }
-  
-  ReplyStartTimePolicy_ptr proxy =
-    dynamic_cast<ReplyStartTimePolicy_ptr> (_tao_objref);
-  
-  return ReplyStartTimePolicy::_duplicate (proxy);
+  return ReplyStartTimePolicy::_duplicate (
+      dynamic_cast<ReplyStartTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::ReplyStartTimePolicy_ptr
@@ -985,15 +913,9 @@ Messaging::ReplyEndTimePolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ReplyEndTimePolicy::_nil ();
-    }
-  
-  ReplyEndTimePolicy_ptr proxy =
-    dynamic_cast<ReplyEndTimePolicy_ptr> (_tao_objref);
-  
-  return ReplyEndTimePolicy::_duplicate (proxy);
+  return ReplyEndTimePolicy::_duplicate (
+      dynamic_cast<ReplyEndTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::ReplyEndTimePolicy_ptr
@@ -1002,15 +924,9 @@ Messaging::ReplyEndTimePolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ReplyEndTimePolicy::_nil ();
-    }
-  
-  ReplyEndTimePolicy_ptr proxy =
-    dynamic_cast<ReplyEndTimePolicy_ptr> (_tao_objref);
-  
-  return ReplyEndTimePolicy::_duplicate (proxy);
+  return ReplyEndTimePolicy::_duplicate (
+      dynamic_cast<ReplyEndTimePolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::ReplyEndTimePolicy_ptr
@@ -1130,15 +1046,9 @@ Messaging::RelativeRequestTimeoutPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RelativeRequestTimeoutPolicy::_nil ();
-    }
-  
-  RelativeRequestTimeoutPolicy_ptr proxy =
-    dynamic_cast<RelativeRequestTimeoutPolicy_ptr> (_tao_objref);
-  
-  return RelativeRequestTimeoutPolicy::_duplicate (proxy);
+  return RelativeRequestTimeoutPolicy::_duplicate (
+      dynamic_cast<RelativeRequestTimeoutPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RelativeRequestTimeoutPolicy_ptr
@@ -1147,15 +1057,9 @@ Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RelativeRequestTimeoutPolicy::_nil ();
-    }
-  
-  RelativeRequestTimeoutPolicy_ptr proxy =
-    dynamic_cast<RelativeRequestTimeoutPolicy_ptr> (_tao_objref);
-  
-  return RelativeRequestTimeoutPolicy::_duplicate (proxy);
+  return RelativeRequestTimeoutPolicy::_duplicate (
+      dynamic_cast<RelativeRequestTimeoutPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RelativeRequestTimeoutPolicy_ptr
@@ -1288,15 +1192,9 @@ Messaging::RoutingPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RoutingPolicy::_nil ();
-    }
-  
-  RoutingPolicy_ptr proxy =
-    dynamic_cast<RoutingPolicy_ptr> (_tao_objref);
-  
-  return RoutingPolicy::_duplicate (proxy);
+  return RoutingPolicy::_duplicate (
+      dynamic_cast<RoutingPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RoutingPolicy_ptr
@@ -1305,15 +1203,9 @@ Messaging::RoutingPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RoutingPolicy::_nil ();
-    }
-  
-  RoutingPolicy_ptr proxy =
-    dynamic_cast<RoutingPolicy_ptr> (_tao_objref);
-  
-  return RoutingPolicy::_duplicate (proxy);
+  return RoutingPolicy::_duplicate (
+      dynamic_cast<RoutingPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::RoutingPolicy_ptr
@@ -1433,15 +1325,9 @@ Messaging::MaxHopsPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return MaxHopsPolicy::_nil ();
-    }
-  
-  MaxHopsPolicy_ptr proxy =
-    dynamic_cast<MaxHopsPolicy_ptr> (_tao_objref);
-  
-  return MaxHopsPolicy::_duplicate (proxy);
+  return MaxHopsPolicy::_duplicate (
+      dynamic_cast<MaxHopsPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::MaxHopsPolicy_ptr
@@ -1450,15 +1336,9 @@ Messaging::MaxHopsPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return MaxHopsPolicy::_nil ();
-    }
-  
-  MaxHopsPolicy_ptr proxy =
-    dynamic_cast<MaxHopsPolicy_ptr> (_tao_objref);
-  
-  return MaxHopsPolicy::_duplicate (proxy);
+  return MaxHopsPolicy::_duplicate (
+      dynamic_cast<MaxHopsPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::MaxHopsPolicy_ptr
@@ -1578,15 +1458,9 @@ Messaging::QueueOrderPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return QueueOrderPolicy::_nil ();
-    }
-  
-  QueueOrderPolicy_ptr proxy =
-    dynamic_cast<QueueOrderPolicy_ptr> (_tao_objref);
-  
-  return QueueOrderPolicy::_duplicate (proxy);
+  return QueueOrderPolicy::_duplicate (
+      dynamic_cast<QueueOrderPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::QueueOrderPolicy_ptr
@@ -1595,15 +1469,9 @@ Messaging::QueueOrderPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return QueueOrderPolicy::_nil ();
-    }
-  
-  QueueOrderPolicy_ptr proxy =
-    dynamic_cast<QueueOrderPolicy_ptr> (_tao_objref);
-  
-  return QueueOrderPolicy::_duplicate (proxy);
+  return QueueOrderPolicy::_duplicate (
+      dynamic_cast<QueueOrderPolicy_ptr> (_tao_objref)
+    );
 }
 
 Messaging::QueueOrderPolicy_ptr

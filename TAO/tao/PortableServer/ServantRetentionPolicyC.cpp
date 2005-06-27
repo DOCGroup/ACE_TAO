@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -90,7 +90,7 @@ PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
 PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void)
 {}
 
-void
+void 
 PortableServer::ServantRetentionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServantRetentionPolicy *_tao_tmp_pointer =
@@ -104,15 +104,9 @@ PortableServer::ServantRetentionPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantRetentionPolicy::_nil ();
-    }
-
-  ServantRetentionPolicy_ptr proxy =
-    dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-
-  return ServantRetentionPolicy::_duplicate (proxy);
+  return ServantRetentionPolicy::_duplicate (
+      dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ServantRetentionPolicy_ptr
@@ -121,15 +115,9 @@ PortableServer::ServantRetentionPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServantRetentionPolicy::_nil ();
-    }
-
-  ServantRetentionPolicy_ptr proxy =
-    dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref);
-
-  return ServantRetentionPolicy::_duplicate (proxy);
+  return ServantRetentionPolicy::_duplicate (
+      dynamic_cast<ServantRetentionPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ServantRetentionPolicy_ptr
@@ -139,7 +127,7 @@ PortableServer::ServantRetentionPolicy::_duplicate (ServantRetentionPolicy_ptr o
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -205,12 +193,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ServantRetention
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-
+  
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ServantRetentionPolicyValue> (_tao_temp);
     }
-
+  
   return _tao_success;
 }
 

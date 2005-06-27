@@ -68,39 +68,39 @@
 
 namespace PortableServer
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
   };
-
+  
 #if (TAO_HAS_MINIMUM_POA == 0)
   typedef ThreadPolicyValue &ThreadPolicyValue_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ThreadPolicyValue;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_THREADPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_THREADPOLICY__VAR_OUT_CH_
-
+  
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ThreadPolicy
       >
     ThreadPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ThreadPolicy
@@ -108,101 +108,101 @@ namespace PortableServer
     ThreadPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_THREADPOLICY_CH_)
 #define _PORTABLESERVER_THREADPOLICY_CH_
-
+  
   class TAO_PortableServer_Export ThreadPolicy
     : public virtual ::CORBA::Policy
   {
   public:
     typedef ThreadPolicy_ptr _ptr_type;
     typedef ThreadPolicy_var _var_type;
-
+    
     // The static operations.
     static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
-
+    
     static void _tao_release (ThreadPolicy_ptr obj);
-
+    
     static ThreadPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ThreadPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ThreadPolicy_ptr _nil (void)
     {
       return static_cast<ThreadPolicy_ptr> (0);
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::ThreadPolicyValue value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     ThreadPolicy (void);
-
+    
     virtual ~ThreadPolicy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ThreadPolicy (const ThreadPolicy &);
-
+    
     void operator= (const ThreadPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ThreadPolicy;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -223,7 +223,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_THREADPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_THREADPOLICY__TRAITS_CH_
-
+  
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ThreadPolicy>
   {

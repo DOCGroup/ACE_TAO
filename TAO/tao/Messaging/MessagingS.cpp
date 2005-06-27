@@ -65,7 +65,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -74,7 +74,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -96,7 +96,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ACE\HEAD\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -259,7 +259,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:999
+// be\be_visitor_interface/interface_ss.cpp:813
 
 TAO::Collocation_Proxy_Broker *
 Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -294,6 +294,7 @@ POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl::_TAO_ReplyHandler_Direct_Pro
 
 POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl::~_TAO_ReplyHandler_Direct_Proxy_Impl (void)
 {}
+
 
 
 //
@@ -350,8 +351,8 @@ namespace POA_Messaging
           this->operation_details_,
           this->args_);
       
-      TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
+      TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
+        TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -386,7 +387,7 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
 #endif /* TAO_HAS_INTERCEPTORS */
   
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
-  TAO::SArg_Traits< CORBA::Char *>::in_arg_val _tao_repository_id;
+  TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_repository_id;
   
   TAO::Argument * const args[] =
     {
@@ -667,7 +668,7 @@ const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:940
+// be\be_visitor_interface/interface_ss.cpp:754
 
 void POA_Messaging::ReplyHandler::_dispatch (
     TAO_ServerRequest & req,
@@ -682,7 +683,7 @@ void POA_Messaging::ReplyHandler::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:891
+// be\be_visitor_interface/interface_ss.cpp:705
 
 Messaging::ReplyHandler *
 POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)

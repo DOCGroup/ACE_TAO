@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -90,7 +90,7 @@ PortableServer::ThreadPolicy::ThreadPolicy (void)
 PortableServer::ThreadPolicy::~ThreadPolicy (void)
 {}
 
-void
+void 
 PortableServer::ThreadPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ThreadPolicy *_tao_tmp_pointer =
@@ -104,15 +104,9 @@ PortableServer::ThreadPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadPolicy::_nil ();
-    }
-
-  ThreadPolicy_ptr proxy =
-    dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-
-  return ThreadPolicy::_duplicate (proxy);
+  return ThreadPolicy::_duplicate (
+      dynamic_cast<ThreadPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ThreadPolicy_ptr
@@ -121,15 +115,9 @@ PortableServer::ThreadPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadPolicy::_nil ();
-    }
-
-  ThreadPolicy_ptr proxy =
-    dynamic_cast<ThreadPolicy_ptr> (_tao_objref);
-
-  return ThreadPolicy::_duplicate (proxy);
+  return ThreadPolicy::_duplicate (
+      dynamic_cast<ThreadPolicy_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::ThreadPolicy_ptr
@@ -139,7 +127,7 @@ PortableServer::ThreadPolicy::_duplicate (ThreadPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -205,12 +193,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::ThreadPolicyValu
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-
+  
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::ThreadPolicyValue> (_tao_temp);
     }
-
+  
   return _tao_success;
 }
 

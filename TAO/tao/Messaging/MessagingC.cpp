@@ -44,7 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -367,7 +367,7 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_I
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/field_cs.cpp:580
+// be\be_visitor_valuetype/field_cs.cpp:592
 
 // Accessor to set the member.
 void
@@ -385,7 +385,7 @@ OBV_Messaging::ExceptionHolder::is_system_exception (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/field_cs.cpp:580
+// be\be_visitor_valuetype/field_cs.cpp:592
 
 // Accessor to set the member.
 void
@@ -403,7 +403,7 @@ OBV_Messaging::ExceptionHolder::byte_order (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/field_cs.cpp:755
+// be\be_visitor_valuetype/field_cs.cpp:767
 
 // Accessor to set the member.
 void
