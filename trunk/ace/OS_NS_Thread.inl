@@ -2170,7 +2170,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       fds_.set_bit (s->fd_[0]);
       if ((rc = ACE_OS::select (ACE_Handle_Set::MAXSIZE, fds_, 0, 0, timeout)) != 1)
         {
-          if (rc == 0 || (errno != EINTR && errno != EAGAIN))
+          if (rc == 0 || errno != EAGAIN)
           {
             if (rc == 0)
               errno = ETIME;
