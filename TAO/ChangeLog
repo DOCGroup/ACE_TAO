@@ -1,3 +1,9 @@
+Mon Jun 27 10:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,i}:
+          Removed server_request_interceptors and client_request_interceptors.
+          The lists are internal to the ORB and not to be used from outside
+
 Mon Jun 27 09:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling.mpc:
