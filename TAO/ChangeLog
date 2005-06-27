@@ -1,7 +1,29 @@
+Mon Jun 27 13:54:27 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/be/be_util.cpp
+        * TAO_IDL/be_include/be_util.h
+        * TAO_IDL/be/be_visitor_interface.cpp
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp
+        * TAO_IDL/be/be_visitor_valuebox.cpp
+        * TAO_IDL/be/be_visitor_valuetype.cpp
+        * TAO_IDL/be/be_visitor_valuetype_fwd.cpp
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
+
+          When generating Any insertion and extraction operators put them
+          in a namespace that corresponds to their enclosing module (if
+          any).  Addresses problem reported in Bugzilla report #2071.
+
 Mon Jun 27 13:08:01 2005  Gary Maxey <gary.maxey@hp.com>
-	
+
         * tao/Valuetype/ValueBase.cpp:
-	  Added missing copy constructor implementation
+          Added missing copy constructor implementation
 
         * TAO/tao/Valuetype/StringValueC.inl
           Change to avoid warnings by some compilers

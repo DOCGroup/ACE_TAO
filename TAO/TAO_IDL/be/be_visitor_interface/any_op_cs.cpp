@@ -120,16 +120,36 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "}";
     }
 
+
+  be_module *module = 0;
+ 
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      module = be_module::narrow_from_scope (node->defined_in ());
+
+      if (!module)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_any_op_cs::"
+                             "visit_interface - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+
+      be_util::gen_nested_namespace_begin (os, module);
+    }
+
   *os << be_nl << be_nl
       << "// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << "_ptr _tao_elem" << be_uidt_nl
+      << node->local_name () << "_ptr _tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << node->full_name () << "_ptr _tao_objptr =" << be_idt_nl
-      << node->full_name () << "::_duplicate (_tao_elem);" << be_uidt_nl
+      << node->local_name () << "_ptr _tao_objptr =" << be_idt_nl
+      << node->local_name () << "::_duplicate (_tao_elem);" << be_uidt_nl
       << "_tao_any <<= &_tao_objptr;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -137,14 +157,14 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << "_ptr *_tao_elem" << be_uidt_nl
+      << node->local_name () << "_ptr *_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Impl_T<" << node->name () << ">::insert ("
+      << "TAO::Any_Impl_T<" << node->local_name () << ">::insert ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << node->local_name () << "::_tao_any_destructor," << be_nl
+      << node->tc_name ()->last_component () << "," << be_nl
       << "*_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -152,18 +172,24 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   *os << "CORBA::Boolean" << be_nl
       << "operator>>= (" << be_idt << be_idt_nl
       << "const CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << "_ptr &_tao_elem" << be_uidt_nl
+      << node->local_name () << "_ptr &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
-      << "TAO::Any_Impl_T<" << node->name () << ">::extract ("
+      << "TAO::Any_Impl_T<" << node->local_name () << ">::extract ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << node->local_name () << "::_tao_any_destructor," << be_nl
+      << node->tc_name ()->last_component () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
+
+
+  if (module != 0)
+    {
+      be_util::gen_nested_namespace_end (os, module);
+    }
 
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)

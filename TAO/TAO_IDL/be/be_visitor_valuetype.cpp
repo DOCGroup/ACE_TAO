@@ -48,6 +48,7 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
+#include "be_util.h"
 
 #include "be_visitor_valuetype.h"
 #include "be_visitor_argument.h"

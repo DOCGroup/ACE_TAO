@@ -24,6 +24,8 @@
 #include "be_eventtype_fwd.h"
 #include "be_extern.h"
 #include "be_helper.h"
+#include "be_module.h"
+#include "be_util.h"
 
 #include "be_visitor_valuetype_fwd.h"
 #include "be_visitor_context.h"
