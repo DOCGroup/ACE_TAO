@@ -14,7 +14,7 @@ Copy zlib.h in the zlib_path/include and copy zziplib.h, zzip-conf.h and zzip-ms
 you find a binary package of the libraries and just install it.
 4. Set $ZLIB_ROOT and $ZZIP_ROOT to point to the directories where you placed the 
 libraries and the include files.
-5. Turn on ZIP_Wrappers in the default.features or the global.features for MPC.
+5. Turn on zzip and zlib in default.features for MPC.
 6. MPC will handle the rest.
 
 
