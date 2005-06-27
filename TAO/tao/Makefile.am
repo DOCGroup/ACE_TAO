@@ -1633,6 +1633,7 @@ libTAO_Valuetype_la_SOURCES = \
   Valuetype/AbstractBase.cpp \
   Valuetype/AbstractBase_Invocation_Adapter.cpp \
   Valuetype/Seq_Tmplinst.cpp \
+  Valuetype/StringValueC.cpp \
   Valuetype/ValueBase.cpp \
   Valuetype/ValueFactory.cpp \
   Valuetype/ValueFactory_Map.cpp \
@@ -1654,6 +1655,8 @@ nobase_include_HEADERS += \
   Valuetype/Sequence_T.cpp \
   Valuetype/Sequence_T.h \
   Valuetype/Sequence_T.inl \
+  Valuetype/StringValueC.h \
+  Valuetype/StringValueC.inl \
   Valuetype/ValueBase.h \
   Valuetype/ValueBase.inl \
   Valuetype/ValueFactory.h \
@@ -2115,6 +2118,15 @@ nobase_include_HEADERS += \
   PI_Server/PortableServer_ORBInitializer.h \
   PI_Server/PortableServer_PolicyFactory.h \
   PI_Server/pi_server_export.h
+
+pkgconfig_DATA += TAO_PI_Server.pc
+
+TAO_PI_Server.pc: ${top_builddir}/config.status ${srcdir}/PI_Server/TAO_PI_Server.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/PI_Server/TAO_PI_Server.pc.in
+
+EXTRA_DIST += \
+  PI_Server/TAO_PI_Server.pc.in
+
 
 ## Makefile.RTCORBA.am
 
