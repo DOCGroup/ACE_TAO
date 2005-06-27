@@ -602,7 +602,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
     }
 
   // The "XXXXXX" template to be filled in.
-  ACE_TCHAR * const t  = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
+  ACE_TCHAR * const t  = ACE_OS::strstr (s, ACE_LIB_TEXT ("XXXXXX"));
 
   if (t == 0)
     {
