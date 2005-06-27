@@ -1,3 +1,12 @@
+Mon Jun 27 08:21:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Change to protect against race condition in sema based Event
+          implementation.
+
+        * ace/OS_NS_Thread.inl:
+          Change in errno (EINTR) handling with FIFO based sema timedwait.
+
 Mon Jun 27 06:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue_T.{h,cpp}:
@@ -6,14 +15,14 @@ Mon Jun 27 06:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 27 01:03:12 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/global.features
-	* MPC/config/global.features
-	* MPC/config/ZIP_Wrapper.mpb
+        * bin/MakeProjectCreator/config/global.features:
+        * MPC/config/global.features:
+        * MPC/config/ZIP_Wrapper.mpb:
 
-	added a new feature to MPC regarding the ZIP_Wrappers used by
-	the Repository Manager. I added this feature to make sure the RM
-	would not be compiled unless the proper ZIP libraries are in place.
-	Please check the README in CIAO/DAnCE/new_RepositoryManager
+          Added a new feature to MPC regarding the ZIP_Wrappers used by
+          the Repository Manager. I added this feature to make sure the RM
+          would not be compiled unless the proper ZIP libraries are in place.
+          Please check the README in CIAO/DAnCE/new_RepositoryManager
 
 
 Sun Jun 26 22:29:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
