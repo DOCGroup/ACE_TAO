@@ -96,11 +96,10 @@ CORBA::ValueBase *
 CORBA::StringValue::_copy_value (void)
 {
   CORBA::ValueBase *result = 0;
-  ACE_NEW_THROW_EX (
+  ACE_NEW_RETURN (
     result,
     StringValue (*this),
-    CORBA::NO_MEMORY ()
-    );
+    0);
     
   return result;
 }
@@ -133,11 +132,10 @@ CORBA::StringValue::_tao_unmarshal (
       return 1;
     }
   
-  ACE_NEW_THROW_EX (
+  ACE_NEW_RETURN (
     vb_object,
     StringValue,
-    CORBA::NO_MEMORY ()
-    );
+    0);
     
   return (strm >> vb_object->_pd_value);
 }
@@ -182,11 +180,10 @@ CORBA::ValueBase *
 CORBA::WStringValue::_copy_value (void)
 {
   CORBA::ValueBase *result = 0;
-  ACE_NEW_THROW_EX (
+  ACE_NEW_RETURN (
     result,
     WStringValue (*this),
-    CORBA::NO_MEMORY ()
-    );
+    0);
     
   return result;
 }
@@ -219,11 +216,10 @@ CORBA::WStringValue::_tao_unmarshal (
       return 1;
     }
   
-  ACE_NEW_THROW_EX (
+  ACE_NEW_RETURN (
     vb_object,
     WStringValue,
-    CORBA::NO_MEMORY ()
-    );
+    0);
     
   return (strm >> vb_object->_pd_value);
 }
