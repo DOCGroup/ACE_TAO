@@ -1,3 +1,8 @@
+Tue Jun 28 13:31:01 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO/tao/Valuetype/StringValueC.cpp
+          Change to allow operation in non-exception environments
+
 Tue Jun 28 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Dynamic_ParameterC.h:
