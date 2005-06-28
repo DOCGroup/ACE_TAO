@@ -1,15 +1,34 @@
+Tue Jun 28 08:55:12 EDT 2005 Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * DAnCE/ComponentPackager/Base_Packager.cpp
+        * DAnCE/ComponentPackager/Base_Packager.h
+        * DAnCE/ComponentPackager/CPK_Packager.cpp
+        * DAnCE/ComponentPackager/CPK_Packager.h
+        * DAnCE/ComponentPackager/ComponentPackager.mpc
+        * DAnCE/ComponentPackager/Component_Packager.cpp
+        * DAnCE/ComponentPackager/Modified_Deployment.xsd
+        * DAnCE/ComponentPackager/PDL_Handler.cpp
+        * DAnCE/ComponentPackager/PDL_Handler.h
+        * DAnCE/ComponentPackager/README.html
+        * DAnCE/ComponentPackager/Sample.pdl
+        * DAnCE/ComponentPackager/XercesString.cpp
+        * DAnCE/ComponentPackager/XercesString.h
+
+        Added the files implementing ComponentPackager, for details
+        please read README.html
+
 Tue Jun 28 01:03:12 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
-	* TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
         * TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
         * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
 
-	removed the _O_* flags to ACE_OS::open ();
+        removed the _O_* flags to ACE_OS::open ();
 
 Mon Jun 27 16:25:52 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/examples/Swapping/Sender/Sender_exec.cpp:
-        
+
           Fixed cut-and-paste error.
 
 Mon Jun 27 07:04:01 2005  Chad Elliott  <elliott_c@ociweb.com>

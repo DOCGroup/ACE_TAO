@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:PackageDescriptorsList
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Modified_Deployment.xsd">
+    <desc>package.tpd</desc>
+    <desc>Stock.pcd</desc>
+    <desc>Stock.cid</desc>
+    <desc>Stock.cpd</desc>
+    <desc>Broker.cid</desc>
+    <desc>Broker.ccd</desc>
+    <desc>Broker.cpd</desc>
+    <desc>Broker_Stub.iad</desc>
+    <desc>Broker_Svnt.iad</desc>
+    <desc>Broker_Exec.iad</desc>
+    <desc>Distributor.cid</desc>
+    <desc>Distributor.ccd</desc>
+    <desc>Distributor.cpd</desc>
+    <desc>Distributor_Stub.iad</desc>
+    <desc>Distributor_Svnt.iad</desc>
+    <desc>Distributor_Exec.iad</desc>
+</Deployment:PackageDescriptorsList>
