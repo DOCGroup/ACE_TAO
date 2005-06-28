@@ -1,3 +1,10 @@
+Tue Jun 28 08:41:03 2005  Ming Xiong  <mxiong@tango.dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/global.features
+
+          Added a new feature ziparchive which is needed by 
+	  CIAO/DAnCE/ComponentPackager
+
 Mon Jun 27 09:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/README:
