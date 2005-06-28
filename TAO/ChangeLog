@@ -1,3 +1,10 @@
+Tue Jun 28 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp (_get_orb):
+          Return the orb related to the TAO_Stub, the orb_core_ member
+          could sometimes be zero. Thanks to Bala for giving feedback
+          on this.
+
 Mon Jun 27 14:54:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
