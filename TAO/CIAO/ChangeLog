@@ -1,3 +1,11 @@
+Tue Jun 28 01:03:12 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
+
+	* TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+
+	removed the _O_* flags to ACE_OS::open ();
+
 Mon Jun 27 16:25:52 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/examples/Swapping/Sender/Sender_exec.cpp:
