@@ -117,6 +117,10 @@ ACE_USES_GPROF                          ACE calls getitimer before spawning
                                         of gprof with multithreaded
                                         applications. It uses the idea from
                                         http://sam.zoy.org/writings/programming/gprof.html
+ACE_USES_FIFO_SEM                       Directs ACE to use FIFO based semaphores on
+                                        platforms that support this (not having full
+                                        POSIX semaphore support, supporting mkfifo, select
+                                        and fcntl).
 ACE_WSOCK_VERSION                       A parameter list indicating
                                         the version of WinSock (e.g.,
                                         "1, 1" is version 1.1).
@@ -378,6 +382,12 @@ ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
                                         only two fields.
 ACE_HAS_LIMITED_SELECT                  The select is unable to deal with
                                         large file descriptors.
+ACE_HAS_LINUX_NPTL                      Linux platform (with kernel >= 2.6.x)
+                                        with GLibc including new NPTL (Native
+                                        POSIX Thread Library).
+                                        This triggers extended POSIX checks
+                                        since the NPTL library is (almost) fully
+                                        POSIX compliant.
 ACE_HAS_LOG_MSG_NT_EVENT_LOG            Platform supports Windows NT event
                                         log so we can create an
                                         ACE_Log_Msg_Backend to log to it.
@@ -468,6 +478,8 @@ ACE_HAS_POSIX_SEM                       Platform supports POSIX
                                         VxWorks and Solaris).  Corresponds
                                         to _POSIX_SEMAPHORES constant
                                         in <unistd.h>
+ACE_HAS_POSIX_SEM_TIMEOUT               Platform supports timed wait operation
+                                        on POSIX realtime semaphores.
 ACE_HAS_POSIX_TIME                      Platform supports the POSIX
                                         struct timespec type
 ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
@@ -737,48 +749,48 @@ ACE_UINT32_TYPE                         Specific type to use for ACE_UINT32.
                                         If not defined, ACE will attempt to
                                         determine the correct type.
 ACE_UINT64_TYPE                         Specific type to use for ACE_UINT64.
-                                        If not defined, ACE will attempt to 
+                                        If not defined, ACE will attempt to
                                         determine the correct type.
 
-ACE_INT8_FORMAT_SPECIFIER               String literal containing *printf 
+ACE_INT8_FORMAT_SPECIFIER               String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_INT8 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
-ACE_INT16_FORMAT_SPECIFIER              String literal containing *printf 
+ACE_INT16_FORMAT_SPECIFIER              String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_INT16 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
-ACE_INT32_FORMAT_SPECIFIER              String literal containing *printf 
+ACE_INT32_FORMAT_SPECIFIER              String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_INT32 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
-ACE_INT64_FORMAT_SPECIFIER              String literal containing *printf 
+ACE_INT64_FORMAT_SPECIFIER              String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_INT64 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
-ACE_UINT8_FORMAT_SPECIFIER              String literal containing *printf 
+ACE_UINT8_FORMAT_SPECIFIER              String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_UINT8 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
-ACE_UINT16_FORMAT_SPECIFIER             String literal containing *printf 
+ACE_UINT16_FORMAT_SPECIFIER             String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_UINT16 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
-ACE_UINT32_FORMAT_SPECIFIER             String literal containing *printf 
+ACE_UINT32_FORMAT_SPECIFIER             String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_UINT32 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
-ACE_UINT64_FORMAT_SPECIFIER             String literal containing *printf 
+ACE_UINT64_FORMAT_SPECIFIER             String literal containing *printf
                                         format specifier (including the '%')
                                         to be used for ACE_UINT64 values.  If
-                                        not defined, ACE will attempt to 
+                                        not defined, ACE will attempt to
                                         determine the correct setting.
 
 ACE_HAS_VOIDPTR_GETTIMEOFDAY            Platform/compiler supports
@@ -1184,7 +1196,7 @@ ACE_LACKS_DEPRECATED_MACROS             When this define is set, macros which
                                         are deprecated are not defined. Usefull
                                         to check whether deprecated macros are
                                         not used anymore.
- 
+
 ACE_DONT_INIT_WINSOCK                   This definition defines whether or not
                                         to explicitly initialize Winsock during
                                         ACE::init() (i.e., whether WSAStartup()
