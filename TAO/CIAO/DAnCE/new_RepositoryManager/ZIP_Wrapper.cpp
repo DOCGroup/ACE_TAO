@@ -82,7 +82,7 @@ bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
 {
 	bool return_code = true;
 
-	ZZIP_FILE* zip_file = zzip_open (accessor, O_RDONLY|O_BINARY);
+	ZZIP_FILE* zip_file = zzip_open (accessor, O_RDONLY| O_BINARY);
 
     if (! zip_file)
 		return false;
@@ -120,7 +120,7 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
 	  return false;
 
 	//get the handle to the file
-	ZZIP_FILE* zip_file = zzip_file_open (dir, filename, O_RDONLY|O_BINARY);
+	ZZIP_FILE* zip_file = zzip_file_open (dir, filename, O_RDONLY | O_BINARY);
 
     if (!zip_file)
 		return false;
@@ -189,7 +189,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 			name = next + 1;
 
 		//open a zip handle
-		file = zzip_file_open(dir, dir_entry->d_name, O_RDONLY|O_BINARY);
+		file = zzip_file_open(dir, dir_entry->d_name, O_RDONLY | O_BINARY);
 		if (!file)
 			return false;
 
@@ -215,7 +215,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 		ACE_OS::write(ACE_STDOUT, "\n", 1);
 
 	   // Open a file handle to the local filesystem
-       ACE_HANDLE handle = ACE_OS::open (file_path.c_str (), _O_CREAT | _O_TRUNC | O_WRONLY);
+       ACE_HANDLE handle = ACE_OS::open (file_path.c_str (), O_CREAT | O_TRUNC | O_WRONLY);
        if (handle == ACE_INVALID_HANDLE)
          ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),

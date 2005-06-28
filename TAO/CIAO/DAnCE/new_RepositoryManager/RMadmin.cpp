@@ -205,7 +205,7 @@ int write_to_disk (
 {
 	
 	// Open a file handle to the local filesystem
-    ACE_HANDLE handle = ACE_OS::open (full_path, _O_CREAT | _O_TRUNC | O_WRONLY);
+    ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
     if (handle == ACE_INVALID_HANDLE)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
