@@ -1,3 +1,9 @@
+Tue Jun 28 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Dynamic_ParameterC.h:
+          Remove generated include of TypeCode.h. This seems to cause problems
+          in some builds.
+
 Tue Jun 28 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp (_get_orb):
