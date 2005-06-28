@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project(ComponentPackager): naming, ciao_server_dnc, xerces, taoexe, ziparchive {
+  exename = Component_Packager
+  requires += exceptions ziparchive
+  after += XSC_Config_Handlers NodeDaemon_stub
+
+  libs     += XSC_Config_Handlers
+
+  Source_Files {
+    Component_Packager.cpp
+    CPK_Packager.cpp
+    Base_Packager.cpp
+    PDL_Handler.cpp
+    XercesString.cpp
+  }
+}
