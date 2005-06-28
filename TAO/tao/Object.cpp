@@ -631,7 +631,7 @@ CORBA::Object::_validate_connection (
 CORBA::ORB_ptr
 CORBA::Object::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  return CORBA::ORB::_duplicate (this->orb_core_->orb ());
+  return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
 }
 
 /*****************************************************************
