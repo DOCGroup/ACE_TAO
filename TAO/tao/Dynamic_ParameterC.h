@@ -45,7 +45,6 @@
 #include "tao/Environment.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Any.h"
-#include "tao/TypeCode.h"
 #include "tao/VarOut_T.h"
 
 #include "tao/ParameterModeC.h"
@@ -69,40 +68,40 @@
 
 namespace Dynamic
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct Parameter;
-  
+
   typedef
     TAO_Var_Var_T<
         Parameter
       >
     Parameter_var;
-  
+
   typedef
     TAO_Out_T<
         Parameter,
         Parameter_var
       >
     Parameter_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export Parameter
   {
     typedef Parameter_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::Any argument;
     CORBA::ParameterMode mode;
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_Export ::CORBA::TypeCode_ptr const _tc_Parameter;
 
 // TAO_IDL - Generated from
