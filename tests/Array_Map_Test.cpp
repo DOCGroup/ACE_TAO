@@ -293,17 +293,16 @@ index_operator_test (void)
       letter = letters + letters_len - 1;
       word = words + words_len - 1;
 
-#if defined (_MSC_VER) && (_MSC_VER <= 1200)
-      // MSVC++ 6 doesn't use the const rbegin/rend() methods without
-      // making the map object const.  *sigh*
-      const_reverse_iterator const rlast =
-        const_cast<Map const &> (phonetic).rend ();
-      for (const_reverse_iterator r =
-             const_cast<Map const &> (phonetic).rbegin ();
-#else
-      const_reverse_iterator const rlast = phonetic.rend ();
-      for (const_reverse_iterator r = phonetic.rbegin ();
-#endif  /* _MSC_VER <= 1200 */
+      // Work around compiler / STL implementations that cannot
+      // handle implicit conversions from iterator to const_iterator
+      // (e.g. due to missing template constructor.)
+      //
+      // We don't strictly need a const Map for this test but having
+      // one allows us to exercise const iterators.
+      Map const & const_phonetic = phonetic;
+
+      const_reverse_iterator const rlast = const_phonetic.rend ();
+      for (const_reverse_iterator r = const_phonetic.rbegin ();
            r != rlast;
            ++r, --letter, --word)
         {

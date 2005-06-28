@@ -1,3 +1,18 @@
+Mon Jun 27 22:22:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Array_Map.h (ACE_Array_Map):
+
+	  Added missing "const_pointer" typedef/trait.
+
+	* tests/Array_Map_Test.cpp (index_operator_test):
+
+	  Work around compiler / STL implementations that cannot handle
+	  implicit conversions from iterator to const_iterator (e.g. due
+	  to missing template constructor) by accessing the iterators
+	  through a reference to const a Map. We don't strictly need a
+	  const Map for this test but having one allows us to exercise
+	  const iterators.
+
 Mon Jun 27 21:54:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-linux-common.h:
