@@ -1,3 +1,18 @@
+Tue Jun 28 16:11:50 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
+
+          Backing out namespace code generation change of Mon Jun 27
+	  for now due to problems getting it to work across multiple
+	  compilers.
+
 Tue Jun 28 13:31:01 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO/tao/Valuetype/StringValueC.cpp
