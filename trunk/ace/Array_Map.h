@@ -96,6 +96,7 @@ public:
   typedef value_type &                   reference;
   typedef value_type const &             const_reference;
   typedef value_type *                   pointer;
+  typedef value_type const *             const_pointer;
   typedef ptrdiff_t                      difference_type;
   typedef size_t                         size_type;
 
