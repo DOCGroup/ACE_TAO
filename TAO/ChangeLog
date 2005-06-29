@@ -1,3 +1,11 @@
+Wed Jun 29 18:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Added an extra identation for priority and priority model so that it
+          is clear they belong to a certain priority and added
+          PRIORITY_BANDED_CONNECTION_POLICY_TYPE as one of the types we
+          recognize.
+
 Wed Jun 29 10:13:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
