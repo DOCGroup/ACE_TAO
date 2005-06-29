@@ -1,3 +1,11 @@
+Wed Jun 29 12:02:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.cpp:
+
+	  Moved "PortableInterceptor.h" include directive out of
+	  TAO_HAS_INTERCCEPTORS preprocessor block.  It should always be
+	  visible.  Fixes errors in builds with interceptors disabled.
+
 Wed Jun 29 18:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
