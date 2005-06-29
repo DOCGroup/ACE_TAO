@@ -5,10 +5,23 @@
  * Copyright 2003 Addison-Wesley. All Rights Reserved.
  */
 
+#include "ace/OS_NS_string.h"
 #include "ace/Configuration.h"
 #include "ace/Configuration_Import_Export.h"
 #include "ace/Get_Opt.h"
-#include "HA_Status.h"
+#include "ace/Log_Msg.h"
+#include "ace/INET_Addr.h"
+#include "ace/Service_Object.h"
+
+class HA_Status : public ACE_Service_Object
+{
+public:
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+
+private:
+  ACE_INET_Addr listen_addr_;
+};
+
 
 int
 HA_Status::init (int argc, ACE_TCHAR *argv[])
@@ -25,13 +38,13 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
     return -1;
   int option;
   ACE_TCHAR config_file[MAXPATHLEN];
-  ACE_OS_String::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
+  ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
   while ((option = cmd_opts ()) != EOF)
     switch (option) {
     case 'f':
-      ACE_OS_String::strncpy (config_file,
-                              cmd_opts.opt_arg (),
-                              MAXPATHLEN);
+      ACE_OS::strncpy (config_file,
+                       cmd_opts.opt_arg (),
+                       MAXPATHLEN);
       break;
     case ':':
       ACE_ERROR_RETURN
@@ -83,12 +96,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   status.init (argc, argv);
   return 0;
 }
-
-// These are wrong, just here for an example
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-  template class ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#  pragma instantiate ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
