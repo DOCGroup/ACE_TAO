@@ -32,15 +32,6 @@ namespace TAO
     return this->forwarded_to_._retn ();
   }
 
-  ACE_INLINE void
-  Invocation_Base::reply_received (Invocation_Status s)
-  {
-#if TAO_HAS_INTERCEPTORS == 1
-    this->req_info_.reply_status (s);
-#endif /*TAO_HAS_INTERCEPTORS*/
-    ACE_UNUSED_ARG (s);
-  }
-
   ACE_INLINE bool
   Invocation_Base::is_forwarded (void) const
   {

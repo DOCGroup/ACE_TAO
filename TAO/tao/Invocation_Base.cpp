@@ -9,15 +9,19 @@
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PortableInterceptorC.h"
 # include "RequestInfo_Util.h"
-#endif /*TAO_HAS_INTERCEPTORS*/
+# include "PortableInterceptor.h"
+#endif /* TAO_HAS_INTERCEPTORS == 1*/
+
 
 #if !defined (__ACE_INLINE__)
 # include "Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Invocation_Base,
            "$Id$")
+
 
 namespace TAO
 {
@@ -43,6 +47,12 @@ namespace TAO
 
   Invocation_Base::~Invocation_Base (void)
   {
+  }
+
+  void
+  Invocation_Base::reply_received (Invocation_Status TAO_INTERCEPTOR (s))
+  {
+    TAO_INTERCEPTOR (this->req_info_.reply_status (s));
   }
 
   TAO_Service_Context &
