@@ -1,14 +1,35 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event, notification {
-  sharedname   = TAO_DsNotifyLogAdmin
-  dynamicflags = TAO_NOTIFYLOG_BUILD_DLL
+project(DsNotifyLogAdmin_IDL) : orbsvcslib, core, dslogadmin, dseventlogadmin, event, notification {
+
+  specific (!automake) {
+    requires += dummy_label
+  }
+
+  custom_only = 1
 
   idlflags    += -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h
 
   IDL_Files {
     DsNotifyLogAdmin.idl
+  }
+}
+
+project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event, notification {
+  sharedname   = TAO_DsNotifyLogAdmin
+  dynamicflags = TAO_NOTIFYLOG_BUILD_DLL
+
+  specific (automake) {
+    after       += DsNotifyLogAdmin_IDL
+  } else {
+    idlflags    += -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h
+  }
+
+  IDL_Files {
+    conditional (!automake) {
+      DsNotifyLogAdmin.idl
+    }
   }
 
   Source_Files {

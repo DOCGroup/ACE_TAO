@@ -19,14 +19,30 @@ project(CosProperty) : orbsvcslib, core, portableserver {
   Source_Files {
     CosPropertyC.cpp
     CosPropertyS.cpp
+    CosPropertyServiceC.cpp
+    CosPropertyServiceS.cpp
     Property
   }
 
   Header_Files {
+    CosPropertyC.h
+    CosPropertyS.h
+    CosPropertyServiceC.h
+    CosPropertyServiceS.h
+    Property
+  }
+
+  Inline_Files {
+    CosPropertyC.inl
+    CosPropertyS.inl
+    CosPropertyServiceC.inl
+    CosPropertyServiceS.inl
     Property
   }
 
   Template_Files {
+    CosPropertyS_T.cpp
+    CosPropertyServiceS_T.cpp
   }
 
   Pkgconfig_Files {

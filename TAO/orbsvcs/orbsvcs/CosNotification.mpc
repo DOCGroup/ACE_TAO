@@ -1,9 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNotification) : orbsvcslib, core, event {
-  sharedname   = TAO_CosNotification
-  dynamicflags = TAO_NOTIFY_BUILD_DLL
+project(CosNotification_IDL) : orbsvcslib, core, event {
+
+  specific(!automake) {
+    requires += dummy_label
+  }
+
+  custom_only = 1
 
   idlflags    += -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h
 
@@ -14,6 +18,28 @@ project(CosNotification) : orbsvcslib, core, event {
     CosNotifyChannelAdmin.idl
     NotifyExt.idl
     Event_Forwarder.idl
+  }
+}
+
+project(CosNotification) : orbsvcslib, core, event {
+  sharedname   = TAO_CosNotification
+  dynamicflags = TAO_NOTIFY_BUILD_DLL
+
+  specific (automake) {
+    after       += CosNotification_IDL
+  } else {
+    idlflags    += -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h
+  }
+
+  IDL_Files {
+    conditional (!automake) {
+      CosNotification.idl
+      CosNotifyComm.idl
+      CosNotifyFilter.idl
+      CosNotifyChannelAdmin.idl
+      NotifyExt.idl
+      Event_Forwarder.idl
+    }
   }
 
   Source_Files {
@@ -49,7 +75,7 @@ project(CosNotification) : orbsvcslib, core, event {
   Template_Files {
   }
 
-  Resource_Files{
+  Resource_Files {
     CosNotification.rc
   }
 

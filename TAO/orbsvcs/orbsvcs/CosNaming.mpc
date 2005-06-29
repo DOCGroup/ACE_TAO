@@ -1,14 +1,35 @@
 // -*- MPC -*-
 // $Id$
 
+project(CosNaming_IDL) : orbsvcslib, core {
+
+  specific(!automake) {
+    requires += dummy_label
+  }
+
+  custom_only =	1
+
+  idlflags +=	-Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h
+
+  IDL_Files {
+    CosNaming.idl
+  }
+}
+
 project(CosNaming) : orbsvcslib, core {
   sharedname   = TAO_CosNaming
   dynamicflags = TAO_NAMING_BUILD_DLL
 
-  idlflags    += -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h
+  specific (automake) {
+    after	+= CosNaming_IDL
+  } else {
+    idlflags	+= -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h
+  }
 
   IDL_Files {
-    CosNaming.idl
+    conditional (!automake) {
+      CosNaming.idl
+    }
   }
 
   Source_Files {
@@ -38,4 +59,3 @@ project(CosNaming) : orbsvcslib, core {
     TAO_CosNaming.pc.in
   }
 }
-
