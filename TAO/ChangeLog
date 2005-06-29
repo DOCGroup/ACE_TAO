@@ -1,3 +1,39 @@
+Tue Jun 28 19:51:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+	  Added a *_IDL project, currently only for automake builds, that
+	  only compiles the *.idl files.  This ensures that all generated
+	  files will be included in the lists of sources, headers,
+	  inlines, templates, etc. instead of only those used in the stub
+	  libraries.  Other build types continue to compile *.idl files as
+	  part of the stub library projects.  When this is prefected, most
+	  build methods can use the automake build mechanism.
+
+	* orbsvcs/orbsvcs/CosProperty.mpc:
+
+	  Added missing *.h, *.inl, and *S_T.* files to Header_Files,
+	  Inline_Files, and Template_Files so that they're installed.
+
+	* orbsvcs/orbsvcs/SSLIOP.mpc:
+
+	  Added explicit Header_Files and Inline_Files sections so all
+	  files are installed.
+
 Tue Jun 28 16:11:50 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp
