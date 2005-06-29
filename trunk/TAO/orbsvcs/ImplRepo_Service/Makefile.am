@@ -61,8 +61,8 @@ libTAO_ImR_Activator_IDL_la_CPPFLAGS = \
   -DACTIVATOR_IDL_BUILD_DLL
 
 libTAO_ImR_Activator_IDL_la_SOURCES = \
-  ImR_ActivatorS.cpp \
-  ImR_ActivatorC.cpp
+  ImR_ActivatorC.cpp \
+  ImR_ActivatorS.cpp
 
 noinst_HEADERS = \
   ImR_Activator.idl \
@@ -148,10 +148,10 @@ libTAO_ImR_Locator_IDL_la_CPPFLAGS = \
   -DLOCATOR_IDL_BUILD_DLL
 
 libTAO_ImR_Locator_IDL_la_SOURCES = \
-  ImR_LocatorS.cpp \
-  ImR_LocatorC.cpp \
+  AsyncStartupWaiterC.cpp \
   AsyncStartupWaiterS.cpp \
-  AsyncStartupWaiterC.cpp
+  ImR_LocatorC.cpp \
+  ImR_LocatorS.cpp
 
 noinst_HEADERS += \
   AsyncStartupWaiter.idl \
@@ -191,23 +191,9 @@ libTAO_ImR_Activator_la_CPPFLAGS = \
   -DACTIVATOR_BUILD_DLL
 
 libTAO_ImR_Activator_la_SOURCES = \
-  ImR_Activator_i.cpp \
+  Activator_Loader.cpp \
   Activator_Options.cpp \
-  Activator_Loader.cpp
-
-libTAO_ImR_Activator_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_ImR_Activator_la_LIBADD = \
-  libTAO_ImR_Activator_IDL.la \
-  libTAO_ImR_Locator_IDL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
-  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  ImR_Activator_i.cpp
 
 noinst_HEADERS += \
   Activator_Loader.h \
@@ -237,8 +223,8 @@ ImR_Activator_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 ImR_Activator_SOURCES = \
-  ImR_Activator.cpp \
   Activator_NT_Service.cpp \
+  ImR_Activator.cpp \
   Activator_NT_Service.h
 
 ImR_Activator_LDADD = \
@@ -282,36 +268,16 @@ libTAO_ImR_Locator_la_CPPFLAGS = \
 libTAO_ImR_Locator_la_SOURCES = \
   Activator_Info.cpp \
   Adapter_Activator.cpp \
-  Forwarder.cpp \
-  ImR_Locator_i.cpp \
   AsyncStartupWaiter_i.cpp \
+  Forwarder.cpp \
   INS_Locator.cpp \
-  Locator_XMLHandler.cpp \
+  ImR_Locator_i.cpp \
+  Iterator.cpp \
   Locator_Loader.cpp \
   Locator_Options.cpp \
-  Iterator.cpp \
-  Server_Info.cpp \
-  Locator_Repository.cpp
-
-libTAO_ImR_Locator_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_ImR_Locator_la_LIBADD = \
-  libTAO_ImR_Locator_IDL.la \
-  libTAO_ImR_Activator_IDL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
-  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  Locator_Repository.cpp \
+  Locator_XMLHandler.cpp \
+  Server_Info.cpp
 
 noinst_HEADERS += \
   Activator_Info.h \

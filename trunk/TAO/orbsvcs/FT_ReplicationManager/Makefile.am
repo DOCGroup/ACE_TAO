@@ -34,33 +34,10 @@ libTAO_ReplicationManagerLib_la_CPPFLAGS = \
   -DTAO_REPLICATIONMANAGERLIB_BUILD_DLL
 
 libTAO_ReplicationManagerLib_la_SOURCES = \
-  FT_FaultAnalyzer.cpp \
   FT_DefaultFaultAnalyzer.cpp \
-  FT_FaultEventDescriptor.cpp \
-  FT_FaultConsumer.cpp
-
-libTAO_ReplicationManagerLib_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_ReplicationManagerLib_la_LIBADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+  FT_FaultAnalyzer.cpp \
+  FT_FaultConsumer.cpp \
+  FT_FaultEventDescriptor.cpp
 
 noinst_HEADERS = \
   FT_DefaultFaultAnalyzer.h \
@@ -92,12 +69,12 @@ FT_ReplicationManager_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 FT_ReplicationManager_SOURCES = \
-  FT_ReplicationManager.cpp \
-  FT_ReplicationManager_Main.cpp \
   FT_Property_Validator.cpp \
+  FT_ReplicationManager.cpp \
   FT_ReplicationManagerFaultAnalyzer.cpp \
-  FT_ReplicationManager.h \
+  FT_ReplicationManager_Main.cpp \
   FT_Property_Validator.h \
+  FT_ReplicationManager.h \
   FT_ReplicationManagerFaultAnalyzer.h
 
 FT_ReplicationManager_LDADD = \
