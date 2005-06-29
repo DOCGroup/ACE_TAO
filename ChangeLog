@@ -1,31 +1,41 @@
+Wed Jun 29 10:43:11 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Port the ACE_DISABLE_WIN32_INCREASE_PRIORITY feature from earlier OCI versions
+        of ACE, so that a user can disable the setting of a thread to the realtime priority
+        class. This prevents hard lockups of Windows machines when running as an
+        administrator, and allows many tests to function when not running as an admin.
+
+
 Tue Jun 28 20:58:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/core.mpb:
+        * bin/MakeProjectCreator/config/core.mpb:
 
-	  inherit from new install base project for backwards compatibility.
+          inherit from new install base project for backwards compatibility.
 
-	* bin/MakeProjectCreator/config/conv_lib.mpb:
-	* bin/MakeProjectCreator/config/install.mpb:
-	* bin/MakeProjectCreator/config/install_bin.mpb:
-	* bin/MakeProjectCreator/config/install_headers.mpb:
-	* bin/MakeProjectCreator/config/install_lib.mpb:
+        * bin/MakeProjectCreator/config/conv_lib.mpb:
+        * bin/MakeProjectCreator/config/install.mpb:
+        * bin/MakeProjectCreator/config/install_bin.mpb:
+        * bin/MakeProjectCreator/config/install_headers.mpb:
+        * bin/MakeProjectCreator/config/install_lib.mpb:
 
-	  New new base projects to offer more flexibility on what parts of
-	  a project are installed.  install_bin, install_lib, and install_
-	  headers install binaries, libraries, and header files.  install
-	  installs everything.  conv_lib is for "convenience libraries", a
-	  set of objects that is packaged as a library for the developer's
-	  convenience.  For most builds it builds a shared library that is
-	  installed without the cooresponding headers; but the automake
-	  build uses automake's native convenience library support --- a
-	  static library is built and linked into the executable(s).
+          New new base projects to offer more flexibility on what parts of
+          a project are installed.  install_bin, install_lib, and install_
+          headers install binaries, libraries, and header files.  install
+          installs everything.  conv_lib is for "convenience libraries", a
+          set of objects that is packaged as a library for the developer's
+          convenience.  For most builds it builds a shared library that is
+          installed without the cooresponding headers; but the automake
+          build uses automake's native convenience library support --- a
+          static library is built and linked into the executable(s).
 
 Tue Jun 28 08:41:03 2005  Ming Xiong  <mxiong@tango.dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/global.features
+        * bin/MakeProjectCreator/config/global.features
 
           Added a new feature ziparchive which is needed by
-	  CIAO/DAnCE/ComponentPackager
+          CIAO/DAnCE/ComponentPackager
 
 Mon Jun 27 09:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
