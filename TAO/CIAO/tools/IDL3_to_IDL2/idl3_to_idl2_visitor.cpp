@@ -1125,7 +1125,15 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
     }
     
   target_name += fn;
-  this->os->open (target_name.c_str ());
+  
+  if (this->os->open (target_name.c_str ()) != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Failed to open file %s for writing.\n",
+                  target_name.c_str ()));
+                  
+      return -1;
+    }
   
   os->gen_ifndef_string (fn.c_str (), "_TAO_IDL_", "_IDL_");
   

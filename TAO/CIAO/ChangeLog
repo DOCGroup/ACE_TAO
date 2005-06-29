@@ -1,3 +1,12 @@
+Wed Jun 29 18:09:11 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Added check for successful opening of target file, which prevents
+          a crash when the file open is unsuccessful, for example when
+          write permissions are denied in the directory. Thanks to Will
+          Otte <wotte@dre.vanderbilt.edu> for pointing out the problem.
+
 Tue Jun 28 08:55:12 EDT 2005 Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/ComponentPackager/Base_Packager.cpp
