@@ -9,9 +9,9 @@
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PortableInterceptorC.h"
 # include "RequestInfo_Util.h"
-# include "PortableInterceptor.h"
 #endif /* TAO_HAS_INTERCEPTORS == 1*/
 
+#include "PortableInterceptor.h"  /* Must always be visible. */
 
 #if !defined (__ACE_INLINE__)
 # include "Invocation_Base.inl"
