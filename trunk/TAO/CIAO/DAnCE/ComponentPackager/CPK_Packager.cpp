@@ -207,7 +207,7 @@ namespace CIAO
 
   // overloaded std::out operator
   CZipMemFile& operator << (CZipMemFile &mf,
-                            const TCHAR *str)
+                            const ACE_TCHAR *str)
   {
     mf.Write (str, ACE_OS::strlen (str));
     return mf;
