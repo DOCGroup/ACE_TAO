@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*HA Status) : acelib {
-  sharedname   = HA_Status
-  dynamicflags = HASTATUS_BUILD_DLL
+project(*HA Status) : aceexe {
+  exename = HA_Status
   Source_Files {
     HA_Status.cpp
   }
