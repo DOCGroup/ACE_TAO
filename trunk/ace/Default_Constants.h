@@ -401,10 +401,6 @@
 #define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
 #endif /* ACE_DEFAULT_CDR_MEMCPY_TRADEOFF */
 
-#if !defined (ACE_CONNECTOR_HANDLER_MAP_SIZE)
-const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
-#endif /*ACE_CONNECTOR_HANDLER_MAP_SIZE*/
-
 #if defined (ACE_WIN32)
    // Define the pathname separator characters for Win32 (ugh).
 #  define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
