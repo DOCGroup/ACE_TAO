@@ -1,3 +1,10 @@
+Wed Jun 29 17:00:57 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
+
+       * DAnCE/ExecutionManager/DAM_Map.cpp:
+       * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+
+         Added CIAO_TRACE messages.
+
 Wed Jun 29 16:38:42 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/ComponentPackager/Base_Packager.h

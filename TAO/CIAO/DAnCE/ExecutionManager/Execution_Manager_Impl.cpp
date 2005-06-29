@@ -36,6 +36,7 @@ namespace CIAO
                        Deployment::StartError
                        ))
     {
+      CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::preparePlan");
       if (CIAO::debug_level () > 10)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) CIAO_Execution_Manager: preparePlan "
@@ -85,6 +86,7 @@ namespace CIAO
     Execution_Manager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::getManagers");
       return this->map_.get_dams (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
@@ -95,6 +97,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StopError))
     {
+      CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::destroyManagers");
       ACE_TRY
         {
           ::Deployment::DeploymentPlan_var plan =
@@ -130,6 +133,7 @@ namespace CIAO
     Execution_Manager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::shutdown");
       // Shutdown the ORB on which it is runing
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
     }
