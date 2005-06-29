@@ -1,3 +1,8 @@
+Wed Jun 29 20:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Client.h:
+          Added include of naming_client.h
+
 Wed Jun 29 20:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IOR_Parser.h:
