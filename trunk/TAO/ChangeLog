@@ -1,3 +1,9 @@
+Wed Jun 29 10:13:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+
+	  Change type of orb_ member variable from _ptr to _var.
+
 Wed Jun 29 10:00:31 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO/tao/Valuetype/StringValueC.inl
