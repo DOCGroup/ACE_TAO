@@ -79,7 +79,7 @@ namespace CIAO
 
   // overloaded std::out operator
   CZipMemFile& operator << (CZipMemFile &mf,
-                            const TCHAR *str);
+                            const ACE_TCHAR *str);
   // overloaded std::out operator
   CZipMemFile& operator << (CZipMemFile &mf,
                             const ACE_TString &str);
