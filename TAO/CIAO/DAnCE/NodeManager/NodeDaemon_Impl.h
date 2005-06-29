@@ -32,6 +32,7 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+#include "NAM_Map.h"
 
 namespace CIAO
 {
@@ -57,7 +58,11 @@ namespace CIAO
                      const char * nodeapp_loc,
                      int spawn_delay)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
+    
+    /// Initializes the NodeDaemon.
+    virtual void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    
     /// POA operation..
     virtual PortableServer::POA_ptr _default_POA (void);
 
@@ -89,7 +94,8 @@ namespace CIAO
     destroyManager (Deployment::NodeApplicationManager_ptr appManager
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StopError));
+                       Deployment::StopError,
+                       Deployment::InvalidReference));
 
   protected:
     /// Since this class is reference counted, making this
@@ -118,7 +124,9 @@ namespace CIAO
     int spawn_delay_;
 
     // Cache reference of last NodeAppManager
-    Deployment::NodeApplicationManager_var manager_;
+    // Deployment::NodeApplicationManager_var manager_;
+    
+    NAM_Map map_;
   };
 }
 
