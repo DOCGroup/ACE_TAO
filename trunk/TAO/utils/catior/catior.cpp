@@ -846,19 +846,24 @@ cat_tag_policies (TAO_InputCDR& stream) {
       stream3 >> server_priority;
 
       if (priority_model == RTCORBA::CLIENT_PROPAGATED) {
-        ACE_DEBUG ((LM_DEBUG,"%I Priority Model: %d (CLIENT_PROPAGATED)\n",
+        ACE_DEBUG ((LM_DEBUG,"%I\t Priority Model: %d (CLIENT_PROPAGATED)\n",
                     priority_model));
       } else if (priority_model == RTCORBA::SERVER_DECLARED) {
-        ACE_DEBUG ((LM_DEBUG,"%I Priority Model: %d (SERVER_DECLARED)\n",
+        ACE_DEBUG ((LM_DEBUG,"%I\t Priority Model: %d (SERVER_DECLARED)\n",
                     priority_model));
       } else {
-        ACE_DEBUG ((LM_DEBUG,"%I Priority Model: %d (UNKNOWN!)\n",
+        ACE_DEBUG ((LM_DEBUG,"%I\t Priority Model: %d (UNKNOWN!)\n",
                     priority_model));
       }
       ACE_DEBUG ((LM_DEBUG,
-                  "%I Priority: %d\n",
+                  "%I\t Priority: %d\n",
                   server_priority));
 
+    } else if (policies[iter].ptype == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE) {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I Policy #%d Type: %d (PRIORITY_BANDED_CONNECTION_POLICY_TYPE)\n",
+                  iter+1,
+                  policies[iter].ptype));
     } else if (policies[iter].ptype == Messaging::REBIND_POLICY_TYPE) {
       ACE_DEBUG ((LM_DEBUG,
                   "%I Policy #%d Type: %d (REBIND_POLICY_TYPE)\n",
