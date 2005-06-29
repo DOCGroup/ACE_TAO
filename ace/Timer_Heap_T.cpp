@@ -182,10 +182,14 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Heap_T (void)
   // Clean up all the nodes still in the queue
   for (size_t i = 0; i < current_size; i++)
     {
-      this->upcall_functor ().deletion (*this,
-                                        this->heap_[i]->get_type (),
-                                        this->heap_[i]->get_act ());
+      // Grab the event_handler and act, then delete the node before calling
+      // back to the handler. Prevents a handler from trying to cancel_timer()
+      // inside handle_close(), ripping the current timer node out from
+      // under us.
+      TYPE eh = this->heap_[i]->get_type ();
+      const void *act = this->heap_[i]->get_act ();
       this->free_node (this->heap_[i]);
+      this->upcall_functor ().deletion (*this, eh, act);
     }
 
   delete [] this->heap_;

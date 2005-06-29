@@ -1,12 +1,29 @@
+Wed Jun 29 12:33:18 2005  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Config/config.mpc:
+	* examples/APG/Config/Makefile.am:
+	* examples/APG/Config/HA_Status.cpp: Simplify greatly to build
+	  HA_Status as a simple executable, not a DLL. Thanks to Gavin Yu
+	  <songtaoyu at lucent dot com> for noticing this problem.
+
+	* examples/APG/Config/HA_Status.h: Removed.
+
+	* THANKS: Added Gavin Yu to the Hall of Fame.
+
+	* ace/Timer_Heap_T.cpp (dtor): When cleaning out the timer nodes,
+	  free_node() before doing the deletion() upcall. Prevents a user's
+	  handle_close() from doing a cancel_timer() and ripping the current
+	  timer node out from under us and causing free_node() to assert().
+
 Wed Jun 29 10:43:11 2005  Justin Michel  <michel_j@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
 
-          Port the ACE_DISABLE_WIN32_INCREASE_PRIORITY feature from earlier OCI versions
-        of ACE, so that a user can disable the setting of a thread to the realtime priority
-        class. This prevents hard lockups of Windows machines when running as an
-        administrator, and allows many tests to function when not running as an admin.
-
+          Port the ACE_DISABLE_WIN32_INCREASE_PRIORITY feature from earlier
+	  OCI versions of ACE, so that a user can disable the setting of a
+	  thread to the realtime priority class. This prevents hard lockups
+	  of Windows machines when running as an administrator, and allows
+	  many tests to function when not running as an admin.
 
 Tue Jun 28 20:58:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 

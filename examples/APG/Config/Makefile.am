@@ -27,21 +27,17 @@ ARGV_Example_LDADD = \
  $(top_builddir)/ace/libACE.la
 
 ## Makefile.Config_HA_Status.am 
-noinst_LTLIBRARIES = libHA_Status.la
+noinst_PROGRAMS += HA_Status
 
-libHA_Status_la_CPPFLAGS = \
+HA_Status_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -DHASTATUS_BUILD_DLL
+  -I$(ACE_BUILDDIR)
 
-libHA_Status_la_SOURCES = \
+HA_Status_SOURCES = \
   HA_Status.cpp
 
-libHA_Status_la_LIBADD = \
+HA_Status_LDADD = \
  $(top_builddir)/ace/libACE.la
-
-noinst_HEADERS = \
-  HA_Status.h
 
 ## Makefile.Get_Opt.am 
 noinst_PROGRAMS += Get_Opt
