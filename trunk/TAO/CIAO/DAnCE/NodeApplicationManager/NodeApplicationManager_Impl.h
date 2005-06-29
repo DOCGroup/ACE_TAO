@@ -92,7 +92,7 @@ namespace CIAO
      *
      * @return NodeApplicationManager_ptr.
      **/
-    virtual Deployment::NodeApplicationManager_ptr
+    virtual PortableServer::ObjectId
     init (const char *nodeapp_location,
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,

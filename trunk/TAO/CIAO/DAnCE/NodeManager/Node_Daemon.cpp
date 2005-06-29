@@ -177,7 +177,9 @@ main (int argc, char *argv[])
                       spawn_delay),
                       -1);
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
-
+      
+      daemon_servant->init ();
+      
       // Implicit activation
       CIAO::NodeDaemon_var daemon =
         daemon_servant->_this ();
