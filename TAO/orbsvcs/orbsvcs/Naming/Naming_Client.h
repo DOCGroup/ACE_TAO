@@ -22,6 +22,7 @@
 
 #include "tao/ORB.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/naming_export.h"
 
 /**
  * @class TAO_Naming_Client
