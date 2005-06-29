@@ -1,3 +1,10 @@
+Wed Jun 29 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+          Removed ACE_CONNECTOR_HANDLER_MAP_SIZE, it is not used at all
+          anywhere in the repo. Found this when solving a problem with
+          OpenVMS
+
 Wed Jun 29 12:33:18 2005  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Config/config.mpc:
