@@ -1,3 +1,18 @@
+Wed Jun 29 07:22:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	* orbsvcs/FT_ReplicationManager/Makefile.am:
+	* orbsvcs/ImplRepo_Service/Makefile.am:
+
+	  Regenerated.
+
+	* TAO_IDL/tao_idl.mpc:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+	* orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+	  Changed so-called "convenience libraries" projects to inherit
+	  from conv_lib.mpb.
+
 Tue Jun 28 22:21:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Invocation_Base.inl (reply_received):
