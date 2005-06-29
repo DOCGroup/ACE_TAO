@@ -1,3 +1,21 @@
+Wed Jun 29 16:28:52 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+	* DAnCE/NodeManager/NAM_Map.cpp
+	* DAnCE/NodeManager/NAM_Map.h
+	* DAnCE/NodeManager/NodeDaemon.mpc
+	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
+	* DAnCE/NodeManager/NodeDaemon_Impl.h
+	* DAnCE/NodeManager/Node_Daemon.cpp
+	* DAnCE/ciao/Deployment.idl
+
+	Merged dance_multiple_assemblies to main.  This merge
+	contains code necessary to be able to deploy multiple assemblies 
+	into a single NodeManager.
+
 Wed Jun 29 18:09:11 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:

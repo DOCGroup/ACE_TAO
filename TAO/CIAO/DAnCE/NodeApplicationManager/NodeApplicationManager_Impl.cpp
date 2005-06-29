@@ -13,7 +13,7 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl (void)
 {
 }
 
-Deployment::NodeApplicationManager_ptr
+PortableServer::ObjectId
 CIAO::NodeApplicationManager_Impl::init (
     const char *nodeapp_location,
     const CORBA::ULong delay,
@@ -23,6 +23,8 @@ CIAO::NodeApplicationManager_Impl::init (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidProperty))
 {
+  PortableServer::ObjectId_var oid;
+  
   ACE_TRY
     {
       if (nodeapp_location == 0)
@@ -41,9 +43,8 @@ CIAO::NodeApplicationManager_Impl::init (
       this->callback_poa_ = PortableServer::POA::_duplicate (callback_poa);
 
       // Activate the ourself.
-      PortableServer::ObjectId_var oid
-        = this->poa_->activate_object (this
-                                       ACE_ENV_ARG_PARAMETER);
+      oid = this->poa_->activate_object (this
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
@@ -67,8 +68,7 @@ CIAO::NodeApplicationManager_Impl::init (
   ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
 
   //return this object reference
-  return
-    Deployment::NodeApplicationManager::_duplicate (this->objref_.in ());
+  return oid.in ();
 }
 
 void
