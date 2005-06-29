@@ -1,3 +1,22 @@
+Tue Jun 28 22:21:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.inl (reply_received):
+	* tao/Invocation_Base.cpp (reply_received):
+
+	  Moved this method out-of-line.  It calls a method on its
+	  TAO_ClientRequestInfo field.  Inlining this method exposes the
+	  unexported TAO_ClientRequestInfo class to code outside of the
+	  TAO shared library, which results in "unresolved_symbol"
+	  link-time errors when attempting to call
+	  Invocation_Base::reply_received() directly or indirectly
+	  (e.g. via TAO::Reply_Guard::~Reply_Guard()).  Fixes g++ 4.0
+	  link-time errors.
+
+	* tao/Synch_Invocation.h (Reply_Guard):
+
+	  Improved const-correctness by making an immutable pointer member
+	  "const".
+
 Tue Jun 28 20:52:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Concurrency_Service/Makefile.am:
@@ -131,9 +150,9 @@ Mon Jun 27 13:08:01 2005  Gary Maxey <gary.maxey@hp.com>
 
 Mon Jun 27 12:19:01 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp (TAO): Changed
-	  the comment to "Using default value of 1.5 seconds".  Thanks to
- 	  Simon Massey and Bala for resolving this.
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp
+	  (TAO): Changed the comment to "Using default value of 1.5
+	  seconds".  Thanks to Simon Massey and Bala for resolving this.
 
 Mon Jun 27 11:09:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 

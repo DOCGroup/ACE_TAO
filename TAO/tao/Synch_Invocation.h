@@ -176,6 +176,7 @@ namespace TAO
   class TAO_Export Reply_Guard
   {
   public:
+
     Reply_Guard (Invocation_Base *s,
                  Invocation_Status is);
 
@@ -187,7 +188,13 @@ namespace TAO
     void set_status (Invocation_Status s);
 
   private:
-    Invocation_Base *invocation_;
+
+    Reply_Guard (Reply_Guard const &);
+    Reply_Guard & operator= (Reply_Guard const &);
+
+  private:
+
+    Invocation_Base * const invocation_;
     Invocation_Status status_;
   };
 
