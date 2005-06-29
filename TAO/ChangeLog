@@ -1,3 +1,8 @@
+Wed Jun 29 20:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOR_Parser.h:
+          Emulated exception macro fix
+
 Wed Jun 29 12:02:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Invocation_Base.cpp:
