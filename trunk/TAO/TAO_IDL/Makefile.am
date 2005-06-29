@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -23,6 +23,16 @@ libTAO_IDL_FE_la_CPPFLAGS = \
   -DTAO_IDL_FE_BUILD_DLL
 
 libTAO_IDL_FE_la_SOURCES = \
+  fe/fe_declarator.cpp \
+  fe/fe_extern.cpp \
+  fe/fe_global.cpp \
+  fe/fe_init.cpp \
+  fe/fe_interface_header.cpp \
+  fe/fe_lookup.cpp \
+  fe/fe_private.cpp \
+  fe/fe_tmplinst.cpp \
+  fe/y.tab.cpp \
+  fe/lex.yy.cpp \
   ast/ast_argument.cpp \
   ast/ast_array.cpp \
   ast/ast_attribute.cpp \
@@ -31,7 +41,7 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_component_fwd.cpp \
   ast/ast_concrete_type.cpp \
   ast/ast_constant.cpp \
-  ast/ast_decl.cpp \
+  ast/ast_root.cpp \
   ast/ast_enum.cpp \
   ast/ast_enum_val.cpp \
   ast/ast_eventtype.cpp \
@@ -50,47 +60,37 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_predefined_type.cpp \
   ast/ast_recursive.cpp \
   ast/ast_redef.cpp \
-  ast/ast_root.cpp \
   ast/ast_sequence.cpp \
   ast/ast_string.cpp \
   ast/ast_structure.cpp \
   ast/ast_structure_fwd.cpp \
   ast/ast_type.cpp \
   ast/ast_typedef.cpp \
-  ast/ast_union.cpp \
   ast/ast_union_branch.cpp \
   ast/ast_union_fwd.cpp \
   ast/ast_union_label.cpp \
-  ast/ast_valuebox.cpp \
   ast/ast_valuetype.cpp \
   ast/ast_valuetype_fwd.cpp \
   ast/ast_visitor.cpp \
-  fe/fe_declarator.cpp \
-  fe/fe_extern.cpp \
-  fe/fe_global.cpp \
-  fe/fe_init.cpp \
-  fe/fe_interface_header.cpp \
-  fe/fe_lookup.cpp \
-  fe/fe_private.cpp \
-  fe/fe_tmplinst.cpp \
-  fe/lex.yy.cpp \
-  fe/y.tab.cpp \
-  narrow/narrow.cpp \
-  util/utl_decllist.cpp \
+  ast/ast_union.cpp \
+  ast/ast_decl.cpp \
+  ast/ast_valuebox.cpp \
+  util/utl_global.cpp \
   util/utl_err.cpp \
+  util/utl_decllist.cpp \
   util/utl_exceptlist.cpp \
   util/utl_exprlist.cpp \
-  util/utl_global.cpp \
+  util/utl_scope.cpp \
   util/utl_identifier.cpp \
   util/utl_idlist.cpp \
   util/utl_indenter.cpp \
   util/utl_labellist.cpp \
   util/utl_list.cpp \
   util/utl_namelist.cpp \
-  util/utl_scope.cpp \
   util/utl_stack.cpp \
   util/utl_string.cpp \
-  util/utl_strlist.cpp
+  util/utl_strlist.cpp \
+  narrow/narrow.cpp
 
 noinst_HEADERS = \
   fe/y.tab.h \
@@ -177,15 +177,20 @@ libTAO_IDL_BE_la_CPPFLAGS = \
   -DTAO_IDL_BE_BUILD_DLL
 
 libTAO_IDL_BE_la_SOURCES = \
+  be/be_valuebox.cpp \
+  be/be_util.cpp \
+  be/be_decl.cpp \
   be/be_argument.cpp \
-  be/be_array.cpp \
-  be/be_attribute.cpp \
+  be/be_global.cpp \
   be/be_codegen.cpp \
+  be/be_array.cpp \
+  be/be_enum.cpp \
+  be/be_attribute.cpp \
+  be/be_interface.cpp \
   be/be_component.cpp \
   be/be_component_fwd.cpp \
   be/be_constant.cpp \
-  be/be_decl.cpp \
-  be/be_enum.cpp \
+  be/be_union_branch.cpp \
   be/be_enum_val.cpp \
   be/be_eventtype.cpp \
   be/be_eventtype_fwd.cpp \
@@ -194,11 +199,10 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_factory.cpp \
   be/be_field.cpp \
   be/be_generator.cpp \
-  be/be_global.cpp \
+  be/be_visitor_amh_pre_proc.cpp \
   be/be_helper.cpp \
-  be/be_home.cpp \
+  be/be_visitor_arg_traits.cpp \
   be/be_init.cpp \
-  be/be_interface.cpp \
   be/be_interface_fwd.cpp \
   be/be_interface_strategy.cpp \
   be/be_module.cpp \
@@ -219,26 +223,24 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_type.cpp \
   be/be_typedef.cpp \
   be/be_union.cpp \
-  be/be_union_branch.cpp \
   be/be_union_fwd.cpp \
   be/be_union_label.cpp \
-  be/be_valuebox.cpp \
   be/be_valuetype.cpp \
   be/be_valuetype_fwd.cpp \
   be/be_visitor.cpp \
-  be/be_visitor_amh_pre_proc.cpp \
   be/be_visitor_ami_pre_proc.cpp \
-  be/be_visitor_arg_traits.cpp \
+  be/be_visitor_ccm_pre_proc.cpp \
+  be/be_visitor_tmplinst.cpp \
   be/be_visitor_argument.cpp \
   be/be_visitor_array.cpp \
   be/be_visitor_attribute.cpp \
-  be/be_visitor_ccm_pre_proc.cpp \
   be/be_visitor_component.cpp \
   be/be_visitor_component_fwd.cpp \
   be/be_visitor_constant.cpp \
   be/be_visitor_context.cpp \
   be/be_visitor_decl.cpp \
   be/be_visitor_enum.cpp \
+  be/be_visitor_valuebox.cpp \
   be/be_visitor_exception.cpp \
   be/be_visitor_factory.cpp \
   be/be_visitor_field.cpp \
@@ -252,16 +254,15 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_sequence.cpp \
   be/be_visitor_structure.cpp \
   be/be_visitor_structure_fwd.cpp \
-  be/be_visitor_tmplinst.cpp \
-  be/be_visitor_traits.cpp \
   be/be_visitor_typecode.cpp \
   be/be_visitor_typedef.cpp \
   be/be_visitor_union.cpp \
   be/be_visitor_union_branch.cpp \
   be/be_visitor_union_fwd.cpp \
-  be/be_visitor_valuebox.cpp \
   be/be_visitor_valuetype.cpp \
-  be/be_visitor_valuetype_fwd.cpp
+  be/be_visitor_valuetype_fwd.cpp \
+  be/be_visitor_traits.cpp \
+  be/be_home.cpp
 
 noinst_HEADERS += \
   be_include/TAO_IDL_BE_Export.h \
@@ -308,6 +309,7 @@ noinst_HEADERS += \
   be_include/be_union_branch.h \
   be_include/be_union_fwd.h \
   be_include/be_union_label.h \
+  be_include/be_util.h \
   be_include/be_valuebox.h \
   be_include/be_valuetype.h \
   be_include/be_valuetype_fwd.h \

@@ -21,6 +21,14 @@ project(SSLIOP) : orbsvcslib, core, security, ssl, interceptors {
     }
   }
 
+  Header_Files {
+    SSLIOP
+  }
+
+  Inline_Files {
+    SSLIOP
+  }
+
   Template_Files {
   }
 }
