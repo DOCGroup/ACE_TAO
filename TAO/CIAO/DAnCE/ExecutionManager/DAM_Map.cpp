@@ -18,6 +18,7 @@ namespace CIAO
     bool
     DAM_Map::is_plan_available (const ACE_CString &str)
     {
+      CIAO_TRACE("Execution_Manager::DAM_Map::is_plan_available");
       if (this->map_.find (str) == 0)
         return true;
 
@@ -27,6 +28,7 @@ namespace CIAO
     ::Deployment::DomainApplicationManager_ptr
     DAM_Map::fetch_dam_reference (const ACE_CString &str)
     {
+      CIAO_TRACE("Execution_Manager::DAM_Map::fetch_dam_reference");
       if (!this->is_plan_available (str))
         return ::Deployment::DomainApplicationManager::_nil ();
 
@@ -53,6 +55,7 @@ namespace CIAO
       const ACE_CString &str,
       ::Deployment::DomainApplicationManager_ptr dam)
     {
+      CIAO_TRACE("Execution_Manager::DAM_Map::bind_dam_reference");
       int retval =
         this->map_.bind (str,
                          dam);
@@ -67,6 +70,7 @@ namespace CIAO
     Deployment::DomainApplicationManagers *
     DAM_Map::get_dams (ACE_ENV_SINGLE_ARG_DECL)
     {
+      CIAO_TRACE("Execution_Manager::DAM_Map::get_dams");
       CORBA::ULong sz =
         this->map_.current_size ();
 
@@ -100,6 +104,7 @@ namespace CIAO
     bool
     DAM_Map::unbind_dam (const ACE_CString &str)
     {
+      CIAO_TRACE("Execution_Manager::DAM_Map::unbind_dam");
       int retval =
         this->map_.unbind (str);
 
