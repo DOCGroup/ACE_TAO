@@ -1,3 +1,9 @@
+Wed Jun 29 10:00:31 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO/tao/Valuetype/StringValueC.inl
+
+          Change to avoid compiler warnings from some compilers.
+
 Wed Jun 29 07:22:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/Makefile.am:
@@ -105,8 +111,8 @@ Tue Jun 28 16:11:50 2005  Gary Maxey <gary.maxey@hp.com>
         * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
 
           Backing out namespace code generation change of Mon Jun 27
-	  for now due to problems getting it to work across multiple
-	  compilers.
+          for now due to problems getting it to work across multiple
+          compilers.
 
 Tue Jun 28 13:31:01 2005  Gary Maxey <gary.maxey@hp.com>
 
