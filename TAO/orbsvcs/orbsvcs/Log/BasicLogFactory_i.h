@@ -84,7 +84,7 @@ public:
                      ));
 
 protected:
-  CORBA::ORB_ptr                orb_;
+  CORBA::ORB_var                orb_;
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var        log_mgr_;
