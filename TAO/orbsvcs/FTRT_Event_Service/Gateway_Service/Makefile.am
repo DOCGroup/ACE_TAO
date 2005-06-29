@@ -6,23 +6,21 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
 
-## Makefile.FTRTEC_Gateway_Service.am
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS += ftrtec_gateway_service
+noinst_PROGRAMS = ftrtec_gateway_service
 
 ftrtec_gateway_service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -39,13 +37,19 @@ ftrtec_gateway_service_SOURCES = \
 ftrtec_gateway_service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTRT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FtRtEvent.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
