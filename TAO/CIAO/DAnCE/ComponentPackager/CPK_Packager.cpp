@@ -68,7 +68,7 @@ namespace CIAO
          ACE_TString inzip_path = impl_inzip_path + base;
 
          // store the plan info to predefined struct
-         Component_Packager::DESC_PLAN_ITER plan_iter =
+         Component_Packager::DESC_PLAN_CONST_ITER plan_iter =
            pkg_plan.implementations.find (inzip_path);
          if (plan_iter != pkg_plan.descriptors.end ())
          {
@@ -115,7 +115,7 @@ namespace CIAO
   }
 
   int
-  CPK_Packager::createPackage (PACKAGE_PLAN &pkg_plan)
+  CPK_Packager::createPackage (const PACKAGE_PLAN &pkg_plan)
   {
     this->cpk_zip_.Open (this->cpk_file_,
                          CZipArchive::zipCreate);
@@ -140,7 +140,7 @@ namespace CIAO
 
 
     //@@ Archive descriptors
-    for (Component_Packager::DESC_PLAN_ITER iter = pkg_plan.descriptors.begin ();
+    for (Component_Packager::DESC_PLAN_CONST_ITER iter = pkg_plan.descriptors.begin ();
          iter != pkg_plan.descriptors.end ();
          iter++)
     {
@@ -171,7 +171,7 @@ namespace CIAO
     }
 
     //@@ Archive implementations
-    for (Component_Packager::IMPL_PLAN_ITER iter = pkg_plan.implementations.begin ();
+    for (Component_Packager::IMPL_PLAN_CONST_ITER iter = pkg_plan.implementations.begin ();
          iter != pkg_plan.implementations.end ();
          iter++)
     {

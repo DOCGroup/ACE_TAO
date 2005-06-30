@@ -1,3 +1,16 @@
+Thu Jun 30 04:33:35 2005 ming xiong <mxiong@dre.vanderbilt.edu>
+
+       * DAnCE/ComponentPackager/Base_Packager.h
+       * DAnCE/ComponentPackager/CPK_Packager.cpp
+       * DAnCE/ComponentPackager/CPK_Packager.h
+       * DAnCE/ComponentPackager/PDL_Handler.cpp
+       * DAnCE/ComponentPackager/PDL_Handler.h
+       * DAnCE/ComponentPackager/Base_Packager.cpp
+       
+       Added a release operation for destructor of PDL_Handler;Changed the
+       definition of input parameter for CPK_Packager::createPackager to const
+       to indicate it can not be changed
+       
 Thu Jun 30 00:37:35 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
 	* RMadmin.cpp
