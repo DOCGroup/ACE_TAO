@@ -89,7 +89,7 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   TAO_BasicLog_i* basic_log_i;
 
   ACE_NEW_THROW_EX (basic_log_i,
-                    TAO_BasicLog_i (this->orb_,
+                    TAO_BasicLog_i (this->orb_.in (),
                                     *this,
                                     this->log_mgr_.in (),
                                     id,
