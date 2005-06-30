@@ -40,14 +40,14 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
+  // be\be_visitor_arg_traits.cpp:539
 
 #if !defined (_CORBA_POLICYLIST__ARG_TRAITS_CS_)
 #define _CORBA_POLICYLIST__ARG_TRAITS_CS_
@@ -115,15 +115,9 @@ RTScheduling::ThreadAction::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadAction::_nil ();
-    }
-  
-  ThreadAction_ptr proxy =
-    dynamic_cast<ThreadAction_ptr> (_tao_objref);
-  
-  return ThreadAction::_duplicate (proxy);
+  return ThreadAction::_duplicate (
+      dynamic_cast<ThreadAction_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::ThreadAction_ptr
@@ -132,15 +126,9 @@ RTScheduling::ThreadAction::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadAction::_nil ();
-    }
-  
-  ThreadAction_ptr proxy =
-    dynamic_cast<ThreadAction_ptr> (_tao_objref);
-  
-  return ThreadAction::_duplicate (proxy);
+  return ThreadAction::_duplicate (
+      dynamic_cast<ThreadAction_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::ThreadAction_ptr
@@ -248,15 +236,9 @@ RTScheduling::DistributableThread::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return DistributableThread::_nil ();
-    }
-  
-  DistributableThread_ptr proxy =
-    dynamic_cast<DistributableThread_ptr> (_tao_objref);
-  
-  return DistributableThread::_duplicate (proxy);
+  return DistributableThread::_duplicate (
+      dynamic_cast<DistributableThread_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::DistributableThread_ptr
@@ -265,15 +247,9 @@ RTScheduling::DistributableThread::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return DistributableThread::_nil ();
-    }
-  
-  DistributableThread_ptr proxy =
-    dynamic_cast<DistributableThread_ptr> (_tao_objref);
-  
-  return DistributableThread::_duplicate (proxy);
+  return DistributableThread::_duplicate (
+      dynamic_cast<DistributableThread_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::DistributableThread_ptr
@@ -551,15 +527,9 @@ RTScheduling::Current::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-  
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-  
-  return Current::_duplicate (proxy);
+  return Current::_duplicate (
+      dynamic_cast<Current_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::Current_ptr
@@ -568,15 +538,9 @@ RTScheduling::Current::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-  
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-  
-  return Current::_duplicate (proxy);
+  return Current::_duplicate (
+      dynamic_cast<Current_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::Current_ptr
@@ -692,15 +656,9 @@ RTScheduling::ResourceManager::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ResourceManager::_nil ();
-    }
-  
-  ResourceManager_ptr proxy =
-    dynamic_cast<ResourceManager_ptr> (_tao_objref);
-  
-  return ResourceManager::_duplicate (proxy);
+  return ResourceManager::_duplicate (
+      dynamic_cast<ResourceManager_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::ResourceManager_ptr
@@ -709,15 +667,9 @@ RTScheduling::ResourceManager::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ResourceManager::_nil ();
-    }
-  
-  ResourceManager_ptr proxy =
-    dynamic_cast<ResourceManager_ptr> (_tao_objref);
-  
-  return ResourceManager::_duplicate (proxy);
+  return ResourceManager::_duplicate (
+      dynamic_cast<ResourceManager_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::ResourceManager_ptr
@@ -917,15 +869,9 @@ RTScheduling::Scheduler::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Scheduler::_nil ();
-    }
-  
-  Scheduler_ptr proxy =
-    dynamic_cast<Scheduler_ptr> (_tao_objref);
-  
-  return Scheduler::_duplicate (proxy);
+  return Scheduler::_duplicate (
+      dynamic_cast<Scheduler_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::Scheduler_ptr
@@ -934,15 +880,9 @@ RTScheduling::Scheduler::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Scheduler::_nil ();
-    }
-  
-  Scheduler_ptr proxy =
-    dynamic_cast<Scheduler_ptr> (_tao_objref);
-  
-  return Scheduler::_duplicate (proxy);
+  return Scheduler::_duplicate (
+      dynamic_cast<Scheduler_ptr> (_tao_objref)
+    );
 }
 
 RTScheduling::Scheduler_ptr
