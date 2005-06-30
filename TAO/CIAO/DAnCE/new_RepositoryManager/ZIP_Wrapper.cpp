@@ -9,21 +9,21 @@
  * allows a program to become ZIP-aware.
  */
 
-#include "ace/Containers_T.h"		//for ACE_Double_Linked_List
-#include "ace/Message_Block.h"		//for ACE_Message_Block
+#include "ace/Containers_T.h"           //for ACE_Double_Linked_List
+#include "ace/Message_Block.h"          //for ACE_Message_Block
 
-#include "ace/OS_NS_fcntl.h"	  //for open
-#include "ace/OS_NS_unistd.h"	  //for close
+#include "ace/OS_NS_fcntl.h"      //for open
+#include "ace/OS_NS_unistd.h"     //for close
 #include "ace/OS_NS_sys_stat.h"   //for filesize and mkdir
 
 #include <string>
-#include <memory>				  //for auto_ptr
+#include <memory>                                 //for auto_ptr
 
 
 /////////////////////////////////////////////////////////////////////////////
 //NOTE: some #defines problems with zzip & ACE - put these 2 lines on top!!!!
 /////////////////////////////////////////////////////////////////////////////
-#include "zziplib.h"				//for ZZIP
+#include "zziplib.h"                            //for ZZIP
 #include "ZIP_Wrapper.h"
 
 
@@ -49,9 +49,9 @@ ZIP_File_Info::ZIP_File_Info ()
 //get a list of the files in the archive
 size_t ZIP_Wrapper::file_list_info (char* zip_name, ACE_Double_Linked_List<ZIP_File_Info> &list)
 {
-  size_t num = 0;					//number of files in archive
-  ZZIP_DIR * dir;					//pointer to a zip archive
-  ZZIP_DIRENT * dir_entry;		//pointer to a file within the archive
+  size_t num = 0;                                       //number of files in archive
+  ZZIP_DIR * dir;                                       //pointer to a zip archive
+  ZZIP_DIRENT * dir_entry;              //pointer to a file within the archive
 
   //open the zip archive
   dir = zzip_opendir(zip_name);
@@ -65,9 +65,9 @@ size_t ZIP_Wrapper::file_list_info (char* zip_name, ACE_Double_Linked_List<ZIP_F
       //retrieve the name of the file
       char* name = dir_entry->d_name;
 
-      //remove the subpath part if any		NOTE: Lunux style assumed, need to check
+      //remove the subpath part if any          NOTE: Lunux style assumed, need to check
       //while(char* next = strstr(name, "/"))
-      //	name = next + 1;
+      //        name = next + 1;
 
       list.insert_tail (new ZIP_File_Info (name, dir_entry->st_size));
     }
@@ -85,7 +85,7 @@ bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
 
   if (! zip_file)
     return false;
-	
+        
   int num_read;
   file.size(BUFSIZ);
   ACE_Message_Block* head = &file;
@@ -102,7 +102,7 @@ bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
     return_code = false;
 
   zzip_file_close (zip_file);
-	
+        
   return return_code;
 }
 
@@ -110,7 +110,7 @@ bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
 bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Block &file)
 {
   bool return_code = true;
-  ZZIP_DIR * dir;					//pointer to a zip archive
+  ZZIP_DIR * dir;                                       //pointer to a zip archive
 
   //open the zip archive
   dir = zzip_opendir(archive_path);
@@ -123,7 +123,7 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
 
   if (!zip_file)
     return false;
-	
+        
   int num_read;
   file.size(BUFSIZ);
   ACE_Message_Block* head = &file;
@@ -141,7 +141,7 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
 
   zzip_file_close (zip_file);
   zzip_closedir(dir);
-	
+        
   return return_code;
 }
 
@@ -153,9 +153,9 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
 //the path is assumed to be an existing directory
 bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 {
-  ZZIP_DIR * dir;					//pointer to a zip archive
-  ZZIP_DIRENT * dir_entry;		//pointer to a file within the archive
-  ZZIP_FILE* file;				//pointer to a zip file within an archive
+  ZZIP_DIR * dir;                                       //pointer to a zip archive
+  ZZIP_DIRENT * dir_entry;              //pointer to a file within the archive
+  ZZIP_FILE* file;                              //pointer to a zip file within an archive
 
   //open the zip archive
   dir = zzip_opendir(zip_archive);
@@ -172,10 +172,10 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
   std::string arch_dir (path);
   arch_dir += "/";
   arch_dir += zip_archive;
-  arch_dir[arch_dir.length () - 4] = '\0';		//NOTE: Assumes .zip extension
+  arch_dir[arch_dir.length () - 4] = '\0';              //NOTE: Assumes .zip extension
 
   //create directory
-  ACE_OS::mkdir(arch_dir.c_str());				//if dir exists -1 is returned and ignored
+  ACE_OS::mkdir(arch_dir.c_str());                              //if dir exists -1 is returned and ignored
 
   //read each dir entry and show one line of info per file
   while (dir_entry = zzip_readdir (dir))
@@ -183,7 +183,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
       //retrieve the name of the file
       char* name = dir_entry->d_name;
 
-      //remove the subpath part if any		NOTE: Lunux style assumed, need to check
+      //remove the subpath part if any          NOTE: Lunux style assumed, need to check
       while(char* next = strstr(name, "/"))
         name = next + 1;
 
@@ -197,7 +197,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
       //TODO: change to ACE_NEW_RETURN
       std::auto_ptr<char> buffer;
       buffer.reset ( new char [dir_entry->st_size + 1]);
-		
+                
       //read in the data
       zzip_read(file, &(*buffer), dir_entry->st_size);
 
@@ -205,7 +205,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
       zzip_file_close (file);
 
       //create file name + path to open
-      std::string file_path (arch_dir.c_str ());		//NOTE: need the c-style char to stop at '\0'
+      std::string file_path (arch_dir.c_str ());                //NOTE: need the c-style char to stop at '\0'
       file_path += "/";
       file_path += name;
 

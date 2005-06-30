@@ -12,12 +12,12 @@
 #define NEW_REPOSITORYMANAGERI_H_
 
 #include "new_RepositoryManagerS.h"
-#include "DeploymentS.h"					//added for the deployment stuff
+#include "DeploymentS.h"                                        //added for the deployment stuff
 
-#include "ace/Hash_Map_Manager.h"			//for the ACE_Hash_Map_Manager
-#include "ace/Null_Mutex.h"					//for ACE_Null_Mutex
-#include "ace/RW_Mutex.h"					//for ACE_RW_Mutex
-#include "ace/OS_NS_string.h"				//for ACE_CString
+#include "ace/Hash_Map_Manager.h"                       //for the ACE_Hash_Map_Manager
+#include "ace/Null_Mutex.h"                                     //for ACE_Null_Mutex
+#include "ace/RW_Mutex.h"                                       //for ACE_RW_Mutex
+#include "ace/OS_NS_string.h"                           //for ACE_CString
 #include "ace/SString.h"
 
 
@@ -110,7 +110,7 @@ protected:
 
   ///function that writes out a file to a specified location on the hand disk
   ///returns 1 on success
-  ///		-1 on error
+  ///           -1 on error
 
   int write_to_disk (const char* full_path, 
                      const CORBA::Octet* buffer, 
@@ -119,8 +119,8 @@ protected:
 
   ///function that writes out a file to a specified location on the hand disk
   ///returns 1 on success
-  ///		 0 on already exists and replace == false
-  ///		-1 on error
+  ///            0 on already exists and replace == false
+  ///           -1 on error
 
   int write_to_disk (const char* full_path, 
                      ACE_Message_Block& mb,
@@ -129,15 +129,15 @@ protected:
 
   ///function to read the contents of a file from disk into a CORBA::OctetSeq
   ///returns a pointer to a CORBA::Octet buffer and updated the lenght on success 
-  ///		 0 on failure
+  ///            0 on failure
 
   CORBA::Octet* read_from_disk (const char* full_path, size_t &lenght);
 
 private:
   /// Cached information about the installed packages
   /// and the Implementation Artifacts within them
-  /// Key:	Package name of CString type or
-  /// Value:	The location of the local copy of the package
+  /// Key:      Package name of CString type or
+  /// Value:    The location of the local copy of the package
 
   ///Based on the synchronization needed we can parametrize this with either 
   ///ACE_Null_Mutex or ACE_RW_Mutex
