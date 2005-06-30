@@ -12,6 +12,6 @@ project(Plan_Launcher): naming, ciao_server_dnc, xerces, taoexe {
   Source_Files {
     Plan_Launcher.cpp
     Plan_Launcher_Impl.cpp
-    ../ExecutionManager/DAM_Map.cpp
+    DAM_Map.cpp
   }
 }
