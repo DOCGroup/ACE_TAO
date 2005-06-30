@@ -9,8 +9,8 @@
 #include "new_RepositoryManagerC.h"
 #include "Options.h"
 
-#include "ace/OS_NS_fcntl.h"	  //for open
-#include "ace/OS_NS_unistd.h"	  //for close
+#include "ace/OS_NS_fcntl.h"      //for open
+#include "ace/OS_NS_unistd.h"     //for close
 #include "ace/OS_NS_sys_stat.h"   //for filesize and fstat and mkdir
 
 #include "Config_Handlers/DnC_Dump.h"
@@ -69,22 +69,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options* options = Options::instance ();
       options->parse_args (argc, argv);
-		
+                
       if (options->shutdown_)
         {
           rm->shutdown ();
         }
       else if (options->install_)
         {
-          size_t length = 0;	 
+          size_t length = 0;     
           CORBA::Octet* buffer = read_from_disk (options->local_path_.c_str (), length);
 
           Deployment::Package* the_package = new Deployment::Package (
-                                                                      length,				//max of the sequence
-                                                                      length,				//length of the sequence
-                                                                      buffer,				//data to be stored within the sequence
-                                                                      true				//take ownership of the data
-                                                                      );		
+                                                                      length,                           //max of the sequence
+                                                                      length,                           //length of the sequence
+                                                                      buffer,                           //data to be stored within the sequence
+                                                                      true                              //take ownership of the data
+                                                                      );                
 
           try
             {
@@ -203,7 +203,7 @@ int write_to_disk (
                    size_t length
                    )
 {
-	
+        
   // Open a file handle to the local filesystem
   ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (handle == ACE_INVALID_HANDLE)

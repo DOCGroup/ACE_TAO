@@ -65,9 +65,9 @@ CIAO_new_RepositoryManagerDaemon_i::shutdown ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add your implementation here
-	
+        
   this->packages_.unbind_all ();
-	
+        
   this->the_orb_->shutdown (0);
 }
 
@@ -230,7 +230,7 @@ CIAO_new_RepositoryManagerDaemon_i::findPackageByName (const char * name)
     ACE_THROW (Deployment::NoSuchName ()); // package not found
 
  
-  size_t length = 0;	 
+  size_t length = 0;     
   CORBA::Octet* buffer = this->read_from_disk (entry->int_id_.c_str (), length);
 
   Deployment::Package* package = new Deployment::Package (length, //max of the sequence
@@ -287,7 +287,7 @@ CIAO_new_RepositoryManagerDaemon_i::findImplementationByName (const char * imple
                                     true //take ownership of the data
                                     );
 
-  //impl->the_platform = UNDEF;		//Deployment::Platform
+  //impl->the_platform = UNDEF;         //Deployment::Platform
 
   CORBA::Octet* ptr = impl->the_implementation.get_buffer ();
 
@@ -338,10 +338,10 @@ CIAO_new_RepositoryManagerDaemon_i::getAllPackageNames ()
        iter != this->packages_.end () && index < num_entries;
        iter++)
 
-    seq[index] = const_cast<char*> (((*iter).int_id_).c_str ());	//this looks hideous, but as lond as it works!
+    seq[index] = const_cast<char*> (((*iter).int_id_).c_str ());        //this looks hideous, but as lond as it works!
 
 
-  return seq._retn ();		//release the underlying CORBA::StringSeq
+  return seq._retn ();          //release the underlying CORBA::StringSeq
 }
 
 
@@ -385,7 +385,7 @@ CIAO_new_RepositoryManagerDaemon_i::write_to_disk (const char* full_path,
                                                    const CORBA::Octet* buffer, 
                                                    size_t length)
 {
-	
+        
   // Open a file handle to the local filesystem
   ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (handle == ACE_INVALID_HANDLE)
@@ -422,7 +422,7 @@ CIAO_new_RepositoryManagerDaemon_i::write_to_disk (const char* full_path,
 
   if (ACE_OS::stat(full_path, &stat) != -1 && !replace)
     return 0;
-	
+        
   // Open a file handle to the local filesystem
   ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (handle == ACE_INVALID_HANDLE)
@@ -438,7 +438,7 @@ CIAO_new_RepositoryManagerDaemon_i::write_to_disk (const char* full_path,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("write error")),
                         -1);
-		
+                
   // Close the file handle
   ACE_OS::close (handle);
 

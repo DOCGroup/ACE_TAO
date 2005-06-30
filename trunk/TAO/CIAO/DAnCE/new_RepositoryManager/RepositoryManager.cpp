@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       //Get the root POA object
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-		
+                
       //downcast to POA type
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
 
@@ -76,19 +76,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       //register and implicitly activate servant
       CIAO::new_RepositoryManagerDaemon_var RepositoryManagerDeamon = repo->_this ();
-		
+                
       //convert the IOR to string
       CORBA::String_var ior = orb->object_to_string (RepositoryManagerDeamon.in ());
 
       //output the IOR to a file
       FILE* ior_out = ACE_OS::fopen (rm_ior, "w");
-		
+                
       if (ior_out == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            rm_ior),
                           1);
-		
+                
       ACE_OS::fprintf (ior_out, "%s", ior.in ());
       ACE_OS::fclose (ior_out);
 
