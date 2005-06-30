@@ -201,6 +201,14 @@ public:
   virtual int encode_endpoints (void) = 0;
 
   /**
+   * Encodes this profile's endpoints into protocol specific tagged
+   * components. This is used for non-RTCORBA applications that share
+   * endpoints on profiles. The only known implementation is IIOP, using
+   * TAG_ALTERNATE_IIOP_ADDRESS components.
+   */
+  virtual int encode_alternate_endpoints (void);
+
+  /**
    * Return pointer to this profile's endpoint.  If the profile
    * contains more than one endpoint, i.e., a list, the method returns
    * the head of the list.

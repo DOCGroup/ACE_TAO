@@ -387,21 +387,11 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_IIOP_Profile::encode_endpoints (void)
+TAO_IIOP_Profile::encode_alternate_endpoints (void)
 {
-  // Create a data structure and fill it with endpoint info for wire
-  // transfer both for RT requests and non-RT.
-  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
-
-  if (endpoint->priority () != TAO_INVALID_PRIORITY)
-    {
-      // RT requests
-      if (this->encode_endpoints_for_rt () == -1)
-	return -1;
-    }
-
-  // encode IOP::TAG_ALTERNATE_IIOP_ADDRESS tag if there are more
+  // encode IOP::TAG_ALTERNATE_IIOP_ADDRESS tags if there are more
   // than one endpoints to listen to.
+  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
   for (CORBA::ULong i = 1;
        i < this->count_;
        ++i)
@@ -410,6 +400,9 @@ TAO_IIOP_Profile::encode_endpoints (void)
       // endpoints are the alternate endpoints. So, neglect the first
       // endpoint for TAG_ALTERNATE_IIOP_ADDRESS
       endpoint = endpoint->next_;
+
+      if (!endpoint->is_encodable_)
+        continue;
 
       // Encode the data structure. - The CORBA specification does not
       // mandate a particular container for the endpoints, only that
@@ -449,7 +442,7 @@ TAO_IIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_IIOP_Profile::encode_endpoints_for_rt (void)
+TAO_IIOP_Profile::encode_endpoints (void)
 {
   CORBA::ULong actual_count = 0;
 

@@ -45,7 +45,7 @@ TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
        ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
-      if (profile->encode_endpoints () == -1)
+      if (profile->encode_alternate_endpoints () == -1)
         return -1;
     }
 
