@@ -292,14 +292,14 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
 }
 
 CORBA::ULongLong
-TAO_Log_i::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_current_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recordstore_.get_current_size ();
 }
 
 CORBA::ULongLong
-TAO_Log_i::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::get_n_records (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recordstore_.get_n_records ();
@@ -1125,7 +1125,7 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
 }
 
 void
-TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::UnsupportedQoS))
 {
