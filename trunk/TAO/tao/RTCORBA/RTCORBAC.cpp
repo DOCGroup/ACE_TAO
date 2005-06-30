@@ -41,7 +41,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -187,15 +187,9 @@ RTCORBA::PriorityModelPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PriorityModelPolicy::_nil ();
-    }
-  
-  PriorityModelPolicy_ptr proxy =
-    dynamic_cast<PriorityModelPolicy_ptr> (_tao_objref);
-  
-  return PriorityModelPolicy::_duplicate (proxy);
+  return PriorityModelPolicy::_duplicate (
+      dynamic_cast<PriorityModelPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::PriorityModelPolicy_ptr
@@ -204,15 +198,9 @@ RTCORBA::PriorityModelPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PriorityModelPolicy::_nil ();
-    }
-  
-  PriorityModelPolicy_ptr proxy =
-    dynamic_cast<PriorityModelPolicy_ptr> (_tao_objref);
-  
-  return PriorityModelPolicy::_duplicate (proxy);
+  return PriorityModelPolicy::_duplicate (
+      dynamic_cast<PriorityModelPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::PriorityModelPolicy_ptr
@@ -332,15 +320,9 @@ RTCORBA::ThreadpoolPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadpoolPolicy::_nil ();
-    }
-  
-  ThreadpoolPolicy_ptr proxy =
-    dynamic_cast<ThreadpoolPolicy_ptr> (_tao_objref);
-  
-  return ThreadpoolPolicy::_duplicate (proxy);
+  return ThreadpoolPolicy::_duplicate (
+      dynamic_cast<ThreadpoolPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ThreadpoolPolicy_ptr
@@ -349,15 +331,9 @@ RTCORBA::ThreadpoolPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ThreadpoolPolicy::_nil ();
-    }
-  
-  ThreadpoolPolicy_ptr proxy =
-    dynamic_cast<ThreadpoolPolicy_ptr> (_tao_objref);
-  
-  return ThreadpoolPolicy::_duplicate (proxy);
+  return ThreadpoolPolicy::_duplicate (
+      dynamic_cast<ThreadpoolPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ThreadpoolPolicy_ptr
@@ -477,15 +453,9 @@ RTCORBA::ProtocolProperties::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ProtocolProperties::_nil ();
-    }
-  
-  ProtocolProperties_ptr proxy =
-    dynamic_cast<ProtocolProperties_ptr> (_tao_objref);
-  
-  return ProtocolProperties::_duplicate (proxy);
+  return ProtocolProperties::_duplicate (
+      dynamic_cast<ProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ProtocolProperties_ptr
@@ -494,15 +464,9 @@ RTCORBA::ProtocolProperties::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ProtocolProperties::_nil ();
-    }
-  
-  ProtocolProperties_ptr proxy =
-    dynamic_cast<ProtocolProperties_ptr> (_tao_objref);
-  
-  return ProtocolProperties::_duplicate (proxy);
+  return ProtocolProperties::_duplicate (
+      dynamic_cast<ProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ProtocolProperties_ptr
@@ -684,15 +648,9 @@ RTCORBA::ServerProtocolPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServerProtocolPolicy::_nil ();
-    }
-  
-  ServerProtocolPolicy_ptr proxy =
-    dynamic_cast<ServerProtocolPolicy_ptr> (_tao_objref);
-  
-  return ServerProtocolPolicy::_duplicate (proxy);
+  return ServerProtocolPolicy::_duplicate (
+      dynamic_cast<ServerProtocolPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ServerProtocolPolicy_ptr
@@ -701,15 +659,9 @@ RTCORBA::ServerProtocolPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ServerProtocolPolicy::_nil ();
-    }
-  
-  ServerProtocolPolicy_ptr proxy =
-    dynamic_cast<ServerProtocolPolicy_ptr> (_tao_objref);
-  
-  return ServerProtocolPolicy::_duplicate (proxy);
+  return ServerProtocolPolicy::_duplicate (
+      dynamic_cast<ServerProtocolPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ServerProtocolPolicy_ptr
@@ -829,15 +781,9 @@ RTCORBA::ClientProtocolPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ClientProtocolPolicy::_nil ();
-    }
-  
-  ClientProtocolPolicy_ptr proxy =
-    dynamic_cast<ClientProtocolPolicy_ptr> (_tao_objref);
-  
-  return ClientProtocolPolicy::_duplicate (proxy);
+  return ClientProtocolPolicy::_duplicate (
+      dynamic_cast<ClientProtocolPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ClientProtocolPolicy_ptr
@@ -846,15 +792,9 @@ RTCORBA::ClientProtocolPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ClientProtocolPolicy::_nil ();
-    }
-  
-  ClientProtocolPolicy_ptr proxy =
-    dynamic_cast<ClientProtocolPolicy_ptr> (_tao_objref);
-  
-  return ClientProtocolPolicy::_duplicate (proxy);
+  return ClientProtocolPolicy::_duplicate (
+      dynamic_cast<ClientProtocolPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::ClientProtocolPolicy_ptr
@@ -974,15 +914,9 @@ RTCORBA::PrivateConnectionPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PrivateConnectionPolicy::_nil ();
-    }
-  
-  PrivateConnectionPolicy_ptr proxy =
-    dynamic_cast<PrivateConnectionPolicy_ptr> (_tao_objref);
-  
-  return PrivateConnectionPolicy::_duplicate (proxy);
+  return PrivateConnectionPolicy::_duplicate (
+      dynamic_cast<PrivateConnectionPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::PrivateConnectionPolicy_ptr
@@ -991,15 +925,9 @@ RTCORBA::PrivateConnectionPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PrivateConnectionPolicy::_nil ();
-    }
-  
-  PrivateConnectionPolicy_ptr proxy =
-    dynamic_cast<PrivateConnectionPolicy_ptr> (_tao_objref);
-  
-  return PrivateConnectionPolicy::_duplicate (proxy);
+  return PrivateConnectionPolicy::_duplicate (
+      dynamic_cast<PrivateConnectionPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::PrivateConnectionPolicy_ptr
@@ -1119,15 +1047,9 @@ RTCORBA::TCPProtocolProperties::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return TCPProtocolProperties::_nil ();
-    }
-  
-  TCPProtocolProperties_ptr proxy =
-    dynamic_cast<TCPProtocolProperties_ptr> (_tao_objref);
-  
-  return TCPProtocolProperties::_duplicate (proxy);
+  return TCPProtocolProperties::_duplicate (
+      dynamic_cast<TCPProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::TCPProtocolProperties_ptr
@@ -1136,15 +1058,9 @@ RTCORBA::TCPProtocolProperties::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return TCPProtocolProperties::_nil ();
-    }
-  
-  TCPProtocolProperties_ptr proxy =
-    dynamic_cast<TCPProtocolProperties_ptr> (_tao_objref);
-  
-  return TCPProtocolProperties::_duplicate (proxy);
+  return TCPProtocolProperties::_duplicate (
+      dynamic_cast<TCPProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::TCPProtocolProperties_ptr
@@ -1264,15 +1180,9 @@ RTCORBA::GIOPProtocolProperties::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return GIOPProtocolProperties::_nil ();
-    }
-  
-  GIOPProtocolProperties_ptr proxy =
-    dynamic_cast<GIOPProtocolProperties_ptr> (_tao_objref);
-  
-  return GIOPProtocolProperties::_duplicate (proxy);
+  return GIOPProtocolProperties::_duplicate (
+      dynamic_cast<GIOPProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::GIOPProtocolProperties_ptr
@@ -1281,15 +1191,9 @@ RTCORBA::GIOPProtocolProperties::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return GIOPProtocolProperties::_nil ();
-    }
-  
-  GIOPProtocolProperties_ptr proxy =
-    dynamic_cast<GIOPProtocolProperties_ptr> (_tao_objref);
-  
-  return GIOPProtocolProperties::_duplicate (proxy);
+  return GIOPProtocolProperties::_duplicate (
+      dynamic_cast<GIOPProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::GIOPProtocolProperties_ptr
@@ -1409,15 +1313,9 @@ RTCORBA::UnixDomainProtocolProperties::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return UnixDomainProtocolProperties::_nil ();
-    }
-  
-  UnixDomainProtocolProperties_ptr proxy =
-    dynamic_cast<UnixDomainProtocolProperties_ptr> (_tao_objref);
-  
-  return UnixDomainProtocolProperties::_duplicate (proxy);
+  return UnixDomainProtocolProperties::_duplicate (
+      dynamic_cast<UnixDomainProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::UnixDomainProtocolProperties_ptr
@@ -1426,15 +1324,9 @@ RTCORBA::UnixDomainProtocolProperties::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return UnixDomainProtocolProperties::_nil ();
-    }
-  
-  UnixDomainProtocolProperties_ptr proxy =
-    dynamic_cast<UnixDomainProtocolProperties_ptr> (_tao_objref);
-  
-  return UnixDomainProtocolProperties::_duplicate (proxy);
+  return UnixDomainProtocolProperties::_duplicate (
+      dynamic_cast<UnixDomainProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::UnixDomainProtocolProperties_ptr
@@ -1554,15 +1446,9 @@ RTCORBA::SharedMemoryProtocolProperties::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return SharedMemoryProtocolProperties::_nil ();
-    }
-  
-  SharedMemoryProtocolProperties_ptr proxy =
-    dynamic_cast<SharedMemoryProtocolProperties_ptr> (_tao_objref);
-  
-  return SharedMemoryProtocolProperties::_duplicate (proxy);
+  return SharedMemoryProtocolProperties::_duplicate (
+      dynamic_cast<SharedMemoryProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::SharedMemoryProtocolProperties_ptr
@@ -1571,15 +1457,9 @@ RTCORBA::SharedMemoryProtocolProperties::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return SharedMemoryProtocolProperties::_nil ();
-    }
-  
-  SharedMemoryProtocolProperties_ptr proxy =
-    dynamic_cast<SharedMemoryProtocolProperties_ptr> (_tao_objref);
-  
-  return SharedMemoryProtocolProperties::_duplicate (proxy);
+  return SharedMemoryProtocolProperties::_duplicate (
+      dynamic_cast<SharedMemoryProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::SharedMemoryProtocolProperties_ptr
@@ -1699,15 +1579,9 @@ RTCORBA::UserDatagramProtocolProperties::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return UserDatagramProtocolProperties::_nil ();
-    }
-  
-  UserDatagramProtocolProperties_ptr proxy =
-    dynamic_cast<UserDatagramProtocolProperties_ptr> (_tao_objref);
-  
-  return UserDatagramProtocolProperties::_duplicate (proxy);
+  return UserDatagramProtocolProperties::_duplicate (
+      dynamic_cast<UserDatagramProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::UserDatagramProtocolProperties_ptr
@@ -1716,15 +1590,9 @@ RTCORBA::UserDatagramProtocolProperties::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return UserDatagramProtocolProperties::_nil ();
-    }
-  
-  UserDatagramProtocolProperties_ptr proxy =
-    dynamic_cast<UserDatagramProtocolProperties_ptr> (_tao_objref);
-  
-  return UserDatagramProtocolProperties::_duplicate (proxy);
+  return UserDatagramProtocolProperties::_duplicate (
+      dynamic_cast<UserDatagramProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::UserDatagramProtocolProperties_ptr
@@ -1844,15 +1712,9 @@ RTCORBA::StreamControlProtocolProperties::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return StreamControlProtocolProperties::_nil ();
-    }
-  
-  StreamControlProtocolProperties_ptr proxy =
-    dynamic_cast<StreamControlProtocolProperties_ptr> (_tao_objref);
-  
-  return StreamControlProtocolProperties::_duplicate (proxy);
+  return StreamControlProtocolProperties::_duplicate (
+      dynamic_cast<StreamControlProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::StreamControlProtocolProperties_ptr
@@ -1861,15 +1723,9 @@ RTCORBA::StreamControlProtocolProperties::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return StreamControlProtocolProperties::_nil ();
-    }
-  
-  StreamControlProtocolProperties_ptr proxy =
-    dynamic_cast<StreamControlProtocolProperties_ptr> (_tao_objref);
-  
-  return StreamControlProtocolProperties::_duplicate (proxy);
+  return StreamControlProtocolProperties::_duplicate (
+      dynamic_cast<StreamControlProtocolProperties_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::StreamControlProtocolProperties_ptr
@@ -2055,15 +1911,9 @@ RTCORBA::PriorityBandedConnectionPolicy::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PriorityBandedConnectionPolicy::_nil ();
-    }
-  
-  PriorityBandedConnectionPolicy_ptr proxy =
-    dynamic_cast<PriorityBandedConnectionPolicy_ptr> (_tao_objref);
-  
-  return PriorityBandedConnectionPolicy::_duplicate (proxy);
+  return PriorityBandedConnectionPolicy::_duplicate (
+      dynamic_cast<PriorityBandedConnectionPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr
@@ -2072,15 +1922,9 @@ RTCORBA::PriorityBandedConnectionPolicy::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PriorityBandedConnectionPolicy::_nil ();
-    }
-  
-  PriorityBandedConnectionPolicy_ptr proxy =
-    dynamic_cast<PriorityBandedConnectionPolicy_ptr> (_tao_objref);
-  
-  return PriorityBandedConnectionPolicy::_duplicate (proxy);
+  return PriorityBandedConnectionPolicy::_duplicate (
+      dynamic_cast<PriorityBandedConnectionPolicy_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr
@@ -2200,15 +2044,9 @@ RTCORBA::Current::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-  
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-  
-  return Current::_duplicate (proxy);
+  return Current::_duplicate (
+      dynamic_cast<Current_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::Current_ptr
@@ -2217,15 +2055,9 @@ RTCORBA::Current::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-  
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-  
-  return Current::_duplicate (proxy);
+  return Current::_duplicate (
+      dynamic_cast<Current_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::Current_ptr
@@ -2345,15 +2177,9 @@ RTCORBA::Mutex::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Mutex::_nil ();
-    }
-  
-  Mutex_ptr proxy =
-    dynamic_cast<Mutex_ptr> (_tao_objref);
-  
-  return Mutex::_duplicate (proxy);
+  return Mutex::_duplicate (
+      dynamic_cast<Mutex_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::Mutex_ptr
@@ -2362,15 +2188,9 @@ RTCORBA::Mutex::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Mutex::_nil ();
-    }
-  
-  Mutex_ptr proxy =
-    dynamic_cast<Mutex_ptr> (_tao_objref);
-  
-  return Mutex::_duplicate (proxy);
+  return Mutex::_duplicate (
+      dynamic_cast<Mutex_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::Mutex_ptr
@@ -2676,15 +2496,9 @@ RTCORBA::RTORB::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RTORB::_nil ();
-    }
-  
-  RTORB_ptr proxy =
-    dynamic_cast<RTORB_ptr> (_tao_objref);
-  
-  return RTORB::_duplicate (proxy);
+  return RTORB::_duplicate (
+      dynamic_cast<RTORB_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::RTORB_ptr
@@ -2693,15 +2507,9 @@ RTCORBA::RTORB::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return RTORB::_nil ();
-    }
-  
-  RTORB_ptr proxy =
-    dynamic_cast<RTORB_ptr> (_tao_objref);
-  
-  return RTORB::_duplicate (proxy);
+  return RTORB::_duplicate (
+      dynamic_cast<RTORB_ptr> (_tao_objref)
+    );
 }
 
 RTCORBA::RTORB_ptr
