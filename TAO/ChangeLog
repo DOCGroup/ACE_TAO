@@ -1,3 +1,10 @@
+Thu Jun 30 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Any/Recursive/client.cpp:
+          Added include of TypeCodeFactory_Loader.h so that the
+          TypeCodeFactory is loaded. Fixes crashing of the test on
+          windows
+
 Thu Jun 30 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
