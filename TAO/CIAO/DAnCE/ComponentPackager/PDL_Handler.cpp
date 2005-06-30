@@ -20,6 +20,11 @@ namespace CIAO
                                            true))
   {}
 
+  PDL_Handler::~PDL_Handler()
+  {
+    this->iter_->release();
+  }
+
   void
   PDL_Handler::process_pdl (DESC_LIST &desc_list)
   {
@@ -37,7 +42,8 @@ namespace CIAO
         ACE_TString value;
         this->get_node_value (this->iter_,
                               value);
-        desc_list.push_back (value);
+        if (value.length () != 0)
+          desc_list.push_back (value);
       }
 
     }

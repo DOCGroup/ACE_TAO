@@ -24,8 +24,8 @@ namespace CIAO
   namespace Component_Packager
   {
 
-  typedef std::map <ACE_TString, ACE_TString>::iterator DESC_PLAN_ITER;
-  typedef std::map <ACE_TString, ACE_TString>::iterator IMPL_PLAN_ITER;
+  typedef std::map <ACE_TString, ACE_TString>::const_iterator DESC_PLAN_CONST_ITER;
+  typedef std::map <ACE_TString, ACE_TString>::const_iterator IMPL_PLAN_CONST_ITER;
 
   struct packageplan
   {
@@ -54,7 +54,7 @@ namespace CIAO
     int preparePackage (PACKAGE_PLAN &pkg_plan);
 
     /// Create the archive
-    int createPackage (PACKAGE_PLAN &pkg_plan);
+    int createPackage (const PACKAGE_PLAN &pkg_plan);
 
   protected:
     // URL for package

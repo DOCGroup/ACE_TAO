@@ -68,6 +68,8 @@ namespace CIAO
     PDL_Handler (DOMDocument* pdl_doc,
                 unsigned long filter);
 
+    ~PDL_Handler (void);
+
     /// Process the pdl and get the descriptors list
     void process_pdl (DESC_LIST &desc_list);
 
