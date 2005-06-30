@@ -1,3 +1,13 @@
+Thu Jun 30 09:59:17 2005  William Otte  <wotte@atl.lmco.com>
+
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+
+	Factored out the plan launcher capability into a shared library so
+	applications can use its functionality. 
+
 Thu Jun 30 04:33:35 2005 ming xiong <mxiong@dre.vanderbilt.edu>
 
        * DAnCE/ComponentPackager/Base_Packager.h

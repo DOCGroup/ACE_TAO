@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// $Id$
+// Plan_Launcher.mpc,v 1.8 2005/04/21 19:33:14 parsons Exp
 
 project(Plan_Launcher): naming, ciao_server_dnc, xerces, taoexe {
   exename = plan_launcher
@@ -11,5 +11,7 @@ project(Plan_Launcher): naming, ciao_server_dnc, xerces, taoexe {
 
   Source_Files {
     Plan_Launcher.cpp
+    Plan_Launcher_Impl.cpp
+    ../ExecutionManager/DAM_Map.cpp
   }
 }
