@@ -1,3 +1,35 @@
+Thu Jun 30 09:50:46 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+          This restores the behavior of IIOP_Profile::encode_endpoints so
+          that it always creates only TAO_TAG_ENDPOINT component.
+          Initially, the new TAG_ALTERNATE_IIOP_ADDRESS support was added
+          to this method, with an internal test if the endpoint priority
+          was TAO_INVALID_PRIORITY or not. If it was not, both kinds of
+          tagged components were created, if the priority was invalid,
+          only the new tagged component was created. But this causes
+          trouble for RT_CORBA with multiple nics. It also generates
+          redundant components.
+
+          A new method, encode_alternate_endpoints is added to support the
+          generation of combined endpoints in non-RT ORBs. This new method
+          is called from Default_Acceptor_Filter.cpp. The base TAO_Profile
+          supplies a null implementation of encode_alternate_endpoints so
+          that existing, non-IIOP profiles don't have to be altered.
+
+        * tao/params.cpp:
+          To address the issue raised by bugzilla #2173, I've set the
+          default for using shared profiles (non-RT) to 0. This avoids a
+          side-effect of making shared profiles with endpoints that do not
+          have a priority set in an RT environment.
+
+        * tests/AlternateIIOP/run_test.pl:
+          Add an explicit -ORBUseSharedProfile 1 to the server.
+
 Thu Jun 30 09:29:56 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tao/Valuetype/StringValueC.inl

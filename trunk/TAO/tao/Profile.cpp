@@ -736,6 +736,18 @@ TAO_Profile::hash_service_i (CORBA::ULong m)
   return this->orb_core_->hash_service (this, m);
 }
 
+int
+TAO_Profile::encode_alternate_endpoints(void)
+{
+  // this should be a pure virtual, but there are many
+  // existing specializations that would need to be
+  // modified. This maintains the existing behavior, since
+  // the previous version of the POA did not gather alternate
+  // endpoints.
+
+  return 0;
+}
+
 // ****************************************************************
 
 TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
