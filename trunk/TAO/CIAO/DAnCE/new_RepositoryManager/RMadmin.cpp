@@ -1,9 +1,9 @@
 // $Id$
 
 /***
- * @file RMClient.cpp
+ * file RMClient.cpp
  *
- * @author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
+ * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  **/
 
 #include "new_RepositoryManagerC.h"

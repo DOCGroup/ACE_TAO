@@ -1,3 +1,15 @@
+Thu Jun 30 00:37:35 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
+
+	* RMadmin.cpp
+	* RepositoryManager.cpp
+	* ZIP_Wrapper.cpp
+	* ZIP_Wrapper.h
+	* new_RepositoryManager_Impl.cpp
+	* new_RepositoryManager_Impl.h
+
+	removed the "@file" comments which apparently confuse Doxygen.
+
+
 Wed Jun 29 17:00:57 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
 
        * DAnCE/ExecutionManager/DAM_Map.cpp:
