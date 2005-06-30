@@ -72,7 +72,14 @@ public:
 
   /// Template methods. Please see Profile.h for documentation.
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Encode endpoints for RT profiles, using a single TAO_TAG_ENDPOINT
+  /// component.
   virtual int encode_endpoints (void);
+
+  /// Encode alternate endpoints for non-RT profiles, using multiple
+  /// TAG_ALTERNATE_IIOP_ADDRESS components, one endpoint per component
+  virtual int encode_alternate_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;
   virtual CORBA::ULong hash (CORBA::ULong max
