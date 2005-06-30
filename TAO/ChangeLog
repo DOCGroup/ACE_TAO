@@ -1,3 +1,9 @@
+Thu Jun 30 09:29:56 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tao/Valuetype/StringValueC.inl
+
+          Latest attempt at getting rid of warning from gcc compiler
+
 Thu Jun 30 14:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduling/RTSchedulerC.cpp:
