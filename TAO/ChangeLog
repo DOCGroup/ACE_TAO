@@ -1,6 +1,8 @@
 Thu Jun 30 13:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInfoC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/RTCORBA/RTCORBAC.cpp:
           Regenerated with the latest version of the idl compiler
 
 Thu Jun 30 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
