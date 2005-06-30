@@ -1,10 +1,10 @@
 // $Id$
 
 ///====================================================================
-//@filename: ZIP_Wrapper.h
-//@Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
+// filename: ZIP_Wrapper.h
+// Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
 //
-//@Purpose: to provide a wrapper around ZZIPlib for easy handling of
+// Purpose: to provide a wrapper around ZZIPlib for easy handling of
 //			ZIP archives. This wrapper can me used as an auxiliary 
 //			class that allows a program to become ZIP-aware
 
@@ -23,7 +23,7 @@
 ///===================================================================
 //Class definition for ZIP_File_Info
 //
-//@Description: This class is used as a carrier of information
+// Description: This class is used as a carrier of information
 //				about entities residing inside a ZIP archive
 
 class ZIP_File_Info

@@ -32,8 +32,8 @@
 
 
 ///====================================================================
-//@filename: new_RepositoryManager_Impl.cpp
-//@Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
+// filename: new_RepositoryManager_Impl.cpp
+// Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
 //
 
 

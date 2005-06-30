@@ -1,10 +1,10 @@
 // $Id$
 
 ///====================================================================
-//@filename: ZIP_Wrapper.cpp
-//@Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
+// filename: ZIP_Wrapper.cpp
+// Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
 //
-//@Purpose: to provide a wrapper around ZZIPlib for easy handling of
+// Purpose: to provide a wrapper around ZZIPlib for easy handling of
 //			ZIP archives. This wrapper can me used as an auxiliary 
 //			class that allows a program to become ZIP-aware
 

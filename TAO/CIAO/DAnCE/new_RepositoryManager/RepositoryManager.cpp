@@ -1,9 +1,9 @@
 // $Id$
 
 /***
- * @file RepositoryManager.cpp
+ * file RepositoryManager.cpp
  *
- * @author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
+ * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  **/
 
 
