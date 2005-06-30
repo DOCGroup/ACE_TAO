@@ -2,6 +2,7 @@
 
 #include "TestC.h"
 #include "tao/IFR_Client/IFR_BaseC.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 
 #include "ace/Get_Opt.h"
 
