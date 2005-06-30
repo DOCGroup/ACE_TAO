@@ -64,7 +64,7 @@ namespace CIAO
     int preparePackage (PACKAGE_PLAN &pkg_plan);
 
     /// Create a zip archive
-    int createPackage (PACKAGE_PLAN &pkg_plan);
+    int createPackage (const PACKAGE_PLAN &pkg_plan);
 
   protected:
     // A memory buffer to store package description
