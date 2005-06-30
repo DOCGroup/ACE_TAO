@@ -21,7 +21,7 @@
 #include "Sender_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace Sender_Impl
+namespace CIDL_Sender_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   Sender_exec_i
