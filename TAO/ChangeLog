@@ -1,3 +1,9 @@
+Thu Jun 30 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Fixed retrieval and printing of port number in
+          cat_tag_alternate_endpoints.
+
 Wed Jun 29 20:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Client.h:
