@@ -1,3 +1,12 @@
+Thu Jun 30 10:21:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (get_current_size, get_n_records,
+	  flush):
+
+	  Changed argument list to use ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+	  instead of ACE_ENV_SINGLE_ARG_DECL, since these methods do not
+	  throw exceptions.
+
 Thu Jun 30 09:50:46 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Profile.cpp:
