@@ -1,3 +1,12 @@
+Thu Jun 30 12:36:06 2005  William Otte  <wotte@atl.lmco.com>
+
+	* DAnCE/Plan_Launcher/DAM_Map.cpp
+	* DAnCE/Plan_Launcher/DAM_Map.h
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+
+	Added DAM_Map to the Plan_Launcher directory, as make wouldn't
+	handle the relative reference properly.
+	
 Thu Jun 30 09:29:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/new_RepositoryManager/RMadmin.cpp
