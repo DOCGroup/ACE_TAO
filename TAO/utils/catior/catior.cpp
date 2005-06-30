@@ -773,7 +773,7 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
     const char *host = epseq[iter].host;
     ACE_DEBUG ((LM_DEBUG,
                 "%I Host: %s\n",host));
-    unsigned short port = epseq[iter].port;
+    CORBA::UShort port = epseq[iter].port;
     ACE_DEBUG ((LM_DEBUG,
                 "%I Port: %d\n",port));
     ACE_DEBUG ((LM_DEBUG,
@@ -793,12 +793,12 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   stream.skip_bytes(length);
 
   CORBA::String_var host;
-  CORBA::Short port;
+  CORBA::UShort port;
   if ((stream2  >> host.out()) == 0 ||
       (stream2 >> port) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"cannot extract endpoint info\n"),0);
   ACE_DEBUG ((LM_DEBUG,
-              "%I endpoint: %s:%u\n",host.in(),port));
+              "%I endpoint: %s:%d\n",host.in(),port));
   return 1;
 }
 
