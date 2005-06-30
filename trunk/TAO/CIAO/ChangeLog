@@ -1,3 +1,15 @@
+Thu Jun 30 23:34:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/tests/Minimum/Receiver/Receiver_exec.cpp:
+        * DAnCE/tests/Minimum/Receiver/Receiver_exec.h:
+        * DAnCE/tests/Minimum/Sender/Sender_exec.cpp:
+        * DAnCE/tests/Minimum/Sender/Sender_exec.h:
+        
+          More overlooked changes to exec files corresponding to
+          CIDL compiler code generation changes of
+          
+          Wed Jun 22 23:20:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Thu Jun 30 12:36:06 2005  William Otte  <wotte@atl.lmco.com>
 
 	* DAnCE/Plan_Launcher/DAM_Map.cpp

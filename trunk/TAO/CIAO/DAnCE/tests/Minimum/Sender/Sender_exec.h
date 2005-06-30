@@ -32,7 +32,7 @@
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace Sender_Impl
+namespace CIDL_Sender_Impl
 {
   class SENDER_EXEC_Export Sender_exec_i
   : public virtual Sender_Exec,
