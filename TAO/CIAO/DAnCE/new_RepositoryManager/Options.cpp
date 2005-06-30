@@ -21,7 +21,7 @@ Options::instance (void)
 void
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-	ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:l:a:idps"));
+        ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:l:a:idps"));
 
   int c;
 
@@ -37,7 +37,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'p':
         this->plan_ = true;
         break;
-	  case 's':
+          case 's':
         this->shutdown_ = true;
         break;
       case 'n':
@@ -51,36 +51,36 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
         // Usage fallthrough.
       default:
-		  this->usage ();
-		  
+                  this->usage ();
+                  
       }
 
   if ((this->package_ == "") && (this->shutdown_ == false)) 
-	  this->usage ();
+          this->usage ();
   if (this->package_ != "")
   {
-	if (!(this->install_ || this->plan_ || this->delete_ || (this->artifact_ != "")))
-	  this->usage ();
+        if (!(this->install_ || this->plan_ || this->delete_ || (this->artifact_ != "")))
+          this->usage ();
     else if (this->install_ && this->local_path_ == "")
-	  this->usage ();
+          this->usage ();
   }
 }
 
 void Options::usage (void)
 {
-	ACE_DEBUG ((LM_DEBUG, "OPTIONS: -s <shutdown> -n <:package> [-i <install> -l <:local_path>] \
-		[-d <delete>] [-p <plan>] [-a <artifact>]\n"));
+        ACE_DEBUG ((LM_DEBUG, "OPTIONS: -s <shutdown> -n <:package> [-i <install> -l <:local_path>] \
+                [-d <delete>] [-p <plan>] [-a <artifact>]\n"));
     ACE_OS::exit (1);
 }
 
 
 Options::Options (void) 
   : package_ (""),
-	local_path_ (""),
-	artifact_ (""),
-	delete_ (false),
-	install_ (false),
-	plan_ (false),
-	shutdown_ (false)
+        local_path_ (""),
+        artifact_ (""),
+        delete_ (false),
+        install_ (false),
+        plan_ (false),
+        shutdown_ (false)
 {
 }
