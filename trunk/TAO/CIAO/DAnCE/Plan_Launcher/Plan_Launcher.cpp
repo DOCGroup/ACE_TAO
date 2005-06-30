@@ -1,10 +1,8 @@
 // $Id$
+#include "Plan_Launcher_Impl.h"
+
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
-#include "orbsvcs/CosNamingC.h"
-#include "Config_Handlers/XML_File_Intf.h"
-#include "ciao/DeploymentC.h"
-#include "ciao/CIAO_common.h"
 #include <iostream>
 
 #include "ExecutionManager/ExecutionManagerC.h"
@@ -89,51 +87,6 @@ namespace CIAO
       return true;
     }
 
-    static CORBA::Object_ptr
-    fetch_reference_naming (CORBA::ORB_ptr orb
-                            ACE_ENV_ARG_DECL)
-    {
-      CORBA::Object_var tmp =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      CosNaming::NamingContext_var pns =
-        CosNaming::NamingContext::_narrow (tmp.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      CosNaming::Name name (2);
-      name.length (2);
-      name[0].id =
-        CORBA::string_dup ("CIAO");
-      name[1].id =
-        CORBA::string_dup ("ExecutionManager");
-
-      return pns->resolve (name
-                           ACE_ENV_ARG_PARAMETER);
-    }
-
-    static CORBA::Object_ptr
-    fetch_reference_file (CORBA::ORB_ptr orb
-                          ACE_ENV_ARG_DECL)
-    {
-      return orb->string_to_object (ior_file
-                                    ACE_ENV_ARG_PARAMETER);
-    }
-
-    static ::Deployment::DomainApplicationManager_ptr
-    init_dap_ior (::CIAO::ExecutionManagerDaemon_ptr exec_mgr 
-                  ACE_ENV_ARG_DECL)
-    {
-      CIAO::Config_Handlers::XML_File_Intf intf (package_url);
-      
-      ::Deployment::DeploymentPlan_var plan =
-          intf.get_plan ();
-
-      return exec_mgr->preparePlan (plan, 1);
-    }
-
     static ::Deployment::DomainApplicationManager_ptr
     read_dap_ior (CORBA::ORB_ptr orb
                   ACE_ENV_ARG_DECL)
@@ -181,51 +134,42 @@ namespace CIAO
 
           if (parse_args (argc, argv) == false)
             return -1;
-
-          CORBA::Object_var obj;
-
-          // Initialize Execution Manager reference
-          if (use_naming)
+          
+          
+          Plan_Launcher_i launcher;
+          
+          if (!launcher.init (use_naming ? 0 : ior_file,
+                              orb.in ()))
             {
-              obj =
-                fetch_reference_naming (orb.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              obj =
-                fetch_reference_file (orb.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-
-          ::CIAO::ExecutionManagerDaemon_var exec_mgr =
-              ::CIAO::ExecutionManagerDaemon::_narrow (
-                obj.in ()
-                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (exec_mgr.in ()))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) CIAO_PlanLauncher: nil Execution"
-                          " Manager reference, narrow failed\n"));
+              ACE_ERROR ((LM_ERROR, "Plan_Launcher: Error initializing the EM.\n"));
               return -1;
             }
-
-          if (CIAO::debug_level () > 10)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
-                        " Manager ref \n"));
           
-          // Initialize Domain Application Manager reference
+          CORBA::String_var uuid;
           ::Deployment::DomainApplicationManager_var dapp_mgr;
+          
           if (mode != pl_mode_stop)
             {
-              dapp_mgr = init_dap_ior (exec_mgr.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              uuid = launcher.launch_plan (package_url);
+              
+              if (uuid == 0)
+                {
+                  ACE_ERROR ((LM_ERROR, "Plan_Launcher: Error launching plan\n"));
+                  return -1;
+                }
+              
+              dapp_mgr = launcher.get_dam (uuid);
+              
+              // Write out DAM ior if requested
+              if (mode == pl_mode_start)
+                write_dap_ior (orb.in (), dapp_mgr.in ());
+              else // if (pl_mode_interactive)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Press <Enter> to tear down application\n"));
+                  char dummy [256];
+                  std::cin.getline (dummy, 256);
+                }
             }
           else
             {
@@ -241,76 +185,17 @@ namespace CIAO
                           "nil DomainApplicationManager reference\n"));
               return -1;
             }
-
+          
           if (CIAO::debug_level () > 10)
             ACE_DEBUG ((LM_DEBUG,
                         "CIAO_PlanLauncher: Obtained DAM ref \n"));
-
-          // == BALA check some bogus things here..
-          // Create a dummy set of properties and start the
-          // Launching of applications
-          if (mode != pl_mode_stop)
-            {
-              ::Deployment::Properties_var properties;
-              ACE_NEW_RETURN (properties,
-                              Deployment::Properties,
-                              1);
-              if (CIAO::debug_level ())
-                ACE_DEBUG ((LM_DEBUG,
-                            "CIAO_PlanLauncher: start Launch application..."));
-
-              // Don not start the Application immediately since it vialtes
-              // the semantics of component activation sequence
-              int start = 0;
-
-              dapp_mgr->startLaunch (properties.in (), 0);
-              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-
-              // Call finish Launch to complete the connections
-              ACE_DEBUG ((LM_DEBUG,
-                          "CIAO_PlanLauncher: finish Launch application..."));
-              dapp_mgr->finishLaunch (start);
-              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-
-              // Call start to activate components
-              ACE_DEBUG ((LM_DEBUG,
-                          "CIAO_PlanLauncher: start activating components..."));
-              dapp_mgr->start ();
-              ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("CIAO_PlanLauncher: ")
-                          ACE_TEXT ("Application Deployed successfully\n")));
-
-              if (mode == pl_mode_start)
-                {
-                  write_dap_ior (orb.in (), dapp_mgr.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-                }
-              
-              if (mode == pl_mode_interactive)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                             "Press <Enter> to tear down application\n"));
-                  char dummy [256];
-                  std::cin.getline (dummy, 256);
-                }
-            }
 
           if (mode != pl_mode_start)
           {
             // Tear down the assembly
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: destroy the application....."));
-            dapp_mgr->destroyApplication ();
-
-            ACE_DEBUG ((LM_DEBUG, "[success]\n"));
-
-            ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: destroy the manager....."));
-
-            exec_mgr->destroyManager (dapp_mgr.in ());
-            ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+                        "Plan_Launcher: destroy the application....."));
+            launcher.teardown_plan (dapp_mgr.in ());
           }
 
           orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -343,5 +228,7 @@ int
 ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
+  ACE_DEBUG ((LM_DEBUG, "NEW PLAN LAUNCHER\n"));
+  
   return run_main_implementation (argc, argv);
 }
