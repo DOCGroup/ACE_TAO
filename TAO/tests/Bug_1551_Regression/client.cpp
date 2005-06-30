@@ -45,6 +45,8 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  int retval = 0;
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -134,9 +136,10 @@ main (int argc, char *argv[])
 
       if(client.thr_mgr ()->wait (&thread_deadline) == -1)
       {
-        ACE_ERROR_RETURN((LM_ERROR,
-                             "ERROR - Timeout waiting for client threads\n"),
-            1);
+        ACE_ERROR((LM_ERROR,
+                             "ERROR - Timeout waiting for client threads\n"));
+
+        retval = 1;
       }
 
       root_poa->destroy (1,  // ethernalize objects
@@ -155,5 +158,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  return 0;
+  return retval;
 }
