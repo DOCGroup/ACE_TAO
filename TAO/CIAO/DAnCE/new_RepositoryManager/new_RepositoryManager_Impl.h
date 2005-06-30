@@ -1,10 +1,10 @@
 // $Id$
 
 ///====================================================================
-//@filename: new_RepositoryManager_Impl.h
-//@Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
+// filename: new_RepositoryManager_Impl.h
+// Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
 //
-//@Purpose: This class is the implementation class for the new
+// Purpose: This class is the implementation class for the new
 //			RepositoryManager
 
 
