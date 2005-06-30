@@ -1,3 +1,9 @@
+Thu Jun 30 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1551_Regression/client.cpp:
+          When we get a timeout on the client threads output an error but
+          first nicely destroy the POA and ORB before shutting down
+
 Thu Jun 30 10:21:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (get_current_size, get_n_records,
