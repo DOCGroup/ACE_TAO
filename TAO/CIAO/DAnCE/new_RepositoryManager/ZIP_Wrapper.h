@@ -12,14 +12,14 @@
 #ifndef _ZIP_WRAPPER_H_
 #define _ZIP_WRAPPER_H_
 
-#include "ace/Containers_T.h"		//for ACE_Double_Linked_List
-#include "ace/Message_Block.h"		//for ACE_Message_Block
+#include "ace/Containers_T.h"           //for ACE_Double_Linked_List
+#include "ace/Message_Block.h"          //for ACE_Message_Block
 
-#include "ace/OS_NS_fcntl.h"	  //for open
+#include "ace/OS_NS_fcntl.h"      //for open
 #include "ace/OS_NS_sys_stat.h"   //for filesize and mkdir
 
 #include <string>
-			
+                        
 /**
  * @class ZIP_File_Info
  * This class is used as a carrier of information about entities
@@ -37,7 +37,7 @@ public:
   ZIP_File_Info ();
 };
 
-			
+                        
 /**
  * @class ZIP_Wrapper
  * 
