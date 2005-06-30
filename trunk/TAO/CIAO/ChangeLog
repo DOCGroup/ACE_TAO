@@ -1,3 +1,15 @@
+Thu Jun 30 09:29:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/new_RepositoryManager/RMadmin.cpp
+	* DAnCE/new_RepositoryManager/RepositoryManager.cpp
+	* DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+	* DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
+
+	Fixed Doxygen documentation tags, fixed some indenting,
+	removed tabs.
+
 Thu Jun 30 09:59:17 2005  William Otte  <wotte@atl.lmco.com>
 
 	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
@@ -23,12 +35,12 @@ Thu Jun 30 04:33:35 2005 ming xiong <mxiong@dre.vanderbilt.edu>
        
 Thu Jun 30 00:37:35 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
-	* RMadmin.cpp
-	* RepositoryManager.cpp
-	* ZIP_Wrapper.cpp
-	* ZIP_Wrapper.h
-	* new_RepositoryManager_Impl.cpp
-	* new_RepositoryManager_Impl.h
+	* DAnCE/new_RepositoryManager/RMadmin.cpp
+	* DAnCE/new_RepositoryManager/RepositoryManager.cpp
+	* DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+	* DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
 
 	removed the "@file" comments which apparently confuse Doxygen.
 
@@ -118,50 +130,50 @@ Mon Jun 27 07:04:01 2005  Chad Elliott  <elliott_c@ociweb.com>
 
 Sun Jun 26 23:53:23 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
-        * TAO/CIAO/DAnCE/new_RepositoryManager/Modified_Deployment.xsd
-        * TAO/CIAO/DAnCE/new_RepositoryManager/Options.cpp
-        * TAO/CIAO/DAnCE/new_RepositoryManager/Options.h
-        * TAO/CIAO/DAnCE/new_RepositoryManager/README.txt
-        * TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
-        * TAO/CIAO/DAnCE/new_RepositoryManager/RepositoryManager.cpp
-        * TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
-        * TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.h
-        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.idl
-        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
-        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
-        * TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
-        * TAO/CIAO/DAnCE/new_RepositoryManager/packages/inconsistent.cpk
-        * TAO/CIAO/DAnCE/new_RepositoryManager/packages/package.cpk
+        * DAnCE/new_RepositoryManager/Modified_Deployment.xsd
+        * DAnCE/new_RepositoryManager/Options.cpp
+        * DAnCE/new_RepositoryManager/Options.h
+        * DAnCE/new_RepositoryManager/README.txt
+        * DAnCE/new_RepositoryManager/RMadmin.cpp
+        * DAnCE/new_RepositoryManager/RepositoryManager.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.idl
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
+        * DAnCE/new_RepositoryManager/packages/inconsistent.cpk
+        * DAnCE/new_RepositoryManager/packages/package.cpk
 
         Added these files to the head. The files are implementing the repository
         manager.
 
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/Modified_Deployment.xsd
+        * DAnCE/new_RepositoryManager/Modified_Deployment.xsd
         needed for the retrievePlan function that retrieves the Deployment plan
 
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/Options.cpp
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/Options.h
+        * DAnCE/new_RepositoryManager/Options.cpp
+        * DAnCE/new_RepositoryManager/Options.h
         options class for the RMadmin.cpp
 
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/README.txt
+        * DAnCE/new_RepositoryManager/README.txt
 
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/RMadmin.cpp
+        * DAnCE/new_RepositoryManager/RMadmin.cpp
         a sample client program. You can use it as an example on how to use the RM
 
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.h
         The ZIP Wrapper class that allows read access to ZIP packages and CCM packages
         that have the cpk extension.
 
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/RepositoryManager.cpp
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.idl
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
+        * DAnCE/new_RepositoryManager/RepositoryManager.cpp
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.idl
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
         The Repository Manager implementation files
 
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/packages/inconsistent.cpk
-        -- TAO/CIAO/DAnCE/new_RepositoryManager/packages/package.cpk
+        * DAnCE/new_RepositoryManager/packages/inconsistent.cpk
+        * DAnCE/new_RepositoryManager/packages/package.cpk
         couple of sample packages that I created manually to test the RM.
 
 
