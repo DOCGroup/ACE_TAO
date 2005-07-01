@@ -1,3 +1,19 @@
+Fri Jul  1 13:16:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_produce.cpp:
+        
+          Moved the conditional initialization of the *A.cpp file stream
+          from before the stub header visitor executes to after the
+          stub header visitor and before the stub source visitor. This
+          move allows the checks for recursive types that happen in
+          the stub header visitor to complete, giving correct results
+          when the presence of recursive types is checked in the
+          generation of includes for the *A.cpp file, if it is generated.
+          The *A.cpp includes must also be generated before the *C.cpp
+          file since the *A.cpp file, if generated, will steal some
+          includes that would go in the *C.cpp file if the -GA option
+          was not used.
+
 Fri Jul  1 12:54:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:

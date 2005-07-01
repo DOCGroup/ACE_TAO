@@ -166,11 +166,28 @@ BE_produce (void)
         }
     }
 
-  // Initialize the anyop streams here, if the option is set.
-  // It has to be done after the filename is set (for this iteration,
-  // if there are multiple IDL files) and before stub file generation,
+  // (1) Generate client header,
+  // instantiate a visitor context, and set the codegen state
+  ctx.state (TAO_CodeGen::TAO_ROOT_CH);
+
+  // Get a root visitor.
+  be_visitor_root_ch root_ch_visitor (&ctx);
+
+  // Generate code for the client header
+  if (root->accept (&root_ch_visitor) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "client header for Root failed\n"));
+      BE_abort ();
+    }
+
+  // (2) Initialize the anyop streams, if the option is set.
+  // It has to be done after the stub header file generation,
+  // where checks for recursive types are done,
+  // and before stub source file generation,
   // since #includes of Any-related files may be redirected to a
-  // separate file, if the option below is set.
+  // separate file.
   if (be_global->gen_anyop_files ())
     {
       int status = 0;
@@ -189,23 +206,7 @@ BE_produce (void)
         }
     }
 
-  // (1) Generate client header,
-  // instantiate a visitor context, and set the codegen state
-  ctx.state (TAO_CodeGen::TAO_ROOT_CH);
-
-  // Get a root visitor.
-  be_visitor_root_ch root_ch_visitor (&ctx);
-
-  // Generate code for the client header
-  if (root->accept (&root_ch_visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "client header for Root failed\n"));
-      BE_abort ();
-    }
-
-  // (2) Generate client inline and
+  // (3) Generate client inline and
   // set the context information.
   if (be_global->gen_client_inline ())
     {
@@ -225,7 +226,7 @@ BE_produce (void)
         }
     }
 
-  // (3) Generate client stubs.
+  // (4) Generate client stubs.
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_CS);
 
@@ -241,7 +242,7 @@ BE_produce (void)
       BE_abort ();
     }
 
-  // (4) Generate server header.
+  // (5) Generate server header.
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
 
@@ -266,7 +267,7 @@ BE_produce (void)
 
   if (be_global->gen_server_inline ())
     {
-      // (5) Generate server inline.
+      // (6) Generate server inline.
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_SI);
 
@@ -283,7 +284,7 @@ BE_produce (void)
         }
     }
 
-  // (6) Generate server skeletons
+  // (7) Generate server skeletons
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SS);
 
@@ -299,7 +300,7 @@ BE_produce (void)
       BE_abort ();
     }
 
-  // (7) Generated server template header.
+  // (8) Generated server template header.
   if (be_global->gen_tie_classes ())
     {
       ctx.reset ();
@@ -322,7 +323,7 @@ BE_produce (void)
   // the implementation header and skeleton files.
   if (be_global->gen_impl_files ())
     {
-      // (8) generate implementation header.
+      // (9) generate implementation header.
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);
 
@@ -338,7 +339,7 @@ BE_produce (void)
           BE_abort ();
         }
 
-      // (9) Generate implementation source.
+      // (10) Generate implementation source.
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IS);
 
