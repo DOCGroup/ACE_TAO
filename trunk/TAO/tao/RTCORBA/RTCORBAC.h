@@ -2577,7 +2577,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:51
+    // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_RTCORBA_RTORB_MUTEXNOTFOUND_CH_)
 #define _RTCORBA_RTORB_MUTEXNOTFOUND_CH_
@@ -2614,7 +2614,7 @@ namespace RTCORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:127
+      // be\be_visitor_exception/exception_ch.cpp:129
       
       virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
@@ -2724,7 +2724,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:51
+    // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_RTCORBA_RTORB_INVALIDTHREADPOOL_CH_)
 #define _RTCORBA_RTORB_INVALIDTHREADPOOL_CH_
@@ -2761,7 +2761,7 @@ namespace RTCORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:127
+      // be\be_visitor_exception/exception_ch.cpp:129
       
       virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };

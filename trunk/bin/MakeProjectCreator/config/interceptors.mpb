@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project: pi {
+project {
   requires += interceptors
 }
