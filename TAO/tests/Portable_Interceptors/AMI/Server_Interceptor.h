@@ -8,6 +8,7 @@
 #ifndef Server_Interceptor__h_
 #define Server_Interceptor__h_
 
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"

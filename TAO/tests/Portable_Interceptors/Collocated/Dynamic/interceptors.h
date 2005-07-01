@@ -12,6 +12,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PI/PI.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

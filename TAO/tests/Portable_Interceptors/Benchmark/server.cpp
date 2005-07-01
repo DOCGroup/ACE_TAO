@@ -3,7 +3,6 @@
 #include "test_i.h"
 #include "Server_ORBInitializer.h"
 #include "Interceptor_Type.h"
-#include "interceptors.h"
 
 #include "tao/ORBInitializer_Registry.h"
 

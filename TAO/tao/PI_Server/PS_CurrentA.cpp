@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "PI_Server.h"
+#include "PS_CurrentC.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode_Static.h"
@@ -38,26 +38,25 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:74
+// be\be_visitor_typecode/struct_typecode.cpp:87
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableServer_Current_NoContext = 0;
 static TAO::TypeCode::Struct<char const *,
-                             CORBA::TypeCode_ptr const *,
-                             TAO::TypeCode::Struct_Field<char const *,
-                                                         CORBA::TypeCode_ptr const *> const *,
-                             TAO::Null_RefCount_Policy>
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
   _tao_tc_PortableServer_Current_NoContext (
     CORBA::tk_except,
     "IDL:omg.org/PortableServer/Current/NoContext:2.3",
     "NoContext",
     _tao_fields_PortableServer_Current_NoContext,
     0);
-
+  
 ::CORBA::TypeCode_ptr const PortableServer::Current::_tc_NoContext =
   &_tao_tc_PortableServer_Current_NoContext;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -65,7 +64,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/Current:2.3",
     "Current");
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_Current =
@@ -75,7 +74,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -98,7 +97,7 @@ namespace TAO
   {
     return false;
   }
-
+  
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableServer::Current>::demarshal_value (TAO_InputCDR &)
@@ -149,8 +148,8 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// TAO_IDL - Generated from 
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
 {
@@ -160,7 +159,7 @@ namespace TAO
   {
     return false;
   }
-
+  
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::Current::NoContext>::demarshal_value (TAO_InputCDR &)

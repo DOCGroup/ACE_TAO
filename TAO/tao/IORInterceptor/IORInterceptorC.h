@@ -50,7 +50,7 @@
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/InterceptorC.h"
 #include "tao/IORInterceptor/IORInfoC.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
 

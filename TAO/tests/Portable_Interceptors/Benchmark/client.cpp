@@ -1,7 +1,6 @@
 // $Id$
 
 #include "testC.h"
-#include "interceptors.h"
 #include "marker.h"
 #include "Client_ORBInitializer.h"
 #include "Interceptor_Type.h"

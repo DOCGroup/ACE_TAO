@@ -108,7 +108,7 @@ namespace TAO
     CORBA::Object_ptr target (void) const;
 
     /// Does this invocation return a response?
-    CORBA::Boolean  response_expected (void) const;
+    CORBA::Boolean response_expected (void) const;
     //@}
 
   protected:
@@ -142,7 +142,8 @@ namespace TAO
 
   private:
 
-    ACE_UNIMPLEMENTED_FUNC (Invocation_Base & operator= (const Invocation_Base &))
+    Invocation_Base (const Invocation_Base&);
+    Invocation_Base & operator= (const Invocation_Base &);
 
   private:
     //@{
@@ -192,6 +193,15 @@ namespace TAO
     /// Return the syncscope policy of the operation.
     CORBA::Octet sync_scope (void) const;
 
+    /// Return a reference to the number of interceptors pushed on to
+    /// the current interceptor flow stack.
+    /**
+     * @note It is a reference since the Portable Interceptor flow stack
+     *       code must be able to modify this value and use that value
+     *       at a later time without being forced to use TSS.
+     */
+    size_t &stack_size (void);
+
   protected:
     /// Helper method to invoke send_request interception call to all
     /// the registered interceptors.
@@ -220,11 +230,11 @@ namespace TAO
   protected:
     /// The client requestor adapter and the request info object for
     /// making calls on all the registered interceptors.
-    ClientRequestInterceptor_Adapter adapter_;
+    ClientRequestInterceptor_Adapter *adapter_;
     TAO_ClientRequestInfo req_info_;
-
-
+    size_t stack_size_;
 #endif /*TAO_HAS_INTERCEPTORS*/
+    //@}
   };
 }
 

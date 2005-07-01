@@ -1,8 +1,7 @@
 // $Id$
 
-#include "tao/Interceptor_List.h"
-
-#include "tao/InterceptorC.h"
+#include "InterceptorC.h"
+#include "ORBInitInfoC.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
@@ -19,14 +18,21 @@ namespace TAO
   }
 
   template <typename InterceptorType>
-  PortableInterceptor::Interceptor_ptr
+  Interceptor_List<InterceptorType>::InterceptorType_ptr_type
   Interceptor_List<InterceptorType>::interceptor (size_t index)
   {
     return this->interceptors_[index].in ();
   }
 
   template <typename InterceptorType>
-  int
+  size_t
+  Interceptor_List<InterceptorType>::size (void)
+  {
+    return this->interceptors_.size ();
+  }
+
+  template <typename InterceptorType>
+  void
   Interceptor_List<InterceptorType>::add_interceptor (
     InterceptorType_ptr_type interceptor
     ACE_ENV_ARG_DECL)
@@ -71,7 +77,7 @@ namespace TAO
                     if (ACE_OS::strcmp (existing_name.in (),
                                         name.in ()) == 0)
                       {
-                        return -1;
+                        ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
                       }
                   }
               }
@@ -86,26 +92,16 @@ namespace TAO
       }
     else
       {
-        ACE_THROW_RETURN (
+        ACE_THROW (
             CORBA::INV_OBJREF (
                 CORBA::SystemException::_tao_minor_code (
                     0,
                     EINVAL
                   ),
                 CORBA::COMPLETED_NO
-              ),
-            0
-          );
+              )
+            );
       }
-
-    return 0;
-  }
-
-  template <typename InterceptorType>
-  typename Interceptor_List<InterceptorType>::TYPE &
-  Interceptor_List<InterceptorType>::interceptors (void)
-  {
-    return this->interceptors_;
   }
 
   template <typename InterceptorType>

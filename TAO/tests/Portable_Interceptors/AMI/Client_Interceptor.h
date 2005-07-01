@@ -8,6 +8,7 @@
 #ifndef Client_Interceptor__h_
 #define Client_Interceptor__h_
 
+#include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"

@@ -4,7 +4,7 @@
 //
 
 #include "Client_ORBInitializer.h"
-#include "interceptors.h"
+#include "client_interceptors.h"
 #include "Interceptor_Type.h"
 
 ACE_RCSID (Benchmark, Client_ORBInitializer, "$Id$")

@@ -4,9 +4,10 @@
 //
 
 #include "Server_ORBInitializer.h"
-#include "interceptors.h"
 
-ACE_RCSID (Service_Context_Manipulation, Server_ORBInitializer, "$Id$")
+ACE_RCSID (Bug_1559,
+           Server_ORBInitializer,
+           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (void)
 {

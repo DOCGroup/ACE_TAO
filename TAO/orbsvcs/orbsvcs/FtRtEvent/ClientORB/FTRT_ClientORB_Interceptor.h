@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 
+#include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

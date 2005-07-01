@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   Interceptor_List.h
+ *  @file   Interceptor_List_T.h
  *
  *  $Id$
  *
@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Array_Base.h"
+#include "tao/SystemException.h"
 
 namespace PortableInterceptor
 {
@@ -52,24 +52,16 @@ namespace TAO
     /// Constructor.
     Interceptor_List (void);
 
-    /**
-     * Register an interceptor.
-     * @retval 0 Interceptor added without problems
-     * @retval -1 Interceptor not added because of a duplicate name
-     */
-    int add_interceptor (
+    void add_interceptor (
       InterceptorType_ptr_type i
       ACE_ENV_ARG_DECL);
 
-    /// Return reference to the underlying Portable Interceptor array.
-    TYPE & interceptors (void);
-
     void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
 
-  protected:
-
     /// Return the interceptor in sequence element @a index.
-    PortableInterceptor::Interceptor_ptr interceptor (size_t index);
+    InterceptorType_ptr_type interceptor (size_t index);
+
+    size_t size (void);
 
   private:
     /// Dynamic array of registered interceptors.
@@ -79,11 +71,11 @@ namespace TAO
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Interceptor_List.cpp"
+#include "Interceptor_List_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Interceptor_List.cpp")
+#pragma implementation ("Interceptor_List_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"

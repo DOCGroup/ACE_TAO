@@ -10,7 +10,7 @@ project(*Server): taoserver, iorinterceptor, codecfactory, interceptors {
   }
 }
 
-project(*Client): taoclient, codecfactory, interceptors {
+project(*Client): taoclient, pi, codecfactory, interceptors {
   Source_Files {
     testC.cpp
     FOO_Client_ORBInitializer.cpp

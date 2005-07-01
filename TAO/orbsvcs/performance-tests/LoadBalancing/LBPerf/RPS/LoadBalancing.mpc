@@ -1,7 +1,5 @@
 // $Id$
-project(*Performance_Server): loadbalancing, strategies {
-  includes += $(TAO_ROOT)/orbsvcs
-
+project(*Performance_Server): loadbalancing, pi_server, strategies {
   Source_Files {
     server.cpp
     Roundtrip.cpp

@@ -1,21 +1,22 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, interceptors {
+project(*Server): taoserver, pi_server, interceptors {
   Source_Files {
     test_i.cpp
     Server_ORBInitializer.cpp
-    interceptors.cpp
+    server_interceptor.cpp
     Threaded_Server.cpp
   }
 }
 
-project(*Client): taoserver, taoclient, interceptors {
+project(*Client): taoserver, pi, interceptors {
+  exename = client
   Source_Files {
     test_i.cpp
     testC.cpp
     testS.cpp
-    interceptors.cpp
+    client_interceptor.cpp
     Threaded_Client.cpp
 
     Server_Task.cpp

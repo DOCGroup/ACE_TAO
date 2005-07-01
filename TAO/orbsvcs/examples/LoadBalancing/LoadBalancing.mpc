@@ -1,6 +1,5 @@
 // $Id$
-project(*Server): taoexe, loadbalancing, exceptions {
-  includes += $(TAO_ROOT)/orbsvcs
+project(*Server): taoexe, loadbalancing, pi_server, exceptions {
   Source_Files {
     ServerRequestInterceptor.cpp
     ORBInitializer.cpp
@@ -11,7 +10,7 @@ project(*Server): taoexe, loadbalancing, exceptions {
   }
 }
 
-project(*Client): taoexe, strategies {
+project(*Client): taoclient, strategies {
   Source_Files {
     TestC.cpp
     client.cpp
