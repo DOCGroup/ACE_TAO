@@ -20,12 +20,14 @@
 
 #include "Notify_SequencePushConsumer.h"
 
+class Notify_Test_Client;
+
 class Notify_Sequence_Push_Consumer : public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
   Notify_Sequence_Push_Consumer (const char* name,
                                  unsigned int expected,
-                                 CORBA::Boolean& done);
+                                 Notify_Test_Client& client);
 
   ~Notify_Sequence_Push_Consumer ();
 
@@ -41,7 +43,8 @@ private:
   ACE_CString name_;
   unsigned int expected_;
   unsigned int count_;
-  CORBA::Boolean& done_;
+  Notify_Test_Client& client_;
+  ACE_Time_Value first_;
 };
 
 #endif /* TAO_NOTIFY_SEQUENCE_PUSH_CONSUMER_H */

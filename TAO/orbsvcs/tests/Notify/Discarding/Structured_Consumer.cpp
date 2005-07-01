@@ -1,31 +1,20 @@
 // $Id$
 
-// ******************************************************************
-// Include Section
-// ******************************************************************
-
-#include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
+#include "Notify_Structured_Push_Consumer.h"
+#include "goC.h"
+#include "Notify_Test_Client.h"
 
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "Notify_Structured_Push_Consumer.h"
-#include "goC.h"
 
-#include "Notify_Test_Client.h"
-
-// ******************************************************************
-// Data Section
-// ******************************************************************
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_strings.h"
 
 static const char* ior = "file://supplier.ior";
 static CORBA::Short discard_policy = CosNotification::FifoOrder;
-static CORBA::Long expected = 13;
-CORBA::Long max_events_per_consumer = 10;
-
-// ******************************************************************
-// Subroutine Section
-// ******************************************************************
+CORBA::Long max_events_per_consumer = 4;
+static Notify_Structured_Push_Consumer* consumer_1;
 
 class Consumer_Client : public Notify_Test_Client
 {
@@ -47,26 +36,22 @@ Consumer_Client::parse_args (int argc, char *argv[])
         ior = get_opts.optarg;
         break;
 
-      case 'e':
-        expected = ACE_OS::atoi (get_opts.optarg);
-        break;
-
       case 'd':
       {
         const char* discard = get_opts.optarg;
-        if (ACE_OS::strcmp (discard, "fifo") == 0)
+        if (ACE_OS::strcasecmp (discard, "fifo") == 0)
           {
             discard_policy = CosNotification::FifoOrder;
           }
-        else if (ACE_OS::strcmp (discard, "priority") == 0)
+        else if (ACE_OS::strcasecmp (discard, "priority") == 0)
           {
             discard_policy = CosNotification::PriorityOrder;
           }
-        else if (ACE_OS::strcmp (discard, "lifo") == 0)
+        else if (ACE_OS::strcasecmp (discard, "lifo") == 0)
           {
             discard_policy = CosNotification::LifoOrder;
           }
-        else if (ACE_OS::strcmp (discard, "deadline") == 0)
+        else if (ACE_OS::strcasecmp (discard, "deadline") == 0)
           {
             discard_policy = CosNotification::DeadlineOrder;
 #if !defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -90,7 +75,6 @@ Consumer_Client::parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
-                           "-e <expected events> "
                            "-d <fifo|priority|lifo|deadline> "
                            "\n",
                            argv [0]),
@@ -125,14 +109,12 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
   ACE_DEBUG ((LM_DEBUG, "Max Events per Consumer = %d...\n", max_events_per_consumer));
 
   // startup the consumer
-  Notify_Structured_Push_Consumer* consumer_1;
   ACE_NEW_THROW_EX (consumer_1,
                     Notify_Structured_Push_Consumer (
                                           "consumer1",
                                           discard_policy,
-                                          expected,
                                           max_events_per_consumer,
-                                          client->done ()),
+                                          *client),
                     CORBA::NO_MEMORY ());
   consumer_1->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -185,32 +167,26 @@ int main (int argc, char* argv[])
             {
               create_consumers (admin.in (), &client ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
-
               // Tell the supplier to go
               sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              CORBA::Boolean wait_more = 1;
-              while (!client.done () || wait_more)
-                {
-                  // See if we can get any more events
-                  if (client.done () && wait_more)
-                    {
-                      ACE_OS::sleep (5);
-                      wait_more = 0;
-                    }
-                  if (orb->work_pending ())
-                    {
-                      orb->perform_work ();
-                    }
-                }
+              ACE_DEBUG((LM_DEBUG, "Consumer waiting for events...\n"));
+
+              client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
+              ACE_TRY_CHECK;
+ 
+              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
+              consumer_1->disconnect();
+
+              sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
         }
     }
   ACE_CATCH (CORBA::Exception, e)
     {
-      ACE_PRINT_EXCEPTION (e,
-                           "Consumer exception: ");
+      ACE_PRINT_EXCEPTION (e, "Error: ");
       status = 1;
     }
   ACE_ENDTRY;

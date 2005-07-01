@@ -10,7 +10,8 @@ ACE_RCSID (lib,
 #define NAMING_SERVICE_NAME "NameService"
 
 Notify_Test_Client::Notify_Test_Client (void)
-  : done_ (false)
+: num_clients_( 0 )
+, done_( false )
 {
   // @@ Later: accept the inter filter operator as a param.
   ifgop_ = CosNotifyChannelAdmin::OR_OP;
@@ -18,6 +19,10 @@ Notify_Test_Client::Notify_Test_Client (void)
 
 Notify_Test_Client::~Notify_Test_Client ()
 {
+  root_poa_->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 int
@@ -122,19 +127,43 @@ Notify_Test_Client::resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Notify_Test_Client::ORB_run (void)
+Notify_Test_Client::ORB_run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  while (!this->done_)
-    if (this->orb_->work_pending ())
-      this->orb_->perform_work ();
+  while (! is_done())
+  {
+    ACE_Time_Value tv(0, 10 * 1000);
+    orb_->run(tv ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  ACE_DEBUG((LM_DEBUG, "\nWaiting for stray events...\n"));
+
+  ACE_Time_Value tv(2);
+  orb_->run(tv ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   return 0;
 }
 
-void
-Notify_Test_Client::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void Notify_Test_Client::consumer_start (TAO_Notify_Tests_Peer*)
 {
-  this->done_ = true;
+  num_clients_++;
+}
+
+void
+Notify_Test_Client::consumer_done (TAO_Notify_Tests_Peer*)
+{
+  int value = --num_clients_;
+  if ( value == 0 )
+  {
+    this->done_ = true;
+  }
+}
+
+bool
+Notify_Test_Client::is_done (void) const
+{
+  return this->done_;
 }
 
 CORBA::ORB_ptr
@@ -202,11 +231,4 @@ Notify_Test_Client::create_event_channel (const char* cname,
     }
 
   return ec._retn ();
-}
-
-
-CORBA::Boolean&
-Notify_Test_Client::done (void)
-{
-  return this->done_;
 }

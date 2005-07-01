@@ -1,91 +1,107 @@
-/* -*- C++ -*- */
 // $Id$
-
 #include "Notify_Push_Consumer.h"
+#include "Notify_Test_Client.h"
 #include "tao/debug.h"
 
-CORBA::Short Notify_Push_Consumer::event_count = 0;
-
-Notify_Push_Consumer::Notify_Push_Consumer (const char* name)
- : name_ (name)
+Notify_Push_Consumer::Notify_Push_Consumer (const char* name,
+                                            int sent,
+                                            bool useFilter,
+                                            Notify_Test_Client& client)
+: name_ (name)
+, sent_(sent)
+, received_(0)
+, expected_(sent)
+, useFilter_(useFilter)
+, client_(client)
 {
+  // By sending multiples of 9, we ensure that all combinations of group and type
+  // are possible, and that our calculations come out evenly.
+  ACE_ASSERT(sent % 9 == 0);
+
+  // This test currently only supports one expression
+  if (useFilter)
+  {
+    // group != 0 && type != 1
+    expected_ = sent_ * 4 / 9;
+  }
+
+  this->client_.consumer_start (this);
 }
 
-
-CORBA::Short
-Notify_Push_Consumer::get_count ()
+void
+Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
+                                CosNotifyChannelAdmin::EventChannel_ptr notify_channel ACE_ENV_ARG_DECL)
+                                ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return event_count;
+  ACE_UNUSED_ARG(notify_channel);
+  CosNotifyComm::StructuredPushConsumer_var objref =
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
+    consumer_admin->obtain_notification_push_supplier (
+    CosNotifyChannelAdmin::STRUCTURED_EVENT,
+    proxy_id_
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->proxy_ =
+    CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
+    proxysupplier.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->proxy_->connect_structured_push_consumer (objref.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // give ownership to POA
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
-
-
-static const char*
-Any_String (const CORBA::Any& any)
+static void validate_expression(bool expr, const char* msg)
 {
-  static char out[256] = "";
-  CORBA::Short s;
-  CORBA::UShort us;
-  CORBA::Long l;
-  CORBA::ULong ul;
-  CORBA::ULongLong ull;
-  const char* str;
-
-  if (any >>= s)
-    {
-      ACE_OS::sprintf (out, "%d", s);
-    }
-  else if (any >>= us)
-    {
-      ACE_OS::sprintf (out, "%u", us);
-    }
-  else if (any >>= l)
-    {
-      ACE_OS::sprintf (out, "%d", l);
-    }
-  else if (any >>= ul)
-    {
-      ACE_OS::sprintf (out, "%u", ul);
-    }
-  else if (any >>= str)
-    {
-      ACE_OS::strcpy (out, str);
-    }
-  else if (any >>= ull)
-    {
-#if defined (ACE_LACKS_LONGLONG_T)
-      ACE_OS::strcpy (out, ull.as_string (out));
-#else
-      // @@@@ (JP) Need to cast to signed int64 to cast to
-      // double on Win32, but this hack may not fly on
-      // other platforms.
-      double temp = (double) (CORBA::LongLong) ull;
-      ACE_OS::sprintf (out, "%.0f", temp);
-#endif /* ACE_LACKS_LONGLONG_T */
-    }
-  else
-    {
-      ACE_OS::strcpy (out, "Unsupported Any Type");
-    }
-
-  return out;
+  if (! expr)
+  {
+    ACE_ERROR((LM_ERROR, "Error: %s\n", msg));
+  }
 }
 
+#define validate(expr) validate_expression(expr, #expr)
 
 void
 Notify_Push_Consumer::push_structured_event (
-    const CosNotification::StructuredEvent& event
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  const CosNotification::StructuredEvent& event
+  ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "%s %d (sent recv) %s %s\n",
-                Any_String (event.filterable_data[1].value),
-                event_count,
-                (const char*)event.filterable_data[0].name,
-                Any_String (event.filterable_data[0].value)));
+  ACE_DEBUG((LM_DEBUG, "-"));
+  received_++;
 
-  event_count ++;
+  CORBA::ULong id = 0;
+  CORBA::ULong group = 0;
+  CORBA::ULong type = 0;
+
+  ACE_ASSERT(event.filterable_data.length() == 3);
+  ACE_ASSERT(ACE_OS::strcmp(event.filterable_data[0].name.in(), "id") == 0);
+  ACE_ASSERT(ACE_OS::strcmp(event.filterable_data[1].name.in(), "group") == 0);
+  ACE_ASSERT(ACE_OS::strcmp(event.filterable_data[2].name.in(), "type") == 0);
+  event.filterable_data[0].value >>= id;
+  event.filterable_data[1].value >>= group;
+  event.filterable_data[2].value >>= type;
+
+  if (useFilter_)
+    validate(type != 1 && group != 0);
+
+  if (received_ > expected_)
+  {
+    ACE_ERROR((LM_ERROR, "\nError: Expected %d, Received %d\n", expected_, received_));
+    this->client_.consumer_done (this);
+    return;
+  }
+  if (received_ >= expected_)
+  {
+    ACE_DEBUG((LM_DEBUG, "\nConsumer received %d events.\n", received_));
+    this->client_.consumer_done (this);
+    return;
+  }
 }

@@ -13,21 +13,24 @@ ACE_TMAIN (int argc, char *argv[])
       Notify_Test_Client client;
       client.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-      
+ 
       CosNotifyChannelAdmin::EventChannelFactory_ptr ecf = client.notify_factory ();
-      
+ 
       NotifyExt::EventChannelFactory_var ecf_ext = NotifyExt::EventChannelFactory::_narrow (ecf);
-      
+ 
+      ACE_DEBUG((LM_DEBUG, "Destroying ECF...\n"));
+
       ecf_ext->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG((LM_DEBUG, "ECF destroyed.\n"));
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("Failed to run the program\n"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Error: \n"));
       return 1;
     }
   ACE_ENDTRY;
-  
+ 
   return 0;
 }

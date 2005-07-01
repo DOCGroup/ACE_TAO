@@ -19,7 +19,6 @@
 // ******************************************************************
 
 static const char* ior = "file://supplier.ior";
-static int done = 0;
 static CORBA::Short discard_policy = CosNotification::FifoOrder;
 static unsigned int low = 2;  // 10
 static unsigned int high = 4; // 13
@@ -129,7 +128,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                                                    discard_policy,
                                                    low,
                                                    high,
-                                                   done),
+                                                   *client),
                     CORBA::NO_MEMORY ());
   consumer_1->init(client->root_poa () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -218,30 +217,18 @@ int main (int argc, char* argv[])
               sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              unsigned int try_count = 0;
-              unsigned int try_max = (high - low) * 2;
-              while (done <= 1)
-                {
-                  // See if we can get any more events
-                  if (done)
-                    {
-                      ACE_OS::sleep (3);
-                      try_count++;
-                      if (try_count >= try_max)
-                        break;
-                    }
-                  if (orb->work_pending ())
-                    {
-                      orb->perform_work ();
-                    }
-                }
+              client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
+              ACE_TRY_CHECK;
+              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
+ 
+              sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
         }
     }
   ACE_CATCH (CORBA::Exception, e)
     {
-      ACE_PRINT_EXCEPTION (e,
-                           "Consumer exception: ");
+      ACE_PRINT_EXCEPTION (e, "Error: Consumer exception: ");
       status = 1;
     }
   ACE_ENDTRY;

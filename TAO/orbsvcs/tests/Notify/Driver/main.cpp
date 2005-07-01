@@ -20,8 +20,7 @@ ACE_TMAIN (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("Failed to run the Notify Testing Driver\n"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Error: \n"));
       return 1;
     }
   ACE_ENDTRY;

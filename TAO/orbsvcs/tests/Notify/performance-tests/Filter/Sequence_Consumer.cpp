@@ -20,14 +20,12 @@
 // ******************************************************************
 
 static const char* ior = "file://supplier.ior";
-static CORBA::Boolean done = 0;
-static CORBA::Boolean dummy = 0;
 static CORBA::Boolean filter = 0;
 static unsigned int consumers = 2;
 static unsigned int batch_size = 10;
-static unsigned int expected = 50;  // 50 sets of 10
+static unsigned int expected = 100;  // 100 sets of 10
 
-#define GRAMMAR "EXTENDED_TCL"
+#define GRAMMAR "TCL"
 
 // ******************************************************************
 // Subroutine Section
@@ -87,7 +85,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
-    ec->new_for_consumers (CosNotifyChannelAdmin::OR_OP,
+    ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP,
                            adminid
                            ACE_ENV_ARG_PARAMETER);
 
@@ -95,12 +93,12 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 
   if (filter)
     {
-      // Filter Section
+      ACE_DEBUG((LM_DEBUG, "\nConsumer filter enabled.\n"));
+
       CosNotifyFilter::FilterFactory_var ffact =
           ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      // One Filter
       CosNotifyFilter::Filter_var filter =
           ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -117,7 +115,6 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 
       admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
-      // End One Filter
     }
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
@@ -139,7 +136,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                         Notify_Sequence_Push_Consumer (
                                          name,
                                          expected * batch_size,
-                                         (i + 1 == consumers ? done : dummy)),
+                                         *client),
                         CORBA::NO_MEMORY ());
 
       consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
@@ -207,33 +204,17 @@ int main (int argc, char* argv[])
               sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              ACE_Time_Value now = ACE_OS::gettimeofday ();
-              while (!done)
-                {
-                  if (orb->work_pending ())
-                    {
-                      orb->perform_work ();
-                    }
-                }
-              ACE_Time_Value then = ACE_OS::gettimeofday ();
+              client.ORB_run();
+              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
 
-              static const unsigned int per = 100;
-              ACE_Time_Value difference = then - now;
-              double denominator = per / ((double)expected *
-                                          (double)batch_size);
-              difference *= denominator;
-
-              if (TAO_debug_level)
-                ACE_DEBUG((LM_DEBUG,
-                           "Average of %ds %dus for %u events\n",
-                           difference.sec (), difference.usec (), per));
+              sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
         }
     }
   ACE_CATCH (CORBA::Exception, e)
     {
-      ACE_PRINT_EXCEPTION (e,
-                           "Consumer exception: ");
+      ACE_PRINT_EXCEPTION (e, "Error: Consumer exception: ");
       status = 1;
     }
   ACE_ENDTRY;

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Options_Parser.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID (lib,
            TAO_Options_Parser,
@@ -104,7 +103,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       NotifyExt::ThreadPoolLanesParams tpl_params;
 
       tpl_params.priority_model = NotifyExt::CLIENT_PROPAGATED;
-      tpl_params.server_priority = default_priority,
+      tpl_params.server_priority = default_priority;
       tpl_params.stacksize = 0;
       tpl_params.lanes.length (lanecount);
       tpl_params.allow_borrowing = 0;
