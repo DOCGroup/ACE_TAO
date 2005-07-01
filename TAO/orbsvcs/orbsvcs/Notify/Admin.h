@@ -23,9 +23,10 @@
 #include "FilterAdmin.h"
 #include "EventTypeSeq.h"
 #include "Topology_Object.h"
+#include "EventChannel.h"
+
 
 class TAO_Notify_Proxy;
-class TAO_Notify_EventChannel;
 template <class TYPE> class TAO_Notify_Container_T;
 
 /**
@@ -46,7 +47,7 @@ public:
   TAO_Notify_Admin ();
 
   /// Destructor
-  ~TAO_Notify_Admin ();
+  virtual ~TAO_Notify_Admin ();
 
   /// Init
   void init (TAO_Notify::Topology_Parent * parent ACE_ENV_ARG_DECL);
@@ -89,17 +90,14 @@ protected:
   void save_attrs (TAO_Notify::NVPList& attrs);
   virtual const char * get_admin_type_name (void) const = 0;
 
-protected:
-  typedef TAO_Notify_Container_T <TAO_Notify_Proxy>
-    TAO_Notify_Proxy_Container;
+  typedef TAO_Notify_Container_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Container;
 
+  TAO_Notify_Proxy_Container& proxy_container();
   /// = Data Members
 
   /// The EventChannel.
-  TAO_Notify_EventChannel *ec_;
+  TAO_Notify_EventChannel::Ptr ec_;
 
-  /// The Proxy Container.
-  TAO_Notify_Proxy_Container *proxy_container_;
 
   /// The types that we've subscribed our proxy objects with the event manager.
   TAO_Notify_EventTypeSeq subscribed_types_;
@@ -111,6 +109,9 @@ protected:
   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_;
 
   bool is_default_;
+private:
+  /// The Proxy Container.
+  ACE_Auto_Ptr< TAO_Notify_Proxy_Container > proxy_container_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -39,7 +39,7 @@ public:
   TAO_Notify_Constraint_Interpreter (void);
 
   /// Destructor
-  ~TAO_Notify_Constraint_Interpreter (void);
+  virtual ~TAO_Notify_Constraint_Interpreter (void);
 
   /**
    * This method builds an expression tree representing the

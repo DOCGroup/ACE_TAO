@@ -4,7 +4,6 @@
 
 ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 
-#include "ace/Dynamic_Service.h"
 #include "Properties.h"
 #include "Factory.h"
 #include "Builder.h"
@@ -14,11 +13,12 @@ ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 #include "Reconnect_Worker_T.h"
 #include "Event_Persistence_Strategy.h"
 #include "Routing_Slip_Persistence_Manager.h"
-
 #include "EventChannel.h"
 #include "Container_T.h"
 #include "Find_Worker_T.h"
 #include "Seq_Worker_T.h"
+
+#include "ace/Dynamic_Service.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
@@ -35,8 +35,7 @@ TAO_Notify_EventChannel_Find_Worker;
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Seq_Worker;
 
 TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory (void)
-  : ec_container_ (0)
-  , topology_save_seq_ (0)
+  : topology_save_seq_ (0)
   , topology_factory_(0)
   , reconnect_registry_(*this)
   , loading_topology_ (false)
@@ -59,8 +58,6 @@ TAO_Notify_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
 
-  delete this->ec_container_;
-
   // Reset references to CORBA objects.
   properties->orb (CORBA::ORB::_nil ());
   properties->default_poa (PortableServer::POA::_nil ());
@@ -69,17 +66,21 @@ TAO_Notify_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
+  ACE_ASSERT (this->ec_container_.get() == 0);
+
   this->default_filter_factory_ =
     TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Init ec_container_
-  ACE_NEW_THROW_EX (this->ec_container_,
+  TAO_Notify_EventChannel_Container* ecc = 0;
+  ACE_NEW_THROW_EX (ecc,
                     TAO_Notify_EventChannel_Container (),
                     CORBA::INTERNAL ());
   ACE_CHECK;
+  this->ec_container_.reset( ecc );
 
-  this->ec_container_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->ec_container().init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_Notify_POA_Helper* object_poa = 0;
@@ -95,16 +96,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DE
   object_poa->init (poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // release auto_ref.
-  auto_object_poa.release ();
-
-  this->object_poa_own (object_poa);
-
-  // We are also activated in the same Object POA.
-  this->poa_ = this->object_poa_;
-
-  // Make the Proxys acivate in this same POA.
-  this->proxy_poa_ = this->object_poa_;
+  this->adopt_poa (auto_object_poa.release ());
 
   // Note topology factory is configured separately from the "builder" mediated
   // objects since it is independant of the "style" of Notification Service.
@@ -140,7 +132,7 @@ TAO_Notify_EventChannelFactory::release (void)
 void
 TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel ACE_ENV_ARG_DECL)
 {
-  this->ec_container_->remove (event_channel ACE_ENV_ARG_PARAMETER);
+  this->ec_container().remove (event_channel ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -151,7 +143,7 @@ TAO_Notify_EventChannelFactory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return 1;
 
-  this->ec_container_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->ec_container().shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   return 0;
@@ -194,7 +186,7 @@ TAO_Notify_EventChannelFactory::get_all_channels (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_EventChannel_Seq_Worker seq_worker;
 
-  return seq_worker.create (*this->ec_container_ ACE_ENV_ARG_PARAMETER);
+  return seq_worker.create (this->ec_container() ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
@@ -206,7 +198,7 @@ TAO_Notify_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::Channe
 {
   TAO_Notify_EventChannel_Find_Worker find_worker;
 
-  return find_worker.resolve (id, *this->ec_container_ ACE_ENV_ARG_PARAMETER);
+  return find_worker.resolve (id, this->ec_container() ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -265,8 +257,7 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& sav
 
   TAO_Notify::Save_Persist_Worker<TAO_Notify_EventChannel> wrk(saver, want_all_children);
 
-  ACE_ASSERT(this->ec_container_ != 0);
-  this->ec_container_->collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
+  this->ec_container().collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (want_all_children || this->reconnect_registry_.is_changed ())
@@ -394,7 +385,7 @@ TAO_Notify_EventChannelFactory::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   // Reconnect all children first
   TAO_Notify::Reconnect_Worker<TAO_Notify_EventChannel> wrk;
 
-  this->ec_container_->collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
+  this->ec_container().collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Then send reconnection announcement to registered clients
@@ -458,7 +449,7 @@ TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path
 
   // EventChannelFactory only:  The first id is proably for the ECF itself
   // if so, silently consume it.
-  if (position < path_size && id_path[position] == this->id_)
+  if (position < path_size && id_path[position] == this->id())
   {
     ++position;
   }
@@ -466,7 +457,7 @@ TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path
   {
     TAO_Notify_EventChannel_Find_Worker find_worker;
 
-    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], *this->ec_container_ ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container() ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     ++position;
     if (ec != 0)
@@ -487,14 +478,14 @@ TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path
 
   // EventChannelFactory only:  The first id is proably for the ECF itself
   // if so, silently consume it.
-  if (position < path_size && id_path[position] == this->id_)
+  if (position < path_size && id_path[position] == this->id())
   {
     ++position;
   }
   if (position < path_size)
   {
     TAO_Notify_EventChannel_Find_Worker find_worker;
-    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], *this->ec_container_ ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container() ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     ++position;
     if (ec != 0)
@@ -539,29 +530,10 @@ TAO_Notify_EventChannelFactory::get_id () const
   return id();
 }
 
+TAO_Notify_EventChannelFactory::TAO_Notify_EventChannel_Container&
+TAO_Notify_EventChannelFactory::ec_container()
+{
+  ACE_ASSERT( this->ec_container_.get() != 0 );
+  return *ec_container_;
+}
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel
-                              , CosNotifyChannelAdmin::EventChannel
-                              , CosNotifyChannelAdmin::EventChannel_ptr
-                              , CosNotifyChannelAdmin::ChannelNotFound>;
-template class TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel>;
-
-template class TAO_Notify_Container_T <TAO_Notify_EventChannel>;
-
-template class TAO_ESF_Shutdown_Proxy<TAO_Notify_EventChannel>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel
-                              , CosNotifyChannelAdmin::EventChannel
-                              , CosNotifyChannelAdmin::EventChannel_ptr
-                              , CosNotifyChannelAdmin::ChannelNotFound>
-#pragma instantiate TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel>
-
-
-#pragma instantiate TAO_Notify_Container_T <TAO_Notify_EventChannel>
-
-#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_Notify_EventChannel>;
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

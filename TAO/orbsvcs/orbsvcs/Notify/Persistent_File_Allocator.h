@@ -39,9 +39,7 @@ namespace TAO_Notify
 class TAO_Notify_Serv_Export Persistent_Callback
 {
 public:
-  /// Destructor.
-  virtual ~Persistent_Callback (void);
-
+  virtual ~Persistent_Callback();
   /// \brief Called by a Persistent_File_Allocator when a write request has
   /// completed.
   virtual void persist_complete() = 0;
@@ -133,7 +131,7 @@ public:
   /// The destructor.
   ~Persistent_File_Allocator();
 
-  bool open (const char* filename,
+  bool open (const ACE_TCHAR* filename,
     const size_t block_size = 512);
 
   /// \brief Wait for pending I/O and terminate our work thread.

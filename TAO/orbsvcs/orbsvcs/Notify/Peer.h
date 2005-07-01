@@ -36,6 +36,7 @@ class TAO_Notify_Peer;
 class TAO_Notify_Serv_Export TAO_Notify_Peer
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Peer > Ptr;
   /// Constuctor
   TAO_Notify_Peer (void);
 
@@ -46,8 +47,6 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-  /// Release
-  virtual void release (void) = 0;
 
   /// Shutdown the peer.
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -74,6 +73,9 @@ protected:
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
                                    const CosNotification::EventTypeSeq& removed
                                    ACE_ENV_ARG_DECL) = 0;
+private:
+  /// Release
+  virtual void release (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)

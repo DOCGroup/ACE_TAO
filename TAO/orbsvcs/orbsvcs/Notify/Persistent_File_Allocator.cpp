@@ -13,7 +13,7 @@
 namespace TAO_Notify
 {
 
-Persistent_Callback::~Persistent_Callback (void)
+Persistent_Callback::~Persistent_Callback()
 {
 }
 
@@ -136,7 +136,7 @@ Persistent_File_Allocator::~Persistent_File_Allocator()
 }
 
 bool
-Persistent_File_Allocator::open (const char* filename,
+Persistent_File_Allocator::open (const ACE_TCHAR* filename,
   const size_t block_size)
 {
   bool file_opened = this->pstore_.open(filename, block_size);
@@ -191,7 +191,7 @@ Persistent_File_Allocator::allocate_at(size_t block_number)
 }
 
 Persistent_Storage_Block*
-Persistent_File_Allocator::allocate_nowrite (void)
+Persistent_File_Allocator::allocate_nowrite()
 {
   Persistent_Storage_Block* result = 0;
   ACE_NEW_RETURN (result,
@@ -327,10 +327,11 @@ Persistent_File_Allocator::shutdown_thread()
 {
   if (this->thread_active_)
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_);
-    this->terminate_thread_ = true;
-    this->wake_up_thread_.signal();
-    ace_mon.release();
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_);
+      this->terminate_thread_ = true;
+      this->wake_up_thread_.signal();
+    }
     this->thread_manager_.close();
     ACE_ASSERT (!this->terminate_thread_);
     ACE_ASSERT (!this->thread_active_);

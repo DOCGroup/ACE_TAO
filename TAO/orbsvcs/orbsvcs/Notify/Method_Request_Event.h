@@ -83,7 +83,7 @@ public:
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (
     const TAO_Notify_Method_Request_Event & prev_request,
-    const TAO_Notify_Event_var & event_var);
+    const TAO_Notify_Event::Ptr & event_var);
 
   TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request);
@@ -94,7 +94,7 @@ public:
   /// satisfy the pure virtual method.  Should never be called.
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 private:
-  TAO_Notify_Event_var event_var_;
+  TAO_Notify_Event::Ptr event_var_;
 };
 
 #include /**/ "ace/post.h"

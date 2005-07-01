@@ -37,7 +37,7 @@ public:
   TAO_Notify_SequencePushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  ~TAO_Notify_SequencePushSupplier ();
+  virtual ~TAO_Notify_SequencePushSupplier ();
 
   /// Init
   void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);

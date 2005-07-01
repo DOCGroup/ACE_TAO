@@ -33,6 +33,7 @@ class ACE_Event_Handler;
 class TAO_Notify_Serv_Export TAO_Notify_Timer : public TAO_Notify_Refcountable
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer > Ptr;
   /// Destructor
   virtual ~TAO_Notify_Timer (){};
 

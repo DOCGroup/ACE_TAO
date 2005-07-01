@@ -61,9 +61,9 @@ TAO_Notify_AdminProperties::global_queue_lock (void)
 }
 
 ACE_INLINE TAO_SYNCH_CONDITION&
-TAO_Notify_AdminProperties::global_queue_not_full_condition (void)
+TAO_Notify_AdminProperties::global_queue_not_full(void)
 {
-  return this->global_queue_not_full_condition_;
+  return this->global_queue_not_full_;
 }
 
 ACE_INLINE TAO_Notify_Atomic_Property_Long&

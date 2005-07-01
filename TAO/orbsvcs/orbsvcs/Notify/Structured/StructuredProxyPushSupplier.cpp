@@ -22,8 +22,6 @@ TAO_Notify_StructuredProxyPushSupplier::~TAO_Notify_StructuredProxyPushSupplier 
 void
 TAO_Notify_StructuredProxyPushSupplier::release (void)
 {
-  if (this->consumer_)
-    this->consumer_->release ();
 
   delete this;
   //@@ inform factory
@@ -67,6 +65,7 @@ TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (ACE
                    ))
 
 {
+  TAO_Notify_StructuredProxyPushSupplier::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -106,6 +106,7 @@ module CosNotifyComm
     CosEventComm::PushConsumer {
   };
 
+#ifdef TAO_HAS_NOTIFY_PULL_INTERFACES
   /**
    * @interface PullConsumer
    *
@@ -131,7 +132,7 @@ module CosNotifyComm
     NotifySubscribe,
     CosEventComm::PullSupplier {
   };
-
+#endif /* TAO_HAS_NOTIFY_PULL_INTERFACES */
   /**
    * @interface PushSupplier
    *
@@ -176,6 +177,7 @@ module CosNotifyComm
     void disconnect_structured_push_consumer();
   };
 
+#ifdef TAO_HAS_NOTIFY_PULL_INTERFACES
   /**
    * @interface StructuredPullConsumer
    *
@@ -239,6 +241,7 @@ module CosNotifyComm
      */
     void disconnect_structured_pull_supplier();
   };
+#endif /* TAO_HAS_NOTIFY_PULL_INTERFACES */
 
   /**
    * @interface StructuredPushSupplier

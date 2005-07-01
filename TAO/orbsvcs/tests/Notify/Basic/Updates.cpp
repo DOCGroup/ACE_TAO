@@ -184,10 +184,8 @@ Updates::wait_for_updates (int expected_added, int expected_removed)
           removed_count_ == expected_removed)
         break;
 
-      {
-        if (this->orb_->work_pending ())
-          this->orb_->perform_work ();
-      }
+      ACE_Time_Value tv(0, 100 * 1000);
+      orb_->run(tv);
     }
 }
 
@@ -479,16 +477,9 @@ main (int argc, char* argv[])
       updates.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::UserException, ue)
-    {
-      ACE_PRINT_EXCEPTION (ue,
-                           "Updates user error: ");
-      return 1;
-    }
   ACE_CATCH (CORBA::SystemException, se)
     {
-      ACE_PRINT_EXCEPTION (se,
-                           "Updates system error: ");
+      ACE_PRINT_EXCEPTION (se, "Error: ");
       return 1;
     }
   ACE_ENDTRY;

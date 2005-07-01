@@ -18,7 +18,6 @@ TAO_Notify_CosEC_ProxyPushSupplier::~TAO_Notify_CosEC_ProxyPushSupplier ()
 void
 TAO_Notify_CosEC_ProxyPushSupplier::release (void)
 {
-  this->consumer_->release ();
 
   delete this;
   //@@ inform factory
@@ -51,6 +50,7 @@ TAO_Notify_CosEC_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG
                    CORBA::SystemException
                    ))
 {
+  TAO_Notify_CosEC_ProxyPushSupplier::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 

@@ -47,9 +47,9 @@ ConnectDisconnect::ConnectDisconnect (void)
    any_supplier_ (0),
    structured_supplier_ (0),
    sequence_supplier_ (0),
-   count_ (10),
-   consumers_ (10),
-   suppliers_ (10)
+   count_ (3),
+   consumers_ (3),
+   suppliers_ (3)
 {
 }
 
@@ -111,8 +111,6 @@ ConnectDisconnect::init (int argc,
   // How many are we counting..?
   this->expected_count_ = count_ * (consumers_ * 3 + suppliers_ * 3);
 
-  // this->expected_count_ = 10*(10*2 + 0);
-
   // Create the consumers and suppliers.
 
   // Arrays of Consumers.
@@ -137,6 +135,7 @@ ConnectDisconnect::init (int argc,
                   TAO_Notify_Tests_SequencePushSupplier*[this->suppliers_],
                   -1);
 
+  consumer_start( 0 );
   return 0;
 }
 
@@ -153,19 +152,16 @@ ConnectDisconnect::parse_args(int argc, char *argv[])
       if ((current_arg = arg_shifter.get_the_parameter ("-count")))
         {
           this->count_ = ACE_OS::atoi (current_arg);
-          // The number of counsumers to create.
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-consumers")))
         {
           this->consumers_ = ACE_OS::atoi (current_arg);
-          // The number of suppliers to create.
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-suppliers")))
         {
           this->suppliers_ = ACE_OS::atoi (current_arg);
-          // The number of iterations to connect disconnect.
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
@@ -325,28 +321,22 @@ ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
 void
 ConnectDisconnect::end_test (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  consumer_done( 0 );
 }
 
 int
 ConnectDisconnect::check_results (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "result_count_ = %d",
-              this->result_count_.value ()));
-  ACE_DEBUG ((LM_DEBUG,
-              " expected_count_ = %d\n",
-              this->expected_count_));
+  ACE_DEBUG ((LM_DEBUG, "result_count_ = %d", this->result_count_.value ()));
+  ACE_DEBUG ((LM_DEBUG, " expected_count_ = %d\n", this->expected_count_));
 
   if (this->result_count_ != this->expected_count_)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ConnectDisconnect test failed\n"));
+      ACE_DEBUG ((LM_DEBUG, "ConnectDisconnect test failed\n"));
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ConnectDisconnect test succeded\n"));
+      ACE_DEBUG ((LM_DEBUG, "ConnectDisconnect test succeeded\n"));
     }
 
   // Destroy the channel.
@@ -371,9 +361,7 @@ main (int argc, char* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      client.init (argc,
-                   argv
-                   ACE_ENV_ARG_PARAMETER);
+      client.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       client.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -382,16 +370,9 @@ main (int argc, char* argv[])
       client.end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  ACE_CATCH (CORBA::Exception, se)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "ConnectDisconnect user error: ");
-      return 1;
-    }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "ConnectDisconnect system error: ");
+      ACE_PRINT_EXCEPTION (se, "Error: ");
       return 1;
     }
   ACE_ENDTRY;
@@ -399,11 +380,3 @@ main (int argc, char* argv[])
   return client.check_results ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -21,8 +21,6 @@ TAO_Notify_ProxyPushConsumer::~TAO_Notify_ProxyPushConsumer ()
 void
 TAO_Notify_ProxyPushConsumer::release (void)
 {
-  if (this->supplier_)
-    this->supplier_->release ();
 
   delete this;
   //@@ inform factory
@@ -45,8 +43,8 @@ TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
                    ))
 {
   // Check if we should proceed at all.
-  if (this->admin_properties_->reject_new_events () == 1
-      && this->admin_properties_->queue_full ())
+  if (this->admin_properties().reject_new_events () == 1
+      && this->admin_properties().queue_full ())
     ACE_THROW (CORBA::IMP_LIMIT ());
 
   if (this->is_connected () == 0)
@@ -84,6 +82,7 @@ void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_
                    CORBA::SystemException
                    ))
 {
+  TAO_Notify_ProxyPushConsumer::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -45,7 +45,7 @@ public:
   TAO_Notify_ETCL_FilterFactory (void);
 
   /// Destructor
-  ~TAO_Notify_ETCL_FilterFactory ();
+  virtual ~TAO_Notify_ETCL_FilterFactory ();
 
   ///= TAO_Notify_FilterFactory methods.
 

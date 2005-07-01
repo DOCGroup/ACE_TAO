@@ -44,7 +44,7 @@ public:
   TAO_Notify_ETCL_Filter (void);
 
   /// Destructor
-  ~TAO_Notify_ETCL_Filter ();
+  virtual ~TAO_Notify_ETCL_Filter ();
 
 protected:
   virtual char * constraint_grammar (ACE_ENV_SINGLE_ARG_DECL)

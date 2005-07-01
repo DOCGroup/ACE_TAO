@@ -36,21 +36,19 @@ public:
   /// Destructor
   ~TAO_RT_Notify_Service ();
 
-  /// Overload base virtual method to silence HPUX11 build warning.
-  virtual int init (int argc, char *argv[]);
 
   /// Init the service.
-  virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
 protected:
   /// Init the data members
   virtual void init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
   /// Create the Factory for RT Notify objects.
-  virtual void init_factory (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Factory* create_factory (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Creates the Builder for RT Notify objects.
-  virtual void init_builder (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Builder* create_builder (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 ACE_FACTORY_DECLARE (TAO_RT_Notify,TAO_RT_Notify_Service)

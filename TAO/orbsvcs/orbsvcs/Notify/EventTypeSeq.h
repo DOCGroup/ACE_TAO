@@ -74,8 +74,10 @@ public:
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
     const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
-  virtual void release (void);
 
+private:
+
+  virtual void release (void);
 };
 
 #include /**/ "ace/post.h"

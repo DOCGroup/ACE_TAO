@@ -13,7 +13,9 @@
 #define TAO_Notify_EVENT_MANAGER_H
 
 #include /**/ "ace/pre.h"
+#include "ace/Auto_Ptr.h"
 
+#include "Refcountable.h"
 #include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -30,15 +32,15 @@ class TAO_Notify_ProxySupplier;
 class TAO_Notify_ProxyConsumer;
 class TAO_Notify_EventTypeSeq;
 
-template <class PROXY, class ACE_LOCK> 
+template <class PROXY, class ACE_LOCK>
 class TAO_Notify_Event_Map_T;
 
-typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier, 
-                               TAO_SYNCH_RW_MUTEX> 
+typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier,
+                               TAO_SYNCH_RW_MUTEX>
   TAO_Notify_Consumer_Map;
 
-typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, 
-                               TAO_SYNCH_RW_MUTEX> 
+typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer,
+                               TAO_SYNCH_RW_MUTEX>
   TAO_Notify_Supplier_Map;
 
 /**
@@ -47,14 +49,17 @@ typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer,
  * @brief A class that manages the Consumer and Supplier maps.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Event_Manager
+class TAO_Notify_Serv_Export TAO_Notify_Event_Manager : public TAO_Notify_Refcountable
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager > Ptr;
   /// Constuctor
   TAO_Notify_Event_Manager (void);
 
   /// Destructor
-  ~TAO_Notify_Event_Manager ();
+  virtual ~TAO_Notify_Event_Manager ();
+
+  void release();
 
   /// Init
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -75,8 +80,8 @@ public:
   void disconnect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL);
 
   /// Map accessors.
-  TAO_Notify_Consumer_Map* consumer_map (void);
-  TAO_Notify_Supplier_Map* supplier_map (void);
+  TAO_Notify_Consumer_Map& consumer_map (void);
+  TAO_Notify_Supplier_Map& supplier_map (void);
 
   /// Offer change received on <proxy_consumer>.
   void offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL);
@@ -85,10 +90,10 @@ public:
   void subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL);
 
   /// What are the types being offered.
-  const TAO_Notify_EventTypeSeq& offered_types (void);
+  const TAO_Notify_EventTypeSeq& offered_types (void) const;
 
   /// What are the types being subscribed.
-  const TAO_Notify_EventTypeSeq& subscription_types (void);
+  const TAO_Notify_EventTypeSeq& subscription_types (void) const;
 
 protected:
   /// Subscribe <proxy_supplier> to the event type sequence list <seq>.
@@ -103,11 +108,12 @@ protected:
   /// Subscribe <proxy_consumer> to the event type sequence list <seq>.
   void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq ACE_ENV_ARG_DECL);
 
+private:
   /// Consumer Map
-  TAO_Notify_Consumer_Map* consumer_map_;
+  ACE_Auto_Ptr< TAO_Notify_Consumer_Map > consumer_map_;
 
   /// Supplier Map
-  TAO_Notify_Supplier_Map* supplier_map_;
+  ACE_Auto_Ptr< TAO_Notify_Supplier_Map > supplier_map_;
 };
 
 /********************************************************************************/

@@ -53,7 +53,7 @@ namespace TAO_Notify
     Reconnection_Registry (Topology_Parent & parent);
 
     /// Destructor
-    ~Reconnection_Registry ();
+    virtual ~Reconnection_Registry ();
 
     //////////////////////////
     // During normal operation
@@ -84,9 +84,9 @@ namespace TAO_Notify
     void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory
       ACE_ENV_ARG_DECL);
 
+  private:
     void release (void);
 
-  private:
     Reconnection_Registry_Type reconnection_registry_;
     ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;
   };

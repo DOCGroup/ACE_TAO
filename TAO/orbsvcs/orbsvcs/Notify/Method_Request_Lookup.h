@@ -85,7 +85,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_Queueable
 public:
   /// Constuctor from event
   TAO_Notify_Method_Request_Lookup_Queueable (
-    const TAO_Notify_Event_var& event,
+    const TAO_Notify_Event::Ptr& event,
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
   /// Constuctor from delivery request
@@ -94,14 +94,14 @@ public:
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Lookup_Queueable ();
+  virtual ~TAO_Notify_Method_Request_Lookup_Queueable ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
-  const TAO_Notify_Event_var event_var_;
-  TAO_Notify_ProxyConsumer_Guard proxy_guard_;
+  const TAO_Notify_Event::Ptr event_var_;
+  TAO_Notify_ProxyConsumer::Ptr proxy_guard_;
 };
 
 /*****************************************************************************************************************************/
@@ -123,7 +123,7 @@ public:
     TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Lookup_No_Copy ();
+  virtual ~TAO_Notify_Method_Request_Lookup_No_Copy ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);

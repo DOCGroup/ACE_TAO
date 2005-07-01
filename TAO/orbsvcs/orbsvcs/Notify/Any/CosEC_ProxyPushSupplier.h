@@ -49,10 +49,7 @@ public:
   TAO_Notify_CosEC_ProxyPushSupplier (void);
 
   /// Destructor
-  ~TAO_Notify_CosEC_ProxyPushSupplier ();
-
-  /// Release
-  virtual void release (void);
+  virtual ~TAO_Notify_CosEC_ProxyPushSupplier ();
 
   virtual const char * get_proxy_type_name (void) const;
 
@@ -73,6 +70,10 @@ public:
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
+
+private:
+  /// Release
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

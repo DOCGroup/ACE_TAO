@@ -36,7 +36,7 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::SupplierAdmin_var ret;
 
-  CORBA::Object_var object = this->supplier_admin_->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var object = this->supplier_admin().ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ret._retn ());
 
   ret = CosNotifyChannelAdmin::SupplierAdmin::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
@@ -62,7 +62,7 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::E
     this->subscribed_types_.add_and_remove (seq_added, seq_removed);
   }
 
-  this->event_manager_->offer_change (this, seq_added, seq_removed ACE_ENV_ARG_PARAMETER);
+  this->event_manager().offer_change (this, seq_added, seq_removed ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
@@ -71,7 +71,7 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (CosNotifyCh
                    CORBA::SystemException
                    ))
 {
-  return this->obtain_types (mode, this->event_manager_->subscription_types () ACE_ENV_ARG_PARAMETER);
+  return this->obtain_types (mode, this->event_manager().subscription_types () ACE_ENV_ARG_PARAMETER);
 }
 
 #endif /* TAO_Notify_PROXYCONSUMER_T_CPP */

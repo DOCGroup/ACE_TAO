@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Message_Block.h"
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 #include "ace/OS_NS_sys_time.h"
 
 #include "Event.h"

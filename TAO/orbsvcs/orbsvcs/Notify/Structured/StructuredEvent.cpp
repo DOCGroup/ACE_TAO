@@ -135,10 +135,3 @@ TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::S
 TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
 {
 }
-
-const TAO_Notify_Event *
-TAO_Notify_StructuredEvent::queueable_copy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)const
-{
-  return this;
-}
-

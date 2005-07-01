@@ -46,10 +46,8 @@ public:
   TAO_Notify_ProxyPushConsumer (void);
 
   /// Destructor
-  ~TAO_Notify_ProxyPushConsumer ();
+  virtual ~TAO_Notify_ProxyPushConsumer ();
 
-  /// Release
-  virtual void release (void);
 
 //  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
   virtual const char * get_proxy_type_name (void) const;
@@ -82,9 +80,8 @@ protected:
                      ));
 
 private:
-  // Overloaded TAO_Notify_ProxyConsumer::push to get around Borland compiler warnings.
-  // I don't think this is necessary any more -- Dale.
-//  virtual void push (TAO_Notify_Event_var &event);
+  /// Release
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

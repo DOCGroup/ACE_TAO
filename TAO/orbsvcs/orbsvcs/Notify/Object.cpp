@@ -7,6 +7,7 @@
 #include "Builder.h"
 #include "ThreadPool_Task.h"
 #include "Reactive_Task.h"
+#include "Event_Manager.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -18,17 +19,14 @@ ACE_RCSID(Notify, TAO_Notify_Object, "$Id$")
 
 
 TAO_Notify_Object::TAO_Notify_Object (void)
-  : event_manager_ (0)
-  , admin_properties_ (0)
-  , id_ (0)
-  , poa_ (0)
+  : poa_ (0)
   , proxy_poa_ (0)
-  , own_proxy_poa_ (0)
+  , own_proxy_poa_ (false)
   , object_poa_ (0)
-  , own_object_poa_ (0)
-  , worker_task_ (0)
-  , own_worker_task_ (0)
-  , shutdown_ (0)
+  , own_object_poa_ (false)
+  , id_ (0)
+  , own_worker_task_ (false)
+  , shutdown_ (false)
 {
   if (TAO_debug_level > 2 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
@@ -39,27 +37,34 @@ TAO_Notify_Object::~TAO_Notify_Object ()
   if (TAO_debug_level > 2 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
 
-  this->shutdown_proxy_poa ();
-  this->shutdown_object_poa ();
+  this->destroy_proxy_poa ();
+  this->destroy_object_poa ();
+  this->destroy_poa ();
 }
 
 void
 TAO_Notify_Object::initialize (TAO_Notify_Object* parent)
 {
+  ACE_ASSERT (parent != 0 && this->event_manager_.get() == 0);
+
+  // Do not use sets to avoid asserts.
+  // Object must be able to inherit NULL references
+  // due to current design.
   this->event_manager_ = parent->event_manager_;
   this->admin_properties_ = parent->admin_properties_;
-
-  this->poa_ = parent->poa_;
-  this->object_poa_ = parent->object_poa_;
-  this->proxy_poa_ = parent->proxy_poa_;
+  this->inherit_poas( *parent );
   this->worker_task_ = parent->worker_task_;
-
-  if (this->worker_task_)
-    this->worker_task_->_incr_refcnt ();
 
   // Pass  QoS
   parent->qos_properties_.transfer (this->qos_properties_);
   this->qos_changed (this->qos_properties_);
+}
+
+void
+TAO_Notify_Object::set_event_manager( TAO_Notify_Event_Manager* event_manager )
+{
+  ACE_ASSERT( event_manager != 0 );
+  this->event_manager_.reset( event_manager );
 }
 
 CORBA::Object_ptr
@@ -90,12 +95,12 @@ TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_CATCHANY
     {
+      // Do not propagate any exceptions
       if (TAO_debug_level > 2)
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t)\n");
     ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
   }
-      // Do not propagate any exceptions
     }
   ACE_ENDTRY;
 }
@@ -129,26 +134,35 @@ void
 TAO_Notify_Object::shutdown_worker_task (void)
 {
   // Only do this if we are the owner.
-  if (this->own_worker_task_ == 1)
+  TAO_Notify_Worker_Task::Ptr task( this->worker_task_ );
+  this->worker_task_.reset();
+  if ( task.isSet() )
     {
-      this->worker_task_->shutdown (); // the worker deletes itself when its <close> hook is eventually called.
+    if ( this->own_worker_task_ )
+    {
+      task->shutdown ();
     }
-
-  if (this->worker_task_)
-    this->worker_task_->_decr_refcnt ();
+    }
 }
 
 void
-TAO_Notify_Object::shutdown_proxy_poa (void)
+TAO_Notify_Object::destroy_proxy_poa (void)
 {
-  if (this->own_proxy_poa_ == 1)
+  if (this->proxy_poa_ != 0)
     {
       ACE_TRY_NEW_ENV
         {
+          if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = 0;
+          if ( this->proxy_poa_ == this->poa_ ) this->poa_ = 0;
+
+          if ( this->own_proxy_poa_ == true )
+          {
+            this->own_proxy_poa_ = false;
+          	ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( object_poa_ );
           this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          delete this->proxy_poa_;
+          }
+          this->proxy_poa_ = 0;
         }
       ACE_CATCHANY
         {
@@ -161,16 +175,23 @@ TAO_Notify_Object::shutdown_proxy_poa (void)
 }
 
 void
-TAO_Notify_Object::shutdown_object_poa (void)
+TAO_Notify_Object::destroy_object_poa (void)
 {
-  if (this->own_object_poa_ == 1)
+  if (this->object_poa_ != 0)
     {
       ACE_TRY_NEW_ENV
         {
+          if ( this->object_poa_ == this->proxy_poa_ ) this->proxy_poa_ = 0;
+          if ( this->object_poa_ == this->poa_ ) this->poa_ = 0;
+
+          if ( this->own_object_poa_ == true )
+          {
+            this->own_object_poa_ = false;
+          	ACE_Auto_Ptr< TAO_Notify_POA_Helper > aop( object_poa_ );
           this->object_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          delete this->object_poa_;
+          }
+          this->object_poa_ = 0;
         }
       ACE_CATCHANY
         {
@@ -182,52 +203,51 @@ TAO_Notify_Object::shutdown_object_poa (void)
     }
 }
 
-void
-TAO_Notify_Object::worker_task_own (TAO_Notify_Worker_Task* worker_task)
+/// Shutdown the current poa.
+void TAO_Notify_Object::destroy_poa (void)
 {
-  this->worker_task (worker_task);
-
-  // claim ownership.
-  this->own_worker_task_ = 1;
+  this->poa_ = 0;
 }
 
 void
-TAO_Notify_Object::worker_task (TAO_Notify_Worker_Task* worker_task)
+TAO_Notify_Object::set_worker_task (TAO_Notify_Worker_Task* worker_task)
 {
+  ACE_ASSERT( worker_task != 0 );
+
   // shutdown the current worker.
   this->shutdown_worker_task ();
 
-  this->worker_task_ = worker_task;
+  this->worker_task_.reset (worker_task);
 
-  this->own_worker_task_ = 0;
+  this->own_worker_task_ = true;
 
-  if (this->worker_task_)
-    this->worker_task_->_incr_refcnt ();
 }
 
 void
-TAO_Notify_Object::proxy_poa_own (TAO_Notify_POA_Helper* proxy_poa)
+TAO_Notify_Object::set_proxy_poa (TAO_Notify_POA_Helper* proxy_poa)
 {
   // shutdown current proxy poa.
-  this->shutdown_proxy_poa ();
+  this->destroy_proxy_poa ();
 
   this->proxy_poa_ = proxy_poa;
 
-  // claim ownership.
-  own_proxy_poa_ = 1;
+  this->own_proxy_poa_ = true;
 }
 
 void
-TAO_Notify_Object::object_poa_own (TAO_Notify_POA_Helper* object_poa)
+TAO_Notify_Object::set_object_poa (TAO_Notify_POA_Helper* object_poa)
 {
   // shutdown current object poa.
-  this->shutdown_object_poa ();
+  this->destroy_object_poa ();
 
-  // shutdown current object poa
   this->object_poa_ = object_poa;
 
-  // claim ownership.
-  this->own_object_poa_ = 1;
+  this->own_object_poa_ = true;
+}
+void
+TAO_Notify_Object::set_poa (TAO_Notify_POA_Helper* poa)
+{
+  this->poa_ = poa;
 }
 
 void
@@ -300,6 +320,7 @@ TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties
 TAO_Notify_Timer*
 TAO_Notify_Object::timer (void)
 {
+  ACE_ASSERT (worker_task_.get() != 0);
   return this->worker_task_->timer ();
 }
 

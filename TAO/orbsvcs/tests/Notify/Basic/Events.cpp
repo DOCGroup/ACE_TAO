@@ -139,6 +139,8 @@ Events::init (int argc,
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  consumer_start( 0 );
+
   return 0;
 }
 
@@ -292,7 +294,7 @@ Events::run_test (ACE_ENV_SINGLE_ARG_DECL)
 void
 Events::end_test (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  consumer_done( 0 );
 }
 
 int
@@ -339,18 +341,12 @@ main (int argc, char* argv[])
       events.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      events.ORB_run ();
+      events.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
+      ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  ACE_CATCH (CORBA::Exception, se)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "Events user error: ");
-      return 1;
-    }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "Events system error: ");
+      ACE_PRINT_EXCEPTION (se, "Error: ");
       return 1;
     }
   ACE_ENDTRY;

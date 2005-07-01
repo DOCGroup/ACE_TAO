@@ -234,7 +234,6 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
       Notify/Any/ProxyPushSupplier.cpp
       Notify/Any/PushConsumer.cpp
       Notify/Any/PushSupplier.cpp
-      Notify/Sequence/Batch_Buffering_Strategy.cpp
       Notify/Sequence/SequenceProxyPushConsumer.cpp
       Notify/Sequence/SequenceProxyPushSupplier.cpp
       Notify/Sequence/SequencePushConsumer.cpp

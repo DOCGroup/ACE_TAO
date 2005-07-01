@@ -39,7 +39,7 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ,
 }
 
 void
-TAO_Notify_RT_StructuredProxyPushSupplier::deliver_request (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL)
+TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {

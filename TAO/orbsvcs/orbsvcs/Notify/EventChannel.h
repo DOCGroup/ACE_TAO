@@ -23,6 +23,8 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "Topology_Object.h"
 #include "Object.h"
+#include "EventChannelFactory.h"
+
 
 class TAO_Notify_ConsumerAdmin;
 class TAO_Notify_SupplierAdmin;
@@ -49,6 +51,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannel
   friend class TAO_Notify_Builder;
 
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannel > Ptr;
   typedef CosNotifyChannelAdmin::ChannelIDSeq SEQ;
   typedef CosNotifyChannelAdmin::ChannelIDSeq_var SEQ_VAR;
 
@@ -56,7 +59,7 @@ public:
   TAO_Notify_EventChannel (void);
 
   /// Destructor
-  ~TAO_Notify_EventChannel ();
+  virtual ~TAO_Notify_EventChannel ();
 
   /// Init
   void init (TAO_Notify_EventChannelFactory* ecf
@@ -92,30 +95,20 @@ public:
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
 
-  /// Release
-  virtual void release (void);
 
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
-
-protected:
-  virtual void save_attrs(TAO_Notify::NVPList& attrs);
-
-protected:
+private:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
   typedef TAO_Notify_Container_T <TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Container;
 
+  virtual void save_attrs(TAO_Notify::NVPList& attrs);
+
   /// = Data Members
   /// The parent object.
-  TAO_Notify_EventChannelFactory* ecf_;
-
-  /// ConsumerAdmin Container.
-  TAO_Notify_ConsumerAdmin_Container *ca_container_;
-
-  /// SupplierAdmin Container.
-  TAO_Notify_SupplierAdmin_Container *sa_container_;
+  TAO_Notify_EventChannelFactory::Ptr ecf_;
 
   TAO_SYNCH_MUTEX default_admin_mutex_;
 
@@ -235,6 +228,19 @@ protected:
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
+
+private:
+  TAO_Notify_ConsumerAdmin_Container& ca_container();
+  TAO_Notify_SupplierAdmin_Container& sa_container();
+
+  /// ConsumerAdmin Container.
+  ACE_Auto_Ptr< TAO_Notify_ConsumerAdmin_Container > ca_container_;
+
+  /// SupplierAdmin Container.
+  ACE_Auto_Ptr< TAO_Notify_SupplierAdmin_Container > sa_container_;
+
+  /// Release
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

@@ -28,13 +28,11 @@ ACE_RCSID(RT_Notify, TAO_Notify_ProxyConsumer, "$Id$")
 
 TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer (void)
   : supplier_admin_ (0)
-  , supplier_ (0)
 {
 }
 
 TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer ()
 {
-  this->supplier_admin_->_decr_refcnt ();
 }
 
 TAO_Notify_Peer*
@@ -44,14 +42,14 @@ TAO_Notify_ProxyConsumer::peer (void)
 }
 
 void
-TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent * topology_parent ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent* topology_parent ACE_ENV_ARG_DECL)
 {
+  ACE_ASSERT( this->supplier_admin_.get() == 0 );
+
   TAO_Notify_Proxy::initialize (topology_parent ACE_ENV_ARG_PARAMETER);
 
-  this->supplier_admin_ = dynamic_cast<TAO_Notify_SupplierAdmin *> (topology_parent);
-  ACE_ASSERT(this->supplier_admin_ != 0);
-
-  this->supplier_admin_->_incr_refcnt ();
+  this->supplier_admin_.reset (dynamic_cast<TAO_Notify_SupplierAdmin *>(topology_parent));
+  ACE_ASSERT (this->supplier_admin_.get() != 0);
 
   const CosNotification::QoSProperties &default_ps_qos =
     TAO_Notify_PROPERTIES::instance ()->default_proxy_consumer_qos_properties ();
@@ -66,52 +64,45 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier ACE_ENV_ARG_DEC
                    , CosEventChannelAdmin::AlreadyConnected
                    ))
 {
-  TAO_Notify_Atomic_Property_Long& supplier_count = this->admin_properties_->suppliers ();
-  const TAO_Notify_Property_Long& max_suppliers = this->admin_properties_->max_suppliers ();
+  // Adopt the supplier
+  ACE_Auto_Ptr< TAO_Notify_Supplier > auto_supplier (supplier);
 
-  if (max_suppliers != 0 &&
-      supplier_count >= max_suppliers.value ())
+  TAO_Notify_Atomic_Property_Long& supplier_count = this->admin_properties().suppliers ();
+  const TAO_Notify_Property_Long& max_suppliers = this->admin_properties().max_suppliers ();
+
+  if (max_suppliers != 0 && supplier_count >= max_suppliers.value ())
+  {
     ACE_THROW (CORBA::IMP_LIMIT ()); // we've reached the limit of suppliers connected.
+  }
 
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                         CORBA::INTERNAL ());
     ACE_CHECK;
-    TAO_Notify_Supplier* deleted_supplier = 0;
 
-    if (this->is_connected ())
+    // if supplier is set and reconnect not allowed we get out.
+    if (this->is_connected () && TAO_Notify_PROPERTIES::instance()->allow_reconnect() == false)
       {
-        if (TAO_Notify_PROPERTIES::instance()->allow_reconnect())
-          {
-            deleted_supplier = this->supplier_;
-          }
-        else
-          {
-            supplier->release ();
             ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
           }
-      }
 
-    this->supplier_ = supplier;
+    // Adopt the supplier
+    this->supplier_ = auto_supplier;
 
     this->supplier_admin_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
     ACE_CHECK;
-
-    if (deleted_supplier != 0)
-      {
-        deleted_supplier->_decr_refcnt();
       }
-  }
 
   // Inform QoS values.
-  supplier_->qos_changed (this->qos_properties_);
+  ACE_ASSERT (this->supplier_.get() != 0);
+  this->supplier_->qos_changed (this->qos_properties_);
 
   TAO_Notify_EventTypeSeq removed;
 
-  this->event_manager_->offer_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
+  this->event_manager().offer_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->event_manager_->connect (this ACE_ENV_ARG_PARAMETER);
+  this->event_manager().connect (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Increment the global supplier count
@@ -122,8 +113,8 @@ TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event ACE_ENV_ARG_DECL)
 {
   if (this->supports_reliable_events ())
     {
-      TAO_Notify_Event_var pevent;
-      event->queueable_copy (pevent ACE_ENV_ARG_PARAMETER);
+      TAO_Notify_Event::Ptr pevent (
+        event->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
       ACE_CHECK;
       TAO_Notify::Routing_Slip_Ptr routing_slip =
         TAO_Notify::Routing_Slip::create (pevent ACE_ENV_ARG_PARAMETER);
@@ -137,7 +128,7 @@ TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event ACE_ENV_ARG_DECL)
   else
     {
       TAO_Notify_Method_Request_Lookup_No_Copy request (event, this);
-      this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+      this->execute_task (request ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -163,14 +154,14 @@ TAO_Notify_ProxyConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_EventTypeSeq added;
 
-  event_manager_->offer_change (this, added, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
+  event_manager().offer_change (this, added, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->event_manager_->disconnect (this ACE_ENV_ARG_PARAMETER);
+  this->event_manager().disconnect (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Decrement the global supplier count
-  this->admin_properties_->suppliers ()--;
+  this->admin_properties().suppliers ()--;
 }
 
 int
@@ -184,9 +175,10 @@ TAO_Notify_ProxyConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
-  if (this->supplier_ != 0)
+  if (this->supplier_.get() != 0)
+  {
     this->supplier_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+  }
   return 0;
 }
 

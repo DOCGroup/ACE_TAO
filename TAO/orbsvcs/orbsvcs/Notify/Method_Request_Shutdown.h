@@ -36,7 +36,7 @@ public:
   TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Shutdown ();
+  virtual ~TAO_Notify_Method_Request_Shutdown ();
 
   /// Create a copy of this object.
   TAO_Notify_Method_Request_Queueable* copy (void);

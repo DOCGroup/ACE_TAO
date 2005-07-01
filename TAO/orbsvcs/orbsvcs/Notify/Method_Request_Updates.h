@@ -25,7 +25,7 @@
 #include "Proxy.h"
 
 typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
-                                        , TAO_Notify_Proxy_Guard
+                                        , TAO_Notify_Proxy::Ptr
                                         , const TAO_Notify_EventTypeSeq&
                                         , TAO_Notify_Proxy*
                                         > TAO_Notify_Method_Request_Updates_Base;
@@ -44,7 +44,7 @@ public:
   TAO_Notify_Method_Request_Updates (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Updates ();
+  virtual ~TAO_Notify_Method_Request_Updates ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
@@ -72,7 +72,7 @@ public:
   TAO_Notify_Method_Request_Updates_No_Copy (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Updates_No_Copy ();
+  virtual ~TAO_Notify_Method_Request_Updates_No_Copy ();
 
   /// Create a copy of this object.
   virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);

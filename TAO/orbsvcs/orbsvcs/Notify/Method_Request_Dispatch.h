@@ -81,8 +81,7 @@ protected:
 
 protected:
   /// The Proxy
-  TAO_Notify_ProxySupplier_Guard proxy_supplier_;
-  //TAO_Notify_ProxySupplier* proxy_supplier_;
+  TAO_Notify_ProxySupplier::Ptr proxy_supplier_;
 
   /// Flag is true if we want to do filtering else false.
   bool filtering_;
@@ -105,7 +104,7 @@ public:
   /// of the one in the previous method request
   TAO_Notify_Method_Request_Dispatch_Queueable (
     const TAO_Notify_Method_Request_Event & request,
-    TAO_Notify_Event_var & event,
+    TAO_Notify_Event::Ptr & event,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
@@ -117,14 +116,14 @@ public:
     bool filtering);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Dispatch_Queueable ();
+  virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
-  const TAO_Notify_Event_var event_var_;
-  TAO_Notify_ProxySupplier_Guard proxy_guard_;
+  const TAO_Notify_Event::Ptr event_var_;
+  TAO_Notify_ProxySupplier::Ptr proxy_guard_;
 };
 
 /*******************************************************************************************************/
@@ -153,7 +152,7 @@ public:
     bool filtering);
 
   /// Destructor
-  ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
+  virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);

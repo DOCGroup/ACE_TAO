@@ -25,7 +25,9 @@
 #include "Notify_SequencePushSupplier.h"
 
 #if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
 #pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -129,7 +131,7 @@ protected:
 
 /***************************************************************************/
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
