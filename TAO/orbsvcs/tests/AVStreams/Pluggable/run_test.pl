@@ -15,13 +15,14 @@ $sleeptime = 2;
 $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
+$input = PerlACE::LocalFile ("test_input");
 
 $debug = 0;
 
+unlink $nsior, $test_input;
+
 # generate test stream data
 $input = PerlACE::generate_test_file("test_input", 102400);
-
-unlink $nsior;
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {

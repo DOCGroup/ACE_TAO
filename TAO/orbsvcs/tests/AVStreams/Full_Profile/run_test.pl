@@ -16,6 +16,7 @@ $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 $outfile = PerlACE::LocalFile ("output");
+$input = PerlACE::LocalFile ("test_input");
 
 $debug = 0;
 
