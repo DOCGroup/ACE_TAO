@@ -54,7 +54,7 @@ namespace TAO
    * point, and enforces flow rules dictated by the Portable Interceptor
    * specification/chapter.
    */
-  class TAO_Export ClientRequestInterceptor_Adapter_Impl :
+  class TAO_PI_Export ClientRequestInterceptor_Adapter_Impl :
     public ClientRequestInterceptor_Adapter
   {
   public:
