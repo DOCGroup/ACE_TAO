@@ -64,7 +64,8 @@ namespace Messaging
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
  */
-class TAO_ClientRequestInfo
+/// @todo TAO_Export is temporarily
+class TAO_Export TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -230,7 +231,7 @@ public:
   void exception (CORBA::Exception *exception);
 
   /// Set the status of the received reply.
-  void reply_status (TAO::Invocation_Status s);
+  void reply_status (TAO::Invocation_Status invoke_status);
 
   /// Extract the forward object reference from the
   /// PortableInterceptor::ForwardRequest exception, and set the reply
@@ -286,12 +287,6 @@ private:
    */
   TAO::PICurrent_Copy_Callback copy_callback_;
 };
-
-// -------------------------------------------------------------------
-
-# if defined (__ACE_INLINE__)
-#  include "ClientRequestInfo.inl"
-# endif  /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

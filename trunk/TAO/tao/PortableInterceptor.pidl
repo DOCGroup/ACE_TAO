@@ -40,8 +40,6 @@
 #include <InvalidSlot.pidl>
 #include <ClientRequestInfo.pidl>
 #include <ServerRequestInfo.pidl>
-#include <ClientRequestInterceptor.pidl>
-#include <ServerRequestInterceptor.pidl>
 #include <PICurrent.pidl>
 
 module PortableInterceptor {

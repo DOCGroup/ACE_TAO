@@ -8,29 +8,22 @@ ACE_RCSID (PortableServer,
            ServerInterceptorAdapter,
            "$Id$")
 
-#ifndef __ACE_INLINE__
-# include "ServerInterceptorAdapter.inl"
-#endif /* !__ACE_INLINE__ */
+#include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableServer/PICurrent_Guard.h"
 
-#include "ServerRequestInfo.h"
-#include "PICurrent_Guard.h"
-
+#include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 
 
-TAO::ServerRequestInterceptor_Adapter::ServerRequestInterceptor_Adapter (
-  TAO_ServerRequest & server_request)
-  : interceptors_ (server_request.orb_core ()->server_request_interceptors ())
-  , len_ (interceptors_.size ())
-  , stack_size_ (server_request.interceptor_count ())
-  , location_forwarded_ (false)
+TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl (void)
 {
 }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void
-TAO::ServerRequestInterceptor_Adapter::tao_ft_interception_point (
+TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
+  TAO_ServerRequest &server_request,
   TAO::ServerRequestInfo * ri,
   CORBA::OctetSeq_out oc
   ACE_ENV_ARG_DECL)
@@ -49,7 +42,7 @@ TAO::ServerRequestInterceptor_Adapter::tao_ft_interception_point (
 
       oc = 0;
 
-      for (size_t i = 0 ; i < this->len_; ++i)
+      for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
           this->interceptors_[i]->tao_ft_interception_point (
             ri,
@@ -68,7 +61,7 @@ TAO::ServerRequestInterceptor_Adapter::tao_ft_interception_point (
 
           // The starting interception point completed successfully.
           // Push the interceptor on to the flow stack.
-          ++this->stack_size_;
+          ++server_request.interceptor_count ();
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
@@ -85,13 +78,14 @@ TAO::ServerRequestInterceptor_Adapter::tao_ft_interception_point (
 }
 
 void
-TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
+TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
+  TAO_ServerRequest &server_request,
   TAO::ServerRequestInfo * ri
   ACE_ENV_ARG_DECL)
 {
   // This method implements one of the "intermediate" server side
   // interception point.
-  if (this->len_ != this->stack_size_)
+  if (this->interceptor_list_.size() != this->server_request.interceptor_count ())
     {
       // This method (i.e. the receive_request() interception point)
       // should only be invoked if all of the interceptors registered
@@ -106,7 +100,7 @@ TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
 
   ACE_TRY
     {
-      for (size_t i = 0 ; i < this->stack_size_; ++i)
+      for (size_t i = 0 ; i < server_request.interceptor_count (); ++i)
         {
           this->interceptors_[i]->receive_request_service_contexts (
             ri
@@ -133,7 +127,8 @@ TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
 /// messing around things in the same function, which is harder to
 /// read and could make the code buggier.
 void
-TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
+TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
+  TAO_ServerRequest &server_request,
   TAO::ServerRequestInfo * ri
   ACE_ENV_ARG_DECL)
 {
@@ -150,26 +145,26 @@ TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
       TAO::PICurrent_Guard const pi_guard (ri->server_request (),
                                            false /* Copy RSC to TSC */);
 
-      for (size_t i = 0 ; i < this->len_; ++i)
+      for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
-          this->interceptors_[i]->receive_request_service_contexts (
-            ri
-            ACE_ENV_ARG_PARAMETER);
+          this->interceptor_list_.interceptor(i)->
+            receive_request_service_contexts (
+              ri
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // The starting interception point completed successfully.
           // Push the interceptor on to the flow stack.
-          ++this->stack_size_;
+          ++server_request.interceptor_count ();
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri
+      this->send_other (server_request,
+                        ri
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -178,7 +173,8 @@ TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
 void
-TAO::ServerRequestInterceptor_Adapter::receive_request (
+TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
+  TAO_ServerRequest &server_request,
   TAO::ServerRequestInfo * ri
   ACE_ENV_ARG_DECL)
 {
@@ -186,7 +182,7 @@ TAO::ServerRequestInterceptor_Adapter::receive_request (
   // point.  Interceptors are invoked in the same order they were
   // pushed on to the flow stack.
 
-  if (this->len_ != this->stack_size_)
+  if (this->interceptor_list_.size() != server_request.interceptor_count ())
     {
       // This method (i.e. the receive_request() interception point)
       // should only be invoked if all of the interceptors registered
@@ -201,10 +197,11 @@ TAO::ServerRequestInterceptor_Adapter::receive_request (
 
   ACE_TRY
     {
-      for (size_t i = 0; i < this->stack_size_; ++i)
+      for (size_t i = 0; i < server_request.interceptor_count (); ++i)
         {
-          this->interceptors_[i]->receive_request (ri
-                                                   ACE_ENV_ARG_PARAMETER);
+          this->interceptor_list_.interceptor(i)->receive_request (
+            ri
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Note that no interceptors are pushed on to or popped off
@@ -215,11 +212,10 @@ TAO::ServerRequestInterceptor_Adapter::receive_request (
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri
+      this->send_other (server_request,
+                        ri
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -227,7 +223,8 @@ TAO::ServerRequestInterceptor_Adapter::receive_request (
 }
 
 void
-TAO::ServerRequestInterceptor_Adapter::send_reply (
+TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
+  TAO_ServerRequest &server_request,
   TAO::ServerRequestInfo * ri
   ACE_ENV_ARG_DECL)
 {
@@ -239,18 +236,19 @@ TAO::ServerRequestInterceptor_Adapter::send_reply (
   // interception point.
 
   // Unwind the stack.
-  size_t const len = this->stack_size_;
+  size_t const len = server_request.interceptor_count ();
   for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
       // invoked.  This is necessary to prevent an interceptor already
       // invoked in this "ending" interception point from being
       // invoked in another "ending" interception point.
-      --this->stack_size_;
+      --server_request.interceptor_count ();
 
-      this->interceptors_[this->stack_size_]->send_reply (
-        ri
-        ACE_ENV_ARG_PARAMETER);
+      this->interceptor_list_.interceptor (
+        server_request.interceptor_count ())->send_reply (
+          ri
+          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -260,7 +258,8 @@ TAO::ServerRequestInterceptor_Adapter::send_reply (
 }
 
 void
-TAO::ServerRequestInterceptor_Adapter::send_exception (
+TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
+  TAO_ServerRequest &server_request,
   TAO::ServerRequestInfo *ri
   ACE_ENV_ARG_DECL)
 {
@@ -274,29 +273,29 @@ TAO::ServerRequestInterceptor_Adapter::send_exception (
   ACE_TRY
     {
       // Unwind the flow stack.
-      size_t const len = this->stack_size_;
+      size_t const len = server_request.interceptor_count ();
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
           // invoked.  This is necessary to prevent an interceptor
           // already invoked in this "ending" interception point from
           // being invoked in another "ending" interception point.
-          --this->stack_size_;
+          --server_request.interceptor_count ();
 
-          this->interceptors_[this->stack_size_]->send_exception (
-            ri
-            ACE_ENV_ARG_PARAMETER);
+          this->interceptor_list_.interceptor (
+            server_request.interceptor_count ())->send_exception (
+              ri
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri
+      this->send_other (server_request,
+                        ri
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      this->location_forwarded_ = true;
     }
   ACE_CATCHANY
     {
@@ -312,7 +311,9 @@ TAO::ServerRequestInterceptor_Adapter::send_exception (
 
       ri->exception (&ACE_ANY_EXCEPTION);
 
-      this->send_exception (ri ACE_ENV_ARG_PARAMETER);
+      this->send_exception (server_request,
+                            ri
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableInterceptor::ReplyStatus status =
@@ -331,7 +332,8 @@ TAO::ServerRequestInterceptor_Adapter::send_exception (
 }
 
 void
-TAO::ServerRequestInterceptor_Adapter::send_other (
+TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
+  TAO_ServerRequest &server_request,
   TAO::ServerRequestInfo * ri
   ACE_ENV_ARG_DECL)
 {
@@ -345,32 +347,48 @@ TAO::ServerRequestInterceptor_Adapter::send_other (
   ACE_TRY
     {
       // Unwind the flow stack.
-      size_t const len = this->stack_size_;
+      size_t const len = server_request.interceptor_count ();
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
           // invoked.  This is necessary to prevent an interceptor
           // already invoked in this "ending" interception point from
           // being invoked in another "ending" interception point.
-          --this->stack_size_;
+          --server_request.interceptor_count ();
 
-          this->interceptors_[this->stack_size_]->send_other (
-            ri
-            ACE_ENV_ARG_PARAMETER);
+          this->interceptor_list_.interceptor(
+            server_request.interceptor_count ())->send_other (
+              ri
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
       ri->forward_reference (exc);
-      this->send_other (ri
+      this->send_other (server_request,
+                        ri
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
+}
+
+
+void
+TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor
+  ACE_ENV_ARG_DECL)
+{
+  this->interceptor_list_.add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors (
+  ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->interceptor_list_.destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

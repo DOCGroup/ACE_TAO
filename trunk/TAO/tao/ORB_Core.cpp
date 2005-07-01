@@ -57,6 +57,14 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+# include "tao/ClientRequestInterceptor_Adapter.h"
+# include "tao/ClientRequestInterceptor_Adapter_Factory.h"
+# include "tao/ServerRequestInterceptor_Adapter.h"
+# include "tao/ServerRequestInterceptor_Adapter_Factory.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1  */
+
+
 #if !defined (__ACE_INLINE__)
 # include "ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
@@ -187,8 +195,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     orbinitializer_registry_ (0),
 #if (TAO_HAS_INTERCEPTORS == 1)
     pi_current_ (0),
-    client_request_interceptors_ (),
-    server_request_interceptors_ (),
+    client_request_interceptor_adapter_ (0),
+    server_request_interceptor_adapter_ (0),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptor_adapter_ (0),
     valuetype_adapter_ (0),
@@ -2144,13 +2152,24 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_TRY
     {
 #if TAO_HAS_INTERCEPTORS == 1
-      this->client_request_interceptors_.destroy_interceptors (
-          ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (this->client_request_interceptor_adapter_ != 0)
+        {
+          this->client_request_interceptor_adapter_->destroy_interceptors (
+            ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      this->server_request_interceptors_.destroy_interceptors (
-          ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          client_request_interceptor_adapter_ = 0;
+        }
+
+      if (this->server_request_interceptor_adapter_ != 0)
+        {
+          this->server_request_interceptor_adapter_->destroy_interceptors (
+            ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          server_request_interceptor_adapter_ = 0;
+        }
+
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       if (this->ior_interceptor_adapter_ != 0)
@@ -2896,6 +2915,111 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
 
   return this->ior_interceptor_adapter_;
 }
+
+#if TAO_HAS_INTERCEPTORS == 1
+
+int
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+   ACE_ENV_ARG_DECL)
+{
+  if (this->clientrequestinterceptor_adapter_i ())
+    {
+      this->client_request_interceptor_adapter_->add_interceptor (interceptor
+                                                                  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ERROR: ORB Core unable to find the ")
+                  ACE_TEXT ("Client Request Interceptor Adapter Factory instance")));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+}
+
+TAO::ClientRequestInterceptor_Adapter *
+TAO_ORB_Core::clientrequestinterceptor_adapter_i (void)
+{
+  if (this->client_request_interceptor_adapter_ == 0)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
+
+      if (this->client_request_interceptor_adapter_ == 0)
+        {
+          TAO_ClientRequestInterceptor_Adapter_Factory *factory =
+            ACE_Dynamic_Service<TAO_ClientRequestInterceptor_Adapter_Factory>::instance (
+                "ClientRequestInterceptor_Adapter_Factory"
+              );
+
+          if (factory)
+            {
+              this->client_request_interceptor_adapter_ =
+                factory->create ();
+            }
+        }
+    }
+
+  return this->client_request_interceptor_adapter_;
+}
+
+
+int
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::ServerRequestInterceptor_ptr interceptor
+   ACE_ENV_ARG_DECL)
+{
+  if (this->serverrequestinterceptor_adapter_i ())
+    {
+      this->server_request_interceptor_adapter_->add_interceptor (interceptor
+                                                                  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ERROR: ORB Core unable to find the ")
+                  ACE_TEXT ("Server Request Interceptor Adapter Factory instance")));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+}
+
+TAO::ServerRequestInterceptor_Adapter *
+TAO_ORB_Core::serverrequestinterceptor_adapter_i (void)
+{
+  if (this->server_request_interceptor_adapter_ == 0)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
+
+      if (this->server_request_interceptor_adapter_ == 0)
+        {
+          TAO_ServerRequestInterceptor_Adapter_Factory *factory =
+            ACE_Dynamic_Service<TAO_ServerRequestInterceptor_Adapter_Factory>::instance (
+                "ServerRequestInterceptor_Adapter_Factory"
+              );
+
+          if (factory)
+            {
+              this->server_request_interceptor_adapter_ =
+                factory->create ();
+            }
+        }
+    }
+
+  return this->server_request_interceptor_adapter_;
+}
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
 // ****************************************************************
 

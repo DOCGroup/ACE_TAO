@@ -23,6 +23,7 @@
 #include "FT_ServerORB_export.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/ORB.h"
 
 #if defined(_MSC_VER)

@@ -5,7 +5,7 @@
 
 #include "Server_ORBInitializer.h"
 #include "Interceptor_Type.h"
-#include "interceptors.h"
+#include "server_interceptors.h"
 
 ACE_RCSID (Benchmark,
            Server_ORBInitializer,

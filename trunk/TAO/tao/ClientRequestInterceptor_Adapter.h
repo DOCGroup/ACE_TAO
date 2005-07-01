@@ -26,20 +26,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbconf.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-
-#include "ClientRequestInterceptorC.h"
-#include "Interceptor_List.h"
-
-namespace TAO
-{
-  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
-    ClientRequestInterceptor_List;
-}
+#include "ace/CORBA_macros.h"
 
 class TAO_ClientRequestInfo;
+
+namespace PortableInterceptor
+{
+  class ClientRequestInterceptor;
+  typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
+}
 
 namespace TAO
 {
@@ -58,13 +53,7 @@ namespace TAO
   class TAO_Export ClientRequestInterceptor_Adapter
   {
   public:
-
-    ClientRequestInterceptor_Adapter (
-        ClientRequestInterceptor_List::TYPE & interceptors,
-        Invocation_Base *invocation
-      );
-
-    ~ClientRequestInterceptor_Adapter (void);
+    virtual ~ClientRequestInterceptor_Adapter (void);
 
     /**
      * @name PortableInterceptor Client Side Interception Points
@@ -77,54 +66,37 @@ namespace TAO
     //@{
     /// This method implements one of the "starting" client side
     /// interception points.
-    void send_request (TAO_ClientRequestInfo * ri
-                       ACE_ENV_ARG_DECL);
+    virtual void send_request (Invocation_Base &invocation,
+                               TAO_ClientRequestInfo *ri
+                               ACE_ENV_ARG_DECL) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    void receive_reply (TAO_ClientRequestInfo * ri
-                        ACE_ENV_ARG_DECL);
+    virtual void receive_reply (Invocation_Base &invocation,
+                                TAO_ClientRequestInfo *ri
+                                ACE_ENV_ARG_DECL) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    void receive_exception (TAO_ClientRequestInfo * ri
-                            ACE_ENV_ARG_DECL);
+    virtual void receive_exception (Invocation_Base &invocation,
+                                    TAO_ClientRequestInfo *ri
+                                    ACE_ENV_ARG_DECL) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    void receive_other (TAO_ClientRequestInfo * ri
-                        ACE_ENV_ARG_DECL);
-    //@}
+    virtual void receive_other (Invocation_Base &invocation,
+                                TAO_ClientRequestInfo *ri
+                                ACE_ENV_ARG_DECL) = 0;
 
-  protected:
+    /// Register an interceptor.
+    virtual void add_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+      ACE_ENV_ARG_DECL) = 0;
 
-    /// Process the given PortableInterceptor::ForwardRequest exception,
-    /// i.e. invoke the receive_other() interception point, in addition
-    /// to notifying the Invocation object of the LOCATION_FORWARD.
-    void process_forward_request (TAO_ClientRequestInfo * ri,
-                                  PortableInterceptor::ForwardRequest & exc
-                                  ACE_ENV_ARG_DECL);
-
-  private:
-
-    /// Reference to the list of registered interceptors.
-    ClientRequestInterceptor_List::TYPE & interceptors_;
-
-    /// Pointer to the GIOP invocation object for the current request.
-    Invocation_Base * invocation_;
-
-    /// The number of interceptors "pushed" onto the logical flow
-    /// stack.  This is used when unwinding the flow stack.
-    size_t stack_size_;
+    virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
   };
 
 }
-#if defined (__ACE_INLINE__)
-#include "ClientRequestInterceptor_Adapter.inl"
-#endif  /* __ACE_INLINE__ */
-
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_H */

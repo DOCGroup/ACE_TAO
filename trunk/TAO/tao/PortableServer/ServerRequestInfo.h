@@ -27,6 +27,7 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
+#include "portableserver_export.h"
 #include "tao/ServerRequestInfoC.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
@@ -64,7 +65,7 @@ namespace TAO
    * @note This class is currently not meant to be reference counted
    *       since it is instantiated on the stack.
    */
-  class ServerRequestInfo
+  class TAO_PortableServer_Export ServerRequestInfo
     : public virtual PortableInterceptor::ServerRequestInfo,
       public virtual CORBA::LocalObject
   {

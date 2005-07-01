@@ -25,6 +25,7 @@
 #include "ace/Atomic_Op.h"
 
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 #include "tao/CORBA_String.h"
 

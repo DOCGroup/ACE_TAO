@@ -8,7 +8,7 @@ ACE_RCSID (Dynamic, Echo_Server_ORBInitializer, "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "interceptors.h"
+#include "server_interceptor.h"
 
 void
 Echo_Server_ORBInitializer::pre_init (

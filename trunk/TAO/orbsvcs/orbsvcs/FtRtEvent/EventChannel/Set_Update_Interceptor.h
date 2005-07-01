@@ -13,9 +13,9 @@
 #ifndef TAO_SET_UPDATE_INTERCEPTOR_H
 #define TAO_SET_UPDATE_INTERCEPTOR_H
 
+#include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-//#include "tao/TimeBaseC.h"
 #include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,13 +28,12 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_FT_ClientRequest_Interceptor
+ * @class TAO_Set_Update_Interceptor
  *
  * @brief Interceptors for adding service context to set_update() and
  *        oneway_set_update() methods.
  *
  */
-
 class TAO_Set_Update_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual TAO_Local_RefCounted_Object

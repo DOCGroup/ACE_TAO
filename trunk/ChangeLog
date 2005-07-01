@@ -1,3 +1,15 @@
+Fri Jul  1 11:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/interceptors.mpb
+          Don't use pi as base lib.
+
+        * bin/MakeProjectCreator/config/iorinterceptor.mpb
+        * bin/MakeProjectCreator/config/loadbalancing.mpb
+        * bin/MakeProjectCreator/config/rtscheduling.mpb:
+        * bin/MakeProjectCreator/config/fault_tolerance.mpb
+        * bin/MakeProjectCreator/config/ftclientorb.mpb
+          Added pi and pi_server as base projects when needed
+
 Fri Jul  1 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:

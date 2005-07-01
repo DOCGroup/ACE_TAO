@@ -8,6 +8,7 @@
 #include "ace/TMCast/GroupFwd.hpp"
 
 #include "tao/corba.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"

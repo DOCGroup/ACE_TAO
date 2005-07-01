@@ -24,12 +24,9 @@
 
 #include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
-#include "tao/Interceptor_List.h"
 
 namespace PortableInterceptor
 {
-  class Interceptor;
-  typedef Interceptor *Interceptor_ptr;
   class IORInterceptor;
   typedef IORInterceptor *IORInterceptor_ptr;
   class IORInfo;
@@ -39,9 +36,6 @@ namespace PortableInterceptor
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor>
-    IORInterceptor_List;
-
   typedef ACE_Array_Base< ::PortableInterceptor::ObjectReferenceTemplate*>
     ObjectReferenceTemplate_Array;
 }

@@ -24,6 +24,13 @@
 
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/IORInterceptor/IORInterceptor.h"
+#include "tao/PI/Interceptor_List_T.h"
+
+namespace TAO
+{
+  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor>
+    IORInterceptor_List;
+}
 
 class TAO_Root_POA;
 

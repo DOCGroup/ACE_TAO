@@ -60,6 +60,13 @@ client_test (Test_ptr server ACE_ENV_ARG_DECL)
         {
           server->client_test (i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          if (i == 1)
+            {
+              ACE_ERROR ((LM_ERROR,
+              "\nERROR: No exception has been thrown from client_test() "
+              "operation.\n"));
+            }
         }
       ACE_CATCH (Test::X, ex)
         {
@@ -108,6 +115,13 @@ server_test (Test_ptr server ACE_ENV_ARG_DECL)
         {
           server->server_test (i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          if (i == 1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "\nERROR: No exception has been thrown from server_test() "
+                          "operation.\n"));
+            }
         }
       ACE_CATCH (Test::X, ex)
         {

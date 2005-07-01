@@ -1,5 +1,5 @@
 // $Id$
-project(*Server): orbsvcsexe, fault_tolerance, tmcast, interceptors {
+project(*Server): orbsvcsexe, fault_tolerance, tmcast, pi_server, interceptors {
   Source_Files {
     RolyPoly_i.cpp
     ORB_Initializer.cpp

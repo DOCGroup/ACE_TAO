@@ -36,7 +36,7 @@
 #ifndef _IOR_INTERCEPTOR_IDL_
 #define _IOR_INTERCEPTOR_IDL_
 
-#include "tao/PortableInterceptor.pidl"
+#include "tao/PI/Interceptor.pidl"
 #include "tao/IORInterceptor/IORInfo.pidl"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 

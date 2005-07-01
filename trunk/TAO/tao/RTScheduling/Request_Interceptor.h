@@ -6,15 +6,17 @@
 #define TAO_RTSCHEDULING_REQUEST_INTERCEPTOR_H
 
 #include "rtscheduler_export.h"
-#include "tao/PortableInterceptorC.h"
 #include "RTScheduler.h"
 #include "ace/Atomic_Op.h"
 #include "Current.h"
 
+#include "tao/PI/PI.h"
+#include "tao/PI_Server/PI_Server.h"
+
 extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
 class TAO_RTScheduler_Export Client_Interceptor :
-  public  PortableInterceptor::ClientRequestInterceptor
+  public PortableInterceptor::ClientRequestInterceptor
 {
 public:
 

@@ -60,7 +60,7 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, 
   }
 }
 
-project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, interceptors {
+project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, pi_server, pi, interceptors {
   sharedname   = TAO_FT_ServerORB
   dynamicflags = TAO_FT_SERVERORB_BUILD_DLL
   tagchecks   += FT_ServerORB

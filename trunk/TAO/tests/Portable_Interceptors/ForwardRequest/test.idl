@@ -13,7 +13,7 @@
  */
 //=============================================================================
 
-#include "tao/PortableInterceptor.pidl"
+#include "tao/PI_Server/ServerRequestInterceptor.pidl"
 
 module ForwardRequestTest
 {

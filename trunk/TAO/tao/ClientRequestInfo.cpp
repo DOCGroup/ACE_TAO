@@ -20,10 +20,6 @@ ACE_RCSID (tao,
 #include "debug.h"
 #include "Service_Context.h"
 
-# if !defined (__ACE_INLINE__)
-#   include "ClientRequestInfo.inl"
-# endif /* !__ACE_INLINE__ */
-
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
   : invocation_ (inv),
     caught_exception_ (0),
@@ -672,6 +668,14 @@ TAO_ClientRequestInfo::forward_reference (
   // can be added to the list of forward profiles.
 
   this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
+}
+
+void
+TAO_ClientRequestInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->invocation_ == 0)
+    ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                     CORBA::COMPLETED_NO));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

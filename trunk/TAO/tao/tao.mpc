@@ -45,8 +45,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInfoA.cpp
     ClientRequestInfoC.cpp
     ClientRequestInterceptor_Adapter.cpp
-    ClientRequestInterceptorA.cpp
-    ClientRequestInterceptorC.cpp
     Codeset_Manager.cpp
     Codeset_Translator_Factory.cpp
     Collocated_Invocation.cpp
@@ -122,8 +120,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOPA.cpp
     IIOPC.cpp
     Incoming_Message_Queue.cpp
-    InterceptorA.cpp
-    InterceptorC.cpp
     InvalidSlotA.cpp
     InvalidSlotC.cpp
     Invocation_Adapter.cpp
@@ -238,8 +234,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Server_Strategy_Factory.cpp
     ServerRequestInfoA.cpp
     ServerRequestInfoC.cpp
-    ServerRequestInterceptorA.cpp
-    ServerRequestInterceptorC.cpp
+    ServerRequestInterceptor_Adapter.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
     Services_Activate.cpp
@@ -370,8 +365,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInfoC.h
     ClientRequestInfoS.h
     ClientRequestInterceptor_Adapter.h
-    ClientRequestInterceptorC.h
-    ClientRequestInterceptorS.h
     Client_Strategy_Factory.h
     Codeset_Manager.h
     Codeset_Translator_Factory.h
@@ -460,8 +453,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h
-    InterceptorC.h
-    InterceptorS.h
     Interceptor_List.h
     InvalidSlotC.h
     InvalidSlotS.h
@@ -596,8 +587,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Server_Strategy_Factory.h
     ServerRequestInfoC.h
     ServerRequestInfoS.h
-    ServerRequestInterceptorC.h
-    ServerRequestInterceptorS.h
     Service_Callbacks.h
     Service_Context.h
     Services_Activate.h
