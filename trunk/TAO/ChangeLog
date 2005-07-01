@@ -1,3 +1,9 @@
+Fri Jul 01 15:14:06 2005   Gary Maxey <gary.maxey@hp.com>
+
+	* tao/Valuetype/StringValueC.inl: 
+
+          Avoid error when compiling with MSVC6 compiler.
+
 Fri Jul  1 16:14:16 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.cpp:
