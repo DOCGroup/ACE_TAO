@@ -1,3 +1,8 @@
+Fri Jul  1 14:51:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
+          Added pi_server to the client project also
+
 Fri Jul  1 14:40:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Base.cpp:
