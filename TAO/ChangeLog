@@ -1,7 +1,12 @@
+Fri Jul  1 13:58:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+          Corrected export macro
+
 Fri Jul  1 13:16:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_produce.cpp:
-        
+
           Moved the conditional initialization of the *A.cpp file stream
           from before the stub header visitor executes to after the
           stub header visitor and before the stub source visitor. This
