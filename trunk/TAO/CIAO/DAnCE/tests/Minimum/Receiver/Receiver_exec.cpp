@@ -52,7 +52,7 @@ namespace CIDL_Receiver_Impl
   ::Components::CCMException))
   {
     this->context_ =
-    CIAO_GLUE_Minimum::Receiver_Context::_narrow (
+    Receiver_Context::_narrow (
     ctx
     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
