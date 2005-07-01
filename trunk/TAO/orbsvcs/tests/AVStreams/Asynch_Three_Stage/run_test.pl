@@ -16,6 +16,7 @@ $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 $testfile = PerlACE::LocalFile ("output");
+$input = PerlACE::LocalFile ("test_input");
 
 unlink $nsior;
 unlink $testfile, $input;
