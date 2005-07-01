@@ -1,10 +1,17 @@
+Fri Jul  1 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Added support for StackReserveSize and StackCommitSize
+          template variables.
+
 Wed Jun 29 13:58:17 2005  Justin Michel  <michel_j@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
 
-	  Somehow my previous checkin had many other differences besides the simple
-	change that I made. I've remerged the corresponding code from the previous version,
-	but I have no idea how the change happened. 
+          Somehow my previous checkin had many other differences besides the
+          simple change that I made. I've remerged the corresponding code
+          from the previous version, but I have no idea how the change
+          happened.
 
 Wed Jun 29 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
