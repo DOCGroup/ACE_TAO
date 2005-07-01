@@ -2,7 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, valuetype, pi_server, interceptors {
-  idlflags += -DCORBA3 -I$(TAO_ROOT)
+  idlflags += -DCORBA3
 
   Source_Files {
     test_i.cpp
@@ -12,8 +12,8 @@ project(*Server): taoserver, valuetype, pi_server, interceptors {
   }
 }
 
-project(*Client): taoclient, valuetype, pi, interceptors {
-  idlflags += -DCORBA3 -I$(TAO_ROOT)
+project(*Client): taoclient, valuetype, pi, pi_server, interceptors {
+  idlflags += -DCORBA3
 
   Source_Files {
     testC.cpp
