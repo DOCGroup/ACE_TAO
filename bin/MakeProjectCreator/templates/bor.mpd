@@ -22,6 +22,12 @@ OBJFILES = \
 <%if(libpaths)%>
 
 LFLAGS = \
+<%if(StackReserveSize)%>
+        /S:<%StackReserveSize%> \
+<%endif%>
+<%if(StackCommitSize)%>
+        /Sc:<%StackCommitSize%> \
+<%endif%>
 <%foreach(libpaths)%>
         -L"<%libpath%>" \
         -j"<%libpath%>" <%fornotlast(" \\")%>
