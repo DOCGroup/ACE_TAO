@@ -113,4 +113,7 @@
 /// OpenSSL.
 #define OPENSSL_VERSION_NUMBER 0x00905820L
 
+/// Enable IPv6
+#define ACE_HAS_IPV6
+
 #endif /* ACE_CONFIG_DOXYGEN_H */
