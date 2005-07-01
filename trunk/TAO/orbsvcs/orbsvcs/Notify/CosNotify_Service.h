@@ -20,9 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Service.h"
+#include "Builder.h"
+#include "Factory.h"
 
-class TAO_Notify_Factory;
-class TAO_Notify_Builder;
 class TAO_Notify_Properties;
 class TAO_Notify_EventChannelFactory;
 
@@ -41,12 +41,13 @@ public:
   /// Destructor
   virtual ~TAO_CosNotify_Service ();
 
-  /// = Service_Object virtual method overloads.
-  virtual int init (int argc, char *argv[]);
-  virtual int fini (void);
+  /// Init the service from configurator
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  /// Init
-  virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  /// Init the service from driver
+  virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+
+  virtual int fini (void);
 
   /// Create the Channel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
@@ -58,20 +59,27 @@ protected:
   /// Init the data members
   virtual void init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
+private:
+
   /// Create the Factory for Notify objects.
-  virtual void init_factory (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Factory* create_factory (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create the Builder for Notify objects.
-  virtual void init_builder (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Builder* create_builder (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Set thread options on <qos>.
   void set_threads (CosNotification::QoSProperties &qos, int threads);
 
-  /// Service component for object factory operations.
-  TAO_Notify_Factory* factory_;
+  TAO_Notify_Factory& factory();
 
   /// Service component for building NS participants.
-  TAO_Notify_Builder* builder_;
+  TAO_Notify_Builder& builder();
+
+  /// Service component for object factory operations.
+  ACE_Auto_Ptr< TAO_Notify_Factory > factory_;
+
+  /// Service component for building NS participants.
+  ACE_Auto_Ptr< TAO_Notify_Builder > builder_;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_CosNotify_Service)

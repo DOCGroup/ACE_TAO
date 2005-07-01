@@ -36,11 +36,11 @@
 class TAO_Notify_Serv_Export TAO_Notify_Service : public ACE_Service_Object
 {
 public:
-  /// Define Service_Object method otherwise SunCC compiler complains.
-  virtual int init (int argc, char *argv[]) = 0;
+  /// Init the service from configurator
+  virtual int init (int argc, ACE_TCHAR *argv[]) = 0;
 
   /// Init the service.
-  virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL) = 0;
+  virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL) = 0;
 
   /// Create the Channel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (

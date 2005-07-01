@@ -40,6 +40,8 @@ class TAO_Notify_Buffering_Strategy;
 class TAO_Notify_Serv_Export TAO_Notify_Worker_Task : public TAO_Notify_Refcountable
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Worker_Task > Ptr;
+
   /// Constuctor
   TAO_Notify_Worker_Task (void);
 
@@ -56,7 +58,6 @@ public:
   /// The object used by clients to register timers.
   virtual TAO_Notify_Timer* timer (void) = 0;
 
-  virtual TAO_Notify_Buffering_Strategy* buffering_strategy (void) = 0;
 
 protected:
   /// Destructor

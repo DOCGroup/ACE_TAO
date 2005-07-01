@@ -4,7 +4,7 @@
 
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushConsumer, "$Id$")
 
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "StructuredPushSupplier.h"
@@ -23,9 +23,6 @@ TAO_Notify_StructuredProxyPushConsumer::~TAO_Notify_StructuredProxyPushConsumer 
 void
 TAO_Notify_StructuredProxyPushConsumer::release (void)
 {
-  if (this->supplier_)
-    this->supplier_->release ();
-
   delete this;
   //@@ inform factory
 }
@@ -67,8 +64,8 @@ TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotifica
                    ))
 {
   // Check if we should proceed at all.
-  if (this->admin_properties_->reject_new_events () == 1
-      && this->admin_properties_->queue_full ())
+  if (this->admin_properties().reject_new_events () == 1
+      && this->admin_properties().queue_full ())
     ACE_THROW (CORBA::IMP_LIMIT ());
 
   if (this->is_connected () == 0)
@@ -86,6 +83,7 @@ TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (ACE
                    CORBA::SystemException
                    ))
 {
+  TAO_Notify_StructuredProxyPushConsumer::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);

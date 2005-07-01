@@ -56,7 +56,7 @@ TAO_Notify_Method_Request_Updates_No_Copy::execute (ACE_ENV_SINGLE_ARG_DECL)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
-, TAO_Notify_Proxy_Guard
+, TAO_Notify_Proxy::Ptr
 , const TAO_Notify_EventTypeSeq&
 , TAO_Notify_Proxy*
 >;
@@ -70,7 +70,7 @@ template class TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
-, TAO_Notify_Proxy_Guard
+, TAO_Notify_Proxy::Ptr
 , const TAO_Notify_EventTypeSeq&
 , TAO_Notify_Proxy*
 >

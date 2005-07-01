@@ -38,7 +38,7 @@ public:
   TAO_Notify_QoSProperties (void);
 
   /// Destructor
-  ~TAO_Notify_QoSProperties ();
+  virtual ~TAO_Notify_QoSProperties ();
 
   /// Return 0 on success, 1 if unsupported properties were detected and -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq);
@@ -53,25 +53,20 @@ public:
   int transfer (TAO_Notify_QoSProperties& qos_properties);
 
   ///= Accessors
-  /// ThreadPool
   const TAO_Notify_Property_ThreadPool& thread_pool (void) const;
-
-  /// ThreadPoolLane
   const TAO_Notify_Property_ThreadPoolLanes& thread_pool_lane (void) const;
-
-  /// Maximum Batch Size
-  const TAO_Notify_Property_Long& maximum_batch_size (void) const;
-
-  /// Pacing Interval
-  const TAO_Notify_Property_Time& pacing_interval (void) const;
-  ///= Accessors
 
   const TAO_Notify_Property_Short& event_reliability (void) const;
   const TAO_Notify_Property_Short& connection_reliability (void) const;
   const TAO_Notify_Property_Short& priority (void) const;
   const TAO_Notify_Property_Time& timeout (void) const;
   const TAO_Notify_Property_Boolean& stop_time_supported (void) const;
+  const TAO_Notify_Property_Long& maximum_batch_size (void) const;
+  const TAO_Notify_Property_Time& pacing_interval (void) const;
   const TAO_Notify_Property_Long& max_events_per_consumer (void) const;
+  const TAO_Notify_Property_Short& discard_policy(void) const;
+  const TAO_Notify_Property_Short& order_policy(void) const;
+  const TAO_Notify_Property_Time& blocking_policy(void) const;
 
   // The non-const accessors are used during topology load
   TAO_Notify_Property_Short& event_reliability (void);
@@ -82,6 +77,9 @@ public:
   TAO_Notify_Property_Long& maximum_batch_size (void);
   TAO_Notify_Property_Time& pacing_interval (void);
   TAO_Notify_Property_Long& max_events_per_consumer (void);
+  TAO_Notify_Property_Short& discard_policy(void);
+  TAO_Notify_Property_Short& order_policy(void);
+  TAO_Notify_Property_Time& blocking_policy(void);
 
 protected:
   /// Return 1 if <value> is unsupported.
@@ -92,37 +90,22 @@ protected:
   ///= Unsupported Properties.
   ACE_CString unsupported_[UNSUPPORTED_PROPERTY_COUNT];
 
-  ///= Supported properties
-
-  /// Event Reliability
+  ///= Supported standard properties
   TAO_Notify_Property_Short event_reliability_;
-
-  /// Connection Reliability
   TAO_Notify_Property_Short connection_reliability_;
-
-  /// Priority
   TAO_Notify_Property_Short priority_;
-
-  /// Timeout
   TAO_Notify_Property_Time timeout_;
-
-  /// Stop Time Supported
   TAO_Notify_Property_Boolean stop_time_supported_;
-
-  /// Maximum Batch Size
   TAO_Notify_Property_Long maximum_batch_size_;
-
-  /// Maximum Events (queue length) Per Consumer
-  TAO_Notify_Property_Long max_events_per_consumer_;
-
-  /// Pacing Interval
   TAO_Notify_Property_Time pacing_interval_;
+  TAO_Notify_Property_Long max_events_per_consumer_;
+  TAO_Notify_Property_Short discard_policy_;
+  TAO_Notify_Property_Short order_policy_;
 
-  /// ThreadPool Params.
+  /// TAO Extensions
   TAO_Notify_Property_ThreadPool thread_pool_;
-
-  /// ThreadPoolLane Params.
   TAO_Notify_Property_ThreadPoolLanes thread_pool_lane_;
+  TAO_Notify_Property_Time blocking_policy_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -34,8 +34,8 @@ TAO_Notify_CosEC_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL
                    ))
 {
   // Check if we should proceed at all.
-  if (this->admin_properties_->reject_new_events () == 1
-      && this->admin_properties_->queue_full ())
+  if (this->admin_properties().reject_new_events () == 1
+      && this->admin_properties().queue_full ())
     ACE_THROW (CORBA::IMP_LIMIT ());
 
   if (this->is_connected () == 0)
@@ -47,7 +47,7 @@ TAO_Notify_CosEC_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL
 
   TAO_Notify_Method_Request_Lookup_No_Copy request (&event, this);
 
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+  this->execute_task (request ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -75,6 +75,7 @@ TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG
                    CORBA::SystemException
                    ))
 {
+  TAO_Notify_CosEC_ProxyPushConsumer::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 

@@ -10,7 +10,7 @@ namespace TAO_Notify
 {
 
 Standard_Event_Persistence::Standard_Event_Persistence ()
-  : filename_ ("__PERSISTENT_EVENT__.DB")
+  : filename_ (ACE_TEXT ("__PERSISTENT_EVENT__.DB"))
   , block_size_ (512)
   , factory_ (0)
 {
@@ -58,14 +58,14 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
   for (int narg = 0; narg < argc; ++narg)
   {
     ACE_TCHAR * av = argv[narg];
-    if (ACE_OS::strcasecmp (av, "-v") == 0)
+    if (ACE_OS::strcasecmp (av, ACE_TEXT ("-v")) == 0)
     {
       verbose = true;
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Standard_Event_Persistence: -verbose\n")
         ));
     }
-    else if (ACE_OS::strcasecmp (av, "-file_path") == 0 && narg + 1 < argc)
+    else if (ACE_OS::strcasecmp (av, ACE_TEXT ("-file_path")) == 0 && narg + 1 < argc)
     {
       this->filename_ = argv[narg + 1];
       if (TAO_debug_level > 0 || verbose)
@@ -77,7 +77,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
       }
       narg += 1;
     }
-    else if (ACE_OS::strcasecmp (av, "-block_size") == 0 && narg + 1 < argc)
+    else if (ACE_OS::strcasecmp (av, ACE_TEXT ("-block_size")) == 0 && narg + 1 < argc)
     {
       this->block_size_ = ACE_OS::atoi(argv[narg + 1]);
       if (TAO_debug_level > 0 || verbose)
@@ -119,7 +119,7 @@ Standard_Event_Persistence_Factory::Standard_Event_Persistence_Factory ()
 }
 
 bool
-Standard_Event_Persistence_Factory::open (const char * filename,
+Standard_Event_Persistence_Factory::open (const ACE_TCHAR* filename,
                                           ACE_UINT32 block_size)
 {
   bool result = false;

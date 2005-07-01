@@ -68,10 +68,10 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->filtering_ == 1)
     {
-      TAO_Notify_Admin* parent = this->proxy_supplier_->consumer_admin ();
+      TAO_Notify_Admin& parent = this->proxy_supplier_->consumer_admin ();
       CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_,
-                                                                  parent->filter_admin (),
-                                                                  parent->filter_operator ()
+                                                                  parent.filter_admin (),
+                                                                  parent.filter_operator ()
                                                                   ACE_ENV_ARG_PARAMETER);
 
       if (TAO_debug_level > 1)
@@ -188,11 +188,12 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
 // of the one in the previous method request
 TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (
       const TAO_Notify_Method_Request_Event & request,
-      TAO_Notify_Event_var & event,
+      TAO_Notify_Event::Ptr & event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Dispatch (request, event.get (), proxy_supplier, filtering)
   , TAO_Notify_Method_Request_Queueable (event.get ())
+  , event_var_( event )
 {
 #if 0
   ACE_DEBUG ((LM_DEBUG,
@@ -209,6 +210,8 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
         bool filtering)
   : TAO_Notify_Method_Request_Dispatch (request, request->event ().get (), proxy_supplier, filtering)
   , TAO_Notify_Method_Request_Queueable (request->event ().get ())
+  , event_var_( request->event () )
+
 {
 #if 0
   ACE_DEBUG ((LM_DEBUG,
@@ -280,8 +283,8 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_Method_Request_Queueable* request;
 
-  TAO_Notify_Event_var event_var;
-  this->event_->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Event::Ptr event_var (
+    this->event_->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
   ACE_CHECK_RETURN (0);
 
   ACE_NEW_THROW_EX (request,

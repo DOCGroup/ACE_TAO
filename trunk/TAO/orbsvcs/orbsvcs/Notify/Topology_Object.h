@@ -30,7 +30,7 @@
 
 /// \namespace TAO_Notify
 /// \brief A namespace to be used by all of TAO's Notification Service
-/// implementation. 
+/// implementation.
 ///
 /// The initial implementation used the TAO_Notify_ prefix rather than
 /// a namespace.  As part of the reliable Notification Service project
@@ -44,8 +44,8 @@
 // {
 //   namespace Notify {}
 //
-// } 
-// 
+// }
+//
 namespace TAO_Notify
 {
   static const char TOPOLOGY_ID_NAME[] = "TopologyID";
@@ -109,9 +109,9 @@ namespace TAO_Notify
   /// Topology objects must be derived from this class to allow themselves
   /// to be persisted.
   /// Note: virtual inheritance from TopologySavable is unnecessary,
-  /// but HP ACC compiler warns if it's not there. 
-  class TAO_Notify_Serv_Export Topology_Object : 
-    public virtual TAO_Notify_Object, 
+  /// but HP ACC compiler warns if it's not there.
+  class TAO_Notify_Serv_Export Topology_Object :
+    public virtual TAO_Notify_Object,
     public virtual Topology_Savable
   {
   public:
@@ -122,7 +122,7 @@ namespace TAO_Notify
     virtual ~Topology_Object ();
 
     /// Init this object with data from <rhs>.
-    virtual void initialize (Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
+    virtual void initialize (Topology_Parent* topology_parent ACE_ENV_ARG_DECL);
 
     /// \brief Create a child of the appropriate type and return it.
     ///

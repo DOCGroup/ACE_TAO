@@ -23,12 +23,12 @@
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
+#include "Timer_Queue.h"
 
 #include "AdminProperties.h"
 #include "Worker_Task.h"
 
 class TAO_Notify_Buffering_Strategy;
-class TAO_Notify_Timer_Queue;
 
 /**
  * @class TAO_Notify_ThreadPool_Task
@@ -45,24 +45,22 @@ public:
   TAO_Notify_ThreadPool_Task (void);
 
   /// Destructor
-  ~TAO_Notify_ThreadPool_Task ();
+  virtual ~TAO_Notify_ThreadPool_Task ();
 
   /// Call the base class init
-  virtual int init (int argc, char **argv);
+  virtual int init (int argc, ACE_TCHAR **argv);
 
+  /// release reference to my self.
   virtual int close (u_long flags);
 
-  /// Release
-  virtual void release (void);
-
   /// Activate the threadpool
-  void init (const NotifyExt::ThreadPoolParams& tp_params, TAO_Notify_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
+  void init (const NotifyExt::ThreadPoolParams& tp_params, TAO_Notify_AdminProperties::Ptr& admin_properties ACE_ENV_ARG_DECL);
 
   /// Queue the request
   virtual void execute (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL);
 
   /// Shutdown task
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Update QoS Properties.
   virtual void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
@@ -70,22 +68,49 @@ public:
   /// The object used by clients to register timers.
   virtual TAO_Notify_Timer* timer (void);
 
-  /// Access the Buffering Strategy.
-  TAO_Notify_Buffering_Strategy* buffering_strategy (void);
-
 protected:
   /// Task svc
   virtual int svc (void);
 
 private:
+  /// Release
+  virtual void release (void);
+
+  /// wait for all threads to exit svc()
+  virtual void wait_for_shutdown ();
+
   /// The buffering strategy to use.
-  TAO_Notify_Buffering_Strategy* buffering_strategy_;
+  ACE_Auto_Ptr< TAO_Notify_Buffering_Strategy > buffering_strategy_;
 
   /// Shutdown
-  int shutdown_;
+  bool shutdown_;
 
   /// The Queue based timer.
-  TAO_Notify_Timer_Queue* timer_;
+  TAO_Notify_Timer_Queue::Ptr timer_;
+
+  // Since this class already inherited from ACE_Event_Handler
+  // I did not want to conflict with a possible parent
+  /// implementation of handle_exception.
+  class Shutdown_Handler : public ACE_Event_Handler
+  {
+  public:
+    Shutdown_Handler (TAO_Notify_ThreadPool_Task* owner) : owner_ (owner) {};
+
+    /// wait for all threads to complete in another thread
+    virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE)
+    {
+      ACE_UNUSED_ARG (fd);
+      owner_->wait_for_shutdown ();
+      return 0;
+    }
+  private:
+    TAO_Notify_ThreadPool_Task* owner_;
+  };
+
+  friend class Shutdown_Handler;
+
+  Shutdown_Handler shutdown_handler_;
+
 };
 
 #if defined (__ACE_INLINE__)

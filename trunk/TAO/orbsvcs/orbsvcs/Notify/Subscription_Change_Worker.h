@@ -37,7 +37,7 @@ public:
   TAO_Notify_Subscription_Change_Worker (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed);
 
   /// Destructor
-  ~TAO_Notify_Subscription_Change_Worker ();
+  virtual ~TAO_Notify_Subscription_Change_Worker ();
 
   ///= TAO_ESF_Worker method
   void work (TAO_Notify_Proxy* proxy ACE_ENV_ARG_DECL);

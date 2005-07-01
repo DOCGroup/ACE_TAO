@@ -34,7 +34,7 @@ TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  auto_ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
+  ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
@@ -42,10 +42,7 @@ TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
   ACE_CHECK;
 
   // Give ownership of proxy_poa
-  object.proxy_poa_own (proxy_poa);
-
-  // release auto ref.
-  auto_proxy_poa.release ();
+  object.set_proxy_poa (auto_proxy_poa.release ());
 }
 
 void
@@ -60,7 +57,7 @@ TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  auto_ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
+  ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
@@ -68,8 +65,6 @@ TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
   ACE_CHECK;
 
   // Give ownership of proxy_poa
-  object.proxy_poa_own (proxy_poa);
+  object.set_proxy_poa (auto_proxy_poa.release ());
 
-  // release auto ref.
-  auto_proxy_poa.release ();
 }

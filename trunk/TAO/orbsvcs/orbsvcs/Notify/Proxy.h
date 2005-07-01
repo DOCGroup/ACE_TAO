@@ -24,7 +24,6 @@
 #include "EventTypeSeq.h"
 #include "FilterAdmin.h"
 #include "Admin.h"
-#include "Refcountable_Guard_T.h"
 
 class TAO_Notify_Admin;
 class TAO_Notify_Peer;
@@ -41,6 +40,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Proxy
   friend class TAO_Notify_Peer;
 
 public:
+  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Proxy> Ptr;
   typedef CosNotifyChannelAdmin::ProxyIDSeq SEQ;
   typedef CosNotifyChannelAdmin::ProxyIDSeq_var SEQ_VAR;
 
@@ -48,7 +48,7 @@ public:
   TAO_Notify_Proxy (void);
 
   /// Destructor
-  ~TAO_Notify_Proxy ();
+  virtual ~TAO_Notify_Proxy ();
 
   /// Activate
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant
@@ -126,8 +126,6 @@ protected:
   /// True if updates have been turned off.
   CORBA::Boolean updates_off_;
 };
-
-typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Guard;
 
 #if defined (__ACE_INLINE__)
 #include "Proxy.inl"

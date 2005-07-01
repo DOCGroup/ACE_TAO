@@ -45,7 +45,7 @@ Random_File::size() const
 }
 
 bool
-Random_File::open(const char* filename, size_t block_size)
+Random_File::open(const ACE_TCHAR* filename, size_t block_size)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
   this->block_size_ = block_size;

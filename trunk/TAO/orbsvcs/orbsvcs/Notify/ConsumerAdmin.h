@@ -40,11 +40,12 @@ class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin : public POA_NotifyExt::Co
                                              , public virtual TAO_Notify_Admin
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_ConsumerAdmin > Ptr;
   /// Constuctor
   TAO_Notify_ConsumerAdmin (void);
 
   /// Destructor
-  ~TAO_Notify_ConsumerAdmin ();
+  virtual ~TAO_Notify_ConsumerAdmin ();
 
   /// Init
   void init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL);
@@ -53,8 +54,6 @@ public:
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Release this object.
-  virtual void release (void);
 
   virtual const char * get_admin_type_name () const;
 
@@ -235,6 +234,10 @@ protected:
                      CORBA::SystemException
                      ));
 
+private:
+
+  /// Release this object.
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "StructuredProxyPushSupplier.h"
-class TAO_Notify_Method_Request;
 
 /**
  * @class TAO_Notify_RT_StructuredProxyPushSupplier
@@ -46,7 +45,7 @@ public:
                                       CORBA::Long id ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer
-  void deliver_request (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL);
+  void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer, no filtering
   virtual void push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);

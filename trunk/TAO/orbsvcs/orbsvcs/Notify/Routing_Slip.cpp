@@ -52,7 +52,7 @@ size_t Routing_Slip::count_enter_deleting_ = 0;
 size_t Routing_Slip::count_enter_terminal_ = 0;
 
 Routing_Slip_Ptr
-Routing_Slip::create (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL)
+Routing_Slip::create (const TAO_Notify_Event::Ptr& event ACE_ENV_ARG_DECL)
 {
   Routing_Slip * prs;
   ACE_NEW_THROW_EX (prs, Routing_Slip (event), CORBA::NO_MEMORY ());
@@ -117,7 +117,7 @@ Routing_Slip::create (
       if (rspm->reload (event_mb, rs_mb))
       {
         TAO_InputCDR cdr_event (event_mb);
-        TAO_Notify_Event_Copy_var event (TAO_Notify_Event::unmarshal (cdr_event));
+        TAO_Notify_Event::Ptr event (TAO_Notify_Event::unmarshal (cdr_event));
         if (event.get () != 0)
         {
           result = create (event ACE_ENV_ARG_PARAMETER);
@@ -167,7 +167,7 @@ Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 }
 
 Routing_Slip::Routing_Slip(
-      const TAO_Notify_Event_var& event)
+      const TAO_Notify_Event::Ptr& event)
   : is_safe_ (false)
   , until_safe_ (internals_)
   , this_ptr_ (0)
@@ -211,7 +211,7 @@ Routing_Slip::create_persistence_manager()
   return this->rspm_ != 0;
 }
 
-const TAO_Notify_Event_var &
+const TAO_Notify_Event::Ptr &
 Routing_Slip::event () const
 {
   return this->event_;
@@ -232,7 +232,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV
 {
   ACE_ASSERT(pc != 0);
 
-  TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> pcgrd(pc);
+  TAO_Notify_ProxyConsumer::Ptr pcgrd(pc);
 
   Routing_Slip_Guard guard (this->internals_);
 
@@ -274,7 +274,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV
     }
   }
   guard.release ();
-  pc->worker_task()->execute (method ACE_ENV_ARG_PARAMETER);
+  pc->execute_task (method ACE_ENV_ARG_PARAMETER);
 }
 #if 0 // forward
 void
@@ -283,7 +283,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   // must be the first action
   ACE_ASSERT (this->state_ == rssCREATING);
 
-  TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> psgrd(ps);
+  TAO_Notify_ProxySupplier::Ptr psgrd(ps);
   Routing_Slip_Guard guard (this->internals_);
 
   enter_state_transient (guard);
@@ -336,7 +336,7 @@ Routing_Slip::dispatch (
   // cannot be the first action
   ACE_ASSERT (this->state_ != rssCREATING);
 
-  TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> psgrd(ps);
+  TAO_Notify_ProxySupplier::Ptr psgrd(ps);
   Routing_Slip_Guard guard (this->internals_);
 
   size_t request_id = delivery_requests_.size ();
@@ -363,7 +363,7 @@ Routing_Slip::dispatch (
                     this->sequence_,
                     static_cast<int> (request_id),
                     ps->id()));
-      ps->worker_task()->execute (method ACE_ENV_ARG_PARAMETER);
+      ps->execute_task (method ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
   else

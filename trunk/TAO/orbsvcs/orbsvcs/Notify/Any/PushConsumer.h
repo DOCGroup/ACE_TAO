@@ -35,13 +35,11 @@ public:
   TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
-  ~TAO_Notify_PushConsumer ();
+  virtual ~TAO_Notify_PushConsumer ();
 
   /// Init
   void init (CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
 
-  /// TAO_Notify_Destroy_Callback methods.
-  virtual void release (void);
 
   /// Push <event> to this consumer.
 //  virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
@@ -67,6 +65,10 @@ public:
 protected:
   /// The Consumer
   CosEventComm::PushConsumer_var push_consumer_;
+
+private:
+  /// TAO_Notify_Destroy_Callback methods.
+  virtual void release (void);
 };
 
 #include /**/ "ace/post.h"

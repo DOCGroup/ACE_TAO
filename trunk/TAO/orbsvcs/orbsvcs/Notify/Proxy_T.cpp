@@ -10,6 +10,8 @@ ACE_RCSID(Notify, TAO_Notify_Proxy_T, "$Id$")
 template <class SERVANT_TYPE>
 TAO_Notify_Proxy_T<SERVANT_TYPE>::TAO_Notify_Proxy_T (void)
 {
+  // Any object that is used by the POA gets a reference count of 1 at construction
+  this->_incr_refcnt();
 }
 
 template <class SERVANT_TYPE>

@@ -1,19 +1,20 @@
 // $Id$
 
-ACE_INLINE int
-TAO_Notify_ProxyConsumer::is_connected (void)
+ACE_INLINE bool
+TAO_Notify_ProxyConsumer::is_connected (void) const
 {
-  return supplier_ == 0 ? 0 : 1;
+  return (this->supplier_.get() != 0);
 }
 
 ACE_INLINE TAO_Notify_Supplier*
 TAO_Notify_ProxyConsumer::supplier (void)
 {
-  return this->supplier_;
+  return this->supplier_.get();
 }
 
-ACE_INLINE TAO_Notify_SupplierAdmin*
+ACE_INLINE TAO_Notify_SupplierAdmin&
 TAO_Notify_ProxyConsumer::supplier_admin (void)
 {
-  return this->supplier_admin_;
+  ACE_ASSERT( this->supplier_admin_.get() != 0 );
+  return *this->supplier_admin_;
 }

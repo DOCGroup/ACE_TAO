@@ -25,6 +25,7 @@
 
 #include "Peer.h"
 #include "Event.h"
+#include "Timer.h"
 #include "ace/Event_Handler.h"
 
 class TAO_Notify_ProxySupplier;
@@ -49,8 +50,6 @@ public:
     DISPATCH_RETRY,   // retry this message
     DISPATCH_DISCARD, // discard this message
     DISPATCH_FAIL};   // discard all messages and disconnect consumer
-
-  typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
 
 public:
   /// Constuctor
@@ -105,6 +104,8 @@ public:
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
 protected:
+  typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
+
   DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event * request);
 
   /**
@@ -151,11 +152,10 @@ protected:
 
   ///= Protected Data Members
 protected:
+  Request_Queue& pending_events();
+
   /// The Proxy that we associate with.
   TAO_Notify_ProxySupplier* proxy_;
-
-  /// Events pending to be delivered.
-  Request_Queue * pending_events_;
 
   /// Suspended Flag.
   CORBA::Boolean is_suspended_;
@@ -177,7 +177,12 @@ protected:
 //  TAO_Notify_Batch_Buffering_Strategy* buffering_strategy_;
 //
   /// The Timer Manager that we use.
-  TAO_Notify_Timer* timer_;
+  TAO_Notify_Timer::Ptr timer_;
+
+private:
+
+  /// Events pending to be delivered.
+  ACE_Auto_Ptr< Request_Queue > pending_events_;
 };
 
 #if defined (__ACE_INLINE__)

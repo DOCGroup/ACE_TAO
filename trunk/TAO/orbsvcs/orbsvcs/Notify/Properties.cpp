@@ -16,6 +16,7 @@ TAO_Notify_Properties::TAO_Notify_Properties (void)
   : factory_ (0)
   , builder_ (0)
   , asynch_updates_ (0)
+  , allow_reconnect_ (false)
   , updates_ (1)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.

@@ -41,7 +41,7 @@ public:
   TAO_Notify_AnyEvent_No_Copy (const CORBA::Any &event);
 
   /// Destructor
-  ~TAO_Notify_AnyEvent_No_Copy ();
+  virtual ~TAO_Notify_AnyEvent_No_Copy ();
 
   /// Get the event type.
   virtual const TAO_Notify_EventType& type (void) const;
@@ -103,10 +103,7 @@ public:
   TAO_Notify_AnyEvent (const CORBA::Any &event);
 
   /// Destructor
-  ~TAO_Notify_AnyEvent ();
-
-  /// return this
-  virtual const TAO_Notify_Event * queueable_copy (ACE_ENV_SINGLE_ARG_DECL)const;
+  virtual ~TAO_Notify_AnyEvent ();
 
 protected:
   /// Copy of the Event.

@@ -22,8 +22,7 @@
 
 #include "Worker_Task.h"
 #include "AdminProperties.h"
-
-class TAO_Notify_Timer_Reactor;
+#include "Timer_Reactor.h"
 
 /**
  * @class TAO_Notify_Reactive_Task
@@ -38,13 +37,11 @@ public:
   TAO_Notify_Reactive_Task (void);
 
   /// Destructor
-  ~TAO_Notify_Reactive_Task ();
+  virtual ~TAO_Notify_Reactive_Task ();
 
-  /// Release
-  virtual void release (void);
 
   /// Init the reactive task.
-  void init (TAO_Notify_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
+  void init (ACE_ENV_ARG_DECL);
 
   /// Shutdown task
   virtual void shutdown (void);
@@ -60,7 +57,10 @@ public:
 
 protected:
   /// The timer.
-  TAO_Notify_Timer_Reactor* timer_;
+  TAO_Notify_Timer_Reactor::Ptr timer_;
+private:
+  /// Release
+  virtual void release (void);
 };
 
 #if defined (__ACE_INLINE__)

@@ -22,8 +22,6 @@ TAO_Notify_SequenceProxyPushConsumer::~TAO_Notify_SequenceProxyPushConsumer ()
 void
 TAO_Notify_SequenceProxyPushConsumer::release (void)
 {
-  if (this->supplier_)
-    this->supplier_->release ();
 
   delete this;
   //@@ inform factory
@@ -67,7 +65,7 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
                    ))
 {
   // Check if we should proceed at all.
-  if (this->admin_properties_->reject_new_events () == 1 && this->admin_properties_->queue_full ())
+  if (this->admin_properties().reject_new_events () == 1 && this->admin_properties().queue_full ())
     ACE_THROW (CORBA::IMP_LIMIT ());
 
   if (this->is_connected () == 0)
@@ -91,6 +89,7 @@ TAO_Notify_SequenceProxyPushConsumer::disconnect_sequence_push_consumer (ACE_ENV
                    CORBA::SystemException
                    ))
 {
+  TAO_Notify_SequenceProxyPushConsumer::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);

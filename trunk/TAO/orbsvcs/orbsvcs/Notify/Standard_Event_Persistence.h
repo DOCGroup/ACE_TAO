@@ -47,7 +47,7 @@ namespace TAO_Notify
     ///        persistent information.
     /// /param block_size the size of a physical block on the device containing
     ///        the file.
-    bool open (const char * filename, ACE_UINT32 block_size = 512);
+    bool open (const ACE_TCHAR* filename, ACE_UINT32 block_size = 512);
 
     //////////////////////////////////////////////////////
     // Implement Event_Persistence_Factory virtual methods.
@@ -113,11 +113,11 @@ namespace TAO_Notify
     // get the current factory, creating it if necessary
     virtual Event_Persistence_Factory * get_factory ();
 
+  private:
     // release the current factory so a new one can be created
     virtual void reset ();
 
-  private:
-    ACE_CString filename_;  // set via -file_path
+    ACE_TString filename_;  // set via -file_path
     ACE_UINT32 block_size_; // set via -block_size
     Standard_Event_Persistence_Factory * factory_;
   };

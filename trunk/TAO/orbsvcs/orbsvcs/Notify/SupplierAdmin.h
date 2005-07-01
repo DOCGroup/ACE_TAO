@@ -42,11 +42,13 @@ class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin
     public virtual TAO_Notify_Admin
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_SupplierAdmin > Ptr;
+
   /// Constuctor
   TAO_Notify_SupplierAdmin (void);
 
   /// Destructor
-  ~TAO_Notify_SupplierAdmin ();
+  virtual ~TAO_Notify_SupplierAdmin ();
 
   /// Init
   void init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL);
@@ -55,8 +57,6 @@ public:
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Release
-  virtual void release (void);
 
   virtual const char * get_admin_type_name () const;
 
@@ -202,6 +202,10 @@ protected:
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  /// Release
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

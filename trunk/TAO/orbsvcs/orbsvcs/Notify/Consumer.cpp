@@ -10,7 +10,7 @@ ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
 
 #include "Timer.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 #include "ace/Unbounded_Queue.h"
 #include "tao/debug.h"
 #include "Method_Request_Event.h"
@@ -24,31 +24,25 @@ static const int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a co
 
 TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
   : proxy_ (proxy)
-  , pending_events_ (0)
   , is_suspended_ (0)
   , pacing_ (proxy->qos_properties_.pacing_interval ())
   , max_batch_size_ (CosNotification::MaximumBatchSize, 0)
   , timer_id_ (-1)
-//  , buffering_strategy_ (0)
   , timer_ (0)
 {
-  ACE_NEW (
-    this->pending_events_ ,
-    TAO_Notify_Consumer::Request_Queue ()
-    );
+  Request_Queue* pending_events = 0;
+  ACE_NEW (pending_events, TAO_Notify_Consumer::Request_Queue ());
+  this->pending_events_.reset( pending_events );
 
-  this->timer_ = this->proxy ()->timer ();
+  this->timer_.reset( this->proxy ()->timer () );
 }
 
 TAO_Notify_Consumer::~TAO_Notify_Consumer ()
 {
-  delete this->pending_events_;
-//  delete this->buffering_strategy_;
-  if (this->timer_ == 0)
+  if (this->timer_.isSet())
     {
       this->cancel_timer ();
-      this->timer_->_decr_refcnt ();
-      this->timer_ = 0;
+      this->timer_.reset ();
     }
 }
 
@@ -62,19 +56,6 @@ void
 TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
 {
   this->max_batch_size_ = qos_properties.maximum_batch_size ();
-
-/*
-//@@ todo: consider buffering strategy
-  if (this->max_batch_size_.is_valid ())
-    {// set the max batch size.
-      this->buffering_strategy_->batch_size (this->max_batch_size_.value ());
-    }
-*/
-
-  // Inform the buffering strategy of qos change.
-/*
-  this->buffering_strategy_->update_qos_properties (qos_properties);
-*/
 }
 
 void
@@ -90,8 +71,8 @@ TAO_Notify_Consumer::enqueue_request (
   TAO_Notify_Method_Request_Event * request
   ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Event_var event_var;
-  request->event ()->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Event::Ptr event_var (
+    request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
   ACE_CHECK;
   TAO_Notify_Method_Request_Event_Queueable * queue_entry;
   ACE_NEW_THROW_EX (queue_entry,
@@ -106,29 +87,29 @@ TAO_Notify_Consumer::enqueue_request (
     request
     ));
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-  this->pending_events_->enqueue_tail (queue_entry);
+  this->pending_events().enqueue_tail (queue_entry);
 }
 
 bool
 TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock (), false);
-  if (! this->pending_events_->is_empty ())
+  if (! this->pending_events().is_empty ())
     {
       if (DEBUG_LEVEL > 3)ACE_DEBUG ( (LM_DEBUG,
         ACE_TEXT ("Consumer %d: enqueuing another event. %d\n"),
         static_cast<int> (this->proxy ()->id ()),
         request->sequence ()
           ));
-      TAO_Notify_Event_var event_var;
-      request->event ()->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
+      TAO_Notify_Event::Ptr event_var (
+        request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
       ACE_CHECK_RETURN (false);
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
         TAO_Notify_Method_Request_Event_Queueable (*request, event_var),
         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (false);
-      this->pending_events_->enqueue_tail (queue_entry);
+      this->pending_events().enqueue_tail (queue_entry);
       this->schedule_timer (false);
       return true;
     }
@@ -139,15 +120,15 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
         static_cast<int> (this->proxy ()->id ()),
         request->sequence ()
         ));
-      TAO_Notify_Event_var event_var;
-      request->event ()->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
+      TAO_Notify_Event::Ptr event_var (
+        request->event ()->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
       ACE_CHECK_RETURN (false);
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
       ACE_NEW_THROW_EX (queue_entry,
         TAO_Notify_Method_Request_Event_Queueable (*request, event_var),
         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (false);
-      this->pending_events_->enqueue_tail (queue_entry);
+      this->pending_events().enqueue_tail (queue_entry);
       this->schedule_timer (false);
       return true;
     }
@@ -159,8 +140,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request ACE_ENV_
 {
   // Increment reference counts (safely) to prevent this object and its proxy
   // from being deleted while the push is in progress.
-  TAO_Notify_Refcountable_Guard_T<TAO_Notify_Proxy> proxy_guard (this->proxy ());
-  TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer> this_guard (this);
+  TAO_Notify_Proxy::Ptr proxy_guard (this->proxy ());
   bool queued = enqueue_if_necessary (request ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   if (!queued)
@@ -369,18 +349,18 @@ TAO_Notify_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   if (DEBUG_LEVEL  > 5) ACE_DEBUG ( (LM_DEBUG,
     ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %d\n"),
     static_cast<int> (this->proxy ()->id ()),
-    this->pending_events_->size ()
+    this->pending_events().size ()
     ));
 
   // lock ourselves in memory for the duration
-  TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer> self_grd (this);
+  TAO_Notify_Consumer::Ptr self_grd (this);
 
   // dispatch events until: 1) the queue is empty; 2) the proxy shuts down, or 3) the dispatch fails
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
   bool ok = true;
-  while (ok && !this->proxy_supplier ()->has_shutdown () && !this->pending_events_->is_empty ())
+  while (ok && !this->proxy_supplier ()->has_shutdown () && !this->pending_events().is_empty ())
   {
-    if (! dispatch_from_queue (*this->pending_events_, ace_mon))
+    if (! dispatch_from_queue ( this->pending_events(), ace_mon))
     {
       this->schedule_timer (true);
       ok = false;
@@ -464,6 +444,12 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
         result = true;
         break;
       }
+      default:
+      {
+        ace_mon.acquire ();
+        result = false;
+        break;
+      }
     }
   }
   return result;
@@ -484,7 +470,7 @@ TAO_Notify_Consumer::schedule_timer (bool is_error)
     return;
   }
 
-  ACE_ASSERT (this->timer_ != 0);
+  ACE_ASSERT (this->timer_.get() != 0);
 
   // If we're scheduling the timer due to an error then we want to
   // use the retry timeout, otherwise we'll assume that the pacing
@@ -520,7 +506,7 @@ TAO_Notify_Consumer::schedule_timer (bool is_error)
 void
 TAO_Notify_Consumer::cancel_timer (void)
 {
-  if (this->timer_ != 0 && this->timer_id_ != -1)
+  if (this->timer_.isSet() && this->timer_id_ != -1)
   {
     if (DEBUG_LEVEL  > 5) ACE_DEBUG ( (LM_DEBUG,
       ACE_TEXT ("Consumer %d canceling dispatch timer.\n"),
@@ -535,7 +521,7 @@ TAO_Notify_Consumer::cancel_timer (void)
 int
 TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 {
-  TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer> grd (this);
+  TAO_Notify_Consumer::Ptr grd (this);
   this->timer_id_ = -1;  // This must come first, because dispatch_pending may try to resched
   ACE_DECLARE_NEW_ENV;
   ACE_TRY
@@ -554,11 +540,10 @@ TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 void
 TAO_Notify_Consumer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  if (this->timer_ == 0)
+  if (this->timer_.isSet ())
     {
       this->cancel_timer ();
-      this->timer_->_decr_refcnt ();
-      this->timer_ = 0;
+      this->timer_.reset ();
     }
 }
 

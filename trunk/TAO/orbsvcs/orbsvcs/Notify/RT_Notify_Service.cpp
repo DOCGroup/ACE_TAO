@@ -18,14 +18,8 @@ TAO_RT_Notify_Service::~TAO_RT_Notify_Service ()
 {
 }
 
-int
-TAO_RT_Notify_Service::init (int argc, char *argv[])
-{
-  return TAO_CosNotify_Service::init (argc, argv);
-}
-
 void
-TAO_RT_Notify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_RT_Notify_Service::init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Loading the Real-Time Notification Service...\n"));
 
@@ -69,31 +63,31 @@ TAO_RT_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   properties->current (current.in ());
 }
 
-void
-TAO_RT_Notify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Factory*
+TAO_RT_Notify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->factory_ = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
+  TAO_Notify_Factory* factory  = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
 
-  if (this->factory_ == 0)
+  if (factory == 0)
     {
-      ACE_NEW_THROW_EX (this->factory_,
+      ACE_NEW_THROW_EX (factory,
                         TAO_Notify_RT_Factory (),
                         CORBA::NO_MEMORY ());
       ACE_CHECK;
     }
-
-  TAO_Notify_PROPERTIES::instance()->factory (this->factory_);
+  return factory;
 }
 
-void
-TAO_RT_Notify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Builder*
+TAO_RT_Notify_Service::create_builder (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_NEW_THROW_EX (this->builder_,
+  TAO_Notify_Builder* builder = 0;
+  ACE_NEW_THROW_EX (builder,
                     TAO_Notify_RT_Builder (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  TAO_Notify_PROPERTIES::instance()->builder (this->builder_);
+  return builder;
 }
 
 ACE_FACTORY_DEFINE (TAO_RT_Notify,TAO_RT_Notify_Service)

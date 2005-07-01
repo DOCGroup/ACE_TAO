@@ -113,16 +113,8 @@ The svc.conf options:
 
 The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the following options:
 
-"-MTDispatching"                     : Enable MT dispatching
 "-DispatchingThreads [thread_count]" : How many threads for MT dispatching.
 
-"-MTSourceEval"                      : Enable MT proxy consumer(source) filter evaluation.
-"-SourceThreads [thread_count]"      : How many threads for source filter evaluation.
-
-"-MTLookup"                          : Enable MT subscription table lookup.
-"-LookupThreads [thread_count]"      : How many lookup threads.
-
-"-MTListenerEval"                    : Enable MT proxy supplier (listener) filter evaluation.
 "-ListenerThreads"                   : How many threads for listener filter evaluation.
 
 "-AsynchUpdates"                     : Send subscription and
@@ -130,27 +122,33 @@ The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the fo
                                        asynchronously.
 
 "-AllocateTaskperProxy"              : Allocate worker tasks per
-                                       proxy for the following
-                                       options:
-                                       "-MTDispatching",
-                                       "-MTSourceEval"
-                                       "-MTListenerEval"
+                                       proxy 
                                        *see footnote below for explanation*
+"-AllowReconnect"                    : Allows consumers and suppliers to
+                                       reconnect to existing proxies.
+
+"-NoUpdates"                         : Globally disables subscription and
+                                       publication updates.
+
+All other options are deprecated and should not be used.
 
 e.g. svc.conf
-static Notify_Default_Event_Manager_Objects_Factory "-MTSourceEval -MTDispatching -DispatchingThreads 2"
+static Notify_Default_Event_Manager_Objects_Factory "-DispatchingThreads 2"
 
-This means that we want to enable MT proxy supplier filter evaluation
-(default 1 thread) and MT event dispatching with 2 threads.
+This means that we want to enable event dispatching with 2 threads.
 
 ----------------------------------------------------------------
 What does the "-AllocateTaskperProxy" option do?
 
 A Task here implies a thread pool that performs a fixed work in the
 Notify.
-e.g. When you specify "-MTDispatching" and set "DispatchingThreads 1".
+e.g. When you specify "DispatchingThreads 1".
 It means that there is 1 thread to perform the event dispatching to
-consumers IRRESPECTIVE OF THE NUMBER OF PROXYSUPPLIERS.
+consumers IRRESPECTIVE OF THE NUMBER OF PROXYSUPPLIERS. It also means that
+events destined for each consumer will be queued to a buffer for that consumer. 
+Therefore, you can also think of this option as Enable Consumer-side Buffering
+of Events.
+
 This is the default case.
 
 When you specify "-AllocateTaskperProxy" it asks notify to create a
@@ -160,18 +158,17 @@ PROXYSUPPLIER. So if you use this option and connect 50 consumers with
 threads! so use this option with care and you might not need it in
 most cases.
 
-why have this feature in the first place?  The intent is to allow the
+Why have this feature in the first place?  The intent is to allow the
 software architect of a Notify based system, fine control over where
 and how much thread resources are deployed.  e.g. a channel could have
 2 proxy suppliers - the first one delivers an important event in huge
 quantities.  A dedicated thread pool to this proxy will ensure better
-throughput to it's consumers. (Eventually i want to be able to set the
+throughput to it's consumers. (Eventually I want to be able to set the
 thread pool size via a QoS property)
-
-Similarly, the "-MTSourceEval" specifies a thread pool for the filter
-evaluation at the proxyconsumer ("Source").
-and the "-MTListenerEval" specifies a thread pool for the filter
-evaluation at the proxyconsumer ("Listener").
+Similarly "-ListenerThreads 2" specifies a thread pool for use by 
+the supplier-side processing. This enables Buffering on the Supplier-side, with
+the thread pool being used to process supplier side filters and push the 
+events to the Consumer side. 
 
 How to use the NT_Notify_Service
 ================================
