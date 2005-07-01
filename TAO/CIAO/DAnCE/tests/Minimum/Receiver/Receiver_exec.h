@@ -94,7 +94,7 @@ namespace CIDL_Receiver_Impl
     ::Components::CCMException));
 
     protected:
-    CIAO_GLUE_Minimum::Receiver_Context *context_;
+    Receiver_Context *context_;
   };
 
   class RECEIVER_EXEC_Export ReceiverHome_exec_i
