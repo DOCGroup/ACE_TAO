@@ -5,9 +5,9 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_Guard.h"
-# include "ORB_Core.h"
 # include "ServerRequestInfo.h"
-# include "ServerRequestInterceptor_Adapter.h"
+# include "tao/ServerRequestInterceptor_Adapter.h"
+# include "tao/ORB_Core.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "tao/PortableInterceptor.h"
