@@ -17,10 +17,11 @@ $status = 0;
 $nsior = PerlACE::LocalFile ("ns.ior");
 $testfile = PerlACE::LocalFile ("output");
 
+unlink $nsior;
+unlink $testfile, $input;
+
 # generate test stream data
 $input = PerlACE::generate_test_file("test_input", 102400);
-
-unlink $nsior;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
 $SV  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 10 -f $input");
@@ -239,18 +240,4 @@ unlink $nsior;
 unlink $testfile, $input;
 
 exit $status;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

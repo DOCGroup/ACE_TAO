@@ -18,11 +18,13 @@ $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 $testfile = PerlACE::LocalFile ("output");
+$input = PerlACE::LocalFile ("test_input");
+
+unlink $nsior;
+unlink $testfile, $input;
 
 # generate test stream data
 $input = PerlACE::generate_test_file("test_input", 102400);
-
-unlink $nsior;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBDottedDecimalAddresses 1 -o $nsior");
 $SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");

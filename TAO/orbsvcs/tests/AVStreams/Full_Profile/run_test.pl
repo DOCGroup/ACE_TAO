@@ -20,6 +20,7 @@ $outfile = PerlACE::LocalFile ("output");
 $debug = 0;
 
 unlink $nsior;
+unlink $output, $input;
 
 # generate test stream data
 # the size of this file is limited by the maximum packet size
