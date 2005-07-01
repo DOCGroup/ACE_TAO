@@ -18,7 +18,7 @@ namespace TAO
   }
 
   template <typename InterceptorType>
-  Interceptor_List<InterceptorType>::InterceptorType_ptr_type
+  Interceptor_List<typename InterceptorType>::InterceptorType_ptr_type
   Interceptor_List<InterceptorType>::interceptor (size_t index)
   {
     return this->interceptors_[index].in ();
