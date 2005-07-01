@@ -1,3 +1,8 @@
+Fri Jul  1 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_IPV6
+
 Fri Jul  1 11:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/interceptors.mpb
