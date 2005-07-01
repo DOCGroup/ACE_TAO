@@ -45,6 +45,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
+  // Evaluate the member in time for the decision to generate
+  // the recursive typecode include in the stub source file.
+  ACE_Unbounded_Queue<AST_Type *> list;
+  (void) node->in_recursion (list);
+
   // This will be a no-op if it has alread by done by a forward
   // declaration.
   node->gen_var_out_seq_decls ();
