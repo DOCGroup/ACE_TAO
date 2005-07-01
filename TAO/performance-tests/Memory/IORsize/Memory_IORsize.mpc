@@ -1,14 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver {
+project(*client) : taoserver {
+  exename = client
   source_files {
     client.cpp
     Foo_i.cpp
   }
 }
 
-project(*server) : taoexe, portableserver {
+project(*server) : taoserver {
   source_files {
     server.cpp
     Memory_Growth.cpp

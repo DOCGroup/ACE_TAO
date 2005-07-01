@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*latency server): taoexe, portableserver, strategies, minimum_corba {
+project(*latency server): taoserver, strategies, minimum_corba {
 
   Source_Files {
     Roundtrip.cpp
@@ -9,9 +9,9 @@ project(*latency server): taoexe, portableserver, strategies, minimum_corba {
   }
 }
 
-project(*latency client): taoexe, portableserver, strategies, dynamicinterface, minimum_corba {
-
+project(*latency client): taoclient, strategies, dynamicinterface, minimum_corba {
   Source_Files {
+    TestC.cpp
     client.cpp
   }
 }
