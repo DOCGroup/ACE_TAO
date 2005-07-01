@@ -1,3 +1,14 @@
+Fri Jul  1 15:16:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
+          Cleanup generated test files at the start, there can be an old file
+          when things failed in the previous run
+
 Fri Jul  1 15:02:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Callback/Callback.mpc:
