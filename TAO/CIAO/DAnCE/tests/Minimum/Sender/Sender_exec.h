@@ -99,7 +99,7 @@ namespace CIDL_Sender_Impl
     ::Components::CCMException));
 
     protected:
-    CIAO_GLUE_Minimum::Sender_Context *context_;
+    Sender_Context *context_;
   };
 
   class SENDER_EXEC_Export SenderHome_exec_i
