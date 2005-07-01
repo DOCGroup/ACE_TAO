@@ -1,3 +1,14 @@
+Fri Jul  1 11:33:12 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          When generating template specializations, do not add the stream
+          type suffix.  This allows users to combine the idl generated .cpp
+          files into one which with some compilers decreases build times.
+
 Fri Jul  1 15:16:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
@@ -39,16 +50,16 @@ Fri Jul  1 14:40:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jul  1 07:18:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
 
-	  Changed so-called "convenience libraries" projects to inherit
-	  from conv_lib.mpb.
+          Changed so-called "convenience libraries" projects to inherit
+          from conv_lib.mpb.
 
 Fri Jul  1 13:58:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -351,12 +362,12 @@ Thu Jun 30 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 30 10:21:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (get_current_size, get_n_records,
-	  flush):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (get_current_size, get_n_records,
+          flush):
 
-	  Changed argument list to use ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-	  instead of ACE_ENV_SINGLE_ARG_DECL, since these methods do not
-	  throw exceptions.
+          Changed argument list to use ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+          instead of ACE_ENV_SINGLE_ARG_DECL, since these methods do not
+          throw exceptions.
 
 Thu Jun 30 09:50:46 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -438,11 +449,11 @@ Wed Jun 29 20:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun 29 12:02:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Invocation_Base.cpp:
+        * tao/Invocation_Base.cpp:
 
-	  Moved "PortableInterceptor.h" include directive out of
-	  TAO_HAS_INTERCEPTORS preprocessor block.  It should always be
-	  visible.  Fixes errors in builds with interceptors disabled.
+          Moved "PortableInterceptor.h" include directive out of
+          TAO_HAS_INTERCEPTORS preprocessor block.  It should always be
+          visible.  Fixes errors in builds with interceptors disabled.
 
 Wed Jun 29 18:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -454,9 +465,9 @@ Wed Jun 29 18:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun 29 10:13:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
 
-	  Change type of orb_ member variable from _ptr to _var.
+          Change type of orb_ member variable from _ptr to _var.
 
 Wed Jun 29 10:00:31 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -466,98 +477,98 @@ Wed Jun 29 10:00:31 2005  Gary Maxey <gary.maxey@hp.com>
 
 Wed Jun 29 07:22:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/Makefile.am:
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
+        * TAO_IDL/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* TAO_IDL/tao_idl.mpc:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
-	* orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
 
-	  Changed so-called "convenience libraries" projects to inherit
-	  from conv_lib.mpb.
+          Changed so-called "convenience libraries" projects to inherit
+          from conv_lib.mpb.
 
 Tue Jun 28 22:21:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Invocation_Base.inl (reply_received):
-	* tao/Invocation_Base.cpp (reply_received):
+        * tao/Invocation_Base.inl (reply_received):
+        * tao/Invocation_Base.cpp (reply_received):
 
-	  Moved this method out-of-line.  It calls a method on its
-	  TAO_ClientRequestInfo field.  Inlining this method exposes the
-	  unexported TAO_ClientRequestInfo class to code outside of the
-	  TAO shared library, which results in "unresolved_symbol"
-	  link-time errors when attempting to call
-	  Invocation_Base::reply_received() directly or indirectly
-	  (e.g. via TAO::Reply_Guard::~Reply_Guard()).  Fixes g++ 4.0
-	  link-time errors.
+          Moved this method out-of-line.  It calls a method on its
+          TAO_ClientRequestInfo field.  Inlining this method exposes the
+          unexported TAO_ClientRequestInfo class to code outside of the
+          TAO shared library, which results in "unresolved_symbol"
+          link-time errors when attempting to call
+          Invocation_Base::reply_received() directly or indirectly
+          (e.g. via TAO::Reply_Guard::~Reply_Guard()).  Fixes g++ 4.0
+          link-time errors.
 
-	* tao/Synch_Invocation.h (Reply_Guard):
+        * tao/Synch_Invocation.h (Reply_Guard):
 
-	  Improved const-correctness by making an immutable pointer member
-	  "const".
+          Improved const-correctness by making an immutable pointer member
+          "const".
 
 Tue Jun 28 20:52:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Concurrency_Service/Makefile.am:
-	* orbsvcs/CosEvent_Service/Makefile.am:
-	* orbsvcs/Dump_Schedule/Makefile.am:
-	* orbsvcs/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/Fault_Detector/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/LifeCycle_Service/Makefile.am:
-	* orbsvcs/LoadBalancer/Makefile.am:
-	* orbsvcs/Naming_Service/Makefile.am:
-	* orbsvcs/Notify_Service/Makefile.am:
-	* orbsvcs/Scheduling_Service/Makefile.am:
-	* orbsvcs/TAO_Service/Makefile.am:
-	* orbsvcs/Time_Service/Makefile.am:
-	* orbsvcs/Trading_Service/Makefile.am:
+        * orbsvcs/Concurrency_Service/Makefile.am:
+        * orbsvcs/CosEvent_Service/Makefile.am:
+        * orbsvcs/Dump_Schedule/Makefile.am:
+        * orbsvcs/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/Fault_Detector/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+        * orbsvcs/LoadBalancer/Makefile.am:
+        * orbsvcs/Naming_Service/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/Scheduling_Service/Makefile.am:
+        * orbsvcs/TAO_Service/Makefile.am:
+        * orbsvcs/Time_Service/Makefile.am:
+        * orbsvcs/Trading_Service/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Tue Jun 28 19:51:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/Makefile.am:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * TAO_IDL/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
 
-	  Added a *_IDL project, currently only for automake builds, that
-	  only compiles the *.idl files.  This ensures that all generated
-	  files will be included in the lists of sources, headers,
-	  inlines, templates, etc. instead of only those used in the stub
-	  libraries.  Other build types continue to compile *.idl files as
-	  part of the stub library projects.  When this is prefected, most
-	  build methods can use the automake build mechanism.
+          Added a *_IDL project, currently only for automake builds, that
+          only compiles the *.idl files.  This ensures that all generated
+          files will be included in the lists of sources, headers,
+          inlines, templates, etc. instead of only those used in the stub
+          libraries.  Other build types continue to compile *.idl files as
+          part of the stub library projects.  When this is prefected, most
+          build methods can use the automake build mechanism.
 
-	* orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
 
-	  Added missing *.h, *.inl, and *S_T.* files to Header_Files,
-	  Inline_Files, and Template_Files so that they're installed.
+          Added missing *.h, *.inl, and *S_T.* files to Header_Files,
+          Inline_Files, and Template_Files so that they're installed.
 
-	* orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
 
-	  Added explicit Header_Files and Inline_Files sections so all
-	  files are installed.
+          Added explicit Header_Files and Inline_Files sections so all
+          files are installed.
 
 Tue Jun 28 16:11:50 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -594,10 +605,10 @@ Tue Jun 28 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 27 14:54:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Mon Jun 27 13:54:27 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -631,9 +642,9 @@ Mon Jun 27 13:08:01 2005  Gary Maxey <gary.maxey@hp.com>
 
 Mon Jun 27 12:19:01 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp
-	  (TAO): Changed the comment to "Using default value of 1.5
-	  seconds".  Thanks to Simon Massey and Bala for resolving this.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp
+          (TAO): Changed the comment to "Using default value of 1.5
+          seconds".  Thanks to Simon Massey and Bala for resolving this.
 
 Mon Jun 27 11:09:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 

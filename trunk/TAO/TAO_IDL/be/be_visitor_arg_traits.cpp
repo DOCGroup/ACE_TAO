@@ -119,7 +119,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
 
       // This should be generated even for imported nodes. The ifdef
       // guard prevents multiple declarations.
-      os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+      os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
       *os << be_nl << be_nl
           << "template<>" << be_nl
@@ -200,7 +200,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
 
       // This should be generated even for imported nodes. The ifdef
       // guard prevents multiple declarations.
-      os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+      os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
       os << be_nl << be_nl
          << "template<>" << be_nl
@@ -249,7 +249,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
 
       // This should be generated even for imported nodes. The ifdef
       // guard prevents multiple declarations.
-      os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+      os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
       os << be_nl << be_nl
          << "template<>" << be_nl
@@ -543,7 +543,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str ());
+  os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str (), false);
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
@@ -597,7 +597,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
     
   if (alias == 0)
     {
-      os->gen_ifdef_macro (node->flat_name(), guard_suffix.c_str ());
+      os->gen_ifdef_macro (node->flat_name(), guard_suffix.c_str (), false);
     }
   else
     {
@@ -622,7 +622,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       ACE_OS::strcpy (cat_string, alias->local_name ()->get_string ()) ;
       ACE_OS::strcat (cat_string, bound_string);
 
-      os->gen_ifdef_macro (cat_string, guard_suffix.c_str ());
+      os->gen_ifdef_macro (cat_string, guard_suffix.c_str (), false);
        
       delete [] cat_string;
       delete [] bound_string;
@@ -693,7 +693,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   // This should be generated even for imported nodes. The ifdef guard prevents
   // multiple declarations.
-//  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+//  os->gen_ifdef_macro (node->flat_name (), "arg_traits", false);
 
   // Generate the array traits specialization definitions,
   // guarded by #ifdef on unaliased array element type and length.
@@ -727,7 +727,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
     }
 
   unique += "_traits";
-  os->gen_ifdef_macro (unique.fast_rep ());
+  os->gen_ifdef_macro (unique.fast_rep (), 0, false);
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
@@ -785,7 +785,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
@@ -826,7 +826,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
@@ -940,7 +940,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
