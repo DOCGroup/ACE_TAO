@@ -49,7 +49,9 @@ namespace TAO
 
   Invocation_Base::~Invocation_Base (void)
   {
+#if TAO_HAS_INTERCEPTORS == 1
     adapter_ = 0;
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
   }
 
   void
