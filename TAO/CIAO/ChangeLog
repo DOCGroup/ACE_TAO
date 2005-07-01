@@ -1,3 +1,10 @@
+Fri Jul  1 08:42:27 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
+	
+	Fixed compile errors with emulated exceptions turned on.
+	
 Thu Jun 30 23:34:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/tests/Minimum/Receiver/Receiver_exec.cpp:
