@@ -327,12 +327,12 @@ TAO_Notify_Tests_Periodic_Supplier::svc (void)
   ACE_CATCH (CORBA::UserException, ue)
     {
       ACE_PRINT_EXCEPTION (ue,
-                           "Periodic supplier: error sending event. ");
+        "Error: Periodic supplier: error sending event. ");
     }
   ACE_CATCH (CORBA::SystemException, se)
     {
       ACE_PRINT_EXCEPTION (se,
-                           "Periodic supplier: error sending event. ");
+        "Error: Periodic supplier: error sending event. ");
     }
   ACE_ENDTRY;
 

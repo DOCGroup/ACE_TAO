@@ -2,6 +2,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "Notify_Sequence_Push_Consumer.h"
+#include "Notify_Test_Client.h"
 #include "orbsvcs/TimeBaseC.h"
 #include "common.h"
 #include "tao/debug.h"
@@ -11,14 +12,15 @@ Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
                                             CORBA::Short policy,
                                             unsigned int low,
                                             unsigned int high,
-                                            int& done)
+                                            Notify_Test_Client& client)
  : name_ (name),
    discard_policy_ (policy),
    low_ (low),
    high_ (high),
    count_ (0),
-   done_ (done)
+   client_ (client)
 {
+  this->client_.consumer_start (this);
 }
 
 
@@ -75,6 +77,8 @@ Notify_Sequence_Push_Consumer::push_structured_events(
                           ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG((LM_DEBUG, "-"));
+
   CORBA::ULong length = events.length();
 
   if (TAO_debug_level)
@@ -111,14 +115,14 @@ Notify_Sequence_Push_Consumer::push_structured_events(
   this->count_++;
   if (this->count_ > this->high_)
     {
-      this->done_ = 2;
+      this->client_.consumer_done (this);
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT ("Sequence Consumer (%P|%t): ERROR: too "
                            "many events received.\n")));
     }
   else if (this->count_ == this->low_)
     {
-      this->done_ = 1;
+      this->client_.consumer_done (this);
     }
   else
     {

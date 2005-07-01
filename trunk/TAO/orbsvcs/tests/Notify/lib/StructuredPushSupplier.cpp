@@ -44,6 +44,7 @@ TAO_Notify_Tests_StructuredPushSupplier::connect_to_peer (Proxy_Traits::PTR prox
 void
 TAO_Notify_Tests_StructuredPushSupplier::disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ACE_DEBUG((LM_DEBUG, "\nPush Supplier disconnecting from consumer.\n"));
   this->proxy_->disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -51,7 +52,9 @@ void
 TAO_Notify_Tests_StructuredPushSupplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  bool this_method_used_only_by_notify_service = false;
+  ACE_ASSERT(this_method_used_only_by_notify_service);
+  ACE_UNUSED_ARG(this_method_used_only_by_notify_service);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

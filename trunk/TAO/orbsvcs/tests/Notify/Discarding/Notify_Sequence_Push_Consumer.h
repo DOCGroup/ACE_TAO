@@ -20,15 +20,15 @@
 
 #include "Notify_SequencePushConsumer.h"
 
+class Notify_Test_Client;
 
 class Notify_Sequence_Push_Consumer: public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
   Notify_Sequence_Push_Consumer (const char* name,
                                  CORBA::Short policy,
-                                 unsigned int low,
-                                 unsigned int high,
-                                 CORBA::Boolean& done);
+                                 Notify_Test_Client& client,
+                                 int sent);
 
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
                 ACE_ENV_ARG_DECL)
@@ -41,10 +41,10 @@ protected:
 
   ACE_CString name_;
   CORBA::Short discard_policy_;
-  unsigned int low_;
-  unsigned int high_;
   unsigned int count_;
-  CORBA::Boolean& done_;
+  Notify_Test_Client& client_;
+  int sent_;
+  int first_;
 };
 
 #endif /* TAO_NOTIFY_SEQUENCE_PUSH_CONSUMER_H */

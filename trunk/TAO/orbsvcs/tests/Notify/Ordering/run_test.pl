@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $ior = PerlACE::LocalFile ("supplier.ior");
 $notifyior = PerlACE::LocalFile ("notify.ior");
+$naming_ior = PerlACE::LocalFile ("naming.ior");
 $notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 $status = 0;
 $deadline = 0;
@@ -25,11 +26,9 @@ foreach my $arg (@ARGV) {
   }
 }
 
-unlink $notifyior;
-
 $port = PerlACE::uniqueid () + 10001;
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
-                            "-ORBEndpoint iiop://localhost:$port");
+                            "-ORBEndpoint iiop://localhost:$port -o $naming_ior");
 $TS = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
                             "-ORBInitRef NameService=iioploc://" .
                             "localhost:$port/NameService " .
@@ -47,15 +46,18 @@ $SEC = new PerlACE::Process ("Sequence_Consumer");
 
 $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
-if ($NS->Spawn () == -1) {
-    exit 1;
+               
+unlink $notifyior;
+unlink $naming_ior;
+               
+$NS->Spawn ();
+if (PerlACE::waitforfile_timed ($naming_ior, 20) == -1) {
+  print STDERR "ERROR: waiting for the naming service to start\n";
+  $NS->Kill ();
+  exit 1;
 }
 
-if ($TS->Spawn () == -1) {
-    $NS->Kill ();
-    exit 1;
-}
-
+$TS->Spawn ();
 if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
@@ -63,79 +65,155 @@ if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     exit 1;
 }
 
-@policies = ("fifo", "priority");
 if ($deadline) {
-  push(@policies, "deadline");
+  ## @@todo : Add combinations of deadline ordering.
 }
 
-for($i = 0; $i <= $#policies; $i++) {
-  $order_policy = $policies[$i];
-  print "************* Running Structured Consumer with the " .
-        "$order_policy policy ***********\n";
+# Although the TAO notify service supports OrderPolicy on the supplier side
+# QoS, this setting typically serves no practical purpose, and is not testable.
+# This is because we have no way to force the supplier-side queue to back up, and
+# the OrderPolicy will have no affect.
+# Therefore we don't test setting this policy on the supplier side.
 
-  unlink $ior;
-  $STS->Arguments($STS->Arguments() . " -d $order_policy");
-  $STS->Spawn ();
-
-  if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
-      print STDERR "ERROR: waiting for the supplier to start\n";
-      $STS->Kill ();
-      $TS->Kill ();
-      $NS->Kill ();
-      $status = 1;
-      last;
-  }
-
-  $STC->Arguments($client_args . " -d $order_policy");
-  $client = $STC->SpawnWaitKill (120);
-
-  $STS->Kill ();
-  if ($client != 0) {
-    print STDERR "ERROR: Structured_Consumer did not run properly\n";
+print "**** Structured Supplier (fifo) -> Structured Consumer (none) *****\n";
+unlink $ior;
+$STS->Arguments($STS->Arguments() . " -d fifo");
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
     $status = 1;
-    last;
-  }
+    exit 1;
+}
+$STC->Arguments($client_args . " -d fifo");
+$client = $STC->SpawnWaitKill (20);
+if ($client != 0) {
+  $STS->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
 
-## // pradeep: commented out priority policies temporarily till the sequences implementation is fixed.
-@policies_seq = ("fifo");
+print "**** Structured Supplier (fifo) -> Structured Consumer (priority) *****\n";
+unlink $ior;
+$STS->Arguments($STS->Arguments() . " -d fifo");
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
+    exit 1;
+}
+$STC->Arguments($client_args . " -d priority -o");
+$client = $STC->SpawnWaitKill (20);
+if ($client != 0) {
+  $STS->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
 
-if ($status == 0) {
-  for($i = 0; $i <= $#policies_seq; $i++) {
-    $order_policy = $policies_seq[$i];
-    print "************** Running Sequence Consumer with the " .
-          "$order_policy policy ************\n";
+print "**** Structured Supplier (fifo) -> Sequence Consumer (priority) *****\n";
+unlink $ior;
+$STS->Arguments($STS->Arguments() . " -d fifo");
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
+    exit 1;
+}
+$SEC->Arguments($client_args . " -d priority -o");
+$client = $SEC->SpawnWaitKill (20);
+if ($client != 0) {
+  $STS->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
 
-    unlink $ior;
-    $SES->Arguments($SES->Arguments() . " -d $order_policy");
-    $SES->Spawn ();
-
-    if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
-        print STDERR "ERROR: waiting for the supplier to start\n";
-        $SES->Kill ();
-        $TS->Kill ();
-        $NS->Kill ();
-        $status = 1;
-        last;
-    }
-
-    $SEC->Arguments($client_args . " -d $order_policy");
-    $client = $SEC->SpawnWaitKill (120);
-
+print "**** Sequence Supplier (fifo) -> Structured Consumer (priority) *****\n";
+unlink $ior;
+$SES->Arguments($SES->Arguments() . " -d fifo");
+$SES->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
     $SES->Kill ();
-    if ($client != 0) {
-      print STDERR "ERROR: Sequence_Consumer did not run properly\n";
-      $status = 1;
-      last;
-    }
-  }
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
+    exit 1;
 }
+$STC->Arguments($client_args . " -d priority -o");
+$client = $STC->SpawnWaitKill (20);
+if ($client != 0) {
+  $SES->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $SES->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+
+print "**** Sequence Supplier (fifo) -> Sequence Consumer (priority) *****\n";
+unlink $ior;
+$SES->Arguments($SES->Arguments() . " -d fifo");
+$SES->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+    $SES->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
+    exit 1;
+}
+$SEC->Arguments($client_args . " -d priority -o");
+$client = $SEC->SpawnWaitKill (20);
+if ($client != 0) {
+  $SES->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $SES->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+
 
 $TS->Kill ();
 $NS->Kill ();
 
 unlink $ior;
 unlink $notifyior;
-
+unlink $naming_ior;
 
 exit $status;

@@ -124,7 +124,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                     Notify_Sequence_Push_Consumer ("consumer1",
                                                    low,
                                                    high,
-                                                   client->done ()),
+                                                   *client),
                     CORBA::NO_MEMORY ());
 
   consumer_1->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
@@ -183,30 +183,18 @@ int main (int argc, char* argv[])
               sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              unsigned int try_count = 0;
-              unsigned int try_max = (high - low) * 2;
-              while (true)
-                {
-                  // See if we can get any more events
-                  if (client.done ())
-                    {
-                      ACE_OS::sleep (3);
-                      try_count++;
-                      if (try_count >= try_max)
-                        break;
-                    }
-                  if (orb->work_pending ())
-                    {
-                      orb->perform_work ();
-                    }
-                }
+              client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
+              ACE_TRY_CHECK;
+              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
+ 
+              sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
         }
     }
   ACE_CATCH (CORBA::Exception, e)
     {
-      ACE_PRINT_EXCEPTION (e,
-                           "Consumer exception: ");
+      ACE_PRINT_EXCEPTION (e, "Error: Consumer exception: ");
       status = 1;
     }
   ACE_ENDTRY;

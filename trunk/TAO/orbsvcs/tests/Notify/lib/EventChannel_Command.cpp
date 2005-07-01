@@ -119,7 +119,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG
 
   LOOKUP_MANAGER->resolve (naming);
 
-  notify_service->init (orb.in () ACE_ENV_ARG_PARAMETER);
+  notify_service->init_service (orb.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Activate the factory

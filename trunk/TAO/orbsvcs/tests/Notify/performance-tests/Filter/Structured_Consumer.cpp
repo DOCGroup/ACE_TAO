@@ -19,8 +19,6 @@
 // ******************************************************************
 
 static const char* ior = "file://supplier.ior";
-static CORBA::Boolean done = 0;
-static CORBA::Boolean dummy = 0;
 static CORBA::Boolean filter = 0;
 static unsigned int consumers = 2;
 static unsigned int expected = 1000;
@@ -137,7 +135,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                         Notify_Structured_Push_Consumer (
                                          name,
                                          expected,
-                                         (i + 1 == consumers ? done : dummy)),
+                                         *client),
                         CORBA::NO_MEMORY ());
 
       consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
@@ -204,38 +202,19 @@ int main (int argc, char* argv[])
               // Tell the supplier to go
               sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
+ 
+              client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
+              ACE_TRY_CHECK;
+              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
 
-              ACE_Time_Value now = ACE_OS::gettimeofday ();
-              while (!done)
-                {
-                  if (orb->work_pending ())
-                    {
-                      orb->perform_work ();
-                    }
-                }
-              ACE_Time_Value then = ACE_OS::gettimeofday ();
-
-              static const unsigned int per = 100;
-              ACE_Time_Value difference = then - now;
-
-              if (TAO_debug_level)
-                ACE_DEBUG((LM_DEBUG,
-                           "Total time: %d seconds\n", difference.sec ()));
-
-              double denominator = per / (double)expected;
-              difference *= denominator;
-
-              if (TAO_debug_level)
-                ACE_DEBUG((LM_DEBUG,
-                           "Average of %ds %dus for %u events\n",
-                           difference.sec (), difference.usec (), per));
+              sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
             }
         }
     }
   ACE_CATCH (CORBA::Exception, e)
     {
-      ACE_PRINT_EXCEPTION (e,
-                           "Consumer exception: ");
+      ACE_PRINT_EXCEPTION (e, "Error: Consumer exception: ");
       status = 1;
     }
   ACE_ENDTRY;

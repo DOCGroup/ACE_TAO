@@ -9,15 +9,15 @@ use lib "../../../../../../bin";
 use PerlACE::Run_Test;
 
 $ior = PerlACE::LocalFile ("supplier.ior");
+$namingior = PerlACE::LocalFile ("naming.ior");
 $notifyior = PerlACE::LocalFile ("notify.ior");
 $notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 $status = 0;
 
-unlink $notifyior;
-
 $port = PerlACE::uniqueid () + 10001;
 $NS = new PerlACE::Process ("../../../../Naming_Service/Naming_Service",
-                            "-ORBEndpoint iiop://localhost:$port");
+                            "-ORBEndpoint iiop://localhost:$port " .
+                            "-o $namingior");
 $TS = new PerlACE::Process ("../../../../Notify_Service/Notify_Service",
                             "-ORBInitRef NameService=iioploc://" .
                             "localhost:$port/NameService " .
@@ -33,13 +33,21 @@ $SES = new PerlACE::Process ("Sequence_Supplier",
                              "localhost:$port/NameService");
 $SEC = new PerlACE::Process ("Sequence_Consumer");
 
+unlink $ior;
+unlink $notifyior;
+unlink $namingior;
+
 $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
+               
 $NS->Spawn ();
-print $NS->CommandLine ()."\n";
-$TS->Spawn ();
-print $TS->CommandLine ()."\n";
+if (PerlACE::waitforfile_timed ($namingior, 20) == -1) {
+      print STDERR "ERROR: waiting for the naming service to start\n";
+      $NS->Kill ();
+      exit 1;
+}
 
+$TS->Spawn ();
 if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
@@ -47,116 +55,149 @@ if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     exit 1;
 }
 
-print "********* Running Structured Consumer with two " .
-      "consumers and no filter *******\n";
-
-unlink $ior;
-print $STS->CommandLine ()."\n";
+######################################################################
+print "**** Structured Supplier -> 2 Structured Consumers ****\n";
 $STS->Spawn ();
-
 if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
     print STDERR "ERROR: waiting for the supplier to start\n";
     $STS->Kill ();
     $TS->Kill ();
     $NS->Kill ();
-    $status = 1;
+    exit 1;
 }
 
-if ($status == 0) {
-  $STC->Arguments($client_args);
-  print $STC->CommandLine ()."\n";
-  $client = $STC->SpawnWaitKill (60);
-  print "\n";
+$STC->Arguments($client_args);
+print $STC->CommandLine ()."\n";
+$client = $STC->SpawnWaitKill (300);
+print "\n";
+if ($client != 0) {
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    exit 1;
+}
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
 
+
+######################################################################
+print "**** Structured Supplier -> Structured Consumer (filtered) ****\n";
+
+unlink $ior;
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    exit 1;
+}
+
+$STC->Arguments($client_args . " -f -c 1");
+$client = $STC->SpawnWaitKill (60);
+print "\n";
+if ($client != 0) {
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    exit 1;
+}
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+
+######################################################################
+print "**** Structured Supplier -> Sequence Consumer (filtered) ****\n";
+
+unlink $ior;
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+  print STDERR "ERROR: waiting for the supplier to start\n";
   $STS->Kill ();
-  if ($client != 0) {
-    print STDERR "ERROR: Structured_Consumer did not run properly\n";
-    $status = 1;
-  }
-
-  if ($status == 0) {
-    print "********* Running Structured Consumer with one " .
-          "consumer and one filter *******\n";
-
-    unlink $ior;
-    $STS->Spawn ();
-
-    if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
-        print STDERR "ERROR: waiting for the supplier to start\n";
-        $STS->Kill ();
-        $TS->Kill ();
-        $NS->Kill ();
-        $status = 1;
-    }
-
-    if ($status == 0) {
-      $STC->Arguments($client_args . " -f -c 1");
-      $client = $STC->SpawnWaitKill (60);
-      print "\n";
-
-      $STS->Kill ();
-      if ($client != 0) {
-        print STDERR "ERROR: Structured_Consumer did not run properly\n";
-        $status = 1;
-      }
-    }
-  }
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
 
-if ($status == 0) {
-  print "********* Running Sequence Consumer with two " .
-        "consumers and no filter *******\n";
+$SEC->Arguments($client_args . " -f -c 1");
+$client = $SEC->SpawnWaitKill (60);
+print "\n";
+if ($client != 0) {
+  $STS->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
 
-  unlink $ior;
-  $SES->Spawn ();
+######################################################################
+print "**** Sequence Supplier -> 2 Sequence Consumers ****\n";
 
-  if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
-      print STDERR "ERROR: waiting for the supplier to start\n";
-      $SES->Kill ();
-      $TS->Kill ();
-      $NS->Kill ();
-      $status = 1;
-  }
-
-  if ($status == 0) {
-    $SEC->Arguments($client_args);
-    $client = $SEC->SpawnWaitKill (60);
-    print "\n";
-
+unlink $ior;
+$SES->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
     $SES->Kill ();
-    if ($client != 0) {
-      print STDERR "ERROR: Sequence_Consumer did not run properly\n";
-      $status = 1;
-    }
+    $TS->Kill ();
+    $NS->Kill ();
+    exit 1;
+}
 
-    if ($status == 0) {
-      print "********* Running Sequence Consumer with one " .
-            "consumer and one filter *******\n";
+$SEC->Arguments($client_args);
+$client = $SEC->SpawnWaitKill (60);
+print "\n";
+if ($client != 0) {
+  $SES->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $SES->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
 
-      unlink $ior;
-      $SES->Spawn ();
+######################################################################
+print "**** Sequence Supplier -> Sequence Consumer (filtered) ****\n";
 
-      if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
-          print STDERR "ERROR: waiting for the supplier to start\n";
-          $SES->Kill ();
-          $TS->Kill ();
-          $NS->Kill ();
-          $status = 1;
-      }
+unlink $ior;
+$SES->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+  print STDERR "ERROR: waiting for the supplier to start\n";
+  $SES->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
 
-      if ($status == 0) {
-        $SEC->Arguments($client_args . " -f -c 1");
-        $client = $SEC->SpawnWaitKill (60);
-        print "\n";
-
-        $SES->Kill ();
-        if ($client != 0) {
-          print STDERR "ERROR: Sequence_Consumer did not run properly\n";
-          $status = 1;
-        }
-      }
-    }
-  }
+$SEC->Arguments($client_args . " -f -c 1");
+$client = $SEC->SpawnWaitKill (60);
+print "\n";
+if ($client != 0) {
+  $SES->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+$server = $SES->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
 
 $TS->Kill ();
@@ -164,6 +205,7 @@ $NS->Kill ();
 
 unlink $ior;
 unlink $notifyior;
+unlink $namingior;
 
 
 exit $status;

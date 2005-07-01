@@ -98,7 +98,7 @@ TAO_Notify_Tests_Worker::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ORB run error\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ORB run error\n");
     }
   ACE_ENDTRY;
 
