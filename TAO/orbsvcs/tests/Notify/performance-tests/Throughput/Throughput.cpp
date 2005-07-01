@@ -12,8 +12,8 @@
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Time_Utilities.h"
 
-ACE_RCSID (Notify_Tests, 
-           Throughput, 
+ACE_RCSID (Notify_Tests,
+           Throughput,
            "$Id$")
 
 /***************************************************************************/
@@ -616,16 +616,9 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "ending main...\n"));
 
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  ACE_CATCH (CORBA::Exception, se)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "Events user error: ");
-      return 1;
-    }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "Events system error: ");
+      ACE_PRINT_EXCEPTION (se, "Error: ");
       return 1;
     }
   ACE_ENDTRY;

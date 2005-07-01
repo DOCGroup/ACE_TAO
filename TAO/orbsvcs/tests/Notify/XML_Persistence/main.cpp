@@ -86,7 +86,7 @@ int main(int ac, char **av)
         pass2 = true;
         break;
       default:
-        fprintf (stderr, "Illegal -pass command line option.  Expecting 1, 2, or 3\n");
+        ACE_OS::fprintf (stderr, "Illegal -pass command line option.  Expecting 1, 2, or 3\n");
         return -1;
       }
     }
@@ -395,7 +395,7 @@ int main(int ac, char **av)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION(ex, "Unexpected exception caught in main. ");
+    ACE_PRINT_EXCEPTION(ex, "Error: Unexpected exception caught in main. ");
     retval = -1;
   }
   ACE_CATCHALL

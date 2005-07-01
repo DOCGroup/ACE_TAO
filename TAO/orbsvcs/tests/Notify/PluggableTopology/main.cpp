@@ -94,7 +94,7 @@ int main(int, char**)
     CNCA::ChannelID ecid;
     CNCA::EventChannel_var ec = ecf->create_channel(qos, admin, ecid);
 
-    printf("Created channel id=\"%ld\"\n", static_cast<long> (ecid));
+    ACE_OS::printf("Created channel id=\"%ld\"\n", static_cast<long>(ecid));
 
     tearDown();
 

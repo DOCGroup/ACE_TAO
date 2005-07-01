@@ -46,6 +46,8 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
                                                Proxy_Traits_ID proxy_id
                                                ACE_ENV_ARG_DECL)
 {
+  // This will decr the ref count on exit.
+  // Clients of this class should use raw pointers, not vars.
   PortableServer::ServantBase_var servant_var (this);
 
   ACE_TYPENAME Peer_Traits::VAR peer_var =
@@ -53,6 +55,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
   ACE_CHECK;
 
   this->connect_to_peer (proxy, peer_var.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // save the proxy
   this->proxy_ = Proxy_Traits_INTERFACE::_duplicate (proxy);
@@ -64,7 +67,6 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
       LOOKUP_MANAGER->_register (this->proxy_.in (),
                                  this->proxy_name_.c_str ()
                                  ACE_ENV_ARG_PARAMETER);
-
       ACE_CHECK;
     }
 }
@@ -84,6 +86,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr
   this->connect (proxy_var.in (),
                  this->proxy_id_
                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
@@ -169,14 +172,14 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_CATCH(CORBA::TRANSIENT, ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "");
+      ACE_PRINT_EXCEPTION (ex, "Error: ");
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s is_equivalent transient exception.",
                   this->name_.c_str ()));
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ");
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s is_equivanent other exception.",
                   this->name_.c_str ()));
@@ -193,10 +196,31 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
-  this->disconnect_from_proxy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_TRY
+    {
+      this->disconnect_from_proxy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Peer %s failed to disconnect from proxy.",
+                  this->name_.c_str ()));
+    }
+  ACE_ENDTRY;
 
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY
+    {
+      this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Peer %s failed to deactivate.",
+                  this->name_.c_str ()));
+    }
+  ACE_ENDTRY;
 }
 
 template <class Peer_Traits>

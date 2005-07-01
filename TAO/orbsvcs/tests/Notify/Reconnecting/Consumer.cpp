@@ -13,7 +13,7 @@ ACE_RCSID (Notify_Tests, Consumer_Main, "$Id$")
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";
 
-static const size_t minus_one = static_cast<size_t> (-1);
+static const size_t minus_one = ACE_static_cast (size_t, -1);
 
 ///////////////////////////
 // StructuredPushConsumer_i
@@ -90,7 +90,7 @@ StructuredPushConsumer_i::check_serial_number (CORBA::ULong seq)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Structured Consumer received event %d.\n"),
-        static_cast<int> (seq)
+        ACE_static_cast (int, seq)
         ));
     }
   }
@@ -102,7 +102,7 @@ StructuredPushConsumer_i::check_serial_number (CORBA::ULong seq)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Structured Consumer received correct event %d.\n"),
-          static_cast<int> (seq)
+          ACE_static_cast (int, seq)
           ));
       }
     }
@@ -112,8 +112,8 @@ StructuredPushConsumer_i::check_serial_number (CORBA::ULong seq)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Structured Consumer: service received event %d; Notify discarded %d*.\n"),
-          static_cast<int> (seq),
-          static_cast<int> (this->serial_number_)
+          ACE_static_cast (int, seq),
+          ACE_static_cast (int, this->serial_number_)
           ));
       }
       this->received_ += seq - this->serial_number_;
@@ -123,8 +123,8 @@ StructuredPushConsumer_i::check_serial_number (CORBA::ULong seq)
       this->problem_ = true;
       ACE_DEBUG ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Structured Consumer received notifications out of sequence.  Expecting %d received %d.\n"),
-        static_cast<int> (this->serial_number_),
-        static_cast<int> (seq)
+        ACE_static_cast (int, this->serial_number_),
+        ACE_static_cast (int, seq)
         ));
     }
     this->serial_number_ = seq + 1;
@@ -156,7 +156,7 @@ StructuredPushConsumer_i::push_structured_event (
     this->may_discard_ = 1;
     ACE_DEBUG ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Structured Consumer failing at event # %d.\n"),
-      static_cast<int> (this->received_)
+      ACE_static_cast (int, this->received_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
     ACE_CHECK;
@@ -185,7 +185,7 @@ StructuredPushConsumer_i::push_structured_event (
       this->problem_ = true;
       ACE_DEBUG ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Structured Consumer received wrong filterable data name.%s. Expecting serial_number\n"),
-        static_cast<const char *> (notification.filterable_data[0].name)
+        ACE_static_cast (const char *, notification.filterable_data[0].name)
         ));
     }
   }
@@ -313,7 +313,7 @@ SequencePushConsumer_i::check_serial_number (CORBA::ULong seq)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Sequence Consumer received event %d.\n"),
-        static_cast<int> (seq)
+        ACE_static_cast (int, seq)
         ));
     }
   }
@@ -325,7 +325,7 @@ SequencePushConsumer_i::check_serial_number (CORBA::ULong seq)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Sequence Consumer received correct event %d.\n"),
-          static_cast<int> (seq)
+          ACE_static_cast (int, seq)
           ));
       }
     }
@@ -335,8 +335,8 @@ SequencePushConsumer_i::check_serial_number (CORBA::ULong seq)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Sequence Consumer: service received event %d; Notify discarded %d*.\n"),
-          static_cast<int> (seq),
-          static_cast<int> (this->serial_number_)
+          ACE_static_cast (int, seq),
+          ACE_static_cast (int, this->serial_number_)
           ));
       }
       this->received_ += seq - this->serial_number_;
@@ -346,8 +346,8 @@ SequencePushConsumer_i::check_serial_number (CORBA::ULong seq)
       this->problem_ = true;
       ACE_DEBUG ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Sequence Consumer received notifications out of sequence.  Expecting %d received %d.\n"),
-        static_cast<int> (this->serial_number_),
-        static_cast<int> (seq)
+        ACE_static_cast (int, this->serial_number_),
+        ACE_static_cast (int, seq)
         ));
     }
     this->serial_number_ = seq + 1;
@@ -368,7 +368,7 @@ SequencePushConsumer_i::push_structured_events (
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Sequence Consumer received batch of %d events.\n"),
-      static_cast<int> (batch_size)
+      ACE_static_cast (int, batch_size)
       ));
   }
   for (size_t nevent = 0; nevent < batch_size; ++nevent)
@@ -389,8 +389,8 @@ SequencePushConsumer_i::push_structured_events (
       this->may_discard_ = batch_size;
       ACE_DEBUG ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Sequence Consumer failing at event # %d. Expecting %d duplicates.\n"),
-        static_cast<int> (this->received_),
-        static_cast<int> (nevent + 1)
+        ACE_static_cast (int, this->received_),
+        ACE_static_cast (int, nevent + 1)
         ));
       ACE_THROW (CORBA::UNKNOWN());
       ACE_CHECK;
@@ -420,7 +420,7 @@ SequencePushConsumer_i::push_structured_events (
         this->problem_ = true;
         ACE_DEBUG ((LM_ERROR,
           ACE_TEXT ("(%P|%t) Sequence Consumer received wrong filterable data name.%s. Expecting serial_number\n"),
-          static_cast<const char *> (notification.filterable_data[0].name)
+          ACE_static_cast (const char *, notification.filterable_data[0].name)
           ));
       }
     }
@@ -536,7 +536,7 @@ AnyPushConsumer_i::check_serial_number (CORBA::ULong seq)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Any Consumer received event %d.\n"),
-        static_cast<int> (seq)
+        ACE_static_cast (int, seq)
         ));
     }
   }
@@ -548,7 +548,7 @@ AnyPushConsumer_i::check_serial_number (CORBA::ULong seq)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Any Consumer received correct event %d.\n"),
-          static_cast<int> (seq)
+          ACE_static_cast (int, seq)
           ));
       }
     }
@@ -558,8 +558,8 @@ AnyPushConsumer_i::check_serial_number (CORBA::ULong seq)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Any Consumer: service received event %d; Notify discarded %d*.\n"),
-          static_cast<int> (seq),
-          static_cast<int> (this->serial_number_)
+          ACE_static_cast (int, seq),
+          ACE_static_cast (int, this->serial_number_)
           ));
       }
       this->received_ += seq - this->serial_number_;
@@ -569,8 +569,8 @@ AnyPushConsumer_i::check_serial_number (CORBA::ULong seq)
       this->problem_ = true;
       ACE_DEBUG ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Any Consumer received notifications out of sequence.  Expecting %d received %d.\n"),
-        static_cast<int> (this->serial_number_),
-        static_cast<int> (seq)
+        ACE_static_cast (int, this->serial_number_),
+        ACE_static_cast (int, seq)
         ));
     }
     this->serial_number_ = seq + 1;
@@ -602,7 +602,7 @@ AnyPushConsumer_i::push (
     this->may_discard_ = 1;
     ACE_DEBUG ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Any Consumer failing at event # %d.\n"),
-      static_cast<int> (this->received_)
+      ACE_static_cast (int, this->received_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
     ACE_CHECK;
@@ -641,7 +641,7 @@ AnyPushConsumer_i::push (
           this->problem_ = true;
           ACE_DEBUG ((LM_ERROR,
             ACE_TEXT ("(%P|%t) Any Consumer received wrong filterable data name in structured event: %s. Expecting serial_number\n"),
-            static_cast<const char *> (notification->filterable_data[0].name)
+            ACE_static_cast (const char *, notification->filterable_data[0].name)
             ));
         }
       }
@@ -979,8 +979,8 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P,%t) Consumer: Listening for %d structured events. Failing every %d events.\n"),
-          static_cast<int> (this->expect_),
-          static_cast<int> (this->fail_)
+          ACE_static_cast (int, this->expect_),
+          ACE_static_cast (int, this->fail_)
           ));
       }
       this->structured_push_consumer_.set_expectations (this->expect_, this->fail_, this->serial_number_, this->verbose_);
@@ -994,8 +994,8 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P,%t) Consumer: Listening for %d sequence events. Failing every %d events.\n"),
-          static_cast<int> (this->expect_),
-          static_cast<int> (this->fail_)
+          ACE_static_cast (int, this->expect_),
+          ACE_static_cast (int, this->fail_)
           ));
       }
       this->sequence_push_consumer_.set_expectations (this->expect_, this->fail_, this->serial_number_, this->verbose_);
@@ -1009,8 +1009,8 @@ int Consumer_Main::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P,%t) Consumer: Listening for %d CORBA::Any events. Failing every %d events.\n"),
-          static_cast<int> (this->expect_),
-          static_cast<int> (this->fail_)
+          ACE_static_cast (int, this->expect_),
+          ACE_static_cast (int, this->fail_)
           ));
       }
       this->any_push_consumer_.set_expectations (this->expect_, this->fail_, this->serial_number_, this->verbose_);
@@ -1045,7 +1045,7 @@ Consumer_Main::save_ids()
   if (idf != 0)
   {
     int endflag = 12345;
-    int imode = static_cast<int> (this->mode_);
+    int imode = ACE_static_cast (int, this->mode_);
     ACE_OS::fprintf (idf,
       "%d,%d,%d,%d,%d,%d,%d,\n",
       static_cast<int> (imode),
@@ -1253,7 +1253,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer: Reconnect to event channel %d\n"),
-          static_cast<int> (this->ec_id_)
+          ACE_static_cast (int, this->ec_id_)
           ));
       }
     }
@@ -1289,7 +1289,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
           {
             ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Consumer: Connect to Existing event channel %d\n"),
-              static_cast<int> (this->ec_id_)
+              ACE_static_cast (int, this->ec_id_)
               ));
           }
           // kill the channel filename so we don't overwrite the file
@@ -1362,13 +1362,13 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
     if (chf != 0)
     {
-      fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
+      ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
       fclose (chf);
     }
   }
 }
 
-CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAdmin::AdminID> (-1);
+CosNotifyChannelAdmin::AdminID default_admin_id = ACE_static_cast (CosNotifyChannelAdmin::AdminID, -1);
 
 void
 Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
@@ -1415,7 +1415,7 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) Consumer: Reconnect to consumer admin %d\n"),
-            static_cast<int> (this->sa_id_)
+            ACE_static_cast (int, this->sa_id_)
             ));
         }
       }
@@ -1482,7 +1482,7 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer: Create new consumer admin %d\n"),
-          static_cast<int> (this->sa_id_)
+          ACE_static_cast (int, this->sa_id_)
           ));
       }
     }
@@ -1491,7 +1491,7 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Consumer: connect to consumer admin failed %d\n"),
-      static_cast<int> (this->sa_id_)
+      ACE_static_cast (int, this->sa_id_)
       ));
   }
 }
@@ -1514,7 +1514,7 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer: Reconnect to proxy supplier %d\n"),
-          static_cast<int> (this->structured_proxy_id_)
+          ACE_static_cast (int, this->structured_proxy_id_)
           ));
       }
     }
@@ -1536,7 +1536,7 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Consumer: Create new structured proxy %d\n"),
-        static_cast<int> (this->structured_proxy_id_)
+        ACE_static_cast (int, this->structured_proxy_id_)
         ));
     }
   }
@@ -1602,7 +1602,7 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer: Reconnect to proxy %d\n"),
-          static_cast<int> (this->sequence_proxy_id_)
+          ACE_static_cast (int, this->sequence_proxy_id_)
           ));
       }
     }
@@ -1632,7 +1632,7 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Consumer: Create new sequence proxy %d\n"),
-          static_cast<int> (this->sequence_proxy_id_)
+          ACE_static_cast (int, this->sequence_proxy_id_)
         ));
     }
   }
@@ -1644,7 +1644,7 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Consumer: Received wrong type of push supplier proxy %d\n"),
-        static_cast<int> (this->sequence_proxy_id_)
+        ACE_static_cast (int, this->sequence_proxy_id_)
       ));
 
     ACE_THROW (CORBA::BAD_PARAM());
@@ -1719,30 +1719,30 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer: Reconnect to proxy %d\n"),
-          static_cast<int> (this->any_proxy_id_)
+          ACE_static_cast (int, this->any_proxy_id_)
           ));
       }
       else
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer: Get proxy supplier %d returned nil\n"),
-          static_cast<int> (this->any_proxy_id_)
+          ACE_static_cast (int, this->any_proxy_id_)
           ));
       }
     }
     ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Consumer: Get proxy supplier %d threw exception\n"),
-        static_cast<int> (this->any_proxy_id_)
+        ACE_static_cast (int, this->any_proxy_id_)
         ));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT ("To wit:"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT ("Error:"));
     }
     ACE_CATCHALL
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Consumer: Get proxy supplier %d threw exception\n"),
-        static_cast<int> (this->any_proxy_id_)
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("Error: (%P|%t) Consumer: Get proxy supplier %d threw exception\n"),
+        ACE_static_cast (int, this->any_proxy_id_)
         ));
     }
     ACE_ENDTRY;
@@ -1761,7 +1761,7 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Consumer: Create new Any proxy %d\n"),
-          static_cast<int> (this->any_proxy_id_)
+          ACE_static_cast (int, this->any_proxy_id_)
         ));
     }
   }
@@ -1773,7 +1773,7 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Consumer: Received wrong type of push supplier proxy %d\n"),
-        static_cast<int> (this->any_proxy_id_)
+        ACE_static_cast (int, this->any_proxy_id_)
       ));
     ACE_THROW (CORBA::BAD_PARAM());
   }
@@ -1836,7 +1836,7 @@ int Consumer_Main::fini (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) destroy admin %d\n"),
-            static_cast<int> (this->sa_id_)
+            ACE_static_cast(int, this->sa_id_)
           ));
       }
       this->sa_->destroy();
@@ -1851,21 +1851,13 @@ int Consumer_Main::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result = 0;
 
-  //////////////////////////////////
-  // Run the event loop for the ORB.
-  // Initial run to initialize the orb
-  ACE_Time_Value tv(1,0);
-  this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
-
   while (this->structured_push_consumer_.received () < this->expect_
     && this->sequence_push_consumer_.received () < this->expect_
     && this->any_push_consumer_.received () < this->expect_
     )
   {
-    ACE_Time_Value work_tv(1,0);
-    // keep the orb alive -- listenting for reconnect
-    this->orb_->perform_work (work_tv ACE_ENV_ARG_PARAMETER);
+    ACE_Time_Value tv(0, 100 * 1000);
+    this->orb_->run(tv ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(-1);
   }
 
@@ -1902,8 +1894,7 @@ main (int argc, char *argv[])
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Consumer::main\t\n");
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: Consumer::main\t\n");
     result = -1;
   }
   ACE_ENDTRY;

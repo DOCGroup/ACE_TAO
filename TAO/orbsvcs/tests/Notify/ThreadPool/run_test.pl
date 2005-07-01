@@ -35,9 +35,7 @@ $Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$s
 #$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$supplier_ior -ORBSvcConf $consumer_conf -ORBDebugLevel 1";
 
 unlink $naming_ior;
-if ($Naming->Spawn () == -1) {
-  exit 1;
-}
+$Naming->Spawn ();
 
 if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
   print STDERR "ERROR: waiting for the naming service to start\n";

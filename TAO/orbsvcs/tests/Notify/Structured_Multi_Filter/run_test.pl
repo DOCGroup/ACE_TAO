@@ -5,126 +5,107 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
+use strict;
+
 use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
-$ior = PerlACE::LocalFile ("supplier.ior");
-$notifyior = PerlACE::LocalFile ("notify.ior");
-$notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
+my $ior = PerlACE::LocalFile ("supplier.ior");
+my $namingior = PerlACE::LocalFile ("naming.ior");
+my $notifyior = PerlACE::LocalFile ("notify.ior");
+my $notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 
-$status = 0;
+my $status = 0;
 
-$port = PerlACE::uniqueid () + 10005;
-$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
-                            "-ORBEndpoint iiop://localhost:$port");
-$TS = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
+my $port = PerlACE::uniqueid () + 10005;
+my $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
+                            "-ORBEndpoint iiop://localhost:$port " .
+                            "-o $namingior");
+my $TS = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
                             "-ORBInitRef NameService=iioploc://" .
                             "localhost:$port/NameService " .
                             "-IORoutput $notifyior -ORBSvcConf " .
                             "$notify_conf" );
-$STS = new PerlACE::Process ("Structured_Supplier");
+my $STS = new PerlACE::Process ("Structured_Supplier");
 
-$STC = new PerlACE::Process ("Structured_Consumer");
+my $STC = new PerlACE::Process ("Structured_Consumer");
 
-$args = " -ORBInitRef NameService=iioploc://localhost:$port/NameService ";
-$cargs = "-n90 -c2 ";
-$sfilter = "-s ";
-$filter = "-f ";
+my $args = " -ORBInitRef NameService=iioploc://localhost:$port/NameService ";
 
-@ops = ("-oAND_OP ", "-oOR_OP ");
+my @ops = (undef, "AND", "OR");
 
-$heading = "*************** Running AND_OP Test ****************\n";
+unlink $ior;
+unlink $notifyior;
+unlink $namingior;
 
-foreach $ops (@ops)
+$NS->Spawn ();
+if (PerlACE::waitforfile_timed ($namingior, 20) == -1) {
+    print STDERR "ERROR: waiting for the naming service to start\n";
+    $NS->Kill ();
+    exit 1;
+}
+
+$TS->Spawn ();
+if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
+    print STDERR "ERROR: waiting for the notify service to start\n";
+    $TS->Kill ();
+    $NS->Kill ();
+    exit 1;
+}
+
+foreach my $supplier_op (@ops)
+{
+  foreach my $consumer_op (@ops)
   {
-    if ($ops eq "-oOR_OP ")
-      {
-        $heading = "\n\n*************** Running OR_OP Test ****************\n";
-      }
+    my $supplier_args = "";
+    if (defined $supplier_op) {
+      $supplier_args .= " -f $supplier_op";
+    }
 
-    print $heading;
+    my $consumer_args = "";
+    if (defined $supplier_op) {
+      $consumer_args .= " -s $supplier_op";
+    }
+    if (defined $consumer_op) {
+      $consumer_args .= " -f $consumer_op";
+    }
 
-    print "\n********** Running Structured_Supplier Test\n\n";
-
-    # Start Naming Service
-    $NS->Spawn ();
-    $TS->Spawn ();
-
-    sleep 2;
-
-    $STS->Arguments($filter . $ops . $args);
+    print "\n**** Testing with $consumer_args ****\n";
+    
+    $STS->Arguments($supplier_args . $args);
     $STS->Spawn ();
-
     if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
       print STDERR "ERROR: waiting for the supplier to start\n";
       $STS->Kill ();
+      $status = 1;
+      last;
+    }
+        
+    $STC->Arguments($consumer_args . $args);
+    my $client = $STC->SpawnWaitKill(20);
+    if ($client != 0) {
+      print STDERR "ERROR: Structured_Consumer did not run properly\n";
+      $status = 1;
+      last;
+    }
+    my $server = $STS->WaitKill(5);
+    if ($server != 0) {
       $TS->Kill ();
       $NS->Kill ();
-      $status = 1;
+      exit 1;
     }
-
-    sleep 2;
-
-    $STC->Arguments($cargs . $sfilter . $ops . $args);
-    $client = $STC->SpawnWaitKill(60);
-
-    $STS->Kill();
-    if ($client !=0) {
-      print STDERR "ERROR: Structured_Consumer did not run properly\n";
-      $status = 1
-    }
-
-    $TS->Kill ();
-    $NS->Kill ();
-
-    sleep 2;
 
     unlink $ior;
-    unlink $notifyior;
-
-    sleep (2);
-
-    #################
-    print "\n********** Running Structured_Consumer Test\n\n";
-
-    # Start Naming Service
-    $NS->Spawn ();
-    $TS->Spawn ();
-
-    sleep 2;
-
-    $STS->Arguments($args);
-    $STS->Spawn ();
-
-    if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
-      print STDERR "ERROR: waiting for the supplier to start\n";
-      $STS->Kill ();
-      $TS->Kill ();
-      $NS->Kill ();
-      $status = 1;
-    }
-
-    sleep 2;
-
-    $STC->Arguments($cargs . $filter . $ops . $args);
-    $client = $STC->SpawnWaitKill(60);
-
-    $STS->Kill();
-    if ($client !=0) {
-      print STDERR "ERROR: Structured_Consumer did not run properly\n";
-      $status = 1
-    }
-
-    $TS->Kill ();
-    $NS->Kill ();
-
-    sleep 2;
-
-    unlink $ior;
-    unlink $notifyior;
-
-    sleep (2);
   }
+  if ($status == 1) {
+    last;
+  }
+}
+  
+$TS->Kill ();
+$NS->Kill ();
 
+unlink $notifyior;
+unlink $namingior;
 
 exit $status;

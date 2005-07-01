@@ -16,10 +16,14 @@
 #ifndef NOTIFY_TEST_CLIENT_H
 #define NOTIFY_TEST_CLIENT_H
 
+#include "ace/Atomic_Op_T.h"
+#include "ace/Thread_Mutex.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "notify_test_export.h"
+
+class TAO_Notify_Tests_Peer;
 
 class TAO_NOTIFY_TEST_Export Notify_Test_Client
 {
@@ -39,13 +43,16 @@ public:
   virtual int parse_args (int argc, char* argv[]);
   // Allow the user to override this empty method
 
-  int ORB_run (void);
+  int ORB_run (ACE_ENV_SINGLE_ARG_DECL);
   // Call ORB::run to accept requests.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  // Shutdown the ORB
+  void consumer_start (TAO_Notify_Tests_Peer*);
+  // How many clients will call consumer_done.
 
-  CORBA::Boolean& done (void);
+  void consumer_done (TAO_Notify_Tests_Peer*);
+  // Callback for clients to unregister themselves.
+
+  bool is_done (void) const;
   // Access the done boolean.
 
   CORBA::ORB_ptr orb (void);
@@ -101,8 +108,9 @@ protected:
   CosNotification::AdminProperties initial_admin_;
   // Initial admin props specified to the factory when creating the EC.
 
-  CORBA::Boolean done_;
-  // Set when we should shutdown.
+private:
+  ACE_Atomic_Op< ACE_Thread_Mutex, int > num_clients_;
+  bool done_;
 };
 
 #endif /* NOTIFY_TEST_CLIENT_H */

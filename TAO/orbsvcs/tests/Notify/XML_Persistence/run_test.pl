@@ -32,7 +32,7 @@ cleanup();
 $ret = 0;
 
 $UTEST = new PerlACE::Process("main", "-ORBEndpoint iiop://:$port -pass 3");
-$ret = $UTEST->SpawnWaitKill(10);
+$ret = $UTEST->SpawnWaitKill(20);
 if ($ret != 0) {
   print "ERROR : main returned $ret\n";
   exit $ret;

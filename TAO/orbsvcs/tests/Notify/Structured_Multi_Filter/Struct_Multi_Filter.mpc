@@ -14,7 +14,7 @@ project(*Ntf Struct Cons): notifytest {
   exename = Structured_Consumer
 
   Source_Files {
-    controlC.cpp
+    goC.cpp
     Notify_Push_Consumer.cpp
     Structured_Consumer.cpp
   }

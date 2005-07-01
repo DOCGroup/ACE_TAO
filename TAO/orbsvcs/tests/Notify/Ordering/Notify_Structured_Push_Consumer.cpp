@@ -1,22 +1,30 @@
 // $Id$
 
-#include "ace/OS_NS_unistd.h"
 #include "Notify_Structured_Push_Consumer.h"
-#include "orbsvcs/TimeBaseC.h"
+#include "Notify_Test_Client.h"
 #include "common.h"
+
+#include "orbsvcs/TimeBaseC.h"
+
 #include "tao/debug.h"
+
+#include "ace/OS_NS_unistd.h"
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
                                             const char* name,
                                             CORBA::Short policy,
-                                            unsigned int expected,
-                                            CORBA::Boolean& done)
+                                            bool use_ordering,
+                                            int expected,
+                                            Notify_Test_Client& client)
  : name_ (name),
    order_policy_ (policy),
+   use_ordering_ (use_ordering),
    expected_ (expected),
    count_ (0),
-   done_ (done)
+   first_(0),
+   client_ (client)
 {
+  this->client_.consumer_start (this);
 }
 
 
@@ -42,12 +50,16 @@ Notify_Structured_Push_Consumer::_connect (
       proxysupplier.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CosNotification::QoSProperties properties (1);
-  properties.length (1);
-  properties[0].name = CORBA::string_dup (CosNotification::OrderPolicy);
-  properties[0].value <<= this->order_policy_;
+  if (use_ordering_)
+  {
+    CosNotification::QoSProperties properties (1);
+    properties.length (1);
+    properties[0].name = CORBA::string_dup (CosNotification::OrderPolicy);
+    properties[0].value <<= this->order_policy_;
 
-  this->proxy_->set_qos (properties);
+    this->proxy_->set_qos (properties);
+  }
+
   this->proxy_->connect_structured_push_consumer (objref.in ()
                                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -64,133 +76,56 @@ Notify_Structured_Push_Consumer::push_structured_event (
                           ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  static long previous = 0;
-  static CORBA::Boolean first = 1;
-  // Since the Notification Service begins to dispatch before all the
-  // events are queued, the first 2 events are not in the "expected"
-  // order.
-  static const unsigned int expected_out_of_order = 2;
+  ACE_DEBUG((LM_DEBUG, "-"));
+  if (count_ == 0)
+  {
+    // Sleep long enough to force the channel to back up, otherwise
+    // there will be no ordering.
+    ACE_OS::sleep(2);
+  }
 
-  if (this->count_ >= expected_out_of_order)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG, "Received event:\n"));
+  ++count_;
 
-      CORBA::ULong hlength = event.header.variable_header.length ();
-      for (CORBA::ULong hi = 0; hi < hlength; hi++)
-        {
-          if (TAO_debug_level)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s = %s\n",
-                        (const char*)event.header.variable_header[hi].name,
-                        Any_String (event.header.variable_header[hi].value)));
-
-          if (this->order_policy_ == CosNotification::PriorityOrder)
-            {
-              if (ACE_OS::strcmp (
-                      event.header.variable_header[hi].name, "Priority") == 0)
-                {
-                  CORBA::Short current;
-                  event.header.variable_header[hi].value >>= current;
-                  if (first)
-                    {
-                      first = 0;
-                    }
-                  else
-                    {
-                      if (current >
-                          static_cast<CORBA::Short> (previous))
-                        {
-                          this->done_ = 1;
-                          ACE_ERROR ((LM_ERROR,
-                                      ACE_TEXT ("ERROR: Priority Ordering failed.\n")));
-                        }
-                    }
-                  previous = static_cast<long> (current);
-                }
-            }
-          else if (this->order_policy_ == CosNotification::DeadlineOrder)
-            {
-              if (ACE_OS::strcmp (
-                      event.header.variable_header[hi].name, "Timeout") == 0)
-                {
-                  TimeBase::TimeT current;
-                  event.header.variable_header[hi].value >>= current;
-                  if (first)
-                    {
-                      first = 0;
-                    }
-                  else
-                    {
-                      if (current <
-                          static_cast<TimeBase::TimeT> (previous))
-                        {
-                          this->done_ = 1;
-                          ACE_ERROR ((LM_ERROR,
-                                      ACE_TEXT ("ERROR: Deadline Ordering failed.\n")));
-                        }
-                    }
-# if defined (ACE_CONFIG_WIN32_H)
-                  previous = static_cast<long> (current);
-# else
-                  // Convert ACE_ULong_Long to 32-bit integer
-                  previous = (current / 1);
-# endif /* ACE_CONFIG_WIN32_H */
-                }
-            }
-        }
-
-      CORBA::ULong flength = event.filterable_data.length ();
-      for (CORBA::ULong i = 0; i < flength; i++)
-        {
-          if (TAO_debug_level)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s = %s\n",
-                        (const char*)event.filterable_data[i].name,
-                        Any_String (event.filterable_data[i].value)));
-
-          if (this->order_policy_ == CosNotification::FifoOrder)
-            {
-              if (ACE_OS::strcmp (event.filterable_data[i].name, "enum") == 0)
-                {
-                  CORBA::ULong current;
-                  event.filterable_data[i].value >>= current;
-                  if (first)
-                    {
-                      first = 0;
-                    }
-                  else
-                    {
-                      if (current <
-                          static_cast<CORBA::ULong> (previous))
-                        {
-                          this->done_ = 1;
-                          ACE_ERROR ((LM_ERROR,
-                                      ACE_TEXT ("ERROR: FIFO Ordering failed.\n")));
-                        }
-                    }
-                  previous = static_cast<long> (current);
-                }
-            }
-        }
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    "-------------------------\n"));
-    }
-  this->count_++;
   if (this->count_ > this->expected_)
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: too many events received.\n")));
+  }
+ 
+  if (this->count_ >= this->expected_)
+  {
+    this->client_.consumer_done (this);
+  }
+
+  CORBA::Long id = 0;
+
+  ACE_ASSERT(event.header.variable_header.length() == 3);
+  ACE_ASSERT(ACE_OS::strcmp(event.header.variable_header[0].name.in(), "id") == 0);
+  event.header.variable_header[0].value >>= id;
+
+  // The first event won't necessarilly be in order, because we hadn't yet forced
+  // the channel to queue events.
+  if (count_ > 1)
+  {
+    if (order_policy_ == CosNotification::PriorityOrder
+      || order_policy_ == CosNotification::DeadlineOrder)
     {
-      this->done_ = 1;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ERROR: too "
-                            "many events received.\n")));
+      int eid = expected_ - count_ + 1;
+      if (eid <= first_)
+        --eid;
+
+      if (id != eid)
+        ACE_ERROR((LM_ERROR, "\nError: "));
+      ACE_DEBUG((LM_DEBUG, "Expected id:%d Received id:%d\n", eid, id));
     }
-  else if (this->count_ == this->expected_)
+    else
     {
-      this->done_ = 1;
+      if (id != count_ - 1)
+        ACE_ERROR((LM_ERROR, "\nError: Expected id:%d Received id:%d\n", count_ - 1, id));
     }
+  }
   else
-    {
-      ACE_OS::sleep (1);
-    }
+  {
+    ACE_DEBUG((LM_DEBUG, "Ignoring first event. id=%d\n", id));
+    first_ = id;
+  }
 }
