@@ -243,6 +243,10 @@ typedef enum CMA_T_SCHED_POLICY {
 // hrtime_t is a basic type that doesn't require ACE_U64_TO_U32 conversion
 #define ACE_HRTIME_T_IS_BASIC_TYPE
 
+// printf format specifiers for 64 bit integers
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
+# define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
+
 //=========================================================================
 // Threads specific parts
 //=========================================================================
