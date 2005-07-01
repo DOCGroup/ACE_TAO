@@ -17,13 +17,14 @@ $status = 0;
 $nsior = PerlACE::LocalFile ("ns.ior");
 $test1 = PerlACE::LocalFile ("test1");
 $test2 = PerlACE::LocalFile ("test2");
+$input = PerlACE::LocalFile ("test_input");
+
+unlink $nsior, $test1, $test2, $input;
 
 # generate test stream data
 # the size of this file is limited by the maximum packet size
 # windows has a maximum size of 8KB
 $input = PerlACE::generate_test_file("test_input", 32000);
-
-unlink $nsior, $test1, $test2;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
 $SV1 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test1");
