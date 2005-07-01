@@ -262,7 +262,7 @@ TAO_Notify_ConsumerAdmin::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_Proxy_Seq_Worker seq_worker;
 
-  return seq_worker.create (*this->proxy_container_ ACE_ENV_ARG_PARAMETER);
+  return seq_worker.create (this->proxy_container() ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ProxySupplier_ptr
@@ -274,7 +274,7 @@ TAO_Notify_ConsumerAdmin::get_proxy_supplier (CosNotifyChannelAdmin::ProxyID pro
 {
   TAO_Notify_ProxySupplier_Find_Worker find_worker;
 
-  return find_worker.resolve (proxy_id, *this->proxy_container_ ACE_ENV_ARG_PARAMETER);
+  return find_worker.resolve (proxy_id, this->proxy_container() ACE_ENV_ARG_PARAMETER);
 }
 
 void TAO_Notify_ConsumerAdmin::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
@@ -318,7 +318,7 @@ TAO_Notify_ConsumerAdmin::subscription_change (const CosNotification::EventTypeS
 
     TAO_Notify_Subscription_Change_Worker worker (added, removed);
 
-    this->proxy_container_->collection()->for_each (&worker ACE_ENV_ARG_PARAMETER);
+    this->proxy_container().collection()->for_each (&worker ACE_ENV_ARG_PARAMETER);
   }
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -470,7 +470,7 @@ TAO_Notify_ConsumerAdmin::find_proxy_supplier (
   if (position < path_size)
   {
     TAO_Notify_ProxySupplier_Find_Worker find_worker;
-    TAO_Notify_Proxy * proxy = find_worker.find (id_path[position], *this->proxy_container_ ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_Proxy * proxy = find_worker.find (id_path[position], this->proxy_container() ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     result = dynamic_cast <TAO_Notify_ProxySupplier *> (proxy);
   }

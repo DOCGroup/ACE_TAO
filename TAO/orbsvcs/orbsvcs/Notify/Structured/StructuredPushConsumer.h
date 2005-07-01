@@ -40,10 +40,7 @@ public:
   void init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
 
   /// Destructor
-  ~TAO_Notify_StructuredPushConsumer ();
-
-  /// Release
-  virtual void release (void);
+  virtual ~TAO_Notify_StructuredPushConsumer ();
 
   /// Push <event> to this consumer.
 //  virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
@@ -70,6 +67,10 @@ public:
 protected:
   /// The Consumer
   CosNotifyComm::StructuredPushConsumer_var push_consumer_;
+
+private:
+  /// Release
+  virtual void release (void);
 };
 
 #include /**/ "ace/post.h"

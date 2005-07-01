@@ -4,6 +4,14 @@
 //#include "Method_Request.h"
 #include "Method_Request_Dispatch.h"
 
+ACE_INLINE
+TAO_Notify_Consumer::Request_Queue&
+TAO_Notify_Consumer::pending_events()
+{
+  ACE_ASSERT( pending_events_.get() != 0 );
+  return *pending_events_;
+}
+
 ACE_INLINE TAO_SYNCH_MUTEX*
 TAO_Notify_Consumer::proxy_lock (void)
 {

@@ -16,19 +16,15 @@ ACE_RCSID (Notify,
            "$Id$")
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
-  : factory_ (0)
-  , builder_ (0)
 {
 }
 
 TAO_CosNotify_Service::~TAO_CosNotify_Service ()
 {
-  delete this->factory_;
-  delete this->builder_;
 }
 
 int
-TAO_CosNotify_Service::init (int argc, char *argv[])
+TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -51,6 +47,8 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
         {
           // If Dispatching Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads \n")));
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-DispatchingThreads"))))
         {
@@ -61,6 +59,8 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
         {
           // If Source Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads \n")));
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-SourceThreads"))))
         {
@@ -69,21 +69,33 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTLookup")) == 0)
         {
-          // If Source Threads are initalized, the option is implicit.
+          // If Lookup Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads \n")));
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-LookupThreads"))))
         {
+          // Since this option is always either added to source_threads
+          // or ignored, we'll deprecate it in favor of that option.
           lookup_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads \n")));
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTListenerEval")) == 0)
         {
-          // If Source Threads are initalized, the option is implicit.
+          // If Listener Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads \n")));
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ListenerThreads"))))
         {
+          // Since this option is always added to dispatching_threads, we'll
+          // deprecate it in favor of that option.
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -ListenerThreads option has been deprecated, use -DispatchingThreads \n")));
           listener_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
@@ -108,6 +120,14 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
       {
         arg_shifter.consume_arg ();
         TAO_Notify_PROPERTIES::instance()->allow_reconnect (true);
+      }
+      else
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Ignoring unknown option for Notify Factory: %s\n"),
+                    arg_shifter.get_current()
+          ));
+        arg_shifter.consume_arg ();
       }
     }
 
@@ -172,7 +192,7 @@ TAO_CosNotify_Service::fini (void)
 }
 
 void
-TAO_CosNotify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
 
@@ -202,42 +222,47 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     properties->default_poa (default_poa.in ());
 
     // Init the factory
-    this->init_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
+    ACE_ASSERT( this->factory_.get() != 0 );
+    TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
     ACE_CHECK;
 
-    this->init_builder (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
+    ACE_ASSERT( this->builder_.get() != 0 );
+    TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
     ACE_CHECK;
 }
 
-void
-TAO_CosNotify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Factory*
+TAO_CosNotify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->factory_ = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
-
-  if (this->factory_ == 0)
-    ACE_NEW_THROW_EX (this->factory_,
+  TAO_Notify_Factory* factory = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
+  if (factory == 0)
+    {
+       ACE_NEW_THROW_EX (factory,
                       TAO_Notify_Default_Factory (),
                       CORBA::NO_MEMORY ());
   ACE_CHECK;
-
-  TAO_Notify_PROPERTIES::instance()->factory (this->factory_);
+    }
+  return factory;
 }
 
-void
-TAO_CosNotify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Builder*
+TAO_CosNotify_Service::create_builder (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_NEW_THROW_EX (this->builder_,
+  TAO_Notify_Builder* builder = 0;
+  ACE_NEW_THROW_EX (builder,
                     TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  TAO_Notify_PROPERTIES::instance()->builder (this->builder_);
+  return builder;
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_CosNotify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
-  return this->builder_->build_event_channel_factory (poa ACE_ENV_ARG_PARAMETER);
+  return this->builder().build_event_channel_factory (poa ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -245,6 +270,21 @@ TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/ ACE_ENV_A
 {
   // NOP.
 }
+
+TAO_Notify_Factory&
+TAO_CosNotify_Service::factory (void)
+{
+  ACE_ASSERT( this->factory_.get() != 0 );
+  return *this->factory_;
+}
+
+TAO_Notify_Builder&
+TAO_CosNotify_Service::builder (void)
+{
+  ACE_ASSERT( this->builder_.get() != 0 );
+  return *this->builder_;
+}
+
 
 /*********************************************************************************************************************/
 
@@ -268,13 +308,3 @@ ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_CosNotify_Service)
 
 /*********************************************************************************************************************/
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Notify_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Notify_Factory>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

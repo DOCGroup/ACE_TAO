@@ -45,10 +45,7 @@ public:
   TAO_Notify_SequenceProxyPushConsumer (void);
 
   /// Destructor
-  ~TAO_Notify_SequenceProxyPushConsumer ();
-
-  /// TAO_Notify_Destroy_Callback methods
-  virtual void release (void);
+  virtual ~TAO_Notify_SequenceProxyPushConsumer ();
 
   virtual const char * get_proxy_type_name (void) const;
 
@@ -86,6 +83,10 @@ protected:
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
+
+private:
+  /// TAO_Notify_Destroy_Callback methods
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

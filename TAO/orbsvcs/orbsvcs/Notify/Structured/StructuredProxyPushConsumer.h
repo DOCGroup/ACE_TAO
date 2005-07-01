@@ -46,10 +46,8 @@ public:
   TAO_Notify_StructuredProxyPushConsumer (void);
 
   /// Destructor
-  ~TAO_Notify_StructuredProxyPushConsumer ();
+  virtual ~TAO_Notify_StructuredProxyPushConsumer ();
 
-  /// Release
-  virtual void release (void);
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
@@ -87,6 +85,11 @@ protected:
   ));
 
   virtual const char * get_proxy_type_name (void) const;
+
+private:
+
+  /// Release
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

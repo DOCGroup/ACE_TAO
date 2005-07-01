@@ -21,7 +21,7 @@ ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 #endif //DEBUG_LEVEL
 
 TAO_Notify_SequencePushConsumer::TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy)
-  : TAO_Notify_Consumer (proxy)
+: TAO_Notify_Consumer (proxy)
 {
 }
 
@@ -30,31 +30,11 @@ TAO_Notify_SequencePushConsumer::~TAO_Notify_SequencePushConsumer ()
 }
 
 void
-TAO_Notify_SequencePushConsumer::init (
-  CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_Notify_AdminProperties_var& admin_properties
-#if 1
-  ACE_ENV_ARG_DECL_NOT_USED)
-#else //1
-  ACE_ENV_ARG_DECL)
-#endif
+TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL_NOT_USED)
 {
-  set_consumer (push_consumer);
+  ACE_ASSERT (this->push_consumer_.in() == 0);
+  ACE_ASSERT (push_consumer != 0);
 
-#if 1 //// @@ TODO: use buffering strategy in TAO_Notify_Consumer???
-  ACE_UNUSED_ARG ( admin_properties);
-#else //1
-
-  ACE_NEW_THROW_EX (this->buffering_strategy_,
-                    TAO_Notify_Batch_Buffering_Strategy (this->msg_queue_, admin_properties,
-                                                     this->max_batch_size_.value ()),
-                    CORBA::NO_MEMORY ());
-#endif // 1
-}
-
-void
-TAO_Notify_SequencePushConsumer::set_consumer (
-  CosNotifyComm::SequencePushConsumer_ptr push_consumer)
-{
   this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (push_consumer);
   this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);
 
@@ -164,8 +144,12 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           static_cast<int> (this->proxy ()->id ()),
           request->sequence ()
           ));
-        ace_mon.acquire ();
         requests.enqueue_head (request); // put the failed event back where it was
+        result = false;
+        break;
+      }
+    default:
+      {
         result = false;
         break;
       }
@@ -184,13 +168,15 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
   this->enqueue_request (request ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
-  if (this->pacing_.is_valid ())
+  size_t mbs = static_cast<size_t>(this->max_batch_size_.value());
+
+  if (this->pending_events().size() >= mbs || this->pacing_.is_valid () == 0)
   {
-    schedule_timer (false);
+    this->dispatch_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
   else
   {
-    this->dispatch_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
+    schedule_timer (false);
   }
   return true;
 }
@@ -239,10 +225,11 @@ TAO_Notify_SequencePushConsumer::get_ior (ACE_CString & iorstr) const
 
 void
 TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer
-    ACE_ENV_ARG_DECL_NOT_USED)
+                                                          ACE_ENV_ARG_DECL)
 {
   TAO_Notify_SequencePushConsumer* tmp = dynamic_cast<TAO_Notify_SequencePushConsumer *> (old_consumer);
   ACE_ASSERT(tmp != 0);
-  this->set_consumer(tmp->push_consumer_.in());
+  this->init(tmp->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   this->schedule_timer(false);
 }

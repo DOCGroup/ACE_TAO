@@ -5,7 +5,7 @@ ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
 
 #include "../Properties.h"
 #include "../Event.h"
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 
 TAO_Notify_StructuredPushConsumer::TAO_Notify_StructuredPushConsumer (TAO_Notify_ProxySupplier* proxy)
   :TAO_Notify_Consumer (proxy)
@@ -19,6 +19,8 @@ TAO_Notify_StructuredPushConsumer::~TAO_Notify_StructuredPushConsumer ()
 void
 TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL_NOT_USED)
 {
+  ACE_ASSERT (push_consumer != 0 && this->push_consumer_.in() == 0);
+
   this->push_consumer_ = CosNotifyComm::StructuredPushConsumer::_duplicate (push_consumer);
 
   this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);

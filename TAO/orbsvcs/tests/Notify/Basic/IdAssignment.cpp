@@ -7,8 +7,8 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "IdAssignment.h"
 
-ACE_RCSID (Notify_Tests, 
-           IdAssignment, 
+ACE_RCSID (Notify_Tests,
+           IdAssignment,
            "$Id$")
 
 IdAssignment::IdAssignment (void)
@@ -478,8 +478,7 @@ int main (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ");
       return 1;
     }
   ACE_ENDTRY;

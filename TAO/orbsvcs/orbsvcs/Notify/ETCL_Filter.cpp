@@ -327,6 +327,7 @@ TAO_Notify_ETCL_Filter::remove_all_constraints_i (ACE_ENV_SINGLE_ARG_DECL_NOT_US
       if (iter.next (entry) != 0)
         {
           delete entry->int_id_;
+          entry->int_id_ = 0;
         }
     }
 

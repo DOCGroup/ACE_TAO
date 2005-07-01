@@ -37,13 +37,11 @@ public:
   TAO_Notify_StructuredPushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  ~TAO_Notify_StructuredPushSupplier ();
+  virtual ~TAO_Notify_StructuredPushSupplier ();
 
   /// Init
   void init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
 
-  /// Release
-  virtual void release (void);
 
   /// Retrieve the ior of this peer
   virtual bool get_ior (ACE_CString & iorstr) const;
@@ -51,6 +49,10 @@ public:
 protected:
   /// The Supplier
   CosNotifyComm::StructuredPushSupplier_var push_supplier_;
+
+private:
+  /// Release
+  virtual void release (void);
 };
 
 #include /**/ "ace/post.h"

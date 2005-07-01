@@ -18,10 +18,11 @@ ACE_RCSID (Notify,
 #include "Structured/StructuredEvent.h"
 
 TAO_Notify_Event::TAO_Notify_Event (void)
-  :priority_ (CosNotification::Priority, CosNotification::DefaultPriority),
-   timeout_ (CosNotification::Timeout),
-   reliable_ (CosNotification::EventReliability, false),
-   event_on_heap_ (0)
+: priority_ (CosNotification::Priority, CosNotification::DefaultPriority)
+, timeout_ (CosNotification::Timeout)
+, reliable_ (CosNotification::EventReliability, false)
+, clone_ (0)
+, is_on_heap_ (false)
 {
   //  if (TAO_debug_level > 0)
   //  ACE_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
@@ -78,20 +79,3 @@ TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
   return result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Auto_Basic_Ptr<TAO_Notify_Event>;
-template class TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
-template class ACE_Unbounded_Queue<TAO_Notify_Event_var>;
-template class ACE_Node<TAO_Notify_Event_var>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Notify_Event_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify_Event>
-#pragma instantiate TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
-#pragma instantiate ACE_Unbounded_Queue<TAO_Notify_Event_var>
-#pragma instantiate ACE_Node<TAO_Notify_Event_var>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Notify_Event_var>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -480,12 +480,14 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
 
       return 0;
     }
-
+  else
+    {
   ACE_NEW_RETURN (any_ptr,
                   CORBA::Any (*any),
                   -1);
   this->current_value_ = any_ptr;
   return comp->accept (this);
+    }
 }
 
 int
@@ -586,8 +588,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
   ACE_TRY
     {
       CORBA::TypeCode_var tc = this->current_value_->type ();
-      tc = TAO_DynAnyFactory::strip_alias (tc.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+      tc = TAO_DynAnyFactory::strip_alias (tc.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       switch (special->type ())
@@ -596,10 +597,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
           {
             CORBA::ULong length;
 
-            CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            switch (kind)
+      switch (tc->kind ())
               {
               case CORBA::tk_sequence:
                 {

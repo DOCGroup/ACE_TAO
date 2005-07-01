@@ -32,14 +32,14 @@ class ACE_Reactor;
 class TAO_Notify_Serv_Export TAO_Notify_Timer_Reactor : public TAO_Notify_Timer
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Reactor > Ptr;
+
   /// Constuctor
   TAO_Notify_Timer_Reactor (void);
 
   /// Destructor
   virtual ~TAO_Notify_Timer_Reactor ();
 
-  /// Release
-  virtual void release (void);
 
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,
@@ -52,6 +52,10 @@ public:
 protected:
   /// The instance reactor that we use.
   ACE_Reactor* reactor_;
+
+private:
+  /// Release
+  virtual void release (void);
 };
 
 #include /**/ "ace/post.h"

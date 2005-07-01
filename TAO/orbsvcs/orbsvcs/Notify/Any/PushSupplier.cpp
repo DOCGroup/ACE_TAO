@@ -17,6 +17,8 @@ TAO_Notify_PushSupplier::~TAO_Notify_PushSupplier ()
 void
 TAO_Notify_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
 {
+  ACE_ASSERT (push_supplier != 0 && this->push_supplier_.in() == 0);
+
   this->push_supplier_ = CosEventComm::PushSupplier::_duplicate (push_supplier);
 
   ACE_TRY

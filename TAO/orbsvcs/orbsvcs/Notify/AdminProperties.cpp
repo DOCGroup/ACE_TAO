@@ -18,7 +18,7 @@ TAO_Notify_AdminProperties::TAO_Notify_AdminProperties (void)
   , max_suppliers_ (CosNotification::MaxSuppliers, 0)
   , reject_new_events_ (CosNotification::RejectNewEvents, 0)
   , global_queue_length_ (0)
-  , global_queue_not_full_condition_ (global_queue_lock_)
+  , global_queue_not_full_ (global_queue_lock_)
 {
 }
 
@@ -83,22 +83,8 @@ TAO_Notify_AdminProperties::queue_full (void)
   if (this->max_global_queue_length () == 0)
     return 0;
   else
-    if (this->global_queue_length_ > this->max_global_queue_length ().value ())
+    if (this->global_queue_length_ >= this->max_global_queue_length ().value ())
       return 1;
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>;
-template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>;
-template class ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>
-#pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>
-#pragma ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

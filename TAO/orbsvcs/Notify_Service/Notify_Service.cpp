@@ -94,7 +94,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
       return -1;
   }
 
-  this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
+  this->notify_service_->init_service (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.

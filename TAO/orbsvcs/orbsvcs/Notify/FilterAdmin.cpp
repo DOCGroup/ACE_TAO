@@ -10,7 +10,7 @@ ACE_RCSID(Notify, FilterAdmin, "$Id$")
 
 #include "Topology_Saver.h"
 #include "Properties.h"
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 
 // Implementation skeleton constructor
 TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin (void)

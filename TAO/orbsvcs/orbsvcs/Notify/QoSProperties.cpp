@@ -9,20 +9,22 @@
 ACE_RCSID(Notify, TAO_Notify_QoSProperties, "$Id$")
 
 #include "Property.h"
-
-
+#include "Notify_Extensions.h"
 
 TAO_Notify_QoSProperties::TAO_Notify_QoSProperties (void)
-  :  event_reliability_(CosNotification::EventReliability)
-    , connection_reliability_(CosNotification::ConnectionReliability)
-    , priority_ (CosNotification::Priority)
-    , timeout_ (CosNotification::Timeout)
-    , stop_time_supported_ (CosNotification::StopTimeSupported)
-    , maximum_batch_size_ (CosNotification::MaximumBatchSize)
-    , max_events_per_consumer_ (CosNotification::MaxEventsPerConsumer)
-    , pacing_interval_ (CosNotification::PacingInterval)
-    , thread_pool_ (NotifyExt::ThreadPool)
-    , thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
+: event_reliability_(CosNotification::EventReliability)
+, connection_reliability_(CosNotification::ConnectionReliability)
+, priority_ (CosNotification::Priority)
+, timeout_ (CosNotification::Timeout)
+, stop_time_supported_ (CosNotification::StopTimeSupported)
+, maximum_batch_size_ (CosNotification::MaximumBatchSize)
+, pacing_interval_ (CosNotification::PacingInterval)
+, max_events_per_consumer_ (CosNotification::MaxEventsPerConsumer)
+, discard_policy_ (CosNotification::DiscardPolicy)
+, order_policy_ (CosNotification::OrderPolicy)
+, thread_pool_ (NotifyExt::ThreadPool)
+, thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
+, blocking_policy_(TAO_Notify_Extensions::BlockingPolicy)
 {
   unsupported_[0] = CosNotification::StartTimeSupported;
 }
@@ -93,6 +95,19 @@ TAO_Notify_QoSProperties::init ()
     a <<= this->max_events_per_consumer_.value();
     this->add(this->max_events_per_consumer_.name(), a);
   }
+  if (this->discard_policy_.is_valid())
+  {
+    CORBA::Any a;
+    a <<= this->discard_policy_.value();
+    this->add(this->discard_policy_.name(), a);
+  }
+  if (this->order_policy_.is_valid())
+  {
+    CORBA::Any a;
+    a <<= this->order_policy_.value();
+    this->add(this->order_policy_.name(), a);
+  }
+
   if (this->thread_pool_.is_valid())
   {
     CORBA::Any a;
@@ -104,6 +119,12 @@ TAO_Notify_QoSProperties::init ()
     CORBA::Any a;
     a <<= this->thread_pool_lane_.value();
     this->add(this->thread_pool_lane_.name(), a);
+  }
+  if (this->blocking_policy_.is_valid())
+  {
+    CORBA::Any a;
+    a <<= this->blocking_policy_.value();
+    this->add(this->blocking_policy_.name(), a);
   }
 }
 
@@ -132,7 +153,6 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
 
   if (prop_seq.length () > 0)
     {
-        // Now, init the supported properties
         this->event_reliability_.set (*this);
         this->connection_reliability_.set (*this);
         this->priority_.set (*this);
@@ -140,8 +160,13 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
         this->stop_time_supported_.set (*this);
         this->maximum_batch_size_.set (*this);
         this->pacing_interval_.set (*this);
+    this->max_events_per_consumer_.set (*this);
+    this->discard_policy_.set (*this);
+    this->order_policy_.set (*this);
+
         this->thread_pool_.set (*this);
         this->thread_pool_lane_.set (*this);
+    this->blocking_policy_.set (*this);
   }
 
   return err_index == -1 ? 0 : 1;
@@ -157,6 +182,11 @@ TAO_Notify_QoSProperties::copy (TAO_Notify_QoSProperties& qos_properties)
   qos_properties.stop_time_supported_ = this->stop_time_supported_;
   qos_properties.maximum_batch_size_ = this->maximum_batch_size_;
   qos_properties.pacing_interval_ = this->pacing_interval_;
+  qos_properties.max_events_per_consumer_ = this->max_events_per_consumer_;
+  qos_properties.discard_policy_ = this->discard_policy_;
+  qos_properties.order_policy_ = this->order_policy_;
+
+  qos_properties.blocking_policy_ = this->blocking_policy_;
 
   PROPERTY_MAP::ITERATOR iter (this->property_map_);
   PROPERTY_MAP::ENTRY *entry;

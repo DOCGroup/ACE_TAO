@@ -34,14 +34,14 @@
 class TAO_Notify_Serv_Export TAO_Notify_Timer_Queue : public TAO_Notify_Timer
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Queue > Ptr;
+
   /// Constuctor
   TAO_Notify_Timer_Queue (void);
 
   /// Destructor
   virtual ~TAO_Notify_Timer_Queue ();
 
-  /// Release
-  virtual void release (void);
 
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,
@@ -57,6 +57,10 @@ public:
 protected:
   /// The Timer Queue
   ACE_Timer_Heap timer_queue_;
+
+private:
+  /// Release
+  virtual void release (void);
 };
 
 #include /**/ "ace/post.h"

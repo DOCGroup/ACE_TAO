@@ -43,7 +43,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
+  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
@@ -88,9 +88,10 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
     const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
-  virtual void release (void);
  private:
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
+
+  virtual void release (void);
 
   /// Mutex to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;

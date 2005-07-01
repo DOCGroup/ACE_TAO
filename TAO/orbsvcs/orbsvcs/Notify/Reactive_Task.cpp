@@ -20,17 +20,20 @@ TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task ()
 }
 
 void
-TAO_Notify_Reactive_Task::init (TAO_Notify_AdminProperties_var& /*admin_properties*/ ACE_ENV_ARG_DECL)
+TAO_Notify_Reactive_Task::init (ACE_ENV_ARG_DECL)
 {
-  ACE_NEW_THROW_EX (this->timer_,
+  ACE_ASSERT (this->timer_.get() == 0);
+
+  TAO_Notify_Timer_Reactor* timer = 0;
+  ACE_NEW_THROW_EX (timer,
                     TAO_Notify_Timer_Reactor (),
                     CORBA::NO_MEMORY ());
+  this->timer_.reset (timer);
 }
 
 void
 TAO_Notify_Reactive_Task::release (void)
 {
-  this->timer_->_decr_refcnt ();
   delete this; //TODO: Release via factory.
 }
 
@@ -48,6 +51,5 @@ TAO_Notify_Reactive_Task::execute (TAO_Notify_Method_Request& method_request ACE
 TAO_Notify_Timer*
 TAO_Notify_Reactive_Task::timer (void)
 {
-  this->timer_->_incr_refcnt ();
-  return this->timer_;
+  return this->timer_.get();
 }

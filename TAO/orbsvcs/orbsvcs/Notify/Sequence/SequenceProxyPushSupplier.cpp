@@ -19,8 +19,6 @@ TAO_Notify_SequenceProxyPushSupplier::~TAO_Notify_SequenceProxyPushSupplier ()
 void
 TAO_Notify_SequenceProxyPushSupplier::release (void)
 {
-  if (this->consumer_)
-    this->consumer_->release ();
 
   delete this;
   //@@ inform factory
@@ -40,7 +38,7 @@ TAO_Notify_SequenceProxyPushSupplier::connect_sequence_push_consumer (CosNotifyC
                     TAO_Notify_SequencePushConsumer (this),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (push_consumer, this->admin_properties_ ACE_ENV_ARG_PARAMETER);
+  consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->connect (consumer ACE_ENV_ARG_PARAMETER);
@@ -55,6 +53,7 @@ TAO_Notify_SequenceProxyPushSupplier::disconnect_sequence_push_supplier (ACE_ENV
                    ))
 
 {
+  TAO_Notify_SequenceProxyPushSupplier::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);

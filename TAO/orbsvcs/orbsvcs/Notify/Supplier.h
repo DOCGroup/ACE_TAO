@@ -37,7 +37,7 @@ public:
   TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  ~TAO_Notify_Supplier ();
+  virtual ~TAO_Notify_Supplier ();
 
   /// Access Specific Proxy.
   TAO_Notify_ProxyConsumer* proxy_consumer (void);

@@ -24,14 +24,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "tao/TypeCode.h"
+#include "tao/Typecode.h"
 
 #include "notify_serv_export.h"
 
-class TAO_ETCL_Constraint;
-class TAO_ETCL_Literal_Constraint;
 class TAO_Notify_Property_Constraint;
 
 class TAO_Notify_Serv_Export TAO_Notify_Constraint_Visitor

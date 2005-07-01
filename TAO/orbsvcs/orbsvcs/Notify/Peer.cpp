@@ -82,7 +82,7 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
 
       if (cos_added.length () != 0 || cos_removed.length () != 0)
         {
-          TAO_Notify_Proxy_Guard proxy_guard(this->proxy ()); // Protect this object from being destroyed in this scope.
+          TAO_Notify_Proxy::Ptr proxy_guard(this->proxy ()); // Protect this object from being destroyed in this scope.
 
           this->dispatch_updates_i (cos_added, cos_removed ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

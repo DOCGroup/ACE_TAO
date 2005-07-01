@@ -4,26 +4,28 @@
 #include "ProxySupplier.h"
 #include "Event_Map_T.h"
 
-ACE_INLINE TAO_Notify_Consumer_Map*
+ACE_INLINE TAO_Notify_Consumer_Map&
 TAO_Notify_Event_Manager::consumer_map (void)
 {
-  return this->consumer_map_;
+  ACE_ASSERT( this->consumer_map_.get() != 0 );
+  return *this->consumer_map_;
 }
 
-ACE_INLINE TAO_Notify_Supplier_Map*
+ACE_INLINE TAO_Notify_Supplier_Map&
 TAO_Notify_Event_Manager::supplier_map (void)
 {
-  return this->supplier_map_;
+  ACE_ASSERT( this->supplier_map_.get() != 0 );
+  return *this->supplier_map_;
 }
 
 ACE_INLINE const TAO_Notify_EventTypeSeq&
-TAO_Notify_Event_Manager::offered_types (void)
+TAO_Notify_Event_Manager::offered_types (void) const
 {
   return this->supplier_map_->event_types ();
 }
 
 ACE_INLINE const TAO_Notify_EventTypeSeq&
-TAO_Notify_Event_Manager::subscription_types (void)
+TAO_Notify_Event_Manager::subscription_types (void) const
 {
   return this->consumer_map_->event_types ();
 }

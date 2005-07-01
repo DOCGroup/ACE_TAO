@@ -21,12 +21,12 @@
 
 #include "Event.h"
 #include "Proxy.h"
-#include "Refcountable_Guard_T.h"
+#include "ConsumerAdmin.h"
+
 #include "orbsvcs/CosEventChannelAdminC.h"
 
 class TAO_Notify_Consumer;
-class TAO_Notify_ConsumerAdmin;
-class TAO_Notify_Method_Request;
+class TAO_Notify_Method_Request_Dispatch_No_Copy;
 /**
  * @class TAO_Notify_ProxySupplier
  *
@@ -38,6 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier : public virtual TAO_Notif
   friend class TAO_Notify_Consumer;
 
 public:
+  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> Ptr;
   /// Constuctor
   TAO_Notify_ProxySupplier (void);
 
@@ -57,7 +58,7 @@ public:
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void deliver (TAO_Notify_Method_Request & request ACE_ENV_ARG_DECL);
+  virtual void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request ACE_ENV_ARG_DECL);
 
   /// Override TAO_Notify_Container_T::shutdown  method
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -68,30 +69,26 @@ public:
   /// Override, TAO_Notify_Proxy::qos_changed to apply MaxEventssPerConsumer QoS.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
-  /// Access our Peer.
-  virtual TAO_Notify_Peer* peer (void);
+  /// Returns true if connected
+  bool is_connected (void) const;
 
   /// Access the Consumer
   TAO_Notify_Consumer* consumer (void);
 
-  /// Return 1 if connected
-  int is_connected (void);
-
   /// The CA parent.
-  TAO_Notify_ConsumerAdmin* consumer_admin (void);
+  TAO_Notify_ConsumerAdmin& consumer_admin (void);
 
-//  const char * get_proxy_type_name (void) const;
-protected:
-
+private:
   ///= Data Members.
   /// The CA parent.
-  TAO_Notify_ConsumerAdmin* consumer_admin_;
+  TAO_Notify_ConsumerAdmin::Ptr consumer_admin_;
 
   /// The Consumer that we're connect to.
-  TAO_Notify_Consumer* consumer_;
-};
+  ACE_Auto_Ptr<TAO_Notify_Consumer> consumer_;
 
-typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> TAO_Notify_ProxySupplier_Guard;
+  /// Access our Peer.
+  virtual TAO_Notify_Peer* peer (void);
+};
 
 #if defined (__ACE_INLINE__)
 #include "ProxySupplier.inl"

@@ -15,7 +15,6 @@ ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 #include "Supplier_Map.h"
 
 TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (void)
-  :consumer_map_ (0), supplier_map_ (0)
 {
 }
 
@@ -24,28 +23,36 @@ TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, "destroying consumer/supplier map count = %d/%d, \n",
-                  this->consumer_map_->proxy_count (), this->supplier_map_->proxy_count ()));
+                  this->consumer_map().proxy_count (), this->supplier_map().proxy_count ()));
     }
+}
 
-  delete this->consumer_map_;
-  delete this->supplier_map_;
+void TAO_Notify_Event_Manager::release()
+{
+  delete this;
 }
 
 void
 TAO_Notify_Event_Manager::init (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_NEW_THROW_EX (this->consumer_map_,
+  ACE_ASSERT (this->consumer_map_.get() == 0);
+
+  TAO_Notify_Consumer_Map* consumer_map = 0;
+  ACE_NEW_THROW_EX (consumer_map,
                     TAO_Notify_Consumer_Map (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
+  this->consumer_map_.reset( consumer_map );
 
-  ACE_NEW_THROW_EX (this->supplier_map_,
+  this->consumer_map().init (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO_Notify_Supplier_Map* supplier_map = 0;
+  ACE_NEW_THROW_EX (supplier_map,
                     TAO_Notify_Supplier_Map (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
-
-  this->consumer_map_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_map_.reset( supplier_map );
 
   this->supplier_map_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -59,7 +66,7 @@ TAO_Notify_Event_Manager::shutdown (void)
 void
 TAO_Notify_Event_Manager::connect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL)
 {
-  this->consumer_map_->connect (proxy_supplier ACE_ENV_ARG_PARAMETER);
+  this->consumer_map().connect (proxy_supplier ACE_ENV_ARG_PARAMETER);
 
   // Inform about offered types.
   TAO_Notify_EventTypeSeq removed;
@@ -69,13 +76,13 @@ TAO_Notify_Event_Manager::connect (TAO_Notify_ProxySupplier* proxy_supplier ACE_
 void
 TAO_Notify_Event_Manager::disconnect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL)
 {
-  this->consumer_map_->disconnect (proxy_supplier ACE_ENV_ARG_PARAMETER);
+  this->consumer_map().disconnect (proxy_supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_Notify_Event_Manager::connect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL)
 {
-  this->supplier_map_->connect (proxy_consumer ACE_ENV_ARG_PARAMETER);
+  this->supplier_map().connect (proxy_consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   // Inform about subscription types.
   TAO_Notify_EventTypeSeq removed;
@@ -85,7 +92,7 @@ TAO_Notify_Event_Manager::connect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_
 void
 TAO_Notify_Event_Manager::disconnect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL)
 {
-  this->supplier_map_->disconnect (proxy_consumer ACE_ENV_ARG_PARAMETER);
+  this->supplier_map().disconnect (proxy_consumer ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -99,7 +106,7 @@ TAO_Notify_Event_Manager::offer_change (TAO_Notify_ProxyConsumer* proxy_consumer
   this->un_publish (proxy_consumer, removed, last_removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_Notify_Consumer_Map::ENTRY::COLLECTION* updates_collection = this->consumer_map_->updates_collection ();
+  TAO_Notify_Consumer_Map::ENTRY::COLLECTION* updates_collection = this->consumer_map().updates_collection ();
 
   TAO_Notify_ProxySupplier_Update_Worker worker (new_added, last_removed);
 
@@ -115,7 +122,7 @@ TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_s
   this->subscribe (proxy_supplier, added, new_added ACE_ENV_ARG_PARAMETER);
   this->un_subscribe (proxy_supplier, removed, last_removed ACE_ENV_ARG_PARAMETER);
 
-  TAO_Notify_Supplier_Map::ENTRY::COLLECTION* updates_collection = this->supplier_map_->updates_collection ();
+  TAO_Notify_Supplier_Map::ENTRY::COLLECTION* updates_collection = this->supplier_map().updates_collection ();
 
   TAO_Notify_ProxyConsumer_Update_Worker worker (new_added, last_removed);
 
@@ -132,7 +139,7 @@ TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, c
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = consumer_map_->insert (proxy_supplier, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = this->consumer_map().insert (proxy_supplier, *event_type ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (result == 1)
@@ -149,7 +156,7 @@ TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = consumer_map_->remove (proxy_supplier, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = this->consumer_map().remove (proxy_supplier, *event_type ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (result == 1)
@@ -166,7 +173,7 @@ TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, con
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = supplier_map_->insert (proxy_consumer, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = supplier_map().insert (proxy_consumer, *event_type ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (result == 1)
@@ -183,7 +190,7 @@ TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, 
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = supplier_map_->remove (proxy_consumer, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = supplier_map().remove (proxy_consumer, *event_type ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (result == 1)
@@ -191,133 +198,3 @@ TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, 
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier, TAO_SYNCH_RW_MUTEX>;
-template class TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX>;
-
-template class ACE_Hash<TAO_Notify_EventType>;
-template class ACE_Equal_To<TAO_Notify_EventType>;
-
-template class TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer>;
-template class TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier>;
-
-template class ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_Null_Mutex>;
-
-template class ACE_Unbounded_Set<TAO_Notify_EventType>;
-template class ACE_Unbounded_Set_Const_Iterator<TAO_Notify_EventType>;
-template class ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX> >;
-template class ACE_Unbounded_Set_Iterator<TAO_Notify_EventType>;
-
-template class TAO_ESF_Worker<TAO_Notify_ProxySupplier>;
-template class TAO_ESF_Worker<TAO_Notify_ProxyConsumer>;
-template class TAO_ESF_Worker<TAO_Notify_Proxy>;
-template class TAO_ESF_Worker<TAO_Notify_Consumer>;
-template class TAO_ESF_Worker<TAO_Notify_Peer>;
-template class TAO_ESF_Worker<TAO_Notify_SupplierAdmin>;
-template class TAO_ESF_Worker<TAO_Notify_ConsumerAdmin>;
-template class TAO_ESF_Worker<TAO_Notify_EventChannel>;
-
-template class ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX>;
-template class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX> >;
-
-template class ACE_Node<ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX > >;
-template class ACE_Node<TAO_Notify_Supplier *>;
-template class ACE_Node<TAO_Notify_SupplierAdmin *>;
-template class ACE_Node<TAO_Notify_ConsumerAdmin *>;
-template class ACE_Node<TAO_Notify_EventChannel *>;
-template class ACE_Node<TAO_Notify_ProxyConsumer *>;
-template class ACE_Node<TAO_Notify_EventType>;
-template class ACE_Node<TAO_Notify_Peer *>;
-template class ACE_Node<TAO_Notify_ProxySupplier *>;
-template class ACE_Node<TAO_Notify_Proxy *>;
-template class ACE_Node<TAO_Notify_Consumer *>;
-
-template class ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *>;
-template class ACE_Hash_Map_Entry<ACE_CString, CORBA::Any>;
-template class ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *>;
-
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX>
-
-#pragma instantiate ACE_Hash<TAO_Notify_EventType>
-#pragma instantiate ACE_Equal_To<TAO_Notify_EventType>
-
-#pragma instantiate TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer>
-#pragma instantiate TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier>
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Unbounded_Set<TAO_Notify_EventType>
-#pragma instantiate ACE_Unbounded_Set_Const_Iterator<TAO_Notify_EventType>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX> >
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_EventType>
-
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_ProxySupplier>
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_ProxyConsumer>
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_Proxy>
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_Consumer>
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_Peer>
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_ConsumerAdmin>
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_SupplierAdmin>
-#pragma instantiate TAO_ESF_Worker<TAO_Notify_EventChannel>
-
-#pragma instantiate ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX> >
-
-#pragma instantiate ACE_Node<ACE_Refcounted_Auto_Ptr<TAO_Notify_Event, TAO_SYNCH_MUTEX > >
-#pragma instantiate ACE_Node<TAO_Notify_Supplier *>
-#pragma instantiate ACE_Node<TAO_Notify_SupplierAdmin *>
-#pragma instantiate ACE_Node<TAO_Notify_ConsumerAdmin *>
-#pragma instantiate ACE_Node<TAO_Notify_EventChannel *>
-#pragma instantiate ACE_Node<TAO_Notify_ProxyConsumer *>
-#pragma instantiate ACE_Node<TAO_Notify_EventType>
-#pragma instantiate ACE_Node<TAO_Notify_Peer *>
-#pragma instantiate ACE_Node<TAO_Notify_ProxySupplier *>
-#pragma instantiate ACE_Node<TAO_Notify_Proxy *>
-#pragma instantiate ACE_Node<TAO_Notify_Consumer *>
-
-#pragma instantiate ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, CORBA::Any>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *>
-
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxySupplier> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_Event_Map_Entry_T<TAO_Notify_ProxyConsumer> *, ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

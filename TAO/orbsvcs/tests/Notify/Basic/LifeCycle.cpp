@@ -9,8 +9,8 @@
 
 #include "LifeCycle.h"
 
-ACE_RCSID (Notify_Tests, 
-           LifeCycle, 
+ACE_RCSID (Notify_Tests,
+           LifeCycle,
            "$Id$")
 
 LifeCycle::LifeCycle (void)
@@ -260,22 +260,9 @@ main (int argc, char *argv[])
       test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH(CosNotification::UnsupportedAdmin, ex)
-   {
-     ACE_PRINT_EXCEPTION (ex, "Unsupported Admin Properties");
-   }
-  ACE_CATCH(CosNotification::UnsupportedQoS, ex)
-   {
-     ACE_PRINT_EXCEPTION (ex, "Unsupported QoS Properties");
-   }
-  ACE_CATCH(CosNotifyChannelAdmin::AdminNotFound, ex)
-   {
-     ACE_PRINT_EXCEPTION (ex, "destroying admin object");
-   }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ");
       return 1;
     }
   ACE_ENDTRY;

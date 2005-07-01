@@ -24,12 +24,10 @@
 
 #include "orbsvcs/CosEventChannelAdminC.h"
 
-#include "Refcountable_Guard_T.h"
 #include "Event.h"
 #include "Proxy.h"
+#include "SupplierAdmin.h"
 
-
-class TAO_Notify_SupplierAdmin;
 class TAO_Notify_Supplier;
 
 /**
@@ -41,11 +39,12 @@ class TAO_Notify_Supplier;
 class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer : public virtual TAO_Notify_Proxy
 {
 public:
+  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> Ptr;
   /// Constuctor
   TAO_Notify_ProxyConsumer (void);
 
   /// Destructor
-  ~TAO_Notify_ProxyConsumer ();
+  virtual ~TAO_Notify_ProxyConsumer ();
 
   /// init: overrides Topology_Object method
   virtual void init (TAO_Notify::Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
@@ -66,35 +65,34 @@ public:
   /// Destroy this object.
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Access our Peer.
-  virtual TAO_Notify_Peer* peer (void);
 
+  /// Return 1 if connected
+  bool is_connected (void) const;
+
+  /// The SA parent.
+  TAO_Notify_SupplierAdmin& supplier_admin (void);
+
+protected:
   /// Access the Supplier
   TAO_Notify_Supplier* supplier (void);
 
-  /// Return 1 if connected
-  int is_connected (void);
-
-  /// The SA parent.
-  TAO_Notify_SupplierAdmin* supplier_admin (void);
-
-protected:
   /// Accept an event from the Supplier
   void push_i (TAO_Notify_Event * event ACE_ENV_ARG_DECL);
 
+private:
   /// Is this part of a reliable channel
   bool supports_reliable_events () const;
 
-protected:
   ///= Data Members.
   /// The SA parent.
-  TAO_Notify_SupplierAdmin* supplier_admin_;
+  TAO_Notify_SupplierAdmin::Ptr supplier_admin_;
 
   /// The Supplier that we're connect to.
-  TAO_Notify_Supplier* supplier_;
-};
+  ACE_Auto_Ptr<TAO_Notify_Supplier> supplier_;
 
-typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> TAO_Notify_ProxyConsumer_Guard;
+  /// Access our Peer.
+  virtual TAO_Notify_Peer* peer (void);
+};
 
 #if defined (__ACE_INLINE__)
 #include "ProxyConsumer.inl"

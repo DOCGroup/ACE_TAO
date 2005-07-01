@@ -29,7 +29,7 @@ CORBA::Object_ptr
 TAO_Notify_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
   // Set the POA that we use to return our <ref>
-  this->poa_ = this->proxy_poa_;
+  this->set_primary_as_proxy_poa();
   return TAO_Notify_Object::activate (servant ACE_ENV_ARG_PARAMETER);
 }
 
@@ -39,14 +39,15 @@ TAO_Notify_Proxy::activate (PortableServer::Servant servant,
                             ACE_ENV_ARG_DECL)
 {
   // Set the POA that we use to return our <ref>
-  this->poa_ = this->proxy_poa_;
+  this->set_primary_as_proxy_poa();
   return TAO_Notify_Object::activate (servant, id ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_Notify_Proxy::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->proxy_poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
+  ACE_ASSERT (this->proxy_poa() != 0 );
+  this->proxy_poa()->deactivate (this->id() ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -72,7 +73,7 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
 
   if (TAO_Notify_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
     {
-      this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+      this->execute_task (request ACE_ENV_ARG_PARAMETER);
     }
   else // execute in the current thread context.
     {

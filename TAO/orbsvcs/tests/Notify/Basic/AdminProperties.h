@@ -97,26 +97,23 @@ public:
   AdminProperties (void);
   ~AdminProperties (void);
 
-  int parse_args (int argc,
-                  char *argv[]) ;
+  int parse_args (int argc, char *argv[]) ;
 
-  int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
   // Initialization.
 
   void run_test (ACE_ENV_SINGLE_ARG_DECL);
   // Run the test.
 
-protected:
+private:
   void create_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   void create_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void create_channel(bool reject ACE_ENV_ARG_DECL);
 
   /// Test MaxSuppliers and MaxConsumers
   void test_max_clients (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Test MaxQueueLength properties
-  void test_max_queue_length (ACE_ENV_SINGLE_ARG_DECL);
+  void test_max_queue_length (bool reject ACE_ENV_ARG_DECL);
 
   // Data Members
   CosNotifyChannelAdmin::EventChannel_var ec_;
@@ -134,12 +131,6 @@ protected:
   CORBA::Boolean reject_new_events_;
   // Values for Admin Properties supplied by user.
 
-  /// Consumer Delay.
-  ACE_Time_Value consumer_delay_;
-
-  /// Inital delay.
-  ACE_Time_Value initial_delay_;
-
   /// Number of consumers to connect to check MaxConsumers property.
   CORBA::Long consumers_;
 
@@ -155,9 +146,8 @@ protected:
   /// Count of consumers successfully connect to the EC.
   int consumers_connected_count_;
 
-  /// Boolean flag that is set if the IMPL_LIMIT exception is thrown when trying to
-  /// exceed the Max_Queue_Length
-  CORBA::Boolean was_rejected_;
+  // Number of supplier pushes that resulted in an IMP_LIMIT exception
+  int rejections_;
 };
 
 #endif /* ADMINPROPERTIES */

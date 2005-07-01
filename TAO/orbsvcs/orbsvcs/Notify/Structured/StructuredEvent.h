@@ -38,7 +38,7 @@ public:
   TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
-  ~TAO_Notify_StructuredEvent_No_Copy ();
+  virtual ~TAO_Notify_StructuredEvent_No_Copy ();
 
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR & cdr) const;
@@ -96,10 +96,8 @@ public:
   TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
-  ~TAO_Notify_StructuredEvent ();
+  virtual ~TAO_Notify_StructuredEvent ();
 
-  /// returns this
-  virtual const TAO_Notify_Event * queueable_copy (ACE_ENV_SINGLE_ARG_DECL)const;
 
 protected:
   /// Copy of the Event.

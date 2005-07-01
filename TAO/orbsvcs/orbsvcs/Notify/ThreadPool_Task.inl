@@ -8,8 +8,3 @@ TAO_Notify_ThreadPool_Task::update_qos_properties (const TAO_Notify_QoSPropertie
   this->buffering_strategy_->update_qos_properties (qos_properties);
 }
 
-ACE_INLINE TAO_Notify_Buffering_Strategy*
-TAO_Notify_ThreadPool_Task::buffering_strategy (void)
-{
-  return this->buffering_strategy_;
-}

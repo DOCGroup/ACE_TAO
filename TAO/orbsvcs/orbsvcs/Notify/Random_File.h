@@ -47,7 +47,7 @@ public:
   ~Random_File();
 
   /// Open a file with default permissions.
-  bool open(const char* filename, size_t block_size = 512);
+  bool open(const ACE_TCHAR* filename, size_t block_size = 512);
 
   /// Accessor for the block size.
   /// Note signed size_t is used to be compatible with

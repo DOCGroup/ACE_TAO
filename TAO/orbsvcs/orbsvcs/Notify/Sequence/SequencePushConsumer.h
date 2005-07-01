@@ -25,7 +25,6 @@
 #include "../Property_T.h"
 #include "../Consumer.h"
 #include "../AdminProperties.h"
-#include "Batch_Buffering_Strategy.h"
 #include "ace/Null_Condition.h"
 
 class TAO_Notify_ProxySupplier;
@@ -42,19 +41,12 @@ class TAO_Notify_Serv_Export TAO_Notify_SequencePushConsumer
   : public TAO_Notify_Consumer
 {
 public:
-  /// Constuctor
   TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy);
 
-  /// Destructor
-  ~TAO_Notify_SequencePushConsumer ();
+  virtual ~TAO_Notify_SequencePushConsumer ();
 
   /// Init the Consumer
-  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_Notify_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
-
-  void set_consumer (CosNotifyComm::SequencePushConsumer_ptr push_consumer);
-
-  /// TAO_Notify_Destroy_Callback methods.
-  virtual void release (void);
+  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
 
   /// Add request to a queue if necessary.
   /// for Sequence it's always necessary.
@@ -89,6 +81,9 @@ protected:
   /// The Consumer
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
 
+private:
+  /// TAO_Notify_Destroy_Callback methods.
+  virtual void release (void);
 };
 
 #include /**/ "ace/post.h"

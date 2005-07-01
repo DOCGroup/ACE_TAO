@@ -6,7 +6,7 @@ ACE_RCSID (Notify,
            TAO_Notify_PushConsumer,
            "$Id$")
 
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 #include "orbsvcs/CosEventCommC.h"
 #include "../Event.h"
 #include "../Properties.h"
@@ -23,6 +23,8 @@ TAO_Notify_PushConsumer::~TAO_Notify_PushConsumer ()
 void
 TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
 {
+  ACE_ASSERT ( push_consumer != 0 && this->push_consumer_.in() == 0 );
+
   this->push_consumer_ = CosEventComm::PushConsumer::_duplicate (push_consumer);
 
   ACE_TRY

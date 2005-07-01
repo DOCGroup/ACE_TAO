@@ -98,7 +98,12 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
   ACE_DECLARE_NEW_CORBA_ENV;
 
   if (disconnect_on_last_event_ == 1)
+  {
     consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    if (TAO_debug_level)
+      ACE_DEBUG ((LM_DEBUG, "PushConsumer has been disconnected.\n"));
+    consumer = 0;
+  }
 }
 
 void
@@ -112,7 +117,12 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
   ACE_DECLARE_NEW_CORBA_ENV;
 
   if (disconnect_on_last_event_ == 1)
+  {
     consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    if (TAO_debug_level)
+      ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer has been disconnected.\n"));
+    consumer = 0;
+  }
 }
 
 void
@@ -126,7 +136,12 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
   ACE_DECLARE_NEW_CORBA_ENV;
 
   if (disconnect_on_last_event_ == 1)
+  {
     consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+    if (TAO_debug_level)
+      ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer has been disconnected.\n"));
+    consumer = 0;
+  }
 }
 
 int
@@ -210,42 +225,15 @@ MultiTypes::init (int argc,
   sequence_supplier_->connect (this->supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  consumer_start( 0 );
+
   return 0;
 }
 
 int
-MultiTypes::parse_args(int argc, char *argv[])
+MultiTypes::parse_args(int, char **)
 {
-  ACE_Arg_Shifter arg_shifter (argc,
-                              argv);
-
-    const char *current_arg = 0;
-
-    while (arg_shifter.is_anything_left ())
-    {
-      if ((current_arg = arg_shifter.get_the_parameter ("-count")))
-        {
-          // The number of counsumers to create.
-          arg_shifter.consume_arg ();
-        }
-      else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
-        {
-          ACE_DEBUG((LM_DEBUG,
-                     "usage: %s "
-                     "-count testcount \n",
-                     argv[0],
-                     argv[0]));
-
-          arg_shifter.consume_arg ();
-
-          return -1;
-        }
-      else
-        {
-          arg_shifter.ignore_arg ();
-        }
-    }
-
+  // Doesn't accept any arguments
   return 0;
 }
 
@@ -276,7 +264,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the event..\n"));
+    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
   this->wait_for_all_consumers (1);
 
   /*****************************************************************************/
@@ -298,7 +286,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the event..\n"));
+    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
   this->wait_for_all_consumers (1);
 
   /*****************************************************************************/
@@ -326,7 +314,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the event..\n"));
+    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 2 events..\n"));
   this->wait_for_all_consumers (2);
 
   /*****************************************************************************/
@@ -344,7 +332,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the event..\n"));
+    ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
   this->wait_for_all_consumers (1);
 
   ACE_DEBUG ((LM_DEBUG, "MultiTypes test has run successfully!\n"));
@@ -353,25 +341,24 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
 void
 MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
 {
-  while (1)
+  while (true)
     {
-      if (any_event_count_.value () == expected_count_per_consumer &&
-          struct_event_count_.value () == expected_count_per_consumer &&
-          seq_event_count_.value () == expected_count_per_consumer)
-        break;
-
+      if (any_event_count_.value () >= expected_count_per_consumer &&
+          struct_event_count_.value () >= expected_count_per_consumer &&
+          seq_event_count_.value () >= expected_count_per_consumer)
       {
-        ACE_Time_Value tv (0,1000);
-        if (this->orb_->work_pending (tv))
-          this->orb_->perform_work ();
+        break;
       }
+
+      ACE_Time_Value tv (0, 100 * 1000);
+      this->orb_->run(tv);
     }
 }
 
 void
 MultiTypes::end_test (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  consumer_done( 0 );
 }
 
 int
@@ -410,28 +397,12 @@ main (int argc, char* argv[])
       client.end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  ACE_CATCH (CORBA::Exception, se)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "MultiTypes user error: ");
-      return 1;
-    }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "MultiTypes system error: ");
+      ACE_PRINT_EXCEPTION (se, "Error: ");
       return 1;
     }
   ACE_ENDTRY;
 
   return client.check_results ();
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

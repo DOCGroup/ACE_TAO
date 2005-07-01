@@ -19,8 +19,6 @@ TAO_Notify_ProxyPushSupplier::~TAO_Notify_ProxyPushSupplier ()
 void
 TAO_Notify_ProxyPushSupplier::release (void)
 {
-  if (this->consumer_)
-    this->consumer_->release ();
 
   delete this;
   //@@ inform factory
@@ -55,6 +53,7 @@ TAO_Notify_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
+  TAO_Notify_ProxyPushSupplier::Ptr guard( this );
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -44,10 +44,8 @@ public:
   TAO_Notify_CosEC_ProxyPushConsumer (void);
 
   /// Destructor
-  ~TAO_Notify_CosEC_ProxyPushConsumer ();
+  virtual ~TAO_Notify_CosEC_ProxyPushConsumer ();
 
-  /// Release
-  virtual void release (void);
 
   virtual const char * get_proxy_type_name (void) const;
 
@@ -71,9 +69,8 @@ protected:
                      CORBA::SystemException
                      ));
 private:
-  // Overloaded TAO_Notify_ProxyConsumer::push to get around Borland compiler warnings.
-  // I don't think this is necessary any more -- Dale.
-//  virtual void push (TAO_Notify_Event_var &event);
+  /// Release
+  virtual void release (void);
 };
 
 #if defined(_MSC_VER)

@@ -20,12 +20,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/NotifyExtS.h"
 #include "Topology_Object.h"
 #include "Topology_Factory.h"
 #include "Reconnection_Registry.h"
 #include "Routing_Slip.h"
+
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/NotifyExtS.h"
 
 class TAO_Notify_EventChannel;
 template <class TYPE> class TAO_Notify_Container_T;
@@ -50,6 +51,8 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   typedef ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr> Routing_Slip_Set;
 
 public:
+  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory > Ptr;
+
   /// Constuctor
   TAO_Notify_EventChannelFactory (void);
 
@@ -62,9 +65,6 @@ public:
   /// = ServantBase  Methods
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Release this object.
-  virtual void release (void);
 
   /// Remove <channel> from the <ec_container_>
   void remove (TAO_Notify_EventChannel* channel ACE_ENV_ARG_DECL);
@@ -115,13 +115,9 @@ public:
   virtual TAO_Notify_Object::ID get_id () const;
 
 
- protected:
-  typedef TAO_Notify_Container_T<TAO_Notify_EventChannel>
-    TAO_Notify_EventChannel_Container;
+ private:
 
   /// = Data Members
-  /// Container for Event Channels.
-  TAO_Notify_EventChannel_Container *ec_container_;
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
@@ -174,6 +170,13 @@ public:
                      CosNotifyChannelAdmin::ChannelNotFound));
 
 private:
+  typedef TAO_Notify_Container_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Container;
+
+  TAO_Notify_EventChannel_Container& ec_container();
+
+  /// Container for Event Channels.
+  ACE_Auto_Ptr< TAO_Notify_EventChannel_Container > ec_container_;
+
   TAO_SYNCH_MUTEX topology_save_lock_;
 
   CosNotifyChannelAdmin::EventChannelFactory_var channel_factory_;
@@ -185,6 +188,9 @@ private:
   bool loading_topology_;
 
   Routing_Slip_Set routing_slip_restart_set_;
+
+  /// Release this object.
+  virtual void release (void);
 
 };
 

@@ -43,14 +43,10 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Notify_Message_Queue;
 class TAO_Notify_Serv_Export TAO_Notify_Buffering_Strategy
 {
 public:
-  /// Constuctor
   TAO_Notify_Buffering_Strategy (
       TAO_Notify_Message_Queue& msg_queue,
-       TAO_Notify_AdminProperties_var& admin_properties,
-       CORBA::Long batch_size
-     );
+    TAO_Notify_AdminProperties::Ptr& admin_properties);
 
-  /// Destructor
   ~TAO_Notify_Buffering_Strategy ();
 
   /// Update state with the following QoS Properties:
@@ -72,21 +68,13 @@ public:
   /// Shutdown
   void shutdown (void);
 
-  /// Set the new batch size.
-  void batch_size (CORBA::Long batch_size);
+private:
 
-  /// Obtain our batch size
-  CORBA::Long batch_size (void);
-
-  /// Set the max local queue length.
-  void max_local_queue_length (CORBA::Long length);
-
-protected:
   /// Apply the Order Policy and queue. return -1 on error.
   int queue (TAO_Notify_Method_Request_Queueable& method_request);
 
   /// Discard as per the Discard Policy.
-  int discard (void);
+  bool discard (TAO_Notify_Method_Request_Queueable& method_request);
 
   ///= Data Members
 
@@ -94,22 +82,16 @@ protected:
   TAO_Notify_Message_Queue& msg_queue_;
 
   /// Reference to the properties per event channel.
-  TAO_Notify_AdminProperties_var admin_properties_;
+  TAO_Notify_AdminProperties::Ptr admin_properties_;
 
   /// The shared global lock used by all the queues.
   ACE_SYNCH_MUTEX& global_queue_lock_;
-
-  /// The shared Condition for global queue not full.
-  ACE_SYNCH_CONDITION& global_queue_not_full_condition_;
 
   /// The global queue length - queue length accross all the queues.
   CORBA::Long& global_queue_length_;
 
   /// The maximum events that can be queued overall.
-  const TAO_Notify_Property_Long& max_global_queue_length_;
-
-  /// The maximum queue length for the local queue.
-  CORBA::Long max_local_queue_length_;
+  const TAO_Notify_Property_Long& max_queue_length_;
 
   /// Order of events in internal buffers.
   TAO_Notify_Property_Short order_policy_;
@@ -117,29 +99,19 @@ protected:
   /// Policy to discard when buffers are full.
   TAO_Notify_Property_Short discard_policy_;
 
-  /// Flag that we should use discarding(1) or blocking (0).
-  int use_discarding_;
+  TAO_Notify_Property_Long max_events_per_consumer_;
+  TAO_Notify_Property_Time blocking_policy_;
 
-  /// The blocking timeout will be used in place of discarding
-  /// This is a TAO specific extension.
-  ACE_Time_Value blocking_time_; // 0 means wait forever.
 
-  /// Condition that the local queue is not full.
-  ACE_SYNCH_CONDITION local_queue_not_full_condition_;
-
-  /// The batch size that we want to monitor for dequeuing.
-  CORBA::Long batch_size_;
+  TAO_SYNCH_CONDITION& global_not_full_;
+  TAO_SYNCH_CONDITION local_not_full_;
 
   /// Condition that batch size reached.
-  ACE_SYNCH_CONDITION batch_size_reached_condition_;
+  TAO_SYNCH_CONDITION local_not_empty_;
 
   /// Flag to shutdown.
-  int shutdown_;
+  bool shutdown_;
 };
-
-#if defined (__ACE_INLINE__)
-#include "Buffering_Strategy.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

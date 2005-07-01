@@ -55,14 +55,14 @@ namespace TAO_Notify
   NVP::NVP(const TAO_Notify_Property_Time& p)
     : name(p.name())
   {
-    char buf[128];
+    ACE_TCHAR buf[128];
     ACE_UINT64 us = p.value();
 #ifdef ACE_LACKS_LONGLONG_T
     us.as_string(buf);
 #else
     ACE_OS::sprintf(buf, ACE_UINT64_FORMAT_SPECIFIER, us);
 #endif /* ACE_LACKS_LONGLONG_T */
-    value = buf;
+    value = ACE_TEXT_ALWAYS_CHAR (buf);
   }
 
   NVP::NVP(const TAO_Notify_Property_Boolean& p)

@@ -20,16 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Atomic_Op.h"
-#include "ace/Refcounted_Auto_Ptr.h"
-#include "ace/Condition_Thread_Mutex.h"
-
-#include "tao/orbconf.h"
-
 #include "PropertySeq.h"
 #include "Property_T.h"
 #include "Property.h"
 #include "Property_Boolean.h"
+
+#include "tao/orbconf.h"
+
+#include "ace/Atomic_Op.h"
+#include "ace/Bound_Ptr.h"
+#include "ace/Condition_Thread_Mutex.h"
 
 /**
  * @class TAO_Notify_AdminProperties
@@ -41,11 +41,12 @@ class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
   : public TAO_Notify_PropertySeq
 {
 public:
+  typedef ACE_Strong_Bound_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX> Ptr;
   /// Constuctor
   TAO_Notify_AdminProperties (void);
 
   /// Destructor
-  ~TAO_Notify_AdminProperties ();
+  virtual ~TAO_Notify_AdminProperties ();
 
   // Init
   int init (const CosNotification::PropertySeq& prop_seq);
@@ -67,7 +68,7 @@ public:
 
   CORBA::Long& global_queue_length (void);
   TAO_SYNCH_MUTEX& global_queue_lock (void);
-  TAO_SYNCH_CONDITION& global_queue_not_full_condition (void);
+  TAO_SYNCH_CONDITION& global_queue_not_full (void);
 
   TAO_Notify_Atomic_Property_Long& consumers (void);
   TAO_Notify_Atomic_Property_Long& suppliers (void);
@@ -110,7 +111,7 @@ protected:
   TAO_SYNCH_MUTEX global_queue_lock_;
 
   /// The condition that the queue_length_ is not at max.
-  TAO_SYNCH_CONDITION global_queue_not_full_condition_;
+  TAO_SYNCH_CONDITION global_queue_not_full_;
 
   /// These are used to count the number of consumers and suppliers connected to
   /// the system.
@@ -118,9 +119,6 @@ protected:
   TAO_Notify_Atomic_Property_Long suppliers_;
 };
 
-typedef ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties,
-                                TAO_SYNCH_MUTEX>
-  TAO_Notify_AdminProperties_var;
 
 #if defined (__ACE_INLINE__)
 #include "AdminProperties.inl"

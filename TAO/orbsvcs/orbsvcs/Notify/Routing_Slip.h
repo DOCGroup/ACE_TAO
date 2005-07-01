@@ -67,7 +67,7 @@ class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
   typedef ACE_Guard< TAO_SYNCH_MUTEX > Routing_Slip_Guard;
 public:
   /// "Factory" method for normal use.
-  static Routing_Slip_Ptr create (const TAO_Notify_Event_var& event
+  static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event
     ACE_ENV_ARG_DECL);
 
   /// "Factory" method for use during reload from persistent storage.
@@ -115,7 +115,7 @@ public:
 
   /////////////////////////////////////////////////////
   // \brief Access the event associated with this routing slip
-  const TAO_Notify_Event_var & event () const;
+  const TAO_Notify_Event::Ptr & event () const;
 
   /// \brief Provide an identifying number for this Routing Slip
   /// to use in debug messages.
@@ -148,7 +148,7 @@ private:
   bool create_persistence_manager();
 
   /// Private constructor for use by create method
-  Routing_Slip(const TAO_Notify_Event_var& event);
+  Routing_Slip(const TAO_Notify_Event::Ptr& event);
 
   /// Test to see if all deliveries are complete.
   bool all_deliveries_complete () const;
@@ -176,7 +176,7 @@ private:
   Routing_Slip_Ptr this_ptr_;
 
   // The event being delivered.
-  TAO_Notify_Event_var event_;
+  TAO_Notify_Event::Ptr event_;
 
   /// A  mini-state machine to control persistence
   /// See external doc for circles and arrows.
