@@ -118,11 +118,11 @@ namespace TAO
        * assignment operator.
        */
       //@{
-      Server_Invocation_Interceptor (const Server_Invocation_Interceptor &)'
+      Server_Invocation_Interceptor (const Server_Invocation_Interceptor &);
       void operator= (const Server_Invocation_Interceptor &);
       //@}
 
-        private:
+    private:
 
       /// Reference to the current SSLIOP execution context.
       ::SSLIOP::Current_var ssliop_current_;
