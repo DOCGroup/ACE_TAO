@@ -1,3 +1,22 @@
+Fri Jul  1 000:27:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        
+          Moved evaluation of the in_recursion_ member of structs unions
+          and valuetypes to happen soon enough to make the generation of
+          the file include of Recursive_Type_TypeCode.h conditional on
+          whether a recursive type has been seen or not. Thanks to
+          Ossama Otheman <ossama@dre.vanderbilt.edu> for suggesting
+          the conditional include.
+
 Thu Jun 30 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1551_Regression/client.cpp:

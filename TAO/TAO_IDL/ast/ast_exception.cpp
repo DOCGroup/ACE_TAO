@@ -158,6 +158,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
           if (type->in_recursion (list))
             {
               this->in_recursion_ = 1;
+              idl_global->recursive_type_seen_ = true;
               return this->in_recursion_;
             }
         }
