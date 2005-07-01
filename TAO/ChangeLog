@@ -1,3 +1,248 @@
+Fri Jul  1 11:30:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ClientRequestInfo.{h,cpp,inl}:
+          Doxygen fix and moved check_validity to the cpp file and removed
+          the inline file
+
+        * tao/ClientRequestInterceptor.pidl:
+        * tao/ClientRequestInterceptorA.cpp:
+        * tao/ClientRequestInterceptorC.{h,cpp}:
+        * tao/ClientRequestInterceptorS.h:
+          Moved to the PI library
+
+        * tao/ClientRequestInterceptor_Adapter.{h,cpp,inl}:
+          Made this a base class, real functionality is in the PI lib.
+          Remove the .inl file
+
+        * tao/ClientRequestInterceptor_Adapter_Factory.h:
+          New factory base for creating a ClientRequestInterceptor_Adapter
+
+        * tao/Interceptor.pidl:
+        * tao/InterceptorA.cpp:
+        * tao/InterceptorC.{h,cpp}:
+        * tao/InterceptorS.h:
+        * tao/Interceptor_List.{cpp,h}:
+          Moved to the PI lib
+
+        * tao/Invocation_Base.{h,cpp,inl}:
+          Store the PI stack size in the invocation base and handle that
+          the ClientRequestInterceptor pointer can be 0.
+
+        * tao/IORInterceptor_Adapter.h:
+          Removed several not needed forward declarations
+
+        * tao/ORB_Core.{h,cpp,i}:
+          Added methods to get the Client/Server Request interceptor adapters.
+          Added the moment an interceptor is registered an adapter will be
+          created on demand. Later on we just retrieve the pointer
+
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.h:
+          Updated for the moved files
+
+        * tao/RTScheduler.mpc:
+          Needs PI_Server
+
+        * tao/ServerRequestInterceptor.pidl:
+        * tao/ServerRequestInterceptorA.cpp:
+        * tao/ServerRequestInterceptorC.{h,cpp}:
+        * tao/ServerRequestInterceptorS.h:
+          Moved to the PI_Server library
+
+        * tao/ServerRequestInterceptor_Adapter.{h,cpp}:
+          New adapter
+
+        * tao/ServerRequestInterceptor_Adapter_Factory.h:
+          New factory
+
+        * tao/tao.mpc:
+          Updated for all moved files.
+
+        * tao/IORInterceptor/IORInterceptor.pidl
+        * tao/IORInterceptor/IORInterceptorC.h
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.{h,cpp}:
+          Updated for Interceptor_List changes
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Improved debug statement
+
+        * tao/PI/ClientRequestInterceptor.pidl:
+        * tao/PI/ClientRequestInterceptorA.cpp:
+        * tao/PI/ClientRequestInterceptorC.{h,cpp}:
+        * tao/PI/ClientRequestInterceptorS.h:
+          Moved from TAO lib
+
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.{h,cpp,inl}:
+          Implemented ClientRequestInterceptor Adapter which calls the
+          interceptors
+        * tao/PI/ClientRequestInterceptor_Factory_Impl.{h,cpp}:
+          Implemented factory interface.
+
+        * tao/PI/Interceptor.pidl:
+        * tao/PI/InterceptorA.cpp:
+        * tao/PI/InterceptorC.{h,cpp}:
+        * tao/PI/InterceptorS.h:
+          Moved from TAO lib
+
+        * tao/PI/Interceptor_List_T.{h,cpp}:
+          Moved from TAO lib and updated interfaces to not expose any
+          internal knowledge
+
+        * tao/PI/PI.{h,cpp}:
+          Add some process directives
+
+        * tao/PI/diff/ORBInitializer.diff
+          New diff
+
+        * tao/PI_Server/PI_Server.{h,cpp}:
+          Add some process directives
+
+        * tao/PI_Server/PS_CurrentA.cpp
+        * tao/PI_Server/PS_CurrentC.{h,cpp}:
+          Regenerated
+
+        * tao/PI_Server/ServerInterceptorAdapter.{h,cpp}:
+          From portableserver library, adapter that invokes server
+          request interceptors
+
+        * tao/PI_Server/ServerRequestInterceptor.pidl
+        * tao/PI_Server/ServerRequestInterceptorA.cpp
+        * tao/PI_Server/ServerRequestInterceptorC.cpp
+        * tao/PI_Server/ServerRequestInterceptorC.h
+        * tao/PI_Server/ServerRequestInterceptorS.h
+          Moved from TAO lib
+
+        * tao/PI_Server/ServerRequestInterceptor_Factory_Impl.{h,cpp}:
+          New factory to create an instance of the adapter
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Be aware the Server Request Interceptor adapter is a pointer and
+          can be zero
+
+        * tao/PortableServer/ServerInterceptorAdapter.{h,cpp,inl}:
+          Removed, moved to the PI_Server lib
+
+        * tao/PortableServer/ServerRequestInfo.{h,inl}:
+          Export this classes, need it from the PI_Server lib
+
+        * tao/RTCORBA/RTCORBAA.cpp
+        * tao/RTCORBA/RTCORBAC.h
+          Regenerated
+
+        * tao/RTScheduling/RTScheduler.pidl
+        * tao/RTScheduling/RTSchedulerA.cpp
+        * tao/RTScheduling/RTSchedulerC.h
+        * tao/RTScheduling/Request_Interceptor.h
+          Updated for PI changes
+
+        * tests/Bug_1495_Regression/interceptors.cpp
+        * tests/Bug_1495_Regression/interceptors.h
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp
+        * tests/Portable_Interceptors/Benchmark/interceptors.h
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp
+        * tests/Portable_Interceptors/Dynamic/interceptors.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp
+        * tests/Portable_Interceptors/Bug_1559/interceptors.h
+          Removed these files, replaced by seperate client/server files below
+
+        * tests/Bug_1495_Regression/client_interceptor.cpp
+        * tests/Bug_1495_Regression/client_interceptor.h
+        * tests/Bug_1495_Regression/server_interceptor.cpp
+        * tests/Bug_1495_Regression/server_interceptor.h
+        * tests/Portable_Interceptors/Benchmark/client_interceptors.cpp
+        * tests/Portable_Interceptors/Benchmark/client_interceptors.h
+        * tests/Portable_Interceptors/Benchmark/server_interceptors.cpp
+        * tests/Portable_Interceptors/Benchmark/server_interceptors.h
+        * tests/Portable_Interceptors/Bug_1559/client_interceptor.cpp
+        * tests/Portable_Interceptors/Bug_1559/client_interceptor.h
+        * tests/Portable_Interceptors/Bug_1559/server_interceptor.cpp
+        * tests/Portable_Interceptors/Bug_1559/server_interceptor.h
+        * tests/Portable_Interceptors/Dynamic/client_interceptor.cpp
+        * tests/Portable_Interceptors/Dynamic/client_interceptor.h
+        * tests/Portable_Interceptors/Dynamic/server_interceptor.cpp
+        * tests/Portable_Interceptors/Dynamic/server_interceptor.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client_interceptor.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client_interceptor.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server_interceptor.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server_interceptor.h
+          New files
+
+        * tests/Bug_1495_Regression/Bug_1495.mpc
+        * tests/Bug_1495_Regression/Server_ORBInitializer.cpp
+        * tests/Bug_1495_Regression/Server_ORBInitializer.h
+        * tests/Bug_1495_Regression/Threaded_Server.cpp
+        * tests/Portable_Interceptors/AMI/Client_Interceptor.h
+        * tests/Portable_Interceptors/AMI/PI_AMI.mpc
+        * tests/Portable_Interceptors/AMI/Server_Interceptor.h
+        * tests/Portable_Interceptors/Benchmark/Client_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc
+        * tests/Portable_Interceptors/Benchmark/Server_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Benchmark/client.cpp
+        * tests/Portable_Interceptors/Benchmark/server.cpp
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_1559/client.cpp
+        * tests/Portable_Interceptors/Bug_1559/server.cpp
+        * tests/Portable_Interceptors/Bug_2088/Bug_2088.mpc
+        * tests/Portable_Interceptors/Collocated/Dynamic/PI_Dynamic.mpc
+        * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.h
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.h
+        * tests/Portable_Interceptors/Dynamic/Echo_Client_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Dynamic/Echo_Server_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc
+        * tests/Portable_Interceptors/Dynamic/client.cpp
+        * tests/Portable_Interceptors/Dynamic/server.cpp
+        * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h
+        * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/ForwardRequest/test.idl
+        * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc
+        * tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.h
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.h
+        * tests/Portable_Interceptors/PICurrent/PI_PICurrent.mpc
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
+        * tests/RTCORBA/Client_Propagated/interceptors.h
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc
+        * orbsvcs/orbsvcs/FTORB.mpc
+        * orbsvcs/orbsvcs/FaultTolerance.mpc
+        * orbsvcs/orbsvcs/FtRtEvent.mpc
+        * orbsvcs/orbsvcs/Security.mpc
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/test.idl
+          Update for PI change
+
 Fri Jul  1 000:27:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_exception.cpp:
@@ -9,7 +254,7 @@ Fri Jul  1 000:27:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
         * TAO_IDL/be/be_visitor_union/union_ch.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
-        
+
           Moved evaluation of the in_recursion_ member of structs unions
           and valuetypes to happen soon enough to make the generation of
           the file include of Recursive_Type_TypeCode.h conditional on

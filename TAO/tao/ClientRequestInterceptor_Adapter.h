@@ -27,6 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/CORBA_macros.h"
+#include "tao/SystemException.h"
 
 class TAO_ClientRequestInfo;
 
