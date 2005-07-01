@@ -23,6 +23,7 @@
 
 #include "orbsvcs/SSLIOPC.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -117,9 +118,9 @@ namespace TAO
        * assignment operator.
        */
       //@{
-      ACE_UNIMPLEMENTED_FUNC (Server_Invocation_Interceptor (const Server_Invocation_Interceptor &))
-        ACE_UNIMPLEMENTED_FUNC (void operator= (const Server_Invocation_Interceptor &))
-        //@}
+      Server_Invocation_Interceptor (const Server_Invocation_Interceptor &)'
+      void operator= (const Server_Invocation_Interceptor &);
+      //@}
 
         private:
 
