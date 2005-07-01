@@ -45,7 +45,8 @@ CORBA::StringValue::StringValue (CORBA::Char * val)
 
 ACE_INLINE 
 CORBA::StringValue::StringValue (const CORBA::StringValue& val)
-  : CORBA::ValueBase (val), CORBA::DefaultValueRefCountBase (val)
+  : ACE_NESTED_CLASS (CORBA, ValueBase) (val),
+    ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)
 {
   this->_pd_value = val._pd_value;
 }
@@ -180,7 +181,8 @@ CORBA::WStringValue::WStringValue (CORBA::WChar * val)
 
 ACE_INLINE 
 CORBA::WStringValue::WStringValue (const CORBA::WStringValue& val)
-  : CORBA::ValueBase (val), CORBA::DefaultValueRefCountBase (val)
+  : ACE_NESTED_CLASS (CORBA, ValueBase) (val),
+    ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)
 {
   this->_pd_value = val._pd_value;
 }
