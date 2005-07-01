@@ -2,7 +2,7 @@
 
 // =================================================================
 /**
- * @file PolicyFactory_Loader.cpp
+ * @file ServerRequestInterceptor_Factory_Impl.cpp
  *
  * $Id$
  *

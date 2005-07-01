@@ -3,7 +3,7 @@
 
 //=============================================================================
 /**
- *  @file    PolicyFactory_Loader.h
+ *  @file    ClientRequestInterceptor_Factory_Impl.h
  *
  *  $Id$
  *
