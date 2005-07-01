@@ -1,3 +1,15 @@
+Fri Jul  1 17:04:50 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        
+          When generating the base class name in the constructor of
+          a sequence, changed the call to be_sequence::gen_base_class_name
+          to pass the current scope (as is already done for the same call
+          in the stub header visitor) instead of the global scope. This
+          change fixes a problem with nested anonymous sequences, for
+          example, 'sequence<sequence<short> >, in the generated 
+          constructor initialization list.
+
 Fri Jul  1 11:33:12 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/be/be_helper.cpp:
