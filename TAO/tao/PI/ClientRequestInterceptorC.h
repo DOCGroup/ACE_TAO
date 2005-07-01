@@ -40,20 +40,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/PI/pi_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "tao/InterceptorC.h"
+#include "tao/PI/InterceptorC.h"
 #include "tao/PIForwardRequestC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_PI_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -122,7 +122,7 @@ namespace PortableInterceptor
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_
   
-  class TAO_Export ClientRequestInterceptor
+  class TAO_PI_Export ClientRequestInterceptor
     : public virtual ::PortableInterceptor::Interceptor
   {
   public:
@@ -238,7 +238,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ClientRequestInterceptor;
+  extern TAO_PI_Export ::CORBA::TypeCode_ptr const _tc_ClientRequestInterceptor;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -256,7 +256,7 @@ namespace TAO
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__TRAITS_CH_
   
   template<>
-  struct TAO_Export Objref_Traits< ::PortableInterceptor::ClientRequestInfo>
+  struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::ClientRequestInfo>
   {
     static ::PortableInterceptor::ClientRequestInfo_ptr duplicate (
         ::PortableInterceptor::ClientRequestInfo_ptr
@@ -277,7 +277,7 @@ namespace TAO
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__TRAITS_CH_
   
   template<>
-  struct TAO_Export Objref_Traits< ::PortableInterceptor::ClientRequestInterceptor>
+  struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::ClientRequestInterceptor>
   {
     static ::PortableInterceptor::ClientRequestInterceptor_ptr duplicate (
         ::PortableInterceptor::ClientRequestInterceptor_ptr
@@ -298,9 +298,9 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_ch.cpp:52
 
-TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr); // copying
-TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr *); // non-copying
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr &);
+TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr); // copying
+TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr *); // non-copying
+TAO_PI_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

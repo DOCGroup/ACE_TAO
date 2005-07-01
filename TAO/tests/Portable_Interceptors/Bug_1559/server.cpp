@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
-#include "interceptors.h"
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 

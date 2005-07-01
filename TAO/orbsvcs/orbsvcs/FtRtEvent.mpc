@@ -37,7 +37,7 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent_serv, naming, minimu
   }
 }
 
-project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
+project (FTRT_ClientORB) :  messaging, orbsvcslib, pi, core {
   sharedname   = TAO_FTRT_ClientORB
   dynamicflags = TAO_FTRT_BUILD_DLL
   tagchecks    = FTRT_ClientORB

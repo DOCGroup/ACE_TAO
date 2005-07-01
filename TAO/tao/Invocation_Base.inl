@@ -56,6 +56,13 @@ namespace TAO
     return this->target_;
   }
 
+#if TAO_HAS_INTERCEPTORS == 1
+  ACE_INLINE size_t &
+  Invocation_Base::stack_size  (void)
+  {
+    return stack_size_;
+  }
+#endif /*TAO_HAS_INTERCEPTORS*/
 
 
 }

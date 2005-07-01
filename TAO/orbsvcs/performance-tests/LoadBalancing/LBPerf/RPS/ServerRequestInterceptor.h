@@ -20,9 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-
 #include "ace/Atomic_Op.h"
 
 #if defined(_MSC_VER)

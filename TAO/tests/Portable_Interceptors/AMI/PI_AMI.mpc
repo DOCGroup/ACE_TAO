@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client) : messaging, taoserver, ami, interceptors {
+project(*Client) : messaging, taoserver, ami, pi, interceptors {
   exename = client
   source_files {
     client.cpp
@@ -11,7 +11,7 @@ project(*Client) : messaging, taoserver, ami, interceptors {
   }
 }
 
-project(*server) : messaging, taoserver, ami, interceptors {
+project(*server) : messaging, taoserver, pi_server, interceptors {
   exename = server
   source_files {
     server.cpp

@@ -74,3 +74,4 @@ TAO::ServerRequestInfo::server_request (void)
 {
   return this->server_request_;
 }
+

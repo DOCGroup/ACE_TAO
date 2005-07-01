@@ -5,6 +5,7 @@
 #ifndef INTERCEPTORS_H
 #define INTERCEPTORS_H
 
+#include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"

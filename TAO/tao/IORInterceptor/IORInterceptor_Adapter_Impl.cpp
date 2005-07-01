@@ -23,15 +23,9 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
     ACE_ENV_ARG_DECL
   )
 {
-  int retval =
-    this->ior_interceptor_list_.add_interceptor (i
-                                                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-  if (retval == -1)
-    {
-      ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
-    }
+  this->ior_interceptor_list_.add_interceptor (i
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -49,10 +43,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::IORInterceptor_List::TYPE & interceptors =
-    this->ior_interceptor_list_.interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
+  const size_t interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
     return;
@@ -78,8 +69,9 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
     {
       ACE_TRY
         {
-          interceptors[i]->establish_components (info.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
+          this->ior_interceptor_list_.interceptor (i)->establish_components (
+            info.in ()
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -91,8 +83,9 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
           // IORInterceptors.
           if (TAO_debug_level > 1)
             {
-              CORBA::String_var name = interceptors[i]->name (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
+              CORBA::String_var name =
+                this->ior_interceptor_list_.interceptor (i)->name (
+                  ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
               // @@ What do we do if we get an exception here?
 
@@ -133,10 +126,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  TAO::IORInterceptor_List::TYPE & interceptors =
-    this->ior_interceptor_list_.interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
+  const size_t interceptor_count = this->ior_interceptor_list_.size ();
 
   // All the establish_components() interception points have been
   // invoked. Now call the components_established() interception point
@@ -145,7 +135,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
     {
       ACE_TRY
         {
-          interceptors[j]->components_established (
+          this->ior_interceptor_list_.interceptor (j)->components_established (
             info
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -167,10 +157,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::IORInterceptor_List::TYPE interceptors =
-    this->ior_interceptor_list_.interceptors();
-
-  const size_t interceptor_count = interceptors.size ();
+  const size_t interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
     return;
@@ -191,9 +178,10 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      interceptors[i]->adapter_state_changed (seq_obj_ref_template,
-                                              state
-                                              ACE_ENV_ARG_PARAMETER);
+      this->ior_interceptor_list_.interceptor (i)->adapter_state_changed (
+        seq_obj_ref_template,
+        state
+        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -208,17 +196,14 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
   /// Whenever the POAManager state is changed, the
   /// adapter_manager_state_changed method is to be invoked on all the IOR
   ///  Interceptors.
-  TAO::IORInterceptor_List::TYPE & interceptors =
-    this->ior_interceptor_list_.interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
+  const size_t interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
     return;
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      interceptors[i]->adapter_manager_state_changed (
+      this->ior_interceptor_list_.interceptor(i)->adapter_manager_state_changed (
         id,
         state
         ACE_ENV_ARG_PARAMETER);

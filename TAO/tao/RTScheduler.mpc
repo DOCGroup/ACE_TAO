@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, rtcorba, portableserver, core, corba_messaging {
+project : taolib, rtcorba, pi, pi_server, portableserver, core, corba_messaging {
   sharedname   = TAO_RTScheduler
   dynamicflags = TAO_RTSCHEDULER_BUILD_DLL
 

@@ -4,7 +4,7 @@
 //
 
 #include "Client_ORBInitializer.h"
-#include "interceptors.h"
+#include "client_interceptor.h"
 
 ACE_RCSID (Service_Context_Manipulation, Client_ORBInitializer, "$Id$")
 

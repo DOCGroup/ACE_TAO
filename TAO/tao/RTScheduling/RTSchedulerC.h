@@ -53,6 +53,7 @@
 #include "tao/RTCORBA/RTCORBA_includeC.h"
 #include "tao/PortableServer/PortableServer_includeC.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/PIForwardRequestC.h"
 
 #ifndef TAO_RTSCHEDULER_SAFE_INCLUDE
 #error "You should not include RTSchedulerC.h directly, use RTScheduler.h"
@@ -393,7 +394,7 @@ namespace RTScheduling
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:51
+    // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_RTSCHEDULING_CURRENT_UNSUPPORTED_SCHEDULING_DISCIPLINE_CH_)
 #define _RTSCHEDULING_CURRENT_UNSUPPORTED_SCHEDULING_DISCIPLINE_CH_
@@ -428,7 +429,7 @@ namespace RTScheduling
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:127
+      // be\be_visitor_exception/exception_ch.cpp:129
       
       virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
@@ -817,7 +818,7 @@ namespace RTScheduling
     
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:51
+    // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_RTSCHEDULING_SCHEDULER_INCOMPATIBLE_SCHEDULING_DISCIPLINES_CH_)
 #define _RTSCHEDULING_SCHEDULER_INCOMPATIBLE_SCHEDULING_DISCIPLINES_CH_
@@ -852,7 +853,7 @@ namespace RTScheduling
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:127
+      // be\be_visitor_exception/exception_ch.cpp:129
       
       virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };

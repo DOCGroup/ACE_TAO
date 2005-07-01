@@ -24,6 +24,7 @@
 
 #include "testC.h"
 #include "tao/LocalObject.h"
+#include "tao/PortableInterceptorC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

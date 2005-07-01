@@ -37,7 +37,7 @@
 #include "tao/TypeCode_Struct_Field.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -55,7 +55,7 @@ namespace RTScheduling
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/enum_typecode.cpp:34
+// be\be_visitor_typecode/enum_typecode.cpp:34
 
 static char const * const _tao_enumerators_RTScheduling_DistributableThread_DT_State[] =
   {
@@ -77,7 +77,7 @@ static TAO::TypeCode::Enum<char const *,
   &_tao_tc_RTScheduling_DistributableThread_DT_State;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -95,14 +95,13 @@ namespace RTScheduling
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:74
+// be\be_visitor_typecode/struct_typecode.cpp:87
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE = 0;
 static TAO::TypeCode::Struct<char const *,
-                             CORBA::TypeCode_ptr const *,
-                             TAO::TypeCode::Struct_Field<char const *,
-                                                         CORBA::TypeCode_ptr const *> const *,
-                             TAO::Null_RefCount_Policy>
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
   _tao_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE (
     CORBA::tk_except,
     "IDL:RTScheduling/Current/UNSUPPORTED_SCHEDULING_DISCIPLINE:1.0",
@@ -114,12 +113,12 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:50
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:925
+// be\be_visitor_typecode/typecode_defn.cpp:937
 
 
 #ifndef _TAO_TYPECODE_RTScheduling_Current_IdType_GUARD
@@ -143,6 +142,7 @@ namespace TAO
 
 
 #endif /* _TAO_TYPECODE_RTScheduling_Current_IdType_GUARD */
+
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
@@ -156,12 +156,12 @@ static TAO::TypeCode::Alias<char const *,
   &_tao_tc_RTScheduling_Current_IdType;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:50
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:925
+// be\be_visitor_typecode/typecode_defn.cpp:937
 
 
 #ifndef _TAO_TYPECODE_RTScheduling_Current_NameList_GUARD
@@ -185,6 +185,7 @@ namespace TAO
 
 
 #endif /* _TAO_TYPECODE_RTScheduling_Current_NameList_GUARD */
+
 static TAO::TypeCode::Alias<char const *,
                             CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
@@ -198,7 +199,7 @@ static TAO::TypeCode::Alias<char const *,
   &_tao_tc_RTScheduling_Current_NameList;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -216,7 +217,7 @@ namespace RTScheduling
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -234,14 +235,13 @@ namespace RTScheduling
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:74
+// be\be_visitor_typecode/struct_typecode.cpp:87
 
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES = 0;
 static TAO::TypeCode::Struct<char const *,
-                             CORBA::TypeCode_ptr const *,
-                             TAO::TypeCode::Struct_Field<char const *,
-                                                         CORBA::TypeCode_ptr const *> const *,
-                             TAO::Null_RefCount_Policy>
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
   _tao_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES (
     CORBA::tk_except,
     "IDL:RTScheduling/Scheduler/INCOMPATIBLE_SCHEDULING_DISCIPLINES:1.0",
@@ -253,7 +253,7 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>

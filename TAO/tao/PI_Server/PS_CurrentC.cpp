@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "PI_Server.h"
+#include "PS_CurrentC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -82,7 +82,7 @@ TAO::Objref_Traits<PortableServer::Current>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::Current::NoContext::NoContext (void)
@@ -183,7 +183,7 @@ PortableServer::Current::Current (void)
 PortableServer::Current::~Current (void)
 {}
 
-void
+void 
 PortableServer::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -197,15 +197,9 @@ PortableServer::Current::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-  
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-  
-  return Current::_duplicate (proxy);
+  return Current::_duplicate (
+      dynamic_cast<Current_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::Current_ptr
@@ -214,15 +208,9 @@ PortableServer::Current::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return Current::_nil ();
-    }
-  
-  Current_ptr proxy =
-    dynamic_cast<Current_ptr> (_tao_objref);
-  
-  return Current::_duplicate (proxy);
+  return Current::_duplicate (
+      dynamic_cast<Current_ptr> (_tao_objref)
+    );
 }
 
 PortableServer::Current_ptr

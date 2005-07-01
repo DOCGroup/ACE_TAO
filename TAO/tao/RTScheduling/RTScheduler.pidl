@@ -29,7 +29,7 @@
 #include "tao/RTCORBA/RTCORBA_include.pidl"
 #include "tao/PortableServer/PortableServer_include.pidl"
 #include "tao/PortableInterceptor.pidl"
-
+#include "tao/PIForwardRequest.pidl"
 
 module CORBA
 {

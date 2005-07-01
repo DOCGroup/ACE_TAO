@@ -5,9 +5,9 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_Guard.h"
-
-# include "tao/PortableServer/ServerRequestInfo.h"
-# include "tao/PortableServer/ServerInterceptorAdapter.h"
+# include "ORB_Core.h"
+# include "ServerRequestInfo.h"
+# include "ServerRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "tao/PortableInterceptor.h"
@@ -55,7 +55,8 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                        exceptions,
                                        nexceptions);
 
-  TAO::ServerRequestInterceptor_Adapter interceptor_adapter (server_request);
+  TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
+    server_request.orb_core ()->serverrequestinterceptor_adapter ();
 
   ACE_TRY
     {
@@ -63,14 +64,19 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
         TAO::PICurrent_Guard pi_guard (server_request,
                                        true  /* Copy TSC to RSC */);
 
-        // Invoke intermediate server side interception points.
-        interceptor_adapter.receive_request (&request_info
-                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        if (interceptor_adapter != 0)
+          {
+            // Invoke intermediate server side interception points.
+            interceptor_adapter->receive_request (server_request,
+                                                  &request_info
+                                                  ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
 
         // Don't bother performing the upcall if an interceptor caused a
         // location forward.
-        if (!interceptor_adapter.location_forwarded ())
+        CORBA::Object_var forward_to = server_request.forward_location ();
+        if (CORBA::is_nil (forward_to.in ()))
           {
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -82,36 +88,56 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           }
       }
 
-      // Do not execute the send_reply() interception point if an
-      // interceptor caused a location forward.  The send_other()
-      // interception point should already have been executed by the
-      // ServerRequestInterceptor_Adapter object.
-      //
-      // It should actually be safe to call this interception point,
-      // regardless, since the interceptor flow stack should have been
-      // emptied by the send_other() interception point.  Note that
-      // we'd still need to avoid resetting the reply status to
-      // SUCCESSFUL, however.
-      if (!interceptor_adapter.location_forwarded ())
+      if (interceptor_adapter == 0)
         {
-          // No location forward by interceptors and successful upcall.
-
           request_info.reply_status (PortableInterceptor::SUCCESSFUL);
-          interceptor_adapter.send_reply (&request_info
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        }
+      else
+        {
+          // Do not execute the send_reply() interception point if an
+          // interceptor caused a location forward.  The send_other()
+          // interception point should already have been executed by the
+          // ServerRequestInterceptor_Adapter object.
+          //
+          // It should actually be safe to call this interception point,
+          // regardless, since the interceptor flow stack should have been
+          // emptied by the send_other() interception point.  Note that
+          // we'd still need to avoid resetting the reply status to
+          // SUCCESSFUL, however.
+          CORBA::Object_var forward_to_after = server_request.forward_location ();
+          if (CORBA::is_nil (forward_to_after.in ()))
+            {
+              // No location forward by interceptors and successful upcall.
+              request_info.reply_status (PortableInterceptor::SUCCESSFUL);
+              interceptor_adapter->send_reply (server_request,
+                                               &request_info
+                                               ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
     }
   ACE_CATCHANY
     {
-      request_info.exception (&ACE_ANY_EXCEPTION);
-      interceptor_adapter.send_exception (&request_info
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      // Just assume the current exception is a system exception, the
+      // status can only change when the interceptor changes this
+      // and this is only done when the sri_adapter is available. If we
+      // don't have an sri_adapter we just rethrow the exception
       PortableInterceptor::ReplyStatus status =
-        request_info.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableInterceptor::SYSTEM_EXCEPTION;
+
+      request_info.exception (&ACE_ANY_EXCEPTION);
+
+      if (interceptor_adapter != 0)
+        {
+          interceptor_adapter->send_exception (server_request,
+                                               &request_info
+                                               ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          status =
+            request_info.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       if (status == PortableInterceptor::SYSTEM_EXCEPTION
           || status == PortableInterceptor::USER_EXCEPTION)
@@ -126,9 +152,13 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
       CORBA::UNKNOWN ex;
 
       request_info.exception (&ex);
-      interceptor_adapter.send_exception (&request_info
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (interceptor_adapter != 0)
+        {
+          interceptor_adapter->send_exception (server_request,
+                                               &request_info
+                                               ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       PortableInterceptor::ReplyStatus status =
         request_info.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -151,7 +181,8 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #if TAO_HAS_INTERCEPTORS == 1
   // Don't bother marshaling inout/out/return values if an interceptor
   // caused a location forward.
-  if (!interceptor_adapter.location_forwarded ())
+ CORBA::Object_var forward_to_end = server_request.forward_location ();
+  if (CORBA::is_nil (forward_to_end.in ()))
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     {
       if (server_request.outgoing ())

@@ -65,7 +65,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
         {
           ACE_ERROR ((
             LM_ERROR,
-            "TAO (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply "
+            "TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply "
             "clone_from failed \n"));
         }
       return -1;

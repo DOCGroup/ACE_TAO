@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 
 #include "testC.h"
-#include "interceptors.h"
 #include "Echo_Client_ORBInitializer.h"
 
 #include "tao/ORBInitializer_Registry.h"
@@ -102,7 +101,7 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-#if TAO_HAS_INTERCEPTORS == 1    
+#if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 

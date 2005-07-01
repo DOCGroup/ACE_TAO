@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Security) : orbsvcslib, corba_messaging, core, portableserver, interceptors, valuetype {
+project(Security) : orbsvcslib, corba_messaging, core, portableserver, pi, interceptors, valuetype {
   sharedname   = TAO_Security
   idlflags    += -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h
   dynamicflags = TAO_SECURITY_BUILD_DLL
@@ -34,7 +34,7 @@ project(Security) : orbsvcslib, corba_messaging, core, portableserver, intercept
   }
 
   Header_Files {
-    Security/security_export.h   
+    Security/security_export.h
   }
 
   Template_Files {

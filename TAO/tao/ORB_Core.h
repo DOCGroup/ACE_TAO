@@ -40,20 +40,11 @@
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/PICurrent.h"
-#include "tao/ClientRequestInterceptorC.h"
-#include "tao/ServerRequestInterceptorC.h"
-#include "tao/Interceptor_List.h"
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
-    ClientRequestInterceptor_List;
-}
-
-namespace TAO
-{
-  typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor>
-    ServerRequestInterceptor_List;
+  class ClientRequestInterceptor_Adapter;
+  class ServerRequestInterceptor_Adapter;
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
@@ -140,6 +131,16 @@ namespace PortableInterceptor
 {
   class IORInterceptor;
   typedef IORInterceptor *IORInterceptor_ptr;
+
+#if TAO_HAS_INTERCEPTORS == 1
+
+  class ClientRequestInterceptor;
+  typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
+
+  class ServerRequestInterceptor;
+  typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1  */
 }
 
 // ****************************************************************
@@ -847,23 +848,13 @@ public:
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
-  /// Return the array of client-side interceptors specific to this
-  /// ORB.
-  /**
-   * @todo This method has to be removed when the RTCosScheduling doesn't
-   * use it anymore.
-   */
-  TAO::ClientRequestInterceptor_List::TYPE &
-    client_request_interceptors (void);
+  /// Get the Client Request Interceptor adapter.
+  /// Will not create a new one if not available yet.
+  TAO::ClientRequestInterceptor_Adapter *clientrequestinterceptor_adapter (void);
 
-  /// Return the array of server-side interceptors specific to this
-  /// ORB.
-  /**
-   * @todo This method has to be removed when the RTCosScheduling doesn't
-   * use it anymore.
-   */
-  TAO::ServerRequestInterceptor_List::TYPE &
-    server_request_interceptors (void);
+  /// Get the Server Request Interceptor adapter.
+  /// Will not create a new one if not available yet.
+  TAO::ServerRequestInterceptor_Adapter *serverrequestinterceptor_adapter (void);
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -965,6 +956,15 @@ protected:
 #if TAO_HAS_INTERCEPTORS == 1
   /// Obtain and cache the picurrent factory object reference.
   void resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Get the Client Request Interceptor adapter.
+  /// If not created, this method will try to create one if needed.
+  TAO::ClientRequestInterceptor_Adapter *clientrequestinterceptor_adapter_i (void);
+
+  /// Get the Server Request Interceptor adapter.
+  /// If not created, this method will try to create one if needed.
+  TAO::ServerRequestInterceptor_Adapter *serverrequestinterceptor_adapter_i (void);
+
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// Obtain and cache the codec factory object reference.
@@ -1008,15 +1008,15 @@ private:
 
   /// The ORB Core should not be copied.
   //@{
-  ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
-  ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_ORB_Core&))
+  TAO_ORB_Core(const TAO_ORB_Core&);
+  void operator=(const TAO_ORB_Core&);
   //@}
 
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Checks to see whether collocation optimizations have to be
-  /// applied on objects in the <other_orb>
+  /// applied on objects in the @a other_orb
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
                                          const TAO_MProfile &mp);
 
@@ -1223,11 +1223,12 @@ protected:
    */
   TAO::PICurrent *pi_current_;
 
-  /// Client request interceptor registry.
-  TAO::ClientRequestInterceptor_List client_request_interceptors_;
+  /// The adapter for handling client request interceptors
+  TAO::ClientRequestInterceptor_Adapter *client_request_interceptor_adapter_;
 
-  /// Server request interceptor registry.
-  TAO::ServerRequestInterceptor_List server_request_interceptors_;
+  /// The adapter for handling server request interceptors
+  TAO::ServerRequestInterceptor_Adapter *server_request_interceptor_adapter_;
+
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// IORInterceptor adapter.

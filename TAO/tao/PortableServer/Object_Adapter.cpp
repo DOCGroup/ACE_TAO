@@ -10,7 +10,6 @@
 #include "POA_Guard.h"
 #include "ServerRequestInfo.h"
 #include "Default_Servant_Dispatcher.h"
-#include "ServerInterceptorAdapter.h"
 #include "Collocated_Object_Proxy_Broker.h"
 #include "POAManager.h"
 #include "Servant_Base.h"
@@ -32,6 +31,7 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/ServerRequestInterceptor_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
@@ -732,7 +732,8 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
   int result = 0;
 
 #if TAO_HAS_INTERCEPTORS == 1
-  TAO::ServerRequestInterceptor_Adapter sri_adapter (request);
+  TAO::ServerRequestInterceptor_Adapter *sri_adapter =
+    orb_core_.serverrequestinterceptor_adapter ();
 
   TAO::ServerRequestInfo ri (request,
                              0,  // args
@@ -743,39 +744,52 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
   ACE_TRY
     {
+      if (sri_adapter != 0)
+        {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-      CORBA::OctetSeq_var ocs;
-      sri_adapter.tao_ft_interception_point (&ri,
-                                             ocs.out ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      /// If we have a cached result, just go ahead and send the reply
-      /// and let us  return
-      if (ocs.ptr () != 0)
-        {
-          // request.result_seq (
-          request.send_cached_reply (ocs.inout ());
-
-          return TAO_Adapter::DS_OK;
-        }
-#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
-
-      // The receive_request_service_contexts() interception point
-      // must be invoked before the operation is dispatched to the
-      // servant.
-      sri_adapter.receive_request_service_contexts (&ri ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // If a PortableInterceptor::ForwardRequest exception was
-      // thrown, then set the forward_to object reference and return
-      // with the appropriate return status.
-      if (sri_adapter.location_forwarded ())
-        {
-          forward_to = ri.forward_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
+          CORBA::OctetSeq_var ocs;
+          sri_adapter.tao_ft_interception_point (request,
+                                                 &ri,
+                                                 ocs.out ()
+                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          return TAO_Adapter::DS_FORWARD;
+          /// If we have a cached result, just go ahead and send the reply
+          /// and let us  return
+          if (ocs.ptr () != 0)
+            {
+              // request.result_seq (
+              request.send_cached_reply (ocs.inout ());
+
+              return TAO_Adapter::DS_OK;
+            }
+
+          // If a PortableInterceptor::ForwardRequest exception was
+          // thrown, then set the forward_to object reference and return
+          // with the appropriate return status.
+          forward_to.ptr () = request.forward_location ();
+          if (!CORBA::is_nil (request.forward_location ()))
+            {
+              return TAO_Adapter::DS_FORWARD;
+            }
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+
+          // The receive_request_service_contexts() interception point
+          // must be invoked before the operation is dispatched to the
+          // servant.
+          sri_adapter->receive_request_service_contexts (request,
+                                                         &ri
+                                                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // If a PortableInterceptor::ForwardRequest exception was
+          // thrown, then set the forward_to object reference and return
+          // with the appropriate return status.
+          forward_to.ptr () = request.forward_location ();
+          if (!CORBA::is_nil (request.forward_location ()))
+            {
+              return TAO_Adapter::DS_FORWARD;
+            }
         }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -790,22 +804,37 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
       if (result == TAO_Adapter::DS_FORWARD)
         {
           ri.forward_reference (forward_to.ptr ());
-          sri_adapter.send_other (&ri
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (sri_adapter != 0)
+            {
+              sri_adapter->send_other (request,
+                                       &ri
+                                       ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
     }
   ACE_CATCHANY
     {
-      ri.exception (&ACE_ANY_EXCEPTION);
-
-      sri_adapter.send_exception (&ri
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      // Just assume the current exception is a system exception, the
+      // status can only change when the interceptor changes this
+      // and this is only done when the sri_adapter is available. If we
+      // don't have an sri_adapter we just rethrow the exception
       PortableInterceptor::ReplyStatus status =
-        ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableInterceptor::SYSTEM_EXCEPTION;
+
+      if (sri_adapter != 0)
+        {
+          ri.exception (&ACE_ANY_EXCEPTION);
+
+          sri_adapter->send_exception (request,
+                                       &ri
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          status =
+            ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       // Only re-throw the exception if it hasn't been transformed by
       // the send_exception() interception point (e.g. to a

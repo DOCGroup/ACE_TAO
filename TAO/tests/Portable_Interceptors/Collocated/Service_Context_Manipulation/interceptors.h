@@ -3,6 +3,8 @@
 #ifndef SERVICE_CONTEXT_MANIPULATION_COLLOCATED_INTERCEPTORS_H
 #define SERVICE_CONTEXT_MANIPULATION_COLLOCATED_INTERCEPTORS_H
 
+#include "tao/PI/PI.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"

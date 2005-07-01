@@ -55,6 +55,8 @@ TAO_Requires_PI_Initializer =
 #include "ORBInitializerC.h"
 #include "PolicyFactoryC.h"
 #include "ORBInitInfoC.h"
+#include "InterceptorC.h"
+#include "ClientRequestInterceptorC.h"
 #undef TAO_PI_SAFE_INCLUDE
 
 #endif  /* TAO_PI_H */
