@@ -1,3 +1,21 @@
+Fri Jul  1 15:02:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Callback/Callback.mpc:
+        * performance-tests/Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/AMI/AMI.mpc:
+        * performance-tests/Latency/Collocation/Collocation.mpc:
+        * performance-tests/Latency/DII/DII.mpc:
+        * performance-tests/Latency/DSI/DSI.mpc:
+        * performance-tests/Latency/Deferred/Deferred.mpc:
+        * performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
+        * performance-tests/Latency/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Memory/IORsize/Memory_IORsize.mpc:
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+        * performance-tests/POA/Create_Reference/Create_Reference.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+          Use better base projects to simplify things
+
 Fri Jul  1 14:51:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
