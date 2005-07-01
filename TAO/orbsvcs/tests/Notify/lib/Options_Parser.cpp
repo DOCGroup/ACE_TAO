@@ -6,8 +6,9 @@ ACE_RCSID (lib,
            TAO_Options_Parser,
            "$Id$")
 
-#include "tao/debug.h"
 #include "orbsvcs/NotifyExtC.h"
+#include "tao/debug.h"
+#include "ace/Log_Msg.h"
 
 TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser (void)
 {
