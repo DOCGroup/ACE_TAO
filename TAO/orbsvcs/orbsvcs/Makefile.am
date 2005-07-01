@@ -598,10 +598,10 @@ libTAO_CosEvent_la_CPPFLAGS = \
   -DTAO_EVENT_BUILD_DLL
 
 libTAO_CosEvent_la_SOURCES = \
-  CosTypedEventCommC.cpp \
-  CosTypedEventChannelAdminC.cpp \
+  CosEventChannelAdminC.cpp \
   CosEventCommC.cpp \
-  CosEventChannelAdminC.cpp
+  CosTypedEventChannelAdminC.cpp \
+  CosTypedEventCommC.cpp
 
 libTAO_CosEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -709,13 +709,13 @@ libTAO_Svc_Utils_la_CPPFLAGS = \
   -DTAO_SVC_UTILS_BUILD_DLL
 
 libTAO_Svc_Utils_la_SOURCES = \
-  TimeBaseC.cpp \
-  TimeBaseS.cpp \
+  IOR_Multicast.cpp \
   RtecBaseC.cpp \
   RtecBaseS.cpp \
   Shutdown_Utilities.cpp \
-  Time_Utilities.cpp \
-  IOR_Multicast.cpp
+  TimeBaseC.cpp \
+  TimeBaseS.cpp \
+  Time_Utilities.cpp
 
 libTAO_Svc_Utils_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -775,10 +775,10 @@ libTAO_CosEvent_Skel_la_CPPFLAGS = \
   -DTAO_EVENT_SKEL_BUILD_DLL
 
 libTAO_CosEvent_Skel_la_SOURCES = \
-  CosTypedEventCommS.cpp \
-  CosTypedEventChannelAdminS.cpp \
+  CosEventChannelAdminS.cpp \
   CosEventCommS.cpp \
-  CosEventChannelAdminS.cpp
+  CosTypedEventChannelAdminS.cpp \
+  CosTypedEventCommS.cpp
 
 libTAO_CosEvent_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1427,6 +1427,7 @@ libTAO_CosLoadBalancing_la_LDFLAGS = \
 libTAO_CosLoadBalancing_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
@@ -1830,12 +1831,12 @@ libTAO_CosNotification_la_CPPFLAGS = \
 
 libTAO_CosNotification_la_SOURCES = \
   CosNotificationC.cpp \
+  CosNotifyChannelAdminC.cpp \
   CosNotifyCommC.cpp \
   CosNotifyFilterC.cpp \
-  CosNotifyChannelAdminC.cpp \
-  NotifyExtC.cpp \
   Event_ForwarderC.cpp \
-  Notify/Notify_Extensions.cpp
+  Notify/Notify_Extensions.cpp \
+  NotifyExtC.cpp
 
 libTAO_CosNotification_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1941,11 +1942,11 @@ libTAO_CosNotification_Skel_la_CPPFLAGS = \
 
 libTAO_CosNotification_Skel_la_SOURCES = \
   CosNotificationS.cpp \
+  CosNotifyChannelAdminS.cpp \
   CosNotifyCommS.cpp \
   CosNotifyFilterS.cpp \
-  CosNotifyChannelAdminS.cpp \
-  NotifyExtS.cpp \
-  Event_ForwarderS.cpp
+  Event_ForwarderS.cpp \
+  NotifyExtS.cpp
 
 libTAO_CosNotification_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2503,8 +2504,8 @@ libTAO_CosTrading_la_CPPFLAGS = \
 
 libTAO_CosTrading_la_SOURCES = \
   CosTradingC.cpp \
-  CosTradingReposC.cpp \
-  CosTradingDynamicC.cpp
+  CosTradingDynamicC.cpp \
+  CosTradingReposC.cpp
 
 libTAO_CosTrading_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2550,9 +2551,9 @@ libTAO_CosTrading_Skel_la_CPPFLAGS = \
   -DTAO_TRADING_SKEL_BUILD_DLL
 
 libTAO_CosTrading_Skel_la_SOURCES = \
-  CosTradingS.cpp \
+  CosTradingDynamicS.cpp \
   CosTradingReposS.cpp \
-  CosTradingDynamicS.cpp
+  CosTradingS.cpp
 
 libTAO_CosTrading_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -3561,8 +3562,8 @@ libTAO_RTEvent_la_CPPFLAGS = \
 libTAO_RTEvent_la_SOURCES = \
   Event_Utilities.cpp \
   RtecDefaultEventDataC.cpp \
-  RtecEventCommC.cpp \
   RtecEventChannelAdminC.cpp \
+  RtecEventCommC.cpp \
   RtecUDPAdminC.cpp
 
 libTAO_RTEvent_la_LDFLAGS = \
@@ -3611,8 +3612,8 @@ libTAO_RTEvent_Skel_la_CPPFLAGS = \
 
 libTAO_RTEvent_Skel_la_SOURCES = \
   RtecDefaultEventDataS.cpp \
-  RtecEventCommS.cpp \
   RtecEventChannelAdminS.cpp \
+  RtecEventCommS.cpp \
   RtecUDPAdminS.cpp
 
 libTAO_RTEvent_Skel_la_LDFLAGS = \
@@ -3666,17 +3667,17 @@ libTAO_RTEvent_Serv_la_SOURCES = \
   Event/ECG_CDR_Message_Receiver.cpp \
   Event/ECG_CDR_Message_Sender.cpp \
   Event/ECG_Complex_Address_Server.cpp \
+  Event/ECG_ConsumerEC_Control.cpp \
   Event/ECG_Mcast_EH.cpp \
   Event/ECG_Mcast_Gateway.cpp \
+  Event/ECG_Reactive_ConsumerEC_Control.cpp \
+  Event/ECG_Reconnect_ConsumerEC_Control.cpp \
   Event/ECG_Simple_Address_Server.cpp \
   Event/ECG_Simple_Mcast_EH.cpp \
   Event/ECG_UDP_EH.cpp \
   Event/ECG_UDP_Out_Endpoint.cpp \
   Event/ECG_UDP_Receiver.cpp \
   Event/ECG_UDP_Sender.cpp \
-  Event/ECG_ConsumerEC_Control.cpp \
-  Event/ECG_Reactive_ConsumerEC_Control.cpp \
-  Event/ECG_Reconnect_ConsumerEC_Control.cpp \
   Event/EC_And_Filter.cpp \
   Event/EC_Basic_Factory.cpp \
   Event/EC_Basic_Filter_Builder.cpp \
@@ -3701,8 +3702,8 @@ libTAO_RTEvent_Serv_la_SOURCES = \
   Event/EC_Gateway_IIOP_Factory.cpp \
   Event/EC_Group_Scheduling.cpp \
   Event/EC_Lifetime_Utils.cpp \
-  Event/EC_Masked_Type_Filter.cpp \
   Event/EC_MT_Dispatching.cpp \
+  Event/EC_Masked_Type_Filter.cpp \
   Event/EC_Negation_Filter.cpp \
   Event/EC_Null_Factory.cpp \
   Event/EC_Null_Scheduling.cpp \
@@ -4304,6 +4305,7 @@ libTAO_FT_ServerORB_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FT_ServerORB_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -4519,14 +4521,15 @@ libTAO_FaultTolerance_la_LIBADD = \
   libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   libTAO_CosNotification.la \
   libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5628,12 +5631,13 @@ libTAO_SSLIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_SSLIOP_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
   libTAO_Security.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
   -lssl \

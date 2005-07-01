@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
 includedir = @includedir@/tao
 pkgconfigdir = @libdir@/pkgconfig
@@ -70,8 +70,6 @@ libTAO_la_SOURCES = \
   ClientRequestInfo.cpp \
   ClientRequestInfoA.cpp \
   ClientRequestInfoC.cpp \
-  ClientRequestInterceptorA.cpp \
-  ClientRequestInterceptorC.cpp \
   ClientRequestInterceptor_Adapter.cpp \
   Client_Strategy_Factory.cpp \
   Codeset_Manager.cpp \
@@ -147,8 +145,6 @@ libTAO_la_SOURCES = \
   IORInterceptor_Adapter_Factory.cpp \
   IOR_Parser.cpp \
   Incoming_Message_Queue.cpp \
-  InterceptorA.cpp \
-  InterceptorC.cpp \
   InvalidSlotA.cpp \
   InvalidSlotC.cpp \
   Invocation_Adapter.cpp \
@@ -253,8 +249,7 @@ libTAO_la_SOURCES = \
   Sequence_TypeCode_Static.cpp \
   ServerRequestInfoA.cpp \
   ServerRequestInfoC.cpp \
-  ServerRequestInterceptorA.cpp \
-  ServerRequestInterceptorC.cpp \
+  ServerRequestInterceptor_Adapter.cpp \
   Server_Strategy_Factory.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
@@ -442,15 +437,10 @@ nobase_include_HEADERS = \
   Cleanup_Func_Registry.h \
   Cleanup_Func_Registry.inl \
   ClientRequestInfo.h \
-  ClientRequestInfo.inl \
   ClientRequestInfo.pidl \
   ClientRequestInfoC.h \
   ClientRequestInfoS.h \
-  ClientRequestInterceptor.pidl \
-  ClientRequestInterceptorC.h \
-  ClientRequestInterceptorS.h \
   ClientRequestInterceptor_Adapter.h \
-  ClientRequestInterceptor_Adapter.inl \
   Client_Strategy_Factory.h \
   Codeset_Manager.h \
   Codeset_Translator_Factory.h \
@@ -574,9 +564,6 @@ nobase_include_HEADERS = \
   IOR_Parser.h \
   Incoming_Message_Queue.h \
   Incoming_Message_Queue.inl \
-  Interceptor.pidl \
-  InterceptorC.h \
-  InterceptorS.h \
   Interceptor_List.cpp \
   Interceptor_List.h \
   InterfaceDef.pidl \
@@ -777,9 +764,7 @@ nobase_include_HEADERS = \
   ServerRequestInfo.pidl \
   ServerRequestInfoC.h \
   ServerRequestInfoS.h \
-  ServerRequestInterceptor.pidl \
-  ServerRequestInterceptorC.h \
-  ServerRequestInterceptorS.h \
+  ServerRequestInterceptor_Adapter.h \
   Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \
@@ -960,7 +945,11 @@ nobase_include_HEADERS = \
   target_specification.i \
   varbase.h
 
-pkgconfig_DATA = TAO.pc
+pkgconfig_DATA = \
+  TAO.pc
+
+CLEANFILES = \
+  TAO.pc
 
 TAO.pc: ${top_builddir}/config.status ${srcdir}/TAO.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/TAO.pc.in
@@ -1007,7 +996,11 @@ nobase_include_HEADERS += \
   CodecFactory/IOP_Codec_includeS.h \
   CodecFactory/codecfactory_export.h
 
-pkgconfig_DATA += TAO_CodecFactory.pc
+pkgconfig_DATA += \
+  TAO_CodecFactory.pc
+
+CLEANFILES += \
+  TAO_CodecFactory.pc
 
 TAO_CodecFactory.pc: ${top_builddir}/config.status ${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
@@ -1029,6 +1022,12 @@ libTAO_PI_la_CPPFLAGS = \
   -DTAO_PI_BUILD_DLL
 
 libTAO_PI_la_SOURCES = \
+  PI/ClientRequestInterceptorA.cpp \
+  PI/ClientRequestInterceptorC.cpp \
+  PI/ClientRequestInterceptor_Adapter_Impl.cpp \
+  PI/ClientRequestInterceptor_Factory_Impl.cpp \
+  PI/InterceptorA.cpp \
+  PI/InterceptorC.cpp \
   PI/ORBInitInfo.cpp \
   PI/ORBInitInfoA.cpp \
   PI/ORBInitInfoC.cpp \
@@ -1050,6 +1049,17 @@ libTAO_PI_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  PI/ClientRequestInterceptor.pidl \
+  PI/ClientRequestInterceptorC.h \
+  PI/ClientRequestInterceptorS.h \
+  PI/ClientRequestInterceptor_Adapter_Impl.h \
+  PI/ClientRequestInterceptor_Adapter_Impl.inl \
+  PI/ClientRequestInterceptor_Factory_Impl.h \
+  PI/Interceptor.pidl \
+  PI/InterceptorC.h \
+  PI/InterceptorS.h \
+  PI/Interceptor_List_T.cpp \
+  PI/Interceptor_List_T.h \
   PI/ORBInitInfo.h \
   PI/ORBInitInfo.inl \
   PI/ORBInitInfo.pidl \
@@ -1067,7 +1077,11 @@ nobase_include_HEADERS += \
   PI/PolicyFactory_Registry.h \
   PI/pi_export.h
 
-pkgconfig_DATA += TAO_PI.pc
+pkgconfig_DATA += \
+  TAO_PI.pc
+
+CLEANFILES += \
+  TAO_PI.pc
 
 TAO_PI.pc: ${top_builddir}/config.status ${srcdir}/PI/TAO_PI.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/PI/TAO_PI.pc.in
@@ -1114,7 +1128,11 @@ nobase_include_HEADERS += \
   BiDir_GIOP/BiDir_Policy_i.h \
   BiDir_GIOP/bidirgiop_export.h
 
-pkgconfig_DATA += TAO_BiDirGIOP.pc
+pkgconfig_DATA += \
+  TAO_BiDirGIOP.pc
+
+CLEANFILES += \
+  TAO_BiDirGIOP.pc
 
 TAO_BiDirGIOP.pc: ${top_builddir}/config.status ${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
@@ -1243,7 +1261,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Servant_Base.cpp \
   PortableServer/Servant_Dispatcher.cpp \
   PortableServer/Servant_Upcall.cpp \
-  PortableServer/ServerInterceptorAdapter.cpp \
   PortableServer/ServerRequestInfo.cpp \
   PortableServer/Special_Basic_SArguments.cpp \
   PortableServer/StrategyFactory.cpp \
@@ -1422,8 +1439,6 @@ nobase_include_HEADERS += \
   PortableServer/Servant_Location.h \
   PortableServer/Servant_Upcall.h \
   PortableServer/Servant_Upcall.inl \
-  PortableServer/ServerInterceptorAdapter.h \
-  PortableServer/ServerInterceptorAdapter.inl \
   PortableServer/ServerRequestInfo.h \
   PortableServer/ServerRequestInfo.inl \
   PortableServer/Special_Basic_SArgument_T.cpp \
@@ -1457,7 +1472,11 @@ nobase_include_HEADERS += \
   PortableServer/poa_macros.h \
   PortableServer/portableserver_export.h
 
-pkgconfig_DATA += TAO_PortableServer.pc
+pkgconfig_DATA += \
+  TAO_PortableServer.pc
+
+CLEANFILES += \
+  TAO_PortableServer.pc
 
 TAO_PortableServer.pc: ${top_builddir}/config.status ${srcdir}/PortableServer/TAO_PortableServer.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/PortableServer/TAO_PortableServer.pc.in
@@ -1513,7 +1532,11 @@ nobase_include_HEADERS += \
   IFR_Client/IFR_ExtendedC.inl \
   IFR_Client/ifr_client_export.h
 
-pkgconfig_DATA += TAO_IFR_Client.pc
+pkgconfig_DATA += \
+  TAO_IFR_Client.pc
+
+CLEANFILES += \
+  TAO_IFR_Client.pc
 
 TAO_IFR_Client.pc: ${top_builddir}/config.status ${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
@@ -1554,7 +1577,11 @@ nobase_include_HEADERS += \
   Domain/DomainS_T.inl \
   Domain/domain_export.h
 
-pkgconfig_DATA += TAO_Domain.pc
+pkgconfig_DATA += \
+  TAO_Domain.pc
+
+CLEANFILES += \
+  TAO_Domain.pc
 
 TAO_Domain.pc: ${top_builddir}/config.status ${srcdir}/Domain/TAO_Domain.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/Domain/TAO_Domain.pc.in
@@ -1608,7 +1635,11 @@ nobase_include_HEADERS += \
   DynamicAny/DynamicAnyC.h \
   DynamicAny/dynamicany_export.h
 
-pkgconfig_DATA += TAO_DynamicAny.pc
+pkgconfig_DATA += \
+  TAO_DynamicAny.pc
+
+CLEANFILES += \
+  TAO_DynamicAny.pc
 
 TAO_DynamicAny.pc: ${top_builddir}/config.status ${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
@@ -1667,7 +1698,11 @@ nobase_include_HEADERS += \
   Valuetype/Valuetype_Adapter_Impl.h \
   Valuetype/valuetype_export.h
 
-pkgconfig_DATA += TAO_Valuetype.pc
+pkgconfig_DATA += \
+  TAO_Valuetype.pc
+
+CLEANFILES += \
+  TAO_Valuetype.pc
 
 TAO_Valuetype.pc: ${top_builddir}/config.status ${srcdir}/Valuetype/TAO_Valuetype.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/Valuetype/TAO_Valuetype.pc.in
@@ -1753,7 +1788,11 @@ nobase_include_HEADERS += \
   Messaging/TAO_ExtC.h \
   Messaging/messaging_export.h
 
-pkgconfig_DATA += TAO_Messaging.pc
+pkgconfig_DATA += \
+  TAO_Messaging.pc
+
+CLEANFILES += \
+  TAO_Messaging.pc
 
 TAO_Messaging.pc: ${top_builddir}/config.status ${srcdir}/Messaging/TAO_Messaging.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/Messaging/TAO_Messaging.pc.in
@@ -1822,7 +1861,11 @@ nobase_include_HEADERS += \
   DynamicInterface/Unknown_User_Exception.h \
   DynamicInterface/dynamicinterface_export.h
 
-pkgconfig_DATA += TAO_DynamicInterface.pc
+pkgconfig_DATA += \
+  TAO_DynamicInterface.pc
+
+CLEANFILES += \
+  TAO_DynamicInterface.pc
 
 TAO_DynamicInterface.pc: ${top_builddir}/config.status ${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
@@ -1880,7 +1923,11 @@ nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplate_includeS.h \
   ObjRefTemplate/ort_export.h
 
-pkgconfig_DATA += TAO_ObjRefTemplate.pc
+pkgconfig_DATA += \
+  TAO_ObjRefTemplate.pc
+
+CLEANFILES += \
+  TAO_ObjRefTemplate.pc
 
 TAO_ObjRefTemplate.pc: ${top_builddir}/config.status ${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
@@ -1932,7 +1979,11 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
   IORInterceptor/iorinterceptor_export.h
 
-pkgconfig_DATA += TAO_IORInterceptor.pc
+pkgconfig_DATA += \
+  TAO_IORInterceptor.pc
+
+CLEANFILES += \
+  TAO_IORInterceptor.pc
 
 TAO_IORInterceptor.pc: ${top_builddir}/config.status ${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
@@ -1973,7 +2024,11 @@ nobase_include_HEADERS += \
   IORManipulation/IORManipulation.h \
   IORManipulation/ior_manip_export.h
 
-pkgconfig_DATA += TAO_IORManip.pc
+pkgconfig_DATA += \
+  TAO_IORManip.pc
+
+CLEANFILES += \
+  TAO_IORManip.pc
 
 TAO_IORManip.pc: ${top_builddir}/config.status ${srcdir}/IORManipulation/TAO_IORManip.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/IORManipulation/TAO_IORManip.pc.in
@@ -2015,7 +2070,11 @@ nobase_include_HEADERS += \
   IORTable/Table_Adapter.h \
   IORTable/iortable_export.h
 
-pkgconfig_DATA += TAO_IORTable.pc
+pkgconfig_DATA += \
+  TAO_IORTable.pc
+
+CLEANFILES += \
+  TAO_IORTable.pc
 
 TAO_IORTable.pc: ${top_builddir}/config.status ${srcdir}/IORTable/TAO_IORTable.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/IORTable/TAO_IORTable.pc.in
@@ -2067,7 +2126,11 @@ nobase_include_HEADERS += \
   ImR_Client/ServerObject_i.h \
   ImR_Client/imr_client_export.h
 
-pkgconfig_DATA += TAO_ImR_Client.pc
+pkgconfig_DATA += \
+  TAO_ImR_Client.pc
+
+CLEANFILES += \
+  TAO_ImR_Client.pc
 
 TAO_ImR_Client.pc: ${top_builddir}/config.status ${srcdir}/ImR_Client/TAO_ImR_Client.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/ImR_Client/TAO_ImR_Client.pc.in
@@ -2095,7 +2158,11 @@ libTAO_PI_Server_la_SOURCES = \
   PI_Server/PS_CurrentA.cpp \
   PI_Server/PS_CurrentC.cpp \
   PI_Server/PortableServer_ORBInitializer.cpp \
-  PI_Server/PortableServer_PolicyFactory.cpp
+  PI_Server/PortableServer_PolicyFactory.cpp \
+  PI_Server/ServerInterceptorAdapter.cpp \
+  PI_Server/ServerRequestInterceptorA.cpp \
+  PI_Server/ServerRequestInterceptorC.cpp \
+  PI_Server/ServerRequestInterceptor_Factory_Impl.cpp
 
 libTAO_PI_Server_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2117,9 +2184,18 @@ nobase_include_HEADERS += \
   PI_Server/Policy_Creator_T.h \
   PI_Server/PortableServer_ORBInitializer.h \
   PI_Server/PortableServer_PolicyFactory.h \
+  PI_Server/ServerInterceptorAdapter.h \
+  PI_Server/ServerRequestInterceptor.pidl \
+  PI_Server/ServerRequestInterceptorC.h \
+  PI_Server/ServerRequestInterceptorS.h \
+  PI_Server/ServerRequestInterceptor_Factory_Impl.h \
   PI_Server/pi_server_export.h
 
-pkgconfig_DATA += TAO_PI_Server.pc
+pkgconfig_DATA += \
+  TAO_PI_Server.pc
+
+CLEANFILES += \
+  TAO_PI_Server.pc
 
 TAO_PI_Server.pc: ${top_builddir}/config.status ${srcdir}/PI_Server/TAO_PI_Server.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/PI_Server/TAO_PI_Server.pc.in
@@ -2221,7 +2297,11 @@ nobase_include_HEADERS += \
   RTCORBA/rtcorba_export.h \
   RTCORBA/rtcorba_typedefs.h
 
-pkgconfig_DATA += TAO_RTCORBA.pc
+pkgconfig_DATA += \
+  TAO_RTCORBA.pc
+
+CLEANFILES += \
+  TAO_RTCORBA.pc
 
 TAO_RTCORBA.pc: ${top_builddir}/config.status ${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
@@ -2285,7 +2365,11 @@ nobase_include_HEADERS += \
   RTPortableServer/RT_Servant_Dispatcher.h \
   RTPortableServer/rtportableserver_export.h
 
-pkgconfig_DATA += TAO_RTPortableServer.pc
+pkgconfig_DATA += \
+  TAO_RTPortableServer.pc
+
+CLEANFILES += \
+  TAO_RTPortableServer.pc
 
 TAO_RTPortableServer.pc: ${top_builddir}/config.status ${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
@@ -2326,6 +2410,7 @@ libTAO_RTScheduler_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_RTScheduler_la_LIBADD = \
+  libTAO_PI_Server.la \
   libTAO_PortableServer.la \
   libTAO_RTCORBA.la \
   libTAO_PI.la \
@@ -2349,7 +2434,11 @@ nobase_include_HEADERS += \
   RTScheduling/ThreadAction.h \
   RTScheduling/rtscheduler_export.h
 
-pkgconfig_DATA += TAO_RTScheduler.pc
+pkgconfig_DATA += \
+  TAO_RTScheduler.pc
+
+CLEANFILES += \
+  TAO_RTScheduler.pc
 
 TAO_RTScheduler.pc: ${top_builddir}/config.status ${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
@@ -2388,7 +2477,11 @@ nobase_include_HEADERS += \
   SmartProxies/Smart_Proxies.inl \
   SmartProxies/smartproxies_export.h
 
-pkgconfig_DATA += TAO_SmartProxies.pc
+pkgconfig_DATA += \
+  TAO_SmartProxies.pc
+
+CLEANFILES += \
+  TAO_SmartProxies.pc
 
 TAO_SmartProxies.pc: ${top_builddir}/config.status ${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
@@ -2504,7 +2597,11 @@ nobase_include_HEADERS += \
   Strategies/uiop_endpoints.pidl \
   Strategies/uiop_endpointsC.h
 
-pkgconfig_DATA += TAO_Strategies.pc
+pkgconfig_DATA += \
+  TAO_Strategies.pc
+
+CLEANFILES += \
+  TAO_Strategies.pc
 
 TAO_Strategies.pc: ${top_builddir}/config.status ${srcdir}/Strategies/TAO_Strategies.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/Strategies/TAO_Strategies.pc.in
@@ -2696,7 +2793,11 @@ nobase_include_HEADERS += \
   TypeCodeFactory/TypeCodeFactory_i.h \
   TypeCodeFactory/typecodefactory_export.h
 
-pkgconfig_DATA += TAO_TypeCodeFactory.pc
+pkgconfig_DATA += \
+  TAO_TypeCodeFactory.pc
+
+CLEANFILES += \
+  TAO_TypeCodeFactory.pc
 
 TAO_TypeCodeFactory.pc: ${top_builddir}/config.status ${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
@@ -2749,7 +2850,11 @@ nobase_include_HEADERS += \
   Utils/Server_Main.h \
   Utils/utils_export.h
 
-pkgconfig_DATA += TAO_Utils.pc
+pkgconfig_DATA += \
+  TAO_Utils.pc
+
+CLEANFILES += \
+  TAO_Utils.pc
 
 TAO_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_Utils.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/TAO_Utils.pc.in
