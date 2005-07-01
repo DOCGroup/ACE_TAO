@@ -14,7 +14,7 @@ project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging {
   }
 }
 
-project(*Client): taoclient, orbsvcsexe, iormanip, ftorb {
+project(*Client): taoclient, orbsvcsexe, iormanip, pi_server, ftorb {
   idlflags += -DCORBA3
 
   Source_Files {
