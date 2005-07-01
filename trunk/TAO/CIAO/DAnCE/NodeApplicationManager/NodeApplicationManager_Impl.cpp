@@ -65,7 +65,7 @@ CIAO::NodeApplicationManager_Impl::init (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
+  ACE_CHECK_RETURN (0);
 
   //return this object reference
   return oid.in ();
