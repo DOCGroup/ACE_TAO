@@ -1,3 +1,10 @@
+Fri Jul  1 16:14:16 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.cpp:
+        * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+
+          Fix some typos with the previous checkin.
+
 Fri Jul  1 14:43:27 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
