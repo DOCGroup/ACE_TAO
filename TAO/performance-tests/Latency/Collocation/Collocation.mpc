@@ -1,3 +1,4 @@
 // $Id$
-project(Latency*): taoexe, portableserver, strategies {
+project(Latency*): taoserver, strategies {
+  exename = Collocated_Test
 }
