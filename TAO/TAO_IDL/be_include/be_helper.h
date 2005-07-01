@@ -141,7 +141,8 @@ public:
   // "printf" style variable argument print
 
   int gen_ifdef_macro (const char *flat_name,
-                       const char *suffix = 0);
+                       const char *suffix = 0,
+                       bool add_stream_type_suffix = true);
   // generate a #if !defined, #defined macro
 
   int gen_endif (void);

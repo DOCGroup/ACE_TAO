@@ -109,7 +109,7 @@ be_visitor_traits::visit_interface (be_interface *node)
 
   if (!node->imported ())
     {
-      os->gen_ifdef_macro (node->flat_name (), "traits");
+      os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
       *os << be_nl << be_nl
           << "template<>" << be_nl
@@ -184,7 +184,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
   // declarations.
   if (!node->imported ())
     {
-      os->gen_ifdef_macro (node->flat_name (), "traits");
+      os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
       *os << be_nl << be_nl
           << "template<>" << be_nl
