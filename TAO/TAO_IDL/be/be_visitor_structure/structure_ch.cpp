@@ -43,6 +43,11 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       return 0;
     }
 
+  // Evaluate the member in time for the decision to generate
+  // the recursive typecode include in the stub source file.
+  ACE_Unbounded_Queue<AST_Type *> list;
+  (void) node->in_recursion (list);
+        
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the _var and _out typedefs.

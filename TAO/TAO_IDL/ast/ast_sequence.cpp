@@ -75,6 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
@@ -170,6 +171,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     {
       // They match.
       this->in_recursion_ = 1;
+      idl_global->recursive_type_seen_ = true;
       return this->in_recursion_;
     }
   else
@@ -178,6 +180,12 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       ACE_Unbounded_Queue<AST_Type *> scope_list = list;
       scope_list.enqueue_tail (this);
       this->in_recursion_ = type->in_recursion (scope_list);
+      
+      if (this->in_recursion_ == 1)
+        {
+          idl_global->recursive_type_seen_ = true;
+        }
+      
       return this->in_recursion_;
     }
 }

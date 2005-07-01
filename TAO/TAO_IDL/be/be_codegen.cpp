@@ -1998,9 +1998,6 @@ TAO_CodeGen::gen_cond_file_include (bool condition_green,
 void
 TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 {
-//   this->gen_standard_include (stream,
-//                               "tao/TypeCode.h");
-
   this->gen_standard_include (stream,
                               "tao/Null_RefCount_Policy.h");
 
@@ -2017,10 +2014,6 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
                                stream);
 
   this->gen_cond_file_include (idl_global->interface_seen_,
-//                                idl_global->abstract_iface_seen_
-//                                | idl_global->non_local_iface_seen_
-//                                | idl_global->local_iface_seen_
-//                                | idl_global->base_object_seen_,
                                "tao/Objref_TypeCode_Static.h",
                                stream);
 
@@ -2035,16 +2028,12 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 
   this->gen_cond_file_include (
       idl_global->exception_seen_
-//       | idl_global->fixed_size_arg_seen_ // Could be a struct
-//       | idl_global->var_size_arg_seen_   // Could be a struct
       | idl_global->aggregate_seen_,
       "tao/Struct_TypeCode_Static.h",
       stream);
 
   this->gen_cond_file_include (
       idl_global->exception_seen_
-//       | idl_global->fixed_size_arg_seen_ // Could be a struct
-//       | idl_global->var_size_arg_seen_   // Could be a struct
       | idl_global->aggregate_seen_,
       "tao/TypeCode_Struct_Field.h",
       stream);
@@ -2065,13 +2054,7 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
                                "tao/TypeCode_Value_Field.h",
                                stream);
 
-  // @@ Until we get idl_global->recursive_type_seen_ set
-  //    automatically, include Recursive_Type_TypeCode.h whenever a
-  //    struct, union or valuetype is seen, just in case.
-  this->gen_cond_file_include (idl_global->aggregate_seen_
-                               | idl_global->union_seen_
-                               | idl_global->valuetype_seen_, // idl_global->recursive_type_seen_,
+  this->gen_cond_file_include (idl_global->recursive_type_seen_,
                                "tao/Recursive_Type_TypeCode.h",
                                stream);
-
 }
