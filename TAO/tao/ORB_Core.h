@@ -839,12 +839,12 @@ public:
   void pi_current (TAO::PICurrent *current);
 
   /// Register a client request interceptor.
-  int add_interceptor (
+  void add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
   /// Register a server request interceptor.
-  int add_interceptor (
+  void add_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 

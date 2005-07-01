@@ -2918,7 +2918,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-int
+void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ClientRequestInterceptor_ptr interceptor
    ACE_ENV_ARG_DECL)
@@ -2969,7 +2969,7 @@ TAO_ORB_Core::clientrequestinterceptor_adapter_i (void)
 }
 
 
-int
+void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ServerRequestInterceptor_ptr interceptor
    ACE_ENV_ARG_DECL)

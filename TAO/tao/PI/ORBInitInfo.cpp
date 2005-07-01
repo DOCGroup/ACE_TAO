@@ -202,13 +202,8 @@ TAO_ORBInitInfo::add_client_request_interceptor (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  int retval = this->orb_core_->add_interceptor (interceptor
-                                                 ACE_ENV_ARG_PARAMETER);
-
-  if (retval == -1)
-    {
-      ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
-    }
+  this->orb_core_->add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_THROW (CORBA::NO_IMPLEMENT (
@@ -230,13 +225,8 @@ TAO_ORBInitInfo::add_server_request_interceptor (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  int retval = this->orb_core_->add_interceptor (interceptor
-                                                 ACE_ENV_ARG_PARAMETER);
-
-  if (retval == -1)
-    {
-      ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
-    }
+  this->orb_core_->add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
 #else
   ACE_UNUSED_ARG (interceptor);

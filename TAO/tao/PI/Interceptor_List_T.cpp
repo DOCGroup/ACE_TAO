@@ -50,7 +50,7 @@ namespace TAO
             /// Interceptor with the same isn't already registered.
             CORBA::String_var name =
               interceptor->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK_RETURN (0);
+            ACE_CHECK;
 
             if (ACE_OS::strlen (name.in ()) != 0)
               {
