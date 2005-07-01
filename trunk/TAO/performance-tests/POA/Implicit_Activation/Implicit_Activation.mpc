@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver {
+project(*server): taoserver {
   Source_Files {
     Factory.cpp
     Simple.cpp
@@ -9,7 +9,7 @@ project(*server): taoexe, portableserver {
   }
 }
 
-project(*client): taoexe {
+project(*client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

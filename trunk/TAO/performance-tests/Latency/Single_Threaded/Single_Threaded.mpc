@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, strategies {
+project(*server): taoserver, strategies {
 
   Source_Files {
     Roundtrip.cpp
@@ -9,7 +9,7 @@ project(*server): taoexe, portableserver, strategies {
   }
 }
 
-project(*client): taoexe, strategies {
+project(*client): taoclient, strategies {
 
   Source_Files {
     TestC.cpp
