@@ -1,3 +1,16 @@
+Fri Jul  1 07:18:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/IFR_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/IFR_Service/IFR_Service.mpc:
+
+	  Changed so-called "convenience libraries" projects to inherit
+	  from conv_lib.mpb.
+
 Fri Jul  1 13:58:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:

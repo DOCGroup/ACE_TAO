@@ -54,7 +54,7 @@ endif !BUILD_MINIMUM_CORBA
 
 if !BUILD_MINIMUM_CORBA
 
-lib_LTLIBRARIES = libTAO_IFR_BE.la
+noinst_LTLIBRARIES = libTAO_IFR_BE.la
 
 libTAO_IFR_BE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -76,15 +76,6 @@ libTAO_IFR_BE_la_SOURCES = \
   ifr_adding_visitor_union.cpp \
   ifr_removing_visitor.cpp \
   ifr_visitor.cpp
-
-libTAO_IFR_BE_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_IFR_BE_la_LIBADD = \
-  $(TAO_BUILDDIR)/TAO_IDL/libTAO_IDL_FE.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
   be_extern.h \
