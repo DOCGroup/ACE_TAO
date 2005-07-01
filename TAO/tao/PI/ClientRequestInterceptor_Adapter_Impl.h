@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ClientRequestInterceptor_Adapter.h
+ *  @file    ClientRequestInterceptor_Adapter_Impl.h
  *
  *  $Id$
  *
@@ -12,6 +12,7 @@
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
