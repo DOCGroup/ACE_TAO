@@ -2,7 +2,7 @@ Sat Jul  2 12:16:49 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp: 
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-        * DAnCE/NodeDaemon_Impl.cpp:
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
 
 	Added CIAO_TRACE messages.
 
