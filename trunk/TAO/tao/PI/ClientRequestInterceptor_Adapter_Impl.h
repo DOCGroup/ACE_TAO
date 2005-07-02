@@ -59,10 +59,7 @@ namespace TAO
   {
   public:
 
-    ClientRequestInterceptor_Adapter_Impl (
-//        ClientRequestInterceptor_List::TYPE & interceptors,
-//        Invocation_Base *invocation
-      );
+    ClientRequestInterceptor_Adapter_Impl (void);
 
     /**
      * @name PortableInterceptor Client Side Interception Points
