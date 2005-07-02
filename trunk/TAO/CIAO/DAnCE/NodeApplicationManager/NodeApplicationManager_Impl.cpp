@@ -93,6 +93,7 @@ create_node_application (const ACE_CString & options
                    Deployment::StartError,
                    Deployment::InvalidProperty))
 {
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_node_application");
   Deployment::NodeApplication_var retval;
   Deployment::Properties_var prop;
 
@@ -212,6 +213,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
                    Deployment::StartError,
                    Deployment::InvalidProperty))
 {
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_connections");
   Deployment::Connections_var retv;
 
   ACE_NEW_THROW_EX (retv,
@@ -277,6 +279,7 @@ startLaunch (const Deployment::Properties & configProperty,
                    Deployment::StartError,
                    Deployment::InvalidProperty))
 {
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
   ACE_UNUSED_ARG (configProperty);
   ACE_UNUSED_ARG (start);
   /**
@@ -361,6 +364,7 @@ destroyApplication (Deployment::Application_ptr app
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::destroyApplication");
   ACE_UNUSED_ARG (app);
 
   //ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);

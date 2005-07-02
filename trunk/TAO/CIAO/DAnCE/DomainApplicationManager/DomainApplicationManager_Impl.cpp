@@ -135,6 +135,7 @@ bool
 CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_plan_info");
   if ( this->deployment_config_.init (this->deployment_file_) == -1 )
     return 0;
 
@@ -196,6 +197,7 @@ int
 CIAO::DomainApplicationManager_Impl::
 split_plan (void)
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::split_plan");
   // Initialize the total number of child deployment plans specified
   // by the global plan.
   CORBA::ULong i;
@@ -330,7 +332,7 @@ void
 CIAO::DomainApplicationManager_Impl::
 add_connections (const Deployment::Connections & incoming_conn)
 {
-
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::add_connections");
   CORBA::ULong old_len = this->all_connections_->length ();
 
   // Expand the length of the <all_connection_> sequence.
@@ -354,6 +356,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::StartError,
                    ::Deployment::InvalidProperty))
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::startLaunch");
   ACE_UNUSED_ARG (start);
   ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::startLaunch.\n"));
   ACE_TRY
@@ -431,6 +434,7 @@ finishLaunch (::CORBA::Boolean start
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::finishLaunch");
   ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::finishLaunch.\n"));
   ACE_TRY
     {
@@ -496,6 +500,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::start");
   ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::start.\n"));
   ACE_TRY
     {
@@ -587,6 +592,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyApplication");
   ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::destroyApplication.\n"));
   ACE_TRY
     {
@@ -651,6 +657,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyManager");
   ACE_TRY
     {
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
@@ -692,6 +699,7 @@ CIAO::DomainApplicationManager_Impl::
 getPlan (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::getPlan");
   Deployment::DeploymentPlan_var plan = 0;
   // Make a deep copy of the Plan
   ACE_NEW_THROW_EX (plan,
@@ -706,6 +714,7 @@ Deployment::Connections *
 CIAO::DomainApplicationManager_Impl::
 get_outgoing_connections (const Deployment::DeploymentPlan &plan)
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
   Deployment::Connections_var connections;
   ACE_NEW_RETURN (connections,
                   Deployment::Connections,
@@ -727,6 +736,7 @@ CIAO::DomainApplicationManager_Impl::
 get_outgoing_connections_i (const char * instname,
                             Deployment::Connections & retv)
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
   // Search in all the connections in the plan.
   for (CORBA::ULong i = 0; i < this->plan_.connection.length(); ++i)
   {
@@ -813,6 +823,7 @@ void
 CIAO::DomainApplicationManager_Impl::
 dump_connections (const ::Deployment::Connections & connections)
 {
+  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::dump_connections");
   const CORBA::ULong conn_len = connections.length ();
   for (CORBA::ULong i = 0; i < conn_len; ++i)
   {
