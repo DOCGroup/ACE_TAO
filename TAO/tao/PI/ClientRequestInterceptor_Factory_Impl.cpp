@@ -23,8 +23,6 @@ ACE_RCSID (PI,
 
 TAO::ClientRequestInterceptor_Adapter*
 TAO_ClientRequestInterceptor_Adapter_Factory_Impl::create (void)
-//    TAO::ClientRequestInterceptor_List::TYPE & interceptors,
-  //  TAO::Invocation_Base *invocation)
 {
   TAO::ClientRequestInterceptor_Adapter_Impl* obj = 0;
   ACE_NEW_RETURN (obj,
