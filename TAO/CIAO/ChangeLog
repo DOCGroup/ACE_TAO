@@ -1,3 +1,11 @@
+Sat Jul  2 12:16:49 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp: 
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeDaemon_Impl.cpp:
+
+	Added CIAO_TRACE messages.
+
 Fri Jul  1 08:42:27 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
@@ -574,7 +582,7 @@ Wed May 25 11:13:19 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
           Thanks to Steven Baker <Steven_D_Baker@raytheon.com> for
           identifying the problem.
 
-Wed May 25 10:52:39 2005  Cassia Tatibana  <cassia@lindy.dre.vanderbilt.edu>
+Wed May 25 10:52:39 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
 
         * DAnCE/examples/Display/HUDisplay.idl:
         * DAnCE/examples/Display/HUDisplay.mpc:

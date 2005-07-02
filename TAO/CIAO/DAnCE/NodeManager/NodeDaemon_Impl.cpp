@@ -100,6 +100,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                    Deployment::StartError,
                    Deployment::PlanError))
 {
+  CIAO_TRACE("CIAO::NodeDaemon_Impl::preparePlan");
   ACE_TRY
     {
       if (!this->map_.is_available (plan.UUID.in ()))
@@ -176,6 +177,7 @@ CIAO::NodeDaemon_Impl::destroyManager
                    Deployment::StopError,
                    Deployment::InvalidReference))
 {  
+  CIAO_TRACE("CIAO::NodeDaemon_Impl::destroyManager");
   ACE_TRY
     {
       // Deactivate this object
