@@ -453,7 +453,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h
-    Interceptor_List.h
     InvalidSlotC.h
     InvalidSlotS.h
     Invocation_Adapter.h
@@ -697,7 +696,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Condition.cpp
     Connector_Impl.cpp
     Enum_TypeCode.cpp
-    Interceptor_List.cpp
     Fixed_TypeCode.cpp
     Objref_TypeCode.cpp
     Recursive_Type_TypeCode.cpp
