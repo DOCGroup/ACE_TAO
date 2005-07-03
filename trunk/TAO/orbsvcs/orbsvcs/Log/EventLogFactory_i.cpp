@@ -121,7 +121,7 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
 DsEventLogAdmin::EventLog_ptr
 TAO_EventLogFactory_i::create (
     DsLogAdmin::LogFullActionType full_action,
-    CORBA::ULongLong max_rec_size,
+    CORBA::ULongLong max_size,
     const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
     DsLogAdmin::LogId_out id_out
     ACE_ENV_ARG_DECL)
@@ -138,7 +138,7 @@ TAO_EventLogFactory_i::create (
   DsEventLogAdmin::EventLog_ptr eventlog =
     this->create_with_id (id,
                           full_action,
-                          max_rec_size,
+                          max_size,
                           thresholds
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());

@@ -160,7 +160,7 @@ TAO_RTEventLogFactory_i::activate (PortableServer::POA_ptr poa
 RTEventLogAdmin::EventLog_ptr
 TAO_RTEventLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
-        CORBA::ULongLong max_rec_size,
+        CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         DsLogAdmin::LogId_out id_out
         ACE_ENV_ARG_DECL
@@ -180,7 +180,7 @@ TAO_RTEventLogFactory_i::create (
   RTEventLogAdmin::EventLog_ptr eventlog =
     this->create_with_id (id,
                           full_action,
-                          max_rec_size,
+                          max_size,
                           thresholds
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
@@ -276,6 +276,6 @@ template class ACE_Auto_Basic_Ptr<TAO_RTEventLog_i>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate auto_ptr <TAO_RTEventLog_i>
-#pragma instantiate ACE_Auto_Event_Ptr <TAO_RTEventLog_i>
+#pragma instantiate ACE_Auto_Basic_Ptr <TAO_RTEventLog_i>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
