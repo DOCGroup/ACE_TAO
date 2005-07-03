@@ -1,10 +1,16 @@
+Sun Jul  3 14:59:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/APG/Config/Makefile.am:
+
+	  Regenerate.
+
 Sun Jul 03 18:40:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-		* include/makeinclude/rules.lib.GNU:
-		  Addition for VxWorks shared lib build.
+	* include/makeinclude/rules.lib.GNU:
+	  Addition for VxWorks shared lib build.
 
-		* include/makeinclude/platform_vxworks5.5.x.GNU:
-		  Some cleanup and changes for shared lib builds.
+	* include/makeinclude/platform_vxworks5.5.x.GNU:
+	  Some cleanup and changes for shared lib builds.
 
 Fri Jul 01 14:40:25 2005  Gary Maxey <gary.maxey@hp.com>
 
