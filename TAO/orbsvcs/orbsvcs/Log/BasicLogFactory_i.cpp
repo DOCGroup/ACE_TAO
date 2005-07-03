@@ -41,7 +41,7 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
 
 DsLogAdmin::BasicLog_ptr
 TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
-                               CORBA::ULongLong max_rec_size,
+                               CORBA::ULongLong max_size,
                                DsLogAdmin::LogId_out id_out
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -57,7 +57,7 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
   DsLogAdmin::BasicLog_ptr basiclog =
     this->create_with_id (id,
                           full_action,
-                          max_rec_size
+                          max_size
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 

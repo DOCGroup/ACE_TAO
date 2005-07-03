@@ -86,7 +86,7 @@ TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
 DsNotifyLogAdmin::NotifyLog_ptr
 TAO_NotifyLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
-        CORBA::ULongLong max_rec_size,
+        CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         const CosNotification::QoSProperties & initial_qos,
         const CosNotification::AdminProperties & initial_admin,
@@ -110,7 +110,7 @@ TAO_NotifyLogFactory_i::create (
   DsNotifyLogAdmin::NotifyLog_ptr notifylog =
     this->create_with_id (id,
                           full_action,
-                          max_rec_size,
+                          max_size,
                           thresholds,
                           initial_qos,
                           initial_admin
