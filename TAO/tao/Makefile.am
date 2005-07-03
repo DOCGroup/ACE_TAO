@@ -564,8 +564,6 @@ nobase_include_HEADERS = \
   IOR_Parser.h \
   Incoming_Message_Queue.h \
   Incoming_Message_Queue.inl \
-  Interceptor_List.cpp \
-  Interceptor_List.h \
   InterfaceDef.pidl \
   InvalidName.pidl \
   InvalidSlot.pidl \

@@ -1,6 +1,18 @@
+Sun Jul  3 15:00:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* tao/tao.mpc:
+
+	  Removed Interceptor_List.h from Header_Files and
+	  Interceptor_List.cpp from Template_Files sections.
+
 Fri Jul 01 15:14:06 2005   Gary Maxey <gary.maxey@hp.com>
 
-	* tao/Valuetype/StringValueC.inl: 
+	* tao/Valuetype/StringValueC.inl:
 
           Avoid error when compiling with MSVC6 compiler.
 
