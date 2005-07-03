@@ -161,6 +161,7 @@ ifeq ($(VXWORKSLINK),true)
 $(VSHLIB): $(basename $(notdir $(PRJ_FILE))).out
 	-$(RM) $@
 	-$(LN_S)  $(PROJECT_OUT) $@
+	-$(POST_BUILD_RULE)
 else # !VXWORKSLINK
   ifeq (1,$(aix_build))
 $(VSHLIB): shr.o

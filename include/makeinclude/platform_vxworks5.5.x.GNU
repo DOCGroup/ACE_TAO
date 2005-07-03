@@ -16,6 +16,12 @@
 VXWORKS = 1
 CROSS-COMPILE = 1
 
+ifneq (,$(HOST_ROOT))
+  TAO_IDL := $(HOST_ROOT)/bin/tao_idl.exe
+  TAO_IDL_DEP := $(TAO_IDL)
+  TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
+endif
+
 ifeq ("$(OS)", "Windows_NT")
 ifneq ($(MAKE_MODE), unix)
 vxworks_ntbuild = 1
@@ -124,14 +130,12 @@ ifneq ($(VX_LIB_BUILD),1)
     PRJ_FILE = $(basename $(notdir $(BIN_UNCHECKED))).vxworks
     EXEEXT = .out
     PRJ_DIR = .
-    GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE)
-    CLEANUP_OBJS := ctdt.c $(CLEANUP_OBJS)
+    CLEANUP_OBJS := ctdt.c $(PRJ_DIR)/$(PRJ_FILE) $(CLEANUP_OBJS)
   else
     ## set variables for VxWorks .SO linktarget identification
     PRJ_FILE = $(basename $(notdir $(SHLIB_UNCHECKED))).vxworks
     PRJ_DIR = .
-    GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE)
-    CLEANUP_OBJS := ctdt.c *.out $(CLEANUP_OBJS)
+    CLEANUP_OBJS := ctdt.c $(PRJ_DIR)/$(PRJ_FILE) *.out $(CLEANUP_OBJS)
   endif
 endif
 
@@ -141,9 +145,8 @@ include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
 include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
 include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 
-ifeq ($(MAKE_MODE), unix)
-  RM=rm -f
-endif
+## make sure we don't use that stupid, crippled vxrm.bat script.
+override RM=rm -f
 
 ifeq ("$(VXWORKSLINK)","true")
   # prevent possible clash with static LIB rules
@@ -176,11 +179,6 @@ ifeq ("$(VXWORKSLINK)","true")
 default: all
 
 endif
-
-##ifneq ($(static_libs),1)
-##  AR             := echo
-##  ARFLAGS        := "build static lib only"
-##endif # ! static_libs
 
 CPPFLAGS += $(VXWORKS_VERSION_FLAG)
 
@@ -264,6 +262,12 @@ CCFLAGS         += $(C++FLAGS)
 PIC              =
 
 ifeq ("$(VXWORKSLINK)","true")
+
+  ifdef repo
+	POST_BUILD_RULE = if exist $(VDIR)/.rpobak/*.rpo mv $(VDIR)/.rpobak/*.rpo $(VDIR)/.
+  endif
+
+.PHONY: $(PRJ_DIR)/$(PRJ_FILE)
   ## special target to satisfy VxWorks dependencies for images
 $(PRJ_DIR)/$(PRJ_FILE):
   ifdef repo
@@ -273,7 +277,8 @@ $(PRJ_DIR)/$(PRJ_FILE):
     #### this step holds for both .SO as well as 'app' images so use both VSHOBJS and OBJS
 	-$(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)$(LINK_OUTPUT_FLAG) ace-templ_inst $? $(ACE_SHLIBS) $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
 	-$(RM) ace-templ_inst
-	-$(RM) $(VDIR)/*.rpo
+	@if not exist $(VDIR)/.rpobak $(MKDIR) $(VDIR)/.rpobak $(ACE_NUL_STDERR)
+	-if exist $(VDIR)/*.rpo mv $(VDIR)/*.rpo $(VDIR)/.rpobak
       ifeq ($(VX_SO_BUILD),1)
     #### build library of objects in .SO to use as a sort of import library for VxWorks
 	echo $(filter %.o, $(VSHOBJS)) | xargs $(AR) $(ARFLAGS) $(VLIB) $(AREXTRA)
