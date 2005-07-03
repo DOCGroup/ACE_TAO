@@ -8,16 +8,16 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
-includedir = @includedir@/orbsvcs/orbsvcs
+includedir = @includedir@/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
-TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
 ## Makefile.CosNaming_IDL.am
 
@@ -2085,7 +2085,6 @@ Notify = \
   Notify/Any/ProxyPushSupplier.cpp \
   Notify/Any/PushConsumer.cpp \
   Notify/Any/PushSupplier.cpp \
-  Notify/Sequence/Batch_Buffering_Strategy.cpp \
   Notify/Sequence/SequenceProxyPushConsumer.cpp \
   Notify/Sequence/SequenceProxyPushSupplier.cpp \
   Notify/Sequence/SequencePushConsumer.cpp \
@@ -2140,7 +2139,6 @@ nobase_include_HEADERS += \
   Notify/Any/PushSupplier.h \
   Notify/Bit_Vector.h \
   Notify/Buffering_Strategy.h \
-  Notify/Buffering_Strategy.inl \
   Notify/Builder.h \
   Notify/Consumer.h \
   Notify/Consumer.inl \
@@ -2216,7 +2214,6 @@ nobase_include_HEADERS += \
   Notify/Routing_Slip_Persistence_Manager.h \
   Notify/Routing_Slip_Queue.h \
   Notify/Routing_Slip_Queue.inl \
-  Notify/Sequence/Batch_Buffering_Strategy.h \
   Notify/Sequence/SequenceProxyPushConsumer.h \
   Notify/Sequence/SequenceProxyPushSupplier.h \
   Notify/Sequence/SequencePushConsumer.h \
