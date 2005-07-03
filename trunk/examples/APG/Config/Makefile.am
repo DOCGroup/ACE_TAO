@@ -20,8 +20,7 @@ ARGV_Example_CPPFLAGS = \
 
 ARGV_Example_SOURCES = \
   ARGV_Example.cpp \
-  HASTATUS_export.h \
-  HA_Status.h
+  HASTATUS_export.h
 
 ARGV_Example_LDADD = \
  $(top_builddir)/ace/libACE.la
@@ -48,8 +47,7 @@ Get_Opt_CPPFLAGS = \
 
 Get_Opt_SOURCES = \
   Get_Opt.cpp \
-  HASTATUS_export.h \
-  HA_Status.h
+  HASTATUS_export.h
 
 Get_Opt_LDADD = \
  $(top_builddir)/ace/libACE.la
@@ -63,8 +61,7 @@ Get_Opt_Long_CPPFLAGS = \
 
 Get_Opt_Long_SOURCES = \
   Get_Opt_Long.cpp \
-  HASTATUS_export.h \
-  HA_Status.h
+  HASTATUS_export.h 
 
 Get_Opt_Long_LDADD = \
  $(top_builddir)/ace/libACE.la
