@@ -1,3 +1,18 @@
+Sun Jul  3 15:09:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+	  Fix typo in ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA case.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+	  Change create() method parameter name from max_rec_size to
+	  max_size, as it specifies the size of the whole log, not a
+	  single log record.
+
 Sun Jul  3 15:00:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
