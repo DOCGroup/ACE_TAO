@@ -547,6 +547,7 @@ ACE_INET_Addr::set_addr (void *addr, int /* len */, int map)
       this->set_address (reinterpret_cast<const char*> (&in6->sin6_addr),
                          sizeof (in6->sin6_addr),
                          0);
+      this->inet_addr_.in6_.sin6_scope_id = in6->sin6_scope_id;
     }
 #endif // ACE_HAS_IPV6
 }
@@ -916,7 +917,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 
 }
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
+#if (defined (__linux__) || defined (ACE_WIN32)) && defined (ACE_HAS_IPV6)
 int
 ACE_INET_Addr::set_interface (const char *intf_name)
 {
@@ -924,9 +925,13 @@ ACE_INET_Addr::set_interface (const char *intf_name)
       (IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr) ||
        IN6_IS_ADDR_MC_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr)))
     {
+#if defined (__linux__)
       this->inet_addr_.in6_.sin6_scope_id =
         ACE_OS::if_nametoindex (intf_name);
-
+#else
+      this->inet_addr_.in6_.sin6_scope_id =
+        intf_name ? ACE_OS::atoi (intf_name) : 0;
+#endif
       // check to see if the interface lookup succeeded
       if (this->inet_addr_.in6_.sin6_scope_id != 0)
         return 0;
@@ -968,6 +973,19 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
                                           &this->inet_addr_.in6_.sin6_addr,
                                           dst,
                                           size);
+#if defined (__linux__)
+      if ((IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr) ||
+           IN6_IS_ADDR_MC_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr)) &&
+          this->inet_addr_.in6_.sin6_scope_id != 0)
+        {
+          char scope_buf[32];
+          ACE_OS::sprintf (scope_buf, "%%%u", this->inet_addr_.in6_.sin6_scope_id);
+          if ((ACE_OS::strlen (ch)+ACE_OS::strlen (scope_buf)) < (size_t)size)
+            {
+              ACE_OS::strcat (dst, scope_buf);
+            }
+        }
+#endif
       return ch;
 #  endif /* ACE_WIN32 */
     }
