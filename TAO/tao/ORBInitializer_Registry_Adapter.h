@@ -23,6 +23,9 @@
 
 #include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
+#include "tao/Basic_Types.h"
+
+class TAO_ORB_Core;
 
 namespace PortableInterceptor
 {
@@ -44,6 +47,8 @@ namespace TAO
     : public ACE_Service_Object
   {
     public:
+      virtual ~ORBInitializer_Registry_Adapter (void);
+
       /// Register an ORBInitializer with the underlying ORBInitializer
       /// array.
       virtual void register_orb_initializer (
