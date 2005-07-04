@@ -42,7 +42,6 @@ namespace StringLiterals
     COMP_SC,
     COMP_CD,
     CIDL_NS,
-    INH_RCSB,
     TYPE_ID,
     TYPE_PREFIX,
     REPO_ID,

@@ -155,8 +155,7 @@ namespace MyImpl
   };
 
   class RTEVENTSERVICE_EXEC_Export RTEventServiceSupplier_impl :
-    public virtual POA_RtecEventComm::PushSupplier,
-    public virtual PortableServer::RefCountServantBase
+    public virtual POA_RtecEventComm::PushSupplier
   {
 
   public:
@@ -172,8 +171,7 @@ namespace MyImpl
   };
 
   class RTEVENTSERVICE_EXEC_Export RTEventServiceConsumer_impl :
-    public virtual POA_RtecEventComm::PushConsumer,
-    public virtual PortableServer::RefCountServantBase
+    public virtual POA_RtecEventComm::PushConsumer
   {
 
   public:

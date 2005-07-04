@@ -37,8 +37,7 @@
 namespace CIAO_GLUE_RtecEventChannelAdmin
 {
   class RTEVENTSERVICE_SVNT_Export EventChannel_Servant
-  : public virtual POA_RtecEventChannelAdmin::EventChannel,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_RtecEventChannelAdmin::EventChannel
   {
     public:
     EventChannel_Servant (
@@ -184,8 +183,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class RTEVENTSERVICE_SVNT_Export RTEventService_Servant
-  : public virtual POA_BasicSP::RTEventService,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::RTEventService
   {
     public:
     RTEventService_Servant (
@@ -438,8 +436,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class RTEVENTSERVICE_SVNT_Export RTEventServiceHome_Servant
-  : public virtual POA_BasicSP::RTEventServiceHome,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::RTEventServiceHome
   {
     public:
     RTEventServiceHome_Servant (

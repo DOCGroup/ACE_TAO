@@ -41,9 +41,8 @@
 
 namespace CIAO_GLUE_BasicSP
 {
-  class BMCLOSEDED_SVNT_Export ReadData_Servant
-  : public virtual POA_BasicSP::ReadData,
-  public virtual PortableServer::RefCountServantBase
+  class BMCLOSEDED_SVNT_Export ReadData_Servant :
+    public virtual POA_BasicSP::ReadData
   {
     public:
     ReadData_Servant (
@@ -252,8 +251,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class BMCLOSEDED_SVNT_Export BMClosedED_Servant
-  : public virtual POA_BasicSP::BMClosedED,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::BMClosedED
   {
     public:
     BMClosedED_Servant (
@@ -305,8 +303,7 @@ namespace CIAO_GLUE_BasicSP
 
     // Servant class for the in_avail consumer.
     class BMCLOSEDED_SVNT_Export DataAvailableConsumer_in_avail_Servant
-    : public virtual POA_BasicSP::DataAvailableConsumer,
-    public virtual PortableServer::RefCountServantBase
+    : public virtual POA_BasicSP::DataAvailableConsumer
     {
       public:
       DataAvailableConsumer_in_avail_Servant (
@@ -608,8 +605,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class BMCLOSEDED_SVNT_Export BMClosedEDHome_Servant
-  : public virtual POA_BasicSP::BMClosedEDHome,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::BMClosedEDHome
   {
     public:
     BMClosedEDHome_Servant (

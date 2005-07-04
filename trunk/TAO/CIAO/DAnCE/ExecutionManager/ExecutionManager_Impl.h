@@ -46,8 +46,7 @@
 namespace CIAO
 {
   class ExecutionManager_Impl
-    : public virtual POA_CIAO::ExecutionManagerDaemon,
-    public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::ExecutionManagerDaemon
     {
 
     public:

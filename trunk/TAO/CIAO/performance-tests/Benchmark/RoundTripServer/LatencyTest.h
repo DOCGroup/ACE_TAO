@@ -14,9 +14,8 @@
 #endif /* _MSC_VER */
 
 /// Implement the Test::LatencyTest interface
-class LatencyTest_Impl
-: public virtual POA_Benchmark::LatencyTest
-  , public virtual PortableServer::RefCountServantBase
+class LatencyTest_Impl :
+  public virtual POA_Benchmark::LatencyTest
 {
 public:
   /// Constructor

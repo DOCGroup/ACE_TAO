@@ -46,8 +46,7 @@ namespace CIAO
    * components and homes.
    */
   class CIAO_SERVER_Export Container_Impl
-    : public virtual POA_Deployment::Container,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Deployment::Container
   {
   public:
     /// Constructor

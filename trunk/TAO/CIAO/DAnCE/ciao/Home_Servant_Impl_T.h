@@ -50,8 +50,7 @@ namespace CIAO
             typename COMP_SVNT>
   class Home_Servant_Impl
     : public virtual BASE_SKEL,
-      public virtual Home_Servant_Impl_Base,
-      public virtual PortableServer::RefCountServantBase
+      public virtual Home_Servant_Impl_Base
   {
   public:
     Home_Servant_Impl (EXEC * exe,
@@ -108,9 +107,9 @@ namespace CIAO
                                     ACE_Equal_To<PortableServer::ObjectId>,
                                     ACE_SYNCH_MUTEX>
       OBJREF_MAP;
-    
+
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;
-    
+
     OBJREF_MAP objref_map_;
   };
 }

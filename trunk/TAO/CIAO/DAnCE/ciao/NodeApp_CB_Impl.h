@@ -35,8 +35,7 @@ namespace CIAO
    *        we will have an unique callback object. --Tao
    */
   class Deployment_svnt_Export NodeApplication_Callback_Impl
-    : public virtual POA_CIAO::NodeApplication_Callback,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::NodeApplication_Callback
   {
   public:
     friend class NodeApplicationManager_Impl;

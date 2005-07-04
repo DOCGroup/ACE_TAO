@@ -50,8 +50,7 @@ namespace CIAO
             typename COMP_SVNT>
   class Swapping_Home_Servant_Impl
     : public virtual BASE_SKEL,
-      public virtual Home_Servant_Impl_Base,
-      public virtual PortableServer::RefCountServantBase
+      public virtual Home_Servant_Impl_Base
   {
   public:
     Swapping_Home_Servant_Impl (EXEC * exe,
