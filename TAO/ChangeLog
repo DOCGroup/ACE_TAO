@@ -1,3 +1,12 @@
+Mon Jul  4 13:37:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Added missing Messaging_PolicyValueA.cpp
+
+        * tao/tao.mpc:
+          Added missing Messaging_PolicyValueA.cpp and
+          Messaging_PolicyValueC.cpp
+
 Mon Jul  4 13:12:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Protocols_Hooks.h:

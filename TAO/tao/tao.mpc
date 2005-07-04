@@ -180,7 +180,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ORB.cpp
     ORBInitializer_Registry.cpp
     ORBInitializer_Registry_Adapter.cpp
-    orb_typesA.cpp
     orb_typesC.cpp
     ORB_Core.cpp
     ORB_Core_Auto_Ptr.cpp
