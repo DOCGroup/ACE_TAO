@@ -8,14 +8,8 @@
 #include "TestS.h"
 #include "ace/Task.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 class Manager
   :  public virtual POA_Test::Manager
-  ,  public virtual PortableServer::RefCountServantBase
 {
 public:
   Manager (CORBA::ORB_ptr orb);
@@ -54,9 +48,5 @@ private:
   CORBA::Long milliseconds_;
   // The number of milliseconds.
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* LONGUPCALLS_MANAGER_H */

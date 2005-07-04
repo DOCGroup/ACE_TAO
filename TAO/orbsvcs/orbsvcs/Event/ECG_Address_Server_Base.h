@@ -27,8 +27,7 @@
  * initialized in the same fasion.
  */
 class TAO_RTEvent_Serv_Export TAO_ECG_Address_Server_Base :
-  public virtual POA_RtecUDPAdmin::AddrServer,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
 

@@ -44,8 +44,7 @@
  */
 class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification :
   public TAO_LogNotification,
-  public POA_CosNotifyComm::PushSupplier,
-  public PortableServer::RefCountServantBase
+  public POA_CosNotifyComm::PushSupplier
 {
 public:
   // = Initialization and Termination methods.

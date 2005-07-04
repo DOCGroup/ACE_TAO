@@ -8,11 +8,6 @@
 
 #include "SenderS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 class ACE_Manual_Event;
 
 /**
@@ -20,7 +15,6 @@ class ACE_Manual_Event;
  */
 class Sender_i
   : public virtual POA_Sender
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -55,10 +49,6 @@ private:
   /// Payload that is being sent
   Receiver::Payload payload_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* MUXING_RECEIVER_H */

@@ -13,7 +13,6 @@
 // Trivial test corba object
 class DynServer_Export DynServer
   : public POA_test
-  , public PortableServer::RefCountServantBase
 {
   int n_;
 public:

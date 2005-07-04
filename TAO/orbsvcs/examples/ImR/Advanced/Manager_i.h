@@ -12,7 +12,6 @@
 
 class  Manager_i
   : public virtual POA_Manager
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   Manager_i (long retryCount);

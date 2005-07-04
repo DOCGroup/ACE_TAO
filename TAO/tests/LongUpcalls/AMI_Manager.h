@@ -6,14 +6,8 @@
 #include "TestS.h"
 #include "ace/Task.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 class AMI_Manager
-  : public virtual POA_Test::Manager,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Test::Manager
 {
 public:
   AMI_Manager (CORBA::ORB_ptr orb);
@@ -61,7 +55,6 @@ private:
 
 class Controller_Handler
   :  public virtual POA_Test::AMI_ControllerHandler
-  ,  public virtual PortableServer::RefCountServantBase
 {
 public:
   Controller_Handler (TAO_SYNCH_MUTEX *mutex,
@@ -86,9 +79,5 @@ private:
   // received.
   // The mutex is used to protect the access to the flag.
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* LONGUPCALLS_AMI_MANAGER_H */

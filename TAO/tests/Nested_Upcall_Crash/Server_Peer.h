@@ -13,7 +13,6 @@
 
 class Server_Peer
   : public POA_Test::Peer
-  , public PortableServer::RefCountServantBase
 {
 public:
   Server_Peer (ACE_RANDR_TYPE seed,

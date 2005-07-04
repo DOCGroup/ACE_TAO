@@ -13,7 +13,6 @@
 
 class Client_Peer
   : public POA_Test::Peer
-  , public PortableServer::RefCountServantBase
 {
 public:
   Client_Peer (CORBA::ORB_ptr orb);

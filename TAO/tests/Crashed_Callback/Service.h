@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Service interface
 class Service
   : public virtual POA_Test::Service
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -54,10 +48,6 @@ private:
   /// Count the number of tests executed
   int test_count_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* CRASHED_CALLBACK_SERVICE_H */

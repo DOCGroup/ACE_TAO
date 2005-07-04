@@ -23,7 +23,6 @@
  */
 class Callback
   : public virtual POA_Test::Callback
-  , public virtual PortableServer::RefCountServantBase
 
 {
 public:

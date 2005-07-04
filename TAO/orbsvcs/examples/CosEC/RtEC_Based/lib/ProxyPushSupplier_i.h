@@ -26,16 +26,10 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "rtec_cosec_export.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_CosEC_PushConsumerWrapper;
 
 class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushSupplier_i :
-  public POA_CosEventChannelAdmin::ProxyPushSupplier,
-  public virtual PortableServer::RefCountServantBase
+  public POA_CosEventChannelAdmin::ProxyPushSupplier
 {
   // = TITLE
   //   class ProxyPushSupplier-i implements the ProxyPushConsumer interface.
@@ -77,10 +71,6 @@ private:
   TAO_CosEC_PushConsumerWrapper *wrapper_;
   // The Rtec PushConsumer wrapper used by the Rtec ProxyPushSupplier.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* _PROXYPUSHSUPPLIER_H */

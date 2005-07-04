@@ -13,7 +13,6 @@
 
 class Echo_Handler
   : public POA_Test::AMI_EchoHandler
-  , public PortableServer::RefCountServantBase
 {
 public:
   Echo_Handler(void);

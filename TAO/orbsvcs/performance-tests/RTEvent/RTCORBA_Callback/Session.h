@@ -11,7 +11,6 @@
 /// Implement the Test::Session interface
 class Session
   : public virtual POA_Test::Session
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

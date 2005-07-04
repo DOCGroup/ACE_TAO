@@ -43,7 +43,6 @@
  */
 class TAO_Log_Serv_Export TAO_Iterator_i :
   public POA_DsLogAdmin::Iterator,
-  public virtual PortableServer::RefCountServantBase,
   public ACE_Event_Handler
 {
 public:

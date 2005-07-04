@@ -48,8 +48,7 @@ class TAO_NotifyLogFactory_i;
  * EventChannel.
  */
 class TAO_Notify_LogConsumer :
-  public virtual POA_CosNotifyComm::PushConsumer,
-  public PortableServer::RefCountServantBase
+  public virtual POA_CosNotifyComm::PushConsumer
 {
 public:
   // = Initialization and Termination methods.

@@ -52,8 +52,7 @@ class TAO_RTEventLogFactory_i;
  */
 class TAO_RTEventLog_Export TAO_RTEventLog_i :
   public TAO_Log_i,
-  public POA_RTEventLogAdmin::EventLog,
-  public virtual PortableServer::RefCountServantBase
+  public POA_RTEventLogAdmin::EventLog
 {
 public:
   // = Initialization and Termination methods.

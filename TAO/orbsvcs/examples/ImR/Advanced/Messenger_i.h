@@ -10,13 +10,14 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  Messenger_i : public virtual POA_Messenger, public virtual PortableServer::RefCountServantBase
+class  Messenger_i
+  : public virtual POA_Messenger
 {
 public:
   Messenger_i (CORBA::ORB_ptr orb, long instance);
- 
+
   virtual ~Messenger_i (void);
- 
+
   virtual
   CORBA::Long send_message (
       ::CORBA::Long thread,
@@ -24,7 +25,7 @@ public:
       ::CORBA::Long obj,
       ::CORBA::Long req
    ) ACE_THROW_SPEC ((CORBA::SystemException));
- 
+
   virtual void shutdownOrb ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 

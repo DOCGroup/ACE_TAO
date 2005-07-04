@@ -25,7 +25,6 @@
  */
 class TAO_RTEC_Perf_Export Loopback_Supplier
   : public virtual POA_RtecEventComm::PushSupplier
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

@@ -21,16 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class RND_Driver;
 
 class RND_Consumer
   : public POA_RtecEventComm::PushConsumer
-  , public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Simple consumer object
@@ -91,7 +85,6 @@ RND_Timer::RND_Timer (RND_Driver *driver)
 
 class RND_Supplier
   : public POA_RtecEventComm::PushSupplier
-  , public PortableServer::RefCountServantBase
   , public ACE_Task_Base
 {
   // = TITLE
@@ -186,9 +179,5 @@ private:
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_;
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* EC_RANDOM_H */

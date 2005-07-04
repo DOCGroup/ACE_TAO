@@ -12,8 +12,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 
 class test_i :
-  public POA_test,
-  public PortableServer::RefCountServantBase
+  public POA_test
 {
 public:
   /// Constructor.

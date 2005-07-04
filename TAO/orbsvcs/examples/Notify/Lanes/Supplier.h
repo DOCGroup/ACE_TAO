@@ -20,18 +20,14 @@
 #include "ace/SString.h"
 #include "ace/Condition_Thread_Mutex.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 /**
  * @class TAO_Notify_Lanes_Supplier
  *
  * @brief Implement a Structured Supplier.
  *
  */
-class TAO_Notify_Lanes_Supplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class TAO_Notify_Lanes_Supplier
+  : public POA_CosNotifyComm::StructuredPushSupplier
 {
  public:
   // = Initialization and Termination code
@@ -109,10 +105,6 @@ protected:
   /// Number of consumers connected.
   int consumer_count_;
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_SUPPLIER_H */

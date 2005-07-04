@@ -15,11 +15,6 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Big_Reply interface
 /**
  * Simply return a Big_Reply
@@ -27,7 +22,6 @@
 
 class Big_Reply_i
   : public virtual POA_Test::Big_Reply
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -58,10 +52,6 @@ private:
   Test::Octet_Seq_var reply_message_;
 
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 

@@ -15,11 +15,6 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Receiver interface
 /**
  * Skeleton implementation..
@@ -27,7 +22,6 @@
 
 class Receiver_i
   : public virtual POA_Test::Receiver
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -59,10 +53,6 @@ private:
   /// Number of calls processed so far..
   CORBA::ULong no_calls_;
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_RECEIVER_I_H*/

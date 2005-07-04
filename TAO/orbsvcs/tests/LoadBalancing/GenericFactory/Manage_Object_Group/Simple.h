@@ -19,7 +19,6 @@ class LB_Basic_Test;
 /// Implement the Test::Simple interface
 class Simple
   : public virtual POA_Test::Simple
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

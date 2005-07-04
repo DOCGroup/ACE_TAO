@@ -50,8 +50,7 @@ class TAO_NotifyLogFactory_i;
  */
 class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i :
   public TAO_Log_i,
-  public POA_DsNotifyLogAdmin::NotifyLog,
-  public virtual PortableServer::RefCountServantBase
+  public POA_DsNotifyLogAdmin::NotifyLog
 {
 public:
   // = Initialization and Termination.

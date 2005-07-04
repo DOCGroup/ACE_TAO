@@ -29,16 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class Content_Iterator_i :
-  public virtual POA_Web_Server::Content_Iterator,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_Web_Server::Content_Iterator
 {
   // = TITLE
   //    Implement the Web_Server::Content_Iterator interface.
@@ -90,9 +82,5 @@ private:
   // The number of the current chunk of data being sent.  (Used only
   // for debugging purposes.)
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif  /* CONTENT_ITERATOR_I_H */

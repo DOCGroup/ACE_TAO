@@ -36,8 +36,7 @@
  * CPU in the "form" of percentage.
  */
 class TAO_LoadBalancing_Export TAO_LB_CPU_Utilization_Monitor
-  : public virtual POA_CosLoadBalancing::LoadMonitor,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
 

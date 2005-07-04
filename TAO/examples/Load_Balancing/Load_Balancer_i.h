@@ -27,14 +27,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-#if defined (_MSC_VER)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 class  Object_Group_Factory_i :
-  public virtual POA_Load_Balancer::Object_Group_Factory,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_Load_Balancer::Object_Group_Factory
 {
   // = TITLE
   //    This class implements Load_Balancer::Object_Group_Factory idl
@@ -143,8 +137,7 @@ private:
   // Map containing all round robin <Object_Group>s created by this factory.
 };
 
-class Object_Group_i : public virtual POA_Load_Balancer::Object_Group,
-                       public virtual PortableServer::RefCountServantBase
+class Object_Group_i : public virtual POA_Load_Balancer::Object_Group
 
 {
   // = TITLE

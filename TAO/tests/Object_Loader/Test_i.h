@@ -19,12 +19,7 @@
 #include "TestS.h"
 #include "OLT_Export.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-class OLT_Export Test_i : public POA_Test, public PortableServer::RefCountServantBase
+class OLT_Export Test_i : public POA_Test
 {
   // = TITLE
   //   Implement the Test interface
@@ -50,9 +45,5 @@ private:
 
   static CORBA::Long instance_count_;
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* TAO_OBJECT_LOADER_TEST_I_H */

@@ -27,7 +27,7 @@
  *
  */
 template <class Peer_Traits>
-class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON, public PortableServer::RefCountServantBase
+class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON
 {
   typedef ACE_TYPENAME Peer_Traits::Admin_Traits Admin_Traits;
   typedef ACE_TYPENAME Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;

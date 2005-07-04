@@ -66,7 +66,8 @@ private:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 };
 
-class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class Filter_StructuredPushSupplier
+  : public POA_CosNotifyComm::StructuredPushSupplier
 {
   // = TITLE
   //   Filter_StructuredPushSupplier

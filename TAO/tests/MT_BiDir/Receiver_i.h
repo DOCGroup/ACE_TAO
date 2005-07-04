@@ -8,17 +8,11 @@
 
 #include "ReceiverS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /**
  * Simply print count how many bytes were received.
  */
 class Receiver_i
   : public virtual POA_Receiver
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -38,10 +32,6 @@ private:
   CORBA::ULong message_count_;
   CORBA::ULong byte_count_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* MUXING_RECEIVER_H */

@@ -21,11 +21,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SString.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class Filter_StructuredPushConsumer;
 class Filter_StructuredPushSupplier;
 
@@ -130,7 +125,8 @@ class FilterClient
 };
 
 /*****************************************************************/
-class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class Filter_StructuredPushConsumer
+  : public POA_CosNotifyComm::StructuredPushConsumer
 {
   // = TITLE
   //   Filter_StructuredPushConsumer
@@ -201,7 +197,8 @@ protected:
 
 /*****************************************************************/
 
-class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class Filter_StructuredPushSupplier
+  : public POA_CosNotifyComm::StructuredPushSupplier
 {
   // = TITLE
   //   Filter_StructuredPushSupplier
@@ -260,11 +257,5 @@ protected:
         CORBA::SystemException
       ));
 };
-
-/*****************************************************************/
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* NOTIFY_FILTER_CLIENT_H */

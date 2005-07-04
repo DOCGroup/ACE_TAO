@@ -37,7 +37,8 @@
  * @brief Implementation of CosNotifyFilter::Filter servant.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
+class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
+  : public POA_CosNotifyFilter::Filter
 {
 public:
   /// Constuctor

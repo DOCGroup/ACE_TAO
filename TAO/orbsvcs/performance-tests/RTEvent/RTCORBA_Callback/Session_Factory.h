@@ -11,7 +11,6 @@
 /// Implement the Test::Session_Factory interface
 class Session_Factory
   : public virtual POA_Test::Session_Factory
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

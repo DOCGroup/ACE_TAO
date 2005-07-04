@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Shutdown_Helper interface
 class Shutdown_Helper
   : public virtual POA_Test::Shutdown_Helper
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -31,10 +25,6 @@ private:
   /// the application.
   CORBA::ORB_var orb_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* SHUTDOWN_HELPER_H */

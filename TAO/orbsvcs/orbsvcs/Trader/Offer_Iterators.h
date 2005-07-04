@@ -28,8 +28,7 @@
   // *************************************************************
 
 class TAO_Offer_Iterator :
-  public virtual POA_CosTrading::OfferIterator,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_CosTrading::OfferIterator
 {
   // = TITLE
   //     This class implements CosTrading::OfferIterator IDL
@@ -160,8 +159,7 @@ private:
   // *************************************************************
 
 class TAO_Offer_Iterator_Collection :
-  public virtual POA_CosTrading::OfferIterator,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_CosTrading::OfferIterator
 // = TITLE
 //   A collection of offer iterator to query in turn.
 //
@@ -219,8 +217,7 @@ private:
   // *************************************************************
 
 class TAO_Offer_Id_Iterator :
-  public virtual POA_CosTrading::OfferIdIterator,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_CosTrading::OfferIdIterator
 // = TITLE
 //   Silly little iterator that contains the overflow of offer ids
 //   from the Admin list_offers method.

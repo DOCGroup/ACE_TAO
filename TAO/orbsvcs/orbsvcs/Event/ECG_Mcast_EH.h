@@ -107,7 +107,6 @@ private:
    */
   class Observer :
     public virtual POA_RtecEventChannelAdmin::Observer,
-    public virtual PortableServer::RefCountServantBase,
     public TAO_EC_Deactivated_Object
   {
   public:

@@ -17,14 +17,8 @@
 
 #include "IdentityS.h"
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-#if defined (_MSC_VER)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 class Identity_i :
-  public virtual POA_Identity,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_Identity
 {
   // = TITLE
   //    This class implements Identity.idl interface.
