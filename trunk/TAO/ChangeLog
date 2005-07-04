@@ -1,3 +1,8 @@
+Mon Jul  4 14:34:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+          Fixed compile error
+
 Mon Jul  4 14:12:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.h:
