@@ -58,8 +58,7 @@ namespace CIAO
   // implementation in a namespace Node_Application or whatever to
   // signify that it belongs to another software piece of CIAO?
   class CIAO_SERVER_Export NodeApplication_Impl
-    : public virtual POA_Deployment::NodeApplication,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Deployment::NodeApplication
   {
   public:
     /// Default constructor.

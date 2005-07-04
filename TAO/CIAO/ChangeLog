@@ -1,6 +1,49 @@
+Mon Jul  4 09:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.h:pp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeManager/NodeDaemon_Impl.h:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/ciao/Container_Impl.h:
+        * DAnCE/ciao/Home_Servant_Impl_T.h:
+        * DAnCE/ciao/NodeApp_CB_Impl.h:
+        * DAnCE/ciao/NodeApplication_Impl.h:
+        * DAnCE/ciao/Servant_Impl_T.h:
+        * DAnCE/ciao/StandardConfigurator_Impl.h:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.h:
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h:
+        * ciao/ComponentInstallation_Impl.h:
+        * ciao/ComponentServer_Impl.h:
+        * ciao/Container_Impl.h:
+        * ciao/HomeRegistrar_i.h:
+        * ciao/Home_Servant_Impl_T.h:
+        * ciao/Servant_Impl_T.h:
+        * ciao/ServerActivator_Impl.h:
+        * ciao/StandardConfigurator_Impl.h:
+        * docs/templates/CIAO_Glue_Session_Template.h:
+        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.h:
+        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_svnt.h:
+        * performance-tests/Benchmark/LatencyTest.h:
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
+        * tools/Assembly_Deployer/Assembly_Impl.h:
+        * tools/Assembly_Deployer/Assembly_Service_Impl.h:
+        * tools/Daemon/Daemon_Impl.h:
+        * tools/Simple_Component_Server/Simple_Server_i.h:
+          All servants are reference counted by default, no need anymore to
+          derive the servant from RefCountServantBase
+
 Sat Jul  2 12:16:49 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp: 
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
         * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
 
@@ -10,19 +53,19 @@ Fri Jul  1 08:42:27 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
-	
+
 	Fixed compile errors with emulated exceptions turned on.
-	
+
 Thu Jun 30 23:34:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/tests/Minimum/Receiver/Receiver_exec.cpp:
         * DAnCE/tests/Minimum/Receiver/Receiver_exec.h:
         * DAnCE/tests/Minimum/Sender/Sender_exec.cpp:
         * DAnCE/tests/Minimum/Sender/Sender_exec.h:
-        
+
           More overlooked changes to exec files corresponding to
           CIDL compiler code generation changes of
-          
+
           Wed Jun 22 23:20:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jun 30 12:36:06 2005  William Otte  <wotte@atl.lmco.com>
@@ -33,7 +76,7 @@ Thu Jun 30 12:36:06 2005  William Otte  <wotte@atl.lmco.com>
 
 	Added DAM_Map to the Plan_Launcher directory, as make wouldn't
 	handle the relative reference properly.
-	
+
 Thu Jun 30 09:29:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/new_RepositoryManager/RMadmin.cpp
@@ -54,7 +97,7 @@ Thu Jun 30 09:59:17 2005  William Otte  <wotte@atl.lmco.com>
 	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
 
 	Factored out the plan launcher capability into a shared library so
-	applications can use its functionality. 
+	applications can use its functionality.
 
 Thu Jun 30 04:33:35 2005 ming xiong <mxiong@dre.vanderbilt.edu>
 
@@ -64,11 +107,11 @@ Thu Jun 30 04:33:35 2005 ming xiong <mxiong@dre.vanderbilt.edu>
        * DAnCE/ComponentPackager/PDL_Handler.cpp
        * DAnCE/ComponentPackager/PDL_Handler.h
        * DAnCE/ComponentPackager/Base_Packager.cpp
-       
+
        Added a release operation for destructor of PDL_Handler;Changed the
        definition of input parameter for CPK_Packager::createPackager to const
        to indicate it can not be changed
-       
+
 Thu Jun 30 00:37:35 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
 	* DAnCE/new_RepositoryManager/RMadmin.cpp
@@ -93,7 +136,7 @@ Wed Jun 29 16:38:42 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
         * DAnCE/ComponentPackager/Base_Packager.h
         * DAnCE/ComponentPackager/CPK_Packager.h
         * DAnCE/ComponentPackager/CPK_Packager.h
-        
+
         Changed a couplfe of places to meet the Doxygen test and TChar test for
         bin/fuzz.pl
 
@@ -112,13 +155,13 @@ Wed Jun 29 16:28:52 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/ciao/Deployment.idl
 
 	Merged dance_multiple_assemblies to main.  This merge
-	contains code necessary to be able to deploy multiple assemblies 
+	contains code necessary to be able to deploy multiple assemblies
 	into a single NodeManager.
 
 Wed Jun 29 18:09:11 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Added check for successful opening of target file, which prevents
           a crash when the file open is unsuccessful, for example when
           write permissions are denied in the directory. Thanks to Will

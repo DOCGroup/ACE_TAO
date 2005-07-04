@@ -195,8 +195,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class EC_SVNT_Export EC_Servant
-  : public virtual POA_BasicSP::EC,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::EC
   {
     public:
     EC_Servant (
@@ -256,7 +255,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void 
+    virtual void
     hertz (
     ::CORBA::Long
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -497,8 +496,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class EC_SVNT_Export ECHome_Servant
-  : public virtual POA_BasicSP::ECHome,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::ECHome
   {
     public:
     ECHome_Servant (

@@ -15,8 +15,7 @@
 
 /// Implement the Test::LatencyTest interface
 class LatencyTest
-: public virtual POA_Benchmark::LatencyTest,
-  public virtual PortableServer::RefCountServantBase
+: public virtual POA_Benchmark::LatencyTest
 {
  public:
   /// Constructor

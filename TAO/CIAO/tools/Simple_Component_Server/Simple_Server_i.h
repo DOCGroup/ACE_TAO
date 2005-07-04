@@ -24,8 +24,7 @@
 namespace CIAO
 {
   class Simple_Server_i
-    : public virtual POA_CIAO::Simple_Server,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::Simple_Server
   {
   public:
     /// Constructor

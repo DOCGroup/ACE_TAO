@@ -45,8 +45,7 @@ namespace CIAO
    * used to manage the lifecycle of containers running on the server.
    */
   class AssemblyFactory_Impl
-    : public virtual POA_Components::Deployment::AssemblyFactory,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Components::Deployment::AssemblyFactory
   {
   public:
     /// Constructor
@@ -109,8 +108,7 @@ namespace CIAO
    * used to manage the lifecycle of containers running on the server.
    */
   class Assembly_Impl
-    : public virtual POA_Components::Deployment::Assembly,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Components::Deployment::Assembly
   {
   public:
     /// Constructor

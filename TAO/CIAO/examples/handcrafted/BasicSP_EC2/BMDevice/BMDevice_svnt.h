@@ -42,8 +42,7 @@
 namespace CIAO_GLUE_BasicSP
 {
   class BMDEVICE_SVNT_Export ReadData_Servant
-  : public virtual POA_BasicSP::ReadData,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::ReadData
   {
     public:
     ReadData_Servant (
@@ -229,8 +228,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class BMDEVICE_SVNT_Export BMDevice_Servant
-  : public virtual POA_BasicSP::BMDevice,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::BMDevice
   {
     public:
     BMDevice_Servant (
@@ -263,8 +261,7 @@ namespace CIAO_GLUE_BasicSP
 
     // Servant class for the timeout consumer.
     class BMDEVICE_SVNT_Export TimeOutConsumer_timeout_Servant
-    : public virtual POA_BasicSP::TimeOutConsumer,
-    public virtual PortableServer::RefCountServantBase
+    : public virtual POA_BasicSP::TimeOutConsumer
     {
       public:
       TimeOutConsumer_timeout_Servant (
@@ -566,8 +563,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class BMDEVICE_SVNT_Export BMDeviceHome_Servant
-  : public virtual POA_BasicSP::BMDeviceHome,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::BMDeviceHome
   {
     public:
     BMDeviceHome_Servant (

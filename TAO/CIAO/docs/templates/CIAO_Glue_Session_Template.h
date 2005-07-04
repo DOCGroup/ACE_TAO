@@ -56,8 +56,7 @@ namespace CIAO_GLUE
 
 ##foreach [facet type] in (all facet interface types in the original IDL)
   class [SERVANT]_Export [facet type]_Servant :
-    : public virtual POA_[facet type], // full skeleton name here
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_[facet type] // full skeleton name here
   {
   public:
     // Constructor and destructor.
@@ -254,8 +253,7 @@ namespace CIAO_GLUE
   //////////////////////////////////////////////////////////////////
   // Component Servant Glue code implementation
   class [SERVANT]_Export [component name]_Servant
-    : public virtual POA_[component name], // full skeleton name here
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_[component name] // full skeleton name here
   {
   public:
     // Ctor.
@@ -325,8 +323,7 @@ namespace CIAO_GLUE
 
     // First we need to generate the event sink specific servant
     class [SERVANT]_Export [eventtype]Consumer_[consumer name]_Servant
-      : public virtual POA_[eventtype]Consumer, // full skeleton name here
-        public virtual PortableServer::RefCountServantBase
+      : public virtual POA_[eventtype]Consumer // full skeleton name here
     {
     public:
       // Constructor and destructor.
@@ -594,8 +591,7 @@ namespace CIAO_GLUE
 
   // Foreach component home
   class [SERVANT]_Export [home name]_Servant :
-    public virtual POA_[home name], // full skeleton name here
-    public virtual PortableServer::RefCountServantBase
+    public virtual POA_[home name] // full skeleton name here
   {
   public:
     // Ctor.

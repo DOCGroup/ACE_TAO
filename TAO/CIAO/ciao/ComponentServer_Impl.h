@@ -41,8 +41,7 @@ namespace CIAO
    * used to manage the lifecycle of containers running on the server.
    */
   class CIAO_SERVER_Export ComponentServer_Impl
-    : public virtual POA_Components::Deployment::ComponentServer,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Components::Deployment::ComponentServer
   {
   public:
     /// Constructor

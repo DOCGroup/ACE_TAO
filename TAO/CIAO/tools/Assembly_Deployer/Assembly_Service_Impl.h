@@ -24,8 +24,7 @@
 namespace CIAO
 {
   class Assembly_Service_Impl
-    : public virtual POA_CIAO::Assembly_Service,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::Assembly_Service
   {
   public:
     /// Constructor

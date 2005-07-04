@@ -37,8 +37,7 @@ namespace CIAO
    * @class NodeApplicationManager_Impl
    */
   class CIAO_NAM_Export NodeApplicationManager_Impl
-    : public virtual POA_Deployment::NodeApplicationManager,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Deployment::NodeApplicationManager
   {
   public:
     /// Constructor

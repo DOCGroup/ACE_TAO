@@ -42,8 +42,7 @@ namespace CIAO
    * defined in the meta data.
    */
   class CIAO_SERVER_Export StandardConfigurator_Impl
-    : public virtual POA_Components::StandardConfigurator,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Components::StandardConfigurator
   {
   public:
     /// Constructor

@@ -48,8 +48,7 @@ namespace CIAO
    * nodes. It specializes the ApplicationManager abstract interface.
    */
   class DomainApplicationManager_Export DomainApplicationManager_Impl
-    : public virtual POA_Deployment::DomainApplicationManager,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Deployment::DomainApplicationManager
   {
   public:
     /// Define the type which contains a list of DnC artifacts.
@@ -170,7 +169,7 @@ namespace CIAO
     virtual ::Deployment::DeploymentPlan * getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /** 
+    /**
      * This is a helper function to destroy the NodeAppManager.
      * Since we don't want to do so in the destructor so we will
      * ask the ExecutionManager to do this on us when the same IDL
@@ -183,8 +182,8 @@ namespace CIAO
 
   protected:
     /// Destructor
-    virtual ~DomainApplicationManager_Impl (void);    
-    
+    virtual ~DomainApplicationManager_Impl (void);
+
     /**
      * (1) Parse the global deployment plan, get the total number of
      *     child plans included in the global plan, and get the list of

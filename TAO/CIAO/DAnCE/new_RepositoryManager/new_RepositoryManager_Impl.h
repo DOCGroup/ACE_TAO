@@ -31,22 +31,23 @@ namespace
   const static char* RM_STORAGE_PATH = "./RepositoryDir";
 }
 
-class  CIAO_new_RepositoryManagerDaemon_i : public virtual POA_CIAO::new_RepositoryManagerDaemon, public virtual PortableServer::RefCountServantBase
+class  CIAO_new_RepositoryManagerDaemon_i :
+  public virtual POA_CIAO::new_RepositoryManagerDaemon
 {
 public:
 
-  /// Constructor 
+  /// Constructor
   CIAO_new_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb);
-  
-  /// Destructor 
+
+  /// Destructor
   virtual ~CIAO_new_RepositoryManagerDaemon_i (void);
-  
+
 
   /// shutdown method to shut down the orb gracefully
   virtual
   void shutdown ()
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   /// This method allow you to install a package into the RM
   virtual
   void installPackage (const char * installationName,
@@ -56,22 +57,22 @@ public:
                      ::Deployment::NameExists,
                      ::Deployment::PackageError));
 
-  /// This method parse the depoyment plan in a package and return the 
-  /// corresponding structure. You need to provide the name of the 
+  /// This method parse the depoyment plan in a package and return the
+  /// corresponding structure. You need to provide the name of the
   /// package whose deployment plan you want to get . If no plan is
   /// found in the package, an exception is thrown
   virtual
   ::Deployment::DeploymentPlan * retrievePlan (const char * packageName)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::Deployment::NoPlan));
-  
+
   /// find a package and return it if installed in the RM
   /// else throw an exception
   virtual
   ::Deployment::Package * findPackageByName (const char * name)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::Deployment::NoSuchName));
-  
+
   /// find an implementation (.dll, .so) by its name and return it if installed in the RM
   /// else throw an exception. You need to specify the package in which the RM
   /// is to look for the implementation
@@ -80,24 +81,24 @@ public:
                                                            const char * package_name)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::Deployment::NoSuchName));
-  
+
   /// not implemented
   virtual
   ::Deployment::Package * findPackageByUUID (const char * UUID)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::Deployment::NoSuchName));
-  
+
   ///not implemented
   virtual
   ::Deployment::Implementation * findImplementationByUUID (const char * UUID)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::Deployment::NoSuchName));
-  
+
   /// get the names of all packages currently installed in the RM
   virtual
   ::CORBA::StringSeq * getAllPackageNames ()
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   /// Find out if the package was installed in the repository,
   /// delete it if found or throw and exception otherwise
   virtual
@@ -112,8 +113,8 @@ protected:
   ///returns 1 on success
   ///           -1 on error
 
-  int write_to_disk (const char* full_path, 
-                     const CORBA::Octet* buffer, 
+  int write_to_disk (const char* full_path,
+                     const CORBA::Octet* buffer,
                      size_t length);
 
 
@@ -122,13 +123,13 @@ protected:
   ///            0 on already exists and replace == false
   ///           -1 on error
 
-  int write_to_disk (const char* full_path, 
+  int write_to_disk (const char* full_path,
                      ACE_Message_Block& mb,
                      bool replace = true);
 
 
   ///function to read the contents of a file from disk into a CORBA::OctetSeq
-  ///returns a pointer to a CORBA::Octet buffer and updated the lenght on success 
+  ///returns a pointer to a CORBA::Octet buffer and updated the lenght on success
   ///            0 on failure
 
   CORBA::Octet* read_from_disk (const char* full_path, size_t &lenght);
@@ -139,7 +140,7 @@ private:
   /// Key:      Package name of CString type or
   /// Value:    The location of the local copy of the package
 
-  ///Based on the synchronization needed we can parametrize this with either 
+  ///Based on the synchronization needed we can parametrize this with either
   ///ACE_Null_Mutex or ACE_RW_Mutex
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

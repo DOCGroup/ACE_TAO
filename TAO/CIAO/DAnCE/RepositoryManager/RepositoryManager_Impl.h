@@ -74,8 +74,7 @@ using xercesc::AbstractDOMParser;
 namespace CIAO
 {
   class RepositoryManager_Impl
-    : public virtual POA_CIAO::RepositoryManagerDaemon,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::RepositoryManagerDaemon
     {
 
     public:

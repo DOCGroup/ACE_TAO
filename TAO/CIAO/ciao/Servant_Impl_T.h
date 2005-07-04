@@ -38,22 +38,21 @@ namespace CIAO
    * This class implements navigation and other operations
    * common to all generated servants.
    */
-  template <typename BASE_SKEL, 
-            typename EXEC, 
-            typename EXEC_VAR, 
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
             typename CONTEXT>
   class Servant_Impl : public virtual BASE_SKEL,
-                       public virtual Servant_Impl_Base,
-                       public virtual PortableServer::RefCountServantBase
+                       public virtual Servant_Impl_Base
   {
   public:
     Servant_Impl (EXEC * exe,
                   Components::CCMHome_ptr home,
                   Home_Servant_Impl_Base *home_servant,
                   Session_Container * c);
-                  
+
     virtual ~Servant_Impl (void);
-   
+
     // Operations for CCMObject interface.
 
     virtual CORBA::Boolean
@@ -88,10 +87,10 @@ namespace CIAO
     _ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  protected: 
-    EXEC_VAR executor_;    
-    
-    CONTEXT * context_;  
+  protected:
+    EXEC_VAR executor_;
+
+    CONTEXT * context_;
   };
 }
 
