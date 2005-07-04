@@ -1,3 +1,11 @@
+Mon Jul  4 04:21:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Array_Map.h (ACE_Array_Map):
+
+	  Work around non-standard compliant Sun C++
+	  std::reverse_iterator<> template arguments.  Define a typedef
+	  specific to Sun C++ 5.5 or earlier.
+
 Sun Jul  3 14:59:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/APG/Config/Makefile.am:
