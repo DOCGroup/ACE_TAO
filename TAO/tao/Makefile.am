@@ -227,7 +227,6 @@ libTAO_la_SOURCES = \
   Policy_Validator.cpp \
   PollableC.cpp \
   PortableInterceptorC.cpp \
-  PredefinedType_Seq_Tmplinst.cpp \
   Principal.cpp \
   Profile.cpp \
   Profile_Transport_Resolver.cpp \
