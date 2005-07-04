@@ -9,7 +9,6 @@
 
 class ST_AMH_Servant
   : public virtual POA_Test::AMH_Roundtrip
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);

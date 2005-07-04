@@ -16,7 +16,6 @@
 /// Implement the Test::Hello interface
 class Memory_Growth
   : public virtual POA_Test::Memory_Growth
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

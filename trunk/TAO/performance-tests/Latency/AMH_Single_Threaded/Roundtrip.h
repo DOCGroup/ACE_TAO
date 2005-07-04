@@ -16,7 +16,6 @@
 /// Implement the Test::Roundtrip interface
 class Roundtrip
   : public virtual POA_Test::AMH_Roundtrip
-  , public virtual PortableServer::RefCountServantBase
 {
  public:
     /// Constructor

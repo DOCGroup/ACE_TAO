@@ -32,8 +32,7 @@
  *
  **/
 class TAO_IMR_Client_Export ServerObject_i
-  : public POA_ImplementationRepository::ServerObject,
-    public PortableServer::RefCountServantBase
+  : public POA_ImplementationRepository::ServerObject
 {
 public:
   /// Constructor.
