@@ -184,6 +184,7 @@ libTAO_la_SOURCES = \
   New_Leader_Generator.cpp \
   ORB.cpp \
   ORBInitializer_Registry.cpp \
+  ORBInitializer_Registry_Adapter.cpp \
   ORB_Core.cpp \
   ORB_Core_Auto_Ptr.cpp \
   ORB_Core_TSS_Resources.cpp \

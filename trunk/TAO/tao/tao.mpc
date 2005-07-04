@@ -177,6 +177,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     operation_details.cpp
     ORB.cpp
     ORBInitializer_Registry.cpp
+    ORBInitializer_Registry_Adapter.cpp
     orb_typesA.cpp
     orb_typesC.cpp
     ORB_Core.cpp
