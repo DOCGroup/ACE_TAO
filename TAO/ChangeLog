@@ -1,3 +1,8 @@
+Mon Jul  4 13:52:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Stub.h:
+          Removed not needed forward declarations
+
 Mon Jul  4 13:42:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orb_types.pidl:
