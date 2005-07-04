@@ -88,16 +88,13 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Coordinator *coordinator_impl;
+      Coordinator *coordinator_impl = 0;
       ACE_NEW_RETURN (coordinator_impl,
                       Coordinator (peer_count),
                       1);
 
       Test::Coordinator_var coordinator =
         coordinator_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      coordinator_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
@@ -137,15 +134,13 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Building session list . . . "));
 
-      Session_Control *session_control_impl;
+      Session_Control *session_control_impl = 0;
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
                       1);
 
       Test::Session_Control_var session_control =
         session_control_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      session_control_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Session_List session_list;
@@ -158,10 +153,10 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_ASSERT (session_list.length () == peer_count);
- 
+
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
       ACE_DEBUG ((LM_DEBUG, "Giving start signal . . . "));
-      
+
       CORBA::ULong j;
       for (j = 0; j != peer_count; ++j)
         {

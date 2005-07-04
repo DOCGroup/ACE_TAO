@@ -97,9 +97,6 @@ main (int argc, char *argv[])
         coordinator_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      coordinator_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       CORBA::String_var ior =
         orb->object_to_string (coordinator.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -135,6 +132,8 @@ main (int argc, char *argv[])
           return 1;
         }
 
+      ACE_DEBUG ((LM_DEBUG, "Building session list . . . "));
+
       Session_Control *session_control_impl;
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
@@ -142,8 +141,6 @@ main (int argc, char *argv[])
 
       Test::Session_Control_var session_control =
         session_control_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      session_control_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Session_List session_list;
@@ -156,7 +153,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_ASSERT (session_list.length () == peer_count);
+      ACE_DEBUG ((LM_DEBUG, "done.\n"));
 
+      ACE_DEBUG ((LM_DEBUG, "Giving start signal . . . "));
       CORBA::ULong j;
       for (j = 0; j != peer_count; ++j)
         {
@@ -178,7 +177,9 @@ main (int argc, char *argv[])
 
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Waiting for sessions . . . \n"));
+      ACE_DEBUG ((LM_DEBUG, "done.\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "Waiting for sessions . . .\n"));
       for (int k = 0;
            k != 300 && !session_control_impl->all_sessions_finished ();
            ++k)
@@ -204,8 +205,12 @@ main (int argc, char *argv[])
 
         }
 
+      ACE_DEBUG ((LM_DEBUG, "Shutdown all peers . . .\n"));
+
       coordinator_impl->shutdown_all_peers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
