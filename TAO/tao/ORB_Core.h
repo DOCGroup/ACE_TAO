@@ -96,7 +96,6 @@ class TAO_Valuetype_Adapter;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-class TAO_Buffering_Constraint_Policy;
 class TAO_Eager_Buffering_Sync_Strategy;
 class TAO_Delayed_Buffering_Sync_Strategy;
 
