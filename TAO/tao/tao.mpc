@@ -157,6 +157,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Managed_Types.cpp
     Marshal.cpp
     MCAST_Parser.cpp
+    Messaging_PolicyValueA.cpp
+    Messaging_PolicyValueC.cpp
     Messaging_SyncScopeC.cpp
     MProfile.cpp
     Muxed_TMS.cpp

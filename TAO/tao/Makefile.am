@@ -177,6 +177,7 @@ libTAO_la_SOURCES = \
   MProfile.cpp \
   Managed_Types.cpp \
   Marshal.cpp \
+  Messaging_PolicyValueA.cpp \
   Messaging_PolicyValueC.cpp \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
