@@ -24,7 +24,7 @@
 #include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
 #include "tao/Basic_Types.h"
-#include "tao/System_Exception.h"
+#include "tao/SystemException.h"
 
 class TAO_ORB_Core;
 
