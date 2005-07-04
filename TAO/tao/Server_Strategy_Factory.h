@@ -24,8 +24,6 @@
 #include "TAO_Export.h"
 #include "Basic_Types.h"
 
-class TAO_Active_Object_Map_Impl;
-class TAO_Reverse_Active_Object_Map_Impl;
 class TAO_ORB_Core;
 
 enum TAO_Demux_Strategy
