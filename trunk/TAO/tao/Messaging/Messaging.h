@@ -26,19 +26,8 @@ public:
   static int init (void);
 };
 
-# if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_Messaging_Initializer = &TAO_Messaging_Initializer::init ();
-
-#else
-
 static int
 TAO_Requires_Messaging_Initializer = TAO_Messaging_Initializer::init ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #define TAO_MESSAGING_SAFE_INCLUDE
 #include "MessagingC.h"

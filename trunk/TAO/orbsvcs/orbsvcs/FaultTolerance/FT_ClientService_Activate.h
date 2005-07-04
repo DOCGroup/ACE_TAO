@@ -61,19 +61,8 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_FT_ClientService_Activate)
 ACE_FACTORY_DECLARE (TAO_FT_ClientORB, TAO_FT_ClientService_Activate)
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_FT_Requires_ClientService_Activate = &TAO_FT_ClientService_Activate::Initializer;
-
-#else
-
 static int
 TAO_FT_Requires_ClientService_Activate = TAO_FT_ClientService_Activate::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_FT_CLIENTACTIVATE_H*/

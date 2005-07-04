@@ -47,19 +47,8 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
 ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_IORManip_Initializer = &TAO_IORManip_Loader::Initializer;
-
-#else
-
 static int
 TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #define TAO_IORMANIP_SAFE_INCLUDE
 #include "IORC.h"

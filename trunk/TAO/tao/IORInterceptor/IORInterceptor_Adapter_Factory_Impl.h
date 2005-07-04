@@ -53,21 +53,9 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_IORInterceptor_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Factory_Impl)
 
-#if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_IORInterceptor_Initializer =
-  &TAO_IORInterceptor_Adapter_Factory_Impl::Initializer;
-
-#else
-
 static int
 TAO_Requires_IORInterceptor_Initializer =
   TAO_IORInterceptor_Adapter_Factory_Impl::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #define TAO_IORINTERCEPTOR_SAFE_INCLUDE
 #include "tao/IORInterceptor/IORInterceptorC.h"

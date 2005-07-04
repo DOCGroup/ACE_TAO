@@ -62,22 +62,9 @@ namespace TAO
     ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
     ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
 
-    #if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-    typedef int (*TAO_Module_Initializer) (void);
-
-    static TAO_Module_Initializer
-    TAO_Requires_ImR_Client_Initializer =
-      &TAO::ImR_Client::ImR_Client_Adapter_Impl::Initializer;
-
-    #else
-
     static int
     TAO_Requires_ImR_Client_Initializer =
       TAO::ImR_Client::ImR_Client_Adapter_Impl::Initializer ();
-
-    #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
-
   }
 }
 
