@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Startup_Callback interface
 class Startup_Callback
   : public virtual POA_Test::Startup_Callback
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -41,10 +35,6 @@ private:
   /// Store the process.
   Test::Process_var process_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* CLIENT_LEAKS_STARTUP_CALLBACK_H */

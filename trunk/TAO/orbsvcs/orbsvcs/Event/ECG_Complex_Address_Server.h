@@ -45,8 +45,7 @@
  *
  */
 class TAO_RTEvent_Serv_Export TAO_ECG_Complex_Address_Server :
-  public virtual POA_RtecUDPAdmin::AddrServer,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
 

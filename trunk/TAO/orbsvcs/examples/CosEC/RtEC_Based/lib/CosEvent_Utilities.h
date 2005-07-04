@@ -27,16 +27,10 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "rtec_cosec_export.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_CosEC_EventChannel_i;
 
 class TAO_RTEC_COSEC_Export CosEC_ServantBase :
-  public virtual POA_CosEventChannelAdmin::EventChannel,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_CosEventChannelAdmin::EventChannel
 {
   // = TITLE
   //   A generic servant base class.
@@ -158,11 +152,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   // e.g "1 4 2 5 3 6" where (1,4) (2,5) and (3,6) from source id,
   // event id pairs.
 };
-
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_COSEVENT_UTILITIES_H */

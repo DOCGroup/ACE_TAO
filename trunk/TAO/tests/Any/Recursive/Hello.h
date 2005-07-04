@@ -18,14 +18,8 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 class Hello
   : public virtual POA_Test::Hello
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
 
@@ -46,9 +40,5 @@ private:
   CORBA::ORB_var orb_;
 
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* HELLO_H */

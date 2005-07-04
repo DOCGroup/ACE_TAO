@@ -20,11 +20,6 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class Subscribe_StructuredPushConsumer;
 class Subscribe_StructuredPushSupplier;
 
@@ -119,7 +114,8 @@ class Subscribe
 };
 
 /*****************************************************************/
-class Subscribe_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class Subscribe_StructuredPushConsumer
+  : public POA_CosNotifyComm::StructuredPushConsumer
 {
   // = TITLE
   //   Subscribe_StructuredPushConsumer
@@ -189,7 +185,8 @@ protected:
 
 /*****************************************************************/
 
-class Subscribe_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class Subscribe_StructuredPushSupplier
+  : public POA_CosNotifyComm::StructuredPushSupplier
 {
   // = TITLE
   //   Subscribe_StructuredPushSupplier
@@ -245,11 +242,5 @@ protected:
         CORBA::SystemException
       ));
 };
-
-/*****************************************************************/
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* NOTIFY_SUBSCRIBE_CLIENT_H */

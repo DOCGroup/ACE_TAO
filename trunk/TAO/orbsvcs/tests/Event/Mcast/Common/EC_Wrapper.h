@@ -22,7 +22,6 @@ class TAO_EC_Event_Channel;
  *        - automatic cleanup in destructor, if necessary
  */
 class ECMcastTests_Export EC_Wrapper:
-  public virtual PortableServer::RefCountServantBase,
   public virtual POA_RtecEventChannelAdmin::EventChannel,
   public TAO_EC_Deactivated_Object
 {

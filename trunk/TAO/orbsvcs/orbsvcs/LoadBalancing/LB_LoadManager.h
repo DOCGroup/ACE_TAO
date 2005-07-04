@@ -36,8 +36,7 @@
 
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
-  : public virtual POA_CosLoadBalancing::LoadManager,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::LoadManager
 {
 public:
 

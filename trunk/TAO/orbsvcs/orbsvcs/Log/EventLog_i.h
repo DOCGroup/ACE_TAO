@@ -53,8 +53,7 @@ class TAO_EventLogFactory_i;
  */
 class TAO_EventLog_i :
   public TAO_Log_i,
-  public POA_DsEventLogAdmin::EventLog,
-  public virtual PortableServer::RefCountServantBase
+  public POA_DsEventLogAdmin::EventLog
 {
 public:
 

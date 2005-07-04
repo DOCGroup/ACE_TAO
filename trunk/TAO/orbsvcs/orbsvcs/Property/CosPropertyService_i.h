@@ -486,8 +486,8 @@ public:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertyNamesIterator : public virtual PortableServer::RefCountServantBase,
-                                                     public virtual POA_CosPropertyService::PropertyNamesIterator
+class TAO_Property_Export TAO_PropertyNamesIterator
+  : public virtual POA_CosPropertyService::PropertyNamesIterator
 {
   // = TITLE
   //     The PropertyNamesIterator interface allows a client to
@@ -547,8 +547,8 @@ private:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertiesIterator : public virtual PortableServer::RefCountServantBase,
-                                                  public virtual POA_CosPropertyService::PropertiesIterator
+class TAO_Property_Export TAO_PropertiesIterator
+  : public virtual POA_CosPropertyService::PropertiesIterator
 {
   // = TITLE
   //     Thid class implements PropertiesIterator interface allows a client to

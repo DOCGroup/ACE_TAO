@@ -29,16 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class Callback_Handler
-  : public virtual POA_Web_Server::AMI_CallbackHandler,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Web_Server::AMI_CallbackHandler
 {
   // = TITLE
   //    Class that asynchronously sends chunks of data to the
@@ -142,9 +134,5 @@ private:
   int last_chunk_;
   // Flag that indicates all chunks of data have been sent.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif  /* CALLBACK_HANDLER_H */

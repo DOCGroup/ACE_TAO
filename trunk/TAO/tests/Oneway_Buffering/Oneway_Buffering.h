@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Oneway_Buffering interface
 class Oneway_Buffering
   : public virtual POA_Test::Oneway_Buffering
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -44,10 +38,6 @@ private:
   /// Report request progress to this interface
   Test::Oneway_Buffering_Admin_var admin_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ONEWAY_BUFFERING_H */

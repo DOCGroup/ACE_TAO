@@ -15,11 +15,6 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Sender interface
 /**
  * Implements the oneway call send_ready_message. This in turn calls
@@ -28,7 +23,6 @@
 
 class Sender_i
   : public virtual POA_Test::Sender
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -59,10 +53,6 @@ private:
   /// Number of invocations received
   CORBA::ULong number_received_;
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_SENDER_I_H*/

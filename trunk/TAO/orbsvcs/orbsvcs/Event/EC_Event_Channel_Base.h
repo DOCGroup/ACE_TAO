@@ -106,7 +106,6 @@ private:
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Base
   : public POA_RtecEventChannelAdmin::EventChannel
-  , public PortableServer::RefCountServantBase
 {
 public:
   /// destructor

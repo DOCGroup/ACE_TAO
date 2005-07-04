@@ -25,7 +25,6 @@
 
 class Gateway_i
   : public virtual PortableServer::DynamicImplementation
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   Gateway_i (CORBA::ORB_ptr orb,

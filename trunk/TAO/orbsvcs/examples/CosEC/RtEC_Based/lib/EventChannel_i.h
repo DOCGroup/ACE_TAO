@@ -27,14 +27,8 @@
 #include "ConsumerAdmin_i.h"
 #include "SupplierAdmin_i.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_RTEC_COSEC_Export TAO_CosEC_EventChannel_i :
-public virtual POA_CosEventChannelAdmin::EventChannel,
-public virtual PortableServer::RefCountServantBase
+  public virtual POA_CosEventChannelAdmin::EventChannel
 {
   // = TITLE
   //   class TAO_CosEC_EventChannel_i implements the standard Cos EventChannel
@@ -93,10 +87,6 @@ private:
   // The reference to the SupplierAdmin interface returned after
   // activating the servant in the ORB.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* EVENTCHANNEL_I_H */

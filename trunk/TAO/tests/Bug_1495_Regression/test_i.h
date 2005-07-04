@@ -37,7 +37,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  Bug1495_i : public virtual POA_Bug1495_Regression::Bug1495, public virtual PortableServer::RefCountServantBase
+class  Bug1495_i : public virtual POA_Bug1495_Regression::Bug1495
 {
 public:
     //Constructor

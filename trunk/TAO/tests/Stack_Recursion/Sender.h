@@ -8,18 +8,12 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Receiver interface
 /**
  * Simply print count how many bytes were received.
  */
 class Sender
   : public virtual POA_Test::Sender
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -54,10 +48,6 @@ private:
 
   int is_done_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* MUXING_RECEIVER_H */

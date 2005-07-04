@@ -94,9 +94,8 @@ private:
  * This class connects as a supplier to an EventChannel, and supplies
  * to it all events it receives via UDP or Multicast.
  */
-class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver
-  : public virtual PortableServer::RefCountServantBase
-  , public virtual POA_RtecEventComm::PushSupplier
+class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver :
+  public virtual POA_RtecEventComm::PushSupplier
   , public virtual TAO_EC_Deactivated_Object
   , public virtual TAO_ECG_Dgram_Handler
 {

@@ -37,8 +37,7 @@
  * asynchronously sent exceptions.
  */
 class TAO_LB_LoadAlert_Handler
-  : public virtual POA_CosLoadBalancing::AMI_LoadAlertHandler,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::AMI_LoadAlertHandler
 {
 public:
 

@@ -23,7 +23,6 @@
  */
 class TAO_RTEC_Perf_Export Loopback
  : public virtual POA_Federated_Test::Loopback
- , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

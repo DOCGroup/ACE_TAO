@@ -44,8 +44,7 @@
  * iterator is destroyed.
  */
 template <class ITERATOR, class TABLE_ENTRY>
-class TAO_Bindings_Iterator : public virtual PortableServer::RefCountServantBase,
-                              public virtual POA_CosNaming::BindingIterator
+class TAO_Bindings_Iterator : public virtual POA_CosNaming::BindingIterator
 {
 public:
   // = Intialization and termination methods.

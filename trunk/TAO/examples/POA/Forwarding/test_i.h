@@ -14,15 +14,10 @@
 
 #include "testS.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class ServantActivator;
 
-class test_i : public virtual PortableServer::RefCountServantBase,
-                     public virtual POA_test
+class test_i :
+  public virtual POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb_ptr,
@@ -51,6 +46,3 @@ protected:
   CORBA::Long value_;
 };
 
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */

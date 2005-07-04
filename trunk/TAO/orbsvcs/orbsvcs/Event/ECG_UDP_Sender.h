@@ -95,7 +95,6 @@ private:
  *
  */
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
-  public virtual PortableServer::RefCountServantBase,
   public virtual POA_RtecEventComm::PushConsumer,
   public TAO_EC_Deactivated_Object
 {

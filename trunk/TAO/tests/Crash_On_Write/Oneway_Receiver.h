@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Oneway_Receiver interface
 class Oneway_Receiver
   : public virtual POA_Test::Oneway_Receiver
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -26,10 +20,6 @@ public:
   virtual void receive_oneway (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ONEWAY_RECEIVER_H */

@@ -42,7 +42,6 @@ class TAO_Naming_Context_Impl;
  */
 
 class TAO_Naming_Serv_Export TAO_Naming_Context :
-  public virtual PortableServer::RefCountServantBase,
   public virtual POA_CosNaming::NamingContextExt
 {
 public:

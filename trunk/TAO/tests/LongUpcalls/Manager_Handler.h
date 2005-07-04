@@ -8,14 +8,8 @@
 #include "TestS.h"
 #include "ace/Task.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 class Manager_Handler
   :  public virtual POA_Test::AMI_ManagerHandler
-  ,  public virtual PortableServer::RefCountServantBase
 {
 public:
   Manager_Handler (Test::Manager_ptr manager,
@@ -37,9 +31,5 @@ private:
   Test::Controller_var controller_;
   // The controller
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* LONGUPCALLS_MANAGER_HANDLER_H */

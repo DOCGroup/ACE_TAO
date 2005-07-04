@@ -28,7 +28,6 @@ class RTServer_Setup;
  */
 class TAO_RTEC_Perf_Export Peer_Base
  : public virtual POA_Federated_Test::Peer
- , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

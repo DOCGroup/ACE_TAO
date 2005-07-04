@@ -17,7 +17,6 @@
 /// Implement the Test::Basic interface
 class Basic
   : public virtual POA_Test::Basic
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

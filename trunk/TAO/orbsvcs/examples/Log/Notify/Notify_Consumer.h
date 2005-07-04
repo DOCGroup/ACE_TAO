@@ -27,7 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class Consumer : public POA_CosNotifyComm::PushConsumer, public PortableServer::RefCountServantBase
+class Consumer
+  : public POA_CosNotifyComm::PushConsumer
 {
   // = TITLE
   //   Simple consumer object

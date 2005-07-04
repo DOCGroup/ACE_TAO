@@ -76,8 +76,7 @@ namespace TAO
   *   registry is queried to find factories that can create the member.
   */
   class FT_ReplicationManager
-    : public virtual POA_FT::ReplicationManager,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_FT::ReplicationManager
   {
 
     //////////////////////

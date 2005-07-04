@@ -31,8 +31,7 @@ class ServerRequestInterceptor;
  *        request arriving per second.
  */
 class RPS_Monitor
-  : public virtual POA_CosLoadBalancing::LoadMonitor,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
 

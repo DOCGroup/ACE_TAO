@@ -26,19 +26,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 // Forward declaration
 class Callback_i;
 
 class Push_Iterator_Handler
-  : public virtual POA_Web_Server::AMI_Iterator_FactoryHandler,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Web_Server::AMI_Iterator_FactoryHandler
 {
   // = TITLE
   //    Implement the Web_Server::Iterator_Factory AMI Reply Handler.
@@ -111,9 +103,5 @@ private:
   Web_Server::AMI_Iterator_FactoryHandler_var ami_handler_;
   // Reference to this Reply Handler's self.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif  /* PUSH_ITERATOR_HANDLER_H */

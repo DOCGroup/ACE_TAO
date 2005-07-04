@@ -23,8 +23,7 @@
 
 
 class server_i
-  : public virtual POA_server,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_server
 {
 public:
 

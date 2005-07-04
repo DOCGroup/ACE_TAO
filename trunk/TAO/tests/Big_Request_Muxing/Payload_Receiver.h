@@ -8,18 +8,12 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Payload_Receiver interface
 /**
  * Simply print count how many bytes were received.
  */
 class Payload_Receiver
   : public virtual POA_Test::Payload_Receiver
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -39,10 +33,6 @@ private:
   /// Count the number of bytes received
   CORBA::ULong byte_count_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* BIG_REQUEST_MUXING_PAYLOAD_RECEIVER_H */

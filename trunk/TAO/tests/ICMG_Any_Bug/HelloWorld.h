@@ -8,16 +8,10 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::HelloWorld interface
 ///
 class HelloWorld
   : public virtual POA_Test::HelloWorld
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
 
@@ -28,10 +22,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* HELLOWORLD_H */

@@ -30,7 +30,6 @@
  */
 class ImR_Iterator
   : public POA_ImplementationRepository::ServerInformationIterator
-  , public PortableServer::RefCountServantBase
 {
 public:
   ImR_Iterator (CORBA::ULong n, Locator_Repository& repo, PortableServer::POA_ptr poa);
