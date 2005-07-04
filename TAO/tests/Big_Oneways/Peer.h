@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Peer interface
 class Peer
   : public virtual POA_Test::Peer
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -40,10 +34,6 @@ private:
   /// Keep a pointer to the ORB to shutdown cleanly
   CORBA::ORB_var orb_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* BIG_ONEWAYS_PEER_H */

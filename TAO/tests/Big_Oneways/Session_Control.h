@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Session_Control interface
 class Session_Control
   : public virtual POA_Test::Session_Control
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -46,10 +40,6 @@ private:
   /// Set to falso if any session reported a failure
   CORBA::Boolean success_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* BIG_ONEWAYS_SESSION_CONTROL_H */

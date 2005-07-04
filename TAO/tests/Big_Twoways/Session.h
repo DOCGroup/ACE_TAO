@@ -16,15 +16,9 @@
 # include "ace/Null_Barrier.h"
 #endif  /* ACE_HAS_THREADS */
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Session interface
 class Session
   : public virtual POA_Test::Session
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -110,10 +104,6 @@ private:
 #endif /* ACE_HAS_THREADS */
   Barrier barrier_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 
