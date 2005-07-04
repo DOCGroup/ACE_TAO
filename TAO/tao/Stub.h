@@ -32,10 +32,6 @@
 #endif /* HPUX && IOR */
 
 // Forward declarations.
-class TAO_RelativeRoundtripTimeoutPolicy;
-class TAO_Client_Priority_Policy;
-class TAO_Sync_Scope_Policy;
-class TAO_Buffering_Constraint_Policy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Set;
 class TAO_Profile;
