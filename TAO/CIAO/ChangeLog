@@ -1,3 +1,24 @@
+Mon Jul  4 22:50:17 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        
+          Created a new code emitter that knows which types CIAO
+          supports as component attribute types (basic types) and
+          which it does not (everything else). In the former case,
+          when DAnCE is assigning attribute values from XML properties -
+          in set_attributes () - it emits the usual code delegating
+          the assignment to the specific attribute mutator method
+          based on a string compare of the given attribute name to
+          the known attribute names of that component. In the latter
+          case, it emits an error message, stating that this particular
+          IDL kind is not supported by CIAO as a component attribute
+          type. Thanks to Sunil Rottoo <srottoo@airsage.com> for
+          pointing out that trying to set the value of an unsupported
+          component attribute type from a DnC property value in XML
+          caused a crash.
+
 Mon Jul  4 09:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/Literals.cpp:

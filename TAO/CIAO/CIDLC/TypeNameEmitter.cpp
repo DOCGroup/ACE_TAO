@@ -1755,3 +1755,219 @@ AssignFromExtractedEmitter::traverse (SemanticGraph::Home&)
   os << STRS[EXTRACT];
 }
 
+// ====================================================================
+
+SetAttributeDelegationEmitter::SetAttributeDelegationEmitter (
+    ostream& os,
+    SemanticGraph::ReadWriteAttribute& a
+  )
+  : TypeNameEmitter (os),
+    attr_ (a),
+    assign_emitter_ (os),
+    extract_emitter_ (os)
+{
+  assign_belongs_.node_traverser (assign_emitter_);
+  extract_belongs_.node_traverser (extract_emitter_);
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Boolean&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Octet&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Char&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Wchar&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Short&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (UnsignedShort&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Long& t)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (UnsignedLong&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (LongLong&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (UnsignedLongLong&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Float&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Double&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (String& t)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Wstring&)
+{
+  emit_delegation ();
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Object&)
+{
+  emit_error ("CORBA::Object");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (ValueBase&)
+{
+  emit_error ("sequence");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (Any&)
+{
+  emit_error ("CORBA::Any");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Enum&)
+{
+  emit_error ("enum");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Struct& s)
+{
+  emit_error ("struct");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Union& u)
+{
+  emit_error ("union");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::UnboundedSequence&)
+{
+  emit_error ("sequence");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Interface&)
+{
+  emit_error ("interface");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::ValueType&)
+{
+  emit_error ("valuetype");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::EventType&)
+{
+  emit_error ("eventtype");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Component&)
+{
+  emit_error ("component");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Home&)
+{
+  emit_error ("home");
+}
+
+void
+SetAttributeDelegationEmitter::emit_delegation (void)
+{
+  open_if_block ();
+  
+  Traversal::ReadWriteAttribute::belongs (attr_, extract_belongs_);
+
+  os << "descr_value >>= " << STRS[EXTRACT] << ";"
+     << "this->" << attr_.name () << " (";
+  
+  Traversal::ReadWriteAttribute::belongs (attr_, assign_belongs_);
+   
+  os << ");";
+  
+  close_if_block ();
+}
+
+void
+SetAttributeDelegationEmitter::emit_error (const char *corba_kind)
+{
+  open_if_block ();
+  
+  os << "ACE_ERROR ((" << endl
+     << "    LM_ERROR," << endl
+     << "    \"Component attributes of " << corba_kind << "\"" << endl
+     << "    \"IDL type are not yet supported by CIAO\\n\"" << endl
+     << "  ));";
+     
+  close_if_block ();
+}
+
+void
+SetAttributeDelegationEmitter::open_if_block (void)
+{
+  os << "if (ACE_OS::strcmp (descr_name, \""
+     << attr_.name () << "\") == 0)" << endl
+     << "{";
+}
+
+void
+SetAttributeDelegationEmitter::close_if_block (void)
+{
+  os << "continue;"
+     << "}";
+}

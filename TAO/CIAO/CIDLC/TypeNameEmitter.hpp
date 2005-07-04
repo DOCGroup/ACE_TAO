@@ -407,4 +407,52 @@ public:
   virtual void traverse (SemanticGraph::Home&);
 };
 
+class SetAttributeDelegationEmitter : public TypeNameEmitter,
+                                      public Traversal::ReadWriteAttribute
+{
+public:
+  SetAttributeDelegationEmitter (std::ostream&,
+                                 SemanticGraph::ReadWriteAttribute&);
+  
+  virtual void traverse (Boolean&);
+  virtual void traverse (Octet&);
+  virtual void traverse (Char&);
+  virtual void traverse (Wchar&);
+  virtual void traverse (Short&);
+  virtual void traverse (UnsignedShort&);
+  virtual void traverse (Long&);
+  virtual void traverse (UnsignedLong&);
+  virtual void traverse (LongLong&);
+  virtual void traverse (UnsignedLongLong&);
+  virtual void traverse (Float&);
+  virtual void traverse (Double&);
+  virtual void traverse (String&);
+  virtual void traverse (Wstring&);
+  virtual void traverse (Object&);
+  virtual void traverse (ValueBase&);
+  virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Enum&);
+  virtual void traverse (SemanticGraph::Struct&);
+  virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::UnboundedSequence&);
+  virtual void traverse (SemanticGraph::Interface&);
+  virtual void traverse (SemanticGraph::ValueType&);
+  virtual void traverse (SemanticGraph::EventType&);
+  virtual void traverse (SemanticGraph::Component&);
+  virtual void traverse (SemanticGraph::Home&);
+  
+private:  
+  void emit_delegation (void);
+  void emit_error (const char *);
+  void open_if_block (void);
+  void close_if_block (void);
+  
+private:
+  SemanticGraph::ReadWriteAttribute& attr_;
+  AssignFromExtractedEmitter assign_emitter_;
+  ExtractedTypeDeclEmitter extract_emitter_;
+  Traversal::Belongs assign_belongs_;
+  Traversal::Belongs extract_belongs_;
+};
+
 #endif /* TYPENAME_EMITTER_HPP */
