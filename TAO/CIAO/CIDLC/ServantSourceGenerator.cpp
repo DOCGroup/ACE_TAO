@@ -3146,38 +3146,20 @@ namespace
                                   EmitterBase
     {
       SetAttributesEmitter (Context& c)
-        : EmitterBase (c),
-          extract_emitter_ (c.os ()),
-          assign_emitter_ (c.os ())
+        : EmitterBase (c)
       {
-        extract_belongs_.node_traverser (extract_emitter_);
-        assign_belongs_.node_traverser (assign_emitter_);
       }
 
       virtual void
       pre (SemanticGraph::ReadWriteAttribute& a)
       {
-        os << "if (ACE_OS::strcmp (descr_name, \""
-           << a.name () << "\") == 0)" << endl
-           << "{";
+        Traversal::Belongs delegate_belongs;
+        
+        SetAttributeDelegationEmitter delegater (ctx.os (), a);
+        delegate_belongs.node_traverser (delegater);
 
-        Traversal::ReadWriteAttribute::belongs (a, extract_belongs_);
-
-        os << "descr_value >>= " << STRS[EXTRACT] << ";"
-           << "this->" << a.name () << " (";
-
-        Traversal::ReadWriteAttribute::belongs (a, assign_belongs_);
-
-        os << ");"
-           << "continue;"
-           << "}";
+        Traversal::ReadWriteAttribute::belongs (a, delegate_belongs);
       }
-
-    private:
-      ExtractedTypeDeclEmitter extract_emitter_;
-      AssignFromExtractedEmitter assign_emitter_;
-      Traversal::Belongs extract_belongs_;
-      Traversal::Belongs assign_belongs_;
     };
 
   public:
