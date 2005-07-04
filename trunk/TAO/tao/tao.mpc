@@ -211,7 +211,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PolicyFactory_Registry_Adapter.cpp
     PollableC.cpp
     PortableInterceptorC.cpp
-    PredefinedType_Seq_Tmplinst.cpp
     Principal.cpp
     Profile.cpp
     Profile_Transport_Resolver.cpp
