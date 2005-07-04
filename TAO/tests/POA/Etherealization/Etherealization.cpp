@@ -35,8 +35,8 @@ public:
   }
 };
 
-class test_i_with_reference_counting : public virtual PortableServer::RefCountServantBase,
-                                       public virtual POA_test
+class test_i_with_reference_counting :
+  public virtual POA_test
 {
 public:
   void method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

@@ -11,7 +11,6 @@ ACE_RCSID(Collocation_Opportunities, Collocation_Opportunities, "$Id$")
 
 class test_i :
   public POA_test,
-  public PortableServer::RefCountServantBase
 {
 public:
 

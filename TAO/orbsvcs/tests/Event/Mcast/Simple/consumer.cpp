@@ -7,8 +7,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 
 class EC_Consumer:
-  public POA_RtecEventComm::PushConsumer,
-  public PortableServer::RefCountServantBase
+  public POA_RtecEventComm::PushConsumer
 {
 public:
 

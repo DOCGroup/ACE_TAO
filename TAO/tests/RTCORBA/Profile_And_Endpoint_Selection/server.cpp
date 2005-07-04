@@ -24,8 +24,7 @@ static const char *bands_file = "empty_file";
 static const char *lanes_file = "empty_file";
 
 class test_i :
-  public POA_test,
-  public PortableServer::RefCountServantBase
+  public POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb,

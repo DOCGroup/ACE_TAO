@@ -24,8 +24,8 @@
 
 ACE_RCSID(Explicit_Activation, server, "$Id$")
 
-class test_i : public virtual PortableServer::RefCountServantBase,
-               public virtual POA_test
+class test_i :
+  public virtual POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb_ptr,

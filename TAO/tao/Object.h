@@ -379,6 +379,18 @@ namespace CORBA
     IOP::IOR_var ior_;
 
     /// Cached pointer of our ORB_Core
+    /**
+     * Be aware that this pointer can be zero or not. In fact there are two
+     * ways to get this pointer filled:
+     * - If CORBA::Object is constructed through one of the constructors with a
+     * stub and null ORB_Core, we use the orb_core from the stub to fill
+     * this pointer
+     * - If the other constructor, which uses IOP::IOR is used, a stub
+     * needs to be created first (i.e., the IOR needs to be evaluated first),
+     * in which case the ORB_Core would be null. The orb_core pointer then
+     * needs to be accessed from the stub and passed back as part of
+     * _get_orb().
+     */
     TAO_ORB_Core *orb_core_;
 
     /**

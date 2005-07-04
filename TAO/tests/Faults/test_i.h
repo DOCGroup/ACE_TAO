@@ -73,8 +73,7 @@ private:
   // The ORB
 };
 
-class Middle_i : public virtual POA_Simple_Server,
-                 public virtual PortableServer::RefCountServantBase
+class Middle_i : public virtual POA_Simple_Server
 {
   // = TITLE
   //   Another implementation of the simple server...

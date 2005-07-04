@@ -15,7 +15,6 @@
 /// Implement the Test::Hello interface
 class Foo_i
   : public virtual POA_Test::Foo
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   Foo_i (CORBA::ORB_ptr p)

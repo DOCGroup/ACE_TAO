@@ -18,7 +18,6 @@
 /// Implement the Test::Roundtrip interface
 class Roundtrip
   : public virtual PortableServer::DynamicImplementation
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

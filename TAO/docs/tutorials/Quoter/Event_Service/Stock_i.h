@@ -10,8 +10,7 @@
 #include <orbsvcs/CosEventChannelAdminC.h>
 
 class Quoter_Stock_i
-  : public virtual POA_Quoter::Modify_Stock,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Quoter::Modify_Stock
 {
 public:
   Quoter_Stock_i (const char *symbol,

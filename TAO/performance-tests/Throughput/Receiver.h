@@ -17,7 +17,6 @@
 /// Implement the Test::Receiver interface
 class Receiver
   : public virtual POA_Test::Receiver
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

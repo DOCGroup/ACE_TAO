@@ -23,7 +23,6 @@ ACE_RCSID(Bug_1670_Regression, server, "$Id$")
  */
 class Simple_C
   : public virtual POA_Baz::AMH_C
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   Simple_C (CORBA::ORB_ptr orb);

@@ -6,8 +6,8 @@
 
 
 
-class Time_impl : public POA_TimeModule::Time,
-                  virtual public PortableServer::RefCountServantBase
+class Time_impl :
+  public POA_TimeModule::Time
 {
 public:
   virtual TimeModule::TimeOfDay

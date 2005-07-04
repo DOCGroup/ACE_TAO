@@ -37,7 +37,6 @@ int destroy_ec_flag = 0;
  * heartbeats and shuts down.
  */
 class Heartbeat_Application :
-  public virtual PortableServer::RefCountServantBase,
   public POA_RtecEventComm::PushConsumer,
   public TAO_EC_Deactivated_Object
 {
