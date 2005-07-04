@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Coordinator interface
 class Coordinator
   : public virtual POA_Test::Coordinator
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -56,10 +50,6 @@ private:
   /// Array's capacity
   size_t peer_max_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* BIG_ONEWAYS_COORDINATOR_H */
