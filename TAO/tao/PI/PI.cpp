@@ -10,7 +10,9 @@ ACE_RCSID (PI,
 int
 TAO_PI_Init::Initializer (void)
 {
+#if TAO_HAS_INTERCEPTORS == 1
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_ClientRequestInterceptor_Adapter_Factory_Impl);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   return ACE_Service_Config::process_directive (ace_svc_desc_ORBInitializer_Registry);
 }

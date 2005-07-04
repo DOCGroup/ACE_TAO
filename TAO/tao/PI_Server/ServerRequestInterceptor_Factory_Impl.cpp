@@ -12,6 +12,9 @@
 // =================================================================
 
 #include "ServerRequestInterceptor_Factory_Impl.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "ServerInterceptorAdapter.h"
 
 #include "tao/ORB.h"
@@ -38,3 +41,5 @@ ACE_STATIC_SVC_DEFINE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_PI_Server, TAO_ServerRequestInterceptor_Adapter_Factory_Impl)
+
+#endif  /* TAO_HAS_INTERCEPTORS */
