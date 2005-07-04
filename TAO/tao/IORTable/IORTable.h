@@ -30,19 +30,8 @@ public:
   static int init (void);
 };
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_IORTable_Initializer = &TAO_IORTable_Initializer::init;
-
-#else
-
 static int
 TAO_Requires_IORTable_Initializer = TAO_IORTable_Initializer::init ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #define TAO_IORTABLE_SAFE_INCLUDE
 #include "IORTableC.h"

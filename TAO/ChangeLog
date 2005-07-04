@@ -1,3 +1,33 @@
+Mon Jul  4 12:05:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.h:
+        * orbsvcs/orbsvcs/PortableGroup/MIOP.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:
+        * tao/PICurrent_Loader.h:
+        * tao/BiDir_GIOP/BiDirGIOP.h:
+        * tao/CodecFactory/CodecFactory.h:
+        * tao/DynamicAny/DynamicAny.h:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
+        * tao/IORManipulation/IORManip_Loader.h:
+        * tao/IORTable/IORTable.h:
+        * tao/ImR_Client/ImR_Client.h:
+        * tao/Messaging/Messaging.h:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+        * tao/PI/PI.h:
+        * tao/PI/PolicyFactory_Loader.h:
+        * tao/PI_Server/PI_Server.h:
+        * tao/PortableServer/PortableServer.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+          Removed usage of ACE_HAS_BROKEN_STATIC_CONSTRUCTORS. This seems
+          to be used for older broken VxWorks versions but we don't need
+          this anymore. Zapped the usage of this and the workaround we
+          had in TAO. This fixes bugzilla bug 2177
+
 Mon Jul  4 11:01:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORBInitializer_Registry_Adapter.{h,cpp}:

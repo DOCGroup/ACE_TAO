@@ -251,21 +251,9 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Adapter_Impl)
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_TypeCodeFactory_Initializer =
-  &TAO_TypeCodeFactory_Adapter_Impl::Initializer;
-
-#else
-
 static int
 TAO_Requires_TypeCodeFactory_Initializer =
   TAO_TypeCodeFactory_Adapter_Impl::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TYPECODEFACTORY_ADAPTER_IMPL_H */

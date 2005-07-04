@@ -82,21 +82,9 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_IFR_Client_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_IFR_Client_Initializer =
-  &TAO_IFR_Client_Adapter_Impl::Initializer;
-
-#else
-
 static int
 TAO_Requires_IFR_Client_Initializer =
   TAO_IFR_Client_Adapter_Impl::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #include /**/ "ace/post.h"
 
