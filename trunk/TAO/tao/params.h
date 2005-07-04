@@ -30,9 +30,6 @@
 
 // Forward decls.
 
-class TAO_Active_Object_Map_Impl;
-class TAO_Reverse_Active_Object_Map_Impl;
-
 // @@ Using an ACE_Unbounded_Queue to contain the endpoints and
 //    preconnects may not be the best container to use.  However, it
 //    will only be used during ORB bootstrapping.  Also, a template
