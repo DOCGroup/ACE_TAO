@@ -30,20 +30,8 @@ namespace TAO
     static int Initializer (void);
   };
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*Module_Initializer) (void);
-
-static Module_Initializer
-Requires_MIOP_Initializer = &MIOP_Loader::Initializer;
-
-#else
-
 static int
 Requires_MIOP_Initializer = MIOP_Loader::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
-}
 
 #include /**/ "ace/post.h"
 #endif /*TAO_MIOP_H*/

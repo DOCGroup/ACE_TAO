@@ -67,19 +67,8 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
 ACE_FACTORY_DECLARE (TAO_BiDirGIOP, TAO_BiDirGIOP_Loader)
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_BiDirGIOP_Initializer = &TAO_BiDirGIOP_Loader::Initializer;
-
-#else
-
 static int
 TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #define TAO_BIDIRGIOP_SAFE_INCLUDE
 #include "BiDirPolicyC.h"

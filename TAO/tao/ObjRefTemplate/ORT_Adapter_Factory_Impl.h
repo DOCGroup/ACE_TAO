@@ -53,20 +53,8 @@ namespace TAO
   ACE_FACTORY_DECLARE (TAO_ORT, ORT_Adapter_Factory_Impl)
 }
 
-#if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-  TAO_Requires_ORTFactory_Initializer =
-    &TAO::ORT_Adapter_Factory_Impl::Initializer;
-
-#else
-
 static int TAO_Requires_ORTFactory_Initializer =
   TAO::ORT_Adapter_Factory_Impl::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #define TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
 #include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
