@@ -1,3 +1,15 @@
+Mon Jul  4 10:31:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server/PI_Server.cpp:
+        * tao/PI_Server/ServerRequestInterceptor_Factory_Impl.{h,cpp}:
+        * tao/PI/PI.cpp:
+        * tao/PI/ClientRequestInterceptor_Factory_Impl.{h,cpp}:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.{h,cpp}:
+          Added guards for when interceptors are disabled. The complete
+          PI/PI_Server lib shouldn't get build when interceptors are
+          disabled but that is not yet possible because the
+          ORBInitializers are used internally by some core libs.
+
 Mon Jul  4 09:23:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/AMH_Servant.h:
