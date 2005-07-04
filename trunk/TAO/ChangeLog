@@ -1,3 +1,20 @@
+Mon Jul  4 13:42:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orb_types.pidl:
+          Don't use -GA with regeneration, we then get an A.cpp with contents
+          but the C.cpp file is empty, so just generate everything in C.cpp
+
+        * tao/orb_typesC.{h,cpp}:
+        * tao/orb_typesS.h:
+          Regenerated
+
+        * tao/orb_typesA.cpp:
+          Removed
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+          Removed file above
+
 Mon Jul  4 13:37:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
