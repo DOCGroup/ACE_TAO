@@ -1,3 +1,13 @@
+Mon Jul  4 12:59:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PredefinedType_Seq_Tmplinst.cpp:
+          Removed this file, explicit templates are not working with TAO
+          and will not work anymore in the future
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+          Removed file above
+
 Mon Jul  4 12:05:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.h:
