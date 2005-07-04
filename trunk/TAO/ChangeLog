@@ -1,3 +1,20 @@
+Mon Jul  4 13:07:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Visibility.pidl:
+          Don't use -GA with regeneration, we then get an A.cpp with contents
+          but the C.cpp file is empty, so just generate everything in C.cpp
+
+        * tao/VisibilityC.{h,cpp}:
+        * tao/VisibilityS.h:
+          Regenerated
+
+        * tao/VisibilityA.cpp:
+          Removed
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+          Removed file above
+
 Mon Jul  4 12:59:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PredefinedType_Seq_Tmplinst.cpp:

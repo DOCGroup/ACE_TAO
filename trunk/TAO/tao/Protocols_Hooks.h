@@ -34,11 +34,8 @@ namespace CORBA
 }
 
 class TAO_ORB_Core;
-class TAO_Resource_Factory;
 class TAO_Service_Context;
-class TAO_Acceptor_Registry;
 class TAO_Connection_Handler;
-class TAO_Transport;
 class TAO_Stub;
 
 class TAO_Export TAO_IIOP_Protocol_Properties
