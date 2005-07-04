@@ -30,8 +30,10 @@ namespace TAO
     static int Initializer (void);
   };
 
-static int
-Requires_MIOP_Initializer = MIOP_Loader::Initializer ();
+  static int
+  Requires_MIOP_Initializer = MIOP_Loader::Initializer ();
+
+}
 
 #include /**/ "ace/post.h"
 #endif /*TAO_MIOP_H*/
