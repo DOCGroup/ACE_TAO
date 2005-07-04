@@ -1,5 +1,7 @@
 #include "ClientRequestInterceptor_Adapter_Impl.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 #if !defined (__ACE_INLINE__)
 #include "ClientRequestInterceptor_Adapter_Impl.inl"
 #endif /* defined INLINE */
@@ -233,3 +235,5 @@ namespace TAO
     this->interceptor_list_.destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 }
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
