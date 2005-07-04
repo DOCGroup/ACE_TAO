@@ -105,6 +105,20 @@ public:
   typedef std::reverse_iterator<iterator, value_type> reverse_iterator;
   typedef std::reverse_iterator<const_iterator,
                                 value_type const>     const_reverse_iterator;
+#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x550 \
+      && defined (_RWSTD_NO_CLASS_PARTIAL_SPEC)
+  typedef std::reverse_iterator<iterator,
+                                std::input_iterator_tag,
+                                value_type,
+                                reference,
+                                pointer,
+                                difference_type> reverse_iterator;
+  typedef std::reverse_iterator<const_iterator,
+                                std::input_iterator_tag,
+                                value_type const,
+                                const_reference,
+                                const_pointer,
+                                difference_type> const_reverse_iterator;
 #else
   typedef std::reverse_iterator<iterator>       reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
