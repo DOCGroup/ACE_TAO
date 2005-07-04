@@ -1,3 +1,13 @@
+Mon Jul  4 11:01:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry_Adapter.{h,cpp}:
+          Added virtual destructor in new cpp file, hopefully this fixes the
+          gcc 4 runtime errors
+
+        * tao/tao.mpc
+        * tao/Makefile.am:
+          Added new file
+
 Mon Jul  4 10:31:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server/PI_Server.cpp:
