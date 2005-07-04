@@ -25,8 +25,7 @@
  * @brief This class is used to test the RTCORBA 1.0 Scheduling Service
  *
  */
-class Object1_impl : public POA_testSched::Object1,
-                     public PortableServer::RefCountServantBase
+class Object1_impl : public POA_testSched::Object1
 {
   public:
     Object1_impl();

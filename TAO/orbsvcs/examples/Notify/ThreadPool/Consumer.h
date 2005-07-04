@@ -28,7 +28,8 @@
  *
  */
 
-class TAO_Notify_ThreadPool_Consumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class TAO_Notify_ThreadPool_Consumer
+  : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
   /// Constuctor

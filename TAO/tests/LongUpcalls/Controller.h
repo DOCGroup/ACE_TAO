@@ -5,14 +5,8 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 class Controller
-  : public virtual POA_Test::Controller,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Test::Controller
 {
 public:
   Controller (void);
@@ -32,9 +26,5 @@ private:
   CORBA::ULong start_count_;
   CORBA::ULong finish_count_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* LONGUPCALLS_CONTROLLER_H */

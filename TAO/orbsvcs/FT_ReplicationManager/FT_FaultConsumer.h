@@ -39,7 +39,6 @@ namespace TAO
   */
   class TAO_ReplicationManagerLib_Export FT_FaultConsumer
     : public virtual POA_CosNotifyComm::StructuredPushConsumer
-    , public virtual PortableServer::RefCountServantBase
   {
 
     //////////////////////

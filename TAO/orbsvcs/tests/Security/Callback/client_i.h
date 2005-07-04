@@ -23,8 +23,7 @@
 #include "serverC.h"
 
 class client_i
-  : public virtual POA_client,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_client
 {
 public:
 

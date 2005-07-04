@@ -39,8 +39,7 @@
  * of 1.25 (i.e. 5/4), and so on and so forth.
  */
 class TAO_LoadBalancing_Export TAO_LB_CPU_Load_Average_Monitor
-  : public virtual POA_CosLoadBalancing::LoadMonitor,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
 

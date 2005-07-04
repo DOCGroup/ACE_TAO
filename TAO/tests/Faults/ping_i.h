@@ -18,8 +18,7 @@
 
 #include "pingS.h"
 
-class PingObject_i : public POA_PingObject,
-                     public virtual PortableServer::RefCountServantBase
+class PingObject_i : public POA_PingObject
 {
   // = TITLE
   //   A simple implementation of the <ping> interface

@@ -26,7 +26,7 @@ class DT_Creator;
  * @brief Implements a Job that performs some cpu bound work.
  *
  */
-class Job_i : public POA_Job, public virtual PortableServer::RefCountServantBase
+class Job_i : public POA_Job
 {
  public:
   /// Constructor

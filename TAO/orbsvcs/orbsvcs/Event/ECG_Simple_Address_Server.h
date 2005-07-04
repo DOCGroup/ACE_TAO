@@ -25,8 +25,7 @@
  * initialized with, regardless of the header.
  */
 class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Address_Server :
-  public virtual POA_RtecUDPAdmin::AddrServer,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
 

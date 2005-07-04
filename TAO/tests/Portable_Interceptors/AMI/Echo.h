@@ -13,7 +13,6 @@
 
 class Echo
   : public POA_Test::Echo
-  , public PortableServer::RefCountServantBase
 {
 public:
   Echo(CORBA::ORB_ptr orb);

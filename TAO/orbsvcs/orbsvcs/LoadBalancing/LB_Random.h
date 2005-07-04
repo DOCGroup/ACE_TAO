@@ -32,8 +32,7 @@
  * member residing at a random location.
  */
 class TAO_LB_Random
-  : public virtual POA_CosLoadBalancing::Strategy,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
 

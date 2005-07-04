@@ -29,14 +29,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_CosEventChannelFactory_i :
-  public virtual POA_CosEventChannelFactory::ChannelFactory,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_CosEventChannelFactory::ChannelFactory
 {
  public:
   // = Initialization and termination code.
@@ -119,10 +113,6 @@ class TAO_CosEventChannelFactory_i :
   CosNaming::NamingContext_var naming_;
   // The naming context to use.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 

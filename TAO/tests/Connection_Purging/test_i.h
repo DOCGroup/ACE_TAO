@@ -8,15 +8,8 @@
 
 #include "testS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
-
 class test_i
   : public virtual POA_test
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   // = The skeleton methods
@@ -26,10 +19,6 @@ public:
 
 private:
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* TEST_I_H */

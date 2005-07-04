@@ -8,15 +8,9 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::Crashed_Callback interface
 class Crashed_Callback
   : public virtual POA_Test::Crashed_Callback
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -32,10 +26,6 @@ public:
   virtual void test_oneway (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* CRASHED_CALLBACK_CRASHED_CALLBACK_H */

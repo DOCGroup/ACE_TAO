@@ -23,7 +23,6 @@
  */
 class TAO_RTEC_Perf_Export Control
  : public virtual POA_Federated_Test::Control
- , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

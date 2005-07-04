@@ -34,7 +34,6 @@ class RND_Driver;
 
 class RND_Consumer
   : public POA_CosEventComm::PushConsumer
-  , public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Simple consumer object
@@ -94,7 +93,6 @@ RND_Timer::RND_Timer (RND_Driver *driver)
 
 class RND_Supplier
   : public POA_CosEventComm::PushSupplier
-  , public PortableServer::RefCountServantBase
   , public ACE_Task_Base
 {
   // = TITLE

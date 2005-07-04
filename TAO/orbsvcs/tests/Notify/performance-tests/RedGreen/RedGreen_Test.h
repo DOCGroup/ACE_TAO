@@ -160,7 +160,8 @@ class RedGreen_Test
 };
 
 /*****************************************************************/
-class RedGreen_Test_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class RedGreen_Test_StructuredPushConsumer
+  : public POA_CosNotifyComm::StructuredPushConsumer
 {
   // = TITLE
   //   RedGreen_Test_StructuredPushConsumer
@@ -257,8 +258,7 @@ public:
 
 /*****************************************************************/
 class RedGreen_Test_StructuredPushSupplier
-  : public POA_CosNotifyComm::StructuredPushSupplier,
-  public PortableServer::RefCountServantBase
+  : public POA_CosNotifyComm::StructuredPushSupplier
 {
   // = TITLE
   //   RedGreen_Test_StructuredPushSupplier

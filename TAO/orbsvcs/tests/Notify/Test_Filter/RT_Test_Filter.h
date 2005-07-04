@@ -34,7 +34,8 @@
  * @brief Implementation of CosNotifyFilter::Filter servant.
  *
  */
-class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
+class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter
+  : public POA_CosNotifyFilter::Filter
 {
 public:
   /// Constuctor

@@ -24,8 +24,7 @@
 #include "Time_DateS.h"
 
 class Time_Date_i
-  : public POA_Time_Date,
-    public PortableServer::RefCountServantBase
+  : public POA_Time_Date
 {
   // = TITLE
   //    Time_Date object implementation.

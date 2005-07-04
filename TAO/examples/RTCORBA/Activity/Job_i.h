@@ -25,7 +25,7 @@ class ACE_Arg_Shifter;
  * @brief Implements a Job that performs some cpu bound work.
  *
  */
-class activity_Export Job_i : public POA_Job, public virtual PortableServer::RefCountServantBase
+class activity_Export Job_i : public POA_Job
 {
  public:
   /// Constructor

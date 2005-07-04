@@ -11,7 +11,6 @@
 
 class Reply_Handler
   : public POA_Test::AMI_HelloHandler
-  , public PortableServer::RefCountServantBase
 {
 public:
   Reply_Handler (

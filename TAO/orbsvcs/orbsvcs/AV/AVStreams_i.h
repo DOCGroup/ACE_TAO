@@ -41,13 +41,6 @@
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map;
 typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowEndPoint_var> FlowEndPoint_Map_Entry;
 typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
@@ -60,8 +53,7 @@ typedef ACE_Hash_Map_Iterator <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex> 
 #include "AV_Core.h"
 
 class TAO_AV_Export AV_Null_MediaCtrl
-  : public virtual POA_Null_MediaCtrl,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Null_MediaCtrl
 {
 public:
   AV_Null_MediaCtrl (void);
@@ -79,8 +71,7 @@ protected:
  */
 class TAO_AV_Export TAO_Basic_StreamCtrl
   : public virtual POA_AVStreams::Basic_StreamCtrl,
-    public virtual TAO_PropertySet,
-    public virtual PortableServer::RefCountServantBase
+    public virtual TAO_PropertySet
 {
 
 public:
@@ -179,8 +170,7 @@ protected:
 };
 
 class TAO_AV_Export TAO_Negotiator
-  : public POA_AVStreams::Negotiator,
-    public virtual PortableServer::RefCountServantBase
+  : public POA_AVStreams::Negotiator
 {
 public:
   virtual CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
@@ -229,8 +219,7 @@ protected:
  */
 class TAO_AV_Export TAO_StreamCtrl
   : public virtual POA_AVStreams::StreamCtrl,
-    public virtual TAO_Basic_StreamCtrl,
-    public virtual PortableServer::RefCountServantBase
+    public virtual TAO_Basic_StreamCtrl
 {
 
 public:
@@ -355,8 +344,7 @@ protected:
 
 class TAO_AV_Export TAO_MCastConfigIf
   : public virtual POA_AVStreams::MCastConfigIf,
-    public virtual TAO_PropertySet,
-    public virtual PortableServer::RefCountServantBase
+    public virtual TAO_PropertySet
 {
 public:
 
@@ -548,8 +536,7 @@ class TAO_Reverse_FlowSpec_Entry;
  */
 class TAO_AV_Export TAO_StreamEndPoint
   : public virtual POA_AVStreams::StreamEndPoint,
-    public virtual TAO_Base_StreamEndPoint,
-    public virtual PortableServer::RefCountServantBase
+    public virtual TAO_Base_StreamEndPoint
 {
 
 public:
@@ -737,8 +724,7 @@ protected:
  */
 class TAO_AV_Export TAO_StreamEndPoint_A :
   public virtual POA_AVStreams::StreamEndPoint_A,
-  public virtual TAO_StreamEndPoint,
-  public virtual PortableServer::RefCountServantBase
+  public virtual TAO_StreamEndPoint
 {
 
 public:
@@ -789,8 +775,7 @@ public:
  */
 class TAO_AV_Export TAO_StreamEndPoint_B :
   public virtual POA_AVStreams::StreamEndPoint_B,
-  public virtual TAO_StreamEndPoint,
-  public virtual PortableServer::RefCountServantBase
+  public virtual TAO_StreamEndPoint
 {
   // = DESCRIPTION
   //     The "B" side of a streamendpoint
@@ -819,8 +804,7 @@ public:
  */
 class TAO_AV_Export TAO_VDev
   :public virtual TAO_PropertySet,
-   public virtual POA_AVStreams::VDev,
-   public virtual PortableServer::RefCountServantBase
+   public virtual POA_AVStreams::VDev
 {
 
 public:
@@ -906,8 +890,7 @@ class TAO_AV_Endpoint_Strategy;
  */
 class TAO_AV_Export TAO_MMDevice
   :public virtual POA_AVStreams::MMDevice,
-   public virtual TAO_PropertySet,
-   public virtual PortableServer::RefCountServantBase
+   public virtual TAO_PropertySet
 {
 
 public:
@@ -1053,8 +1036,7 @@ class TAO_FlowProducer;
  */
 class TAO_AV_Export TAO_FlowConnection
  : public virtual POA_AVStreams::FlowConnection,
-   public virtual TAO_PropertySet,
-   public virtual PortableServer::RefCountServantBase
+   public virtual TAO_PropertySet
 {
 
 public:
@@ -1169,8 +1151,7 @@ protected:
  */
 class TAO_AV_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
-  public virtual TAO_Base_StreamEndPoint,
-  public virtual PortableServer::RefCountServantBase
+  public virtual TAO_Base_StreamEndPoint
 {
 
 public:
@@ -1370,8 +1351,7 @@ protected:
 
 class TAO_AV_Export TAO_FlowProducer:
   public virtual POA_AVStreams::FlowProducer,
-  public virtual TAO_FlowEndPoint,
-  public virtual PortableServer::RefCountServantBase
+  public virtual TAO_FlowEndPoint
 {
 public:
   /// default constructor
@@ -1452,8 +1432,7 @@ protected:
 
 class TAO_AV_Export TAO_FlowConsumer :
   public virtual POA_AVStreams::FlowConsumer,
-  public virtual TAO_FlowEndPoint,
-  public virtual PortableServer::RefCountServantBase
+  public virtual TAO_FlowEndPoint
 {
 public:
   /// default constructor.
@@ -1498,8 +1477,7 @@ public:
  *        for the specific media like camera, speaker.
  */
 class TAO_AV_Export TAO_MediaControl
-  :public virtual POA_AVStreams::MediaControl,
-   public virtual PortableServer::RefCountServantBase
+  :public virtual POA_AVStreams::MediaControl
 {
 
 public:
@@ -1549,10 +1527,6 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "Flows_T.h"
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* AVSTREAMS_I_H */

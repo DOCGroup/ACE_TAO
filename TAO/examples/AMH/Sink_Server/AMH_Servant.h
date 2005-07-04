@@ -23,11 +23,10 @@
 /// Implement the Rountrip interface
 class AMH_Servant
   : public virtual POA_Test::AMH_Roundtrip
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   AMH_Servant (CORBA::ORB_ptr orb);
-  
+
   virtual ~AMH_Servant (void);
 
   /// parse arguments from command line for sleep time

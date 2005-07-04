@@ -30,19 +30,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-#if defined (_MSC_VER)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 typedef ACE_Allocator_Adapter <ACE_Malloc<ACE_MMAP_MEMORY_POOL,
   TAO_SYNCH_MUTEX> > ALLOCATOR;
 
 typedef ACE_Hash_Map_With_Allocator<char *, char *> HASH_MAP;
 
 class  Object_Group_Factory_i :
-  public virtual POA_Load_Balancer::Object_Group_Factory,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_Load_Balancer::Object_Group_Factory
 {
   // = TITLE
   //    This class implements Load_Balancer::Object_Group_Factory idl
@@ -184,8 +178,8 @@ private:
 
 };
 
-class Object_Group_i : public virtual POA_Load_Balancer::Object_Group,
-                       public virtual PortableServer::RefCountServantBase
+class Object_Group_i
+  : public virtual POA_Load_Balancer::Object_Group
 
 {
   // = TITLE

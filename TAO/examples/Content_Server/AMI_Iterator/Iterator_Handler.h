@@ -29,16 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class Iterator_Handler
-  : public virtual POA_Web_Server::AMI_Content_IteratorHandler,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Web_Server::AMI_Content_IteratorHandler
 {
   // = TITLE
   //    The AMI reply handler for replies from the Content_Iterator.
@@ -141,9 +133,5 @@ private:
   // the pointer itself) of the<pending_data> parameter will be
   // decremented when file retrieval has completed.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif  /* ITERATOR_HAHNDLER_H */

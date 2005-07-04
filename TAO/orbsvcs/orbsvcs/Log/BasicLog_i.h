@@ -48,8 +48,7 @@ class TAO_LogMgr_i;
  */
 class TAO_Log_Serv_Export TAO_BasicLog_i :
   public TAO_Log_i,
-  public POA_DsLogAdmin::BasicLog,
-  public virtual PortableServer::RefCountServantBase
+  public POA_DsLogAdmin::BasicLog
 {
 public:
 

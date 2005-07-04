@@ -16,7 +16,6 @@
 /// Implement the Test::McastHello interface
 class McastHello
   : public virtual POA_Test::McastHello
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

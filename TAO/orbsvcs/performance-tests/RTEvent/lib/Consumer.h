@@ -26,7 +26,6 @@
  */
 class TAO_RTEC_Perf_Export Consumer
   : public virtual POA_RtecEventComm::PushConsumer
-  , public virtual PortableServer::RefCountServantBase
 
 {
 public:

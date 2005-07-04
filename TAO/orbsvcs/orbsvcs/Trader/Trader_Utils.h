@@ -181,8 +181,7 @@ private:
  * property handler construct CosTradingDynamic::DynamicProp structs.
  */
 class TAO_Trading_Serv_Export TAO_Dynamic_Property
-  : public virtual POA_CosTradingDynamic::DynamicPropEval,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosTradingDynamic::DynamicPropEval
 {
 public:
 

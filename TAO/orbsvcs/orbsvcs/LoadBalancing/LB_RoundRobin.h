@@ -35,8 +35,7 @@
  * member residing at the next location.
  */
 class TAO_LB_RoundRobin
-  : public virtual POA_CosLoadBalancing::Strategy,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
 

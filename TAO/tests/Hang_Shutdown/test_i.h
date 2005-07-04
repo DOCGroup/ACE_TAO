@@ -7,11 +7,6 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-#  pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 #include "ace/OS_NS_unistd.h"
 
 namespace TAO
@@ -20,7 +15,6 @@ namespace TAO
   {
     class test_i
       : public virtual POA_TAO::Test::Hang
-      , public virtual PortableServer::RefCountServantBase
     {
     public:
       // = The skeleton methods
@@ -46,9 +40,6 @@ namespace TAO
     };
   }
 }
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_HANG_TEST_I_H */

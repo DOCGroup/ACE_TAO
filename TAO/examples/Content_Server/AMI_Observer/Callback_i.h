@@ -28,17 +28,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 // Implement the Web_Server::Callback interface.
 class Callback_i :
-  public virtual POA_Web_Server::Callback,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_Web_Server::Callback
 {
   // = TITLE
   //    Implement the Web_Server::Callback interface.
@@ -131,9 +123,5 @@ private:
   // the pointer itself) of the <pending_data> parameter will be
   // decremented when file retrieval has completed.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif  /* CALLBACK_I_H */

@@ -54,8 +54,7 @@ namespace TAO_LB
  * member residing at a location with the smallest load.
  */
 class TAO_LB_LoadAverage
-  : public virtual POA_CosLoadBalancing::Strategy,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
 

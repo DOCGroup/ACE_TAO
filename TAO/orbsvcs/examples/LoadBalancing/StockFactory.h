@@ -9,9 +9,7 @@
 #include "Stock.h"
 
 class StockFactory
-  : public POA_Test::StockFactory,
-    public virtual PortableServer::RefCountServantBase
-
+  : public POA_Test::StockFactory
 {
 public:
   StockFactory (CORBA::ORB_ptr orb, int number);
