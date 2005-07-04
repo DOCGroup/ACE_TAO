@@ -1,24 +1,36 @@
+Mon Jul 04 21:08:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.cpp:
+          Added support for specifying interface ids for IPv6 Link Local
+          addresses either as part of the address (<ip>'%'<interface id>)
+          separately through ACE_INET_Address::set_interface().
+          Straightened out differences between Windows and Linux.
+          ACE_INET_Address::get_host_addr() now returns <ip>'%'<interface id>
+          formatted address when appropriate both on Windows (natively) and
+          Linux (ACE).
+
 Mon Jul  4 04:21:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Array_Map.h (ACE_Array_Map):
+        * ace/Array_Map.h (ACE_Array_Map):
 
-	  Work around non-standard compliant Sun C++
-	  std::reverse_iterator<> template arguments.  Define a typedef
-	  specific to Sun C++ 5.5 or earlier.
+          Work around non-standard compliant Sun C++
+          std::reverse_iterator<> template arguments.  Define a typedef
+          specific to Sun C++ 5.5 or earlier.
 
 Sun Jul  3 14:59:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/APG/Config/Makefile.am:
+        * examples/APG/Config/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
 Sun Jul 03 18:40:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* include/makeinclude/rules.lib.GNU:
-	  Addition for VxWorks shared lib build.
+        * include/makeinclude/rules.lib.GNU:
+          Addition for VxWorks shared lib build.
 
-	* include/makeinclude/platform_vxworks5.5.x.GNU:
-	  Some cleanup and changes for shared lib builds.
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Some cleanup and changes for shared lib builds.
 
 Fri Jul 01 14:40:25 2005  Gary Maxey <gary.maxey@hp.com>
 
