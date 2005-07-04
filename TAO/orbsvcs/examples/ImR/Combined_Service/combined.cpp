@@ -15,7 +15,6 @@ using namespace PortableServer;
 
 class SvcConf
   : public POA_ServiceConfigurator
-  , public PortableServer::RefCountServantBase
 {
   ACE_Service_Config& asc_;
 public:

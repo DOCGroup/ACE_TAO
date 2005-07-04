@@ -29,8 +29,7 @@ setup_test_parameters (Test_Object_And_Servant *test,
                        CORBA::ORB_ptr orb
                        ACE_ENV_ARG_DECL);
 class test_i :
-  public POA_test,
-  public PortableServer::RefCountServantBase
+  public POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb,

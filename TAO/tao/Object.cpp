@@ -629,9 +629,20 @@ CORBA::Object::_validate_connection (
 
 
 CORBA::ORB_ptr
-CORBA::Object::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Object::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
+  if (orb_core_ != 0)
+    {
+      return CORBA::ORB::_duplicate (orb_core_->orb ());
+    }
+  else
+    {
+      TAO_OBJECT_IOR_EVALUATE_RETURN;
+      if (this->protocol_proxy_)
+        return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
+      else
+        ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::ORB::_nil());
+    }
 }
 
 /*****************************************************************

@@ -13,8 +13,7 @@
 #endif /* _MSC_VER */
 
 class TAO_CosEC_PushConsumerWrapper :
-  public POA_RtecEventComm::PushConsumer,
-  public virtual PortableServer::RefCountServantBase
+  public POA_RtecEventComm::PushConsumer
 {
   // = TITLE
   //   Wrapper class for the Rtec PushConsumer.

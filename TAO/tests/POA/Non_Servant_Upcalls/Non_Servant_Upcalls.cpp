@@ -27,8 +27,8 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-class test_i : public virtual PortableServer::RefCountServantBase,
-               public virtual POA_test
+class test_i :
+  public virtual POA_test
 {
 public:
   test_i (test_i *other);

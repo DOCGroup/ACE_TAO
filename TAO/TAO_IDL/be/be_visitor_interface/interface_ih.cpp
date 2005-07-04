@@ -16,8 +16,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           interface_ih, 
+ACE_RCSID (be_visitor_interface,
+           interface_ih,
            "$Id$")
 
 // ************************************************************
@@ -45,8 +45,8 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   static char namebuf [NAMEBUFSIZE];
 
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
   // Generate the skeleton class name.
@@ -67,7 +67,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   // Inherit from the base skeleton name, unless the interface
   // is local.
   *os <<"public virtual ";
-  
+
   if (node->is_local ())
     {
       *os << node->full_name ();
@@ -78,14 +78,10 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
     }
 
   *os << ", public virtual ";
-  
+
   if (node->is_local ())
     {
       *os << "TAO_Local_RefCounted_Object";
-    }
-  else
-    {
-      *os << "PortableServer::RefCountServantBase";
     }
 
   *os << be_nl
@@ -131,9 +127,9 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
 
   // Generate the code for the members of the derived classes.
-  int status = 
+  int status =
     node->traverse_inheritance_graph (
-              be_visitor_interface_ih::method_helper, 
+              be_visitor_interface_ih::method_helper,
               os
             );
 
@@ -173,7 +169,7 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_is::"
-                             "method_helper\n"), 
+                             "method_helper\n"),
                             -1);
         }
     }

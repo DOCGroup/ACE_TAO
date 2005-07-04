@@ -902,7 +902,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::Exception * \
 CORBA::name ::_tao_duplicate (void) const \
 { \
-  CORBA::Exception * result; \
+  CORBA::Exception * result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
   return result; \
 }
@@ -914,7 +914,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException * \
 CORBA::name ::_tao_create (void) \
 { \
-  CORBA::name *result; \
+  CORBA::name *result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \
   return result; \
 }

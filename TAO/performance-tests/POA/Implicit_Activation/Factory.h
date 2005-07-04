@@ -16,7 +16,6 @@
 /// Implement the Test::Factory interface
 class Factory
   : public virtual POA_Test::Factory
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor

@@ -110,8 +110,7 @@ test_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 class test_factory_i :
-  public POA_test_factory,
-  public PortableServer::RefCountServantBase
+  public POA_test_factory
 {
 public:
 

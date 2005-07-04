@@ -14,8 +14,7 @@
 #endif /* _MSC_VER */
 
 class TAO_CosEC_PushSupplierWrapper :
-  public virtual POA_RtecEventComm::PushSupplier,
-  public virtual PortableServer::RefCountServantBase
+  public virtual POA_RtecEventComm::PushSupplier
 {
   // = TITLE
   //   A Wrapper for the Rtec PushSupplier.

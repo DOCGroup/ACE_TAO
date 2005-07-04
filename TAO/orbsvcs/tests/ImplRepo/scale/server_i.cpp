@@ -13,7 +13,6 @@
 
 class test_i
   : public virtual POA_test
-  , PortableServer::RefCountServantBase
 {
   int n_;
   CORBA::ORB_var orb_;

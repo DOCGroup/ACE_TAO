@@ -14,8 +14,7 @@
 #endif /* _MSC_VER */
 
 class Quoter_Stock_i
-  : public virtual POA_Quoter::Stock,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Quoter::Stock
 {
 public:
   Quoter_Stock_i (const char *symbol,

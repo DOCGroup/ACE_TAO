@@ -29,7 +29,6 @@ ACE_RCSID(Simple_Naming, client, "$Id$")
 #endif /* _MSC_VER */
 
 class My_Test_Object :
-  public virtual PortableServer::RefCountServantBase,
   public virtual POA_Test_Object
 {
 public:

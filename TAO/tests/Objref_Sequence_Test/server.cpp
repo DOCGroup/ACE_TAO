@@ -5,7 +5,7 @@
 
 /// Implement the Server Interface
 class ServerServant :
-  public POA_Server, public PortableServer::RefCountServantBase
+  public POA_Server
 {
 public:
   /// Ctor

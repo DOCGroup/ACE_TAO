@@ -8,8 +8,7 @@
 #include "../check_supported_priorities.cpp"
 
 class test_i :
-  public POA_test,
-  public PortableServer::RefCountServantBase
+  public POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb,
