@@ -23,8 +23,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
+#include "tao/orbconf.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+
+#include "ace/Service_Config.h"
 #include "tao/ClientRequestInterceptor_Adapter_Factory.h"
 
 namespace TAO
@@ -41,6 +44,8 @@ public:
 
 ACE_STATIC_SVC_DECLARE (TAO_ClientRequestInterceptor_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_PI, TAO_ClientRequestInterceptor_Adapter_Factory_Impl)
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include /**/ "ace/post.h"
 

@@ -27,6 +27,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "ClientRequestInterceptorC.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
@@ -122,6 +126,8 @@ namespace TAO
 #if defined (__ACE_INLINE__)
 #include "ClientRequestInterceptor_Adapter_Impl.inl"
 #endif  /* __ACE_INLINE__ */
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include /**/ "ace/post.h"
 
