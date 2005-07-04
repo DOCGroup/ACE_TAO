@@ -1,3 +1,24 @@
+Mon Jul  4 07:11:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Twoways/Coordinator.h:
+        * tests/Big_Twoways/Session.h:
+        * tests/Big_Twoways/Session_Control.h:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session_Control.h:
+          No need to derive from RefCountServantBase, Servants are
+          reference counted now by defailt.
+
+        * tests/Big_Twoways/run_test.pl:
+        * tests/Big_Oneways/run_test.pl:
+          Use WaitKill for the server, if the server is still running, it
+          is an error
+
+        * tests/Big_Twoways/server.cpp:
+        * tests/Big_Oneways/server.cpp:
+          No need to do a _remove_ref, the _var handle this
+
 Sun Jul  3 15:09:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
