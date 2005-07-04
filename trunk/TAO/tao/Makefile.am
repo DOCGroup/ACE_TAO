@@ -330,7 +330,6 @@ libTAO_la_SOURCES = \
   default_resource.cpp \
   default_server.cpp \
   operation_details.cpp \
-  orb_typesA.cpp \
   orb_typesC.cpp \
   params.cpp \
   skip.cpp \
