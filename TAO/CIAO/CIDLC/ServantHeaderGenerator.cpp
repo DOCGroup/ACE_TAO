@@ -248,7 +248,7 @@ namespace
   private:
     std::ostream& os;
   };
-  
+
   // Generates the set operation of a ReadWriteAttribute.
   struct WriteAttributeEmitter : Traversal::ReadWriteAttribute,
                                  EmitterBase
@@ -259,52 +259,52 @@ namespace
         type_name_emitter_ (c.os ())
     {
       write_belongs_.node_traverser (write_type_name_emitter_);
-      
-      edge_traverser (set_raises_);      
+
+      edge_traverser (set_raises_);
       set_raises_.node_traverser (type_name_emitter_);
     }
-    
+
     virtual void
     pre (SemanticGraph::ReadWriteAttribute&)
     {
       os << "virtual void" << endl;
     }
-    
+
     virtual void
     name (SemanticGraph::ReadWriteAttribute& a)
     {
       os << a.name () << " (" << endl;
- 
+
       Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
-      
+
       os << " " << a.name () << endl
          << STRS[ENV_HDR] << ")" << endl;
     }
-    
+
     virtual void
     get_raises (SemanticGraph::ReadWriteAttribute&)
     {
     }
-    
+
     virtual void
     set_raises_none (SemanticGraph::ReadWriteAttribute&)
     {
       os << STRS[EXCP_SNGL];
     }
-    
+
     virtual void
     set_raises_pre (SemanticGraph::ReadWriteAttribute&)
     {
       os << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl;
     }
-    
+
     virtual void
     set_raises_post (SemanticGraph::ReadWriteAttribute&)
     {
       os << "))";
     }
-    
+
     virtual void
     post (SemanticGraph::ReadWriteAttribute&)
     {
@@ -316,7 +316,7 @@ namespace
     {
       os << "," << endl;
     }
-    
+
   private:
     INArgTypeNameEmitter write_type_name_emitter_;
     TypeNameEmitter type_name_emitter_;
@@ -335,11 +335,11 @@ namespace
         type_name_emitter_ (c.os ())
     {
       read_belongs_.node_traverser (read_type_name_emitter_);
-      
-      edge_traverser (get_raises_);      
+
+      edge_traverser (get_raises_);
       get_raises_.node_traverser (type_name_emitter_);
     }
-    
+
     // ReadWriteAttribute
     //
     virtual void
@@ -348,36 +348,36 @@ namespace
       os << "virtual ";
 
       Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
-      
+
       os << endl;
     }
-    
+
     virtual void
     name (SemanticGraph::ReadWriteAttribute& a)
     {
       os << a.name () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl;
     }
-    
+
     virtual void
     get_raises_none (SemanticGraph::ReadWriteAttribute&)
     {
       os << STRS[EXCP_SNGL];
     }
-    
+
     virtual void
     get_raises_pre (SemanticGraph::ReadWriteAttribute&)
     {
       os << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl;
     }
-    
+
     virtual void
     get_raises_post (SemanticGraph::ReadWriteAttribute&)
     {
       os << "))";
     }
-    
+
     virtual void
     set_raises (SemanticGraph::ReadWriteAttribute&)
     {
@@ -387,7 +387,7 @@ namespace
     post (SemanticGraph::ReadWriteAttribute& a)
     {
       os << ";" << endl << endl;
-      
+
       WriteAttributeEmitter write_attribute_emitter (ctx);
       write_attribute_emitter.traverse (a);
     }
@@ -397,7 +397,7 @@ namespace
     {
       os << "," << endl;
     }
-    
+
     // ReadAttribute
     //
     virtual void
@@ -406,36 +406,36 @@ namespace
       os << "virtual ";
 
       Traversal::ReadAttribute::belongs (a, read_belongs_);
-      
+
       os << endl;
     }
-    
+
     virtual void
     name (SemanticGraph::ReadAttribute& a)
     {
       os << a.name () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl;
     }
-    
+
     virtual void
     get_raises_none (SemanticGraph::ReadAttribute&)
     {
       os << STRS[EXCP_SNGL];
     }
-    
+
     virtual void
     get_raises_pre (SemanticGraph::ReadAttribute&)
     {
       os << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl;
     }
-    
+
     virtual void
     get_raises_post (SemanticGraph::ReadAttribute&)
     {
       os << "))";
     }
-    
+
     virtual void
     set_raises (SemanticGraph::ReadAttribute&)
     {
@@ -452,7 +452,7 @@ namespace
     {
       os << "," << endl;
     }
-    
+
   private:
     ReturnTypeNameEmitter read_type_name_emitter_;
     TypeNameEmitter type_name_emitter_;
@@ -501,11 +501,10 @@ namespace
 
       ScopedName scoped (i.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
-     
+
       os << "template <typename T>" << endl
          << "class " << i.name () << "_Servant_T" << endl
-         << ": public virtual POA_" << stripped << "," << endl
-         << STRS[INH_RCSB] << endl
+         << ": public virtual POA_" << stripped << endl
          << "{"
          << "public:" << endl
          << i.name () << "_Servant_T (" << endl
@@ -776,7 +775,7 @@ namespace
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "));" << endl << endl;
-            
+
         os << "// CIAO-specific." << endl
            << STRS[COMP_CK] << " *" << endl
            << "subscribe_" << p.name () << "_generic (" << endl
@@ -785,7 +784,7 @@ namespace
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "));" << endl << endl;
-            
+
         os << "virtual ";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -860,7 +859,7 @@ namespace
         os << "Consumer_var>" << endl
            << "ciao_publishes_" << p.name () << "_map_;"
            << endl << endl;
-           
+
         os << "ACE_Active_Map_Manager<" << endl
            << STRS[COMP_ECB] << "_var>" << endl
            << "ciao_publishes_" << p.name () << "_generic_map_;"
@@ -901,12 +900,12 @@ namespace
 
         component_emitter.traverse (t);
       }
-       
+
       os << "class " << t.name () << "_Servant;" << endl;
 
       string swap_option = cl_.get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
-      
+
       os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Context" << endl
          << "  : public virtual CIAO::"
@@ -982,7 +981,7 @@ namespace
            << "::CCM_" << t.name () << "_Context" << endl
            << "// that enable component swapping in the container"
            << endl << endl;
-           
+
         os << "virtual " << STRS[COMP_CD] << " *" << endl
            << "get_registered_consumers (" << endl
            << "const char *publisher_name" << endl
@@ -1048,7 +1047,7 @@ namespace
       // Namespace closer.
 //      os << "}";
     }
-    
+
   private:
     CommandLine const& cl_;
   };
@@ -1177,8 +1176,7 @@ namespace
 
         Traversal::ConsumerData::belongs (c, stripped_belongs_);
 
-        os << "Consumer," << endl
-           << STRS[INH_RCSB] << endl
+        os << "Consumer" << endl
            << "{"
            << "public:" << endl;
 
@@ -1222,13 +1220,13 @@ namespace
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "));" << endl << endl;
-           
+
         os << "// CIAO-specific in " << STRS[COMP_ECB] << "." << endl
            << "virtual CORBA::Boolean" << endl
            << "ciao_is_substitutable (" << endl
            << "const char *event_repo_id" << endl
            << STRS[ENV_HDR] << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl << endl; 
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
 
         os << "// Get component implementation." << endl
            << "virtual CORBA::Object_ptr" << endl
@@ -1459,7 +1457,7 @@ namespace
          << t.name () << "_var," << endl
          << "    " << t.name () << "_Context" << endl
          << "  > comp_svnt_base;" << endl << endl;
-         
+
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr executor," << endl
@@ -1664,7 +1662,7 @@ namespace
 
         component_emitter.traverse (t);
       }
-      
+
       os << "const char *ins_name_;" << endl << endl;
 
       os << "private:" << endl << endl
@@ -1917,10 +1915,10 @@ namespace
       os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Servant" << endl
          << "  : public virtual CIAO::";
-         
+
       string swap_option = cl_.get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
-         
+
       ScopedName scoped (t.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
@@ -1931,35 +1929,35 @@ namespace
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
          << "      ";
-         
+
       Traversal::Home::manages (t, manages_);
 
       os << "," << endl
          << "      ";
-      
+
       Traversal::Home::manages (t, manages_);
 
       os << "_var," << endl
          << "      ";
-      
+
       Traversal::Home::manages (t, enclosing_manages_);
 
       os << "::CCM_";
-      
+
       Traversal::Home::manages (t, simple_manages_);
 
       os << "," << endl
          << "      ";
-      
+
       Traversal::Home::manages (t, enclosing_manages_);
 
       os << "::CCM_";
-      
+
       Traversal::Home::manages (t, simple_manages_);
 
       os << "_var," << endl
          << "      ";
-      
+
       Traversal::Home::manages (t, simple_manages_);
 
       os << "_Servant" << endl
@@ -1975,35 +1973,35 @@ namespace
          << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
          << "    ";
-         
+
       Traversal::Home::manages (t, manages_);
 
       os << "," << endl
          << "    ";
-      
+
       Traversal::Home::manages (t, manages_);
 
       os << "_var," << endl
          << "    ";
-      
+
       Traversal::Home::manages (t, enclosing_manages_);
 
       os << "::CCM_";
-      
+
       Traversal::Home::manages (t, simple_manages_);
 
       os << "," << endl
          << "    ";
-      
+
       Traversal::Home::manages (t, enclosing_manages_);
 
       os << "::CCM_";
-      
+
       Traversal::Home::manages (t, simple_manages_);
 
       os << "_var," << endl
          << "    ";
-      
+
       Traversal::Home::manages (t, simple_manages_);
 
       os << "_Servant" << endl
@@ -2364,7 +2362,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
 
   string swap_option = cl_.get_value ("custom-container", "");
   bool swapping = (swap_option == "upgradeable");
-         
+
   os << "#include \"ciao/"
      << (swapping ? "Swapping_Container.h" : "Container_Base.h")
      << "\"" << endl
@@ -2374,7 +2372,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
      << "\"" << endl
      << "#include \"ciao/Servant_Impl_T.h\"" << endl
      << "#include \"ciao/"
-     << (swapping ? "Swapping_Servant_Home_Impl_T.h" 
+     << (swapping ? "Swapping_Servant_Home_Impl_T.h"
                   : "Home_Servant_Impl_T.h")
      << "\"" << endl
      << "#include \"ace/Active_Map_Manager_T.h\"" << endl << endl;

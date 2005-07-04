@@ -145,8 +145,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class BMDISPLAY_SVNT_Export BMDisplay_Servant
-  : public virtual POA_BasicSP::BMDisplay,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::BMDisplay
   {
     public:
     BMDisplay_Servant (
@@ -158,8 +157,7 @@ namespace CIAO_GLUE_BasicSP
 
     // Servant class for the data_ready consumer.
     class BMDISPLAY_SVNT_Export DataAvailableConsumer_data_ready_Servant
-    : public virtual POA_BasicSP::DataAvailableConsumer,
-    public virtual PortableServer::RefCountServantBase
+    : public virtual POA_BasicSP::DataAvailableConsumer
     {
       public:
       DataAvailableConsumer_data_ready_Servant (
@@ -468,8 +466,7 @@ namespace CIAO_GLUE_BasicSP
   };
 
   class BMDISPLAY_SVNT_Export BMDisplayHome_Servant
-  : public virtual POA_BasicSP::BMDisplayHome,
-  public virtual PortableServer::RefCountServantBase
+  : public virtual POA_BasicSP::BMDisplayHome
   {
     public:
     BMDisplayHome_Servant (

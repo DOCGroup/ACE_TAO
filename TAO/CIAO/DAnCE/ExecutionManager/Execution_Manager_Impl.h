@@ -44,8 +44,7 @@ namespace CIAO
      *
      */
     class Execution_Manager_Impl
-      : public virtual POA_CIAO::ExecutionManagerDaemon,
-        public virtual PortableServer::RefCountServantBase
+      : public virtual POA_CIAO::ExecutionManagerDaemon
     {
     public:
       Execution_Manager_Impl (CORBA::ORB_ptr orb,

@@ -46,8 +46,7 @@ namespace CIAO
    *
    */
   class NodeDaemon_Impl
-    : public virtual POA_CIAO::NodeDaemon,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::NodeDaemon
   {
   public:
 
@@ -58,11 +57,11 @@ namespace CIAO
                      const char * nodeapp_loc,
                      int spawn_delay)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     /// Initializes the NodeDaemon.
     virtual void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     /// POA operation..
     virtual PortableServer::POA_ptr _default_POA (void);
 
@@ -125,7 +124,7 @@ namespace CIAO
 
     // Cache reference of last NodeAppManager
     // Deployment::NodeApplicationManager_var manager_;
-    
+
     NAM_Map map_;
   };
 }

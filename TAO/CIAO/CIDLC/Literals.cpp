@@ -68,9 +68,6 @@ namespace StringLiterals
     // This could change - don't want it scattered all over.
     "namespace CIDL_",                                    // CIDL_NS
 
-    // Commonly used base class.
-    "public virtual PortableServer::RefCountServantBase", // INH_RCSB
-
     // Labels for things stored in a SyntaxTree node's Context.
     "CIDLC::RepositoryIdGenerator::TypeId",               // TYPE_ID
     "CIDLC::RepositoryIdGenerator::TypePrefix",           // TYPE_PREFIX

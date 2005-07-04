@@ -25,8 +25,7 @@
 namespace CIAO
 {
   class CIAO_SERVER_Export HomeRegistrar_Impl
-    : public virtual POA_CIAO::HomeRegistrar,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::HomeRegistrar
   {
   public:
     /**

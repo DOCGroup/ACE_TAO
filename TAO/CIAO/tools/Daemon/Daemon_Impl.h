@@ -39,8 +39,7 @@ namespace CIAO
    * to acquire the
    */
   class Daemon_Impl
-    : public virtual POA_CIAO::Daemon,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::Daemon
   {
   public:
 

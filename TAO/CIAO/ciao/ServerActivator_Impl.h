@@ -42,8 +42,7 @@ namespace CIAO
    * Notice that this implementation is *NOT* thread-safe.
    */
   class CIAO_SERVER_Export Activator_Callback_Impl
-    : public virtual POA_CIAO::Activator_Callback,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::Activator_Callback
   {
   public:
     friend class ServerActivator_Impl;
@@ -97,8 +96,7 @@ namespace CIAO
    * used to manage the lifecycle of containers running on the server.
    */
   class CIAO_SERVER_Export ServerActivator_Impl
-    : public virtual POA_Components::Deployment::ServerActivator,
-      public virtual PortableServer::RefCountServantBase
+    : public virtual POA_Components::Deployment::ServerActivator
   {
   public:
     /// Constructor

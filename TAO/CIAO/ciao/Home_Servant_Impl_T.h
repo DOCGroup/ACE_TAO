@@ -40,8 +40,8 @@ namespace CIAO
    * This class implements operations
    * common to all generated home servants.
    */
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -50,16 +50,15 @@ namespace CIAO
             typename COMP_SVNT>
   class Home_Servant_Impl
     : public virtual BASE_SKEL,
-      public virtual Home_Servant_Impl_Base,
-      public virtual PortableServer::RefCountServantBase
+      public virtual Home_Servant_Impl_Base
   {
   public:
     Home_Servant_Impl (EXEC * exe,
                        Session_Container * c,
                        const char *ins_name);
-                       
+
     virtual ~Home_Servant_Impl (void);
-    
+
     // Operations for CCMHome interface.
 
     virtual void
@@ -67,7 +66,7 @@ namespace CIAO
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
-                       
+
     // Operations for keyless home interface.
 
     virtual ::Components::CCMObject_ptr
@@ -89,7 +88,7 @@ namespace CIAO
     _ciao_activate_component (COMP_EXEC *exe
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
     void
     _ciao_passivate_component (COMP *comp
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -119,4 +118,4 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_HOME_SERVANT_IMPL_T_H */
-   
+
