@@ -31,6 +31,9 @@
 
 #include "VisibilityC.h"
 #include "tao/CDR.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode_Static.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -43,4 +46,24 @@
 namespace TAO
 {
 }
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:50
+
+static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_Visibility (
+    CORBA::tk_alias,
+    "IDL:omg.org/CORBA/Visibility:1.0",
+    "Visibility",
+    &CORBA::_tc_short);
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_Visibility =
+    &_tao_tc_CORBA_Visibility;
+}
+
 

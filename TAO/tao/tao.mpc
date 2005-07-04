@@ -296,7 +296,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Value_TypeCode_Static.cpp
     Valuetype_Adapter.cpp
     ValueModifierC.cpp
-    VisibilityA.cpp
     VisibilityC.cpp
     Wait_On_Leader_Follower.cpp
     Wait_On_LF_No_Upcall.cpp

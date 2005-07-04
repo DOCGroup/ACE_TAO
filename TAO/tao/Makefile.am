@@ -311,7 +311,6 @@ libTAO_la_SOURCES = \
   ValueModifierC.cpp \
   Value_TypeCode_Static.cpp \
   Valuetype_Adapter.cpp \
-  VisibilityA.cpp \
   VisibilityC.cpp \
   WCharSeqA.cpp \
   WCharSeqC.cpp \
