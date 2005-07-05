@@ -1,3 +1,4 @@
+// $Id$
 
 #include "tao/params.h"
 #include "tao/orbconf.h"
@@ -41,30 +42,26 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     }
 }
 
-TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
-{
-}
-
 void
 TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
                                       TAO_EndpointSet &endpoint_set)
 {
-  ACE_CString endpoints;
-
   // Look for the lane in the endpoints map.
-  int result =
-    this->endpoints_map_.find (lane, endpoints);
+  endpoints_map_type::iterator const endpoints =
+    this->endpoints_map_.find (lane);
 
   // If lane is not in the map, <endpoint_set> remains empty
-  if (result != 0)
+  if (endpoints == this->endpoints_map_.end ())
     return;
 
   // At this point, the parsing should not fail since they have been
   // parsed successfully before.
-  result =
-    this->parse_and_add_endpoints (endpoints,
+  int const result =
+    this->parse_and_add_endpoints ((*endpoints).second,
                                    endpoint_set);
+
   ACE_ASSERT (result == 0);
+  ACE_UNUSED_ARG (result);
 }
 
 int
@@ -83,27 +80,19 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
     return result;
 
   // Look for the lane in the endpoints map.
-  ACE_CString existing_endpoints;
-  result =
-    this->endpoints_map_.find (lane, existing_endpoints);
+  //
+  // Return reference to endpoints string corresponding to lane
+  // string.  If none, a default constructed string is inserted into
+  // the map and returned.
+  ACE_CString & existing_endpoints = this->endpoints_map_[lane];
 
-  // Create the resultant endpoints string.
-  ACE_CString new_endpoints;
-  if (result == 0)
-    new_endpoints =
-      existing_endpoints +
-      ";" +
-      additional_endpoints;
-  else
-    new_endpoints =
-      additional_endpoints;
+  // Create the resulting endpoints string.
+  if (existing_endpoints.length () != 0)
+    {
+      existing_endpoints += ";";
+    }
 
-  result =
-    this->endpoints_map_.rebind (lane,
-                                 new_endpoints);
-
-  if (result == -1)
-    return result;
+  existing_endpoints += additional_endpoints;
 
   return 0;
 }
@@ -119,12 +108,9 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
   //
   // A single endpoint, instead of several, can be added just as well.
 
-  int status = 0;
-  // Return code:  0 = success,  -1 = failure
+  static char const endpoints_delimiter = ';';
 
-  const char endpoints_delimiter = ';';
-
-  size_t length = endpoints.length ();
+  size_t const length = endpoints.length ();
 
   if (endpoints[0] == endpoints_delimiter ||
       endpoints[length - 1] == endpoints_delimiter)
@@ -135,6 +121,9 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
       // (e.g. ";uiop://foo;iiop://1.3@bar")
     }
 
+  int status = 0;
+  // Return code:  0 = success,  -1 = failure
+
   if (length > 0)
     {
       int endpoints_count = 1;
@@ -143,7 +132,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
         {
           if (endpoints[j] == endpoints_delimiter)
             {
-              endpoints_count++;
+              ++endpoints_count;
             }
         }
 
@@ -162,13 +151,14 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
               continue;
             }
 
-          ACE_CString endpt = endpoints.substring (begin, end - begin);
+          ACE_CString const endpt =
+            endpoints.substring (begin, end - begin);
           // The substring call will work even if `end' is equal to
           // ACE_CString::npos since that will just extract the substring
           // from the offset `begin' to the end of the string.
 
           // Check for a valid URL style endpoint set
-          int check_offset = endpt.find ("://");
+          int const check_offset = endpt.find ("://");
 
           if (check_offset > 0 &&
               check_offset != endpt.npos)

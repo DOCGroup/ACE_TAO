@@ -6,6 +6,10 @@
 // String_var type
 // ----------------------------------------------------------------------
 
+#include "ace/OS_NS_string.h"
+// #include "ace/OS_NS_wchar.h"
+
+
 ACE_INLINE
 CORBA::String_var::String_var (void)
   : ptr_ (0)
@@ -268,4 +272,20 @@ ACE_INLINE CORBA::WChar *&
 CORBA::WString_out::ptr (void)
 {
   return this->ptr_;
+}
+
+// ----------------------------------------------------------------------
+
+ACE_INLINE bool
+CORBA::operator== (CORBA::String_var const & lhs,
+                   CORBA::String_var const & rhs)
+{
+  return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
+}
+
+ACE_INLINE bool
+CORBA::operator== (CORBA::WString_var const & lhs,
+                   CORBA::WString_var const & rhs)
+{
+  return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
 }

@@ -1,5 +1,7 @@
 // -*- C++ -*-
+//
 // $Id$
+
 ACE_INLINE int
 TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 {
