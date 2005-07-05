@@ -182,7 +182,7 @@ namespace TAO
 
     /// Assignment operator.
     void operator= (ORB_Core_Ref_Counter const & rhs);
-    
+
     /// Equality operator.
     bool operator== (ORB_Core_Ref_Counter const & rhs);
 
