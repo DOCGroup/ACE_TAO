@@ -49,7 +49,7 @@ ACE_INLINE
 TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (TAO_ORB_Core * core)
   : core_ (core)
 {
-  ACE_ASSERT (core != 0);
+//   ACE_ASSERT (core != 0);
 
   // Claim ownership.
   (void) this->core_->_incr_refcnt ();
@@ -67,8 +67,9 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (
   TAO::ORB_Core_Ref_Counter const & rhs)
   : core_ (rhs.core_)
 {
-  ACE_ASSERT (rhs.core_ != 0);
+//   ACE_ASSERT (rhs.core_ != 0);
 
+  // Claim ownership.
   (void) this->core_->_incr_refcnt ();
 }
 
