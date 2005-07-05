@@ -66,6 +66,6 @@ namespace CIAO
   };
 }
 
-    
+#include "ace/post.h"    
 
 #endif /*CIAO_NAM_MAP_H*/

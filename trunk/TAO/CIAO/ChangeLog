@@ -1,3 +1,11 @@
+Tue Jul  5 11:16:44 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/NodeManager/NAM_Map.h
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+	* DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+	
+	Fixed some misc fuzz errors. 
+	
 Tue Jul  5 16:01:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
