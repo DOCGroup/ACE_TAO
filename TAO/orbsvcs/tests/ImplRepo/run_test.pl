@@ -675,6 +675,7 @@ sub persistent_ir_test
 
     my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
 
+    unlink $imr_locator_ior;
     ## Be sure to start the ImR on a consistent endpoint, so that any created IORs
     ## remain valid even if the ImR restarts.
     $IMR_LOCATOR->Arguments ("-orbendpoint iiop://:8888 -x $backing_store -d 2 -o $imr_locator_ior");
@@ -685,9 +686,9 @@ sub persistent_ir_test
       return 1;
     }
 
+    unlink $imr_activator_ior;
     $IMR_ACTIVATOR->Arguments ("-d 2 -o $imr_activator_ior $imr_initref");
     $IMR_ACTIVATOR->Spawn ();
-
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
@@ -695,6 +696,7 @@ sub persistent_ir_test
         return 1;
     }
 
+    unlink $P_SVR->Executable();
     # Copy the server to a path with spaces to ensure that these
     # work corrrectly.
     copy ($A_SVR->Executable(), $P_SVR->Executable());
@@ -707,16 +709,17 @@ sub persistent_ir_test
 
     if ($result != 0) {
         print STDERR "ERROR: tao_imr returned $result\n";
+        unlink $P_SVR->Executable();
         return 1;
     }
 
+    unlink $airplane_ior;
     ## This will write out the imr-ified IOR. Note : If you don't use -orbendpoint
     ## when starting the ImR, then this IOR will no longer be valid when the ImR
     ## restarts below. You can fix this by creating a new valid IOR, or starting
     ## the ImR on a consistent endpoint. 
     $A_SVR->Arguments ("-o $airplane_ior -ORBUseIMR 1 $refstyle $imr_initref");
     $A_SVR->Spawn ();
-
     if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $IMR_LOCATOR->Kill ();
@@ -758,10 +761,6 @@ sub persistent_ir_test
         $status = 1;
     }
 
-    # Since the second server was started by the activator, it is not
-    # managed by perl, and we can't wait for it to die. So sleep a few secs.
-    #sleep 2;
-
     my $implrepo = $IMR_LOCATOR->TerminateWaitKill (5);
     if ($implrepo != 0) {
         print STDERR "ERROR: IMR_Locator returned $implrepo\n";
@@ -770,7 +769,6 @@ sub persistent_ir_test
 
     # Unlink so that we can wait on them again to know the server started.
     unlink $imr_locator_ior;
-
     print "Restarting Implementation Repository.\n";
     $IMR_LOCATOR->Spawn ();
     if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -793,10 +791,6 @@ sub persistent_ir_test
         $status = 1;
     }
 
-    # Since the second server was started by the activator, it is not
-    # managed by perl, and we can't wait for it to die. So sleep a few secs.
-    #sleep 2;
-
     my $imr_result = $IMR_ACTIVATOR->TerminateWaitKill (5);
     if ($imr_result != 0) {
         print STDERR "ERROR: IMR_Activator returned $imr_result\n";
@@ -808,6 +802,11 @@ sub persistent_ir_test
         print STDERR "ERROR: IMR_Locator returned $imr_result\n";
         $status = 1;
     }
+
+    unlink $P_SVR->Executable();
+    unlink $imr_locator_ior;
+    unlink $imr_activator_ior;
+    unlink $airplane_ior;
 
     return $status;   
 }
