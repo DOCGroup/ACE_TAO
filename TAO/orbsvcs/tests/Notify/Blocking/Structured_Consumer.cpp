@@ -156,7 +156,8 @@ int main (int argc, char* argv[])
     ACE_TRY_CHECK;
 
     ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
-    consumer_1->disconnect();
+    consumer_1->disconnect(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
     sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;

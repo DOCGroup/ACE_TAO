@@ -243,7 +243,7 @@ AdminProperties::create_channel(bool reject ACE_ENV_ARG_DECL)
                                                this->initial_admin_,
                                                id
                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 
@@ -253,14 +253,14 @@ AdminProperties::create_channel(bool reject ACE_ENV_ARG_DECL)
   this->supplier_admin_ = ec_->new_for_suppliers (this->ifgop_,
                                                   adminid
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   this->consumer_admin_ = ec_->new_for_consumers (this->ifgop_,
                                                   adminid
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 }

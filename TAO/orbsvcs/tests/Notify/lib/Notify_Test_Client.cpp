@@ -19,10 +19,18 @@ Notify_Test_Client::Notify_Test_Client (void)
 
 Notify_Test_Client::~Notify_Test_Client ()
 {
-  root_poa_->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_TRY_NEW_ENV
+  {
+    root_poa_->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+  ACE_CATCHALL
+  {
+    ACE_ERROR((LM_ERROR, "Error: Exception in ~Notify_Test_Client()\n"));
+  }
+  ACE_ENDTRY;
 }
 
 int
@@ -133,14 +141,14 @@ Notify_Test_Client::ORB_run (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_Time_Value tv(0, 10 * 1000);
     orb_->run(tv ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN(-1);
   }
 
   ACE_DEBUG((LM_DEBUG, "\nWaiting for stray events...\n"));
 
   ACE_Time_Value tv(2);
   orb_->run(tv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   return 0;
 }

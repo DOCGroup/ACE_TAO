@@ -204,7 +204,9 @@ int main (int argc, char* argv[])
               sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              client.ORB_run();
+              client.ORB_run(ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
               ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
 
               sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
