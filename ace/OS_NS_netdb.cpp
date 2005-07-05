@@ -343,9 +343,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (handle == ACE_INVALID_HANDLE)
-    {
-      return -1;
-    }
+    return -1;
 
   ACE_OS::strcpy (ifr.ifr_name, "eth0");
 
@@ -357,6 +355,8 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   struct sockaddr* sa =
     (struct sockaddr *) &ifr.ifr_addr;
+
+  ACE_OS::close (handle);
 
   ACE_OS::memcpy (node->node,
 		  sa->sa_data,
