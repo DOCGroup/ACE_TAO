@@ -291,17 +291,13 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     ACE_OS::gethostbyname (hostname);
 
   if (phost == 0)
-    {
-      return -1;
-    }
+    return -1;
 
   ACE_HANDLE handle =
     ACE_OS::socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
   if (handle == ACE_INVALID_HANDLE)
-    {
-      return -1;
-    }
+    return -1;
 
   char **paddrs = phost->h_addr_list;
 
@@ -324,14 +320,15 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
                      SIOCGARP,
                      &ar) == -1)
     {
+      ACE_OS::close (handle);
       return -1;
     }
 
   ACE_OS::close (handle);
 
   ACE_OS::memcpy (node->node,
-		  ar.arp_ha.sa_data,
-		  6);
+                  ar.arp_ha.sa_data,
+                  6);
 
   return 0;
 
@@ -359,7 +356,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   ACE_OS::close (handle);
 
   ACE_OS::memcpy (node->node,
-		  sa->sa_data,
+                  sa->sa_data,
                   6);
 
   return 0;
