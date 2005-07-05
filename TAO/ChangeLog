@@ -23,6 +23,7 @@ Tue Jul  5 07:41:12 2005  Justin Michel  <michel_j@ociweb.com>
         * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
 
           Fix misc problems with use of ACE_ENV macros.
+	  Add missing go.idl files
 
 Tue Jul  5 03:07:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
