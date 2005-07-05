@@ -30,7 +30,7 @@
 
 
 #include "EDF_SchedulingC.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
 #include "ace/OS_NS_string.h"
@@ -58,75 +58,75 @@ static const CORBA::Long _oc_EDF_Scheduling_SchedulingParameter[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x4544465f), 
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c69), 
-  ACE_NTOHL (0x6e672f53), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c696e), 
-  ACE_NTOHL (0x67506172), 
-  ACE_NTOHL (0x616d6574), 
-  ACE_NTOHL (0x65723a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x4544465f),
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c69),
+  ACE_NTOHL (0x6e672f53),
+  ACE_NTOHL (0x63686564),
+  ACE_NTOHL (0x756c696e),
+  ACE_NTOHL (0x67506172),
+  ACE_NTOHL (0x616d6574),
+  ACE_NTOHL (0x65723a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:EDF_Scheduling/SchedulingParameter:1.0
     20,
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c69), 
-  ACE_NTOHL (0x6e675061), 
-  ACE_NTOHL (0x72616d65), 
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c69),
+  ACE_NTOHL (0x6e675061),
+  ACE_NTOHL (0x72616d65),
   ACE_NTOHL (0x74657200),  // name = SchedulingParameter
   4, // member count
     9,
-  ACE_NTOHL (0x64656164), 
-  ACE_NTOHL (0x6c696e65), 
+  ACE_NTOHL (0x64656164),
+  ACE_NTOHL (0x6c696e65),
   ACE_NTOHL (0x0),  // name = deadline
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
 
   11,
-  ACE_NTOHL (0x696d706f), 
-  ACE_NTOHL (0x7274616e), 
+  ACE_NTOHL (0x696d706f),
+  ACE_NTOHL (0x7274616e),
   ACE_NTOHL (0x63650000),  // name = importance
     CORBA::tk_long,
 
   7,
-  ACE_NTOHL (0x70657269), 
+  ACE_NTOHL (0x70657269),
   ACE_NTOHL (0x6f640000),  // name = period
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
 
   8,
-  ACE_NTOHL (0x7461736b), 
+  ACE_NTOHL (0x7461736b),
   ACE_NTOHL (0x5f696400),  // name = task_id
     CORBA::tk_long,
 
@@ -146,10 +146,10 @@ namespace EDF_Scheduling
     &_tc_TAO_tc_EDF_Scheduling_SchedulingParameter;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 EDF_Scheduling::SchedulingParameter::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -164,7 +164,7 @@ EDF_Scheduling::SchedulingParameter::_tao_any_destructor (
 
 // Traits specializations for EDF_Scheduling::SchedulingParameterPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 EDF_Scheduling::SchedulingParameterPolicy_ptr
 TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_duplicate (
     EDF_Scheduling::SchedulingParameterPolicy_ptr p
@@ -173,7 +173,7 @@ TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_duplicate (
   return EDF_Scheduling::SchedulingParameterPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_release (
     EDF_Scheduling::SchedulingParameterPolicy_ptr p
@@ -182,14 +182,14 @@ TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 EDF_Scheduling::SchedulingParameterPolicy_ptr
 TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_nil (void)
 {
   return EDF_Scheduling::SchedulingParameterPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_marshal (
     EDF_Scheduling::SchedulingParameterPolicy_ptr p,
@@ -200,7 +200,7 @@ TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*EDF_Scheduling__TAO_SchedulingParameterPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -211,7 +211,7 @@ EDF_Scheduling::SchedulingParameterPolicy::SchedulingParameterPolicy (void)
 EDF_Scheduling::SchedulingParameterPolicy::~SchedulingParameterPolicy (void)
 {}
 
-void 
+void
 EDF_Scheduling::SchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SchedulingParameterPolicy *_tao_tmp_pointer =
@@ -229,10 +229,10 @@ EDF_Scheduling::SchedulingParameterPolicy::_narrow (
     {
       return SchedulingParameterPolicy::_nil ();
     }
-  
+ 
   SchedulingParameterPolicy_ptr proxy =
     dynamic_cast<SchedulingParameterPolicy_ptr> (_tao_objref);
-  
+ 
   return SchedulingParameterPolicy::_duplicate (proxy);
 }
 
@@ -243,7 +243,7 @@ EDF_Scheduling::SchedulingParameterPolicy::_duplicate (SchedulingParameterPolicy
     {
       obj->_add_ref ();
     }
-  
+ 
   return obj;
 }
 
@@ -298,26 +298,26 @@ static const CORBA::Long _oc_EDF_Scheduling_SchedulingParameterPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x4544465f), 
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c69), 
-  ACE_NTOHL (0x6e672f53), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c696e), 
-  ACE_NTOHL (0x67506172), 
-  ACE_NTOHL (0x616d6574), 
-  ACE_NTOHL (0x6572506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x4544465f),
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c69),
+  ACE_NTOHL (0x6e672f53),
+  ACE_NTOHL (0x63686564),
+  ACE_NTOHL (0x756c696e),
+  ACE_NTOHL (0x67506172),
+  ACE_NTOHL (0x616d6574),
+  ACE_NTOHL (0x6572506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:EDF_Scheduling/SchedulingParameterPolicy:1.0
     26,
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c69), 
-  ACE_NTOHL (0x6e675061), 
-  ACE_NTOHL (0x72616d65), 
-  ACE_NTOHL (0x74657250), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c69),
+  ACE_NTOHL (0x6e675061),
+  ACE_NTOHL (0x72616d65),
+  ACE_NTOHL (0x74657250),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = SchedulingParameterPolicy
   };
 
@@ -340,7 +340,7 @@ namespace EDF_Scheduling
 
 // Traits specializations for EDF_Scheduling::Scheduler.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 EDF_Scheduling::Scheduler_ptr
 TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_duplicate (
     EDF_Scheduling::Scheduler_ptr p
@@ -349,7 +349,7 @@ TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_duplicate (
   return EDF_Scheduling::Scheduler::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_release (
     EDF_Scheduling::Scheduler_ptr p
@@ -358,14 +358,14 @@ TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 EDF_Scheduling::Scheduler_ptr
 TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_nil (void)
 {
   return EDF_Scheduling::Scheduler::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_marshal (
     EDF_Scheduling::Scheduler_ptr p,
@@ -376,7 +376,7 @@ TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*EDF_Scheduling__TAO_Scheduler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -387,7 +387,7 @@ EDF_Scheduling::Scheduler::Scheduler (void)
 EDF_Scheduling::Scheduler::~Scheduler (void)
 {}
 
-void 
+void
 EDF_Scheduling::Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   Scheduler *_tao_tmp_pointer =
@@ -405,10 +405,10 @@ EDF_Scheduling::Scheduler::_narrow (
     {
       return Scheduler::_nil ();
     }
-  
+ 
   Scheduler_ptr proxy =
     dynamic_cast<Scheduler_ptr> (_tao_objref);
-  
+ 
   return Scheduler::_duplicate (proxy);
 }
 
@@ -419,7 +419,7 @@ EDF_Scheduling::Scheduler::_duplicate (Scheduler_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+ 
   return obj;
 }
 
@@ -474,18 +474,18 @@ static const CORBA::Long _oc_EDF_Scheduling_Scheduler[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x4544465f), 
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c69), 
-  ACE_NTOHL (0x6e672f53), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c6572), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x4544465f),
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c69),
+  ACE_NTOHL (0x6e672f53),
+  ACE_NTOHL (0x63686564),
+  ACE_NTOHL (0x756c6572),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:EDF_Scheduling/Scheduler:1.0
     10,
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c65), 
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c65),
   ACE_NTOHL (0x72000000),  // name = Scheduler
   };
 
@@ -503,7 +503,7 @@ namespace EDF_Scheduling
     &_tc_TAO_tc_EDF_Scheduling_Scheduler;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
