@@ -46,7 +46,7 @@ TAO::ORB_Table::bind (char const * orb_id,
 
   value_type const value =
     std::make_pair (key_type (orb_id), data_type (orb_core));
-                                            
+
   std::pair<iterator, bool> result = this->table_.insert (value);
 
   if (result.second)
