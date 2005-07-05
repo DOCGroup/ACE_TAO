@@ -196,10 +196,10 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
-  ACE_TRY
+  ACE_TRY_EX(TRY1)
     {
       this->disconnect_from_proxy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX(TRY1);
     }
   ACE_CATCHANY
     {
@@ -209,10 +209,10 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_ENDTRY;
 
-  ACE_TRY
+  ACE_TRY_EX(TRY2)
     {
       this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX(TRY2);
     }
   ACE_CATCHANY
     {

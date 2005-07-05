@@ -196,18 +196,10 @@ SendEvents (int id ACE_ENV_ARG_DECL)
     events[z + 1] = revents[z];
   }
 
-  ACE_TRY_NEW_ENV
-  {
-    ACE_DEBUG ((LM_DEBUG, "Sending events.\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sending events.\n"));
 
-    supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCH (CORBA::Exception, e)
-  {
-    ACE_PRINT_EXCEPTION (e, "Error: Supplier exception: ");
-  }
-  ACE_ENDTRY;
+  supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 static void
