@@ -1,3 +1,10 @@
+Tue Jul  5 18:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_netdb.cpp (getmacaddress): Some layout fixes and
+          also fixed a handle leak in the Sun part. Thanks to
+          <likemartinma at 163 dot com> for reportint this. This fixes
+          bugid 1875
+
 Tue Jul  5 08:30:07 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_netdb.cpp (getmacaddress): Call close() to avoid
