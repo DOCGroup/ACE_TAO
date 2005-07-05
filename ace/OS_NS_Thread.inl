@@ -340,19 +340,6 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INLINE int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
-{
-  ACE_condattr_t attributes;
-  if (ACE_OS::condattr_init (attributes, type) == 0
-      && ACE_OS::cond_init (cv, attributes, name, arg) == 0)
-    {
-      (void) ACE_OS::condattr_destroy (attributes);
-      return 0;
-    }
-  return -1;
-}
-
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
