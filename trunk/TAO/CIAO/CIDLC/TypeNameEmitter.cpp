@@ -1807,7 +1807,7 @@ SetAttributeDelegationEmitter::traverse (UnsignedShort&)
 }
 
 void
-SetAttributeDelegationEmitter::traverse (Long& t)
+SetAttributeDelegationEmitter::traverse (Long&)
 {
   emit_delegation ();
 }
@@ -1843,7 +1843,7 @@ SetAttributeDelegationEmitter::traverse (Double&)
 }
 
 void
-SetAttributeDelegationEmitter::traverse (String& t)
+SetAttributeDelegationEmitter::traverse (String&)
 {
   emit_delegation ();
 }
@@ -1851,7 +1851,7 @@ SetAttributeDelegationEmitter::traverse (String& t)
 void
 SetAttributeDelegationEmitter::traverse (Wstring&)
 {
-  emit_delegation ();
+  emit_error ("wstring");
 }
 
 void
