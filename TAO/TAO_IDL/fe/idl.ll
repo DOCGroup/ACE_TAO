@@ -1065,7 +1065,7 @@ idl_find_node (char *s)
   if (node != 0)
     {
       d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
-                                                                  I_TRUE);
+                                                                 I_TRUE);
     }
 
   if (d == 0)
