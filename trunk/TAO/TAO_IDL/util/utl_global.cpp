@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Process.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (util,
            utl_global,
@@ -1133,10 +1134,25 @@ IDL_GlobalData::string_to_scoped_name (char *s)
   int len = 0;
   UTL_ScopedName *retval = 0;
 
+  // If we're doing #pragma ID, the id string may have a ::
+  // while the target scoped name does not, so we check for
+  // a space.
+  char *test = ACE_OS::strchr (start, ' ');
   char *end = ACE_OS::strstr (start, "::");
+  
+  if ((test - end) < 0)
+    {
+      end = test;
+    }
 
   while (end != 0)
     {
+      if (!ACE_OS::ace_isalpha (start[0]))
+        {
+          idl_global->err ()->error0 (UTL_Error::EIDL_BAD_SCOPENAME_STRING);
+          exit (99);
+        }
+        
       len = end - start;
 
       if (len != 0)
@@ -1175,10 +1191,23 @@ IDL_GlobalData::string_to_scoped_name (char *s)
 
       start = end + 2;
 
-      end = ACE_OS::strstr (start, "::");
+      end = (end[0] == ' ' ? 0 : ACE_OS::strstr (start, "::"));
     }
 
+  if (!ACE_OS::ace_isalpha (start[0]))
+    {
+      idl_global->err ()->error0 (UTL_Error::EIDL_BAD_SCOPENAME_STRING);
+      exit (99);
+    }
+        
   end = ACE_OS::strchr (start, ' ');
+
+  // This means we've already dealt with the space between the target
+  // name and the id string (above) and we're done.  
+  if (end == 0)
+    {
+      return retval;
+    }
 
   len = end - start;
 

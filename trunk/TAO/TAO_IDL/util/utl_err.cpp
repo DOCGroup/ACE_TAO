@@ -210,6 +210,8 @@ error_string (UTL_Error::ErrorCode c)
       return "";
     case UTL_Error::EIDL_ILLEGAL_VALUETYPE:
       return "valuetype not allowed as type of boxed value type";
+    case UTL_Error::EIDL_BAD_SCOPENAME_STRING:
+      return "malformed scoped name string";
   }
 
   return 0;
