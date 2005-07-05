@@ -1,6 +1,12 @@
+Tue Jul  5 14:12:07 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Cleanup generated files such as IORs and the copy of the server executable.
+
 Tue Jul 05 11:49:13 2005   Gary Maxey <gary.maxey@hp.com>
 
-	* tao/Valuetype/StringValueC.inl:
+        * tao/Valuetype/StringValueC.inl:
 
           Avoid error when compiling with HPUX compiler.
 
