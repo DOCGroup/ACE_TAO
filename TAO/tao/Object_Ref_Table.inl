@@ -34,8 +34,8 @@ TAO_Object_Ref_Table::destroy (void)
 {
   Table tmp;
 
-  ACE_GUARD (TAO_SYNCH_MUTEX, 
-             guard, 
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             guard,
              this->lock_);
 
   this->table_.swap (tmp);  // Force release of memory held by our table.
