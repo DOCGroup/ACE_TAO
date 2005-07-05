@@ -1,3 +1,8 @@
+Tue Jul  5 18:13:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Removed Windows CE from the platforms Riverace
+	  supports and added links to some Riverace pages.
+
 Tue Jul 05 21:40:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Mem_Map.cpp:
