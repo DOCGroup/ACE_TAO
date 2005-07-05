@@ -1,3 +1,18 @@
+Tue Jul  5 10:15:29 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+
+          Ensure that OS_NS_unistd.h is included where we use ACE_OS::unlink().
+
 Tue Jul  5 07:48:44 2005  Justin Michel  <michel_j@ociweb.com>
 
         * examples/Kokyu_dsrt_schedulers/EDF_SchedulingC.cpp:

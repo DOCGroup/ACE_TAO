@@ -16,6 +16,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_unistd.h"
 
 static const char* ior_file = "supplier.ior";
 static TAO_Notify_Tests_StructuredPushSupplier* supplier = 0;
