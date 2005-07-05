@@ -1188,11 +1188,7 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_destroy (ACE_cond_t *cv);
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
   extern ACE_Export
-#else
-  ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
   int cond_init (ACE_cond_t *cv,
                  short type = ACE_DEFAULT_SYNCH_TYPE,
                  const char *name = 0,
@@ -1837,17 +1833,19 @@ extern "C"
 {
   typedef struct
   {
-#if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    /// Protect critical section.
-    ACE_mutex_t lock_;
-#endif
-
 #if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    /// Protect critical section.
+    ACE_mutex_t lock_;
     /// Keeps track of waiters.
     ACE_cond_t condition_;
+#else
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
+     (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    /// Protect critical section.
+    ACE_mutex_t lock_;
+# endif
 #endif
 
     /// Object type.
@@ -1899,17 +1897,17 @@ protected:
   /// Event data
   ACE_eventdata_t* eventdata_;
 
-#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_MUTEXATTR_PSHARED)) && \
-  (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    /// Protect critical section.
-  ACE_sema_t lock_;
-#endif
-
 #if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
   (defined (ACE_USES_FIFO_SEM) || \
     (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
   /// Keeps track of waiters.
   ACE_sema_t semaphore_;
+
+# if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_MUTEXATTR_PSHARED)) && \
+     (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+    /// Protect critical section.
+  ACE_sema_t lock_;
+# endif
 #endif
 };
 
