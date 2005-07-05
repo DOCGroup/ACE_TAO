@@ -117,13 +117,13 @@ CORBA::StringValue::_boxed_in (void) const
 ACE_INLINE CORBA::Char *&
 CORBA::StringValue::_boxed_inout (void)
 {
-  return this->_pd_value;
+  return this->_pd_value.inout ();
 }
 
 ACE_INLINE CORBA::Char *&
 CORBA::StringValue::_boxed_out (void)
 {
-  return this->_pd_value;
+  return this->_pd_value.out ();
 }
 
 ACE_INLINE char &
@@ -253,13 +253,13 @@ CORBA::WStringValue::_boxed_in (void) const
 ACE_INLINE CORBA::WChar *&
 CORBA::WStringValue::_boxed_inout (void)
 {
-  return this->_pd_value;
+  return this->_pd_value.inout ();
 }
 
 ACE_INLINE CORBA::WChar *&
 CORBA::WStringValue::_boxed_out (void)
 {
-  return this->_pd_value;
+  return this->_pd_value.out ();
 }
 
 ACE_INLINE CORBA::WChar &
