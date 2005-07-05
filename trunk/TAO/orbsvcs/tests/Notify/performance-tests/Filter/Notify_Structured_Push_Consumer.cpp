@@ -4,6 +4,8 @@
 #include "Notify_Test_Client.h"
 #include "common.h"
 
+#include "ace/OS_NS_sys_time.h"
+
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
                                             const char* name,
                                             unsigned int expected,

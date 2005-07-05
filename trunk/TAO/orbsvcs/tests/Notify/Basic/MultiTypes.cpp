@@ -356,7 +356,7 @@ MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
 }
 
 void
-MultiTypes::end_test (ACE_ENV_SINGLE_ARG_DECL)
+MultiTypes::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   consumer_done( 0 );
 }

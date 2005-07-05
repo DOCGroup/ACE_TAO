@@ -1,44 +1,70 @@
+Tue Jul  5 07:41:12 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/Events.cpp:
+        * orbsvcs/tests/Notify/Basic/MultiTypes.cpp:
+        * orbsvcs/tests/Notify/Basic/Sequence.cpp:
+        * orbsvcs/tests/Notify/Basic/Simple.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/go.idl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/go.idl:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/lib/Peer_T.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+
+          Fix misc problems with use of ACE_ENV macros.
+
 Tue Jul  5 03:07:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CORBA_String.h:
-	* tao/CORBA_String.inl:
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
 
-	  Added TAO-specific equality operators.  Allows
-	  CORBA::{W}String_var to be used as map key.
+          Added TAO-specific equality operators.  Allows
+          CORBA::{W}String_var to be used as map key.
 
-	* tao/ORB.cpp (resolve_initial_references):
+        * tao/ORB.cpp (resolve_initial_references):
 
-	  The initial reference map is now an ACE_Array_Map, which
-	  implements an STL-like map interface.  Updated map iteration
-	  accordingly.
+          The initial reference map is now an ACE_Array_Map, which
+          implements an STL-like map interface.  Updated map iteration
+          accordingly.
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Table.cpp:
-	* tao/ORB_Table.h:
-	* tao/ORB_Table.inl:
-	* tao/Object_Ref_Table.cpp:
-	* tao/Object_Ref_Table.h:
-	* tao/Object_Ref_Table.inl:
-	* tao/params.cpp:
-	* tao/params.h:
-	* tao/params.i:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Table.cpp:
+        * tao/ORB_Table.h:
+        * tao/ORB_Table.inl:
+        * tao/Object_Ref_Table.cpp:
+        * tao/Object_Ref_Table.h:
+        * tao/Object_Ref_Table.inl:
+        * tao/params.cpp:
+        * tao/params.h:
+        * tao/params.i:
 
-	  Replaced ACE_Hash_Map_Manager_Ex usage with light weight
-	  ACE_Array_Map.  Hash map benefits were not worth the larger
-	  footprint.
+          Replaced ACE_Hash_Map_Manager_Ex usage with light weight
+          ACE_Array_Map.  Hash map benefits were not worth the larger
+          footprint.
 
-	  Inlined a number very small functions.  Reduces footprint.
+          Inlined a number very small functions.  Reduces footprint.
 
-	* tao/ORB_Core_Auto_Ptr.h (TAO_ORB_Core_Auto_Ptr):
+        * tao/ORB_Core_Auto_Ptr.h (TAO_ORB_Core_Auto_Ptr):
 
-	  Uncommented "explicit" constructor keyword.  Support for it has
-	  been required in ACE and TAO for a while now.
+          Uncommented "explicit" constructor keyword.  Support for it has
+          been required in ACE and TAO for a while now.
 
-	* tao/Makefile.am (nobase_include_HEADERS):
+        * tao/Makefile.am (nobase_include_HEADERS):
 
-	  Added new Object_Ref_Table.inl inline soure file.
+          Added new Object_Ref_Table.inl inline soure file.
 
 Mon Jul  4 18:56:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -440,34 +466,34 @@ Mon Jul  4 07:11:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jul  3 15:09:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
 
-	  Fix typo in ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA case.
+          Fix typo in ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA case.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
 
-	  Change create() method parameter name from max_rec_size to
-	  max_size, as it specifies the size of the whole log, not a
-	  single log record.
+          Change create() method parameter name from max_rec_size to
+          max_size, as it specifies the size of the whole log, not a
+          single log record.
 
 Sun Jul  3 15:00:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Removed Interceptor_List.h from Header_Files and
-	  Interceptor_List.cpp from Template_Files sections.
+          Removed Interceptor_List.h from Header_Files and
+          Interceptor_List.cpp from Template_Files sections.
 
 Fri Jul 01 15:14:06 2005   Gary Maxey <gary.maxey@hp.com>
 
-	* tao/Valuetype/StringValueC.inl:
+        * tao/Valuetype/StringValueC.inl:
 
           Avoid error when compiling with MSVC6 compiler.
 

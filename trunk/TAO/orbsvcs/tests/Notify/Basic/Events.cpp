@@ -292,7 +292,7 @@ Events::run_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Events::end_test (ACE_ENV_SINGLE_ARG_DECL)
+Events::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   consumer_done( 0 );
 }

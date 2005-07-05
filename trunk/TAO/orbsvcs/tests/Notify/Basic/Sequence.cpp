@@ -324,7 +324,7 @@ Sequence::run_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Sequence::end_test (ACE_ENV_SINGLE_ARG_DECL)
+Sequence::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   consumer_done( 0 );
 }
