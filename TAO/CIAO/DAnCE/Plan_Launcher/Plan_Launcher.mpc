@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// Plan_Launcher.mpc,v 1.8 2005/04/21 19:33:14 parsons Exp
+// $Id$ 
 
 project(Plan_Launcher): naming, ciao_server_dnc, xerces, taoexe {
   exename = plan_launcher

@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file ZIP_wrapper.cpp
+ * @file ZIP_Wrapper.cpp
  * @author Stoyan Paunov <spaunov@isis.vanderbilt.edu
  *
  * Purpose: to provide a wrapper around ZZIPlib for easy handling of
