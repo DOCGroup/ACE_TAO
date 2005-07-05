@@ -610,10 +610,12 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           ACE_CString object_id (ACE_TEXT_ALWAYS_CHAR(current_arg),
                                  pos - current_arg);
           ACE_CString IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
-          if (this->init_ref_map_.bind (object_id, IOR) != 0)
+          if (!this->init_ref_map_.insert (
+                 std::make_pair (InitRefMap::key_type (object_id),
+                                 InitRefMap::data_type (IOR))).second)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Cannot store ORBInitRef ")
+                          ACE_TEXT ("Duplicate -ORBInitRef ")
                           ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
@@ -1532,12 +1534,6 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
     protocols_hooks_name;
 }
 
-TAO_Protocols_Hooks *
-TAO_ORB_Core::get_protocols_hooks (void)
-{
-  return this->protocols_hooks_;
-}
-
 int
 TAO_ORB_Core::bidirectional_giop_init (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -1805,10 +1801,10 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
                       CORBA::Object::_nil ());
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
-    const TAO::ORB_Table::Iterator end = table->end ();
-    for (TAO::ORB_Table::Iterator i = table->begin (); i != end; ++i)
+    TAO::ORB_Table::iterator const end = table->end ();
+    for (TAO::ORB_Table::iterator i = table->begin (); i != end; ++i)
       {
-        TAO_ORB_Core *other_core = (*i).int_id_;
+        TAO_ORB_Core * const other_core = (*i).second.core ();
 
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
@@ -1848,10 +1844,10 @@ TAO_ORB_Core::initialize_object (TAO_Stub *stub,
                               0));
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
-    TAO::ORB_Table::Iterator const end = table->end ();
-    for (TAO::ORB_Table::Iterator i = table->begin (); i != end; ++i)
+    TAO::ORB_Table::iterator const end = table->end ();
+    for (TAO::ORB_Table::iterator i = table->begin (); i != end; ++i)
       {
-        TAO_ORB_Core * const other_core = (*i).int_id_;
+        TAO_ORB_Core * const other_core = (*i).second.core ();
 
         if (this->is_collocation_enabled (other_core,
                                           mprofile))
@@ -2450,7 +2446,7 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 
   const size_t total_size =
     initial_services_size
-    + this->init_ref_map_.current_size ()
+    + this->init_ref_map_.size ()
     + this->object_ref_table_.current_size ();
 
   CORBA::ORB::ObjectIdList *tmp = 0;
@@ -2476,21 +2472,21 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 
   // References registered via
   // ORBInitInfo::register_initial_reference().
-  TAO_Object_Ref_Table::Iterator obj_ref_end =
+  TAO_Object_Ref_Table::iterator const obj_ref_end =
     this->object_ref_table_.end ();
 
-  for (TAO_Object_Ref_Table::Iterator i = this->object_ref_table_.begin ();
+  for (TAO_Object_Ref_Table::iterator i = this->object_ref_table_.begin ();
        i != obj_ref_end;
        ++i, ++index)
-    list[index] = CORBA::string_dup ((*i).ext_id_);
+    list[index] = CORBA::string_dup ((*i).first.in ());
 
   // References registered via INS.
-  const InitRefMap::iterator end = this->init_ref_map_.end ();
+  InitRefMap::iterator const end = this->init_ref_map_.end ();
 
   for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
        j != end;
        ++j, ++index)
-    list[index] = (*j).ext_id_.c_str ();
+    list[index] = (*j).second.c_str ();
 
   return list._retn ();
 }
@@ -3105,33 +3101,6 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
   return TAO::TAO_CS_REMOTE_STRATEGY;
 }
 
-TAO_ORB_Core::InitRefMap *
-TAO_ORB_Core::init_ref_map ()
-{
-  return &this->init_ref_map_;
-}
-
-void
-TAO_ORB_Core::set_default (const char * orb_id)
-{
-  TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
-  table->set_default (orb_id);
-}
-
-void
-TAO_ORB_Core::not_default (const char * orb_id)
-{
-  TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
-  table->not_default (orb_id);
-}
-
-/// Return the valuetype adapter
-TAO_Valuetype_Adapter *&
-TAO_ORB_Core::valuetype_adapter (void)
-{
-  return this->valuetype_adapter_;
-}
-
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -3146,12 +3115,6 @@ template class ACE_Reverse_Lock<TAO_SYNCH_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >;
 
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
-
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_CString, ACE_CString>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
 template class ACE_Array_Base<void *>;
 
@@ -3170,12 +3133,6 @@ template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 #pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_CString>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Array_Base<void *>
 

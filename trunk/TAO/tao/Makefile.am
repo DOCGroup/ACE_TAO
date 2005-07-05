@@ -652,6 +652,7 @@ nobase_include_HEADERS = \
   Object_Proxy_Broker.h \
   Object_Proxy_Impl.h \
   Object_Ref_Table.h \
+  Object_Ref_Table.inl \
   Object_T.cpp \
   Object_T.h \
   Objref_TypeCode.cpp \

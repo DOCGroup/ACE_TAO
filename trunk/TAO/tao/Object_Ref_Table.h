@@ -21,17 +21,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
-#include "ace/Hash_Map_Manager_T.h"
-
+#include "tao/CORBA_String.h"
+#include "tao/Object.h"
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
 
+#include "ace/Array_Map.h"
+
 namespace CORBA
 {
-  class Object;
-  typedef Object *Object_ptr;
-
   class Environment;
 }
 
@@ -53,24 +51,16 @@ namespace CORBA
  * is needed.  For example, "corbaname" may return different results
  * on each use.
  */
-class TAO_Export TAO_Object_Ref_Table
+class TAO_Object_Ref_Table
 {
 public:
 
-  typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                  CORBA::Object_ptr,
-                                  ACE_Hash<const char *>,
-                                  ACE_Equal_To<const char *>,
-                                  TAO_SYNCH_MUTEX>
-    Table;
+  typedef ACE_Array_Map<CORBA::String_var, CORBA::Object_var> Table;
 
-  typedef Table::iterator Iterator;
+  typedef Table::iterator iterator;
 
   /// Constructor
   TAO_Object_Ref_Table (void);
-
-  /// Destructor
-  ~TAO_Object_Ref_Table (void);
 
   /// Register an object reference with the table, and map the given
   /// ID to it.
@@ -91,8 +81,8 @@ public:
    * @name Forward Iterators
    */
   //@{
-  Iterator begin (void);
-  Iterator end (void);
+  iterator begin (void);
+  iterator end (void);
   //@}
 
   /// Return the current size of the underlying table.
@@ -120,7 +110,15 @@ private:
   /// The implementation.
   Table table_;
 
+  /// Table synchronization lock.
+  TAO_SYNCH_MUTEX lock_;
+
 };
+
+
+#ifdef __ACE_INLINE__
+# include "tao/Object_Ref_Table.inl"
+#endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

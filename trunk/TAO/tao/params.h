@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Unbounded_Queue.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Array_Map.h"
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,12 +37,6 @@
 //    footprint by using this container.
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
-typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                ACE_CString,
-                                ACE_Hash<ACE_CString>,
-                                ACE_Equal_To<ACE_CString>,
-                                ACE_Null_Mutex>
-  TAO_EndpointMap;
 
 
 // -------------------------------------------------------------------
@@ -64,11 +57,11 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
 class TAO_Export TAO_ORB_Parameters
 {
 public:
+
+  typedef ACE_Array_Map<ACE_CString, ACE_CString> endpoints_map_type;
+
   /// Constructor.
   TAO_ORB_Parameters (void);
-
-  /// Destructor.
-  ~TAO_ORB_Parameters (void);
 
   /// Specifies the endpoints on which this server is willing to
   /// listen for requests.
@@ -205,7 +198,7 @@ private:
   // TAO_EndpointSet preconnects_list_;
 
   /// Map of endpoints this server is willing to accept requests on.
-  TAO_EndpointMap endpoints_map_;
+  endpoints_map_type endpoints_map_;
 
   /// Port numbers of the configured services.
   CORBA::UShort service_port_[TAO_NO_OF_MCAST_SERVICES];

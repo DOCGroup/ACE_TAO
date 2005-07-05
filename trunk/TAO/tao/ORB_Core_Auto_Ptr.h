@@ -26,12 +26,8 @@ class TAO_ORB_Core;
  * @brief Define a TAO_ORB_Core auto_ptr class.
  *
  * This class is used as an aid to make ORB initialization exception
- * safe.  It ensures that the ORB core is deallocated if an exception
- * is thrown.
- *
- * @todo
- * TAO_ORB_Core_Auto_Ptr should be renamed to TAO_ORB_Core_var
- * since the ORB Core is reference counted.
+ * safe.  It ensures that the ORB core is deallocated through its
+ * reference counting mechanism if an exception is thrown.
  */
 class TAO_Export TAO_ORB_Core_Auto_Ptr
 {
@@ -39,7 +35,7 @@ public:
 
   /// Initialization and termination methods
   //@{
-  /* explicit */ TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p = 0);
+  explicit TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p = 0);
   TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &ap);
   TAO_ORB_Core_Auto_Ptr &operator= (TAO_ORB_Core_Auto_Ptr &rhs);
   ~TAO_ORB_Core_Auto_Ptr (void);

@@ -3,6 +3,8 @@
 // $Id$
 
 #include "tao/ORB_Core_TSS_Resources.h"
+#include "tao/ORB_Table.h"
+
 
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
@@ -62,6 +64,12 @@ ACE_INLINE TAO_Flushing_Strategy *
 TAO_ORB_Core::flushing_strategy (void)
 {
   return this->flushing_strategy_;
+}
+
+ACE_INLINE TAO_Protocols_Hooks *
+TAO_ORB_Core::get_protocols_hooks (void)
+{
+  return this->protocols_hooks_;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -183,6 +191,33 @@ ACE_INLINE TAO_Request_Dispatcher *
 TAO_ORB_Core::request_dispatcher (void)
 {
   return this->request_dispatcher_;
+}
+
+ACE_INLINE TAO_ORB_Core::InitRefMap *
+TAO_ORB_Core::init_ref_map (void)
+{
+  return &this->init_ref_map_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::set_default (const char * orb_id)
+{
+  TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
+  table->set_default (orb_id);
+}
+
+ACE_INLINE void
+TAO_ORB_Core::not_default (const char * orb_id)
+{
+  TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
+  table->not_default (orb_id);
+}
+
+/// Return the valuetype adapter
+ACE_INLINE TAO_Valuetype_Adapter *&
+TAO_ORB_Core::valuetype_adapter (void)
+{
+  return this->valuetype_adapter_;
 }
 
 ACE_INLINE void

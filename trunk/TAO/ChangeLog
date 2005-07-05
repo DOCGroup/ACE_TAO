@@ -1,3 +1,45 @@
+Tue Jul  5 03:07:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/CORBA_String.h:
+	* tao/CORBA_String.inl:
+
+	  Added TAO-specific equality operators.  Allows
+	  CORBA::{W}String_var to be used as map key.
+
+	* tao/ORB.cpp (resolve_initial_references):
+
+	  The initial reference map is now an ACE_Array_Map, which
+	  implements an STL-like map interface.  Updated map iteration
+	  accordingly.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Table.cpp:
+	* tao/ORB_Table.h:
+	* tao/ORB_Table.inl:
+	* tao/Object_Ref_Table.cpp:
+	* tao/Object_Ref_Table.h:
+	* tao/Object_Ref_Table.inl:
+	* tao/params.cpp:
+	* tao/params.h:
+	* tao/params.i:
+
+	  Replaced ACE_Hash_Map_Manager_Ex usage with light weight
+	  ACE_Array_Map.  Hash map benefits were not worth the larger
+	  footprint.
+
+	  Inlined a number very small functions.  Reduces footprint.
+
+	* tao/ORB_Core_Auto_Ptr.h (TAO_ORB_Core_Auto_Ptr):
+
+	  Uncommented "explicit" constructor keyword.  Support for it has
+	  been required in ACE and TAO for a while now.
+
+	* tao/Makefile.am (nobase_include_HEADERS):
+
+	  Added new Object_Ref_Table.inl inline soure file.
+
 Mon Jul  4 18:56:12  UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/MIOP.h:
