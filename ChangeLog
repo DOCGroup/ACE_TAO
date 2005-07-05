@@ -10,12 +10,13 @@ Mon Jul 04 21:08:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
         * ace/INET_Addr.h:
         * ace/INET_Addr.cpp:
           Added support for specifying interface ids for IPv6 Link Local
-          addresses either as part of the address (<ip>'%'<interface id>)
-          separately through ACE_INET_Address::set_interface().
-          Straightened out differences between Windows and Linux.
-          ACE_INET_Address::get_host_addr() now returns <ip>'%'<interface id>
-          formatted address when appropriate both on Windows (natively) and
-          Linux (ACE).
+ 	  addresses either as part of the address (<ip>'%'<interface id>)
+ 	  separately through ACE_INET_Address::set_interface().
+  	  Straightened out differences between Windows and Linux.
+  	  ACE_INET_Address::get_host_addr() now returns <ip>'%'<interface
+ 	  id> formatted address when appropriate both on Windows
+ 	  (natively) and Linux (ACE).  Thanks to Srikanth Gopal
+ 	  <sriki_666@yahoo.com> for reporting this problem.
 
 Mon Jul  4 04:21:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
