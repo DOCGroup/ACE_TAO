@@ -1,3 +1,15 @@
+Tue Jul  5 16:01:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/TypeNameEmitter.cpp:
+        
+          Small change to the checkin of
+          
+          Mon Jul  4 22:50:17 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          to emit an error message when attempting to set a wstring 
+          attribute from a CCM property value, since wstrings are
+          not yet supported for this activity.
+
 Mon Jul  4 22:50:17 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
