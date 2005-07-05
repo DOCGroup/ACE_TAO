@@ -1182,12 +1182,17 @@ CORBA::ORB::resolve_initial_references (const char *name,
   // -----------------------------------------------------------------
 
   // Check ORBInitRef options.
-  ACE_CString ior;
-  ACE_CString object_id (name);
+
+  // @@ There appears to be long standing (i.e. back when the map was
+  //    an ACE_Hash_Map_Manager) race condition here since the map
+  //    access is not synchronized.
 
   // Is the service name in the IOR Table.
-  if (this->orb_core_->init_ref_map ()->find (object_id, ior) == 0)
-    return this->string_to_object (ior.c_str ()
+  TAO_ORB_Core::InitRefMap::iterator ior =
+    this->orb_core_->init_ref_map ()->find (ACE_CString (name));
+
+  if (ior != this->orb_core_->init_ref_map ()->end ())
+    return this->string_to_object ((*ior).second.c_str ()
                                    ACE_ENV_ARG_PARAMETER);
 
   // Look for an environment variable called "<name>IOR".
@@ -1573,7 +1578,7 @@ CORBA::ORB_init (int &argc,
 
       // The ORB table increases the reference count on the ORB Core
       // so do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr
-      // do decrease the reference on the ORB Core when it goes out of
+      // to decrease the reference on the ORB Core when it goes out of
       // scope.
       oc.reset (tmp);
     }

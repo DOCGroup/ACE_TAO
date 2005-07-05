@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@uci.edu>
- *  @author Carlos O'Ryan <coryan@uci.edu>
+ *  @author Ossama Othman
+ *  @author Carlos O'Ryan
  */
 //=============================================================================
 
@@ -24,10 +24,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
+#include "tao/CORBA_String.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Map.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
 
 
 // Forward declarations.
@@ -35,6 +35,8 @@ class TAO_ORB_Core;
 
 namespace TAO
 {
+  class ORB_Core_Ref_Counter;
+
   /**
    * @class ORB_Table
    *
@@ -67,18 +69,21 @@ namespace TAO
      */
     ORB_Table (void);
 
-    /// destructor
-    ~ORB_Table (void);
-
-    typedef ACE_Hash_Map_Manager_Ex<const char *, TAO_ORB_Core *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex> Table;
-    typedef Table::iterator Iterator;
+    typedef ACE_Array_Map<CORBA::String_var, ORB_Core_Ref_Counter> Table;
+    typedef Table::key_type   key_type;
+    typedef Table::data_type  data_type;
+    typedef Table::value_type value_type;
+    typedef Table::size_type  size_type;
+    typedef Table::iterator   iterator;
 
     /// The canonical ACE_Map methods.
     //@{
-    Iterator begin (void);
-    Iterator end (void);
+    iterator begin (void);
+    iterator end (void);
     int bind (const char *orb_id, TAO_ORB_Core *orb_core);
 
+    /// Return @c TAO_ORB_Core corresponding to ORB with given @a
+    /// orb_id.
     /**
      * @note The caller must decrease the reference count on the
      *       returned ORB_Core, i.e. the callers "owns" it.
@@ -114,7 +119,14 @@ namespace TAO
     ORB_Table (const ORB_Table &);
     void operator= (const ORB_Table &);
 
+    /// Return @c TAO_ORB_Core corresponding to ORB with given @a
+    /// orb_id.  (underlying unlocked implementation).
+    TAO_ORB_Core * find_i (char const * orb_id);
+
     /// Update our list of orbs
+    /**
+     * @todo Where the implementation for ORB_Table::update_orbs?
+     */
     void update_orbs (void);
 
   private:
@@ -133,12 +145,56 @@ namespace TAO
     TAO_ORB_Core * first_orb_;
 
     /// List of orbs for get_orbs call
+    /**
+     * @todo ORB_Table::orbs_ appears to be unused.  Remove it?
+     */
     TAO_ORB_Core ** orbs_;
 
     /// Number of ORBs in the table.
     size_t num_orbs_;
 
   };
+
+  // -----------------------------------------------
+
+  /**
+   * @class ORB_Table_Ref_Counter
+   *
+   * @brief Class contained by ORB_Table's Unbounded_Set.
+   *
+   * Class contained by ORB_Table's Unbounded_Set.
+   */
+  class ORB_Core_Ref_Counter
+  {
+  public:
+
+    /// Constructor.
+    ORB_Core_Ref_Counter (void);
+
+    /// Constructor.
+    ORB_Core_Ref_Counter (TAO_ORB_Core * core);
+
+    /// Destructor.
+    ~ORB_Core_Ref_Counter (void);
+
+    /// Copy constructor.
+    ORB_Core_Ref_Counter (ORB_Core_Ref_Counter const & rhs);
+
+    /// Assignment operator.
+    void operator= (ORB_Core_Ref_Counter const & rhs);
+    
+    /// Equality operator.
+    bool operator== (ORB_Core_Ref_Counter const & rhs);
+
+    /// ORB_Core pointer accessor.
+    TAO_ORB_Core * core (void) const { return this->core_; }
+
+  private:
+
+    TAO_ORB_Core * core_;
+
+  };
+
 }
 
 #if defined (__ACE_INLINE__)
