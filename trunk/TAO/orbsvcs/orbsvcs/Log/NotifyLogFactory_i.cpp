@@ -151,7 +151,7 @@ TAO_NotifyLogFactory_i::create_with_id (
   // Validate log_full_action before creating log
   if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
     ACE_THROW_RETURN (DsLogAdmin::InvalidLogFullAction (),
-                      DsLogAdmin::BasicLog::_nil ());
+                      DsNotifyLogAdmin::NotifyLog::_nil ());
 
   // Make sure the id not used up.
   if (hash_map_.find (id) == 0)
