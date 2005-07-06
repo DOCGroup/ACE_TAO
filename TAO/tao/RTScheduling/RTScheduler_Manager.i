@@ -1,18 +1,22 @@
+// -*- C++ -*-
+//
 // $Id$
+
+#include "tao/ORB_Core.h"
+
 
 // *************************************************************
 // Inline operations for class TAO_RTScheduler_Manager_var
 // *************************************************************
 
-#include "tao/ORB_Core.h"
-
 ACE_INLINE
-TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (void) // default constructor
+TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (void)
   : ptr_ (TAO_RTScheduler_Manager::_nil ())
 {}
 
 ACE_INLINE
-TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (TAO_RTScheduler_Manager_ptr p)
+TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (
+  TAO_RTScheduler_Manager_ptr p)
   : ptr_ (p)
 {}
 
@@ -23,13 +27,14 @@ TAO_RTScheduler_Manager_var::ptr (void) const
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (const ::TAO_RTScheduler_Manager_var &p) // copy constructor
+TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (
+  const ::TAO_RTScheduler_Manager_var &p) // copy constructor
   : TAO_Base_var (),
     ptr_ (TAO_RTScheduler_Manager::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-TAO_RTScheduler_Manager_var::~TAO_RTScheduler_Manager_var (void) // destructor
+TAO_RTScheduler_Manager_var::~TAO_RTScheduler_Manager_var (void)
 {
   CORBA::release (this->ptr_);
 }
@@ -46,10 +51,11 @@ ACE_INLINE TAO_RTScheduler_Manager_var &
 TAO_RTScheduler_Manager_var::operator= (const ::TAO_RTScheduler_Manager_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::TAO_RTScheduler_Manager::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = ::TAO_RTScheduler_Manager::_duplicate (p.ptr ());
+    }
+
   return *this;
 }
 
@@ -120,9 +126,8 @@ TAO_RTScheduler_Manager_var::nil (void)
 
 ACE_INLINE ::TAO_RTScheduler_Manager_ptr
 TAO_RTScheduler_Manager_var::narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
+  CORBA::Object * p
+  ACE_ENV_ARG_DECL)
 {
   return ::TAO_RTScheduler_Manager::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
@@ -214,14 +219,13 @@ TAO_RTScheduler_Manager::rtscheduler (void)
 
 ACE_INLINE void
 TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
-                                ACE_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
 {
- rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
- this->orb_->object_ref_table ().register_initial_reference ("RTScheduler",
-						         RTScheduling::Scheduler::_duplicate (this->rtscheduler_.in ())
-							ACE_ENV_ARG_PARAMETER);	
+  this->rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
+  this->orb_->orb ()->register_initial_reference (
+    "RTScheduler",
+    RTScheduling::Scheduler::_duplicate (this->rtscheduler_.in ())
+    ACE_ENV_ARG_PARAMETER);	
  ACE_CHECK;						
 
 }
-
-
