@@ -1,3 +1,11 @@
+Tue Jul  5 17:06:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (set_log_full_action):
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+
+	  Throw DsLogAdmin::InvalidLogFullAction when passed a
+	  unknown/unsupported log full action.
+
 Tue Jul  5 23:03:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
@@ -5,16 +13,16 @@ Tue Jul  5 23:03:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
         * TAO_IDL/util/utl_global.cpp:
-        
-          - Added a check to code that converts a string to a 
+
+          - Added a check to code that converts a string to a
             ScopedName class in the IDL compiler. The check
             detects certain kinds (not all) of malformed strings.
-            
+
           - Fixed a bug in the string handling code that processes
             a #pragma ID directive. There was confusion if the
             target node name was not scoped (contained no double
             colon) but the ID string did.
-            
+
           Thanks to Gar Maxey <gary.maxey@hp.com> for sending in
           the example IDL file that uncovered these problems.
 
@@ -22,7 +30,8 @@ Tue Jul  5 14:12:07 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
 
-          Cleanup generated files such as IORs and the copy of the server executable.
+          Cleanup generated files such as IORs and the copy of the server
+	  executable.
 
 Tue Jul 05 11:49:13 2005   Gary Maxey <gary.maxey@hp.com>
 
