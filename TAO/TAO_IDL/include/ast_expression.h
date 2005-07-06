@@ -293,6 +293,8 @@ protected:
   // Evaluate different sets of operators.
   AST_ExprValue *eval_bin_op (void);
 
+  AST_ExprValue *eval_mod_op (void);
+
   AST_ExprValue *eval_bit_op (EvalKind ek);
 
   AST_ExprValue *eval_un_op (EvalKind ek);

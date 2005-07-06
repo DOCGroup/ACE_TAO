@@ -1,3 +1,10 @@
+Wed Jul 06 10:48:04 2005   Gary Maxey <gary.maxey@hp.com>
+
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/include/ast_expression.h:
+
+	  Fix for broken mod (%) operator in constant expressions.
+
 Wed Jul  6 08:11:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
