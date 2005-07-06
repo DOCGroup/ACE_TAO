@@ -1,3 +1,24 @@
+Wed Jul  6 15:44:16 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/IIOP_Connection_Handler.cpp (open):
+
+          Set server side sockets to be non-blocking even if the
+          client connection policy is blocking. This fixes bugzilla
+          #2183.
+
+        * tests/Bug_2183_Regression/Bug_2183_Regression.mpc:
+        * tests/Bug_2183_Regression/Hello.cpp:
+        * tests/Bug_2183_Regression/Hello.h:
+        * tests/Bug_2183_Regression/README:
+        * tests/Bug_2183_Regression/Test.idl:
+        * tests/Bug_2183_Regression/client.cpp:
+        * tests/Bug_2183_Regression/hang_client.pl:
+        * tests/Bug_2183_Regression/run_test.pl:
+        * tests/Bug_2183_Regression/server.conf:
+        * tests/Bug_2183_Regression/server.cpp:
+
+          Added regression test for the above.
+
 Wed Jul  6 09:47:47 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
