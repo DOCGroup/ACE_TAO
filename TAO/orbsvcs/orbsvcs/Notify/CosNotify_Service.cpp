@@ -242,7 +242,7 @@ TAO_CosNotify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
        ACE_NEW_THROW_EX (factory,
                       TAO_Notify_Default_Factory (),
                       CORBA::NO_MEMORY ());
-  ACE_CHECK;
+       ACE_CHECK_RETURN(0);
     }
   return factory;
 }
@@ -254,7 +254,7 @@ TAO_CosNotify_Service::create_builder (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN(0);
 
   return builder;
 }

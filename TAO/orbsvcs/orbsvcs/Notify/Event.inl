@@ -30,7 +30,7 @@ TAO_Notify_Event::queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const
   {
     TAO_Notify_Event* copied = this->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
     copied->is_on_heap_ = true;
-    ACE_CHECK;
+    ACE_CHECK_RETURN(0);
     this->clone_.reset( copied );
   }
   return this->clone_.get();
