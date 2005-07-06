@@ -315,15 +315,22 @@ TAO_Log_i::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   DsLogAdmin::InvalidLogFullAction))
 {
+  if (action != DsLogAdmin::wrap && action != DsLogAdmin::halt)
+    ACE_THROW (DsLogAdmin::InvalidLogFullAction ()); 
+
   DsLogAdmin::LogFullActionType old_action =
     this->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  if (action == old_action)
+    return;
+  
   log_full_action_ = action;
 
-  if (notifier_ && action != old_action)
+  if (notifier_)
     {
       DsLogAdmin::Log_var log =
         this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
