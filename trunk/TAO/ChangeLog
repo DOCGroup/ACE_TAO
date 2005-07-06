@@ -1,3 +1,13 @@
+Tue Jul  5 18:01:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id):
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp (create_with_id):
+
+	  Throw DsLogAdmin::InvalidLogFullAction when passed an
+	  unknown/unsupported log full action.
+
 Tue Jul  5 17:22:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
@@ -12,7 +22,7 @@ Tue Jul  5 17:06:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (set_log_full_action):
 	* orbsvcs/orbsvcs/Log/Log_i.h:
 
-	  Throw DsLogAdmin::InvalidLogFullAction when passed a
+	  Throw DsLogAdmin::InvalidLogFullAction when passed an
 	  unknown/unsupported log full action.
 
 Tue Jul  5 23:03:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
