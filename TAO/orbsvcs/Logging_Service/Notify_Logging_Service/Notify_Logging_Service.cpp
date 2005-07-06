@@ -125,7 +125,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
+  this->notify_service_->init_service (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Activate the factory

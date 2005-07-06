@@ -591,13 +591,16 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
       tc = TAO_DynAnyFactory::strip_alias (tc.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       switch (special->type ())
         {
         case TAO_ETCL_LENGTH:
           {
             CORBA::ULong length;
 
-      switch (tc->kind ())
+            switch (kind)
               {
               case CORBA::tk_sequence:
                 {
