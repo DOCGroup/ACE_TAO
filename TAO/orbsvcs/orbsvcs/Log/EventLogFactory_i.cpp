@@ -205,7 +205,7 @@ TAO_EventLogFactory_i::create_with_id (
 
   notifier_->object_creation (DsEventLogAdmin::EventLog::_duplicate (event_log.in ()), id
                               ACE_ENV_ARG_PARAMETER);
-  //ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
+  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   return event_log._retn ();
 }
