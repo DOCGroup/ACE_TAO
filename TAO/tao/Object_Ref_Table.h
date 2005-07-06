@@ -51,7 +51,7 @@ namespace CORBA
  * is needed.  For example, "corbaname" may return different results
  * on each use.
  */
-class TAO_Object_Ref_Table
+class TAO_Export TAO_Object_Ref_Table
 {
 public:
 

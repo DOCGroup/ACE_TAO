@@ -1,3 +1,17 @@
+Wed Jul  6 12:15:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
+
+	  Re-exported this class until code that accesses it directly is
+	  updated to use the standard interface.
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/RTScheduling/Current.cpp:
+	* tao/RTScheduling/RTScheduler_Manager.i:
+
+	  Reverted changes below due to potential order of initialization
+	  problems.
+
 Wed Jul  6 11:06:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
