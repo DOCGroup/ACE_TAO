@@ -127,7 +127,8 @@ public:
   void
   set_log_full_action (DsLogAdmin::LogFullActionType action
                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     DsLogAdmin::InvalidLogFullAction));
 
   /// Get the administrative state of the log.
   DsLogAdmin::AdministrativeState
