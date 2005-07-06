@@ -1,3 +1,13 @@
+Wed Jul  6 11:06:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/RTScheduling/Current.cpp:
+	* tao/RTScheduling/RTScheduler_Manager.i:
+
+	  Register and retrieve initial references through the standard
+	  ORB interface, not directly through the underlying table.  The
+	  table is no longer exported.
+
 Wed Jul 06 10:48:04 2005   Gary Maxey <gary.maxey@hp.com>
 
 	* TAO_IDL/ast/ast_expression.cpp:
@@ -190,6 +200,11 @@ Tue Jul  5 03:07:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
           footprint.
 
           Inlined a number very small functions.  Reduces footprint.
+
+        * tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
+
+	  Do not export this class from the TAO shared library.  It is
+	  meant for internal use alone.
 
         * tao/ORB_Core_Auto_Ptr.h (TAO_ORB_Core_Auto_Ptr):
 
