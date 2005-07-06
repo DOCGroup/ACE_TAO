@@ -1813,6 +1813,49 @@ AST_Expression::eval_bin_op (void)
 
   return retval;
 }
+// Apply binary operators to an AST_Expression after evaluating
+// its sub-expressions.
+// Operations supported: '%'
+AST_Expression::AST_ExprValue *
+AST_Expression::eval_mod_op (void)
+{
+  AST_ExprValue *retval = 0;
+
+  if (this->pd_v1 == 0 || this->pd_v2 == 0)
+    {
+      return 0;
+    }
+
+  this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
+
+  if (this->pd_v1->ev () == 0)
+    {
+      return 0;
+    }
+
+  this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
+
+  if (pd_v2->ev () == 0)
+    {
+      return 0;
+    }
+
+  ACE_NEW_RETURN (retval,
+                  AST_ExprValue,
+                  0);
+
+  retval->et = EV_long;
+
+  if (this->pd_v2->ev ()->u.lval == 0)
+    {
+      return 0;
+    }
+
+  retval->u.lval =
+    this->pd_v1->ev ()->u.lval % this->pd_v2->ev ()->u.lval;
+
+  return retval;
+}
 
 // Apply bitwise operations to an AST_Expression after evaluating
 // its sub-expressions.
@@ -2305,8 +2348,11 @@ AST_Expression::eval_internal (AST_Expression::EvalKind ek)
     case EC_minus:
     case EC_mul:
     case EC_div:
+       this->pd_ev = this->eval_bin_op ();
+      return eval_kind (this->pd_ev,
+                        ek);
     case EC_mod:
-      this->pd_ev = this->eval_bin_op ();
+      this->pd_ev = this->eval_mod_op ();
       return eval_kind (this->pd_ev,
                         ek);
     case EC_or:
