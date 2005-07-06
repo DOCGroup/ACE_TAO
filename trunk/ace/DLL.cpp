@@ -175,14 +175,10 @@ ACE_DLL::close (void)
 {
   ACE_TRACE ("ACE_DLL::close");
 
-  // Guard against multiple calls to close(), e.g., one explicitly and
-  // one from the destructor.
-  if (dll_handle_ == 0)
-    return 0;
-
   int retval = 0;
 
-  if (this->close_handle_on_destruction_
+  if (this->dll_handle_
+      && this->close_handle_on_destruction_
       && this->dll_name_
       && (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
     this->error_ = 1;
