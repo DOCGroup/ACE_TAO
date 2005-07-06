@@ -1,33 +1,49 @@
+Wed Jul  6 15:06:17 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/tests/Notify/Blocking/common.cpp:
+        * orbsvcs/tests/Notify/Discarding/common.cpp:
+        * orbsvcs/tests/Notify/Ordering/common.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.inl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
+
+          Some ACE_*_cast macros were inadvertently reintroduced when porting notification
+        service fixes from 1.4a.
+
 Wed Jul  6 12:15:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
+        * tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
 
-	  Re-exported this class until code that accesses it directly is
-	  updated to use the standard interface.
+          Re-exported this class until code that accesses it directly is
+          updated to use the standard interface.
 
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-	* tao/RTScheduling/Current.cpp:
-	* tao/RTScheduling/RTScheduler_Manager.i:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.i:
 
-	  Reverted changes below due to potential order of initialization
-	  problems.
+          Reverted changes below due to potential order of initialization
+          problems.
 
 Wed Jul  6 11:06:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-	* tao/RTScheduling/Current.cpp:
-	* tao/RTScheduling/RTScheduler_Manager.i:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.i:
 
-	  Register and retrieve initial references through the standard
-	  ORB interface, not directly through the underlying table.  The
-	  table is no longer exported.
+          Register and retrieve initial references through the standard
+          ORB interface, not directly through the underlying table.  The
+          table is no longer exported.
 
 Wed Jul 06 10:48:04 2005   Gary Maxey <gary.maxey@hp.com>
 
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
 
-	  Fix for broken mod (%) operator in constant expressions.
+          Fix for broken mod (%) operator in constant expressions.
 
 Wed Jul  6 08:11:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -35,8 +51,8 @@ Wed Jul  6 08:11:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
         * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp (create_with_id):
 
-	  Fix cut-n-pasto introduced in:
-	  Tue Jul  5 18:01:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+          Fix cut-n-pasto introduced in:
+          Tue Jul  5 18:01:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Wed Jul  6 15:44:16 2005  Simon McQueen  <sm@prismtech.com>
 
@@ -217,8 +233,8 @@ Tue Jul  5 03:07:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
 
-	  Do not export this class from the TAO shared library.  It is
-	  meant for internal use alone.
+          Do not export this class from the TAO shared library.  It is
+          meant for internal use alone.
 
         * tao/ORB_Core_Auto_Ptr.h (TAO_ORB_Core_Auto_Ptr):
 
