@@ -1,3 +1,12 @@
+Tue Jul  5 17:22:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
+
+	  Uncomment ACE_CHECK_RETURN(...) after call to object_creation()
+	  to align behavior between native and emulated exceptions and to
+	  match cooresponding checks in NotifyLogFactory_i.cpp and
+	  RTEventLogFactory_i.cpp.
+
 Tue Jul  5 17:06:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (set_log_full_action):
