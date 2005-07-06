@@ -1,3 +1,12 @@
+Wed Jul  6 08:11:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp (create_with_id):
+
+	  Fix cut-n-pasto introduced in:
+	  Tue Jul  5 18:01:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Wed Jul  6 15:44:16 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/IIOP_Connection_Handler.cpp (open):
