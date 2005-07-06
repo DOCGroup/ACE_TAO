@@ -158,7 +158,7 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
   if (this->msg_queue_.dequeue (mb) == -1)
     return -1;
 
-  method_request = ACE_dynamic_cast (TAO_Notify_Method_Request_Queueable*, mb);
+  method_request = dynamic_cast<TAO_Notify_Method_Request_Queueable*>(mb);
 
   if (method_request == 0)
     return -1;
