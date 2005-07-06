@@ -1,29 +1,43 @@
+Wed Jul  6 09:47:47 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+
+          Fix misc problems with exception macros.
+          Fix problem with renamed init() method.
+          Fix problem with use of ACE_Thread_Mutex instead of TAO_SYNCH_MUTEX.
+
 Tue Jul  5 18:01:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id):
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp (create_with_id):
 
-	  Throw DsLogAdmin::InvalidLogFullAction when passed an
-	  unknown/unsupported log full action.
+          Throw DsLogAdmin::InvalidLogFullAction when passed an
+          unknown/unsupported log full action.
 
 Tue Jul  5 17:22:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
 
-	  Uncomment ACE_CHECK_RETURN(...) after call to object_creation()
-	  to align behavior between native and emulated exceptions and to
-	  match cooresponding checks in NotifyLogFactory_i.cpp and
-	  RTEventLogFactory_i.cpp.
+          Uncomment ACE_CHECK_RETURN(...) after call to object_creation()
+          to align behavior between native and emulated exceptions and to
+          match cooresponding checks in NotifyLogFactory_i.cpp and
+          RTEventLogFactory_i.cpp.
 
 Tue Jul  5 17:06:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (set_log_full_action):
-	* orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (set_log_full_action):
+        * orbsvcs/orbsvcs/Log/Log_i.h:
 
-	  Throw DsLogAdmin::InvalidLogFullAction when passed an
-	  unknown/unsupported log full action.
+          Throw DsLogAdmin::InvalidLogFullAction when passed an
+          unknown/unsupported log full action.
 
 Tue Jul  5 23:03:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -50,7 +64,7 @@ Tue Jul  5 14:12:07 2005  Justin Michel  <michel_j@ociweb.com>
         * orbsvcs/tests/ImplRepo/run_test.pl:
 
           Cleanup generated files such as IORs and the copy of the server
-	  executable.
+          executable.
 
 Tue Jul 05 11:49:13 2005   Gary Maxey <gary.maxey@hp.com>
 

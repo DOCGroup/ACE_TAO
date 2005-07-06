@@ -109,7 +109,7 @@ protected:
   // Initial admin props specified to the factory when creating the EC.
 
 private:
-  ACE_Atomic_Op< ACE_Thread_Mutex, int > num_clients_;
+  ACE_Atomic_Op< TAO_SYNCH_MUTEX, int > num_clients_;
   bool done_;
 };
 

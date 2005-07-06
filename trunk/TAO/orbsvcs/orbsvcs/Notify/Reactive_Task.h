@@ -41,7 +41,7 @@ public:
 
 
   /// Init the reactive task.
-  void init (ACE_ENV_ARG_DECL);
+  void init (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Shutdown task
   virtual void shutdown (void);

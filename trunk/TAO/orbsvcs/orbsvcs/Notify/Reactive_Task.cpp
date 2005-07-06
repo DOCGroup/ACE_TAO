@@ -20,7 +20,7 @@ TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task ()
 }
 
 void
-TAO_Notify_Reactive_Task::init (ACE_ENV_ARG_DECL)
+TAO_Notify_Reactive_Task::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (this->timer_.get() == 0);
 
