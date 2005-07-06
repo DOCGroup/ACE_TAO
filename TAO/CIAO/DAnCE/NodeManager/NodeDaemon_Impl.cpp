@@ -156,8 +156,8 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
     }
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {
-      ACE_THROW (Deployment::StartError (),
-                 Deployment::NodeApplicationManager::_nil ());
+      ACE_THROW_RETURN (Deployment::StartError (),
+                        Deployment::NodeApplicationManager::_nil ());
     }
   ACE_CATCHANY
     {
