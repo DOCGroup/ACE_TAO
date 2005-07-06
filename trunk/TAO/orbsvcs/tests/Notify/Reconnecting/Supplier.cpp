@@ -449,7 +449,7 @@ Supplier_Main::save_ids()
   if (idf != 0)
   {
     int endflag = 12345;
-    int imode = ACE_static_cast (int, this->mode_);
+    int imode = static_cast<int>(this->mode_);
     ACE_OS::fprintf (idf,
       "%d,%d,%d,%d,%d,%d,%d,\n",
       static_cast<int> (imode),
@@ -643,7 +643,7 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Supplier: Reconnect to event channel %d\n"),
-          ACE_static_cast (int, this->ec_id_)
+          static_cast<int>(this->ec_id_)
           ));
       }
     }
@@ -679,7 +679,7 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
           {
             ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Supplier: Connect to Existing event channel %d\n"),
-              ACE_static_cast (int, this->ec_id_)
+              static_cast<int>(this->ec_id_)
               ));
           }
           // kill the channel filename so we don't overwrite the file
@@ -758,7 +758,7 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   }
 }
 
-CosNotifyChannelAdmin::AdminID default_admin_id = ACE_static_cast (CosNotifyChannelAdmin::AdminID, -1);
+CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAdmin::AdminID>(-1);
 
 void
 Supplier_Main::init_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
@@ -777,7 +777,7 @@ Supplier_Main::init_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Supplier: Reconnect to supplier admin %d\n"),
-          ACE_static_cast (int, this->sa_id_)
+          static_cast<int>(this->sa_id_)
           ));
       }
     }
@@ -826,7 +826,7 @@ Supplier_Main::init_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Supplier: Create new supplier admin %d\n"),
-        ACE_static_cast (int, this->sa_id_)
+        static_cast<int>(this->sa_id_)
         ));
     }
   }
@@ -851,7 +851,7 @@ Supplier_Main::init_structured_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Supplier: Reconnect to proxy supplier %d\n"),
-          ACE_static_cast (int, this->structured_proxy_id_)
+          static_cast<int>(this->structured_proxy_id_)
           ));
       }
     }
@@ -873,7 +873,7 @@ Supplier_Main::init_structured_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Supplier: Create new proxy %d\n"),
-        ACE_static_cast (int, this->structured_proxy_id_)
+        static_cast<int>(this->structured_proxy_id_)
         ));
     }
   }
@@ -907,7 +907,7 @@ Supplier_Main::init_structured_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Supplier: Received wrong type of push consumer proxy %d\n"),
-        ACE_static_cast (int, this->structured_proxy_id_)
+        static_cast<int>(this->structured_proxy_id_)
       ));
 
     ACE_THROW (CORBA::UNKNOWN());
@@ -937,7 +937,7 @@ Supplier_Main::init_sequence_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Supplier: Reconnect to proxy %d\n"),
-          ACE_static_cast (int, this->sequence_proxy_id_)
+          static_cast<int>(this->sequence_proxy_id_)
           ));
       }
     }
@@ -959,7 +959,7 @@ Supplier_Main::init_sequence_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Supplier: Create new proxy %d\n"),
-          ACE_static_cast (int, this->sequence_proxy_id_)
+          static_cast<int>(this->sequence_proxy_id_)
         ));
     }
   }
@@ -971,7 +971,7 @@ Supplier_Main::init_sequence_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Supplier: Received wrong type of push consumer proxy %d\n"),
-        ACE_static_cast (int, this->sequence_proxy_id_)
+        static_cast<int>(this->sequence_proxy_id_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
   }
@@ -995,7 +995,7 @@ Supplier_Main::init_sequence_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Supplier: Received wrong type of push consumer proxy %d\n"),
-        ACE_static_cast (int, this->sequence_proxy_id_)
+        static_cast<int>(this->sequence_proxy_id_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
   }
@@ -1024,7 +1024,7 @@ Supplier_Main::init_any_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Supplier: Reconnect to proxy %d\n"),
-          ACE_static_cast (int, this->any_proxy_id_)
+          static_cast<int>(this->any_proxy_id_)
           ));
       }
     }
@@ -1046,7 +1046,7 @@ Supplier_Main::init_any_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Supplier: Create new proxy %d\n"),
-          ACE_static_cast (int, this->any_proxy_id_)
+          static_cast<int>(this->any_proxy_id_)
         ));
     }
   }
@@ -1058,7 +1058,7 @@ Supplier_Main::init_any_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Supplier: Received wrong type of push consumer proxy %d\n"),
-        ACE_static_cast (int, this->any_proxy_id_)
+        static_cast<int>(this->any_proxy_id_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
   }
@@ -1082,7 +1082,7 @@ Supplier_Main::init_any_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Supplier: Received wrong type of push consumer proxy %d\n"),
-        ACE_static_cast (int, this->sequence_proxy_id_)
+        static_cast<int>(this->sequence_proxy_id_)
       ));
     ACE_THROW (CORBA::UNKNOWN());
   }
@@ -1137,7 +1137,7 @@ int Supplier_Main::fini (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) destroy admin %d\n"),
-            ACE_static_cast(int, this->sa_id_)
+            static_cast<int>(this->sa_id_)
           ));
       }
       this->sa_->destroy();
@@ -1186,7 +1186,7 @@ void Supplier_Main::send_structured_event (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P,%t) Supplier push structured event %d\n"),
-      ACE_static_cast (int, serial_number_)
+      static_cast<int>(serial_number_)
       ));
   }
 
@@ -1236,7 +1236,7 @@ void Supplier_Main::send_sequence_event (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P,%t) Supplier push sequence events %d\n"),
-      ACE_static_cast (int, this->serial_number_)
+      static_cast<int>(this->serial_number_)
       ));
   }
 
@@ -1254,7 +1254,7 @@ void Supplier_Main::send_any_event (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P,%t) Supplier push any event %d\n"),
-      ACE_static_cast (int, this->serial_number_)
+      static_cast<int>(this->serial_number_)
       ));
   }
 
@@ -1281,7 +1281,7 @@ int Supplier_Main::run (ACE_ENV_SINGLE_ARG_DECL)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Supplier paused after %d events\n"),
-          ACE_static_cast (int, this->pause_)
+          static_cast<int>(this->pause_)
           ));
       }
       reconnections = this->reconnection_callback_.reconnect_count ();
@@ -1302,7 +1302,7 @@ int Supplier_Main::run (ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) Supplier no longer paused. Next s# %d\n"),
-            ACE_static_cast (int, this->serial_number_)
+            static_cast<int>(this->serial_number_)
             ));
         }
         paused = false;
