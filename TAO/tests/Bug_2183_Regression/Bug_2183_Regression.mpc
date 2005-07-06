@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver {
+  libs += TAO_Strategies
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+
