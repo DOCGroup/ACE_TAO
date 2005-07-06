@@ -2,8 +2,8 @@ Tue Jul  5 22:05:19 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/DLL.cpp: Fixed a problem with ACE_DLL::close() where
 	  the dll_name_ might not be deleted if dll_handle_ was 0.  Thanks
- 	  to Alvin Msg <alvin.msg@gmail.com> for reporting this.  This
- 	  fixes bugid 2185.
+ 	  to Alvin Lee <alvin.msg@gmail.com> for reporting this.  This
+ 	  fixes the first part of bugid 2185.
 
 Tue Jul  5 18:13:29 2005  Steve Huston  <shuston@riverace.com>
 
