@@ -1,3 +1,10 @@
+Thu Jul  7 09:11:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Message_Block.cpp: Changed the order of the #includes
+	  to work around a problem when ACE is used with STLport.  Thanks
+ 	  to Alvin Lee for reporting this.  This fixes another part of
+ 	  bugid 2185.
+
 Tue Jul  5 22:05:19 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/DLL.cpp: Fixed a problem with ACE_DLL::close() where

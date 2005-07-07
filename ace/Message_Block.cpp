@@ -4,9 +4,9 @@
 #include "ace/Message_Block.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
-#include "ace/Guard_T.h"
 #include "ace/OS_NS_string.h"
 
 //#define ACE_ENABLE_TIMEPROBES
