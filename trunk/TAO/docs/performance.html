@@ -606,7 +606,17 @@ installation.<P>
     <h4>Compile-time Footprint</h4>
 
 It has also been observed recently that using -xO3 with -xspace on SUN
-CC 5.3 compiler gives a big footprint reduction of the order of 40%.
+CC 5.3 compiler gives a big footprint reduction of the order of 40%.</P>
+<P>Also footprint can be saved by specifying the following in your
+platform_macros.GNU file: </P>
+<P>
+<code> 
+<pre>
+optimize=1
+debug=0
+CPPFLAGS += -DACE_USE_RCSID=0
+</pre>
+</code>
 
     <a name="runtime_footprint"></a>
     <h4>Run-time Footprint</h4>
