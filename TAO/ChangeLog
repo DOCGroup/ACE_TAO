@@ -1,3 +1,12 @@
+Wed Jul  6 23:10:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Object_Ref_Table.cpp (bind):
+
+	  "Transfer" ownership of the object reference being inserted to the
+	  object reference table by increasing the reference count.
+	  Addresses seg faults in code that accesses object references
+	  from the this table.
+
 Wed Jul  6 15:06:17 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
