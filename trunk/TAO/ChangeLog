@@ -1,3 +1,24 @@
+Thu Jul  7 15:18:01 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* orbsvcs/examples/Notify/Federation/federation.mwc:
+	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+	* orbsvcs/examples/Notify/Federation/Agent/Agent.mpc:
+	* orbsvcs/examples/Notify/Federation/Agent/README:
+	* orbsvcs/examples/Notify/Federation/Agent/agent.dia:
+	* orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+	* orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+	* orbsvcs/examples/Notify/Federation/Gate/Gate.mpc:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/README:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.mpc:
+
+	  Added a set of examples and support code that show how to set
+	  up a multicast-based federation of  Notification Services.
+
+	* NEWS:
+
+	  Announce new examples.
+
 Thu Jul  7 11:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core_TSS_Resources.cpp:
