@@ -1650,52 +1650,6 @@ extern const char * const _sys_errlist[];
         ])
     ],[AC_DEFINE([ACE_HAS_SYS_ERRLIST])],)
 
-dnl Check for sys_nerr
-dnl TODO: Check whether this variable can be defined somewhere else.
-ACE_CACHE_CHECK([for sys_nerr],
-  [ace_cv_lib_posix_sys_nerr],[
-  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <stdio.h>
-#include <errno.h>
-
-#if !defined (_sys_nerr)
-# define _sys_nerr sys_nerr
-#endif
-    ]],[[
-     void* vp = (void*) &_sys_nerr;
-    ]])],[
-     ace_cv_lib_posix_sys_nerr=yes
-    ],[
-     dnl Check if sys_nerr is a global variable in a library
-     AC_LINK_IFELSE([AC_LANG_PROGRAM(
-       [[
-#include <stdio.h>
-#include <errno.h>
-
-#if !defined (_sys_nerr)
-# define _sys_nerr sys_nerr
-#endif
-
-extern int _sys_nerr;
-       ]],
-       [[
-        void* vp = (void*) &_sys_nerr;
-       ]])],
-       [
-        ace_cv_lib_posix_sys_nerr=yes
-       ],
-       [
-        ace_cv_lib_posix_sys_nerr=no
-       ])
-    ])
-  ],
-  [
-   dnl Do nothing
-  ],
-  [
-   AC_DEFINE([ACE_LACKS_SYS_NERR])
-  ])
-
 dnl Save the cache for debugging purposes
 AC_CACHE_SAVE
 

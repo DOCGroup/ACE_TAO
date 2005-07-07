@@ -137,12 +137,19 @@ else  # ! 4.2
         # If 64-bit build is desired, turn that on. If no code gen options
         # are given to Forte 6, the default build is 32-bit, even when
         # building on a 64-bit system. Specifying xarch=v9 generates code
-        # that runs on any Sparc v9 (64-bit) processor. If you want to
-        # tune this further, you should extract and insert from CCFLAGS
-        # in a private platform_macros.GNU file.
+        # that runs on any Sparc v9 (64-bit) processor.
+        # Beginning at (I believe) Studio 10 (C++ 5.7) there's a
+        # -xarch=generic64 option that works for both Sparc and x86.
+        # If you want to tune this further, you should extract and insert
+        # from CCFLAGS in a private platform_macros.GNU file.
         ifeq (64,$(buildbits))
-          CCFLAGS += -xarch=v9
-          LDFLAGS += -xarch=v9
+          ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+            CCFLAGS += -xarch=generic64
+            LDFLAGS += -xarch=generic64
+          else
+            CCFLAGS += -xarch=v9
+            LDFLAGS += -xarch=v9
+          endif # C++ 5.7
         endif # buildbits
       endif # CC 5.0
     endif # compat4 requested

@@ -166,8 +166,6 @@
 
 #define ACE_LACKS_SYSV_SHMEM
 
-#define ACE_LACKS_SYS_NERR    // psos/tm does not have sys_nerr
-
 #define ACE_LACKS_SYS_TYPES_H
 
 #define ACE_LACKS_TIMESPEC_T

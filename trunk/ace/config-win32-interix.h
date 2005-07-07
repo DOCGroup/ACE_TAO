@@ -17,8 +17,6 @@
 # define ACE_LACKS_RWLOCK_T
 # define ACE_LACKS_GETPGID                      // Don't have getpgid(), have setpgid() though...
 # define ACE_LACKS_UCONTEXT_H
-# define ACE_LACKS_SYS_NERR                     // If we don't have sys_nerr...
-# define ERRMAX 256                             // Then we define ERRMAX .
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS    // Don't have gethostbyaddr_r and friends.
 # define ACE_HAS_DIRENT

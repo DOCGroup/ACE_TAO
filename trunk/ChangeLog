@@ -1,3 +1,44 @@
+Thu Jul  7 18:11:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac:
+	* ace/README:
+	* ace/config-WinCE.h:
+	* ace/config-mvs.h:
+	* ace/config-openvms.h:
+	* ace/config-psos-diab.h:
+	* ace/config-psos-diab-mips.h:
+	* ace/config-psos-diab-ppc.h:
+	* ace/config-psos-tm.h:
+	* ace/config-psosim-g++.h:
+	* ace/config-rtems.h:
+	* ace/config-sunos5.7.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-tandem-nsk-mips-v3.h:
+	* ace/config-vxworks5.x.h:
+	* ace/config-win32-interix.h:
+	* ace/config-win32-visualage.h:
+	* ace/OS_NS_string.{h cpp}:
+	* m4/config_h.m4: Removed all references to sys_nerr and
+	  ACE_LACKS_SYS_NERR. These are old, hacky ways to check things
+	  that can be done better (see below).
+
+	* ace/OS_NS_string.{h cpp} (strerror): Check for an invalid errnum
+	  value by checking the return value of strerror(); supply a
+	  "Unknown error %d" message if it's bad, and set errno to EINVAL.
+
+	* ace/Log_Msg.cpp (log): Use ACE_OS::strerror() and its new return
+	  value to check for the need to try another way to format 'p' and
+	  'm' messages. Windows is now the only special case.
+
+	* ace/Select_Reactor_Base.cpp: Include "Timer_Queue.h" instead of
+	  "Timer_Heap.h" to get the appropriate definitions and inclusion of
+	  other needed headers; in this case, Recursive_Thread_Mutex.h. Fixes
+	  compile errors on Solaris 10.
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU: Changed -xarch= from
+	  v9 to generic64 when using "buildbits=64" on Sun Studio 10
+	  (C++ 5.7). This works for both Sparc and x86 architectures.
+
 Thu Jul  7 17:24:21 2005  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_orb_tests.lst:

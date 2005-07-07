@@ -34,11 +34,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-
-# if defined (ACE_LACKS_SYS_NERR)
-extern ACE_Export int sys_nerr;
-# endif /* ACE_LACKS_SYS_NERR */
-
 namespace ACE_OS {
 
   /** @name Functions from <cstring>
@@ -164,7 +159,11 @@ namespace ACE_OS {
   wchar_t *strecpy (wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Returns a system error message.
+  /*
+  ** Returns a system error message. If the supplied errnum is out of range,
+  ** a string of the form "Unknown error %d" is used to format the string
+  ** whose pointer is returned and errno is set to EINVAL.
+  */
   extern ACE_Export
   char *strerror (int errnum);
 
