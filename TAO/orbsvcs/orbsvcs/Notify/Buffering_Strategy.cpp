@@ -18,8 +18,8 @@ ACE_RCSID (Notify, Buffering_Strategy, "$Id$")
 #include "ace/Message_Queue.h"
 
 TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
-    TAO_Notify_Message_Queue& msg_queue,
-    TAO_Notify_AdminProperties::Ptr& admin_properties)
+  TAO_Notify_Message_Queue& msg_queue,
+  TAO_Notify_AdminProperties::Ptr& admin_properties)
   : msg_queue_ (msg_queue)
   , admin_properties_ (admin_properties)
   , global_queue_lock_ (admin_properties->global_queue_lock ())
@@ -42,7 +42,7 @@ TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
 
 void
 TAO_Notify_Buffering_Strategy::update_qos_properties
-  (const TAO_Notify_QoSProperties& qos_properties)
+(const TAO_Notify_QoSProperties& qos_properties)
 {
   this->order_policy_.set (qos_properties);
   this->discard_policy_.set (qos_properties);
@@ -73,7 +73,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable& met
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
   if (this->shutdown_)
-        return -1;
+    return -1;
 
   bool discarded_existing = false;
 
@@ -84,30 +84,30 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable& met
     this->global_queue_length_ >= this->max_queue_length_.value ();
 
   while (local_overflow || global_overflow)
-          {
+  {
     if (blocking_policy_.is_valid())
-              {
+    {
       ACE_Time_Value timeout;
       ORBSVCS_Time::TimeT_to_Time_Value(timeout, blocking_policy_.value());
       // Condition variables take an absolute time
       timeout += ACE_OS::gettimeofday();
       if (local_overflow)
-                  {
+      {
         local_not_full_.wait(&timeout);
-                  }
+      }
       else
-                  {
+      {
         global_not_full_.wait(&timeout);
-              }
+      }
       if (errno != ETIME)
-                  {
+      {
         local_overflow = this->max_events_per_consumer_.is_valid() &&
           this->msg_queue_.message_count () >= this->max_events_per_consumer_.value();
         global_overflow = this->max_queue_length_.value () != 0 &&
           this->global_queue_length_ >= this->max_queue_length_.value ();
         continue;
       }
-                  }
+    }
 
     discarded_existing = this->discard(method_request);
     if (discarded_existing)
@@ -115,19 +115,20 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable& met
       --this->global_queue_length_;
       local_not_full_.signal();
       global_not_full_.signal();
-                  }
+    }
     break;
-              }
+  }
 
   if (! (local_overflow || global_overflow) || discarded_existing)
   {
-  if (this->queue (method_request) == -1)
+    if (this->queue (method_request) == -1)
     {
-      ACE_DEBUG((LM_DEBUG, "Notify (%P|%t) - Panic! failed to enqueue event"));
+      if (! this->shutdown_)
+        ACE_DEBUG((LM_DEBUG, "Notify (%P|%t) - Panic! failed to enqueue event\n"));
       return -1;
     }
 
-  ++this->global_queue_length_;
+    ++this->global_queue_length_;
 
     local_not_empty_.signal ();
   }
@@ -145,15 +146,15 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
     return -1;
 
   while (this->msg_queue_.message_count () == 0)
-    {
-      this->local_not_empty_.wait (abstime);
+  {
+    this->local_not_empty_.wait (abstime);
 
-      if (this->shutdown_)
-        return -1;
+    if (this->shutdown_)
+      return -1;
 
-      if (errno == ETIME)
-        return 0;
-    }
+    if (errno == ETIME)
+      return 0;
+  }
 
   if (this->msg_queue_.dequeue (mb) == -1)
     return -1;
@@ -181,28 +182,28 @@ TAO_Notify_Buffering_Strategy::queue (TAO_Notify_Method_Request_Queueable& metho
   if (! this->order_policy_.is_valid() ||
     order == CosNotification::AnyOrder ||
     order == CosNotification::FifoOrder)
-    {
-      if (TAO_debug_level > 0)
+  {
+    if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in fifo order\n"));
     return this->msg_queue_.enqueue_tail (&method_request);
-    }
+  }
 
   if (order == CosNotification::PriorityOrder)
-    {
-      if (TAO_debug_level > 0)
+  {
+    if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in priority order\n"));
     return this->msg_queue_.enqueue_prio (&method_request);
-    }
+  }
 
   if (order == CosNotification::DeadlineOrder)
-    {
-      if (TAO_debug_level > 0)
+  {
+    if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in deadline order\n"));
     return this->msg_queue_.enqueue_deadline (&method_request);
-    }
- 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid order policy\n"));
+  }
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid order policy\n"));
   return this->msg_queue_.enqueue_tail (&method_request);
 }
 
@@ -218,35 +219,35 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable& met
   int result = -1;
   if (this->discard_policy_.is_valid() == 0 ||
     this->discard_policy_ == CosNotification::AnyOrder ||
-      this->discard_policy_ == CosNotification::FifoOrder)
-    {
-      result = this->msg_queue_.dequeue_head (mb);
-    }
+    this->discard_policy_ == CosNotification::FifoOrder)
+  {
+    result = this->msg_queue_.dequeue_head (mb);
+  }
   else if (this->discard_policy_ == CosNotification::LifoOrder)
-    {
+  {
     // The most current message is NOT the newest one in the queue. It's
     // the one we're about to add to the queue.
     result = -1;
-    }
+  }
   else if (this->discard_policy_ == CosNotification::DeadlineOrder)
-    {
-      result = this->msg_queue_.dequeue_deadline (mb);
-    }
+  {
+    result = this->msg_queue_.dequeue_deadline (mb);
+  }
   else if (this->discard_policy_ == CosNotification::PriorityOrder)
-    {
-      result = this->msg_queue_.dequeue_prio (mb);
+  {
+    result = this->msg_queue_.dequeue_prio (mb);
     if (mb->msg_priority() >= method_request.msg_priority())
     {
       this->msg_queue_.enqueue_prio (mb);
       result = -1;
     }
-    }
+  }
   else
-    {
-      if (TAO_debug_level > 0)
+  {
+    if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid discard policy\n"));
     result = this->msg_queue_.dequeue_head (mb);
-    }
+  }
 
   if (result != -1)
   {

@@ -107,14 +107,11 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request A
 {
   if (!shutdown_)
   {
-  TAO_Notify_Method_Request_Queueable& request_copy = *method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+    TAO_Notify_Method_Request_Queueable& request_copy = *method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  if (this->buffering_strategy_->enqueue (request_copy) == -1)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
-                    "failed to enqueue\n"));
-    }
+    // Ignore the return value, because we already print an error
+    // message if enqueing fails.
+    this->buffering_strategy_->enqueue (request_copy);
   }
 }
 
