@@ -1,3 +1,8 @@
+Thu Jul  7 19:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTScheduling/Current.cpp:
+          Fixed conversion warning
+
 Thu Jul  7 11:33:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Table.inl (operator==):
