@@ -251,7 +251,7 @@ oneway          return IDL_ONEWAY;
                   return IDL_UINTEGER_LITERAL;
                 }
 
-(\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"[ \t]*)+ {
+(\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3})*\"[ \t]*)+ {
                   /* Skip the quotes */
                   char *tmp = ace_yytext;
                   for(int i = strlen(tmp) - 1; i >= 0; --i) {
@@ -268,7 +268,7 @@ oneway          return IDL_ONEWAY;
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }
-(L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
+(L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
                   char *tmp = ACE_OS::strdup (ace_yytext);
                   tmp[strlen (tmp) - 1] = '\0';
