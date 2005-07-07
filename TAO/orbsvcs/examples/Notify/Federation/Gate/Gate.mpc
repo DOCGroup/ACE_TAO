@@ -1,0 +1,8 @@
+//  -*- MPC -*-
+// $Id$
+
+project(Gate) : rmcast, orbsvcsexe, notification, notification_skel {
+  sharedname   = Gate
+  dynamicflags =
+
+}
