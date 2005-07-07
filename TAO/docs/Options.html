@@ -448,6 +448,13 @@ this option is disabled (<code>0</code>) since domain names are
 more flexible address notations for IORs.</td>
       </tr>
       <tr>
+        <td><code>-ORBNoServerSideNameLookups</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBNoServerSideNameLookups"></a>Setting this to 1 will 
+prevent the ORB from looking up the peer's hostname when accepting an incoming 
+connection from a client when the above value (<code>ORBDottedDecimalAddresses</code>)
+is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
+      </tr>      
+      <tr>
         <td><code>-ORBEndpoint</code> <em>endpoint</em></td>
         <td><a name="-ORBEndpoint"></a>This option is same as the <a
         href="#-ORBListenEndpoints"><code>-ORBListenEndPoints</code></a>

@@ -105,6 +105,11 @@ public:
   int use_dotted_decimal_addresses (void) const;
   void use_dotted_decimal_addresses (int);
 
+  /// The ORB will cache incoming connections against the dotted
+  /// decimal form of the peer's address
+  int cache_incoming_by_dotted_decimal_address (void) const;
+  void cache_incoming_by_dotted_decimal_address (int);
+  
   /// The ORB will turn off SO_LINGER if this is zero.
   int linger (void) const;
   void linger (int);
@@ -228,6 +233,10 @@ private:
 
   /// For selecting a address notation
   int use_dotted_decimal_addresses_;
+  
+  /// If incoming connections should be cached against IP (true) or 
+  /// hostname (false).
+  int cache_incoming_by_dotted_decimal_address_;
 
   /// For setting the SO_LINGER option
   int linger_;
