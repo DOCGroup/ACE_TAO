@@ -47,7 +47,6 @@ libTAO_la_SOURCES = \
   Asynch_Queued_Message.cpp \
   Asynch_Reply_Dispatcher_Base.cpp \
   Base_Transport_Property.cpp \
-  Basic_Arguments.cpp \
   BiDir_Adapter.cpp \
   Bind_Dispatcher_Guard.cpp \
   Block_Flushing_Strategy.cpp \
@@ -258,7 +257,6 @@ libTAO_la_SOURCES = \
   Services_Activate.cpp \
   ShortSeqA.cpp \
   ShortSeqC.cpp \
-  Special_Basic_Arguments.cpp \
   StringSeqA.cpp \
   StringSeqC.cpp \
   String_TypeCode_Static.cpp \

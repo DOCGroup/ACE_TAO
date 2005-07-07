@@ -631,9 +631,9 @@ CORBA::Object::_validate_connection (
 CORBA::ORB_ptr
 CORBA::Object::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (orb_core_ != 0)
+  if (this->orb_core_ != 0)
     {
-      return CORBA::ORB::_duplicate (orb_core_->orb ());
+      return CORBA::ORB::_duplicate (this->orb_core_->orb ());
     }
   else
     {

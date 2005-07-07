@@ -26,7 +26,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Asynch_Queued_Message.cpp
     Asynch_Reply_Dispatcher_Base.cpp
     Base_Transport_Property.cpp
-    Basic_Arguments.cpp
     BiDir_Adapter.cpp
     Bind_Dispatcher_Guard.cpp
     Block_Flushing_Strategy.cpp
@@ -242,7 +241,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ShortSeqA.cpp
     ShortSeqC.cpp
     skip.cpp
-    Special_Basic_Arguments.cpp
     String_TypeCode_Static.cpp
     StringSeqA.cpp
     StringSeqC.cpp
