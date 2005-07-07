@@ -51,6 +51,9 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (TAO_ORB_Core * core)
 {
 //   ACE_ASSERT (core != 0);
 
+  // Note that the TAO_ORB_Core pointer should always be valid in this
+  // constructor.
+
   // Claim ownership.
   (void) this->core_->_incr_refcnt ();
 }
@@ -67,10 +70,9 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (
   TAO::ORB_Core_Ref_Counter const & rhs)
   : core_ (rhs.core_)
 {
-//   ACE_ASSERT (rhs.core_ != 0);
-
   // Claim ownership.
-  (void) this->core_->_incr_refcnt ();
+  if (this->core_)
+    (void) this->core_->_incr_refcnt ();
 }
 
 ACE_INLINE
@@ -87,6 +89,8 @@ ACE_INLINE
 bool
 TAO::ORB_Core_Ref_Counter::operator== (TAO::ORB_Core_Ref_Counter const & rhs)
 {
-  return (ACE_OS::strcmp (this->core_->orbid (),
-                          rhs.core_->orbid ()) == 0);
+  return (this->core_ != 0
+          && rhs.core_ != 0
+          && ACE_OS::strcmp (this->core_->orbid (),
+                            rhs.core_->orbid ()) == 0);
 }
