@@ -50,6 +50,17 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
   this->use_dotted_decimal_addresses_ = x;
 }
 
+ACE_INLINE int
+TAO_ORB_Parameters::cache_incoming_by_dotted_decimal_address (void) const
+{
+  return this->cache_incoming_by_dotted_decimal_address_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::cache_incoming_by_dotted_decimal_address (int x)
+{
+  this->cache_incoming_by_dotted_decimal_address_ = x;
+}
 
 ACE_INLINE int
 TAO_ORB_Parameters::linger (void) const
