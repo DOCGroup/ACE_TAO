@@ -1,3 +1,10 @@
+Thu Jul  7 11:33:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Table.inl (operator==):
+
+	  Improved slightly by adding a TAO_ORB_Core pointer equality
+	  check.
+
 Thu Jul  7 11:23:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Table.inl (ORB_Core_Ref_Counter):
