@@ -2,10 +2,6 @@
 
 #include "tao/ORB_Core_TSS_Resources.h"
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-# include "ClientRequestInfo.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1  */
-
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   : event_loop_thread_ (0)
   , client_leader_thread_ (0)
