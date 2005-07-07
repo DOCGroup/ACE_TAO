@@ -1037,9 +1037,6 @@ ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr ()
                                         function
 ACE_LACKS_SWAB                          Platform/compiler lacks
                                         swab () function.
-ACE_LACKS_SYS_NERR                      Platforms/compiler lacks the
-                                        sys_nerr variable (e.g.,
-                                        VxWorks and MVS).
 ACE_LACKS_SYSTIME_H                     <time.h> doesn't automatically
                                         #include /**/ <sys/time.h>
 ACE_LACKS_SYS_MSG_H                     Platform lacks sys/msg.h

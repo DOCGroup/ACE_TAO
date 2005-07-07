@@ -77,8 +77,6 @@ typedef unsigned long long uint64_t;
 #define ACE_HAS_SNPRINTF
 
 #if defined (__sparcv9)
-#define ERRMAX 256 /* Needed for following define */
-#define ACE_LACKS_SYS_NERR
 #define _LP64
 #define ACE_SIZEOF_LONG 8 /* Needed to circumvent compiler bug #4294969 */
 #endif /* __sparcv9 */

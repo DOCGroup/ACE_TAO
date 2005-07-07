@@ -188,9 +188,6 @@
 #define ACE_LACKS_ISATTY
 #define ACE_LACKS_STRERROR
 
-#define ERRMAX 256  // Needed for following define
-#define ACE_LACKS_SYS_NERR  // Needed for sys_nerr in Log_Msg.cpp
-
 #define ACE_LACKS_CUSERID
 #define ACE_LACKS_CHDIR
 #define ACE_LACKS_ENV

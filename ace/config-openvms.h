@@ -16,7 +16,6 @@
 #pragma message disable UNSCOMZER
 
 //#define MAXPATHLEN 255
-//#define ERRMAX sys_nerr
 //#define howmany __howmany
 //#define MAXHOSTNAMELEN 255
 //#define MAXNAMLEN FILENAME_MAX
