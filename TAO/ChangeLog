@@ -1,3 +1,8 @@
+Thu Jul  7 19:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/performance.html:
+          Added some info about how to reduce compilation footprint
+
 Thu Jul  7 19:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduling/Current.cpp:
