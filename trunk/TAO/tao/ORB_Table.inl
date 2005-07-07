@@ -89,8 +89,9 @@ ACE_INLINE
 bool
 TAO::ORB_Core_Ref_Counter::operator== (TAO::ORB_Core_Ref_Counter const & rhs)
 {
-  return (this->core_ != 0
-          && rhs.core_ != 0
-          && ACE_OS::strcmp (this->core_->orbid (),
-                            rhs.core_->orbid ()) == 0);
+  return (this->core_ == rhs.core_
+          || (this->core_ != 0
+              && rhs.core_ != 0
+              && ACE_OS::strcmp (this->core_->orbid (),
+                                 rhs.core_->orbid ()) == 0));
 }
