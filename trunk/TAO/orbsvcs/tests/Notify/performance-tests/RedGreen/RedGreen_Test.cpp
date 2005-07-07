@@ -7,8 +7,8 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Notify, 
-           RedGreen_Test, 
+ACE_RCSID (Notify,
+           RedGreen_Test,
            "$Id$")
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
@@ -22,6 +22,8 @@ ACE_RCSID (Notify,
 
 ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
 ACE_hrtime_t g_throughput_start_;
+
+static bool consumer_is_done = false;
 
 int
 RedGreen_Test::parse_args (int argc,
@@ -107,8 +109,30 @@ RedGreen_Test::init (int argc,
 void
 RedGreen_Test::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->send_events (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_NEW_ENV
+  {
+    this->send_events (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    while (! consumer_is_done)
+    {
+      ACE_Time_Value tv(0, 10 * 1000);
+      this->orb_->run(tv ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+
+    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "Supplier:");
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
   ACE_CHECK;
+
+ 
 
   worker_.thr_mgr ()->wait ();
 }
@@ -702,13 +726,22 @@ Worker::orb (CORBA::ORB_ptr orb)
 void
 Worker::done (void)
 {
-  this->orb_->shutdown ();
+  consumer_is_done = true;
 }
 
 int
 Worker::svc (void)
 {
-  this->orb_->run ();
+  ACE_TRY_NEW_ENV
+  {
+    this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "Consumer:");
+  }
+  ACE_ENDTRY;
 
   return 0;
 }
