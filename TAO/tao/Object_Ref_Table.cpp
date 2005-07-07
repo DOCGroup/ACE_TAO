@@ -42,8 +42,9 @@ TAO_Object_Ref_Table::bind (const char *id,
                     -1);
 
   std::pair<iterator, bool> const result =
-    this->table_.insert (std::make_pair (CORBA::String_var (id),
-                                         CORBA::Object_var (obj)));
+    this->table_.insert (
+      std::make_pair (CORBA::String_var (id),
+                      CORBA::Object_var (CORBA::Object::_duplicate (obj))));
 
   if (!result.second)
     {
