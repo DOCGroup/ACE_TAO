@@ -93,8 +93,6 @@ ACE_RCSID (util,
 
 static long *pSeenOnce= 0;
 
-
-
 IDL_GlobalData::IDL_GlobalData (void)
   : pd_root (0),
     pd_gen (0),
@@ -1133,6 +1131,7 @@ IDL_GlobalData::string_to_scoped_name (char *s)
   char *start = s;
   int len = 0;
   UTL_ScopedName *retval = 0;
+  char tmp[256];
 
   // If we're doing #pragma ID, the id string may have a ::
   // while the target scoped name does not, so we check for
@@ -1140,25 +1139,17 @@ IDL_GlobalData::string_to_scoped_name (char *s)
   char *test = ACE_OS::strchr (start, ' ');
   char *end = ACE_OS::strstr (start, "::");
   
-  if ((test - end) < 0)
+  if (test != 0 && test - end < 0)
     {
       end = test;
     }
 
   while (end != 0)
     {
-      if (!ACE_OS::ace_isalpha (start[0]))
-        {
-          idl_global->err ()->error0 (UTL_Error::EIDL_BAD_SCOPENAME_STRING);
-          exit (99);
-        }
-        
       len = end - start;
 
       if (len != 0)
         {
-          char tmp[256];
-
           ACE_OS::strncpy (tmp,
                            start,
                            len);
@@ -1190,28 +1181,22 @@ IDL_GlobalData::string_to_scoped_name (char *s)
         }
 
       start = end + 2;
-
       end = (end[0] == ' ' ? 0 : ACE_OS::strstr (start, "::"));
+  
+      if (test != 0 && test - end < 0)
+        {
+          end = 0;
+        }
     }
 
-  if (!ACE_OS::ace_isalpha (start[0]))
-    {
-      idl_global->err ()->error0 (UTL_Error::EIDL_BAD_SCOPENAME_STRING);
-      exit (99);
-    }
-        
-  end = ACE_OS::strchr (start, ' ');
+  len = test - start;
 
   // This means we've already dealt with the space between the target
   // name and the id string (above) and we're done.  
-  if (end == 0)
+  if (test == 0 || len <= 0)
     {
       return retval;
     }
-
-  len = end - start;
-
-  char tmp[256];
 
   ACE_OS::strncpy (tmp,
                    start,
