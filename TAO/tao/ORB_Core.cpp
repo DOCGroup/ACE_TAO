@@ -327,6 +327,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   int dotted_decimal_addresses = 0;
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
+  // Disable looking up the host name for incoming connections.
+  int no_server_side_name_lookups = 0;
+
 #if defined (TAO_STD_PROFILE_COMPONENTS)
   int std_profile_components = 1;
 #else
@@ -370,6 +373,15 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // Use dotted decimal addresses
           // @@ this should be renamed.  See above comment. fredk
           dotted_decimal_addresses =
+            ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBNoServerSideNameLookups"))))
+        {
+          // Don't look up the host name for incoming connections
+          no_server_side_name_lookups =
             ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
@@ -1123,6 +1135,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
+  // When caching incoming transports don't use the host name if 
+  // -ORBDottedDecimalAddresses or -ORBNoServerSideNameLookups is true.
+  this->orb_params ()->cache_incoming_by_dotted_decimal_address 
+                                            (no_server_side_name_lookups
+                                             || dotted_decimal_addresses);
   this->orb_params ()->linger (linger);
   this->orb_params ()->nodelay (nodelay);
   if (rcv_sock_size >= 0)

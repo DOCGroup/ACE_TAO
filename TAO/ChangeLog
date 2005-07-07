@@ -1,3 +1,19 @@
+Thu Jul  7 16:56:55 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/params.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/IIOP_Connection_Handler.cpp:
+
+          Add configuration property '-ORBNoServerSideNameLookups' so
+          that server side client name lookups can still be prevented
+          when '-ORBDottedDecimalAddresses 1' is not used.
+
+        * docs/Options.html:
+
+          Document the above.
+
 Thu Jul  7 10:01:26 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Builder.cpp:
