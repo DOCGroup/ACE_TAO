@@ -1,5 +1,14 @@
---- lex.yy.cpp.orig 2005-01-28 10:30:36.000000000 -0600
-+++ lex.yy.cpp 2005-01-28 10:30:44.000000000 -0600
+--- lex.yy.cpp.orig	2005-07-07 11:05:08.066403000 -0700
++++ lex.yy.cpp	2005-07-07 10:51:41.804932200 -0700
+@@ -1058,7 +1058,7 @@
+ TAO_YY_DECL
+         {
+         register tao_yy_state_type tao_yy_current_state;
+-        register char *tao_yy_cp, *tao_yy_bp;
++        register char *tao_yy_cp = 0, *tao_yy_bp = 0;
+         register int tao_yy_act;
+ 
+ 
 @@ -1591,42 +1591,42 @@
                    idl_global->set_lineno(idl_global->lineno() + 1);
                    idl_store_pragma(ace_tao_yytext);
@@ -96,3 +105,32 @@
  case TAO_YY_STATE_EOF(INITIAL):
          tao_yyterminate();
  
+@@ -2059,6 +2059,7 @@
+ #endif        /* ifndef TAO_YY_NO_UNPUT */
+ 
+ 
++#ifndef TAO_YY_NO_INPUT
+ #ifdef __cplusplus
+ static int tao_yyinput()
+ #else
+@@ -2131,7 +2132,7 @@
+ 
+         return c;
+         }
+-
++#endif /* TAO_YY_NO_INPUT */
+ 
+ #ifdef TAO_YY_USE_PROTOS
+ void tao_yyrestart( FILE *input_file )
+@@ -2242,11 +2243,6 @@
+         }
+ 
+ 
+-#ifndef TAO_YY_ALWAYS_INTERACTIVE
+-#ifndef TAO_YY_NEVER_INTERACTIVE
+-extern int isatty TAO_YY_PROTO(( int ));
+-#endif
+-#endif
+ 
+ #ifdef TAO_YY_USE_PROTOS
+ void tao_yy_init_buffer( TAO_YY_BUFFER_STATE b, FILE *file )
