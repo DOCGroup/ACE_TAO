@@ -1,3 +1,8 @@
+Thu Jul  7 11:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core_TSS_Resources.cpp:
+          Removed not needed include
+
 Thu Jul  7 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Basic_Arguments.cpp:
