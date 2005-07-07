@@ -218,9 +218,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform lacks setregid()
 #define ACE_LACKS_SETREGID
 
-// Platforms/compiler lacks the sys_nerr variable
-#define ACE_LACKS_SYS_NERR
-
 // Compile using multi-thread libraries
 #define ACE_MT_SAFE 1
 

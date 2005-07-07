@@ -16,14 +16,6 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_stdlib.h"
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_LACKS_SYS_NERR)
-#  if defined (__rtems__)
-int sys_nerr = EWOULDBLOCK + 1;  // definitely a hack.
-#  else
-int sys_nerr = ERRMAX + 1;
-#  endif /* __rtems__ */
-#endif /* ACE_LACKS_SYS_NERR */
-
 #if !defined (ACE_HAS_MEMCHR)
 const void *
 ACE_OS::memchr_emulation (const void *s, int c, size_t len)
@@ -108,17 +100,35 @@ ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
 char *
 ACE_OS::strerror (int errnum)
 {
+  static char ret_errortext[128];
+
   if (ACE::is_sock_error (errnum))
     {
       const ACE_TCHAR *errortext = ACE::sock_error (errnum);
-      static char ret_errortext[128];
-      ACE_OS::strncpy (ret_errortext, ACE_TEXT_ALWAYS_CHAR(errortext), sizeof(ret_errortext));
+      ACE_OS::strncpy (ret_errortext,
+		       ACE_TEXT_ALWAYS_CHAR (errortext),
+		       sizeof (ret_errortext));
       return ret_errortext;
     }
 #if defined (ACE_LACKS_STRERROR)
+  errno = EINVAL;
   return ACE_OS::strerror_emulation (errnum);
 #else /* ACE_LACKS_STRERROR */
-  return ::strerror (errnum);
+  // Adapt to the various ways that strerror() indicates a bad errnum.
+  // Most modern systems set errno to EINVAL. Some older platforms return
+  // a pointer to a NULL string. This code makes the behavior more consistent
+  // across platforms. On a bad errnum, we make a string with the error number
+  // and set errno to EINVAL.
+  ACE_Errno_Guard g (errno);
+  errno = 0;
+  char *errmsg = ::strerror (errnum);
+  if (errno == EINVAL || ACE_OS::strlen (errmsg) == 0)
+    {
+      ACE_OS::sprintf (ret_errortext, "Unknown error %d", errnum);
+      errmsg = ret_errortext;
+      g = EINVAL;
+    }
+  return errmsg;
 #endif /* ACE_LACKS_STRERROR */
 }
 

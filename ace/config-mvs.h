@@ -15,7 +15,6 @@
 #define howmany __howmany       /* MVS uses different names than most others */
 #define fd_mask __fd_mask
 #define MAXNAMLEN  __DIR_NAME_MAX
-#define ERRMAX __sys_nerr
 #if defined (log)               /* log is a macro in math.h */
 # undef log                     /* conflicts with log function in ACE */
 #endif /* log */
@@ -95,7 +94,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSTIME_H
-#define ACE_LACKS_SYS_NERR
 #define ACE_LACKS_NETINET_TCP_H
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR

@@ -952,15 +952,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   ACE_TRACE ("ACE_Log_Msg::log");
   // External decls.
 
-// sys_nerr is deprecated on some platforms, and is declared by
-// system header files on others.
-#if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) \
-    && !defined(__MINGW32__) && !defined(__GLIBC__)  \
-    && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__OpenBSD__) \
-    && !defined(__APPLE__) \
-    && !defined(__QNX__)
-   extern int sys_nerr;
-#endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) && ... */
   typedef void (*PTF)(...);
 
   // Check if there were any conditional values set.
@@ -1229,33 +1220,34 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'p':             // <errno> string, ala perror()
                   {
-                    errno = ACE::map_errno (this->errnum ());
-#if !defined (ACE_HAS_WINCE)     /* CE doesn't do strerror() */
-                    if (errno >= 0
-#  if !defined (__GLIBC__)   /* sys_nerr is deprecated on some
-                               platforms. */
-                        && errno < sys_nerr
-#  endif  /* !__GLIBC__ */
-                        )
+                    errno = 0;
+                    char *msg;
+                    msg = ACE_OS::strerror (ACE::map_errno (this->errnum ()));
+                    // Windows can try to translate the errnum using
+                    // system calls if strerror() doesn't get anything useful.
+#if defined (ACE_WIN32)
+                    if (errno == 0)
                       {
-#  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+#endif
+
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls: %ls"));
-#  else
+#else
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
-#  endif
+#endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (msg));
                         else
                           this_len = ACE_OS::sprintf
                             (bp, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (msg));
+#if defined (ACE_WIN32)
                       }
                     else
-#endif /* !ACE_HAS_WINCE */
                       {
-#if defined (ACE_WIN32)
+                        errno = ACE::map_errno (this->errnum ());
                         ACE_TCHAR *lpMsgBuf = 0;
 
      // PharLap can't do FormatMessage, so try for socket
@@ -1312,24 +1304,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
                           }
-#elif !defined (ACE_HAS_WINCE)
-                        ACE_OS::strcpy (fp,
-                                        ACE_LIB_TEXT (
-                                                  "s: <unknown error> = %d"));
-                        if (can_check)
-                          this_len = ACE_OS::snprintf
-                            (bp, bspace,
-                             format,
-                             va_arg (argp, ACE_TCHAR *),
-                             errno);
-                        else
-                          this_len = ACE_OS::sprintf
-                            (bp,
-                             format,
-                             va_arg (argp, ACE_TCHAR *),
-                             errno);
-#endif /* ACE_WIN32 */
                       }
+#endif /* ACE_WIN32 */
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;
                   }
@@ -1353,15 +1329,16 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'm': // Format the string assocated with the errno value.
                   {
-                    errno = ACE::map_errno (this->errnum ());
-                    if (errno >= 0
-
-#  if !defined (__GLIBC__)   /* sys_nerr is deprecated on some
-                               platforms. */
-                        && errno < sys_nerr
-#  endif  /* !__GLIBC__ */
-                        )
+                    errno = 0;
+                    char *msg;
+                    msg = ACE_OS::strerror (ACE::map_errno (this->errnum ()));
+                    // Windows can try to translate the errnum using
+                    // system calls if strerror() doesn't get anything useful.
+#if defined (ACE_WIN32)
+                    if (errno == 0)
                       {
+#endif
+
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
@@ -1369,16 +1346,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
-                            (bp, bspace, format,
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
+                            (bp, bspace, format, ACE_TEXT_CHAR_TO_TCHAR (msg));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format,
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
+                            (bp, format, ACE_TEXT_CHAR_TO_TCHAR (msg));
+#if defined (ACE_WIN32)
                       }
                     else
                       {
-#if defined (ACE_WIN32)
+                        errno = ACE::map_errno (this->errnum ());
                         ACE_TCHAR *lpMsgBuf = 0;
 
      // PharLap can't do FormatMessage, so try for socket
@@ -1426,19 +1402,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
                           }
-#elif !defined (ACE_HAS_WINCE)
-                        // Ignore the built format... if this is a problem,
-                        // this part can be changed to build another string
-                        // and pass that with the complete conversion specs.
-                        if (can_check)
-                          this_len = ACE_OS::snprintf
-                            (bp, bspace,
-                             ACE_LIB_TEXT ("<unknown error> = %d"), errno);
-                        else
-                          this_len = ACE_OS::sprintf
-                            (bp, ACE_LIB_TEXT ("<unknown error> = %d"), errno);
-#endif /* ACE_WIN32 */
                       }
+#endif /* ACE_WIN32 */
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;
                   }

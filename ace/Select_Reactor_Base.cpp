@@ -5,7 +5,7 @@
 #include "ace/Thread.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/Timer_Heap.h"
+#include "ace/Timer_Queue.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 #include "ace/OS_NS_fcntl.h"
