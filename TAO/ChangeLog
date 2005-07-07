@@ -1,23 +1,48 @@
+Thu Jul  7 10:01:26 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+        * orbsvcs/tests/Notify/Basic/Events.h:
+        * orbsvcs/tests/Notify/Basic/Filter.h:
+        * orbsvcs/tests/Notify/Basic/MultiTypes.h:
+        * orbsvcs/tests/Notify/Basic/Sequence.h:
+        * orbsvcs/tests/Notify/Basic/Simple.h:
+        * orbsvcs/tests/Notify/Basic/Updates.h:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.h:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.h:
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.h:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * tests/Bug_2183_Regression/Hello.h:
+
+          Fix problems with ACE exception macros and fuzz errors.
+
 Thu Jul  7 15:18:01 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* orbsvcs/examples/Notify/Federation/federation.mwc:
-	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
-	* orbsvcs/examples/Notify/Federation/Agent/Agent.mpc:
-	* orbsvcs/examples/Notify/Federation/Agent/README:
-	* orbsvcs/examples/Notify/Federation/Agent/agent.dia:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.h:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.mpc:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/README:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.mpc:
+        * orbsvcs/examples/Notify/Federation/federation.mwc:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.mpc:
+        * orbsvcs/examples/Notify/Federation/Agent/README:
+        * orbsvcs/examples/Notify/Federation/Agent/agent.dia:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.mpc:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/README:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.mpc:
 
-	  Added a set of examples and support code that show how to set
-	  up a multicast-based federation of  Notification Services.
+          Added a set of examples and support code that show how to set
+          up a multicast-based federation of  Notification Services.
 
-	* NEWS:
+        * NEWS:
 
-	  Announce new examples.
+          Announce new examples.
 
 Thu Jul  7 11:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -41,12 +66,12 @@ Thu Jul  7 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jul  6 23:10:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Object_Ref_Table.cpp (bind):
+        * tao/Object_Ref_Table.cpp (bind):
 
-	  "Transfer" ownership of the object reference being inserted to the
-	  object reference table by increasing the reference count.
-	  Addresses seg faults in code that accesses object references
-	  from the this table.
+          "Transfer" ownership of the object reference being inserted to the
+          object reference table by increasing the reference count.
+          Addresses seg faults in code that accesses object references
+          from the this table.
 
 Wed Jul  6 15:06:17 2005  Justin Michel  <michel_j@ociweb.com>
 

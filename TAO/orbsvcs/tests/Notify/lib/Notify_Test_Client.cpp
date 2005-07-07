@@ -22,13 +22,13 @@ Notify_Test_Client::~Notify_Test_Client ()
   ACE_TRY_NEW_ENV
   {
     root_poa_->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
     orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
   }
-  ACE_CATCHALL
+  ACE_CATCH (CORBA::Exception, e)
   {
-    ACE_ERROR((LM_ERROR, "Error: Exception in ~Notify_Test_Client()\n"));
+    ACE_PRINT_EXCEPTION (e, "\nError: ");
   }
   ACE_ENDTRY;
 }

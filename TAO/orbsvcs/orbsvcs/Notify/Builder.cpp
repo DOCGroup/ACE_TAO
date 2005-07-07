@@ -561,7 +561,7 @@ TAO_Notify_Builder::apply_reactive_concurrency (TAO_Notify_Object& object ACE_EN
 
   object.set_worker_task (worker_task);
 
-  worker_task->init (ACE_ENV_ARG_PARAMETER);
+  worker_task->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
