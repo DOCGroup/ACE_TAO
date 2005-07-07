@@ -303,7 +303,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
+  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ()
                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
