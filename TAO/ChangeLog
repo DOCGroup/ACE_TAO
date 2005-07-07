@@ -1,3 +1,12 @@
+Thu Jul  7 11:23:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Table.inl (ORB_Core_Ref_Counter):
+
+	  Fixed seg faults caused by calling methods through a nil
+	  TAO_ORB_Core pointer by verifying that the pointer is non-nil
+	  before doing so.  Thanks to Johnny for pointing out the
+	  corresponding crash.
+
 Thu Jul  7 18:13:24 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_err.h:
