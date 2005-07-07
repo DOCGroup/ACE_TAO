@@ -1,3 +1,18 @@
+Thu Jul  7 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/UB_String_Arguments.cpp:
+          Removed these files
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Updated for changes above
+
+        * tao/Object.cpp (_get_orb):
+          Updated to comply with coding guidelines. Thanks to Ossama to
+          point out a few minor items
+
 Wed Jul  6 23:10:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Object_Ref_Table.cpp (bind):
