@@ -180,8 +180,7 @@ int main (int argc, char * argv[])
     for (int i = 0; i < num_events; ++i)
     {
       ACE_DEBUG((LM_DEBUG, "+"));
-      send_event (i ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      send_event (i);
     }
     ACE_DEBUG((LM_DEBUG, "\nSupplier sent %d events.\n", num_events));
 

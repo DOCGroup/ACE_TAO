@@ -16,11 +16,6 @@
 #ifndef RECONNECTNG_CONSUMER_H
 #define RECONNECTNG_CONSUMER_H
 
-//#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-//#pragma warning(pop)
-//#endif /* _MSC_VER */
-
-
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/NotifyExtS.h"

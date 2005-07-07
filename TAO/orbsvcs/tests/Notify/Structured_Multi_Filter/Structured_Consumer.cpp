@@ -88,7 +88,7 @@ create_consumer (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 
 int main (int argc, char * argv[])
 {
-  ACE_TRY_NEW_ENV;
+  ACE_TRY_NEW_ENV
   {
     Consumer_Client client;
 
