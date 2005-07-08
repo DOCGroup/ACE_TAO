@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Deployment:PackageDescriptorsList
- xmlns:Deployment="http://www.omg.org/Deployment"
- xmlns:xmi="http://www.omg.org/XMI"
+<Package:packageDescriptorsList
+ xmlns:Package="http://www.dre.vanderbilt.edu/Package"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.omg.org/Deployment Modified_Deployment.xsd">
+ xsi:schemaLocation="http://www.dre.vanderbilt.edu/Package Package.xsd">
     <desc>package.tpd</desc>
     <desc>Stock.pcd</desc>
     <desc>Stock.cid</desc>
@@ -20,4 +19,4 @@
     <desc>Distributor_Stub.iad</desc>
     <desc>Distributor_Svnt.iad</desc>
     <desc>Distributor_Exec.iad</desc>
-</Deployment:PackageDescriptorsList>
+</Package:packageDescriptorsList>
