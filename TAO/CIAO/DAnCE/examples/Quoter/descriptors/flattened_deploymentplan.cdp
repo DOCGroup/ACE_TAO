@@ -10,7 +10,7 @@
     <label>Quoter-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:Quoter/EC:1.0</supportedType> 
+    <supportedType>IDL:Quoter/EC:1.0</supportedType>
     <port>
       <name>read_quoter</name>
       <specificType>IDL:Quoter/Read_Quoter:1.0</specificType>
@@ -22,12 +22,15 @@
       <kind>SimplexReceptacle</kind>
     </port>
   </realizes>
-  
+
   <implementation id="Quoter-Distributor-mdd">
     <name>Quoter-Distributor-mdd</name>
     <source><!-- @@ Don't know what goes here --></source>
     <artifact>Quoter-Distributor_exec</artifact>
     <artifact>Quoter-Distributor_svnt</artifact>
+    <artifact>Quoter-Distributor_stub</artifact>
+    <artifact>Quoter-Base_stub</artifact>
+    <artifact>Quoter-Base_svnt</artifact>
     <!--
     <execParameter></execParameter>
     <deployRequirement></deployRequirement>
@@ -39,6 +42,9 @@
     <source><!-- @@ Don't know what goes here --></source>
     <artifact>Quoter-Broker_exec</artifact>
     <artifact>Quoter-Broker_svnt</artifact>
+    <artifact>Quoter-Broker_stub</artifact>
+    <artifact>Quoter-Base_stub</artifact>
+    <artifact>Quoter-Base_svnt</artifact>
     <!--
     <execParameter></execParameter>
     <deployRequirement></deployRequirement>
@@ -128,7 +134,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Quoter-Distributor_svnt">
     <name>Distributor_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -146,7 +152,14 @@
       </value>
     </execParameter>
   </artifact>
-  
+
+  <artifact id="Quoter-Distributor_stub">
+    <name>Distributor_stub</name>
+    <source><!-- @@ Not sure --></source>
+    <node><!-- blank --></node>
+    <location>Distributor_stub</location>
+  </artifact>
+
   <artifact id="Quoter-Broker_exec">
     <name>Broker_exec</name>
     <source><!-- @@ Not sure about this--></source>
@@ -164,7 +177,7 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Quoter-Broker_svnt">
     <name>Broker_svnt</name>
     <source><!-- @@ Not sure --></source>
@@ -182,4 +195,28 @@
       </value>
     </execParameter>
   </artifact>
-</Deployment:deploymentPlan>  
+
+  <artifact id="Quoter-Broker_stub">
+    <name>Broker_stub</name>
+    <source><!-- @@ Not sure --></source>
+    <node><!-- blank --></node>
+    <location>Broker_stub</location>
+  </artifact>
+
+
+  <artifact id="Quoter-Base_stub">
+    <name>Stock_Base_stub</name>
+    <source><!-- @@ Not sure --></source>
+    <node><!-- blank --></node>
+    <location>Stock_Base_stub</location>
+  </artifact>
+
+  <artifact id="Quoter-Base_svnt">
+    <name>Stock_Base_svnt</name>
+    <source><!-- @@ Not sure --></source>
+    <node><!-- blank --></node>
+    <location>Stock_Base_svnt</location>
+  </artifact>
+
+</Deployment:deploymentPlan>
+
