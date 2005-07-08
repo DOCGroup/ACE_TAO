@@ -1,3 +1,9 @@
+Fri Jul  8 12:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocalObject.cpp:
+          Removed some remarks about possible corba spec mismatch. Checked
+          the latest corba spec and we throw the correct error
+
 Fri Jul  8 12:20:47 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2183_Regression/server.conf:
