@@ -131,7 +131,9 @@ private:
   // NotifyPublish interface.
   //
   virtual void
-  offer_change (EventTypeSeq const&, EventTypeSeq const&) throw ()
+  offer_change (EventTypeSeq const&, EventTypeSeq const& ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosNotifyComm::InvalidEventType))
   {
     // We don't care.
   }
@@ -139,7 +141,9 @@ private:
   // StructuredPushSupplier interface.
   //
   virtual void
-  push_structured_event (StructuredEvent const& e) throw ()
+  push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected))
   {
     // Extract space_craft_name and agent_name.
     //
@@ -163,7 +167,8 @@ private:
 
 
   virtual void
-  disconnect_structured_push_consumer () throw ()
+  disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // We don't care.
   }
@@ -186,118 +191,133 @@ private:
 int
 main (int argc, char* argv[])
 {
-  ORB_var orb (ORB_init (argc, argv));
-
-  if (argc < 2)
+  ACE_TRY_NEW_ENV
   {
-    ACE_ERROR ((LM_ERROR,
-                "Usage: %s <agent-name> [<space-craft-name>={a, b, c}]\n",
-                argv[0]));
-    return 1;
-  }
+    ORB_var orb (ORB_init (argc, argv));
+
+    if (argc < 2)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Usage: %s <agent-name> [<space-craft-name>={a, b, c}]\n",
+                  argv[0]));
+      return 1;
+    }
 
 
-  // Activate the root POA.
-  //
-  CORBA::Object_var obj (orb->resolve_initial_references ("RootPOA"));
-  PortableServer::POA_var root_poa (PortableServer::POA::_narrow (obj.in ()));
+    // Activate the root POA.
+    //
+    CORBA::Object_var obj (orb->resolve_initial_references ("RootPOA"));
+    PortableServer::POA_var root_poa (PortableServer::POA::_narrow (obj.in ()));
 
-  PortableServer::POAManager_var poa_manager (root_poa->the_POAManager ());
+    PortableServer::POAManager_var poa_manager (root_poa->the_POAManager ());
 
-  poa_manager->activate ();
+    poa_manager->activate ();
 
 
-  // Initialize Notification Service.
-  //
-  TAO_Notify_Service* ns =
-    ACE_Dynamic_Service<TAO_Notify_Service>::instance (
-      TAO_NOTIFICATION_SERVICE_NAME);
-
-  if (ns == 0)
-  {
-    ns =
+    // Initialize Notification Service.
+    //
+    TAO_Notify_Service* ns =
       ACE_Dynamic_Service<TAO_Notify_Service>::instance (
-        TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
-  }
+        TAO_NOTIFICATION_SERVICE_NAME);
 
-  if (ns == 0)
-  {
+    if (ns == 0)
+    {
+      ns =
+        ACE_Dynamic_Service<TAO_Notify_Service>::instance (
+          TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
+    }
+
+    if (ns == 0)
+    {
       ACE_ERROR ((LM_ERROR,
                   "Notification Service not found! check svc.conf\n"));
       return -1;
-  }
-
-  ns->init_service (orb.in () /*ACE_ENV_ARG_PARAMETER*/);
-  //ACE_CHECK_RETURN (-1);
-
-
-
-  // Create the channel factory.
-  //
-  EventChannelFactory_var factory (ns->create (root_poa.in ()
-                                               /*ACE_ENV_ARG_PARAMETER*/));
-  //ACE_CHECK_RETURN (-1);
-
-  if (is_nil (factory.in ()))
-  {
-    ACE_ERROR ((LM_ERROR,
-                "Unable to create channel factory\n"));
-    return 1;
-  }
-
-
-  // Create the channel.
-  //
-  QoSProperties qosp;
-  AdminProperties ap;
-  ChannelID id;
-
-  EventChannel_var channel (factory->create_channel (qosp, ap, id));
-
-  // Find which space craft we are on.
-  //
-  ACE_INET_Addr addr;
-  char const* space_craft_name = 0;
-
-  if (argc < 3)
-    space_craft_name = "a";  // Default to spacecraft "a".
-  else
-    space_craft_name = argv[2];
-
-  // Do a quick mapping to mcast addresses.
-  //
-  switch (space_craft_name[0])
-  {
-  case 'a':
-    {
-      addr = ACE_INET_Addr ("224.1.0.1:10000");
-      break;
     }
-  case 'b':
-    {
-      addr = ACE_INET_Addr ("224.1.0.2:10000");
-      break;
-    }
-  case 'c':
-    {
-      addr = ACE_INET_Addr ("224.1.0.3:10000");
-      break;
-    }
-  default:
+
+
+    ns->init_service (orb.in () ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // Create the channel factory.
+    //
+    EventChannelFactory_var factory (ns->create (root_poa.in ()
+                                                 ACE_ENV_ARG_PARAMETER));
+    ACE_TRY_CHECK;
+
+    if (is_nil (factory.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Space craft name should be either 'a', 'b', or 'c'.\n"));
+                  "Unable to create channel factory\n"));
       return 1;
     }
+
+
+    // Create the channel.
+    //
+    QoSProperties qosp;
+    AdminProperties ap;
+    ChannelID id;
+
+    EventChannel_var channel (factory->create_channel (qosp, ap, id));
+
+    // Find which space craft we are on.
+    //
+    ACE_INET_Addr addr;
+    char const* space_craft_name = 0;
+
+    if (argc < 3)
+      space_craft_name = "a";  // Default to spacecraft "a".
+    else
+      space_craft_name = argv[2];
+
+    // Do a quick mapping to mcast addresses.
+    //
+    switch (space_craft_name[0])
+    {
+    case 'a':
+      {
+        addr = ACE_INET_Addr ("224.1.0.1:10000");
+        break;
+      }
+    case 'b':
+      {
+        addr = ACE_INET_Addr ("224.1.0.2:10000");
+        break;
+      }
+    case 'c':
+      {
+        addr = ACE_INET_Addr ("224.1.0.3:10000");
+        break;
+      }
+    default:
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Space craft name should be either 'a', 'b', or 'c'.\n"));
+        return 1;
+      }
+    }
+
+    // Create the gate.
+    //
+    Gate gate (addr, channel);
+
+    // Start the agent.
+    //
+    Agent agent (space_craft_name, argv[1], channel);
+
+    orb->run ();
   }
-
-  // Create the gate.
-  //
-  Gate gate (addr, channel);
-
-  // Start the agent.
-  //
-  Agent agent (space_craft_name, argv[1], channel);
-
-  orb->run ();
+  ACE_CATCH (CORBA::UserException, ue)
+  {
+    ACE_PRINT_EXCEPTION (ue,
+                         "User exception: ");
+    return 1;
+  }
+  ACE_CATCH (CORBA::SystemException, se)
+  {
+    ACE_PRINT_EXCEPTION (se,
+                         "System exception: ");
+    return 1;
+  }
+  ACE_ENDTRY;
 }
