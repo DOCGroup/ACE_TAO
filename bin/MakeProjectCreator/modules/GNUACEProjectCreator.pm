@@ -13,28 +13,17 @@ package GNUACEProjectCreator;
 use strict;
 use File::Basename;
 
+use MakeProjectBase;
 use ProjectCreator;
 
 use vars qw(@ISA);
-@ISA = qw(ProjectCreator);
+@ISA = qw(MakeProjectBase ProjectCreator);
 
 # ************************************************************
 # Subroutine Section
 # ************************************************************
 
-sub dollar_special {
-  #my($self) = shift;
-  return 1;
-}
-
-
 sub expand_variables_from_template_values {
-  #my($self) = shift;
-  return 0;
-}
-
-
-sub sort_files {
   #my($self) = shift;
   return 0;
 }
@@ -104,17 +93,9 @@ sub fill_value {
 }
 
 
-sub project_file_name {
-  my($self) = shift;
-  my($name) = shift;
-
-  if (!defined $name) {
-    $name = $self->project_name();
-  }
-
-  return $self->get_modified_project_file_name('GNUmakefile' .
-                                               ($name eq '' ? '' : ".$name"),
-                                               '');
+sub project_file_prefix {
+  #my($self) = shift;
+  return 'GNUmakefile.';
 }
 
 
