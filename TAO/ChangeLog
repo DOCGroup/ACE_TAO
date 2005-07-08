@@ -1,3 +1,13 @@
+Fri Jul  8 15:32:36 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+	* orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+
+	  Changed all references to TAO_Notify_Service:init to read
+	  init_service because somebody decided for some reason to
+	  rename this function. Also made the code compilable by VC6.
+
 Fri Jul  8 12:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LocalObject.cpp:
