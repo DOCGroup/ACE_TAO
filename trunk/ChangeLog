@@ -13,6 +13,9 @@ Fri Jul  8 15:42:18 2005  Steve Huston  <shuston@riverace.com>
 	  Added __amd64 to the "little endian" machine indicators. Corrects
 	  this check for Solaris 10 x86.
 
+	* ace/config-sunos5.10.h: Noted that Studio 10 (C++ 5.7) works
+	  as well.
+
 	* include/makeinclude/platform_sunos5_sunc++.GNU: If -fast is required,
 	  be sure it goes to the left of any -xarch options on the command
 	  line, else it'll override -xarch. Also, added support for building
