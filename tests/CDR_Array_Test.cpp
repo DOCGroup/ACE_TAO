@@ -643,7 +643,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     }
 
   ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Data OK, test %d completed.\n"),
+             ACE_TEXT ("Data OK, test %s completed.\n"),
              H::name ()));
 }
 
