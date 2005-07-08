@@ -1,64 +1,62 @@
 // $Id$
 
 #include "PDL_Handler.h"
-#include "XercesString.h"
+#include "Config_Handlers/XML_Helper.h"
+#include "xercesc/dom/DOM.hpp"
 
 namespace CIAO
 {
   namespace Component_Packager
   {
-  PDL_Handler::PDL_Handler (DOMDocument* pdl_doc,
-                            unsigned long filter)
+  using namespace CIAO::Config_Handlers;
+  using xercesc::DOMDocument;
 
-    :traverse_ (pdl_doc),
-     pdl_doc_ (pdl_doc),
-     root_ (this->pdl_doc_->getDocumentElement()),
-     filter_ (filter),
-     iter_ (traverse_->createNodeIterator (this->root_,
-                                           this->filter_,
-                                           0,
-                                           true))
-  {}
+  PDL_Handler::PDL_Handler ()
+  {
+  }
 
   PDL_Handler::~PDL_Handler()
   {
-    this->iter_->release();
   }
 
-  void
-  PDL_Handler::process_pdl (DESC_LIST &desc_list)
+
+  int 
+  PDL_Handler::process_pdl (const char *pdl_url,
+                   DESC_LIST &desc_list)
   {
-    for (DOMNode* node = this->iter_->nextNode();
-        node != 0;
-        node = this->iter_->nextNode())
+    //@@ retrieve location information for standard descriptors
+    XML_Helper pdl_helper;
+
+    if (!pdl_helper.is_initialized ())
+      return -1;
+
+    xercesc::DOMDocument* pdl_dom =
+      pdl_helper.create_dom (pdl_url);
+
+    if (!pdl_dom)
+      return -1;
+
+    Package::PackageDescriptorsList list = 
+      Package::packageDescriptorsList (pdl_dom);
+
+    this->get_DescriptorsList (list,
+                               desc_list);
+    return 0;
+  }
+
+  void 
+  PDL_Handler::get_DescriptorsList (Package::PackageDescriptorsList &list,
+                                    DESC_LIST &desc_list)
+  {
+    for (Package::PackageDescriptorsList::desc_const_iterator iter = list.begin_desc ();
+         iter != list.end_desc ();
+         iter++)
     {
-
-      XStr node_name (node->getNodeName());
-      if (node_name == XStr (ACE_TEXT ("Deployment:PackageDescriptorsList")))
-      {
-      }
-      else if (node_name == XStr (ACE_TEXT ("desc")))
-      {
-        ACE_TString value;
-        this->get_node_value (this->iter_,
-                              value);
-        if (value.length () != 0)
-          desc_list.push_back (value);
-      }
-
+      ACE_TString value((*iter).c_str ());
+      if (value.length () != 0)
+        desc_list.push_back (value);
     }
-    return;
-  }
-
-  void
-  PDL_Handler::get_node_value (DOMNodeIterator *iter,
-                               ACE_TString &value)
-  {
-    DOMNode* node = iter->nextNode();
-    const XMLCh* text = reinterpret_cast<DOMText*> (node)->getNodeValue ();
-    if (text)
-      value = XMLString::transcode (text);
-    return;
+    return;    
   }
 
   }

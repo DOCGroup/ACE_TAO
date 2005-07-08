@@ -1,38 +1,55 @@
+Fri Jul  8 15:49:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * DAnCE/ComponentPackager/Base_Packager.h
+        * DAnCE/ComponentPackager/ComponentPackager.mpc
+        * DAnCE/ComponentPackager/CPK_Packager.cpp
+        * DAnCE/ComponentPackager/Package.xsd
+        * DAnCE/ComponentPackager/pdl.cpp
+        * DAnCE/ComponentPackager/pdl.hpp
+        * DAnCE/ComponentPackager/PDL_Handler.cpp
+        * DAnCE/ComponentPackager/PDL_Handler.h
+        * DAnCE/ComponentPackager/README.html
+        * DAnCE/ComponentPackager/Sample.pdl
+
+        Updated ComponentPackager to support XSC, eliminating the coupling with
+        Old_Config_Handlers.Move the schema for .pdl file from Deployment.xsd to
+        Package.xsd so that it's independently helpful by itself.
+
 Fri Jul  8 09:43:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
 
-	Fixed a compile error on Debian Core.
-	
+        Fixed a compile error on Debian Core.
+
 Thu Jul  7 23:38:32 UTC 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
-	* docs/index.html
+        * docs/index.html
 
-	  Modofied this page a little bit to include our work in DAnCE.
+          Modofied this page a little bit to include our work in DAnCE.
 
 Wed Jul  6 17:21:58 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
-        
+
           Fixed incorrect syntax in ACE_THROW macro.
 
 Tue Jul  5 11:16:44 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeManager/NAM_Map.h
-	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
-	* DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
-	
-	Fixed some misc fuzz errors. 
-	
+        * DAnCE/NodeManager/NAM_Map.h
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+
+        Fixed some misc fuzz errors.
+
 Tue Jul  5 16:01:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
-        
+
           Small change to the checkin of
-          
+
           Mon Jul  4 22:50:17 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-          to emit an error message when attempting to set a wstring 
+          to emit an error message when attempting to set a wstring
           attribute from a CCM property value, since wstrings are
           not yet supported for this activity.
 
@@ -41,7 +58,7 @@ Mon Jul  4 22:50:17 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
-        
+
           Created a new code emitter that knows which types CIAO
           supports as component attribute types (basic types) and
           which it does not (everything else). In the former case,
@@ -102,18 +119,18 @@ Mon Jul  4 09:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jul  2 12:16:49 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
         * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
 
-	Added CIAO_TRACE messages.
+        Added CIAO_TRACE messages.
 
 Fri Jul  1 08:42:27 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp
 
-	Fixed compile errors with emulated exceptions turned on.
+        Fixed compile errors with emulated exceptions turned on.
 
 Thu Jun 30 23:34:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -129,34 +146,34 @@ Thu Jun 30 23:34:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jun 30 12:36:06 2005  William Otte  <wotte@atl.lmco.com>
 
-	* DAnCE/Plan_Launcher/DAM_Map.cpp
-	* DAnCE/Plan_Launcher/DAM_Map.h
-	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/DAM_Map.cpp
+        * DAnCE/Plan_Launcher/DAM_Map.h
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
 
-	Added DAM_Map to the Plan_Launcher directory, as make wouldn't
-	handle the relative reference properly.
+        Added DAM_Map to the Plan_Launcher directory, as make wouldn't
+        handle the relative reference properly.
 
 Thu Jun 30 09:29:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/new_RepositoryManager/RMadmin.cpp
-	* DAnCE/new_RepositoryManager/RepositoryManager.cpp
-	* DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
-	* DAnCE/new_RepositoryManager/ZIP_Wrapper.h
-	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
-	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
+        * DAnCE/new_RepositoryManager/RMadmin.cpp
+        * DAnCE/new_RepositoryManager/RepositoryManager.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
 
-	Fixed Doxygen documentation tags, fixed some indenting,
-	removed tabs.
+        Fixed Doxygen documentation tags, fixed some indenting,
+        removed tabs.
 
 Thu Jun 30 09:59:17 2005  William Otte  <wotte@atl.lmco.com>
 
-	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
-	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
-	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
-	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
 
-	Factored out the plan launcher capability into a shared library so
-	applications can use its functionality.
+        Factored out the plan launcher capability into a shared library so
+        applications can use its functionality.
 
 Thu Jun 30 04:33:35 2005 ming xiong <mxiong@dre.vanderbilt.edu>
 
@@ -173,14 +190,14 @@ Thu Jun 30 04:33:35 2005 ming xiong <mxiong@dre.vanderbilt.edu>
 
 Thu Jun 30 00:37:35 EDT 2005 Stoyan Paunov <s.paunov@vanderbilt.edu>
 
-	* DAnCE/new_RepositoryManager/RMadmin.cpp
-	* DAnCE/new_RepositoryManager/RepositoryManager.cpp
-	* DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
-	* DAnCE/new_RepositoryManager/ZIP_Wrapper.h
-	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
-	* DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
+        * DAnCE/new_RepositoryManager/RMadmin.cpp
+        * DAnCE/new_RepositoryManager/RepositoryManager.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.cpp
+        * DAnCE/new_RepositoryManager/new_RepositoryManager_Impl.h
 
-	removed the "@file" comments which apparently confuse Doxygen.
+        removed the "@file" comments which apparently confuse Doxygen.
 
 
 Wed Jun 29 17:00:57 2005  Cassia Tatibana  <cassia@dre.vanderbilt.edu>
@@ -201,21 +218,21 @@ Wed Jun 29 16:38:42 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
 Wed Jun 29 16:28:52 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
-	* DAnCE/NodeManager/NAM_Map.cpp
-	* DAnCE/NodeManager/NAM_Map.h
-	* DAnCE/NodeManager/NodeDaemon.mpc
-	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
-	* DAnCE/NodeManager/NodeDaemon_Impl.h
-	* DAnCE/NodeManager/Node_Daemon.cpp
-	* DAnCE/ciao/Deployment.idl
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeManager/NAM_Map.cpp
+        * DAnCE/NodeManager/NAM_Map.h
+        * DAnCE/NodeManager/NodeDaemon.mpc
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp
+        * DAnCE/NodeManager/NodeDaemon_Impl.h
+        * DAnCE/NodeManager/Node_Daemon.cpp
+        * DAnCE/ciao/Deployment.idl
 
-	Merged dance_multiple_assemblies to main.  This merge
-	contains code necessary to be able to deploy multiple assemblies
-	into a single NodeManager.
+        Merged dance_multiple_assemblies to main.  This merge
+        contains code necessary to be able to deploy multiple assemblies
+        into a single NodeManager.
 
 Wed Jun 29 18:09:11 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 

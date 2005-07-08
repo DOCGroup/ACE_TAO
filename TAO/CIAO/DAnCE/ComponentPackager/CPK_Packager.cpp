@@ -1,20 +1,16 @@
 // $Id$
 
 #include "Config_Handlers/XML_File_Intf.h"
-#include "Config_Handlers/XML_Helper.h"
 #include "ciao/DeploymentC.h"
 #include "ciao/CIAO_common.h"
 
 #include "CPK_Packager.h"
 #include "PDL_Handler.h"
-#include <iostream>
 
 namespace CIAO
 {
   namespace Component_Packager
   {
-  using namespace CIAO::Config_Handlers;
-
   int
   CPK_Packager::preparePackage (PACKAGE_PLAN &pkg_plan)
   {
@@ -90,17 +86,16 @@ namespace CIAO
     if (!this->include_std_desc_ ) return 0;
 
     //@@ retrieve location information for standard descriptors
-    XML_Helper pdl_helper;
-
-    DOMDocument* pdl_doc =
-      pdl_helper.create_dom (this->pdl_url_);
-
-    PDL_Handler pdl_handler (pdl_doc,
-                             DOMNodeFilter::SHOW_ALL |
-                             DOMNodeFilter::SHOW_TEXT);
-
+    PDL_Handler pdl_handler;
     PDL_Handler::DESC_LIST desc_list;
-    pdl_handler.process_pdl (desc_list);
+
+    if (-1 == pdl_handler.process_pdl (this->pdl_url_,
+                                       desc_list))
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("Error processing the .pdl file\n")));
+      return -1;
+    }
 
     for (PDL_Handler::DESC_LIST::iterator iter = desc_list.begin ();
          iter != desc_list.end ();
