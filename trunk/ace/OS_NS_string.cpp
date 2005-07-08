@@ -16,6 +16,10 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_stdlib.h"
 #endif /* ACE_HAS_WCHAR */
 
+#if !defined (ACE_LACKS_STRERROR)
+#  include "ace/OS_NS_stdio.h"
+#endif /* ACE_LACKS_STRERROR */
+
 #if !defined (ACE_HAS_MEMCHR)
 const void *
 ACE_OS::memchr_emulation (const void *s, int c, size_t len)
