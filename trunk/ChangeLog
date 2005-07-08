@@ -1,3 +1,8 @@
+Fri Jul  8 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl (thr_cancel):
+          Added implementation for VxWorks.
+
 Fri Jul  8 08:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_string.cpp:
