@@ -143,5 +143,8 @@ do {
 
   print "." if ($. % $progress_interval == 0);
 } until $numread == 0 || $layout->eof;
-print "\nDone.\n"
+print "\nDone.\n";
 
+## Sleep 1 second to allow the socket on Windows to get flushed
+## before it's destroyed and this process exits.
+sleep(1);
