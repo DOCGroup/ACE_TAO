@@ -215,7 +215,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
     {
       // Check if the mcast_addr passed into this method is the
       // same as the QoS session address.
-      if (mcast_addr == qos_session->dest_addr ())
+      if (qos_session != 0 && mcast_addr == qos_session->dest_addr ())
         {
           // Subscribe to the QoS session.
           if (this->qos_manager_.join_qos_session (qos_session) == -1)
@@ -247,7 +247,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
         return -1;
 
       else
-        if (qos_params.socket_qos () != 0)
+        if (qos_params.socket_qos () != 0 && qos_session != 0)
           qos_session->qos (*(qos_params.socket_qos ()));
 
       return 0;

@@ -1,3 +1,8 @@
+Fri Jul  8 12:37:15 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp (subscribe): Added checks
+	  to guard against cases where the qos_session is NULL.  Thanks to
+
 Fri Jul  8 09:52:02 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
