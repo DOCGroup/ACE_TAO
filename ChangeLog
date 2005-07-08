@@ -1,3 +1,9 @@
+Fri Jul  8 08:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_string.cpp:
+          Added include of OS_NS_stdio.h when ACE_LACKS_STRERROR is not
+          defined
+
 Thu Jul  7 18:11:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac:
