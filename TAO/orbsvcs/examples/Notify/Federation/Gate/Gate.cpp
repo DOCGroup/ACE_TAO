@@ -190,7 +190,9 @@ tracker ()
 }
 
 void Gate::
-push_structured_event (StructuredEvent const& e) throw ()
+push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosEventComm::Disconnected))
 {
   for (ULong i (0); i < e.header.variable_header.length (); ++i)
   {
@@ -246,13 +248,16 @@ push_structured_event (StructuredEvent const& e) throw ()
 
 
 void Gate::
-disconnect_structured_push_consumer () throw ()
+disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We don't care.
 }
 
 void Gate::
-offer_change (EventTypeSeq const&, EventTypeSeq const&) throw ()
+offer_change (EventTypeSeq const&, EventTypeSeq const& ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType))
 {
   // We don't care.
 }
