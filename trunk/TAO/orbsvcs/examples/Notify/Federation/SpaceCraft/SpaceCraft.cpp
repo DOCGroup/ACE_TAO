@@ -75,7 +75,7 @@ main (int argc, char* argv[])
       return -1;
   }
 
-  ns->init (orb.in () /*ACE_ENV_ARG_PARAMETER*/);
+  ns->init_service (orb.in () /*ACE_ENV_ARG_PARAMETER*/);
   //ACE_CHECK_RETURN (-1);
 
 

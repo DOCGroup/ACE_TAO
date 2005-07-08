@@ -99,7 +99,7 @@ init (ConsumerAdmin_ptr consumer_admin,
 ACE_THR_FUNC_RETURN Gate::
 tracker_thunk (void* arg)
 {
-  Gate* a (reinterpret_cast<Gate*> (arg));
+  Gate* a = reinterpret_cast<Gate*> (arg);
   a->tracker ();
   return 0;
 }
@@ -230,7 +230,7 @@ push_structured_event (StructuredEvent const& e) throw ()
   char* buffer = reinterpret_cast<char*> (seq.get_buffer ());
 
   {
-    char* buf (buffer);
+    char* buf = buffer;
 
     for (ACE_Message_Block const* mb = cdr.begin ();
          mb != 0;
