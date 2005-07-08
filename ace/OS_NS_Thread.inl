@@ -2550,6 +2550,8 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
                                        result),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
+# elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (::taskDelete (thr_id), int, -1);
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
