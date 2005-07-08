@@ -89,7 +89,7 @@ Notify_Sequence_Push_Consumer::_connect (
 void
 Notify_Sequence_Push_Consumer::push_structured_events (
                           const CosNotification::EventBatch& events
-                          ACE_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++count_;

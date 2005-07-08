@@ -38,7 +38,7 @@ TAO_Notify_Tests_SequencePushConsumer::disconnect_from_proxy (ACE_ENV_SINGLE_ARG
 }
 
 void
-TAO_Notify_Tests_SequencePushConsumer::disconnect_sequence_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_SequencePushConsumer::disconnect_sequence_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   bool this_method_used_only_by_notify_service = false;
