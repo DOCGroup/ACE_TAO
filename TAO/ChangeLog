@@ -1,3 +1,12 @@
+Fri Jul  8 12:59:38 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/dribble.pl:
+
+          Added a sleep(1) at the end of this script to allow the socket to
+          get flushed before the process exits.  On windows, the socket data
+          is lost if the socket isn't flushed by the OS before the process
+          completes.
+
 Fri Jul  8 11:15:00 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
