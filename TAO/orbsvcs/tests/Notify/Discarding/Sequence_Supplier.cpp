@@ -53,13 +53,13 @@ public:
   {
   }
 
-  void go (ACE_ENV_SINGLE_ARG_DECL)
+  void go (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = true;
   }
 
-  void done (ACE_ENV_SINGLE_ARG_DECL)
+  void done (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = false;

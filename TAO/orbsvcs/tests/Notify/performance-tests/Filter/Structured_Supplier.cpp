@@ -39,13 +39,13 @@ public:
   {
   }
 
-  void go (ACE_ENV_SINGLE_ARG_DECL)
+  void go (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = true;
   }
 
-  void done (ACE_ENV_SINGLE_ARG_DECL)
+  void done (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = false;
@@ -128,7 +128,7 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 
 
 static void
-SendEvent (int id ACE_ENV_ARG_DECL)
+SendEvent (int id ACE_ENV_ARG_DECL_NOT_USED)
 {
   const char* type = ( (id & 1) == 1 ? "odd" : "even" );
   CosNotification::StructuredEvent event;
