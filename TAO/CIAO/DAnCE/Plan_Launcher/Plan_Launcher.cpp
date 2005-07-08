@@ -152,7 +152,7 @@ namespace CIAO
             {
               uuid = launcher.launch_plan (package_url);
               
-              if (uuid == 0)
+              if (uuid.in () == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "Plan_Launcher: Error launching plan\n"));
                   return -1;
