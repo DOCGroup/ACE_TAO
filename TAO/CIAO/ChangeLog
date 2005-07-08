@@ -1,3 +1,9 @@
+Thu Jul  7 23:38:32 UTC 2005  Gan Deng <gan.deng@vanderbilt.edu>
+
+	* docs/index.html
+
+	  Modofied this page a little bit to include our work in DAnCE.
+
 Wed Jul  6 17:21:58 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
