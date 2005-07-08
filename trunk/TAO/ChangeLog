@@ -1,11 +1,35 @@
+Fri Jul  8 11:15:00 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/PushConsumer.cpp:
+        * orbsvcs/tests/Notify/lib/PushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.cpp:
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.cpp:
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+
+          Add NOT_USED where appropriate to exception macros.
+
 Fri Jul  8 16:03:46 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.h:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
 
-	  Made the code compile on platforms with emulated exceptions.
+          Made the code compile on platforms with emulated exceptions.
 
 Fri Jul  8 14:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -14,13 +38,13 @@ Fri Jul  8 14:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jul  8 15:32:36 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
 
-	  Changed all references to TAO_Notify_Service:init to read
-	  init_service because somebody decided for some reason to
-	  rename this function. Also made the code compilable by VC6.
+          Changed all references to TAO_Notify_Service:init to read
+          init_service because somebody decided for some reason to
+          rename this function. Also made the code compilable by VC6.
 
 Fri Jul  8 12:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
