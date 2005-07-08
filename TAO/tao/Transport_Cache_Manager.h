@@ -78,7 +78,7 @@ namespace TAO
     Transport_Cache_Manager (TAO_ORB_Core &orb_core);
 
     /// Destructor
-    virtual ~Transport_Cache_Manager (void);
+    ~Transport_Cache_Manager (void);
 
     /// Add the transport to the cache.
     /**
