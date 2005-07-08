@@ -102,8 +102,6 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::Flags
                                      ACE_ENV_ARG_DECL)
 {
-  // @@ Correct minor code?  CCM spec says one thing CORBA spec says
-  //    another!
   ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
                                   CORBA::COMPLETED_NO));
 }
@@ -119,8 +117,6 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::Flags
                                      ACE_ENV_ARG_DECL)
 {
-  // @@ Correct minor code?  CCM spec says one thing CORBA spec says
-  //    another!
   ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
                                   CORBA::COMPLETED_NO));
 }
@@ -129,8 +125,6 @@ CORBA::Request_ptr
 CORBA::LocalObject::_request (const char *
                               ACE_ENV_ARG_DECL)
 {
-  // @@ Correct minor code?  CCM spec says one thing CORBA spec says
-  //    another!
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
                                          CORBA::COMPLETED_NO),
                     0);
@@ -239,14 +233,3 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
   delete this;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class TAO_Pseudo_Var_T<CORBA::LocalObject>;
-  template class TAO_Pseudo_Out_T<CORBA::LocalObject, CORBA::LocalObject_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<CORBA::LocalObject>
-# pragma instantiate TAO_Pseudo_Out_T<CORBA::LocalObject, CORBA::LocalObject_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
