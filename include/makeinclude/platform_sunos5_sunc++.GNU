@@ -67,6 +67,31 @@ CXX             = CC
 
 CC_VERSION = $(shell $(CXX) -V 2>&1)
 
+ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
+endif
+
+#### The following macro overrides enable creation of fast executables.
+#### They _don't_ support fast compilation :-)
+#### To use, add fast=1 to your "make" invocation.
+####
+#### -g is incompatible with -fast.  If you need -g, you can
+#### use "-fast -O3".
+####
+#### Have to do this _before_ adding any -xarch, -xtarget, etc. flags since
+#### -fast is shorthand for a list of internally-assigned options, some of
+#### which will are -xarch, -xtarget. Thus, explicit -xarch needs to go
+#### to the right of -fast.
+DCFLAGS         += -g
+DCCFLAGS        +=
+DLD             = $(CXX)
+ifeq (1,$(fast))
+  CFLAGS += -fast
+  DCFLAGS =
+  DCCFLAGS =
+  LDFLAGS += -fast
+endif # fast
+
 ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### CC 4.2, only, supports -features=castop
   CCFLAGS      += $(CFLAGS) -features=castop
@@ -176,10 +201,6 @@ ifeq ($(templates),explicit)
 endif
 
 CCFLAGS         += $(TEMPLATES_FLAG)
-DCFLAGS         += -g
-DCCFLAGS        +=
-DLD             = $(CXX)
-
 
 #### Sun CC-specific "Pure virtual finction called" bug fix trigger.
 #### XXX: Shouldn't this go into a compiler version specific guard ???
@@ -243,17 +264,3 @@ else
   SOBUILD = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                       /bin/ln $(VSHDIR)$*.o $@
 endif # CLEANUP_BIN
-
-#### The following macro overrides enable creation of fast executables.
-#### They _don't_ support fast compilation :-)
-#### To use, add fast=1 to your "make" invocation.
-####
-#### -g is incompatible with -fast.  If you need -g, you can
-#### use "-fast -O3".
-####
-ifeq (1,$(fast))
-  CFLAGS += -fast
-  DCFLAGS =
-  DCCFLAGS =
-  LDFLAGS += -fast
-endif # fast
