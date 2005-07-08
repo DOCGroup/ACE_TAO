@@ -1,3 +1,9 @@
+Fri Jul  8 12:20:47 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2183_Regression/server.conf:
+
+          Used the wrong comment character in this file.
+
 Thu Jul  7 16:29:47 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
