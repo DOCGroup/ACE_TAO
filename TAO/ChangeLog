@@ -1,3 +1,8 @@
+Fri Jul  8 14:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager.h:
+          Removed virtual from destructor, no need for this.
+
 Fri Jul  8 15:32:36 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
