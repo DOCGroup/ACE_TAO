@@ -36,7 +36,7 @@ namespace CIAO
   /**
    * @class Base_Package
    *
-   * @brief Base class for Packager
+   * @brief Base class for ComponentPackager
    *
    */
   class Base_Packager

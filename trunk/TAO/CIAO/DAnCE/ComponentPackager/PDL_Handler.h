@@ -19,34 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "XercesString.h"
-#include <xercesc/util/XMLUniDefs.hpp>
-#include <xercesc/util/XercesDefs.hpp>
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLURL.hpp>
-#include <xercesc/util/XMLUri.hpp>
-
-using xercesc::XMLUni;
-using xercesc::XMLUri;
-using xercesc::XMLURL;
-using xercesc::XMLString;
-using xercesc::XMLException;
-using xercesc::DOMException;
-using xercesc::DOMBuilder;
-using xercesc::DOMImplementationRegistry;
-using xercesc::DOMImplementationLS;
-using xercesc::DOMImplementation;
-using xercesc::DOMInputSource;
-using xercesc::DOMText;
-using xercesc::DOMNamedNodeMap;
-using xercesc::DOMLocator;
-using xercesc::DOMError;
-using xercesc::DOMDocument;
-using xercesc::DOMDocumentTraversal;
-using xercesc::DOMNodeIterator;
-using xercesc::DOMNode;
-using xercesc::DOMNodeFilter;
-using xercesc::DOMNamedNodeMap;
+#include "pdl.hpp"
 
 namespace CIAO
 {
@@ -64,28 +37,16 @@ namespace CIAO
   {
   public:
     typedef std::list<ACE_TString>  DESC_LIST;
-    /// constructor
-    PDL_Handler (DOMDocument* pdl_doc,
-                unsigned long filter);
 
-    ~PDL_Handler (void);
+    PDL_Handler ();
+    virtual ~PDL_Handler (void);
 
-    /// Process the pdl and get the descriptors list
-    void process_pdl (DESC_LIST &desc_list);
+    /// Process the pdl file and get the descriptors list
+    int process_pdl (const char *pdl_url,
+                     DESC_LIST &desc_list);
 
-    /// Retrieve the node value
-    void get_node_value (DOMNodeIterator *iter,
-                         ACE_TString &value);
-  protected:
-    DOMDocumentTraversal* traverse_;
-
-    DOMDocument* pdl_doc_;
-
-    DOMNode* root_;
-
-    unsigned long filter_;
-
-    DOMNodeIterator* iter_;
+    static void get_DescriptorsList (Package::PackageDescriptorsList &list,
+                                     DESC_LIST &desc_list);
   };
 
   }
