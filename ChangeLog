@@ -1,3 +1,8 @@
+Sat Jul  9 06:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Doxygen improvements
+
 Sat Jul  9 06:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl (thr_cancel):
