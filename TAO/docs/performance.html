@@ -33,11 +33,10 @@
     <!-- with you before jumping on to it. - Bala -->
     <!-- Bala, aren't they the same? In any case Doug wrote -->
     <!-- this. ;-) -->
-
     <!-- Shouldnt be an issue though :-) -->
       and latency for a variety of applications.  We also explain
       various ways to speedup the compilation of ACE+TAO and
-      applications that use ACE+TAO.</p>
+      applications that use ACE+TAO.  </p>
 
      <p>
       As with most applications, including compilers, enabling
@@ -592,11 +591,10 @@ application with the -DACE_NO_INLINE C++ flag. <P>
 In order for code built with -DACE_NO_INLINE to link, you will need to
 be using a version of ACE+TAO built with the "inline=0" make flag. <P>
 
-In order to accommodate both inline and non-inline builds of your
-application it will be necessary to build two copies of your ACE+TAO
-libraries, one with inlining and one without. You can then use your
-ACE_ROOT and TAO_ROOT variables to point at the appropriate
-installation.<P>
+To accommodate both inline and non-inline builds of your application
+it will be necessary to build two copies of your ACE+TAO libraries,
+one with inlining and one without. You can then use your ACE_ROOT and
+TAO_ROOT variables to point at the appropriate installation.<P>
 
     <p><hr><p>
     <a name="footprint"></a>
@@ -606,7 +604,7 @@ installation.<P>
     <h4>Compile-time Footprint</h4>
 
 It has also been observed recently that using -xO3 with -xspace on SUN
-CC 5.3 compiler gives a big footprint reduction of the order of 40%.</P>
+CC 5.x compiler gives a big footprint reduction of the order of 40%.</P>
 <P>Also footprint can be saved by specifying the following in your
 platform_macros.GNU file: </P>
 <P>
@@ -624,11 +622,15 @@ CPPFLAGS += -DACE_USE_RCSID=0
 <!-- Doug, put information about how to reduce the size of the -->
 <!-- connection blocks, etc. -->
 
+More information on reducing the memory footprint of TAO is available
+<A
+HREF="http://www.ociweb.com/cnb/CORBANewsBrief-200212.html">here</A>. <P>
+
     <hr><P>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Fri Jul  9 22:16:12 CDT 2004
+Last modified: Sat Jul  9 16:17:09 CDT 2005
 <!-- hhmts end -->
   </body>
 </html>
