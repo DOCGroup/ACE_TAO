@@ -1668,7 +1668,7 @@ namespace ACE_OS {
                 ACE_thread_t *thr_id,
                 ACE_THR_FUNC_RETURN *status);
 
-  /// NOTE: the "inst" arge is deprecated.  It will be ignored.
+  /// @note the "inst" arge is deprecated.  It will be ignored.
   extern ACE_Export
   int thr_key_detach (ACE_thread_key_t key, void * inst);
 
@@ -1677,25 +1677,25 @@ namespace ACE_OS {
 
 # if defined (ACE_HAS_THR_C_DEST)
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  /// for internal use.  Applications should call thr_keycreate
+  /// @internal Applications should call thr_keycreate
   extern ACE_Export
   int thr_keycreate_native (ACE_OS_thread_key_t *key,
                      ACE_THR_C_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
-  /// NOTE: the "inst" arge is deprecated.  It will be ignored.
+  /// @note The "inst" arge is deprecated.  It will be ignored.
   extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_C_DEST,
                      void *inst = 0);
 # else
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  // for internal use:  applications should call thr_keycreate instead
+  /// @internal Applications should call thr_keycreate instead
   extern ACE_Export
   int thr_keycreate_native (ACE_OS_thread_key_t *key,
                      ACE_THR_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  /// NOTE: the "inst" arge is deprecated.  It will be ignored.
+  /// @note The "inst" arge is deprecated.  It will be ignored.
   extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_DEST,
@@ -1704,7 +1704,7 @@ namespace ACE_OS {
 # endif /* ACE_HAS_THR_C_DEST */
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  // for internal use:  applications should call thr_keyfree instead
+  /// @internal  applications should call thr_keyfree instead
   extern ACE_Export
   int thr_keyfree_native (ACE_OS_thread_key_t key);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
@@ -1745,7 +1745,7 @@ namespace ACE_OS {
   int thr_setprio (const ACE_Sched_Priority prio);
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  /// for internal use.  Applications should call thr_setspecific
+  /// @internal Applications should call thr_setspecific
   extern ACE_Export
   int thr_setspecific_native (ACE_OS_thread_key_t key,
                               void *data);
