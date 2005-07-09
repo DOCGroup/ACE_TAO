@@ -6,7 +6,8 @@ Sat Jul  9 06:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sat Jul  9 06:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl (thr_cancel):
-          Fixed VxWorks implementation
+          Fixed VxWorks implementation.  Thanks to Abhijit Sachdev <abhi
+	  at qualcomm dot com> for motivating this fix.
 
 Fri Jul  8 15:42:18 2005  Steve Huston  <shuston@riverace.com>
 
