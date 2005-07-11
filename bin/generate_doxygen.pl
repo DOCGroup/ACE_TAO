@@ -53,6 +53,7 @@ $dot_path = '/usr/local/bin';
 	       ,'ciao_daemon'
 	       ,'ciao_serveractivator'
   	       ,'ciao_xml_helpers'
+  	       ,'ciao_DAnCE'
 	       ,'ciao');
 
 # Modify defaults using the command line arguments
