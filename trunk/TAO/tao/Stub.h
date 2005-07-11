@@ -217,13 +217,6 @@ public:
    */
   void servant_orb (CORBA::ORB_ptr orb);
 
-  /// Make a call on to services to see whether they have some
-  /// preferences on selecting the right profiles.
-  /**
-   * @deprecated  Remove after TAO 1.2.1 is released.
-   */
-  CORBA::Boolean service_profile_selection (void);
-
   /**
    * Create the IOP::IOR info. We will create the info at most once.
    * Get the index of the profile we are using to make the invocation.

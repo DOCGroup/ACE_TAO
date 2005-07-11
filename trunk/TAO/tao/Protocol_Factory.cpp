@@ -3,8 +3,8 @@
 #include "Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao, 
-           Protocol_Factory, 
+ACE_RCSID (tao,
+           Protocol_Factory,
            "$Id$")
 
 static const char prefix_[] = "\0";
@@ -61,13 +61,3 @@ TAO_Protocol_Factory::options_delimiter (void) const
   return '\0';
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Protocol_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Protocol_Factory>
-
-#endif

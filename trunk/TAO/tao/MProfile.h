@@ -206,7 +206,7 @@ protected:
   TAO_SYNCH_RECURSIVE_MUTEX mutex_;
 
 protected:
-  /// return the complete list of profiles, this object retains
+  /// Return the complete list of profiles, this object retains
   /// ownership!
   TAO_Profile **pfiles (void) const;
 
