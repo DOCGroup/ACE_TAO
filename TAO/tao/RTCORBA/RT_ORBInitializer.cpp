@@ -88,7 +88,7 @@ TAO_RT_ORBInitializer::pre_init (
                                  rt_poa_factory_directive);
 
   // Create the initial priority mapping instance.
-  TAO_Priority_Mapping *pm;
+  TAO_Priority_Mapping *pm = 0;
   switch (this->priority_mapping_type_)
     {
     case TAO_PRIORITY_MAPPING_CONTINUOUS:
