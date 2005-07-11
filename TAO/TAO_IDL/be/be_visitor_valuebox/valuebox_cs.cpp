@@ -78,11 +78,10 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->name () << "::_copy_value (void)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::ValueBase *result = 0;" << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt_nl
       << "result," << be_nl
       << node->local_name () << " (*this)," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_nl
-      << ");" << be_nl << be_uidt_nl
+      << "0);" << be_nl << be_uidt_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -155,18 +154,17 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << be_uidt_nl
       << ") == 0)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "vb_object = 0;" << be_nl
       << "if (is_null_object)"  << be_idt_nl
       << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
+      << "return true;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt_nl
       << "vb_object," << be_nl
       << node->local_name () << "," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_nl
-      << ");" << be_nl << be_uidt_nl;
+      << "false);" << be_nl << be_uidt_nl;
   if (is_array)
     {
       *os << at->full_name() << "_forany temp (vb_object->_boxed_inout ());"
@@ -270,11 +268,9 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
           << " (CORBA::ULong max)" << be_nl
           << "{" << be_idt_nl
           << node->full_name () << "* p;" << be_nl
-          << "ACE_NEW_THROW_EX (" << be_idt_nl
+          << "ACE_NEW (" << be_idt_nl
           << "p," << be_nl
-          << node->full_name () << " (max)," << be_nl
-          << "CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_nl 
+          << node->full_name () << " (max));" << be_uidt_nl
           << "this->_pd_value = p;" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -304,7 +300,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
       << "CORBA::Boolean release)" << be_uidt_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (";
 
@@ -313,9 +309,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
       *os << "max, ";
     }
 
-  *os << "length, buf, release)," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_uidt_nl
-      << ");" << be_nl 
+  *os << "length, buf, release));" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 

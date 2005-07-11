@@ -1,3 +1,10 @@
+Mon Jul 11 13:39:34 2005   Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+
+          Updated to solve cross platform compilation problems.
+
 Mon Jul 11 21:08:17 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* orbsvcs/examples/Notify/Federation/Gate/Export.h:
