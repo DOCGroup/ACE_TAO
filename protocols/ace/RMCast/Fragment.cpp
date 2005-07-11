@@ -13,7 +13,9 @@ using std::endl;
 namespace ACE_RMCast
 {
   Fragment::
-  Fragment ()
+  Fragment (Parameters const& params)
+      : params_ (params),
+        sn_ (1)
   {
   }
 
@@ -22,8 +24,19 @@ namespace ACE_RMCast
   {
     if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
     {
+      unsigned short max_payload_size (
+        params_.max_packet_size () - max_service_size);
+
       if (data->size () <= max_payload_size)
       {
+        u64 sn;
+        {
+          Lock l (mutex_);
+          sn = sn_++;
+        }
+
+        m->add (Profile_ptr (new SN (sn)));
+
         out_->send (m);
         return;
       }
@@ -38,7 +51,6 @@ namespace ACE_RMCast
       // cerr << "size : " << size << endl
       //      << "packs: " << packets << endl;
 
-
       for (u32 i (1); i <= packets; ++i)
       {
         Message_ptr part (new Message);
@@ -47,6 +59,13 @@ namespace ACE_RMCast
 
         // cerr << "pack: " << s << endl;
 
+        u64 sn;
+        {
+          Lock l (mutex_);
+          sn = sn_++;
+        }
+
+        part->add (Profile_ptr (new SN (sn)));
         part->add (Profile_ptr (new Part (i, packets, size)));
         part->add (Profile_ptr (new Data (p, s)));
 

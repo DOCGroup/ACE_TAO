@@ -13,7 +13,8 @@ using std::endl;
 namespace ACE_RMCast
 {
   Reassemble::
-  Reassemble ()
+  Reassemble (Parameters const& params)
+      : params_ (params)
   {
   }
 
@@ -55,6 +56,7 @@ namespace ACE_RMCast
 
           if (part->num () == 1)
             abort ();
+
 
           Data const* data = static_cast<Data const*> (m->find (Data::id));
 

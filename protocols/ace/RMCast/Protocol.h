@@ -20,6 +20,7 @@
 
 #include "Bits.h"
 
+#include <iostream>
 
 namespace ACE_RMCast
 {
@@ -32,10 +33,8 @@ namespace ACE_RMCast
   // Protocol parameters
   //
   //
-  u32 const max_packet_size = 1470; // MTU (1500) - IP-header - UDP-header
-  u32 const max_service_size = 60;  // service profiles (Part, SN, etc), sizes
-                                    // plus message size.
-  u32 const max_payload_size = max_packet_size - max_service_size;
+  unsigned short const max_service_size = 60;  // service profiles (Part, SN,
+                                               // etc), sizes plus message size.
 
   //
   //
@@ -66,7 +65,7 @@ namespace ACE_RMCast
   struct Profile;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Profile, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<Profile, Mutex>
   Profile_ptr;
 
   struct Profile
@@ -370,7 +369,7 @@ namespace ACE_RMCast
   struct From;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<From, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<From, Mutex>
   From_ptr;
 
   struct From : Profile
@@ -454,7 +453,7 @@ namespace ACE_RMCast
   struct To;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<To, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<To, Mutex>
   To_ptr;
 
   struct To : Profile
@@ -538,7 +537,7 @@ namespace ACE_RMCast
   struct Data;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Data, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<Data, Mutex>
   Data_ptr;
 
   struct Data : Profile
@@ -546,6 +545,13 @@ namespace ACE_RMCast
     static u16 const id;
 
   public:
+    virtual
+    ~Data ()
+    {
+      if (buf_)
+        operator delete (buf_);
+    }
+
     Data (Header const& h, istream& is)
         : Profile (h),
           buf_ (0),
@@ -664,7 +670,7 @@ namespace ACE_RMCast
   struct SN;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<SN, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<SN, Mutex>
   SN_ptr;
 
   struct SN : Profile
@@ -734,7 +740,7 @@ namespace ACE_RMCast
   class NAK;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<NAK, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<NAK, Mutex>
   NAK_ptr;
 
   class NAK : public Profile
@@ -930,7 +936,7 @@ namespace ACE_RMCast
   struct NRTM;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<NRTM, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<NRTM, Mutex>
   NRTM_ptr;
 
   struct NRTM : Profile
@@ -1104,7 +1110,7 @@ namespace ACE_RMCast
   struct NoData;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<NoData, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<NoData, Mutex>
   NoData_ptr;
 
   struct NoData : Profile
@@ -1153,13 +1159,14 @@ namespace ACE_RMCast
     }
   };
 
+
   //
   //
   //
   struct Part;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Part, ACE_Null_Mutex>
+  ACE_Refcounted_Auto_Ptr<Part, Mutex>
   Part_ptr;
 
   struct Part : Profile
@@ -1253,7 +1260,7 @@ namespace ACE_RMCast
 /*
 inline
 std::ostream&
-operator<< (std::ostream& os, RMCast::Address const& a)
+operator<< (std::ostream& os, ACE_RMCast::Address const& a)
 {
   char buf[64];
   a.addr_to_string (buf, 64, 1);
