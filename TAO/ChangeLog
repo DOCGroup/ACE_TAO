@@ -1,3 +1,11 @@
+Mon Jul 11 21:08:17 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* orbsvcs/examples/Notify/Federation/Gate/Export.h:
+	* orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+	* orbsvcs/examples/Notify/Federation/Gate/Gate.mpc:
+
+	Added export macro.
+
 Mon Jul 11 09:07:26 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Admin.cpp:
