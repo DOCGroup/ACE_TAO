@@ -1,7 +1,13 @@
+Mon Jul 11 08:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2174_Regression to the list of tests. It will fail
+          until the fix for this bug is in the archive
+
 Sun Jul  10 23:24:12 UTC 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * etc/DAnCE.doxygen:
-          
+
 	  Added doxygen configuration file for DAnCE.
 
 Sat Jul  9 06:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
