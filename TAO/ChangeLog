@@ -1,11 +1,18 @@
+Mon Jul 11 07:23:49 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+
+          Set the stack size for windows based project types to 16Mb to
+          allow this test to complete on Windows.
+
 Mon Jul 11 11:12:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
 
-	  Add explicit return statements to main (which is renamed
-	  to ace_main_i and, as a result, doesn't have proper main
-	  semantics).
+          Add explicit return statements to main (which is renamed
+          to ace_main_i and, as a result, doesn't have proper main
+          semantics).
 
 Mon Jul 11 08:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
