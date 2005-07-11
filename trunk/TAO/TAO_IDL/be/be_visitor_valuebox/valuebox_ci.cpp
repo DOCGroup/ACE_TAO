@@ -70,9 +70,9 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
   // case.
   *os << "ACE_INLINE CORBA::Boolean " << be_nl
       << node->name ()
-      << "::_tao_unmarshal_v (TAO_InputCDR & strm)" << be_nl
+      << "::_tao_unmarshal_v (TAO_InputCDR &)" << be_nl
       << "{" << be_idt_nl  
-      << "return 1;" << be_uidt_nl 
+      << "return true;" << be_uidt_nl 
       << "}" << be_nl << be_nl;
 
   // Indicate that code is already generated for this node.
@@ -415,13 +415,13 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl 
       << vb_node->name () << "::_boxed_inout (void)" << be_nl
       << "{" << be_idt_nl
-      << "return this->_pd_value;" << be_uidt_nl
+      << "return this->_pd_value.inout ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl 
       << vb_node->name () << "::_boxed_out (void)" << be_nl
       << "{" << be_idt_nl
-      << "return this->_pd_value;" << be_uidt_nl
+      << "return this->_pd_value.out ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Overloaded subscript operators
@@ -748,11 +748,9 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
       << vb_node->name () << "::" << vb_node->local_name () << " (void)"
       << be_nl << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
-      << node->full_name () << " ()," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_uidt_nl
-      << ");" << be_nl
+      << node->full_name () << " ());" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 }
@@ -805,11 +803,9 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
       << " (const " << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
-      << node->full_name () << " (value)," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_uidt_nl
-      << ");" << be_nl 
+      << node->full_name () << " (value));" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 }
@@ -825,7 +821,10 @@ be_visitor_valuebox_ci::emit_copy_constructor (void)
   // Public Copy constructor
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
-      << " (const " << vb_node->full_name () << "& val)" << be_nl
+      << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
+      << ": ACE_NESTED_CLASS (CORBA, ValueBase) (val)," << be_nl
+      << "  ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)"
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val._pd_value;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -842,14 +841,15 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
   // Public copy constructor
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
-      << vb_node->full_name () << "& value)" << be_nl
+      << vb_node->full_name () << "& val)" << be_idt_nl
+      << ": ACE_NESTED_CLASS (CORBA, ValueBase) (val)," << be_nl
+      << "  ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)"
+      << be_uidt_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
-      << node->full_name () << " (value._pd_value.in ())," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_uidt_nl
-      << ");" << be_nl 
+      << node->full_name () << " (val._pd_value.in ()));" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 }
@@ -888,11 +888,10 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
       << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value)," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_uidt_nl
-      << ");" << be_nl << be_nl
+      << "*this);" << be_uidt_nl << be_nl
       << "this->_pd_value = p;" << be_nl
       << "return *this;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -927,11 +926,9 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
       << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
-      << node->full_name () << " (value)," << be_nl
-      << "CORBA::NO_MEMORY ()" << be_uidt_nl
-      << ");" << be_nl 
+      << node->full_name () << " (value));" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 }
