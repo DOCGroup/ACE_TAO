@@ -21,8 +21,10 @@
 
 #include "ace/RMCast/Socket.h"
 
-class Gate : public POA_CosNotifyComm::StructuredPushConsumer,
-             public PortableServer::RefCountServantBase
+#include "Export.h"
+
+class Gate_Export Gate : public POA_CosNotifyComm::StructuredPushConsumer,
+                         public PortableServer::RefCountServantBase
 {
 public:
   virtual
