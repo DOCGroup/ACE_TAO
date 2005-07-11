@@ -7,15 +7,18 @@
 
 #include "Retransmit.h"
 
+/*
+#include <iostream>
+using std::cerr;
+using std::endl;
+*/
+
 namespace ACE_RMCast
 {
-  ACE_Time_Value const tick (0, 50000);
-  unsigned long const retention_time = 60; // How many ticks to retain.
-
   Retransmit::
-  Retransmit ()
-      : cond_ (mutex_),
-        sn_ (1),
+  Retransmit (Parameters const& params)
+      : params_ (params),
+        cond_ (mutex_),
         stop_ (false)
   {
   }
@@ -47,10 +50,10 @@ namespace ACE_RMCast
   {
     if (m->find (Data::id) != 0)
     {
-      m->add (Profile_ptr (new SN (sn_)));
+      SN const* sn = static_cast<SN const*> (m->find (SN::id));
 
       Lock l (mutex_);
-      queue_.bind (sn_++, Descr (m->clone ()));
+      queue_.bind (sn->num (), Descr (m->clone ()));
     }
 
     out_->send (m);
@@ -99,10 +102,8 @@ namespace ACE_RMCast
         }
       }
     }
-    else
-    {
-      in_->recv (m);
-    }
+
+    in_->recv (m);
   }
 
   ACE_THR_FUNC_RETURN Retransmit::
@@ -121,7 +122,7 @@ namespace ACE_RMCast
 
       for (Queue::iterator i (queue_); !i.done ();)
       {
-        if ((*i).int_id_.inc () >= retention_time)
+        if ((*i).int_id_.inc () >= params_.retention_timeout ())
         {
           u64 sn ((*i).ext_id_);
           i.advance ();
@@ -136,7 +137,7 @@ namespace ACE_RMCast
       // Go to sleep but watch for "manual cancellation" request.
       //
       ACE_Time_Value time (ACE_OS::gettimeofday ());
-      time += tick;
+      time += params_.tick ();
 
       while (!stop_)
       {

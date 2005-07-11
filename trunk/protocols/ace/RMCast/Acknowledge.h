@@ -11,13 +11,14 @@
 #include "Stack.h"
 #include "Protocol.h"
 #include "Bits.h"
+#include "Parameters.h"
 
 namespace ACE_RMCast
 {
   class Acknowledge : public Element
   {
   public:
-    Acknowledge ();
+    Acknowledge (Parameters const& params);
 
     virtual void
     in_start (In_Element* in);
@@ -223,6 +224,8 @@ namespace ACE_RMCast
     track_thunk (void* obj);
 
   private:
+    Parameters const& params_;
+
     Map hold_;
     Mutex mutex_;
     Condition cond_;

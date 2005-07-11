@@ -12,13 +12,14 @@
 
 #include "Stack.h"
 #include "Protocol.h"
+#include "Parameters.h"
 
 namespace ACE_RMCast
 {
   class Link : public Element
   {
   public:
-    Link (Address const& addr, bool simulator);
+    Link (Address const& addr, Parameters const& params);
 
     virtual void
     in_start (In_Element* in);
@@ -49,6 +50,8 @@ namespace ACE_RMCast
     recv (Message_ptr);
 
   private:
+    Parameters const& params_;
+
     Address addr_, self_;
     ACE_SOCK_Dgram_Mcast rsock_;
     ACE_SOCK_Dgram ssock_;
@@ -58,7 +61,6 @@ namespace ACE_RMCast
 
     // Simulator.
     //
-    bool simulator_;
     Message_ptr hold_;
 
     Mutex mutex_;

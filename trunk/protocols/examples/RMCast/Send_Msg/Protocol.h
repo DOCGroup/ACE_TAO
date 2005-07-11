@@ -5,12 +5,12 @@
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 
-unsigned short const payload_size = 512;
-unsigned long const message_count = 10000;
+unsigned short const payload_size = 702;
+unsigned long const message_count = 80000;
 
 struct Message
 {
-  unsigned long sn;
+  unsigned int sn;
 
   unsigned short payload[payload_size];
 };

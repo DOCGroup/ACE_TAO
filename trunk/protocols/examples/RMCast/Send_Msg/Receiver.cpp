@@ -5,6 +5,8 @@
 #include "ace/Vector_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Time_Value.h"     // ACE_Time_Value
+#include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "ace/RMCast/Socket.h"
 
@@ -47,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     // VC6 does not know about new rules.
     //
     {
-      for (unsigned long i = 0; i < message_count; ++i)
+      for (unsigned int i = 0; i < message_count; ++i)
       {
         received.push_back (0);
         damaged.push_back (0);
@@ -57,10 +59,18 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
 
     Message msg;
+    bool first (true);
+    ACE_Time_Value start_time, time;
 
     while (true)
     {
       ssize_t s = socket.size ();
+
+      if (first)
+      {
+        start_time = ACE_OS::gettimeofday ();
+        first = false;
+      }
 
       if (s == -1 && errno == ENOENT)
       {
@@ -106,7 +116,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       if (msg.sn + 1 == message_count) break;
     }
 
-    unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
+    time = ACE_OS::gettimeofday () - start_time;
+
+    unsigned int lost_count (0), damaged_count (0), duplicate_count (0);
 
     {
       for (Status_List::Iterator i (received); !i.done (); i.advance ())
@@ -140,13 +152,18 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       }
     }
 
+    unsigned long tput =
+      (sizeof (msg) * message_count) / (time.msec () == 0 ? 1 : time.msec ());
+
     ACE_DEBUG ((LM_DEBUG,
-                "lost      : %d\n"
-                "damaged   : %d\n"
-                "duplicate : %d\n",
+                "lost       : %d\n"
+                "damaged    : %d\n"
+                "duplicate  : %d\n"
+                "throughput : %d KB/sec\n",
                 lost_count,
                 damaged_count,
-                duplicate_count));
+                duplicate_count,
+                tput));
 
     /*
     cout << "lost message dump:" << endl;
