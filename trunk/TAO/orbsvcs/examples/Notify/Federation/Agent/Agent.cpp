@@ -306,6 +306,8 @@ main (int argc, char* argv[])
     Agent agent (space_craft_name, argv[1], channel);
 
     orb->run ();
+
+    return 0;
   }
   ACE_CATCH (CORBA::UserException, ue)
   {
@@ -320,4 +322,6 @@ main (int argc, char* argv[])
     return 1;
   }
   ACE_ENDTRY;
+
+  return 1;
 }
