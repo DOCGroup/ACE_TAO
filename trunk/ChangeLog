@@ -19,7 +19,7 @@ Mon Jul 11 20:08:51 2005  Boris Kolpackov  <boris@kolpackov.net>
 	* protocols/ace/RMCast/Socket.cpp:
 	* protocols/ace/RMCast/Socket.h:
 
-	Made protocol parameters configurable on a pee-instance
+	Made protocol parameters configurable on a per-instance
 	basis.
 
 	* protocols/examples/RMCast/Send_Msg/Protocol.h:
