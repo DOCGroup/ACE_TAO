@@ -3,6 +3,5 @@
 
 project(Gate) : rmcast, orbsvcsexe, notification, notification_skel {
   sharedname   = Gate
-  dynamicflags =
-
+  dynamicflags = GATE_BUILD_DLL
 }
