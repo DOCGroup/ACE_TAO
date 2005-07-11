@@ -35,6 +35,7 @@ TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST !Win32
 TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32 !IRIX
 TAO/tests/Bug_1482_Regression/run_test.pl: !VxWorks !MINIMUM !ST
 TAO/tests/Bug_1551_Regression/run_test.pl: !VxWorks !MINIMUM !ST !IRIX
+TAO/tests/Bug_2174_Regression/run_test.pl:
 TAO/tests/Bug_2183_Regression/run_test.pl:
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST

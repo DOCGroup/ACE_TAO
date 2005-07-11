@@ -1,3 +1,15 @@
+Mon Jul 11 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2183_Regression/Bug_2183_Regression.mpc:
+          Simplified this mpc file
+
+        * tests/Bug_2174_Regression/*:
+          New regression for bug 2174. _non_existent should return
+          true/false, not raise OBJECT_NOT_EXIST. Thanks to
+          Torsten Kuepper <torsten dot kuepper at nokia dot com>
+          for making this regression. The bugfix for this will follow
+          later this week.
+
 Fri Jul  8 12:59:38 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/GIOP_Fragments/PMB_With_Fragments/dribble.pl:
