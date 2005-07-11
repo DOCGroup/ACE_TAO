@@ -1668,7 +1668,9 @@ namespace ACE_OS {
                 ACE_thread_t *thr_id,
                 ACE_THR_FUNC_RETURN *status);
 
-  /// @note the "inst" arge is deprecated.  It will be ignored.
+  /**
+   * @note the "inst" arge is deprecated.  It will be ignored.
+   */
   extern ACE_Export
   int thr_key_detach (ACE_thread_key_t key, void * inst);
 
@@ -1683,7 +1685,9 @@ namespace ACE_OS {
                      ACE_THR_C_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
-  /// @note The "inst" arge is deprecated.  It will be ignored.
+  /**
+   * @note the "inst" arge is deprecated.  It will be ignored.
+   */
   extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_C_DEST,
@@ -1695,7 +1699,9 @@ namespace ACE_OS {
   int thr_keycreate_native (ACE_OS_thread_key_t *key,
                      ACE_THR_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  /// @note The "inst" arge is deprecated.  It will be ignored.
+  /**
+   * @note the "inst" arge is deprecated.  It will be ignored.
+   */
   extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_DEST,
