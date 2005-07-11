@@ -19,9 +19,16 @@
 #include "Reassemble.h"
 #include "Acknowledge.h"
 #include "Retransmit.h"
+#include "Flow.h"
 #include "Link.h"
 
 #include "Socket.h"
+
+/*
+#include <iostream>
+using std::cerr;
+using std::endl;
+*/
 
 namespace ACE_RMCast
 {
@@ -30,7 +37,7 @@ namespace ACE_RMCast
   public:
     ~Socket_Impl ();
 
-    Socket_Impl (Address const& a, bool loop, bool simulator);
+    Socket_Impl (Address const& a, bool loop, Parameters const& params);
 
   public:
     void
@@ -51,6 +58,7 @@ namespace ACE_RMCast
 
   private:
     bool loop_;
+    Parameters const params_;
 
     Mutex mutex_;
     Condition cond_;
@@ -63,22 +71,25 @@ namespace ACE_RMCast
     ACE_Auto_Ptr<Reassemble> reassemble_;
     ACE_Auto_Ptr<Acknowledge> acknowledge_;
     ACE_Auto_Ptr<Retransmit> retransmit_;
+    ACE_Auto_Ptr<Flow> flow_;
     ACE_Auto_Ptr<Link> link_;
   };
 
 
   Socket_Impl::
-  Socket_Impl (Address const& a, bool loop, bool simulator)
+  Socket_Impl (Address const& a, bool loop, Parameters const& params)
       : loop_ (loop),
+        params_ (params),
         cond_ (mutex_)
   {
     signal_pipe_.open ();
 
-    fragment_.reset (new Fragment ());
-    reassemble_.reset (new Reassemble ());
-    acknowledge_.reset (new Acknowledge ());
-    retransmit_.reset (new Retransmit ());
-    link_.reset (new Link (a, simulator));
+    fragment_.reset (new Fragment (params_));
+    reassemble_.reset (new Reassemble (params_));
+    acknowledge_.reset (new Acknowledge (params_));
+    retransmit_.reset (new Retransmit (params_));
+    flow_.reset (new Flow (params_));
+    link_.reset (new Link (a, params_));
 
     // Start IN stack from top to bottom.
     //
@@ -87,12 +98,14 @@ namespace ACE_RMCast
     reassemble_->in_start (fragment_.get ());
     acknowledge_->in_start (reassemble_.get ());
     retransmit_->in_start (acknowledge_.get ());
-    link_->in_start (retransmit_.get ());
+    flow_->in_start (retransmit_.get ());
+    link_->in_start (flow_.get ());
 
     // Start OUT stack from bottom up.
     //
     link_->out_start (0);
-    retransmit_->out_start (link_.get ());
+    flow_->out_start (link_.get ());
+    retransmit_->out_start (flow_.get ());
     acknowledge_->out_start (retransmit_.get ());
     reassemble_->out_start (acknowledge_.get ());
     fragment_->out_start (reassemble_.get ());
@@ -109,11 +122,13 @@ namespace ACE_RMCast
     reassemble_->out_stop ();
     acknowledge_->out_stop ();
     retransmit_->out_stop ();
+    flow_->out_stop ();
     link_->out_stop ();
 
     // Stop IN stack from bottom up.
     //
     link_->in_stop ();
+    flow_->in_stop ();
     retransmit_->in_stop ();
     acknowledge_->in_stop ();
     reassemble_->in_stop ();
@@ -269,6 +284,9 @@ namespace ACE_RMCast
 
       Lock l (mutex_);
 
+      //if (queue_.size () != 0)
+      //  cerr << "recv socket queue size: " << queue_.size () << endl;
+
       bool signal (queue_.is_empty ());
 
       queue_.enqueue_tail (m);
@@ -287,7 +305,6 @@ namespace ACE_RMCast
 
         cond_.signal ();
       }
-
     }
   }
 
@@ -301,8 +318,8 @@ namespace ACE_RMCast
   }
 
   Socket::
-  Socket (Address const& a, bool loop, bool simulator)
-      : impl_ (new Socket_Impl (a, loop, simulator))
+  Socket (Address const& a, bool loop, Parameters const& params)
+      : impl_ (new Socket_Impl (a, loop, params))
   {
   }
 

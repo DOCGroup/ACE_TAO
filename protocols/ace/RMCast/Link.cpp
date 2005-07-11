@@ -9,27 +9,23 @@
 
 namespace ACE_RMCast
 {
-  // Time period after which a manual cancellation request is
-  // checked for.
-  //
-  ACE_Time_Value const timeout (0, 500);
-
   Link::
-  Link (Address const& addr, bool simulator)
-      : addr_ (addr),
+  Link (Address const& addr, Parameters const& params)
+      : params_ (params),
+        addr_ (addr),
         ssock_ (Address (static_cast<unsigned short> (0),
                          static_cast<ACE_UINT32> (INADDR_ANY)),
                 AF_INET,
                 IPPROTO_UDP,
                 1),
-        stop_ (false),
-        simulator_ (simulator)
+        stop_ (false)
 
   {
     srand (time (0));
 
 
     rsock_.set_option (IP_MULTICAST_LOOP, 0);
+    // rsock_.set_option (IP_MULTICAST_TTL, 0);
 
     // Set recv/send buffers.
     //
@@ -104,9 +100,9 @@ namespace ACE_RMCast
   {
     // Simulate message loss and reordering.
     //
-    if (simulator_)
+    if (params_.simulator ())
     {
-      if ((rand () % 5) != 0)
+      if ((rand () % 17) != 0)
       {
         Lock l (mutex_);
 
@@ -118,7 +114,7 @@ namespace ACE_RMCast
         }
         else
         {
-          if ((rand () % 5) != 0)
+          if ((rand () % 17) != 0)
           {
             send_ (m);
           }
@@ -152,11 +148,11 @@ namespace ACE_RMCast
 
     os << *m;
 
-    if (os.length () > max_packet_size)
+    if (os.length () > params_.max_packet_size ())
     {
       ACE_ERROR ((LM_ERROR,
                   "packet length (%d) exceeds max_poacket_size (%d)\n",
-                  os.length (), max_packet_size));
+                  os.length (), params_.max_packet_size ()));
 
       for (Message::ProfileIterator i (m->begin ()); !i.done (); i.advance ())
       {
@@ -197,11 +193,11 @@ namespace ACE_RMCast
 
       Address addr;
 
-      // Block for up to timeout time waiting for an incomming message.
+      // Block for up to one tick waiting for an incomming message.
       //
       for (;;)
       {
-        ACE_Time_Value t (timeout);
+        ACE_Time_Value t (params_.tick ());
         ssize_t r = rsock_.recv (data, 4, addr, MSG_PEEK, &t);
 
 

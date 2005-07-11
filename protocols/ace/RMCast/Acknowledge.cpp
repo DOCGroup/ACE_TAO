@@ -16,14 +16,11 @@ using std::endl;
 
 namespace ACE_RMCast
 {
-  ACE_Time_Value const tick (0, 5000);
-  unsigned long const nak_timeout = 20;   // # of ticks.
-  unsigned long const nrtm_timeout = 50;  // # of ticks.
-
   Acknowledge::
-  Acknowledge ()
-      : cond_ (mutex_),
-        nrtm_timer_ (nrtm_timeout),
+  Acknowledge (Parameters const& params)
+      : params_ (params),
+        cond_ (mutex_),
+        nrtm_timer_ (params_.nrtm_timeout ()),
         stop_ (false)
   {
   }
@@ -110,10 +107,13 @@ namespace ACE_RMCast
 
         if (--nrtm_timer_ == 0)
         {
-          nrtm_timer_ = nrtm_timeout;
+          nrtm_timer_ = params_.nrtm_timeout ();
 
           // Send NRTM.
           //
+          unsigned short max_payload_size (
+            params_.max_packet_size () - max_service_size);
+
           u32 max_elem (NRTM::max_count (max_payload_size));
 
           Profile_ptr nrtm (create_nrtm (max_elem));
@@ -141,7 +141,7 @@ namespace ACE_RMCast
       //
       {
         ACE_Time_Value time (ACE_OS::gettimeofday ());
-        time += tick;
+        time += params_.tick ();
 
         Lock l (mutex_);
 
@@ -165,6 +165,9 @@ namespace ACE_RMCast
   void Acknowledge::
   track_queue (Address const& addr, Queue& q, Messages& msgs)
   {
+    unsigned short max_payload_size (
+      params_.max_packet_size () - max_service_size);
+
     u32 max_elem (NAK::max_count (max_payload_size));
     u32 count (0);
 
@@ -192,14 +195,14 @@ namespace ACE_RMCast
             //@@ Need exp fallback.
             //
             d.nak_count (d.nak_count () + 1);
-            d.timer ((d.nak_count () + 1) * nak_timeout);
+            d.timer ((d.nak_count () + 1) * params_.nak_timeout ());
 
             nak->add (sn);
 
             ++count;
 
-            //cerr << 6 << "NAK # " << d.nak_count () << ": "
-            //     << addr << " " << sn << endl;
+            // cerr << 6 << "NAK # " << d.nak_count () << ": "
+            // << addr << " " << sn << endl;
           }
         }
       }
@@ -218,12 +221,6 @@ namespace ACE_RMCast
         msgs.push_back (m);
       }
     }
-
-    /*
-    if (count > max_elem)
-      cerr << "NAC count : " << count << endl
-           << "NAK max   : " << max_elem << endl;
-    */
 
     // Detect and record new losses.
     //
@@ -282,10 +279,6 @@ namespace ACE_RMCast
         // First message from this source.
         //
         hold_.bind (from, Queue (sn));
-        //@@ rm
-        //
-        hold_.find (from, e);
-
         in_->recv (m);
       }
       else
@@ -330,6 +323,9 @@ namespace ACE_RMCast
   {
     if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
     {
+      unsigned short max_payload_size (
+        params_.max_packet_size () - max_service_size);
+
       if (max_payload_size > data->size ())
       {
         u32 max_size (max_payload_size - data->size ());
@@ -346,7 +342,7 @@ namespace ACE_RMCast
         }
       }
 
-      nrtm_timer_ = nrtm_timeout; // Reset timer.
+      nrtm_timer_ = params_.nrtm_timeout (); // Reset timer.
     }
 
     out_->send (m);

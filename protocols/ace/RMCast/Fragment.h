@@ -8,17 +8,24 @@
 #include "Stack.h"
 #include "Protocol.h"
 #include "Bits.h"
+#include "Parameters.h"
 
 namespace ACE_RMCast
 {
   class Fragment : public Element
   {
   public:
-    Fragment ();
+    Fragment (Parameters const& params);
 
   public:
     virtual void
     send (Message_ptr m);
+
+    Parameters const& params_;
+
+  private:
+    Mutex mutex_;
+    u64 sn_;
   };
 }
 

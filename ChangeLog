@@ -1,3 +1,32 @@
+Mon Jul 11 20:08:51 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Flow.cpp:
+	* protocols/ace/RMCast/Flow.h:
+
+	Implemented flow control stack element.
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Acknowledge.h:
+	* protocols/ace/RMCast/Fragment.cpp:
+	* protocols/ace/RMCast/Fragment.h:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Link.h:
+	* protocols/ace/RMCast/Protocol.h:
+	* protocols/ace/RMCast/Reassemble.cpp:
+	* protocols/ace/RMCast/Reassemble.h:
+	* protocols/ace/RMCast/Retransmit.cpp:
+	* protocols/ace/RMCast/Retransmit.h:
+	* protocols/ace/RMCast/Socket.cpp:
+	* protocols/ace/RMCast/Socket.h:
+
+	Made protocol parameters configurable on a pee-instance
+	basis.
+
+	* protocols/examples/RMCast/Send_Msg/Protocol.h:
+	* protocols/examples/RMCast/Send_Msg/Receiver.cpp:
+
+	Made receiver print throughput information.
+
 Mon Jul 11 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:

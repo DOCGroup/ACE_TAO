@@ -12,6 +12,7 @@
 #include "ace/Time_Value.h"
 
 #include "RMCast_Export.h"
+#include "Parameters.h"
 
 
 namespace ACE_RMCast
@@ -27,7 +28,9 @@ namespace ACE_RMCast
     // If 'simulator' is 'true' then internal message loss and
     // reordering simulator (on IPv4 level) is turned on.
     //
-    Socket (ACE_INET_Addr const& a, bool loop = true, bool simulator = false);
+    Socket (ACE_INET_Addr const& a,
+            bool loop = true,
+            Parameters const& params = Parameters ());
 
   public:
     virtual void

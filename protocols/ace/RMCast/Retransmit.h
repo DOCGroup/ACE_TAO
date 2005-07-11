@@ -11,13 +11,14 @@
 #include "Stack.h"
 #include "Protocol.h"
 #include "Bits.h"
+#include "Parameters.h"
 
 namespace ACE_RMCast
 {
   class Retransmit : public Element
   {
   public:
-    Retransmit ();
+    Retransmit (Parameters const& params);
 
     virtual void
     out_start (Out_Element* out);
@@ -82,11 +83,11 @@ namespace ACE_RMCast
     track_thunk (void* obj);
 
   private:
+    Parameters const& params_;
+
     Queue queue_;
     Mutex mutex_;
     Condition cond_;
-
-    u64 sn_;
 
     bool stop_;
     ACE_Thread_Manager tracker_mgr_;
