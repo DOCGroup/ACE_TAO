@@ -172,6 +172,8 @@ main (int argc, char* argv[])
     Gate constellation_gate (constellation_addr, channel);
 
     orb->run ();
+
+    return 0;
   }
   ACE_CATCH (CORBA::UserException, ue)
   {
@@ -186,4 +188,6 @@ main (int argc, char* argv[])
     return 1;
   }
   ACE_ENDTRY;
+
+  return 1;
 }
