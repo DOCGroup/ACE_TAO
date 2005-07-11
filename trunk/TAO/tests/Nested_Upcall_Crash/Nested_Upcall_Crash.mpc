@@ -2,6 +2,10 @@
 // $Id$
 
 project(*Server): taoserver, messaging {
+  specific(bmake, borland, nmake, em3, vc6, vc71, vc8) {
+    // Use a roughly 16MB stack to avoid stack overflow in this test
+    StackReserveSize = 16000000
+  }
   Source_Files {
     Clock_Ticks.cpp
     Server_Peer.cpp
