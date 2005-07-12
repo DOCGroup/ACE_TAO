@@ -153,20 +153,31 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
   && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
   ACE_CATCHALL
     {
+      // Just assume the current exception is a system exception, the
+      // status can only change when the interceptor changes this
+      // and this is only done when the sri_adapter is available. If we
+      // don't have an sri_adapter we just rethrow the exception
+      PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::SYSTEM_EXCEPTION;
+
       CORBA::UNKNOWN ex;
 
-      request_info.exception (&ex);
+      server_request.caught_exception (&ex);
+
       if (interceptor_adapter != 0)
         {
           interceptor_adapter->send_exception (server_request,
-                                               &request_info
+                                               args,
+                                               nargs,
+                                               servant_upcall,
+                                               exceptions,
+                                               nexceptions
                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-        }
 
-      PortableInterceptor::ReplyStatus status =
-        request_info.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          status =
+            server_request.reply_status ();
+        }
 
       if (status == PortableInterceptor::SYSTEM_EXCEPTION)
         ACE_TRY_THROW (ex);
