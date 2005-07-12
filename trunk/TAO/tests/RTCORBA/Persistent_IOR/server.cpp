@@ -424,6 +424,18 @@ main (int argc, char **argv)
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
+  ACE_CATCH (CORBA::INTERNAL, ex)
+    {
+      if ((ex.minor() & 0x1F) == 9) {
+        ACE_DEBUG ((LM_DEBUG, "You must be superuser to run "
+                              "this test on this platform.\n"));
+        return 0;
+      }
+      else {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+        return -1;
+      }
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");

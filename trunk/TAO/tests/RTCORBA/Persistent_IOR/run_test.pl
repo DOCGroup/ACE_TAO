@@ -8,10 +8,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
+$status = 0;
 $iiop_port = 27532;
 $tp_iiop_port = 27533;
 
-$extra_server_args = "-d 1 -ORBobjrefstyle url -ORBEndpoint iiop://1.0\@:$iiop_port -ORBLaneEndpoint 2:0 iiop://1.0\@:$tp_iiop_port";
+$continuous = ($^O eq 'hpux');
+
+$extra_server_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext " : '') .
+                     "-d 1 -ORBobjrefstyle url -ORBEndpoint iiop://1.0\@:$iiop_port -ORBLaneEndpoint 2:0 iiop://1.0\@:$tp_iiop_port";
 
 @iorfiles = 
     (
@@ -75,9 +79,15 @@ sub run_server
 
     $SV->Spawn ();
 
+    $server = $SV->Wait (10);
+    if ($server == 0) 
+    {
+       return 0;
+    }
+
     for $file (@$iorfiles)
     {
-        if (PerlACE::waitforfile_timed ($file, 10) == -1)
+        if (PerlACE::waitforfile_timed ($file, 1) == -1)
         {
             print STDERR "ERROR: cannot find ior file: $file\n";
             $status = 1;

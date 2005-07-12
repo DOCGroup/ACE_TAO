@@ -29,8 +29,13 @@ elsif ($^O eq "dec_osf") {
         "-a 20 -b 30";
 }
 elsif ($^O eq "hpux") {
+    $continuous = 1;
     $server_args =
         "-a 17 -b 29";
+}
+
+if ($continuous) {
+  $server_args .= " -ORBSvcConf continuous$PerlACE::svcconf_ext";
 }
 
 $client_args = "-p file://$iorfile1 -o file://$iorfile2";

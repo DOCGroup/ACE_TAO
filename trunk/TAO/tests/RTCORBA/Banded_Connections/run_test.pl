@@ -20,22 +20,25 @@ print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 
 # Different priority values for the bands on each OS.
 
-$server_args =
-    "-b bands.unix";
-
 if ($^O eq "MSWin32") {
     $server_args =
         "-b bands.nt";
 }
-
-if ($^O eq "dec_osf") {
+elsif ($^O eq "dec_osf") {
     $server_args =
         "-b bands.tru64";
 }
-
-if ($^O eq "hpux") {
+elsif ($^O eq "hpux") {
     $server_args =
         "-b bands.hpux";
+}
+elsif ($^O eq "irix") {
+    $server_args =
+        "-b bands.irix";
+}
+else {
+    $server_args =
+        "-b bands.unix";
 }
 
 if (PerlACE::is_vxworks_test()) {
