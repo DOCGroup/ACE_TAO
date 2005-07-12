@@ -1,3 +1,8 @@
+Tue Jul 12 11:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1639_Regression/test.mpc:
+          Simplified this mpc file
+
 Tue Jul 12 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2174_Regression/Bug_2174_Regression.mpc:
