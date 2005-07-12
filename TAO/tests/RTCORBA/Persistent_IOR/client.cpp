@@ -76,6 +76,14 @@ main (int argc, char **argv)
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      if (CORBA::is_nil (test.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil reference <%s>\n",
+                             ior),
+                            1);
+        }
+
       for (int i = 0; i < iterations; i++)
         {
           test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
