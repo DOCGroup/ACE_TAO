@@ -4,6 +4,7 @@
 #include "ace/Array_Base.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_math.h"
+#include "ace/OS_NS_stdlib.h"
 
 typedef ACE_Array_Base<CORBA::ULong> ULong_Array;
 
@@ -158,11 +159,16 @@ get_values (const char *test_type,
   char* working_string = string;
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      result = ::sscanf (working_string,
-                         "%ul",
-                         &values[i]);
-      if (result == 0 || result == EOF)
-        break;
+      // sscanf with "%ul" doesn't seem to work properly on HP-UX.  So,
+      // we will use strtoul instead.
+      char* endptr = 0;
+      values[i] = ACE_OS::strtoul (working_string, &endptr, 10);
+
+      if (endptr != working_string && endptr != 0 && *endptr != '\0')
+	{
+	  result = 0;
+          break;
+	}
 
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;

@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
+$continuous = ($^O eq 'hpux');
+
 print STDERR "\n********** RTCORBA Collocation Unit Test **********\n\n";
 
 if (PerlACE::is_vxworks_test()) {
@@ -15,6 +17,10 @@ if (PerlACE::is_vxworks_test()) {
 }
 else {
     $T = new PerlACE::Process ("Collocation");    
+}
+
+if ($continuous) {
+  $T->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");
 }
 
 $test = $T->SpawnWaitKill(60);

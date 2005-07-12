@@ -69,7 +69,13 @@ test_i::method (CORBA::ULong work,
   else if (current_priority == this->high_priority_)
     priority_string = "high";
   else
-    ACE_ASSERT (0);
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: %d != %d and %d != %d\n",
+                            current_priority, this->low_priority_,
+                            current_priority, this->high_priority_));
+      ACE_ASSERT (0);
+    }
+
 
   ACE_DEBUG ((LM_DEBUG,
               "test_i::method - %s started at %T (%P|%t|%d|%d) for %d secs at priority %s\n",

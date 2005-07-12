@@ -1,3 +1,41 @@
+Tue Jul 12 08:33:05 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/RTCORBA/Banded_Connections/bands.irix:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+
+          Added support for IRIX.
+
+        * tests/RTCORBA/Collocation/continuous.conf:
+        * tests/RTCORBA/Collocation/continuous.conf.xml:
+        * tests/RTCORBA/Collocation/run_test.pl:
+        * tests/RTCORBA/Destroy_Thread_Pool/continuous.conf:
+        * tests/RTCORBA/Destroy_Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Destroy_Thread_Pool/run_test.pl:
+        * tests/RTCORBA/Persistent_IOR/continuous.conf:
+        * tests/RTCORBA/Persistent_IOR/continuous.conf.xml:
+        * tests/RTCORBA/Persistent_IOR/run_test.pl:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/continuous.conf:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/continuous.conf.xml:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp:
+        * tests/RTCORBA/Server_Declared/continuous.conf:
+        * tests/RTCORBA/Server_Declared/continuous.conf.xml:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/continuous.conf:
+        * tests/RTCORBA/Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+
+          For HP-UX, the only priority mapping that makes sense is
+          continuous.  For each of these tests, I added a configurator file
+          to set the priority mapping and only use it on HP-UX.
+
+        * tests/RTCORBA/common_args.cpp:
+
+          sscanf wasn't working properly (at least with aCC 3.60) so I
+          switched to strtoul.
+
 Tue Jul 12 13:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Persistent_IOR/client.cpp:
@@ -231,11 +269,11 @@ Mon Jul 11 13:39:34 2005   Gary Maxey <gary.maxey@hp.com>
 
 Mon Jul 11 21:08:17 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* orbsvcs/examples/Notify/Federation/Gate/Export.h:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.h:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.mpc:
+        * orbsvcs/examples/Notify/Federation/Gate/Export.h:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.mpc:
 
-	Added export macro.
+        Added export macro.
 
 Mon Jul 11 09:07:26 2005  Justin Michel  <michel_j@ociweb.com>
 

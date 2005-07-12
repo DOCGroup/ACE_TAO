@@ -11,6 +11,8 @@ use PerlACE::Run_Test;
 $server_static_threads = 1;
 $server_dynamic_threads = 0;
 $status = 0;
+$continuous = ($^O eq 'hpux');
+$common_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext" : '');
 
 @configurations =
   (
@@ -47,11 +49,12 @@ sub run_test
     $arg = $parms[0];
 
     if (PerlACE::is_vxworks_test()) {
-        $SV = new PerlACE::ProcessVX ("server", "-s $server_static_threads -d $server_dynamic_threads");
+        $SV = new PerlACE::ProcessVX ("server", "$common_args -s $server_static_threads -d $server_dynamic_threads");
     }
     else {
-        $SV = new PerlACE::Process ("server", "-s $server_static_threads -d $server_dynamic_threads");
+        $SV = new PerlACE::Process ("server", "$common_args -s $server_static_threads -d $server_dynamic_threads");
     }
+
     $server = $SV->Spawn ();
     if ($server == -1)
       {
@@ -79,7 +82,7 @@ sub run_test
         print $test->{file}."\n";
       }
 
-    $CL[$i] = new PerlACE::Process ("client", $arg);
+    $CL[$i] = new PerlACE::Process ("client", "$common_args $arg");
     $CL[$i]->Spawn ();
 
     $client = $CL[$i]->WaitKill (20);
