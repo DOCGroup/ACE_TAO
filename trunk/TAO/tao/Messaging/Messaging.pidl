@@ -36,7 +36,6 @@
 #ifndef TAO_MESSAGING_PIDL
 #define TAO_MESSAGING_PIDL
 
-#include "tao/Pollable.pidl"
 #include "tao/Messaging/Messaging_SyncScope_Policy.pidl"
 #include "tao/Messaging/Messaging_RT_Policy.pidl"
 #include "tao/Messaging/Messaging_No_Impl.pidl"

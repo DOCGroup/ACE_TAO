@@ -22,7 +22,7 @@
 #ifndef _SERVER_REQUESTINFO_PIDL_
 #define _SERVER_REQUESTINFO_PIDL_
 
-#include <RequestInfo.pidl>
+#include "tao/PI/RequestInfo.pidl"
 #include <orb_types.pidl>
 #include <Policy_Forward.pidl>
 

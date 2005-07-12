@@ -48,8 +48,8 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PI/InterceptorC.h"
+#include "tao/PI/PIForwardRequestC.h"
 #include "tao/OctetSeqC.h"
-#include "tao/PIForwardRequestC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -70,22 +70,22 @@
 
 namespace PortableInterceptor
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__VAR_OUT_CH_
-  
+
   class ServerRequestInfo;
   typedef ServerRequestInfo *ServerRequestInfo_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ServerRequestInfo
       >
     ServerRequestInfo_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ServerRequestInfo
@@ -93,22 +93,22 @@ namespace PortableInterceptor
     ServerRequestInfo_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__VAR_OUT_CH_
-  
+
   class ServerRequestInterceptor;
   typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ServerRequestInterceptor
       >
     ServerRequestInterceptor_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ServerRequestInterceptor
@@ -116,45 +116,45 @@ namespace PortableInterceptor
     ServerRequestInterceptor_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR_CH_
-  
+
   class TAO_PI_Server_Export ServerRequestInterceptor
     : public virtual ::PortableInterceptor::Interceptor
   {
   public:
     typedef ServerRequestInterceptor_ptr _ptr_type;
     typedef ServerRequestInterceptor_var _var_type;
-    
+
     // The static operations.
     static ServerRequestInterceptor_ptr _duplicate (ServerRequestInterceptor_ptr obj);
-    
+
     static void _tao_release (ServerRequestInterceptor_ptr obj);
-    
+
     static ServerRequestInterceptor_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServerRequestInterceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ServerRequestInterceptor_ptr _nil (void)
     {
       return static_cast<ServerRequestInterceptor_ptr> (0);
     }
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 
     virtual void tao_ft_interception_point (
@@ -168,10 +168,10 @@ namespace PortableInterceptor
       )) {}
 
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS */
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_request_service_contexts (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -180,10 +180,10 @@ namespace PortableInterceptor
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_request (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -192,10 +192,10 @@ namespace PortableInterceptor
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_reply (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS

@@ -76,26 +76,22 @@ namespace TAO
     //@{
     /// This method implements one of the "starting" client side
     /// interception points.
-    virtual void send_request (Invocation_Base &invocation,
-                               TAO_ClientRequestInfo *ri
+    virtual void send_request (Invocation_Base &invocation
                                ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_reply (Invocation_Base &invocation,
-                                TAO_ClientRequestInfo *ri
+    virtual void receive_reply (Invocation_Base &invocation
                                 ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_exception (Invocation_Base &invocation,
-                                    TAO_ClientRequestInfo *ri
+    virtual void receive_exception (Invocation_Base &invocation
                                     ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_other (Invocation_Base &invocation,
-                                TAO_ClientRequestInfo *ri
+    virtual void receive_other (Invocation_Base &invocation
                                 ACE_ENV_ARG_DECL);
     //@}
 
@@ -106,13 +102,15 @@ namespace TAO
 
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
 
+    virtual PortableInterceptor::ReplyStatus reply_status (
+      TAO::Invocation_Base const &invocation_base);
+
   protected:
 
     /// Process the given PortableInterceptor::ForwardRequest exception,
     /// i.e. invoke the receive_other() interception point, in addition
     /// to notifying the Invocation object of the LOCATION_FORWARD.
     void process_forward_request (Invocation_Base &invocation,
-                                  TAO_ClientRequestInfo *ri,
                                   PortableInterceptor::ForwardRequest &exc
                                   ACE_ENV_ARG_DECL);
 

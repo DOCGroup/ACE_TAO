@@ -55,7 +55,6 @@
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "tao/PollableC.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"

@@ -226,4 +226,23 @@ TAO_ServerRequest::result_seq (CORBA::OctetSeq &ocs)
 {
   this->result_seq_ = ocs;
 }
+
+ACE_INLINE CORBA::Exception *
+TAO_ServerRequest::caught_exception (void)
+{
+  return this->caught_exception_;
+}
+
+ACE_INLINE void
+TAO_ServerRequest::reply_status (PortableInterceptor::ReplyStatus s)
+{
+  this->reply_status_ = s;
+}
+
+ACE_INLINE PortableInterceptor::ReplyStatus
+TAO_ServerRequest::reply_status (void)
+{
+  return this->reply_status_;
+}
+
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

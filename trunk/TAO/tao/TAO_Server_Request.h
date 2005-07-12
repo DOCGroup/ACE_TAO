@@ -43,6 +43,8 @@ namespace CORBA
 {
   class ORB;
   typedef ORB *ORB_ptr;
+
+  class Exception;
 }
 
 class TAO_Operation_Details;
@@ -97,7 +99,7 @@ public:
                      CORBA::Object_ptr target);
 
   /// Destructor.
-  virtual ~TAO_ServerRequest (void);
+  ~TAO_ServerRequest (void);
 
   /**
    * @name Request attributes.
@@ -240,6 +242,17 @@ public:
 
   /// Return a reference to the PICurrent copy callback object.
   TAO::PICurrent_Copy_Callback & pi_current_copy_callback (void);
+
+  CORBA::Exception *caught_exception (void);
+
+  void caught_exception (CORBA::Exception *exception);
+
+  /// Set the status of the received reply.
+  void reply_status (PortableInterceptor::ReplyStatus s);
+
+  /// Get the status of the received reply.
+  PortableInterceptor::ReplyStatus reply_status (void);
+
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
@@ -278,7 +291,6 @@ private:
   /// Did we get passed to a CORBA::ServerRequest?
   CORBA::Boolean is_dsi_;
 
-  //  TAO_GIOP_ReplyStatusType exception_type_;
   /// Exception type (will be NO_EXCEPTION in the majority of the cases).
   CORBA::ULong exception_type_;
 
@@ -327,6 +339,12 @@ private:
 
   /// Used by the FTORB
   CORBA::OctetSeq_var result_seq_;
+
+  /// Pointer to the caught exception.
+  CORBA::Exception * caught_exception_;
+
+  /// Reply status for the current request.
+  PortableInterceptor::ReplyStatus reply_status_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 

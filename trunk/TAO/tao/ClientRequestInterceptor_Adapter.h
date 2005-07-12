@@ -28,6 +28,7 @@
 
 #include "ace/CORBA_macros.h"
 #include "tao/SystemException.h"
+#include "tao/Invocation_Utils.h"
 
 class TAO_ClientRequestInfo;
 
@@ -35,6 +36,8 @@ namespace PortableInterceptor
 {
   class ClientRequestInterceptor;
   typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
+
+  typedef CORBA::Short ReplyStatus;
 }
 
 namespace TAO
@@ -67,26 +70,22 @@ namespace TAO
     //@{
     /// This method implements one of the "starting" client side
     /// interception points.
-    virtual void send_request (Invocation_Base &invocation,
-                               TAO_ClientRequestInfo *ri
+    virtual void send_request (Invocation_Base &invocation
                                ACE_ENV_ARG_DECL) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_reply (Invocation_Base &invocation,
-                                TAO_ClientRequestInfo *ri
+    virtual void receive_reply (Invocation_Base &invocation
                                 ACE_ENV_ARG_DECL) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_exception (Invocation_Base &invocation,
-                                    TAO_ClientRequestInfo *ri
+    virtual void receive_exception (Invocation_Base &invocation
                                     ACE_ENV_ARG_DECL) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_other (Invocation_Base &invocation,
-                                TAO_ClientRequestInfo *ri
+    virtual void receive_other (Invocation_Base &invocation
                                 ACE_ENV_ARG_DECL) = 0;
 
     /// Register an interceptor.
@@ -95,6 +94,10 @@ namespace TAO
       ACE_ENV_ARG_DECL) = 0;
 
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+    /// Convert TAO Invocation status to a PI status
+    virtual PortableInterceptor::ReplyStatus reply_status (
+      TAO::Invocation_Base const &invocation_base) = 0;
   };
 
 }

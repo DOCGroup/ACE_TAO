@@ -57,9 +57,6 @@ public:
                TAO_ORB_Core *orb_core,
                const TAO_GIOP_Message_Version &version);
 
-  /// If you have a virtual method you need a virtual dtor.
-  virtual ~TAO_Profile (void);
-
   /**
    * @name Non virtual methods for the profile classes.
   */
@@ -110,7 +107,6 @@ public:
   /// The memory is owned by the caller!
   TAO::ObjectKey *_key (void) const;
   //@}
-
 
   /**
    * @name Template methods that needs to be implemented by the
@@ -236,6 +232,8 @@ public:
   //@}
 
 protected:
+  /// If you have a virtual method you need a virtual dtor.
+  virtual ~TAO_Profile (void);
 
   /**
    * @name Protected template methods.

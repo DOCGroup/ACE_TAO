@@ -76,10 +76,15 @@ namespace TAO
     /// point. It will be used as the first interception point and it is
     /// proprietary to TAO.
     /// @@ Will go away once Bug 1369 is fixed
-    void tao_ft_interception_point (TAO_ServerRequest &server_request,
-                                    TAO::ServerRequestInfo *ri,
-                                    CORBA::OctetSeq_out oc
-                                    ACE_ENV_ARG_DECL);
+    void tao_ft_interception_point (
+        TAO_ServerRequest &server_request,
+        TAO::Argument * const args[],
+        size_t nargs,
+        void * servant_upcall,
+        CORBA::TypeCode_ptr const * exceptions,
+        size_t nexceptions,
+        CORBA::OctetSeq_out oc
+        ACE_ENV_ARG_DECL);
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
     /// This method implements the "intermediate" server side
@@ -89,32 +94,57 @@ namespace TAO
     /// @note This method should have been the "starting" interception
     ///       point according to the interceptor spec. This will be
     ///       fixed once Bug 1369 is completely done.
-    void receive_request_service_contexts (TAO_ServerRequest &server_request,
-                                           TAO::ServerRequestInfo *ri
-                                           ACE_ENV_ARG_DECL);
+    void receive_request_service_contexts (
+        TAO_ServerRequest &server_request,
+        TAO::Argument * const args[],
+        size_t nargs,
+        void * servant_upcall,
+        CORBA::TypeCode_ptr const * exceptions,
+        size_t nexceptions
+        ACE_ENV_ARG_DECL);
 
     /// This method an "intermediate" server side interception point.
-    void receive_request (TAO_ServerRequest &server_request,
-                          TAO::ServerRequestInfo *ri
-                          ACE_ENV_ARG_DECL);
+    void receive_request (
+        TAO_ServerRequest &server_request,
+        TAO::Argument * const args[],
+        size_t nargs,
+        void * servant_upcall,
+        CORBA::TypeCode_ptr const * exceptions,
+        size_t nexceptions
+        ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
     /// interception points.
-    void send_reply (TAO_ServerRequest &server_request,
-                     TAO::ServerRequestInfo *ri
-                     ACE_ENV_ARG_DECL);
+    void send_reply (
+        TAO_ServerRequest &server_request,
+        TAO::Argument * const args[],
+        size_t nargs,
+        void * servant_upcall,
+        CORBA::TypeCode_ptr const * exceptions,
+        size_t nexceptions
+        ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
     /// interception points.
-    void send_exception (TAO_ServerRequest &server_request,
-                         TAO::ServerRequestInfo *ri
-                         ACE_ENV_ARG_DECL);
+    void send_exception (
+        TAO_ServerRequest &server_request,
+        TAO::Argument * const args[],
+        size_t nargs,
+        void * servant_upcall,
+        CORBA::TypeCode_ptr const * exceptions,
+        size_t nexceptions
+        ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
     /// interception points.
-    void send_other (TAO_ServerRequest &server_request,
-                     TAO::ServerRequestInfo *ri
-                     ACE_ENV_ARG_DECL);
+    void send_other (
+        TAO_ServerRequest &server_request,
+        TAO::Argument * const args[],
+        size_t nargs,
+        void * servant_upcall,
+        CORBA::TypeCode_ptr const * exceptions,
+        size_t nexceptions
+        ACE_ENV_ARG_DECL);
     //@}
 
     /// Register an interceptor.

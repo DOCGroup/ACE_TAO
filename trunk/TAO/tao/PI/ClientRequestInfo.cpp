@@ -9,21 +9,19 @@ ACE_RCSID (tao,
            ClientRequestInfo,
            "$Id$")
 
-#include "Any.h"
-#include "PolicyC.h"
-#include "PortableInterceptorC.h"
-#include "PICurrent.h"
-#include "Invocation_Base.h"
-#include "Stub.h"
-#include "ORB_Core.h"
-#include "Profile.h"
-#include "debug.h"
-#include "Service_Context.h"
+#include "tao/Any.h"
+#include "tao/PolicyC.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/PICurrent.h"
+#include "tao/Invocation_Base.h"
+#include "tao/Stub.h"
+#include "tao/ORB_Core.h"
+#include "tao/Profile.h"
+#include "tao/debug.h"
+#include "tao/Service_Context.h"
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
   : invocation_ (inv),
-    caught_exception_ (0),
-    reply_status_ (-1),
     rs_pi_current_ (),
     copy_callback_ ()
 {
@@ -153,8 +151,8 @@ TAO_ClientRequestInfo::received_exception (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
-      && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
+  if (this->invocation_->reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
+      && this->invocation_->reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO), 0);
@@ -175,12 +173,15 @@ TAO_ClientRequestInfo::received_exception (ACE_ENV_SINGLE_ARG_DECL)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  CORBA::Any_var caught_exception = temp;
+  CORBA::Any_var caught_exception_var = temp;
 
-  if (this->caught_exception_ != 0)
-    *temp <<= *(this->caught_exception_);
+  CORBA::Exception *caught_exception =
+    invocation_->caught_exception ();
 
-  return caught_exception._retn ();
+  if (caught_exception != 0)
+    *temp <<= *(caught_exception);
+
+  return caught_exception_var._retn ();
 }
 
 char *
@@ -191,15 +192,17 @@ TAO_ClientRequestInfo::received_exception_id (
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
-      && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
+  CORBA::Exception *caught_exception =
+    invocation_->caught_exception ();
+
+  if (caught_exception == 0)
     {
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO),
                         0);
     }
 
-  return CORBA::string_dup (this->caught_exception_->_rep_id ());
+  return CORBA::string_dup (caught_exception->_rep_id ());
 }
 
 IOP::TaggedComponent *
@@ -537,7 +540,7 @@ TAO_ClientRequestInfo::reply_status (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableInterceptor::SYSTEM_EXCEPTION);
 
-  if (this->reply_status_ == -1)
+  if (this->invocation_->reply_status() == -1)
     {
       // A reply hasn't been received yet.
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
@@ -545,7 +548,7 @@ TAO_ClientRequestInfo::reply_status (ACE_ENV_SINGLE_ARG_DECL)
                         -1);
     }
 
-  return this->reply_status_;
+  return this->invocation_->reply_status();
 }
 
 CORBA::Object_ptr
@@ -555,7 +558,7 @@ TAO_ClientRequestInfo::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
+  if (this->invocation_->reply_status() != PortableInterceptor::LOCATION_FORWARD)
     {
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO),
@@ -615,59 +618,6 @@ TAO_ClientRequestInfo::get_reply_service_context (
   return this->get_service_context_i (service_context_list,
                                       id
                                       ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_ClientRequestInfo::reply_status (TAO::Invocation_Status invoke_status)
-{
-  switch (invoke_status)
-    {
-    case TAO::TAO_INVOKE_SUCCESS:
-      this->reply_status_ = PortableInterceptor::SUCCESSFUL;
-      break;
-    case TAO::TAO_INVOKE_RESTART:
-      if (this->invocation_->is_forwarded ())
-        this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
-      else
-        this->reply_status_ = PortableInterceptor::TRANSPORT_RETRY;
-      break;
-    case TAO::TAO_INVOKE_USER_EXCEPTION:
-      this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
-      break;
-    case TAO::TAO_INVOKE_SYSTEM_EXCEPTION:
-      this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
-      break;
-    default:
-      this->reply_status_ = PortableInterceptor::UNKNOWN;
-      break;
-    }
-}
-
-void
-TAO_ClientRequestInfo::exception (CORBA::Exception *exception)
-{
-  if (CORBA::SystemException::_downcast (exception) != 0)
-    this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
-  else if (CORBA::UserException::_downcast (exception) != 0)
-    this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
-
-  // @@ Is it possible for both of the above downcasts to fail?
-
-  this->caught_exception_ = exception;
-}
-
-void
-TAO_ClientRequestInfo::forward_reference (
-  PortableInterceptor::ForwardRequest &)
-{
-  // Note that we're converting the ForwardRequest exception in to a
-  // LOCATION_FORWARD reply, so we do not set the exception status.
-  //
-  // The forward object reference is not handled here.  Rather, it is
-  // handled by the TAO::Invocation_Base object so that its profiles
-  // can be added to the list of forward profiles.
-
-  this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
 }
 
 void

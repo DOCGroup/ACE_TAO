@@ -8,7 +8,6 @@
 #include "Regular_POA.h"
 #include "Creation_Time.h"
 #include "POA_Guard.h"
-#include "ServerRequestInfo.h"
 #include "Default_Servant_Dispatcher.h"
 #include "Collocated_Object_Proxy_Broker.h"
 #include "POAManager.h"
@@ -18,6 +17,7 @@
 #include "ace/Auto_Ptr.h"
 
 // -- TAO Include --
+#include "tao/PortableInterceptorC.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
@@ -735,13 +735,6 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
   TAO::ServerRequestInterceptor_Adapter *sri_adapter =
     orb_core_.serverrequestinterceptor_adapter ();
 
-  TAO::ServerRequestInfo ri (request,
-                             0,  // args
-                             0,  // nargs
-                             0,  // servant_upcall
-                             0,  // exceptions
-                             0); // nexceptions
-
   ACE_TRY
     {
       if (sri_adapter != 0)
@@ -749,7 +742,11 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
           CORBA::OctetSeq_var ocs;
           sri_adapter.tao_ft_interception_point (request,
-                                                 &ri,
+                                                 0,  // args
+                                                 0,  // nargs
+                                                 0,  // servant_upcall
+                                                 0,  // exceptions
+                                                 0, // nexceptions
                                                  ocs.out ()
                                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -778,7 +775,11 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           // must be invoked before the operation is dispatched to the
           // servant.
           sri_adapter->receive_request_service_contexts (request,
-                                                         &ri
+                                                         0,  // args
+                                                         0,  // nargs
+                                                         0,  // servant_upcall
+                                                         0,  // exceptions
+                                                         0   // nexceptions
                                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -803,11 +804,15 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
       if (result == TAO_Adapter::DS_FORWARD)
         {
-          ri.forward_reference (forward_to.ptr ());
+          request.forward_location (forward_to.ptr ());
           if (sri_adapter != 0)
             {
               sri_adapter->send_other (request,
-                                       &ri
+                                       0,  // args
+                                       0,  // nargs
+                                       0,  // servant_upcall
+                                       0,  // exceptions
+                                       0   // nexceptions
                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
@@ -824,16 +829,19 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
       if (sri_adapter != 0)
         {
-          ri.exception (&ACE_ANY_EXCEPTION);
+          request.caught_exception (&ACE_ANY_EXCEPTION);
 
           sri_adapter->send_exception (request,
-                                       &ri
+                                       0,  // args
+                                       0,  // nargs
+                                       0,  // servant_upcall
+                                       0,  // exceptions
+                                       0   // nexceptions
                                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           status =
-            ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            request.reply_status ();
         }
 
       // Only re-throw the exception if it hasn't been transformed by

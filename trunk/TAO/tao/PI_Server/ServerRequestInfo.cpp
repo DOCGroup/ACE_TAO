@@ -8,9 +8,9 @@ ACE_RCSID (PortableServer,
            ServerRequestInfo,
            "$Id$")
 
-#include "Root_POA.h"
-#include "Servant_Upcall.h"
-#include "Servant_Base.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -219,20 +219,20 @@ PortableInterceptor::ReplyStatus
 TAO::ServerRequestInfo::reply_status (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->reply_status_ == -1)
+  if (this->server_request_.reply_status () == -1)
     // A reply hasn't been received yet.
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                             CORBA::COMPLETED_NO),
                       -1);
 
-  return this->reply_status_;
+  return this->server_request_.reply_status ();
 }
 
 CORBA::Object_ptr
 TAO::ServerRequestInfo::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
+  if (this->server_request_.reply_status () != PortableInterceptor::LOCATION_FORWARD)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                             CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
@@ -324,8 +324,8 @@ CORBA::Any *
 TAO::ServerRequestInfo::sending_exception (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
-      && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
+  if (this->server_request_.reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
+      && this->server_request_.reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO),
@@ -347,12 +347,12 @@ TAO::ServerRequestInfo::sending_exception (ACE_ENV_SINGLE_ARG_DECL)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  CORBA::Any_var caught_exception = temp;
+  CORBA::Any_var caught_exception_var = temp;
 
-  if (this->caught_exception_ != 0)
-    (*temp) <<= *(this->caught_exception_);
+  if (this->server_request_.caught_exception () != 0)
+    (*temp) <<= *(this->server_request_.caught_exception ());
 
-  return caught_exception._retn ();
+  return caught_exception_var._retn ();
 }
 
 char *

@@ -12,7 +12,7 @@ project(*Server): taoserver, valuetype, pi, pi_server, interceptors {
   }
 }
 
-project(*Client): taoclient, valuetype, pi, pi_server, interceptors {
+project(*Client): taoclient, valuetype, pi, interceptors {
   idlflags += -DCORBA3
 
   Source_Files {

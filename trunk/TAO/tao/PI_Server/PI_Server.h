@@ -40,6 +40,7 @@ TAO_Requires_PI_Server_Initializer =
 #define TAO_PI_SERVER_SAFE_INCLUDE
 #include "PS_CurrentC.h"
 #include "ServerRequestInterceptorC.h"
+#include "ServerRequestInfoC.h"
 #undef TAO_PI_SERVER_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"
