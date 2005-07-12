@@ -1,3 +1,15 @@
+Tue Jul 12 13:39:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+	  Make _IDL projects unconditional now that Chad has enhanced
+	  MPC to support custom_only builds for VC++ projects.
+
 Tue Jul 12 18:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Upcall_Wrapper.cpp:
