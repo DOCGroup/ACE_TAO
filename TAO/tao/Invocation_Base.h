@@ -25,7 +25,7 @@
 #include "tao/Invocation_Utils.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/ClientRequestInfo.h"
+#include "tao/PI_ForwardC.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -202,6 +202,16 @@ namespace TAO
      */
     size_t &stack_size (void);
 
+    CORBA::Exception *caught_exception (void);
+
+    /// Change the exception status.
+    void exception (CORBA::Exception *exception);
+
+    /// Invoke status
+    TAO::Invocation_Status invoke_status (void) const;
+
+    PortableInterceptor::ReplyStatus reply_status (void) const;
+
   protected:
     /// Helper method to invoke send_request interception call to all
     /// the registered interceptors.
@@ -228,11 +238,15 @@ namespace TAO
         handle_all_exception (ACE_ENV_SINGLE_ARG_DECL);
 
   protected:
-    /// The client requestor adapter and the request info object for
-    /// making calls on all the registered interceptors.
+    /// The client requestor adapter
     ClientRequestInterceptor_Adapter *adapter_;
-    TAO_ClientRequestInfo req_info_;
+
     size_t stack_size_;
+
+    TAO::Invocation_Status invoke_status_;
+
+    /// Pointer to the caught exception.
+    CORBA::Exception *caught_exception_;
 #endif /*TAO_HAS_INTERCEPTORS*/
     //@}
   };

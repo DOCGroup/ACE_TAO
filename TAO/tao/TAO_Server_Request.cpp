@@ -12,6 +12,10 @@
 #include "CDR.h"
 #include "SystemException.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+#include "PortableInterceptorC.h"
+#endif
+
 #if !defined (__ACE_INLINE__)
 # include "TAO_Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
@@ -71,6 +75,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     , rs_pi_current_ ()
     , pi_current_copy_callback_ ()
     , result_seq_ (0)
+    , caught_exception_ (0)
+    , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
@@ -111,6 +117,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
   , interceptor_count_ (0)
   , rs_pi_current_ ()
   , result_seq_ (0)
+  , caught_exception_ (0)
+  , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   this->profile_.object_key (object_key);
@@ -144,6 +152,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
   , interceptor_count_ (0)
   , rs_pi_current_ ()
   , result_seq_ (0)
+  , caught_exception_ (0)
+  , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   // Have to use a const_cast<>.  *sigh*
@@ -477,4 +487,16 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                   ACE_TEXT ("could not send cached reply\n")));
     }
 }
+
+void
+TAO_ServerRequest::caught_exception (CORBA::Exception *exception)
+{
+  if (CORBA::SystemException::_downcast (exception) != 0)
+    this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+  else if (CORBA::UserException::_downcast (exception) != 0)
+    this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
+
+  this->caught_exception_ = exception;
+}
+
 #endif /*TAO_HAS_INTERCEPTORS*/

@@ -174,17 +174,3 @@ TAO_Transport::connection_handler (void)
   return this->connection_handler_i();
 }
 
-/*****************************************************/
-
-ACE_INLINE
-TAO_Transport_Refcount_Guard::TAO_Transport_Refcount_Guard (TAO_Transport *t)
-  : tr_ (t)
-{
-  this->tr_->add_reference ();
-}
-
-ACE_INLINE
-TAO_Transport_Refcount_Guard::~TAO_Transport_Refcount_Guard (void)
-{
-  this->tr_->remove_reference ();
-}

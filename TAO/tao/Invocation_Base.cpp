@@ -41,8 +41,9 @@ namespace TAO
     , stub_ (stub)
 #if TAO_HAS_INTERCEPTORS == 1
     , adapter_ (orb_core_->clientrequestinterceptor_adapter ())
-    , req_info_ (this)
     , stack_size_ (0)
+    , invoke_status_ (TAO_INVOKE_START)
+    , caught_exception_ (0)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   {
   }
@@ -57,7 +58,7 @@ namespace TAO
   void
   Invocation_Base::reply_received (Invocation_Status TAO_INTERCEPTOR (s))
   {
-    TAO_INTERCEPTOR (this->req_info_.reply_status (s));
+    TAO_INTERCEPTOR (invoke_status_ = s);
   }
 
   TAO_Service_Context &
@@ -149,8 +150,7 @@ namespace TAO
       {
         ACE_TRY
           {
-            this->adapter_->send_request (*this,
-                                          &this->req_info_
+            this->adapter_->send_request (*this
                                           ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
@@ -193,8 +193,7 @@ namespace TAO
       {
         ACE_TRY
           {
-            this->adapter_->receive_reply (*this,
-                                           &this->req_info_
+            this->adapter_->receive_reply (*this
                                            ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
@@ -220,8 +219,7 @@ namespace TAO
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
         const PortableInterceptor::ReplyStatus status =
-          this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+          this->adapter_->reply_status (*this);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
@@ -240,8 +238,7 @@ namespace TAO
       {
         ACE_TRY
           {
-            this->adapter_->receive_other (*this,
-                                           &this->req_info_
+            this->adapter_->receive_other (*this
                                            ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
@@ -277,19 +274,20 @@ namespace TAO
   Invocation_Base::handle_any_exception (CORBA::Exception *ex
                                          ACE_ENV_ARG_DECL)
   {
-    this->req_info_.exception (ex);
+    caught_exception_ = ex;
+
+    PortableInterceptor::ReplyStatus status =
+      PortableInterceptor::SYSTEM_EXCEPTION;
 
     if (adapter_ != 0)
       {
-        this->adapter_->receive_exception (*this,
-                                           &this->req_info_
+        this->adapter_->receive_exception (*this
                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
-      }
 
-    const PortableInterceptor::ReplyStatus status =
-      this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (status);
+        status =
+          this->adapter_->reply_status (*this);
+      }
 
     return status;
   }
@@ -297,24 +295,42 @@ namespace TAO
   PortableInterceptor::ReplyStatus
   Invocation_Base::handle_all_exception (ACE_ENV_SINGLE_ARG_DECL)
   {
-    CORBA::UNKNOWN ex;
-
-    this->req_info_.exception (&ex);
+    PortableInterceptor::ReplyStatus status =
+      PortableInterceptor::SYSTEM_EXCEPTION;
 
     if (adapter_ != 0)
       {
-        this->adapter_->receive_exception (*this,
-                                           &this->req_info_
+        CORBA::UNKNOWN ex;
+        this->caught_exception_ = &ex;
+
+        this->adapter_->receive_exception (*this
                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
-      }
 
-    const PortableInterceptor::ReplyStatus status =
-      this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (status);
+        status =
+          this->adapter_->reply_status (*this);
+      }
 
     return status;
   }
 
+  void
+  Invocation_Base::exception (CORBA::Exception *exception)
+  {
+    this->caught_exception_ = exception;
+  }
+
+  PortableInterceptor::ReplyStatus
+  Invocation_Base::reply_status (void) const
+  {
+    if (adapter_ != 0)
+      {
+        return this->adapter_->reply_status (*this);
+      }
+    else
+      {
+        return -1;
+      }
+  }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 }

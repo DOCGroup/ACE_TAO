@@ -1,3 +1,193 @@
+Tue Jul 12 10:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2174_Regression/Bug_2174_Regression.mpc:
+          Don't build the client when minimum_corba is set
+
+        * tao/CONV_FRAME.pidl:
+        * tao/GIOP.pidl
+          Updated regeneration instructions
+
+        * tao/CONV_FRAMES_T.h:
+        * tao/GIOPS_T.h
+          Removed this file
+
+        * tao/ClientRequestInfo.{h,cpp}
+        * tao/ClientRequestInfo.pidl:
+        * tao/ClientRequestInfoA.cpp
+        * tao/ClientRequestInfoC.{h,cpp}:
+        * tao/ClientRequestInfoS.h:
+        * tao/PIForwardRequest.pidl
+        * tao/PIForwardRequestA.cpp
+        * tao/PIForwardRequestC.{h,cpp}:
+        * tao/PIForwardRequestS.h
+        * tao/RequestInfo.pidl
+        * tao/RequestInfoA.cpp:
+        * tao/RequestInfoC.{h,cpp}:
+        * tao/RequestInfoS.h:
+          These files are moved to the PI library
+
+        * tao/ClientRequestInterceptor_Adapter.h:
+          Don't pass TAO_ClientRequestInfo with each invocation,
+          an instance is allocated within the adapter implementation.
+          Also added a method to get the PortableInterceptor::ReplyStatus
+          from a TAO::Invocation_Base
+
+        * tao/Collocation_Resolver.cpp:
+        * tao/Protocol_Factory.cpp:
+        * tao/Protocols_Hooks.cpp:
+        * tao/Tagged_Components.cpp:
+          Removed explicit template instantiations
+
+        * tao/IIOP_Profile.h:
+        * tao/Profile.h:
+          Moved destructor to protected part to make sure an instance
+          is only removed by the _decr_refcnt
+
+        * tao/Invocation_Base.{h,cpp,inl}:
+          Reworked the invocation path to invoke the client request
+          interceptor when it is set and don't create a TAO_ClientRequestInfo
+          on the stack, this is done in the PI adapter. Store the invoke_status
+          and caught_exception as members in this class, this was done
+          previously in the TAO_ClientRequestInfo, but this is now not
+          used anymore in the TAO lib
+
+        * tao/MProfile.h:
+          Doxygen improvement
+
+        * tao/Makefile.am:
+          Updated because of moving of files
+
+        * tao/ORB_Core.h:
+          No need to forward declare TAO_ServerRequest
+
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.h:
+          Removed the files we moved to PI/PI_Server
+
+        * tao/ServerRequestInfo.pidl:
+        * tao/ServerRequestInfoA.cpp:
+        * tao/ServerRequestInfoC.{h,cpp}:
+        * tao/ServerRequestInfoS.h:
+          Moved to the PI_Server lib
+
+        * tao/ServerRequestInterceptor_Adapter.h:
+          Updated to not pass TAO_ServerRequestInfo with each call, pass
+          the difference exception info
+
+        * tao/Stub.{h,cpp}:
+          Removed service_profile_selection(), this was marked deprecated for
+          a long time.
+
+        * tao/Synch_Invocation.cpp:
+          Fixed incorrect emulated exception usage
+
+        * tao/TAO_Server_Request.{h,cpp,i}:
+          Added data members which where previous in TAO_ServerRequestInfo
+
+        * tao/Transport.{h,cpp,inl}:
+          Removed TAO_Transport_Refcount_Guard, not used
+
+        * tao/tao.mpc:
+          Updated
+
+        * tao/PI/ClientRequestInfo.{cpp,h}:
+        * tao/PI/ClientRequestInfo.pidl:
+        * tao/PI/ClientRequestInfoA.cpp"
+        * tao/PI/ClientRequestInfoC.{h,cpp}:
+        * tao/PI/ClientRequestInfoS.h:
+          These files moved here from the TAO core library
+
+        * tao/PI/ClientRequestInterceptor.pidl:
+          Updated includes because of moved files
+
+        * tao/PI/ClientRequestInterceptorA.cpp:
+        * tao/PI/ClientRequestInterceptorC.{h,cpp}:
+        * tao/PI/ClientRequestInterceptorS.h:
+          Regenerated
+
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.{h,cpp}:
+          Allocate a TAO_ClientRequestInfo on the stack for each
+          interception point and updated for base interface
+
+        * tao/PI/InterceptorA.cpp
+        * tao/PI/InterceptorC.{h,cpp}:
+        * tao/PI/InterceptorS.h:
+        * tao/PI/ORBInitInfoA.cpp:
+        * tao/PI/ORBInitInfoC.{h,cpp}:
+        * tao/PI/ORBInitInfoS.h:
+        * tao/PI/ORBInitializerA.cpp:
+        * tao/PI/ORBInitializerC.{h,cpp}:
+        * tao/PI/ORBInitializerS.h:
+          Regenerated
+
+        * tao/PI/PI.h:
+          Include new *C.h files
+
+        * tao/PI/PIForwardRequest.pidl
+        * tao/PI/PIForwardRequestA.cpp
+        * tao/PI/PIForwardRequestC.{h,cpp}:
+        * tao/PI/PIForwardRequestS.h:
+        * tao/PI/RequestInfo.pidl:
+        * tao/PI/RequestInfoA.cpp:
+        * tao/PI/RequestInfoC.{h,cpp}:
+        * tao/PI/RequestInfoS.h:
+          Moved from the TAO lib
+
+        * tao/PI_Server/PI_Server.h:
+          Added new *C.h files
+
+        * tao/PI_Server/ServerInterceptorAdapter.{h,cpp}:
+          Allocate a TAO_ServerRequestInfo for each interception point
+
+        * tao/PI_Server/ServerRequestInfo.{h,cpp,inl}:
+        * tao/PI_Server/ServerRequestInfo.pidl:
+        * tao/PI_Server/ServerRequestInfoA.cpp:
+        * tao/PI_Server/ServerRequestInfoC.{h,cpp}:
+        * tao/PI_Server/ServerRequestInfoS.h:
+          Moved from the PortableServer lib
+
+        * tao/PI_Server/ServerRequestInterceptor.pidl:
+          Updated includes
+
+        * tao/PI_Server/ServerRequestInterceptorC.h:
+          Regenerated
+
+        * tao/PortableServer/Basic_SArguments.cpp:
+        * tao/PortableServer/Special_Basic_SArguments.cpp:
+        * tao/PortableServer/UB_String_SArguments.cpp
+          Removed, not needed
+
+        * tao/PortableServer/ServerRequestInfo.{h,cpp,inl}:
+          Moved to the PI_Server lib
+
+        * tao/PortableServer/Local_Servant_Base.inl:
+          Removed commented out code
+
+        * tao/PortableServer/ORT_Adapter.cpp:
+        * tao/PortableServer/ORT_Adapter_Factory.cpp:
+        * tao/PortableServer/StrategyFactory.cpp:
+          Removed explicit templates
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Updated code because of changes ServerRequestInterceptor
+          adapter change
+
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          Initialise pointer with 0
+
+        * tao/RTScheduling/RTScheduler.pidl:
+          Updated include
+
+        * tao/RTScheduling/RTSchedulerC.h:
+          Regenerated
+
+        * tests/Big_Twoways/Peer.cpp:
+          Initialise pointer with 0
+
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+          Added needed include
+
 Mon Jul 11 13:39:34 2005   Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:

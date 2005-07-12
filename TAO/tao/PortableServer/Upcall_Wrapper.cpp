@@ -5,8 +5,8 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_Guard.h"
-# include "ServerRequestInfo.h"
 # include "tao/ServerRequestInterceptor_Adapter.h"
+# include "tao/PortableInterceptorC.h"
 # include "tao/ORB_Core.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -48,13 +48,6 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-  TAO::ServerRequestInfo request_info (server_request,
-                                       args,
-                                       nargs,
-                                       servant_upcall,
-                                       exceptions,
-                                       nexceptions);
-
   TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
     server_request.orb_core ()->serverrequestinterceptor_adapter ();
 
@@ -68,7 +61,11 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           {
             // Invoke intermediate server side interception points.
             interceptor_adapter->receive_request (server_request,
-                                                  &request_info
+                                                  args,
+                                                  nargs,
+                                                  servant_upcall,
+                                                  exceptions,
+                                                  nexceptions
                                                   ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
@@ -90,7 +87,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
       if (interceptor_adapter == 0)
         {
-          request_info.reply_status (PortableInterceptor::SUCCESSFUL);
+          server_request.reply_status (PortableInterceptor::SUCCESSFUL);
         }
       else
         {
@@ -108,9 +105,13 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           if (CORBA::is_nil (forward_to_after.in ()))
             {
               // No location forward by interceptors and successful upcall.
-              request_info.reply_status (PortableInterceptor::SUCCESSFUL);
+              server_request.reply_status (PortableInterceptor::SUCCESSFUL);
               interceptor_adapter->send_reply (server_request,
-                                               &request_info
+                                               args,
+                                               nargs,
+                                               servant_upcall,
+                                               exceptions,
+                                               nexceptions
                                                ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
@@ -125,18 +126,21 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
       PortableInterceptor::ReplyStatus status =
         PortableInterceptor::SYSTEM_EXCEPTION;
 
-      request_info.exception (&ACE_ANY_EXCEPTION);
+      server_request.caught_exception (&ACE_ANY_EXCEPTION);
 
       if (interceptor_adapter != 0)
         {
           interceptor_adapter->send_exception (server_request,
-                                               &request_info
+                                               args,
+                                               nargs,
+                                               servant_upcall,
+                                               exceptions,
+                                               nexceptions
                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           status =
-            request_info.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            server_request.reply_status ();
         }
 
       if (status == PortableInterceptor::SYSTEM_EXCEPTION

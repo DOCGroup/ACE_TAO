@@ -25,6 +25,7 @@
 #include "testC.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI_Server/PI_Server.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

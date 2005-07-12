@@ -11,12 +11,3 @@ TAO_Collocation_Resolver::~TAO_Collocation_Resolver (void)
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Collocation_Resolver>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Collocation_Resolver>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

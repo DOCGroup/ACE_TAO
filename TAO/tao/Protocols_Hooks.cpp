@@ -3,8 +3,8 @@
 #include "Protocols_Hooks.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao, 
-           Protocols_Hooks, 
+ACE_RCSID (tao,
+           Protocols_Hooks,
            "$Id$")
 
 TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)
@@ -16,13 +16,13 @@ TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)
     enable_network_priority_ (0)
 {
 }
-  
+
 TAO_UIOP_Protocol_Properties::TAO_UIOP_Protocol_Properties (void)
   : send_buffer_size_ (0),
     recv_buffer_size_ (0)
 {
 }
-  
+
 TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
@@ -34,12 +34,12 @@ TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
     mmap_lockname_ ()
 {
 }
-  
+
 TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties (void)
   : enable_network_priority_ (0)
 {
 }
-  
+
 TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties (void)
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
@@ -49,18 +49,9 @@ TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties (void)
     enable_network_priority_ (0)
 {
 }
-  
+
 /// destructor
 TAO_Protocols_Hooks::~TAO_Protocols_Hooks (void)
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Protocols_Hooks>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Protocols_Hooks>
-
-#endif

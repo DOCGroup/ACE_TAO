@@ -33,6 +33,8 @@ class TAO_Export TAO_PolicyFactory_Registry_Factory :
   public ACE_Service_Object
 {
 public:
+  virtual ~TAO_PolicyFactory_Registry_Factory (void);
+
   virtual TAO::PolicyFactory_Registry_Adapter* create (void) = 0;
 };
 

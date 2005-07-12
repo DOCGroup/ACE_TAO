@@ -31,12 +31,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "tao/ClientRequestInfoC.h"
-#include "tao/ORB_Constants.h"
-#include "Invocation_Utils.h"
+#include "ClientRequestInfoC.h"
 #include "PIForwardRequestC.h"
-#include "PICurrent_Impl.h"
-#include "PICurrent_Copy_Callback.h"
+#include "tao/ORB_Constants.h"
+#include "tao/Invocation_Utils.h"
+#include "tao/PICurrent_Impl.h"
+#include "tao/PICurrent_Copy_Callback.h"
 
 class TAO_Service_Context;
 
@@ -218,28 +218,6 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /**
-   * @name Stub helper methods
-   *
-   * The following methods are used in the implementation of the
-   * Stubs, they are not part of the ClientRequestInfo interface, but
-   * an extension used internally by TAO.
-   */
-  //@{
-
-  /// Change the exception status.
-  void exception (CORBA::Exception *exception);
-
-  /// Set the status of the received reply.
-  void reply_status (TAO::Invocation_Status invoke_status);
-
-  /// Extract the forward object reference from the
-  /// PortableInterceptor::ForwardRequest exception, and set the reply
-  /// status flag accordingly.
-  void forward_reference (PortableInterceptor::ForwardRequest &exc);
-  //@}
-
-
 private:
 
   /// Check if this ClientRequestInfo object is called within the
@@ -260,12 +238,6 @@ private:
 private:
   /// Pointer to the invocation object.
   TAO::Invocation_Base *invocation_;
-
-  /// Pointer to the caught exception.
-  CORBA::Exception *caught_exception_;
-
-  /// Reply status for the current request.
-  PortableInterceptor::ReplyStatus reply_status_;
 
   /// The "Request Scope Current" (RSC) object, as required by
   /// Portable Interceptors.

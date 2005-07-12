@@ -74,7 +74,6 @@ class TAO_Profile;
 
 class TAO_Endpoint_Selector_Factory;
 class TAO_Message_State_Factory;
-class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
 class TAO_BiDir_Adapter;
 
