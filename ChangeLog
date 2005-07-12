@@ -1,3 +1,10 @@
+Tue Jul 12 17:15:00 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Flow.cpp:
+	* protocols/ace/RMCast/Protocol.h:
+
+	Added missing includes.
+
 Tue Jul 12 14:46:53 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Parameters.h:
