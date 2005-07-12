@@ -53,8 +53,7 @@ parse_args (int argc, char **argv)
 }
 
 class test_i :
-  public POA_test,
-  public PortableServer::RefCountServantBase
+  public POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb,
@@ -65,7 +64,7 @@ public:
   void start_test (CORBA::Long session_id,
 		   const char *protocol,
 		   CORBA::ULong invocation_rate,
-		   CORBA::ULong message_size,		  
+		   CORBA::ULong message_size,
 		   CORBA::ULong iterations
                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -129,22 +128,22 @@ void
 test_i::start_test (CORBA::Long session_id,
 		    const char *protocol,
 		    CORBA::ULong invocation_rate,
-		    CORBA::ULong message_size,		  
+		    CORBA::ULong message_size,
 		    CORBA::ULong iterations
                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "Session id starts %d\n",
 		  session_id));
-      
+
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      "Protocol = %5s Invocation Rate = %3d Message Size = %5d Expected Latency = %4d ", 
-	      protocol, 
+  ACE_DEBUG ((LM_DEBUG,
+	      "Protocol = %5s Invocation Rate = %3d Message Size = %5d Expected Latency = %4d ",
+	      protocol,
 	      invocation_rate,
 	      message_size,
 	      1000 / invocation_rate));
