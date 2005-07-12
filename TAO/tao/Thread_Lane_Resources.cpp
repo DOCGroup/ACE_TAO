@@ -382,6 +382,7 @@ TAO_Thread_Lane_Resources::finalize (void)
     {
       this->connector_registry_->close_all ();
       delete this->connector_registry_;
+      this->connector_registry_ = 0;
     }
 
   // Ask the registry to close all registered acceptors.
@@ -389,6 +390,7 @@ TAO_Thread_Lane_Resources::finalize (void)
     {
       this->acceptor_registry_->close_all ();
       delete this->acceptor_registry_;
+      this->acceptor_registry_ = 0;
     }
 
   // Set of handlers still in the connection cache.
@@ -417,7 +419,10 @@ TAO_Thread_Lane_Resources::finalize (void)
     }
 
   delete this->transport_cache_;
+  this->transport_cache_ = 0;
+
   delete this->leader_follower_;
+  this->leader_follower_ = 0;
 
   // Delete all the allocators here.. They shouldnt be done earlier,
   // lest some of the contents in the above, say reactor or acceptor
