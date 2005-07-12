@@ -3,13 +3,9 @@
 
 project(CosTrading_IDL) : orbsvcslib, core {
 
-  specific(!automake) {
-    requires += dummy_label
-  }
-
   custom_only = 1
 
-  idlflags    += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
+  idlflags += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
 
   IDL_Files {
     CosTrading.idl
@@ -23,18 +19,9 @@ project(CosTrading) : orbsvcslib, core {
   sharedname   = TAO_CosTrading
   dynamicflags = TAO_TRADING_BUILD_DLL
 
-  specific (automake) {
-    after     += CosTrading_IDL
-  } else {
-    idlflags  += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
-  }
+  after += CosTrading_IDL
 
   IDL_Files {
-    conditional (!automake) {
-      CosTrading.idl
-      CosTradingRepos.idl
-      CosTradingDynamic.idl
-    }
   }
 
   Source_Files {
