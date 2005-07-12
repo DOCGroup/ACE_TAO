@@ -161,7 +161,9 @@ sub nt_service_test
     $BIN_IMR_ACTIVATOR->IgnoreExeSubDir(1);
 
     print "Copying ImplRepo services to the same location as the dlls.\n";
+    unlink $BIN_IMR_LOCATOR->Executable ();
     copy ($IMR_LOCATOR->Executable (), $BIN_IMR_LOCATOR->Executable ());
+    unlink $BIN_IMR_ACTIVATOR->Executable ();
     copy ($IMR_ACTIVATOR->Executable (), $BIN_IMR_ACTIVATOR->Executable ());
 
     print "Stopping any existing TAO ImR Services\n";
@@ -198,7 +200,7 @@ sub nt_service_test
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \""
-                         . $A_SVR->Executable () .
+                         . $A_SVR->Executable() .
                          "\" -w \"$ACE_ROOT/lib\"");
     $result = $TAO_IMR->SpawnWaitKill (10);
     if ($result != 0) {
@@ -670,7 +672,6 @@ sub shutdown_repo
 
 sub persistent_ir_test
 {
-    my $status = 0;
     my $result = 0;
 
     my $imr_initref = "-ORBInitRef ImplRepoService=file://$imr_locator_ior";
@@ -692,7 +693,7 @@ sub persistent_ir_test
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
-	$IMR_LOCATOR->Kill ();
+	      $IMR_LOCATOR->Kill ();
         return 1;
     }
 
@@ -700,7 +701,7 @@ sub persistent_ir_test
     # Copy the server to a path with spaces to ensure that these
     # work corrrectly.
     copy ($A_SVR->Executable(), $P_SVR->Executable());
-    chmod (0755, $P_SVR->Executable());
+    chmod(0755, $P_SVR->Executable()); 
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \"" 
@@ -723,6 +724,7 @@ sub persistent_ir_test
     if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
         $A_SVR->Kill ();
         return 1;
     }
@@ -730,41 +732,53 @@ sub persistent_ir_test
     $result = $A_CLI->SpawnWaitKill (10);
     if ($result != 0) {
         print STDERR "ERROR: airplane client returned $result\n";
-        $status = 1;
+        $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
+        $A_SVR->Kill ();
+        return 1;
     }
 
     $TAO_IMR->Arguments ("$imr_initref shutdown airplane_server");
-    
     $result = $TAO_IMR->SpawnWaitKill (10);
     if ($result != 0) {
         print STDERR "ERROR: tao_imr shutdown returned $result\n";
-        $status = 1;
+        $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
+        $A_SVR->Kill ();
+        return 1;
     }
 
     $result = $A_SVR->WaitKill (1);
     if ($result != 0) {
         print STDERR "ERROR: airplane server returned $result\n";
-        $status = 1;
+        $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
+        return 1;
     }
 
     # Should cause the activator to spawn another server.
     $result = $A_CLI->SpawnWaitKill (20);
     if ($result != 0) {
         print STDERR "ERROR: airplane client 2 returned $result\n";
-        $status = 1;
+        $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
+        return 1;
     }
 
     # Shutdown airplane_server
     $result = $TAO_IMR->SpawnWaitKill (10);
     if ($result != 0) {
         print STDERR "ERROR: tao_imr shutdown 2 returned $result\n";
-        $status = 1;
+        $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
+        return 1;
     }
 
     my $implrepo = $IMR_LOCATOR->TerminateWaitKill (5);
     if ($implrepo != 0) {
         print STDERR "ERROR: IMR_Locator returned $implrepo\n";
-        $status = 1;
+        $IMR_ACTIVATOR->Kill ();
+        return 1;
     }
 
     # Unlink so that we can wait on them again to know the server started.
@@ -781,26 +795,31 @@ sub persistent_ir_test
     $result = $A_CLI->SpawnWaitKill (20);
     if ($result != 0) {
         print STDERR "ERROR: airplane client 3 returned $result\n";
-        $status = 1;
+        $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
+        return 1;
     }
 
     # Shutdown airplane_server
     $result = $TAO_IMR->SpawnWaitKill (10);
     if ($result != 0) {
         print STDERR "ERROR: tao_imr shutdown 3 returned $result\n";
-        $status = 1;
+        $IMR_LOCATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
+        return 1;
     }
 
-    my $imr_result = $IMR_ACTIVATOR->TerminateWaitKill (5);
-    if ($imr_result != 0) {
-        print STDERR "ERROR: IMR_Activator returned $imr_result\n";
-        $status = 1;
+    $result = $IMR_ACTIVATOR->TerminateWaitKill (5);
+    if ($result != 0) {
+        print STDERR "ERROR: IMR_Activator returned $result\n";
+        $IMR_LOCATOR->Kill ();
+        return 1;
     }
 
-    $imr_result = $IMR_LOCATOR->TerminateWaitKill (5);
-    if ($imr_result != 0) {
-        print STDERR "ERROR: IMR_Locator returned $imr_result\n";
-        $status = 1;
+    $result = $IMR_LOCATOR->TerminateWaitKill (5);
+    if ($result != 0) {
+        print STDERR "ERROR: IMR_Locator returned $result\n";
+        return 1;
     }
 
     unlink $P_SVR->Executable();
@@ -808,7 +827,7 @@ sub persistent_ir_test
     unlink $imr_activator_ior;
     unlink $airplane_ior;
 
-    return $status;   
+    return 0;   
 }
 
 ###############################################################################
