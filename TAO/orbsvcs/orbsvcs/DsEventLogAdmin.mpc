@@ -3,13 +3,9 @@
 
 project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event {
 
-  specific(!automake) {
-    requires += dummy_label
-  }
-
   custom_only = 1
 
-  idlflags    += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
+  idlflags += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
 
   IDL_Files {
     DsEventLogAdmin.idl
@@ -20,16 +16,9 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   sharedname   = TAO_DsEventLogAdmin
   dynamicflags = TAO_EVENTLOG_BUILD_DLL
 
-  specific (automake) {
-    after       += DsEventLogAdmin_IDL
-  } else {
-    idlflags    += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
-  }
+  after += DsEventLogAdmin_IDL
 
   IDL_Files {
-    conditional (!automake) {
-      DsEventLogAdmin.idl
-    }
   }
 
   Source_Files {
