@@ -389,8 +389,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
       ACE_TRY_CHECK;
 
       PortableInterceptor::ReplyStatus status =
-        server_request.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server_request.reply_status ();
 
       // Only re-throw the exception if it hasn't been transformed by
       // the send_exception() interception point (e.g. to a
