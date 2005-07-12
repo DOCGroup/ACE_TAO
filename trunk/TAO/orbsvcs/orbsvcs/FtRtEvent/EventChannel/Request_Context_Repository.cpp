@@ -6,6 +6,7 @@
 
 #include "tao/TypeCode.h"
 #include "tao/PI/PI.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/IOP_IORC.h"
 #include "ace/TSS_T.h"
 

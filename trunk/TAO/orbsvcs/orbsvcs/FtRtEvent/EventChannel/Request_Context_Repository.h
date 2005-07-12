@@ -26,6 +26,12 @@ namespace PortableInterceptor
 {
   class ORBInitInfo;
   typedef ORBInitInfo *ORBInitInfo_ptr;
+
+  class ServerRequestInfo;
+  typedef ServerRequestInfo *ServerRequestInfo_ptr;
+
+  class ClientRequestInfo;
+  typedef ClientRequestInfo *ClientRequestInfo_ptr;
 }
 
 /**
