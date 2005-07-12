@@ -527,8 +527,9 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
 void
 TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
 {
-  // If we have no-drop-reply strategy simply return.
-  if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown ())
+  // If we have no-drop-reply strategy or already fininalized simply return.
+  if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown () ||
+       this->transport_cache_ == 0)
     return;
 
   // Set of handlers still in the connection cache.
