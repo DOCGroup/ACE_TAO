@@ -1,3 +1,8 @@
+Mon Jul 11 12:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.inl:
+          Initialise pointer with 0
+
 Mon Jul 11 20:08:51 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Flow.cpp:
