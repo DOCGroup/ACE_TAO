@@ -1,3 +1,9 @@
+Tue Jul 12 14:46:53 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Parameters.h:
+
+	Forgot to add this file for Mon Jul 11 20:08:51 2005.
+
 Mon Jul 11 12:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-8.h:
