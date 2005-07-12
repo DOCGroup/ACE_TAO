@@ -64,8 +64,7 @@ namespace Messaging
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
  */
-/// @todo TAO_Export is temporarily
-class TAO_Export TAO_ClientRequestInfo
+class TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual TAO_Local_RefCounted_Object
 {
