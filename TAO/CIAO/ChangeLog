@@ -1,3 +1,10 @@
+Fri Jul  12 00:03:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/README.html
+        
+        Updated some directory information in this file since the quoter example has been
+        moved to new directory.
+        
 Fri Jul  11 11:44:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * TAO/CIAO/DAnCE/examples/Quoter/README.html
