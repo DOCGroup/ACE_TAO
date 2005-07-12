@@ -1,3 +1,12 @@
+Tue Jul 12 13:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Persistent_IOR/client.cpp:
+          Added check for nil reference
+
+        * tao/Thread_Lane_Resources.cpp (cleanup_rw_transports):
+          If we are already finalized (transport_cache pointer is zero)
+          directly return.
+
 Tue Jul 12 13:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Persistent_IOR/test.idl:
