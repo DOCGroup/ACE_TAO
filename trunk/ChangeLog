@@ -1,3 +1,9 @@
+Tue Jul 12 16:17:38 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* Updated all the COPYING files to reflect the revised DOC
+ 	  software open-source license.  Thanks to Angela Ziegenhorn
+ 	  <Angela.Ziegenhorn@veritas.com> for these modifications.
+
 Mon Jul 11 18:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Manager.cpp (remove_thr_all):
