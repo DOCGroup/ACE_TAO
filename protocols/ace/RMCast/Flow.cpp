@@ -4,6 +4,11 @@
 
 #include "Flow.h"
 
+#include "ace/OS_NS_unistd.h"   // sleep
+#include "ace/OS_NS_sys_time.h" // gettimeofday
+
+#include <math.h> // exp
+
 /*
 #include <iostream>
 using std::cerr;
