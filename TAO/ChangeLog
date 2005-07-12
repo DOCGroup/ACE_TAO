@@ -1,3 +1,8 @@
+Tue Jul 12 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Thread_Lane_Resources.cpp:
+          Set pointers to zero after deleting them
+
 Tue Jul 12 12:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ClientRequestInfo.h:
