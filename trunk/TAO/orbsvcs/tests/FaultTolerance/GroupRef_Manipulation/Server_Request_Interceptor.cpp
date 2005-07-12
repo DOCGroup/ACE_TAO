@@ -2,6 +2,7 @@
 
 #include "Server_Request_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
+#include "tao/PI_Server/PI_Server.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 #include "testS.h"
