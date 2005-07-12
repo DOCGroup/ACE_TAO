@@ -1,3 +1,11 @@
+Tue Jul 12 08:56:03 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Ensure that old exe files are deleted before new ones are copied in
+        the nt_service_ir test.
+          Make the nt_service_ir test fail more quickly when an error occurs.
+
 Tue Jul 12 08:33:05 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/RTCORBA/Banded_Connections/bands.irix:
