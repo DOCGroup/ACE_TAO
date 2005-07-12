@@ -243,7 +243,7 @@ ACE_Thread_Descriptor::at_exit (void *object,
    }
   else
    {
-     ACE_At_Thread_Exit* cleanup;
+     ACE_At_Thread_Exit* cleanup = 0;
      ACE_NEW_RETURN (cleanup,
                      ACE_At_Thread_Exit_Func (object,
                                               cleanup_hook,
@@ -614,9 +614,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // point to the task name in the TCB in ACE_OS::thr_create ().
   if (t_id == 0)
     {
-      ACE_NEW_RETURN (t_id,
-                      char*,
-                      -1);
+       ACE_NEW_RETURN (t_id,
+                       char*,
+                       -1);
        ACE_NEW_RETURN (*t_id,
                        char[16],
                        -1);
@@ -819,7 +819,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
                                 ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
-  ACE_Thread_Descriptor *thr_desc;
+  ACE_Thread_Descriptor *thr_desc = 0;
 
   if (td == 0)
     {
@@ -970,12 +970,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
   ACE_UNUSED_ARG (close_handler);
 #endif /* ACE_WIN32 */
 
-#if 1
-
   this->thread_desc_freelist_.add (td);
-#else
-  delete td;
-#endif /* 1 */
 
 #if defined (ACE_HAS_THREADS)
   // Tell all waiters when there are no more threads left in the pool.
@@ -986,23 +981,15 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 
 // Repeatedly call remove_thr on all table entries until there
 // is no thread left.   Must be called with lock held.
-
 void
 ACE_Thread_Manager::remove_thr_all (void)
 {
-  ACE_Thread_Descriptor *td;
+  ACE_Thread_Descriptor *td = 0;
 
   while ((td = this->thr_list_.delete_head ()) != 0)
     {
-#if defined (ACE_WIN32)
-      // We need to let go handles if we want to let the threads
-      // run wild.
-      // @@ Do we need to close down AIX thread handles too?
-      ::CloseHandle (td->thr_handle_);
-#endif /* ACE_WIN32 */
-      delete td;
+      this->remove_thr (td, 1);
     }
-
 }
 
 // ------------------------------------------------------------------
@@ -1808,7 +1795,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         this->remove_thr_all ();
 
 #if !defined (VXWORKS)
-  ACE_Thread_Descriptor_Base* item;
+  ACE_Thread_Descriptor_Base* item = 0;
   while ((item = this->terminated_thr_list_.delete_head ()) != 0)
     {
       term_thr_list_copy.insert_tail (item);
