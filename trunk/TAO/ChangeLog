@@ -1,3 +1,8 @@
+Tue Jul 12 13:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Persistent_IOR/test.idl:
+          Made the shutdown call a oneway
+
 Tue Jul 12 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Thread_Lane_Resources.cpp:
