@@ -67,9 +67,6 @@ public:
   /// Profile constructor, default.
   TAO_IIOP_Profile (TAO_ORB_Core *orb_core);
 
-  /// Destructor is to be called only through <_decr_refcnt>.
-  ~TAO_IIOP_Profile (void);
-
   /// Template methods. Please see Profile.h for documentation.
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -92,6 +89,9 @@ public:
   void add_endpoint (TAO_IIOP_Endpoint *endp);
 
 protected:
+  /// Destructor is to be called only through <_decr_refcnt>.
+  ~TAO_IIOP_Profile (void);
+
   /**
    * Helper method for encode_endpoints to deal with RT requests.
    *

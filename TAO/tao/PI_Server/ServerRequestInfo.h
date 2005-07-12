@@ -27,13 +27,13 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "portableserver_export.h"
-#include "tao/ServerRequestInfoC.h"
+#include "pi_server_export.h"
+#include "ServerRequestInfoC.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
 #include "tao/TAO_Server_Request.h"
-#include "tao/PIForwardRequestC.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI/PIForwardRequestC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -65,7 +65,7 @@ namespace TAO
    * @note This class is currently not meant to be reference counted
    *       since it is instantiated on the stack.
    */
-  class TAO_PortableServer_Export ServerRequestInfo
+  class TAO_PI_Server_Export ServerRequestInfo
     : public virtual PortableInterceptor::ServerRequestInfo,
       public virtual CORBA::LocalObject
   {
@@ -241,12 +241,6 @@ namespace TAO
      */
     //@{
 
-    /// Change the exception status.
-    void exception (CORBA::Exception *exception);
-
-    /// Set the status of the received reply.
-    void reply_status (PortableInterceptor::ReplyStatus s);
-
     /// Extract the forward object reference from the
     /// @c PortableInterceptor::ForwardRequest exception, and set the
     /// reply status flag accordingly.
@@ -300,13 +294,6 @@ namespace TAO
 
     /// The number of elements in the @c exceptions_ array.
     size_t const nexceptions_;
-
-    /// Pointer to the caught exception.
-    CORBA::Exception * caught_exception_;
-
-    /// Reply status for the current request.
-    PortableInterceptor::ReplyStatus reply_status_;
-
   };
 
 }  // End namespace TAO

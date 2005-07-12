@@ -40,8 +40,6 @@
 
 #include "tao/TimeBase.pidl"
 #include "tao/Policy.pidl"
-#include "tao/Pollable.pidl"
-
 
 #pragma prefix "omg.org"
 

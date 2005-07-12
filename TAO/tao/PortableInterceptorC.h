@@ -48,8 +48,6 @@
 #include "tao/PI_ForwardC.h"
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/InvalidSlotC.h"
-#include "tao/ClientRequestInfoC.h"
-#include "tao/ServerRequestInfoC.h"
 #include "tao/PICurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)

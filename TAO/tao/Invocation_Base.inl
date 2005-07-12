@@ -60,7 +60,19 @@ namespace TAO
   ACE_INLINE size_t &
   Invocation_Base::stack_size  (void)
   {
-    return stack_size_;
+    return this->stack_size_;
+  }
+
+  ACE_INLINE CORBA::Exception *
+  Invocation_Base::caught_exception (void)
+  {
+    return this->caught_exception_;
+  }
+
+  ACE_INLINE TAO::Invocation_Status
+  Invocation_Base::invoke_status (void) const
+  {
+    return this->invoke_status_;
   }
 #endif /*TAO_HAS_INTERCEPTORS*/
 

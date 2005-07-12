@@ -418,7 +418,6 @@ nobase_include_HEADERS = \
   CONV_FRAME.pidl \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
-  CONV_FRAMES_T.h \
   CORBALOC_Parser.h \
   CORBALOC_Parser.i \
   CORBANAME_Parser.h \
@@ -519,7 +518,6 @@ nobase_include_HEADERS = \
   GIOPC.h \
   GIOPC.inl \
   GIOPS.h \
-  GIOPS_T.h \
   GIOP_Message_Base.h \
   GIOP_Message_Generator_Parser.h \
   GIOP_Message_Generator_Parser_10.h \
@@ -1156,7 +1154,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/AdapterActivatorA.cpp \
   PortableServer/AdapterActivatorC.cpp \
   PortableServer/Adapter_Activator.cpp \
-  PortableServer/Basic_SArguments.cpp \
   PortableServer/Collocated_Object_Proxy_Broker.cpp \
   PortableServer/Creation_Time.cpp \
   PortableServer/Default_Acceptor_Filter.cpp \
@@ -1258,7 +1255,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Servant_Dispatcher.cpp \
   PortableServer/Servant_Upcall.cpp \
   PortableServer/ServerRequestInfo.cpp \
-  PortableServer/Special_Basic_SArguments.cpp \
   PortableServer/StrategyFactory.cpp \
   PortableServer/ThreadPolicy.cpp \
   PortableServer/ThreadPolicyA.cpp \
@@ -1268,7 +1264,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/ThreadStrategyORBControl.cpp \
   PortableServer/ThreadStrategySingle.cpp \
   PortableServer/ThreadStrategySingleFactoryImpl.cpp \
-  PortableServer/UB_String_SArguments.cpp \
   PortableServer/Upcall_Command.cpp \
   PortableServer/Upcall_Wrapper.cpp
 

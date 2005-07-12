@@ -1025,21 +1025,6 @@ private:
   ACE_Message_Block* partial_message_;
 };
 
-/**
- * @class TAO_Transport_Refcount_Guard
- *
- * @brief Helper class that increments the refcount on construction
- *  and decrements the refcount on destruction.
- */
-class TAO_Export TAO_Transport_Refcount_Guard
-{
-public:
-  TAO_Transport_Refcount_Guard (TAO_Transport *);
-  ~TAO_Transport_Refcount_Guard (void);
-private:
-  TAO_Transport *tr_;
-};
-
 #if defined (__ACE_INLINE__)
 # include "Transport.inl"
 #endif /* __ACE_INLINE__ */

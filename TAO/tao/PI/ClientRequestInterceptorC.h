@@ -48,7 +48,7 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PI/InterceptorC.h"
-#include "tao/PIForwardRequestC.h"
+#include "tao/PI/PIForwardRequestC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -69,22 +69,22 @@
 
 namespace PortableInterceptor
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__VAR_OUT_CH_
-  
+
   class ClientRequestInfo;
   typedef ClientRequestInfo *ClientRequestInfo_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ClientRequestInfo
       >
     ClientRequestInfo_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ClientRequestInfo
@@ -92,22 +92,22 @@ namespace PortableInterceptor
     ClientRequestInfo_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__VAR_OUT_CH_
-  
+
   class ClientRequestInterceptor;
   typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ClientRequestInterceptor
       >
     ClientRequestInterceptor_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ClientRequestInterceptor
@@ -115,45 +115,45 @@ namespace PortableInterceptor
     ClientRequestInterceptor_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_
-  
+
   class TAO_PI_Export ClientRequestInterceptor
     : public virtual ::PortableInterceptor::Interceptor
   {
   public:
     typedef ClientRequestInterceptor_ptr _ptr_type;
     typedef ClientRequestInterceptor_var _var_type;
-    
+
     // The static operations.
     static ClientRequestInterceptor_ptr _duplicate (ClientRequestInterceptor_ptr obj);
-    
+
     static void _tao_release (ClientRequestInterceptor_ptr obj);
-    
+
     static ClientRequestInterceptor_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ClientRequestInterceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ClientRequestInterceptor_ptr _nil (void)
     {
       return static_cast<ClientRequestInterceptor_ptr> (0);
     }
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_request (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -162,10 +162,10 @@ namespace PortableInterceptor
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_poll (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -173,10 +173,10 @@ namespace PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_reply (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -184,10 +184,10 @@ namespace PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_exception (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -196,7 +196,7 @@ namespace PortableInterceptor
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     

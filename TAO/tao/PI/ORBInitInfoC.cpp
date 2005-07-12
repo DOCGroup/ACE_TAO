@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -310,15 +310,9 @@ PortableInterceptor::ORBInitInfo::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ORBInitInfo::_nil ();
-    }
-  
-  ORBInitInfo_ptr proxy =
-    dynamic_cast<ORBInitInfo_ptr> (_tao_objref);
-  
-  return ORBInitInfo::_duplicate (proxy);
+  return ORBInitInfo::_duplicate (
+      dynamic_cast<ORBInitInfo_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::ORBInitInfo_ptr
@@ -327,15 +321,9 @@ PortableInterceptor::ORBInitInfo::_unchecked_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return ORBInitInfo::_nil ();
-    }
-  
-  ORBInitInfo_ptr proxy =
-    dynamic_cast<ORBInitInfo_ptr> (_tao_objref);
-  
-  return ORBInitInfo::_duplicate (proxy);
+  return ORBInitInfo::_duplicate (
+      dynamic_cast<ORBInitInfo_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::ORBInitInfo_ptr

@@ -29,7 +29,7 @@
 #define _CLIENT_REQUEST_INTERCEPTOR_IDL_
 
 #include "tao/PI/Interceptor.pidl"
-#include <PIForwardRequest.pidl>
+#include "tao/PI/PIForwardRequest.pidl"
 
 module PortableInterceptor {
 

@@ -40,9 +40,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     CharSeqC.cpp
     Cleanup_Func_Registry.cpp
     Client_Strategy_Factory.cpp
-    ClientRequestInfo.cpp
-    ClientRequestInfoA.cpp
-    ClientRequestInfoC.cpp
     ClientRequestInterceptor_Adapter.cpp
     Codeset_Manager.cpp
     Codeset_Translator_Factory.cpp
@@ -195,8 +192,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PICurrent_Copy_Callback.cpp
     PICurrent_Impl.cpp
     PICurrent_Loader.cpp
-    PIForwardRequestA.cpp
-    PIForwardRequestC.cpp
     Pluggable_Messaging.cpp
     Pluggable_Messaging_Utils.cpp
     Policy_Current.cpp
@@ -209,6 +204,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PolicyA.cpp
     PolicyC.cpp
     PolicyFactory_Registry_Adapter.cpp
+    PolicyFactory_Registry_Factory.cpp
     PollableC.cpp
     PortableInterceptorC.cpp
     Principal.cpp
@@ -224,16 +220,12 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Remote_Object_Proxy_Broker.cpp
     Reply_Dispatcher.cpp
     Request_Dispatcher.cpp
-    RequestInfoA.cpp
-    RequestInfoC.cpp
     RequestInfo_Util.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
     Sequence.cpp
     Sequence_TypeCode_Static.cpp
     Server_Strategy_Factory.cpp
-    ServerRequestInfoA.cpp
-    ServerRequestInfoC.cpp
     ServerRequestInterceptor_Adapter.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
@@ -359,9 +351,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     CharSeqC.h
     CharSeqS.h
     Cleanup_Func_Registry.h
-    ClientRequestInfo.h
-    ClientRequestInfoC.h
-    ClientRequestInfoS.h
     ClientRequestInterceptor_Adapter.h
     Client_Strategy_Factory.h
     Codeset_Manager.h
@@ -379,7 +368,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Connect_Strategy.h
     CONV_FRAMEC.h
     CONV_FRAMES.h
-    CONV_FRAMES_T.h
     corbafwd.h
     corba.h
     CORBALOC_Parser.h
@@ -436,7 +424,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     GIOP_Message_State.h
     GIOP_Message_Version.h
     GIOPS.h
-    GIOPS_T.h
     GIOP_Utils.h
     GUIResource_Factory.h
     IFR_Client_Adapter.h
@@ -534,8 +521,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PICurrentS.h
     PICurrent_Impl.h
     PICurrent_Loader.h
-    PIForwardRequestC.h
-    PIForwardRequestS.h
     PI_ForwardC.h
     Pluggable_Messaging.h
     Pluggable_Messaging_Utils.h
@@ -571,8 +556,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Reply_Dispatcher.h
     Request_Dispatcher.h
     RequestInfo_Util.h
-    RequestInfoC.h
-    RequestInfoS.h
     Resource_Factory.h
     Resume_Handle.h
     Seq_Out_T.h
@@ -582,8 +565,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Sequence_TypeCode_Static.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
-    ServerRequestInfoC.h
-    ServerRequestInfoS.h
     Service_Callbacks.h
     Service_Context.h
     Services_Activate.h

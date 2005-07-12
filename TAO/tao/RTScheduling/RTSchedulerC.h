@@ -52,8 +52,10 @@
 
 #include "tao/RTCORBA/RTCORBA_includeC.h"
 #include "tao/PortableServer/PortableServer_includeC.h"
+#include "tao/PI/ClientRequestInfoC.h"
 #include "tao/PortableInterceptorC.h"
-#include "tao/PIForwardRequestC.h"
+#include "tao/PI/PIForwardRequestC.h"
+#include "tao/PI_Server/ServerRequestInfoC.h"
 
 #ifndef TAO_RTSCHEDULER_SAFE_INCLUDE
 #error "You should not include RTSchedulerC.h directly, use RTScheduler.h"
@@ -92,22 +94,22 @@ namespace CORBA
 
 namespace RTScheduling
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_RTSCHEDULING_THREADACTION__VAR_OUT_CH_)
 #define _RTSCHEDULING_THREADACTION__VAR_OUT_CH_
-  
+
   class ThreadAction;
   typedef ThreadAction *ThreadAction_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ThreadAction
       >
     ThreadAction_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ThreadAction
@@ -115,45 +117,45 @@ namespace RTScheduling
     ThreadAction_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTSCHEDULING_THREADACTION_CH_)
 #define _RTSCHEDULING_THREADACTION_CH_
-  
+
   class TAO_RTScheduler_Export ThreadAction
     : public virtual CORBA::Object
   {
   public:
     typedef ThreadAction_ptr _ptr_type;
     typedef ThreadAction_var _var_type;
-    
+
     // The static operations.
     static ThreadAction_ptr _duplicate (ThreadAction_ptr obj);
-    
+
     static void _tao_release (ThreadAction_ptr obj);
-    
+
     static ThreadAction_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ThreadAction_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ThreadAction_ptr _nil (void)
     {
       return static_cast<ThreadAction_ptr> (0);
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void _cxx_do (
         ::CORBA::VoidData data
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -161,38 +163,38 @@ namespace RTScheduling
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     ThreadAction (void);
-    
+
     virtual ~ThreadAction (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ThreadAction (const ThreadAction &);
-    
+
     void operator= (const ThreadAction &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_RTScheduler_Export ::CORBA::TypeCode_ptr const _tc_ThreadAction;
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 

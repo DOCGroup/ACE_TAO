@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/PI/pi_export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
@@ -48,7 +48,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_PI_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -71,7 +71,7 @@ namespace PortableInterceptor
 #if !defined (_PORTABLEINTERCEPTOR_FORWARDREQUEST_CH_)
 #define _PORTABLEINTERCEPTOR_FORWARDREQUEST_CH_
   
-  class TAO_Export ForwardRequest : public CORBA::UserException
+  class TAO_PI_Export ForwardRequest : public CORBA::UserException
   {
   public:
     
@@ -119,7 +119,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ForwardRequest;
+  extern TAO_PI_Export ::CORBA::TypeCode_ptr const _tc_ForwardRequest;
 
 #endif /* end #if !defined */
 
@@ -139,16 +139,16 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_ch.cpp:52
 
-TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::ForwardRequest &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::ForwardRequest*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ForwardRequest *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::ForwardRequest *&);
+TAO_PI_Export void operator<<= (CORBA::Any &, const PortableInterceptor::ForwardRequest &); // copying version
+TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::ForwardRequest*); // noncopying version
+TAO_PI_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ForwardRequest *&); // deprecated
+TAO_PI_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::ForwardRequest *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_ch.cpp:52
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ForwardRequest &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ForwardRequest &);
+TAO_PI_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ForwardRequest &);
+TAO_PI_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ForwardRequest &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
