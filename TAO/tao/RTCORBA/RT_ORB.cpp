@@ -241,7 +241,7 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException ))
 {
-  TAO_TCP_Protocol_Properties *tmp;
+  TAO_TCP_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_TCP_Protocol_Properties (send_buffer_size,
                                         recv_buffer_size,
@@ -263,7 +263,7 @@ TAO_RT_ORB::create_unix_domain_protocol_properties (
                                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_UnixDomain_Protocol_Properties *tmp;
+  TAO_UnixDomain_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_UnixDomain_Protocol_Properties (
                                                send_buffer_size,
@@ -288,7 +288,7 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_SharedMemory_Protocol_Properties *tmp;
+  TAO_SharedMemory_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_SharedMemory_Protocol_Properties (send_buffer_size,
                                                           recv_buffer_size,
@@ -311,7 +311,7 @@ TAO_RT_ORB::create_user_datagram_protocol_properties (
                                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_UserDatagram_Protocol_Properties *tmp;
+  TAO_UserDatagram_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_UserDatagram_Protocol_Properties (
                                                  enable_network_priority),
@@ -333,7 +333,7 @@ TAO_RT_ORB::create_stream_control_protocol_properties (
                                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_StreamControl_Protocol_Properties *tmp;
+  TAO_StreamControl_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_StreamControl_Protocol_Properties (
                                                   send_buffer_size,
@@ -405,7 +405,7 @@ TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PriorityModelPolicy *tmp;
+  TAO_PriorityModelPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (priority_model, server_priority),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -420,7 +420,7 @@ TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ThreadpoolPolicy *tmp;
+  TAO_ThreadpoolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (threadpool),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -436,7 +436,7 @@ TAO_RT_ORB::create_priority_banded_connection_policy (const
                                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PriorityBandedConnectionPolicy *tmp;
+  TAO_PriorityBandedConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (priority_bands),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -450,7 +450,7 @@ RTCORBA::PrivateConnectionPolicy_ptr
 TAO_RT_ORB::create_private_connection_policy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_PrivateConnectionPolicy *tmp;
+  TAO_PrivateConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -465,7 +465,7 @@ TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protoco
                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ServerProtocolPolicy *tmp;
+  TAO_ServerProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (protocols),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -480,7 +480,7 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ClientProtocolPolicy *tmp;
+  TAO_ClientProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (protocols),
                     CORBA::NO_MEMORY (TAO::VMCID,
