@@ -1,3 +1,11 @@
+Mon Jul 11 18:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.cpp (remove_thr_all):
+          Don't just delete each Thread_Descriptor, but call remove_thr
+          for each Thread_Descriptor, this method will add the descriptor
+          to the freelist and handle all other cleanup actions. Fixes
+          some invalid reads we found in some RTCorba tests
+
 Tue Jul 12 17:15:00 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Flow.cpp:
