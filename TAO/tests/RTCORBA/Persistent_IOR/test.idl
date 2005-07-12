@@ -4,5 +4,5 @@ interface test
 {
   void method ();
 
-  void shutdown ();
+  oneway void shutdown ();
 };
