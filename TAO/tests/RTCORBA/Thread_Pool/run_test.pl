@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $number_of_clients = 4;
 $status = 0;
+$continuous = ($^O eq 'hpux');
 
 @configurations = 
     (
@@ -61,6 +62,10 @@ if (PerlACE::is_vxworks_test()) {
 }
 else {
     $SV = new PerlACE::Process ("server");
+}
+
+if ($continuous) {
+  $SV->Arguments ("-ORBSvcConf continuous$PerlACE::svcconf_ext");
 }
 
 $SV->Spawn ();

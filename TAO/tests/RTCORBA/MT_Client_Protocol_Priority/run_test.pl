@@ -12,7 +12,7 @@ $status = 0;
 $quiet = 0;
 
 # check for -q flag
-if ($ARGV[0] eq '-q') {
+if ($#ARGV >= 0 && $ARGV[0] eq '-q') {
     $quiet = 1;
 }
 
@@ -22,8 +22,6 @@ $data_file = PerlACE::LocalFile ("test_run.data");
 
 $debug_level = 1;
 $iterations = 50;
-$priority1 = 45;
-$priority2 = 50;
 
 if ($^O eq "MSWin32") {
     $priority1 = 2;
@@ -36,6 +34,14 @@ elsif ($^O eq "dec_osf") {
 elsif ($^O eq "hpux") {
     $priority1 = 17;
     $priority2 = 22;
+}
+elsif ($^O eq "irix") {
+    $priority1 = 27;
+    $priority2 = 33;
+}
+else {
+    $priority1 = 45;
+    $priority2 = 50;
 }
 
 # Clean up leftovers from previous runs.
