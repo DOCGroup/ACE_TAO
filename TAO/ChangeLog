@@ -1,3 +1,8 @@
+Tue Jul 12 17:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.{h,cpp}:
+          Fixed compile errors
+
 Tue Jul 12 08:56:03 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
