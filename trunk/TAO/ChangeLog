@@ -1,3 +1,8 @@
+Tue Jul 12 11:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_ORB.cpp:
+          Initialise pointers with 0
+
 Tue Jul 12 11:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1639_Regression/test.mpc:
