@@ -1,3 +1,9 @@
+Wed Jul 13 12:53:34 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+
+          Added a missing ACE_CHECK_RETURN.
+
 Wed Jul 13 16:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
