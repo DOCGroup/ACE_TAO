@@ -41,6 +41,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Cleanup_Func_Registry.cpp
     Client_Strategy_Factory.cpp
     ClientRequestInterceptor_Adapter.cpp
+    ClientRequestInterceptor_Adapter_Factory.cpp
     Codeset_Manager.cpp
     Codeset_Translator_Factory.cpp
     Collocated_Invocation.cpp
@@ -225,6 +226,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Sequence_TypeCode_Static.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInterceptor_Adapter.cpp
+    ServerRequestInterceptor_Adapter_Factory.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
     Services_Activate.cpp
