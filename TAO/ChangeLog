@@ -1,3 +1,9 @@
+Tue Jul 12 17:43:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Tue Jul 12 17:12:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
