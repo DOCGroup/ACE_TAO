@@ -129,6 +129,8 @@
 // to pick it up.
 #if defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE > 2)
 #  define ACE_HAS_SHM_OPEN
+#else
+#  undef ACE_HAS_SHM_OPEN
 #endif /* _POSIX_C_SOURCE > 2 */
 
 // The struct msghdr is conditional on SunOS 5.6 based on _XPG4_2

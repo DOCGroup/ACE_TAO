@@ -1,8 +1,16 @@
+Wed Jul 13 07:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process_Semaphore.cpp:
+          Removed commented out explicit template instantiations
+
+        * ace/Containers_T.h:
+          Small doxygen fix
+
 Tue Jul 12 22:59:12 UTC 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * html/index.html:
 
-	  Fixed a typo which was introduced in this HTML file for 
+	  Fixed a typo which was introduced in this HTML file for
 	  my earlier checkin.
 
 Tue Jul 12 16:17:38 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
@@ -11,7 +19,7 @@ Tue Jul 12 16:17:38 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
  	  software open-source license.  Thanks to Angela Ziegenhorn
  	  <Angela.Ziegenhorn@veritas.com> for these modifications.
 
-Mon Jul 11 18:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Jul 12 18:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Manager.cpp (remove_thr_all):
           Don't just delete each Thread_Descriptor, but call remove_thr
