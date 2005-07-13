@@ -166,8 +166,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                                                CORBA::COMPLETED_NO));
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s processing using %s ")
-                      ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
+                      ACE_TEXT ("(%P|%t): %s processing using %s ")
+                      ACE_TEXT ("original thread CORBA/native priority %d/%d ")
                       ACE_TEXT ("not changed\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (priority_model),
                       ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
@@ -179,8 +179,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 #else /* ACE_HAS_THREADS */
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s processing using %s ")
-                      ACE_TEXT ("(%P|%t): original thread CORBA/native priority ")
+                      ACE_TEXT ("(%P|%t): %s processing using %s ")
+                      ACE_TEXT ("original thread CORBA/native priority ")
                       ACE_TEXT ("not changed\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (priority_model),
                       ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id)));
