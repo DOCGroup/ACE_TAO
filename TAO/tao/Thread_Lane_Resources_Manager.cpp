@@ -33,12 +33,3 @@ TAO_Thread_Lane_Resources_Manager_Factory::~TAO_Thread_Lane_Resources_Manager_Fa
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

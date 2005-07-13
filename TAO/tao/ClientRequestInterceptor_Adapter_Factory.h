@@ -39,6 +39,8 @@ class TAO_Export TAO_ClientRequestInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
+  virtual ~TAO_ClientRequestInterceptor_Adapter_Factory (void);
+
   virtual TAO::ClientRequestInterceptor_Adapter *create (void) = 0;
 };
 
