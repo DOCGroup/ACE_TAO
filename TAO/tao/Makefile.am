@@ -99,7 +99,6 @@ libTAO_la_SOURCES = \
   Dynamic_ParameterA.cpp \
   Dynamic_ParameterC.cpp \
   Empty_Param_TypeCode.cpp \
-  Encodable.cpp \
   Endpoint.cpp \
   Endpoint_Selector_Factory.cpp \
   Enum_TypeCode_Static.cpp \
@@ -486,7 +485,6 @@ nobase_include_HEADERS = \
   Dynamic_ParameterC.h \
   Empty_Param_TypeCode.h \
   Empty_Param_TypeCode.inl \
-  Encodable.h \
   Endpoint.h \
   Endpoint.i \
   Endpoint_Selector_Factory.h \
@@ -2817,6 +2815,7 @@ libTAO_Utils_la_CPPFLAGS = \
   -DTAO_UTILS_BUILD_DLL
 
 libTAO_Utils_la_SOURCES = \
+  Utils/Encodable.cpp \
   Utils/Implicit_Deactivator.cpp \
   Utils/ORB_Destroyer.cpp \
   Utils/ORB_Manager.cpp \
@@ -2837,6 +2836,7 @@ libTAO_Utils_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Utils/Auto_Functor.h \
+  Utils/Encodable.h \
   Utils/Implicit_Deactivator.h \
   Utils/ORB_Destroyer.h \
   Utils/ORB_Manager.h \

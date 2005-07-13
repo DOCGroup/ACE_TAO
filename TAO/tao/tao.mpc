@@ -77,7 +77,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     DynamicA.cpp
     DynamicC.cpp
     Empty_Param_TypeCode.cpp
-    Encodable.cpp
     Endpoint.cpp
     Endpoint_Selector_Factory.cpp
     Enum_TypeCode_Static.cpp
@@ -395,7 +394,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     DynamicC.h
     DynamicS.h
     Dynamic_ParameterC.h
-    Encodable.h
     Endpoint.h
     Endpoint_Selector_Factory.h
     Enum_TypeCode.h
