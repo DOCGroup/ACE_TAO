@@ -88,7 +88,7 @@ Tue Jul 12 08:33:05 2005  Chad Elliott  <elliott_c@ociweb.com>
         * tests/RTCORBA/Thread_Pool/continuous.conf:
         * tests/RTCORBA/Thread_Pool/continuous.conf.xml:
         * tests/RTCORBA/Thread_Pool/run_test.pl:
-                             de
+
           For HP-UX, the only priority mapping that makes sense is
           continuous.  For each of these tests, I added a configurator file
           to set the priority mapping and only use it on HP-UX.

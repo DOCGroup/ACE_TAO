@@ -5,10 +5,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Create lightweight ACE_Hash_Manager for use in TAO
 
-PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.7
+PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
 ====================================================
-
-. Support for shared libraries with VxWorks
 
 . RMCast
   - Support for message fragmentation. This will allow
@@ -17,6 +15,16 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.7
   - Timed recv() in RMCast::Socket.
   - Per-instance configurable protocol parameters (e.g., message
     retention time, NAK timeout, etc).
+
+USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
+====================================================
+
+. Support for shared libraries with VxWorks
+
+. Extended ACE_OS::event_xxx implementation to support platforms
+  having either PThread support with Process Shared condition
+  variables or POSIX semaphores with named (process shared)
+  semaphore support or using the new FIFO based semaphores.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.5 and ACE-5.4.6
 ====================================================
