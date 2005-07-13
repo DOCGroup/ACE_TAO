@@ -111,15 +111,3 @@ ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>::operator () (const ACE_TCHAR *
   return p;
 }
 
-//
-// These are instantiated both with and without ACE_HAS_THREADS.
-//
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-// template class ACE_Guard<ACE_Process_Semaphore>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-// #pragma instantiate ACE_Guard<ACE_Process_Semaphore>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
