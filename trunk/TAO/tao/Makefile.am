@@ -223,7 +223,6 @@ libTAO_la_SOURCES = \
   Policy_Manager.cpp \
   Policy_Set.cpp \
   Policy_Validator.cpp \
-  PollableC.cpp \
   PortableInterceptorC.cpp \
   PredefinedType_Seq_Tmplinst.cpp \
   Principal.cpp \
@@ -702,9 +701,6 @@ nobase_include_HEADERS = \
   Policy_Set.h \
   Policy_Set.i \
   Policy_Validator.h \
-  Pollable.pidl \
-  PollableC.h \
-  PollableS.h \
   PortableInterceptor.h \
   PortableInterceptor.pidl \
   PortableInterceptorC.h \
@@ -1740,6 +1736,7 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Messaging_RT_PolicyC.cpp \
   Messaging/Messaging_SyncScope_PolicyA.cpp \
   Messaging/Messaging_SyncScope_PolicyC.cpp \
+  Messaging/PollableC.cpp \
   Messaging/TAO_ExtA.cpp \
   Messaging/TAO_ExtC.cpp
 
@@ -1780,6 +1777,9 @@ nobase_include_HEADERS += \
   Messaging/Messaging_RT_PolicyC.h \
   Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/Messaging_SyncScope_PolicyC.h \
+  Messaging/PollableC.h \
+  Messaging/PollableS.h \
+  Messaging/Pollable.pidl \
   Messaging/TAO_Ext.pidl \
   Messaging/TAO_ExtC.h \
   Messaging/messaging_export.h
