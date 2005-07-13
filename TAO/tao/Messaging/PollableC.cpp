@@ -37,6 +37,8 @@
 #include "tao/Objref_TypeCode_Static.h"
 #include "tao/Struct_TypeCode_Static.h"
 #include "tao/TypeCode_Struct_Field.h"
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -93,6 +95,14 @@ CORBA::Pollable::Pollable (void)
 
 CORBA::Pollable::~Pollable (void)
 {}
+
+void 
+CORBA::Pollable::_tao_any_destructor (void *_tao_void_pointer)
+{
+  Pollable *_tao_tmp_pointer =
+    static_cast<Pollable *> (_tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
 
 CORBA::Pollable_ptr
 CORBA::Pollable::_narrow (
@@ -174,6 +184,24 @@ CORBA::Pollable::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_Pollable (
+    CORBA::tk_local_interface,
+    "IDL:omg.org/CORBA/Pollable:1.0",
+    "Pollable");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_Pollable =
+    &_tao_tc_CORBA_Pollable;
+}
+
+
+
+// TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::DIIPollable.
@@ -214,6 +242,14 @@ CORBA::DIIPollable::DIIPollable (void)
 
 CORBA::DIIPollable::~DIIPollable (void)
 {}
+
+void 
+CORBA::DIIPollable::_tao_any_destructor (void *_tao_void_pointer)
+{
+  DIIPollable *_tao_tmp_pointer =
+    static_cast<DIIPollable *> (_tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
 
 CORBA::DIIPollable_ptr
 CORBA::DIIPollable::_narrow (
@@ -299,6 +335,24 @@ CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_DIIPollable (
+    CORBA::tk_local_interface,
+    "IDL:omg.org/CORBA/DIIPollable:1.0",
+    "DIIPollable");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_DIIPollable =
+    &_tao_tc_CORBA_DIIPollable;
+}
+
+
+
+// TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::PollableSet.
@@ -362,6 +416,13 @@ CORBA::PollableSet::NoPossiblePollable::operator= (const ::CORBA::PollableSet::N
 {
   this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
+}
+
+void CORBA::PollableSet::NoPossiblePollable::_tao_any_destructor (void *_tao_void_pointer)
+{
+  NoPossiblePollable *_tao_tmp_pointer =
+    static_cast<NoPossiblePollable *> (_tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
 CORBA::PollableSet::NoPossiblePollable *
@@ -470,6 +531,13 @@ CORBA::PollableSet::UnknownPollable::operator= (const ::CORBA::PollableSet::Unkn
   return *this;
 }
 
+void CORBA::PollableSet::UnknownPollable::_tao_any_destructor (void *_tao_void_pointer)
+{
+  UnknownPollable *_tao_tmp_pointer =
+    static_cast<UnknownPollable *> (_tao_void_pointer);
+  delete _tao_tmp_pointer;
+}
+
 CORBA::PollableSet::UnknownPollable *
 CORBA::PollableSet::UnknownPollable::_downcast (CORBA::Exception *_tao_excp)
 {
@@ -552,6 +620,14 @@ CORBA::PollableSet::PollableSet (void)
 CORBA::PollableSet::~PollableSet (void)
 {}
 
+void 
+CORBA::PollableSet::_tao_any_destructor (void *_tao_void_pointer)
+{
+  PollableSet *_tao_tmp_pointer =
+    static_cast<PollableSet *> (_tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
+
 CORBA::PollableSet_ptr
 CORBA::PollableSet::_narrow (
     CORBA::Object_ptr _tao_objref
@@ -629,4 +705,397 @@ CORBA::Boolean
 CORBA::PollableSet::marshal (TAO_OutputCDR &)
 {
   return false;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_PollableSet (
+    CORBA::tk_local_interface,
+    "IDL:omg.org/CORBA/PollableSet:1.0",
+    "PollableSet");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_PollableSet =
+    &_tao_tc_CORBA_PollableSet;
+}
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::Pollable>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::Pollable>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::Pollable>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::Pollable_ptr _tao_elem
+  )
+{
+  CORBA::Pollable_ptr _tao_objptr =
+    CORBA::Pollable::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::Pollable_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::Pollable>::insert (
+      _tao_any,
+      CORBA::Pollable::_tao_any_destructor,
+      CORBA::_tc_Pollable,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::Pollable_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::Pollable>::extract (
+        _tao_any,
+        CORBA::Pollable::_tao_any_destructor,
+        CORBA::_tc_Pollable,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::DIIPollable>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::DIIPollable>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::DIIPollable>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::DIIPollable_ptr _tao_elem
+  )
+{
+  CORBA::DIIPollable_ptr _tao_objptr =
+    CORBA::DIIPollable::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::DIIPollable_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::DIIPollable>::insert (
+      _tao_any,
+      CORBA::DIIPollable::_tao_any_destructor,
+      CORBA::_tc_DIIPollable,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::DIIPollable_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::DIIPollable>::extract (
+        _tao_any,
+        CORBA::DIIPollable::_tao_any_destructor,
+        CORBA::_tc_DIIPollable,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::PollableSet>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::PollableSet>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::PollableSet>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::PollableSet_ptr _tao_elem
+  )
+{
+  CORBA::PollableSet_ptr _tao_objptr =
+    CORBA::PollableSet::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::PollableSet_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::PollableSet>::insert (
+      _tao_any,
+      CORBA::PollableSet::_tao_any_destructor,
+      CORBA::_tc_PollableSet,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::PollableSet_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::PollableSet>::extract (
+        _tao_any,
+        CORBA::PollableSet::_tao_any_destructor,
+        CORBA::_tc_PollableSet,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from 
+// be\be_visitor_exception/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<CORBA::PollableSet::NoPossiblePollable>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<CORBA::PollableSet::NoPossiblePollable>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
+}
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::PollableSet::NoPossiblePollable &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::PollableSet::NoPossiblePollable>::insert_copy (
+      _tao_any,
+      CORBA::PollableSet::NoPossiblePollable::_tao_any_destructor,
+      CORBA::PollableSet::_tc_NoPossiblePollable,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::PollableSet::NoPossiblePollable *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::PollableSet::NoPossiblePollable>::insert (
+      _tao_any,
+      CORBA::PollableSet::NoPossiblePollable::_tao_any_destructor,
+      CORBA::PollableSet::_tc_NoPossiblePollable,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::PollableSet::NoPossiblePollable *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::PollableSet::NoPossiblePollable *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::PollableSet::NoPossiblePollable *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::PollableSet::NoPossiblePollable>::extract (
+        _tao_any,
+        CORBA::PollableSet::NoPossiblePollable::_tao_any_destructor,
+        CORBA::PollableSet::_tc_NoPossiblePollable,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from 
+// be\be_visitor_exception/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<CORBA::PollableSet::UnknownPollable>::marshal_value (TAO_OutputCDR &)
+  {
+    return false;
+  }
+  
+  template<>
+  CORBA::Boolean
+  Any_Dual_Impl_T<CORBA::PollableSet::UnknownPollable>::demarshal_value (TAO_InputCDR &)
+  {
+    return false;
+  }
+}
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::PollableSet::UnknownPollable &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::PollableSet::UnknownPollable>::insert_copy (
+      _tao_any,
+      CORBA::PollableSet::UnknownPollable::_tao_any_destructor,
+      CORBA::PollableSet::_tc_UnknownPollable,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::PollableSet::UnknownPollable *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::PollableSet::UnknownPollable>::insert (
+      _tao_any,
+      CORBA::PollableSet::UnknownPollable::_tao_any_destructor,
+      CORBA::PollableSet::_tc_UnknownPollable,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::PollableSet::UnknownPollable *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::PollableSet::UnknownPollable *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::PollableSet::UnknownPollable *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::PollableSet::UnknownPollable>::extract (
+        _tao_any,
+        CORBA::PollableSet::UnknownPollable::_tao_any_destructor,
+        CORBA::PollableSet::_tc_UnknownPollable,
+        _tao_elem
+      );
 }

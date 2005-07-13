@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "messaging_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -50,7 +50,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_Messaging_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -119,7 +119,7 @@ namespace CORBA
 #if !defined (_CORBA_POLLABLE_CH_)
 #define _CORBA_POLLABLE_CH_
   
-  class TAO_Export Pollable
+  class TAO_Messaging_Export Pollable
     : public virtual CORBA::Object
   {
   public:
@@ -146,7 +146,7 @@ namespace CORBA
       return static_cast<Pollable_ptr> (0);
     }
     
-    
+    static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -196,6 +196,11 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_Pollable;
+  
+  // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_CORBA_DIIPOLLABLE__VAR_OUT_CH_)
@@ -224,7 +229,7 @@ namespace CORBA
 #if !defined (_CORBA_DIIPOLLABLE_CH_)
 #define _CORBA_DIIPOLLABLE_CH_
   
-  class TAO_Export DIIPollable
+  class TAO_Messaging_Export DIIPollable
     : public virtual ::CORBA::Pollable
   {
   public:
@@ -251,7 +256,7 @@ namespace CORBA
       return static_cast<DIIPollable_ptr> (0);
     }
     
-    
+    static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -280,12 +285,17 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_DIIPollable;
+  
+  // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLLABLESET_CH_)
 #define _CORBA_POLLABLESET_CH_
   
-  class TAO_Export PollableSet
+  class TAO_Messaging_Export PollableSet
     : public virtual CORBA::Object
   {
   public:
@@ -312,7 +322,7 @@ namespace CORBA
       return static_cast<PollableSet_ptr> (0);
     }
     
-    
+    static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:53
@@ -320,7 +330,7 @@ namespace CORBA
 #if !defined (_CORBA_POLLABLESET_NOPOSSIBLEPOLLABLE_CH_)
 #define _CORBA_POLLABLESET_NOPOSSIBLEPOLLABLE_CH_
     
-    class TAO_Export NoPossiblePollable : public CORBA::UserException
+    class TAO_Messaging_Export NoPossiblePollable : public CORBA::UserException
     {
     public:
       
@@ -329,6 +339,8 @@ namespace CORBA
       ~NoPossiblePollable (void);
 
       NoPossiblePollable &operator= (const NoPossiblePollable &);
+      
+      static void _tao_any_destructor (void *);
       
       static NoPossiblePollable *_downcast (CORBA::Exception *);
       static const NoPossiblePollable *_downcast (CORBA::Exception const *);
@@ -368,7 +380,7 @@ namespace CORBA
 #if !defined (_CORBA_POLLABLESET_UNKNOWNPOLLABLE_CH_)
 #define _CORBA_POLLABLESET_UNKNOWNPOLLABLE_CH_
     
-    class TAO_Export UnknownPollable : public CORBA::UserException
+    class TAO_Messaging_Export UnknownPollable : public CORBA::UserException
     {
     public:
       
@@ -377,6 +389,8 @@ namespace CORBA
       ~UnknownPollable (void);
 
       UnknownPollable &operator= (const UnknownPollable &);
+      
+      static void _tao_any_destructor (void *);
       
       static UnknownPollable *_downcast (CORBA::Exception *);
       static const UnknownPollable *_downcast (CORBA::Exception const *);
@@ -490,6 +504,11 @@ namespace CORBA
   };
 
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_PollableSet;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -507,7 +526,7 @@ namespace TAO
 #define _CORBA_POLLABLE__TRAITS_CH_
   
   template<>
-  struct TAO_Export Objref_Traits< ::CORBA::Pollable>
+  struct TAO_Messaging_Export Objref_Traits< ::CORBA::Pollable>
   {
     static ::CORBA::Pollable_ptr duplicate (
         ::CORBA::Pollable_ptr
@@ -528,7 +547,7 @@ namespace TAO
 #define _CORBA_DIIPOLLABLE__TRAITS_CH_
   
   template<>
-  struct TAO_Export Objref_Traits< ::CORBA::DIIPollable>
+  struct TAO_Messaging_Export Objref_Traits< ::CORBA::DIIPollable>
   {
     static ::CORBA::DIIPollable_ptr duplicate (
         ::CORBA::DIIPollable_ptr
@@ -549,7 +568,7 @@ namespace TAO
 #define _CORBA_POLLABLESET__TRAITS_CH_
   
   template<>
-  struct TAO_Export Objref_Traits< ::CORBA::PollableSet>
+  struct TAO_Messaging_Export Objref_Traits< ::CORBA::PollableSet>
   {
     static ::CORBA::PollableSet_ptr duplicate (
         ::CORBA::PollableSet_ptr
@@ -566,6 +585,43 @@ namespace TAO
 
 #endif /* end #if !defined */
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_ch.cpp:52
+
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::Pollable_ptr); // copying
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::Pollable_ptr *); // non-copying
+TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Pollable_ptr &);
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_ch.cpp:52
+
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::DIIPollable_ptr); // copying
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::DIIPollable_ptr *); // non-copying
+TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::DIIPollable_ptr &);
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_ch.cpp:52
+
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::PollableSet_ptr); // copying
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::PollableSet_ptr *); // non-copying
+TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PollableSet_ptr &);
+
+// TAO_IDL - Generated from
+// be\be_visitor_exception/any_op_ch.cpp:52
+
+TAO_Messaging_Export void operator<<= (CORBA::Any &, const CORBA::PollableSet::NoPossiblePollable &); // copying version
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::PollableSet::NoPossiblePollable*); // noncopying version
+TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PollableSet::NoPossiblePollable *&); // deprecated
+TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::PollableSet::NoPossiblePollable *&);
+
+// TAO_IDL - Generated from
+// be\be_visitor_exception/any_op_ch.cpp:52
+
+TAO_Messaging_Export void operator<<= (CORBA::Any &, const CORBA::PollableSet::UnknownPollable &); // copying version
+TAO_Messaging_Export void operator<<= (CORBA::Any &, CORBA::PollableSet::UnknownPollable*); // noncopying version
+TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PollableSet::UnknownPollable *&); // deprecated
+TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::PollableSet::UnknownPollable *&);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
