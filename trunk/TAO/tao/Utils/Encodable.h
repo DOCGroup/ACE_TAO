@@ -8,7 +8,6 @@
  *   Defines the interface for classes that wish to be
  *   encodable/decodable into/from a CDR representation.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================
@@ -24,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "utils_export.h"
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
@@ -38,7 +37,7 @@ class TAO_InputCDR;
  * encoded/decoded into/from a CDR stream. Implementation of the
  * streaming methods is deferred to the subclasses.
  */
-class TAO_Export TAO_Encodable
+class TAO_UTILS_Export TAO_Encodable
 {
 public:
 
