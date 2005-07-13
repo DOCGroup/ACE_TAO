@@ -118,27 +118,27 @@ TAO_Transport::reset_flush_timer (void)
 // codeset related methods
 
 
-ACE_INLINE TAO_Codeset_Translator_Factory *
+ACE_INLINE TAO_Codeset_Translator_Base *
 TAO_Transport::char_translator (void) const
 {
   return this->char_translator_;
 }
 
-ACE_INLINE TAO_Codeset_Translator_Factory *
+ACE_INLINE TAO_Codeset_Translator_Base *
 TAO_Transport::wchar_translator (void) const
 {
   return this->wchar_translator_;
 }
 
 ACE_INLINE void
-TAO_Transport::char_translator (TAO_Codeset_Translator_Factory *tf)
+TAO_Transport::char_translator (TAO_Codeset_Translator_Base *tf)
 {
   this->char_translator_ = tf;
   this->tcs_set_ = 1;
 }
 
 ACE_INLINE void
-TAO_Transport::wchar_translator (TAO_Codeset_Translator_Factory *tf)
+TAO_Transport::wchar_translator (TAO_Codeset_Translator_Base *tf)
 {
   this->wchar_translator_ = tf;
   this->tcs_set_ = 1;

@@ -11,7 +11,6 @@
 #include "tao/Leader_Follower_Flushing_Strategy.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
 #include "tao/LF_Strategy_Complete.h"
-#include "tao/Codeset_Manager.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -43,7 +42,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , object_key_table_lock_type_ (TAO_THREAD_LOCK)
   , corba_object_lock_type_ (TAO_THREAD_LOCK)
   , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
-  , codeset_manager_ (0)
+  , char_codeset_descriptor_ ()
+  , wchar_codeset_descriptor_ ()
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
   , drop_replies_ (true)
 {
@@ -71,8 +71,6 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
     CORBA::string_free (this->parser_names_[i]);
 
   delete [] this->parser_names_;
-
-  delete this->codeset_manager_;
 }
 
 int
@@ -164,7 +162,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                  ACE_TEXT("-ORBNativeCharCodeSet")) == 0)
     {
         ++curarg;
-        CONV_FRAME::CodeSetId ncs;
+        ACE_CDR::ULong ncs;
         if (ACE_Codeset_Registry::locale_to_registry (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                                       ncs) == 0)
           {
@@ -172,7 +170,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                   endPtr, 0);
           }
-
         // Validate the CodesetId
         if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
           {
@@ -182,26 +179,24 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                          ncs));
             return -1;
           }
-        TAO_Codeset_Manager *csm = this->get_codeset_manager();
-        if (csm)
-          csm->set_ncs_c(ncs);
+        this->char_codeset_descriptor_.ncs (ncs);
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBNativeWCharCodeSet")) == 0)
       {
         ++curarg;
-        CONV_FRAME::CodeSetId ncs;
-        if (ACE_Codeset_Registry::locale_to_registry (ACE_TEXT_ALWAYS_CHAR (argv[curarg]),
+        ACE_CDR::ULong ncs;
+        if (ACE_Codeset_Registry::locale_to_registry(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                                       ncs) == 0)
           {
             char **endPtr = 0;
-            ncs = ACE_OS::strtoul (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                   endPtr, 0);
           }
         // Validate the CodesetId
         int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
-        if (mb == 0 || static_cast<size_t> (mb) > sizeof (ACE_CDR::WChar))
+        if (mb == 0 || static_cast<size_t>(mb) > sizeof (ACE_CDR::WChar))
           {
             if (TAO_debug_level > 0)
               ACE_ERROR((LM_ERROR,
@@ -209,9 +204,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                          ncs));
             return -1;
           }
-        TAO_Codeset_Manager *csm = this->get_codeset_manager();
-        if (csm)
-          csm->set_ncs_w(ncs,mb);
+        this->wchar_codeset_descriptor_.ncs (ncs, mb);
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -220,10 +213,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            TAO_Codeset_Manager *csm = this->get_codeset_manager();
-            if (csm)
-              if (csm->add_char_translator(ACE_TEXT_ALWAYS_CHAR (argv[curarg])) == -1)
-                return -1;
+            this->char_codeset_descriptor_.add_translator (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
           }
       }
 
@@ -234,10 +224,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            TAO_Codeset_Manager *csm = this->get_codeset_manager();
-            if (csm)
-              if (csm->add_wchar_translator(ACE_TEXT_ALWAYS_CHAR(argv[curarg])) == -1)
-                return -1;
+            this->wchar_codeset_descriptor_.add_translator (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
           }
       }
 
@@ -494,10 +481,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                     argv[curarg]));
       }
     }
-
-  TAO_Codeset_Manager *csm = this->get_codeset_manager();
-  if (csm)
-    csm->configure_codeset_factories();
 
   return 0;
 }
@@ -1032,15 +1015,12 @@ TAO_Default_Resource_Factory::disable_factory (void)
     }
 }
 
-TAO_Codeset_Manager *
-TAO_Default_Resource_Factory::get_codeset_manager (void)
+const TAO_Codeset_Descriptor *
+TAO_Default_Resource_Factory::get_codeset_descriptor(int for_wchar) const
 {
-  if (this->codeset_manager_ == 0)
-    {
-      ACE_NEW_RETURN (this->codeset_manager_, TAO_Codeset_Manager, 0);
-    }
-
-  return this->codeset_manager_;
+  if (for_wchar)
+    return &this->wchar_codeset_descriptor_;
+  return &this->char_codeset_descriptor_;
 }
 
 TAO_Resource_Factory::Resource_Usage

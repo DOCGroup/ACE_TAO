@@ -374,6 +374,17 @@ components is optional in GIOP 1.1 The default value is controlled by a
 compile-time flag defined in <CODE>orbconf.h</CODE>.</td>
       </tr>
       <tr>
+        <td><code>-ORBNegotiateCodesets</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBNegotiateCodesets"></a>If <em>0</em> then the ORB
+does not include the codeset negotiation subsystem, TAO_Codeset. This yields
+a somewhat smaller runtime footprint as well as a smaller IOR. However this
+also removes the ability to interoperate with ORBs on systems using
+alternative character or wide charater encodings. The default value may be set
+at compile time by defining <CODE>TAO_NEGOTIATE_CODESETS 0</CODE> in
+<CODE>orbconf.h</CODE>. Codeset negotiation support is enabled by default in
+TAO as shipped.</td>
+      </tr>
+      <tr>
         <td><code>-ORBSingleReadOptimization</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBSingleReadOptimization"></a>This option
 controls whether TAO's ``single read optimization'' is used when
@@ -449,11 +460,11 @@ more flexible address notations for IORs.</td>
       </tr>
       <tr>
         <td><code>-ORBNoServerSideNameLookups</code> <em>boolean (0|1)</em></td>
-        <td><a name="-ORBNoServerSideNameLookups"></a>Setting this to 1 will 
-prevent the ORB from looking up the peer's hostname when accepting an incoming 
+        <td><a name="-ORBNoServerSideNameLookups"></a>Setting this to 1 will
+prevent the ORB from looking up the peer's hostname when accepting an incoming
 connection from a client when the above value (<code>ORBDottedDecimalAddresses</code>)
 is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
-      </tr>      
+      </tr>
       <tr>
         <td><code>-ORBEndpoint</code> <em>endpoint</em></td>
         <td><a name="-ORBEndpoint"></a>This option is same as the <a
@@ -468,19 +479,19 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         <em>"targetNetwork:localNetwork,.."</em></td>
         <td><a name="-ORBPreferredInterfaces"></a>  This option allows
     clients running on a multihomed host to pick a local
-    network/interface to communicate with a remote target. 
+    network/interface to communicate with a remote target.
     When TAO attempts to establish a connection with a host
     matching targetNetwork, then it will use the local ip address
     matching localNetwork. Simple wildcards can be used for both
     parameters, and multiple preferred interfaces can be specified
     using comma separators. For example, for a machine with two network cards
-    identified by the ip addresses 192.168.1.10 and 192.168.1.20, you can 
+    identified by the ip addresses 192.168.1.10 and 192.168.1.20, you can
     use -ORBPreferredInterfaces *=*10,*=*20.
     Or to force all communication on the loopback address to try to first
     use the loopback address, use -ORBPreferredInterfaces 127.0.0.1=127* .
     <em>targetNetwork</em> can use any string, and must typically match
     with the value read from an IOR.
-    <em>localNetwork</em> must use a dotted decimal address, because it 
+    <em>localNetwork</em> must use a dotted decimal address, because it
     will be matched with the local ip interfaces.
         </tr>
       <tr>
@@ -652,10 +663,10 @@ is set. The default is true. </td>
       </tr>
       <tr>
         <td><code>-ORBUseSharedProfiles</code> <em>boolean (0|1)</em></td>
-        <td><a name="-ORBUseSharedProfiles"></a> 
+        <td><a name="-ORBUseSharedProfiles"></a>
           This option allows multiple implicit or explicit endpoints to be
           combined into a single profile for a given protocol rather than using
-          multiple profiles. For IIOP in non RTCORBA environments, the CORBA 
+          multiple profiles. For IIOP in non RTCORBA environments, the CORBA
           specified tagged component <code>TAG_ALTERNATE_IIOP_ADDRESS</code> is
           used to encode the combined endpoints. Processses using RTCORBA and
           priority banded connections will continue to generate Profiles with

@@ -36,4 +36,3 @@ ACE_FACTORY_DECLARE (IBM1047_ISO8859, Char_IBM1047_ISO8859_Factory)
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CHAR_IBM1047_ISO8859_FACTORY_H */
-

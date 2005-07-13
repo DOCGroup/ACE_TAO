@@ -43,7 +43,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInterceptor_Adapter.cpp
     ClientRequestInterceptor_Adapter_Factory.cpp
     Codeset_Manager.cpp
-    Codeset_Translator_Factory.cpp
+    Codeset_Translator_Base.cpp
     Collocated_Invocation.cpp
     Collocation_Proxy_Broker.cpp
     Collocation_Resolver.cpp
@@ -282,8 +282,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UserException.cpp
     UShortSeqA.cpp
     UShortSeqC.cpp
-    UTF16_BOM_Factory.cpp
-    UTF16_BOM_Translator.cpp
     Value_TypeCode_Static.cpp
     Valuetype_Adapter.cpp
     ValueModifierC.cpp
@@ -354,8 +352,9 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ClientRequestInterceptor_Adapter.h
     Client_Strategy_Factory.h
     Codeset_Manager.h
-    Codeset_Translator_Factory.h
-    Codeset_Translator_Factory_T.h
+    Codeset_Translator_Base.h
+//    Codeset_Translator_Factory.h  *** file is for backwardscompatibility only
+//                                  *** there should be no dependencies on it
     Collocated_Invocation.h
     Collocation_Proxy_Broker.h
     Collocation_Resolver.h
@@ -634,8 +633,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UserException.h
     UShortSeqC.h
     UShortSeqS.h
-    UTF16_BOM_Factory.h
-    UTF16_BOM_Translator.h
     Value_TypeCode.h
     Value_TypeCode_Static.h
     Valuetype_Adapter.h
