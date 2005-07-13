@@ -1,3 +1,9 @@
+Wed Jul 13 10:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/performance.html:
+          Started with documenting the defines that have impact on runtime
+          footprint
+
 Tue Jul 12 17:43:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
