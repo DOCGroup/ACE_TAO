@@ -1,5 +1,5 @@
---- orig/MessagingC.h	2005-03-29 14:10:15.848518400 +0200
-+++ MessagingC.h	2005-03-29 14:10:19.884321600 +0200
+--- orig/MessagingC.h	2005-07-13 20:07:51.586041600 +0200
++++ MessagingC.h	2005-07-13 20:07:52.988057600 +0200
 @@ -40,6 +40,10 @@
  # pragma once
  #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -11,10 +11,10 @@
  #include "messaging_export.h"
  #include "tao/Valuetype/ValueBase.h"
  #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
---- orig/MessagingC.cpp	2005-03-29 14:10:15.848518400 +0200
-+++ MessagingC.cpp	2005-03-29 14:10:19.884321600 +0200
+--- orig/MessagingC.cpp	2005-07-13 20:07:51.586041600 +0200
++++ MessagingC.cpp	2005-07-13 20:07:52.998072000 +0200
 @@ -29,7 +29,7 @@
- // be\be_codegen.cpp:302
+ // be\be_codegen.cpp:291
  
  
 -#include "MessagingC.h"
@@ -22,8 +22,8 @@
  #include "tao/CDR.h"
  #include "tao/Object_T.h"
  #include "tao/ORB_Core.h"
---- orig/MessagingA.cpp	2005-03-29 14:10:15.848518400 +0200
-+++ MessagingA.cpp	2005-03-29 14:11:22.284048000 +0200
+--- orig/MessagingA.cpp	2005-07-13 20:07:51.586041600 +0200
++++ MessagingA.cpp	2005-07-13 20:07:53.028115200 +0200
 @@ -25,7 +25,7 @@
  // Information about TAO is available at:
  //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -32,19 +32,19 @@
 +#include "Messaging.h"
  #include "tao/Null_RefCount_Policy.h"
  #include "tao/TypeCode_Constants.h"
- #include "tao/Alias_TypeCode.h"
---- orig/MessagingS.h	2005-03-29 14:10:15.848518400 +0200
-+++ MessagingS.h	2005-03-29 14:10:19.954422400 +0200
-@@ -33,11 +33,8 @@
+ #include "tao/Alias_TypeCode_Static.h"
+--- orig/MessagingS.h	2005-07-13 20:07:51.586041600 +0200
++++ MessagingS.h	2005-07-13 20:08:42.519280000 +0200
+@@ -33,11 +33,7 @@
  
  #include /**/ "ace/pre.h"
  
 -#include "MessagingC.h"
-+#include "Messaging.h"
- #include "tao/PollableS.h"
 -#include "tao/Messaging/Messaging_SyncScope_PolicyS.h"
 -#include "tao/Messaging/Messaging_RT_PolicyS.h"
 -#include "tao/Messaging/Messaging_No_ImplS.h"
+-#include "tao/Messaging/PollableS.h"
++#include "Messaging.h"
  #include "tao/OctetSeqS.h"
  
  #if !defined (ACE_LACKS_PRAGMA_ONCE)

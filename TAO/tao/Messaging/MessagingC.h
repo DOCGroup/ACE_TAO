@@ -58,6 +58,7 @@
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
+#include "tao/Messaging/PollableC.h"
 #include "tao/OctetSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)
