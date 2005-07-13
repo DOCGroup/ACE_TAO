@@ -1,3 +1,10 @@
+Wed Jul 13 16:46:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/ETCL.mpc:
+
+	  Added Header_Files, Inline_Files, and Template_Files sections
+	  so headers and inlines are installed for the automake build.
+
 Wed Jul 13 16:37:41 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset.mpc
