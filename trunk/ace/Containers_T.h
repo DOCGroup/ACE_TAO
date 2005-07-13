@@ -889,7 +889,7 @@ public:
    */
   T *insert_head (T *new_item);
 
-  ///Removes the head of the list and returns a pointer to that item.
+  /// Removes the head of the list and returns a pointer to that item.
   /**
    * Removes and returns the first <item> in the list.  Returns
    * internal node's address on success, 0 if the queue was empty.
@@ -897,7 +897,7 @@ public:
    */
   T* delete_head (void);
 
-  ///Removes the tail of the list and returns a pointer to that item.
+  /// Removes the tail of the list and returns a pointer to that item.
   /**
    * Removes and returns the last <item> in the list.  Returns
    * internal nodes's address on success, 0 if the queue was
