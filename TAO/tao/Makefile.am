@@ -67,10 +67,8 @@ libTAO_la_SOURCES = \
   CharSeqA.cpp \
   CharSeqC.cpp \
   Cleanup_Func_Registry.cpp \
-  ClientRequestInfo.cpp \
-  ClientRequestInfoA.cpp \
-  ClientRequestInfoC.cpp \
   ClientRequestInterceptor_Adapter.cpp \
+  ClientRequestInterceptor_Adapter_Factory.cpp \
   Client_Strategy_Factory.cpp \
   Codeset_Manager.cpp \
   Codeset_Translator_Factory.cpp \
@@ -245,9 +243,8 @@ libTAO_la_SOURCES = \
   Resume_Handle.cpp \
   Sequence.cpp \
   Sequence_TypeCode_Static.cpp \
-  ServerRequestInfoA.cpp \
-  ServerRequestInfoC.cpp \
   ServerRequestInterceptor_Adapter.cpp \
+  ServerRequestInterceptor_Adapter_Factory.cpp \
   Server_Strategy_Factory.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
