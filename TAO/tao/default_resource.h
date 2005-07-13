@@ -121,7 +121,7 @@ public:
   virtual ACE_Allocator* ami_response_handler_allocator (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
 
-  virtual TAO_Codeset_Manager *get_codeset_manager ();
+  virtual const TAO_Codeset_Descriptor *get_codeset_descriptor(int wchar=0) const;
 
   virtual int init_protocol_factories (void);
 
@@ -240,7 +240,8 @@ private:
   /// Type of flushing strategy configured
   Flushing_Strategy_Type flushing_strategy_type_;
 
-  TAO_Codeset_Manager *codeset_manager_;
+  TAO_Codeset_Descriptor char_codeset_descriptor_;
+  TAO_Codeset_Descriptor wchar_codeset_descriptor_;
 
   /// Resource usage strategy
   Resource_Usage resource_usage_strategy_;

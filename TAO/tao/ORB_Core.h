@@ -250,52 +250,6 @@ public:
                                                   ACE_ENV_ARG_DECL);
   //@}
 
-  /**
-   * @name Default Code Set Translators
-   *
-   * Get the default codeset translators.
-   *
-   * @par
-   * In most configurations these are just <nil> objects, but they can
-   * be set to something different if the native character sets are
-   * not ISO8869 (aka Latin/1, UTF-8) and UNICODE (aka UTF-16).
-   *
-   * @note
-   * This is just note on how the translator database coule be
-   * implemented: use the Service Configurator to load the translator,
-   * and then use the CodesetId (an unsigned long) to translate the
-   * character set code into the Service Object name.
-   * @par
-   * The default resource factory could parse command line options
-   * like:
-   *   - -ORBcharcodeset 0x00010001=ISO8859
-   *   - -ORBcharcodeset 0x10020417=IBM1047
-   *   - -ORBwcharcodeset 0x00010106=ISOIEC10646
-   * that would let the user experiment with different translators
-   * and plug them in on demand.
-   *@par
-   *
-   * We should also think about how translators will report conversion
-   * failures and how to simplify the implementation of char
-   * translators (it would seem like just a couple of arrays are
-   * needed, maybe the arrays should be dynamically loaded and the
-   * implementation would remain constant?  Just a thought.
-   *
-   */
-  //@{
-  /// Convert from ISO8859 to the native character set
-  ACE_Char_Codeset_Translator *from_iso8859 (void) const;
-
-  /// Convert from the native character set to ISO8859
-  ACE_Char_Codeset_Translator *to_iso8859 (void) const;
-
-  /// Convert from UNICODE to the native wide character set
-  ACE_WChar_Codeset_Translator *from_unicode (void) const;
-
-  /// Convert from the native wide character set to UNICODE
-  ACE_WChar_Codeset_Translator *to_unicode (void) const;
-  //@}
-
   /// Set/get the collocation flags
   //@{
   void optimize_collocation_objects (CORBA::Boolean opt);
@@ -908,8 +862,9 @@ public:
    */
   TAO_Flushing_Strategy *flushing_strategy (void);
 
-  /// Get Code Set Manager
+  /// Get/Set Code Set Manager
   TAO_Codeset_Manager *codeset_manager (void);
+  void codeset_manager (TAO_Codeset_Manager *);
 
   typedef ACE_Array_Map<ACE_CString, ACE_CString> InitRefMap;
 
@@ -1012,6 +967,10 @@ private:
   /// applied on objects in the @a other_orb
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
                                          const TAO_MProfile &mp);
+
+  /// Load the codeset manager, if the option is set and the library
+  /// is available.
+  void load_codeset_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
 

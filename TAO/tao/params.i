@@ -215,3 +215,16 @@ TAO_ORB_Parameters::disable_rt_collocation_resolver (bool x)
 {
   this->disable_rt_collocation_resolver_ = x;
 }
+
+
+ACE_INLINE bool
+TAO_ORB_Parameters::negotiate_codesets (void) const
+{
+  return this->negotiate_codesets_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::negotiate_codesets (bool x)
+{
+  this->negotiate_codesets_ = x;
+}

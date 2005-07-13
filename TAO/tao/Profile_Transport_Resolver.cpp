@@ -109,7 +109,8 @@ namespace TAO
       {
         TAO_Codeset_Manager *tcm =
           this->stub_->orb_core ()->codeset_manager ();
-        tcm->set_tcs (*this->profile_, *this->transport_);
+        if (tcm)
+          tcm->set_tcs (*this->profile_, *this->transport_);
       }
   }
 

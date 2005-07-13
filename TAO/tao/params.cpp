@@ -36,6 +36,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , pref_network_ ()
   , disable_rt_collocation_resolver_ (false)
   , enforce_preferred_interfaces_ (false)
+  , negotiate_codesets_ (true)
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {

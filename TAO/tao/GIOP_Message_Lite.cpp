@@ -711,8 +711,12 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
       parse_error =
         this->parse_request_header (request);
 
-      request.orb_core()->codeset_manager()->process_service_context(request);
-      transport->assign_translators(&cdr,&output);
+      TAO_Codeset_Manager *csm = request.orb_core()->codeset_manager();
+      if (csm)
+        {
+          csm->process_service_context(request);
+          transport->assign_translators(&cdr,&output);
+        }
 
       // Throw an exception if the
       if (parse_error != 0)

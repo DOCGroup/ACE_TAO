@@ -17,7 +17,7 @@
 #include "Thread_Lane_Resources.h"
 #include "Resume_Handle.h"
 #include "Codeset_Manager.h"
-#include "Codeset_Translator_Factory.h"
+#include "Codeset_Translator_Base.h"
 #include "debug.h"
 #include "CDR.h"
 #include "ORB_Core.h"
@@ -291,10 +291,9 @@ TAO_Transport::generate_request_header (
   // on a particular connection.
   if (this->first_request_)
     {
-      this->orb_core ()->codeset_manager ()->generate_service_context (
-                                                 opdetails,
-                                                 *this
-                                               );
+      TAO_Codeset_Manager *csm = this->orb_core ()->codeset_manager ();
+      if (csm)
+        csm->generate_service_context (opdetails,*this);
     }
 
   if (this->messaging_object ()->generate_request_header (opdetails,

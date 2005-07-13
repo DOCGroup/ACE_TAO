@@ -26,37 +26,37 @@
 // via the Service Manager.
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Dynamic_Service<UTF16_BOM_Factory>;
+template class ACE_Dynamic_Service<TAO_UTF16_BOM_Factory>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Dynamic_Service<UTF16_BOM_Factory>
+#pragma instantiate ACE_Dynamic_Service<TAO_UTF16_BOM_Factory>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-ACE_STATIC_SVC_DEFINE (UTF16_BOM_Factory,
-                       ACE_TEXT ("UTF16_BOM_Factory"),
+ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
+                       ACE_TEXT ("TAO_UTF16_BOM_Factory"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (UTF16_BOM_Factory),
+                       &ACE_SVC_NAME (TAO_UTF16_BOM_Factory),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO, UTF16_BOM_Factory)
-ACE_STATIC_SVC_REQUIRE (UTF16_BOM_Factory)
+ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
+ACE_STATIC_SVC_REQUIRE (TAO_UTF16_BOM_Factory)
 
-UTF16_BOM_Factory::UTF16_BOM_Factory ()
+TAO_UTF16_BOM_Factory::TAO_UTF16_BOM_Factory ()
   : translator_ (0)
   , forceBE_ (false)
 {
 }
 
-UTF16_BOM_Factory::~UTF16_BOM_Factory ()
+TAO_UTF16_BOM_Factory::~TAO_UTF16_BOM_Factory ()
 {
   delete this->translator_;
 }
 
 int
-UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
+TAO_UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   TAO_Codeset_Translator_Factory::init (argc, argv);
 
@@ -70,8 +70,8 @@ UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
     else
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t)UTF16_BOM_Factory parameter error: %s\n")
-        ACE_TEXT ("Usage: UTF16_BOM_Factory \"-forceBE\"\n")
+        ACE_TEXT ("(%P|%t)TAO_UTF16_BOM_Factory parameter error: %s\n")
+        ACE_TEXT ("Usage: TAO_UTF16_BOM_Factory \"-forceBE\"\n")
         , argv[narg]
         ));
       return -1;
@@ -81,10 +81,10 @@ UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-UTF16_BOM_Factory::parse_one_arg (int argc, ACE_TCHAR *argv[])
+TAO_UTF16_BOM_Factory::parse_one_arg (int argc, ACE_TCHAR *argv[])
 {
   int consumed = 0;
-  if ((argc > 0) && (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-forcebe")) == 0))
+  if ((argc > 0) && (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-forcebe")) == 0))
   {
     this->forceBE_ = true;
     consumed = 1;
@@ -93,14 +93,14 @@ UTF16_BOM_Factory::parse_one_arg (int argc, ACE_TCHAR *argv[])
 }
 
 CONV_FRAME::CodeSetId
-UTF16_BOM_Factory::ncs () const
+TAO_UTF16_BOM_Factory::ncs () const
 {
   create_translator();
   return this->translator_->ncs();
 }
 
 CONV_FRAME::CodeSetId
-UTF16_BOM_Factory::tcs () const
+TAO_UTF16_BOM_Factory::tcs () const
 {
   create_translator();
   return this->translator_->tcs();
@@ -109,7 +109,7 @@ UTF16_BOM_Factory::tcs () const
 // Assign either a reference to the existing translator or a new translator
 // for input CDR streams
 void
-UTF16_BOM_Factory::assign (TAO_InputCDR *cdr) const
+TAO_UTF16_BOM_Factory::assign (TAO_InputCDR *cdr) const
 {
   if (cdr)
     {
@@ -121,7 +121,7 @@ UTF16_BOM_Factory::assign (TAO_InputCDR *cdr) const
 // Assign either a reference to the existing translator or a new translator
 // for output CDR streams
 void
-UTF16_BOM_Factory::assign (TAO_OutputCDR *cdr) const
+TAO_UTF16_BOM_Factory::assign (TAO_OutputCDR *cdr) const
 {
   if (cdr)
     {
@@ -131,16 +131,16 @@ UTF16_BOM_Factory::assign (TAO_OutputCDR *cdr) const
 }
 
 void
-UTF16_BOM_Factory::create_translator () const
+TAO_UTF16_BOM_Factory::create_translator () const
 {
   if (this->translator_ == 0)
   {
-    UTF16_BOM_Factory * pthis = const_cast<UTF16_BOM_Factory *> (this);
-    ACE_NEW (pthis->translator_, UTF16_BOM_Translator (this->forceBE_));
+    TAO_UTF16_BOM_Factory * pthis = const_cast<TAO_UTF16_BOM_Factory *> (this);
+    ACE_NEW (pthis->translator_, TAO_UTF16_BOM_Translator (this->forceBE_));
     if (this->translator_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) UTF16_BOM_Factory cannot create UTF16_BOM_Translator\n")
+        ACE_TEXT ("(%P|%t) TAO_UTF16_BOM_Factory cannot create Translator\n")
         ));
     }
   }

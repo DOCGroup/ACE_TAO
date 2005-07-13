@@ -23,7 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Set.h"
+#include "ace/Service_Object.h"
+#include "TAO_Export.h"
 
 class ACE_WChar_Codeset_Translator;
 
@@ -33,57 +34,8 @@ class TAO_Operation_Details;
 
 class TAO_ServerRequest;
 class TAO_Tagged_Components;
-class TAO_Codeset_Translator_Factory;
+class TAO_Codeset_Translator_Base;
 class TAO_Codeset_Manager;
-
-// ****************************************************************
-
-/**
- * @class TAO_Codeset_Item
- *
- * @brief A single element in the list of Codeset Translator Factories
- *
- * This class is used by the Codeset_Manager to store references to
- * individual codeset factories. Only those translators that match the
- * char or wchar native codeset will be kept in the list.
- *
- */
-
-class TAO_Codeset_Item
-{
-public:
-  friend class TAO_Codeset_Manager;
-
-  /// Creator method, the codeset name can only be set when the
-  /// object is created.
-  TAO_Codeset_Item (const char *name);
-
-  /// Destructor that deallocates the factory object if the
-  /// CodeSet_Item retains ownership.
-  ~TAO_Codeset_Item (void);
-
-  /// Return a reference to the character representation of the codeset
-  /// factories name.
-  const char *codeset_name (void);
-
-  /// Return a pointer to the codeset factory.
-  TAO_Codeset_Translator_Factory *factory (void);
-
-  /// Set the factory pointer's value.
-  void factory (TAO_Codeset_Translator_Factory *factory);
-
-private:
-  // Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Codeset_Item (const TAO_Codeset_Item&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Codeset_Item&))
-
-private:
-  /// Factory name.
-  char *name_;
-
-  /// Pointer to factory object.
-  TAO_Codeset_Translator_Factory *factory_;
-};
 
 // ****************************************************************
 
@@ -108,112 +60,45 @@ class TAO_Export TAO_Codeset_Manager
 {
 
 public:
-  /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet No. 1
-  static CONV_FRAME::CodeSetId default_char_codeset;
-  /// NCS for wchar is defaulted to 0 (not used), but people wishing to
-  /// provide a non-compliant default wchar codeset may do so.
-  static CONV_FRAME::CodeSetId default_wchar_codeset;
-
-  TAO_Codeset_Manager ();
-  ~TAO_Codeset_Manager();
+  virtual ~TAO_Codeset_Manager();
 
   ///  Called by an object of TAO_Acceptor to set NCS and CCS values for
   ///  Char/Wchar in to the Object Reference.
-  void set_codeset (TAO_Tagged_Components& ) const;
-
-  /// Called from an object of TAO::Invocation_Base to set TCS on the
+  virtual void set_codeset (TAO_Tagged_Components& ) const = 0;
+  ///
+  /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport
-  void set_tcs (TAO_Profile &theProfile, TAO_Transport &);
+  virtual void set_tcs (TAO_Profile &theProfile, TAO_Transport &) = 0;
 
   /// Called from an Object of TAO_Messaging for every request at server side
   /// to process service context and set TCS for Char/WChar
-  void process_service_context (TAO_ServerRequest &);
+  virtual void process_service_context (TAO_ServerRequest &) = 0;
 
   /// Called by a client object to generate service context
   /// at this time Transport has the TCS for Char and WChar
-  void generate_service_context (TAO_Operation_Details&, TAO_Transport & );
+  virtual void generate_service_context (TAO_Operation_Details&, TAO_Transport & ) = 0;
 
-  /// Called by the resource factory to set the native char codeset id
-  void set_ncs_c (CONV_FRAME::CodeSetId ncs);
+  virtual TAO_Codeset_Translator_Base * get_char_trans (CONV_FRAME::CodeSetId tcs) = 0;
 
-  /// Called by the resource factory to set the native wchar codeset id. The
-  /// maxbytes value is used to communicate the width of untranslated wide
-  /// characters on the stream. This size may be smaller than the size of a
-  /// wchar_t.
-  void set_ncs_w (CONV_FRAME::CodeSetId ncs, int maxbytes = 0);
+  virtual TAO_Codeset_Translator_Base * get_wchar_trans (CONV_FRAME::CodeSetId tcs) = 0;
 
-  /// Called by the resource factory to add a potential codeset translator
-  /// for char data. The actual factory will be added to the list later, if its
-  /// ncs matches that of the codeset manager.
-  int add_char_translator (const char *name);
+  virtual void open (void) = 0;
 
-  /// Called by the resource factory to add a potential codeset translator
-  /// for wchar data. The actual factory will be added to the list later, if
-  /// its ncs matches that of the codeset manager.
-  int add_wchar_translator (const char *name);
+};
 
-  /// Called by the resource factory to signify the end of initialization.
-  /// This will traverse the list of named codeset translator factories and add
-  /// any of those that have a native codeset id matching the manager's native
-  /// codeset id.
-  void configure_codeset_factories();
+// ****************************************************************
 
-private:
-  /// Typedefs for containers containing the list of codesets
-  /// factories for character and wide character.
-  typedef ACE_Unbounded_Set<TAO_Codeset_Item*>
-          TAO_CodesetFactorySet;
+/**
+ * @class TAO_Codeset_Manager_Factory_Base
+ *
+ * @brief Abstract Base class for creating instances of the codeset manager.
+ */
 
-  /// Iterators
-  typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
-          TAO_CodesetFactorySetItor;
-
-  /// Compute the TCS for Char/WChar asper the CORBA Specification
-  CONV_FRAME::CodeSetId computeTCS (CONV_FRAME::CodeSetComponent &,
-                                    CONV_FRAME::CodeSetComponent &);
-
-  /// Find CodesetId in the codeset component
-  int isElementOf (CONV_FRAME::CodeSetId,
-                   CONV_FRAME::CodeSetComponent & );
-
-  /// Find the intersection of CodesetIds between Client and Server CCS
-  CONV_FRAME::CodeSetId intersectionOf (CONV_FRAME::CodeSetComponent &,
-                                        CONV_FRAME::CodeSetComponent &);
-
-  /// Determine compatibility between two codesets via the codeset registry
-  int isCompatible (CONV_FRAME::CodeSetId,  CONV_FRAME::CodeSetId);
-
-  /// Traverse the list of codeset factories, populating the list of conversion
-  /// codeset values with the translated codeset id from each factory that has
-  /// a matching native codeset. Those factories that do not have a matching
-  /// codeset are not retained in the list.
-  int init_codeset_factories_i (TAO_CodesetFactorySet&,
-                                CONV_FRAME::CodeSetComponent&);
-
-  /// Get the translator between our ncs_c and the supplied tcs_c
-  TAO_Codeset_Translator_Factory * get_char_trans (CONV_FRAME::CodeSetId);
-
-  /// Get the translator between our ncs_w and the supplied tcs_w
-  TAO_Codeset_Translator_Factory * get_wchar_trans (CONV_FRAME::CodeSetId);
-
-  TAO_Codeset_Translator_Factory * get_translator_i (TAO_CodesetFactorySet&,
-                                                     CONV_FRAME::CodeSetId);
-
-  /// The CodeSetComponentInfo struct contains all of the information regarding
-  /// the code sets this application recognizes. This is where the native code
-  /// set for both char and wchar are stored.
-  CONV_FRAME::CodeSetComponentInfo codeset_info_;
-
-  /// The lists of available translators for both chars and wchars.
-  TAO_CodesetFactorySet char_factories_;
-  TAO_CodesetFactorySet wchar_factories_;
-
-  /// The UTF16 BOM (Byte Order Marker) translator is unique in that it is
-  /// required when UTF16 is used as both the native and transmitted codeset.
-  /// It exists to insert or extract the BOM preceeding Wchar data in the
-  /// stream.
-  TAO_Codeset_Translator_Factory *utf16_bom_translator_;
-
+class TAO_Export TAO_Codeset_Factory : public ACE_Service_Object
+{
+public:
+  virtual ~TAO_Codeset_Factory ();
+  virtual TAO_Codeset_Manager *create(TAO_ORB_Core *orb_core) = 0;
 };
 
 #include /**/ "ace/post.h"

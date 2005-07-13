@@ -76,6 +76,14 @@
 # define TAO_USE_DOTTED_DECIMAL_ADDRESSES 0
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
+// If set the ORB will use codeset negotiation. This means adding a
+// Codeset component to each profile in an IOR, and a codeset context
+// to the first request. The use of codeset negotiation also causes
+// libTAO_Codeset to be linked in.
+#if !defined (TAO_NEGOTIATE_CODESETS)
+# define TAO_NEGOTIATE_CODESETS 1
+#endif /*TAO_NEGOTIATE_CODESETS*/
+
 // The default size of TAO's ORB table, i.e. the one used as the
 // underlying implementation for the CORBA::ORB_init() function.
 #if !defined (TAO_DEFAULT_ORB_TABLE_SIZE)
