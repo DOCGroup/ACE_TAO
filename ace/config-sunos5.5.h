@@ -20,6 +20,9 @@
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>
 
+// Sun has the posix defines so let this file sort out what Sun delivers
+#include "ace/config-posix.h"
+
 // Compiler version-specific settings:
 #if defined (__SUNPRO_CC)
 # if (__SUNPRO_CC < 0x410)
