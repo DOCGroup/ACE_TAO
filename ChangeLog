@@ -1,3 +1,10 @@
+Wed Jul 13 17:10:45 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/MakeProjectCreator/config/codeset.mpb:
+
+          A new base project for use when creating codeset translators or
+          any other code that must depend on the new library, TAO_Codeset.
+
 Wed Jul 13 12:42:57 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
