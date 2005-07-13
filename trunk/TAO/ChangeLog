@@ -1,3 +1,9 @@
+Wed Jul 13 13:26:45 2005  Gary Maxey <gary.maxey@hp.com>
+
+	* NEWS:
+
+	  Added information about availability of the Boxed Value Type.
+
 Wed Jul 13 13:17:56 2005   Gary Maxey <gary.maxey@hp.com>
 
         * tests/OBV/ValueBox/client.cpp:
