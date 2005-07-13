@@ -1,3 +1,8 @@
+Wed Jul 13 12:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Process_Semaphore_Test.cpp:
+          Fixed compile error in previous change
+
 Wed Jul 13 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Semaphore_Test.cpp:
