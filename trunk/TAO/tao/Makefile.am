@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -noreldefs -type automake TAO.mwc
 
 includedir = @includedir@/tao
 pkgconfigdir = @libdir@/pkgconfig
@@ -47,6 +47,7 @@ libTAO_la_SOURCES = \
   Asynch_Queued_Message.cpp \
   Asynch_Reply_Dispatcher_Base.cpp \
   Base_Transport_Property.cpp \
+  Basic_Arguments.cpp \
   BiDir_Adapter.cpp \
   Bind_Dispatcher_Guard.cpp \
   Block_Flushing_Strategy.cpp \
@@ -176,7 +177,6 @@ libTAO_la_SOURCES = \
   MProfile.cpp \
   Managed_Types.cpp \
   Marshal.cpp \
-  Messaging_PolicyValueA.cpp \
   Messaging_PolicyValueC.cpp \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
@@ -184,7 +184,6 @@ libTAO_la_SOURCES = \
   New_Leader_Generator.cpp \
   ORB.cpp \
   ORBInitializer_Registry.cpp \
-  ORBInitializer_Registry_Adapter.cpp \
   ORB_Core.cpp \
   ORB_Core_Auto_Ptr.cpp \
   ORB_Core_TSS_Resources.cpp \
@@ -227,6 +226,7 @@ libTAO_la_SOURCES = \
   Policy_Validator.cpp \
   PollableC.cpp \
   PortableInterceptorC.cpp \
+  PredefinedType_Seq_Tmplinst.cpp \
   Principal.cpp \
   Profile.cpp \
   Profile_Transport_Resolver.cpp \
@@ -257,6 +257,7 @@ libTAO_la_SOURCES = \
   Services_Activate.cpp \
   ShortSeqA.cpp \
   ShortSeqC.cpp \
+  Special_Basic_Arguments.cpp \
   StringSeqA.cpp \
   StringSeqC.cpp \
   String_TypeCode_Static.cpp \
@@ -310,6 +311,7 @@ libTAO_la_SOURCES = \
   ValueModifierC.cpp \
   Value_TypeCode_Static.cpp \
   Valuetype_Adapter.cpp \
+  VisibilityA.cpp \
   VisibilityC.cpp \
   WCharSeqA.cpp \
   WCharSeqC.cpp \
@@ -328,6 +330,7 @@ libTAO_la_SOURCES = \
   default_resource.cpp \
   default_server.cpp \
   operation_details.cpp \
+  orb_typesA.cpp \
   orb_typesC.cpp \
   params.cpp \
   skip.cpp \
@@ -418,6 +421,7 @@ nobase_include_HEADERS = \
   CONV_FRAME.pidl \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
+  CONV_FRAMES_T.h \
   CORBALOC_Parser.h \
   CORBALOC_Parser.i \
   CORBANAME_Parser.h \
@@ -518,6 +522,7 @@ nobase_include_HEADERS = \
   GIOPC.h \
   GIOPC.inl \
   GIOPS.h \
+  GIOPS_T.h \
   GIOP_Message_Base.h \
   GIOP_Message_Generator_Parser.h \
   GIOP_Message_Generator_Parser_10.h \
@@ -648,7 +653,6 @@ nobase_include_HEADERS = \
   Object_Proxy_Broker.h \
   Object_Proxy_Impl.h \
   Object_Ref_Table.h \
-  Object_Ref_Table.inl \
   Object_T.cpp \
   Object_T.h \
   Objref_TypeCode.cpp \
@@ -1154,6 +1158,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/AdapterActivatorA.cpp \
   PortableServer/AdapterActivatorC.cpp \
   PortableServer/Adapter_Activator.cpp \
+  PortableServer/Basic_SArguments.cpp \
   PortableServer/Collocated_Object_Proxy_Broker.cpp \
   PortableServer/Creation_Time.cpp \
   PortableServer/Default_Acceptor_Filter.cpp \
@@ -1255,6 +1260,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Servant_Dispatcher.cpp \
   PortableServer/Servant_Upcall.cpp \
   PortableServer/ServerRequestInfo.cpp \
+  PortableServer/Special_Basic_SArguments.cpp \
   PortableServer/StrategyFactory.cpp \
   PortableServer/ThreadPolicy.cpp \
   PortableServer/ThreadPolicyA.cpp \
@@ -1264,6 +1270,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/ThreadStrategyORBControl.cpp \
   PortableServer/ThreadStrategySingle.cpp \
   PortableServer/ThreadStrategySingleFactoryImpl.cpp \
+  PortableServer/UB_String_SArguments.cpp \
   PortableServer/Upcall_Command.cpp \
   PortableServer/Upcall_Wrapper.cpp
 
