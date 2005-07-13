@@ -15,7 +15,16 @@ project(ETCL) : orbsvcslib, core {
     ETCL
   }
 
+  Header_Files {
+    ETCL
+  }
+
+  Inline_Files {
+    ETCL
+  }
+
   Template_Files {
+    ETCL
   }
 
   Pkgconfig_Files {
