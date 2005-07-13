@@ -1,3 +1,17 @@
+Wed Jul 13 18:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Pollable.pidl:
+        * tao/PollableC.{h,cpp}:
+        * tao/PollableS.h:
+          Moved these files to the Messaging library
+
+        * tao/Messaging/*C.{h,cpp}:
+          Regenerated
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Updated because of file move above
+
 Wed Jul 13 12:53:34 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
