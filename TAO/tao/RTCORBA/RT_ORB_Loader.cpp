@@ -160,7 +160,6 @@ TAO_RT_ORB_Loader::init (int argc,
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
-      PortableInterceptor::ORBInitializer_var orb_initializer;
 
       /// Register the RTCORBA ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
@@ -175,6 +174,8 @@ TAO_RT_ORB_Loader::init (int argc,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;
+
+      PortableInterceptor::ORBInitializer_var orb_initializer;
       orb_initializer = temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()

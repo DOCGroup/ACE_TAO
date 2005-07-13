@@ -199,7 +199,7 @@ TAO_RT_ORBInitializer::pre_init (
   ACE_CHECK;
 
   // Create the RT_Current.
-  CORBA::Object_ptr current;
+  CORBA::Object_ptr current = CORBA::Object::_nil ();
   ACE_NEW_THROW_EX (current,
                     TAO_RT_Current (tao_info->orb_core ()),
                     CORBA::NO_MEMORY (
