@@ -1,3 +1,15 @@
+Wed Jul 13 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Encodable.{h,cpp}:
+        * tao/Utils/Encodable.{h,cpp}:
+          Moved Encodable from the TAO lib to the Utils lib. It is a utility
+          class that is not used in TAO and its tests. This way anyone using
+          it can keep using it.
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Updated for change above
+
 Wed Jul 13 12:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_ORB_Loader.cpp:
