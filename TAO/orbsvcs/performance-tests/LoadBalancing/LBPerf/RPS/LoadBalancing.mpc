@@ -8,7 +8,7 @@ project(*Performance_IDL): loadbalancing, strategies {
 }
 
 project(*Performance_Server): loadbalancing, pi_server, strategies {
-  after += Performance_IDL
+  after += *Performance_IDL
 
   Source_Files {
     server.cpp
