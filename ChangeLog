@@ -1,3 +1,8 @@
+Wed Jul 13 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Process_Semaphore_Test.cpp:
+          Only test timeouts when ACE_HAS_POSIX_SEM_TIMEOUT is defined
+
 Wed Jul 13 07:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h:
