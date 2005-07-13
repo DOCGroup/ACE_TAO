@@ -1,3 +1,11 @@
+Wed Jul 13 11:18:44 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+
+          Update the test to be more tolerant of differing thread behavior
+        on the various platforms.
+
 Wed Jul 13 10:24:39 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
