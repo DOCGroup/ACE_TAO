@@ -141,8 +141,8 @@ acquire_release (void)
     if (event_ping.wait (&wait))
     {
       ACE_ASSERT(errno == ETIME);
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P) Acquiring pong timed out\n")));
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("(%P) Acquiring pong timed out\n")));
     }
   }
 }
