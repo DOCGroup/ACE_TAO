@@ -1,3 +1,17 @@
+Wed Jul 13 18:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ServerRequestInterceptor_Adapter_Factory.{h,cpp}:
+        * tao/ClientRequestInterceptor_Adapter_Factory.{h,cpp}:
+          Added virtual destructor to resolve gcc4 runtime errors, the cpp
+          file is new
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Added new files
+
+        * tao/Thread_Lane_Resources_Manager.cpp:
+          Removed explicit templates
+
 Wed Jul 13 18:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Pollable.pidl:
