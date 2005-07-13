@@ -131,7 +131,7 @@ IFR_DII_Client::find_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->target_def_ =
     this->target_->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-
+  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->target_def_.in ()))
     {
