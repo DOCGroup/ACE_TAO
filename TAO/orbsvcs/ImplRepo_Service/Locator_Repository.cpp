@@ -299,9 +299,9 @@ Locator_Repository::init(const Options& opts)
       }
       break;
     }
-#if defined (ACE_WIN32)
   case Options::REPO_REGISTRY:
     {
+#if defined (ACE_WIN32)
       if (opts.repository_erase())
       {
         ACE_Configuration_Win32Registry config( HKEY_LOCAL_MACHINE );
@@ -313,9 +313,13 @@ Locator_Repository::init(const Options& opts)
         resolve_key(HKEY_LOCAL_MACHINE, WIN32_REG_KEY);
       this->config_.reset(new ACE_Configuration_Win32Registry(root));
       loadAsBinary(*this->config_, *this);
+#else
+      ACE_ERROR ((LM_ERROR, "Registry persistence is only "
+                            "supported on Windows\n"));
+      err = -1;
+#endif
       break;
     }
-#endif
   case Options::REPO_XML_FILE:
     {
       if (opts.repository_erase())

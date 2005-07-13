@@ -19,6 +19,11 @@ namespace TAO
 {
   namespace ImR_Client
   {
+    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl (void)
+     : server_object_ (0)
+    {
+    }
+
     void
     ImR_Client_Adapter_Impl::imr_notify_startup (
       TAO_Root_POA* poa ACE_ENV_ARG_DECL)

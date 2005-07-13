@@ -15,7 +15,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use Sys::Hostname;
 use File::Spec;
-use Getopt::Long qw(:config bundling);
+use Getopt::Long;
 
 
 # Initialize variables
@@ -137,7 +137,7 @@ sub start_imr
         # Start the IMR Service
         unlink "implrepo.ior";
         $IMPL = new PerlACE::Process(
-                    "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImplRepo_Service", 
+                    "$ENV{ACE_ROOT}/TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service", 
                     $IMR_CMD);
         $IMPL->Spawn();
         PerlACE::waitforfile_timed("implrepo.ior", 10);
@@ -220,7 +220,7 @@ sub start_activator
         # Start the Activator
         unlink "activator.ior";
         $ACT = new PerlACE::Process(
-                "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImR_Activator", 
+                "$ENV{ACE_ROOT}/TAO/orbsvcs/ImplRepo_Service/ImR_Activator", 
                 $ACT_CMD);
         $ACT->Spawn();
         PerlACE::waitforfile_timed("activator.ior", 5);
