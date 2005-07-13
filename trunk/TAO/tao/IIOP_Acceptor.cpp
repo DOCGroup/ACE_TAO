@@ -285,14 +285,15 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("IIOP_Acceptor::open, address==%s, options=%s\n"),
                   address, options));
     }
-      
-  this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  this->orb_core_ = orb_core;
     {
+  if (this->hosts_ != 0)
+
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -367,11 +368,12 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("IIOP_Acceptor: specified host=%s:%d\n"),
-                  (specified_hostname==0 ? "<null>" : specified_hostname),
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("IIOP_Acceptor::open, specified host=%s:%d\n"),
+                  (specified_hostname == 0 ? "<null>" : specified_hostname),
                   addr.get_port_number ()));
     }
-      
+
   this->endpoint_count_ = 1;  // Only one hostname to store
 
   ACE_NEW_RETURN (this->addrs_,
@@ -389,6 +391,8 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("IIOP_Acceptor::open, ")
                       ACE_TEXT ("Overriding address in IOR with %s\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (this->hostname_in_ior_)));
         }
@@ -587,9 +591,10 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - Overriding the hostname with <%s>\n"),
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - ")
+                      ACE_TEXT ("Overriding the hostname with <%s>\n"),
                       this->hostname_in_ior_));
-      
+
       host = CORBA::string_dup (this->hostname_in_ior_);
     }
   else if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
@@ -865,7 +870,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
       if (end == begin)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Zero length IIOP option.\n")));
+                      ACE_TEXT ("TAO (%P|%t) - Zero length IIOP option.\n")));
           result = -1;
           break;
         }
@@ -882,7 +887,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   if (argc > 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) IIOP")
+                  ACE_TEXT ("TAO (%P|%t) - IIOP")
                   ACE_TEXT (" endpoint has %d unknown options:\n"),
                   argc));
       for (int i = 0; i < argc; i++)
@@ -909,7 +914,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
       if (slot == static_cast <int> (len - 1)
           || slot == ACE_CString::npos)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
+                           ACE_TEXT ("TAO (%P|%t) - IIOP option <%s> is ")
                            ACE_TEXT ("missing a value.\n"),
                            ACE_TEXT_CHAR_TO_TCHAR(argv[i]->c_str ())),
                           -1);
