@@ -1,3 +1,12 @@
+Wed Jul 13 07:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added include of config-posix.h, let this file try to sort out
+          which posix parts Sun delivers
+
+        * ace/config-sunos5.6.h:
+          Sun 5.6 incorrectly reports that it has shm_open
+
 Wed Jul 13 07:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process_Semaphore.cpp:
@@ -13,7 +22,7 @@ Tue Jul 12 22:59:12 UTC 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	  Fixed a typo which was introduced in this HTML file for
 	  my earlier checkin.
 
-Tue Jul 12 16:17:38 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+Tue Jul 12 16:17:38 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu> t
 
 	* Updated all the COPYING files to reflect the revised DOC
  	  software open-source license.  Thanks to Angela Ziegenhorn
