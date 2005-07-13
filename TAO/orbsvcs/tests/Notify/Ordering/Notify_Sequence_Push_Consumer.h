@@ -45,7 +45,7 @@ protected:
   bool use_ordering_;
   int expected_;
   int count_;
-  int first_;
+  int previous_first_;
   Notify_Test_Client& client_;
 };
 
