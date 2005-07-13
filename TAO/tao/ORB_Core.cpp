@@ -35,6 +35,7 @@
 #include "PolicyFactory_Registry_Adapter.h"
 #include "PolicyFactory_Registry_Factory.h"
 #include "ORBInitializer_Registry_Adapter.h"
+#include "Codeset_Manager.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "Policy_Manager.h"
@@ -269,6 +270,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // Don't delete, is a process wide singleton shared by all orbs
   orbinitializer_registry_ = 0;
 
+  delete this->codeset_manager_;
+
   CORBA::release (this->orb_);
 }
 
@@ -348,6 +351,12 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                     monitor,
                     this->lock_,
                     -1);
+
+#if defined (TAO_NEGOTIATE_CODESETS) && (TAO_NEGOTIATE_CODESETS == 1)
+  int negotiate_codesets = 1;
+#else
+  int negotiate_codesets = 0;
+#endif /* TAO_NEGOTIATE_CODESETS */
 
   // Pick up the value of the use_implrepo_ flag from an environment variable
   // called "TAO_USE_IMR". Do it here so that it can be overridden by
@@ -881,6 +890,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
            arg_shifter.consume_arg ();
          }
+       else if ((current_arg = arg_shifter.get_the_parameter
+                 (ACE_LIB_TEXT("-ORBNegotiateCodesets"))))
+         {
+           negotiate_codesets =
+             (ACE_OS::atoi (current_arg));
+
+           arg_shifter.consume_arg ();
+         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBSingleReadOptimization"))))
         {
@@ -1004,7 +1021,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                           CORBA::COMPLETED_NO),
                         -1);
     }
-
+#if 0
   // @@Phil: Could we add a -ORB option to prevent creation of codeset
   // manager. This adds to our runtime footprint. It would be awesome
   // if we can do away with this if the user doesnt want to. Does that
@@ -1023,6 +1040,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                           CORBA::COMPLETED_NO),
                         -1);
     }
+#endif
 
   // @@ ????
   // Make sure the reactor is initialized...
@@ -1135,9 +1153,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
-  // When caching incoming transports don't use the host name if 
+  // When caching incoming transports don't use the host name if
   // -ORBDottedDecimalAddresses or -ORBNoServerSideNameLookups is true.
-  this->orb_params ()->cache_incoming_by_dotted_decimal_address 
+  this->orb_params ()->cache_incoming_by_dotted_decimal_address
                                             (no_server_side_name_lookups
                                              || dotted_decimal_addresses);
   this->orb_params ()->linger (linger);
@@ -1150,6 +1168,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
   this->orb_params ()->std_profile_components (std_profile_components);
+
+  this->orb_params ()->negotiate_codesets (negotiate_codesets);
 
   // Set up the pluggable protocol infrastructure.  First get a
   // pointer to the protocol factories set, then obtain pointers to
@@ -2364,6 +2384,39 @@ TAO_ORB_Core::resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL)
 
       this->ior_table_ = iortable_adapter->root ();
     }
+}
+
+void
+TAO_ORB_Core::load_codeset_manager ()
+{
+  if (this->orb_params()->negotiate_codesets() == 0)
+    return;
+
+  TAO_Codeset_Factory *factory =
+    ACE_Dynamic_Service<TAO_Codeset_Factory>::instance ("TAO_Codeset");
+  if (factory == 0)
+    {
+      ACE_Service_Config::process_directive
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
+                                       "TAO_Codeset",
+                                       "_make_TAO_Codeset_Manager_Factory",
+                                       ""));
+      factory =
+        ACE_Dynamic_Service<TAO_Codeset_Factory>::instance ("TAO_Codeset");
+    }
+  if (factory == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT("(%P|%t) ORB_Core: ")
+                    ACE_TEXT("Unable to initialize Codeset Manager\n")));
+      return;
+    }
+
+  this->codeset_manager_ = factory->create (this);
+  if (this->codeset_manager_)
+    this->codeset_manager_->open();
+
 }
 
 int

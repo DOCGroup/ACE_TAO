@@ -22,15 +22,17 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
-#include "tao/Codeset_Translator_Factory.h"
+#include "Codeset_Translator_Factory.h"
 
 #include "UTF16_BOM_Translator.h"
+#include "codeset_export.h"
 
-class TAO_Export UTF16_BOM_Factory : public  TAO_Codeset_Translator_Factory
+class TAO_Codeset_Export TAO_UTF16_BOM_Factory
+  : public  TAO_Codeset_Translator_Factory
 {
 public:
-  UTF16_BOM_Factory ();
-  virtual ~UTF16_BOM_Factory ();
+  TAO_UTF16_BOM_Factory ();
+  virtual ~TAO_UTF16_BOM_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// ncs returns the translator's native codeset ID.
@@ -54,12 +56,12 @@ private:
   int parse_one_arg (int argc, ACE_TCHAR *argv[]);
 
 private:
-  UTF16_BOM_Translator *translator_;
+  TAO_UTF16_BOM_Translator *translator_;
   bool forceBE_;    // force big endian wchar, warray, & wstring
 };
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO, UTF16_BOM_Factory)
-ACE_FACTORY_DECLARE (TAO, UTF16_BOM_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF16_BOM_Factory)
+ACE_FACTORY_DECLARE (TAO_Codeset, TAO_UTF16_BOM_Factory)
 
 #include /**/ "ace/post.h"
 #endif /* UTF16_BOM_FACTORY_H */

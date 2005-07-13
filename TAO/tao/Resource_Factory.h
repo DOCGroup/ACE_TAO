@@ -23,6 +23,7 @@
 
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
+#include "ace/CDR_Base.h"
 
 #include "tao/TAO_Export.h"
 
@@ -34,7 +35,6 @@ class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
 
-class TAO_Codeset_Manager;
 class ACE_Lock;
 
 // ****************************************************************
@@ -83,6 +83,34 @@ typedef ACE_Unbounded_Set<TAO_Protocol_Item*>
 
 typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
         TAO_ProtocolFactorySetItor;
+
+// ****************************************************************
+
+class TAO_Export TAO_Codeset_Descriptor
+{
+public:
+  TAO_Codeset_Descriptor ();
+  ~TAO_Codeset_Descriptor ();
+  struct Translator_Node
+  {
+    char *name_;
+    Translator_Node *next_;
+  };
+  void ncs (ACE_CDR::ULong ncs, int mb = 0);
+  ACE_CDR::ULong ncs (void) const;
+  int max_bytes (void) const;
+
+  int ncs_set (void) const;
+
+  void add_translator (const char *name);
+  const Translator_Node *translators (void) const;
+
+private:
+  ACE_CDR::ULong ncs_;
+  int max_bytes_;
+  int ncs_set_;
+  Translator_Node *trans_base_;
+};
 
 // ****************************************************************
 
@@ -175,7 +203,8 @@ public:
    */
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
 
-  virtual TAO_Codeset_Manager *get_codeset_manager(void);
+  // Returns either the char or wchar codeset descriptor object.
+  virtual const TAO_Codeset_Descriptor *get_codeset_descriptor(int for_wchar=0) const;
 
   /**
    * This method will loop through the protocol list and

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Codeset_Translator_Factory.h"
+#include "Codeset_Translator_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,7 @@ public:
   TAO_Codeset_Translator_Factory_T ();
   virtual ~TAO_Codeset_Translator_Factory_T ();
 
-  /// Initialize the factory service object. Instantiates the translator.
+  /// initialize the factory service object. Instantiates the translator.
   int init( int argc, ACE_TCHAR* argv[]);
 
   /// ncs returns the translator's native codeset ID.
@@ -68,7 +68,7 @@ private:
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Codeset_Translator_Factory_T.cpp"
+#include "Codeset_Translator_Factory_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

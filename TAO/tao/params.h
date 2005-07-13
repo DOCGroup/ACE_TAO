@@ -109,7 +109,7 @@ public:
   /// decimal form of the peer's address
   int cache_incoming_by_dotted_decimal_address (void) const;
   void cache_incoming_by_dotted_decimal_address (int);
-  
+
   /// The ORB will turn off SO_LINGER if this is zero.
   int linger (void) const;
   void linger (int);
@@ -179,6 +179,10 @@ public:
 
   void enforce_pref_interfaces (bool p);
   bool enforce_pref_interfaces (void) const;
+
+  void negotiate_codesets (bool c);
+  bool negotiate_codesets (void) const;
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -233,8 +237,8 @@ private:
 
   /// For selecting a address notation
   int use_dotted_decimal_addresses_;
-  
-  /// If incoming connections should be cached against IP (true) or 
+
+  /// If incoming connections should be cached against IP (true) or
   /// hostname (false).
   int cache_incoming_by_dotted_decimal_address_;
 
@@ -295,6 +299,9 @@ private:
   bool disable_rt_collocation_resolver_;
 
   bool enforce_preferred_interfaces_;
+
+  /// Enable the use of codeset negotiation
+  bool negotiate_codesets_;
 };
 
 #if defined (__ACE_INLINE__)

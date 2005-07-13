@@ -1,3 +1,77 @@
+Wed Jul 13 16:37:41 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset.mpc
+        * tao/Codeset_Manager.cpp
+        * tao/Codeset_Manager.h
+        * tao/Codeset_Translator_Base.cpp
+        * tao/Codeset_Translator_Base.h
+        * tao/Codeset_Translator_Factory.h
+        * tao/GIOP_Message_Base.cpp
+        * tao/GIOP_Message_Lite.cpp
+        * tao/IIOP_Acceptor.cpp
+        * tao/ORB_Core.cpp
+        * tao/ORB_Core.h
+        * tao/ORB_Core.i
+        * tao/Profile_Transport_Resolver.cpp
+        * tao/Resource_Factory.cpp
+        * tao/Resource_Factory.h
+        * tao/Transport.cpp
+        * tao/Transport.h
+        * tao/Transport.inl
+        * tao/default_resource.cpp
+        * tao/default_resource.h
+        * tao/orbconf.h
+        * tao/params.cpp
+        * tao/params.h
+        * tao/params.i
+        * tao/tao.mpc
+        * tao/Codeset/Codeset_Manager_i.cpp
+        * tao/Codeset/Codeset_Manager_i.h
+        * tao/Codeset/Codeset_Translator_Factory.cpp
+        * tao/Codeset/Codeset_Translator_Factory.h
+        * tao/Codeset/Codeset_Translator_Factory_T.cpp
+        * tao/Codeset/Codeset_Translator_Factory_T.h
+        * tao/Codeset/UTF16_BOM_Factory.cpp
+        * tao/Codeset/UTF16_BOM_Factory.h
+        * tao/Codeset/UTF16_BOM_Translator.cpp
+        * tao/Codeset/UTF16_BOM_Translator.h
+        * tao/Codeset/UTF8_Latin1_Factory.cpp
+        * tao/Codeset/UTF8_Latin1_Factory.h
+        * tao/Codeset/UTF8_Latin1_Translator.cpp
+        * tao/Codeset/UTF8_Latin1_Translator.h
+        * tao/Codeset/codeset_export.h
+
+          Refactored the support for codeset negotiation. All logic is now
+          maintained in a separate library, TAO_Codeset. The class
+          TAO_Codeset_Manager is now an abstract base class, providing the
+          interface, when needed, to the traditional codeset assignment
+          and translator selection functions. Since the instance of the
+          codeset manager is now optional, all places that reference it
+          must test for a non-null pointer. The initialization of the
+          codeset manager is now deferred. The resource factory now
+          populates a collection of codeset descriptors based on the
+          supplied configuration options. The ORB Core loads an instance
+          of the codeset manager on demand if the negotiate_codesets
+          option is set. The tao/Codeset_Translator_Factory.h file remains
+          as a shell to support backwards compatibility at the code level,
+          but the base class for the translators is now in the Codeset
+          library.
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/CodeSets_libs_IMB1047_ISO8859.mpc
+        * tests/CodeSets/libs/UCS4_UTF16/CodeSets_libs_UCS4_UTF16.mpc
+
+          Added a reference to the new MPC base project, codeset.
+
+        * tests/CodeSets/simple/CodeSets_simple.mpc
+        * tests/CodeSets/simple/wcs_test.conf
+
+          Fixed misc. typos and odd dependancies.
+
+        * docs/Options.html:
+        * NEWS:
+
+          Added description of Codeset changes.
+
 Wed Jul 13 13:26:45 2005  Gary Maxey <gary.maxey@hp.com>
 
 	* NEWS:
@@ -7,7 +81,7 @@ Wed Jul 13 13:26:45 2005  Gary Maxey <gary.maxey@hp.com>
 Wed Jul 13 13:17:56 2005   Gary Maxey <gary.maxey@hp.com>
 
         * tests/OBV/ValueBox/client.cpp:
-        * tests/OBV/ValueBox/run_test.pl: 
+        * tests/OBV/ValueBox/run_test.pl:
         * tests/OBV/ValueBox/server.cpp:
         * tests/OBV/ValueBox/Test_impl.cpp:
         * tests/OBV/ValueBox/Test_impl.h:

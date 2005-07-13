@@ -35,7 +35,7 @@ class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
-class TAO_Codeset_Translator_Factory;
+class TAO_Codeset_Translator_Base;
 
 class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
@@ -744,16 +744,16 @@ public:
   size_t sent_byte_count (void);
 
   /// CodeSet Negotiation - Get the char codeset translator factory
-  TAO_Codeset_Translator_Factory *char_translator (void) const;
+  TAO_Codeset_Translator_Base *char_translator (void) const;
 
   /// CodeSet Negotiation - Get the wchar codeset translator factory
-  TAO_Codeset_Translator_Factory *wchar_translator (void) const;
+  TAO_Codeset_Translator_Base *wchar_translator (void) const;
 
   /// CodeSet negotiation - Set the char codeset translator factory
-  void char_translator (TAO_Codeset_Translator_Factory *);
+  void char_translator (TAO_Codeset_Translator_Base *);
 
   /// CodeSet negotiation - Set the wchar codeset translator factory
-  void wchar_translator (TAO_Codeset_Translator_Factory *);
+  void wchar_translator (TAO_Codeset_Translator_Base *);
 
   /// Use the Transport's codeset factories to set the translator for input
   /// and output CDRs.
@@ -1007,8 +1007,8 @@ private:
   /// with the DSCP stuff around there. Do you agree?
 
   /// Additional member values required to support codeset translation
-  TAO_Codeset_Translator_Factory *char_translator_;
-  TAO_Codeset_Translator_Factory *wchar_translator_;
+  TAO_Codeset_Translator_Base *char_translator_;
+  TAO_Codeset_Translator_Base *wchar_translator_;
 
   /// The tcs_set_ flag indicates that negotiation has occured and so the
   /// translators are correct, since a null translator is valid if both ends

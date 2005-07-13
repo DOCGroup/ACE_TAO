@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "tao/Codeset_Translator_Factory.h"
+#include "Codeset_Translator_Factory.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (tao,
