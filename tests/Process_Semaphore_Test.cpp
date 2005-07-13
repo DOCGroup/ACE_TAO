@@ -109,7 +109,8 @@ acquire_release (void)
 
 #if defined (ACE_WIN32) || \
       defined (ACE_USES_FIFO_SEM) || \
-      (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
+      (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) &&
+       !defined (ACE_LACKS_NAMED_POSIX_SEM))
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P) Testing timeouts\n")));
 
@@ -142,7 +143,8 @@ acquire_release (void)
 
 #if defined (ACE_WIN32) || \
       defined (ACE_USES_FIFO_SEM) || \
-      (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
+      (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) &&
+       !defined (ACE_LACKS_NAMED_POSIX_SEM))
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P) Testing timeouts\n")));
 
