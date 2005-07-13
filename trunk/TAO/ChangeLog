@@ -1,9 +1,35 @@
+Wed Jul 13 10:24:39 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Print an error if the registry option is used on a non-Windows OS.
+
+        * orbsvcs/examples/ImR/Advanced/run_test.pl:
+
+          When "using" Getopts::Long, take everything to be compatible with
+          Perl 5.6.1.
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+
+          Simplify the persistence project by using a wildcard.
+
+        * tao/ImR_Client/ImR_Client.h:
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Added a constructor to initialize the server_object_ pointer.
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          Do not put the passed in POAManager in the safe_poa_manager as we
+          do not want it to be destroyed in case an exception is thrown
+          during the create_POA_i() method.
+
 Wed Jul 13 08:01:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
 
-	  Fixed typo introduced in:
-	  Tue Jul 12 17:12:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+          Fixed typo introduced in:
+          Tue Jul 12 17:12:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Wed Jul 13 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -45,30 +71,30 @@ Wed Jul 13 10:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jul 12 17:43:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Tue Jul 12 17:12:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
-	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
 
-	  Add *_IDL projects for compiling *.idl files.  This eliminates
-	  duplicate rules that would otherwise result when Makefile.am's
-	  are aggregated in the automake build.
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
 
 Tue Jul 12 13:39:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
 
-	  Make _IDL projects unconditional now that Chad has enhanced
-	  MPC to support custom_only builds for VC++ projects.
+          Make _IDL projects unconditional now that Chad has enhanced
+          MPC to support custom_only builds for VC++ projects.
 
 Tue Jul 12 18:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

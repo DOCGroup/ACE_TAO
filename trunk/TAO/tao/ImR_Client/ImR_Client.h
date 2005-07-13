@@ -45,7 +45,10 @@ namespace TAO
       : public ::TAO::Portable_Server::ImR_Client_Adapter
     {
     public:
-      // Used to force the initialization of the PortableServer code.
+      /// Constructor.
+      ImR_Client_Adapter_Impl (void);
+
+      /// Used to force the initialization of the PortableServer code.
       static int Initializer (void);
 
       /// ImplRepo helper method, notify the ImplRepo on startup

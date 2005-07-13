@@ -247,9 +247,7 @@ project(CosNotification_Persist) : notification_serv, core, acexml {
   }
 
   Source_Files {
-    Notify/XML_Loader.cpp
-    Notify/XML_Saver.cpp
-    Notify/XML_Topology_Factory.cpp
+    Notify/XML_*.cpp
   }
 
   Header_Files {
