@@ -1,3 +1,10 @@
+Wed Jul 13 08:01:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+
+	  Fixed typo introduced in:
+	  Tue Jul 12 17:12:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Wed Jul 13 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Encodable.{h,cpp}:
