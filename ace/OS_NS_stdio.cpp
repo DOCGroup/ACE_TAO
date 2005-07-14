@@ -381,11 +381,13 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
-  // the max possible length. If this isn't ok, use ACE_OS::snprintf().
+  // a length that works (ULONG_MAX doesn't on all platform since some check
+  // to see if the operation will remain in bounds). If this isn't ok, use
+  // ACE_OS::snprintf().
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (ACE_STD_NAMESPACE::vswprintf (buf, ULONG_MAX, format, ap), int, -1, result);
+  ACE_OSCALL (ACE_STD_NAMESPACE::vswprintf (buf, 4096, format, ap), int, -1, result);
   va_end (ap);
   return result;
 
