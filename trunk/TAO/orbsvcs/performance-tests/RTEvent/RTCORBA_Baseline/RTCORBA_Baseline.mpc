@@ -1,4 +1,14 @@
 // $Id$
+
+project(*IDL): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+
+  IDL_Files {
+    Test.idl
+  }
+
+  custom_only = 1
+}
+
 project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
@@ -7,6 +17,12 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   Source_Files {
     server.cpp
     Roundtrip.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+
+  after    += *IDL
+  IDL_Files {
   }
 }
 
@@ -18,5 +34,9 @@ project(*client): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   Source_Files {
     TestC.cpp
     client.cpp
+  }
+
+  after    += *IDL
+  IDL_Files {
   }
 }
