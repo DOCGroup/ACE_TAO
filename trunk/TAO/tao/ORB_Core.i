@@ -256,7 +256,6 @@ TAO_ORB_Core::orb_params(void)
   return &(this->orb_params_);
 }
 
-
 ACE_INLINE TAO_Codeset_Manager *
 TAO_ORB_Core::codeset_manager()
 {
@@ -277,7 +276,7 @@ ACE_INLINE void
 TAO_ORB_Core::codeset_manager (TAO_Codeset_Manager *tcm)
 {
   this->codeset_manager_ = tcm;
-};
+}
 
 #define TAO_OC_RETRIEVE(member) \
 ((this->member##_ == 0) \
