@@ -49,8 +49,8 @@ WARN_FORMAT           = "$file:$line: $text"
 
 INPUT                 = TAO/CIAO/DAnCE
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt *.idl
-RECURSIVE             =
-EXCLUDE               =
+RECURSIVE             = YES
+EXCLUDE               = TAO/CIAO/DAnCE/examples TAO/CIAO/DAnCE/tests
 EXCLUDE_PATTERNS      =
 EXAMPLE_PATH          =
 EXAMPLE_PATTERNS      =
