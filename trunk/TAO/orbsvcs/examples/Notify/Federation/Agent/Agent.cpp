@@ -5,23 +5,23 @@
 #include <iostream>
 #include <sstream>
 
-#include <ace/OS.h>
+#include "ace/OS.h"
 
-#include <tao/corba.h>
+#include "tao/corba.h"
 
-#include <orbsvcs/CosNotificationC.h>
-#include <orbsvcs/CosNotifyChannelAdminC.h>
-#include <orbsvcs/CosNotifyCommC.h>
-#include <orbsvcs/CosNotifyCommS.h>
+#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNotifyCommS.h"
 
 // For in-process Notification Service.
 //
-#include <ace/Dynamic_Service.h>
-#include <orbsvcs/Notify/Service.h>
-#include <orbsvcs/Notify/CosNotify_Initializer.h> // NS static link helper.
+#include "ace/Dynamic_Service.h"
+#include "orbsvcs/Notify/Service.h"
+#include "orbsvcs/Notify/CosNotify_Initializer.h" // NS static link helper.
 
 
-#include <Gate/Gate.h>
+#include "Gate/Gate.h"
 
 using std::cerr;
 using std::endl;
@@ -206,7 +206,11 @@ main (int argc, char* argv[])
 
     // Activate the root POA.
     //
-    CORBA::Object_var obj (orb->resolve_initial_references ("RootPOA"));
+    CORBA::Object_var obj (
+      orb->resolve_initial_references ("RootPOA"
+                                       ACE_ENV_ARG_PARAMETER));
+    ACE_TRY_CHECK;
+
     PortableServer::POA_var root_poa (PortableServer::POA::_narrow (obj.in ()));
 
     PortableServer::POAManager_var poa_manager (root_poa->the_POAManager ());
