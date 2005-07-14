@@ -616,6 +616,61 @@ CPPFLAGS += -DACE_USE_RCSID=0
 </pre>
 </code>
 
+<P>
+If portable interceptors aren't needed, code around line 729 in
+<code>$TAO_ROOT/tao/orbconf.h</code> can be modified to hard-code 
+<code>TAO_HAS_INTERCEPTORS</code> as <code>0</code>, and all interceptor 
+code will be skipped by the preprocessor.
+
+<P>
+The following IDL compiler options can be used to reduce compile-time
+footprint:<p>
+<TABLE BORDER=2 CELLSPACING=2 CELLPADDING=2 ID="Table1">
+  <TH>Command-Line Option
+  <TH>Description and Usage
+  <TR>
+    <TD><code>-Sc</code>
+    <TD>Suppresses generation of the TIE classes (template classes used
+    to delegate request dispatching when IDL interface inheritance 
+    would cause a 'ladder' of inheritance if the servant classe had
+    corresponding inheritance). This option can be used almost all the
+    time.
+  <tr>
+    <td><code>-Sa</code>
+    <td>Suppresses generation of Any insertion/extraction operators. If
+    the application IDL contains no Anys, and the application itself
+    doesn't use them, this can be a useful option.
+  <tr>
+    <td><code>-St</code>
+    <td>Suppresses type code generation. Since Anys depend on type codes,
+    this option will also suppress the generation of Any operators. Usage
+    requires the same conditions as for the suppression of Any operators,
+    plus no type codes in application IDL and no application usage of
+    generated type codes.
+  <tr>
+    <td><code>-GA</code>
+    <td>Generates type code and Any operator definitions into a separate
+    file with a 'A' suffix just before the <code>.cpp</code> extension.
+    This is a little more flexible and transparent than using <code>-Sa</code> or
+    <code>-St</code> if you are compiling to DLLs or shared objects,
+    since the code in this file won't get linked in unless it's used.
+  <tr>
+    <td><code>-Sp</code>
+    <td>Suppresses the generation of extra classes used for thru-POA
+    collocation optimization. If the application has no collocated
+    client/server pairs, or if the performance gain from collocation
+    optimization is not important, this option can be used.
+  <tr>
+    <td><code>-H dynamic_hash</code><br>
+        <code>-H binary_search</code><br>
+        <code>-H linear_search</code><br>
+    <td>Generates alternatives to the default code generated on
+    the skeleton side for operation dispatching (which uses perfect
+    hashing). These options each give a small amount of footprint
+    reducion, each amount slightly different, with a corresponding tradeoff
+    in speed of operation dispatch.
+</TABLE>
+
     <a name="runtime_footprint"></a>
     <h4>Run-time Footprint</h4>
 
@@ -655,7 +710,7 @@ HREF="http://www.ociweb.com/cnb/CORBANewsBrief-200212.html">here</A>. <P>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Sat Jul  9 16:17:09 CDT 2005
+Last modified: Thu Jul  14 16:36:12 CDT 2005
 <!-- hhmts end -->
   </body>
 </html>
