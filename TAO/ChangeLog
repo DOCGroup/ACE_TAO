@@ -1,3 +1,12 @@
+Thu Jul 14 08:38:48 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp
+        * tests/OBV/ValueBox/Test_impl.cpp
+        * tests/OBV/ValueBox/client.cpp
+        * tests/OBV/ValueBox/server.cpp: 
+
+          Fixed platform-specific errors.
+
 Thu Jul 14 09:06:53 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset/codeset_export.h:
