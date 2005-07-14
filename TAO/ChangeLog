@@ -1,3 +1,9 @@
+Thu Jul 14 09:06:53 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset/codeset_export.h:
+
+          Another round of fixes.
+
 Thu Jul 14 08:11:27 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset/codeset_export.h:
