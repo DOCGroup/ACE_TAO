@@ -1,9 +1,18 @@
+Thu Jul 14 10:51:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Thu Jul 14 08:38:48 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp
         * tests/OBV/ValueBox/Test_impl.cpp
         * tests/OBV/ValueBox/client.cpp
-        * tests/OBV/ValueBox/server.cpp: 
+        * tests/OBV/ValueBox/server.cpp:
 
           Fixed platform-specific errors.
 
