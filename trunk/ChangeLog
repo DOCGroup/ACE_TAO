@@ -1,3 +1,10 @@
+Wed Jul 13 22:12:12 UTC 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * etc/ciao_DAnCE.doxygen
+
+          Added "RECURSIVE=YES" so source files could be found correctly
+	  Also added excluded path option for CIAO examples and tests.
+
 Wed Jul 13 17:10:45 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/MakeProjectCreator/config/codeset.mpb:
