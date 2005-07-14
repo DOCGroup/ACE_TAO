@@ -1,3 +1,10 @@
+Wed Jul 13 21:51:15 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.h:
+
+          I forgot to take out the unneeded CORBA::Environment arg from
+          load_codeset_manager. This was caught by a No Exceptions build.
+
 Wed Jul 13 16:46:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/ETCL.mpc:
