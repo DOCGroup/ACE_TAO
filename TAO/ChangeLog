@@ -1,3 +1,10 @@
+Thu Jul 14 12:20:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Codeset.mpc:
+
+	  Added PIDL_Files and Resource_Files definitions so that bogus
+	  definitions aren't added to the project.
+
 Thu Jul 14 10:51:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
