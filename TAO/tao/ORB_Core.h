@@ -970,7 +970,7 @@ private:
 
   /// Load the codeset manager, if the option is set and the library
   /// is available.
-  void load_codeset_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void load_codeset_manager ();
 
 protected:
 
