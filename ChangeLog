@@ -1,3 +1,9 @@
+Thu Jul 14 12:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Record.cpp:
+          Fixed compile error in previous committed caused when merging
+          changes from one system to another
+
 Thu Jul 14 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp (sprintf wchar):
