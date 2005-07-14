@@ -1,3 +1,8 @@
+        Thu Jul 14 08:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.i:
+          Removed not needed ;
+
 Thu Jul 14 09:37:54 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
