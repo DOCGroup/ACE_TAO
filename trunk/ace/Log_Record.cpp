@@ -223,7 +223,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::snprintf (verbose_msg,
-                        MAXVERBOSELOGMSGLEN
+                        MAXVERBOSELOGMSGLEN,
                         verbose_fmt,
                         timestamp,
                         lhost_name,
