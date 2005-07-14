@@ -1,3 +1,10 @@
+Thu Jul 14 09:37:54 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+
+	  Fixed a number of fuzz errors.
+
 Wed Jul 13 21:51:15 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB_Core.h:
