@@ -1,3 +1,16 @@
+Thu Jul 14 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp (sprintf wchar):
+          ULONG_MAX was passed, this caused vswprintf to return always -1
+          because ULONG_MAX is of course really large on a 64bit system.
+          Pass 4096 instead, just as done with the other vswprintf in
+          OS_NS_stdio.inl.
+
+        * ace/Log_Record.cpp:
+          Use snprintf because we know the sizes of the buffer, this way
+          we don't call the method above that caused problems on 64bit
+          systems.
+
 Thu Jul 14 09:31:55 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Flow.cpp:
