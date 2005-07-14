@@ -66,14 +66,14 @@ TAO_UTF8_Latin1_Translator::read_char_i (ACE_InputCDR &cdr, ACE_CDR::Char &x)
         return 0;
       if ( upper < 0xC0 )
         {
-          x = ACE_static_cast(ACE_CDR::Char, upper);
+          x = static_cast<ACE_CDR::Char>(upper);
           return 1;
         }
       ACE_CDR::Octet lower;
       if (this->read_1 (cdr, &lower))
         {
           ACE_CDR::Octet final = ((upper & 0xBF) << 6) + (lower & 0xC0);
-          x = ACE_static_cast (ACE_CDR::Char, final);
+          x = static_cast<ACE_CDR::Char>(final);
           return 2;
         };
     }
@@ -87,8 +87,8 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
     return 0;
-  if (ACE_static_cast (ACE_CDR::Short, this->major_version(cdr)) == 1
-      && ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) == 2)
+  if (static_cast<ACE_CDR::Short>(this->major_version(cdr)) == 1
+      && static_cast<ACE_CDR::Short>(this->minor_version(cdr)) == 2)
     len--;
 
   // A check for the length being too great is done later in the
@@ -172,7 +172,7 @@ TAO_UTF8_Latin1_Translator::write_char_i (ACE_OutputCDR &cdr,
     { // character cannot be represented in a single octet
       // Since the source will never be > 0xFF, we don't have to worry about
       // using a third octet.
-      ACE_CDR::Octet upper = 0xC0 + ox >> 6;
+      ACE_CDR::Octet upper = 0xC0 + (ox >> 6);
       ACE_CDR::Octet lower = 0x80 + (ox & 0x3F);
       if (this->write_1(cdr, &upper))
         return this->write_1(cdr, &lower);
@@ -192,7 +192,7 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
   ACE_CDR::ULong l = len;
   // Compute the real buffer size by adding in multi-byte codepoints.
   for (ACE_CDR::ULong i = 0; i < len; i++)
-    if (ACE_static_cast(ACE_CDR::Octet,x[i]) > 0xbf) l++;
+    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf) l++;
 
   // Always add one for the nul
   l++;
