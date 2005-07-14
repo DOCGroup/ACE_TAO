@@ -20,4 +20,10 @@ project : taolib, core {
   Template_Files {
     Codeset
   }
+
+  Resource_Files {
+  }
+
+  PIDL_Files {
+  }
 }
