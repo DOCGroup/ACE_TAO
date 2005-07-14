@@ -84,14 +84,16 @@ TAO_UTF8_Latin1_Factory::create_translator () const
 {
   if (this->translator_ == 0)
   {
-    TAO_UTF8_Latin1_Factory * pthis = ACE_const_cast (TAO_UTF8_Latin1_Factory *, this);
+    TAO_UTF8_Latin1_Factory * pthis =
+      const_cast <TAO_UTF8_Latin1_Factory *>(this);
     ACE_NEW (pthis->translator_, TAO_UTF8_Latin1_Translator);
     if (this->translator_ == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) TAO_UTF8_Latin1_Factory cannot ")
-                  ACE_TEXT("create TAO_UTF8_Latin1_Translator\n")
-        ));
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) TAO_UTF8_Latin1_Factory cannot ")
+                    ACE_TEXT("create TAO_UTF8_Latin1_Translator\n")
+                    ));
     }
   }
 }
