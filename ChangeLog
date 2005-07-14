@@ -9,7 +9,7 @@ Thu Jul 14 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Log_Record.cpp:
           Use snprintf because we know the sizes of the buffer, this way
           we don't call the method above that caused problems on 64bit
-          systems.
+          systems. This fixes bugzilla 2176.
 
 Thu Jul 14 09:31:55 2005  Boris Kolpackov  <boris@kolpackov.net>
 
