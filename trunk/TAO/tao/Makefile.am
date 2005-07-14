@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -noreldefs -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
 includedir = @includedir@/tao
 pkgconfigdir = @libdir@/pkgconfig
@@ -47,7 +47,6 @@ libTAO_la_SOURCES = \
   Asynch_Queued_Message.cpp \
   Asynch_Reply_Dispatcher_Base.cpp \
   Base_Transport_Property.cpp \
-  Basic_Arguments.cpp \
   BiDir_Adapter.cpp \
   Bind_Dispatcher_Guard.cpp \
   Block_Flushing_Strategy.cpp \
@@ -71,7 +70,7 @@ libTAO_la_SOURCES = \
   ClientRequestInterceptor_Adapter_Factory.cpp \
   Client_Strategy_Factory.cpp \
   Codeset_Manager.cpp \
-  Codeset_Translator_Factory.cpp \
+  Codeset_Translator_Base.cpp \
   Collocated_Invocation.cpp \
   Collocation_Proxy_Broker.cpp \
   Collocation_Resolver.cpp \
@@ -174,6 +173,7 @@ libTAO_la_SOURCES = \
   MProfile.cpp \
   Managed_Types.cpp \
   Marshal.cpp \
+  Messaging_PolicyValueA.cpp \
   Messaging_PolicyValueC.cpp \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
@@ -181,6 +181,7 @@ libTAO_la_SOURCES = \
   New_Leader_Generator.cpp \
   ORB.cpp \
   ORBInitializer_Registry.cpp \
+  ORBInitializer_Registry_Adapter.cpp \
   ORB_Core.cpp \
   ORB_Core_Auto_Ptr.cpp \
   ORB_Core_TSS_Resources.cpp \
@@ -203,8 +204,6 @@ libTAO_la_SOURCES = \
   PICurrent_Copy_Callback.cpp \
   PICurrent_Impl.cpp \
   PICurrent_Loader.cpp \
-  PIForwardRequestA.cpp \
-  PIForwardRequestC.cpp \
   PI_ForwardC.cpp \
   ParameterModeA.cpp \
   ParameterModeC.cpp \
@@ -214,6 +213,7 @@ libTAO_la_SOURCES = \
   PolicyA.cpp \
   PolicyC.cpp \
   PolicyFactory_Registry_Adapter.cpp \
+  PolicyFactory_Registry_Factory.cpp \
   Policy_Current.cpp \
   Policy_Current_Impl.cpp \
   Policy_ForwardA.cpp \
@@ -222,7 +222,6 @@ libTAO_la_SOURCES = \
   Policy_Set.cpp \
   Policy_Validator.cpp \
   PortableInterceptorC.cpp \
-  PredefinedType_Seq_Tmplinst.cpp \
   Principal.cpp \
   Profile.cpp \
   Profile_Transport_Resolver.cpp \
@@ -235,8 +234,6 @@ libTAO_la_SOURCES = \
   Remote_Invocation.cpp \
   Remote_Object_Proxy_Broker.cpp \
   Reply_Dispatcher.cpp \
-  RequestInfoA.cpp \
-  RequestInfoC.cpp \
   RequestInfo_Util.cpp \
   Request_Dispatcher.cpp \
   Resource_Factory.cpp \
@@ -252,7 +249,6 @@ libTAO_la_SOURCES = \
   Services_Activate.cpp \
   ShortSeqA.cpp \
   ShortSeqC.cpp \
-  Special_Basic_Arguments.cpp \
   StringSeqA.cpp \
   StringSeqC.cpp \
   String_TypeCode_Static.cpp \
@@ -299,14 +295,11 @@ libTAO_la_SOURCES = \
   ULongSeqC.cpp \
   UShortSeqA.cpp \
   UShortSeqC.cpp \
-  UTF16_BOM_Factory.cpp \
-  UTF16_BOM_Translator.cpp \
   Union_TypeCode_Static.cpp \
   UserException.cpp \
   ValueModifierC.cpp \
   Value_TypeCode_Static.cpp \
   Valuetype_Adapter.cpp \
-  VisibilityA.cpp \
   VisibilityC.cpp \
   WCharSeqA.cpp \
   WCharSeqC.cpp \
@@ -325,7 +318,6 @@ libTAO_la_SOURCES = \
   default_resource.cpp \
   default_server.cpp \
   operation_details.cpp \
-  orb_typesA.cpp \
   orb_typesC.cpp \
   params.cpp \
   skip.cpp \
@@ -416,7 +408,6 @@ nobase_include_HEADERS = \
   CONV_FRAME.pidl \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
-  CONV_FRAMES_T.h \
   CORBALOC_Parser.h \
   CORBALOC_Parser.i \
   CORBANAME_Parser.h \
@@ -431,16 +422,11 @@ nobase_include_HEADERS = \
   CharSeqS.h \
   Cleanup_Func_Registry.h \
   Cleanup_Func_Registry.inl \
-  ClientRequestInfo.h \
-  ClientRequestInfo.pidl \
-  ClientRequestInfoC.h \
-  ClientRequestInfoS.h \
   ClientRequestInterceptor_Adapter.h \
+  ClientRequestInterceptor_Adapter_Factory.h \
   Client_Strategy_Factory.h \
   Codeset_Manager.h \
-  Codeset_Translator_Factory.h \
-  Codeset_Translator_Factory_T.cpp \
-  Codeset_Translator_Factory_T.h \
+  Codeset_Translator_Base.h \
   Collocated_Invocation.h \
   Collocation_Proxy_Broker.h \
   Collocation_Resolver.h \
@@ -516,7 +502,6 @@ nobase_include_HEADERS = \
   GIOPC.h \
   GIOPC.inl \
   GIOPS.h \
-  GIOPS_T.h \
   GIOP_Message_Base.h \
   GIOP_Message_Generator_Parser.h \
   GIOP_Message_Generator_Parser_10.h \
@@ -647,6 +632,7 @@ nobase_include_HEADERS = \
   Object_Proxy_Broker.h \
   Object_Proxy_Impl.h \
   Object_Ref_Table.h \
+  Object_Ref_Table.inl \
   Object_T.cpp \
   Object_T.h \
   Objref_TypeCode.cpp \
@@ -668,9 +654,6 @@ nobase_include_HEADERS = \
   PICurrent_Impl.h \
   PICurrent_Impl.inl \
   PICurrent_Loader.h \
-  PIForwardRequest.pidl \
-  PIForwardRequestC.h \
-  PIForwardRequestS.h \
   PI_Forward.pidl \
   PI_ForwardC.h \
   ParameterMode.pidl \
@@ -685,6 +668,7 @@ nobase_include_HEADERS = \
   PolicyC.h \
   PolicyC.inl \
   PolicyFactory_Registry_Adapter.h \
+  PolicyFactory_Registry_Factory.h \
   PolicyS.h \
   Policy_Current.h \
   Policy_Current.inl \
@@ -726,9 +710,6 @@ nobase_include_HEADERS = \
   Remote_Object_Proxy_Broker.h \
   Reply_Dispatcher.h \
   Reply_Dispatcher.i \
-  RequestInfo.pidl \
-  RequestInfoC.h \
-  RequestInfoS.h \
   RequestInfo_Util.h \
   Request_Dispatcher.h \
   Resource_Factory.h \
@@ -750,10 +731,8 @@ nobase_include_HEADERS = \
   Sequence_TypeCode.inl \
   Sequence_TypeCode_Static.h \
   Sequence_TypeCode_Static.inl \
-  ServerRequestInfo.pidl \
-  ServerRequestInfoC.h \
-  ServerRequestInfoS.h \
   ServerRequestInterceptor_Adapter.h \
+  ServerRequestInterceptor_Adapter_Factory.h \
   Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \
@@ -867,8 +846,6 @@ nobase_include_HEADERS = \
   UShortSeq.pidl \
   UShortSeqC.h \
   UShortSeqS.h \
-  UTF16_BOM_Factory.h \
-  UTF16_BOM_Translator.h \
   Union_TypeCode.cpp \
   Union_TypeCode.h \
   Union_TypeCode.inl \
@@ -1011,6 +988,9 @@ libTAO_PI_la_CPPFLAGS = \
   -DTAO_PI_BUILD_DLL
 
 libTAO_PI_la_SOURCES = \
+  PI/ClientRequestInfo.cpp \
+  PI/ClientRequestInfoA.cpp \
+  PI/ClientRequestInfoC.cpp \
   PI/ClientRequestInterceptorA.cpp \
   PI/ClientRequestInterceptorC.cpp \
   PI/ClientRequestInterceptor_Adapter_Impl.cpp \
@@ -1024,10 +1004,14 @@ libTAO_PI_la_SOURCES = \
   PI/ORBInitializerC.cpp \
   PI/ORBInitializer_Registry_Impl.cpp \
   PI/PI.cpp \
+  PI/PIForwardRequestA.cpp \
+  PI/PIForwardRequestC.cpp \
   PI/PolicyFactoryA.cpp \
   PI/PolicyFactoryC.cpp \
   PI/PolicyFactory_Loader.cpp \
-  PI/PolicyFactory_Registry.cpp
+  PI/PolicyFactory_Registry.cpp \
+  PI/RequestInfoA.cpp \
+  PI/RequestInfoC.cpp
 
 libTAO_PI_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1038,6 +1022,10 @@ libTAO_PI_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  PI/ClientRequestInfo.h \
+  PI/ClientRequestInfo.pidl \
+  PI/ClientRequestInfoC.h \
+  PI/ClientRequestInfoS.h \
   PI/ClientRequestInterceptor.pidl \
   PI/ClientRequestInterceptorC.h \
   PI/ClientRequestInterceptorS.h \
@@ -1059,11 +1047,17 @@ nobase_include_HEADERS += \
   PI/ORBInitializerS.h \
   PI/ORBInitializer_Registry_Impl.h \
   PI/PI.h \
+  PI/PIForwardRequest.pidl \
+  PI/PIForwardRequestC.h \
+  PI/PIForwardRequestS.h \
   PI/PolicyFactory.pidl \
   PI/PolicyFactoryC.h \
   PI/PolicyFactoryS.h \
   PI/PolicyFactory_Loader.h \
   PI/PolicyFactory_Registry.h \
+  PI/RequestInfo.pidl \
+  PI/RequestInfoC.h \
+  PI/RequestInfoS.h \
   PI/pi_export.h
 
 pkgconfig_DATA += \
@@ -1131,6 +1125,43 @@ EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
 
+## Makefile.Codeset.am
+
+lib_LTLIBRARIES += libTAO_Codeset.la
+
+libTAO_Codeset_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_CODESET_BUILD_DLL
+
+libTAO_Codeset_la_SOURCES = \
+  Codeset/Codeset_Manager_i.cpp \
+  Codeset/Codeset_Translator_Factory.cpp \
+  Codeset/UTF16_BOM_Factory.cpp \
+  Codeset/UTF16_BOM_Translator.cpp \
+  Codeset/UTF8_Latin1_Factory.cpp \
+  Codeset/UTF8_Latin1_Translator.cpp
+
+libTAO_Codeset_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_Codeset_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Codeset/Codeset_Manager_i.h \
+  Codeset/Codeset_Translator_Factory.h \
+  Codeset/Codeset_Translator_Factory_T.cpp \
+  Codeset/Codeset_Translator_Factory_T.h \
+  Codeset/UTF16_BOM_Factory.h \
+  Codeset/UTF16_BOM_Translator.h \
+  Codeset/UTF8_Latin1_Factory.h \
+  Codeset/UTF8_Latin1_Translator.h \
+  Codeset/codeset_export.h
+
 ## Makefile.PortableServer.am
 
 lib_LTLIBRARIES += libTAO_PortableServer.la
@@ -1149,7 +1180,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/AdapterActivatorA.cpp \
   PortableServer/AdapterActivatorC.cpp \
   PortableServer/Adapter_Activator.cpp \
-  PortableServer/Basic_SArguments.cpp \
   PortableServer/Collocated_Object_Proxy_Broker.cpp \
   PortableServer/Creation_Time.cpp \
   PortableServer/Default_Acceptor_Filter.cpp \
@@ -1250,8 +1280,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Servant_Base.cpp \
   PortableServer/Servant_Dispatcher.cpp \
   PortableServer/Servant_Upcall.cpp \
-  PortableServer/ServerRequestInfo.cpp \
-  PortableServer/Special_Basic_SArguments.cpp \
   PortableServer/StrategyFactory.cpp \
   PortableServer/ThreadPolicy.cpp \
   PortableServer/ThreadPolicyA.cpp \
@@ -1261,7 +1289,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/ThreadStrategyORBControl.cpp \
   PortableServer/ThreadStrategySingle.cpp \
   PortableServer/ThreadStrategySingleFactoryImpl.cpp \
-  PortableServer/UB_String_SArguments.cpp \
   PortableServer/Upcall_Command.cpp \
   PortableServer/Upcall_Wrapper.cpp
 
@@ -1428,8 +1455,6 @@ nobase_include_HEADERS += \
   PortableServer/Servant_Location.h \
   PortableServer/Servant_Upcall.h \
   PortableServer/Servant_Upcall.inl \
-  PortableServer/ServerRequestInfo.h \
-  PortableServer/ServerRequestInfo.inl \
   PortableServer/Special_Basic_SArgument_T.cpp \
   PortableServer/Special_Basic_SArgument_T.h \
   PortableServer/Special_Basic_SArgument_T.inl \
@@ -1774,9 +1799,9 @@ nobase_include_HEADERS += \
   Messaging/Messaging_RT_PolicyC.h \
   Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/Messaging_SyncScope_PolicyC.h \
+  Messaging/Pollable.pidl \
   Messaging/PollableC.h \
   Messaging/PollableS.h \
-  Messaging/Pollable.pidl \
   Messaging/TAO_Ext.pidl \
   Messaging/TAO_ExtC.h \
   Messaging/messaging_export.h
@@ -2153,6 +2178,9 @@ libTAO_PI_Server_la_SOURCES = \
   PI_Server/PortableServer_ORBInitializer.cpp \
   PI_Server/PortableServer_PolicyFactory.cpp \
   PI_Server/ServerInterceptorAdapter.cpp \
+  PI_Server/ServerRequestInfo.cpp \
+  PI_Server/ServerRequestInfoA.cpp \
+  PI_Server/ServerRequestInfoC.cpp \
   PI_Server/ServerRequestInterceptorA.cpp \
   PI_Server/ServerRequestInterceptorC.cpp \
   PI_Server/ServerRequestInterceptor_Factory_Impl.cpp
@@ -2178,6 +2206,11 @@ nobase_include_HEADERS += \
   PI_Server/PortableServer_ORBInitializer.h \
   PI_Server/PortableServer_PolicyFactory.h \
   PI_Server/ServerInterceptorAdapter.h \
+  PI_Server/ServerRequestInfo.h \
+  PI_Server/ServerRequestInfo.inl \
+  PI_Server/ServerRequestInfo.pidl \
+  PI_Server/ServerRequestInfoC.h \
+  PI_Server/ServerRequestInfoS.h \
   PI_Server/ServerRequestInterceptor.pidl \
   PI_Server/ServerRequestInterceptorC.h \
   PI_Server/ServerRequestInterceptorS.h \

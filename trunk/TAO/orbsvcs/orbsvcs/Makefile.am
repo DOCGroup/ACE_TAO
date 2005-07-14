@@ -1162,7 +1162,7 @@ PortableGroup = \
   PortableGroupC.cpp \
   PortableGroupS.cpp \
   PortableGroup_Simple_DSC.cpp \
-  PortableGroup/UIPMC_Acceptor.cpp \
+  PortableGroup/GOA.cpp \
   PortableGroup/MIOP.cpp \
   PortableGroup/PG_Default_Property_Validator.cpp \
   PortableGroup/PG_FactoryRegistry.cpp \
@@ -1178,31 +1178,31 @@ PortableGroup = \
   PortableGroup/PG_Null_Property_Validator.cpp \
   PortableGroup/PG_ObjectGroupManager.cpp \
   PortableGroup/PG_ObjectGroup_Map.cpp \
+  PortableGroup/PG_Object_Adapter_Factory.cpp \
   PortableGroup/PG_Object_Group.cpp \
   PortableGroup/PG_Object_Group_Manipulator.cpp \
   PortableGroup/PG_Operators.cpp \
   PortableGroup/PG_Properties_Encoder.cpp \
   PortableGroup/PG_Properties_Support.cpp \
   PortableGroup/PG_PropertyManager.cpp \
-  PortableGroup/PG_Utils.cpp \
   PortableGroup/PG_Property_Set.cpp \
   PortableGroup/PG_Property_Utils.cpp \
+  PortableGroup/PG_Servant_Dispatcher.cpp \
+  PortableGroup/PG_Utils.cpp \
   PortableGroup/PortableGroup_Acceptor_Registry.cpp \
   PortableGroup/PortableGroup_Loader.cpp \
   PortableGroup/PortableGroup_ORBInitializer.cpp \
   PortableGroup/PortableGroup_Request_Dispatcher.cpp \
   PortableGroup/Portable_Group_Map.cpp \
+  PortableGroup/UIPMC_Acceptor.cpp \
   PortableGroup/UIPMC_Connection_Handler.cpp \
   PortableGroup/UIPMC_Connector.cpp \
   PortableGroup/UIPMC_Endpoint.cpp \
   PortableGroup/UIPMC_Factory.cpp \
   PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp \
   PortableGroup/UIPMC_Profile.cpp \
-  PortableGroup/GOA.cpp \
   PortableGroup/UIPMC_Transport.cpp \
-  PortableGroup/UIPMC_Wait_Never.cpp \
-  PortableGroup/PG_Object_Adapter_Factory.cpp \
-  PortableGroup/PG_Servant_Dispatcher.cpp
+  PortableGroup/UIPMC_Wait_Never.cpp
 
 lib_LTLIBRARIES += libTAO_PortableGroup.la
 
@@ -1907,8 +1907,11 @@ libTAO_ETCL_la_LIBADD = \
 nobase_include_HEADERS += \
   ETCL/ETCL_Constraint.h \
   ETCL/ETCL_Constraint.i \
+  ETCL/ETCL_Constraint.inl \
+  ETCL/ETCL_Constraint_Visitor.h \
   ETCL/ETCL_Interpreter.h \
-  ETCL/ETCL_y.h
+  ETCL/ETCL_y.h \
+  ETCL/etcl_export.h
 
 pkgconfig_DATA += \
   TAO_ETCL.pc
@@ -2596,20 +2599,20 @@ EXTRA_DIST += \
 ## Makefile.CosTrading_Serv.am
 
 Trader = \
-  Trader/Constraint_Visitors.cpp \
-  Trader/Service_Type_Repository.cpp \
   Trader/Constraint_Interpreter.cpp \
   Trader/Constraint_Nodes.cpp \
-  Trader/Trader.cpp \
+  Trader/Constraint_Visitors.cpp \
   Trader/Constraint_l.cpp \
   Trader/Constraint_y.cpp \
   Trader/Interpreter.cpp \
   Trader/Interpreter_Utils.cpp \
   Trader/Offer_Database.cpp \
   Trader/Offer_Iterators.cpp \
+  Trader/Service_Type_Repository.cpp \
+  Trader/Trader.cpp \
+  Trader/Trader_Constraint_Visitors.cpp \
   Trader/Trader_Interfaces.cpp \
   Trader/Trader_Utils.cpp \
-  Trader/Trader_Constraint_Visitors.cpp \
   Trader/Trading_Loader.cpp
 
 lib_LTLIBRARIES += libTAO_CosTrading_Serv.la
@@ -3429,8 +3432,8 @@ EXTRA_DIST += \
 if BUILD_CORBA_MESSAGING
 
 FTRT_ClientORB = \
-  FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp \
   FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.cpp \
+  FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp \
   FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp
 
 lib_LTLIBRARIES += libTAO_FTRT_ClientORB.la
@@ -3986,9 +3989,9 @@ FtRtEvent = \
   FtRtecEventChannelAdminC.cpp \
   FtRtecEventChannelAdminS.cpp \
   FtRtEvent/Utils/FTEC_Gateway.cpp \
-  FtRtEvent/Utils/UUID.cpp \
   FtRtEvent/Utils/Log.cpp \
-  FtRtEvent/Utils/Safe_InputCDR.cpp
+  FtRtEvent/Utils/Safe_InputCDR.cpp \
+  FtRtEvent/Utils/UUID.cpp
 
 lib_LTLIBRARIES += libTAO_FtRtEvent.la
 
@@ -4076,40 +4079,40 @@ if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 FTRT_EventChannel = \
-  FtRtEvent/EventChannel/Fault_Detector_Loader.cpp \
-  FtRtEvent/EventChannel/FTEC_Group_Manager.cpp \
-  FtRtEvent/EventChannel/FTEC_Event_Channel.cpp \
-  FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp \
-  FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp \
   FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp \
   FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp \
   FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp \
   FtRtEvent/EventChannel/Dynamic_Bitset.cpp \
-  FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp \
   FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.cpp \
   FtRtEvent/EventChannel/FTEC_ConsumerAdmin.cpp \
+  FtRtEvent/EventChannel/FTEC_Event_Channel.cpp \
   FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp \
   FtRtEvent/EventChannel/FTEC_Factory.cpp \
-  FtRtEvent/EventChannel/Replication_Service.cpp \
+  FtRtEvent/EventChannel/FTEC_Group_Manager.cpp \
   FtRtEvent/EventChannel/FTEC_ORBInitializer.cpp \
+  FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp \
   FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp \
   FtRtEvent/EventChannel/FTEC_SupplierAdmin.cpp \
   FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp \
   FtRtEvent/EventChannel/Fault_Detector.cpp \
-  FtRtEvent/EventChannel/Set_Update_Interceptor.cpp \
+  FtRtEvent/EventChannel/Fault_Detector_Loader.cpp \
+  FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp \
+  FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp \
   FtRtEvent/EventChannel/GroupInfoPublisher.cpp \
   FtRtEvent/EventChannel/IOGR_Maker.cpp \
-  FtRtEvent/EventChannel/Request_Context_Repository.cpp \
   FtRtEvent/EventChannel/Identification_Service.cpp \
-  FtRtEvent/EventChannel/replace_key.cpp \
   FtRtEvent/EventChannel/ObjectGroupManagerHandler.cpp \
   FtRtEvent/EventChannel/ProxyConsumerStateWorker.cpp \
   FtRtEvent/EventChannel/ProxySupplierStateWorker.cpp \
+  FtRtEvent/EventChannel/Replication_Service.cpp \
   FtRtEvent/EventChannel/Replication_Strategy.cpp \
+  FtRtEvent/EventChannel/Request_Context_Repository.cpp \
   FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp \
+  FtRtEvent/EventChannel/Set_Update_Interceptor.cpp \
   FtRtEvent/EventChannel/Update_Manager.cpp \
   FtRtEvent/EventChannel/UpdateableHandler.cpp \
-  FtRtEvent/EventChannel/create_persistent_poa.cpp
+  FtRtEvent/EventChannel/create_persistent_poa.cpp \
+  FtRtEvent/EventChannel/replace_key.cpp
 
 lib_LTLIBRARIES += libTAO_FTRT_EventChannel.la
 
@@ -4618,7 +4621,7 @@ HTIOP-stamp: $(srcdir)/HTIOP.idl
 
 HTIOP = \
   HTIOPC.cpp \
-  HTIOP/HTIOP_Transport.cpp \
+  HTIOP/HTIOP_Acceptor.cpp \
   HTIOP/HTIOP_Acceptor_Impl.cpp \
   HTIOP/HTIOP_Completion_Handler.cpp \
   HTIOP/HTIOP_Connection_Handler.cpp \
@@ -4627,8 +4630,8 @@ HTIOP = \
   HTIOP/HTIOP_Endpoint.cpp \
   HTIOP/HTIOP_Factory.cpp \
   HTIOP/HTIOP_Profile.cpp \
-  HTIOP/htiop_endpointsC.cpp \
-  HTIOP/HTIOP_Acceptor.cpp
+  HTIOP/HTIOP_Transport.cpp \
+  HTIOP/htiop_endpointsC.cpp
 
 lib_LTLIBRARIES += libTAO_HTIOP.la
 
@@ -4680,12 +4683,8 @@ nobase_include_HEADERS += \
 if !BUILD_MINIMUM_CORBA
 
 IFRService = \
-  IFRService/Contained_i.cpp \
-  IFRService/tmplinst.cpp \
-  IFRService/AliasDef_i.cpp \
-  IFRService/StructDef_i.cpp \
   IFRService/AbstractInterfaceDef_i.cpp \
-  IFRService/UnionDef_i.cpp \
+  IFRService/AliasDef_i.cpp \
   IFRService/ArrayDef_i.cpp \
   IFRService/AttributeDef_i.cpp \
   IFRService/ComponentContainer_i.cpp \
@@ -4694,7 +4693,7 @@ IFRService = \
   IFRService/ComponentRepository_i.cpp \
   IFRService/ConstantDef_i.cpp \
   IFRService/ConsumesDef_i.cpp \
-  IFRService/IRObject_i.cpp \
+  IFRService/Contained_i.cpp \
   IFRService/Container_i.cpp \
   IFRService/EmitsDef_i.cpp \
   IFRService/EnumDef_i.cpp \
@@ -4713,30 +4712,34 @@ IFRService = \
   IFRService/IDLType_i.cpp \
   IFRService/IFR_BaseS.cpp \
   IFRService/IFR_BasicS.cpp \
-  IFRService/RecursDef_i.cpp \
   IFRService/IFR_ComponentsS.cpp \
   IFRService/IFR_ExtendedS.cpp \
   IFRService/IFR_Service_Loader.cpp \
-  IFRService/ModuleDef_i.cpp \
+  IFRService/IFR_Service_Utils.cpp \
+  IFRService/IRObject_i.cpp \
   IFRService/InterfaceAttrExtension_i.cpp \
   IFRService/InterfaceDef_i.cpp \
   IFRService/LocalInterfaceDef_i.cpp \
+  IFRService/ModuleDef_i.cpp \
   IFRService/NativeDef_i.cpp \
   IFRService/OperationDef_i.cpp \
   IFRService/Options.cpp \
   IFRService/PrimitiveDef_i.cpp \
   IFRService/ProvidesDef_i.cpp \
   IFRService/PublishesDef_i.cpp \
+  IFRService/RecursDef_i.cpp \
   IFRService/Repository_i.cpp \
   IFRService/SequenceDef_i.cpp \
   IFRService/StringDef_i.cpp \
+  IFRService/StructDef_i.cpp \
   IFRService/TypedefDef_i.cpp \
+  IFRService/UnionDef_i.cpp \
   IFRService/UsesDef_i.cpp \
   IFRService/ValueBoxDef_i.cpp \
   IFRService/ValueDef_i.cpp \
   IFRService/ValueMemberDef_i.cpp \
   IFRService/WstringDef_i.cpp \
-  IFRService/IFR_Service_Utils.cpp
+  IFRService/tmplinst.cpp
 
 lib_LTLIBRARIES += libTAO_IFRService.la
 
@@ -5452,8 +5455,8 @@ Security = \
   Security/SL3_ContextEstablishmentPolicy.cpp \
   Security/SL3_CredentialsAcquirerFactory.cpp \
   Security/SL3_CredentialsCurator.cpp \
-  Security/SL3_ObjectCredentialsPolicy.cpp \
   Security/SL3_PolicyFactory.cpp \
+  Security/SL3_ObjectCredentialsPolicy.cpp \
   Security/SL3_SecurityCurrent.cpp \
   Security/SL3_SecurityCurrent_Impl.cpp \
   Security/SL3_SecurityManager.cpp \
@@ -5578,33 +5581,33 @@ SSLIOP-stamp: $(srcdir)/SSLIOP.idl
 
 SSLIOP = \
   SSLIOPC.cpp \
-  SSLIOP/SSLIOP_Connection_Handler.cpp \
-  SSLIOP/SSLIOP_Factory.cpp \
-  SSLIOP/SSLIOP_EVP_PKEY.cpp \
   SSLIOP/IIOP_SSL_Acceptor.cpp \
   SSLIOP/IIOP_SSL_Connection_Handler.cpp \
   SSLIOP/IIOP_SSL_Connector.cpp \
   SSLIOP/IIOP_SSL_Transport.cpp \
-  SSLIOP/SSLIOP_Acceptor.cpp \
   SSLIOP/SSLIOP_Accept_Strategy.cpp \
+  SSLIOP/SSLIOP_Acceptor.cpp \
   SSLIOP/SSLIOP_ClientCredentials.cpp \
+  SSLIOP/SSLIOP_Connection_Handler.cpp \
   SSLIOP/SSLIOP_Connector.cpp \
   SSLIOP/SSLIOP_Credentials.cpp \
   SSLIOP/SSLIOP_CredentialsAcquirer.cpp \
   SSLIOP/SSLIOP_CredentialsAcquirerFactory.cpp \
   SSLIOP/SSLIOP_Current.cpp \
   SSLIOP/SSLIOP_Current_Impl.cpp \
-  SSLIOP/params_dup.c \
+  SSLIOP/SSLIOP_EVP_PKEY.cpp \
   SSLIOP/SSLIOP_Endpoint.cpp \
-  SSLIOP/SSLIOP_Util.cpp \
+  SSLIOP/SSLIOP_Factory.cpp \
   SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
+  SSLIOP/SSLIOP_SSL.cpp \
   SSLIOP/SSLIOP_ORBInitializer.cpp \
   SSLIOP/SSLIOP_OwnCredentials.cpp \
   SSLIOP/SSLIOP_Profile.cpp \
-  SSLIOP/SSLIOP_SSL.cpp \
   SSLIOP/SSLIOP_TargetCredentials.cpp \
-  SSLIOP/SSLIOP_X509.cpp \
   SSLIOP/SSLIOP_Transport.cpp \
+  SSLIOP/SSLIOP_Util.cpp \
+  SSLIOP/SSLIOP_X509.cpp \
+  SSLIOP/params_dup.c \
   SSLIOP/ssl_endpointsC.cpp
 
 lib_LTLIBRARIES += libTAO_SSLIOP.la
