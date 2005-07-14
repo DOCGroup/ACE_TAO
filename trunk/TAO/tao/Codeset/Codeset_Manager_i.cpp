@@ -229,14 +229,13 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
   // Generating codeset context
   // Assuming the TCS values from Transport will be defaulted
   TAO_Codeset_Translator_Factory *tf =
-    ACE_dynamic_cast(TAO_Codeset_Translator_Factory*,
-                     trans.char_translator ());
+    dynamic_cast<TAO_Codeset_Translator_Factory*>(trans.char_translator());
 
   codeset_cntx.char_data =
     tf ? tf->tcs () : this->codeset_info_.ForCharData.native_code_set;
 
-  tf = ACE_dynamic_cast(TAO_Codeset_Translator_Factory*,
-                        trans.wchar_translator ());
+  tf =
+    dynamic_cast<TAO_Codeset_Translator_Factory*>(trans.wchar_translator());
 
   codeset_cntx.wchar_data =
     tf ? tf->tcs () : this->codeset_info_.ForWcharData.native_code_set;
