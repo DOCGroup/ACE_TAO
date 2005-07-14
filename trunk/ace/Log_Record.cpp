@@ -203,7 +203,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       ctp[24] = '\0'; // NUL-terminate after the date.
 
       ACE_OS::snprintf (timestamp,
-                        26
+                        26,
                         time_fmt,
                         ctp + 4,
                         ((long) this->usecs_) / 1000,

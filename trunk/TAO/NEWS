@@ -8,16 +8,11 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (JTC/Ossama) autoconf support for TAO tests and examples
 
-. Subset PortableInterceptors and Anys to separate libraries
-
 . When making asynchronous invocations data is queued until it can be
   transported on the network
 
 . Add possibility to set customer allocators to be used by the ORB for
   marshaling and demarshaling
-
-. Improve CORBA compliance by fixing bugzilla bugs 1917, 1271, 1951,
-  and 2043
 
 . (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
@@ -31,6 +26,13 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Fix Notification Service use of PacingInterval and MaximumBatchSize.
 
 . Fix Notification Service detection of dead consumers.
+
+PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
+====================================================
+
+. Subset Anys to a separate library
+
+. Improve CORBA compliance by fixing bugzilla bugs 1917, 1271, and 2043
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
 ====================================================
@@ -56,7 +58,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
   ACE_DYNAMIC_SERVICE_DIRECTIVE macro which also works when the xml
   version of service config is enabled.
 
-  The Codeset negotiation support is in its own library. The hooks are
+. The Codeset negotiation support is in its own library. The hooks are
   still present in the ORB Core to dynamically load the codeset support
   if needed. This behavior is overridden by the new ORB_init option
   -ORBNegotiateCodesets 0.
@@ -64,7 +66,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
 . The Boxed Value Type as specified by the OMG is now accepted by the
   TAO_IDL compiler.
 
-  TAO clients now parse the OMG specified TAG_ALTERNATE_IIOP_ADDRESS
+. TAO clients now parse the OMG specified TAG_ALTERNATE_IIOP_ADDRESS
   profile component. To generate IORs using that component, add the
   new ORB_init option, -ORBUseSharedProfiles 1.
 
