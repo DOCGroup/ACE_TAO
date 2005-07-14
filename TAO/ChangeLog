@@ -1,3 +1,19 @@
+Thu Jul 14 22:52:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/Fixed_Array_SArgument_T.h:
+        * tao/PortableServer/Fixed_Array_SArgument_T.inl:
+        
+          Changed the Fixed_Array_SArg_Traits_T typedef
+          'out_arg_type' for fixed arrays to
+          be <array>_slice* instead of <array>_slice*&, and 
+          changed the Out_Fixed_Array_SArgument_T::arg() method
+          to return a slice pointer instead of a slice pointer
+          reference. Since the array is of fixed size, the slice
+          pointer can be declared on the stack, and no heap
+          allocation is necessary, for an OUT arg of this type on
+          the skeleton side. Thanks to Chad Elliott
+          <elliott_c@ociweb.com> for pointing this out.
+
 Thu Jul 14 15:04:41 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
@@ -7,7 +23,7 @@ Thu Jul 14 15:04:41 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Thu Jul 14 21:42:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * docs/performace.html:
+        * docs/performance.html:
         
           Updated section on ways to reduce compile-time footprint.
 

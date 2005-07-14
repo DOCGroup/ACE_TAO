@@ -85,7 +85,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_slice *& arg (void);
+    S_slice * arg (void);
 
   private:
     S x_;
@@ -147,7 +147,7 @@ namespace TAO
     // the client and server side argument class templates.
     typedef T_slice const *                             in_arg_type;
     typedef ret_type                                    inout_arg_type;
-    typedef ret_type &                                  out_arg_type;
+    typedef ret_type                                    out_arg_type;
     typedef ret_type &                                  ret_arg_type;
 
   };

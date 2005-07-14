@@ -50,13 +50,13 @@ TAO::Out_Fixed_Array_SArgument_T<S,
 
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-S_slice *&
+S_slice *
 TAO::Out_Fixed_Array_SArgument_T<S,
                                  S_slice,
                                  S_forany>::arg (void)
 {
   S_forany tmp (this->x_);
-  return tmp.out ();
+  return tmp.inout ();
 }
 
 // ===========================================================================
