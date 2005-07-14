@@ -1,3 +1,10 @@
+Thu Jul 14 15:04:41 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
 Thu Jul 14 21:42:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/performace.html:
