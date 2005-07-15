@@ -70,6 +70,7 @@ libTAO_la_SOURCES = \
   ClientRequestInterceptor_Adapter_Factory.cpp \
   Client_Strategy_Factory.cpp \
   Codeset_Manager.cpp \
+  Codeset_Manager_Factory_Base.cpp \
   Codeset_Translator_Base.cpp \
   Collocated_Invocation.cpp \
   Collocation_Proxy_Broker.cpp \
@@ -426,6 +427,7 @@ nobase_include_HEADERS = \
   ClientRequestInterceptor_Adapter_Factory.h \
   Client_Strategy_Factory.h \
   Codeset_Manager.h \
+  Codeset_Manager_Factory_Base.h \
   Codeset_Translator_Base.h \
   Collocated_Invocation.h \
   Collocation_Proxy_Broker.h \

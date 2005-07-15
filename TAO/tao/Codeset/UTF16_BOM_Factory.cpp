@@ -35,14 +35,13 @@ template class ACE_Dynamic_Service<TAO_UTF16_BOM_Factory>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
-                       ACE_TEXT ("TAO_UTF16_BOM_Factory"),
+                       ACE_TEXT ("UTF16_BOM_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_UTF16_BOM_Factory),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
-ACE_STATIC_SVC_REQUIRE (TAO_UTF16_BOM_Factory)
 
 TAO_UTF16_BOM_Factory::TAO_UTF16_BOM_Factory ()
   : translator_ (0)

@@ -23,7 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
 #include "TAO_Export.h"
 
 class ACE_WChar_Codeset_Translator;
@@ -84,21 +83,6 @@ public:
 
   virtual void open (void) = 0;
 
-};
-
-// ****************************************************************
-
-/**
- * @class TAO_Codeset_Manager_Factory_Base
- *
- * @brief Abstract Base class for creating instances of the codeset manager.
- */
-
-class TAO_Export TAO_Codeset_Factory : public ACE_Service_Object
-{
-public:
-  virtual ~TAO_Codeset_Factory ();
-  virtual TAO_Codeset_Manager *create(TAO_ORB_Core *orb_core) = 0;
 };
 
 #include /**/ "ace/post.h"
