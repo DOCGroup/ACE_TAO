@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoexe {
+project : taoexe, negotiate_codesets {
   exename = client
 }
