@@ -1,3 +1,23 @@
+Fri Jul 15 16:35:37 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/negotiate_codesets.mpb:
+        * bin/MakeProjectCreator/config/taoclient.mpb:
+        * bin/MakeProjectCreator/config/taoserver.mpb:
+
+          Added a new feature, negotiate_codesets. Disabled by default,
+          but when enabled in default.features or on the mpc/mwc command
+          line adds TAO_Codeset to the project's libs list. Dynamically
+          linked applications do not need to do anything, the libary will
+          be dynamically loaded if needed by the ORB. Static applications
+          must enable this feature. Merely enabling is not sufficient, to
+          actually make use of the codeset code, they must also include
+          tao/Codeset/Codeset.h somewhere in their application. Enabling
+          the mpc feature without including the header will not cause any
+          code to be statically linked. Enabling the feature with dynamic
+          applications will add a dependency on the TAO_Codeset library
+          regardless of the use of the code.
+
 Fri Jul 15 08:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:

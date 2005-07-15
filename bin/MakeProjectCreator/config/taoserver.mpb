@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoexe, portableserver {
+project : taoexe, negotiate_codesets, portableserver {
   exename  = server
 }
