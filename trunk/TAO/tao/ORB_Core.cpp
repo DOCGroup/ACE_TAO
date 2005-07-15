@@ -36,6 +36,7 @@
 #include "PolicyFactory_Registry_Factory.h"
 #include "ORBInitializer_Registry_Adapter.h"
 #include "Codeset_Manager.h"
+#include "Codeset_Manager_Factory_Base.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "Policy_Manager.h"
@@ -352,7 +353,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                     this->lock_,
                     -1);
 
-#if defined (TAO_NEGOTIATE_CODESETS) && (TAO_NEGOTIATE_CODESETS == 1)
+#if (TAO_NEGOTIATE_CODESETS == 1)
   int negotiate_codesets = 1;
 #else
   int negotiate_codesets = 0;
@@ -895,7 +896,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
          {
            negotiate_codesets =
              (ACE_OS::atoi (current_arg));
-
            arg_shifter.consume_arg ();
          }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -2392,17 +2392,22 @@ TAO_ORB_Core::load_codeset_manager ()
   if (this->orb_params()->negotiate_codesets() == 0)
     return;
 
-  TAO_Codeset_Factory *factory =
-    ACE_Dynamic_Service<TAO_Codeset_Factory>::instance ("TAO_Codeset");
-  if (factory == 0)
+  TAO_Codeset_Manager_Factory_Base *factory =
+    ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
+  if (factory == 0 || factory->is_default())
     {
+#if !defined (TAO_AS_STATIC_LIBS)
+      // only for dynamic libs, check to see if default factory and if so,
+      // remove it
+      ACE_Service_Config::process_directive("remove TAO_Codeset");
       ACE_Service_Config::process_directive
         (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
                                        "TAO_Codeset",
-                                       "_make_TAO_Codeset_Manager_Factory",
+                                       "_make_TAO_Codeset_Manager_Manager_Factory_Base",
                                        ""));
       factory =
-        ACE_Dynamic_Service<TAO_Codeset_Factory>::instance ("TAO_Codeset");
+        ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
+#endif
     }
   if (factory == 0)
     {
@@ -2416,6 +2421,11 @@ TAO_ORB_Core::load_codeset_manager ()
   this->codeset_manager_ = factory->create (this);
   if (this->codeset_manager_)
     this->codeset_manager_->open();
+  else
+    if  (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("(%P|%t) ORB_Core: ")
+                    ACE_TEXT("Codeset Manager not available\n")));
 
 }
 

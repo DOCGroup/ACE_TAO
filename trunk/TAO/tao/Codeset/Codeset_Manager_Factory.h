@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "tao/Codeset_Manager.h"
+#include "tao/Codeset_Manager_Factory_Base.h"
 
 
 // ****************************************************************
@@ -36,11 +36,13 @@
  */
 
 class TAO_Codeset_Export TAO_Codeset_Manager_Factory :
-  public TAO_Codeset_Factory
+  public TAO_Codeset_Manager_Factory_Base
 {
 public:
   virtual ~TAO_Codeset_Manager_Factory ();
   virtual TAO_Codeset_Manager *create(TAO_ORB_Core *orb_core);
+  virtual int is_default(void) const;
+
 };
 
 

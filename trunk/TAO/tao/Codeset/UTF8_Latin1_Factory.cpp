@@ -23,7 +23,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
-ACE_STATIC_SVC_REQUIRE (TAO_UTF8_Latin1_Factory)
 
 TAO_UTF8_Latin1_Factory::TAO_UTF8_Latin1_Factory()
   : translator_ (0)
