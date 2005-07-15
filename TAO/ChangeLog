@@ -1,3 +1,8 @@
+Fri Jul 15 10:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any.h:
+          Removed not needed forward declaration of CORBA_NVList
+
 Thu Jul 14 22:15:02 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset/Codeset.cpp:
