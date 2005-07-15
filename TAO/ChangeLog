@@ -1,3 +1,12 @@
+Fri Jul 15 13:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/Request.{h,cpp}:
+        * tao/DynamicInterface/Server_Request.{h,cpp,inl}:
+          Use more forward declarations and reduced the includes done, doxygen
+          improvement and removed explicit templates
+
 Fri Jul 15 11:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/NVList.cpp:
