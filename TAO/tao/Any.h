@@ -182,7 +182,6 @@ namespace CORBA
   private:
     TAO::Any_Impl *impl_;
 
-    friend class CORBA_NVList;
     friend class TAO_Marshal_Any;
   };
 
