@@ -23,6 +23,13 @@ TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory ()
 {
 }
 
+int
+TAO_Codeset_Manager_Factory::is_default() const
+{
+  return 0;
+}
+
+
 TAO_Codeset_Manager *
 TAO_Codeset_Manager_Factory::create (TAO_ORB_Core *oc)
 {

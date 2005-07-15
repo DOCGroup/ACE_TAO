@@ -382,7 +382,9 @@ also removes the ability to interoperate with ORBs on systems using
 alternative character or wide charater encodings. The default value may be set
 at compile time by defining <CODE>TAO_NEGOTIATE_CODESETS 0</CODE> in
 <CODE>orbconf.h</CODE>. Codeset negotiation support is enabled by default in
-TAO as shipped.</td>
+TAO as shipped.<br> <bold>Note to static lib users</bold> In order to build
+TAO statically and get the codeset negotiation feature, two additional steps
+are needed to ensure the TAO_Codeset library is linked in and initalized. Add the MPC feature "negotiate_codesets=1" to the default.features file and regenerate your makefiles, and add <CODE>#include "tao/Codeset/Codeset.h"</CODE> somewhere in your application source, such as the cpp file containing your main.</td>
       </tr>
       <tr>
         <td><code>-ORBSingleReadOptimization</code> <em>boolean (0|1)</em></td>

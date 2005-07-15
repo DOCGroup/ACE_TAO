@@ -1,12 +1,37 @@
+Fri Jul 15 16:17:34 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Options.html:
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/Makefile.am:
+        * tao/ORB_Core.cpp:
+        * tao/orbconf.h:
+        * tao/tao.mpc:
+        * tao/Codeset/Codeset.cpp:
+        * tao/Codeset/Codeset_Manager_Factory.cpp:
+        * tao/Codeset/Codeset_Manager_Factory.h:
+        * tao/Codeset/UTF16_BOM_Factory.cpp:
+        * tao/Codeset/UTF8_Latin1_Factory.cpp:
+
+          Another round of changes to reconcile the differences between
+          static and dynamic libraries. Static applications must
+          explicitly link libTAO_Codeset and include "tao/Codeset/Codeset"
+          to enable codeset support. Failing to do the include will cause
+          none of the TAO_Codeset code to actually link. Thus merely
+          adding -lTAO_Codeset to the link line is benign if no codeset
+          support is desired. The link line is modified automatically for
+          MPC projects depending on taoexe if the negotiate_codesets
+          feature is enabled in default.features.
+
 Fri Jul 15 11:00:03 2005  Gary Maxey <gary.maxey@hp.com>
 
-        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp: 
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
 
           Fixed platform-specific errors.
 
 Fri Jul 15 08:48:55 2005  Gary Maxey <gary.maxey@hp.com>
 
-        * tests/OBV/ValueBox/client.cpp: 
+        * tests/OBV/ValueBox/client.cpp:
 
           Fixed platform-specific errors.
 
