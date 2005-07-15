@@ -1,3 +1,14 @@
+Fri Jul 15 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.h:
+          Added forward declaration NVList
+
+        * tao/tao.mpc:
+        * tao/extra_core.mpb:
+          Moved ClientRequestInterceptor_Adapter and ServerRequestInterceptor_
+          Adapter to extra_core, don't need them in a minimum build. Removed
+          tao.mpc from tao.mpv, it is already in extra_core.mpb
+
 Fri Jul 15 13:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Context.cpp:
