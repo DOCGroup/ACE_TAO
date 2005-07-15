@@ -3,8 +3,10 @@
 
 feature(!minimum_corba) {
   Source_Files(TAO_COMPONENTS) {
-    ServicesC.cpp
     NVList.cpp
+    ClientRequestInterceptor_Adapter.cpp
+    ServerRequestInterceptor_Adapter.cpp
+    ServicesC.cpp
     Dynamic_Adapter.cpp
   }
 }
