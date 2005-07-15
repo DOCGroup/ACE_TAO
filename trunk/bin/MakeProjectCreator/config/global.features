@@ -38,16 +38,17 @@ boost         = 0
 wince         = 0
 uses_wchar    = 0
 ziparchive    = 0
+negotiate_codesets = 0
 
 // Features for various GUI libraries
 
-// Some of features are switched on because they are also controlled 
-// by higher level features eg. gl is 1 because it is necessary for fl, 
-// but if someone turns on fl, we may assume gl is available. This way makefile 
-// generation is simplified. Moreover all internal ACE features like ace_qtreactor 
+// Some of features are switched on because they are also controlled
+// by higher level features eg. gl is 1 because it is necessary for fl,
+// but if someone turns on fl, we may assume gl is available. This way makefile
+// generation is simplified. Moreover all internal ACE features like ace_qtreactor
 // and tao_qtresource are also turn on, because we want to build every component
 // related with qt if qt is provided. It is proposed to not remove
-// switched on features from global.features just because features are available 
+// switched on features from global.features just because features are available
 // by default. This file is also a kind of ACE capabilities documentation, hence
 // it is better to enumerate here all features recognized by ACE.
 
@@ -57,7 +58,7 @@ wxWindows     = 0
 motif         = 0
 // 1 - Athena widgets libraries are avalaible
 athena        = 0
-// 1 - X11 libraries are avalaible 
+// 1 - X11 libraries are avalaible
 x11           = 1
 // 1 - X Toolkit libraries are avalaible
 xt            = 0
@@ -92,4 +93,3 @@ tao_flresource    = 1
 
 //Use the ZIP_Wrapper feature for when using the ZIP wrapper classes
 ZIP_Wrapper = 0
-
