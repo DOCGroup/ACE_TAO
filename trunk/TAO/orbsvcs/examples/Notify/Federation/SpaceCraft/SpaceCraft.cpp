@@ -127,7 +127,7 @@ main (int argc, char* argv[])
     ConsumerAdmin_var consumer_admin (
       channel->new_for_consumers (AND_OP, admin_id));
 
-    consumer_admin->add_filter (filter);
+    consumer_admin->add_filter (filter.in ());
 
     // Find which space craft we are.
     //
@@ -166,14 +166,14 @@ main (int argc, char* argv[])
     // Create the SpaceCraft <=> Channel gate.
     //
     Gate space_craft_gate (space_craft_addr,
-                           consumer_admin,
+                           consumer_admin.in (),
                            channel->default_supplier_admin ());
 
 
     // Create the Channel <=> Constellation gate.
     //
     ACE_INET_Addr constellation_addr ("224.1.1.1:10000");
-    Gate constellation_gate (constellation_addr, channel);
+    Gate constellation_gate (constellation_addr, channel.in ());
 
     orb->run ();
 
