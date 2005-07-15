@@ -1,11 +1,16 @@
-Fri Jul  12 00:03:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+Fri Jul 15 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/NAM_Map.h:
+          Fixed fuzz error
+
+Tue Jul  12 00:03:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/Simple/README.html
-        
+
         Updated some directory information in this file since the quoter example has been
         moved to new directory.
-        
-Fri Jul  11 11:44:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+Mon Jul  11 11:44:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * TAO/CIAO/DAnCE/examples/Quoter/README.html
         * TAO/CIAO/DAnCE/examples/Quoter/Broker/Broker.cidl
@@ -56,7 +61,7 @@ Fri Jul  11 11:44:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
         * TAO/CIAO/DAnCE/examples/Quoter/descriptors/package.tpd
         * TAO/CIAO/DAnCE/examples/Quoter/descriptors/runNodeDaemons.pl
         * TAO/CIAO/DAnCE/examples/Quoter/images/quoter.jpg
-        
+
         Removed Quoter example in DAnCE/examples/ directory to avoid duplicate. The orignal
         example could be found in CIAO/docs/tutorials/Quoter/Simple.
 
