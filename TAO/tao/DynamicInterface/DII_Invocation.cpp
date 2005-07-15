@@ -15,6 +15,7 @@
 #include "tao/debug.h"
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Profile_Transport_Resolver.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_string.h"
 

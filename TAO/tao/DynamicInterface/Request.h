@@ -30,10 +30,8 @@
 #include "Dynamic_Adapter_Impl.h"
 
 #include "ExceptionList.h"
-#include "Context.h"
 
 #include "tao/ORB.h"
-#include "tao/NVList.h"
 #include "tao/Environment.h"
 #include "tao/Sequence.h"
 #include "tao/CDR.h"
@@ -48,6 +46,15 @@
 
 namespace CORBA
 {
+  class NVList;
+  typedef NVList *NVList_ptr;
+
+  class Context;
+  typedef Context *Context_ptr;
+
+  class ContextList;
+  typedef ContextList *ContextList_ptr;
+
   /**
    * @class Request
    *
@@ -174,8 +181,8 @@ namespace CORBA
     ACE_CString &raw_user_exception (void);
 
 
-    /// Proprietary method to check whether a response has been 
-    /// received. 
+    /// Proprietary method to check whether a response has been
+    /// received.
     CORBA::Boolean response_received (void);
 
     // Useful for template programming.
