@@ -3,7 +3,7 @@ Fri Jul 15 08:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/make_release:
           Also exclude ASNMP/asnmp.mwc when generating the em3 project files.
           Thanks to Sam Mesh <sam dot mesh at gmail dot com> for reporting
-          this. This fixes bugzilla bug 2190
+          this. This fixes bugzilla bug 2190.
 
 Thu Jul 14 12:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
