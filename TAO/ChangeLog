@@ -1,3 +1,11 @@
+Fri Jul 15 17:18:44 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+	* orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+
+	  Fixed a number of warnings.
+
 Fri Jul 15 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.h:
