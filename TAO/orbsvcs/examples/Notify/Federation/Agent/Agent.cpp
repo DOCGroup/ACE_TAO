@@ -131,7 +131,9 @@ private:
   // NotifyPublish interface.
   //
   virtual void
-  offer_change (EventTypeSeq const&, EventTypeSeq const& ACE_ENV_ARG_DECL)
+  offer_change (EventTypeSeq const&,
+                EventTypeSeq const&
+                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyComm::InvalidEventType))
   {
@@ -141,7 +143,7 @@ private:
   // StructuredPushSupplier interface.
   //
   virtual void
-  push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL)
+  push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventComm::Disconnected))
   {
@@ -167,7 +169,7 @@ private:
 
 
   virtual void
-  disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // We don't care.
@@ -303,11 +305,11 @@ main (int argc, char* argv[])
 
     // Create the gate.
     //
-    Gate gate (addr, channel);
+    Gate gate (addr, channel.in ());
 
     // Start the agent.
     //
-    Agent agent (space_craft_name, argv[1], channel);
+    Agent agent (space_craft_name, argv[1], channel.in ());
 
     orb->run ();
 
