@@ -1137,6 +1137,8 @@ libTAO_Codeset_la_CPPFLAGS = \
   -DTAO_CODESET_BUILD_DLL
 
 libTAO_Codeset_la_SOURCES = \
+  Codeset/Codeset.cpp \
+  Codeset/Codeset_Manager_Factory.cpp \
   Codeset/Codeset_Manager_i.cpp \
   Codeset/Codeset_Translator_Factory.cpp \
   Codeset/UTF16_BOM_Factory.cpp \
@@ -1152,6 +1154,8 @@ libTAO_Codeset_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  Codeset/Codeset.h \
+  Codeset/Codeset_Manager_Factory.h \
   Codeset/Codeset_Manager_i.h \
   Codeset/Codeset_Translator_Factory.h \
   Codeset/Codeset_Translator_Factory_T.cpp \

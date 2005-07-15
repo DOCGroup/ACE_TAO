@@ -217,24 +217,6 @@ private:
 };
 
 
-// ****************************************************************
-
-/**
- * @class TAO_Codeset_Manager_Factory_Base
- *
- * @brief Abstract Base class for creating instances of the codeset manager.
- */
-
-class TAO_Codeset_Export TAO_Codeset_Manager_Factory :
-  public TAO_Codeset_Factory
-{
-public:
-  virtual ~TAO_Codeset_Manager_Factory ();
-  virtual TAO_Codeset_Manager *create(TAO_ORB_Core *orb_core);
-};
-
-
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_CODESET_MANAGER_I_H */
