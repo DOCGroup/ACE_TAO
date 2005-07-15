@@ -73,6 +73,9 @@ namespace CORBA
   class Context;
   typedef Context * Context_ptr;
 
+  class NVList;
+  typedef NVList *NVList_ptr;
+
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
 
   typedef
@@ -249,9 +252,9 @@ namespace CORBA
                       CORBA::NVList_ptr &new_list
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    void create_operation_list(CORBA::OperationDef_ptr,
-                             CORBA::NVList_ptr&
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void create_operation_list(CORBA::OperationDef_ptr opDef,
+                               CORBA::NVList_ptr& result
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     void create_named_value (CORBA::NamedValue_ptr &nmval
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
