@@ -842,7 +842,7 @@ sub generate_em3 () {
     my $here = Cwd::getcwd();
 
   &ex ("cd ACE_wrappers; \
-        bin/mwc.pl -type em3 -exclude TAO -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
+        bin/mwc.pl -type em3 -exclude ASNMP/asnmp.mwc,TAO -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
         find ./ -name '*.vc[p,w]' | /usr/bin/xargs chmod 0644");
 }
 
