@@ -81,7 +81,11 @@
 // to the first request. The use of codeset negotiation also causes
 // libTAO_Codeset to be linked in.
 #if !defined (TAO_NEGOTIATE_CODESETS)
-# define TAO_NEGOTIATE_CODESETS 1
+# if defined (TAO_AS_STATIC_LIBS)
+#  define TAO_NEGOTIATE_CODESETS 0
+# else
+#  define TAO_NEGOTIATE_CODESETS 1
+# endif /* TAO_AS_STATIC_LIBS */
 #endif /*TAO_NEGOTIATE_CODESETS*/
 
 // The default size of TAO's ORB table, i.e. the one used as the
