@@ -353,7 +353,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
 
       for (i.first (); !i.done (); i.advance ())
         {
-          CORBA::NamedValue_ptr *item;
+          CORBA::NamedValue_ptr *item = 0;
           (void) i.next (item);
 
           CORBA::NamedValue_ptr nv = *item;
@@ -397,7 +397,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item;
+      CORBA::NamedValue_ptr *item = 0;
       (void) i.next (item);
 
       CORBA::NamedValue_ptr nv = *item;
