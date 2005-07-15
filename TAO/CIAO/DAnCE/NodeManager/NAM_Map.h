@@ -28,29 +28,29 @@ namespace CIAO
    * @class NAM_Map
    * @brief Implementation of a map of NodeApplicationManagers.
    *
-   * This table is used by the Node_Daemon to keep track of 
-   * NAMs started for multiple assemblies. 
+   * This table is used by the Node_Daemon to keep track of
+   * NAMs started for multiple assemblies.
    */
   class NAM_Map
   {
   public:
     /// Constructor
     NAM_Map (void);
-    
+
     /// Determine if there is a NAM associated with a UUID
     bool is_available (const ACE_CString &str);
-    
+
     /// Insert a NAM OID into the collection
     bool insert_nam (const ACE_CString &str,
                      const PortableServer::ObjectId &oid);
-                
-    /// Get a specified NAM.  
+
+    /// Get a specified NAM.
     ::PortableServer::ObjectId
     get_nam (const ACE_CString &str);
-    
+
     /// Remove a nam from the map, given its oid.
     bool remove_nam (const PortableServer::ObjectId &oid);
-    
+
   private:
     typedef
     ACE_Hash_Map_Manager_Ex <ACE_CString,
@@ -58,14 +58,14 @@ namespace CIAO
                              ACE_Hash<ACE_CString>,
                              ACE_Equal_To<ACE_CString>,
                              ACE_Null_Mutex> MAP;
-    
-    typedef MAP::iterator Iterator;    
+
+    typedef MAP::iterator Iterator;
 
     MAP map_;
-    
+
   };
 }
 
-#include "ace/post.h"    
+#include /**/ "ace/post.h"
 
 #endif /*CIAO_NAM_MAP_H*/
