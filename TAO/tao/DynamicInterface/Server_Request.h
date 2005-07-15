@@ -53,16 +53,18 @@ namespace CORBA
   typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
   typedef TAO_Pseudo_Out_T<ServerRequest, ServerRequest_var> ServerRequest_out;
 
+  /**
+   * @class ServerRequest
+   *
+   * @brief Class representing the CORBA ServerRequest pseudo-object.
+   *
+   * Instantiated by the POA for DSI requests and passed up
+   * to the application. Contains a reference to the instance
+   * of TAO_ServerRequest that is passed up to the POA from
+   * the ORB.
+   */
   class TAO_DynamicInterface_Export ServerRequest
   {
-    // = TITLE
-    //    Class representing the CORBA ServerRequest pseudo-object.
-    //
-    // = DESCRIPTION
-    //    Instantiated by the POA for DSI requests and passed up
-    //    to the application. Contains a reference to the instance
-    //    of TAO_ServerRequest that is passed up to the POA from
-    //    the ORB.
   public:
     /// Constructor.
     ServerRequest (TAO_ServerRequest &orb_server_request);

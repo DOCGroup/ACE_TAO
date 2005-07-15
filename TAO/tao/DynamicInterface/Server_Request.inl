@@ -16,7 +16,7 @@ ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::ServerRequest_ptr x)
 {
-  return (CORBA::Boolean) (x == 0);
+  return x == 0;
 }
 
 // ===================================================================

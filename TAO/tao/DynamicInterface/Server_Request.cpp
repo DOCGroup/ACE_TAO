@@ -237,14 +237,3 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   this->orb_server_request_.tao_send_reply ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class TAO_Pseudo_Var_T<CORBA::ServerRequest>;
-  template class TAO_Pseudo_Out_T<CORBA::ServerRequest, CORBA::ServerRequest_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<CORBA::ServerRequest>
-# pragma instantiate TAO_Pseudo_Out_T<CORBA::ServerRequest, CORBA::ServerRequest_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
