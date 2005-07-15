@@ -1,3 +1,9 @@
+Fri Jul 15 08:48:55 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tests/OBV/ValueBox/client.cpp: 
+
+          Fixed platform-specific errors.
+
 Fri Jul 15 17:18:44 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
