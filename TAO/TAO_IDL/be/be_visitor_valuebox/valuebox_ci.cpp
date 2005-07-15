@@ -196,7 +196,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl
-      << node->name () << "_forany temp (this->_pd_value);" << be_nl
+      << node->name () << "_forany temp (this->_pd_value.ptr ());" << be_nl
       << "return (strm << temp);" << be_uidt_nl 
       << "}" << be_nl << be_nl;
 

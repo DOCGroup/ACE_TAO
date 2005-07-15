@@ -1,3 +1,9 @@
+Fri Jul 15 11:00:03 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp: 
+
+          Fixed platform-specific errors.
+
 Fri Jul 15 08:48:55 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tests/OBV/ValueBox/client.cpp: 
