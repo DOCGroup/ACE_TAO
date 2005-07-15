@@ -1364,10 +1364,13 @@ main (int argc, char *argv[])
 {
   Test_var test_object;
   CORBA::ORB_var orb;
-  ACE_TRY_NEW_ENV
+
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY_EX (init)
     {
       orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (init);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -1375,10 +1378,10 @@ main (int argc, char *argv[])
       // Obtain reference to the object.
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (init);
 
       test_object = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (init);
 
       if (CORBA::is_nil (test_object.in ()))
       {
@@ -1429,10 +1432,10 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-  ACE_TRY_NEW_ENV
+  ACE_TRY_EX (cleanup)
     {
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (cleanup);
     }
   ACE_CATCHANY
     {
