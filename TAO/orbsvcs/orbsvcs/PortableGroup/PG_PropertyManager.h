@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PG_PROPERTY_MANAGER_H
 #define TAO_PG_PROPERTY_MANAGER_H
 
@@ -31,10 +30,8 @@
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
 
-
 /// Forward declarations.
 class TAO_PG_ObjectGroupManager;
-
 
 /**
  * @class TAO_PG_PropertyManager
