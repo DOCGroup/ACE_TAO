@@ -20,8 +20,79 @@ TAO_LogMgr_i::~TAO_LogMgr_i ()
 
 
 void
-TAO_LogMgr_i::init (CORBA::ORB_ptr orb)
+TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
+		    PortableServer::POA_ptr poa
+		    ACE_ENV_ARG_DECL)
 {
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->poa_ = PortableServer::POA::_duplicate (poa);
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::PolicyList policies;
+
+
+  // Create Factory POA
+  policies.length (1);
+  policies[0] =
+    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->factory_poa_ = this->poa_->create_POA ("factory_POA",
+					       poa_manager.in (),
+					       policies
+					       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Creation of the new POA is over, so destroy the Policy_Ptr's.
+  for (CORBA::ULong i = 0;
+       i < policies.length ();
+       ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+
+  // Create Log POA
+  policies.length (3);
+  policies[0] =
+    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  policies[1] = 
+    this->poa_->create_id_assignment_policy (PortableServer::USER_ID
+					     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  policies[2] = 
+    this->poa_->create_servant_retention_policy (PortableServer::RETAIN
+						 ACE_ENV_ARG_PARAMETER)
+  ACE_CHECK;
+
+  this->log_poa_ = this->factory_poa_->create_POA ("log_POA",
+						   poa_manager.in (),
+						   policies
+						   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Creation of the new POA is over, so destroy the Policy_Ptr's.
+  for (CORBA::ULong i = 0;
+       i < policies.length ();
+       ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  
+
+  // Load Log Strategy
   TAO_Log_Persistence_Strategy* strategy_;
 
   strategy_ = 
