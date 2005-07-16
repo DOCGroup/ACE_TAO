@@ -1,3 +1,9 @@
+Sat Jul 16 18:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/DynamicInterface/Request.inl:
+	  Added include of NVList.h to fix compile errors in builds with
+          inlining enabled
+
 Sat Jul 16 10:24:36 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.{cpp,h}: Added 
