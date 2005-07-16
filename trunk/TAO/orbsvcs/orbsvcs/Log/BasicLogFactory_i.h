@@ -94,18 +94,6 @@ protected:
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var        log_mgr_;
-
-  /// ORB.
-  CORBA::ORB_var                orb_;
-
-  /// POA.
-  PortableServer::POA_var	poa_;
-
-  /// Factory POA.
-  PortableServer::POA_var	factory_poa_;
-
-  /// Log POA.
-  PortableServer::POA_var	log_poa_; 
 };
 
 #if defined(_MSC_VER)
