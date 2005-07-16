@@ -1,3 +1,9 @@
+Sat Jul 16 16:12:04 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp (dispatch): 
+	  Don't put the ACE_GUARDs in the TAO_GroupId*::operator() methods.
+	  Thanks to J.T. for noticing this.
+
 Sat Jul 16 18:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/DynamicInterface/Request.inl:
