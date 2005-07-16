@@ -35,6 +35,7 @@
 #include "tao/Environment.h"
 #include "tao/Sequence.h"
 #include "tao/CDR.h"
+#include "tao/NVList.h"
 
 #include "ace/SString.h"
 
