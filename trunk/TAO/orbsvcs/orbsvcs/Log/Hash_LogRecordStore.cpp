@@ -62,20 +62,39 @@ TAO_Hash_LogRecordStore::close (void)
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_current_size (void)
+TAO_Hash_LogRecordStore::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+                           guard,
+                           lock_,
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->current_size_;
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_n_records (void)
+TAO_Hash_LogRecordStore::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+                           guard,
+                           lock_,
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->num_records_;
 }
 
 int
-TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord &rec)
+TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord &rec
+			      ACE_ENV_ARG_DECL)
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
+
   // Check if we are allowed to write...
 
   if (max_size_ !=0 && (current_size_ + sizeof (rec)) >= max_size_)
@@ -113,15 +132,30 @@ TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord &rec)
 }
 
 int
-TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
+TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::RecordId id,
+				   DsLogAdmin::LogRecord &rec
+				   ACE_ENV_ARG_DECL)
 {
+  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			   guard,
+			   lock_,
+			   CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
+
   int retval = rec_hash_.find (id, rec);
   return retval;
 }
 
 int
-TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec)
+TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
+				 ACE_ENV_ARG_DECL)
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
+
   DsLogAdmin::LogRecord oldrec;
 
   if (rec_hash_.unbind (rec.id, oldrec) != 0)
@@ -144,8 +178,15 @@ TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec)
 }
 
 int
-TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id)
+TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
+				 ACE_ENV_ARG_DECL)
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
+
   DsLogAdmin::LogRecord rec;
   if (rec_hash_.unbind (id, rec) != 0)
     {
@@ -160,8 +201,14 @@ TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id)
 }
 
 int
-TAO_Hash_LogRecordStore::purge_old_records (void)
+TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
+
   CORBA::ULongLong num_records_to_purge = this->num_records_ * 5U / 100U;
 
   if (num_records_to_purge < 1)
@@ -301,6 +348,12 @@ TAO_Hash_LogRecordStore::query (const char *grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			   guard,
+			   lock_,
+			   CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -317,6 +370,12 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			   guard,
+			   lock_,
+			   CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   // Decide between forward vs backward retrieval.
   char constraint[32];
   char uint64_formating[32];
@@ -392,6 +451,12 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			   guard,
+			   lock_,
+			   CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -410,6 +475,12 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -425,6 +496,12 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   CORBA::ULong count (0);
 
   for (CORBA::ULong i = 0; i < ids.length (); i++)
@@ -441,6 +518,12 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
 CORBA::ULong
 TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   if (this->max_record_life_ == 0) {
     return 0;
   }
