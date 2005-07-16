@@ -1,3 +1,15 @@
+Sat Jul 16 02:18:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        
+          Changed code generation of the _boxed_out() method for
+          boxed array types to return the type of the valuebox
+          member's .out() method. The _boxed_out() method previously
+          returned the member's .inout() method, which could
+          potentially cause a memory leak if the member _var's
+          contained pointer is non-zero when _boxed_out() is
+          called.
+
 Fri Jul 15 17:01:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
