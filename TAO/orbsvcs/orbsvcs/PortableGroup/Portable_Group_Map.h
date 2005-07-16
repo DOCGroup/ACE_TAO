@@ -119,14 +119,12 @@ public:
   typedef GroupId_Table::iterator Iterator;
 
 protected:
-  /// @@ Frank: This class will need a mutex to protect
-  ///    this eventually...
+  /// Lock used to synchronize access to map_.
+  TAO_SYNCH_MUTEX lock_;
 
   /// Id map.
   GroupId_Table map_;
 };
-
-
 
 //#if defined (__ACE_INLINE__)
 //# include "Portable_Group_Map.i"

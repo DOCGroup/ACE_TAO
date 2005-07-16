@@ -47,6 +47,10 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
     ACE_ENV_ARG_DECL
   )
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             guard,
+             this->lock_);
+
   Map_Entry *new_entry;
 
   // We take ownership of the group_id memory.  Be sure we don't
@@ -56,10 +60,10 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
   ACE_NEW_THROW_EX (new_entry,
                     Map_Entry (),
                     CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
+                                      CORBA::SystemException::_tao_minor_code (
+                                                                               TAO::VMCID,
+                                                                               ENOMEM),
+                                      CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Fill out the entry.
@@ -110,6 +114,10 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
                                   CORBA::Object_out forward_to
                                   ACE_ENV_ARG_DECL)
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             guard,
+             this->lock_);
+
   // Look up the GroupId.
   Map_Entry *entry = 0;
   if (this->map_.find (group_id,
@@ -143,6 +151,11 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
 u_long
 TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id) const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    0);
+
   u_long hash =
     ACE::hash_pjw ((const char *) id->group_domain_id,
                    ACE_OS::strlen ((const char *) id->group_domain_id));
@@ -162,12 +175,15 @@ TAO_GroupId_Equal_To::operator () (
   const PortableGroup::TagGroupTaggedComponent *lhs,
   const PortableGroup::TagGroupTaggedComponent *rhs) const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    -1);
   return
-    (ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0) &&
-    (lhs->object_group_id == rhs->object_group_id) &&
-    (lhs->object_group_ref_version == rhs->object_group_ref_version);
+    ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0) 
+    && lhs->object_group_id == rhs->object_group_id
+    && lhs->object_group_ref_version == rhs->object_group_ref_version;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
