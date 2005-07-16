@@ -59,13 +59,11 @@ public:
 
   /// Constructor.
   TAO_RTEventLog_i (CORBA::ORB_ptr orb,
+		    PortableServer::POA_ptr poa,
                     TAO_LogMgr_i &logmgr_i,
                     DsLogAdmin::LogMgr_ptr factory,
-                    TAO_RTEventLogFactory_i *event_log_factory,
                     TAO_LogNotification *log_notifier,
-                    DsLogAdmin::LogId id,
-                    DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-                    CORBA::ULongLong max_size = 0);
+                    DsLogAdmin::LogId id);
 
   /// Destructor.
   ~TAO_RTEventLog_i ();
@@ -125,6 +123,8 @@ public:
 
   /// The observer strategy
   TAO_EC_ObserverStrategy *observer_strategy_;
+
+  PortableServer::POA_var	poa_;
 };
 
 #if defined(_MSC_VER)

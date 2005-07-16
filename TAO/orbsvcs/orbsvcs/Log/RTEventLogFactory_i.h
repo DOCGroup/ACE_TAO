@@ -28,7 +28,6 @@
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/CosNamingC.h"
 
 #include "RTEventLog_i.h"
 #include "rteventlog_export.h"
@@ -63,15 +62,12 @@ public:
   /// pointer to it.
   int
   init (CORBA::ORB_ptr orb,
-        PortableServer::POA_ptr poa,
-        const char* child_poa_name,
-        CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ()
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        PortableServer::POA_ptr poa
+        ACE_ENV_ARG_DECL);
 
-  /// Activate this servant with the POA passed in.
+  /// Activate this servant
   RTEventLogAdmin::EventLogFactory_ptr
-    activate (PortableServer::POA_ptr poa
-              ACE_ENV_ARG_DECL);
+  activate (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Used to create a RTEventLog.
   RTEventLogAdmin::EventLog_ptr create (
@@ -111,6 +107,12 @@ public:
       ));
 
 protected:
+  virtual PortableServer::ObjectId* create_objectid (DsLogAdmin::LogId id);
+
+  virtual DsLogAdmin::Log_ptr create_log_object (DsLogAdmin::LogId id);
+
+  virtual DsLogAdmin::Log_ptr create_log_reference (DsLogAdmin::LogId id);
+
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
 
@@ -129,11 +131,14 @@ protected:
   /// ORB.
   CORBA::ORB_var                orb_;
 
-  /// The POA with which we activate all the RTEventLogs.
-  PortableServer::POA_var       poa_;
+  /// POA.
+  PortableServer::POA_var	poa_;
 
-  /// The naming context to use.
-  CosNaming::NamingContext_var  naming_;
+  /// Factory POA.
+  PortableServer::POA_var	factory_poa_;
+
+  /// Log POA.
+  PortableServer::POA_var	log_poa_; 
 };
 
 #if defined(_MSC_VER)

@@ -35,6 +35,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_BasicLogActivator;
+
 /**
  * @class TAO_BasicLogFactory_i
  *
@@ -49,7 +51,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor.
-  TAO_BasicLogFactory_i (void);
+  TAO_BasicLogFactory_i ();
 
   /// Destructor.
   ~TAO_BasicLogFactory_i ();
@@ -60,8 +62,8 @@ public:
               PortableServer::POA_ptr poa
               ACE_ENV_ARG_DECL);
 
-  /// Allows clients to create new BasicLog objects. Raises
-  /// DsLogAdmin::NoResources and DsLogAdmin::InvalidThreshold.
+  /// Allows clients to create new BasicLog objects.
+  /// Raises DsLogAdmin::InvalidThreshold.
   DsLogAdmin::BasicLog_ptr
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
@@ -84,11 +86,26 @@ public:
                      ));
 
 protected:
-  CORBA::ORB_var                orb_;
+  virtual PortableServer::ObjectId* create_objectid (DsLogAdmin::LogId id);
+
+  virtual DsLogAdmin::Log_ptr create_log_object (DsLogAdmin::LogId id);
+
+  virtual DsLogAdmin::Log_ptr create_log_reference (DsLogAdmin::LogId id);
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var        log_mgr_;
 
+  /// ORB.
+  CORBA::ORB_var                orb_;
+
+  /// POA.
+  PortableServer::POA_var	poa_;
+
+  /// Factory POA.
+  PortableServer::POA_var	factory_poa_;
+
+  /// Log POA.
+  PortableServer::POA_var	log_poa_; 
 };
 
 #if defined(_MSC_VER)
