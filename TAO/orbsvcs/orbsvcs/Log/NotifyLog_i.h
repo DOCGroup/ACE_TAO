@@ -57,14 +57,12 @@ public:
 
   /// Constructor.
   TAO_NotifyLog_i (CORBA::ORB_ptr orb,
+		   PortableServer::POA_ptr poa,
                    TAO_LogMgr_i &logmgr_i,
                    DsLogAdmin::LogMgr_ptr factory,
-                   TAO_NotifyLogFactory_i *notify_log_factory,
                    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
                    TAO_LogNotification *log_notifier,
-                   DsLogAdmin::LogId id,
-                   DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-                   CORBA::ULongLong max_size = 0);
+                   DsLogAdmin::LogId id);
 
   /// Destructor.
   ~TAO_NotifyLog_i ();
@@ -231,6 +229,8 @@ private:
 
   /// The ConsumerAdmin that the log uses.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
+
+  PortableServer::POA_var	poa_;
 };
 
 #if defined(_MSC_VER)

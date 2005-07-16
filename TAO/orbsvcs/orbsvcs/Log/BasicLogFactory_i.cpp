@@ -17,16 +17,50 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
                                  PortableServer::POA_ptr poa
                                  ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB::_duplicate(orb);
+  TAO_LogMgr_i::init (orb);
 
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+
+  this->poa_ = PortableServer::POA::_duplicate (poa);
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+  CORBA::PolicyList policies;
+
+  policies.length (1);
+  policies[0] =
+    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+ACE_DEBUG((LM_DEBUG, "Creating factory poa\n"));
+  this->factory_poa_ = this->poa_->create_POA ("factory_POA",
+					       poa_manager.in (),
+					       policies
+					       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+  // Creation of the new POA is over, so destroy the Policy_Ptr's.
+  for (CORBA::ULong i = 0;
+       i < policies.length ();
+       ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+    }
+  
+  
   PortableServer::ObjectId_var oid =
-    poa->activate_object (this
-                          ACE_ENV_ARG_PARAMETER);
+    this->factory_poa_->activate_object (this
+					 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   CORBA::Object_var obj =
-    poa->id_to_reference (oid.in ()
-                          ACE_ENV_ARG_PARAMETER);
+    this->factory_poa_->id_to_reference (oid.in ()
+					 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   // narrow and store the result..
@@ -35,8 +69,46 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
-  return DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+  DsLogAdmin::BasicLogFactory_var v_return =
+    DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
+					  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+
+  policies.length (3);
+  policies[0] =
+    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
+					ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+  policies[1] = 
+    this->poa_->create_id_assignment_policy (PortableServer::USER_ID
+					     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+  policies[2] = 
+    this->poa_->create_servant_retention_policy (PortableServer::RETAIN
+						 ACE_ENV_ARG_PARAMETER)
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+ACE_DEBUG((LM_DEBUG, "Creating log poa\n"));
+  this->log_poa_ = this->factory_poa_->create_POA ("log_POA",
+						   poa_manager.in (),
+						   policies
+						   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+
+  // Creation of the new POA is over, so destroy the Policy_Ptr's.
+  for (CORBA::ULong i = 0;
+       i < policies.length ();
+       ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
+    }
+
+  return v_return._retn ();
 }
 
 DsLogAdmin::BasicLog_ptr
@@ -48,23 +120,23 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                    DsLogAdmin::InvalidLogFullAction
                    ))
 {
-  DsLogAdmin::LogId id;
-
-  // Get an unique/unused id for this Log.
-  while (hash_map_.find ((id = this->next_id_++)) == 0)
-    ;
-
-  DsLogAdmin::BasicLog_ptr basiclog =
-    this->create_with_id (id,
-                          full_action,
-                          max_size
-                          ACE_ENV_ARG_PARAMETER);
+ACE_DEBUG((LM_DEBUG, "TAO_BasicLogFactory_i::create\n"));
+  this->create_i (full_action,
+		  max_size,
+		  0,
+		  id_out
+		  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+  DsLogAdmin::LogId id = id_out;
+  
+  DsLogAdmin::Log_var log =
+    this->create_log_object (id);
 
-  // Set the id to return..
-  id_out = id;
+  // narrow to BasicLog
+  DsLogAdmin::BasicLog_var basic_log =
+    DsLogAdmin::BasicLog::_narrow (log);
 
-  return basiclog;
+  return basic_log._retn ();
 }
 
 DsLogAdmin::BasicLog_ptr
@@ -78,48 +150,89 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                    DsLogAdmin::InvalidLogFullAction
                    ))
 {
-  // Validate log_full_action before creating log
-  if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
-    ACE_THROW_RETURN (DsLogAdmin::InvalidLogFullAction (),
-                      DsLogAdmin::BasicLog::_nil ());
+ACE_DEBUG((LM_DEBUG, "TAO_BasicLogFactory_i::create_with_id\n"));
+  this->create_with_id_i (id,
+			  full_action,
+			  max_size,
+			  0
+			  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
-  // Make sure the id not used up.
-  if (hash_map_.find (id) == 0)
-    ACE_THROW_RETURN (DsLogAdmin::LogIdAlreadyExists (),
-                      DsLogAdmin::BasicLog::_nil ());
+  DsLogAdmin::Log_var log =
+    this->create_log_object (id);
 
-  DsLogAdmin::BasicLog_var basic_log;
-  // Object to return.
+  // narrow to BasicLog
+  DsLogAdmin::BasicLog_var basic_log =
+    DsLogAdmin::BasicLog::_narrow (log);
 
+  return basic_log._retn ();
+}
+
+PortableServer::ObjectId*
+TAO_BasicLogFactory_i::create_objectid (DsLogAdmin::LogId id)
+{
+  char buf[32]; 
+  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id)); 
+ 
+  PortableServer::ObjectId_var oid = 
+        PortableServer::string_to_ObjectId(buf);
+
+  return oid._retn ();
+}
+
+DsLogAdmin::Log_ptr
+TAO_BasicLogFactory_i::create_log_reference (DsLogAdmin::LogId id
+					     ACE_ENV_ARG_DECL)
+{
+  PortableServer::ObjectId_var oid =
+    this->create_objectid (id);
+  const char *intf = 
+	"IDL:omg.org/DsLogAdmin:BasicLog:1.0";
+  
+  CORBA::Object_var obj =
+    this->log_poa_->create_reference_with_id (oid.in (),
+					      intf
+					      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+  
+  DsLogAdmin::BasicLog_var basic_log =
+    DsLogAdmin::BasicLog::_narrow (obj.in ()
+				   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+  
+  return basic_log._retn();
+}
+
+
+DsLogAdmin::Log_ptr
+TAO_BasicLogFactory_i::create_log_object (DsLogAdmin::LogId id
+				          ACE_ENV_ARG_DECL)
+{
   TAO_BasicLog_i* basic_log_i;
 
   ACE_NEW_THROW_EX (basic_log_i,
                     TAO_BasicLog_i (this->orb_.in (),
+				    this->log_poa_.in (),
                                     *this,
                                     this->log_mgr_.in (),
-                                    id,
-                                    full_action,
-                                    max_size),
+                                    id),
                     CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+
+  basic_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   PortableServer::ServantBase_var safe_basic_log_i = basic_log_i;
   // Transfer ownership to the POA.
 
-  basic_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
-
+  // Obtain ObjectId
+  PortableServer::ObjectId_var oid = this->create_objectid (id);
+  
   // Register with the poa
-  basic_log = basic_log_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->log_poa_->activate_object_with_id (oid.in (),
+					   basic_log_i
+					   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
-  // widening a BasicLog_var to a Log_var
-  DsLogAdmin::Log_var log = DsLogAdmin::BasicLog::_duplicate (basic_log.in ());
-
-  // Add to the Hash table..
-  if (hash_map_.bind (id, log) == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      DsLogAdmin::BasicLog::_nil ());
-
-  return basic_log._retn ();
+  return create_log_reference (id ACE_ENV_ARG_PARAMETER);
 }

@@ -25,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/DsLogNotificationS.h"
-
 #include "log_serv_export.h"
 
 
@@ -49,8 +48,7 @@ public:
   virtual ~TAO_LogNotification (void);
 
   /// Event generated when a new log is created.
-  void object_creation (DsLogAdmin::Log_ptr log, DsLogAdmin::LogId id
-                        ACE_ENV_ARG_DECL)
+  void object_creation (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Event generated when a new log is deleted.

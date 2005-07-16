@@ -185,9 +185,7 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
 */
 
       if (factory_servant_->init (orb_.in (),
-                                  root_poa_.in (),
-                                  child_poa_name_,
-                                  context.in ()
+                                  root_poa_.in ()
                                  ACE_ENV_ARG_PARAMETER) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to initialize "

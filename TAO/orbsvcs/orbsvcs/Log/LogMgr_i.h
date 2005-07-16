@@ -25,32 +25,39 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Log/Log_i.h"
-
+#include "orbsvcs/Log/Log_Persistence_Strategy.h"
 #include "log_serv_export.h"
 
 /**
  * @class TAO_LogMgr_i
+ * @brief Log Factory
  *
- * @brief Factory of Logs. Contains list of Logs created.
- *
- * This factory base class is used to maintain a list of logs
- * created by it. Logs can also be removed from the list.
+ * The implementation delegates operations to a dynamically loaded
+ * Strategy class.
  */
-class TAO_Log_Serv_Export TAO_LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
+class TAO_Log_Serv_Export TAO_LogMgr_i
+  : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
 
   // = Initialization and Termination Methods
 
   /// Constructor.
-  TAO_LogMgr_i (void);
+  TAO_LogMgr_i ();
 
   /// Destructor.
-  ~TAO_LogMgr_i ();
+  virtual ~TAO_LogMgr_i ();
 
-  /// Lists all logs created by the log factory.
+  /// Lists all log object references.
   DsLogAdmin::LogList *
     list_logs (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
+
+  /// Lists all log ids.
+  DsLogAdmin::LogIdList *
+    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -63,29 +70,74 @@ public:
                      CORBA::SystemException
                      ));
 
-  /// Lists all log ids.
-  DsLogAdmin::LogIdList *
-  list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  /// Returns true if log exists, otherwise false
+  bool exists (DsLogAdmin::LogId id);
+  
+  /// Remove the given entry from the container.
+  int remove (DsLogAdmin::LogId id);
 
- /// remove the given entry from the hash table.
- int remove (DsLogAdmin::LogId id);
+  /// @brief Create ObjectId
+  ///
+  /// Create object id for log channel @ id.
+  ///
+  /// @param id log id
+  ///
+  /// @return object id
+  ///
+  virtual PortableServer::ObjectId* 
+    create_objectid (DsLogAdmin::LogId id)			= 0;
+
+  /// @brief Create log reference
+  ///
+  /// Create object reference for log channel @a id.
+  ///
+  /// @param id log id
+  ///
+  /// @return object reference
+  ///
+  virtual DsLogAdmin::Log_ptr 
+    create_log_reference (DsLogAdmin::LogId id)			= 0;
+
+  /// @brief Create log object
+  ///
+  /// Create and activate Log object for log channel @a id.
+  ///
+  /// @param id log id
+  ///
+  /// @return object reference
+  ///
+  virtual DsLogAdmin::Log_ptr 
+    create_log_object (DsLogAdmin::LogId id)			= 0;
+
+  /// @brief Get log record store 
+  ///
+  /// Get/Create a log record store for log channel @a id.
+  ///
+  /// @param id log id
+  ///
+  TAO_LogRecordStore*
+    get_log_record_store (DsLogAdmin::LogId id
+		          ACE_ENV_ARG_DECL);
 
 protected:
+  /// 
+  void init (CORBA::ORB_ptr orb);
 
-  /// Define the HASHMAP.
-  typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
-				DsLogAdmin::Log_var,
-				TAO_SYNCH_MUTEX> HASHMAP;
+  /// @brief Create log
+  void create_i (DsLogAdmin::LogFullActionType full_action,
+		 CORBA::ULongLong max_size,
+		 const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+		 DsLogAdmin::LogId_out id_out
+		 ACE_ENV_ARG_DECL);
 
-  /// The map of Logs created.
-  HASHMAP hash_map_;
-
-  /// The next log id to be assigned (if it hasn't already been
-  /// taken by create_by_id().
-  DsLogAdmin::LogId next_id_;
+  /// @brief Create log
+  void create_with_id_i (DsLogAdmin::LogId id,
+			 DsLogAdmin::LogFullActionType full_action,
+			 CORBA::ULongLong max_size,
+			 const DsLogAdmin::CapacityAlarmThresholdList* thresholds
+			 ACE_ENV_ARG_DECL);
+  
+  TAO_LogStore*		logstore_;
 };
 
 #include /**/ "ace/post.h"

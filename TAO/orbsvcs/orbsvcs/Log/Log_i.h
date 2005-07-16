@@ -29,9 +29,12 @@
 #include "orbsvcs/Log/Log_Compaction_Handler.h"
 #include "orbsvcs/Log/Log_Flush_Handler.h"
 #include "orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/Log/LogRecordStore.h"
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
 #include "log_serv_export.h"
+
+class TAO_LogMgr_i;
 
 /**
  * @class TAO_Log_i
@@ -48,11 +51,10 @@ public:
 
   /// Constructor.
   TAO_Log_i (CORBA::ORB_ptr orb,
+             TAO_LogMgr_i& logmgr_i,
              DsLogAdmin::LogMgr_ptr factory,
              DsLogAdmin::LogId id,
-             TAO_LogNotification *log_notifier,
-             DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-             CORBA::ULongLong max_size = 0);
+             TAO_LogNotification *log_notifier);
 
   /// Destructor.
   ~TAO_Log_i ();
@@ -317,25 +319,6 @@ public:
   //@}
 
 protected:
-
-  DsLogAdmin::RecordList* query_i (const char *constraint,
-                                      DsLogAdmin::Iterator_out &iter_out,
-                                      CORBA::ULong how_many
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidConstraint));
-
-  CORBA::ULong match_i (const char *constraint,
-                        CORBA::Boolean delete_rec
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidConstraint));
-
-  /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
-  void check_grammar (const char* grammar ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar));
-
   /// Tells if the Log is scheduled to run now.
   CORBA::Boolean scheduled (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -368,26 +351,11 @@ protected:
   /// The factory of the log
   DsLogAdmin::LogMgr_var factory_;
 
-  /// The action to take if the log reaches max capacity
-  DsLogAdmin::LogFullActionType log_full_action_;
-
   /// The id of the log
   DsLogAdmin::LogId logid_;
 
-  /// The maximum record lifetime
-  CORBA::ULong max_record_life_;
-
-  /// The administrative state of the log
-  DsLogAdmin::AdministrativeState admin_state_;
-
-  /// The forwarding state of the log
-  DsLogAdmin::ForwardingState forward_state_;
-
   /// The operational state of the log
   DsLogAdmin::OperationalState op_state_;
-
-  /// The interval during which the log should be in operation
-  DsLogAdmin::TimeInterval interval_;
 
   /// The availability of the log
   DsLogAdmin::AvailabilityStatus avail_status_;
@@ -412,13 +380,10 @@ protected:
   ACE_Reactor *reactor_;
 
   /// The storage for all the records
-  TAO_LogRecordStore recordstore_;
-
-  /// Max count to return in queries.
-  CORBA::ULong max_rec_list_len_;
+  TAO_LogRecordStore*		recordstore_;
 
   /// For sending Log Generated events.
-  TAO_LogNotification* notifier_;
+  TAO_LogNotification* 		notifier_;
 
   /// Log Compaction Handler
   TAO_Log_Compaction_Handler	log_compaction_handler_;

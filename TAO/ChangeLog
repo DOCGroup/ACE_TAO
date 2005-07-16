@@ -1,3 +1,96 @@
+Fri Jul 15 17:01:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Added Hash_Persistence_Strategy.*, Hash_LogStore.*, and 
+	  Hash_LogRecordStore.* to DsLogAdmin_Serv project.
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+
+	  Use dynamically loaded persistence strategy to create 
+	  LogStore.
+
+	* orbsvcs/orbsvcs/Log/Log_Persistence_Strategy.h:
+	* orbsvcs/orbsvcs/Log/Hash_Persistence_Strategy.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_Persistence_Strategy.h:
+
+	  New TAO_Log_Persistence_Strategy abstract base class which 
+	  strategizes the log parameter and log record storage, with 
+	  concrete TAO_Hash_Persistence_Strategy.h implementation.
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/LogStore.h:
+	* orbsvcs/orbsvcs/Log/Hash_LogStore.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogStore.h:
+
+	  Refactor LogMgr_i class so it bridges to new LogStore abstract
+	  base class, with concrete TAO_Hash_LogStore implementation.
+
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+	  Refactor TAO_LogRecordStore class into an abstract base class 
+	  with a concrete TAO_Hash_LogRecordStore implementartion.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (write_recordlist):
+
+	  Throw DsLogAdmin::LogOffDuty if log is off duty.
+
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+
+	  Use poa_ instead of _default_POA for collocated event channel.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+
+	  Update callers.
+
+	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+
+	  Added poa_ member variable.
+
+	  Changed constructor to take poa parameter.
+
+	  Changed destroy to use poa_ member variable instead of using
+	  _default_POA(), since there are now multiple POAs in play.
+
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	
+          Update callers.
+	
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (object_creation):
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+
+	   Removed unused Log argument.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+
+	  Create persistent POAs for the log factory and log channels.
+
+	  Activate factory and log channel objects explicitly instead
+	  of using _this().
+
+	  Fix assorted resource leaks, unchecked emulated exceptions.
+
 Fri Jul 15 16:17:34 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/Options.html:

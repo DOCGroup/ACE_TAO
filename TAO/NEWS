@@ -27,7 +27,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Fix Notification Service detection of dead consumers.
 
-PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.8
 ====================================================
 
 . Subset Anys to a separate library
@@ -36,6 +36,10 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
 ====================================================
+
+. The Telecom Logging Service now supports dynamically loaded Strategies
+  which can be used to implement a persistent log record store.  If none
+  are specified, a default in-memory hash table implementation is used.
 
 . The CodecFactory is moved to its own library. If you use this in your
   application include tao/CodecFactory/CodecFactory.h and link the

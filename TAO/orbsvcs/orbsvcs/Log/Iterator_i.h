@@ -18,16 +18,16 @@
 #ifndef TAO_TLS_ITERATOR_H
 #define TAO_TLS_ITERATOR_H
 #include /**/ "ace/pre.h"
-
-#include "orbsvcs/DsLogAdminS.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "orbsvcs/DsLogAdminS.h"
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
+#include "log_serv_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -41,63 +41,41 @@
  *
  * @brief Iterator to get LogRecords for the log via a query.
  */
-class TAO_Log_Serv_Export TAO_Iterator_i :
-  public POA_DsLogAdmin::Iterator,
-  public ACE_Event_Handler
+class TAO_Log_Serv_Export TAO_Iterator_i 
+  : public virtual POA_DsLogAdmin::Iterator,
+    public ACE_Event_Handler
 {
 public:
 
   // = Initialization and Termination methods.
 
   /// Constructor.
-  TAO_Iterator_i (ACE_Reactor* reactor,
-		  TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter,
-	          TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
-                  CORBA::ULong start,
-                  const char *constraint,
-                  CORBA::ULong max_rec_list_len
-                  );
+  TAO_Iterator_i (ACE_Reactor* reactor);
 
   /// Destructor.
-  ~TAO_Iterator_i (void);
+  virtual ~TAO_Iterator_i (void);
 
   /// Gets a list of LogRecords.
-  DsLogAdmin::RecordList* get (CORBA::ULong position,
-                               CORBA::ULong how_many
-                               ACE_ENV_ARG_DECL)
+  virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
+				       CORBA::ULong how_many
+				       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidParam));
+                     DsLogAdmin::InvalidParam))			= 0;
 
   /// This destroys the iterator.
-  void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-private:
-
-  /// Current Iterator.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
-
-  /// End Iterator.
-  TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_end_;
-
-  /// Position.
-  CORBA::ULong current_position_;
-
-  /// Constraint.
-  CORBA::String_var constraint_;
-
-  /// Max rec list length.
-  CORBA::ULong max_rec_list_len_;
-
+protected:
   /// Reactor
   ACE_Reactor* reactor_;
 
   /// Timeout
   static ACE_Time_Value timeout_;
-
+  
   /// Timer ID
   long timer_id_;
-
+  
   virtual int handle_timeout (const ACE_Time_Value&, const void *);
 };
 
