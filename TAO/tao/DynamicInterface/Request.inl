@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "tao/NVList.h"
+
 ACE_INLINE
 void
 CORBA::release (CORBA::Request_ptr x)
