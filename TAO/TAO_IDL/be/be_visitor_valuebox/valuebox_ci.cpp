@@ -188,7 +188,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
   *os << "ACE_INLINE " << node->full_name () << "_slice *" << be_nl 
       << vb_node->name () << "::_boxed_out (void)" << be_nl
       << "{" << be_idt_nl
-      << "return this->_pd_value.inout ();" << be_uidt_nl
+      << "return this->_pd_value.out ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // _tao_marshal_v method
