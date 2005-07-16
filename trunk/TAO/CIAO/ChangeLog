@@ -1,3 +1,9 @@
+Fri Jul 15 23:50:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * NEWS:
+          Updated the NEWS file to include the result of our latest 
+	  discussion/plan about DAnCE.
+
 Fri Jul 15 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NAM_Map.h:

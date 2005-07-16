@@ -17,6 +17,18 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
   This will allow the application developers to evolve their applications
   on the fly without server down time.
 
+. Modify ciao_preactivate, ciao_postactivate operations to make them
+  complaint to the D&C specification. 
+  
+. Modify DomainApplicationManager interface to make it separate from the
+  DomainApplication interface, hence compliant to the D&C spec.
+  
+. Adding support to manage multiple nested assemblies, which will involve
+  the work through ExternalReferenceEndPoint idea.
+  
+. Modify the <Connection> IDL data structure to make it compliant to the
+  D&C spec.
+
 PLANNED MAJOR CHANGES FOR CIAO-0.4.7
 ===============================
 . Add a component packaging tool to DAnCE. This tool will allow 
