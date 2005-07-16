@@ -77,12 +77,10 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
                                  PortableServer::POA_ptr poa
                                  ACE_ENV_ARG_DECL)
 {
-  TAO_LogMgr_i::init (orb);
+  TAO_LogMgr_i::init (orb, poa ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
-  this->orb_ = CORBA::ORB::_duplicate (orb);
-
-  this->poa_ = PortableServer::POA::_duplicate (poa);
-
+  
   this->event_channel_ = init (this->poa_.in () ACE_ENV_ARG_PARAMETER);
 
   this->consumer_admin_ =
@@ -94,36 +92,6 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
-  
-  PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-  CORBA::PolicyList policies (1);
-  policies.length (1);
-
-  policies[0] =
-    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
-					ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-  this->factory_poa_ = this->poa_->create_POA ("factory_POA",
-					       poa_manager.in (),
-					       policies
-					       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-  // Creation of the new POA is over, so destroy the Policy_Ptr's.
-  for (CORBA::ULong i = 0;
-       i < policies.length ();
-       ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-    }
-
-  
   PortableServer::ObjectId_var oid =
     this->factory_poa_->activate_object (this
 					 ACE_ENV_ARG_PARAMETER);
@@ -144,40 +112,6 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
     DsEventLogAdmin::EventLogFactory::_narrow (obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-
-  policies.length (3);
-  policies[0] =
-    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
-					ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-  policies[1] = 
-    this->poa_->create_id_assignment_policy (PortableServer::USER_ID
-					     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-  policies[2] = 
-    this->poa_->create_servant_retention_policy (PortableServer::RETAIN
-						 ACE_ENV_ARG_PARAMETER)
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-
-  this->log_poa_ = this->factory_poa_->create_POA ("log_POA",
-						   poa_manager.in (),
-						   policies
-						   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-
-  // Creation of the new POA is over, so destroy the Policy_Ptr's.
-  for (CORBA::ULong i = 0;
-       i < policies.length ();
-       ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
-    }
 
   return v_return._retn ();
 }

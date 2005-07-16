@@ -1,3 +1,19 @@
+Sat Jul 16 15:46:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+
+	  Refactor identical code to create the factory and log channel
+	  POAs out of *LogFactory_i and into base class TAO_LogMgr_i.
+
 Sat Jul 16 14:46:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Hash_LogRecordStore.cpp:

@@ -120,8 +120,19 @@ public:
 		          ACE_ENV_ARG_DECL);
 
 protected:
-  /// 
-  void init (CORBA::ORB_ptr orb);
+  /// @brief Initialize
+  ///
+  /// Creates factory and log channel POAs, and obtains the LogStore
+  /// from a dynamically loaded Log_Persistence_Strategy (if one was
+  /// specified in the service config file, otherwise the default 
+  /// Hash_Persistence_Strategy is used.)
+  ///
+  /// @param orb ORB
+  /// @param poa Parent POA
+  ///
+  void init (CORBA::ORB_ptr orb,
+	     PortableServer::POA_ptr poa
+	     ACE_ENV_ARG_DECL);
 
   /// @brief Create log
   void create_i (DsLogAdmin::LogFullActionType full_action,
@@ -137,7 +148,20 @@ protected:
 			 const DsLogAdmin::CapacityAlarmThresholdList* thresholds
 			 ACE_ENV_ARG_DECL);
   
-  TAO_LogStore*		logstore_;
+  /// ORB.
+  CORBA::ORB_var                orb_;
+
+  /// POA.
+  PortableServer::POA_var	poa_;
+
+  /// Factory POA.
+  PortableServer::POA_var	factory_poa_;
+
+  /// Log POA.
+  PortableServer::POA_var	log_poa_;
+
+private:
+  TAO_LogStore*			logstore_;
 };
 
 #include /**/ "ace/post.h"
