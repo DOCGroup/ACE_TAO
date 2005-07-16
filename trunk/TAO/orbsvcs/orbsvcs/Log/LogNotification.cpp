@@ -19,8 +19,7 @@ TAO_LogNotification::~TAO_LogNotification (void)
 }
 
 void
-TAO_LogNotification::object_creation (DsLogAdmin::Log_ptr /* log */,
-                                      DsLogAdmin::LogId id
+TAO_LogNotification::object_creation (DsLogAdmin::LogId id
                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -7,13 +7,13 @@ ACE_RCSID (Log,
            "$Id$")
 
 TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
+				PortableServer::POA_ptr poa,
                                 TAO_LogMgr_i &logmgr_i,
                                 DsLogAdmin::LogMgr_ptr factory,
-                                DsLogAdmin::LogId id,
-                                DsLogAdmin::LogFullActionType log_full_action,
-                                CORBA::ULongLong max_size)
-  : TAO_Log_i (orb, factory, id, 0, log_full_action, max_size),
-    logmgr_i_(logmgr_i)
+                                DsLogAdmin::LogId id)
+  : TAO_Log_i (orb, logmgr_i, factory, id, 0),
+    logmgr_i_(logmgr_i),
+    poa_(PortableServer::POA::_duplicate(poa))
 {
   // No-Op.
 }
@@ -77,16 +77,12 @@ TAO_BasicLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   this->logmgr_i_.remove (this->logid_); // check for error?
 
   // Deregister with POA.
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this
+			       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (id.in ()
+				 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

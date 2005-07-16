@@ -7,24 +7,20 @@ ACE_RCSID (Log,
            "$Id$")
 
 TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
+				PortableServer::POA_ptr poa,
                                 TAO_LogMgr_i &logmgr_i,
                                 DsLogAdmin::LogMgr_ptr factory,
-                                TAO_EventLogFactory_i *event_log_factory,
                                 TAO_LogNotification *log_notifier,
-                                DsLogAdmin::LogId id,
-                                DsLogAdmin::LogFullActionType log_full_action,
-                                CORBA::ULongLong max_size)
-  : TAO_Log_i (orb, factory, id, log_notifier, log_full_action, max_size),
-    logmgr_i_(logmgr_i)
+                                DsLogAdmin::LogId id)
+  : TAO_Log_i (orb, logmgr_i, factory, id, log_notifier),
+    logmgr_i_(logmgr_i),
+    poa_(PortableServer::POA::_duplicate(poa))
 {
-  ACE_UNUSED_ARG (event_log_factory);
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // Create an instance of the event channel.
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-  TAO_CEC_EventChannel_Attributes attr (poa.in(), poa.in());
+  TAO_CEC_EventChannel_Attributes attr (this->poa_.in(), 
+					this->poa_.in());
 
   ACE_NEW_THROW_EX (this->event_channel_,
                     TAO_CEC_EventChannel(attr),
@@ -94,17 +90,13 @@ TAO_EventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Deregister with POA.
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (id.in ()
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

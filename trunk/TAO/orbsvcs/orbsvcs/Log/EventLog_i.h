@@ -61,13 +61,11 @@ public:
 
   /// Constructor.
   TAO_EventLog_i (CORBA::ORB_ptr orb,
+		  PortableServer::POA_ptr poa,
                   TAO_LogMgr_i &logmgr_i,
                   DsLogAdmin::LogMgr_ptr factory,
-                  TAO_EventLogFactory_i *event_log_factory,
                   TAO_LogNotification *log_notifier,
-                  DsLogAdmin::LogId id,
-                  DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
-                  CORBA::ULongLong max_size = 0);
+                  DsLogAdmin::LogId id);
 
   /// Duplicate the log.
   virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
@@ -123,6 +121,8 @@ private:
   /// The PushConsumer that consumes the events and stores them
   /// in the log.
   TAO_Event_LogConsumer *my_log_consumer_;
+
+  PortableServer::POA_var	poa_;
 };
 
 #if defined(_MSC_VER)

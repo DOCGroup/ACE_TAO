@@ -237,6 +237,12 @@ public:
         ));
 
 protected:
+  virtual PortableServer::ObjectId* create_objectid (DsLogAdmin::LogId id);
+
+  virtual DsLogAdmin::Log_ptr create_log_object (DsLogAdmin::LogId id);
+
+  virtual DsLogAdmin::Log_ptr create_log_reference (DsLogAdmin::LogId id);
+
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
 
@@ -266,6 +272,12 @@ protected:
 
   /// POA.
   PortableServer::POA_var       poa_;
+  
+  /// Factory POA.
+  PortableServer::POA_var	factory_poa_;
+  
+  /// Log POA.
+  PortableServer::POA_var	log_poa_; 
 };
 
 #if defined(_MSC_VER)

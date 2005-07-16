@@ -1,19 +1,39 @@
 #include "LogMgr_i.h"
+#include "ace/Dynamic_Service.h"
+#include "orbsvcs/Log/Hash_Persistence_Strategy.h"
+#include "orbsvcs/Log/LogStore.h"
 
 ACE_RCSID (Log,
            LogMgr_i,
            "$Id$")
 
-TAO_LogMgr_i::TAO_LogMgr_i (void)
-  : next_id_ (0)
+TAO_LogMgr_i::TAO_LogMgr_i ()
+  : logstore_ (0)
 {
-  // No-Op.
 }
+
 
 TAO_LogMgr_i::~TAO_LogMgr_i ()
 {
-  // No-Op.
+  delete logstore_;
 }
+
+
+void
+TAO_LogMgr_i::init (CORBA::ORB_ptr orb)
+{
+  TAO_Log_Persistence_Strategy* strategy_;
+
+  strategy_ = 
+    ACE_Dynamic_Service<TAO_Log_Persistence_Strategy>::instance ("Log_Persistence");
+  if (strategy_ == 0) 
+    {
+      strategy_ = new TAO_Hash_Persistence_Strategy;
+    } 
+
+  logstore_ = strategy_->create_log_store (orb, this);
+}
+
 
 DsLogAdmin::LogList*
 TAO_LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
@@ -21,65 +41,9 @@ TAO_LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  DsLogAdmin::LogList* list;
-
-  // Figure out the length of the list.
-  CORBA::ULong len = static_cast<CORBA::ULong> (hash_map_.current_size ());
-
-  // Allocate the list of <len> length.
-  ACE_NEW_THROW_EX (list,
-                    DsLogAdmin::LogList (len),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  list->length (len);
-
-  // Create an iterator
-  HASHMAP::ITERATOR iter (hash_map_);
-
-  // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry = 0;
-
-  for (CORBA::ULong i = 0; i < len; i++)
-    {
-      iter.next (hash_entry);
-      iter.advance ();
-      (*list)[i] =
-        DsLogAdmin::Log::_duplicate (hash_entry->int_id_.in ());
-    }
-
-  return list;
+  return this->logstore_->list_logs (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-DsLogAdmin::Log_ptr
-TAO_LogMgr_i::find_log (DsLogAdmin::LogId id
-                        ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
-{
-  DsLogAdmin::Log_var v_return;
-
-  if (hash_map_.find (id,
-                      v_return) == -1)
-    {
-      return DsLogAdmin::Log::_nil ();
-    }
-  else
-    {
-      // Note: We have a _var in the hash table. when the hash table goes
-      // out of scope its contained _var members will release the object
-      // references that they hold.
-      // Now, <find> fills in <v_return> and when <v_return> goes out
-      // of scope, it too will release the object ref.we don't want this.
-      // we want the ref. count to remain what it was.
-      // So we increment the ref. count here.
-      DsLogAdmin::Log::_duplicate (v_return.in ());
-      return DsLogAdmin::Log::_duplicate (v_return.in ());
-      // This duplicate is to obey rules of returning obj. refs.
-      // don't get confused!
-    }
-}
 
 DsLogAdmin::LogIdList*
 TAO_LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
@@ -87,61 +51,87 @@ TAO_LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  DsLogAdmin::LogIdList* list;
-
-  // Figure out the length of the list.
-  CORBA::ULong len = static_cast<CORBA::ULong> (hash_map_.current_size ());
-
-  // Allocate the list of <len> length.
-  ACE_NEW_THROW_EX (list,
-                    DsLogAdmin::LogIdList (len),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  list->length (len);
-
-  // Create an iterator
-  HASHMAP::ITERATOR iter (hash_map_);
-
-  // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry = 0;
-
-  for (CORBA::ULong i = 0; i < len; i++)
-    {
-      iter.next (hash_entry);
-      iter.advance ();
-      (*list)[i] = hash_entry->ext_id_;
-    }
-
-  return list;
+  return this->logstore_->list_logs_by_id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+
+DsLogAdmin::Log_ptr
+TAO_LogMgr_i::find_log (DsLogAdmin::LogId id
+                        ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+ACE_DEBUG((LM_DEBUG, "TAO_LogMgr_i::find_Log\n"));
+  return this->logstore_->find_log (id ACE_ENV_ARG_PARAMETER);
+}
+
+
+TAO_LogRecordStore*
+TAO_LogMgr_i::get_log_record_store (DsLogAdmin::LogId id
+				    ACE_ENV_ARG_DECL)
+{
+  return this->logstore_->get_log_record_store (id ACE_ENV_ARG_PARAMETER);
+}
+
+
+bool
+TAO_LogMgr_i::exists (DsLogAdmin::LogId id)
+{
+  return this->logstore_->exists (id);
+}
+
 
 int
 TAO_LogMgr_i::remove (DsLogAdmin::LogId id)
 {
-  return this->hash_map_.unbind (id);
+  return this->logstore_->remove (id);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+void
+TAO_LogMgr_i::create_i (DsLogAdmin::LogFullActionType full_action,
+			CORBA::ULongLong max_size,
+			const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+			DsLogAdmin::LogId_out id_out
+			ACE_ENV_ARG_DECL)
+{
+  // Validate log_full_action before creating log
+  if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
+    ACE_THROW (DsLogAdmin::InvalidLogFullAction ());
 
-template class ACE_Hash_Map_Entry<DsLogAdmin::LogId,DsLogAdmin::Log_var>;
-template class ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
+  if (thresholds) 
+    {
+      // @@ JTC - validate thresholds here
+    }
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  this->logstore_->create (full_action,
+			   max_size,
+			   thresholds,
+			   id_out
+			   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
 
-#pragma instantiate ACE_Hash_Map_Entry<DsLogAdmin::LogId,DsLogAdmin::Log_var>
-#pragma instantiate ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
+void
+TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
+				DsLogAdmin::LogFullActionType full_action,
+				CORBA::ULongLong max_size,
+				const DsLogAdmin::CapacityAlarmThresholdList* thresholds
+				ACE_ENV_ARG_DECL)
+{
+  // Validate log_full_action before creating log
+  if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
+    ACE_THROW (DsLogAdmin::InvalidLogFullAction ());
 
-#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
+  if (thresholds) 
+    {
+      // @@ JTC - validate thresholds here
+    }
+
+  this->logstore_->create_with_id (id,
+				   full_action,
+				   max_size,
+				   thresholds
+				   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}

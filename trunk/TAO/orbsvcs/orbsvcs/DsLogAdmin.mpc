@@ -101,20 +101,26 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    DsLogAdmin {
-      Log/BasicLogFactory_i.cpp
-      Log/BasicLog_i.cpp
-      Log/Iterator_i.cpp
-      Log/LogMgr_i.cpp
-      Log/LogNotification.cpp
-      Log/LogRecordStore.cpp
-      Log/Log_Compaction_Handler.cpp
-      Log/Log_Constraint_Interpreter.cpp
-      Log/Log_Constraint_Visitors.cpp
-      Log/Log_Flush_Handler.cpp
-      Log/Log_i.cpp
-    }
+  Source_Files {
+    Log/Hash_Persistence_Strategy.cpp
+    Log/Hash_LogRecordStore.cpp
+    Log/Hash_LogStore.cpp
+    Log/Hash_Iterator_i.cpp
+    Log/BasicLogFactory_i.cpp
+    Log/BasicLog_i.cpp
+    Log/Iterator_i.cpp
+    Log/LogMgr_i.cpp
+    Log/LogNotification.cpp
+    Log/LogRecordStore.cpp
+    Log/Log_Compaction_Handler.cpp
+    Log/Log_Constraint_Interpreter.cpp
+    Log/Log_Constraint_Visitors.cpp
+    Log/Log_Flush_Handler.cpp
+    Log/Log_i.cpp
+  }
+
+  Header_Files {
+    Log/Log_Persistence_Strategy.h
   }
 
   Inline_Files {
