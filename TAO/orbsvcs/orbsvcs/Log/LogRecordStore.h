@@ -121,32 +121,42 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   // = LogRecordStore status methods
 
   /// Gets the current size of the log data.
-  virtual CORBA::ULongLong get_current_size (void)		= 0;
+  virtual CORBA::ULongLong
+    get_current_size (ACE_ENV_SINGLE_ARG_DECL)			= 0;
 
   /// Get the number of records in the log right now.
-  virtual CORBA::ULongLong get_n_records (void)			= 0;
+  virtual CORBA::ULongLong
+    get_n_records (ACE_ENV_SINGLE_ARG_DECL)			= 0;
 
   // = Record logging, retrieval, update and removal methods.
 
   /// Insert rec into storage. 
   /// Returns 0 on success -1 on failure and 1 if the log is full.
-  virtual int log (DsLogAdmin::LogRecord &rec)			= 0;
+  virtual int
+    log (DsLogAdmin::LogRecord &rec ACE_ENV_ARG_DECL)		= 0;
 
   /// Set rec to the pointer to the LogRecord with the given
   /// id. Returns 0 on success, -1 on failure.
-  virtual int retrieve (DsLogAdmin::RecordId id, 
-			DsLogAdmin::LogRecord &rec)		= 0;
+  virtual int
+    retrieve (DsLogAdmin::RecordId id, 
+	      DsLogAdmin::LogRecord &rec
+	      ACE_ENV_ARG_DECL)					= 0;
 
   /// Update into storage. 
   /// Returns 0 on success -1 on failure.
-  virtual int update (DsLogAdmin::LogRecord &rec)		= 0;
+  virtual int
+    update (DsLogAdmin::LogRecord &rec
+	    ACE_ENV_ARG_DECL)					= 0;
 
   /// Remove the record with id <id> from the LogRecordStore. 
   /// Returns 0 on success, -1 on failure.
-  virtual int remove (DsLogAdmin::RecordId id)			= 0;
+  virtual int
+    remove (DsLogAdmin::RecordId id
+	    ACE_ENV_ARG_DECL)					= 0;
 
   /// Deletes "old" records from the store.
-  virtual int purge_old_records (void)				= 0;
+  virtual int
+    purge_old_records (ACE_ENV_SINGLE_ARG_DECL)			= 0;
 
 
   /// Returns all records in the log that match the given constraint
