@@ -1,3 +1,21 @@
+Sat Jul 16 14:46:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Hash_LogRecordStore.cpp:
+
+	  Add missing read/write guards.
+
+	* orbsvcs/orbsvcs/LogRecordStore.h:
+	* orbsvcs/orbsvcs/Hash_LogRecordStore.h:
+	* orbsvcs/orbsvcs/Hash_LogRecordStore.cpp:
+
+	  Suppored emulated exceptions on all LogRecordStore methods.
+
+	* orbsvcs/orbsvcs/Log_Persistence_Strategy.h:
+	* orbsvcs/orbsvcs/LogStore.h:
+
+	  New files that should have been committed as part of:
+	  Fri Jul 15 17:01:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Sat Jul 16 16:12:04 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp (dispatch): 
