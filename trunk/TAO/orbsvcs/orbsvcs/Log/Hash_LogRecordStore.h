@@ -163,8 +163,8 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
     update (DsLogAdmin::LogRecord &rec
 	    ACE_ENV_ARG_DECL);
 
-  /// Remove the record with id <id> from the LogRecordStore. Returns 0 on
-  /// success, -1 on failure.
+  /// Remove the record with id <id> from the LogRecordStore. 
+  /// Returns 0 on success, -1 on failure.
   virtual int
     remove (DsLogAdmin::RecordId id
 	    ACE_ENV_ARG_DECL);
@@ -173,6 +173,10 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual int
     purge_old_records (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Ensure changes have been flushed to persistent media
+  /// Returns 0 on success, -1 on failure.
+  virtual int
+    flush (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
@@ -249,6 +253,9 @@ protected:
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidConstraint));
+
+  int remove_i (DsLogAdmin::RecordId id
+	        ACE_ENV_ARG_DECL);
 
   /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
   void check_grammar (const char* grammar ACE_ENV_ARG_DECL)
