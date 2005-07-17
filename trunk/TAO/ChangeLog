@@ -1,3 +1,11 @@
+Sat Jul 16 18:01:26 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+	  Changed init() method to not set the administrative and
+	  forwarding states, since those may be from a persistent
+	  data store.
+
 Sat Jul 16 17:48:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp

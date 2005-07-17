@@ -64,15 +64,6 @@ TAO_Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
       this->log_flush_handler_.schedule ();
     }
 
-  // enable the log now.
-  this->set_administrative_state (DsLogAdmin::unlocked
-				  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->set_forwarding_state (DsLogAdmin::on
-			      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
   this->op_state_ = DsLogAdmin::enabled;
 }
 
