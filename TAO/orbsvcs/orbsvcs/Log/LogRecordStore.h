@@ -158,6 +158,11 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual int
     purge_old_records (ACE_ENV_SINGLE_ARG_DECL)			= 0;
 
+  /// Ensure changes have been flushed to persistent media
+  /// Returns 0 on success, -1 on failure
+  virtual int
+    flush (ACE_ENV_SINGLE_ARG_DECL)				= 0;
+
 
   /// Returns all records in the log that match the given constraint
   /// <c>.

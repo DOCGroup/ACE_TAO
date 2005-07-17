@@ -318,6 +318,10 @@ public:
                      DsLogAdmin::UnsupportedQoS));
   //@}
 
+  /// Remove records that have exceeded max_record_life_.
+  void remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 protected:
   /// Tells if the Log is scheduled to run now.
   CORBA::Boolean scheduled (ACE_ENV_SINGLE_ARG_DECL)
@@ -326,10 +330,6 @@ protected:
   /// Copy the attributes of the log being passed.
   void copy_attributes (DsLogAdmin::Log_ptr log
                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  /// Remove records that have exceeded max_record_life_.
-  void remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Check if threshold reached.

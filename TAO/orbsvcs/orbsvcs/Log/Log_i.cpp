@@ -1010,10 +1010,11 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
 }
 
 void
-TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::UnsupportedQoS))
 {
+  this->recordstore_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Boolean
