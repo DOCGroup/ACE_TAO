@@ -110,7 +110,6 @@ TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id
                    CORBA::SystemException
                    ))
 {
-ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogStore::find_log\n"));
   ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
                            guard,
                            lock_,
@@ -119,12 +118,10 @@ ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogStore::find_log\n"));
 
   if (hash_map_.find (id) != 0)
     {
-ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogStore::find_log: nil\n"));
       return DsLogAdmin::Log::_nil ();
     }
   else
     {
-ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogStore::find_log: creating reference\n"));
       return mgr_->create_log_reference (id ACE_ENV_ARG_PARAMETER);
     }
 }

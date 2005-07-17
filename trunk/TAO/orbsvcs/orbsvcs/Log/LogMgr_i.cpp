@@ -133,7 +133,6 @@ TAO_LogMgr_i::find_log (DsLogAdmin::LogId id
                    CORBA::SystemException
                    ))
 {
-ACE_DEBUG((LM_DEBUG, "TAO_LogMgr_i::find_Log\n"));
   return this->logstore_->find_log (id ACE_ENV_ARG_PARAMETER);
 }
 
