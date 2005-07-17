@@ -11,11 +11,13 @@
 #include "tao/Leader_Follower_Flushing_Strategy.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
 #include "tao/LF_Strategy_Complete.h"
+#include "tao/Codeset_Descriptor_Base.h"
+#include "tao/Codeset_Manager_Factory_Base.h"
+#include "tao/Codeset_Manager.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc.h"
-#include "ace/Codeset_Registry.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Auto_Ptr.h"
@@ -42,8 +44,9 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , object_key_table_lock_type_ (TAO_THREAD_LOCK)
   , corba_object_lock_type_ (TAO_THREAD_LOCK)
   , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
-  , char_codeset_descriptor_ ()
-  , wchar_codeset_descriptor_ ()
+  , codeset_manager_ (0)
+  , char_codeset_descriptor_ (0)
+  , wchar_codeset_descriptor_ (0)
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
   , drop_replies_ (true)
 {
@@ -160,51 +163,28 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     /// CodeSet Translators
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBNativeCharCodeSet")) == 0)
-    {
+      {
         ++curarg;
-        ACE_CDR::ULong ncs;
-        if (ACE_Codeset_Registry::locale_to_registry (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                                      ncs) == 0)
+        if (curarg < argc)
           {
-            char **endPtr =0;
-            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                  endPtr, 0);
+            if (this->char_codeset_descriptor_ == 0)
+              this->init_codeset_descriptors();
+            if (this->char_codeset_descriptor_)
+              this->char_codeset_descriptor_->ncs (argv[curarg]);
           }
-        // Validate the CodesetId
-        if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
-          {
-            if (TAO_debug_level > 0)
-              ACE_ERROR((LM_ERROR,
-                         ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
-                         ncs));
-            return -1;
-          }
-        this->char_codeset_descriptor_.ncs (ncs);
-    }
+      }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBNativeWCharCodeSet")) == 0)
       {
         ++curarg;
-        ACE_CDR::ULong ncs;
-        if (ACE_Codeset_Registry::locale_to_registry(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                                      ncs) == 0)
+        if (curarg < argc)
           {
-            char **endPtr = 0;
-            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                  endPtr, 0);
+            if (this->wchar_codeset_descriptor_ == 0)
+              this->init_codeset_descriptors();
+            if (this->wchar_codeset_descriptor_)
+              this->wchar_codeset_descriptor_->ncs (argv[curarg]);
           }
-        // Validate the CodesetId
-        int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
-        if (mb == 0 || static_cast<size_t>(mb) > sizeof (ACE_CDR::WChar))
-          {
-            if (TAO_debug_level > 0)
-              ACE_ERROR((LM_ERROR,
-                         ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
-                         ncs));
-            return -1;
-          }
-        this->wchar_codeset_descriptor_.ncs (ncs, mb);
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -213,7 +193,10 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            this->char_codeset_descriptor_.add_translator (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+            if (this->char_codeset_descriptor_ == 0)
+              this->init_codeset_descriptors();
+            if (this->char_codeset_descriptor_)
+              this->char_codeset_descriptor_->add_translator (argv[curarg]);
           }
       }
 
@@ -224,7 +207,10 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            this->wchar_codeset_descriptor_.add_translator (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+            if (this->wchar_codeset_descriptor_ == 0)
+              this->init_codeset_descriptors();
+            if (this->wchar_codeset_descriptor_)
+              this->wchar_codeset_descriptor_->add_translator (argv[curarg]);
           }
       }
 
@@ -1015,12 +1001,57 @@ TAO_Default_Resource_Factory::disable_factory (void)
     }
 }
 
-const TAO_Codeset_Descriptor *
-TAO_Default_Resource_Factory::get_codeset_descriptor(int for_wchar) const
+TAO_Codeset_Manager *
+TAO_Default_Resource_Factory::codeset_manager(void)
 {
-  if (for_wchar)
-    return &this->wchar_codeset_descriptor_;
-  return &this->char_codeset_descriptor_;
+  static int initialized = 0;
+  if (this->codeset_manager_ || initialized)
+    return this->codeset_manager_;
+
+  initialized = 1;
+  TAO_Codeset_Manager_Factory_Base *factory =
+    ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
+  if (factory == 0 || factory->is_default())
+    {
+#if !defined (TAO_AS_STATIC_LIBS)
+      // only for dynamic libs, check to see if default factory and if so,
+      // remove it
+      ACE_Service_Config::process_directive("remove TAO_Codeset");
+      ACE_Service_Config::process_directive
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
+                                       "TAO_Codeset",
+                                       "_make_TAO_Codeset_Manager_Factory",
+                                       ""));
+      factory =
+        ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
+#endif
+    }
+  if (factory == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT("(%P|%t) ORB_Core: ")
+                    ACE_TEXT("Unable to initialize Codeset Manager\n")));
+      return 0;
+    }
+
+  this->codeset_manager_ = factory->create ();
+
+  return this->codeset_manager_;
+}
+
+void
+TAO_Default_Resource_Factory::init_codeset_descriptors(void)
+{
+  if (this->char_codeset_descriptor_)
+    return;
+  if (this->codeset_manager() == 0)
+    return;
+
+  this->char_codeset_descriptor_ =
+    this->codeset_manager_->char_codeset_descriptor();
+  this->wchar_codeset_descriptor_ =
+    this->codeset_manager_->wchar_codeset_descriptor();
 }
 
 TAO_Resource_Factory::Resource_Usage

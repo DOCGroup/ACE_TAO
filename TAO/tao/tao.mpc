@@ -349,6 +349,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Cleanup_Func_Registry.h
     ClientRequestInterceptor_Adapter.h
     Client_Strategy_Factory.h
+    Codeset_Descriptor_Base.h
     Codeset_Manager.h
     Codeset_Manager_Factory_Base.h
     Codeset_Translator_Base.h

@@ -265,17 +265,12 @@ TAO_ORB_Core::codeset_manager()
     {
       // This causes a factory to be loaded which will call
       // the codeset_manager setter in this thread.
-      this->load_codeset_manager();
+      this->codeset_manager_ =
+        this->resource_factory()->codeset_manager();
       if (this->codeset_manager_ == 0)
         this->orb_params()->negotiate_codesets(false);
     }
   return this->codeset_manager_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::codeset_manager (TAO_Codeset_Manager *tcm)
-{
-  this->codeset_manager_ = tcm;
 }
 
 #define TAO_OC_RETRIEVE(member) \

@@ -17,7 +17,7 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (Codeset,
            TAO_UTF16_BOM_Translator,
            "$Id$")
 
