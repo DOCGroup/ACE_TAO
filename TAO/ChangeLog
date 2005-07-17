@@ -1,3 +1,9 @@
+Sun Jul 17 18:57:26 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp (operator):
+
+          Fixed a typo resulting from an earlier edit.
+
 Sun Jul 17 16:39:01 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset_Descriptor_Base.h:
