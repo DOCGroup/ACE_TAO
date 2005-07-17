@@ -36,7 +36,6 @@
 #include "PolicyFactory_Registry_Factory.h"
 #include "ORBInitializer_Registry_Adapter.h"
 #include "Codeset_Manager.h"
-#include "Codeset_Manager_Factory_Base.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 #include "Policy_Manager.h"
@@ -270,8 +269,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   // Don't delete, is a process wide singleton shared by all orbs
   orbinitializer_registry_ = 0;
-
-  delete this->codeset_manager_;
 
   CORBA::release (this->orb_);
 }
@@ -1021,26 +1018,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                           CORBA::COMPLETED_NO),
                         -1);
     }
-#if 0
-  // @@Phil: Could we add a -ORB option to prevent creation of codeset
-  // manager. This adds to our runtime footprint. It would be awesome
-  // if we can do away with this if the user doesnt want to. Does that
-  // sound reasonable? Please let me know if this is not possible.
-
-  this->codeset_manager_ = trf->get_codeset_manager();
-  if (this->codeset_manager_ == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("ORB Core unable to initialize codeset_manager")));
-      ACE_THROW_RETURN (CORBA::INITIALIZE (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
-#endif
 
   // @@ ????
   // Make sure the reactor is initialized...
@@ -1170,6 +1147,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->orb_params ()->std_profile_components (std_profile_components);
 
   this->orb_params ()->negotiate_codesets (negotiate_codesets);
+
+  if (this->codeset_manager())
+    this->codeset_manager_->open();
+  else
+    if  (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("(%P|%t) ORB_Core: ")
+                    ACE_TEXT("Codeset Manager not available\n")));
 
   // Set up the pluggable protocol infrastructure.  First get a
   // pointer to the protocol factories set, then obtain pointers to
@@ -2384,49 +2369,6 @@ TAO_ORB_Core::resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL)
 
       this->ior_table_ = iortable_adapter->root ();
     }
-}
-
-void
-TAO_ORB_Core::load_codeset_manager ()
-{
-  if (this->orb_params()->negotiate_codesets() == 0)
-    return;
-
-  TAO_Codeset_Manager_Factory_Base *factory =
-    ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
-  if (factory == 0 || factory->is_default())
-    {
-#if !defined (TAO_AS_STATIC_LIBS)
-      // only for dynamic libs, check to see if default factory and if so,
-      // remove it
-      ACE_Service_Config::process_directive("remove TAO_Codeset");
-      ACE_Service_Config::process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
-                                       "TAO_Codeset",
-                                       "_make_TAO_Codeset_Manager_Manager_Factory_Base",
-                                       ""));
-      factory =
-        ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
-#endif
-    }
-  if (factory == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("(%P|%t) ORB_Core: ")
-                    ACE_TEXT("Unable to initialize Codeset Manager\n")));
-      return;
-    }
-
-  this->codeset_manager_ = factory->create (this);
-  if (this->codeset_manager_)
-    this->codeset_manager_->open();
-  else
-    if  (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("(%P|%t) ORB_Core: ")
-                    ACE_TEXT("Codeset Manager not available\n")));
-
 }
 
 int

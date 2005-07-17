@@ -25,7 +25,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORB_Core;
 class TAO_Codeset_Manager;
 
 /**
@@ -47,7 +46,7 @@ public:
   /// Create makes a new instance of the codeset manager for every
   /// call. This allows multiple ORBs to have their own (or none).
   /// This default implementation returns a null pointer only.
-  virtual TAO_Codeset_Manager *create(TAO_ORB_Core *orb_core);
+  virtual TAO_Codeset_Manager *create(void);
 
   /// Is_default is called by the ORB Core to determine if it needs
   /// to reload the factory with a dynamically linked libTAO_Codeset.

@@ -50,79 +50,6 @@ TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
 
 // **********************************************************************
 
-TAO_Codeset_Descriptor::TAO_Codeset_Descriptor ()
-  :ncs_ (0),
-   max_bytes_ (1),
-   ncs_set_ (0),
-   trans_base_(0)
-{
-}
-
-TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
-{
-  Translator_Node *temp = trans_base_;
-  while (temp)
-    {
-      temp = trans_base_->next_;
-      delete [] trans_base_->name_;
-      delete trans_base_;
-      trans_base_ = temp;
-    }
-}
-
-void
-TAO_Codeset_Descriptor::ncs (ACE_CDR::ULong ncs, int mb)
-{
-  this->ncs_ = ncs;
-  this->max_bytes_ = mb;
-  this->ncs_set_ = 1;
-}
-
-ACE_CDR::ULong
-TAO_Codeset_Descriptor::ncs (void) const
-{
-  return this->ncs_;
-}
-
-int
-TAO_Codeset_Descriptor::max_bytes (void) const
-{
-  return this->max_bytes_;
-}
-
-int
-TAO_Codeset_Descriptor::ncs_set (void) const
-{
-  return this->ncs_set_;
-}
-
-void
-TAO_Codeset_Descriptor::add_translator (const char *name)
-{
-  Translator_Node *temp = trans_base_;
-  if (this->trans_base_ == 0)
-    {
-      this->trans_base_ = new Translator_Node;
-      temp = trans_base_;
-    }
-  else
-    {
-      while (temp->next_ != 0)
-        temp = temp->next_;
-      temp->next_ = new Translator_Node;
-      temp = temp->next_;
-    }
-  temp->name_ = new char[ACE_OS::strlen (name) + 1];
-  ACE_OS::strcpy (temp->name_,name);
-  temp->next_ = 0;
-}
-
-const TAO_Codeset_Descriptor::Translator_Node *
-TAO_Codeset_Descriptor::translators (void) const
-{
-  return this->trans_base_;
-}
-
 // ********************************************************************
 
 TAO_Resource_Factory::TAO_Resource_Factory (void)
@@ -232,16 +159,16 @@ TAO_Resource_Factory::get_protocol_factories (void)
   return 0;
 }
 
-const TAO_Codeset_Descriptor *
-TAO_Resource_Factory::get_codeset_descriptor (int) const
-{
-  return 0;
-}
-
 int
 TAO_Resource_Factory::init_protocol_factories (void)
 {
   return -1;
+}
+
+TAO_Codeset_Manager *
+TAO_Resource_Factory::codeset_manager (void)
+{
+  return 0;
 }
 
 int
