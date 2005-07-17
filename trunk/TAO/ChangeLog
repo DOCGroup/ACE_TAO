@@ -1,3 +1,49 @@
+Sun Jul 17 16:39:01 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset_Descriptor_Base.h:
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Manager_Factory_Base.cpp:
+        * tao/Codeset_Manager_Factory_Base.h:
+        * tao/Makefile.am:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/tao.mpc:
+        * tao/Codeset/Codeset_Manager_Factory.cpp:
+        * tao/Codeset/Codeset_Manager_Factory.h:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/Codeset/Codeset_Manager_i.h:
+        * tao/Codeset/Codeset_Translator_Factory.cpp:
+        * tao/Codeset/UTF16_BOM_Translator.cpp:
+        * tao/Codeset/Codeset_Descriptor.cpp:
+        * tao/Codeset/Codeset_Descriptor.h:
+
+          Moved the remaining codeset-specific details out of the ORB core
+          and into TAO_Codeset. This is accomplished by moving the codeset
+          descriptor interface out of the Resource_Factory.h and making it
+          accessible only through the Codeset_Manager interface. This
+          means that the codeset manager must be created earlier in
+          the start-up if the library is available. If one assumes that
+          specifying a native [w]char codeset, or translators in the
+          svc.conf file, one expects to use codeset negotiation, then this
+          earlier loading is not a problem. If no codeset configuration is
+          supplied and -ORBNegotiateCodesets 0 is supplied to ORB_init,
+          then the TAO_Codeset library will not be loaded.
+
+          With static linked applications, if TAO_Codeset is not linked in
+          and tao/Codeset/Codeset.h is not included, then any codeset
+          specific configuration is ignored by the resource factory.
+
+          This change requires regenerating makefiles for TAO and
+          TAO_Codeset. If rebuilding in an existing workspace, rebuilding
+          dependencies for these libraries is recommended.
+
+
 Sat Jul 16 18:01:26 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp:
@@ -11,7 +57,7 @@ Sat Jul 16 17:48:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
 	* orbsvcs/orbsvcs/Log/Hash_LogStore.cpp
 	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp
-	
+
 	  Remove stray ACE_DEBUGs.
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp:
@@ -40,14 +86,14 @@ Sat Jul 16 17:17:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h
 	* orbsvcs/orbsvcs/Log/LogRecordStore.h
 
-	  Added flush method to ensure log records have been written 
+	  Added flush method to ensure log records have been written
 	  to persistent media.
 
 	* orbsvcs/orbsvcs/Log/Log_i.h:
 
 	  Make remove_old_records public so it can be called by log
 	  compaction timer.
-	
+
 	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp:
 
 	  Changed to invoke remove_old_records() on log now that
@@ -89,7 +135,7 @@ Sat Jul 16 14:46:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sat Jul 16 16:12:04 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp (dispatch): 
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp (dispatch):
 	  Don't put the ACE_GUARDs in the TAO_GroupId*::operator() methods.
 	  Thanks to J.T. for noticing this.
 
@@ -101,15 +147,15 @@ Sat Jul 16 18:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jul 16 10:24:36 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.{cpp,h}: Added 
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.{cpp,h}: Added
 	  a lock to prevent race conditions.  Thanks to Frank Hunleth
  	  <frank@hunleth.com> and Felix Perez Alamillo
- 	  <fpalamillo@indra.es> for helping with this.	
-  
+ 	  <fpalamillo@indra.es> for helping with this.
+
 Sat Jul 16 02:18:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
-        
+
           Changed code generation of the _boxed_out() method for
           boxed array types to return the type of the valuebox
           member's .out() method. The _boxed_out() method previously
@@ -122,21 +168,21 @@ Fri Jul 15 17:01:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Added Hash_Persistence_Strategy.*, Hash_LogStore.*, and 
+	  Added Hash_Persistence_Strategy.*, Hash_LogStore.*, and
 	  Hash_LogRecordStore.* to DsLogAdmin_Serv project.
 
 	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
 	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
 
-	  Use dynamically loaded persistence strategy to create 
+	  Use dynamically loaded persistence strategy to create
 	  LogStore.
 
 	* orbsvcs/orbsvcs/Log/Log_Persistence_Strategy.h:
 	* orbsvcs/orbsvcs/Log/Hash_Persistence_Strategy.cpp:
 	* orbsvcs/orbsvcs/Log/Hash_Persistence_Strategy.h:
 
-	  New TAO_Log_Persistence_Strategy abstract base class which 
-	  strategizes the log parameter and log record storage, with 
+	  New TAO_Log_Persistence_Strategy abstract base class which
+	  strategizes the log parameter and log record storage, with
 	  concrete TAO_Hash_Persistence_Strategy.h implementation.
 
 	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
@@ -153,7 +199,7 @@ Fri Jul 15 17:01:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
 	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
 
-	  Refactor TAO_LogRecordStore class into an abstract base class 
+	  Refactor TAO_LogRecordStore class into an abstract base class
 	  with a concrete TAO_Hash_LogRecordStore implementartion.
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (write_recordlist):
@@ -187,9 +233,9 @@ Fri Jul 15 17:01:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
 	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
 	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
-	
+
           Update callers.
-	
+
 	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (object_creation):
 	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
 

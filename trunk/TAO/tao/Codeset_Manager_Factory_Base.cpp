@@ -19,7 +19,7 @@ TAO_Codeset_Manager_Factory_Base::is_default() const
 }
 
 TAO_Codeset_Manager *
-TAO_Codeset_Manager_Factory_Base::create (TAO_ORB_Core *)
+TAO_Codeset_Manager_Factory_Base::create ()
 {
   return 0;
 

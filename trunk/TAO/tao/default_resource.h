@@ -27,7 +27,7 @@
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;
 class TAO_LF_Strategy;
-
+class TAO_Codeset_Descriptor_Base;
 class ACE_Reactor_Impl;
 
 /**
@@ -94,13 +94,6 @@ public:
     TAO_ALLOCATOR_THREAD_LOCK
   };
 
-  /// Translator type
-  enum TRANSLATOR_TYPE
-  {
-    CHAR_TRANSLATOR,
-    WCHAR_TRANSLATOR
-  };
-
   /// Modify and get the source for the CDR allocators
   int cdr_allocator_source (void);
 
@@ -121,9 +114,9 @@ public:
   virtual ACE_Allocator* ami_response_handler_allocator (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
 
-  virtual const TAO_Codeset_Descriptor *get_codeset_descriptor(int wchar=0) const;
-
   virtual int init_protocol_factories (void);
+
+  virtual TAO_Codeset_Manager * codeset_manager (void);
 
   virtual int cache_maximum (void) const;
   virtual int purge_percentage (void) const;
@@ -215,6 +208,8 @@ protected:
   int factory_disabled_;
 
 private:
+  void init_codeset_descriptors (void);
+
   enum Lock_Type
   {
     TAO_NULL_LOCK,
@@ -240,8 +235,9 @@ private:
   /// Type of flushing strategy configured
   Flushing_Strategy_Type flushing_strategy_type_;
 
-  TAO_Codeset_Descriptor char_codeset_descriptor_;
-  TAO_Codeset_Descriptor wchar_codeset_descriptor_;
+  TAO_Codeset_Manager *codeset_manager_;
+  TAO_Codeset_Descriptor_Base *char_codeset_descriptor_;
+  TAO_Codeset_Descriptor_Base * wchar_codeset_descriptor_;
 
   /// Resource usage strategy
   Resource_Usage resource_usage_strategy_;

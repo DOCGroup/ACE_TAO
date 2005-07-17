@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tao
+//    TAO/tao/Codeset
 //
 // = FILENAME
 //    Codeset_Translator_Factory.cpp
@@ -20,7 +20,7 @@
 #include "Codeset_Translator_Factory.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (Codeset,
            Codeset_Translator_Factory,
            "$Id$")
 

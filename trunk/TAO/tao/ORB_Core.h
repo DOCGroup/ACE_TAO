@@ -862,9 +862,8 @@ public:
    */
   TAO_Flushing_Strategy *flushing_strategy (void);
 
-  /// Get/Set Code Set Manager
+  /// Get Code Set Manager
   TAO_Codeset_Manager *codeset_manager (void);
-  void codeset_manager (TAO_Codeset_Manager *);
 
   typedef ACE_Array_Map<ACE_CString, ACE_CString> InitRefMap;
 
@@ -968,9 +967,6 @@ private:
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
                                          const TAO_MProfile &mp);
 
-  /// Load the codeset manager, if the option is set and the library
-  /// is available.
-  void load_codeset_manager ();
 
 protected:
 
@@ -1201,7 +1197,7 @@ protected:
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
 
-  /// Code Set Manager
+  /// Code Set Manager - points to service object in the service repo
   TAO_Codeset_Manager *codeset_manager_;
 
 };

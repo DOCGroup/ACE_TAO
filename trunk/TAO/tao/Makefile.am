@@ -426,6 +426,7 @@ nobase_include_HEADERS = \
   ClientRequestInterceptor_Adapter.h \
   ClientRequestInterceptor_Adapter_Factory.h \
   Client_Strategy_Factory.h \
+  Codeset_Descriptor_Base.h \
   Codeset_Manager.h \
   Codeset_Manager_Factory_Base.h \
   Codeset_Translator_Base.h \
