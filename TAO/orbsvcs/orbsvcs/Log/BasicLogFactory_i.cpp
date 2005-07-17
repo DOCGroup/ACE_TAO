@@ -54,7 +54,6 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                    DsLogAdmin::InvalidLogFullAction
                    ))
 {
-ACE_DEBUG((LM_DEBUG, "TAO_BasicLogFactory_i::create\n"));
   this->create_i (full_action,
 		  max_size,
 		  0,
@@ -84,7 +83,6 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                    DsLogAdmin::InvalidLogFullAction
                    ))
 {
-ACE_DEBUG((LM_DEBUG, "TAO_BasicLogFactory_i::create_with_id\n"));
   this->create_with_id_i (id,
 			  full_action,
 			  max_size,

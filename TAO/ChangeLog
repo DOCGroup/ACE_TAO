@@ -1,3 +1,15 @@
+Sat Jul 16 17:48:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
+	* orbsvcs/orbsvcs/Log/Hash_LogStore.cpp
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp
+	
+	  Remove stray ACE_DEBUGs.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+	  Fix inverted conditional in set_administative_state().
+
 Sat Jul 16 17:17:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:

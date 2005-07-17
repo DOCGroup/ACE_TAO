@@ -362,7 +362,7 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
     this->get_administrative_state (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
     
-  if (state != old_state)
+  if (state == old_state)
     return;
 
   this->recordstore_->set_administrative_state (state ACE_ENV_ARG_PARAMETER);
