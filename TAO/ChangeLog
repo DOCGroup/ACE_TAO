@@ -1,3 +1,38 @@
+Sat Jul 16 17:17:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+	  Changed log record to use log_record_size() instead of sizeof()
+	  when checking whether log is full.
+
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+	  Use the thread-safe interface pattern for remove() method.
+	  Change all callers who already have the write lock to call
+	  new remove_i() method.  Avoids deadlock found by unit test.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+	  Changed flush method to invoke flush on log record store.
+
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h
+
+	  Added flush method to ensure log records have been written 
+	  to persistent media.
+
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+
+	  Make remove_old_records public so it can be called by log
+	  compaction timer.
+	
+	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.cpp:
+
+	  Changed to invoke remove_old_records() on log now that
+	  Hash_LogRecordStore is protected by read/write locks.
+
 Sat Jul 16 15:46:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:

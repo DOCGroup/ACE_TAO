@@ -97,7 +97,7 @@ TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord &rec
 
   // Check if we are allowed to write...
 
-  if (max_size_ !=0 && (current_size_ + sizeof (rec)) >= max_size_)
+  if (max_size_ !=0 && ((current_size_ + log_record_size (rec)) >= max_size_))
     return 1; // return code for log rec. full
 
   // Initialize a couple of fields first...
@@ -178,15 +178,9 @@ TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
 }
 
 int
-TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
+TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id
 				 ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
-
   DsLogAdmin::LogRecord rec;
   if (rec_hash_.unbind (id, rec) != 0)
     {
@@ -199,6 +193,20 @@ TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
 
   return 0;
 }
+
+int
+TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
+				 ACE_ENV_ARG_DECL)
+{
+  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+			    guard,
+			    lock_,
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (-1);
+
+  return remove_i (id);
+}
+
 
 int
 TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
@@ -214,18 +222,19 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
   if (num_records_to_purge < 1)
     num_records_to_purge = 1;
 
-  LOG_RECORD_STORE_ITER iter (rec_hash_);
-  LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
   CORBA::ULong count = 0; // count of matches found.
 
   if (num_records_to_purge > 0 )
     {
+      LOG_RECORD_STORE_ITER iter (rec_hash_);
+      LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
+
       for (CORBA::ULongLong i = 0; i < num_records_to_purge; ++i)
         {
           if (iter.next (hash_entry) == -1 || iter.advance () == -1)
             break;
 
-          if (this->remove (hash_entry->int_id_.id) == 0)
+          if (this->remove_i (hash_entry->int_id_.id) == 0)
             count++;
         }
     }
@@ -233,6 +242,11 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
   return count;
 }
 
+int
+TAO_Hash_LogRecordStore::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return 0;
+}
 
 size_t
 TAO_Hash_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
@@ -432,7 +446,7 @@ TAO_Hash_LogRecordStore::match_i (const char *constraint,
         {
           if (delete_rec == 1)
             {
-              if (this->remove ((*iter).int_id_.id) == 0)
+              if (this->remove_i ((*iter).int_id_.id) == 0)
                 count++;
             }
           else
@@ -506,7 +520,7 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
 
   for (CORBA::ULong i = 0; i < ids.length (); i++)
     {
-      if (this->remove (ids [i]) == 0)
+      if (this->remove_i (ids [i]) == 0)
         {
           count++;
         }
@@ -560,7 +574,7 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-          if (this->remove ((*iter).int_id_.id) == 0)
+          if (this->remove_i ((*iter).int_id_.id) == 0)
             count++;
         }
     }
