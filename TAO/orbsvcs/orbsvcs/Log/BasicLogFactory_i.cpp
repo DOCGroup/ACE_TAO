@@ -1,4 +1,5 @@
 #include "orbsvcs/Log/BasicLogFactory_i.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Log,
            BasicLogFactory_i,

@@ -13,6 +13,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "ace/Auto_Ptr.h"
 
