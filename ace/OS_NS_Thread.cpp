@@ -2945,8 +2945,6 @@ ACE_OS::event_init (ACE_event_t *event,
 # endif
       return result;
     }
-
-    return(0);
   }
   else
   {
