@@ -1,3 +1,8 @@
+Mon Jul 18 14:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any_Impl.cpp:
+          Fixed crash in Any cleanup
+
 Mon Jul 18 15:05:03 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
