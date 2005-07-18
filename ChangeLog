@@ -1,3 +1,8 @@
+Mon Jul 18 13:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/index.html:
+          Update link for DAnCE
+
 Mon Jul 18 15:02:58 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.cpp:
