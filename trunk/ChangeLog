@@ -1,3 +1,10 @@
+Mon Jul 18 15:51:04 2005  Simon McQueen  <sm@prismtech.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Removed unreachable statements identified by HP non stop
+          MIPS build warnings.
+
 Mon Jul 18 09:21:14 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
