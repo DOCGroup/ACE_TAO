@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   LogRecordStore.h
+ *  @file   Hash_LogRecordStore.h
  *
  *  $Id$
  *
@@ -163,7 +163,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
     update (DsLogAdmin::LogRecord &rec
 	    ACE_ENV_ARG_DECL);
 
-  /// Remove the record with id <id> from the LogRecordStore. 
+  /// Remove the record with id <id> from the LogRecordStore.
   /// Returns 0 on success, -1 on failure.
   virtual int
     remove (DsLogAdmin::RecordId id
