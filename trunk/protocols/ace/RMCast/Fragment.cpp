@@ -24,7 +24,7 @@ namespace ACE_RMCast
   {
     if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
     {
-      unsigned short max_payload_size (
+      size_t max_payload_size (
         params_.max_packet_size () - max_service_size);
 
       if (data->size () <= max_payload_size)

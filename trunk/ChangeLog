@@ -1,3 +1,12 @@
+Mon Jul 18 15:02:58 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Fragment.cpp:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Reassemble.cpp:
+
+	  Fixed a bunch of warnings.
+
 Mon Jul 18 08:00:35 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:

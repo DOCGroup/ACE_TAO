@@ -42,8 +42,8 @@ namespace ACE_RMCast
           }
 
           Data_ptr new_data (new Data (data->buf (),
-                                       data->size (),
-                                       part->total_size ()));
+                                       static_cast<size_t> (data->size ()),
+                                       static_cast<size_t> (part->total_size ())));
 
           //std::cerr << "part->total_size (): " << part->total_size () << endl;
 
