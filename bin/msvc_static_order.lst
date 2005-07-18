@@ -29,10 +29,12 @@ TAO/tao/RTScheduler
 TAO/tao/IFR_Client
 TAO/tao/TypeCodeFactory
 TAO/orbsvcs/orbsvcs/Svc_Utils
+TAO/orbsvcs/orbsvcs/CosNaming_IDL
 TAO/orbsvcs/orbsvcs/CosNaming
 TAO/orbsvcs/orbsvcs/CosNaming_Serv
 TAO/orbsvcs/orbsvcs/CosNaming_Skel
 TAO/orbsvcs/orbsvcs/CosProperty
+TAO/orbsvcs/orbsvcs/CosTrading_IDL
 TAO/orbsvcs/orbsvcs/CosTrading
 TAO/orbsvcs/orbsvcs/CosTrading_Serv
 TAO/orbsvcs/orbsvcs/CosTrading_Skel
@@ -52,6 +54,7 @@ TAO/orbsvcs/orbsvcs/RTKokyuEvent
 TAO/orbsvcs/orbsvcs/CosConcurrency
 TAO/orbsvcs/orbsvcs/CosLifeCycle
 TAO/orbsvcs/orbsvcs/CosTime
+TAO/orbsvcs/orbsvcs/CosNotification_IDL
 TAO/orbsvcs/orbsvcs/CosNotification
 TAO/orbsvcs/orbsvcs/CosNotification_Skel
 TAO/orbsvcs/orbsvcs/CosNotification_Serv

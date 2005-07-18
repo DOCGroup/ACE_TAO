@@ -1,3 +1,10 @@
+Mon Jul 18 12:11:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/msvc_static_order.lst:
+
+	  Add CosNaming_IDL, CosTrading_IDL, and CosNotification_IDL
+	  projects to list.
+
 Mon Jul 18 11:42:09 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
