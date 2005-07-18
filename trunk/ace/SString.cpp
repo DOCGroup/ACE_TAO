@@ -66,7 +66,7 @@ ACE_NS_WString::char_rep (void) const
     return 0;
   else
     {
-      char *t;
+      char *t = 0;
 
       ACE_NEW_RETURN (t,
                       char[this->len_ + 1],
@@ -90,7 +90,7 @@ ACE_NS_WString::ushort_rep (void) const
     return 0;
   else
     {
-      ACE_USHORT16 *t;
+      ACE_USHORT16 *t = 0;
 
       ACE_NEW_RETURN (t,
                       ACE_USHORT16[this->len_ + 1],
