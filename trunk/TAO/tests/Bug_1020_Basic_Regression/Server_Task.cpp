@@ -37,6 +37,4 @@ Server_Task::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-
-  return 0;
 }
