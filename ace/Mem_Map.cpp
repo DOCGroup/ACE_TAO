@@ -250,7 +250,13 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
                     file_name,
                     MAXPATHLEN);
 
+#if defined (CHORUS) || defined(INTEGRITY)  || defined (__QNXNTO__)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
+#elif defined (ACE_OPENVMS)
+  ACE_OSCALL (::open (file_name, flags, mode, "shr=get,put,upd"), ACE_HANDLE, -1, this->handle_);
+#else
+  this->handle_ = ACE_OS::open (file_name, flags, mode, sa);
+#endif /* CHORUS */
 
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
@@ -377,7 +383,12 @@ ACE_Mem_Map::remove (void)
   this->close ();
 
   if (this->filename_[0] != '\0')
-    return ACE_OS::shm_unlink (this->filename_);
+#if defined (CHORUS) || defined (__QNXNTO__)
+  return ACE_OS::shm_unlink (this->filename_);
+#else
+  return ACE_OS::unlink (this->filename_);
+#endif /* CHORUS */
+
   else
     return 0;
 }
