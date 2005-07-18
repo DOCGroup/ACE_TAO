@@ -215,21 +215,15 @@ CORBA::LocalObject::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_Local_RefCounted_Object::_add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->refcount_lock_);
   ++this->refcount_;
 }
 
 void
 TAO_Local_RefCounted_Object::_remove_ref (void)
 {
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->refcount_lock_);
-    --this->refcount_;
+  const CORBA::ULong new_count = --this->refcount_;
 
-    if (this->refcount_ != 0)
-      return;
-  }
-
-  delete this;
+  if (new_count == 0)
+    delete this;
 }
 

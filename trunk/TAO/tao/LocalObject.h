@@ -21,7 +21,9 @@
 #define TAO_CORBA_LOCALOBJECT_H
 
 #include /**/ "ace/pre.h"
+
 #include "ace/Thread_Mutex.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -243,12 +245,8 @@ private:
   //@}
 
 protected:
-
-  /// Mutex to protect reference count.
-  TAO_SYNCH_MUTEX refcount_lock_;
-
-  /// Number of outstanding references to this object.
-  CORBA::ULong refcount_;
+  /// Reference counter.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
 };
 
 

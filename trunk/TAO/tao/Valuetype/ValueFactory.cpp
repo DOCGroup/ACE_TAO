@@ -39,30 +39,16 @@ CORBA::ValueFactoryBase::~ValueFactoryBase (void)
 void
 CORBA::ValueFactoryBase::_add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->_tao_reference_count_lock_);
-
   ++this->_tao_reference_count_;
 }
 
 void
 CORBA::ValueFactoryBase::_remove_ref (void)
 {
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX,
-               guard,
-               this->_tao_reference_count_lock_);
+  const CORBA::ULong new_count = --this->_tao_reference_count_;
 
-    --this->_tao_reference_count_;
-
-    if (this->_tao_reference_count_ != 0)
-      {
-        return;
-      }
-  }
-
-  delete this;
+  if (new_count == 0)
+    delete this;
 }
 
 // No-op. This should never be called, but it can't be pure virtual.
