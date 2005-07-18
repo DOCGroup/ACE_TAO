@@ -1,3 +1,10 @@
+Mon Jul 18 13:12:15 2005  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+
+        Linked inthe ValueType library to the NamingService. This is
+        required in case the event embedds a valuetype. See RT 5724.
+
 Mon Jul 18 15:34:01 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/DynamicInterface/DII_Invocation.cpp:
