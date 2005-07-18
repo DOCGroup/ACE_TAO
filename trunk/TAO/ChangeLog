@@ -1,3 +1,23 @@
+Mon Jul 18 05:15:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+	  #include "ace/OS_NS_sys_time.h" to bring ACE_OS::gettimeofday()
+	  definition into scope for noinline builds.
+
+	* orbsvcs/orbsvcs/Log/Hash_LogStore.cpp:
+
+	  #include "ace/Auto_Ptr.h" to bring auto_ptr<> template into
+	  scope for noinline builds.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+	  #include "ace/OS_NS_stdio.h" to bring ACE_OS::sprintf()
+	  definition into scope for noinline builds.
+
 Mon Jul 18 06:53:00 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
