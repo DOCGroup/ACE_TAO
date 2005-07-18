@@ -1,3 +1,9 @@
+Mon Jul 18 08:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset_Descriptor_Base.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+          Fixed fuzz errors
+
 Sun Jul 17 18:57:26 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp (operator):
