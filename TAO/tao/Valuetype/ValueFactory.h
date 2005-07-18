@@ -29,6 +29,7 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Atomic_Op.h"
 #include "tao/Environment.h"
 
 namespace CORBA
@@ -70,8 +71,8 @@ namespace CORBA
     virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract (void);
 
   private:
-    CORBA::ULong _tao_reference_count_;
-    TAO_SYNCH_MUTEX _tao_reference_count_lock_;
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> _tao_reference_count_;
   };
 
 }  // End CORBA namespace
