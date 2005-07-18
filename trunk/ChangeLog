@@ -1,3 +1,10 @@
+Mon Jul 18 09:08:01 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * bin/tao_orb_tests.lst:
+	
+          Added OBV/ValueBox the list of tests. This is a new test
+          to exercise boxed value types.
+
 Mon Jul 18 15:51:04 2005  Simon McQueen  <sm@prismtech.com>
 
         * ace/OS_NS_Thread.cpp:
@@ -65,6 +72,7 @@ Mon Jul 18 08:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/make_release:
           Removed exclude of asnmp.mwc, this file has been zapped
 
+>>>>>>> 4.8950
 Fri Jul 15 16:35:37 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
