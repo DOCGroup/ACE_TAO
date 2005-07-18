@@ -27,6 +27,24 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
    - Per-instance configurable protocol parameters (e.g., message
      retention time, NAK timeout, etc).
 
+. Support for interoperable shared IIOP profiles using
+  TAG_ALTERNATE_IIOP_ADDRESS components. Parsing such shared profiles
+  happens for free. Generating them requires adding -ORBUseSharedProfiles 1
+  to the parameters passed to ORB_init().
+
+. Refactored TAO's codeset negotiation feature to be optionally loadable.
+  The implementation is now in a separate library, TAO_Codeset. Applications
+  not wishing to use codeset support may pass -ORBNegotiateCodesets 0 to
+  ORB_init() to avoid loading the library. When building dynamic applications
+  codeset negotiation is available by default. For static applications, the
+  default is to *not* include codeset negotiation. Staticly linked apps
+  needing codeset negotiation support must do two things:
+  - Define the new MPC feature "negotiate_codesets=1" in default.features
+    and regenerate makefiles
+  - Add "#include <tao/Codeset/Codeset.h>" somewhere in their application
+    source. Placing this in the source file that includes calling ORB_init()
+    is probably the best place.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.5 and ACE-5.4.6
 ====================================================
 
