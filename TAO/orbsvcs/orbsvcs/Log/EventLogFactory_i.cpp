@@ -2,6 +2,7 @@
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/EventLogNotification.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Log,
            EventLogFactory_i,
