@@ -784,14 +784,14 @@ sub generate_makefiles () {
     my $here = Cwd::getcwd();
 
     print "My current wok in generate makefiles $here \n";
-    my $exclude_option = '-exclude ASNMP/asnmp.mwc,TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
+    my $exclude_option = '-exclude TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
     my $tmp_mpc_option =
         '-recurse -hierarchy -relative ACE_ROOT=';
 
     my $mpc_option = $tmp_mpc_option.$here.'/ACE_wrappers';
 
     my $tmp_static_option =
-        '-static -name_modifier *_Static -apply_project -exclude ASNMP/asnmp.mwc,TAO/CIAO,TAO/TAOACE.mwc ';
+        '-static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAO/TAOACE.mwc ';
 
     my $static_option = $tmp_static_option.$mpc_option;
 
@@ -842,7 +842,7 @@ sub generate_em3 () {
     my $here = Cwd::getcwd();
 
   &ex ("cd ACE_wrappers; \
-        bin/mwc.pl -type em3 -exclude ASNMP/asnmp.mwc,TAO -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
+        bin/mwc.pl -type em3 -exclude TAO -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
         find ./ -name '*.vc[p,w]' | /usr/bin/xargs chmod 0644");
 }
 
