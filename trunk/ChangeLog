@@ -1,3 +1,8 @@
+Mon Jul 18 08:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Removed exclude of asnmp.mwc, this file has been zapped
+
 Fri Jul 15 16:35:37 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
