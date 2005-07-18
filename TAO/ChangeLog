@@ -1,3 +1,11 @@
+Mon Jul 18 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2174_Regression/client.cpp:
+          Don't print the transient exception, this is expected
+
+        * tests/Bug_2174_Regression/server.cpp:
+          Removed commented out code
+
 Mon Jul 18 09:20:46 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
