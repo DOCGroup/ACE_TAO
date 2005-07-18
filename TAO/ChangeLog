@@ -1,3 +1,8 @@
+Mon Jul 18 09:20:46 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          Added notes about codeset refactoring.
+
 Mon Jul 18 14:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any_Impl.cpp:
