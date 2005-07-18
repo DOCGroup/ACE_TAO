@@ -14,10 +14,17 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 
 . Support for shared libraries with VxWorks
 
+. Support for Solaris 10 on x86 with Sun Studio 10 (C++ 5.7).
+
 . Extended ACE_OS::event_xxx implementation to support platforms
   having either PThread support with Process Shared condition
   variables or POSIX semaphores with named (process shared)
   semaphore support or using the new FIFO based semaphores.
+
+. ACE_OS::closesocket() no longer calls ACE_OS::shutdown() on any platform
+  while closing the socket. It previously called ACE_OS::shutdown() on
+  HP-UX. Removing this call fixes the fork-and-close programming paradigm
+  that's common to many networked applications.
 
 . RMCast
    - Support for message fragmentation. This will allow
