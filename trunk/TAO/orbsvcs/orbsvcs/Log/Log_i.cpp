@@ -866,9 +866,8 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
       else
         {
           // retval == 1 => log store reached max size.
-          record = reclist[i]; // can't avoid this copy, reclist is const.
 
-          int retval = this->recordstore_->log (record);
+          int retval = this->recordstore_->log (reclist[i]);
           if (retval == 1)
             {
               // The Log is full . check what the policy is

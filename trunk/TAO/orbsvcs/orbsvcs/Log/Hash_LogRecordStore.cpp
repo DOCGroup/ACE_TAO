@@ -87,7 +87,7 @@ TAO_Hash_LogRecordStore::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord &rec
+TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
 			      ACE_ENV_ARG_DECL)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
@@ -96,10 +96,15 @@ TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord &rec
 			    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (-1);
 
-  // Check if we are allowed to write...
+  // Get log record size...
+  size_t record_size = log_record_size (const_rec);
 
-  if (max_size_ !=0 && ((current_size_ + log_record_size (rec)) >= max_size_))
+  // Check if we are allowed to write...
+  if (max_size_ !=0 && ((current_size_ + record_size) >= max_size_))
     return 1; // return code for log rec. full
+
+  // Copy record...
+  DsLogAdmin::LogRecord rec = const_rec;
 
   // Initialize a couple of fields first...
   // ACE emulation of U Long Long (for platforms that don't have one)
@@ -127,7 +132,7 @@ TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord &rec
 
   // Increment the number of records in the log
   ++this->num_records_;
-  this->current_size_ += log_record_size(rec);
+  this->current_size_ += record_size;
 
   return 0;
 }
