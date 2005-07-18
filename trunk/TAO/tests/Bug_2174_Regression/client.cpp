@@ -91,7 +91,6 @@ int main (int argc, char* argv[])
   }
   ACE_CATCH (CORBA::TRANSIENT, ex)
   {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
       result = 5;
   }
   ACE_CATCHANY
