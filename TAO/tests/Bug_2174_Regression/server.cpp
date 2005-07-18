@@ -110,8 +110,6 @@ main (int argc, char *argv[])
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
   ACE_CATCHANY
     {
