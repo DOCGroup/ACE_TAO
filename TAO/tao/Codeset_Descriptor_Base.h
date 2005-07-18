@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   Codeset_Descriptor.h
+ *  @file   Codeset_Descriptor_Base.h
  *
  *  $Id$
  *
