@@ -1,7 +1,15 @@
+Mon Jul 18 11:42:09 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Revived the old style where each GNUmakefile has individual
+          targets that contain the necessary dependencies.  To utilize this
+          you must set the MPC_GNUACE_NAMED_TARGETS environment variable.
+
 Mon Jul 18 09:08:01 2005  Gary Maxey <gary.maxey@hp.com>
 
         * bin/tao_orb_tests.lst:
-	
+
           Added OBV/ValueBox the list of tests. This is a new test
           to exercise boxed value types.
 
@@ -38,12 +46,12 @@ Mon Jul 18 13:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jul 18 15:02:58 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Acknowledge.cpp:
-	* protocols/ace/RMCast/Fragment.cpp:
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Reassemble.cpp:
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Fragment.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Reassemble.cpp:
 
-	  Fixed a bunch of warnings.
+          Fixed a bunch of warnings.
 
 Mon Jul 18 08:00:35 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -63,9 +71,9 @@ Mon Jul 18 10:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jul 18 11:33:23 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated with the latest achievements in RMCast.
+          Updated with the latest achievements in RMCast.
 
 Mon Jul 18 08:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -121,16 +129,16 @@ Thu Jul 14 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 14 09:31:55 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Flow.cpp:
+        * protocols/ace/RMCast/Flow.cpp:
 
-	  Fixed fuzz error over math.h inclusion.
+          Fixed fuzz error over math.h inclusion.
 
 Wed Jul 13 22:12:12 UTC 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * etc/ciao_DAnCE.doxygen
 
           Added "RECURSIVE=YES" so source files could be found correctly
-	  Also added excluded path option for CIAO examples and tests.
+          Also added excluded path option for CIAO examples and tests.
 
 Wed Jul 13 17:10:45 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
