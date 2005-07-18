@@ -25,6 +25,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Thread_Mutex.h"
+#include "ace/Atomic_Op.h"
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
@@ -92,7 +93,7 @@ namespace TAO
     virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
     virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
     virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
-    
+
     bool encoded (void) const;
 
   protected:
@@ -106,11 +107,8 @@ namespace TAO
     bool encoded_;
 
   private:
-    /// Lock for the refcount
-    ACE_SYNCH_MUTEX mutex_;
-
-    /// Number of outstanding references to this object.
-    CORBA::ULong refcount_;
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
   };
 }
 

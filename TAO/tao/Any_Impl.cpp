@@ -21,7 +21,6 @@ TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
   : value_destructor_ (destructor)
   , type_ (CORBA::TypeCode::_duplicate (tc))
   , encoded_ (encoded)
-  , mutex_ ()
   , refcount_ (1)
 {
 }
@@ -97,28 +96,18 @@ TAO::Any_Impl::_tao_any_wstring_destructor (void *x)
 void
 TAO::Any_Impl::_add_ref (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX,
-             guard,
-             this->mutex_);
-
   ++this->refcount_;
 }
 
 void
 TAO::Any_Impl::_remove_ref (void)
 {
-  {
-    ACE_GUARD (ACE_SYNCH_MUTEX,
-               guard,
-               this->mutex_);
+  const CORBA::ULong new_count = --this->refcount_;
 
-    if (--this->refcount_ != 0)
-      {
-        return;
-      }
+  if (new_count != 0)
+    return
 
-    this->free_value ();
-  }
+  this->free_value ();
 
   delete this;
 }

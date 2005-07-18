@@ -232,16 +232,10 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
 void
 TAO_AMH_Response_Handler::_remove_ref (void)
 {
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX,
-               mon,
-               this->refcount_lock_);
+  const CORBA::ULong new_count = --this->refcount_;
 
-    --this->refcount_;
-
-    if (this->refcount_ > 0)
-      return;
-  }
+  if (new_count > 0)
+    return;
 
   if (this->allocator_)
     {
@@ -268,8 +262,3 @@ namespace TAO
   }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
