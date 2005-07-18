@@ -112,6 +112,41 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
   }
 }
 
+void
+test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa
+                                        ACE_ENV_ARG_DECL)
+{
+  test_i test;
+  CORBA::ULong expected_refcount = 1;
+
+  PortableServer::ObjectId* id =
+    root_poa->activate_object (&test ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  expected_refcount++;
+
+  CORBA::Object_var object =
+    root_poa->id_to_reference (*id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  PortableServer::ServantBase_var servant =
+    root_poa->reference_to_servant (object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  expected_refcount++;
+
+  root_poa->deactivate_object (*id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  expected_refcount--;
+
+  CORBA::ULong refcount =
+    test._refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  ACE_UNUSED_ARG (refcount);
+  ACE_UNUSED_ARG (expected_refcount);
+  ACE_ASSERT (expected_refcount == refcount);
+}
+
+
 int
 main (int argc, char **argv)
 {
@@ -188,8 +223,12 @@ main (int argc, char **argv)
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      test_reference_to_servant_active_object(root_poa.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+
       // Test servant.
       test_i test;
+      CORBA::ULong expected_refcount = 1;
 
       (void) test_get_servant_with_no_set (default_servant_poa.in());
 
@@ -201,6 +240,7 @@ main (int argc, char **argv)
       default_servant_poa->set_servant (&test
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      expected_refcount++;
 
       // Create dummy id.
       PortableServer::ObjectId_var id =
@@ -217,6 +257,7 @@ main (int argc, char **argv)
         default_servant_poa->id_to_servant (id.in ()
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      expected_refcount++;
 
       // Assert correctness.
       ACE_ASSERT (&test == servant.in());
@@ -226,6 +267,7 @@ main (int argc, char **argv)
         default_servant_poa->reference_to_servant (object.in ()
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      expected_refcount++;
 
       // Assert correctness.
       ACE_ASSERT (&test == servant.in());
@@ -233,6 +275,14 @@ main (int argc, char **argv)
       // Report success.
       ACE_DEBUG ((LM_DEBUG,
                   "Default_Servant test successful\n"));
+
+      CORBA::ULong refcount =
+        test._refcount_value (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_UNUSED_ARG (refcount);
+      ACE_UNUSED_ARG (expected_refcount);
+      ACE_ASSERT (expected_refcount == refcount);
 
       // Destroy the ORB.
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
