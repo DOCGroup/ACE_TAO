@@ -8,13 +8,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
 ====================================================
 
-. RMCast
-  - Support for message fragmentation. This will allow
-    for messages larger than 64K.
-  - Support for flow control.
-  - Timed recv() in RMCast::Socket.
-  - Per-instance configurable protocol parameters (e.g., message
-    retention time, NAK timeout, etc).
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
@@ -25,6 +18,14 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
   having either PThread support with Process Shared condition
   variables or POSIX semaphores with named (process shared)
   semaphore support or using the new FIFO based semaphores.
+
+. RMCast
+   - Support for message fragmentation. This will allow
+     for messages larger than 64K.
+   - Support for flow control.
+   - Timed recv() in RMCast::Socket.
+   - Per-instance configurable protocol parameters (e.g., message
+     retention time, NAK timeout, etc).
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.5 and ACE-5.4.6
 ====================================================
