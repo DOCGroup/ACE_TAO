@@ -105,7 +105,7 @@ TAO::Any_Impl::_remove_ref (void)
   const CORBA::ULong new_count = --this->refcount_;
 
   if (new_count != 0)
-    return
+    return;
 
   this->free_value ();
 
