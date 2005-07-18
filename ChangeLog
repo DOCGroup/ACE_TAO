@@ -1,3 +1,16 @@
+Mon Jul 18 13:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mem_Map.cpp:
+
+        Reverted the change below, it causes problems on AIX and Solaris. It
+        seems that on AIX we now use ACE_OS::open for shared memory, with the
+        change below we use ACE_OS::shm_open but this fails for strange
+        reasons and I have no idea what the problem is at this moment. So
+        revert this until Martin is back from his vacation
+
+        Tue Jul 05 21:40:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+        Changed to consistently use ACE_OS::shm_open/ACE_OS::shm_unlink.
+
 Mon Jul 18 13:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/index.html:
