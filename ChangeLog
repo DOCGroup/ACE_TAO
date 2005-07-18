@@ -1,3 +1,9 @@
+Mon Jul 18 09:21:14 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Took out TAO-specific comments.
+
 Mon Jul 18 13:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mem_Map.cpp:
