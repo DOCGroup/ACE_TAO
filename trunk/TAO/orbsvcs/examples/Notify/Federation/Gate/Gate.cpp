@@ -162,14 +162,15 @@ tracker ()
 
     for (; i < e.header.variable_header.length (); ++i)
     {
-      if (strcmp (e.header.variable_header[i].name, id_) == 0) break;
+      if (strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+        break;
     }
 
     if (i == e.header.variable_header.length ())
     {
       e.header.variable_header.length (i + 1);
 
-      e.header.variable_header[i].name = string_dup (id_);
+      e.header.variable_header[i].name = string_dup (id_.in ());
     }
 
     //ACE_DEBUG ((LM_DEBUG,
@@ -196,7 +197,7 @@ push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
 {
   for (ULong i (0); i < e.header.variable_header.length (); ++i)
   {
-    if (strcmp (e.header.variable_header[i].name, id_) == 0)
+    if (strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
     {
       ULong ttl;
 
