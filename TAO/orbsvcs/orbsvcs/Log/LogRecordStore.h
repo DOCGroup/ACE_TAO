@@ -133,7 +133,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Insert rec into storage. 
   /// Returns 0 on success -1 on failure and 1 if the log is full.
   virtual int
-    log (DsLogAdmin::LogRecord &rec ACE_ENV_ARG_DECL)		= 0;
+    log (const DsLogAdmin::LogRecord &rec ACE_ENV_ARG_DECL)	= 0;
 
   /// Set rec to the pointer to the LogRecord with the given
   /// id. Returns 0 on success, -1 on failure.

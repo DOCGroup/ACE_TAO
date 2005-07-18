@@ -1,3 +1,27 @@
+Mon Jul 18 14:53:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+	  Changed to compute size of log record only once.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+	  Update for below change.
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+
+	  Changed TAO_LogRecordStore::log()'s log record parameter to a
+	  const reference.
+
+	  Prior to this change, TAO_Log_i::write_recordlist() copied the
+	  indexed record (from the list) to a temporary before invoking
+	  TAO_LogRecordStore::log(), since that updated the id and time-
+	  stamp fields.  Since this is not always true with dynamically
+	  loaded strategies, we make the concrete LogRecordStore class
+	  do the copy.
+
 Mon Jul 18 13:12:15 2005  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.mpc:
