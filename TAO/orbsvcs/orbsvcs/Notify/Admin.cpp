@@ -18,6 +18,10 @@ ACE_RCSID (Notify,
 #include "Save_Persist_Worker_T.h"
 #include "Reconnect_Worker_T.h"
 #include "Event_Manager.h"
+#include "Consumer_Map.h"
+#include "Supplier_Map.h"
+#include "ConsumerAdmin.h"
+#include "SupplierAdmin.h"
 
 #include "tao/debug.h"
 
