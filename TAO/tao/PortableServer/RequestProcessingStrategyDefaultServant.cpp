@@ -188,25 +188,7 @@ namespace TAO
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
-      if (servant)
-        {
-          // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
-          ACE_UNUSED_ARG (non_servant_upcall);
-
-          // The POA invokes _add_ref once on the Servant before returning
-          // it. If the application uses reference counting, the caller of
-          // id_to_servant is responsible for invoking _remove_ref once on
-          // the returned Servant when it is finished with it. A
-          // conforming caller need not invoke _remove_ref on the returned
-          // Servant if the type of the Servant uses the default reference
-          // counting inherited from ServantBase.
-          servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          return servant;
-        }
-      else
+      if (servant == 0)
         {
           /*
            * If using default servant request processing strategy but
@@ -216,6 +198,8 @@ namespace TAO
           ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
                             0);
         }
+
+      return servant;
     }
 
     void
