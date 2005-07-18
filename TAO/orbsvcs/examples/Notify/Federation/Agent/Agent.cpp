@@ -108,10 +108,10 @@ private:
       e.header.variable_header.length (2);
 
       e.header.variable_header[0].name = string_dup ("space_craft_name");
-      e.header.variable_header[0].value <<= string_dup (space_craft_name_);
+      e.header.variable_header[0].value <<= string_dup (space_craft_name_.in ());
 
       e.header.variable_header[1].name = string_dup ("agent_name");
-      e.header.variable_header[1].value <<= string_dup (agent_name_);
+      e.header.variable_header[1].value <<= string_dup (agent_name_.in ());
 
       // Add the counter value into filterable_data section of the event.
       //
