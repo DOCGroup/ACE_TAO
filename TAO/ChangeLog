@@ -1,3 +1,11 @@
+Mon Jul 18 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any_Impl.{h,cpp}:
+        * tao/LocalObject.{h,cpp,i}:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Valuetype/ValueFactory.{h,cpp}:
+          Use ACE_Atomic_Op for the refcount
+
 Mon Jul 18 08:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Codeset_Descriptor_Base.h:
