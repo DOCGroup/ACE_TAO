@@ -1,3 +1,14 @@
+Mon Jul 18 15:34:01 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/PI_Server/PI_Server_Loader.cpp:
+        * tao/Union_TypeCode.cpp:
+        * tao/Union_TypeCode_Static.cpp:
+        * tests/Bug_1020_Basic_Regression/Server_Task.cpp:
+
+          Removed unreachable statements identified by HP non stop
+          MIPS build warnings.
+
 Mon Jul 18 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2174_Regression/client.cpp:

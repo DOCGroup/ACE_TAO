@@ -264,8 +264,6 @@ TAO::TypeCode::Union<char const *,
 //   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
-
-  return CORBA::TypeCode::_nil ();
 }
 
 char const *

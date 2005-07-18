@@ -160,8 +160,6 @@ namespace TAO
                                       CORBA::COMPLETED_YES),
                       TAO_INVOKE_USER_EXCEPTION);
 
-
-    return TAO::TAO_INVOKE_SUCCESS;
   }
 
 

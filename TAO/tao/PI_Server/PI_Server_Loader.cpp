@@ -68,8 +68,6 @@ TAO_PI_Server_Loader::init (int,
   ACE_ENDTRY;
 
   return 0;
-
-  return 0;
 }
 
 /////////////////////////////////////////////////////////////////////
