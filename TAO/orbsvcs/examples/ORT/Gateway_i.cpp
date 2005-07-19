@@ -116,7 +116,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   // Use the NVList (with values) to create a DII Request...
   CORBA::Request_var dii_request;
 
-  CORBA::NamedValue *named_value;
+  CORBA::NamedValue *named_value = 0;
 
   this->orb_->create_named_value (named_value
                                   ACE_ENV_ARG_PARAMETER);
