@@ -93,6 +93,18 @@
         </value>
       </value>
     </configProperty>
+
+    <configProperty>
+      <name>RegisterNaming</name>
+      <value>
+        <type>
+         <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AirFrameDevice_001</string>
+        </value>
+      </value> 
+    </configProperty>
   </instance>
 
   <instance id="BasicSP-BMDevice-idd">

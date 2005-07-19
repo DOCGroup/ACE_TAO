@@ -2,6 +2,8 @@
 #include "Container_Impl.h"
 #include "CCM_ComponentC.h" // for calling StandardConfigurator interface
 
+#include "orbsvcs/CosNamingC.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Container_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -143,7 +145,25 @@ CIAO::Container_Impl::install (
 
                      ACE_TRY_THROW (CORBA::INTERNAL ());
                    }
-                 continue;
+               }
+
+             // Set up the ComponentIOR attribute
+             if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
+                                 "RegisterNaming") == 0)
+               {
+                 const char * naming_context;
+                 impl_infos[i].component_config[prop_len].value >>= naming_context;
+
+                 // Register the component with the naming service
+                 ACE_DEBUG ((LM_DEBUG, "Register component with naming service.\n"));
+                 if (! register_with_ns (naming_context,
+                                         this->orb_.in (),
+                                         comp.in ()
+                                         ACE_ENV_ARG_PARAMETER))
+                   {
+                     ACE_DEBUG ((LM_DEBUG, "Failed to register with naming service.\n"));
+                   }
+                 ACE_TRY_CHECK;
                }
 
              // Initialize attributes through StandardConfigurator interface
@@ -396,3 +416,90 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   if (this->component_map_.unbind (str) == -1)
     ACE_THROW (::Components::RemoveFailure ());
 }
+
+bool
+CIAO::Container_Impl::register_with_ns (const char * obj_name,
+                                        CORBA::ORB_ptr orb,
+                                        Components::CCMObject_ptr obj
+                                        ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+	  // Obtain the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          false);
+
+      CosNaming::NamingContextExt_var naming_context =
+        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+  
+      // Create a Naming Sequence
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (obj_name);
+      name[0].kind = CORBA::string_dup ("");
+
+      // Register with the Name Server
+      naming_context->bind (name, obj ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return true;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to register with naming service.");
+      return false;
+    }
+  ACE_ENDTRY;
+  return true;
+}
+
+bool
+CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
+                                          CORBA::ORB_ptr orb
+                                          ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+	  // Obtain the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          false);
+
+      CosNaming::NamingContextExt_var naming_context =
+        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+  
+      // Create a Naming Sequence
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (obj_name);
+      name[0].kind = CORBA::string_dup ("");
+
+      // Register with the Name Server
+      ACE_DEBUG ((LM_DEBUG, "Unregister component with the name server : %s!\n", obj_name));
+      naming_context->unbind (name ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return true;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to unregister with naming service.");
+      return false;
+    }
+  ACE_ENDTRY;
+  return true;
+}
+
