@@ -1,7 +1,7 @@
 Tue Jul 19 13:14:51 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
-        
+
           Fixed error in generation of inheritance list for impl
           class declaration. Thanks to Steven Hattons
           <hattons@globalsymmetry.com> for reporting the bug.
@@ -141,8 +141,12 @@ Mon Jul 18 13:12:15 2005  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.mpc:
 
-        Linked inthe ValueType library to the NamingService. This is
-        required in case the event embedds a valuetype. See RT 5724.
+        Linked in the ValueType library to the NamingService. This is
+        required in case the event embedds a valuetype. The event body
+          consists of several CORBA anys. The current implementation
+          demarshalls an any before touching app code. Thus if the any
+          were to contain a valuetype, the valuetype library will be
+          called upon to demarshall the data.
 
 Mon Jul 18 15:34:01 2005  Simon McQueen  <sm@prismtech.com>
 
