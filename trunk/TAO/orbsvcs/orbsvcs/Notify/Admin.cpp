@@ -17,7 +17,6 @@ ACE_RCSID (Notify,
 #include "Topology_Saver.h"
 #include "Save_Persist_Worker_T.h"
 #include "Reconnect_Worker_T.h"
-#include "Event_Manager.h"
 #include "Consumer_Map.h"
 #include "Supplier_Map.h"
 #include "ConsumerAdmin.h"

@@ -11,7 +11,6 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 #include "Proxy.h"
 #include "Admin.h"
 #include "SupplierAdmin.h"
-#include "Event_Manager.h"
 #include "Method_Request_Dispatch.h"
 #include "Delivery_Request.h"
 #include "EventChannelFactory.h"
