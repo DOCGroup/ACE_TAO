@@ -1396,6 +1396,11 @@ static int input()
 	return c;
 	}
 
+void yyflush_current_buffer (void)
+{
+	YY_FLUSH_BUFFER;
+}
+
 
 #ifdef YY_USE_PROTOS
 void yyrestart( FILE *input_file )

@@ -71,6 +71,7 @@
 #include "ETCL_Interpreter.h"
 
 extern int yylex (void);
+extern void yyflush_current_buffer (void);
 
 static void yyerror (const char *)
 {
@@ -1262,6 +1263,12 @@ yyerrhandle:
 
  yyabortlab:
   /* YYABORT comes here.  */
+
+  /* Flush out yy_current_buffer before next parse.  Since there is
+     no error recovery, the buffer could still contain tokens from this
+     parse. */
+  yyflush_current_buffer();
+
   if (yyfree_stacks)
     {
       free (yyss);
