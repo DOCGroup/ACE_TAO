@@ -1,3 +1,45 @@
+Tue Jul 19 16:02:32 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          Free process_map_ entries in handle_exit(). Thanks to
+        yevgeng at softcomputer dot com for finding this memory leak.
+
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.inl:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Peer.inl:
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+        * orbsvcs/orbsvcs/Notify/Property.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Loader.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+
+          My previous checkin caused problems depending on the compiler
+        and the setting for __ACE_INLINE__. I took the opportunity to
+        clean up the #includes a little, and hopefully this fixes the
+        compile errors on all platforms.
+
 Tue Jul 19 19:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitializer_Registry_Impl.cpp:

@@ -20,17 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Copy_Disabled.h"
-
 #include "Refcountable.h"
+#include "Property.h"
+#include "Property_Boolean.h"
+#include "Property_T.h"
 
 #include "orbsvcs/Event_ForwarderS.h"
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "Property.h"
-#include "Property_Boolean.h"
-#include "Property_T.h"
+#include "ace/Copy_Disabled.h"
 
 class TAO_Notify_Consumer;
 class TAO_Notify_EventType;

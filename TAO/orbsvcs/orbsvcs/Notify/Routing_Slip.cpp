@@ -13,10 +13,13 @@
 #include "Event_Persistence_Strategy.h"
 #include "Routing_Slip_Persistence_Manager.h"
 #include "Routing_Slip_Queue.h"
-#include "tao/debug.h"
-#include "ace/Dynamic_Service.h"
 #include "Method_Request_Lookup.h"
 #include "Method_Request_Dispatch.h"
+
+#include "tao/debug.h"
+#include "tao/corba.h"
+
+#include "ace/Dynamic_Service.h"
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL

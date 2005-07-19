@@ -7,6 +7,7 @@ ACE_RCSID(RT_Notify, TAO_Notify_StructuredEvent, "$Id$")
 #include "../PropertySeq.h"
 #include "../Consumer.h"
 #include "tao/debug.h"
+#include "tao/corba.h"
 
 TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent &notification)
   : notification_ (&notification), type_ (notification.header.fixed_header.event_type)
