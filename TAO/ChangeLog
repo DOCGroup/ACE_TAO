@@ -1,6 +1,11 @@
+Tue Jul 19 19:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+          Fixed emulated exception error
+
 Tue Jul 19 10:26:03 2005  Gary Maxey <gary.maxey@hp.com>
 
-        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp: 
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
 
           When parse error occurs flush input buffer so a subsequent parse
           does not see tokens from the current one.
