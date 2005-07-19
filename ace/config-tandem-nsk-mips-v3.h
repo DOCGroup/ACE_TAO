@@ -248,6 +248,9 @@ typedef enum CMA_T_SCHED_POLICY {
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
 
+// Use larger default buffer size for ease of interoperability
+#define ACE_DEFAULT_CDR_BUFSIZE 4096
+
 //=========================================================================
 // Threads specific parts
 //=========================================================================
@@ -290,6 +293,10 @@ extern int cma_sigwait  (sigset_t *);
 
 // Platform lacks pthread_attr_setsched()
 #define ACE_LACKS_SETSCHED
+
+// Platform has pthread_getschedparam and pthread_setschedparam
+// even when ACE_LACKS_SETSCHED is defined.
+#define ACE_HAS_PTHREAD_SCHEDPARAM
 
 // Platform has pthread_mutexattr_setkind_np().
 #define ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP
