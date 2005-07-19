@@ -1,3 +1,27 @@
+Tue Jul 19 10:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Server_Request.h:
+        * tao/DynamicInterface/Request.h:
+          Fixed documentation typo
+
+        * tao/DynamicInterface/Server_Request.cpp:
+          Use prefix operators for the refcount
+
+        * tao/DynamicInterface/Context.{h,cpp}:
+        * tao/True_RefCount_Policy.{h,inl}:
+        * tao/Principal.{h,cpp,i}:
+        * tao/NVList.{h,cpp}:
+          Use ACE_Atomic_Op for the refcount
+
+        * tao/Synch_Refcountable.{h,cpp,inl}:
+        * tao/Utils/Synch_Refcountable.{h,cpp,inl}:
+          Moved TAO_Synch_Refcountable to the Utils lib, it is a utility
+          class and not used anywhere in the complete TAO distribution
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Updated for change above
+
 Tue Jul 19 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
