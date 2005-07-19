@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): messaging, taoexe, portableserver {
+project(*Server): taoserver, messaging {
   Source_Files {
     Oneway_Receiver.cpp
     Shutdown_Helper.cpp
