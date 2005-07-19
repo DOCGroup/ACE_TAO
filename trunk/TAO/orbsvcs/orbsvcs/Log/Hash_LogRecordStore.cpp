@@ -184,8 +184,7 @@ TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
 }
 
 int
-TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id
-				 ACE_ENV_ARG_DECL)
+TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id)
 {
   DsLogAdmin::LogRecord rec;
   if (rec_hash_.unbind (id, rec) != 0)

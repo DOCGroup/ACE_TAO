@@ -96,7 +96,8 @@ public:
   /// @return object reference
   ///
   virtual DsLogAdmin::Log_ptr 
-    create_log_reference (DsLogAdmin::LogId id)			= 0;
+    create_log_reference (DsLogAdmin::LogId id
+			  ACE_ENV_ARG_DECL)			= 0;
 
   /// @brief Create log object
   ///
@@ -107,7 +108,8 @@ public:
   /// @return object reference
   ///
   virtual DsLogAdmin::Log_ptr 
-    create_log_object (DsLogAdmin::LogId id)			= 0;
+    create_log_object (DsLogAdmin::LogId id
+		       ACE_ENV_ARG_DECL)			= 0;
 
   /// @brief Get log record store 
   ///

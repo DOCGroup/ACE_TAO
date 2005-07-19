@@ -254,8 +254,7 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidConstraint));
 
-  int remove_i (DsLogAdmin::RecordId id
-	        ACE_ENV_ARG_DECL);
+  int remove_i (DsLogAdmin::RecordId id);
 
   /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
   void check_grammar (const char* grammar ACE_ENV_ARG_DECL)

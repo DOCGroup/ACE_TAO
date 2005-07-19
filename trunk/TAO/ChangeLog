@@ -1,3 +1,22 @@
+Tue Jul 19 14:14:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+	* orbsvcs/orbsvcs/Log/LogStore.h:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+
+	  Fix assorted build errors, mostly related to emulated
+	  exceptions.  Thanks to Simon Massey and Don Sharp for
+	  pointing out these problems.
+
 Tue Jul 19 16:02:32 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:

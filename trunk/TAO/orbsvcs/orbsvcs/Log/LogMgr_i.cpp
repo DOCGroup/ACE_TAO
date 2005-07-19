@@ -72,7 +72,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 
   policies[2] = 
     this->poa_->create_servant_retention_policy (PortableServer::RETAIN
-						 ACE_ENV_ARG_PARAMETER)
+						 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->log_poa_ = this->factory_poa_->create_POA ("log_POA",
