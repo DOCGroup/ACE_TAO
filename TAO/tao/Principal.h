@@ -24,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Atomic_Op.h"
 #include "OctetSeqC.h"
 #include "Pseudo_VarOut_T.h"
 #include "CORBA_methods.h"
@@ -88,12 +89,8 @@ namespace CORBA
     Principal (const CORBA::Principal_ptr &);
 
   private:
-    /// Number of outstanding references to this object.
-    CORBA::ULong refcount_;
-
-    /// Protect the reference count, this is OK because we do no
-    /// duplicates or releases on the critical path.
-    TAO_SYNCH_MUTEX refcount_mutex_;
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
   };
 }  // End CORBA namespace
 

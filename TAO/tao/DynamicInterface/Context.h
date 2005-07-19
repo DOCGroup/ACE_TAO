@@ -117,11 +117,8 @@ namespace CORBA
     typedef CORBA::Context_var _var_type;
 
   private:
-    /// Reference counting.
-    CORBA::ULong refcount_;
-
-    /// Protect the reference count.
-    TAO_SYNCH_MUTEX refcount_lock_;
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
   };
 
   /**
