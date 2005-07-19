@@ -6,7 +6,6 @@
 #include "EventChannelFactory.h"
 #include "ConsumerAdmin.h"
 #include "SupplierAdmin.h"
-#include "Event_Manager.h"
 #include "Properties.h"
 #include "Factory.h"
 #include "Builder.h"

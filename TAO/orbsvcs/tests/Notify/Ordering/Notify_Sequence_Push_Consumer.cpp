@@ -88,7 +88,7 @@ Notify_Sequence_Push_Consumer::push_structured_events (
     ACE_OS::sleep(2);
   }
 
-  ACE_ASSERT(events.length() == BATCH_SIZE);
+  ACE_ASSERT(events.length() == static_cast<CORBA::ULong>(BATCH_SIZE));
 
   count_ += events.length();
 

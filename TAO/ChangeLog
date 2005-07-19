@@ -1,3 +1,19 @@
+Tue Jul 19 10:21:17 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+
+          Fix some problems with compilers that use early template
+        instantiation.
+
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+
+          Fix a warning about signed/unsigned comparison.
+
 Tue Jul 19 15:52:19 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/Union_TypeCode.cpp:
@@ -129,27 +145,27 @@ Tue Jul 19 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jul 18 14:53:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
 
-	  Changed to compute size of log record only once.
+          Changed to compute size of log record only once.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
-	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
 
-	  Update for below change.
+          Update for below change.
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
 
-	  Changed TAO_LogRecordStore::log()'s log record parameter to a
-	  const reference.
+          Changed TAO_LogRecordStore::log()'s log record parameter to a
+          const reference.
 
-	  Prior to this change, TAO_Log_i::write_recordlist() copied the
-	  indexed record (from the list) to a temporary before invoking
-	  TAO_LogRecordStore::log(), since that updated the id and time-
-	  stamp fields.  Since this is not always true with dynamically
-	  loaded strategies, we make the concrete LogRecordStore class
-	  do the copy.
+          Prior to this change, TAO_Log_i::write_recordlist() copied the
+          indexed record (from the list) to a temporary before invoking
+          TAO_LogRecordStore::log(), since that updated the id and time-
+          stamp fields.  Since this is not always true with dynamically
+          loaded strategies, we make the concrete LogRecordStore class
+          do the copy.
 
 Mon Jul 18 13:12:15 2005  Ciju John  <john_c@ociweb.com>
 
@@ -193,10 +209,10 @@ Mon Jul 18 14:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jul 18 15:05:03 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
-	* orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
 
-	  Fixed a bunch of warnings.
+          Fixed a bunch of warnings.
 
 Mon Jul 18 08:13:14 2005  Justin Michel  <michel_j@ociweb.com>
 
