@@ -69,57 +69,47 @@ namespace TAO
   Collocated_Object_Proxy_Broker::_non_existent (CORBA::Object_ptr target
                                                  ACE_ENV_ARG_DECL)
   {
-    CORBA::Boolean _tao_retval = 0;
+    CORBA::Boolean _tao_retval = true;
 
-    ACE_TRY
+    TAO_Stub *stub = target->_stubobj ();
+
+    // Which collocation strategy should we use?
+    if (stub != 0 &&
+        stub->servant_orb_var ()->orb_core ()
+        ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
       {
-        TAO_Stub *stub = target->_stubobj ();
+        TAO::Portable_Server::Servant_Upcall servant_upcall (
+          target->_stubobj ()->servant_orb_var ()->orb_core ()
+          );
 
-        // Which collocation strategy should we use?
-        if (stub != 0 &&
-            stub->servant_orb_var ()->orb_core ()
-            ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
-          {
-            TAO::Portable_Server::Servant_Upcall servant_upcall (
-              target->_stubobj ()->servant_orb_var ()->orb_core ()
-              );
+        CORBA::Object_var forward_to;
 
-            CORBA::Object_var forward_to;
+        servant_upcall.prepare_for_upcall (
+          target->_stubobj ()->object_key (),
+          "_non_existent",
+          forward_to.out ()
+          ACE_ENV_ARG_PARAMETER
+          );
+        ACE_CHECK_RETURN (_tao_retval);
 
-            servant_upcall.prepare_for_upcall (
-              target->_stubobj ()->object_key (),
-              "_non_existent",
-              forward_to.out ()
-              ACE_ENV_ARG_PARAMETER
-              );
-            ACE_TRY_CHECK;
+        servant_upcall.pre_invoke_collocated_request (
+            ACE_ENV_SINGLE_ARG_PARAMETER
+          );
+        ACE_CHECK_RETURN (_tao_retval);
 
-            servant_upcall.pre_invoke_collocated_request (
-                ACE_ENV_SINGLE_ARG_PARAMETER
-              );
-            ACE_TRY_CHECK;
-
-            servant_upcall.servant ()->_non_existent (
-                                           ACE_ENV_SINGLE_ARG_PARAMETER
-                                         );
-            ACE_TRY_CHECK;
-          }
-        // Direct collocation strategy is used.
-        else if (target->_servant () != 0)
-          {
-            target->_servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
+        _tao_retval =
+          servant_upcall.servant ()->_non_existent (
+                                         ACE_ENV_SINGLE_ARG_PARAMETER
+                                       );
+        ACE_CHECK_RETURN (_tao_retval);
       }
-    ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    // Direct collocation strategy is used.
+    else if (target->_servant () != 0)
       {
-        _tao_retval = 1;
+        _tao_retval =
+          target->_servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK_RETURN (_tao_retval);
       }
-    ACE_CATCHANY
-      {
-        ACE_RE_THROW;
-      }
-    ACE_ENDTRY;
 
     return _tao_retval;
   }

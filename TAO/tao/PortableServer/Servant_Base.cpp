@@ -91,7 +91,7 @@ TAO_ServantBase::_is_a (const char *logical_type_id
 CORBA::Boolean
 TAO_ServantBase::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  return 0;
+  return false;
 }
 
 CORBA::InterfaceDef_ptr
