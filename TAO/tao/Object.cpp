@@ -455,16 +455,34 @@ CORBA::Object::_request (const char *operation
 }
 
 // NON_EXISTENT ... send a simple call to the object, which will
-// either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
-// the latter case, return FALSE.
+// either elicit a false response or a OBJECT_NOT_EXIST exception.  In
+// the latter case, return true.
 
 CORBA::Boolean
 CORBA::Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
-  return this->proxy_broker_->_non_existent (this
-                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean retval = false;
+
+  ACE_TRY
+    {
+      retval = this->proxy_broker_->_non_existent (this
+                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      retval = true;
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (retval);
+
+  return retval;
 }
 
 
@@ -1031,78 +1049,3 @@ TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) 
     CORBA::Object_ptr obj
     ) = 0;
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Pseudo_Var_T<CORBA::Object>;
-template class TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>;
-
-template class TAO::Arg_Traits<CORBA::Object>;
-template class
-  TAO::Object_Arg_Traits_T<CORBA::Object_ptr,
-                           CORBA::Object_var,
-                           CORBA::Object_out,
-                           TAO::Objref_Traits<CORBA::Object> >;
-template class TAO::In_Object_Argument_T<CORBA::Object_ptr>;
-template class
-  TAO::Inout_Object_Argument_T<CORBA::Object_ptr,
-                               TAO::Objref_Traits<CORBA::Object> >;
-template class TAO::Out_Object_Argument_T<CORBA::Object_ptr,
-                                          CORBA::Object_out>;
-template class TAO::Ret_Object_Argument_T<CORBA::Object_ptr,
-                                          CORBA::Object_var>;
-
-#if 0
-// Needed in the future
-template class TAO::SArg_Traits<CORBA::Object>;
-template class TAO::Object_SArg_Traits_T<CORBA::Object_ptr,
-                                         CORBA::Object_var,
-                                         CORBA::Object_out>;
-template class TAO::In_Object_SArgument_T<CORBA::Object_ptr,
-                                          CORBA::Object_var>;
-template class TAO::Inout_Object_SArgument_T<CORBA::Object_ptr,
-                                             CORBA::Object_var>;
-template class TAO::Out_Object_SArgument_T<CORBA::Object_ptr,
-                                           CORBA::Object_var,
-                                           CORBA::Object_out>;
-template class TAO::Ret_Object_SArgument_T<CORBA::Object_ptr,
-                                           CORBA::Object_var>;
-#endif /*if 0*/
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Pseudo_Var_T<CORBA::Object>
-#pragma instantiate TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>
-
-#pragma instantiate TAO::Objref_Traits<CORBA::Object>
-#pragma instantiate TAO::Arg_Traits<CORBA::Object>
-#pragma instantiate \
-  TAO::Object_Arg_Traits_T<CORBA::Object_ptr, \
-                           CORBA::Object_var, \
-                           CORBA::Object_out, \
-                           TAO::Objref_Traits<CORBA::Object> >
-#pragma instantiate TAO::In_Object_Argument_T<CORBA::Object_ptr>
-#pragma instantiate \
-  TAO::Inout_Object_Argument_T<CORBA::Object_ptr, \
-                               TAO::Objref_Traits<CORBA::Object> >
-#pragma instantiate TAO::Out_Object_Argument_T<CORBA::Object_ptr, \
-                                               CORBA::Object_out>
-#pragma instantiate TAO::Ret_Object_Argument_T<CORBA::Object_ptr, \
-                                               CORBA::Object_var>
-
-#pragma instantiate TAO::SArg_Traits<CORBA::Object>
-#pragma instantiate TAO::Object_SArg_Traits_T<CORBA::Object_ptr, \
-                                              CORBA::Object_var, \
-                                              CORBA::Object_out>
-#pragma instantiate TAO::In_Object_SArgument_T<CORBA::Object_ptr, \
-                                               CORBA::Object_var>
-#pragma instantiate TAO::Inout_Object_SArgument_T<CORBA::Object_ptr, \
-                                                  CORBA::Object_var>
-#pragma instantiate TAO::Out_Object_SArgument_T<CORBA::Object_ptr, \
-                                                CORBA::Object_var, \
-                                                CORBA::Object_out>
-#pragma instantiate TAO::Ret_Object_SArgument_T<CORBA::Object_ptr, \
-                                                CORBA::Object_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
