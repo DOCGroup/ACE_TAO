@@ -1,3 +1,12 @@
+Tue Jul 19 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitializer_Registry_Impl.{h,cpp}:
+          Use a recursive mutex instead of a normal mutex to allow an
+          ORBInitializer to register another ORBInitializer during
+          pre/post init. Also use the mutex in the fini method to
+          prevent race conditions there. This fixes bugzilla bug
+          2089.
+
 Tue Jul 19 12:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjectKey_Table.cpp:
