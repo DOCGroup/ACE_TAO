@@ -1,3 +1,8 @@
+Tue Jul 19 10:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor_Adapter_Factory.{h,cpp}:
+          Added virtual destructor to fix gcc4 runtime error
+
 Tue Jul 19 10:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reliable_Oneways/Reliable_Oneways.mpc:
