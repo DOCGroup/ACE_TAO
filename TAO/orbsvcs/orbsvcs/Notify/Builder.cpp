@@ -17,7 +17,6 @@ ACE_RCSID (Notify,
 #include "EventChannel.h"
 #include "SupplierAdmin.h"
 #include "ConsumerAdmin.h"
-#include "Event_Manager.h"
 #include "Worker_Task.h"
 #include "Reactive_Task.h"
 #include "ThreadPool_Task.h"

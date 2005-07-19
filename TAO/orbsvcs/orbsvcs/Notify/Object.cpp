@@ -7,7 +7,6 @@
 #include "Builder.h"
 #include "ThreadPool_Task.h"
 #include "Reactive_Task.h"
-#include "Event_Manager.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
