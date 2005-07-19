@@ -56,7 +56,7 @@ namespace TAO
 
       /// Begin initialization of all registered ORBInitializers before
       /// the ORB itself is initialized.
-      virtual void pre_init (
+      virtual size_t pre_init (
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
@@ -66,6 +66,7 @@ namespace TAO
       /// Complete initialization of all registered ORBInitializers after
       /// the ORB has been initialized.
       virtual void post_init (
+        size_t pre_init_count,
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],

@@ -61,7 +61,7 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
                  CORBA::COMPLETED_NO));
 }
 
-void
+size_t
 TAO::ORBInitializer_Registry::pre_init (
   TAO_ORB_Core *orb_core,
   int argc,
@@ -69,9 +69,10 @@ TAO::ORBInitializer_Registry::pre_init (
   PortableInterceptor::SlotId &slotid
   ACE_ENV_ARG_DECL)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    0);
 
   size_t const initializer_count (this->initializers_.size ());
 
@@ -107,24 +108,25 @@ TAO::ORBInitializer_Registry::pre_init (
       // PortableInterceptor specification.
       orb_init_info_temp->invalidate ();
     }
+
+  return initializer_count;
 }
 
 void
 TAO::ORBInitializer_Registry::post_init (
+  size_t pre_init_count,
   TAO_ORB_Core *orb_core,
   int argc,
   char *argv[],
   PortableInterceptor::SlotId &slotid
   ACE_ENV_ARG_DECL)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
-
-  size_t const initializer_count (this->initializers_.size ());
-
-  if (initializer_count > 0)
+  if (pre_init_count > 0)
     {
+      ACE_GUARD (TAO_SYNCH_MUTEX,
+                 guard,
+                 this->lock_);
+
       TAO_ORBInitInfo * orb_init_info_temp = 0;
 
       ACE_NEW_THROW_EX (orb_init_info_temp,
@@ -141,7 +143,7 @@ TAO::ORBInitializer_Registry::post_init (
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
-      for (size_t i = 0; i < initializer_count; ++i)
+      for (size_t i = 0; i < pre_init_count; ++i)
         {
           this->initializers_[i]->post_init (orb_init_info_.in ()
                                              ACE_ENV_ARG_PARAMETER);
