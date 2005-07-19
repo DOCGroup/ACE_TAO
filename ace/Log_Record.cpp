@@ -202,12 +202,11 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
-      ACE_OS::snprintf (timestamp,
-                        26,
-                        time_fmt,
-                        ctp + 4,
-                        ((long) this->usecs_) / 1000,
-                        ctp + 20);
+      ACE_OS::sprintf (timestamp,
+                       time_fmt,
+                       ctp + 4,
+                       ((long) this->usecs_) / 1000,
+                       ctp + 20);
     }
 
   if (ACE_BIT_ENABLED (verbose_flag,
@@ -222,22 +221,20 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                                       ? ACE_LIB_TEXT ("<local_host>")
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
-      ACE_OS::snprintf (verbose_msg,
-                        MAXVERBOSELOGMSGLEN,
-                        verbose_fmt,
-                        timestamp,
-                        lhost_name,
-                        this->pid_,
-                        ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                        this->msg_data_);
+      ACE_OS::sprintf (verbose_msg,
+                       verbose_fmt,
+                       timestamp,
+                       lhost_name,
+                       this->pid_,
+                       ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                       this->msg_data_);
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-    ACE_OS::snprintf (verbose_msg,
-                      MAXVERBOSELOGMSGLEN,
-                      verbose_lite_fmt,
-                      timestamp,
-                      ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                      this->msg_data_);
+    ACE_OS::sprintf (verbose_msg,
+                     verbose_lite_fmt,
+                     timestamp,
+                     ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                     this->msg_data_);
   else
     ACE_OS::strcpy (verbose_msg, this->msg_data_);
   return 0;
