@@ -1,3 +1,11 @@
+Tue Jul 19 11:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2088/client.cpp:
+          Rewrote this test to test the draft 3.1 spec behaviour which
+          matches the current implementation. The 3.0.3 behaviour about
+          which I made this report doesn't seem usable for end users.
+          Fixes bugzilla bug 2088
+
 Tue Jul 19 11:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ORT/Gateway_i.cpp:
