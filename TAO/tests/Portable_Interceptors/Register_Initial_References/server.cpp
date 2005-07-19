@@ -46,7 +46,7 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   if (!invalid_name)
     {
       errors++;
-      ACE_ERROR ((LM_ERROR, "Registering with an empty string with the ORB"
+      ACE_ERROR ((LM_ERROR, "ERROR: Registering with an empty string with the ORB"
                             "doesn't throw an exception\n"));
     }
 
@@ -71,7 +71,7 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   if (!duplicate_name)
     {
       errors++;
-      ACE_ERROR ((LM_ERROR, "Registering with a duplicate with ORB "
+      ACE_ERROR ((LM_ERROR, "ERROR: Registering with a duplicate with ORB "
                             "doesn't throw the expected exception\n"));
     }
 
@@ -99,7 +99,7 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   if (!invalid_object)
     {
       errors++;
-      ACE_ERROR ((LM_ERROR, "Registering with a nil object to ORB "
+      ACE_ERROR ((LM_ERROR, "ERROR: Registering with a nil object to ORB "
                             "doesn't throw bad param with minor code 27\n"));
     }
 
