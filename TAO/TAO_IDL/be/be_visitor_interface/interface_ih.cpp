@@ -62,12 +62,10 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
       << " " << be_global->impl_class_prefix () << namebuf
-      << be_global->impl_class_suffix () << " : ";
+      << be_global->impl_class_suffix () << be_idt_nl << ": public virtual ";
 
   // Inherit from the base skeleton name, unless the interface
   // is local.
-  *os <<"public virtual ";
-
   if (node->is_local ())
     {
       *os << node->full_name ();
@@ -79,10 +77,12 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   if (node->is_local ())
     {
-      *os << ", public virtual TAO_Local_RefCounted_Object";
+      *os << "," << be_idt_nl
+          << "public virtual TAO_Local_RefCounted_Object"
+          << be_uidt;
     }
 
-  *os << be_nl
+  *os << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
       << "// Constructor " << be_nl
