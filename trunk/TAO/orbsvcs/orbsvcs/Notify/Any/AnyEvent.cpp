@@ -5,6 +5,8 @@
 ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
 
 #include "../Consumer.h"
+
+#include "tao/corba.h"
 #include "tao/debug.h"
 
 //#define DEBUG_LEVEL 10

@@ -14,10 +14,11 @@
 #define TOPOLOGY_LOADER_H
 #include /**/ "ace/pre.h"
 
+#include "notify_serv_export.h"
+
 #include "ace/config-all.h"
 
 #include "tao/corba.h"
-#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

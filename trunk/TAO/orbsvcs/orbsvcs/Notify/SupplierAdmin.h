@@ -15,14 +15,13 @@
 #include /**/ "ace/pre.h"
 
 #include "notify_serv_export.h"
+#include "Admin.h"
+
+#include "orbsvcs/NotifyExtS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "orbsvcs/NotifyExtS.h"
-
-#include "Admin.h"
 
 class TAO_Notify_ProxyConsumer;
 

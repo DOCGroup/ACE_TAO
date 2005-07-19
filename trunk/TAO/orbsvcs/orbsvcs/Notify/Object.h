@@ -20,16 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Base.h"
-
-#include "orbsvcs/NotifyExtC.h"
-
 #include "QoSProperties.h"
 #include "AdminProperties.h"
 #include "Worker_Task.h"
 #include "Refcountable.h"
 #include "Name_Value_Pair.h"
 #include "Event_Manager.h"
+
+#include "orbsvcs/NotifyExtC.h"
+
+#include "tao/PortableServer/Servant_Base.h"
 
 class TAO_Notify_POA_Helper;
 class TAO_Notify_Timer;

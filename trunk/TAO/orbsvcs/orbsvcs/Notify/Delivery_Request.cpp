@@ -6,7 +6,10 @@
 #include "Delivery_Request.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "Routing_Slip.h"
+
 #include "tao/debug.h"
+#include "tao/corba.h"
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -86,6 +89,13 @@ Delivery_Request::dispatch (
 {
   this->routing_slip_->dispatch (proxy_supplier, filter ACE_ENV_ARG_PARAMETER);
 }
+
+const Routing_Slip_Ptr &
+Delivery_Request::routing_slip () const
+{
+  return this->routing_slip_;
+}
+
 } // namespace
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

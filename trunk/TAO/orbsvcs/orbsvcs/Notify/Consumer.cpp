@@ -9,11 +9,16 @@
 ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
 
 #include "Timer.h"
+#include "ProxySupplier.h"
+#include "Method_Request_Event.h"
+
 #include "orbsvcs/Time_Utilities.h"
+
+#include "tao/debug.h"
+#include "tao/corba.h"
+
 #include "ace/Bound_Ptr.h"
 #include "ace/Unbounded_Queue.h"
-#include "tao/debug.h"
-#include "Method_Request_Event.h"
 
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
@@ -554,4 +559,16 @@ TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& ad
 {
   if (!CORBA::is_nil (this->publish_.in ()))
     this->publish_->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
+}
+
+TAO_SYNCH_MUTEX*
+TAO_Notify_Consumer::proxy_lock (void)
+{
+  return &this->proxy_->lock_;
+}
+
+TAO_Notify_ProxySupplier*
+TAO_Notify_Consumer::proxy_supplier (void)
+{
+  return this->proxy_;
 }

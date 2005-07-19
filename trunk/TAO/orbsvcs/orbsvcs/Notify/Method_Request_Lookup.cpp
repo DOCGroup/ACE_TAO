@@ -4,7 +4,6 @@
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 
-#include "tao/debug.h"
 #include "Consumer_Map.h"
 #include "ProxySupplier.h"
 #include "ProxyConsumer.h"
@@ -14,6 +13,9 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 #include "Method_Request_Dispatch.h"
 #include "Delivery_Request.h"
 #include "EventChannelFactory.h"
+
+#include "tao/debug.h"
+#include "tao/corba.h"
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
       const TAO_Notify_Event * event,

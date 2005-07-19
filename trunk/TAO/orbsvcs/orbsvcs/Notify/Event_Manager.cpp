@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Event_Manager.h"
-#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Event_Manager.inl"
@@ -13,6 +12,9 @@ ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 #include "ProxySupplier.h"
 #include "Consumer_Map.h"
 #include "Supplier_Map.h"
+#include "Event_Map_T.h"
+
+#include "tao/debug.h"
 
 TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (void)
 {
@@ -198,3 +200,56 @@ TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, 
     }
 }
 
+TAO_Notify_Consumer_Map&
+TAO_Notify_Event_Manager::consumer_map (void)
+{
+  ACE_ASSERT( this->consumer_map_.get() != 0 );
+  return *this->consumer_map_;
+}
+
+TAO_Notify_Supplier_Map&
+TAO_Notify_Event_Manager::supplier_map (void)
+{
+  ACE_ASSERT( this->supplier_map_.get() != 0 );
+  return *this->supplier_map_;
+}
+
+const TAO_Notify_EventTypeSeq&
+TAO_Notify_Event_Manager::offered_types (void) const
+{
+  return this->supplier_map_->event_types ();
+}
+
+const TAO_Notify_EventTypeSeq&
+TAO_Notify_Event_Manager::subscription_types (void) const
+{
+  return this->consumer_map_->event_types ();
+}
+
+/********************************************************************************/
+
+TAO_Notify_ProxyConsumer_Update_Worker::TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+  :added_ (added), removed_ (removed)
+{
+}
+
+void
+TAO_Notify_ProxyConsumer_Update_Worker::work (TAO_Notify_ProxyConsumer* proxy ACE_ENV_ARG_DECL)
+{
+  proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
+}
+
+/********************************************************************************/
+
+TAO_Notify_ProxySupplier_Update_Worker::TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+  :added_ (added), removed_ (removed)
+{
+}
+
+void
+TAO_Notify_ProxySupplier_Update_Worker::work (TAO_Notify_ProxySupplier* proxy ACE_ENV_ARG_DECL)
+{
+  proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
+}
+
+/********************************************************************************/

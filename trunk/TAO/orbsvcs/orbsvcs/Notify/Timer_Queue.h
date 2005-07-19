@@ -15,15 +15,15 @@
 
 #include "notify_serv_export.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "Timer.h"
 
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Recursive_Thread_Mutex.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
  * @class TAO_Notify_Timer_Queue

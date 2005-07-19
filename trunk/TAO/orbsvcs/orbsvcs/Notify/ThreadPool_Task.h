@@ -16,17 +16,17 @@
 
 #include "notify_serv_export.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "Timer_Queue.h"
+#include "AdminProperties.h"
+#include "Worker_Task.h"
 
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
-#include "Timer_Queue.h"
 
-#include "AdminProperties.h"
-#include "Worker_Task.h"
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Notify_Buffering_Strategy;
 

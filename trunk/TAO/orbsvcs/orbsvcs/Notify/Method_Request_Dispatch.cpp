@@ -4,13 +4,17 @@
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 
-#include "tao/debug.h"
 #include "ProxySupplier.h"
 #include "Consumer.h"
 #include "Admin.h"
 #include "ConsumerAdmin.h"
 #include "EventChannelFactory.h"
+
+#include "tao/debug.h"
+#include "tao/corba.h"
+
 #include "ace/OS_NS_stdio.h"
+
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
