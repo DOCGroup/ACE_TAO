@@ -86,7 +86,7 @@ int main (int argc, char* argv[])
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
   {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR: Exception caught:");
       result = 4;
   }
   ACE_CATCH (CORBA::TRANSIENT, ex)
@@ -95,7 +95,7 @@ int main (int argc, char* argv[])
   }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR: Exception caught:");
       result = 6;
     }
   ACE_ENDTRY;
