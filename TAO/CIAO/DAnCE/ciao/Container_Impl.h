@@ -131,6 +131,17 @@ namespace CIAO
       get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
+    bool
+    register_with_ns (const char * obj_name,
+                      CORBA::ORB_ptr orb,
+                      Components::CCMObject_ptr obj
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+    bool
+    unregister_with_ns (const char * obj_name,
+                        CORBA::ORB_ptr orb
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     // ------------------- CIAO Internal Operations ------------------------
     // These below two are helper methods to clean up components
