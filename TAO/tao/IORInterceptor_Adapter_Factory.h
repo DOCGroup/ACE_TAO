@@ -38,6 +38,8 @@ class TAO_Export TAO_IORInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
+  virtual ~TAO_IORInterceptor_Adapter_Factory (void);
+
   virtual TAO_IORInterceptor_Adapter * create (
       ACE_ENV_SINGLE_ARG_DECL
     )
