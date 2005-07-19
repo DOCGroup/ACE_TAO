@@ -77,23 +77,21 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       *os << node->full_skel_name ();
     }
 
-  *os << ", public virtual ";
-
   if (node->is_local ())
     {
-      *os << "TAO_Local_RefCounted_Object";
+      *os << ", public virtual TAO_Local_RefCounted_Object";
     }
 
   *os << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "//Constructor " << be_nl
+      << "// Constructor " << be_nl
       <<  be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
 
   if (be_global->gen_copy_ctor () && !node->is_local ())
     {
-      *os << "//Copy Constructor"<<be_nl
+      *os << "// Copy Constructor"<<be_nl
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << " (const "
           << be_global->impl_class_prefix () << namebuf
@@ -102,7 +100,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   if (be_global->gen_assign_op ())
     {
-      *os << "//Copy Assignment" << be_nl
+      *os << "// Copy Assignment" << be_nl
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "& " << "operator=(const "
           << be_global->impl_class_prefix () << namebuf
@@ -110,7 +108,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
     }
 
-  *os << "//Destructor " << be_nl
+  *os << "// Destructor " << be_nl
       << "virtual " << "~" << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " (void);";
 
