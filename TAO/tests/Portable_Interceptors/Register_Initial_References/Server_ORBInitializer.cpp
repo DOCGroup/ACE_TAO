@@ -57,13 +57,13 @@ Server_ORBInitializer::pre_init (
                           "exception\n"));
 
   bool duplicate_name = false;
-  ACE_TRY
+  ACE_TRY_EX (duplicate)
     {
       // Registering with an duplicate string should give an exception
       orbinitinfo->register_initial_reference ("MyService",
                                                object
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (duplicate) ;
     }
   ACE_CATCH (PortableInterceptor::ORBInitInfo::InvalidName, ex)
     {
@@ -80,13 +80,13 @@ Server_ORBInitializer::pre_init (
                           "doesn't throw the expected exception\n"));
 
   bool invalid_object = false;
-  ACE_TRY
+  ACE_TRY_EX (invalid)
     {
       // Registering with a nil object
       orbinitinfo->register_initial_reference ("NilServer",
                                                CORBA::Object::_nil()
                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (invalid);
     }
   ACE_CATCH (CORBA::BAD_PARAM , ex)
     {

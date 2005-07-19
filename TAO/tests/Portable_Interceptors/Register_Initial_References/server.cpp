@@ -52,13 +52,13 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     }
 
   bool duplicate_name = false;
-  ACE_TRY
+  ACE_TRY_EX (duplicate)
     {
       // Registering with an duplicate string should give an exception
       orb->register_initial_reference ("ORBMyService",
                                         object
                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (duplicate);
     }
   ACE_CATCH (CORBA::ORB::InvalidName, ex)
     {
@@ -78,13 +78,13 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     }
 
   bool invalid_object = false;
-  ACE_TRY
+  ACE_TRY_EX (invalid)
     {
       // Registering with a nil object
       orb->register_initial_reference ("ORBNilServer",
                                        CORBA::Object::_nil()
                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (invalid);
     }
   ACE_CATCH (CORBA::BAD_PARAM , ex)
     {
