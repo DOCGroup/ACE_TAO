@@ -146,6 +146,19 @@ sub CommandLine ()
         $commandline .= ' '.$self->{ARGUMENTS};
     }
 
+    # Avoid modifying TAO/tests run_test.pl scripts by using the
+    # ACE_RUNTEST_ARGS environment variable to append command line
+    # arguments.
+    if ($^O eq "nonstop_kernel") {
+        my $global_args = $ENV{"ACE_RUNTEST_ARGS"};
+        if ((length($global_args) > 0) 
+            && ($commandline !~ /tao_idl/)) {
+            $commandline = $commandline 
+                           . ' ' 
+                           . $global_args;
+        }
+    }
+
     if ($PerlACE::Process::chorus == 1) {
         $commandline = "rsh "
                        . $PerlACE::Process::chorushostname
