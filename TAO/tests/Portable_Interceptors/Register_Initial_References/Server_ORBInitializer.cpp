@@ -50,7 +50,6 @@ Server_ORBInitializer::pre_init (
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!invalid_name)
     ACE_ERROR ((LM_ERROR, "Registering with an empty string doesn't throw an "
@@ -73,7 +72,6 @@ Server_ORBInitializer::pre_init (
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!duplicate_name)
     ACE_ERROR ((LM_ERROR, "Registering with a duplicate with ORBInitInfo "
@@ -99,7 +97,6 @@ Server_ORBInitializer::pre_init (
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!invalid_object)
     ACE_ERROR ((LM_ERROR, "Registering with a nil object to ORBInitInfo "
