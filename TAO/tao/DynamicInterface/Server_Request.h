@@ -161,7 +161,7 @@ namespace CORBA
     /// Reference counting.
     CORBA::ULong refcount_;
 
-    /// Protect the refcount_ and response_receieved_.
+    /// Protect the refcount_ and response_received_.
     TAO_SYNCH_MUTEX lock_;
 
     /// Request from the ORB.

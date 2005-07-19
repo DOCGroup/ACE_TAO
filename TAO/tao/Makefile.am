@@ -259,7 +259,6 @@ libTAO_la_SOURCES = \
   Sync_Strategies.cpp \
   Synch_Invocation.cpp \
   Synch_Queued_Message.cpp \
-  Synch_Refcountable.cpp \
   Synch_Reply_Dispatcher.cpp \
   SystemException.cpp \
   SystemExceptionA.cpp \
@@ -772,8 +771,6 @@ nobase_include_HEADERS = \
   Synch_Invocation.h \
   Synch_Invocation.inl \
   Synch_Queued_Message.h \
-  Synch_Refcountable.h \
-  Synch_Refcountable.inl \
   Synch_Reply_Dispatcher.h \
   SystemException.h \
   SystemException.inl \
@@ -2859,7 +2856,8 @@ libTAO_Utils_la_SOURCES = \
   Utils/PolicyList_Destroyer.cpp \
   Utils/RIR_Narrow.cpp \
   Utils/Servant_Var.cpp \
-  Utils/Server_Main.cpp
+  Utils/Server_Main.cpp \
+  Utils/Synch_Refcountable.cpp
 
 libTAO_Utils_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2883,6 +2881,8 @@ nobase_include_HEADERS += \
   Utils/Servant_Var.h \
   Utils/Servant_Var.inl \
   Utils/Server_Main.h \
+  Utils/Synch_Refcountable.h \
+  Utils/Synch_Refcountable.inl \
   Utils/utils_export.h
 
 pkgconfig_DATA += \

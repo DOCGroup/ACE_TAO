@@ -28,33 +28,18 @@ CORBA::Context::~Context (void)
 CORBA::ULong
 CORBA::Context::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    ace_mon,
-                    this->refcount_lock_,
-                    0);
-
-  return refcount_++;
+  return ++refcount_;
 }
 
 CORBA::ULong
 CORBA::Context::_decr_refcnt (void)
 {
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      ace_mon,
-                      this->refcount_lock_,
-                      0);
+  const CORBA::ULong new_count = --this->refcount_;
 
-    this->refcount_--;
+  if (new_count == 0)
+    delete this;
 
-    if (this->refcount_ != 0)
-      {
-        return this->refcount_;
-      }
-  }
-
-  delete this;
-  return 0;
+  return new_count;
 }
 
 const char *

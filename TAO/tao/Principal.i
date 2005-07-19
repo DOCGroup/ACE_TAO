@@ -2,31 +2,26 @@
 //
 // $Id$
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::Principal_ptr principal)
 {
-  return (CORBA::Boolean) (principal == 0);
+  return principal == 0;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ULong
 CORBA::Principal::_decr_refcnt (void)
 {
-  {
-    this->refcount_--;
+  const CORBA::ULong new_count = --this->refcount_;
 
-    if (this->refcount_ != 0)
-      {
-        return this->refcount_;
-      }
-  }
+  if (new_count == 0)
+    delete this;
 
-  delete this;
-  return 0;
+  return new_count;
 }
 
-ACE_INLINE 
+ACE_INLINE
 void
 CORBA::release (CORBA::Principal_ptr principal)
 {
@@ -36,15 +31,15 @@ CORBA::release (CORBA::Principal_ptr principal)
     }
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ULong
 CORBA::Principal::_incr_refcnt (void)
 {
-  return this->refcount_++;
+  return ++this->refcount_;
 }
 
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Principal *
 CORBA::Principal::_duplicate (CORBA::Principal * x)
 {
@@ -57,7 +52,7 @@ CORBA::Principal::_duplicate (CORBA::Principal * x)
 }
 
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Principal *
 CORBA::Principal::_nil (void)
 {

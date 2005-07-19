@@ -23,8 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "TAO_Export.h"
+#include "utils_export.h"
 
 class ACE_Lock;
 
@@ -33,7 +32,7 @@ class ACE_Lock;
  *
  * @brief Definition for a synchronised refcountable interface.
  */
-class TAO_Export TAO_Synch_Refcountable : private ACE_Refcountable
+class TAO_UTILS_Export TAO_Synch_Refcountable : private ACE_Refcountable
 {
 public:
   virtual ~TAO_Synch_Refcountable (void);

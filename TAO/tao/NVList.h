@@ -24,6 +24,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
+#include "ace/Atomic_Op.h"
 
 #include "tao/CORBA_methods.h"
 #include "tao/Any.h"
@@ -119,11 +120,8 @@ namespace CORBA
 
   private:
 
-    /// maintains how many references exist to this object
-    ULong refcount_;
-
-    /// Protects the reference count.
-    TAO_SYNCH_MUTEX refcount_lock_;
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, ULong> refcount_;
 
     /// holds the value
     Any any_;
@@ -285,11 +283,11 @@ namespace CORBA
     /// maximum length of list
     ULong max_;
 
-    /// maintains how many references exist to this object
-    ULong refcount_;
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, ULong> refcount_;
 
-    /// Protects the reference count.
-    TAO_SYNCH_MUTEX refcount_lock_;
+    /// Protects the incoming pointer.
+    TAO_SYNCH_MUTEX lock_;
 
     /**
      * When the NVList is used as part of a Server Request we can simply

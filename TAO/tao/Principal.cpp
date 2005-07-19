@@ -61,15 +61,3 @@ operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class TAO_Pseudo_Var_T<CORBA::Principal>;
-  template class TAO_Pseudo_Out_T<CORBA::Principal, CORBA::Principal_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<CORBA::Principal>
-# pragma instantiate TAO_Pseudo_Out_T<CORBA::Principal, CORBA::Principal_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

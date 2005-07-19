@@ -27,7 +27,7 @@
 #include "tao/orbconf.h"
 
 #include "ace/Thread_Mutex.h"
-
+#include "ace/Atomic_Op.h"
 
 namespace TAO
 {
@@ -100,13 +100,8 @@ namespace TAO
     virtual ~True_RefCount_Policy (void);
 
   private:
-
-    /// Lock used to synchronize reference count.
-    TAO_SYNCH_MUTEX lock_;
-
-    /// Reference count.
-    unsigned int refcount_;
-
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
   };
 
 }  // End namespace TAO
