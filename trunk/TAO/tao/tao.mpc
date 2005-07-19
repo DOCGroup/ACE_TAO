@@ -240,7 +240,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Sync_Strategies.cpp
     Synch_Invocation.cpp
     Synch_Queued_Message.cpp
-    Synch_Refcountable.cpp
     Synch_Reply_Dispatcher.cpp
     SystemException.cpp
     SystemExceptionA.cpp
@@ -581,7 +580,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Stub.h
     Synch_Invocation.h
     Synch_Queued_Message.h
-    Synch_Refcountable.h
     Synch_Reply_Dispatcher.h
     Sync_Strategies.h
     SystemException.h

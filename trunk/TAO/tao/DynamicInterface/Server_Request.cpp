@@ -29,7 +29,7 @@ CORBA::ServerRequest::_incr_refcnt (void)
                     this->lock_,
                     0);
 
-  return this->refcount_++;
+  return ++this->refcount_;
 }
 
 CORBA::ULong
@@ -41,7 +41,7 @@ CORBA::ServerRequest::_decr_refcnt (void)
                       this->lock_,
                       0);
 
-    this->refcount_--;
+    --this->refcount_;
 
     if (this->refcount_ != 0)
       {

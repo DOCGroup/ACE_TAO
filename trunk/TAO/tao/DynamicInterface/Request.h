@@ -247,7 +247,7 @@ namespace CORBA
     /// Reference counting.
     CORBA::ULong refcount_;
 
-    /// Protect the refcount_ and response_receieved_.
+    /// Protect the refcount_ and response_received_.
     TAO_SYNCH_MUTEX lock_;
 
     /// If not zero then the NVList is not evaluated by default.
