@@ -60,7 +60,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Sets the administrative state of the log
   virtual void
-    set_administrative_state (DsLogAdmin::AdministrativeState
+    set_administrative_state (DsLogAdmin::AdministrativeState state
 			      ACE_ENV_ARG_DECL)			= 0;
 
   /// Get the capacity alarm thresholds
