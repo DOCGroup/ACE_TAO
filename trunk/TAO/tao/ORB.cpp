@@ -1609,15 +1609,16 @@ CORBA::ORB_init (int &argc,
     oc.get ()->orbinitializer_registry ();
 
   PortableInterceptor::SlotId slotid = 0;
+  size_t pre_init_count = 0;
 
   if (orbinitializer_registry != 0)
     {
-
-      orbinitializer_registry->pre_init (oc.get (),
-                                         command_line.get_argc(),
-                                         command_line.get_ASCII_argv(),
-                                         slotid
-                                         ACE_ENV_ARG_PARAMETER);
+      pre_init_count =
+        orbinitializer_registry->pre_init (oc.get (),
+                                           command_line.get_argc(),
+                                           command_line.get_ASCII_argv(),
+                                           slotid
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::ORB::_nil ());
     }
 
@@ -1630,7 +1631,8 @@ CORBA::ORB_init (int &argc,
   if (orbinitializer_registry != 0)
     {
 
-      orbinitializer_registry->post_init (oc.get (),
+      orbinitializer_registry->post_init (pre_init_count,
+                                          oc.get (),
                                           command_line.get_argc(),
                                           command_line.get_ASCII_argv(),
                                           slotid
