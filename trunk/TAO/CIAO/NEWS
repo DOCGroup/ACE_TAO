@@ -10,18 +10,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Support threading models in NodeApplication, such as thread pools
   and the like.
 
-. Have more than one NodeApplicationManager within the NodeManager
-
 . Enhance DAnCE to support adding/removing components to/from the
   existing running assembly without shutting down the running appliation.
   This will allow the application developers to evolve their applications
   on the fly without server down time.
-
-. Modify ciao_preactivate, ciao_postactivate operations to make them
-  complaint to the D&C specification. 
-  
-. Modify DomainApplicationManager interface to make it separate from the
-  DomainApplication interface, hence compliant to the D&C spec.
   
 . Adding support to manage multiple nested assemblies, which will involve
   the work through ExternalReferenceEndPoint idea.
@@ -29,14 +21,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Modify the <Connection> IDL data structure to make it compliant to the
   D&C spec.
 
-PLANNED MAJOR CHANGES FOR CIAO-0.4.7
-===============================
-. Add a component packaging tool to DAnCE. This tool will allow 
-  component packagers to create from deployment plan archived 
-  packages that wrap up all relevant component properties, 
-  descriptors and implementation artifacts.The component packages
-  generated from this tool will be distributed to Repository 
-  Manager.
+PLANNED MAJOR CHANGES FOR CIAO-0.4.8
+====================================
  
 . Integrate Real-time QoS support to CIAO based on OMG's new
   Deployment and Configuration (D&C) specification. Such effort
@@ -47,7 +33,28 @@ PLANNED MAJOR CHANGES FOR CIAO-0.4.7
   and NodeApplication.  Configuring client-side (receptacle) policies
   to honor these server policies.
 
-. Enhance DAnCE to support configurable output of debugging information.
+. Modify ciao_preactivate, ciao_postactivate operations to make them
+  complaint to the D&C specification. 
+
+. Modify DomainApplicationManager interface to make it separate from the
+  DomainApplication interface, hence compliant to the D&C spec.
+
+. Enhanced DAnCE to support deploying multiple assemblies with the same
+  set of ExecutionManager and NodeMangers.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.6 and CIAO-0.4.7
+======================================================
+. Added a component packaging tool to DAnCE. This tool will allow 
+  component packagers to create from deployment plan archived 
+  packages that wrap up all relevant component properties, 
+  descriptors and implementation artifacts.The component packages
+  generated from this tool will be distributed to Repository 
+  Manager.
+
+. Enhanced DAnCE to allow more than one NodeApplicationManagers within 
+  a NodeManager.
+
+. Enhanced DAnCE to support configurable output of debugging information.
   Support for debugging information will be added at the level of both the
   DAnCE/CIAO infrastructure as well as individual component instances.
   Support for tracing of the DAnCE/CIAO infrastructure will also be added.
@@ -55,10 +62,13 @@ PLANNED MAJOR CHANGES FOR CIAO-0.4.7
   their component-based applications, as well as allowing customization of
   the amount of debugging information logged
 
-. Add binding to the Naming Service.
+. Added binding component to the Naming Service. A system deployer
+  could configure this through XML-based flattened deployment plan
+  descriptor. 
+  See $CIAO_ROOT/DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
+  for details.
 
-. Enhance DAnCE to support deploying multiple assemblies with the same
-  set of ExecutionManager and NodeMangers.
+. Added the first cut of the RepositoryManager implementation.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.5 and CIAO-0.4.6
 ======================================================
