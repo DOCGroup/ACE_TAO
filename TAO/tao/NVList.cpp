@@ -496,32 +496,3 @@ CORBA::NVList::_lazy_has_arguments (void) const
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<CORBA::NamedValue_ptr>;
-template class ACE_Unbounded_Queue<CORBA::NamedValue_ptr>;
-template class ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>;
-template class TAO_Pseudo_Var_T<CORBA::NamedValue>;
-template class TAO_Pseudo_Out_T<CORBA::NamedValue, CORBA::NamedValue_var>;
-template class TAO_Pseudo_Var_T<CORBA::NVList>;
-template class TAO_Pseudo_Out_T<CORBA::NVList, CORBA::NVList_var>;
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<TAO_InputCDR>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-template class auto_ptr<TAO_InputCDR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<CORBA::NamedValue_ptr>
-#pragma instantiate ACE_Unbounded_Queue<CORBA::NamedValue_ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>
-#pragma instantiate TAO_Pseudo_Var_T<CORBA::NamedValue>
-#pragma instantiate TAO_Pseudo_Out_T<CORBA::NamedValue, CORBA::NamedValue_var>
-#pragma instantiate TAO_Pseudo_Var_T<CORBA::NVList>
-#pragma instantiate TAO_Pseudo_Out_T<CORBA::NVList, CORBA::NVList_var>
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_InputCDR>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-#pragma instantiate auto_ptr<TAO_InputCDR>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
