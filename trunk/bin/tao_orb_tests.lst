@@ -162,6 +162,7 @@ TAO/tests/Portable_Interceptors/ORB_Shutdown/run_test.pl: !MINIMUM !DISABLE_INTE
 TAO/tests/Portable_Interceptors/PolicyFactory/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Bug_2088/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Recursive_ORBInitializer/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/Register_Initial_References/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/ORT/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !VxWorks !STATIC
 TAO/tests/Two_Objects/run_test.pl: !ST
