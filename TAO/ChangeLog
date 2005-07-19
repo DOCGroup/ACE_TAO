@@ -1,3 +1,12 @@
+Tue Jul 19 11:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ORT/Gateway_i.cpp:
+          Initialise pointer with 0
+
+        * tao/Object_Loader.cpp:
+        * tao/NVList.cpp:
+          Removed explicit templates
+
 Tue Jul 19 10:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor_Adapter_Factory.{h,cpp}:
