@@ -18,7 +18,7 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
                   test_i, 1);
 
   CORBA::Object_ptr object = test->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
   orb->register_initial_reference ("ORBMyService",
                                     object
@@ -42,7 +42,6 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!invalid_name)
     {
@@ -68,7 +67,6 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!duplicate_name)
     {
@@ -97,7 +95,6 @@ int test_orb (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!invalid_object)
     {
