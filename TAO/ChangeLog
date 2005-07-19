@@ -1,3 +1,18 @@
+Tue Jul 19 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Fixed the _non_existent to catch a OBJECT_NOT_EXIST and then return
+          true.
+
+        * tao/PortableServer/Servant_Base.cpp (_non_existent) :
+          Return false instead of 0
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+          Removed try/catch. This is done in CORBA::Object.
+
+          This fixes bugzills 2174. Thanks to Torsten Kuepper
+          <torsten dot kuepper at nokia dot com> for reporting this
+
 Mon Jul 18 14:53:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
