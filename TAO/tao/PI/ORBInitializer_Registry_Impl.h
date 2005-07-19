@@ -25,7 +25,7 @@
 #include "ace/Service_Config.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Objref_VarOut_T.h"
-#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 
 #include "PI.h"
@@ -79,7 +79,7 @@ namespace TAO
     void operator= (const ORBInitializer_Registry &);
 
   private:
-    TAO_SYNCH_MUTEX lock_;
+    TAO_SYNCH_RECURSIVE_MUTEX lock_;
 
     /// Dynamic array containing registered ORBInitializers.
     ACE_Array_Base<PortableInterceptor::ORBInitializer_var> initializers_;
