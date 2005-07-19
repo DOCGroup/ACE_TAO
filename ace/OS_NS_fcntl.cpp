@@ -163,7 +163,7 @@ ACE_OS::open (const char *filename,
   }
 #else
   ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
+  ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /* ACE_WIN32 */
 }
 
