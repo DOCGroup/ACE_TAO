@@ -1,16 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
-#include "Routing_Slip.h"
 
 namespace TAO_Notify
 {
-
-ACE_INLINE
-const Routing_Slip_Ptr &
-Delivery_Request::routing_slip () const
-{
-  return this->routing_slip_;
-}
 
 ACE_INLINE
 void

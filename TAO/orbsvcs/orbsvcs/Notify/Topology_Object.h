@@ -17,9 +17,6 @@
 #include "Object.h"
 #include "Name_Value_Pair.h"
 
-// @@This is should *not* be required. This is a killer..
-#include "tao/corba.h"
-
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
 

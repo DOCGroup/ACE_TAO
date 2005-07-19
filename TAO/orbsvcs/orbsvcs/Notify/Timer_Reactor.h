@@ -14,12 +14,11 @@
 #include /**/ "ace/pre.h"
 
 #include "notify_serv_export.h"
+#include "Timer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "Timer.h"
 
 class ACE_Reactor;
 

@@ -15,8 +15,9 @@
 #include /**/ "ace/pre.h"
 
 #include "notify_serv_export.h"
-
-#include "ace/Auto_Ptr.h"
+#include "Event.h"
+#include "Proxy.h"
+#include "SupplierAdmin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,9 +25,7 @@
 
 #include "orbsvcs/CosEventChannelAdminC.h"
 
-#include "Event.h"
-#include "Proxy.h"
-#include "SupplierAdmin.h"
+#include "ace/Auto_Ptr.h"
 
 class TAO_Notify_Supplier;
 

@@ -8,8 +8,9 @@
 
 ACE_RCSID(Notify, TAO_Notify_Peer, "$Id$")
 
-#include "tao/debug.h"
 #include "Proxy.h"
+
+#include "tao/debug.h"
 
 TAO_Notify_Peer::TAO_Notify_Peer (void)
 {
@@ -108,4 +109,16 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
       // Do nothing
     }
   ACE_ENDTRY;
+}
+
+CORBA::ULong
+TAO_Notify_Peer::_incr_refcnt (void)
+{
+  return this->proxy ()->_incr_refcnt ();
+}
+
+CORBA::ULong
+TAO_Notify_Peer::_decr_refcnt (void)
+{
+  return this->proxy ()->_decr_refcnt ();
 }

@@ -370,15 +370,17 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
       process->getpid (), process->return_value ()));
   }
 
-  if (!CORBA::is_nil (this->locator_.in ()))
+  ACE_CString name;
+  if (this->process_map_.find (process->getpid (), name) == 0)
   {
-    ACE_CString name;
-    if (this->process_map_.find (process->getpid (), name) == 0)
+    this->process_map_.unbind (process->getpid ());
+
+    if (!CORBA::is_nil (this->locator_.in ()))
     {
-      if (debug_ > 0)
+      if (debug_ > 1)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("Notifying ImR_Locator about %s\n"),
+          ACE_TEXT ("ImR Activator: Notifying ImR that %s has exited.\n"),
           name.c_str()));
       }
       this->locator_->notify_child_death(name.c_str());
