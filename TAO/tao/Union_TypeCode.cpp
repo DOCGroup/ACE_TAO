@@ -280,6 +280,8 @@ TAO::TypeCode::Union<StringType,
 //   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+    
+  ACE_NOTREACHED (return CORBA::TypeCode::_nil ());
 }
 
 template <typename StringType,
