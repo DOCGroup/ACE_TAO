@@ -1,3 +1,26 @@
+Tue Jul 19 12:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjectKey_Table.cpp:
+          Removed explicit templates
+
+        * tao/ORB.cpp:
+        * tao/ORBInitializer_Registry_Adapter.h:
+        * tao/PI/ORBInitializer_Registry_Impl.{h,cpp}:
+          Change the interface to the ORBInitializer_Registry related to
+          bugzilla bug 2089. An ORBInitializer can register another
+          ORBInitializer during pre_init/post_init. I found that when
+          during pre_init a new ORBInitializer is registered, this is called
+          during post_init directly, but that shouldn't happen, the new
+          one should only be called when another ORB is initialized.
+          Changed the interface to the registry in such a way the pre_init
+          returns the number of initializers called, this is then passed
+          to post_init so that we only invoke the number of initializers
+          that where called during pre_init.
+
+        * tao/tests/Portable_Interceptors/Recursive_ORBInitializer/*:
+          New regression to test an ORBInitializer that registers
+          itself another ORBInitializer
+
 Tue Jul 19 11:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2088/client.cpp:
