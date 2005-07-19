@@ -1,3 +1,19 @@
+Mon Jul 18 22:31:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ciao/Container_Impl.cpp
+        * DAnCE/ciao/Container_Impl.h
+        * DAnCE/ciao/CCM_Core.mpc
+        * DAnCE/ciao/NodeApplication_Impl.cpp
+
+	  Added support for registering components with naming service.
+	  A system deployer could config such capability through XML tag
+
+        * DAnCE/examples/BasicSP/descriptors/flattened_deploymentplan.cdp
+        * DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
+
+	  Added a couple of examples for using naming service by adding
+	  some <ConfigProperty> tag to the deployment plan descriptor.
+
 Fri Jul 15 23:50:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * NEWS:

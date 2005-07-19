@@ -83,6 +83,8 @@ CIAO::NodeApplication_Impl::finishLaunch (
               ACE_TRY_CHECK;
               break;
 
+	        // @@ (GD) A place holder where the Event Channel connections
+	        //         should be set up.
             case Deployment::EventEmitter:
               consumer = Components::EventConsumerBase::
                 _narrow (providedReference[i].endpoint.in ()

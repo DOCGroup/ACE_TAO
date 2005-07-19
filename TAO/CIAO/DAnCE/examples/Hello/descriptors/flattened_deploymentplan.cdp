@@ -50,6 +50,8 @@
     <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Sender-mdd</implementation>
+
+    <!-- Add this property if you want to write component reference to IOR -->
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -62,6 +64,20 @@
       </value>
     </configProperty>
 
+    <!-- Add this property if you want to register with naming service -->
+    <configProperty>
+      <name>RegisterNaming</name>
+      <value>
+        <type>
+         <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_001</string>
+        </value>
+      </value> 
+    </configProperty>
+
+    <!-- Add this property if you want to initialize component attribute -->
     <configProperty>
       <name>local_message</name>
       <value>
@@ -72,7 +88,6 @@
           <string>This is a test message passed in through XML.</string>
         </value>
       </value> 
-
     </configProperty>
   </instance>
 
