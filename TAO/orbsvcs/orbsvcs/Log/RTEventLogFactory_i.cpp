@@ -165,7 +165,7 @@ TAO_RTEventLogFactory_i::create_with_id (
 			  max_size,
 			  & thresholds
 			  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
+  ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
   DsLogAdmin::Log_var log =
     this->create_log_object (id
