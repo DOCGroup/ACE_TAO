@@ -1,3 +1,10 @@
+Tue Jul 19 10:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_fcntl.cpp:
+        * ace/OS_NS_sys_mman.inl:
+          When returning an ACE_HANDLE return ACE_INVALID_HANDLE instead
+          of -1 as error
+
 Mon Jul 18 18:21:20 2005  Steve Huston  <shuston@riverace.com>
 
 	* NEWS: Added ACE_OS::closesocket() and Solaris 10 notes.
