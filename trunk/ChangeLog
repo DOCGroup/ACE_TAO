@@ -1,7 +1,9 @@
 Tue Jul 19 11:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
-          Removed Bug_2088_Regression completely, this bug is invalid
+          Enable Bug_2088, rewrote this test to test the current functionality
+          which matches the draft 3.1 spec. The Corba 3.0.3 seems to be not
+          usable.
 
 Tue Jul 19 10:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
