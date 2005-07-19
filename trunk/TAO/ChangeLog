@@ -1,3 +1,12 @@
+Tue Jul 19 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+          Fixed bug when generating the implementation class, I removed
+          the base RefCountServantBase generation, but then also public
+          virtual shouldn't be generated. Thanks to Steven T. Hatton
+          <hattons at globalsymmetry dot com> for bringing this to my
+          attention.
+
 Tue Jul 19 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitializer_Registry_Impl.{h,cpp}:
