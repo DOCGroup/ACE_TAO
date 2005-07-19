@@ -1,9 +1,9 @@
 Tue Jul 19 15:52:19 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/Union_TypeCode.cpp:
-        
+
           Put unreachable code back with ACE_NOTREACHED macro to fix
-          warning on Redhat implicit templates build. 
+          warning on Redhat implicit templates build.
 
 Tue Jul 19 14:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
