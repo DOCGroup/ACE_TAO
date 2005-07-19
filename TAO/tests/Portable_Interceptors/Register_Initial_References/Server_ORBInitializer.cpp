@@ -52,8 +52,8 @@ Server_ORBInitializer::pre_init (
   ACE_ENDTRY;
 
   if (!invalid_name)
-    ACE_ERROR ((LM_ERROR, "Registering with an empty string doesn't throw an "
-                          "exception\n"));
+    ACE_ERROR ((LM_ERROR, "ERROR: Registering with an empty string doesn't "
+                          "throw an exception\n"));
 
   bool duplicate_name = false;
   ACE_TRY_EX (duplicate)
@@ -74,7 +74,7 @@ Server_ORBInitializer::pre_init (
   ACE_ENDTRY;
 
   if (!duplicate_name)
-    ACE_ERROR ((LM_ERROR, "Registering with a duplicate with ORBInitInfo "
+    ACE_ERROR ((LM_ERROR, "ERROR: Registering with a duplicate with ORBInitInfo "
                           "doesn't throw the expected exception\n"));
 
   bool invalid_object = false;
@@ -99,7 +99,7 @@ Server_ORBInitializer::pre_init (
   ACE_ENDTRY;
 
   if (!invalid_object)
-    ACE_ERROR ((LM_ERROR, "Registering with a nil object to ORBInitInfo "
+    ACE_ERROR ((LM_ERROR, "ERROR: Registering with a nil object to ORBInitInfo "
                           "doesn't throw bad param with minor code 27\n"));
 }
 
