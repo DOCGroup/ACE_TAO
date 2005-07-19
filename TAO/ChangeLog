@@ -1,3 +1,10 @@
+Tue Jul 19 16:40:37 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+
+          Exclude unsigned long long case in store_label() if platform
+          does not allow this type.
+
 Tue Jul 19 14:14:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:

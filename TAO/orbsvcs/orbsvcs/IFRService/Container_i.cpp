@@ -2331,6 +2331,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       break;
     }
 #endif /* ACE_LACKS_LONGLONG_T */
+#if !(defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T))
     case CORBA::tk_ulonglong:
     {
       CORBA::ULongLong x;
@@ -2339,6 +2340,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       result = static_cast<u_int> (x);
       break;
     }
+#endif
     case CORBA::tk_enum:
     {
       CORBA::ULong x;
