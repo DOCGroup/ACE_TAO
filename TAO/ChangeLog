@@ -1,3 +1,10 @@
+Tue Jul 19 14:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Register_Initial_References/*
+          Added a new regression for register_initial_references on the ORB
+          and the ORBInitInfo. It seems we have some bugs to resolve. This is
+          to test for bugzilla bug 2087
+
 Tue Jul 19 13:14:51 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
