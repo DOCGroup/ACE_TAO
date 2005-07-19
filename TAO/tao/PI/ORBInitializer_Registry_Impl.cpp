@@ -22,6 +22,11 @@ TAO::ORBInitializer_Registry::ORBInitializer_Registry (void)
 int
 TAO::ORBInitializer_Registry::fini (void)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                    guard,
+                    this->lock_,
+                    -1);
+
   // Release all initializers in the array
   size_t const initializer_count (this->initializers_.size ());
   for (size_t i = 0; i < initializer_count; ++i)
@@ -39,7 +44,7 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
 {
   if (!CORBA::is_nil (init))
     {
-      ACE_GUARD (TAO_SYNCH_MUTEX,
+      ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX,
                  guard,
                  this->lock_);
 
@@ -69,7 +74,7 @@ TAO::ORBInitializer_Registry::pre_init (
   PortableInterceptor::SlotId &slotid
   ACE_ENV_ARG_DECL)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
                     this->lock_,
                     0);
@@ -123,7 +128,7 @@ TAO::ORBInitializer_Registry::post_init (
 {
   if (pre_init_count > 0)
     {
-      ACE_GUARD (TAO_SYNCH_MUTEX,
+      ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX,
                  guard,
                  this->lock_);
 
