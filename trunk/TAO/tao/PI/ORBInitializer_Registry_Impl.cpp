@@ -95,7 +95,7 @@ TAO::ORBInitializer_Registry::pre_init (
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK;
+      ACE_CHECK_RETURN (0);
 
       TAO_ORBInitInfo_var orb_init_info_ = orb_init_info_temp;
 
@@ -103,7 +103,7 @@ TAO::ORBInitializer_Registry::pre_init (
         {
           this->initializers_[i]->pre_init (orb_init_info_.in ()
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (0);
         }
 
       slotid = orb_init_info_temp->slot_count ();
