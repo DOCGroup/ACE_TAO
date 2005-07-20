@@ -95,8 +95,11 @@ TAO_NotifyLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
+
   // Remove ourselves from the list of logs.
-  this->logmgr_i_.remove (this->logid_); // check for error?
+  this->logmgr_i_.remove (this->logid_
+			  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Deregister with POA.
   PortableServer::ObjectId_var id =

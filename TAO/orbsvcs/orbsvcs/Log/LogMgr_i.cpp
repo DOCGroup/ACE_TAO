@@ -82,11 +82,11 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   ACE_CHECK;
 
   // Creation of the new POA is over, so destroy the Policy_Ptr's.
-  for (CORBA::ULong i = 0;
-       i < policies.length ();
-       ++i)
+  for (CORBA::ULong j = 0;
+       j < policies.length ();
+       ++j)
     {
-      CORBA::Policy_ptr policy = policies[i];
+      CORBA::Policy_ptr policy = policies[j];
       policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -146,16 +146,18 @@ TAO_LogMgr_i::get_log_record_store (DsLogAdmin::LogId id
 
 
 bool
-TAO_LogMgr_i::exists (DsLogAdmin::LogId id)
+TAO_LogMgr_i::exists (DsLogAdmin::LogId id
+		      ACE_ENV_ARG_DECL)
 {
-  return this->logstore_->exists (id);
+  return this->logstore_->exists (id ACE_ENV_ARG_PARAMETER);
 }
 
 
 int
-TAO_LogMgr_i::remove (DsLogAdmin::LogId id)
+TAO_LogMgr_i::remove (DsLogAdmin::LogId id
+		      ACE_ENV_ARG_DECL)
 {
-  return this->logstore_->remove (id);
+  return this->logstore_->remove (id ACE_ENV_ARG_PARAMETER);
 }
 
 void

@@ -1,3 +1,26 @@
+Wed Jul 20 07:06:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+
+	  Update callers.
+
+	* orbsvcs/orbsvcs/Log/Hash_LogStore.cpp:
+	* orbsvcs/orbsvcs/Log/Hash_LogStore.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/LogStore.h:
+
+	  Added emulated exception goo to ::exists() and ::remove()
+	  methods.
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+
+	  Work around MSV6 not supporting scoping of variables declared in
+	  for loops.
+
 Wed Jul 20 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Connection_Timeout/client.cpp:

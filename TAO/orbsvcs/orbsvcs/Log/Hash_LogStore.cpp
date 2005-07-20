@@ -129,7 +129,8 @@ TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id
 
 
 bool
-TAO_Hash_LogStore::exists (DsLogAdmin::LogId id)
+TAO_Hash_LogStore::exists (DsLogAdmin::LogId id
+			   ACE_ENV_ARG_DECL)
 {
   ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
                            guard,
@@ -142,7 +143,8 @@ TAO_Hash_LogStore::exists (DsLogAdmin::LogId id)
 
 
 int
-TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
+TAO_Hash_LogStore::remove (DsLogAdmin::LogId id
+			   ACE_ENV_ARG_DECL)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
                             guard,
@@ -239,6 +241,12 @@ TAO_LogRecordStore*
 TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id
                                          ACE_ENV_ARG_DECL)
 {
+  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+                           guard,
+                           lock_,
+                           CORBA::INTERNAL ());
+  ACE_CHECK;
+
   TAO_Hash_LogRecordStore* recordstore;
 
   if (hash_map_.find (id, recordstore) != 0)
