@@ -163,7 +163,7 @@ main(int argc, char * argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Caught an exception \n");
+                           "Caught an exception\n");
 
       return -1;
     }
