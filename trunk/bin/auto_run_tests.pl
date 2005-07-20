@@ -148,7 +148,7 @@ foreach my $test_lst (@file_list) {
 
             # see note about tests/run_test.pl printing reports for ace tests individually
             if (! $is_ace_test) {    
-                if ($result > 0) {
+                if ($result != 0) {
                     print "Error: $test returned with status $result\n";
                 }
 
