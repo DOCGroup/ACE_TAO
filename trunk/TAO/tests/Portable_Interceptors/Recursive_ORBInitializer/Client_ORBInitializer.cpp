@@ -29,7 +29,7 @@ Client_ORBInitializer::pre_init (
     {
       PortableInterceptor::register_orb_initializer (second_
                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       // Registered the initializer, clear the pointer so that we only do it
       // once
