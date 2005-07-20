@@ -35,14 +35,14 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    list_logs (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
@@ -50,16 +50,20 @@ public:
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr
     find_log (DsLogAdmin::LogId id
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
 
   /// Returns true if log exists, otherwise false
-  virtual bool exists (DsLogAdmin::LogId id)		= 0;
+  virtual bool 
+    exists (DsLogAdmin::LogId id
+	    ACE_ENV_ARG_DECL)				= 0;
 
   /// Remove the given entry from the hash table.
-  virtual int remove (DsLogAdmin::LogId id)		= 0;
+  virtual int 
+    remove (DsLogAdmin::LogId id
+	    ACE_ENV_ARG_DECL)				= 0;
 
   /// @brief Create log
   virtual void
