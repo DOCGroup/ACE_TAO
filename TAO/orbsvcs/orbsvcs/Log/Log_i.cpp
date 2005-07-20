@@ -265,7 +265,9 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
     }
   else
     {
-      this->recordstore_->set_max_size (size);
+      this->recordstore_->set_max_size (size ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
       if (notifier_ && old_size != size)
         {
           DsLogAdmin::Log_var log =
@@ -759,7 +761,7 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
   CORBA::ULong count =
     this->recordstore_->delete_records_by_id (ids ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
@@ -823,11 +825,11 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
   ACE_CHECK;
 
   // @@ The current revision of the specification (formal/03-07-01)
-  // does not explicitly specify the preference of exceptions to be 
-  // thrown when multiple error conditions are present.  
+  // does not explicitly specify the preference of exceptions to be
+  // thrown when multiple error conditions are present.
   //
-  // However, the because log is considered off duty if the log's 
-  // operational state is disabled or its administrative state is 
+  // However, the because log is considered off duty if the log's
+  // operational state is disabled or its administrative state is
   // locked, we handle the LogOffDuty exception last so the more
   // specific LogLocked and LogDisabled exceptions will be thrown.
 
@@ -848,7 +850,7 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
     {
       ACE_THROW (DsLogAdmin::LogDisabled ());
     }
-  else if (avail_stat.off_duty == 1) 
+  else if (avail_stat.off_duty == 1)
     {
       ACE_THROW (DsLogAdmin::LogOffDuty ());
     }
@@ -868,7 +870,9 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
         {
           // retval == 1 => log store reached max size.
 
-          int retval = this->recordstore_->log (reclist[i]);
+          int retval = this->recordstore_->log (reclist[i] ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
           if (retval == 1)
             {
               // The Log is full . check what the policy is
@@ -953,16 +957,16 @@ TAO_Log_i::set_records_attribute (const char *grammar,
     }
 
   // if iterator is not nil, process remainder of sequence
-  if (!CORBA::is_nil (iter_out.in ())) 
+  if (!CORBA::is_nil (iter_out.in ()))
     {
       CORBA::ULong len;
-      do 
+      do
         {
 	  rec_list = iter_out->get (count, 0 ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK_RETURN (0);
 
 	  len = rec_list->length ();
-	  for (CORBA::ULong i = 0; i < len; ++i) 
+	  for (CORBA::ULong i = 0; i < len; ++i)
 	    {
 	      this->set_record_attribute (rec_list[i].id,
 					  attr_list
@@ -974,7 +978,7 @@ TAO_Log_i::set_records_attribute (const char *grammar,
 	}
       while (len != 0);
     }
-    
+
   return count;
 }
 
@@ -991,7 +995,7 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
                         0);
     }
 
-  DsLogAdmin::NVList* nvlist;
+  DsLogAdmin::NVList* nvlist = 0;
   ACE_NEW_THROW_EX (nvlist,
                     DsLogAdmin::NVList (rec.attr_list),
                     CORBA::NO_MEMORY ());
@@ -1144,7 +1148,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULong count =
     this->recordstore_->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
@@ -1169,13 +1173,13 @@ void
 TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULongLong max_size = 
+  CORBA::ULongLong max_size =
     this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (max_size != 0 && this->thresholds_.length () > 0)
     {
-      CORBA::ULongLong current_size = 
+      CORBA::ULongLong current_size =
         this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -1228,13 +1232,13 @@ void
 TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULongLong max_size = 
+  CORBA::ULongLong max_size =
     this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (max_size != 0 && this->thresholds_.length() > 0)
     {
-      CORBA::ULongLong current_size = 
+      CORBA::ULongLong current_size =
         this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
