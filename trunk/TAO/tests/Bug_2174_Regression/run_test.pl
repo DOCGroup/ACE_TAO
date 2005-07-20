@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
-# Test A: object exists  (_non_existent() returns false)
+# Test A: object exists (_non_existent() returns false)
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL = new PerlACE::Process ("client", "-k file://$iorfile");
