@@ -59,6 +59,7 @@ TAO/orbsvcs/orbsvcs/CosNotification
 TAO/orbsvcs/orbsvcs/CosNotification_Skel
 TAO/orbsvcs/orbsvcs/CosNotification_Serv
 TAO/orbsvcs/orbsvcs/CosNotification_Persist
+TAO/orbsvcs/orbsvcs/DsLogAdmin_IDL
 TAO/orbsvcs/orbsvcs/DsLogAdmin
 TAO/orbsvcs/orbsvcs/DsEventLogAdmin
 TAO/orbsvcs/orbsvcs/DsNotifyLogAdmin
