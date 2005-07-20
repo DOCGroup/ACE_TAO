@@ -12,6 +12,7 @@ $DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
 
 $daemons_running = 0;
 $em_running = 0;
+$ns_running = 0;
 $daemons = 2;
 @ports = ( 60001, 60002 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
@@ -19,6 +20,10 @@ $status = 0;
 $dat_file = "TestNodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 $controller_exec = "$DAnCE/examples/Hello/Sender/starter";
+
+$nsior = PerlACE::LocalFile ("ns.ior");
+
+unlink $nsior;
 
 $E = 0;
 $EM = 0;
@@ -82,6 +87,19 @@ sub run_node_daemons {
 }
 
 delete_ior_files ();
+
+# Invoke naming service
+
+$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service -m 1", "-o $nsior");
+
+print STDERR "Starting Naming Service\n";
+
+if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
+{
+    print STDERR "ERROR: cannot find naming service IOR file\n";
+    $NS->Kill ();
+    exit 1;
+}
 
 # Invoke node daemons.
 print "Invoking node daemons\n";
@@ -149,6 +167,9 @@ $E->SpawnWaitKill (3000);
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";
+
+$NS->Kill ();
+unlink $nsior;
 
 delete_ior_files ();
 kill_open_processes ();

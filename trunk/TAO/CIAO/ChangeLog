@@ -1,6 +1,18 @@
 Mon Jul 18 22:31:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ciao/Container_Impl.cpp
+
+	  Fixed some compilation error about using NamingContextEx.
+
+        * DAnCE/examples/Hello/descriptors/run_test.pl
+
+	  Fixed this script so naming service will be started
+	  explicitly. Thanks Simon McQueen <sm@prismtech.com>
+	  for pointing the error.
+
+Mon Jul 18 22:31:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ciao/Container_Impl.cpp
         * DAnCE/ciao/Container_Impl.h
         * DAnCE/ciao/CCM_Core.mpc
         * DAnCE/ciao/NodeApplication_Impl.cpp

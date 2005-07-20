@@ -427,17 +427,19 @@ CIAO::Container_Impl::register_with_ns (const char * obj_name,
     {
 	  // Obtain the naming service
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService" 
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
                           false);
 
-      CosNaming::NamingContextExt_var naming_context =
-        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in () 
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
   
       // Create a Naming Sequence
       CosNaming::Name name (1);
@@ -447,7 +449,7 @@ CIAO::Container_Impl::register_with_ns (const char * obj_name,
 
       // Register with the Name Server
       naming_context->bind (name, obj ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (false);
 
       return true;
     }
@@ -469,17 +471,19 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
     {
 	  // Obtain the naming service
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService" 
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
                           false);
 
-      CosNaming::NamingContextExt_var naming_context =
-        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in () 
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
   
       // Create a Naming Sequence
       CosNaming::Name name (1);
@@ -490,7 +494,7 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
       // Register with the Name Server
       ACE_DEBUG ((LM_DEBUG, "Unregister component with the name server : %s!\n", obj_name));
       naming_context->unbind (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (false);
 
       return true;
     }
