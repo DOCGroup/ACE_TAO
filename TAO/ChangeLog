@@ -1,3 +1,10 @@
+Wed Jul 20 13:48:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Wed Jul 20 11:06:57 2005   Gary Maxey <gary.maxey@hp.com>
 
         * tests/OBV/ValueBox/client.cpp
