@@ -194,7 +194,6 @@ libTAO_la_SOURCES = \
   Object_KeyC.cpp \
   Object_Loader.cpp \
   Object_Proxy_Broker.cpp \
-  Object_Proxy_Impl.cpp \
   Object_Ref_Table.cpp \
   Objref_TypeCode_Static.cpp \
   OctetSeqA.cpp \
@@ -632,7 +631,6 @@ nobase_include_HEADERS = \
   Object_KeyC.h \
   Object_Loader.h \
   Object_Proxy_Broker.h \
-  Object_Proxy_Impl.h \
   Object_Ref_Table.h \
   Object_Ref_Table.inl \
   Object_T.cpp \
