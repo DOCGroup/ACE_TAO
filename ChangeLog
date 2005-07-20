@@ -1,6 +1,11 @@
+Wed Jul 20 07:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added DsLogAdmin_IDL
+
 Tue Jul 19 14:24:47 2005  Gary Maxey <gary.maxey@hp.com>
 
-        * bin/PerlACE/Process_Unix.pm: 
+        * bin/PerlACE/Process_Unix.pm:
 
           Append command line arguments based on ACE_RUNTEST_ARGS
           environment variable.
