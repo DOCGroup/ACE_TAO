@@ -19,6 +19,7 @@ TAO_ROOT = $(top_srcdir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
+
 ## Makefile.CosNaming_IDL.am
 
 BUILT_SOURCES = \
@@ -2161,14 +2162,12 @@ nobase_include_HEADERS += \
   Notify/EventType.inl \
   Notify/EventTypeSeq.h \
   Notify/Event_Manager.h \
-  Notify/Event_Manager.inl \
   Notify/Event_Persistence_Factory.h \
   Notify/FilterAdmin.h \
   Notify/FilterAdmin.inl \
   Notify/ID_Factory.h \
   Notify/ID_Factory.inl \
   Notify/Method_Request.h \
-  Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch.h \
   Notify/Method_Request_Event.h \
   Notify/Method_Request_Lookup.h \
@@ -2188,7 +2187,6 @@ nobase_include_HEADERS += \
   Notify/POA_Helper.h \
   Notify/POA_Helper.inl \
   Notify/Peer.h \
-  Notify/Peer.inl \
   Notify/Persistent_File_Allocator.h \
   Notify/Properties.h \
   Notify/Properties.inl \
@@ -2213,10 +2211,8 @@ nobase_include_HEADERS += \
   Notify/Reconnection_Registry.h \
   Notify/Refcountable.h \
   Notify/Routing_Slip.h \
-  Notify/Routing_Slip.inl \
   Notify/Routing_Slip_Persistence_Manager.h \
   Notify/Routing_Slip_Queue.h \
-  Notify/Routing_Slip_Queue.inl \
   Notify/Sequence/SequenceProxyPushConsumer.h \
   Notify/Sequence/SequenceProxyPushSupplier.h \
   Notify/Sequence/SequencePushConsumer.h \
@@ -2228,12 +2224,10 @@ nobase_include_HEADERS += \
   Notify/Structured/StructuredPushConsumer.h \
   Notify/Structured/StructuredPushSupplier.h \
   Notify/Subscription_Change_Worker.h \
-  Notify/Subscription_Change_Worker.inl \
   Notify/Supplier.h \
   Notify/Supplier.inl \
   Notify/SupplierAdmin.h \
   Notify/ThreadPool_Task.h \
-  Notify/ThreadPool_Task.inl \
   Notify/Timer_Queue.h \
   Notify/Timer_Reactor.h \
   Notify/Topology_Loader.h \
@@ -2921,19 +2915,6 @@ EXTRA_DIST += \
 
 ## Makefile.DsLogAdmin_Serv.am
 
-DsLogAdmin = \
-  Log/BasicLogFactory_i.cpp \
-  Log/BasicLog_i.cpp \
-  Log/Iterator_i.cpp \
-  Log/LogMgr_i.cpp \
-  Log/LogNotification.cpp \
-  Log/LogRecordStore.cpp \
-  Log/Log_Compaction_Handler.cpp \
-  Log/Log_Constraint_Interpreter.cpp \
-  Log/Log_Constraint_Visitors.cpp \
-  Log/Log_Flush_Handler.cpp \
-  Log/Log_i.cpp
-
 lib_LTLIBRARIES += libTAO_DsLogAdmin_Serv.la
 
 libTAO_DsLogAdmin_Serv_la_CPPFLAGS = \
@@ -2946,7 +2927,21 @@ libTAO_DsLogAdmin_Serv_la_CPPFLAGS = \
   -DTAO_LOG_SERV_BUILD_DLL
 
 libTAO_DsLogAdmin_Serv_la_SOURCES = \
-  $(DsLogAdmin)
+  Log/BasicLogFactory_i.cpp \
+  Log/BasicLog_i.cpp \
+  Log/Hash_Iterator_i.cpp \
+  Log/Hash_LogRecordStore.cpp \
+  Log/Hash_LogStore.cpp \
+  Log/Hash_Persistence_Strategy.cpp \
+  Log/Iterator_i.cpp \
+  Log/LogMgr_i.cpp \
+  Log/LogNotification.cpp \
+  Log/LogRecordStore.cpp \
+  Log/Log_Compaction_Handler.cpp \
+  Log/Log_Constraint_Interpreter.cpp \
+  Log/Log_Constraint_Visitors.cpp \
+  Log/Log_Flush_Handler.cpp \
+  Log/Log_i.cpp
 
 libTAO_DsLogAdmin_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2964,6 +2959,10 @@ libTAO_DsLogAdmin_Serv_la_LIBADD = \
 nobase_include_HEADERS += \
   Log/BasicLogFactory_i.h \
   Log/BasicLog_i.h \
+  Log/Hash_Iterator_i.h \
+  Log/Hash_LogRecordStore.h \
+  Log/Hash_LogStore.h \
+  Log/Hash_Persistence_Strategy.h \
   Log/Iterator_i.h \
   Log/LogMgr_i.h \
   Log/LogNotification.h \
@@ -2972,6 +2971,7 @@ nobase_include_HEADERS += \
   Log/Log_Constraint_Interpreter.h \
   Log/Log_Constraint_Visitors.h \
   Log/Log_Flush_Handler.h \
+  Log/Log_Persistence_Strategy.h \
   Log/Log_i.h
 
 pkgconfig_DATA += \
