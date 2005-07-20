@@ -1136,6 +1136,7 @@ libTAO_Codeset_la_CPPFLAGS = \
 
 libTAO_Codeset_la_SOURCES = \
   Codeset/Codeset.cpp \
+  Codeset/Codeset_Descriptor.cpp \
   Codeset/Codeset_Manager_Factory.cpp \
   Codeset/Codeset_Manager_i.cpp \
   Codeset/Codeset_Translator_Factory.cpp \
@@ -1153,6 +1154,7 @@ libTAO_Codeset_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Codeset/Codeset.h \
+  Codeset/Codeset_Descriptor.h \
   Codeset/Codeset_Manager_Factory.h \
   Codeset/Codeset_Manager_i.h \
   Codeset/Codeset_Translator_Factory.h \
