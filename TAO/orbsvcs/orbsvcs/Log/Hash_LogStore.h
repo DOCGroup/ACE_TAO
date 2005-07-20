@@ -24,6 +24,7 @@
 
 #include "orbsvcs/Log/LogStore.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "log_serv_export.h"
@@ -100,7 +101,7 @@ public:
                           ACE_ENV_ARG_DECL);
 
 private:
-  ACE_RW_Thread_Mutex lock_;
+  ACE_SYNCH_RW_MUTEX	lock_;
 
   /// Define the HASHMAP.
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,

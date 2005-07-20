@@ -30,7 +30,8 @@ class TAO_LogRecordStore;
 class TAO_Log_Serv_Export TAO_LogStore
 {
 public:
-  virtual ~TAO_LogStore()				= 0;
+  // Destructor
+  virtual ~TAO_LogStore() {}
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
@@ -85,6 +86,11 @@ public:
   virtual TAO_LogRecordStore*
     get_log_record_store (DsLogAdmin::LogId id
 		          ACE_ENV_ARG_DECL)		= 0;
+
+protected:
+  // Constructor 
+  TAO_LogStore() {}
+
 
 private:
 };

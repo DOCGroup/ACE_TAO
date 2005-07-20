@@ -25,6 +25,7 @@
 #include "orbsvcs/Log/LogRecordStore.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Reactor.h"
@@ -309,7 +310,7 @@ protected:
 
   ACE_Reactor*                          reactor_;
 
-  mutable ACE_RW_Thread_Mutex           lock_;
+  mutable ACE_SYNCH_RW_MUTEX		lock_;
 };
 
 #include /**/ "ace/post.h"
