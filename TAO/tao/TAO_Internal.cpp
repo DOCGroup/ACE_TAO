@@ -375,6 +375,14 @@ namespace
         pi_server_loader->init (0, 0);
       }
 
+    ACE_Service_Object * const bidir_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance ("BiDirGIOP_Loader");
+
+    if (bidir_loader != 0)
+      {
+        bidir_loader->init (0, 0);
+      }
+
     ACE_Service_Object * const messaging_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance ("Messaging_Loader");
 

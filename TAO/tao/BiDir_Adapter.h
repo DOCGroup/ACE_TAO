@@ -45,13 +45,6 @@ public:
   /// The virtual destructor
   virtual ~TAO_BiDir_Adapter (void);
 
-  /// Activate the BiDirGIOP library
-  virtual int activate (CORBA::ORB_ptr,
-                        int argc,
-                        ACE_TCHAR* argv[]
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-
   virtual void load_policy_validators (TAO_Policy_Validator &validator ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 

@@ -923,10 +923,6 @@ protected:
   /// Obtain and cache the IORManipulation factory object reference.
   void resolve_iormanipulation_i (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Search the Dynamic service list for BiDirectional options that
-  /// can be dynamically loaded.
-  int bidirectional_giop_init (ACE_ENV_SINGLE_ARG_DECL);
-
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.
   void services_callbacks_init (void);
