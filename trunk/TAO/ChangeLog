@@ -1,3 +1,12 @@
+Wed Jul 20 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.cpp:
+          Delete the codeset_manager_, fixes a memory leak
+
+        * tao/Codeset/Codeset_Descriptor.cpp:
+          Use ACE_OS::free to delete the name, it is allocated with
+          ACE_OS::strdup, fixes an invalid read error with valgrind
+
 Wed Jul 20 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Recursive_ORBInitializer/Client_ORBInitializer.cpp:
