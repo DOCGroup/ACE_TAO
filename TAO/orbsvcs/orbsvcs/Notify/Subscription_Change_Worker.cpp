@@ -2,10 +2,6 @@
 
 #include "Subscription_Change_Worker.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Subscription_Change_Worker.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "Proxy.h"
 
 ACE_RCSID(Notify, TAO_Subscription_Change_Worker, "$Id$")

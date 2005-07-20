@@ -2,10 +2,6 @@
 
 #include "ThreadPool_Task.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ThreadPool_Task.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_ThreadPool_Task, "$Id$")
 
 #include "Properties.h"

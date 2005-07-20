@@ -113,10 +113,6 @@ private:
 
 };
 
-#if defined (__ACE_INLINE__)
-#include "ThreadPool_Task.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_THREADPOOL_TASK_H */

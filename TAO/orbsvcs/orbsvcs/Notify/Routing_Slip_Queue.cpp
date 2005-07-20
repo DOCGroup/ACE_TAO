@@ -2,10 +2,6 @@
 
 #include "Routing_Slip_Queue.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Routing_Slip_Queue.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 

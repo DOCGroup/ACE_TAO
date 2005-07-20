@@ -1,25 +1,62 @@
+Wed Jul 20 11:16:07 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Peer.h:
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.cpp:
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h:
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+
+          More cleanup to eliminate compile errors related to template
+        instantiation and #includes. The primary change consisted of
+        moving some ESF Worker classes to Event_Manager.cpp from
+        Event_Manager.h.
+
+        * orbsvcs/orbsvcs/Notify/Event_Manager.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Peer.inl:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.inl:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.inl:
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl:
+
+          Removed these files.
+
 Wed Jul 20 07:06:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
 
-	  Update callers.
+          Update callers.
 
-	* orbsvcs/orbsvcs/Log/Hash_LogStore.cpp:
-	* orbsvcs/orbsvcs/Log/Hash_LogStore.h:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
-	* orbsvcs/orbsvcs/Log/LogStore.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogStore.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/LogStore.h:
 
-	  Added emulated exception goo to ::exists() and ::remove()
-	  methods.
+          Added emulated exception goo to ::exists() and ::remove()
+          methods.
 
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
 
-	  Work around MSV6 not supporting scoping of variables declared in
-	  for loops.
+          Work around MSV6 not supporting scoping of variables declared in
+          for loops.
 
 Wed Jul 20 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -97,22 +134,22 @@ Wed Jul 20 07:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jul 19 18:45:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h
-	* orbsvcs/orbsvcs/Log/Hash_LogStore.h
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h
+        * orbsvcs/orbsvcs/Log/Hash_LogStore.h
 
-	  Use ACE_SYNCH_RW_MUTEX instead of ACE_RW_Thread_Mutex to fix
-	  single threaded builds.
+          Use ACE_SYNCH_RW_MUTEX instead of ACE_RW_Thread_Mutex to fix
+          single threaded builds.
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h
-	* orbsvcs/orbsvcs/Log/LogStore.h
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h
+        * orbsvcs/orbsvcs/Log/LogStore.h
 
-	  Made constructor protected.
-	  Made destructor virtual.
+          Made constructor protected.
+          Made destructor virtual.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
 
-	  Fixed typo introduced in:
-	  Tue Jul 19 14:14:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+          Fixed typo introduced in:
+          Tue Jul 19 14:14:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Jul 19 16:40:37 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -123,22 +160,22 @@ Tue Jul 19 16:40:37 2005  Gary Maxey <gary.maxey@hp.com>
 
 Tue Jul 19 14:14:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
-	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
-	* orbsvcs/orbsvcs/Log/LogStore.h:
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogStore.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
 
-	  Fix assorted build errors, mostly related to emulated
-	  exceptions.  Thanks to Simon Massey and Don Sharp for
-	  pointing out these problems.
+          Fix assorted build errors, mostly related to emulated
+          exceptions.  Thanks to Simon Massey and Don Sharp for
+          pointing out these problems.
 
 Tue Jul 19 16:02:32 2005  Justin Michel  <michel_j@ociweb.com>
 
