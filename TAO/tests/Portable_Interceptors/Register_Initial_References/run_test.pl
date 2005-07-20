@@ -14,7 +14,7 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = new PerlACE::Process ("server");
 }
-print STDERR "\n==== Running Register_Initial_References test\n";
+print STDERR "\n==== Running Register_Initial_References test ====\n";
 
 $server = $SV->SpawnWaitKill (5);
 
