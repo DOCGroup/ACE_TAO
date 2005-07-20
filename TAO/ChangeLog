@@ -1,3 +1,8 @@
+Wed Jul 20 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Recursive_ORBInitializer/Client_ORBInitializer.cpp:
+          Emulated exception fix
+
 Wed Jul 20 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
