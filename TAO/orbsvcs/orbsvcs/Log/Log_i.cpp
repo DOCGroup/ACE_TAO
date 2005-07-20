@@ -989,7 +989,11 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
                    DsLogAdmin::InvalidRecordId))
 {
   DsLogAdmin::LogRecord rec;
-  if (this->recordstore_->retrieve (id, rec) == -1)
+
+  int retval = this->recordstore_->retrieve (id, rec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (retval == -1)
     {
       ACE_THROW_RETURN (DsLogAdmin::InvalidRecordId (),
                         0);
