@@ -1,3 +1,13 @@
+Wed Jul 20 10:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_Proxy_Impl.{h,cpp}:
+          Removed these files, class is not used anymore, we will do soon
+          some cleanup in the TAO_IDL compiler related to this
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Removed file above
+
 Wed Jul 20 07:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_Adapter.h:

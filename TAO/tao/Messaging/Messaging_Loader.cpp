@@ -22,7 +22,7 @@ TAO_Messaging_Loader::~TAO_Messaging_Loader (void)
 
 int
 TAO_Messaging_Loader::init (int,
-			      ACE_TCHAR* [])
+                            ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_Messaging_Loader::init");
 
