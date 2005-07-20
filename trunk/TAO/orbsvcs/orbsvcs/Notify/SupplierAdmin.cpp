@@ -6,7 +6,6 @@ ACE_RCSID (RT_Notify,
            TAO_Notify_SupplierAdmin,
            "$Id$")
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Builder.h"
 #include "ProxyConsumer.h"
 #include "EventChannel.h"
@@ -16,6 +15,9 @@ ACE_RCSID (RT_Notify,
 #include "Properties.h"
 
 #include "tao/debug.h"
+
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level

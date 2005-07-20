@@ -78,9 +78,5 @@ private:
   virtual void release (void) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-#include "Peer.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PEER_H */

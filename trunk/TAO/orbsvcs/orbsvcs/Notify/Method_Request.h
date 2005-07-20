@@ -65,10 +65,6 @@ public:
   void init (const TAO_Notify_Event * event);
 };
 
-#if defined (__ACE_INLINE__)
-#include "Method_Request.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_METHOD_REQUEST_H */

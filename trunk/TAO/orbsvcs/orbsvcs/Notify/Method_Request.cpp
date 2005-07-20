@@ -2,10 +2,6 @@
 
 #include "Method_Request.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Method_Request.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/OS_NS_sys_time.h"
 
