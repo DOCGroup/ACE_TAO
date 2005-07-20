@@ -93,7 +93,8 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   DsLogAdmin::Log_var log =
-    this->create_log_object (id);
+    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // narrow to BasicLog
   DsLogAdmin::BasicLog_var basic_log =
@@ -142,7 +143,7 @@ DsLogAdmin::Log_ptr
 TAO_BasicLogFactory_i::create_log_object (DsLogAdmin::LogId id
 				          ACE_ENV_ARG_DECL)
 {
-  TAO_BasicLog_i* basic_log_i;
+  TAO_BasicLog_i* basic_log_i = 0;
 
   ACE_NEW_THROW_EX (basic_log_i,
                     TAO_BasicLog_i (this->orb_.in (),

@@ -97,7 +97,7 @@ TAO_Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
   // methods and the Notification Service's QoS get_qos methods, I
   // have submitted a defect report to the OMG for clarification.
   //    --jtc
-  
+
   DsLogAdmin::QoSList* ret_ptr;
   ACE_NEW_THROW_EX (ret_ptr,
                     DsLogAdmin::QoSList (1),
@@ -126,11 +126,11 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
   // QoSList takes presidence.  If any unknown/unsupported properties
   // were found, an UnsupportedQoS exception is thrown.
   //    --jtc
-  
+
   DsLogAdmin::QoSType old_qos = this->qostype_;
   DsLogAdmin::QoSType qostype = old_qos;
   DsLogAdmin::QoSList denied;
-  
+
   // validate properties..
   for (CORBA::ULong i = 0; i < qos.length (); ++i)
     {
@@ -154,7 +154,7 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
 
   if (qostype == old_qos)
     return;
-  
+
   this->qostype_ = qostype;
 
   if (this->qostype_ == DsLogAdmin::QoSFlush)
@@ -187,7 +187,7 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
       DsLogAdmin::QoSList_var new_qoslist = new_qoslist_ptr;
       new_qoslist->length(1);
       new_qoslist[0] = qostype;
-      
+
       notifier_->quality_of_service_value_change (log.in (),
                                                   logid_,
                                                   old_qoslist.in (),
@@ -201,7 +201,7 @@ CORBA::ULong
 TAO_Log_i::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     this->recordstore_->get_max_record_life(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -244,7 +244,7 @@ CORBA::ULongLong
 TAO_Log_i::get_max_size (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return recordstore_->get_max_size (ACE_ENV_ARG_PARAMETER);
+  return recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -258,7 +258,8 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
   old_size = this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if ((size != 0) && (size < this->recordstore_->get_current_size (ACE_ENV_ARG_PARAMETER)))
+  if ((size != 0) && (size <
+      this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER)))
     {
       ACE_THROW (DsLogAdmin::InvalidParam ());
     }
@@ -299,7 +300,7 @@ DsLogAdmin::LogFullActionType
 TAO_Log_i::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     this->recordstore_->get_log_full_action(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -310,7 +311,7 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
 		   DsLogAdmin::InvalidLogFullAction))
 {
   if (action != DsLogAdmin::wrap && action != DsLogAdmin::halt)
-    ACE_THROW (DsLogAdmin::InvalidLogFullAction ()); 
+    ACE_THROW (DsLogAdmin::InvalidLogFullAction ());
 
   DsLogAdmin::LogFullActionType old_action =
     this->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -352,13 +353,13 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
   DsLogAdmin::AdministrativeState old_state =
     this->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-    
+
   if (state == old_state)
     return;
 
   this->recordstore_->set_administrative_state (state ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   if (notifier_)
     {
       DsLogAdmin::Log_var log =
@@ -377,7 +378,7 @@ DsLogAdmin::ForwardingState
 TAO_Log_i::get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     this->recordstore_->get_forwarding_state (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -389,10 +390,10 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
   DsLogAdmin::ForwardingState old_state =
     this->get_forwarding_state (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   if (state == old_state)
     return;
-  
+
   this->recordstore_->set_forwarding_state (state ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -442,7 +443,7 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
     this->get_interval (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (interval.start == old_interval.start && 
+  if (interval.start == old_interval.start &&
       interval.stop  == old_interval.stop)
     return;
 
@@ -485,7 +486,7 @@ TAO_Log_i::get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
   //   * operational state is enabled
   //   * adminstrative state is unlocked
   //   * current time falls within the log duration time.
-  //   * current time falls within one (or more) of the log 
+  //   * current time falls within one (or more) of the log
   //     scheduling times.
 
   const CORBA::Boolean s = this->scheduled (ACE_ENV_SINGLE_ARG_PARAMETER);
