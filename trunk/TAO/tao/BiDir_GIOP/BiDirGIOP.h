@@ -41,14 +41,11 @@ public:
   TAO_BiDirGIOP_Loader (void);
 
   /// Destructor
-  ~TAO_BiDirGIOP_Loader (void);
+  virtual ~TAO_BiDirGIOP_Loader (void);
 
-  /// Creates a  factory and returns it.
-  virtual int activate (CORBA::ORB_ptr,
-                        int argc,
-                        ACE_TCHAR *argv []
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  /// Initialize the BiDIR loader hooks.
+  virtual int init (int argc,
+                    ACE_TCHAR* []);
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator
                                        ACE_ENV_ARG_DECL)

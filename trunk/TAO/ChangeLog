@@ -1,3 +1,24 @@
+Wed Jul 20 07:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_Adapter.h:
+          Removed activate call, we are using the init() call to register
+          the ORBInitializer
+
+        * tao/ORB_Core.{h,cpp}:
+          Removed bidirectional_giop_init, this is not needed anymore, get
+          the BiDIR adapter just in load_policy_validators
+
+        * tao/TAO_Internal:
+          Init BiDIR GIOP library as the other libs
+
+        * tao/BiDIR_GIOP/BiDirGIOP.{h,cpp}:
+          Use init() instead of activate() to register the ORBInitializer.
+
+          All these changes make sure that the BiDIR ORBInitializer is
+          registered before the ORBInitializer::pre_init() call, previously
+          if was registered after pre_init which resulted in the problem that
+          after fixing a bug now it doesn't get called anymore in post_init()
+
 Tue Jul 19 18:45:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h

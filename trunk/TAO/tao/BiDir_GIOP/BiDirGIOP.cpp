@@ -2,7 +2,7 @@
 #include "BiDir_ORBInitializer.h"
 #include "BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
+#include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (BiDir_GIOP,
@@ -22,38 +22,47 @@ TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
 }
 
 int
-TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
-                                int,
-                                ACE_TCHAR *[]
-                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_BiDirGIOP_Loader::init (int,
+                            ACE_TCHAR* [])
 {
-  ACE_UNUSED_ARG (orb);
-
   if (TAO_BiDirGIOP_Loader::is_activated_ == 0 && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
       PortableInterceptor::ORBInitializer_var bidir_orb_initializer;
 
-      /// Register the BiDir ORBInitializer.
-      ACE_NEW_THROW_EX (tmp_orb_initializer,
-                        TAO_BiDir_ORBInitializer,
-                        CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
-                                TAO::VMCID,
-                                ENOMEM),
-                            CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (-1);
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          /// Register the BiDir ORBInitializer.
+          ACE_NEW_THROW_EX (tmp_orb_initializer,
+                            TAO_BiDir_ORBInitializer,
+                            CORBA::NO_MEMORY (
+                                CORBA::SystemException::_tao_minor_code (
+                                    TAO::VMCID,
+                                    ENOMEM),
+                                CORBA::COMPLETED_NO));
+          ACE_TRY_CHECK;
 
-      bidir_orb_initializer = tmp_orb_initializer;
+          bidir_orb_initializer = tmp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (
-        bidir_orb_initializer.in ()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+          PortableInterceptor::register_orb_initializer (
+            bidir_orb_initializer.in ()
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      TAO_BiDirGIOP_Loader::is_activated_ = 1;
+          TAO_BiDirGIOP_Loader::is_activated_ = 1;
+        }
+      ACE_CATCHANY
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "(%P | %t) Caught exception:");
+            }
+          return -1;
+        }
+      ACE_ENDTRY;
     }
 
   return 0;
