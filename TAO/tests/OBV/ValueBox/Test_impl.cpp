@@ -519,3 +519,10 @@ Test_impl::union_op4 (const ::Variable_Union1 & p1,
     }
 }
 
+
+void
+Test_impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+}

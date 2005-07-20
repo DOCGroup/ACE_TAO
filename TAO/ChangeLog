@@ -1,3 +1,12 @@
+Wed Jul 20 11:06:57 2005   Gary Maxey <gary.maxey@hp.com>
+
+        * tests/OBV/ValueBox/client.cpp
+        * tests/OBV/ValueBox/valuebox.idl
+        * tests/OBV/ValueBox/Test_impl.cpp
+        * tests/OBV/ValueBox/Test_impl.h
+
+          Resolved some test problems.
+
 Wed Jul 20 11:16:07 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:

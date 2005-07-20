@@ -96,4 +96,7 @@ interface Test
     void union_op4(in Variable_Union1 p1,
                     inout Variable_Union1 p2,
                     out Variable_Union1 p3);
+  
+    // Shutdown the remote ORB
+    oneway void shutdown ();
 };
