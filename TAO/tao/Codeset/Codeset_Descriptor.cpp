@@ -44,7 +44,7 @@ TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
       temp = trans_base_->next_;
       // don't need to delete the associated translator factory, it is
       // owned by the service registry
-      delete [] trans_base_->name_;
+      ACE_OS::free (trans_base_->name_);
       delete trans_base_;
       trans_base_ = temp;
     }

@@ -74,6 +74,9 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
     CORBA::string_free (this->parser_names_[i]);
 
   delete [] this->parser_names_;
+
+  delete codeset_manager_;
+  codeset_manager_ = 0;
 }
 
 int
