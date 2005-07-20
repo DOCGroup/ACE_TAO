@@ -163,7 +163,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_KeyC.cpp
     Object_Loader.cpp
     Object_Proxy_Broker.cpp
-    Object_Proxy_Impl.cpp
     Object_Ref_Table.cpp
     ObjectIdListA.cpp
     ObjectIdListC.cpp
@@ -488,7 +487,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ObjectKey_Table.h
     Object_Loader.h
     Object_Proxy_Broker.h
-    Object_Proxy_Impl.h
     Object_Ref_Table.h
     Object_T.h
     Objref_TypeCode.h
