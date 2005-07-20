@@ -27,6 +27,7 @@ libACE_RMCast_la_CPPFLAGS = \
 
 libACE_RMCast_la_SOURCES = \
   Acknowledge.cpp \
+  Flow.cpp \
   Fragment.cpp \
   Link.cpp \
   Protocol.cpp \
@@ -45,8 +46,10 @@ libACE_RMCast_la_LIBADD = \
 nobase_include_HEADERS = \
   Acknowledge.h \
   Bits.h \
+  Flow.h \
   Fragment.h \
   Link.h \
+  Parameters.h \
   Protocol.h \
   RMCast_Export.h \
   Reassemble.h \
