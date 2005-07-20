@@ -1193,14 +1193,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  // Look for BiDirectional library here. If the user has svc.conf
-  // file, load the library at this point.
-  int ret = this->bidirectional_giop_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (ret == -1)
-    return -1;
-
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
 
@@ -1556,24 +1548,6 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
     protocols_hooks_name;
 }
 
-int
-TAO_ORB_Core::bidirectional_giop_init (ACE_ENV_SINGLE_ARG_DECL)
-{
-  if (this->bidir_adapter_ == 0)
-    {
-      this->bidir_adapter_ =
-        ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance ("BiDirGIOP_Loader");
-    }
-
-  if (this->bidir_adapter_)
-    return this->bidir_adapter_->activate (this->orb_,
-                                           0,
-                                           0
-                                           ACE_ENV_ARG_PARAMETER);
-  else
-    return 0;
-}
-
 void
 TAO_ORB_Core::services_callbacks_init (void)
 {
@@ -1801,6 +1775,12 @@ void
 TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator
                                       ACE_ENV_ARG_DECL)
 {
+  if (this->bidir_adapter_ == 0)
+    {
+      this->bidir_adapter_ =
+        ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance ("BiDirGIOP_Loader");
+    }
+
   // Call the BiDir library if it has been loaded
   if (this->bidir_adapter_)
     this->bidir_adapter_->load_policy_validators (validator ACE_ENV_ARG_PARAMETER);
