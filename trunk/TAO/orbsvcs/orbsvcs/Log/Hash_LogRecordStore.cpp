@@ -563,7 +563,7 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (out
                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
