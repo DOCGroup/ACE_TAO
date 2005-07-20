@@ -20,7 +20,7 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
-  
+
 
   PortableServer::ObjectId_var oid =
     this->factory_poa_->activate_object (this
@@ -62,9 +62,10 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
 		  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
   DsLogAdmin::LogId id = id_out;
-  
+
   DsLogAdmin::Log_var log =
-    this->create_log_object (id);
+    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // narrow to BasicLog
   DsLogAdmin::BasicLog_var basic_log =
@@ -104,10 +105,10 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
 PortableServer::ObjectId*
 TAO_BasicLogFactory_i::create_objectid (DsLogAdmin::LogId id)
 {
-  char buf[32]; 
-  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id)); 
- 
-  PortableServer::ObjectId_var oid = 
+  char buf[32];
+  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id));
+
+  PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId(buf);
 
   return oid._retn ();
@@ -119,20 +120,20 @@ TAO_BasicLogFactory_i::create_log_reference (DsLogAdmin::LogId id
 {
   PortableServer::ObjectId_var oid =
     this->create_objectid (id);
-  const char *intf = 
+  const char *intf =
 	"IDL:omg.org/DsLogAdmin:BasicLog:1.0";
-  
+
   CORBA::Object_var obj =
     this->log_poa_->create_reference_with_id (oid.in (),
 					      intf
 					      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-  
+
   DsLogAdmin::BasicLog_var basic_log =
     DsLogAdmin::BasicLog::_narrow (obj.in ()
 				   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-  
+
   return basic_log._retn();
 }
 
@@ -160,7 +161,7 @@ TAO_BasicLogFactory_i::create_log_object (DsLogAdmin::LogId id
 
   // Obtain ObjectId
   PortableServer::ObjectId_var oid = this->create_objectid (id);
-  
+
   // Register with the poa
   this->log_poa_->activate_object_with_id (oid.in (),
 					   basic_log_i
