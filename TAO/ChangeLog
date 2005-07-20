@@ -1,3 +1,9 @@
+Wed Jul 20 11:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+          Fixed compile problem with emulated exceptions
+
 Wed Jul 20 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
