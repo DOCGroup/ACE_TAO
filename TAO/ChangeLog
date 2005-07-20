@@ -1,3 +1,22 @@
+Tue Jul 19 18:45:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h
+	* orbsvcs/orbsvcs/Log/Hash_LogStore.h
+
+	  Use ACE_SYNCH_RW_MUTEX instead of ACE_RW_Thread_Mutex to fix
+	  single threaded builds.
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h
+	* orbsvcs/orbsvcs/Log/LogStore.h
+
+	  Made constructor protected.
+	  Made destructor virtual.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+	  Fixed typo introduced in:
+	  Tue Jul 19 14:14:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Tue Jul 19 16:40:37 2005  Gary Maxey <gary.maxey@hp.com>
 
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:

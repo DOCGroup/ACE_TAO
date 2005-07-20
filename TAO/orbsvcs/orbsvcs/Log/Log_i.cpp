@@ -1234,7 +1234,7 @@ TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   if (max_size != 0 && this->thresholds_.length() > 0)
     {
       CORBA::ULongLong current_size = 
-        this->recordstore_->get_current_size (ACE_SINGLE_ARG_PARAMETER);
+        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       const CORBA::UShort percent =

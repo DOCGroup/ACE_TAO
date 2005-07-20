@@ -39,9 +39,6 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   // = Initialization and termination methods
 
-  /// Constructor.
-  TAO_LogRecordStore (void);
-
   /// Destructor.
   virtual ~TAO_LogRecordStore (void);
 
@@ -211,6 +208,12 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   virtual CORBA::ULong
     remove_old_records (ACE_ENV_SINGLE_ARG_DECL)		= 0;
+
+
+protected:
+  /// Constructor.
+  TAO_LogRecordStore (void);
+
   
 private:
 };
