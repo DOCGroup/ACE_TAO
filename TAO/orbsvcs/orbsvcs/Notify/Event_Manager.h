@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
-
 #include "tao/orbconf.h"
 
 #include "ace/CORBA_macros.h"
@@ -115,54 +113,6 @@ private:
   /// Supplier Map
   ACE_Auto_Ptr< TAO_Notify_Supplier_Map > supplier_map_;
 };
-
-/********************************************************************************/
-
-/**
- * @class TAO_Notify_ProxyConsumer_Update_Worker
- *
- * @brief Inform ProxyConsumer of updates.
- *
- */
-class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxyConsumer>
-{
-public:
-  TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
-
-protected:
-  ///= TAO_ESF_Worker method
-  void work (TAO_Notify_ProxyConsumer* proxy ACE_ENV_ARG_DECL);
-
-  const TAO_Notify_EventTypeSeq& added_;
-  const TAO_Notify_EventTypeSeq& removed_;
-};
-
-/********************************************************************************/
-
-/**
- * @class TAO_Notify_ProxySupplier_Update_Worker
- *
- * @brief Inform ProxySupplier of updates.
- *
- */
-class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
-{
-public:
-  TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
-
-protected:
-  ///= TAO_ESF_Worker method
-  void work (TAO_Notify_ProxySupplier* proxy ACE_ENV_ARG_DECL);
-
-  const TAO_Notify_EventTypeSeq& added_;
-  const TAO_Notify_EventTypeSeq& removed_;
-};
-
-/********************************************************************************/
-
-#if defined (__ACE_INLINE__)
-#include "Event_Manager.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

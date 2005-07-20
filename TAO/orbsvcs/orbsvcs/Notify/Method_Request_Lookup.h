@@ -19,12 +19,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
 #include "Method_Request_Event.h"
 #include "ProxySupplier.h"
 #include "ProxyConsumer.h"
 #include "Consumer_Map.h"
 #include "Delivery_Request.h"
+
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 class TAO_Notify_Method_Request_Lookup_Queueable;
 class TAO_Notify_Event;

@@ -6,9 +6,6 @@ ACE_RCSID (Notify,
            TAO_Notify_Default_Factory,
            "$Id$")
 
-#include "orbsvcs/ESF/ESF_Proxy_List.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
-
 #include "EventChannelFactory.h"
 #include "EventChannel.h"
 #include "Admin.h"
@@ -24,6 +21,9 @@ ACE_RCSID (Notify,
 #include "Sequence/SequenceProxyPushConsumer.h"
 #include "Sequence/SequenceProxyPushSupplier.h"
 #include "Supplier.h"
+
+#include "orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 
 template <class PROXY>
 class COW_Collection_Default_Factory

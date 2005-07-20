@@ -47,9 +47,5 @@ protected:
   const CosNotification::EventTypeSeq & removed_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "Subscription_Change_Worker.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_SUBSCRIPTION_CHANGE_WORKER_H */

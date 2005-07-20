@@ -235,9 +235,5 @@ private:
 
 } // namespace
 
-#if defined (__ACE_INLINE__)
-#include "Routing_Slip.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_ROUTING_SLIP_H */

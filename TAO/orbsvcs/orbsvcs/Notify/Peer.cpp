@@ -2,10 +2,6 @@
 
 #include "Peer.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Peer.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Peer, "$Id$")
 
 #include "Proxy.h"

@@ -2,10 +2,6 @@
 
 #include "Routing_Slip.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Routing_Slip.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "Delivery_Request.h"
 #include "Worker_Task.h"
 #include "ProxyConsumer.h"

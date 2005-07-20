@@ -2,10 +2,6 @@
 
 #include "Event_Manager.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Event_Manager.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 
 #include "ProxyConsumer.h"
@@ -14,7 +10,53 @@ ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 #include "Supplier_Map.h"
 #include "Event_Map_T.h"
 
+#include "orbsvcs/ESF/ESF_Worker.h"
+
 #include "tao/debug.h"
+
+/********************************************************************************/
+
+/**
+ * @class TAO_Notify_ProxyConsumer_Update_Worker
+ *
+ * @brief Inform ProxyConsumer of updates.
+ *
+ */
+class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxyConsumer>
+{
+public:
+  TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
+
+protected:
+  ///= TAO_ESF_Worker method
+  void work (TAO_Notify_ProxyConsumer* proxy ACE_ENV_ARG_DECL);
+
+  const TAO_Notify_EventTypeSeq& added_;
+  const TAO_Notify_EventTypeSeq& removed_;
+};
+
+/********************************************************************************/
+
+/**
+ * @class TAO_Notify_ProxySupplier_Update_Worker
+ *
+ * @brief Inform ProxySupplier of updates.
+ *
+ */
+class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
+{
+public:
+  TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
+
+protected:
+  ///= TAO_ESF_Worker method
+  void work (TAO_Notify_ProxySupplier* proxy ACE_ENV_ARG_DECL);
+
+  const TAO_Notify_EventTypeSeq& added_;
+  const TAO_Notify_EventTypeSeq& removed_;
+};
+
+/********************************************************************************/
 
 TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (void)
 {
