@@ -14,7 +14,7 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $CL = new PerlACE::Process ("client");
 }
-print STDERR "\n==== Running Recursive ORBInitializer test\n";
+print STDERR "\n==== Running Recursive ORBInitializer test ====\n";
 
 $client = $CL->SpawnWaitKill (5);
 
