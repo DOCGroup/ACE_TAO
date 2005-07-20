@@ -40,7 +40,7 @@ Client_ORBInitializer::pre_init (
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++post_init_called;
