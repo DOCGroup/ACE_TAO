@@ -1,3 +1,8 @@
+Wed Jul 20 09:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/RMCast/Makefile.am:
+          Added new files
+
 Wed Jul 20 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
