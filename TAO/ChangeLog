@@ -1,3 +1,9 @@
+Wed Jul 20 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Connection_Timeout/client.cpp:
+          Changed this test to test the timeout in a separate method so that
+          also in case of failure we cleanly destroy the ORB.
+
 Wed Jul 20 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.cpp:
