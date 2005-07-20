@@ -50,14 +50,14 @@ public:
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    list_logs (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -65,16 +65,18 @@ public:
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr
     find_log (DsLogAdmin::LogId id
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Returns true if log exists, otherwise false
-  bool exists (DsLogAdmin::LogId id);
+  bool exists (DsLogAdmin::LogId id
+               ACE_ENV_ARG_DECL);
   
   /// Remove the given entry from the container.
-  int remove (DsLogAdmin::LogId id);
+  int remove (DsLogAdmin::LogId id
+	      ACE_ENV_ARG_DECL);
 
   /// @brief Create ObjectId
   ///
