@@ -40,8 +40,76 @@ parse_args (int argc, char *argv[])
 }
 
 int
+test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
+{
+  // Start the timer
+  profile_timer.start ();
+
+  ACE_TRY
+    {
+      // First connection happens here..
+      Test::Hello_var hello =
+        Test::Hello::_narrow(object ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (hello.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil Test::Hello reference <%s>\n",
+                             ior),
+                            1);
+        }
+
+      CORBA::String_var the_string =
+        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+                  the_string.in ()));
+
+      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Stop the timer
+      profile_timer.stop ();
+
+      // Get the elampsed time
+      ACE_Profile_Timer::ACE_Elapsed_Time el;
+      profile_timer.elapsed_time (el);
+
+      // Give a 30% error margin for handling exceptions etc. It is a
+      // high margin, though!. But the timeout is too small and wider
+      // range would help.
+#if defined (ACE_LACKS_FLOATING_POINT) && (ACE_LACKS_FLOATING_POINT != 0)
+      // The elapsed time is in usecs
+      if (el.real_time > 200000)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) ERROR: Too long to timeout \n"),
+                             1);
+        }
+#else
+      // The elapsed time is in secs
+      if (el.real_time > 0.200)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) ERROR: Too long to timeout \n"),
+                             1);
+        }
+#endif /* ACE_LACKS_FLOATING_POINT == 1*/
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
 main (int argc, char *argv[])
 {
+  int retval = 1;
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -80,7 +148,6 @@ main (int argc, char *argv[])
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
       for (CORBA::ULong l = 0;
            l != policy_list.length ();
            ++l)
@@ -89,30 +156,7 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      // Start the timer
-      profile_timer.start ();
-
-      // First connection happens here..
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (hello.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             ior),
-                            1);
-        }
-
-      CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
-
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      retval = test_timeout (tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -120,39 +164,11 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      // Stop the timer
-      profile_timer.stop ();
-
-      // Get the elampsed time
-      ACE_Profile_Timer::ACE_Elapsed_Time el;
-      profile_timer.elapsed_time (el);
-
-      // Give a 30% error margin for handling exceptions etc. It is a
-      // high margin, though!. But the timeout is too small and wider
-      // range would help.
-#if defined (ACE_LACKS_FLOATING_POINT) && (ACE_LACKS_FLOATING_POINT != 0)
-      // The elapsed time is in usecs
-      if (el.real_time > 200000)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR: Too long to timeout \n"));
-
-          return 1;
-        }
-#else
-      // The elapsed time is in secs
-      if (el.real_time > 0.200)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR: Too long to timeout \n"));
-
-          return 1;
-        }
-#endif /* ACE_LACKS_FLOATING_POINT == 1*/
-
-      return 0;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return 1;
     }
   ACE_ENDTRY;
 
-  return 0;
+  return retval;
 }
