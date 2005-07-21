@@ -222,9 +222,10 @@ Tue Jul 19 16:02:32 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 
-          Free process_map_ entries in handle_exit(). Thanks to
-        yevgeng at softcomputer dot com for finding this memory leak.
-
+	Free process_map_ entries in handle_exit(). Thanks to
+        Yevgen Galchenko <yevgeng at softcomputer dot com> for finding
+	this memory leak.
+  
         * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
         * orbsvcs/orbsvcs/Notify/Consumer.inl:
         * orbsvcs/orbsvcs/Notify/Consumer.cpp:

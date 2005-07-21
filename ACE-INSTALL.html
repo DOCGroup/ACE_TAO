@@ -208,13 +208,13 @@ of ACE (TAO and CIAO) includes GNUmakefiles for UNIX platforms, VC6
 project files, and VC71 solution files. If it is necessary to generate
 files for build tools for other compilers such as Visual Age for IBM,
 and Windows CE users have to run MPC themselves to generate the
-appropriate files. Please see <a href="MPC/USAGE"> USAGE </a>,
-<a href="MPC/README"> README </a> and
-<a href="bin/MakeProjectCreator/README">README for ACE</a> files for
+appropriate files.  Please see <a href="MPC/USAGE">USAGE</a>, <a
+href="MPC/README">README</a>, and <a
+href="bin/MakeProjectCreator/README">README for ACE</a> files for
 details. The options that have been used to generate the above build
-files can be found in <a href="bin/MakeProjectCreator/config/global.features">
+files can be found in <a
+href="bin/MakeProjectCreator/config/global.features">
 global.features</a> file.
-
 
 <p></p><hr><p>
 </p><h3><a name="installnotes">Installation Notes</a></h3>
@@ -2736,6 +2736,13 @@ well, try 'make realclean'.</p><p>
 <p></p><hr><p>
 </p><h3><a name="MPC">General MPC information</a></h3>
 
+The Makefile Project Creator (MPC) is a tool that takes platform and
+building tool generic files (mpc files) as input, which describe basic
+information needed to generate a "project" file for various build
+tools, including Make, NMake, Visual C++ 6, Visual C++ 7, etc.  Please
+see <a href="MPC/USAGE">USAGE</a>, <a href="MPC/README">README</a> for
+documentation on MPC.
+
 If you are attempting to generate project files using MPC, and you get
 the following error message:<br>
 
@@ -2759,16 +2766,16 @@ out MPC from the OCI anonymous CVS server using the following command.
 <pre>cvs -d :pserver:anonymous@anoncvs.ociweb.com:/cvs co MPC
 </pre>
 
-The README and USAGE files in the MPC directory are an up-to-date source
-of documentation, however it is not a complete set of documentation. The
-TAO Developer's Guide from OCI starting with the 1.3a version contains
-more information about MPC.<p>
+The README and USAGE files in the MPC directory are an up-to-date
+source of documentation, however it is not a complete set of
+documentation. The TAO Developer's Guide from OCI starting with the
+1.3a version contains more information about MPC.<p>
 
 There is a pdf of the MPC chapter from the TAO 1.3a Developer's Guide
 available at <a href="http://downloads.ociweb.com/MPC/">
-http://downloads.ociweb.com/MPC/</a>, however much of MPC has changed
-since it's writing.  It will be updated as newer versions of the
-TAO Developer's Guide is released.
+http://downloads.ociweb.com/MPC/</a>.  However, much of MPC has
+changed since its original writing.  It will be updated as newer
+versions of the TAO Developer's Guide is released.
 
 </p>
 <p>
@@ -3099,7 +3106,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Fri Jun 24 11:44:57 PDT 2005
+Last modified: Thu Jul 21 08:33:33 CDT 2005
 <!-- hhmts end -->
 
 
