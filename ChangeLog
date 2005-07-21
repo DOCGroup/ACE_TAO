@@ -1,3 +1,8 @@
+Thu Jul 21 10:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run Bug_2174_Regression in a minimum corba build
+
 Thu Jul 21 09:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op_T.h:
