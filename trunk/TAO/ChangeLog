@@ -1,3 +1,12 @@
+Thu Jul 21 06:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/Client/index.html:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * docs/tutorials/Quoter/Simple/Server/index.html:
+          Updated GNU makefile names with the MPC generated files.
+          Thanks to <gomezt at saic dot com> for reporting this.
+
 Wed Jul 20 13:48:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
