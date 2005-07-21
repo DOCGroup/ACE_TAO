@@ -1,3 +1,18 @@
+Thu Jul 21 07:42:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/LogMgr_i.cpp:
+
+	  Don't set the servant retention policy when creating the log POA
+	  in minimum CORBA builds.
+
+Thu Jul 21 07:26:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbscvs/orbsvcs/Hash_LogStore.cpp:
+	* orbsvcs/orbsvcs/Hash_LogRecordStore.cpp:
+
+          Use ACE_SYNCH_RW_MUTEX instead of ACE_RW_Thread_Mutex to fix
+	  single threaded builds.
+
 Thu Jul 21 14:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Valuebox/client.cpp:

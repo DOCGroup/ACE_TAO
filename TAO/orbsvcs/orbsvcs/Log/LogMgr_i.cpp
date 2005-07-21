@@ -59,7 +59,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 
 
   // Create Log POA
-  policies.length (3);
+  policies.length (2);
   policies[0] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
 					ACE_ENV_ARG_PARAMETER);
@@ -70,10 +70,13 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 					     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+  policies.length(3)
   policies[2] = 
     this->poa_->create_servant_retention_policy (PortableServer::RETAIN
 						 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#endif
 
   this->log_poa_ = this->factory_poa_->create_POA ("log_POA",
 						   poa_manager.in (),
