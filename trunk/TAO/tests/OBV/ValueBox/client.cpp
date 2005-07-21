@@ -73,7 +73,7 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
     VERIFY ( valuebox_clone->_value () != valuebox->_value () );
 
     // use operator=
-    *valuebox = val2; 
+    *valuebox = val2;
     VERIFY ( valuebox_clone->_value () == valuebox->_value () );
 
     // Check that _value and _boxed_in are the same.
@@ -144,7 +144,7 @@ int box_test_ref (BoxT *valuebox, UT &val1, UT &val2)
 
     p->_value ( val2 ); // deep copy
     VERIFY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
-    
+
     *valuebox = val2;      // deep copy, too.
     VERIFY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
 
@@ -281,8 +281,8 @@ int test_basic_invocations (Test * test_object)
 
         VERIFY (p1->_value () == 25);
         VERIFY (p2->_value () == 53);
-    
-        VBlong_var result = 
+
+        VBlong_var result =
           test_object->basic_op1(p1, p2, p3);
         ACE_TRY_CHECK;
 
@@ -308,8 +308,8 @@ int test_basic_invocations (Test * test_object)
 
         VERIFY (mp1->_value () == 25);
         VERIFY (mp2->_value () == 53);
-    
-        vb_basic::M_VBlong_var mresult = 
+
+        vb_basic::M_VBlong_var mresult =
           test_object->basic_op2(mp1, mp2, mp3);
         ACE_TRY_CHECK;
 
@@ -324,11 +324,11 @@ int test_basic_invocations (Test * test_object)
         p1->_value(67);
         p2->_value(93);
 
-        long lresult = 
+        long lresult =
           test_object->basic_op3(p1->_boxed_in(), p2->_boxed_inout(),
                                  p3->_boxed_out());
         ACE_TRY_CHECK;
-    
+
         VERIFY (p2->_value () == (93*3));
         VERIFY (p3->_value () == (93*5));
         VERIFY (lresult == (p1->_value()*3));
@@ -345,7 +345,7 @@ int test_basic_invocations (Test * test_object)
       fail = 1;
     }
   ACE_ENDTRY;
-  
+
   return fail;
 }
 
@@ -474,7 +474,7 @@ int test_boxed_string_invocations (Test * test_object)
 
         VBstring_var result = test_object->string_op1(p1, p2, p3);
         ACE_TRY_CHECK;
-    
+
         VERIFY (strcmp(p2->_value (), "2string") == 0);
         VERIFY (strcmp(p3->_value (), "2string") == 0);
         VERIFY (strcmp(result->_value (), "1string") == 0);
@@ -485,11 +485,11 @@ int test_boxed_string_invocations (Test * test_object)
 
         p2->_value("second string2");
 
-        char * sresult = 
+        char * sresult =
           test_object->string_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                   p3->_boxed_out());
         ACE_TRY_CHECK;
-    
+
         VERIFY (strcmp(p2->_value (), "2second string") == 0);
         VERIFY (strcmp(p3->_value (), "2second string") == 0);
         VERIFY (strcmp(sresult, "1string") == 0);
@@ -507,7 +507,7 @@ int test_boxed_string_invocations (Test * test_object)
       fail = 1;
     }
   ACE_ENDTRY;
-  
+
   return fail;
 }
 
@@ -538,7 +538,7 @@ int test_boxed_sequence (void)
   longarray[1] = 202;
   longarray[2] = 303;
 
-  // Create a sequence 
+  // Create a sequence
   TDseqlong *temp2;
   ACE_NEW_RETURN (temp2,
                   TDseqlong(10, 3, longarray, 1),
@@ -609,7 +609,7 @@ int test_boxed_sequence_invocations (Test * test_object)
         VBseqlong *p3;
         p1->length(4);
         p2->length(3);
-      
+
         (*p1)[0] = 10;
         (*p1)[1] = 9;
         (*p1)[2] = 8;
@@ -645,7 +645,7 @@ int test_boxed_sequence_invocations (Test * test_object)
         test_object->seq_op2(p1->_boxed_in(), p2->_boxed_inout(),
                              p3->_boxed_out());
         ACE_TRY_CHECK;
-    
+
         VERIFY ((*p2)[0] == 100*3*3);
         VERIFY ((*p2)[1] == 99*3*3);
         VERIFY ((*p2)[2] == 98*3*3);
@@ -667,7 +667,7 @@ int test_boxed_sequence_invocations (Test * test_object)
       fail = 1;
     }
   ACE_ENDTRY;
-  
+
   return fail;
 }
 
@@ -826,7 +826,7 @@ int test_boxed_struct_invocations (Test * test_object)
 
         test_object->struct_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                 p3->_boxed_out());
-    
+
         VERIFY (p2->l() == 92*3*3);
         VERIFY ((p2->abstruct()).s1 == 171*3*3);
         VERIFY ((p2->abstruct()).s2 == 12*3*3);
@@ -906,7 +906,7 @@ int test_boxed_struct_invocations (Test * test_object)
       fail = 1;
     }
   ACE_ENDTRY;
-  
+
   return fail;
 }
 
@@ -1140,7 +1140,7 @@ int test_boxed_array_invocations (Test * test_object)
       fail = 1;
     }
   ACE_ENDTRY;
-  
+
   return fail;
 }
 
@@ -1172,22 +1172,22 @@ int test_boxed_union()
 
     // Explicitly set discriminant, make sure thats the only thing
     // that changes.
-    valuebox1->_d (2); 
+    valuebox1->_d (2);
     VERIFY (valuebox1->_d () == 2);
     VERIFY (valuebox1->m1 () == 37);
-    valuebox1->_d (1); 
+    valuebox1->_d (1);
     VERIFY (valuebox1->_d () == 1);
     VERIFY (valuebox1->m1 () == 37);
 
     // Use _value() to access
-    valuebox1->_value ()._d (2); 
+    valuebox1->_value ()._d (2);
     VERIFY (valuebox1->_d () == 2);
- 
+
     // Use _value as modifier.
     valuebox1->_value (fixed_union1.in());
     VERIFY (valuebox1->_d () != 1 && valuebox1->_d () != 2);
 
-    // 
+    //
     VBfixed_union1_var valuebox2;
     ACE_NEW_RETURN (valuebox2,
                     VBfixed_union1 (),
@@ -1282,7 +1282,7 @@ int test_boxed_union_invocations (Test * test_object)
 
         test_object->union_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                p3->_boxed_out());
-    
+
         VERIFY (p2->_d () == 2);
         VERIFY (p2->m2 () == 789*3*3);
 
@@ -1362,7 +1362,7 @@ int test_boxed_union_invocations (Test * test_object)
       fail = 1;
     }
   ACE_ENDTRY;
-  
+
   return fail;
 }
 
@@ -1441,7 +1441,7 @@ main (int argc, char *argv[])
   ACE_TRY_EX (cleanup)
     {
       test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (cleanup);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
