@@ -32,15 +32,16 @@ Fault_Detector_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Fault_Detector_SOURCES = \
-  Fault_Detector_i.cpp \
-  Fault_Detector_Main.cpp \
   FT_FaultDetectorFactory_i.cpp \
-  Fault_Detector_i.h \
-  FT_FaultDetectorFactory_i.h
+  Fault_Detector_Main.cpp \
+  Fault_Detector_i.cpp \
+  FT_FaultDetectorFactory_i.h \
+  Fault_Detector_i.h
 
 Fault_Detector_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
