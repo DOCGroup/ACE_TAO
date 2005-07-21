@@ -212,7 +212,7 @@ public:
    * some cases if you instantiate the <ACE_Atomic_Op> with an
    * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>.
    *
-   * NOTE: This member function is deprecated and so may go away in
+   * @deprecated This member function is deprecated and so may go away in
    * the future. If you need access to the underlying mutex, consider
    * using the ACE_Atomic_Op_Ex template instead.
    */
