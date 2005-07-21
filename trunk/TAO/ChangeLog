@@ -1,4 +1,9 @@
-Thu Jul 21 14:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Jul 21 14:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Valuebox/client.cpp:
+          Fixed problem with emulated exceptions
+
+Thu Jul 21 13:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
           Fixed compile error with Borland
