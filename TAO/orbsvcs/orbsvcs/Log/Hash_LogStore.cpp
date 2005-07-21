@@ -175,7 +175,7 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
     ;
   id_out = id;
 
-  TAO_Hash_LogRecordStore* impl;
+  TAO_Hash_LogRecordStore* impl = 0;
   ACE_NEW_THROW_EX (impl,
                     TAO_Hash_LogRecordStore (this->orb_,
                                              id,
@@ -215,7 +215,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
       ACE_THROW (DsLogAdmin::LogIdAlreadyExists ());
     }
 
-  TAO_Hash_LogRecordStore* impl;
+  TAO_Hash_LogRecordStore* impl = 0;
   ACE_NEW_THROW_EX (impl,
                     TAO_Hash_LogRecordStore (this->orb_,
                                              id,
@@ -245,9 +245,9 @@ TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
-  TAO_Hash_LogRecordStore* recordstore;
+  TAO_Hash_LogRecordStore* recordstore = 0;
 
   if (hash_map_.find (id, recordstore) != 0)
     {

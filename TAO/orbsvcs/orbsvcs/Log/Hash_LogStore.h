@@ -69,11 +69,10 @@ public:
                      ));
 
   /// Returns true if log exists, otherwise false
-  virtual bool exists (DsLogAdmin::LogId id
-		       ACE_ENV_ARG_DECL);
+  virtual bool exists (DsLogAdmin::LogId id ACE_ENV_ARG_DECL);
 
   /// Remove the given entry from the hash table.
-  virtual int remove (DsLogAdmin::LogId id);
+  virtual int remove (DsLogAdmin::LogId id ACE_ENV_ARG_DECL);
 
   /// @brief Create log
   virtual void
