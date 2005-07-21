@@ -1,3 +1,9 @@
+Thu Jul 21 07:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogStore.{h,cpp}:
+          Fixed problem with emulated exceptions
+
 Thu Jul 21 06:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/Client/index.html:
