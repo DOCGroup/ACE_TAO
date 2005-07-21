@@ -14,6 +14,7 @@
 #include "Topology_Saver.h"
 #include "Save_Persist_Worker_T.h"
 #include "Reconnect_Worker_T.h"
+#include "Proxy.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
