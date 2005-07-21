@@ -1,3 +1,11 @@
+Thu Jul 21 09:24:58 2005  Simon McQueen  <sm@prismtech.com>
+
+        * bin/ciao_tests.lst:
+
+          Descheduled the 3 TAO/CIAO/DAnCE/tests/NodeApplicationTest
+          tests. They fail and there have been no responses to
+          requests that they be fixed.
+
 Wed Jul 20 06:45:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/msvc_static_order.lst:
