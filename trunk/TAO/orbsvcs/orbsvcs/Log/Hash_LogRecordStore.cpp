@@ -65,7 +65,7 @@ TAO_Hash_LogRecordStore::close (void)
 CORBA::ULongLong
 TAO_Hash_LogRecordStore::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -77,7 +77,7 @@ TAO_Hash_LogRecordStore::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::ULongLong
 TAO_Hash_LogRecordStore::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -90,7 +90,7 @@ int
 TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
 			      ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
 			    lock_,
 			    CORBA::INTERNAL ());
@@ -142,7 +142,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::RecordId id,
 				   DsLogAdmin::LogRecord &rec
 				   ACE_ENV_ARG_DECL)
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			   guard,
 			   lock_,
 			   CORBA::INTERNAL ());
@@ -156,7 +156,7 @@ int
 TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
 				 ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
 			    lock_,
 			    CORBA::INTERNAL ());
@@ -203,7 +203,7 @@ int
 TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
 				 ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
 			    lock_,
 			    CORBA::INTERNAL ());
@@ -216,7 +216,7 @@ TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
 int
 TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
 			    lock_,
 			    CORBA::INTERNAL ());
@@ -367,7 +367,7 @@ TAO_Hash_LogRecordStore::query (const char *grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			   guard,
 			   lock_,
 			   CORBA::INTERNAL ());
@@ -389,7 +389,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			   guard,
 			   lock_,
 			   CORBA::INTERNAL ());
@@ -470,7 +470,7 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			   guard,
 			   lock_,
 			   CORBA::INTERNAL ());
@@ -494,7 +494,7 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
 			    lock_,
 			    CORBA::INTERNAL ());
@@ -515,7 +515,7 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
 			    lock_,
 			    CORBA::INTERNAL ());
@@ -537,7 +537,7 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
 CORBA::ULong
 TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
 			    lock_,
 			    CORBA::INTERNAL ());
@@ -604,7 +604,7 @@ TAO_Hash_LogRecordStore::check_grammar (const char* grammar
 DsLogAdmin::AdministrativeState
 TAO_Hash_LogRecordStore::get_administrative_state (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -617,7 +617,7 @@ void
 TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeState state
                                                    ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
@@ -630,7 +630,7 @@ TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeSta
 DsLogAdmin::CapacityAlarmThresholdList*
 TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -649,7 +649,7 @@ void
 TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds
                                                         ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
@@ -663,7 +663,7 @@ TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::Capaci
 DsLogAdmin::ForwardingState
 TAO_Hash_LogRecordStore::get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -676,7 +676,7 @@ void
 TAO_Hash_LogRecordStore::set_forwarding_state (DsLogAdmin::ForwardingState state
                                                ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
@@ -688,7 +688,7 @@ TAO_Hash_LogRecordStore::set_forwarding_state (DsLogAdmin::ForwardingState state
 DsLogAdmin::TimeInterval
 TAO_Hash_LogRecordStore::get_interval (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -701,7 +701,7 @@ void
 TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval
                                        ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
@@ -714,7 +714,7 @@ TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval
 DsLogAdmin::LogFullActionType
 TAO_Hash_LogRecordStore::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -727,7 +727,7 @@ void
 TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType action
                                               ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
@@ -740,7 +740,7 @@ TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType acti
 CORBA::ULong
 TAO_Hash_LogRecordStore::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -753,7 +753,7 @@ void
 TAO_Hash_LogRecordStore::set_max_record_life (CORBA::ULong max_record_life
                                               ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
@@ -765,7 +765,7 @@ TAO_Hash_LogRecordStore::set_max_record_life (CORBA::ULong max_record_life
 CORBA::ULongLong
 TAO_Hash_LogRecordStore::get_max_size (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
@@ -778,7 +778,7 @@ void
 TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size
                                        ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_RW_Thread_Mutex,
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             lock_,
                             CORBA::INTERNAL ());
