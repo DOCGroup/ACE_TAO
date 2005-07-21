@@ -1,3 +1,9 @@
+Thu Jul 21 08:29:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/LogMgr_i.cpp:
+
+	  Fix typo in last change.
+
 Thu Jul 21 07:42:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/LogMgr_i.cpp:
@@ -240,7 +246,7 @@ Tue Jul 19 16:02:32 2005  Justin Michel  <michel_j@ociweb.com>
 	Free process_map_ entries in handle_exit(). Thanks to
         Yevgen Galchenko <yevgeng at softcomputer dot com> for finding
 	this memory leak.
-  
+
         * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
         * orbsvcs/orbsvcs/Notify/Consumer.inl:
         * orbsvcs/orbsvcs/Notify/Consumer.cpp:
