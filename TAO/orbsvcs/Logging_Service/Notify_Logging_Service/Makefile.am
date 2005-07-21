@@ -29,8 +29,8 @@ Notify_Logging_Service_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Notify_Logging_Service_SOURCES = \
-  Notify_Logging_Service.cpp \
   Notify_Logging_Server.cpp \
+  Notify_Logging_Service.cpp \
   Notify_Logging_Service.h
 
 Notify_Logging_Service_LDADD = \

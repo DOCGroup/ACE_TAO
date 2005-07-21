@@ -30,9 +30,9 @@ NT_Naming_Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 NT_Naming_Service_SOURCES = \
-  Naming_Service.cpp \
   NT_Naming_Server.cpp \
   NT_Naming_Service.cpp \
+  Naming_Service.cpp \
   NT_Naming_Service.h \
   Naming_Service.h
 
