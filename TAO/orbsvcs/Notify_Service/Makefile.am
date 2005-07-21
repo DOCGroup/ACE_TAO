@@ -31,11 +31,11 @@ NT_Notify_Service_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 NT_Notify_Service_SOURCES = \
-  Notify_Service.cpp \
   NT_Notify_Server.cpp \
   NT_Notify_Service.cpp \
-  Notify_Service.h \
-  NT_Notify_Service.h
+  Notify_Service.cpp \
+  NT_Notify_Service.h \
+  Notify_Service.h
 
 NT_Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
@@ -49,6 +49,7 @@ NT_Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -86,6 +87,7 @@ Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

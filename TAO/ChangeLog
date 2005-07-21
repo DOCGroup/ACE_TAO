@@ -1,3 +1,16 @@
+Thu Jul 21 15:07:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+	* orbsvcs/FT_ReplicationManager/Makefile.am:
+	* orbsvcs/Fault_Detector/Makefile.am:
+	* orbsvcs/Fault_Notifier/Makefile.am:
+	* orbsvcs/LifeCycle_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Naming_Service/Makefile.am:
+	* orbsvcs/Notify_Service/Makefile.am:
+
+	  Regenerated.
+
 Thu Jul 21 08:29:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/LogMgr_i.cpp:

@@ -32,10 +32,10 @@ LifeCycle_Service_SOURCES = \
   Factory_Trader.cpp \
   LifeCycle_Service.cpp \
   LifeCycle_Service_i.cpp \
-  Factory_Trader.h \
-  LifeCycle_Service_i.h \
   Criteria_Evaluator.h \
-  LifeCycle_Service.h
+  Factory_Trader.h \
+  LifeCycle_Service.h \
+  LifeCycle_Service_i.h
 
 LifeCycle_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
