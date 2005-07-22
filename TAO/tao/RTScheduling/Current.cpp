@@ -577,9 +577,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
 
   CORBA::Object_var object =
     this->orb_->object_ref_table ().resolve_initial_references (
-    "PriorityMappingManager"
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    TAO_OBJID_PRIORITYMAPPINGMANAGER);
 
   RTCORBA::PriorityMappingManager_var mapping_manager =
     RTCORBA::PriorityMappingManager::_narrow (object.in ()
