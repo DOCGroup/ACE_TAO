@@ -666,13 +666,11 @@ public:
                                  ACE_ENV_ARG_DECL);
 
   /// Resolve the RT ORB reference for this ORB.
-  CORBA::Object_ptr resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_rt_orb (void);
 
   /// Resolve the RT Current flyweight for this ORB.
   /// Return server_id string.
   const char *server_id (void) const;
-
-  CORBA::Object_ptr resolve_rt_current (ACE_ENV_SINGLE_ARG_DECL);
 
   /// List all the service known by the ORB
   CORBA::ORB_ObjectIdList *list_initial_references (
