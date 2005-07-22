@@ -32,6 +32,7 @@
 #include "ace/CORBA_macros.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Null_Mutex.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -169,8 +170,8 @@ namespace CORBA
     void operator= (const DefaultValueRefCountBase &);
 
   private: // data
-    CORBA::ULong _tao_reference_count_;
-    ACE_SYNCH_MUTEX _tao_reference_count_lock_;
+    /// Reference counter.
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
   }; // DefaultValueRefCountBase
 
   //  which lock has the lowest memory overhead ?
