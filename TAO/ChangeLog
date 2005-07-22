@@ -1,3 +1,13 @@
+Fri Jul 22 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/ORB.cpp:
+        * tao/Object_Ref_Table.{h,inl}:
+          Corrected exceptions that should be thrown when a duplicate or
+          invalid name is passed with register_initial_reference. Also
+          removed some not needed exception argument macros. Fixes bug
+          2087 and the associated regression test now works fine
+
 Fri Jul 22 10:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object_Ref_Table.inl (register_initial_reference):
