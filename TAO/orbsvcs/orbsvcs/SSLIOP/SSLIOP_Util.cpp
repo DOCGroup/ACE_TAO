@@ -25,10 +25,8 @@ TAO::SSLIOP::Util::current (
       // about the fact that the ORB isn't fully initialized yet
       // (happens on the client side).
       CORBA::Object_var obj =
-        orb_core->object_ref_table ().resolve_initial_references (
-          "SSLIOPCurrent"
-          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb_core->object_ref_table ().resolve_initial_reference (
+          "SSLIOPCurrent");
 
       TAO::SSLIOP::Current_var tao_current =
         TAO::SSLIOP::Current::_narrow (obj.in ()
