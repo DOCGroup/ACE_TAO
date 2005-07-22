@@ -1,3 +1,12 @@
+Fri Jul 22 09:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/ValueBox/client.cpp:
+          Fixed compile errors with Borland
+
+        * tao/Valuetype/ValueBase.{h,cpp}:
+          Use Atomic_Op for the refcount, initialize the refcount to 1 in
+          the copy constructor.
+
 Thu Jul 21 15:07:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
