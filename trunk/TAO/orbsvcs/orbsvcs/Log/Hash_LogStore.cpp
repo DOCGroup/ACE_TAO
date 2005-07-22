@@ -177,7 +177,7 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
 
   TAO_Hash_LogRecordStore* impl = 0;
   ACE_NEW_THROW_EX (impl,
-                    TAO_Hash_LogRecordStore (this->orb_,
+                    TAO_Hash_LogRecordStore (this->orb_.in (),
                                              id,
                                              full_action,
                                              max_size,
@@ -217,7 +217,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
 
   TAO_Hash_LogRecordStore* impl = 0;
   ACE_NEW_THROW_EX (impl,
-                    TAO_Hash_LogRecordStore (this->orb_,
+                    TAO_Hash_LogRecordStore (this->orb_.in (),
                                              id,
                                              full_action,
                                              max_size,
