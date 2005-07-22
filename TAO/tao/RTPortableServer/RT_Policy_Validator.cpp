@@ -570,8 +570,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
 
   // Get the RTORB.
   CORBA::Object_var object =
-    orb_core.resolve_rt_orb (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    orb_core.resolve_rt_orb ();
 
   RTCORBA::RTORB_var rt_orb =
     RTCORBA::RTORB::_narrow (object.in ()
