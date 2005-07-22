@@ -162,11 +162,17 @@ TAO_ORBInitInfo::register_initial_reference (
 
   if (id == 0 || ACE_OS::strlen (id) == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
+  ACE_CHECK;
+
+  if (CORBA::is_nil (obj))
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
+                                 CORBA::COMPLETED_NO));
+  ACE_CHECK;
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
-  table.register_initial_reference (id, obj ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  if (table.register_initial_reference (id, obj) == -1)
+    ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
 }
 
 CORBA::Object_ptr
@@ -187,8 +193,7 @@ TAO_ORBInitInfo::resolve_initial_references (
   // is reached so just use the ORB's resolve_initial_references()
   // mechanism.
   return
-    this->orb_core_->orb ()->resolve_initial_references (id
-                                                          ACE_ENV_ARG_PARAMETER);
+    this->orb_core_->orb ()->resolve_initial_references (id);
 }
 
 void

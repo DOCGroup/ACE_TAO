@@ -9,28 +9,17 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 {
 }
 
-ACE_INLINE void
+ACE_INLINE int
 TAO_Object_Ref_Table::register_initial_reference (
   const char *id,
-  CORBA::Object_ptr obj
-  ACE_ENV_ARG_DECL)
+  CORBA::Object_ptr obj)
 {
-  if (CORBA::is_nil (obj))
-    {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
-                                   CORBA::COMPLETED_NO));
-    }
-
-  if (this->bind (id, obj) != 0)
-    {
-      ACE_THROW (CORBA::ORB::InvalidName ());
-    }
+  return this->bind (id, obj);
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_Object_Ref_Table::resolve_initial_references (
-  const char * id
-  ACE_ENV_ARG_DECL_NOT_USED)
+  const char * id)
 {
   return this->find (id);  // Returns a duplicate.
 }

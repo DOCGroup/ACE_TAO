@@ -1171,9 +1171,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
       // the InitRef table search, since it may contain local objects.
       result =
         this->orb_core ()->object_ref_table ().resolve_initial_references (
-          name
-          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          name);
     }
 
   if (!CORBA::is_nil (result.in ()))
@@ -1280,12 +1278,19 @@ CORBA::ORB::register_initial_reference (const char * id,
                                         CORBA::Object_ptr obj
                                         ACE_ENV_ARG_DECL)
 {
+  if (id == 0 || ACE_OS::strlen (id) == 0)
+    ACE_THROW (CORBA::ORB::InvalidName ());
+  ACE_CHECK;
+
+  if (CORBA::is_nil (obj))
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
+                                 CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
-  table.register_initial_reference (id,
-                                    obj
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  if (table.register_initial_reference (id, obj) == -1)
+    ACE_THROW (CORBA::ORB::InvalidName ());
 }
 
 
