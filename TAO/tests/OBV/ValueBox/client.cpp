@@ -475,7 +475,7 @@ int test_boxed_string_invocations (Test * test_object)
         ACE_NEW_RETURN (p2,
                         VBstring("string2"),
                         1);
-        VBstring *p3;
+        VBstring *p3 = 0;
 
         VERIFY (strcmp(p1->_value (), "string1") == 0);
         VERIFY (strcmp(p2->_value (), "string2") == 0);
@@ -491,7 +491,7 @@ int test_boxed_string_invocations (Test * test_object)
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
         //============================================================
 
-        p2->_value("second string2");
+        p2->_value(CORBA::string_dup ("second string2"));
 
         char * sresult =
           test_object->string_op2(p1->_boxed_in(), p2->_boxed_inout(),
@@ -850,7 +850,7 @@ int test_boxed_struct_invocations (Test * test_object)
 
         Variable_Struct1 vs1;
         vs1.l = 29;
-        vs1.str = "variable1";
+        vs1.str = CORBA::string_dup ("variable1");
 
         VBvariable_struct1 *p4 = 0;
         ACE_NEW_RETURN (p4,
@@ -1072,8 +1072,8 @@ int test_boxed_array_invocations (Test * test_object)
         //============================================================
 
         StringArray sa;
-        sa[0] = "in string1";
-        sa[1] = "in string2";
+        sa[0] = CORBA::string_dup ("in string1");
+        sa[1] = CORBA::string_dup ("in string2");
 
         VBstringarray *p4 = 0;
         ACE_NEW_RETURN (p4,
@@ -1081,8 +1081,8 @@ int test_boxed_array_invocations (Test * test_object)
                         1);
 
         StringArray sa2;
-        sa2[0] = "inout string1";
-        sa2[1] = "inout string2";
+        sa2[0] = CORBA::string_dup ("inout string1");
+        sa2[1] = CORBA::string_dup ("inout string2");
 
         VBstringarray *p5 = 0;
         ACE_NEW_RETURN (p5,
@@ -1317,7 +1317,7 @@ int test_boxed_union_invocations (Test * test_object)
         ACE_NEW_RETURN (variable_union2,
                         Variable_Union1 (),
                         1);
-        variable_union2->m2 ("abracadabra");
+        variable_union2->m2 (CORBA::string_dup ("abracadabra"));
         VBvariable_union1 *p5 = 0;
         ACE_NEW_RETURN (p5,
                         VBvariable_union1 (variable_union2),
