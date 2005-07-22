@@ -62,17 +62,18 @@ public:
   /// Constructor
   TAO_Object_Ref_Table (void);
 
-  /// Register an object reference with the table, and map the given
-  /// ID to it.
-  void register_initial_reference (const char * id,
-                                   CORBA::Object_ptr obj
-                                   ACE_ENV_ARG_DECL);
+  /**
+   * Register an object reference with the table, and map the given
+   * ID to it.
+   * @retval 0 Success
+   * @retval -1 Duplicate id
+   */
+  int register_initial_reference (const char * id,
+                                  CORBA::Object_ptr obj);
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
-  CORBA::Object_ptr resolve_initial_references (
-    const char * id
-    ACE_ENV_ARG_DECL);
+  CORBA::Object_ptr resolve_initial_references (const char * id);
 
   /// Explicitly destroy the contents of the object reference table.
   void destroy (void);
