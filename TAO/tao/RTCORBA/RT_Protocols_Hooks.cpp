@@ -44,9 +44,7 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
   // Save a reference to the priority mapping manager.
   CORBA::Object_var obj =
     orb_core->object_ref_table ().resolve_initial_references (
-      TAO_OBJID_PRIORITYMAPPINGMANAGER
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      TAO_OBJID_PRIORITYMAPPINGMANAGER);
 
   this->mapping_manager_ =
     TAO_Priority_Mapping_Manager::_narrow (obj.in ()
@@ -56,9 +54,7 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
   // Save a reference to the priority mapping manager.
   CORBA::Object_var object =
     orb_core->object_ref_table ().resolve_initial_references (
-      TAO_OBJID_NETWORKPRIORITYMAPPINGMANAGER
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      TAO_OBJID_NETWORKPRIORITYMAPPINGMANAGER);
 
   this->network_mapping_manager_ =
     TAO_Network_Priority_Mapping_Manager::_narrow (object.in ()
@@ -67,9 +63,7 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
 
   object =
     this->orb_core_->object_ref_table ().resolve_initial_references (
-      "RTCurrent"
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      TAO_OBJID_RTCURRENT);
 
   this->current_ =
     RTCORBA::Current::_narrow (object.in ()

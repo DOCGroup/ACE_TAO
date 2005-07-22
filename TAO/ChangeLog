@@ -1,3 +1,15 @@
+Fri Jul 22 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,i}:
+          Removed exception macros from resolve_rt_orb and removed the
+          resolve_rt_current method because it is not used at all
+
+Fri Jul 22 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.i:
+          Removed environment macro to resolve_initial_references on
+          objreftable
+
 Fri Jul 22 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitInfo.cpp:

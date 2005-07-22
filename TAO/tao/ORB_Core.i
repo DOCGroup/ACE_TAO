@@ -577,7 +577,7 @@ TAO_ORB_Core::get_default_policies (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ORB_Core::resolve_rt_orb (void)
 {
   if (CORBA::is_nil (this->rt_orb_.in ()))
     {
@@ -593,24 +593,6 @@ TAO_ORB_Core::resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     }
 
   return CORBA::Object::_duplicate (this->rt_orb_.in ());
-}
-
-ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_rt_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-{
-  if (CORBA::is_nil (this->rt_current_.in ()))
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                        CORBA::Object::_nil ());
-      if (CORBA::is_nil (this->rt_current_.in ()))
-        {
-          // Save a reference to the priority mapping manager.
-          this->rt_current_ =
-              this->object_ref_table ().resolve_initial_references (
-              TAO_OBJID_RTCURRENT);
-        }
-    }
-  return CORBA::Object::_duplicate (this->rt_current_.in ());
 }
 
 #if (TAO_HAS_INTERCEPTORS == 1)
