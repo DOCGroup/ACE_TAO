@@ -98,7 +98,7 @@ Proactor_Scatter_Gather_Test: !chorus !VxWorks !LynxOS
 Proactor_Test: !chorus !VxWorks !LynxOS
 Proactor_Timer_Test: !chorus !VxWorks !LynxOS
 Process_Manager_Test: !chorus !VxWorks
-Process_Manual_Event_Test: !chorus !VxWorks !LynxOS
+Process_Manual_Event_Test: !HPUX !chorus !VxWorks !LynxOS
 Process_Mutex_Test: !chorus !VxWorks !LynxOS
 Process_Semaphore_Test: !chorus !VxWorks !LynxOS
 RB_Tree_Test
