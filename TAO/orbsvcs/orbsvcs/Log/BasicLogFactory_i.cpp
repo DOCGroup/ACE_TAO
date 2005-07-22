@@ -69,7 +69,7 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
 
   // narrow to BasicLog
   DsLogAdmin::BasicLog_var basic_log =
-    DsLogAdmin::BasicLog::_narrow (log);
+    DsLogAdmin::BasicLog::_narrow (log.in ());
 
   return basic_log._retn ();
 }
@@ -98,7 +98,7 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
 
   // narrow to BasicLog
   DsLogAdmin::BasicLog_var basic_log =
-    DsLogAdmin::BasicLog::_narrow (log);
+    DsLogAdmin::BasicLog::_narrow (log.in ());
 
   return basic_log._retn ();
 }

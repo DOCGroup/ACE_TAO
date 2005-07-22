@@ -534,8 +534,9 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
 // Copy constructor
 CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
   (const DefaultValueRefCountBase& rhs)
-  : refcount_ (1),
-    ValueBase (rhs)
+  : ValueBase (rhs),
+    refcount_ (1)
+
 {
 }
 

@@ -110,7 +110,7 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
         VERIFY ( down->_value () != valuebox->_value () );
          VERIFY ( down->_value () == val2 );
       }
-      
+
     CORBA::remove_ref (copy);
 
     // cleanup. Use purify on the PC to check for leaks.
@@ -261,7 +261,7 @@ int test_basic (void)
                     1);
     fail += box_test_ref<VBTDany, CORBA::Any> (pany2, any1.inout (),
                                               any2.inout ());
-    CORBA::remove_ref (pany);
+    CORBA::remove_ref (pany2);
 
     return fail;
 }

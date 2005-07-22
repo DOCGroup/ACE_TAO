@@ -58,7 +58,7 @@ TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLogFactory::_nil ());
-  
+
 
   PortableServer::ObjectId_var oid =
     this->factory_poa_->activate_object (this
@@ -120,13 +120,13 @@ TAO_NotifyLogFactory_i::create (
 
   // narrow to NotifyLog
   DsNotifyLogAdmin::NotifyLog_var notify_log =
-    DsNotifyLogAdmin::NotifyLog::_narrow (log);
-  
+    DsNotifyLogAdmin::NotifyLog::_narrow (log.in ());
+
   // @@ JTC - squelch exception?
   notifier_->object_creation (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
-  return notify_log;
+  return notify_log._retn ();
 }
 
 DsNotifyLogAdmin::NotifyLog_ptr
@@ -165,8 +165,8 @@ TAO_NotifyLogFactory_i::create_with_id (
 
   // narrow to NotifyLog
   DsNotifyLogAdmin::NotifyLog_var notify_log =
-    DsNotifyLogAdmin::NotifyLog::_narrow (log);
-  
+    DsNotifyLogAdmin::NotifyLog::_narrow (log.in ());
+
   // @@ JTC - squelch exception?
   notifier_->object_creation (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
@@ -177,10 +177,10 @@ TAO_NotifyLogFactory_i::create_with_id (
 PortableServer::ObjectId*
 TAO_NotifyLogFactory_i::create_objectid (DsLogAdmin::LogId id)
 {
-  char buf[32]; 
-  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id)); 
- 
-  PortableServer::ObjectId_var oid = 
+  char buf[32];
+  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id));
+
+  PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId(buf);
 
   return oid._retn ();
@@ -192,21 +192,21 @@ TAO_NotifyLogFactory_i::create_log_reference (DsLogAdmin::LogId id
 {
   PortableServer::ObjectId_var oid =
     this->create_objectid (id);
-  const char *intf =  
+  const char *intf =
     "IDL:omg.org/DsNotifyLogAdmin:NotifyLog:1.0";
-  
-  CORBA::Object_var obj = 
+
+  CORBA::Object_var obj =
     this->log_poa_->create_reference_with_id (oid.in (),
 					      intf
 					      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-  
-  DsEventLogAdmin::EventLog_var event_log = 
+
+  DsEventLogAdmin::EventLog_var event_log =
     DsEventLogAdmin::EventLog::_narrow (obj.in ()
 					ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-  
-  return event_log._retn(); 
+
+  return event_log._retn();
 }
 
 DsLogAdmin::Log_ptr
@@ -254,7 +254,7 @@ TAO_NotifyLogFactory_i::create_log_object (DsLogAdmin::LogId id
 
   // Narrow
   DsNotifyLogAdmin::NotifyLog_var notify_log =
-    DsNotifyLogAdmin::NotifyLog::_narrow(obj.in () 
+    DsNotifyLogAdmin::NotifyLog::_narrow(obj.in ()
 					 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
