@@ -1,3 +1,13 @@
+Fri Jul 22 16:31:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Basic_Types.h: The change from:
+	  Fri Jul  8 15:42:18 2005  Steve Huston  <shuston@riverace.com>
+	  turned a previous warning into an error on newer g++ versions.
+	  Instead, moved the __hi_lo struct definition out of the anonymous
+	  union and renamed it to not be a compiler-private name (with 2
+	  leading underscores). This should resolve all the issues. Thanks
+	  to Simon Massey for figuring this out.
+	
 Fri Jul 22 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
