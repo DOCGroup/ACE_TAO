@@ -1,3 +1,9 @@
+Fri Jul 22 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+          Add naming as base project, CIAO_DnC_Server has this
+          also
+
 Fri Jul 22 09:30:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * tests/run_test.lst:
