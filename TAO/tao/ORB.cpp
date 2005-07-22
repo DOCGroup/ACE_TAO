@@ -1170,7 +1170,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
       // Search the object reference table.  This search must occur before
       // the InitRef table search, since it may contain local objects.
       result =
-        this->orb_core ()->object_ref_table ().resolve_initial_references (
+        this->orb_core ()->object_ref_table ().resolve_initial_reference (
           name);
     }
 

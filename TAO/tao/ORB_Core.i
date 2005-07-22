@@ -587,7 +587,7 @@ TAO_ORB_Core::resolve_rt_orb (void)
         {
           // Save a reference to the priority mapping manager.
           this->rt_orb_ =
-              this->object_ref_table ().resolve_initial_references (
+              this->object_ref_table ().resolve_initial_reference (
               TAO_OBJID_RTORB);
         }
     }
