@@ -1,3 +1,8 @@
+Fri Jul 22 12:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
+          Updated for obj_ref_table interface change
+
 Fri Jul 22 12:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitInfo.cpp:
