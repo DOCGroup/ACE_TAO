@@ -298,7 +298,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
    dt_hash_ (dt_hash)
 {
   CORBA::Object_var scheduler_obj =
-    this->orb_->object_ref_table ().resolve_initial_references (
+    this->orb_->object_ref_table ().resolve_initial_reference (
       "RTScheduler");
 
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ()
@@ -326,7 +326,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
     dt_hash_ (dt_hash)
 {
   CORBA::Object_ptr scheduler_obj =
-    orb->object_ref_table ().resolve_initial_references (
+    orb->object_ref_table ().resolve_initial_reference (
       "RTScheduler");
 
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
@@ -576,7 +576,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
     this->orb_->orb_params ()->sched_policy ();
 
   CORBA::Object_var object =
-    this->orb_->object_ref_table ().resolve_initial_references (
+    this->orb_->object_ref_table ().resolve_initial_reference (
     TAO_OBJID_PRIORITYMAPPINGMANAGER);
 
   RTCORBA::PriorityMappingManager_var mapping_manager =
