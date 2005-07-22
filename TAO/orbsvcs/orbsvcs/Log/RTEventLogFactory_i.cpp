@@ -38,8 +38,8 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  
-    
+
+
   PortableServer::POA_var defPOA =
     this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -92,7 +92,7 @@ TAO_RTEventLogFactory_i::activate (ACE_ENV_SINGLE_ARG_DECL)
     this->factory_poa_->id_to_reference (oid.in ()
 					 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (v_return._retn ());
-  
+
   // narrow and store the result..
   this->log_mgr_ =
     DsLogAdmin::LogMgr::_narrow (obj.in ()
@@ -135,8 +135,8 @@ TAO_RTEventLogFactory_i::create (
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
   // narrow to EventLog
-  RTEventLogAdmin::EventLog_var event_log = 
-    RTEventLogAdmin::EventLog::_narrow (log);
+  RTEventLogAdmin::EventLog_var event_log =
+    RTEventLogAdmin::EventLog::_narrow (log.in ());
 
   // @@ JTC - squelch exception?
   notifier_->object_creation (id ACE_ENV_ARG_PARAMETER);
@@ -173,9 +173,9 @@ TAO_RTEventLogFactory_i::create_with_id (
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
   // narrow to EventLog
-  RTEventLogAdmin::EventLog_var event_log = 
-    RTEventLogAdmin::EventLog::_narrow (log);
-  
+  RTEventLogAdmin::EventLog_var event_log =
+    RTEventLogAdmin::EventLog::_narrow (log.in ());
+
   // @@ JTC - squelch exception?
   notifier_->object_creation (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
@@ -186,10 +186,10 @@ TAO_RTEventLogFactory_i::create_with_id (
 PortableServer::ObjectId*
 TAO_RTEventLogFactory_i::create_objectid (DsLogAdmin::LogId id)
 {
-  char buf[32]; 
-  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id)); 
- 
-  PortableServer::ObjectId_var oid = 
+  char buf[32];
+  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id));
+
+  PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId(buf);
 
   return oid._retn ();
@@ -201,21 +201,21 @@ TAO_RTEventLogFactory_i::create_log_reference (DsLogAdmin::LogId id
 {
   PortableServer::ObjectId_var oid =
     this->create_objectid (id);
-  const char *intf =  
+  const char *intf =
     "IDL:omg.org/RTEventLogAdmin:EventLog:1.0";
-  
-  CORBA::Object_var obj = 
+
+  CORBA::Object_var obj =
     this->log_poa_->create_reference_with_id (oid.in (),
 					      intf
 					      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-  
-  RTEventLogAdmin::EventLog_var event_log = 
+
+  RTEventLogAdmin::EventLog_var event_log =
     RTEventLogAdmin::EventLog::_narrow (obj.in ()
 					ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-  
-  return event_log._retn(); 
+
+  return event_log._retn();
 }
 
 DsLogAdmin::Log_ptr
