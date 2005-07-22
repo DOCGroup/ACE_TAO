@@ -1,3 +1,9 @@
+Fri Jul 22 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry.cpp:
+          Fixed compile error on AIX. Thanks to Ventimiglia Chere
+          <Ventimiglia_Chere at emc dot com> for reporting this.
+
 Fri Jul 22 12:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
