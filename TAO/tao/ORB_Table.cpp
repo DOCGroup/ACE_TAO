@@ -122,6 +122,11 @@ TAO::ORB_Table::unbind (const char *orb_id)
               this->first_orb_ = 0;
             }
         }
+
+      // Assign a default constructed ref counter, this will make sure
+      // we drop the refcount on the ORB_Core now, instead at the
+      // moment we destruct the table.
+      (*result).second = TAO::ORB_Core_Ref_Counter ();
     }
 
   return 0;
