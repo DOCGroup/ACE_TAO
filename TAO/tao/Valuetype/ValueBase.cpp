@@ -526,15 +526,16 @@ CORBA::DefaultValueRefCountBase::_refcount_value (void)
 // ===========================================================
 
 CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
-  : _tao_reference_count_ (1)
+  : refcount_ (1)
 {
 }
 
 
 // Copy constructor
-CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase 
+CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
   (const DefaultValueRefCountBase& rhs)
-  : ValueBase (rhs)
+  : refcount_ (1),
+    ValueBase (rhs)
 {
 }
 
@@ -542,44 +543,22 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
 void
 CORBA::DefaultValueRefCountBase::_tao_add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->_tao_reference_count_lock_);
-
-  ++this->_tao_reference_count_;
+  ++this->refcount_;
 }
 
 void
 CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 {
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX,
-               guard,
-               this->_tao_reference_count_lock_);
+  const CORBA::ULong new_count = --this->refcount_;
 
-    --this->_tao_reference_count_;
-
-    if (this->_tao_reference_count_ != 0)
-      {
-        return;
-      }
-  }
-
-  // The guard has been already given up, but this is no problem
-  // cause we have held the last reference, and this one we don't give
-  // away anymore, we do:
-  delete this;
+  if (new_count == 0)
+    delete this;
 }
 
 CORBA::ULong
 CORBA::DefaultValueRefCountBase::_tao_refcount_value (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    guard,
-                    this->_tao_reference_count_lock_,
-                    0);
-
-  return _tao_reference_count_;
+  return this->refcount_.value ();
 }
 
 // ===========================================================
