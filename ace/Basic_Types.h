@@ -506,33 +506,33 @@ typedef ptrdiff_t ptr_arith_t;
 #if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
     long long data_;
 #else
+    struct _ace_hi_lo_correct_endian
+    {
+#  if defined (ACE_BIG_ENDIAN)
+      /// High 32 bits.
+      ACE_UINT32 hi_;
+      /// Low 32 bits.
+      ACE_UINT32 lo_;
+
+#  else
+
+      /// Low 32 bits.
+      ACE_UINT32 lo_;
+      /// High 32 bits.
+      ACE_UINT32 hi_;
+#  endif /* ! ACE_BIG_ENDIAN */
+    };
     union
-      {
-        struct __hi_lo
-          {
-#     if defined (ACE_BIG_ENDIAN)
-            /// High 32 bits.
-            ACE_UINT32 hi_;
+    {
+      struct _ace_hi_lo_correct_endian data_;
 
-            /// Low 32 bits.
-            ACE_UINT32 lo_;
-#     else
-            /// Low 32 bits.
-            ACE_UINT32 lo_;
-
-            /// High 32 bits.
-            ACE_UINT32 hi_;
-#     endif /* ! ACE_BIG_ENDIAN */
-
-          } data_;
-
-        /// To ensure alignment on 8-byte boundary.
-        /**
-         * @note "double" isn't usually usable with
-         *       ACE_LACKS_FLOATING_POINT, but this seems OK.
-         */
-        double for_alignment_;
-      };
+      /// To ensure alignment on 8-byte boundary.
+      /**
+       * @note "double" isn't usually usable with
+       *       ACE_LACKS_FLOATING_POINT, but this seems OK.
+       */
+      double for_alignment_;
+    };
 
     // NOTE:  the following four accessors are inlined here in
     // order to minimize the extent of the data_ struct.  It's
