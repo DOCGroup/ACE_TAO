@@ -327,9 +327,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
 {
   CORBA::Object_ptr scheduler_obj =
     orb->object_ref_table ().resolve_initial_references (
-      "RTScheduler"
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      "RTScheduler");
 
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
                                                        ACE_ENV_ARG_PARAMETER);
