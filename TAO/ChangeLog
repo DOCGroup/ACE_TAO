@@ -1,6 +1,9 @@
-Fri Jul 22 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Jul 22 11:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.i:
+        * tao/RTScheduling/Current.cpp:
           Fixed problems with emulated exceptions
 
 Fri Jul 22 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
