@@ -3,7 +3,7 @@
 // $Id$
 
 #include "tao/ORB_Core.h"
-
+#include "tao/ORB.h"
 
 // *************************************************************
 // Inline operations for class TAO_RTScheduler_Manager_var
@@ -222,7 +222,7 @@ TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
                                       ACE_ENV_ARG_DECL)
 {
   this->rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
-  this->orb_->register_initial_reference (
+  this->orb_->orb ()->register_initial_reference (
     "RTScheduler",
     RTScheduling::Scheduler::_duplicate (this->rtscheduler_.in ())
     ACE_ENV_ARG_PARAMETER);
