@@ -1,3 +1,10 @@
+Fri Jul 22 09:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/ValueBox/client.cpp:
+          When assigning a hardcoded string, use CORBA::string_dup else
+          we get a crash when trying to free the string with some
+          runtimes.
+
 Fri Jul 22 09:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/ValueBox/client.cpp:
