@@ -582,13 +582,21 @@ int test_boxed_sequence (void)
 
   // Test copy_value
   VBseqlong *vbseqlong6 = VBseqlong::_downcast( vbseqlong4->_copy_value() );
-  VERIFY (vbseqlong6->length() == 0);
+  if (vbseqlong6 == 0)
+    {
+      fail++;
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
+    }
+  else
+    {
+      VERIFY (vbseqlong6->length() == 0);
+      vbseqlong6->_remove_ref();
+    }
 
   // release
   vbseqlong1->_remove_ref();
   vbseqlong3->_remove_ref();
   vbseqlong4->_remove_ref();
-  vbseqlong6->_remove_ref();
 
   return fail;
 }
@@ -752,9 +760,17 @@ int test_boxed_struct (void)
     // Test _copy_value and _downcast
     VBfixed_struct1_var valuebox4 =
       VBfixed_struct1::_downcast (valuebox3->_copy_value ());
-    VERIFY (valuebox4->l () == fixed_struct_b->l);
-    VERIFY ((valuebox4->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
-    VERIFY ((valuebox4->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
+    if (valuebox4.in () == 0)
+      {
+        fail++;
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
+      }
+    else
+      {
+        VERIFY (valuebox4->l () == fixed_struct_b->l);
+        VERIFY ((valuebox4->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
+        VERIFY ((valuebox4->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
+      }
 
     //
     // valuebox1 and valuebox3 must be explicitly removed.
