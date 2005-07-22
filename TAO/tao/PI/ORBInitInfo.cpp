@@ -193,7 +193,8 @@ TAO_ORBInitInfo::resolve_initial_references (
   // is reached so just use the ORB's resolve_initial_references()
   // mechanism.
   return
-    this->orb_core_->orb ()->resolve_initial_references (id);
+    this->orb_core_->orb ()->resolve_initial_references (id
+                                                         ACE_ENV_ARG_PARAMETER);
 }
 
 void

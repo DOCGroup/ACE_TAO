@@ -73,7 +73,7 @@ public:
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
-  CORBA::Object_ptr resolve_initial_references (const char * id);
+  CORBA::Object_ptr resolve_initial_reference (const char * id);
 
   /// Explicitly destroy the contents of the object reference table.
   void destroy (void);
