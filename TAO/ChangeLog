@@ -1,3 +1,9 @@
+Fri Jul 22 10:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_Ref_Table.inl (register_initial_reference):
+          When passed a nil object reference, throw a BAD_PARAM exception with
+          minor code 27
+
 Fri Jul 22 10:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Table.cpp:
