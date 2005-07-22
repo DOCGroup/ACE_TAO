@@ -42,8 +42,7 @@ parse_args (int argc, char *argv[])
     if ((Condition)==0) \
     { \
         fail++; \
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %d\n", \
-                  (int)(__LINE__))); \
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n")); \
     } \
 }
 
@@ -99,10 +98,19 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
 
     // try downcast...then we can check that copy was correct.
     BoxT *down = BoxT::_downcast (copy);
-    VERIFY ( down->_value () == val1 );
-    down->_value ( val2 );
-    VERIFY ( down->_value () != valuebox->_value () );
-    VERIFY ( down->_value () == val2 );
+    if (down == 0)
+      {
+        fail++;
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
+      }
+    else
+      {
+        VERIFY ( down->_value () == val1 );
+        down->_value ( val2 );
+        VERIFY ( down->_value () != valuebox->_value () );
+         VERIFY ( down->_value () == val2 );
+      }
+      
     CORBA::remove_ref (copy);
 
     // cleanup. Use purify on the PC to check for leaks.
@@ -633,10 +641,10 @@ int test_boxed_sequence_invocations (Test * test_object)
         VERIFY ((*p3)[0] == 100*5);
         VERIFY ((*p3)[1] == 99*5);
         VERIFY ((*p3)[2] == 98*5);
-        VERIFY ((*result)[0] == 10);
-        VERIFY ((*result)[1] ==  9);
-        VERIFY ((*result)[2] ==  8);
-        VERIFY ((*result)[3] ==  7);
+        VERIFY ((*result.in ())[0] == 10);
+        VERIFY ((*result.in ())[1] ==  9);
+        VERIFY ((*result.in ())[2] ==  8);
+        VERIFY ((*result.in ())[3] ==  7);
 
         //============================================================
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
@@ -1033,9 +1041,9 @@ int test_boxed_array_invocations (Test * test_object)
                 && (*p3)[1] == (3202*3)
                 && (*p3)[2] == (3303*3));
 
-        VERIFY ((*result)[0] == 101
-                && (*result)[1] == 202
-                && (*result)[2] == 303);
+        VERIFY ((*result.in ())[0] == 101
+                && (*result.in ())[1] == 202
+                && (*result.in ())[2] == 303);
 
         //============================================================
         // Array (fixed)
@@ -1092,8 +1100,8 @@ int test_boxed_array_invocations (Test * test_object)
         VERIFY (strcmp((*p5)[1], "2inout string") == 0);
         VERIFY (strcmp((*p6)[0], "1inout string") == 0);
         VERIFY (strcmp((*p6)[1], "2inout string") == 0);
-        VERIFY (strcmp((*result2)[0], sa[0]) == 0);
-        VERIFY (strcmp((*result2)[1], sa[1]) == 0);
+        VERIFY (strcmp((*result2.in ())[0], sa[0]) == 0);
+        VERIFY (strcmp((*result2.in ())[1], sa[1]) == 0);
 
         //============================================================
         // Array (variable)
@@ -1196,16 +1204,17 @@ int test_boxed_union()
     VERIFY (valuebox2->_d () == 2);
 
     // Test copy ctor
-    VBfixed_union1_var valuebox3;
-    ACE_NEW_RETURN (valuebox3,
-                    VBfixed_union1 (*valuebox2),
+    VBfixed_union1* valuebox3_ptr = 0;
+    ACE_NEW_RETURN (valuebox3_ptr,
+                    VBfixed_union1 (*valuebox2.in ()),
                     1);
+    VBfixed_union1_var valuebox3 = valuebox3_ptr;
     VERIFY (valuebox3->_d () == 2);
     VERIFY (valuebox3->m2 () == 333);
 
     // Test assignment op
     valuebox3->m2 (456);
-    *valuebox3 = valuebox2->_value ();
+    *valuebox3.in () = valuebox2->_value ();
     VERIFY (valuebox3->_d () == 2);
     VERIFY (valuebox3->m2 () == 333);
 
