@@ -577,7 +577,7 @@ TAO_ORB_Core::get_default_policies (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (this->rt_orb_.in ()))
     {
@@ -588,9 +588,7 @@ TAO_ORB_Core::resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL)
           // Save a reference to the priority mapping manager.
           this->rt_orb_ =
               this->object_ref_table ().resolve_initial_references (
-              TAO_OBJID_RTORB
-               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+              TAO_OBJID_RTORB);
         }
     }
 
@@ -598,7 +596,7 @@ TAO_ORB_Core::resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_rt_current (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_rt_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (this->rt_current_.in ()))
     {
@@ -609,9 +607,7 @@ TAO_ORB_Core::resolve_rt_current (ACE_ENV_SINGLE_ARG_DECL)
           // Save a reference to the priority mapping manager.
           this->rt_current_ =
               this->object_ref_table ().resolve_initial_references (
-              TAO_OBJID_RTCURRENT
-               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+              TAO_OBJID_RTCURRENT);
         }
     }
   return CORBA::Object::_duplicate (this->rt_current_.in ());
