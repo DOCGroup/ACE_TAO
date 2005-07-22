@@ -15,6 +15,12 @@ TAO_Object_Ref_Table::register_initial_reference (
   CORBA::Object_ptr obj
   ACE_ENV_ARG_DECL)
 {
+  if (CORBA::is_nil (obj))
+    {
+      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
+                                   CORBA::COMPLETED_NO));
+    }
+
   if (this->bind (id, obj) != 0)
     {
       ACE_THROW (CORBA::ORB::InvalidName ());
