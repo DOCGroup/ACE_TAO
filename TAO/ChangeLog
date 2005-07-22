@@ -1,3 +1,16 @@
+Fri Jul 22 12:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitInfo.cpp:
+          Fixed emulated excepton
+
+        * tao/Object_Ref_Table.{h,inl}:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.i:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTScheduling/Current.cpp:
+          Changed resolve_initial_references to resolve_initial_reference
+          on the object ref table, this way the fuzz build doesn't trigger.
+
 Fri Jul 22 11:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_Protocols_Hooks.cpp:
