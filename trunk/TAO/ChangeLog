@@ -1,3 +1,8 @@
+Fri Jul 22 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+          Fixed problems with emulated exceptions
+
 Fri Jul 22 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.{h,i}:
