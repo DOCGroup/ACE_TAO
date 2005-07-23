@@ -54,6 +54,9 @@ namespace CIAO
     /// Return the name of port that this activator encapulates.
     const char*  name (void) const;
 
+    /// set the name
+    void set_name (const char* name);
+
     /// Activate the servant reponsible for this port.
     /**
      * There are intentionally no throw specifications. It is the

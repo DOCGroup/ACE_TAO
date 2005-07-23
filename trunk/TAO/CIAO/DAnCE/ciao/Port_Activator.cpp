@@ -25,4 +25,10 @@ namespace CIAO
     // @@ TODO, need to be inlined.
     return this->oid_.in ();
   }
+
+  void
+  Port_Activator::set_name (const char* name)
+  {
+    this->oid_ = name;
+  }
 }
