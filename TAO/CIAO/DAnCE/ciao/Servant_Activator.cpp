@@ -55,8 +55,9 @@ namespace CIAO
           Port_Activator *&tmp = this->pa_[t];
           if (ACE_OS::strcmp (tmp->name (), str.in ()) == 0)
           {
-            delete tmp;
-            --this->slot_index_;
+            tmp->set_name ("dummy");
+            //delete tmp;
+            //--this->slot_index_;
           }
         }
     }

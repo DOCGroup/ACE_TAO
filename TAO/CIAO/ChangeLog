@@ -1,3 +1,21 @@
+Sat Jul 23 14:53:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Port_Activator.cpp:
+	* DAnCE/ciao/Port_Activator.h:
+	* DAnCE/ciao/Servant_Activator.cpp:
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+
+	  Added a method in Port_Activator to set the name of
+	  port activator. The port activator is used to activate
+	  the ports of the component.
+
+	  Fixed a incorrect delete call in the update_port_activator
+	  function in Servant_Activator.cpp. This will fix the core
+	  dump in the CIAO tests.
+
+	  Modified the calling sequence to deactivate ports when we
+	  deactivate the component.
+
 Sat Jul 23 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/Servant_Impl_Base.cpp:
