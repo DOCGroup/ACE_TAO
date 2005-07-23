@@ -1,3 +1,12 @@
+Sat Jul 23 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Etherealization/Etherealization.cpp:
+          Extended this test with two test cases where we create a
+          reference with user created id using a POA that has a
+          servant activator but don't do any calls and just deactivate
+          the object again. This is the same problem as we are seeing
+          in CIAO and this needs to be resolved as P1 bug
+
 Sat Jul 23 10:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1020_Basic_Regression/Server_Task.cpp:
