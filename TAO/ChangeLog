@@ -1,3 +1,10 @@
+Sat Jul 23 19:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/Active_Object_Map.{h,i}:
+          Fixed a bug when we tried to deactivate a reference created with
+          a user id using a POA that uses servant activator.
+
 Sat Jul 23 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Etherealization/Etherealization.cpp:
