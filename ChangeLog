@@ -1,3 +1,9 @@
+Sat Jul 23 16:36:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+	* bin/ciao_tests.lst:
+
+	  enabled running CIAO NodeApplicationTest again.
+
 Fri Jul 22 16:31:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Basic_Types.h: The change from:
