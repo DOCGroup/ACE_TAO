@@ -79,14 +79,17 @@ namespace CIAO
         PortableServer::ObjectId_var facet_id =
           this->container_->the_facet_cons_POA ()->reference_to_id
               (facets[i]->facet_ref () ACE_ENV_ARG_PARAMETER);
-        
+        ACE_TRY_CHECK;
+
         this->container_->the_facet_cons_POA ()->deactivate_object
           (facet_id ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
+
         sa->update_port_activator (facet_id ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
       }
 
       // Removed Facets
@@ -103,6 +106,7 @@ namespace CIAO
         PortableServer::ObjectId_var cons_id =
           this->container_->the_facet_cons_POA ()->reference_to_id
               (consumers[j]->consumer () ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
         this->container_->the_facet_cons_POA ()->deactivate_object
           (cons_id ACE_ENV_ARG_PARAMETER);
@@ -111,10 +115,12 @@ namespace CIAO
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
         sa->update_port_activator (cons_id ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
       }
 
       Components::SessionComponent_var temp = this->get_executor ();
       temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var objref =
         this->container_->get_objref (this);
@@ -122,11 +128,15 @@ namespace CIAO
       Components::CCMObject_var ccmobjref =
         Components::CCMObject::_narrow (objref.in ()
                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       PortableServer::ObjectId_var oid;
 
       this->container_->uninstall_component ( ccmobjref.in (),
                                               oid.out ()
                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
       this->home_servant_->update_component_map (oid);
     }
     ACE_CATCHANY
