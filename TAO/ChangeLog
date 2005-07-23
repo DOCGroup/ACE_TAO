@@ -1,6 +1,11 @@
+Sat Jul 23 10:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1020_Basic_Regression/Server_Task.cpp:
+          Fixed warning in MinGW build
+
 Fri Jul 22 15:39:18 2005  Gary Maxey <gary.maxey@hp.com>
 
-	* tests/OBV/ValueBox/client.cpp: 
+	* tests/OBV/ValueBox/client.cpp:
 
 	  Guard against null pointers returned from _downcast()
 
