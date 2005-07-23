@@ -130,8 +130,12 @@ public:
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// <user_id> is identical to <system_id>.
-  int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
-                                                TAO_Active_Object_Map_Entry *&entry);
+  /**
+   * @retval -1 Entry is not found or is deactivated.
+   * @retval 0 Entry is found.
+   */
+  int find_entry_using_user_id (const PortableServer::ObjectId &user_id,
+                                TAO_Active_Object_Map_Entry *&entry);
 
   /// Can be used with any policy.  When the SYSTEM_ID policy is used,
   /// the <system_id> is identical to <user_id>.

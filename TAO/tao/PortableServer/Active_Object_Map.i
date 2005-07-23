@@ -170,8 +170,8 @@ TAO_Active_Object_Map::find_servant_using_system_id_and_user_id (const PortableS
 }
 
 ACE_INLINE int
-TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
-                                                                 TAO_Active_Object_Map_Entry *&entry)
+TAO_Active_Object_Map::find_entry_using_user_id (const PortableServer::ObjectId &user_id,
+                                                 TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->user_id_map_->find (user_id,
                                          entry);
@@ -179,8 +179,6 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
   if (result == 0)
     {
       if (entry->deactivated_)
-        result = -1;
-      else if (entry->servant_ == 0)
         result = -1;
     }
 
@@ -194,17 +192,24 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
                                                                  CORBA::Short &priority)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->find_servant_and_system_id_using_user_id (user_id,
-                                                               entry);
+  int result = this->find_entry_using_user_id (user_id,
+                                               entry);
 
   if (result == 0)
     {
-      result = this->id_hint_strategy_->system_id (system_id,
-                                                   *entry);
-      if (result == 0)
+      if (entry->servant_ == 0)
         {
-          servant = entry->servant_;
-          priority = entry->priority_;
+          result = -1;
+        }
+      else
+        {
+          result = this->id_hint_strategy_->system_id (system_id,
+                                                       *entry);
+          if (result == 0)
+            {
+              servant = entry->servant_;
+              priority = entry->priority_;
+            }
         }
     }
 
