@@ -237,6 +237,44 @@ main (int argc, char **argv)
         ACE_TRY_CHECK;
       }
 
+      {
+        // Create a reference with user created ID in child POA which
+        // uses the Servant_Activator.
+        PortableServer::ObjectId_var id =
+          PortableServer::string_to_ObjectId ("no call made");
+
+        object =
+          child_poa->create_reference_with_id (id.in (),
+                                               "IDL:test:1.0"
+                                               ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        child_poa->deactivate_object (id.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+
+      {
+        // Create a reference with user created ID in child POA which
+        // uses the Servant_Activator but just don't call the reference at all
+        PortableServer::ObjectId_var id =
+          PortableServer::string_to_ObjectId ("no call");
+
+        object =
+          child_poa->create_reference_with_id (id.in (),
+                                               "IDL:test:1.0"
+                                               ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        PortableServer::ObjectId_var oid =
+          child_poa->reference_to_id (object.in () ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        child_poa->deactivate_object (oid.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+
       ACE_DEBUG ((LM_DEBUG,
                   "\nEnd of main()\n\n"));
     }
