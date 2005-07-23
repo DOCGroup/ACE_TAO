@@ -81,14 +81,14 @@ namespace CIAO
               (facets[i]->facet_ref () ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        this->container_->the_facet_cons_POA ()->deactivate_object
-          (facet_id ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
 
         sa->update_port_activator (facet_id ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        this->container_->the_facet_cons_POA ()->deactivate_object
+          (facet_id ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
@@ -108,13 +108,13 @@ namespace CIAO
               (consumers[j]->consumer () ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        this->container_->the_facet_cons_POA ()->deactivate_object
-          (cons_id ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
         sa->update_port_activator (cons_id ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        this->container_->the_facet_cons_POA ()->deactivate_object
+          (cons_id ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
