@@ -5,7 +5,7 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Modified_Deployment.xsd">
 
   <label>BasicSP-DeploymentPlan</label>
-  <UUID><!-- @@ fill in --> </UUID>
+  <UUID>Test_UUID_0000</UUID>
   <!-- Exactly one realizes 
        This realizes section may also not be right. -->
   <realizes>
