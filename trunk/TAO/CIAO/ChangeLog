@@ -1,3 +1,11 @@
+Sat Jul 23 23:11:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/tests/Minimum/Receiver/Receiver.mpc
+	* DAnCE/tests/Minimum/Sender/Sender.mpc
+
+	  Modified shared library names to fix some linking erros
+	  on build scoreboard.
+
 Sat Jul 23 14:53:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Port_Activator.cpp:

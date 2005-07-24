@@ -3,7 +3,7 @@
 
 project(Minimum_Base_Receiver_DnC_stub): ciao_client_dnc {
   after += Minimum_Base_DnC_stub
-  sharedname = Receiver_DnC_stub
+  sharedname = Minimum_Receiver_DnC_stub
   idlflags += -Sc \
               -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
@@ -32,8 +32,8 @@ project(Minimum_Base_Receiver_DnC_stub): ciao_client_dnc {
 project(Minimum_Base_Receiver_DnC_svnt) : ciao_servant_dnc {
   after += Minimum_Base_DnC_svnt \
            Minimum_Base_Receiver_DnC_stub
-  sharedname  = Receiver_DnC_svnt
-  libs    += Receiver_DnC_stub \
+  sharedname  = Minimum_Receiver_DnC_svnt
+  libs    += Minimum_Receiver_DnC_stub \
              Minimum_Base_DnC_stub \
              Minimum_Base_DnC_svnt
   
@@ -71,9 +71,9 @@ project(Minimum_Base_Receiver_DnC_svnt) : ciao_servant_dnc {
 
 project(Minimum_Base_Receiver_DnC_exec) : ciao_component_dnc {
   after   += Minimum_Base_Receiver_DnC_svnt
-  sharedname = Receiver_DnC_exec
-  libs      += Receiver_DnC_stub \
-               Receiver_DnC_svnt \
+  sharedname = Minimum_Receiver_DnC_exec
+  libs      += Minimum_Receiver_DnC_stub \
+               Minimum_Receiver_DnC_svnt \
                Minimum_Base_DnC_stub \
                Minimum_Base_DnC_svnt
   
