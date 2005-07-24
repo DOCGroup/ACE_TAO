@@ -90,7 +90,9 @@ delete_ior_files ();
 
 # Invoke naming service
 
-$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service -m 1", "-o $nsior");
+$NS = new PerlACE::Process ("../../../../../orbsvcs/Naming_Service/Naming_Service", "-m 1 -o $nsior");
+
+$NS->Spawn ();
 
 print STDERR "Starting Naming Service\n";
 
