@@ -162,11 +162,11 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeDaemon_Impl::preparePlan\t\n");
+                           "(%P|%t) NodeDaemon_Impl::preparePlan\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
+  //ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
 }
 
 void
