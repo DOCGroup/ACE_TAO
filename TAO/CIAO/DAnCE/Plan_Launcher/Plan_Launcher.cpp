@@ -141,7 +141,7 @@ namespace CIAO
           if (!launcher.init (use_naming ? 0 : ior_file,
                               orb.in ()))
             {
-              ACE_ERROR ((LM_ERROR, "Plan_Launcher: Error initializing the EM.\n"));
+              ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
               return -1;
             }
           
@@ -153,7 +153,7 @@ namespace CIAO
               
               if (uuid == 0)
                 {
-                  ACE_ERROR ((LM_ERROR, "Plan_Launcher: Error launching plan\n"));
+                  ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error launching plan\n"));
                   return -1;
                 }
               

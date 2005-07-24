@@ -429,7 +429,7 @@ CIAO::Container_Impl::register_with_ns (const char * obj_name,
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService" 
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -439,7 +439,7 @@ CIAO::Container_Impl::register_with_ns (const char * obj_name,
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () 
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_TRY_CHECK;
   
       // Create a Naming Sequence
       CosNaming::Name name (1);
@@ -449,13 +449,14 @@ CIAO::Container_Impl::register_with_ns (const char * obj_name,
 
       // Register with the Name Server
       naming_context->bind (name, obj ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_TRY_CHECK;
 
       return true;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to register with naming service.");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "(%P|%t) NodeApplication: failed to register with naming service.");
       return false;
     }
   ACE_ENDTRY;
@@ -473,7 +474,7 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService" 
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -483,7 +484,7 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in () 
                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_TRY_CHECK;
   
       // Create a Naming Sequence
       CosNaming::Name name (1);
@@ -494,13 +495,14 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
       // Register with the Name Server
       ACE_DEBUG ((LM_DEBUG, "Unregister component with the name server : %s!\n", obj_name));
       naming_context->unbind (name ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      ACE_TRY_CHECK;
 
       return true;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to unregister with naming service.");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "(%P|%t) NodeApplication: failed to unregister with naming service.");
       return false;
     }
   ACE_ENDTRY;
