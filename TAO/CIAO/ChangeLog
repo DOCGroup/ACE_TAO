@@ -11,6 +11,10 @@ Sat Jul 23 23:11:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  Fixed the script so naming service could be started
 	  correctly.
 
+	* DAnCE/examples/Hello/step-by-step.html
+
+	  Simple instruction about using naming service.	
+
 Sat Jul 23 14:53:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Port_Activator.cpp:

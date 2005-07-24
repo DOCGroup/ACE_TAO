@@ -92,7 +92,7 @@ Now we can step forward to build the assembly. Here we are going to build the si
 
 <dl>
   <dt> Deployment Plan Descriptor (.cdp) </dt>
-  <dd> In this file, you need to declaratively specify how the component assembly is constructed. Specificly, you need to specify the component types, component instances, component connections and implementation artifact descriptions. </dd>
+  <dd> In this file, you need to declaratively specify how the component assembly is constructed. Specificly, you need to specify the component types, component instances, component connections, implementation artifact descriptions, and whether you want to register component instances with naming service. </dd>
 </dl>
 <br>
 <li> Please make sure that the Modified_Deployment.xsd and XMI.xsd files are in the Hello/descriptors directory.
@@ -116,6 +116,8 @@ Finally you are ready to test the application you have made.
 <br><br>
 
 <UL>
+  <LI> If you specify that you want to register one or more component instances with naming service, please start your naming service first.
+
   <LI> Go into the <em> descriptors </em> directory Start NodeManagers (NodeDameon) by running <code> run_NodeDaemons.pl </code>
   
   <LI> Start the execution manager:
