@@ -4,9 +4,7 @@
 #include "Config_Handlers/XML_File_Intf.h"
 
 #include <iostream>
-
-
-
+#include <string>
 
 namespace CIAO
 {
@@ -162,7 +160,9 @@ namespace CIAO
       map_.bind_dam_reference (plan.UUID.in (),
                                Deployment::DomainApplicationManager::_duplicate (dam.in ()));
 
-      return plan.UUID.in ();
+      std::string * retv = new std::string (plan.UUID.in ());
+
+      return (*retv).c_str ();
     }
     
     ::Deployment::DomainApplicationManager_ptr 

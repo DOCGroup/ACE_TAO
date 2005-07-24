@@ -145,19 +145,19 @@ namespace CIAO
               return -1;
             }
           
-          CORBA::String_var uuid;
           ::Deployment::DomainApplicationManager_var dapp_mgr;
           
           if (mode != pl_mode_stop)
             {
-              uuid = launcher.launch_plan (package_url);
+              const char* uuid = launcher.launch_plan (package_url);
               
-              if (uuid.in () == 0)
+              if (uuid == 0)
                 {
                   ACE_ERROR ((LM_ERROR, "Plan_Launcher: Error launching plan\n"));
                   return -1;
                 }
               
+              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid));
               dapp_mgr = launcher.get_dam (uuid);
               
               // Write out DAM ior if requested
