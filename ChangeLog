@@ -1,7 +1,12 @@
+Mon Jul 25 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Naming_Test.cpp:
+          Initialise pointer with 0
+
 Mon Jul 25 15:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Hash_T.cpp:
-          Initialise some pointersr with 0
+          Initialise some pointers with 0
 
         * ace/Refcountable.h:
           Removed some empty doxygen tags
