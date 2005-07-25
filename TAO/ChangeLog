@@ -1,3 +1,25 @@
+Mon Jul 25 18:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * tao/Abstract_Servant_Base.h:
+        * tao/LocalObject.{h,cpp}:
+        * tao/Object.{h,cpp}:
+        * tao/Object_Proxy_Broker.h:
+        * tao/Remote_Object_Proxy_Broker.{h,cpp}:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.{h,cpp}:
+        * tao/PortableServer/Servant_Base.{h,cpp}:
+          Added CORBA::Object::_repository_id, this fixes bugzilla 2180
+
+        * tests/OctetSeq/client.cpp:
+          Call _repository_id
+
+        * tao/PortableServer/Active_Object_Map.h:
+          No need to export this class
+
 Mon Jul 25 15:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
