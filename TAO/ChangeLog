@@ -1,3 +1,18 @@
+Mon Jul 25 13:34:03 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/airplane_server.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+
+          Add suicide capability to the server. This won't help any tests
+        pass, but should prevent airplane server processes from hanging.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Change the both_ir test to work as documented. The test should run
+        once with the servers running, and then once with the servers launched
+        by the activator. This works around some weird startup problems on
+        Windows.
+
 Mon Jul 25 18:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ThreadStrategyORBControl.{h,cpp}:
@@ -74,9 +89,9 @@ Sat Jul 23 10:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jul 22 15:39:18 2005  Gary Maxey <gary.maxey@hp.com>
 
-	* tests/OBV/ValueBox/client.cpp:
+        * tests/OBV/ValueBox/client.cpp:
 
-	  Guard against null pointers returned from _downcast()
+          Guard against null pointers returned from _downcast()
 
 Fri Jul 22 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -178,37 +193,37 @@ Fri Jul 22 09:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 21 15:07:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/Fault_Detector/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
-	* orbsvcs/LifeCycle_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Naming_Service/Makefile.am:
-	* orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/Fault_Detector/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Naming_Service/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Thu Jul 21 08:29:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/LogMgr_i.cpp:
 
-	  Fix typo in last change.
+          Fix typo in last change.
 
 Thu Jul 21 07:42:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/LogMgr_i.cpp:
 
-	  Don't set the servant retention policy when creating the log POA
-	  in minimum CORBA builds.
+          Don't set the servant retention policy when creating the log POA
+          in minimum CORBA builds.
 
 Thu Jul 21 07:26:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbscvs/orbsvcs/Hash_LogStore.cpp:
-	* orbsvcs/orbsvcs/Hash_LogRecordStore.cpp:
+        * orbscvs/orbsvcs/Hash_LogStore.cpp:
+        * orbsvcs/orbsvcs/Hash_LogRecordStore.cpp:
 
           Use ACE_SYNCH_RW_MUTEX instead of ACE_RW_Thread_Mutex to fix
-	  single threaded builds.
+          single threaded builds.
 
 Thu Jul 21 14:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -237,10 +252,10 @@ Thu Jul 21 06:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jul 20 13:48:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Wed Jul 20 11:06:57 2005   Gary Maxey <gary.maxey@hp.com>
 
@@ -434,9 +449,9 @@ Tue Jul 19 16:02:32 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 
-	Free process_map_ entries in handle_exit(). Thanks to
+        Free process_map_ entries in handle_exit(). Thanks to
         Yevgen Galchenko <yevgeng at softcomputer dot com> for finding
-	this memory leak.
+        this memory leak.
 
         * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
         * orbsvcs/orbsvcs/Notify/Consumer.inl:

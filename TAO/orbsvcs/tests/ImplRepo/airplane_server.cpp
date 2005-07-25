@@ -2,8 +2,8 @@
 
 #include "airplane_server_i.h"
 
-ACE_RCSID (ImplRepo, 
-           airplane_server, 
+ACE_RCSID (ImplRepo,
+           airplane_server,
            "$Id$")
 
 int
@@ -21,24 +21,24 @@ main (int argc, char *argv[])
 
       if (retval == -1)
         return -1;
-      else
-        {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+ 
+ 
+      retval = server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "Paper Airplane Server says goodnight\n"));
+
+      return retval;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_PRINT_EXCEPTION (sysex, "System Exception");
-      return -1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_PRINT_EXCEPTION (userex, "User Exception");
-      return -1;
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG, "Paper Airplane Server says goodnight\n"));
-  return 0;
+  return 1;
 }
