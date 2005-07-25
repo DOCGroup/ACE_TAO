@@ -1,3 +1,10 @@
+Mon Jul 25 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+          Made these tests independent of setting of CIAO_ROOT
+
 Sun Jul 24 07:45:19 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
@@ -22,7 +29,7 @@ Sun Jul 24 01:19:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
 	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
 
-	  Fixed a bug (memory problem) in the plan_launcher which caused 
+	  Fixed a bug (memory problem) in the plan_launcher which caused
 	  the "tearing down" assembly failure.
 
 	* DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
@@ -45,7 +52,7 @@ Sat Jul 23 23:11:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/examples/Hello/step-by-step.html
 
-	  Simple instruction about using naming service.	
+	  Simple instruction about using naming service.
 
 Sat Jul 23 14:53:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
