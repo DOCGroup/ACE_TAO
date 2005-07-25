@@ -873,7 +873,6 @@ sub both_ir_test
        . " $refstyle\"");
     $TAO_IMR->SpawnWaitKill (10);
 
-    # launch the servers once, just to get the IORs
     $N_SVR->Arguments (" -o $nestea_ior -ORBUseIMR 1 $imr_initref $refstyle");
     $N_SVR->Spawn ();
     if (PerlACE::waitforfile_timed ($nestea_ior, 10) == -1) {
@@ -884,9 +883,7 @@ sub both_ir_test
         $N_SVR->Kill ();
         return 1;
     }
-    if ($N_SVR->TerminateWaitKill(10) != 0) {
-       return 1;
-    }
+    
     $A_SVR->Arguments (" -o $airplane_ior -ORBUseIMR 1 $imr_initref $refstyle");
     $A_SVR->Spawn ();
     if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
@@ -897,9 +894,6 @@ sub both_ir_test
         $N_SVR->Kill ();
         return 1;
     }
-    if ($A_SVR->TerminateWaitKill(10) != 0) {
-       return 1;
-    }
 
     my @clients;
 
@@ -908,7 +902,6 @@ sub both_ir_test
        push @clients, &create_ncli();
     }
 
-    # This should spawn one of each server
     print "\n## Spawning multiple simultaneous clients with both servers running.\n";
     map $_->Spawn(), @clients;
     map $_->WaitKill(30), @clients;
@@ -918,6 +911,9 @@ sub both_ir_test
 
     $TAO_IMR->Arguments ("$imr_initref shutdown airplane_server");
     $TAO_IMR->SpawnWaitKill (15);
+
+    $A_SVR->WaitKill();
+    $N_SVR->WaitKill();
 
     print "\n\n\n\n## Spawning multiple simultaneous clients with no servers running.\n";
 
