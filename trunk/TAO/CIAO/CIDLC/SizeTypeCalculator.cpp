@@ -181,16 +181,27 @@ calculate (SemanticGraph::TranslationUnit& u)
   root.edge_traverser (defines);
 
   //--
+  // Everything that can contain a struct or union.
   Traversal::Module module;
+  Traversal::UnconstrainedInterface uinterface;
+  Traversal::ValueType vtype;
+  Traversal::Home component_home;
+  
   Calculator calculator;
   
   defines.node_traverser (module);
+  defines.node_traverser (uinterface);
+  defines.node_traverser (vtype);
+  defines.node_traverser (component_home);
   defines.node_traverser (calculator);
   
   // Layer 4
   //
   Traversal::Defines struct_defines;
   module.edge_traverser (defines);
+  uinterface.edge_traverser (defines);
+  vtype.edge_traverser (defines);
+  component_home.edge_traverser (defines);
   calculator.edge_traverser (struct_defines);
   
   //--
