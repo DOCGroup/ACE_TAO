@@ -60,14 +60,14 @@ public:
 
   typedef const T_slice *   _in_type;
   typedef       T_slice *   _inout_type;
-  typedef       T_slice *&  _out_type;
   typedef       T_slice *   _retn_type;
+  typedef       T_slice *&  _retn_arg_type;
 
   // in, inout, out, _retn
   _in_type      in (void) const;
   _inout_type   inout (void);
-  _out_type     out (void);
   _retn_type    _retn (void);
+  _retn_arg_type  _retn_arg (void);
 
   // TAO extension.
   _retn_type    ptr (void) const;
@@ -95,6 +95,10 @@ public:
   TAO_FixedArray_Var_T<T,T_slice,TAG> &operator= (
       const TAO_FixedArray_Var_T<T,T_slice,TAG> &
     );
+
+  typedef       T_slice *  _out_type;
+  _out_type     out (void);
+
 };
 
 /**
@@ -116,6 +120,9 @@ public:
   TAO_VarArray_Var_T<T,T_slice,TAG> &operator= (
       const TAO_VarArray_Var_T<T,T_slice,TAG> &
     );
+
+  typedef       T_slice *&  _out_type;
+  _out_type     out (void);
 
   operator T_slice *& ();
 };

@@ -72,7 +72,7 @@ TAO_Array_Var_Base_T<T,T_slice,TAG>::inout (void)
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 T_slice *&
-TAO_Array_Var_Base_T<T,T_slice,TAG>::out (void)
+TAO_Array_Var_Base_T<T,T_slice,TAG>::_retn_arg (void)
 {
   TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
   this->ptr_ = 0;
@@ -118,6 +118,15 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::TAO_FixedArray_Var_T (
   : TAO_Array_Var_Base_T<T,T_slice,TAG> (p)
 {}
 
+
+template<typename T, typename T_slice, typename TAG>
+ACE_INLINE
+T_slice *
+TAO_FixedArray_Var_T<T,T_slice,TAG>::out (void)
+{
+  return this->ptr_;
+}
+
 // *************************************************************
 
 template<typename T, typename T_slice, typename TAG>
@@ -143,6 +152,16 @@ template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_VarArray_Var_T<T,T_slice,TAG>::operator T_slice *& ()
 {
+  return this->ptr_;
+}
+
+template<typename T, typename T_slice, typename TAG>
+ACE_INLINE
+T_slice *&
+TAO_VarArray_Var_T<T,T_slice,TAG>::out (void)
+{
+  TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
+  this->ptr_ = 0;
   return this->ptr_;
 }
 
