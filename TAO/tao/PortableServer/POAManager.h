@@ -89,6 +89,10 @@ public:
   PortableServer::POAManager::State get_state_i ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual CORBA::ORB_ptr _get_orb (
+      ACE_ENV_SINGLE_ARG_DECL
+    );
+
 protected:
 
   void activate_i (ACE_ENV_SINGLE_ARG_DECL)
