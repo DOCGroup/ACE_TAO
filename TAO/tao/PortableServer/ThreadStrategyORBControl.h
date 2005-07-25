@@ -28,7 +28,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ThreadStrategyORBControl
+    class ThreadStrategyORBControl
        : public ThreadStrategy
     {
     public:
