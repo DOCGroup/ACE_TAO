@@ -58,6 +58,10 @@ namespace TAO
 
   virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target
                                             ACE_ENV_ARG_DECL);
+
+  virtual char * _repository_id (CORBA::Object_ptr target
+                                 ACE_ENV_SINGLE_ARG_DECL);
+
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   };

@@ -202,6 +202,14 @@ be_visitor_component_sh::visit_component (be_component *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
+  // Add a skeleton for our _repository_id method.
+  *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "void *servant," << be_nl
+      << "void *servant_upcall" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
+
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl

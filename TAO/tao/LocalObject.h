@@ -89,6 +89,11 @@ namespace CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
 
+    /// Get the repository id.
+    virtual char * _repository_id (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
+
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
                                   CORBA::NVList_ptr arg_list,

@@ -121,6 +121,12 @@ TAO_ServantBase::_get_component (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::Object::_nil ();
 }
 
+char *
+TAO_ServantBase::_repository_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+{
+  return CORBA::string_dup (this->_interface_repository_id ());
+}
+
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,

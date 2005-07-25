@@ -807,6 +807,11 @@ be_interface::gen_operation_table (const char *flat_name,
 
         this->skel_count_++;
 
+        *os << "{\"_repository_id\", &" << skeleton_class_name
+            << "::_repository_id_skel, 0}," << be_nl;
+
+        this->skel_count_++;
+
         *os << "};" << be_nl << be_nl;
         *os << "static const CORBA::Long _tao_" << flat_name
             << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
@@ -960,6 +965,11 @@ be_interface::gen_operation_table (const char *flat_name,
             << skeleton_class_name
             << "::_interface_skel, 0" << be_nl;
 
+        this->skel_count_++;
+
+        *os << "_repository_id,&"
+            << skeleton_class_name
+            << "::_repository_id_skel, 0" << be_nl;
         this->skel_count_++;
 
         // Input to the gperf is ready. Run gperf and get things
@@ -2452,7 +2462,7 @@ be_interface::session_component_child (void)
 idl_bool
 be_interface::is_event_consumer (void)
 {
-  return 
+  return
     this->pd_n_inherits == 1
     && ACE_OS::strcmp (this->pd_inherits[0]->full_name (),
                        "Components::EventConsumerBase") == 0;

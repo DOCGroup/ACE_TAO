@@ -14,6 +14,30 @@ ACE_RCSID (tao,
 
 namespace TAO
 {
+  char *
+  Remote_Object_Proxy_Broker::_repository_id (CORBA::Object_ptr target
+                                              ACE_ENV_ARG_DECL)
+  {
+    TAO::Arg_Traits< ::CORBA::Char *>::ret_val _tao_retval;
+
+    TAO::Argument *_tao_signature [] =
+      {
+        &_tao_retval
+      };
+
+    TAO::Invocation_Adapter _tao_call (target,
+                                       _tao_signature,
+                                       1,
+                                       "_repository_id",
+                                       14,
+                                       0);
+
+    _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (_tao_retval.excp ());
+
+    return _tao_retval.retn ();
+  }
+
   CORBA::Boolean
   Remote_Object_Proxy_Broker::_is_a (CORBA::Object_ptr target,
                                      const char *type_id
@@ -89,7 +113,7 @@ namespace TAO
     ACE_CHECK_RETURN (_tao_retval.excp ());
 
     return _tao_retval.retn ();
-}
+  }
 
   CORBA::InterfaceDef_ptr
   Remote_Object_Proxy_Broker::_get_interface (CORBA::Object_ptr target

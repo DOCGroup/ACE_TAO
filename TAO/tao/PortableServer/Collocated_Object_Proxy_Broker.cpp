@@ -19,6 +19,64 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
+  char *
+  Collocated_Object_Proxy_Broker::_repository_id (CORBA::Object_ptr target
+                                                  ACE_ENV_ARG_DECL)
+  {
+    TAO_Stub *stub = target->_stubobj ();
+    char * _tao_retval = 0;
+
+    ACE_TRY
+      {
+        // Which collocation strategy should we use?
+        if (stub != 0 &&
+            stub->servant_orb_var ()->orb_core ()
+              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+          {
+            TAO::Portable_Server::Servant_Upcall servant_upcall (
+                stub->servant_orb_var ()->orb_core ()
+                );
+
+            CORBA::Object_var forward_to;
+            servant_upcall.prepare_for_upcall (
+                stub->profile_in_use ()->object_key (),
+                "_repository_id",
+                forward_to.out ()
+                ACE_ENV_ARG_PARAMETER
+              );
+            ACE_TRY_CHECK;
+
+            _tao_retval =
+              servant_upcall.servant ()->_repository_id (
+                                             ACE_ENV_SINGLE_ARG_PARAMETER
+                                           );
+            ACE_TRY_CHECK;
+          }
+        // Direct collocation strategy is used.
+        else if (target->_servant () != 0)
+          {
+            _tao_retval =
+              target->_servant ()->_repository_id (
+                                       ACE_ENV_SINGLE_ARG_PARAMETER
+                                     );
+            ACE_TRY_CHECK;
+          }
+      }
+    ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+      {
+        // Ignore this exception.
+      }
+    ACE_CATCHANY
+      {
+        ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (_tao_retval);
+
+    return _tao_retval;
+  }
+
+
   CORBA::Boolean
   Collocated_Object_Proxy_Broker::_is_a (CORBA::Object_ptr target,
                                          const char *type_id

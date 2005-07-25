@@ -89,7 +89,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
           base->compute_full_name ("AMH_", "", buf);
           amh_name += buf;
           // buf was allocated by ACE_OS::strdup, so we need to use free
-          // instead of delete. 
+          // instead of delete.
           ACE_OS::free (buf);
 
           if (i != 0)
@@ -155,6 +155,14 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 
   // Add a skeleton for our _component method.
   *os << "static void _component_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "void *obj," << be_nl
+      << "void *servant_upcall" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
+
+  // Add a skeleton for our _repository_id method.
+  *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
