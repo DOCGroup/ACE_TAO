@@ -1,3 +1,8 @@
+Mon Jul 25 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+          Corrected NodeApplication path
+
 Mon Jul 25 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/NodeApplicationTest/run_test.pl:
