@@ -237,7 +237,7 @@ Distributer::init (int /*argc*/,
   PortableServer::ServantBase_var safe_receiver_streamctrl =
     this->receiver_streamctrl_;
 
-  // Bind/Connect  the distributer and receiver MMDevices.
+  // Bind/Connect the distributer and receiver MMDevices.
   result =
     this->receiver_streamctrl_->bind_devs (distributer_sender_mmdevice.in (),
                                            this->receiver_mmdevice_.in (),
@@ -254,7 +254,7 @@ Distributer::init (int /*argc*/,
                                            this->protocol_.c_str (),
                                            0);
 
-  TAO_StreamCtrl* sender_streamctrl;
+  TAO_StreamCtrl* sender_streamctrl = 0;
   // Video stream controller for the stream between sender and distributer
 
   ACE_NEW_RETURN (sender_streamctrl,
@@ -268,7 +268,7 @@ Distributer::init (int /*argc*/,
   // Set the flow specification for the stream between sender and distributer
   flow_spec [0] = CORBA::string_dup (sender_entry.entry_to_string ());
 
-  // Bind/Connect  the sender and sitributer MMDevices.
+  // Bind/Connect the sender and distributer MMDevices.
   CORBA::Boolean res =
     sender_streamctrl->bind_devs (sender_mmdevice_.in (),
                                   distributer_receiver_mmdevice.in (),

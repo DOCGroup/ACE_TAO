@@ -529,7 +529,7 @@ public:
                      PortableServer::POA::ServantAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
-  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid, 
+  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
                                        bool indirect
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -556,6 +556,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongPolicy));
+
+  virtual CORBA::ORB_ptr _get_orb (
+      ACE_ENV_SINGLE_ARG_DECL
+    );
 
 protected:
 
