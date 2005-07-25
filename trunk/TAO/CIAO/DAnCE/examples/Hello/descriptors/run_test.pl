@@ -37,6 +37,7 @@ sub delete_ior_files {
     unlink PerlACE::LocalFile ("Receiver.ior");
     unlink PerlACE::LocalFile ("Sender.ior");
     unlink PerlACE::LocalFile ("DAM.ior");
+    unlink PerlACE::LocalFile ("ns.ior");    
 }
 
 sub kill_node_daemons {
@@ -54,6 +55,12 @@ sub kill_open_processes {
     $EM->Kill ();
     $EM->TimedWait (1);
   }
+  
+  if ($ns_running == 1) {
+    $NS->Kill ();
+    $NS->TimedWait (1);
+  }  
+
 }
 
 sub run_node_daemons {
@@ -112,6 +119,8 @@ if ($status != 0) {
   exit 1;
 }
 
+$ns_running = 1;
+
 # Invoke execution manager.
 print "Invoking execution manager\n";
 $EM = new PerlACE::Process ("$DAnCE/ExecutionManager/Execution_Manager",
@@ -169,9 +178,6 @@ $E->SpawnWaitKill (3000);
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";
-
-$NS->Kill ();
-unlink $nsior;
 
 delete_ior_files ();
 kill_open_processes ();
