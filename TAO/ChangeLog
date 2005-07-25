@@ -1,3 +1,13 @@
+Mon Jul 25 15:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+          Initialise pointers to 0 and fixed some typos in comments
+
+        * tao/PortableServer/Root_POA.{h,cpp}:
+        * tao/PortableServer/POAManager.{h,cpp}:
+          Overruled _get_orb as required by the CORBA spec
+
 Mon Jul 25 13:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
