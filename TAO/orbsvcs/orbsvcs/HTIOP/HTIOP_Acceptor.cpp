@@ -127,8 +127,9 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
-      this->orb_core_->codeset_manager()->
-        set_codeset(pfile->tagged_components());
+      TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
+      if (csm)
+        csm->set_codeset(pfile->tagged_components());
     }
 
   return 0;
@@ -183,8 +184,9 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           && (this->version_.major >= 1 && this->version_.minor >= 1))
         {
           htiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-          this->orb_core_->codeset_manager()->
-            set_codeset(htiop_profile->tagged_components());
+          TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
+          if (csm)
+            csm->set_codeset(htiop_profile->tagged_components());
         }
 
       index = 1;
