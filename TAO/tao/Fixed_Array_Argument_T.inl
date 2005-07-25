@@ -96,7 +96,7 @@ ACE_INLINE
 S_slice *&
 TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::arg (void)
 {
-  return this->x_.out ();
+  return this->x_._retn_arg ();
 }
 
 template<typename S,
