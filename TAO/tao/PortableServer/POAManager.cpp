@@ -370,15 +370,9 @@ TAO_POA_Manager::check_state (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
+CORBA::ORB_ptr
+TAO_POA_Manager::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return CORBA::ORB::_duplicate (this->object_adapter_.orb_core ().orb ());
+}
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Set<TAO_Root_POA *>;
-template class ACE_Unbounded_Set_Iterator<TAO_Root_POA *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Set<TAO_Root_POA *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Root_POA *>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -14,7 +14,7 @@ void
 Connection_Manager::load_ep_addr (const char* file_name)
 {
   FILE* addr_file = ACE_OS::fopen (file_name, "r");
-  
+
   if (addr_file == 0)
     {
       ACE_ERROR ((LM_DEBUG,
@@ -29,10 +29,10 @@ Connection_Manager::load_ep_addr (const char* file_name)
   while (1)
     {
       char buf [BUFSIZ];
-      
+
       // Read from the file into a buffer
 
-      
+
       /*
       int n = ACE_OS::fread (buf,
 			     1,
@@ -47,7 +47,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	    ACE_DEBUG ((LM_DEBUG,"End of Addr file\n"));
 	  break;
 	}
-	
+
 
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
@@ -70,7 +70,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	}
       else
 	flowname += addr_tokenizer [0];
-      
+
       if (addr_tokenizer [1] != 0)
 	{
 	  ACE_CString token (addr_tokenizer [1]);
@@ -106,7 +106,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	      addr->receiver_addr = (addr->receiver_addr.substr (0, pos)).c_str ();
 	    }
 	}
-      
+
       int result = ep_addr_.bind (flowname,
 				  addr);
       if (result == 0)
@@ -124,7 +124,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 		       "Flowname %s Bound Failed\n",
 		       flowname.c_str ()));
 
-      
+
     }
 
 }
@@ -149,7 +149,7 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
   this->sender_name_ =
     sender_name;
 
-  /* 
+  /*
   this->sender_ =
     AVStreams::MMDevice::_duplicate (sender);
   */
@@ -334,13 +334,13 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
 		      "Address Strings %s %s\n",
 		      sender_addr_str.c_str (),
 		      receiver_addr_str.c_str ()));
-	  
+
 	}
       else ACE_DEBUG ((LM_DEBUG,
 		       "No endpoint address for flowname %s\n",
 		       flowname.c_str ()));
-      
-      ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());      
+
+      ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
       ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
 
       // Create the forward flow specification to describe the flow.
@@ -361,12 +361,12 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
         CORBA::string_dup (sender_entry.entry_to_string ());
 
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Connection_Manager::connect_to_receivers Flow Spec Entry %s\n",
-		    sender_entry.entry_to_string ()));
+        ACE_DEBUG ((LM_DEBUG,
+          "Connection_Manager::connect_to_receivers Flow Spec Entry %s\n",
+          sender_entry.entry_to_string ()));
 
       // Create the stream control for this stream.
-      TAO_StreamCtrl *streamctrl;
+      TAO_StreamCtrl *streamctrl = 0;
       ACE_NEW (streamctrl,
                TAO_StreamCtrl);
 
@@ -526,10 +526,10 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
   Endpoint_Addresses* addr = 0;
   ep_addr_.find (flowname,
 		 addr);
-  
+
   ACE_CString sender_addr_str;
   ACE_CString receiver_addr_str;
-  
+
   if (addr != 0)
     {
       sender_addr_str = addr->sender_addr;
@@ -541,9 +541,9 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
 		  receiver_addr_str.c_str ()));
     }
 
-  ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());  
+  ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
   ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
-  
+
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry sender_entry (flowname.c_str (),
                                            "IN",
@@ -561,14 +561,14 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
   flow_spec.length (1);
   flow_spec [0] =
     CORBA::string_dup (sender_entry.entry_to_string ());
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Connection_Manager::connect_to_sender Flow Spec Entry %s\n",
 		sender_entry.entry_to_string ()));
-  
+
   // Create the stream control for this stream
-  TAO_StreamCtrl* streamctrl;
+  TAO_StreamCtrl* streamctrl = 0;
   ACE_NEW (streamctrl,
            TAO_StreamCtrl);
 

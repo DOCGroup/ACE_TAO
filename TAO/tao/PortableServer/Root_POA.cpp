@@ -2847,6 +2847,11 @@ TAO_Root_POA::get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
   return this->poa_manager_.get_manager_id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+CORBA::ORB_ptr
+TAO_Root_POA::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return CORBA::ORB::_duplicate (this->orb_core_.orb ());
+}
 
 // Initialize instance_ to 0, since this is what we test for in the call
 // to instance ().  Note that this does not require a constructor call, so
