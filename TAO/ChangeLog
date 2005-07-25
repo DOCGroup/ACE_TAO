@@ -1,19 +1,25 @@
+Mon Jul 25 15:48:05 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tests/OBV/ValueBox/client.cpp:
+
+          Plugged some memory leaks.
+
 Mon Jul 25 12:49:44 2005   Gary Maxey <gary.maxey@hp.com>
 
-	* tao/Array_VarOut_T.h: 
-	* tao/Array_VarOut_T.inl: 
-	* tao/Fixed_Array_Argument_T.inl: 
-	* tao/PortableServer/Fixed_Array_SArgument_T.inl:
+        * tao/Array_VarOut_T.h: 
+        * tao/Array_VarOut_T.inl: 
+        * tao/Fixed_Array_Argument_T.inl: 
+        * tao/PortableServer/Fixed_Array_SArgument_T.inl:
 
-	  Removed "out" method from class TAO_Array_Var_Base_T and added
-	  the method to classes TAO_FixedArray_Var_T and
-	  TAO_VarArray_Var_T.  For fixed arrays the "out" method now
-	  returns T_slice * for fixed arrays.  For variable arrays the
-	  "out" method returns T_slice *& (same as previously).
+          Removed "out" method from class TAO_Array_Var_Base_T and added
+          the method to classes TAO_FixedArray_Var_T and
+          TAO_VarArray_Var_T.  For fixed arrays the "out" method now
+          returns T_slice * for fixed arrays.  For variable arrays the
+          "out" method returns T_slice *& (same as previously).
 
 Mon Jul 25 12:37:34 2005   Gary Maxey <gary.maxey@hp.com>
 
-	* tests/OBV/ValueBox/client.cpp:
+        * tests/OBV/ValueBox/client.cpp:
 
           Fixed platform-specific compilation warnings.
 

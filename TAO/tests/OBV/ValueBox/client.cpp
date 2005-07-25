@@ -340,6 +340,14 @@ int test_basic_invocations (Test * test_object)
         VERIFY (p2->_value () == (93*3));
         VERIFY (p3->_value () == (93*5));
         VERIFY (lresult == (p1->_value()*3));
+
+        p1->_remove_ref ();
+        p2->_remove_ref ();
+        p3->_remove_ref ();
+
+        mp1->_remove_ref ();
+        mp2->_remove_ref ();
+        mp3->_remove_ref ();
       }
   ACE_CATCH (CORBA::Exception, ex)
     {
@@ -423,7 +431,7 @@ int test_boxed_string()
   VERIFY ((*vbstring3)[0] == 'S');
   (*vbstring3)[0] = 'W';
   VERIFY ((*vbstring3)[0] == 'W' && (*vbstring2)[0] == 'S');
-  vbstring3->_remove_ref();
+  vbstring3->_remove_ref ();
 
   //
   // char *
@@ -437,7 +445,7 @@ int test_boxed_string()
                   VBstring(carray3),
                   1);
   VERIFY ((*vbstring4)[0] == 'F');
-  vbstring4->_remove_ref();
+  vbstring4->_remove_ref ();
 
   //
   // test CORBA::String_var ctor
@@ -448,10 +456,10 @@ int test_boxed_string()
   VERIFY ((*vbstring5)[0] == 'S');
   (*vbstring5)[0] = 'W';
   VERIFY ((*vbstring5)[0] == 'W' && (svar.in())[0] == 'S');
-  vbstring5->_remove_ref();
+  vbstring5->_remove_ref ();
 
   // release, as usual
-  vbstring2->_remove_ref();
+  vbstring2->_remove_ref ();
   return fail;
 }
 
@@ -501,6 +509,11 @@ int test_boxed_string_invocations (Test * test_object)
         VERIFY (strcmp(p2->_value (), "2second string") == 0);
         VERIFY (strcmp(p3->_value (), "2second string") == 0);
         VERIFY (strcmp(sresult, "1string") == 0);
+
+        p1->_remove_ref ();
+        p2->_remove_ref ();
+        p3->_remove_ref ();
+  
       }
   ACE_CATCH (CORBA::Exception, ex)
     {
@@ -590,13 +603,13 @@ int test_boxed_sequence (void)
   else
     {
       VERIFY (vbseqlong6->length() == 0);
-      vbseqlong6->_remove_ref();
+      vbseqlong6->_remove_ref ();
     }
 
   // release
-  vbseqlong1->_remove_ref();
-  vbseqlong3->_remove_ref();
-  vbseqlong4->_remove_ref();
+  vbseqlong1->_remove_ref ();
+  vbseqlong3->_remove_ref ();
+  vbseqlong4->_remove_ref ();
 
   return fail;
 }
@@ -669,6 +682,10 @@ int test_boxed_sequence_invocations (Test * test_object)
         VERIFY ((*p3)[1] == (*p1)[1]*5);
         VERIFY ((*p3)[2] == (*p1)[2]*5);
         VERIFY ((*p3)[3] == (*p1)[3]*5);
+
+        p1->_remove_ref ();
+        p2->_remove_ref ();
+        p3->_remove_ref ();
       }
   ACE_CATCH (CORBA::Exception, ex)
     {
@@ -773,8 +790,9 @@ int test_boxed_struct (void)
       }
 
     //
-    // valuebox1 and valuebox3 must be explicitly removed.
+    // valuebox1, valuebox2, and valuebox3 must be explicitly removed.
     CORBA::remove_ref (valuebox1);
+    CORBA::remove_ref (valuebox2);
     CORBA::remove_ref (valuebox3);
 
     //
@@ -859,6 +877,12 @@ int test_boxed_struct_invocations (Test * test_object)
         VERIFY ((p3->abstruct()).s1 == fs1.abstruct.s1);
         VERIFY ((p3->abstruct()).s2 == fs1.abstruct.s2);
 
+
+        p1->_remove_ref ();
+        p2->_remove_ref ();
+        p3->_remove_ref ();
+
+
         //============================================================
         // Variable struct
         // Test method invocation with boxed value
@@ -916,6 +940,10 @@ int test_boxed_struct_invocations (Test * test_object)
         VERIFY (p6->l() == vs1.l);
         VERIFY (strcmp(p6->str(), vs1.str) == 0);
 
+
+        p4->_remove_ref ();
+        p5->_remove_ref ();
+        p6->_remove_ref ();
       }
   ACE_CATCH (CORBA::Exception, ex)
     {
@@ -1000,9 +1028,9 @@ int test_boxed_array()
             && valuebox2->_value()[2] == 303);
 
     // release
-    valuebox1->_remove_ref();
-    valuebox2->_remove_ref();
-    valuebox3->_remove_ref();
+    valuebox1->_remove_ref ();
+    valuebox2->_remove_ref ();
+    valuebox3->_remove_ref ();
 
     return fail;
 }
@@ -1082,6 +1110,10 @@ int test_boxed_array_invocations (Test * test_object)
                 && (*p3)[2] == (*p1)[2]);
 #endif
 
+        p1->_remove_ref ();
+        p2->_remove_ref ();
+        p3->_remove_ref ();
+
         //============================================================
         // Array (variable)
         // Test method invocation with boxed value
@@ -1149,6 +1181,10 @@ int test_boxed_array_invocations (Test * test_object)
         VERIFY (strcmp((*p6)[0],  sa[0]) == 0);
         VERIFY (strcmp((*p6)[1],  sa[1]) == 0);
 #endif
+
+        p4->_remove_ref ();
+        p5->_remove_ref ();
+        p6->_remove_ref ();
 
       }
   ACE_CATCH (CORBA::Exception, ex)
@@ -1300,6 +1336,7 @@ int test_boxed_union_invocations (Test * test_object)
         VERIFY (result->_d () == 1);
         VERIFY (result->m1 () == 321*3);
 
+
         //============================================================
         // Union (fixed)
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
@@ -1313,6 +1350,10 @@ int test_boxed_union_invocations (Test * test_object)
 
         VERIFY (p3->_d () == 1);
         VERIFY (p3->m1 () == 321);
+
+        p1->_remove_ref ();
+        p2->_remove_ref ();
+        p3->_remove_ref ();
 
         //============================================================
         // Union (variable)
@@ -1372,6 +1413,10 @@ int test_boxed_union_invocations (Test * test_object)
 
         VERIFY (p6->_d () == 1);
         VERIFY (p6->m1 () == 1722);
+
+        p4->_remove_ref ();
+        p5->_remove_ref ();
+        p6->_remove_ref ();
 
       }
   ACE_CATCH (CORBA::Exception, ex)
