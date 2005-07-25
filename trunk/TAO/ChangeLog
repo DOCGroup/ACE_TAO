@@ -1,3 +1,8 @@
+Mon Jul 25 13:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+          Ensured access to codeset manager is guarded by a nil check.
+
 Mon Jul 25 07:38:47 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Strategies/DIOP_Acceptor.cpp:
