@@ -87,6 +87,11 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
+  /// Get the repository id.
+  virtual char * _repository_id (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
+
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL);
 

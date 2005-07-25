@@ -161,7 +161,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << class_name.c_str () << " (const "
       << class_name.c_str () << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
-      
+
   if (node->is_event_consumer ())
     {
       *os << "// Default implementation of CIAO-specific operation," << be_nl
@@ -213,6 +213,15 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "void * servant" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
+
+  // Add a skeleton for our _repository_id method.
+  *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest & req," << be_nl
+      << "void * servant_upcall," << be_nl
+      << "void * servant" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
+
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
