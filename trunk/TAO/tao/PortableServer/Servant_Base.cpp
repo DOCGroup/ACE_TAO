@@ -122,7 +122,7 @@ TAO_ServantBase::_get_component (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-TAO_ServantBase::_repository_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+TAO_ServantBase::_repository_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup (this->_interface_repository_id ());
 }

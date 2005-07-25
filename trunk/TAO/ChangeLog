@@ -1,3 +1,9 @@
+Mon Jul 25 18:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ThreadStrategyORBControl.{h,cpp}:
+          Don't export this, this is only used internally in the
+          portableserver library.
+
 Mon Jul 25 18:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
