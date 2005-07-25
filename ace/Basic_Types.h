@@ -506,7 +506,8 @@ typedef ptrdiff_t ptr_arith_t;
 #if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
     long long data_;
 #else
-    struct _ace_hi_lo_correct_endian
+  public:
+    struct ace_hi_lo_correct_endian
     {
 #  if defined (ACE_BIG_ENDIAN)
       /// High 32 bits.
@@ -522,9 +523,10 @@ typedef ptrdiff_t ptr_arith_t;
       ACE_UINT32 hi_;
 #  endif /* ! ACE_BIG_ENDIAN */
     };
+  private:
     union
     {
-      struct _ace_hi_lo_correct_endian data_;
+      struct ace_hi_lo_correct_endian data_;
 
       /// To ensure alignment on 8-byte boundary.
       /**
