@@ -1238,7 +1238,7 @@ int test_boxed_union()
     fixed_union1->m2 (137);
     VBfixed_union1_var valuebox4;
     ACE_NEW_RETURN (valuebox4,
-                    VBfixed_union1 (fixed_union1),
+                    VBfixed_union1 (fixed_union1.in ()),
                     1);
     VERIFY (valuebox4->m2 () == 137);
     VERIFY (valuebox4->_d () == 1 || valuebox4->_d () == 2);
@@ -1269,7 +1269,7 @@ int test_boxed_union_invocations (Test * test_object)
         fixed_union1->m1 (321);
         VBfixed_union1 *p1 = 0;
         ACE_NEW_RETURN (p1,
-                        VBfixed_union1 (fixed_union1),
+                        VBfixed_union1 (fixed_union1.in ()),
                         1);
 
         Fixed_Union1 *ptemp2 = 0;
@@ -1280,7 +1280,7 @@ int test_boxed_union_invocations (Test * test_object)
         fixed_union2->m2 (789);
         VBfixed_union1 *p2 = 0;
         ACE_NEW_RETURN (p2,
-                        VBfixed_union1 (fixed_union2),
+                        VBfixed_union1 (fixed_union2.in ()),
                         1);
 
         VERIFY (p1->_d () == 1);
@@ -1326,7 +1326,7 @@ int test_boxed_union_invocations (Test * test_object)
         variable_union1->m1 (321);
         VBvariable_union1 *p4 = 0;
         ACE_NEW_RETURN (p4,
-                        VBvariable_union1 (variable_union1),
+                        VBvariable_union1 (variable_union1.in ()),
                         1);
 
         Variable_Union1_var variable_union2;
@@ -1336,7 +1336,7 @@ int test_boxed_union_invocations (Test * test_object)
         variable_union2->m2 (CORBA::string_dup ("abracadabra"));
         VBvariable_union1 *p5 = 0;
         ACE_NEW_RETURN (p5,
-                        VBvariable_union1 (variable_union2),
+                        VBvariable_union1 (variable_union2.in ()),
                         1);
 
         VERIFY (p4->_d () == 1);
