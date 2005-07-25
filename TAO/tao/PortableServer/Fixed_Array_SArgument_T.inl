@@ -72,5 +72,5 @@ ACE_INLINE
 S_slice *&
 TAO::Ret_Fixed_Array_SArgument_T<S_slice,S_var,S_forany>::arg (void)
 {
-  return this->x_.out ();
+  return this->x_._retn_arg ();
 }
