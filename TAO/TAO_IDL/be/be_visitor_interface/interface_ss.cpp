@@ -389,6 +389,114 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   }
 
+  // Generate code for the _repository_id skeleton.
+  {
+    auto_ptr<AST_String> s (
+      idl_global->gen ()->create_string (
+        idl_global->gen ()->create_expr ((idl_uns_long) 0,
+                                         AST_Expression::EV_ulong)));
+
+    // @@ Cheat a little by placing a space before the operation name
+    //    to prevent the IDL compiler from interpreting the leading
+    //    underscore as an IDL escape.
+    Identifier op_name (ACE_OS::strdup (" _repository_id"));
+    UTL_ScopedName scoped_name (&op_name, 0);
+    be_operation repository_id (s.get (),
+                                AST_Operation::OP_noflags,
+                                &scoped_name,
+                                node->is_local (),
+                                node->is_abstract ());
+    repository_id.set_defined_in (node);
+
+    ACE_CString repository_id_upcall_command_name =
+      "_repository_id_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
+
+    be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
+    upcall_command_visitor.visit (&repository_id,
+                                  full_skel_name,
+                                  repository_id_upcall_command_name.c_str ());
+
+    *os << "void " << full_skel_name
+        << "::_repository_id_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest & server_request, " << be_nl
+        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
+        << "void * servant" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ")" << be_uidt_nl;
+    *os << "{" << be_idt_nl;
+
+    // Generate exception list.
+    be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
+    exception_list.visit_operation (&repository_id);
+
+    be_visitor_operation_ss op_visitor (this->ctx_);
+
+    *os << "TAO::SArg_Traits< ";
+
+    op_visitor.gen_arg_template_param_name (&repository_id,
+                                            s.get (),
+                                            os);
+
+    *os << ">::ret_val retval;";
+
+    op_visitor.gen_skel_body_arglist (&repository_id,
+                                      os);
+
+    *os << be_nl << be_nl
+        << "TAO::Argument * const args[] =" << be_idt_nl
+        << "{" << be_idt_nl
+        << "&retval"
+        << be_uidt_nl
+        << "};" << be_uidt_nl << be_nl;
+
+    *os << "static size_t const nargs = 1;" << be_nl << be_nl;
+
+    // Get the right object implementation.
+    *os << full_skel_name << " * const impl =" << be_idt_nl
+        << "static_cast<"
+        << full_skel_name << " *> (servant);"
+        << be_uidt_nl;
+
+    // Upcall_Command instantiation.
+    *os << be_nl
+        << repository_id_upcall_command_name.c_str() << " command ("
+        << be_idt_nl << "impl";
+
+    if (!repository_id.void_return_type ()
+        || repository_id.argument_count () > 0)
+      {
+        // server_request.operation_details () will be non-zero in the
+        // thru-POA collocation case.  Use them if available.
+        *os << "," << be_nl;
+
+        if (be_global->gen_thru_poa_collocation ())
+          *os << "server_request.operation_details ()," << be_nl;
+
+        *os << "args";
+      }
+
+    *os << ");" << be_uidt_nl << be_nl;
+
+    *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
+        << "upcall_wrapper.upcall (server_request" << be_nl
+        << "                       , args" << be_nl
+        << "                       , nargs" << be_nl
+        << "                       , command"
+        << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+        << "                       , servant_upcall" << be_nl
+        << "                       , exceptions" << be_nl
+        << "                       , nexceptions"
+        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
+        << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
+        << "ACE_CHECK;" << be_nl;
+
+    this->generate_send_reply (os);
+
+    *os << be_uidt_nl
+        << "}" << be_nl << be_nl;
+
+  }
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -590,7 +698,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl;
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
   *os << "}";
-  
+
   if (node->is_event_consumer ())
     {
       *os << be_nl << be_nl

@@ -138,6 +138,14 @@ CORBA::LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
                     0);
 }
 
+char *
+CORBA::LocalObject::_repository_id (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
+}
+
 CORBA::InterfaceDef_ptr
 CORBA::LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {

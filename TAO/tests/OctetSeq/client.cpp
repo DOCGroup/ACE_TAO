@@ -4,6 +4,7 @@
 #include "ace/ACE.h"
 #include "testC.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(OctetSeq, client, "$Id$")
 
@@ -78,6 +79,18 @@ main (int argc, char *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil\n",
                              ior),
+                            1);
+        }
+
+      CORBA::String_var repository_id =
+        server->_repository_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (ACE_OS::strcmp (repository_id.in (), "IDL:Test/Database:1.0") != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Repository id is wrong <%s>\n",
+                             repository_id.in ()),
                             1);
         }
 

@@ -16,13 +16,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "Key_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "Key_Adapters.h"
 
 #include "ace/Map_T.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -42,7 +40,7 @@ struct TAO_Active_Object_Map_Entry;
  *
  * Implementation to be used by the POA.
  */
-class TAO_PortableServer_Export TAO_Active_Object_Map
+class TAO_Active_Object_Map
 {
 public:
 

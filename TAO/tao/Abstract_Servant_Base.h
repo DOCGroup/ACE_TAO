@@ -95,6 +95,10 @@ public:
   virtual CORBA::Object_ptr _get_component (
     ACE_ENV_SINGLE_ARG_DECL) = 0;
 
+  /// Default @c_repository_id
+  virtual char * _repository_id (
+    ACE_ENV_SINGLE_ARG_DECL) = 0;
+
   //@{
   /**
    * @name Reference Counting Operations

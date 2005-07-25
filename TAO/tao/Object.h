@@ -173,6 +173,11 @@ namespace CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
 
+    /// Get the repository id.
+    virtual char * _repository_id (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
+
     // DII operations to create a request.
     //
     // The mapping for create_request is split into two forms,

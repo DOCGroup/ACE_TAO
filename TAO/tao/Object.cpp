@@ -508,6 +508,13 @@ CORBA::Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
                                               ACE_ENV_ARG_PARAMETER);
 }
 
+char*
+CORBA::Object::_repository_id (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  return this->proxy_broker_->_repository_id (this
+                                              ACE_ENV_ARG_PARAMETER);
+}
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
