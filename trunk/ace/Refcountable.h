@@ -23,9 +23,6 @@
 /**
  * @class ACE_Refcountable
  *
- * @brief
- *
- *
  */
 class ACE_Export ACE_Refcountable
 {

@@ -42,7 +42,7 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
                           size_t length) const
 {
   ACE_TRACE ("ACE_Naming_Context::info");
-  ACE_UNUSED_ARG (length);
+
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
