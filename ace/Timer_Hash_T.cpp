@@ -413,7 +413,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (const TYPE &type,
   size_t position =
     future_time.sec () % this->table_size_;
 
-  Hash_Token<TYPE> *h;
+  Hash_Token<TYPE> *h = 0;
 
   ACE_NEW_RETURN (h,
                   Hash_Token<TYPE> (act,
@@ -562,7 +562,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
 
   size_t i; // loop variable.
 
-  Hash_Token<TYPE> **timer_ids;
+  Hash_Token<TYPE> **timer_ids = 0;
 
   ACE_NEW_RETURN (timer_ids,
                   Hash_Token<TYPE> *[this->size_],

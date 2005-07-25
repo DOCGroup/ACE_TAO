@@ -1,3 +1,14 @@
+Mon Jul 25 15:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Hash_T.cpp:
+          Initialise some pointersr with 0
+
+        * ace/Refcountable.h:
+          Removed some empty doxygen tags
+
+        * ace/Naming_Context.cpp:
+          Removed not needed ACE_UNUSED_ARG
+
 Sat Jul 23 16:36:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 	* bin/ciao_tests.lst:
@@ -13,7 +24,7 @@ Fri Jul 22 16:31:29 2005  Steve Huston  <shuston@riverace.com>
 	  union and renamed it to not be a compiler-private name (with 2
 	  leading underscores). This should resolve all the issues. Thanks
 	  to Simon Massey for figuring this out.
-	
+
 Fri Jul 22 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
