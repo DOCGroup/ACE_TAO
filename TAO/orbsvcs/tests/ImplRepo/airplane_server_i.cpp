@@ -194,11 +194,19 @@ Airplane_Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_Time_Value tv(60);
+      ACE_Time_Value tvStart = ACE_OS::gettimeofday();
+
+      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_Time_Value tvEnd = ACE_OS::gettimeofday();
 
       this->root_poa_->destroy(1, 1);
       this->orb_->destroy();
+
+      if (tvEnd - tvStart > tv - ACE_Time_Value(5))
+        return 1;
     }
   ACE_CATCHANY
     {
