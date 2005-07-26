@@ -18,11 +18,10 @@ ACE_RCSID (tao,
 #include "SystemException.h"
 
 
-TAO::PICurrent::PICurrent (TAO_ORB_Core *orb_core)
+TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
     slot_count_ (0)
 {
-  // ACE_ASSERT (orb_core != 0);
 }
 
 TAO::PICurrent::~PICurrent (void)
@@ -72,7 +71,7 @@ TAO::PICurrent_Impl *
 TAO::PICurrent::tsc (void)
 {
   TAO_ORB_Core_TSS_Resources *tss =
-    this->orb_core_->get_tss_resources ();
+    this->orb_core_.get_tss_resources ();
 
   return &tss->pi_current_;
 }
@@ -85,6 +84,12 @@ TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier
   // attributes are read only.
   if (identifier >= this->slot_count_)
     ACE_THROW (PortableInterceptor::InvalidSlot ());
+}
+
+CORBA::ORB_ptr
+TAO::PICurrent::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
