@@ -1,3 +1,12 @@
+Tue Jul 26 21:22:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+        
+          Added 'CIDL_' prefix to the scoped name of the exec impl class's
+          base class, in the impl class declaration inheritance list. This
+          file was overlooked when making similar changes to other exec
+          impl classes in CIAO tests and examples.
+
 Mon Jul 26 13:54:12 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * docs/schema/cid.xsd
