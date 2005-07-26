@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include <ULongSeq.pidl>
+
 interface Test
 {
   typedef short TestScenario;
@@ -28,7 +30,7 @@ interface Test
   void client_test (in TestScenario scenario) raises (X, UnknownScenario);
 
   /// The server-side test operation.
-  void server_test (in TestScenario scenario) raises (X, UnknownScenario);
+  void server_test (in TestScenario scenario, out CORBA::ULongSeq myseq) raises (X, UnknownScenario);
 
   /// Shutdown the server.
   oneway void shutdown ();

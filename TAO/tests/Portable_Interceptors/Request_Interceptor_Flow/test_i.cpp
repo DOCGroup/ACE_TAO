@@ -34,12 +34,15 @@ test_i::client_test (Test::TestScenario scenario
 }
 
 void
-test_i::server_test (Test::TestScenario scenario
+test_i::server_test (Test::TestScenario scenario,
+                     CORBA::ULongSeq_out myseq
                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((Test::X,
                    Test::UnknownScenario,
                    CORBA::SystemException))
 {
+  myseq = new CORBA::ULongSeq;
+
   switch (scenario)
     {
     case 1:
