@@ -37,7 +37,7 @@ TAO_PICurrent_Loader::create_object (
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
   ACE_NEW_RETURN (obj,
-                  TAO::PICurrent (orb->orb_core ()),
+                  TAO::PICurrent (*orb->orb_core ()),
                   CORBA::Object::_nil ());
   return obj;
 }
