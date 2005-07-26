@@ -803,12 +803,12 @@ be_interface::gen_operation_table (const char *flat_name,
         this->skel_count_++;
 
         *os << "{\"_interface\", &" << skeleton_class_name
-            << "::_interface_skel, 0}" << be_uidt_nl;
+            << "::_interface_skel, 0}," << be_nl;
 
         this->skel_count_++;
 
         *os << "{\"_repository_id\", &" << skeleton_class_name
-            << "::_repository_id_skel, 0}," << be_nl;
+            << "::_repository_id_skel, 0}" << be_uidt_nl;
 
         this->skel_count_++;
 
