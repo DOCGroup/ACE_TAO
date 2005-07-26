@@ -1,3 +1,9 @@
+Tue Jul 26 12:11:36 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tests/OBV/ValueBox/client.cpp: 
+
+          Plugged some memory leaks.
+
 Tue Jul 26 14:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:

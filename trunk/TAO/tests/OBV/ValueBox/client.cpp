@@ -378,10 +378,12 @@ int test_boxed_string()
   VERIFY (strcmp (string1, string1) == 0);
 
   // Make some objects, using our data
-  VBstring_var vbstring1;
-  ACE_NEW_RETURN (vbstring1,
+  VBstring *temp = 0;
+  ACE_NEW_RETURN (temp,
                   VBstring(string1),
                   1);
+  VBstring_var vbstring1 (temp);
+
   VBstring    *vbstring2 = 0;
   ACE_NEW_RETURN (vbstring2,
                   VBstring(string1), // tests const char * ctor.
@@ -501,7 +503,7 @@ int test_boxed_string_invocations (Test * test_object)
 
         p2->_value(CORBA::string_dup ("second string2"));
 
-        char * sresult =
+        CORBA::String_var sresult =
           test_object->string_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                   p3->_boxed_out());
         ACE_TRY_CHECK;
@@ -1248,10 +1250,11 @@ int test_boxed_union()
     VERIFY (valuebox1->_d () != 1 && valuebox1->_d () != 2);
 
     //
-    VBfixed_union1_var valuebox2;
-    ACE_NEW_RETURN (valuebox2,
+    VBfixed_union1* valuebox2_ptr = 0;
+    ACE_NEW_RETURN (valuebox2_ptr,
                     VBfixed_union1 (),
                     1);
+    VBfixed_union1_var valuebox2 (valuebox2_ptr);
     valuebox2->m2(333);
     VERIFY (valuebox2->_d () == 2);
 
@@ -1260,7 +1263,7 @@ int test_boxed_union()
     ACE_NEW_RETURN (valuebox3_ptr,
                     VBfixed_union1 (*valuebox2.in ()),
                     1);
-    VBfixed_union1_var valuebox3 = valuebox3_ptr;
+    VBfixed_union1_var valuebox3 (valuebox3_ptr);
     VERIFY (valuebox3->_d () == 2);
     VERIFY (valuebox3->m2 () == 333);
 
@@ -1272,10 +1275,11 @@ int test_boxed_union()
 
     // Test constructor taking union argument
     fixed_union1->m2 (137);
-    VBfixed_union1_var valuebox4;
-    ACE_NEW_RETURN (valuebox4,
+    VBfixed_union1 *valuebox4_ptr = 0;
+    ACE_NEW_RETURN (valuebox4_ptr,
                     VBfixed_union1 (fixed_union1.in ()),
                     1);
+    VBfixed_union1_var valuebox4 (valuebox4_ptr);
     VERIFY (valuebox4->m2 () == 137);
     VERIFY (valuebox4->_d () == 1 || valuebox4->_d () == 2);
 
