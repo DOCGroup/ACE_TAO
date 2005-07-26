@@ -1,3 +1,9 @@
+Tue Jul 26 08:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/ValueBox/client.cpp:
+          Added some missing CORBA::string_dup calls which caused this tet
+          to fail in a static build
+
 Tue Jul 26 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
