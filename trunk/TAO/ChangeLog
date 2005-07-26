@@ -1,3 +1,10 @@
+Tue Jul 26 09:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PICurrent.{h,cpp}:
+        * tao/PICurrent_Loader.cpp:
+          Overruled _get_orb and store an ORB_Core reference instead of
+          a pointer
+
 Tue Jul 26 09:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/params.h:
