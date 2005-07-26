@@ -71,11 +71,16 @@ main (int argc, char *argv[])
       Deployment::ComponentImplementationInfo info;
 
       // Add the names and entry points of each of the DLLs
-      info.component_instance_name = "NodeAppTest_RoundTrip";
-      info.executor_dll = "NodeAppTest_RoundTrip_exec";
-      info.executor_entrypt = "createRoundTripHome_Impl";
-      info.servant_dll = "NodeAppTest_RoundTrip_svnt";
-      info.servant_entrypt = "createNodeAppTest_RoundTripHome_Servant";
+      info.component_instance_name =
+        CORBA::string_dup ("NodeAppTest_RoundTrip");
+      info.executor_dll =
+        CORBA::string_dup ("NodeAppTest_RoundTrip_exec");
+      info.executor_entrypt =
+        CORBA::string_dup ("createRoundTripHome_Impl");
+      info.servant_dll =
+        CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
+      info.servant_entrypt =
+      CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
 
       // Create a ContainerImplementationInfo sequence
       Deployment::ContainerImplementationInfo container_info;
@@ -98,7 +103,7 @@ main (int argc, char *argv[])
       Components::CCMObject_var objref = (comp_info[i]).component_ref;
 
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
-        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in () 
+        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
