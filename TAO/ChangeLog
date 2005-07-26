@@ -1,3 +1,12 @@
+Tue Jul 26 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/test_i.{h,cpp}:
+          Added a CORBA::ULongSeq as out argument to the server_test
+          method to test for bug 2158. It seems this problem doesn't
+          exists anymore
+
 Tue Jul 26 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
