@@ -1,3 +1,56 @@
+Tue Jul 26 07:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdAssignmentStrategy.h:
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdAssignmentStrategySystem.cpp:
+        * tao/PortableServer/IdAssignmentStrategySystem.h:
+        * tao/PortableServer/IdAssignmentStrategyUser.cpp:
+        * tao/PortableServer/IdAssignmentStrategyUser.h:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.h:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
+        * tao/PortableServer/ImplicitActivationStrategy.h:
+        * tao/PortableServer/ImplicitActivationStrategyExplicit.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyExplicit.h:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h:
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
+        * tao/PortableServer/LifespanStrategy.h:
+        * tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.h:
+        * tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyTransient.h:
+        * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
+        * tao/PortableServer/Policy_Strategy.h:
+        * tao/PortableServer/RequestProcessingStrategy.h:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.h:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.h:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.h:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.h:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantManager.h:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * tao/PortableServer/StrategyFactory.h:
+        * tao/PortableServer/ThreadStrategy.h:
+        * tao/PortableServer/ThreadStrategyFactory.h:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingle.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
+          Reduced the number of exports. This will reduce footprint in
+          Windows and GCC 4 builds.
+
 Tue Jul 26 06:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
