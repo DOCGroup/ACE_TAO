@@ -1,3 +1,10 @@
+Tue Jul 26 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+          Added some missing CORBA::string_dup calls, this fixes these
+          tests on Windows
+
 Tue Jul 26 07:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NodeDaemon_Impl.{h,cpp}:
