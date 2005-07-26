@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuebox, 
-           valuebox_cs, 
+ACE_RCSID (be_visitor_valuebox,
+           valuebox_cs,
            "$Id: valuebox_cs.cpp Exp")
 
 be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
@@ -36,7 +36,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 {
   // Nothing to do if we are imported or code is already generated.
   if (node->cli_stub_gen () || node->imported ())
-    { 
+    {
       return 0;
     }
 
@@ -66,10 +66,6 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   *os << be_nl << node->name () << " *" << be_nl
       << node->name () << "::_downcast (CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
-      << "if (v == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "return dynamic_cast< ::" << node->name () << " * > (v);"
       << be_uidt_nl << "}" << be_nl << be_nl;
 
