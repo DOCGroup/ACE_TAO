@@ -477,11 +477,11 @@ int test_boxed_string_invocations (Test * test_object)
 
         VBstring *p1 = 0;
         ACE_NEW_RETURN (p1,
-                        VBstring("string1"),
+                        VBstring(CORBA::string_dup ("string1")),
                         1);
         VBstring *p2 = 0;
         ACE_NEW_RETURN (p2,
-                        VBstring("string2"),
+                        VBstring(CORBA::string_dup ("string2")),
                         1);
         VBstring *p3 = 0;
 
