@@ -1,3 +1,8 @@
+Tue Jul 26 12:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp (destroy_interceptors):
+          Fixed memory leak of client/server request interceptor lists
+
 Tue Jul 26 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
