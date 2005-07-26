@@ -1,3 +1,8 @@
+Tue Jul 26 06:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+          Added missing include
+
 Tue Jul 26 06:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Task_Callback.{h,cpp}:
