@@ -49,7 +49,7 @@ CIAO::NodeDaemon_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK; 
+  ACE_CHECK;
 }
 
 PortableServer::POA_ptr
@@ -111,7 +111,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                           "creating a new NAM with UUID: %s\n",
                           plan.UUID.in ()));
             }
-          
+
           //Implementation undefined.
           CIAO::NodeApplicationManager_Impl *app_mgr;
           ACE_NEW_THROW_EX (app_mgr,
@@ -119,9 +119,9 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                                                                this->poa_.in ()),
                             CORBA::NO_MEMORY ());
           ACE_TRY_CHECK;
-          
+
           PortableServer::ServantBase_var safe (app_mgr);
-          
+
           //@@ Note: after the init call the servant ref count would
           //   become 2. so we can leave the safeservant along and be
           //   dead. Also note that I added
@@ -132,7 +132,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                            this->callback_poa_.in ()
                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           this->map_.insert_nam (plan.UUID.in (), oid.in ());
         }
       else
@@ -144,12 +144,12 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                           plan.UUID.in ()));
             }
         }
-      
 
-      CORBA::Object_var obj = 
+
+      CORBA::Object_var obj =
         this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
       ACE_TRY_CHECK;
-      
+
       // narrow should return a nil reference if it fails.
       return
         Deployment::NodeApplicationManager::_narrow (obj.in ());
@@ -166,17 +166,19 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  //ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
+  ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
+
+  return Deployment::NodeApplicationManager::_nil ();
 }
 
 void
-CIAO::NodeDaemon_Impl::destroyManager 
+CIAO::NodeDaemon_Impl::destroyManager
         (Deployment::NodeApplicationManager_ptr manager
          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError,
                    Deployment::InvalidReference))
-{  
+{
   CIAO_TRACE("CIAO::NodeDaemon_Impl::destroyManager");
   ACE_TRY
     {
@@ -185,14 +187,14 @@ CIAO::NodeDaemon_Impl::destroyManager
         this->poa_->reference_to_id (manager
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (!this->map_.remove_nam (id))
         {
           ACE_ERROR ((LM_ERROR,
                       "NodeDaemon_Impl::destroyManager: "
                       "Unable to remove object from map!\n"));
         }
-      
+
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
