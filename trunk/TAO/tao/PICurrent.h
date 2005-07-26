@@ -61,7 +61,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    PICurrent (TAO_ORB_Core *orb_core);
+    PICurrent (TAO_ORB_Core &orb_core);
 
     /**
      * @name PortableInterceptor::Current Methods
@@ -85,6 +85,10 @@ namespace TAO
                        PortableInterceptor::InvalidSlot));
     //@}
 
+    virtual CORBA::ORB_ptr _get_orb (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
+
     /// Number of slots allocated in the slot table.
     PortableInterceptor::SlotId slot_count (void) const;
 
@@ -107,7 +111,7 @@ namespace TAO
      * counted, and should not be destroyed using delete() by anything
      * other than the reference counting mechanism.
      */
-    ~PICurrent (void);
+    virtual ~PICurrent (void);
 
   private:
 
@@ -119,9 +123,8 @@ namespace TAO
     //@}
 
   private:
-
-    /// Pointer to the orb core.
-    TAO_ORB_Core * orb_core_;
+    /// Reference to the orb core.
+    TAO_ORB_Core &orb_core_;
 
     /// The number of allocated slots.
     PortableInterceptor::SlotId slot_count_;
