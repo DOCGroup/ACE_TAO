@@ -2156,6 +2156,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
             ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          delete client_request_interceptor_adapter_;
           client_request_interceptor_adapter_ = 0;
         }
 
@@ -2165,6 +2166,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
             ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          delete server_request_interceptor_adapter_;
           server_request_interceptor_adapter_ = 0;
         }
 
