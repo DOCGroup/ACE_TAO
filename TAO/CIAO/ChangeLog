@@ -1,3 +1,37 @@
+Mon Jul 26 13:54:12 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * docs/schema/cid.xsd
+        * docs/schema/cpd.xsd
+        * docs/schema/iad.xsd
+        * docs/schema/Modified_Deployment.xsd
+
+        Added <xsd:attribute name="href"> for cid/cpd/iad(.xsd) and changed Modified_Deployment.xsd
+        accordingly.We will need href attribute in the repository manager process.
+
+        * DAnCE/Config_Handlers/iad.cpp
+        * DAnCE/Config_Handlers/iad.hpp
+        * DAnCE/Config_Handlers/cid.cpp
+        * DAnCE/Config_Handlers/cid.hpp
+        * DAnCE/Config_Handlers/cpd.cpp
+        * DAnCE/Config_Handlers/cpd.hpp
+
+        Regenerated xsc codes for updated schemas in CIAO/docs/schema/
+
+        * DAnCE/Config_Handlers/STD_CID_Handler.cpp
+        * DAnCE/Config_Handlers/STD_CID_Handler.h
+        * DAnCE/Config_Handlers/STD_CPD_Handler.cpp
+        * DAnCE/Config_Handlers/STD_CPD_Handler.h
+        * DAnCE/Config_Handlers/STD_IAD_Handler.cpp
+        * DAnCE/Config_Handlers/STD_IAD_Handler.h
+        * DAnCE/Config_Handlers/STD_PC_Intf.cpp
+        * DAnCE/Config_Handlers/STD_PC_Intf.h
+        * DAnCE/Config_Handlers/STD_PCD_Handler.cpp
+        * DAnCE/Config_Handlers/STD_PCD_Handler.h
+        * DAnCE/Config_Handlers/Config_Handlers.mpc
+
+        Added new handlers for mapping Config_Handlers::PackageConfiguration to Deployment:PackageConfiguration.
+        Updated Config_Handlers.mpc accordingly
+        
 Tue Jul 26 12:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/new_RepositoryManager/RMadmin.cpp:
@@ -38,70 +72,70 @@ Mon Jul 25 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jul 24 07:45:19 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp
 
-	  Fixed an exception emulation warning in Debian_Full_Reactor
-	  build.
+          Fixed an exception emulation warning in Debian_Full_Reactor
+          build.
 
 Sun Jul 24 07:40:19 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
 
-	  Enhanced error output information a little bit by
-	  adding process ID and thread ID.
+          Enhanced error output information a little bit by
+          adding process ID and thread ID.
 
-	* DAnCE/ciao/Container_Impl.cpp
+        * DAnCE/ciao/Container_Impl.cpp
 
-	  Fixed exception emulation warnings in Debian_Full_Reactor
-	  build.
+          Fixed exception emulation warnings in Debian_Full_Reactor
+          build.
 
 Sun Jul 24 01:19:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
-	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
 
-	  Fixed a bug (memory problem) in the plan_launcher which caused
-	  the "tearing down" assembly failure.
+          Fixed a bug (memory problem) in the plan_launcher which caused
+          the "tearing down" assembly failure.
 
-	* DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
-	* DAnCE/examples/BasicSP/descriptors/flattened_deploymentplan.cdp
+        * DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
+        * DAnCE/examples/BasicSP/descriptors/flattened_deploymentplan.cdp
 
-	  Added a UUID tag to the flattened deployment plan.
+          Added a UUID tag to the flattened deployment plan.
 
 Sat Jul 23 23:11:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DAnCE/tests/Minimum/Receiver/Receiver.mpc
-	* DAnCE/tests/Minimum/Sender/Sender.mpc
+        * DAnCE/tests/Minimum/Receiver/Receiver.mpc
+        * DAnCE/tests/Minimum/Sender/Sender.mpc
 
-	  Modified shared library names to fix some linking erros
-	  on build scoreboard.
+          Modified shared library names to fix some linking erros
+          on build scoreboard.
 
         * DAnCE/examples/Hello/descriptors/run_test.pl
 
-	  Fixed the script so naming service could be started
-	  correctly.
+          Fixed the script so naming service could be started
+          correctly.
 
-	* DAnCE/examples/Hello/step-by-step.html
+        * DAnCE/examples/Hello/step-by-step.html
 
-	  Simple instruction about using naming service.
+          Simple instruction about using naming service.
 
 Sat Jul 23 14:53:22 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/Port_Activator.cpp:
-	* DAnCE/ciao/Port_Activator.h:
-	* DAnCE/ciao/Servant_Activator.cpp:
-	* DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Port_Activator.cpp:
+        * DAnCE/ciao/Port_Activator.h:
+        * DAnCE/ciao/Servant_Activator.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
 
-	  Added a method in Port_Activator to set the name of
-	  port activator. The port activator is used to activate
-	  the ports of the component.
+          Added a method in Port_Activator to set the name of
+          port activator. The port activator is used to activate
+          the ports of the component.
 
-	  Fixed a incorrect delete call in the update_port_activator
-	  function in Servant_Activator.cpp. This will fix the core
-	  dump in the CIAO tests.
+          Fixed a incorrect delete call in the update_port_activator
+          function in Servant_Activator.cpp. This will fix the core
+          dump in the CIAO tests.
 
-	  Modified the calling sequence to deactivate ports when we
-	  deactivate the component.
+          Modified the calling sequence to deactivate ports when we
+          deactivate the component.
 
 Sat Jul 23 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -112,13 +146,13 @@ Mon Jul 18 22:31:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ciao/Container_Impl.cpp
 
-	  Fixed some compilation error about using NamingContextEx.
+          Fixed some compilation error about using NamingContextEx.
 
         * DAnCE/examples/Hello/descriptors/run_test.pl
 
-	  Fixed this script so naming service will be started
-	  explicitly. Thanks Simon McQueen <sm@prismtech.com>
-	  for pointing the error.
+          Fixed this script so naming service will be started
+          explicitly. Thanks Simon McQueen <sm@prismtech.com>
+          for pointing the error.
 
 Mon Jul 18 22:31:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -127,20 +161,20 @@ Mon Jul 18 22:31:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/ciao/CCM_Core.mpc
         * DAnCE/ciao/NodeApplication_Impl.cpp
 
-	  Added support for registering components with naming service.
-	  A system deployer could config such capability through XML tag
+          Added support for registering components with naming service.
+          A system deployer could config such capability through XML tag
 
         * DAnCE/examples/BasicSP/descriptors/flattened_deploymentplan.cdp
         * DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
 
-	  Added a couple of examples for using naming service by adding
-	  some <ConfigProperty> tag to the deployment plan descriptor.
+          Added a couple of examples for using naming service by adding
+          some <ConfigProperty> tag to the deployment plan descriptor.
 
 Fri Jul 15 23:50:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * NEWS:
           Updated the NEWS file to include the result of our latest
-	  discussion/plan about DAnCE.
+          discussion/plan about DAnCE.
 
 Fri Jul 15 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
