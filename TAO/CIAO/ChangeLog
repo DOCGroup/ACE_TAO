@@ -1,7 +1,12 @@
+Tue Jul 26 07:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/NodeDaemon_Impl.{h,cpp}:
+          Fixed warning and use doxygen comment style
+
 Mon Jul 25 22:14:20 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/SizeTypeCalculator.cpp:
-        
+
           Fixed visitor to handle types declared inside the scope of
           an interface, valuetype, or home. Thanks to Friedhelm Wolf
           <Friedhelm.wolf@gmx.de> for reporting a CIDL compiler
