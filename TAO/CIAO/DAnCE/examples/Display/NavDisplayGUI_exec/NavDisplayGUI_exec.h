@@ -29,7 +29,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl :
-    public virtual NavDisplay_Impl::NavDisplay_exec,
+    public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
