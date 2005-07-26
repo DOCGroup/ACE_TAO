@@ -1,3 +1,8 @@
+Tue Jul 26 14:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Small link improvements
+
 Tue Jul 26 12:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp (destroy_interceptors):
