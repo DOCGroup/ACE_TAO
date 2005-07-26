@@ -46,13 +46,6 @@ typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
  *
  * @brief Parameters that are specific to the ORB.  These parameters can
  * be for the client, the server, or for both.
- *
- * @note
- * Some of the functions have inline definitions in the class header
- * below.  Please do not move them back to the .i file.
- * cygnus-2.7.2-960126, distributed with Tornado 1.0.1, can't deal
- * with returing a const reference here.  It raises an internal
- * compiler error at ace/Svc_Handler.cpp:46, of all places.
  */
 class TAO_Export TAO_ORB_Parameters
 {
