@@ -1,3 +1,8 @@
+Tue Jul 26 09:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/params.h:
+          Removed some old comment
+
 Tue Jul 26 08:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/ValueBox/client.cpp:
