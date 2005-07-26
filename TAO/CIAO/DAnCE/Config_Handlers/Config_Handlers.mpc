@@ -4,9 +4,9 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub,xerces {
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  requires += exceptions 
+  requires += exceptions
   includes += $(CIAO_ROOT)/DAnCE/Config_Handlers
-  
+
   Source_Files {
     ccd.cpp
     cdd.cpp
@@ -49,6 +49,11 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub,xerces {
     DnC_Dump.cpp
     DnC_Dump_T.cpp
     Dump_Obj.cpp
+    STD_CID_Handler.cpp
+    STD_CPD_Handler.cpp
+    STD_IAD_Handler.cpp
+    STD_PC_Intf.cpp
+    STD_PCD_Handler.cpp
   }
 
   Header_Files {
@@ -56,7 +61,7 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub,xerces {
 }
 
 project (XSC_Config_Handlers_Tests) : ciao_deployment_stub,xerces {
-  
+
   requires += dummy_label
   exename = test
   after    += XSC_Config_Handlers
@@ -64,7 +69,7 @@ project (XSC_Config_Handlers_Tests) : ciao_deployment_stub,xerces {
   macros   += XML_USE_PTHREADS
   requires += exceptions
   libs     += CIAO_DnC_Server TAO_IFR_Client XSC_Config_Handlers
-                                                                                
+
   Source_Files {
     test.cpp
   }

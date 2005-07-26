@@ -3,7 +3,7 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
@@ -12,7 +12,7 @@
 
 // Fixes the VC6 warning 4786.
 #include "vc6-4786.h"
- 
+
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
@@ -40,161 +40,174 @@ namespace CIAO
 
 #include "Basic_Deployment_Data.hpp"
 
+
 namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Config_Handlers_Export NamedImplementationArtifact : public ::XSCRT::Type
-    {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
 
-      // name
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
-      void name (::XMLSchema::string< ACE_TCHAR > const& );
+  class Config_Handlers_Export NamedImplementationArtifact : public ::XSCRT::Type
+  {
+    //@@ VC6 anathema
+    typedef ::XSCRT::Type Base__;
 
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
+    // name
+    //
+    public:
+    ::XMLSchema::string< ACE_TCHAR > const& name () const;
+    ::XMLSchema::string< ACE_TCHAR >& name ();
+    void name (::XMLSchema::string< ACE_TCHAR > const& );
 
-      // referencedArtifact
-      // 
-      public:
-      ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact () const;
-      ::CIAO::Config_Handlers::ImplementationArtifactDescription& referencedArtifact ();
-      void referencedArtifact (::CIAO::Config_Handlers::ImplementationArtifactDescription const& );
+    protected:
+    ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationArtifactDescription > referencedArtifact_;
+    // referencedArtifact
+    //
+    public:
+    ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact () const;
+    ::CIAO::Config_Handlers::ImplementationArtifactDescription& referencedArtifact ();
+    void referencedArtifact (::CIAO::Config_Handlers::ImplementationArtifactDescription const& );
 
-      public:
-      NamedImplementationArtifact (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__);
+    protected:
+    ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationArtifactDescription > referencedArtifact_;
 
-      NamedImplementationArtifact (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      NamedImplementationArtifact (NamedImplementationArtifact const& s);
+    public:
+    NamedImplementationArtifact (::XMLSchema::string< ACE_TCHAR > const& name__,
+    ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__);
 
-      NamedImplementationArtifact&
-      operator= (NamedImplementationArtifact const& s);
+    NamedImplementationArtifact (::XSCRT::XML::Element< ACE_TCHAR > const&);
+    NamedImplementationArtifact (NamedImplementationArtifact const& s);
 
-      private:
-      char regulator__;
-    };
+    NamedImplementationArtifact&
+    operator= (NamedImplementationArtifact const& s);
 
-    class Config_Handlers_Export ImplementationArtifactDescription : public ::XSCRT::Type
-    {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+    private:
+    char regulator__;
+  };
 
-      // label
-      // 
-      public:
-      bool label_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
-      void label (::XMLSchema::string< ACE_TCHAR > const& );
+  class Config_Handlers_Export ImplementationArtifactDescription : public ::XSCRT::Type
+  {
+    //@@ VC6 anathema
+    typedef ::XSCRT::Type Base__;
 
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
+    // label
+    //
+    public:
+    bool label_p () const;
+    ::XMLSchema::string< ACE_TCHAR > const& label () const;
+    ::XMLSchema::string< ACE_TCHAR >& label ();
+    void label (::XMLSchema::string< ACE_TCHAR > const& );
 
-      // UUID
-      // 
-      public:
-      bool UUID_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
-      ::XMLSchema::string< ACE_TCHAR >& UUID ();
-      void UUID (::XMLSchema::string< ACE_TCHAR > const& );
+    protected:
+    ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
 
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
+    // UUID
+    //
+    public:
+    bool UUID_p () const;
+    ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
+    ::XMLSchema::string< ACE_TCHAR >& UUID ();
+    void UUID (::XMLSchema::string< ACE_TCHAR > const& );
 
-      // location
-      // 
-      public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
-      location_iterator begin_location ();
-      location_iterator end_location ();
-      location_const_iterator begin_location () const;
-      location_const_iterator end_location () const;
-      void add_location (::XMLSchema::string< ACE_TCHAR > const& );
+    protected:
+    ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
 
-      protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > location_;
+    // location
+    //
+    public:
+    typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
+    typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+    location_iterator begin_location ();
+    location_iterator end_location ();
+    location_const_iterator begin_location () const;
+    location_const_iterator end_location () const;
+    void add_location (::XMLSchema::string< ACE_TCHAR > const& );
 
-      // execParameter
-      // 
-      public:
-      bool execParameter_p () const;
-      ::CIAO::Config_Handlers::Property const& execParameter () const;
-      ::CIAO::Config_Handlers::Property& execParameter ();
-      void execParameter (::CIAO::Config_Handlers::Property const& );
+    protected:
+    ::std::vector< ::XMLSchema::string< ACE_TCHAR > > location_;
 
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
+    // execParameter
+    //
+    public:
+    bool execParameter_p () const;
+    ::CIAO::Config_Handlers::Property const& execParameter () const;
+    ::CIAO::Config_Handlers::Property& execParameter ();
+    void execParameter (::CIAO::Config_Handlers::Property const& );
 
-      // deployRequirement
-      // 
-      public:
-      bool deployRequirement_p () const;
-      ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& deployRequirement ();
-      void deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+    protected:
+    ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
 
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+    // deployRequirement
+    //
+    public:
+    bool deployRequirement_p () const;
+    ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
+    ::CIAO::Config_Handlers::Requirement& deployRequirement ();
+    void deployRequirement (::CIAO::Config_Handlers::Requirement const& );
 
-      // dependsOn
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
-      dependsOn_iterator begin_dependsOn ();
-      dependsOn_iterator end_dependsOn ();
-      dependsOn_const_iterator begin_dependsOn () const;
-      dependsOn_const_iterator end_dependsOn () const;
-      void add_dependsOn (::CIAO::Config_Handlers::NamedImplementationArtifact const& );
+    protected:
+    ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
+    // dependsOn
+    //
+    public:
+    typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
+    typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
+    dependsOn_iterator begin_dependsOn ();
+    dependsOn_iterator end_dependsOn ();
+    dependsOn_const_iterator begin_dependsOn () const;
+    dependsOn_const_iterator end_dependsOn () const;
+    void add_dependsOn (::CIAO::Config_Handlers::NamedImplementationArtifact const& );
 
-      // infoProperty
-      // 
-      public:
-      bool infoProperty_p () const;
-      ::CIAO::Config_Handlers::Property const& infoProperty () const;
-      ::CIAO::Config_Handlers::Property& infoProperty ();
-      void infoProperty (::CIAO::Config_Handlers::Property const& );
+    protected:
+    ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
 
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
+    // infoProperty
+    //
+    public:
+    bool infoProperty_p () const;
+    ::CIAO::Config_Handlers::Property const& infoProperty () const;
+    ::CIAO::Config_Handlers::Property& infoProperty ();
+    void infoProperty (::CIAO::Config_Handlers::Property const& );
 
-      // contentLocation
-      // 
-      public:
-      bool contentLocation_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      ::XMLSchema::string< ACE_TCHAR >& contentLocation ();
-      void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
+    protected:
+    ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
+    // contentLocation
+    //
+    public:
+    bool contentLocation_p () const;
+    ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
+    ::XMLSchema::string< ACE_TCHAR >& contentLocation ();
+    void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
 
-      public:
-      ImplementationArtifactDescription ();
+    protected:
+    ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
 
-      ImplementationArtifactDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      ImplementationArtifactDescription (ImplementationArtifactDescription const& s);
+    // href
+    //
+    public:
+    bool href_p () const;
+    ::XMLSchema::string< ACE_TCHAR > const& href () const;
+    ::XMLSchema::string< ACE_TCHAR >& href ();
+    void href (::XMLSchema::string< ACE_TCHAR > const& );
 
-      ImplementationArtifactDescription&
-      operator= (ImplementationArtifactDescription const& s);
+    protected:
+    ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > href_;
 
-      private:
-      char regulator__;
-    };
-  }
+    public:
+    ImplementationArtifactDescription ();
+
+    ImplementationArtifactDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
+    ImplementationArtifactDescription (ImplementationArtifactDescription const& s);
+
+    ImplementationArtifactDescription&
+    operator= (ImplementationArtifactDescription const& s);
+
+    private:
+    char regulator__;
+  };
+}
 }
 
 namespace CIAO
