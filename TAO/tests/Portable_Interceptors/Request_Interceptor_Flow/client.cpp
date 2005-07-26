@@ -113,7 +113,8 @@ server_test (Test_ptr server ACE_ENV_ARG_DECL)
 
       ACE_TRY
         {
-          server->server_test (i ACE_ENV_ARG_PARAMETER);
+          CORBA::ULongSeq_var ulongseq;
+          server->server_test (i, ulongseq.out () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (i == 1)
