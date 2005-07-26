@@ -3,25 +3,26 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
 #include "cpd.hpp"
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
+
     // PackagedComponentImplementation
-    // 
+    //
 
     PackagedComponentImplementation::
     PackagedComponentImplementation (::XMLSchema::string< ACE_TCHAR > const& name__,
     ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__)
-    : 
+    :
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription (referencedImplementation__)),
     regulator__ ()
@@ -33,7 +34,6 @@ namespace CIAO
     PackagedComponentImplementation::
     PackagedComponentImplementation (::CIAO::Config_Handlers::PackagedComponentImplementation const& s)
     :
-    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription (*s.referencedImplementation_)),
     regulator__ ()
@@ -54,7 +54,7 @@ namespace CIAO
 
 
     // PackagedComponentImplementation
-    // 
+    //
     ::XMLSchema::string< ACE_TCHAR > const& PackagedComponentImplementation::
     name () const
     {
@@ -74,7 +74,7 @@ namespace CIAO
     }
 
     // PackagedComponentImplementation
-    // 
+    //
     ::CIAO::Config_Handlers::ComponentImplementationDescription const& PackagedComponentImplementation::
     referencedImplementation () const
     {
@@ -95,11 +95,11 @@ namespace CIAO
 
 
     // ComponentPackageDescription
-    // 
+    //
 
     ComponentPackageDescription::
     ComponentPackageDescription ()
-    : 
+    :
     regulator__ ()
     {
     }
@@ -107,7 +107,6 @@ namespace CIAO
     ComponentPackageDescription::
     ComponentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const& s)
     :
-    ::XSCRT::Type (), 
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
@@ -115,6 +114,7 @@ namespace CIAO
     implementation_ (s.implementation_.get () ? new ::CIAO::Config_Handlers::PackagedComponentImplementation (*s.implementation_) : 0),
     infoProperty_ (s.infoProperty_.get () ? new ::CIAO::Config_Handlers::Property (*s.infoProperty_) : 0),
     contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
+    href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     regulator__ ()
     {
       if (label_.get ()) label_->container (this);
@@ -124,6 +124,7 @@ namespace CIAO
       if (implementation_.get ()) implementation_->container (this);
       if (infoProperty_.get ()) infoProperty_->container (this);
       if (contentLocation_.get ()) contentLocation_->container (this);
+      if (href_.get ()) href_->container (this);
     }
 
     ::CIAO::Config_Handlers::ComponentPackageDescription& ComponentPackageDescription::
@@ -150,12 +151,15 @@ namespace CIAO
       if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
       else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
+      if (s.href_.get ()) href (*(s.href_));
+      else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
       return *this;
     }
 
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     label_p () const
     {
@@ -190,7 +194,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     UUID_p () const
     {
@@ -225,7 +229,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     realizes_p () const
     {
@@ -260,7 +264,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     configProperty_p () const
     {
@@ -295,7 +299,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     implementation_p () const
     {
@@ -330,7 +334,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     infoProperty_p () const
     {
@@ -365,7 +369,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    // 
+    //
     bool ComponentPackageDescription::
     contentLocation_p () const
     {
@@ -398,6 +402,41 @@ namespace CIAO
         contentLocation_->container (this);
       }
     }
+
+    // ComponentPackageDescription
+    //
+    bool ComponentPackageDescription::
+    href_p () const
+    {
+      return href_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ComponentPackageDescription::
+    href () const
+    {
+      return *href_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& ComponentPackageDescription::
+    href ()
+    {
+      return *href_;
+    }
+
+    void ComponentPackageDescription::
+    href (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (href_.get ())
+      {
+        *href_ = e;
+      }
+
+      else
+      {
+        href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        href_->container (this);
+      }
+    }
   }
 }
 
@@ -405,6 +444,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+
     // PackagedComponentImplementation
     //
 
@@ -432,7 +472,7 @@ namespace CIAO
           referencedImplementation_->container (this);
         }
 
-        else 
+        else
         {
         }
       }
@@ -495,7 +535,22 @@ namespace CIAO
           contentLocation (t);
         }
 
-        else 
+        else
+        {
+        }
+      }
+
+      while (p.more_attributes ())
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+        if (n == "href")
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (a);
+          href (t);
+        }
+
+        else
         {
         }
       }
@@ -509,4 +564,3 @@ namespace CIAO
   {
   }
 }
-
