@@ -13,19 +13,17 @@
 #define TAO_PORTABLESERVER_STRATEGYFACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
-
 namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export StrategyFactory :
+    class StrategyFactory :
       public ACE_Service_Object
     {
     public:

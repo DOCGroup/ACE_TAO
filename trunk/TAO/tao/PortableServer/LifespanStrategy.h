@@ -14,13 +14,12 @@
 #define TAO_PORTABLESERVER_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Policy_Strategy.h"
 #include "LifespanPolicyC.h"
 #include "tao/Object_KeyC.h"
 
@@ -30,7 +29,7 @@ namespace TAO
   {
     class Temporary_Creation_Time;
 
-    class TAO_PortableServer_Export LifespanStrategy
+    class LifespanStrategy
       : public Policy_Strategy
     {
     public:

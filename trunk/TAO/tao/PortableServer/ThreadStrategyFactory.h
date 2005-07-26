@@ -14,14 +14,13 @@
 #define TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "StrategyFactory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/StrategyFactory.h"
-#include "tao/PortableServer/ThreadPolicyC.h"
+#include "ThreadPolicyC.h"
 
 namespace TAO
 {
@@ -29,7 +28,7 @@ namespace TAO
   {
     class ThreadStrategy;
 
-    class TAO_PortableServer_Export ThreadStrategyFactory
+    class ThreadStrategyFactory
        : public StrategyFactory
     {
     public:

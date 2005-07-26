@@ -45,7 +45,7 @@ namespace TAO
       return ::PortableServer::MULTIPLE_ID;
     }
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, IdUniquenessStrategyMultiple)
+    ACE_FACTORY_DEFINE (ACE_Local_Service, IdUniquenessStrategyMultiple)
 
     ACE_STATIC_SVC_DEFINE (
         IdUniquenessStrategyMultiple,
@@ -55,11 +55,5 @@ namespace TAO
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_Dynamic_Service<IdUniquenessStrategyMultiple>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<IdUniquenessStrategyMultiple>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }

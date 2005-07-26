@@ -90,17 +90,7 @@ namespace TAO
         0
       )
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, LifespanStrategyFactoryImpl)
-
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-    template class ACE_Dynamic_Service<LifespanStrategyFactoryImpl>;
-
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-    #pragma instantiate ACE_Dynamic_Service<LifespanStrategyFactoryImpl>
-
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+    ACE_FACTORY_DEFINE (ACE_Local_Service, LifespanStrategyFactoryImpl)
   }
 }
 

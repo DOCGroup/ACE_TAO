@@ -32,7 +32,7 @@ namespace TAO
       return ::PortableServer::SINGLE_THREAD_MODEL;
     }
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, ThreadStrategySingle)
+    ACE_FACTORY_DEFINE (ACE_Local_Service, ThreadStrategySingle)
 
     ACE_STATIC_SVC_DEFINE (
         ThreadStrategySingle,
@@ -42,12 +42,6 @@ namespace TAO
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
-
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_Dynamic_Service<ThreadStrategySingle>;
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-    #pragma instantiate ACE_Dynamic_Service<ThreadStrategySingle>
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
 

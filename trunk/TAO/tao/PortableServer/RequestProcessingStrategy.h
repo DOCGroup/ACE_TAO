@@ -14,13 +14,12 @@
 #define TAO_REQUEST_PROCESSING_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Policy_Strategy.h"
 #include "PortableServer.h"
 #include "Servant_Location.h"
 
@@ -45,7 +44,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export RequestProcessingStrategy
+    class RequestProcessingStrategy
       : public Policy_Strategy
     {
     public:

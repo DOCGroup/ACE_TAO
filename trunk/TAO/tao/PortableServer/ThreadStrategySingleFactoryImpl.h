@@ -29,7 +29,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ThreadStrategySingleFactoryImpl
+    class ThreadStrategySingleFactoryImpl
        : public ThreadStrategyFactory
     {
     public:
