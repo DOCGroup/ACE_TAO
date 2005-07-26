@@ -14,20 +14,19 @@
 #define TAO_ID_ASSIGNMENT_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Policy_Strategy.h"
 #include "tao/Basic_Types.h"
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export IdAssignmentStrategy :
+    class IdAssignmentStrategy :
        public Policy_Strategy
     {
     public:

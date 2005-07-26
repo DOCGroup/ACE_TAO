@@ -14,14 +14,13 @@
 #define TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "ServantRetentionStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Servant_Location.h"
-#include "ServantRetentionStrategy.h"
 
 class TAO_Root_POA;
 
@@ -29,7 +28,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ServantRetentionStrategyNonRetain
+    class ServantRetentionStrategyNonRetain
        : public ServantRetentionStrategy
     {
     public:

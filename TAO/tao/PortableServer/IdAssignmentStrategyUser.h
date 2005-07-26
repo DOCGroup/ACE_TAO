@@ -27,7 +27,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export IdAssignmentStrategyUser
+    class IdAssignmentStrategyUser
       : public IdAssignmentStrategy
     {
     public:
