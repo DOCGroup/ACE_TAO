@@ -14,22 +14,20 @@
 #define TAO_THREAD_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Policy_Strategy.h"
 #include "ThreadPolicyC.h"
-
 #include "tao/orbconf.h"
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ThreadStrategy :
+    class ThreadStrategy :
        public Policy_Strategy
     {
     public:

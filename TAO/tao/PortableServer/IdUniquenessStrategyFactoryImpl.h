@@ -40,7 +40,7 @@ namespace TAO
         ACE_ENV_ARG_DECL);
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyFactoryImpl)
+    ACE_STATIC_SVC_DECLARE (IdUniquenessStrategyFactoryImpl)
     ACE_FACTORY_DECLARE (TAO_PortableServer, IdUniquenessStrategyFactoryImpl)
   }
 }

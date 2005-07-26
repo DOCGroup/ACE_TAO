@@ -14,13 +14,12 @@
 #define TAO_POLICY_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
 
@@ -30,7 +29,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Policy_Strategy
+    class Policy_Strategy
       : public ACE_Service_Object
     {
     public:
