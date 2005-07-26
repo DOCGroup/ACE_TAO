@@ -40,7 +40,8 @@ public:
                      CORBA::SystemException));
 
   /// The server-side test operation.
-  virtual void server_test (Test::TestScenario scenario
+  virtual void server_test (Test::TestScenario scenario,
+                            CORBA::ULongSeq_out myseq
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((Test::X,
                      Test::UnknownScenario,
