@@ -1,0 +1,83 @@
+# file      : Config.rules
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+# You may provide correct values for your configuration here.
+#
+
+# Set either BOOST_ROOT or BOOST_LIB & BOOST_INCLUDE. In case
+# only BOOST_ROOT is set then BOOST_LIB=$(BOOST_ROOT)/lib and
+# BOOST_INCLUDE=$(BOOST_ROOT)
+#
+
+BOOST_ROOT    ?=
+BOOST_LIB     ?=
+BOOST_INCLUDE ?=
+
+
+UTILITY_ROOT        ?=
+UTILITY_INCLUDE     ?=
+UTILITY_BUILD_RULES ?=
+
+
+# You normally would not want to edit anything below.
+#
+
+# Boost
+#
+ifneq ($(strip $(BOOST_ROOT)),)
+
+  ifeq ($(strip $(BOOST_LIB)),)
+    BOOST_LIB := $(BOOST_ROOT)/lib
+  endif
+
+  ifeq ($(strip $(BOOST_INCLUDE)),)
+    BOOST_INCLUDE := $(BOOST_ROOT)
+  endif
+
+endif
+
+#$(warning "boost lib   : $(BOOST_LIB)")
+#$(warning "boost inc$  : $(BOOST_INCLUDE)")
+
+ifneq ($(strip $(BOOST_LIB)),)
+  BOOST_LD_FLAGS := -L$(BOOST_LIB)
+endif
+
+ifneq ($(strip $(BOOST_INCLUDE)),)
+  BOOST_CPP_FLAGS := -I$(BOOST_INCLUDE)
+endif
+
+
+# Utility
+#
+ifneq ($(strip $(UTILITY_ROOT)),)
+
+  ifeq ($(strip $(UTILITY_INCLUDE)),)
+
+    UTILITY_INCLUDE := $(UTILITY_ROOT)
+
+  endif
+
+  ifeq ($(strip $(UTILITY_BUILD_RULES)),)
+
+    UTILITY_BUILD_RULES := $(UTILITY_ROOT)/BuildRules
+
+  endif
+
+endif
+
+ifeq ($(strip $(UTILITY_BUILD_RULES)),)
+  UTILITY_BUILD_RULES :=/usr/share/libutility-dev/BuildRules
+endif
+
+
+# $(warning "utility inc : $(UTILITY_INCLUDE)")
+# $(warning "utility bld : $(UTILITY_BUILD_RULES)")
+
+ifneq ($(strip $(UTILITY_INCLUDE)),)
+  UTILITY_CPP_FLAGS := -I$(UTILITY_INCLUDE)
+endif
+
+CPPFLAGS += $(BOOST_CPP_FLAGS) $(UTILITY_CPP_FLAGS)
+LD_FLAGS += $(BOOST_LD_FLAGS)

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<body text="#000000" bgcolor="#FFFFFF">
+
+    <head>
+      <title>Persistent State Service status</title>
+      <!-- $Id$ -->
+    </head>
+
+    <body>
+      <center>
+        <h1><a name="orb"></a>Persistent State Service</h1>
+        Points of contact: <a href="mailto: gontla_p@ociweb.com">Priyanka Gontla</a>
+
+        <p>Last Update: 2002/07/29 </p>
+      </center>
+
+      <p>Persistent State Service (PSS) desribes a way of making a
+	service persistent. The fact that PSS is being used by a
+	service is known only to the service (server) and not to the
+	client which makes use of the service. PSS presents persistent
+	information as storage objects stored in storage homes, to
+	quote the specification. The storage homes are the datastores
+	where the persistent data is saved. </p>
+      <br>
+      <p>The specification introduced Persistent State Definition
+	Language (PSDL), a superset of IDL with five new
+	constructs. PSDL is used to specify the interface to the
+	datastore. The PSDL file used in the application will define
+	the types that might be saved in the datastore. </p>
+      <br>
+      <p>We have a compiler, psdl_tao, which is similar to the tao_idl
+	compiler, which will process the psdl file and generate stubs
+	that are used mainly for the insertion and extraction
+	operations.
+      </p>
+
+      <a name="current"><h3>Current status:</h3></a>
+
+      <ul>
+        <li><p>The PSDL compiler understands and supports the simple
+	    types like <br><CODE>
+	      typdef, module, structures, interfaces.</CODE>
+	  </p>
+        </li>
+        <li>
+          <p> The datastore for now is a regular file. The
+	    <CODE>libTAO_PSDL_Datastore</CODE> interfaces the
+	    datastore and helps write and read from the datastore.
+	    The data that is saved persistently is a hash map whose
+	    external id is TAO_PSDL_String, a wrapper around
+	    ACE_CString and the internal id is TAO_PSDL_OctetSeq, a
+	    wrapper around for CORBA::OctetSeq. </p>
+        </li>
+        <li>
+	  <p> There is an example in
+	    $ACE_ROOT/TAO/orbsvcs/examples/PSS which shows how the PSS
+	    can be used to make a simplified naming service persistent.
+	  </p>
+        </li>
+      </ul>
+
+      <a name="future"><h3>Future work:</h3></a>
+
+      <ul>
+        <li>
+	  <p>Add support to the remaining types defined in PSDL.
+          </p>
+        </li>
+
+        <li>
+	  <p>Use RMCast to have another form of persistency via data
+	    replication.
+          </p>
+        </li>
+
+      </ul>
+
+      <P><HR><P>
+      <a href="#toc">Back to TOC</a>
+    </body>
+</html>

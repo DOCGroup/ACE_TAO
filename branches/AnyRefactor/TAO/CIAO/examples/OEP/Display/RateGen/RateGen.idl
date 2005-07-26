@@ -1,0 +1,34 @@
+// $Id$
+
+/**
+ * @file RateGen.idl
+ *
+ * Definition of the RateGen (a rate generator) component.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#ifndef RATEGEN_IDL
+#define RATEGEN_IDL
+
+#include "../HUDisplay.idl"
+
+module HUDisplay
+{
+  component RateGen supports opmode
+    {
+      publishes tick Pulse;
+
+      /// The attribute can be configured via the home or the
+      /// component property file.
+      attribute long hertz;
+    };
+
+  home RateGenHome manages RateGen
+  {
+    // Explicit operations
+    factory new_RateGen (in long hertz);
+  };
+};
+
+#endif /* RATEGEN_IDL */
