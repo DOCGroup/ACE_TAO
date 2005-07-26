@@ -50,7 +50,7 @@
   <xsd:complexType name="DataType">
     <xsd:choice>
       <xsd:element name="kind" type="Deployment:TCKind"/>
-<!--      
+<!--
 @@ not used, what for?
 
       <xsd:element name="enum" type="Deployment:EnumType"/>
@@ -109,7 +109,7 @@
   <xsd:complexType name="Any">
     <xsd:sequence>
       <xsd:element name="type" type="Deployment:DataType"/>
-      <xsd:element name="value" type="Deployment:DataValue"/>      
+      <xsd:element name="value" type="Deployment:DataValue"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -117,13 +117,13 @@
   <xsd:complexType name="Property">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="value" type="Deployment:Any"/>    
+      <xsd:element name="value" type="Deployment:Any"/>
     </xsd:sequence>
   </xsd:complexType>
 
 
 <!-- End of base definitions. -->
-  
+
   <xsd:complexType name="Node">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
@@ -132,7 +132,7 @@
 @@ recursive, not used
       <xsd:element name="connection" type="Deployment:Interconnect"/>
       <xsd:element name="sharedResource" type="Deployment:SharedResource"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
+      <xsd:element name="resource" type="Deployment:Resource"/>
 -->
     </xsd:sequence>
   </xsd:complexType>
@@ -154,7 +154,7 @@
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="kind" type="Deployment:SatisfierPropertyKind"/>
-      <xsd:element name="value" type="Deployment:Any"/>      
+      <xsd:element name="value" type="Deployment:Any"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -173,7 +173,7 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="node" type="Deployment:Node"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>      
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -181,7 +181,7 @@
   <xsd:complexType name="Domain">
     <xsd:sequence>
       <xsd:element name="label" type="xsd:string"/>
-      <xsd:element name="UUID" type="xsd:string"/>       
+      <xsd:element name="UUID" type="xsd:string"/>
       <xsd:element name="sharedResource" type="Deployment:SharedResource" minOccurs="0"/>
       <xsd:element name="node" type="Deployment:Node" maxOccurs="unbounded"/>
 <!--
@@ -198,7 +198,7 @@
     <xsd:sequence>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:Property"/>      
+      <xsd:element name="property" type="Deployment:Property"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -209,7 +209,7 @@
     <xsd:sequence>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="resourceValue" type="Deployment:Any"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -255,7 +255,7 @@
       <xsd:element name="resourceUsage" type="Deployment:ResourceUsageKind"/>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="resourceValue" type="Deployment:Any"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -309,7 +309,11 @@
 
 
   <xsd:complexType name="ComponentInterfaceDescription">
-    <xsd:choice>
+    <!-- @@mxiong: added minOccurs="0" maxOccurs="unbounded"
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:sequence>
         <xsd:element name="label" type="xsd:string"/>
         <xsd:element name="UUID" type="xsd:string"/>
@@ -323,12 +327,17 @@
       </xsd:sequence>
       <xsd:element name="contentLocation" type="xsd:string"/>
     </xsd:choice>
+    <!-- @@mxiong: added a href attribute
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:attribute name="href" type="xsd:string" use="optional"/>
   </xsd:complexType>
 
 
   <xsd:complexType name="ComponentExternalPortEndpoint">
     <xsd:sequence>
-      <xsd:element name="portName" type="xsd:string"/>      
+      <xsd:element name="portName" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -345,7 +354,7 @@
 
   <xsd:complexType name="ExternalReferenceEndpoint">
     <xsd:sequence>
-      <xsd:element name="location" type="xsd:string"/>      
+      <xsd:element name="location" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -355,7 +364,7 @@
       <xsd:element name="targetName" type="xsd:string"/>
       <xsd:element name="requirementName" type="xsd:string"/>
       <xsd:element name="resourceName" type="xsd:string"/>
-      <xsd:element name="resourceValue" type="Deployment:Any"/>      
+      <xsd:element name="resourceValue" type="Deployment:Any"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -375,7 +384,7 @@
 
   <xsd:complexType name="ImplementationDependency">
     <xsd:sequence>
-      <xsd:element name="requiredType" type="xsd:string"/>     
+      <xsd:element name="requiredType" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -383,8 +392,8 @@
   <xsd:complexType name="DeploymentPlan">
    <xsd:sequence>
      <xsd:element name="label" type="xsd:string" minOccurs="0"/>
-     <xsd:element name="UUID" type="xsd:string" minOccurs="0"/>      
-     <xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription" minOccurs="0" maxOccurs="1"/>     
+     <xsd:element name="UUID" type="xsd:string" minOccurs="0"/>
+     <xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription" minOccurs="0" maxOccurs="1"/>
      <xsd:element name="implementation" type="Deployment:MonolithicDeploymentDescription" maxOccurs="unbounded" />
      <xsd:element name="instance" type="Deployment:InstanceDeploymentDescription" minOccurs="0" maxOccurs="unbounded"/>
      <xsd:element name="connection" type="Deployment:PlanConnectionDescription" minOccurs="0" maxOccurs="unbounded"/>
@@ -396,7 +405,7 @@
      <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
-  
+
 
 
 
@@ -407,14 +416,14 @@
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>     
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
     </xsd:sequence>
   </xsd:complexType>
 
 
   <xsd:complexType name="NamedImplementationArtifact">
     <xsd:sequence>
-      <xsd:element name="name" type="xsd:string"/>     
+      <xsd:element name="name" type="xsd:string"/>
       <!-- @@ recursive NIA->IAD->NIA -->
       <xsd:element name="referencedArtifact" type="Deployment:ImplementationArtifactDescription"/>
     </xsd:sequence>
@@ -422,20 +431,30 @@
 
 
   <xsd:complexType name="ImplementationArtifactDescription">
-    <xsd:choice>
+    <!-- @@mxiong: added minOccurs="0" maxOccurs="1"
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:choice minOccurs="0" maxOccurs="1">
       <xsd:sequence>
         <xsd:element name="label" type="xsd:string"/>
         <xsd:element name="UUID" type="xsd:string"/>
 
         <!-- @@ There probably should be only one location? -->
         <xsd:element name="location" type="xsd:string" maxOccurs="unbounded"/>
+        <!-- @@mxiong: move <dependsOn> before <execParameter>  -->
+        <xsd:element name="dependsOn" type="Deployment:NamedImplementationArtifact" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element name="execParameter" type="Deployment:Property" minOccurs="0"/>
         <xsd:element name="deployRequirement" type="Deployment:Requirement" minOccurs="0"/>
-        <xsd:element name="dependsOn" type="Deployment:NamedImplementationArtifact" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>      
+        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>
       </xsd:sequence>
       <xsd:element name="contentLocation" type="xsd:string"/>
     </xsd:choice>
+    <!-- @@mxiong: added a href attribute
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:attribute name="href" type="xsd:string" use="optional"/>
   </xsd:complexType>
 
 
@@ -446,7 +465,7 @@
       <xsd:element name="componentPort" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:Property"/>      
+      <xsd:element name="property" type="Deployment:Property"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -463,24 +482,33 @@
   <xsd:complexType name="PackagedComponentImplementation">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <!-- @@ recursive CPD->PCI->CID->CAD->SID->CPD -->   
+      <!-- @@ recursive CPD->PCI->CID->CAD->SID->CPD -->
       <xsd:element name="referencedImplementation" type="Deployment:ComponentImplementationDescription"/>
     </xsd:sequence>
   </xsd:complexType>
 
 
   <xsd:complexType name="ComponentPackageDescription">
-    <xsd:choice>
+    <!-- @@mxiong: added minOccurs="0" maxOccurs="1"
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:choice minOccurs="0" maxOccurs="1">
       <xsd:sequence>
         <xsd:element name="label" type="xsd:string"/>
         <xsd:element name="UUID" type="xsd:string"/>
         <xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription" minOccurs="0"/>
         <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0"/>
         <xsd:element name="implementation" type="Deployment:PackagedComponentImplementation"/>
-        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>      
+        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>
       </xsd:sequence>
       <xsd:element name="contentLocation" type="xsd:string"/>
     </xsd:choice>
+    <!-- @@mxiong: added href
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:attribute name="href" type="xsd:string" use="optional"/>
   </xsd:complexType>
 
 
@@ -488,7 +516,7 @@
     <xsd:sequence>
       <xsd:element name="requiredUUID" type="xsd:string"/>
       <xsd:element name="requiredName" type="xsd:string"/>
-      <xsd:element name="requiredType" type="xsd:string"/>      
+      <xsd:element name="requiredType" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -536,7 +564,7 @@
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="externalName" type="xsd:string"/>
-      <xsd:element name="delegatesTo" type="Deployment:SubcomponentPropertyReference"/>      
+      <xsd:element name="delegatesTo" type="Deployment:SubcomponentPropertyReference"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -545,13 +573,17 @@
     <xsd:sequence>
       <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription" maxOccurs="unbounded"/>
       <xsd:element name="connection" type="Deployment:AssemblyConnectionDescription" maxOccurs="unbounded"/>
-      <xsd:element name="externalProperty" type="Deployment:AssemblyPropertyMapping" minOccurs="0"/> 
+      <xsd:element name="externalProperty" type="Deployment:AssemblyPropertyMapping" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
 
 
   <xsd:complexType name="ComponentImplementationDescription">
-    <xsd:choice>
+    <!-- @@mxiong: added minOccurs="0" maxOccurs="unbounded"
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:choice minOccurs="0" maxOccurs="1">
       <xsd:sequence>
         <xsd:element name="label" type="xsd:string"/>
         <xsd:element name="UUID" type="xsd:string"/>
@@ -563,10 +595,15 @@
         <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0"/>
         <xsd:element name="capability" type="Deployment:Capability" minOccurs="0"/>
         <xsd:element name="dependsOn" type="Deployment:ImplementationDependency" minOccurs="0"/>
-        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>      
+        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>
       </xsd:sequence>
       <xsd:element name="contentLocation" type="xsd:string"/>
     </xsd:choice>
+    <!-- @@mxiong: added href
+                   when adding config_handler support
+                   for repoMan
+    -->
+    <xsd:attribute name="href" type="xsd:string" use="optional"/>
   </xsd:complexType>
 
 
@@ -614,7 +651,7 @@
 
 
 
-<!-- VAULT 
+<!-- VAULT
 
 Place for strange things. Nobody knows what they are for...
 
@@ -633,14 +670,14 @@ Place for strange things. Nobody knows what they are for...
   <xsd:complexType name="ObjrefType">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="typeId" type="xsd:string"/>      
+      <xsd:element name="typeId" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 
 
   <xsd:complexType name="BoundedStringType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="bound" type="xsd:string"/>      
+      <xsd:element name="bound" type="xsd:string"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -648,7 +685,7 @@ Place for strange things. Nobody knows what they are for...
   <xsd:complexType name="FixedType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="digits" type="xsd:string"/>
-      <xsd:element name="scale" type="xsd:string"/>      
+      <xsd:element name="scale" type="xsd:string"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -656,14 +693,14 @@ Place for strange things. Nobody knows what they are for...
   <xsd:complexType name="ArrayType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="length" type="xsd:string"/>
-      <xsd:element name="elementType" type="Deployment:DataType"/>      
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:choice>
   </xsd:complexType>
 
   <xsd:complexType name="SequenceType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="bound" type="xsd:string"/>
-      <xsd:element name="elementType" type="Deployment:DataType"/>      
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -671,7 +708,7 @@ Place for strange things. Nobody knows what they are for...
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="typeId" type="xsd:string"/>
-      <xsd:element name="elementType" type="Deployment:DataType"/>      
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -679,14 +716,14 @@ Place for strange things. Nobody knows what they are for...
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="typeId" type="xsd:string"/>
-      <xsd:element name="member" type="Deployment:StructMemberType"/>      
+      <xsd:element name="member" type="Deployment:StructMemberType"/>
     </xsd:choice>
   </xsd:complexType>
 
   <xsd:complexType name="StructMemberType">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="type" type="Deployment:DataType"/>      
+      <xsd:element name="type" type="Deployment:DataType"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -696,7 +733,7 @@ Place for strange things. Nobody knows what they are for...
       <xsd:element name="typeId" type="xsd:string"/>
       <xsd:element name="modifier" type="xsd:string"/>
       <xsd:element name="baseType" type="Deployment:DataType"/>
-      <xsd:element name="member" type="Deployment:ValueMemberType"/>      
+      <xsd:element name="member" type="Deployment:ValueMemberType"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -704,7 +741,7 @@ Place for strange things. Nobody knows what they are for...
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="visibility" type="xsd:string"/>
-      <xsd:element name="type" type="Deployment:DataType"/>      
+      <xsd:element name="type" type="Deployment:DataType"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -714,7 +751,7 @@ Place for strange things. Nobody knows what they are for...
       <xsd:element name="typeId" type="xsd:string"/>
       <xsd:element name="default" type="Deployment:UnionMemberType"/>
       <xsd:element name="discriminatorType" type="Deployment:DataType"/>
-      <xsd:element name="member" type="Deployment:UnionMemberType"/>      
+      <xsd:element name="member" type="Deployment:UnionMemberType"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -722,7 +759,7 @@ Place for strange things. Nobody knows what they are for...
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="type" type="Deployment:DataType"/>
-      <xsd:element name="label" type="Deployment:DataValue"/>      
+      <xsd:element name="label" type="Deployment:DataValue"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -730,7 +767,7 @@ Place for strange things. Nobody knows what they are for...
   <xsd:complexType name="NamedValue">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="value" type="Deployment:DataValue"/>      
+      <xsd:element name="value" type="Deployment:DataValue"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -740,7 +777,7 @@ Place for strange things. Nobody knows what they are for...
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="connect" type="Deployment:Interconnect"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
+      <xsd:element name="resource" type="Deployment:Resource"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -750,7 +787,7 @@ Place for strange things. Nobody knows what they are for...
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="connection" type="Deployment:Bridge"/>
       <xsd:element name="connect" type="Deployment:Node"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
+      <xsd:element name="resource" type="Deployment:Resource"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -775,13 +812,13 @@ Place for strange things. Nobody knows what they are for...
 
 <!--
 
-  This type is not referenced anywhere. 
+  This type is not referenced anywhere.
 
   <xsd:complexType name="RequirementSatisfier">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="resourceType" type="xsd:string"/>
-      <xsd:element name="property" type="Deployment:SatisfierProperty"/>      
+      <xsd:element name="property" type="Deployment:SatisfierProperty"/>
     </xsd:choice>
   </xsd:complexType>
 
