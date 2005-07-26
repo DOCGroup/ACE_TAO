@@ -88,7 +88,7 @@ main (int argc, char *argv[])
 
       TAO::Utils::Servant_Var<Echo> impl;
       {
-        Echo * tmp;
+        Echo * tmp = 0;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
