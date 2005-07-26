@@ -29,8 +29,8 @@ CORBA::Octet* read_from_disk (
                               );
 
 int write_to_disk (
-                   const char* full_path, 
-                   const CORBA::Octet* buffer, 
+                   const char* full_path,
+                   const CORBA::Octet* buffer,
                    size_t length
                    );
 ///========================================================================================
@@ -43,7 +43,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
                                             ""ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
@@ -61,7 +61,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (rm.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
+          ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to acquire new_RepositoryManagerDaemon's objref\n"),
                             -1);
         }
@@ -69,14 +69,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options* options = Options::instance ();
       options->parse_args (argc, argv);
-                
+
       if (options->shutdown_)
         {
           rm->shutdown ();
         }
       else if (options->install_)
         {
-          size_t length = 0;     
+          size_t length = 0;
           CORBA::Octet* buffer = read_from_disk (options->local_path_.c_str (), length);
 
           Deployment::Package* the_package = new Deployment::Package (
@@ -84,13 +84,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                                       length,                           //length of the sequence
                                                                       buffer,                           //data to be stored within the sequence
                                                                       true                              //take ownership of the data
-                                                                      );                
+                                                                      );
 
           try
             {
               rm->installPackage (options->package_.c_str (), *the_package, false);
             }
-          catch (CORBA::Exception &ex)
+          catch (CORBA::Exception &)
             {
               cout << "\nPackage is already in the repository!\n";
             }
@@ -102,7 +102,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               cout << "The package was found!" << endl;
               cout << "Its size is " << package_back->length () << endl;
             }
-          catch (CORBA::Exception &ex)
+          catch (CORBA::Exception &)
             {
               cout << "\nNo such package!" << endl;
             }
@@ -114,7 +114,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               rm->deletePackage (options->package_.c_str ());
               cout << options->package_.c_str () << " deleted" << endl;
             }
-          catch (CORBA::Exception &ex)
+          catch (CORBA::Exception &)
             {
               cout << "\nNo such package!" << endl;
             }
@@ -131,11 +131,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           try
             {
-              Deployment::Implementation_var impl = rm->findImplementationByName (options->artifact_.c_str (), 
+              Deployment::Implementation_var impl = rm->findImplementationByName (options->artifact_.c_str (),
                                                                                   options->package_.c_str());
-              write_to_disk (impl->name, impl->the_implementation.get_buffer (),impl->the_implementation.length ()); 
+              write_to_disk (impl->name, impl->the_implementation.get_buffer (),impl->the_implementation.length ());
             }
-          catch (CORBA::Exception &ex)
+          catch (CORBA::Exception &)
             {
               cout << "\nNo such implementation artifact in that package!" << endl;
             }
