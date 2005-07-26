@@ -1,3 +1,8 @@
+Tue Jul 26 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1020_Basic_Regression/Server_Task.cpp:
+          Added return 0
+
 Tue Jul 26 10:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Remote_Object_Proxy_Broker.cpp:
