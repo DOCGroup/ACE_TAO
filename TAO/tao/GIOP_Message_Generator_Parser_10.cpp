@@ -34,11 +34,11 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
   // Write the response flags
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
     {
-      msg << CORBA::Any::from_octet (1);
+      msg << ACE_OutputCDR::from_octet (1);
     }
   else
     {
-      msg << CORBA::Any::from_octet (0);
+      msg << ACE_OutputCDR::from_octet (0);
     }
 
   // In this case we cannot recognise anything other than the Object
