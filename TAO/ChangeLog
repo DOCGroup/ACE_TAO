@@ -1,3 +1,8 @@
+Wed Jul 27 09:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+          Fixed compile error in minimum build
+
 Wed Jul 27 07:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/ValueBox/client.cpp:
