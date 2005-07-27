@@ -101,12 +101,12 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
       *os << " _tao_forany_" << node->local_name () << " (";
       *os << this->type_name (bt, "_dup");
       *os << " (";
-      
+
       if (this->direction () != AST_Argument::dir_IN)
         {
           *os << "(const ::" << bt->name () << "_slice *) ";
         }
-        
+
       *os << "this->";
       *os << node->local_name () << "_));" << be_nl;
       *os << "(*parameter_list)[len].argument <<= _tao_forany_" ;
@@ -182,11 +182,11 @@ be_visitor_args_paramlist::visit_string (be_string *node)
       // Bounded strings.
       if (node->width () == (long) sizeof (char))
         {
-          *os << "CORBA::Any::from_string ((char *)";
+          *os << "ACE_OutputCDR::from_string ((char *)";
         }
       else
         {
-          *os << "CORBA::Any::from_wstring ((CORBA::WChar *)";
+          *os << "ACE_OutputCDR::from_wstring ((CORBA::WChar *)";
         }
 
       *os << arg->local_name () << "_, "
@@ -213,19 +213,19 @@ be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
-      *os << "CORBA::Any::from_boolean (this->";
+      *os << "ACE_OutputCDR::from_boolean (this->";
       *os << arg->local_name () << "_);";
       break;
     case AST_PredefinedType::PT_char:
-      *os << "CORBA::Any::from_char (this->";
+      *os << "ACE_OutputCDR::from_char (this->";
       *os << arg->local_name () << "_);";
       break;
     case AST_PredefinedType::PT_wchar:
-      *os << "CORBA::Any::from_wchar (this->";
+      *os << "ACE_OutputCDR::from_wchar (this->";
       *os << arg->local_name () << "_);";
       break;
     case AST_PredefinedType::PT_octet:
-      *os << "CORBA::Any::from_octet (this->";
+      *os << "ACE_OutputCDR::from_octet (this->";
       *os << arg->local_name () << "_);";
       break;
     default:

@@ -719,12 +719,12 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                 if (str->width () == (long) sizeof (char))
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "CORBA::Any::to_string (_tao_sequence[i].out (), ";
+                        << "ACE_InputCDR::to_string (_tao_sequence[i].out (), ";
                   }
                 else
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
+                        << "ACE_InputCDR::to_wstring (_tao_sequence[i].out (), ";
                   }
 
                 *os << str->max_size ()->ev ()->u.ulval << "));"
@@ -767,22 +767,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_char (_tao_sequence[i]));"
+                      << "(strm >> ACE_InputCDR::to_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_wchar (_tao_sequence[i]));"
+                      << "(strm >> ACE_InputCDR::to_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_boolean (_tao_sequence[i]));"
+                      << "(strm >> ACE_InputCDR::to_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_octet (_tao_sequence[i]));"
+                      << "(strm >> ACE_InputCDR::to_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:
@@ -884,22 +884,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_char (_tao_sequence[i]));"
+                      << "(strm << ACE_OutputCDR::from_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_wchar (_tao_sequence[i]));"
+                      << "(strm << ACE_OutputCDR::from_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_boolean (_tao_sequence[i]));"
+                      << "(strm << ACE_OutputCDR::from_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_octet (_tao_sequence[i]));"
+                      << "(strm << ACE_OutputCDR::from_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:
