@@ -1,3 +1,9 @@
+Wed Jul 27 16:33:46 2005  Gary Maxey <gary.maxey@hp.com>
+
+	* ace/config-tandem-nsk-mips-v3.h:
+
+	  Add #define for ACE_ANY_OPS_USE_NAMESPACE
+
 Mon Jul 25 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Naming_Test.cpp:
