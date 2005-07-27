@@ -28,7 +28,7 @@
  * event loop of the Reactor and the Followers wait on the
  * condition variable.
  *
- * This impelementation is to work with the Muxed Transport
+ * This implementation is to work with the Muxed Transport
  * Mechanism. Here the state variables such as <Condition
  * Variable> etc cannot be kept in the Wait Strategy, since the
  * Wait Strategy is per Transport object and here the Transport
