@@ -19,6 +19,52 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
+  CORBA::Boolean
+  Collocated_Object_Proxy_Broker::_is_a (CORBA::Object_ptr target,
+                                         const char *type_id
+                                         ACE_ENV_ARG_DECL)
+  {
+    TAO_Stub *stub = target->_stubobj ();
+
+    // Which collocation strategy should we use?
+    if (stub != 0 &&
+        stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
+          == TAO_ORB_Core::THRU_POA)
+      {
+        TAO::Portable_Server::Servant_Upcall servant_upcall (
+          stub->servant_orb_var ()->orb_core ()
+        );
+
+      CORBA::Object_var forward_to;
+      servant_upcall.prepare_for_upcall (
+          stub->profile_in_use ()->object_key (),
+          "_is_a",
+          forward_to.out ()
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_CHECK_RETURN (0);
+
+      servant_upcall.pre_invoke_collocated_request (
+          ACE_ENV_SINGLE_ARG_PARAMETER
+        );
+      ACE_CHECK_RETURN (0);
+
+      return servant_upcall.servant ()->_is_a (type_id
+                                               ACE_ENV_ARG_PARAMETER);
+    }
+
+    // Direct collocation strategy is used.
+    if (target->_servant () != 0)
+      {
+        return target->_servant ()->_is_a (type_id
+                                           ACE_ENV_ARG_PARAMETER);
+      }
+
+    return 0;
+  }
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
   char *
   Collocated_Object_Proxy_Broker::_repository_id (CORBA::Object_ptr target
                                                   ACE_ENV_ARG_DECL)
@@ -75,53 +121,6 @@ namespace TAO
 
     return _tao_retval;
   }
-
-
-  CORBA::Boolean
-  Collocated_Object_Proxy_Broker::_is_a (CORBA::Object_ptr target,
-                                         const char *type_id
-                                         ACE_ENV_ARG_DECL)
-  {
-    TAO_Stub *stub = target->_stubobj ();
-
-    // Which collocation strategy should we use?
-    if (stub != 0 &&
-        stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
-          == TAO_ORB_Core::THRU_POA)
-      {
-        TAO::Portable_Server::Servant_Upcall servant_upcall (
-          stub->servant_orb_var ()->orb_core ()
-        );
-
-      CORBA::Object_var forward_to;
-      servant_upcall.prepare_for_upcall (
-          stub->profile_in_use ()->object_key (),
-          "_is_a",
-          forward_to.out ()
-          ACE_ENV_ARG_PARAMETER
-        );
-      ACE_CHECK_RETURN (0);
-
-      servant_upcall.pre_invoke_collocated_request (
-          ACE_ENV_SINGLE_ARG_PARAMETER
-        );
-      ACE_CHECK_RETURN (0);
-
-      return servant_upcall.servant ()->_is_a (type_id
-                                               ACE_ENV_ARG_PARAMETER);
-    }
-
-    // Direct collocation strategy is used.
-    if (target->_servant () != 0)
-      {
-        return target->_servant ()->_is_a (type_id
-                                           ACE_ENV_ARG_PARAMETER);
-      }
-
-    return 0;
-  }
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   CORBA::Boolean
   Collocated_Object_Proxy_Broker::_non_existent (CORBA::Object_ptr target
