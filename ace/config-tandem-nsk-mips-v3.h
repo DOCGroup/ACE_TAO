@@ -423,6 +423,8 @@ extern int cma_sigwait  (sigset_t *);
 // Compiler supports the typename keyword for templates
 #define ACE_HAS_TYPENAME_KEYWORD
 
+// Compiler can handle any operators in namespace
+#define ACE_ANY_OPS_USE_NAMESPACE
 
 //=========================================================================
 // C++ version3 import/export macros
