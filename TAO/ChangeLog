@@ -1,3 +1,8 @@
+Wed Jul 27 07:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/ValueBox/client.cpp:
+          Fixed conversion warning
+
 Wed Jul 27 07:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Event_Service/index.html:
