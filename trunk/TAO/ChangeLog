@@ -1,6 +1,13 @@
+Wed Jul 27 07:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Event_Service/index.html:
+          Updated documentation how to run this tutorial. Thanks to
+          Frederick Heckel <fwph at cse dot wustl dot edu> for
+          reporting that things didn't work.
+
 Tue Jul 26 12:11:36 2005  Gary Maxey <gary.maxey@hp.com>
 
-        * tests/OBV/ValueBox/client.cpp: 
+        * tests/OBV/ValueBox/client.cpp:
 
           Plugged some memory leaks.
 

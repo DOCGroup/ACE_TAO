@@ -510,12 +510,12 @@ int test_boxed_string_invocations (Test * test_object)
 
         VERIFY (strcmp(p2->_value (), "2second string") == 0);
         VERIFY (strcmp(p3->_value (), "2second string") == 0);
-        VERIFY (strcmp(sresult, "1string") == 0);
+        VERIFY (strcmp(sresult.in (), "1string") == 0);
 
         p1->_remove_ref ();
         p2->_remove_ref ();
         p3->_remove_ref ();
-  
+
       }
   ACE_CATCH (CORBA::Exception, ex)
     {
