@@ -1,3 +1,10 @@
+Wed Jul 27 07:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/cid.cpp:
+        * DAnCE/Config_Handlers/cpd.cpp:
+        * DAnCE/Config_Handlers/iad.cpp:
+          Explicitly initialise base class
+
 Wed Jul 27 07:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/STD_IAD_Handler.h:
