@@ -32,6 +32,7 @@ namespace CIAO
   NamedImplementationArtifact::
   NamedImplementationArtifact (::CIAO::Config_Handlers::NamedImplementationArtifact const& s)
   :
+  ::XSCRT::Type (),
   name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
   referencedArtifact_ (new ::CIAO::Config_Handlers::ImplementationArtifactDescription (*s.referencedArtifact_)),
   regulator__ ()
@@ -105,6 +106,7 @@ namespace CIAO
   ImplementationArtifactDescription::
   ImplementationArtifactDescription (::CIAO::Config_Handlers::ImplementationArtifactDescription const& s)
   :
+  ::XSCRT::Type (),
   label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
   UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
   execParameter_ (s.execParameter_.get () ? new ::CIAO::Config_Handlers::Property (*s.execParameter_) : 0),
