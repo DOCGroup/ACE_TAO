@@ -118,7 +118,8 @@ Stock_Consumer::push (const CORBA::Any& data
       and use the usual mechanisms to catch and throw exceptions.
       For more information on how to use the alternative mapping and
       how to write portable code for both environments check
-      <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/docs/exception.html">Using ACE try macros for CORBA programming</A>.
+      <A HREF="../../../../../docs/exceptions.html">Using 
+      ACE try macros for CORBA programming</A>.
     </P>
 
     <P>Going back to our example,
@@ -335,7 +336,7 @@ Quoter_Stock_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       <A HREF="client.cpp">client.cpp</A>.
       And other support files
       <A HREF="Quoter.idl">Quoter.idl</A>,
-      <A HREF="Makefile">Makefile</A>,
+      <A HREF="GNUMakefile">Makefile</A>,
       <A HREF="Stock_i.h">Stock_i.h</A>,
       <A HREF="Stock_i.cpp">Stock_i.cpp</A>,
       <A HREF="Stock_Factory_i.h">Stock_Factory_i.h</A>,
@@ -354,7 +355,7 @@ Quoter_Stock_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     <P>To test your changes you need to run four programs,
       first TAO's Naming Service:
 <PRE>
-$ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+$ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
 </PRE>
     <P>The CORBA Event Service
     </P>
