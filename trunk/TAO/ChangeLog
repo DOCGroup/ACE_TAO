@@ -1,3 +1,23 @@
+Wed Jul 27 15:59:54 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
+
+	  When generating Any insertion and extraction operators
+	  conditionally put them in a namespace that corresponds to their
+	  enclosing module (if any).  Addresses problem reported in
+	  Bugzilla report #2071.  Since some compilers do not implement
+	  symbol lookup correctly the changed code is controlled by the
+	  ACE_ANY_OPS_USE_NAMESPACE macro.  Use this macro in config*.h if
+	  your compiler implements symbol lookup correctly.  Without the
+	  macro the IDL generated code is as it was.
+
 Wed Jul 27 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Wait_On_Leader_Follower.h:
