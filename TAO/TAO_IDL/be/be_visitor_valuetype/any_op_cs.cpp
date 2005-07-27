@@ -74,6 +74,79 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+
+  be_module *module = 0;
+ 
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      module = be_module::narrow_from_scope (node->defined_in ());
+
+      if (!module)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_valuebox_any_op_cs::"
+                             "visit_valuebox - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+
+      // Some compiler handle "any" operators in a namespace corresponding
+      // to their module, others do not.
+      *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
+
+      be_util::gen_nested_namespace_begin (os, module);
+
+      // emit  nested variation of any operators
+      *os << "// Copying insertion." << be_nl
+          << "void" << be_nl
+          << "operator<<= (" << be_idt << be_idt_nl
+          << "CORBA::Any &_tao_any," << be_nl
+          << node->local_name () << " *_tao_elem" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "CORBA::add_ref (_tao_elem);" << be_nl
+          << "_tao_any <<= &_tao_elem;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      *os << "// Non-copying insertion." << be_nl
+          << "void" << be_nl
+          << "operator<<= (" << be_idt << be_idt_nl
+          << "CORBA::Any &_tao_any," << be_nl
+          << node->local_name () << " **_tao_elem" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "TAO::Any_Impl_T<" << node->local_name () << ">::insert ("
+          << be_idt << be_idt_nl
+          << "_tao_any," << be_nl
+          << node->local_name () << "::_tao_any_destructor," << be_nl
+          << node->tc_name ()->last_component () << "," << be_nl
+          << "*_tao_elem" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      *os << "CORBA::Boolean" << be_nl
+          << "operator>>= (" << be_idt << be_idt_nl
+          << "const CORBA::Any &_tao_any," << be_nl
+          << node->local_name () << " *&_tao_elem" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "return" << be_idt_nl
+          << "TAO::Any_Impl_T<" << node->local_name () << ">::extract ("
+          << be_idt << be_idt_nl
+          << "_tao_any," << be_nl
+          << node->local_name () << "::_tao_any_destructor," << be_nl
+          << node->tc_name ()->last_component () << "," << be_nl
+          << "_tao_elem" << be_uidt_nl
+          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      be_util::gen_nested_namespace_end (os, module);
+
+      // emit #else
+      *os << "#else\n";
+    }
+
   *os << "// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
@@ -116,6 +189,11 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
+
+  if (module != 0)
+    {
+      *os << "\n\n#endif";
+    }
 
   node->cli_stub_any_op_gen (1);
   return 0;
