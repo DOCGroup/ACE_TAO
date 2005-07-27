@@ -33,6 +33,7 @@ namespace CIAO
   SubcomponentInstantiationDescription::
   SubcomponentInstantiationDescription (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& s)
   :
+  ::XSCRT::Type (),
   name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
   package_ (new ::CIAO::Config_Handlers::ComponentPackageDescription (*s.package_)),
   configProperty_ (s.configProperty_.get () ? new ::CIAO::Config_Handlers::Property (*s.configProperty_) : 0),
@@ -271,6 +272,7 @@ namespace CIAO
   SubcomponentPropertyReference::
   SubcomponentPropertyReference (::CIAO::Config_Handlers::SubcomponentPropertyReference const& s)
   :
+  ::XSCRT::Type (),
   propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.propertyName_)),
   instance_ (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (*s.instance_)),
   regulator__ ()
@@ -352,6 +354,7 @@ namespace CIAO
   AssemblyPropertyMapping::
   AssemblyPropertyMapping (::CIAO::Config_Handlers::AssemblyPropertyMapping const& s)
   :
+  ::XSCRT::Type (),
   name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
   externalName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.externalName_)),
   delegatesTo_ (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (*s.delegatesTo_)),
@@ -449,6 +452,7 @@ namespace CIAO
   ComponentAssemblyDescription::
   ComponentAssemblyDescription (::CIAO::Config_Handlers::ComponentAssemblyDescription const& s)
   :
+  ::XSCRT::Type (),
   externalProperty_ (s.externalProperty_.get () ? new ::CIAO::Config_Handlers::AssemblyPropertyMapping (*s.externalProperty_) : 0),
   regulator__ ()
   {
@@ -646,6 +650,7 @@ namespace CIAO
   MonolithicImplementationDescription::
   MonolithicImplementationDescription (::CIAO::Config_Handlers::MonolithicImplementationDescription const& s)
   :
+  ::XSCRT::Type (),
   execParameter_ (s.execParameter_.get () ? new ::CIAO::Config_Handlers::Property (*s.execParameter_) : 0),
   deployRequirement_ (s.deployRequirement_.get () ? new ::CIAO::Config_Handlers::ImplementationRequirement (*s.deployRequirement_) : 0),
   regulator__ ()
@@ -817,6 +822,7 @@ namespace CIAO
   ComponentImplementationDescription::
   ComponentImplementationDescription (::CIAO::Config_Handlers::ComponentImplementationDescription const& s)
   :
+  ::XSCRT::Type (),
   label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
   UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
   implements_ (s.implements_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.implements_) : 0),

@@ -34,6 +34,7 @@ namespace CIAO
     PackagedComponentImplementation::
     PackagedComponentImplementation (::CIAO::Config_Handlers::PackagedComponentImplementation const& s)
     :
+    ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription (*s.referencedImplementation_)),
     regulator__ ()
@@ -107,6 +108,7 @@ namespace CIAO
     ComponentPackageDescription::
     ComponentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const& s)
     :
+    ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
