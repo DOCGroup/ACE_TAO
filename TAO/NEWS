@@ -1,22 +1,17 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
-  strict policy enforcement
-
-. (Johnny/Ossama) Location Forwarding fixes
-
 . (JTC/Ossama) autoconf support for TAO tests and examples
 
-. When making asynchronous invocations data is queued until it can be
+. (Remedy) When making asynchronous invocations data is queued until it can be
   transported on the network
 
-. Add possibility to set customer allocators to be used by the ORB for
+. (Remedy) Add possibility to set customer allocators to be used by the ORB for
   marshaling and demarshaling
 
 . (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
-. IPv6 support
+. (Remedy) IPv6 support
 
 . Reenable support in the Notification service for BlockingPolicy,
   DiscardPolicy, and OrderPolicy. (Note: BlockingPolicy requires -ORBWaitStrategy rw)
@@ -30,9 +25,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.8
 ====================================================
 
-. Subset Anys to a separate library
+. (Remedy) Subset Anys to a separate library
 
-. Improve CORBA compliance by fixing bugzilla bugs 1917, 1271, and 2043
+. (Remedy) Improve CORBA compliance by fixing bugzilla bugs 1917 and 1271
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
 ====================================================
@@ -87,6 +82,8 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
     source. Placing this in the source file that includes calling ORB_init()
     is probably the best place.
 
+. Added CORBA::Object::_repository_id() and CORBA::Object::_get_orb()
+  as described by the spec.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.5 and TAO-1.4.6
 ====================================================
