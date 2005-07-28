@@ -55,6 +55,8 @@ namespace TAO
 #include "ace/TSS_T.h"
 
 // Forward declarations
+class ACE_Data_Block;
+
 class TAO_Adapter;
 class TAO_Acceptor;
 class TAO_Connector;
@@ -412,7 +414,6 @@ public:
   /// The Message Blocks used for input CDRs must have appropiate
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
-
 
   /// Return the locking strategy used for the data blocks.
   ACE_Lock *locking_strategy (void);

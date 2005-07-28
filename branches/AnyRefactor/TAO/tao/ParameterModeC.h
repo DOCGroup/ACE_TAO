@@ -63,23 +63,18 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-  
+
   enum ParameterMode
   {
     PARAM_IN,
     PARAM_OUT,
     PARAM_INOUT
   };
-  
+
   typedef ParameterMode &ParameterMode_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ParameterMode;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -93,12 +88,6 @@ namespace CORBA
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_ch.cpp:51
-
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ParameterMode);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ParameterMode &);
 
 // TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_ch.cpp:50

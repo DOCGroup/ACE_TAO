@@ -57,6 +57,7 @@
 
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Message_Block.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ClientRequestInterceptor_Adapter.h"

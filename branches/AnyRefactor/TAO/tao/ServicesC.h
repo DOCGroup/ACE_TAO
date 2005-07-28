@@ -69,67 +69,47 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::UShort ServiceType;
   typedef CORBA::UShort_out ServiceType_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceType;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::ULong ServiceOption;
   typedef CORBA::ULong_out ServiceOption_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceOption;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::ULong ServiceDetailType;
   typedef CORBA::ULong_out ServiceDetailType_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetailType;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:472
-  
+
   typedef OctetSeq ServiceDetailData;
   typedef OctetSeq_var ServiceDetailData_var;
   typedef OctetSeq_out ServiceDetailData_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetailData;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_SERVICEOPTIONSEQ_CH_)
 #define _CORBA_SERVICEOPTIONSEQ_CH_
-  
+
   class ServiceOptionSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         ServiceOptionSeq,
         ServiceOption
       >
     ServiceOptionSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ServiceOptionSeq,
@@ -137,7 +117,7 @@ namespace CORBA
         ServiceOption
       >
     ServiceOptionSeq_out;
-  
+
   class TAO_Export ServiceOptionSeq
     : public
         TAO_Unbounded_Sequence<
@@ -150,79 +130,70 @@ namespace CORBA
     ServiceOptionSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::ULong* buffer, 
+        CORBA::ULong* buffer,
         CORBA::Boolean release = 0
       );
     ServiceOptionSeq (const ServiceOptionSeq &);
     ~ServiceOptionSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ServiceOptionSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceOptionSeq;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::ServiceType Security = 1U;
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct ServiceDetail;
-  
+
   typedef
     TAO_Var_Var_T<
         ServiceDetail
       >
     ServiceDetail_var;
-  
+
   typedef
     TAO_Out_T<
         ServiceDetail,
         ServiceDetail_var
       >
     ServiceDetail_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export ServiceDetail
   {
     typedef ServiceDetail_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::ServiceDetailType service_detail_type;
     CORBA::ServiceDetailData service_detail;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetail;
-  
+
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_SERVICEDETAILSEQ_CH_)
 #define _CORBA_SERVICEDETAILSEQ_CH_
-  
+
   class ServiceDetailSeq;
-  
+
   typedef
     TAO_VarSeq_Var_T<
         ServiceDetailSeq,
         ServiceDetail
       >
     ServiceDetailSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ServiceDetailSeq,
@@ -230,7 +201,7 @@ namespace CORBA
         ServiceDetail
       >
     ServiceDetailSeq_out;
-  
+
   class TAO_Export ServiceDetailSeq
     : public
         TAO_Unbounded_Sequence<
@@ -243,58 +214,48 @@ namespace CORBA
     ServiceDetailSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        ServiceDetail* buffer, 
+        ServiceDetail* buffer,
         CORBA::Boolean release = 0
       );
     ServiceDetailSeq (const ServiceDetailSeq &);
     ~ServiceDetailSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ServiceDetailSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetailSeq;
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct ServiceInformation;
-  
+
   typedef
     TAO_Var_Var_T<
         ServiceInformation
       >
     ServiceInformation_var;
-  
+
   typedef
     TAO_Out_T<
         ServiceInformation,
         ServiceInformation_var
       >
     ServiceInformation_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export ServiceInformation
   {
     typedef ServiceInformation_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::ServiceOptionSeq service_options;
     CORBA::ServiceDetailSeq service_details;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceInformation;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -308,38 +269,6 @@ namespace CORBA
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceOptionSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceOptionSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceOptionSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceOptionSeq *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceDetail &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceDetail*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceDetail *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceDetail *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceDetailSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceDetailSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceDetailSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceDetailSeq *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceInformation &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceInformation*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceInformation *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceInformation *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71
