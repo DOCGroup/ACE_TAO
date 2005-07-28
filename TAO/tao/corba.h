@@ -48,7 +48,6 @@
 #include "tao/ORB.h"
 
 #include "tao/CurrentC.h"
-#include "tao/BoundsC.h"
 #include "tao/PolicyC.h"
 #include "tao/ServicesC.h"
 #include "tao/DomainC.h"

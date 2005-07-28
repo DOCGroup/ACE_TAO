@@ -66,22 +66,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_OCTETSEQ_CH_)
 #define _CORBA_OCTETSEQ_CH_
-  
+
   class OctetSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         OctetSeq,
         CORBA::Octet
       >
     OctetSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         OctetSeq,
@@ -89,7 +89,7 @@ namespace CORBA
         CORBA::Octet
       >
     OctetSeq_out;
-  
+
   class TAO_Export OctetSeq
     : public
         TAO_Unbounded_Sequence<
@@ -102,14 +102,14 @@ namespace CORBA
     OctetSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer, 
+        CORBA::Octet* buffer,
         CORBA::Boolean release = 0
       );
     OctetSeq (const OctetSeq &);
     ~OctetSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef OctetSeq_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -122,11 +122,6 @@ namespace CORBA
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_OctetSeq;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -152,14 +147,6 @@ namespace TAO
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
   template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71
