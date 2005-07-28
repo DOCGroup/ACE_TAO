@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Buffering_Constraint_Policy.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -45,25 +44,6 @@ TAO_Buffering_Constraint_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return TAO::BUFFERING_CONSTRAINT_POLICY_TYPE;
 }
 
-CORBA::Policy_ptr
-TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val
-                                         ACE_ENV_ARG_DECL)
-{
-  TAO::BufferingConstraint *buffering_constraint = 0;
-// @todo
-//  if ((val >>= buffering_constraint) == 0)
-//    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-//                      CORBA::Policy::_nil ());
-
-  TAO_Buffering_Constraint_Policy *servant = 0;
-  ACE_NEW_THROW_EX (servant,
-                    TAO_Buffering_Constraint_Policy (*buffering_constraint),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return servant;
-}
-
 TAO_Buffering_Constraint_Policy *
 TAO_Buffering_Constraint_Policy::clone (void) const
 {
@@ -105,11 +85,5 @@ TAO_Buffering_Constraint_Policy::_tao_cached_type (void) const
 {
   return TAO_CACHED_POLICY_BUFFERING_CONSTRAINT;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
