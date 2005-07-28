@@ -1,3 +1,8 @@
+Thu Jul 28 10:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OctetSeq/client.cpp:
+          Don't test _repository_id in a minimum corba build
+
 Thu Jul 28 00:43:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/CORBA_String.h:
