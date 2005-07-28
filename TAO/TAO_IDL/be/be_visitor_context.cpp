@@ -622,9 +622,11 @@ be_visitor_context::export_macro (void) const
 {
   switch (this->state_)
     {
+      // If -GA is used, but the anyop macro hasn't been set,
+      // default to the stub macro.
       case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
         return (be_global->gen_anyop_files ()
-                ? be_global->anyop_export_macro ()
+                ? this->non_null_export_macro ()
                 : be_global->stub_export_macro ());
       case TAO_CodeGen::TAO_ARRAY_CH:
       case TAO_CodeGen::TAO_INTERFACE_CH:
@@ -640,4 +642,14 @@ be_visitor_context::export_macro (void) const
       default:
         return "";
     }
+}
+
+const char *
+be_visitor_context::non_null_export_macro (void) const
+{
+  const char *anyop_export = be_global->anyop_export_macro ();
+  
+  return (ACE_OS::strcmp (anyop_export, "") == 0
+          ? be_global->stub_export_macro ()
+          : anyop_export);
 }

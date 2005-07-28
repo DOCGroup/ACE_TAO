@@ -821,12 +821,17 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                            << "\"\n";
     }
 
-  // Other include files.
-
+  // If anyop macro hasn't been set, default to stub macro.
   if (be_global->anyop_export_include () != 0)
     {
       *this->anyop_header_ << "\n#include \""
                            << be_global->anyop_export_include ()
+                           << "\"";
+    }
+  else if (be_global->stub_export_include () != 0)
+    {
+      *this->anyop_header_ << "\n#include \""
+                           << be_global->stub_export_include ()
                            << "\"";
     }
 

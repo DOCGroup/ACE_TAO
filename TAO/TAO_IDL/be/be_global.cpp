@@ -418,7 +418,10 @@ const char*
 BE_GlobalData::skel_export_macro (void) const
 {
   if (this->skel_export_macro_ == 0)
-    return "";
+    {
+      return "";
+    }
+    
   return this->skel_export_macro_;
 }
 
@@ -444,7 +447,10 @@ const char*
 BE_GlobalData::stub_export_macro (void) const
 {
   if (this->stub_export_macro_ == 0)
-    return "";
+    {
+      return "";
+    }
+    
   return this->stub_export_macro_;
 }
 
@@ -470,7 +476,10 @@ const char*
 BE_GlobalData::anyop_export_macro (void) const
 {
   if (this->anyop_export_macro_ == 0)
-    return "";
+    {
+      return "";
+    }
+    
   return this->anyop_export_macro_;
 }
 
