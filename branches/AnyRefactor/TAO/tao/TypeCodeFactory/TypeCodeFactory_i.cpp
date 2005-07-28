@@ -4,10 +4,10 @@
 #include "Recursive_TypeCode.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
-#include "tao/Marshal.h"
+#include "tao/AnyTypeCode/Marshal.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/SystemException.h"
 
 #include "tao/Alias_TypeCode.h"
@@ -20,11 +20,11 @@
 #include "tao/Union_TypeCode.h"
 #include "tao/Value_TypeCode.h"
 
-#include "tao/Recursive_Type_TypeCode.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 
 #include "tao/TypeCode_Case_T.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/TypeCode_Value_Field.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 
 #include "tao/True_RefCount_Policy.h"
 

@@ -159,7 +159,7 @@ operator <<= (CORBA::Any_var &lhs, const CORBA::Object_ptr rhs)
 }
 
 ACE_INLINE void
-operator <<= (CORBA::Any_var &lhs, CORBA::Any::from_boolean rhs)
+operator <<= (CORBA::Any_var &lhs, ACE_OutputCDR::from_boolean rhs)
 {
   lhs.inout () <<= rhs;
 }

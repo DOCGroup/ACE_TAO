@@ -7,13 +7,13 @@
 #include "Request.h"
 #include "DII_Reply_Dispatcher.h"
 
-#include "tao/DynamicC.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/operation_details.h"
 #include "tao/RequestInfo_Util.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/debug.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Constants.h"
 

@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "tao/AnyTypeCode/Recursive_Type_TypeCode_T.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"

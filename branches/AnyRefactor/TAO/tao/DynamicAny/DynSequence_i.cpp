@@ -3,8 +3,8 @@
 
 #include "DynSequence_i.h"
 #include "DynAnyFactory.h"
-#include "tao/Marshal.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
@@ -59,7 +59,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       cdr = unk->_tao_get_cdr ();
     }
   else
@@ -480,7 +480,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
       this->da_members_.size (length);
     }
 
-  CORBA::TypeCode_var element_type = 
+  CORBA::TypeCode_var element_type =
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -506,7 +506,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
               ACE_CHECK;
             }
 
-          this->da_members_[i] = 
+          this->da_members_[i] =
             values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
@@ -550,7 +550,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = 
+  CORBA::Boolean equivalent =
     this->type_.in ()->equivalent (tc.in ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -566,7 +566,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
         {
           TAO::Unknown_IDL_Type *unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-            
+
           cdr = unk->_tao_get_cdr ();
         }
       else
@@ -679,7 +679,7 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
         {
           TAO::Unknown_IDL_Type *field_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
-            
+
           field_cdr = field_unk->_tao_get_cdr ();
         }
       else

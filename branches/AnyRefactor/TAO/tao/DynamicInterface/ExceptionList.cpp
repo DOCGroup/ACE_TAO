@@ -4,7 +4,7 @@ ACE_RCSID (DynamicInterface,
            ExceptionList,
            "$Id$")
 
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
 

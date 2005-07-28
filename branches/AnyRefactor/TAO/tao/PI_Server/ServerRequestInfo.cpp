@@ -15,7 +15,7 @@ ACE_RCSID (PortableServer,
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/PolicyC.h"
-#include "tao/DynamicC.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/RequestInfo_Util.h"

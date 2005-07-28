@@ -200,15 +200,15 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/Recursive_Type_TypeCode_T.inl"
+# include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Recursive_Type_TypeCode_T.cpp"
+# include "tao/AnyTypeCode/Recursive_Type_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Recursive_Type_TypeCode_T.cpp")
+# pragma implementation ("Recursive_Type_TypeCode.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"

@@ -54,8 +54,8 @@
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/TypeCode.h"
-#include "tao/DynamicC.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/CDR.h"
 #include "tao/operation_details.h"
 #include "tao/PortableInterceptor.h"
@@ -80,7 +80,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__SARG_TRAITS_SS_
- 
+
   template<>
   class  SArg_Traits<ImplementationRepository::ServerObject>
     : public
@@ -93,13 +93,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:772
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__SARG_TRAITS_SS_
- 
+
   template<>
   class SArg_Traits<ImplementationRepository::StartupOptions>
     : public
@@ -112,13 +112,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:772
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__SARG_TRAITS_SS_
- 
+
   template<>
   class SArg_Traits<ImplementationRepository::ServerInformation>
     : public
@@ -131,13 +131,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:489
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__SARG_TRAITS_SS_
- 
+
   template<>
   class SArg_Traits<ImplementationRepository::ServerInformationList>
     : public
@@ -153,7 +153,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__SARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__SARG_TRAITS_SS_
- 
+
   template<>
   class  SArg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
@@ -178,7 +178,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_SS_
- 
+
   template<>
   class  Arg_Traits<ImplementationRepository::ServerObject>
     : public
@@ -192,13 +192,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:772
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_
- 
+
   template<>
   class Arg_Traits<ImplementationRepository::StartupOptions>
     : public
@@ -211,13 +211,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:772
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_
- 
+
   template<>
   class Arg_Traits<ImplementationRepository::ServerInformation>
     : public
@@ -230,13 +230,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:489
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_
- 
+
   template<>
   class Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
@@ -252,7 +252,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_SS_
- 
+
   template<>
   class  Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
@@ -393,7 +393,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 {
   static POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_Broker
   strategized_proxy_broker;
- 
+
   return &strategized_proxy_broker;
 }
 
@@ -415,7 +415,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
   TAO::Collocation_Strategy strategy =
     TAO_ORB_Core::collocation_strategy (obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
- 
+
   return strategy;
 }
 
@@ -463,7 +463,7 @@ ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_Ini
 {
   ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function_pointer =
     ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function;
- 
+
   return 0;
 }
 
@@ -553,11 +553,11 @@ POA_ImplementationRepository::ServerInformationIterator::~ServerInformationItera
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class next_n_ServerInformationIterator
     : public TAO::Upcall_Command
   {
@@ -571,41 +571,41 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
- 
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong, TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
- 
+
       TAO::SArg_Traits< ::ImplementationRepository::ServerInformationList>::out_arg_type arg_2 =
         TAO::Portable_Server::get_out_arg< ::ImplementationRepository::ServerInformationList, TAO::SArg_Traits< ::ImplementationRepository::ServerInformationList>::out_arg_type> (
           this->operation_details_,
           this->args_,
           2);
- 
- 
+
+
       retval =
         this->servant_->next_n (
           arg_1
           , arg_2
           ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -619,26 +619,26 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::ULong>::in_arg_val _tao_how_many;
   TAO::SArg_Traits< ::ImplementationRepository::ServerInformationList>::out_arg_val _tao_servers;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_how_many,
       &_tao_servers
     };
- 
+
   static size_t const nargs = 3;
- 
+
   POA_ImplementationRepository::ServerInformationIterator * const impl =
     static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
 
@@ -646,7 +646,7 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -659,15 +659,15 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class destroy_ServerInformationIterator
     : public TAO::Upcall_Command
   {
@@ -677,18 +677,18 @@ namespace POA_ImplementationRepository
       : servant_ (servant)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->servant_->destroy (
         ACE_ENV_SINGLE_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
   };
- 
+
 }
 
 
@@ -702,28 +702,28 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
- 
+
   TAO::Argument * const args[] =
     {
       &retval
     };
- 
+
   static size_t const nargs = 1;
- 
+
   POA_ImplementationRepository::ServerInformationIterator * const impl =
     static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
 
   destroy_ServerInformationIterator command (
     impl);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -736,7 +736,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 // TAO_IDL - Generated from
@@ -744,11 +744,11 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
 
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class _is_a_ServerInformationIterator_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -762,34 +762,34 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
- 
+
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
- 
- 
+
+
       retval =
         this->servant_-> _is_a (
           arg_1
           ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
     TAO_ServerRequest & server_request,
@@ -798,32 +798,32 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_repository_id;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_repository_id
     };
- 
+
   static size_t const nargs = 2;
- 
+
   POA_ImplementationRepository::ServerInformationIterator * const impl =
     static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
- 
+
   _is_a_ServerInformationIterator_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -836,16 +836,16 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class _non_existent_ServerInformationIterator_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -859,27 +859,27 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
- 
- 
+
+
       retval =
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel (
     TAO_ServerRequest & server_request,
@@ -888,30 +888,30 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
- 
+
   TAO::Argument * const args[] =
     {
       &retval
     };
- 
+
   static size_t const nargs = 1;
- 
+
   POA_ImplementationRepository::ServerInformationIterator * const impl =
     static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
- 
+
   _non_existent_ServerInformationIterator_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -924,7 +924,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 
@@ -945,30 +945,30 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ()
       );
- 
+
   if (_tao_adapter == 0)
     {
       ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1,
                                     CORBA::COMPLETED_NO));
     }
- 
+
   POA_ImplementationRepository::ServerInformationIterator * const impl =
     static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
   CORBA::InterfaceDef_ptr _tao_retval =
     impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
- 
+
   server_request.init_reply ();
   TAO_OutputCDR &_tao_out = *server_request.outgoing ();
- 
+
   CORBA::Boolean const _tao_result =
     _tao_adapter->interfacedef_cdr_insert (
         _tao_out,
         _tao_retval
       );
- 
+
   _tao_adapter->dispose (_tao_retval);
- 
+
   if (_tao_result == 0)
     {
       ACE_THROW (CORBA::MARSHAL ());
@@ -977,11 +977,11 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
 
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class _get_component_ServerInformationIterator_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -995,27 +995,27 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
           this->operation_details_,
           this->args_);
- 
- 
+
+
       retval =
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
     TAO_ServerRequest & server_request,
@@ -1024,30 +1024,30 @@ void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
- 
+
   TAO::Argument * const args[] =
     {
       &retval
     };
- 
+
   static size_t const nargs = 1;
- 
+
   POA_ImplementationRepository::ServerInformationIterator * const impl =
     static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
- 
+
   _get_component_ServerInformationIterator_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1060,7 +1060,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator::_is_a (
@@ -1109,22 +1109,22 @@ POA_ImplementationRepository::ServerInformationIterator::_this (ACE_ENV_SINGLE_A
 {
   TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
- 
+
   TAO_Stub_Auto_Ptr safe_stub (stub);
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
- 
+
   CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
- 
+
   ACE_NEW_RETURN (
       tmp,
       CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
- 
+
   CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
- 
+
   typedef ::ImplementationRepository::ServerInformationIterator STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (
@@ -1267,7 +1267,7 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::the_
 {
   static POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker
   strategized_proxy_broker;
- 
+
   return &strategized_proxy_broker;
 }
 
@@ -1289,7 +1289,7 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::get_
   TAO::Collocation_Strategy strategy =
     TAO_ORB_Core::collocation_strategy (obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
- 
+
   return strategy;
 }
 
@@ -1337,7 +1337,7 @@ ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_Initializer (s
 {
   ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function_pointer =
     ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function;
- 
+
   return 0;
 }
 
@@ -1594,11 +1594,11 @@ POA_ImplementationRepository::Administration::~Administration (void)
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class activate_server_Administration
     : public TAO::Upcall_Command
   {
@@ -1612,7 +1612,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
@@ -1620,19 +1620,19 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       this->servant_->activate_server (
         arg_1
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -1646,8 +1646,8 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const exceptions[] =
     {
@@ -1656,18 +1656,18 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
     };
   static size_t const nexceptions = 2;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_server;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_server
     };
- 
+
   static size_t const nargs = 2;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -1675,7 +1675,7 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1688,15 +1688,15 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class add_or_update_server_Administration
     : public TAO::Upcall_Command
   {
@@ -1710,7 +1710,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
@@ -1718,26 +1718,26 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       TAO::SArg_Traits< ::ImplementationRepository::StartupOptions>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::ImplementationRepository::StartupOptions, TAO::SArg_Traits< ::ImplementationRepository::StartupOptions>::in_arg_type> (
           this->operation_details_,
           this->args_,
           2);
- 
+
       this->servant_->add_or_update_server (
         arg_1
         , arg_2
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -1751,8 +1751,8 @@ void POA_ImplementationRepository::Administration::add_or_update_server_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const exceptions[] =
     {
@@ -1760,20 +1760,20 @@ void POA_ImplementationRepository::Administration::add_or_update_server_skel (
     };
   static size_t const nexceptions = 1;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_server;
   TAO::SArg_Traits< ::ImplementationRepository::StartupOptions>::in_arg_val _tao_options;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_server,
       &_tao_options
     };
- 
+
   static size_t const nargs = 3;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -1781,7 +1781,7 @@ void POA_ImplementationRepository::Administration::add_or_update_server_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1794,15 +1794,15 @@ void POA_ImplementationRepository::Administration::add_or_update_server_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class remove_server_Administration
     : public TAO::Upcall_Command
   {
@@ -1816,7 +1816,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
@@ -1824,19 +1824,19 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       this->servant_->remove_server (
         arg_1
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -1850,8 +1850,8 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const exceptions[] =
     {
@@ -1859,18 +1859,18 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
     };
   static size_t const nexceptions = 1;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_server;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_server
     };
- 
+
   static size_t const nargs = 2;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -1878,7 +1878,7 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1891,15 +1891,15 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class shutdown_server_Administration
     : public TAO::Upcall_Command
   {
@@ -1913,7 +1913,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
@@ -1921,19 +1921,19 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       this->servant_->shutdown_server (
         arg_1
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -1947,8 +1947,8 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const exceptions[] =
     {
@@ -1956,18 +1956,18 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
     };
   static size_t const nexceptions = 1;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_server;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_server
     };
- 
+
   static size_t const nargs = 2;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -1975,7 +1975,7 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1988,15 +1988,15 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class server_is_running_Administration
     : public TAO::Upcall_Command
   {
@@ -2010,7 +2010,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
@@ -2018,33 +2018,33 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           2);
- 
+
       TAO::SArg_Traits< ::ImplementationRepository::ServerObject>::in_arg_type arg_3 =
         TAO::Portable_Server::get_in_arg< ::ImplementationRepository::ServerObject, TAO::SArg_Traits< ::ImplementationRepository::ServerObject>::in_arg_type> (
           this->operation_details_,
           this->args_,
           3);
- 
+
       this->servant_->server_is_running (
         arg_1
         , arg_2
         , arg_3
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -2058,8 +2058,8 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const exceptions[] =
     {
@@ -2067,12 +2067,12 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
     };
   static size_t const nexceptions = 1;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_server;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_partial_ior;
   TAO::SArg_Traits< ::ImplementationRepository::ServerObject>::in_arg_val _tao_server_object;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
@@ -2080,9 +2080,9 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
       &_tao_partial_ior,
       &_tao_server_object
     };
- 
+
   static size_t const nargs = 4;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -2090,7 +2090,7 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2103,15 +2103,15 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class server_is_shutting_down_Administration
     : public TAO::Upcall_Command
   {
@@ -2125,7 +2125,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
@@ -2133,19 +2133,19 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       this->servant_->server_is_shutting_down (
         arg_1
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -2159,8 +2159,8 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const exceptions[] =
     {
@@ -2168,18 +2168,18 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
     };
   static size_t const nexceptions = 1;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_server;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_server
     };
- 
+
   static size_t const nargs = 2;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -2187,7 +2187,7 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2200,15 +2200,15 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class find_Administration
     : public TAO::Upcall_Command
   {
@@ -2222,7 +2222,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
@@ -2230,26 +2230,26 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       TAO::SArg_Traits< ::ImplementationRepository::ServerInformation>::out_arg_type arg_2 =
         TAO::Portable_Server::get_out_arg< ::ImplementationRepository::ServerInformation, TAO::SArg_Traits< ::ImplementationRepository::ServerInformation>::out_arg_type> (
           this->operation_details_,
           this->args_,
           2);
- 
+
       this->servant_->find (
         arg_1
         , arg_2
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -2263,26 +2263,26 @@ void POA_ImplementationRepository::Administration::find_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_server;
   TAO::SArg_Traits< ::ImplementationRepository::ServerInformation>::out_arg_val _tao_info;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_server,
       &_tao_info
     };
- 
+
   static size_t const nargs = 3;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -2290,7 +2290,7 @@ void POA_ImplementationRepository::Administration::find_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2303,15 +2303,15 @@ void POA_ImplementationRepository::Administration::find_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class list_Administration
     : public TAO::Upcall_Command
   {
@@ -2325,7 +2325,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
@@ -2333,33 +2333,33 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       TAO::SArg_Traits< ::ImplementationRepository::ServerInformationList>::out_arg_type arg_2 =
         TAO::Portable_Server::get_out_arg< ::ImplementationRepository::ServerInformationList, TAO::SArg_Traits< ::ImplementationRepository::ServerInformationList>::out_arg_type> (
           this->operation_details_,
           this->args_,
           2);
- 
+
       TAO::SArg_Traits< ::ImplementationRepository::ServerInformationIterator>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::ImplementationRepository::ServerInformationIterator, TAO::SArg_Traits< ::ImplementationRepository::ServerInformationIterator>::out_arg_type> (
           this->operation_details_,
           this->args_,
           3);
- 
+
       this->servant_->list (
         arg_1
         , arg_2
         , arg_3
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -2373,18 +2373,18 @@ void POA_ImplementationRepository::Administration::list_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::ULong>::in_arg_val _tao_how_many;
   TAO::SArg_Traits< ::ImplementationRepository::ServerInformationList>::out_arg_val _tao_server_list;
   TAO::SArg_Traits< ::ImplementationRepository::ServerInformationIterator>::out_arg_val _tao_server_iterator;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
@@ -2392,9 +2392,9 @@ void POA_ImplementationRepository::Administration::list_skel (
       &_tao_server_list,
       &_tao_server_iterator
     };
- 
+
   static size_t const nargs = 4;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -2402,7 +2402,7 @@ void POA_ImplementationRepository::Administration::list_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2415,15 +2415,15 @@ void POA_ImplementationRepository::Administration::list_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class shutdown_Administration
     : public TAO::Upcall_Command
   {
@@ -2437,7 +2437,7 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_1 =
@@ -2445,26 +2445,26 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_,
           1);
- 
+
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
           this->operation_details_,
           this->args_,
           2);
- 
+
       this->servant_->shutdown (
         arg_1
         , arg_2
         ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 
 
@@ -2478,26 +2478,26 @@ void POA_ImplementationRepository::Administration::shutdown_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< void>::ret_val retval;
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_activators;
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_servers;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_activators,
       &_tao_servers
     };
- 
+
   static size_t const nargs = 3;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
 
@@ -2505,7 +2505,7 @@ void POA_ImplementationRepository::Administration::shutdown_skel (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2518,7 +2518,7 @@ void POA_ImplementationRepository::Administration::shutdown_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 // TAO_IDL - Generated from
@@ -2526,11 +2526,11 @@ void POA_ImplementationRepository::Administration::shutdown_skel (
 
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class _is_a_Administration_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -2544,34 +2544,34 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
- 
+
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
- 
- 
+
+
       retval =
         this->servant_-> _is_a (
           arg_1
           ACE_ENV_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 void POA_ImplementationRepository::Administration::_is_a_skel (
     TAO_ServerRequest & server_request,
@@ -2580,32 +2580,32 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_repository_id;
- 
+
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_repository_id
     };
- 
+
   static size_t const nargs = 2;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
- 
+
   _is_a_Administration_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2618,16 +2618,16 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class _non_existent_Administration_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -2641,27 +2641,27 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
- 
- 
+
+
       retval =
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 void POA_ImplementationRepository::Administration::_non_existent_skel (
     TAO_ServerRequest & server_request,
@@ -2670,30 +2670,30 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
- 
+
   TAO::Argument * const args[] =
     {
       &retval
     };
- 
+
   static size_t const nargs = 1;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
- 
+
   _non_existent_Administration_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2706,7 +2706,7 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 
@@ -2727,30 +2727,30 @@ void POA_ImplementationRepository::Administration::_interface_skel (
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ()
       );
- 
+
   if (_tao_adapter == 0)
     {
       ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1,
                                     CORBA::COMPLETED_NO));
     }
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
   CORBA::InterfaceDef_ptr _tao_retval =
     impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
- 
+
   server_request.init_reply ();
   TAO_OutputCDR &_tao_out = *server_request.outgoing ();
- 
+
   CORBA::Boolean const _tao_result =
     _tao_adapter->interfacedef_cdr_insert (
         _tao_out,
         _tao_retval
       );
- 
+
   _tao_adapter->dispose (_tao_retval);
- 
+
   if (_tao_result == 0)
     {
       ACE_THROW (CORBA::MARSHAL ());
@@ -2759,11 +2759,11 @@ void POA_ImplementationRepository::Administration::_interface_skel (
 
 namespace POA_ImplementationRepository
 {
- 
- 
+
+
   // TAO_IDL - Generated from
   // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/upcall_command_ss.cpp:127
- 
+
   class _get_component_Administration_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -2777,27 +2777,27 @@ namespace POA_ImplementationRepository
       , args_ (args)
     {
     }
- 
+
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
           this->operation_details_,
           this->args_);
- 
- 
+
+
       retval =
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
- 
+
     }
- 
+
   private:
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
- 
+
 }
 void POA_ImplementationRepository::Administration::_component_skel (
     TAO_ServerRequest & server_request,
@@ -2806,30 +2806,30 @@ void POA_ImplementationRepository::Administration::_component_skel (
     ACE_ENV_ARG_DECL
   )
 {
- 
- 
+
+
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
- 
+
   TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
- 
+
   TAO::Argument * const args[] =
     {
       &retval
     };
- 
+
   static size_t const nargs = 1;
- 
+
   POA_ImplementationRepository::Administration * const impl =
     static_cast<POA_ImplementationRepository::Administration *> (servant);
- 
+
   _get_component_Administration_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
- 
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2842,7 +2842,7 @@ void POA_ImplementationRepository::Administration::_component_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
- 
+
 }
 
 CORBA::Boolean POA_ImplementationRepository::Administration::_is_a (
@@ -2891,22 +2891,22 @@ POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
- 
+
   TAO_Stub_Auto_Ptr safe_stub (stub);
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
- 
+
   CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
- 
+
   ACE_NEW_RETURN (
       tmp,
       CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
- 
+
   CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
- 
+
   typedef ::ImplementationRepository::Administration STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (

@@ -5,8 +5,8 @@
 #include "Distributable_Thread.h"
 #include "tao/TSS_Resources.h"
 #include "tao/debug.h"
-#include "tao/Any.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 

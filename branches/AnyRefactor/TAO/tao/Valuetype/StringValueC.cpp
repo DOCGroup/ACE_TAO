@@ -32,14 +32,14 @@
 #include "StringValueC.h"
 #include "tao/CDR.h"
 #include "tao/Valuetype/ValueFactory.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/String_TypeCode_Static.h"
-#include "tao/Value_TypeCode_Static.h"
-#include "tao/TypeCode_Value_Field.h"
-#include "tao/Recursive_Type_TypeCode.h"
-#include "tao/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Value_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Value_Field.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -69,7 +69,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/StringValue:1.0",
     "StringValue",
     &CORBA::_tc_string);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_StringValue =
@@ -87,7 +87,7 @@ CORBA::StringValue::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-  
+
   return dynamic_cast< ::CORBA::StringValue * > (v);
 }
 
@@ -100,7 +100,7 @@ CORBA::StringValue::_copy_value (void)
     result,
     StringValue (*this),
     0);
-    
+
   return result;
 }
 
@@ -110,7 +110,7 @@ CORBA::StringValue::_tao_obv_repository_id (void) const
   return this->_tao_obv_static_repository_id ();
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 CORBA::StringValue::_tao_unmarshal (
     TAO_InputCDR &strm,
     StringValue *&vb_object
@@ -125,18 +125,18 @@ CORBA::StringValue::_tao_unmarshal (
     {
       return 0;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return 1;
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     StringValue,
     0);
-    
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -153,7 +153,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/WStringValue:1.0",
     "WStringValue",
     &CORBA::_tc_wstring);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_WStringValue =
@@ -171,7 +171,7 @@ CORBA::WStringValue::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-  
+
   return dynamic_cast< ::CORBA::WStringValue * > (v);
 }
 
@@ -184,7 +184,7 @@ CORBA::WStringValue::_copy_value (void)
     result,
     WStringValue (*this),
     0);
-    
+
   return result;
 }
 
@@ -194,7 +194,7 @@ CORBA::WStringValue::_tao_obv_repository_id (void) const
   return this->_tao_obv_static_repository_id ();
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 CORBA::WStringValue::_tao_unmarshal (
     TAO_InputCDR &strm,
     WStringValue *&vb_object
@@ -209,18 +209,18 @@ CORBA::WStringValue::_tao_unmarshal (
     {
       return 0;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return 1;
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     WStringValue,
     0);
-    
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -415,13 +415,13 @@ operator>> (
   template class
     TAO_Value_Var_T<
         CORBA::StringValue
-        
+
       >;
-  
+
   template class
     TAO_Value_Out_T<
         CORBA::StringValue
-        
+
       >;
 
   template class
@@ -437,13 +437,13 @@ operator>> (
   template class
     TAO_Value_Var_T<
         CORBA::WStringValue
-        
+
       >;
-  
+
   template class
     TAO_Value_Out_T<
         CORBA::WStringValue
-        
+
       >;
 
   template class
@@ -461,13 +461,13 @@ operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         CORBA::StringValue \
-        
+
       >
-  
+
 # pragma instantiate \
     TAO_Value_Out_T< \
         CORBA::StringValue \
-        
+
       >
 
 # pragma instantiate \
@@ -483,13 +483,13 @@ operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         CORBA::WStringValue \
-        
+
       >
-  
+
 # pragma instantiate \
     TAO_Value_Out_T< \
         CORBA::WStringValue \
-        
+
       >
 
 # pragma instantiate \
@@ -497,4 +497,4 @@ operator>> (
         CORBA::WStringValue \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

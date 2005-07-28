@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "tao/AnyTypeCode/Recursive_Type_TypeCode_T.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
@@ -221,10 +221,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_ServiceDetail,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_CORBA_ServiceDetailSeq_0 =
       &CORBA_ServiceDetailSeq_0;
-    
+
   }
 }
 
@@ -239,7 +239,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ServiceDetailSeq:1.0",
     "ServiceDetailSeq",
     &TAO::TypeCode::tc_CORBA_ServiceDetailSeq_0);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceDetailSeq =
@@ -265,7 +265,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "service_options", &CORBA::_tc_ServiceOptionSeq },
     { "service_details", &CORBA::_tc_ServiceDetailSeq }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -277,7 +277,7 @@ static TAO::TypeCode::Struct<char const *,
     "ServiceInformation",
     _tao_fields_CORBA_ServiceInformation,
     2);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceInformation =
@@ -286,7 +286,7 @@ namespace CORBA
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -345,7 +345,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -403,7 +403,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -462,7 +462,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
