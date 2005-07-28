@@ -3,18 +3,18 @@
 #include "Any_SystemException.h"
 #include "Any.h"
 #include "Any_Unknown_IDL_Type.h"
-#include "CDR.h"
-#include "Exception.h"
-#include "Environment.h"
 #include "Marshal.h"
-#include "CORBA_String.h"
-#include "SystemException.h"
 #include "TypeCode.h"
+
+#include "tao/CDR.h"
+#include "tao/Exception.h"
+#include "tao/Environment.h"
+#include "tao/CORBA_String.h"
+#include "tao/SystemException.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
-
 
 ACE_RCSID (tao,
            Any_SystemException,
@@ -126,7 +126,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 
       auto_ptr<TAO::Any_SystemException > replacement_safety (replacement);
 
-      // We know this will work since the unencoded case is covered above.  
+      // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
