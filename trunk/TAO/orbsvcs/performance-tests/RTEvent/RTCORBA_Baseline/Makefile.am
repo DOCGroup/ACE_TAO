@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,45 +16,48 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.RTCORBA_Baseline_Client.am
+## Makefile.RTCORBA_Baseline_IDL.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  TestS_T.inl \
-  TestC.inl \
-  TestS.inl \
-  TestC.h \
-  TestS.h \
-  TestS_T.h \
+BUILT_SOURCES = \
   TestC.cpp \
-  TestS_T.cpp
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
-  TestS_T.inl \
-  TestC.inl \
-  TestS.inl \
-  TestC.h \
-  TestS.h \
-  TestS_T.h \
   TestC.cpp \
-  TestS_T.cpp
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
 
-TestS_T.inl TestC.inl TestS.inl TestC.h TestS.h TestS_T.h TestC.cpp TestS_T.cpp: Test-stamp
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Test.idl
 	@touch $@
 
-endif
-endif
-endif
+
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.RTCORBA_Baseline_Client.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
@@ -75,11 +78,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   TestC.cpp \
   client.cpp \
-  TestC.h \
-  TestS.h \
-  TestS_T.h \
-  TestC.inl \
-  TestS_T.inl
+  Roundtrip.h
 
 client_LDADD = \
   ../lib/libTAO_RTEC_Perf.la \
@@ -95,6 +94,8 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -125,12 +126,7 @@ server_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   server.cpp \
-  Roundtrip.h \
-  TestC.h \
-  TestS.h \
-  TestS_T.h \
-  TestC.inl \
-  TestS_T.inl
+  Roundtrip.h
 
 server_LDADD = \
   ../lib/libTAO_RTEC_Perf.la \
@@ -146,6 +142,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

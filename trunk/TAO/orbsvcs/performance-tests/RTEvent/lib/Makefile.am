@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -22,29 +22,29 @@ if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
-  Federated_TestS_T.inl \
-  Federated_TestC.inl \
-  Federated_TestS.inl \
-  Federated_TestC.h \
-  Federated_TestS.h \
-  Federated_TestS_T.h \
   Federated_TestC.cpp \
+  Federated_TestC.h \
+  Federated_TestC.inl \
   Federated_TestS.cpp \
-  Federated_TestS_T.cpp
+  Federated_TestS.h \
+  Federated_TestS.inl \
+  Federated_TestS_T.cpp \
+  Federated_TestS_T.h \
+  Federated_TestS_T.inl
 
 CLEANFILES = \
   Federated_Test-stamp \
-  Federated_TestS_T.inl \
-  Federated_TestC.inl \
-  Federated_TestS.inl \
-  Federated_TestC.h \
-  Federated_TestS.h \
-  Federated_TestS_T.h \
   Federated_TestC.cpp \
+  Federated_TestC.h \
+  Federated_TestC.inl \
   Federated_TestS.cpp \
-  Federated_TestS_T.cpp
+  Federated_TestS.h \
+  Federated_TestS.inl \
+  Federated_TestS_T.cpp \
+  Federated_TestS_T.h \
+  Federated_TestS_T.inl
 
-Federated_TestS_T.inl Federated_TestC.inl Federated_TestS.inl Federated_TestC.h Federated_TestS.h Federated_TestS_T.h Federated_TestC.cpp Federated_TestS.cpp Federated_TestS_T.cpp: Federated_Test-stamp
+Federated_TestC.cpp Federated_TestC.h Federated_TestC.inl Federated_TestS.cpp Federated_TestS.h Federated_TestS.inl Federated_TestS_T.cpp Federated_TestS_T.h Federated_TestS_T.inl: Federated_Test-stamp
 
 Federated_Test-stamp: $(srcdir)/Federated_Test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(srcdir)/Federated_Test.idl
