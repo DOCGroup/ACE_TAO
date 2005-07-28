@@ -1884,7 +1884,7 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Ge 2\t\t\tUse raw throw instead of ACE_THROW macro")
-      ACE_TEXT (" (disabled by default\n")
+      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

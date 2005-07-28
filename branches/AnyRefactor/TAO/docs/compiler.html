@@ -192,7 +192,7 @@ TAO.<p>
 TAO's IDL compiler invokes your <tt>C</tt> (or <tt>C++</tt>)
 preprocessor to resolve included IDL files.  It receives the common
 options for preprocessors (such as <tt>-D</tt> or <tt>-I</tt>).  It
-also receives other options that are specific to it. <p>
+also receives other options that are specific to it.<p>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0>
   <tr>
@@ -229,7 +229,7 @@ also receives other options that are specific to it. <p>
 
     <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
         or <tt>extern</tt> keyword in the generated skeleton code (S
-        files,) this is needed for Windows/NT that requires
+        files,) this is needed for Windows, which requires
         special directives to export symbols from DLLs, usually the definition
         is just a space on unix platforms.&nbsp;</td>
   </tr>
@@ -251,7 +251,7 @@ also receives other options that are specific to it. <p>
 
     <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
         or <tt>extern</tt> keyword in the generated stub code, this is
-        needed for Windows/NT that requires special directives to
+        needed for Windows, which requires special directives to
         export symbols from DLLs, usually the definition is just a
         space on unix platforms.&nbsp;</td>
   </tr>
@@ -266,15 +266,41 @@ also receives other options that are specific to it. <p>
         macro.</td>
   </tr>
 
+  <tr><a name="anyop_export_macro">
+    <td></td>
+
+    <td><tt>anyop_export_macro=</tt><i>macro_name</i></td>
+
+    <td>The compiler will emit <i>macro_name</i> before each Any operator
+        or <tt>extern</tt> typecode declaration in the generated stub code, 
+        this is needed for Windows, which requires special directives to
+        export symbols from DLLs, usually the definition is just a
+        space on unix platforms. This option works only in conjuction with
+        the -GA option, which generates Any operators and typecodes into a
+        separate set of files.&nbsp;</td>
+  </tr>
+
+  <tr><a name="anyop_export_include">
+    <td></td>
+
+    <td><tt>anyop_export_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of the anyop file header, this is usually a good place to define the export
+        macro. This option works in conjuction with the -GA option, which generates Any 
+        operators and typecodes into a separate set of files.</td>
+  </tr>
+
   <tr><a name="export_macro">
     <td></td>
 
     <td><tt>export_macro=</tt><i>macro_name</i></td>
 
-    <td>This option has the same effect as issuing
-        <tt>-Wb,skel_export_macro=</tt><i>macro_name</i>
-        <tt>-Wb,stub_export_macro=</tt><i>macro_name</i>.  This option
-        is useful when building a DLL containing both stubs and
+    <td>This option has the same effect as issuing<br>
+        <tt>-Wb,skel_export_macro=</tt><i>macro_name</i><br>
+        <tt>-Wb,stub_export_macro=</tt><i>macro_name</i><br>
+        <tt>-Wb,anyop_export_macro=</tt><i>macro_name</i>.<br>
+        This option is useful when building a DLL containing both stubs and
         skeletons.</td>
   </tr>
 
@@ -283,9 +309,11 @@ also receives other options that are specific to it. <p>
 
     <td><tt>export_include=</tt><i>include_path</i></td>
 
-    <td>This option has the same effect as specifying
-        <tt>-Wb,stub_export_include=</tt><i>include_path</i>.  This
-        option goes with the previous option to build DLL containing
+    <td>This option has the same effect as specifying<br>
+        <tt>-Wb,stub_export_include=</tt><i>include_path</i><br>
+        <tt>-Wb,skel_export_include=</tt><i>include_path</i><br>
+        <tt>-Wb,anyop_export_include=</tt><i>include_path</i>.<br> 
+        This option goes with the previous option to build DLL containing
         both stubs and skeletons.</td>
   </tr>
 

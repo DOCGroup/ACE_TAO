@@ -203,7 +203,7 @@ TAO_CodeGen::start_client_header (const char *fname)
   // We must include all the client headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
-  // in the original main IDL file, not the one  which went
+  // in the original main IDL file, not the one which went
   // thru CC preprocessor.
   for (size_t j = 0; j < nfiles; ++j)
     {
@@ -836,6 +836,11 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                        << be_global->be_get_client_hdr_fname ()
                        << "\"";
 
+  *this->anyop_header_
+      << "\n\n#if defined (__BORLANDC__)\n"
+      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
+      << "#endif /* __BORLANDC__ */";
+
   return 0;
 }
 
@@ -875,6 +880,44 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                        << "\"";
 
 
+  size_t nfiles = idl_global->n_included_idl_files ();
+
+  // We must include all the client headers corresponding to
+  // IDL files included by the current IDL file.
+  // We will use the included IDL file names as they appeared
+  // in the original main IDL file, not the one which went
+  // thru CC preprocessor.
+  for (size_t j = 0; j < nfiles; ++j)
+    {
+      char* idl_name = idl_global->included_idl_files ()[j];
+
+      // Make a String out of it.
+      UTL_String idl_name_str = idl_name;
+
+      // Make sure this file was actually got included, not
+      // ignored by some #if defined compiler directive.
+
+
+      // Get the clnt header from the IDL file name.
+      const char* anyop_hdr_name =
+        BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+
+      // Sanity check and then print.
+      if (anyop_hdr_name != 0)
+        {
+          this->anyop_source_->print ("\n#include \"%s\"",
+                                      anyop_hdr_name);
+        }
+      else
+        {
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT ("\nWARNING, invalid file '%s' included"),
+                      idl_name));
+        }
+    }
+
+  *this->anyop_source_ << "\n";
+  
   this->gen_typecode_includes (this->anyop_source_);
 
   return 0;
@@ -896,12 +939,6 @@ TAO_CodeGen::anyop_source (void)
 int
 TAO_CodeGen::start_implementation_header (const char *fname)
 {
-  // @@ We are making use of "included_idl_files" that is in the
-  // idl_global. We need to make sure the validity of those files.
-
-
-  idl_global->validate_included_idl_files ();
-
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -964,10 +1001,6 @@ TAO_CodeGen::implementation_header (void)
 int
 TAO_CodeGen::start_implementation_skeleton (const char *fname)
 {
-  // @@ We are making use of "included_idl_files" that is in the
-  // idl_global. We need to make sure the validity of those files.
-  idl_global->validate_included_idl_files ();
-
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -1234,6 +1267,10 @@ TAO_CodeGen::end_server_skeletons (void)
 int
 TAO_CodeGen::end_anyop_header (void)
 {
+  *this->anyop_header_ << "\n\n#if defined (__BORLANDC__)\n"
+                       << "#pragma option pop\n"
+                       << "#endif /* __BORLANDC__ */";
+
   if (be_global->post_include () != 0)
     {
       *this->anyop_header_ << "\n\n#include /**/ \""

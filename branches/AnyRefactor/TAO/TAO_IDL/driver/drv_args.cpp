@@ -186,7 +186,69 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -W[p|b],arg1,argn\tpasses args to preprocessor or BE\n")
+      ACE_TEXT (" -Wp,<arg1,...,argn>\t\t\t\tpasses args to preprocessor\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,export_macro=<macro name>\t\t\tsets export macro ")
+      ACE_TEXT ("for all files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,export_include=<include path>\t\tsets export include ")
+      ACE_TEXT ("file for all files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,stub_export_macro=<macro name>\t\tsets export ")
+      ACE_TEXT ("macro for client files only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,stub_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for client only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,skel_export_macro=<macro name>\t\tsets export ")
+      ACE_TEXT ("macro for server files only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,skel_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for server only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,anyop_export_macro=<macro name>\t\tsets export macro ")
+      ACE_TEXT ("for typecode/Any operator files only, when -GA option ")
+      ACE_TEXT ("is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,anyop_export_include=<include path>\tsets export ")
+      ACE_TEXT ("include file typecode/Any operator files only, when -GA ")
+      ACE_TEXT ("option is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,pch_include=<include path>\t\t\tsets include ")
+      ACE_TEXT ("file for precompiled header mechanism\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,pre_include=<include path>\t\t\tsets include ")
+      ACE_TEXT ("file generate before any other includes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,post_include=<include path>\t\tsets include ")
+      ACE_TEXT ("file generated at the end of the file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,obv_opt_accessor\t\t\t\toptimizes access to base class ")
+      ACE_TEXT ("data in valuetypes\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
