@@ -50,9 +50,6 @@ namespace CORBA
   class Principal;
   typedef Principal *Principal_ptr;
 
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
-
   class OperationDef;
   typedef OperationDef *OperationDef_ptr;
 
@@ -90,9 +87,6 @@ namespace CORBA
 
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
 }
 
 #include /**/ "ace/post.h"

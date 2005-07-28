@@ -35,6 +35,10 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
 
 namespace CORBA
 {
@@ -503,12 +507,14 @@ namespace CORBA
 
   };
 
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
 }  // End namespace CORBA
 
 
 TAO_NAMESPACE_INLINE_FUNCTION
 bool operator<< (TAO_OutputCDR & cdr,
-                            CORBA::TypeCode_ptr tc);
+                 CORBA::TypeCode_ptr tc);
 
 TAO_AnyTypeCode_Export bool operator>> (TAO_InputCDR & cdr,
                             CORBA::TypeCode_ptr & tc);
