@@ -12,6 +12,25 @@ ACE_RCSID (Messaging,
 #include "tao/Any.h"
 
 CORBA::Policy_ptr
+TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
+    const CORBA::Any& val
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+{
+  TAO::BufferingConstraint *buffering_constraint = 0;
+  if ((val >>= buffering_constraint) == 0)
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                      CORBA::Policy::_nil ());
+
+  TAO_Buffering_Constraint_Policy *servant = 0;
+  ACE_NEW_THROW_EX (servant,
+                    TAO_Buffering_Constraint_Policy (*buffering_constraint),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return servant;
+}
+
+CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value
@@ -39,8 +58,8 @@ TAO_Messaging_PolicyFactory::create_policy (
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
   if (type == TAO::BUFFERING_CONSTRAINT_POLICY_TYPE)
-    return TAO_Buffering_Constraint_Policy::create (value
-                                                    ACE_ENV_ARG_PARAMETER);
+    return this->create_buffering_constraint_policy (value
+                                                     ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   if (
