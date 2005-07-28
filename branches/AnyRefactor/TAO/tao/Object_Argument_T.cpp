@@ -4,7 +4,10 @@
 #define TAO_OBJECT_ARGUMENT_T_C
 
 #include "tao/Object_Argument_T.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
 #include "tao/Dynamic_ParameterC.h"
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Object_Argument_T.inl"

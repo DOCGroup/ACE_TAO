@@ -43,10 +43,10 @@
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/BooleanSeqC.h"
 
-#if defined (TAO_AnyTypeCode_Export_MACRO)
-#undef TAO_AnyTypeCode_Export_MACRO
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
 #endif
-#define TAO_AnyTypeCode_Export_MACRO TAO_AnyTypeCode_Export
+#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)

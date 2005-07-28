@@ -2,14 +2,13 @@
 #include "Stub.h"
 #include "operation_details.h"
 #include "ORB_Core.h"
-#include "TypeCode.h"
-#include "DynamicC.h"
 #include "SystemException.h"
 #include "PortableInterceptor.h"  /* Must always be visible. */
 
 #include "ace/Dynamic_Service.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
+# include "DynamicC.h"
 # include "PortableInterceptorC.h"
 # include "RequestInfo_Util.h"
 # include "ClientRequestInterceptor_Adapter_Factory.h"
