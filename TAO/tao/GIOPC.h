@@ -66,111 +66,96 @@
 
 namespace GIOP
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::Short AddressingDisposition;
   typedef CORBA::Short_out AddressingDisposition_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_AddressingDisposition;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::Short KeyAddr = 0;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::Short ProfileAddr = 1;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::Short ReferenceAddr = 2;
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct Version;
-  
+
   typedef
     TAO_Fixed_Var_T<
         Version
       >
     Version_var;
-  
+
   typedef
     Version &
     Version_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export Version
   {
     typedef Version_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::Octet major;
     CORBA::Octet minor;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_Version;
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct IORAddressingInfo;
-  
+
   typedef
     TAO_Var_Var_T<
         IORAddressingInfo
       >
     IORAddressingInfo_var;
-  
+
   typedef
     TAO_Out_T<
         IORAddressingInfo,
         IORAddressingInfo_var
       >
     IORAddressingInfo_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export IORAddressingInfo
   {
     typedef IORAddressingInfo_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::ULong selected_profile_index;
     IOP::IOR ior;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_IORAddressingInfo;
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   class TargetAddress;
-  
+
   typedef
     TAO_Var_Var_T<
         TargetAddress
       >
     TargetAddress_var;
-  
+
   typedef
     TAO_Out_T<
         TargetAddress,
@@ -180,7 +165,7 @@ namespace GIOP
 
 #if !defined (_GIOP_TARGETADDRESS_CH_)
 #define _GIOP_TARGETADDRESS_CH_
-  
+
   class TAO_Export TargetAddress
   {
   public:
@@ -188,49 +173,49 @@ namespace GIOP
     TargetAddress (const TargetAddress &);
     ~TargetAddress (void);
     static void _tao_any_destructor (void*);
-    
+
     TargetAddress &operator= (const TargetAddress &);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_union/discriminant_ch.cpp:114
-    
+
     void _d (CORBA::Short);
     CORBA::Short _d (void) const;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_union/union_ch.cpp:108
-    
+
     typedef TargetAddress_var _var_type;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_union_branch/public_ch.cpp:557
-    
+
     void object_key (const CORBA::OctetSeq &);
     const CORBA::OctetSeq &object_key (void) const;
     CORBA::OctetSeq &object_key (void);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_union_branch/public_ch.cpp:665
-    
+
     void profile (const IOP::TaggedProfile &);
     const IOP::TaggedProfile &profile (void) const;
     IOP::TaggedProfile &profile (void);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_union_branch/public_ch.cpp:665
-    
+
     void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);
     const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const;
     ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_union/union_ch.cpp:142
-    
+
     void _default (void);
   private:
     CORBA::Short disc_;
     CORBA::Short holder_;
-    
+
     union
     {
       // TAO_IDL - Generated from
@@ -243,15 +228,10 @@ namespace GIOP
       // be\be_visitor_union_branch/private_ch.cpp:526
       ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
     } u_;
-    
+
     // TAO extension - frees any allocated storage.
     void _reset (CORBA::Short, CORBA::Boolean /* finalize */);
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_TargetAddress;
 
 #endif /* end #if !defined */
 
@@ -267,30 +247,6 @@ namespace GIOP
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::Version &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::Version*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::Version *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const GIOP::Version *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::IORAddressingInfo &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::IORAddressingInfo*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::IORAddressingInfo *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const GIOP::IORAddressingInfo *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_union/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::TargetAddress &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::TargetAddress*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::TargetAddress *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const GIOP::TargetAddress *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_structure/cdr_op_ch.cpp:54

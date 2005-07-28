@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/SystemException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,14 +23,11 @@
 
 namespace CORBA
 {
-  class SystemException;
   class Any;
 }
 
 namespace TAO
 {
-  typedef CORBA::SystemException* (*excp_factory)(void);
-
   /**
    * @class Any_Exception
    *

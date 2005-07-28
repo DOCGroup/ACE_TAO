@@ -47,7 +47,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::InvalidSlot::InvalidSlot (void)
@@ -129,7 +129,7 @@ void PortableInterceptor::InvalidSlot::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -142,15 +142,15 @@ void PortableInterceptor::InvalidSlot::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_tao_type (void) const
-{
-  return ::PortableInterceptor::_tc_InvalidSlot;
-}
+//CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_tao_type (void) const
+//{
+//  return ::PortableInterceptor::_tc_InvalidSlot;
+//}
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_cs.cpp:60

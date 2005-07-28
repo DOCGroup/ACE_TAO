@@ -3,11 +3,11 @@
 #include "Exception.h"
 #include "SystemException.h"
 #include "Environment.h"
-#include "Any_SystemException.h"
-#include "Any_Dual_Impl_T.h"
-#include "TypeCode.h"
+//#include "Any_SystemException.h"
+//#include "Any_Dual_Impl_T.h"
+//#include "TypeCode.h"
 #include "ORB_Constants.h"
-#include "TypeCode_Constants.h"
+//#include "TypeCode_Constants.h"
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
@@ -90,11 +90,11 @@ CORBA::Exception::_name (void) const
   return this->name_.in ();
 }
 
-CORBA::TypeCode_ptr
+/*CORBA::TypeCode_ptr
 CORBA::Exception::_tao_type (void) const
 {
   return CORBA::TypeCode::_nil ();
-}
+} */
 
 int
 CORBA::Exception::_is_a (const char* repository_id) const
@@ -164,10 +164,11 @@ TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 {}
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
+
 // Specializations for CORBA::Exception Any operators.
 namespace TAO
 {
-  template<>
+/*  template<>
   void
   Any_Dual_Impl_T<CORBA::Exception>::value (
       const CORBA::Exception & val
@@ -215,12 +216,12 @@ namespace TAO
 
     return 0;
   }
-
+  */
   // This should never get called since we don't have extraction operators
   // for CORBA::Exception, but it is here to sidestep the constructor call
   // in the unspecialized version that causes a problem with compilers that
   // require explicit instantiation
-  template<>
+  /*template<>
   CORBA::Boolean
   Any_Dual_Impl_T<CORBA::Exception>::extract (
       const CORBA::Any &,
@@ -230,11 +231,12 @@ namespace TAO
     )
   {
     return 0;
-  }
+  } */
 }
 
 // =======================================================================
 
+/*
 // Insertion of CORBA::Exception - copying.
 void
 operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
@@ -257,14 +259,5 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
       exception->_tao_type (),
       exception
     );
-}
+} */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

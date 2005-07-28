@@ -63,30 +63,30 @@
 
 namespace PortableInterceptor
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_INVALIDSLOT_CH_)
 #define _PORTABLEINTERCEPTOR_INVALIDSLOT_CH_
-  
+
   class TAO_Export InvalidSlot : public CORBA::UserException
   {
   public:
-    
+
     InvalidSlot (void);
     InvalidSlot (const InvalidSlot &);
     ~InvalidSlot (void);
 
     InvalidSlot &operator= (const InvalidSlot &);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     static InvalidSlot *_downcast (CORBA::Exception *);
     static const InvalidSlot *_downcast (CORBA::Exception const *);
-    
+
     static CORBA::Exception *_alloc (void);
-    
+
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -95,22 +95,17 @@ namespace PortableInterceptor
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129
-    
-    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+
+    //virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_InvalidSlot;
 
 #endif /* end #if !defined */
 
@@ -126,14 +121,6 @@ namespace PortableInterceptor
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::InvalidSlot &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::InvalidSlot*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::InvalidSlot *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::InvalidSlot *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_ch.cpp:52
