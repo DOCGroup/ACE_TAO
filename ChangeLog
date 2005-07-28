@@ -1,3 +1,43 @@
+Thu Jul 28 00:28:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Array_Map.cpp:
+	* ace/Array_Map.h:
+	* ace/Array_Map.inl:
+
+	  Added third equality functor template parameter.  Defaults to
+	  std::equal_to<> if unspecified.  Necessary for cases where
+	  operator==() is not suitable or available for a given key type.
+
+	  (erase):
+
+	  Explicitly destroy the tail element by assigning a default
+          constructed value_type instance to it.  Prevents duplicate
+	  instances of erase()d elements from existing.  Some applications
+	  may assume that erased elements no longer exist.  This
+	  essentially disables the lazy destruction behavior of
+	  ACE_Array_Map.  Note that this change also applies to the case
+	  of a map of size 1.
+
+	* ace/Refcountable.cpp:
+	* ace/Refcountable.inl:
+
+	  Moved ~ACE_Refcountable() virtual destructor out of line.
+	  Addresses RTTI issues when g++ 4.0 hidden visibility of inlined
+	  functions is enabled.
+
+	* ace/config-lite.h:
+
+	  Disable use of ACE_RCSIDs by default.  Most users never need to
+	  determine the RCS ID of a given object file in an ACE-based
+	  binary so optimize for the common case.  Also reduces
+	  footprint.
+
+	* tests/Array_Map_Test.cpp:
+
+	  Added reference count test to verify that the number of
+	  references/copies of a given data element drop by the same
+	  amount as was increased during insertion.
+
 Wed Jul 27 16:33:46 2005  Gary Maxey <gary.maxey@hp.com>
 
 	* ace/config-tandem-nsk-mips-v3.h:

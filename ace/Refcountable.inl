@@ -6,11 +6,6 @@ ACE_Refcountable::ACE_Refcountable (int refcount)
 {
 }
 
-ACE_INLINE
-ACE_Refcountable::~ACE_Refcountable (void)
-{
-}
-
 ACE_INLINE int
 ACE_Refcountable::increment (void)
 {

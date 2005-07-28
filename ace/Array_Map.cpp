@@ -10,13 +10,13 @@
 #endif  /* !__ACE_INLINE__ */
 
 #include <algorithm>
-#include <functional>
 
 
 #ifndef ACE_LACKS_MEMBER_TEMPLATES
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 template<typename InputIterator>
-ACE_Array_Map<Key, Value>::ACE_Array_Map (InputIterator f, InputIterator l)
+ACE_Array_Map<Key, Value, EqualTo>::ACE_Array_Map (InputIterator f,
+                                                   InputIterator l)
   : size_ (l - f)
   , capacity_ (size_)
   , nodes_ (size_ == 0 ? 0 : new value_type[size_])
@@ -29,10 +29,10 @@ ACE_Array_Map<Key, Value>::ACE_Array_Map (InputIterator f, InputIterator l)
 //     *n = *i;
 }
 #else
-template<typename Key, typename Value>
-ACE_Array_Map<Key, Value>::ACE_Array_Map (
-  typename ACE_Array_Map<Key, Value>::const_iterator f,
-  typename ACE_Array_Map<Key, Value>::const_iterator l)
+template<typename Key, typename Value, class EqualTo>
+ACE_Array_Map<Key, Value, EqualTo>::ACE_Array_Map (
+  typename ACE_Array_Map<Key, Value, EqualTo>::const_iterator f,
+  typename ACE_Array_Map<Key, Value, EqualTo>::const_iterator l)
   : size_ (l - f)
   , capacity_ (size_)
   , nodes_ (size_ == 0 ? 0 : new value_type[size_])
@@ -46,9 +46,9 @@ ACE_Array_Map<Key, Value>::ACE_Array_Map (
 }
 #endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 
-template<typename Key, typename Value>
-ACE_Array_Map<Key, Value>::ACE_Array_Map (
-  ACE_Array_Map<Key, Value> const & map)
+template<typename Key, typename Value, class EqualTo>
+ACE_Array_Map<Key, Value, EqualTo>::ACE_Array_Map (
+  ACE_Array_Map<Key, Value, EqualTo> const & map)
   : size_ (map.size_)
   , capacity_ (map.size_)
   , nodes_ (size_ == 0 ? 0 : new value_type[size_])
@@ -63,30 +63,31 @@ ACE_Array_Map<Key, Value>::ACE_Array_Map (
 //     *n = *i;
 }
 
-template<typename Key, typename Value>
-ACE_Array_Map<Key, Value>::~ACE_Array_Map (void)
+template<typename Key, typename Value, class EqualTo>
+ACE_Array_Map<Key, Value, EqualTo>::~ACE_Array_Map (void)
 {
   delete[] this->nodes_;
 }
 
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 void
-ACE_Array_Map<Key, Value>::swap (ACE_Array_Map<Key, Value> & map)
+ACE_Array_Map<Key, Value, EqualTo>::swap (
+  ACE_Array_Map<Key, Value, EqualTo> & map)
 {
   std::swap (this->size_, map.size_);
   std::swap (this->capacity_, map.capacity_);
   std::swap (this->nodes_, map.nodes_);
 }
 
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 #if defined (_MSC_VER) && (_MSC_VER <= 1200)
 // MSVC++ 6 doesn't like the typename qualification.
-std::pair<ACE_Array_Map<Key, Value>::iterator, bool>
+std::pair<ACE_Array_Map<Key, Value, EqualTo>::iterator, bool>
 #else
-std::pair<typename ACE_Array_Map<Key, Value>::iterator, bool>
+std::pair<typename ACE_Array_Map<Key, Value, EqualTo>::iterator, bool>
 #endif  /* _MSC_VER <= 1200 */
-ACE_Array_Map<Key, Value>::insert (
-  typename ACE_Array_Map<Key, Value>::value_type const & x)
+ACE_Array_Map<Key, Value, EqualTo>::insert (
+  typename ACE_Array_Map<Key, Value, EqualTo>::value_type const & x)
 {
   // Linear insertion due to linear duplicate key search.
 
@@ -112,10 +113,10 @@ ACE_Array_Map<Key, Value>::insert (
 }
 
 #ifndef ACE_LACKS_MEMBER_TEMPLATES
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 template<typename InputIterator>
 void
-ACE_Array_Map<Key, Value>::insert (InputIterator f, InputIterator l)
+ACE_Array_Map<Key, Value, EqualTo>::insert (InputIterator f, InputIterator l)
 {
   this->grow (l - f);  // Preallocate storage.
 
@@ -125,11 +126,11 @@ ACE_Array_Map<Key, Value>::insert (InputIterator f, InputIterator l)
     }
 }
 #else
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 void
-ACE_Array_Map<Key, Value>::insert (
-  typename ACE_Array_Map<Key, Value>::const_iterator f,
-  typename ACE_Array_Map<Key, Value>::const_iterator l)
+ACE_Array_Map<Key, Value, EqualTo>::insert (
+  typename ACE_Array_Map<Key, Value, EqualTo>::const_iterator f,
+  typename ACE_Array_Map<Key, Value, EqualTo>::const_iterator l)
 {
   this->grow (l - f);  // Preallocate storage.
 
@@ -140,27 +141,37 @@ ACE_Array_Map<Key, Value>::insert (
 }
 #endif  /* ACE_LACKS_MEMBER_TEMPLATES */
 
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 void
-ACE_Array_Map<Key, Value>::erase (
-  typename ACE_Array_Map<Key, Value>::iterator pos)
+ACE_Array_Map<Key, Value, EqualTo>::erase (
+  typename ACE_Array_Map<Key, Value, EqualTo>::iterator pos)
 {
   iterator const first = this->begin ();
   iterator const last = this->end ();
 
   if (pos >= first && pos < last)
     {
-      if (this->size_ > 1 && pos < last - 1)
-        *pos = *(last - 1);
+      if (pos != last - 1)
+        {
+          // Relocate the tail element to the location of the erased
+          // element to prevent introduction of "holes" in the
+          // underlying array.
+          *pos = *(last - 1);
+        }
+
+      // Explicitly destroy the tail element by assigning a default
+      // constructed instance to it.  Note that this also works for
+      // the case of a map of size 1.
+      *(last - 1) = value_type ();
 
       --this->size_;
     }
 }
 
-template<typename Key, typename Value>
-typename ACE_Array_Map<Key, Value>::size_type
-ACE_Array_Map<Key, Value>::erase (
-  typename ACE_Array_Map<Key, Value>::key_type const & k)
+template<typename Key, typename Value, class EqualTo>
+typename ACE_Array_Map<Key, Value, EqualTo>::size_type
+ACE_Array_Map<Key, Value, EqualTo>::erase (
+  typename ACE_Array_Map<Key, Value, EqualTo>::key_type const & k)
 {
   iterator pos = this->find (k);
 
@@ -171,56 +182,60 @@ ACE_Array_Map<Key, Value>::erase (
   return old_size - this->size_;
 }
 
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 void
-ACE_Array_Map<Key, Value>::erase (
-  typename ACE_Array_Map<Key, Value>::iterator first,
-  typename ACE_Array_Map<Key, Value>::iterator last)
+ACE_Array_Map<Key, Value, EqualTo>::erase (
+  typename ACE_Array_Map<Key, Value, EqualTo>::iterator first,
+  typename ACE_Array_Map<Key, Value, EqualTo>::iterator last)
 {
   if (this->begin () <= first && first < last && last < this->end ())
     for (iterator i = first; i != last; ++i)
       this->erase (i);
 }
 
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 void
-ACE_Array_Map<Key, Value>::clear (void)
+ACE_Array_Map<Key, Value, EqualTo>::clear (void)
 {
   this->size_ = 0;  // No need to deallocate array nor destroy elements.
 }
 
-template<typename Key, typename Value>
-typename ACE_Array_Map<Key, Value>::iterator
-ACE_Array_Map<Key, Value>::find (
-  typename ACE_Array_Map<Key, Value>::key_type const & k)
+template<typename Key, typename Value, class EqualTo>
+typename ACE_Array_Map<Key, Value, EqualTo>::iterator
+ACE_Array_Map<Key, Value, EqualTo>::find (
+  typename ACE_Array_Map<Key, Value, EqualTo>::key_type const & k)
 {
   iterator const the_end = this->end ();
 
+  EqualTo eq;
+
   for (iterator i = this->begin (); i != the_end; ++i)
-    if (k == i->first)
+    if (eq (k, i->first))
       return i;
 
   return this->end ();
 }
 
-template<typename Key, typename Value>
-typename ACE_Array_Map<Key, Value>::const_iterator
-ACE_Array_Map<Key, Value>::find (
-  typename ACE_Array_Map<Key, Value>::key_type const & k) const
+template<typename Key, typename Value, class EqualTo>
+typename ACE_Array_Map<Key, Value, EqualTo>::const_iterator
+ACE_Array_Map<Key, Value, EqualTo>::find (
+  typename ACE_Array_Map<Key, Value, EqualTo>::key_type const & k) const
 {
   const_iterator const the_end = this->end ();
 
+  EqualTo eq;
+
   for (const_iterator i = this->begin (); i != the_end; ++i)
-    if (k == i->first)
+    if (eq (k, i->first))
       return i;
 
   return this->end ();
 }
 
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo>
 void
-ACE_Array_Map<Key, Value>::grow (
-  typename ACE_Array_Map<Key, Value>::size_type s)
+ACE_Array_Map<Key, Value, EqualTo>::grow (
+  typename ACE_Array_Map<Key, Value, EqualTo>::size_type s)
 {
   if (this->size () + s > this->capacity_)
     {
@@ -229,7 +244,7 @@ ACE_Array_Map<Key, Value>::grow (
 
       // Strongly exception safe.
 
-      ACE_Array_Map<Key, Value> temp (this->size () + s);
+      ACE_Array_Map<Key, Value, EqualTo> temp (this->size () + s);
 
       std::copy (this->begin (), this->end (), temp.begin ());
 
@@ -245,10 +260,10 @@ ACE_Array_Map<Key, Value>::grow (
 
 // ---------------------------------------------------------------
 
-template <typename Key, typename Value>
+template <typename Key, typename Value, class EqualTo>
 bool
-operator== (ACE_Array_Map<Key, Value> const & lhs,
-            ACE_Array_Map<Key, Value> const & rhs)
+operator== (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
+            ACE_Array_Map<Key, Value, EqualTo> const & rhs)
 {
   // Do not include Array_Map capacity in comparison.  It isn't useful
   // in this case.
@@ -257,10 +272,10 @@ operator== (ACE_Array_Map<Key, Value> const & lhs,
           && std::equal (lhs.begin (), lhs.end (), rhs.begin ()));
 }
 
-template <typename Key, typename Value>
+template <typename Key, typename Value, class EqualTo>
 bool
-operator< (ACE_Array_Map<Key, Value> const & lhs,
-           ACE_Array_Map<Key, Value> const & rhs)
+operator< (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
+           ACE_Array_Map<Key, Value, EqualTo> const & rhs)
 {
   return std::lexicographical_compare (lhs.begin (), lhs.end (),
                                        rhs.begin (), rhs.end ());
