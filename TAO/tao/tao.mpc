@@ -217,7 +217,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Timer.cpp
     TSS_Resources.cpp
     TypeCodeFactory_Adapter.cpp
-    TypeCode_typesC.cpp
+    Typecode_typesC.cpp
     ULongLongSeqC.cpp
     ULongSeqC.cpp
     UserException.cpp
