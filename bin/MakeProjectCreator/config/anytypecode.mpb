@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib {
+  after   += AnyTypeCode
+  libs    += TAO_AnyTypeCode
+}
