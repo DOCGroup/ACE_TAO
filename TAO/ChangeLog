@@ -11,7 +11,7 @@ Thu Jul 28 22:40:26 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           former values have not been set on the command line, but -GA
           is used. This behavior will enable the *A.* files to be
           generated, but compiled into the same library as the stub
-          files. if desired.
+          files, if desired.
 
 Thu Jul 28 18:35:07 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
