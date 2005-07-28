@@ -25,6 +25,7 @@
 #include "be_enum.h"
 #include "be_enum_val.h"
 #include "be_exception.h"
+#include "be_extern.h"
 #include "be_field.h"
 #include "be_interface.h"
 #include "be_interface_fwd.h"
@@ -613,5 +614,30 @@ be_visitor_context::be_scope_as_union (void)
   else
     {
       return 0;
+    }
+}
+
+const char *
+be_visitor_context::export_macro (void) const
+{
+  switch (this->state_)
+    {
+      case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+        return (be_global->gen_anyop_files ()
+                ? be_global->anyop_export_macro ()
+                : be_global->stub_export_macro ());
+      case TAO_CodeGen::TAO_ARRAY_CH:
+      case TAO_CodeGen::TAO_INTERFACE_CH:
+      case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
+      case TAO_CodeGen::TAO_AMI_INTERFACE_CH:
+      case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH:
+      case TAO_CodeGen::TAO_ROOT_CH:
+        return be_global->stub_export_macro ();
+      case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
+      case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+      case TAO_CodeGen::TAO_ROOT_SH:
+        return be_global->skel_export_macro ();
+      default:
+        return "";
     }
 }

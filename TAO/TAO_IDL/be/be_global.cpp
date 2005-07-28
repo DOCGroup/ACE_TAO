@@ -40,6 +40,8 @@ BE_GlobalData::BE_GlobalData (void)
     skel_export_include_ (0),
     stub_export_macro_ (0),
     stub_export_include_ (0),
+    anyop_export_macro_ (0),
+    anyop_export_include_ (0),
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
@@ -405,6 +407,13 @@ BE_GlobalData::be_get_anyop_source_fname (int base_name_only)
                               base_name_only);
 }
 
+const char *
+BE_GlobalData::be_get_anyop_header_fname (int base_name_only)
+{
+  return be_get_anyop_header (idl_global->stripped_filename (),
+                              base_name_only);
+}
+
 const char*
 BE_GlobalData::skel_export_macro (void) const
 {
@@ -455,6 +464,32 @@ void
 BE_GlobalData::stub_export_include (const char *s)
 {
   this->stub_export_include_ = ACE_OS::strdup (s);
+}
+
+const char*
+BE_GlobalData::anyop_export_macro (void) const
+{
+  if (this->anyop_export_macro_ == 0)
+    return "";
+  return this->anyop_export_macro_;
+}
+
+void
+BE_GlobalData::anyop_export_macro (const char *s)
+{
+  this->anyop_export_macro_ = ACE_OS::strdup (s);
+}
+
+const char*
+BE_GlobalData::anyop_export_include (void) const
+{
+  return this->anyop_export_include_;
+}
+
+void
+BE_GlobalData::anyop_export_include (const char *s)
+{
+  this->anyop_export_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -665,10 +700,24 @@ BE_GlobalData::server_template_inline_ending (void) const
   return this->server_template_inline_ending_;
 }
 
+void
+BE_GlobalData::anyop_header_ending (const char* s)
+{
+  delete [] this->anyop_hdr_ending_;
+  this->anyop_hdr_ending_ = ACE::strnew (s);
+}
+
 const char*
 BE_GlobalData::anyop_header_ending (void) const
 {
   return this->anyop_hdr_ending_;
+}
+
+void
+BE_GlobalData::anyop_source_ending (const char* s)
+{
+  delete [] this->anyop_src_ending_;
+  this->anyop_src_ending_ = ACE::strnew (s);
 }
 
 const char*
@@ -1654,6 +1703,8 @@ BE_GlobalData::prep_be_arg (char *s)
   const char skel_arg_include[] = "skel_export_include=";
   const char stub_arg_macro[] = "stub_export_macro=";
   const char stub_arg_include[] = "stub_export_include=";
+  const char anyop_arg_macro[] = "anyop_export_macro=";
+  const char anyop_arg_include[] = "anyop_export_include=";
   const char arg_pch_include[] = "pch_include=";
   const char arg_pre_include[] = "pre_include=";
   const char arg_post_include[] = "post_include=";
@@ -1670,6 +1721,7 @@ BE_GlobalData::prep_be_arg (char *s)
           char* val = arg + sizeof (arg_macro) - 1;
           be_global->skel_export_macro (val);
           be_global->stub_export_macro (val);
+          be_global->anyop_export_macro (val);
         }
       else if (ACE_OS::strstr (arg, arg_include) == arg)
         {
@@ -1695,6 +1747,16 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (stub_arg_include) - 1;
           be_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, anyop_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (anyop_arg_macro) - 1;
+          be_global->anyop_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, anyop_arg_include) == arg)
+        {
+          char* val = arg + sizeof (anyop_arg_include) - 1;
+          be_global->anyop_export_include (val);
         }
       else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
         {
