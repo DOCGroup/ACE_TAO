@@ -1,7 +1,6 @@
 // $Id$
 
 #include "SystemException.h"
-#include "Any_SystemException.h"
 #include "Environment.h"
 #include "ORB_Constants.h"
 #include "CORBA_String.h"
@@ -845,6 +844,7 @@ static const char *repo_id_array[] = {
 // Since we add an extra element subtract 1
 static const CORBA::ULong array_sz =
   (sizeof (repo_id_array) / sizeof (char const *)) - 1;
+
 
 TAO::excp_factory excp_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \

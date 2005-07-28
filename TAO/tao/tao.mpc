@@ -13,15 +13,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Adapter.cpp
     Adapter_Factory.cpp
     Adapter_Registry.cpp
-    Alias_TypeCode_Static.cpp
-    Any.cpp
-    Any_Basic_Impl.cpp
-    Any_Impl.cpp
-    Any_SystemException.cpp
-    Any_Unknown_IDL_Type.cpp
-    AnySeqA.cpp
-    AnySeqC.cpp
-    append.cpp
     Argument.cpp
     Asynch_Queued_Message.cpp
     Asynch_Reply_Dispatcher_Base.cpp
@@ -30,13 +21,9 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Bind_Dispatcher_Guard.cpp
     Block_Flushing_Strategy.cpp
     Blocked_Connect_Strategy.cpp
-    BooleanSeqA.cpp
     BooleanSeqC.cpp
-    BoundsA.cpp
-    BoundsC.cpp
     Cache_Entries.cpp
     CDR.cpp
-    CharSeqA.cpp
     CharSeqC.cpp
     Cleanup_Func_Registry.cpp
     Client_Strategy_Factory.cpp
@@ -51,12 +38,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Connection_Handler.cpp
     Connection_Purging_Strategy.cpp
     Connector_Registry.cpp
-    CONV_FRAMEA.cpp
     CONV_FRAMEC.cpp
     CORBA_String.cpp
     CORBALOC_Parser.cpp
     CORBANAME_Parser.cpp
-    CurrentA.cpp
     CurrentC.cpp
     debug.cpp
     default_client.cpp
@@ -68,25 +53,19 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Default_Stub_Factory.cpp
     Default_Thread_Lane_Resources_Manager.cpp
     DLL_Parser.cpp
-    DomainA.cpp
     DomainC.cpp
-    DoubleSeqA.cpp
     DoubleSeqC.cpp
     Dynamic_Adapter.cpp
-    Dynamic_ParameterA.cpp
-    Dynamic_ParameterC.cpp
-    DynamicA.cpp
-    DynamicC.cpp
-    Empty_Param_TypeCode.cpp
+//    Dynamic_ParameterA.cpp
+//    Dynamic_ParameterC.cpp
+//    DynamicC.cpp
     Endpoint.cpp
     Endpoint_Selector_Factory.cpp
-    Enum_TypeCode_Static.cpp
     Environment.cpp
     Exception.cpp
     Exclusive_TMS.cpp
     Fault_Tolerance_Service.cpp
     FILE_Parser.cpp
-    FloatSeqA.cpp
     FloatSeqC.cpp
     Flushing_Strategy.cpp
     GIOP_Message_Base.cpp
@@ -100,28 +79,23 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     GIOP_Message_State.cpp
     GIOP_Message_Version.cpp
     GIOP_Utils.cpp
-    GIOPA.cpp
     GIOPC.cpp
     IFR_Client_Adapter.cpp
     IIOP_Acceptor.cpp
     IIOP_Connection_Handler.cpp
     IIOP_Connector.cpp
     IIOP_Endpoint.cpp
-    IIOP_EndpointsA.cpp
     IIOP_EndpointsC.cpp
     IIOP_Factory.cpp
     IIOP_Lite_Factory.cpp
     IIOP_Profile.cpp
     IIOP_Transport.cpp
-    IIOPA.cpp
     IIOPC.cpp
     Incoming_Message_Queue.cpp
-    InvalidSlotA.cpp
     InvalidSlotC.cpp
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
-    IOP_IORA.cpp
     IOP_IORC.cpp
     IOPC.cpp
     IOR_Parser.cpp
@@ -143,17 +117,12 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LocalObject.cpp
     LocateRequest_Invocation.cpp
     LocateRequest_Invocation_Adapter.cpp
-    LongDoubleSeqA.cpp
     LongDoubleSeqC.cpp
-    LongLongSeqA.cpp
     LongLongSeqC.cpp
-    LongSeqA.cpp
     LongSeqC.cpp
     LRU_Connection_Purging_Strategy.cpp
     Managed_Types.cpp
-    Marshal.cpp
     MCAST_Parser.cpp
-    Messaging_PolicyValueA.cpp
     Messaging_PolicyValueC.cpp
     Messaging_SyncScopeC.cpp
     MProfile.cpp
@@ -164,11 +133,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_Loader.cpp
     Object_Proxy_Broker.cpp
     Object_Ref_Table.cpp
-    ObjectIdListA.cpp
     ObjectIdListC.cpp
     ObjectKey_Table.cpp
-    Objref_TypeCode_Static.cpp
-    OctetSeqA.cpp
     OctetSeqC.cpp
     operation_details.cpp
     ORB.cpp
@@ -179,13 +145,11 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ORB_Core_Auto_Ptr.cpp
     ORB_Core_TSS_Resources.cpp
     ORB_Table.cpp
-    ParameterModeA.cpp
     ParameterModeC.cpp
     params.cpp
     Parser_Registry.cpp
     PI_ForwardC.cpp
     PICurrent.cpp
-    PICurrentA.cpp
     PICurrentC.cpp
     PICurrent_Copy_Callback.cpp
     PICurrent_Impl.cpp
@@ -194,12 +158,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Pluggable_Messaging_Utils.cpp
     Policy_Current.cpp
     Policy_Current_Impl.cpp
-    Policy_ForwardA.cpp
     Policy_ForwardC.cpp
     Policy_Manager.cpp
     Policy_Set.cpp
     Policy_Validator.cpp
-    PolicyA.cpp
     PolicyC.cpp
     PolicyFactory_Registry_Adapter.cpp
     PolicyFactory_Registry_Factory.cpp
@@ -221,19 +183,13 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resource_Factory.cpp
     Resume_Handle.cpp
     Sequence.cpp
-    Sequence_TypeCode_Static.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
     Services_Activate.cpp
-    ShortSeqA.cpp
     ShortSeqC.cpp
-    skip.cpp
-    String_TypeCode_Static.cpp
-    StringSeqA.cpp
     StringSeqC.cpp
-    Struct_TypeCode_Static.cpp
     Stub.cpp
     Stub_Factory.cpp
     Sync_Strategies.cpp
@@ -241,19 +197,16 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Synch_Queued_Message.cpp
     Synch_Reply_Dispatcher.cpp
     SystemException.cpp
-    SystemExceptionA.cpp
     Tagged_Components.cpp
     Tagged_Profile.cpp
     TAO_Internal.cpp
     TAO_Server_Request.cpp
     TAO_Singleton_Manager.cpp
-    TAOA.cpp
     TAOC.cpp
     target_specification.cpp
     Thread_Lane_Resources.cpp
     Thread_Lane_Resources_Manager.cpp
     Thread_Per_Connection_Handler.cpp
-    TimeBaseA.cpp
     TimeBaseC.cpp
     Transport.cpp
     Transport_Acceptor.cpp
@@ -264,21 +217,12 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Timer.cpp
     True_RefCount_Policy.cpp
     TSS_Resources.cpp
-    TypeCode.cpp
-    TypeCodeA.cpp
-    Typecode_typesC.cpp
-    TypeCode_CDR_Extraction.cpp
-    TypeCode_Constants.cpp
     TypeCodeFactory_Adapter.cpp
-    ULongLongSeqA.cpp
+    TypeCode_typesC.cpp
     ULongLongSeqC.cpp
-    ULongSeqA.cpp
     ULongSeqC.cpp
-    Union_TypeCode_Static.cpp
     UserException.cpp
-    UShortSeqA.cpp
     UShortSeqC.cpp
-    Value_TypeCode_Static.cpp
     Valuetype_Adapter.cpp
     ValueModifierC.cpp
     VisibilityC.cpp
@@ -287,11 +231,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Wait_On_Reactor.cpp
     Wait_On_Read.cpp
     Wait_Strategy.cpp
-    WCharSeqA.cpp
     WCharSeqC.cpp
-    WrongTransactionA.cpp
     WrongTransactionC.cpp
-    WStringSeqA.cpp
     WStringSeqC.cpp
     GUIResource_Factory.cpp
   }
@@ -337,7 +278,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Block_Flushing_Strategy.h
     BooleanSeqC.h
     BooleanSeqS.h
-    BoundsC.h
     Buffer_Allocator_T.h
     Buffering_Constraint_Policy.h
     Cache_Entries.h
@@ -478,7 +418,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Muxed_TMS.h
     New_Leader_Generator.h
     Null_RefCount_Policy.h
-    NVList.h
     Object_Argument_T.h
     Object.h
     objectid.h

@@ -45,6 +45,16 @@ class TAO_InputCDR;
 
 namespace CORBA
 {
+  class SystemException;
+}
+
+namespace TAO
+{
+  typedef CORBA::SystemException* (*excp_factory)(void);
+}
+
+namespace CORBA
+{
   class TypeCode;
   typedef TypeCode *TypeCode_ptr;
 
@@ -187,7 +197,6 @@ namespace CORBA
       static name * _downcast (CORBA::Exception* exception); \
       static name const * _downcast (CORBA::Exception const * exception); \
       virtual void _raise (void) const; \
-      virtual CORBA::TypeCode_ptr _tao_type (void) const; \
       static void _tao_any_destructor (void*); \
       virtual CORBA::Exception *_tao_duplicate (void) const; \
       static CORBA::SystemException *_tao_create (void); \
