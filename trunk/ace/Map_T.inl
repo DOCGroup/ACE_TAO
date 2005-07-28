@@ -191,11 +191,6 @@ ACE_Map<KEY, VALUE>::ACE_Map (void)
 {
 }
 
-template <class KEY, class VALUE> ACE_INLINE
-ACE_Map<KEY, VALUE>::~ACE_Map (void)
-{
-}
-
 template <class KEY, class VALUE> ACE_INLINE ACE_Iterator<ACE_Reference_Pair<const KEY, VALUE> >
 ACE_Map<KEY, VALUE>::begin (void)
 {
