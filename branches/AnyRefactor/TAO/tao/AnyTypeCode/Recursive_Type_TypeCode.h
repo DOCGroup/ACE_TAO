@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Recursive_Type_TypeCode_T.h
+ *  @file    Recursive_Type_TypeCode.h
  *
  *  $Id$
  *
