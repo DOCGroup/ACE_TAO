@@ -1,3 +1,11 @@
+Thu Jul 28 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+          Added include of IFR_Client_Adapter_Impl, this should make sure
+          the IFR_Client is linked into the exe and the static initializers
+          are called. This should fix this test in the Windows static
+          builds
+
 Thu Jul 28 10:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OctetSeq/client.cpp:
