@@ -2,7 +2,6 @@
 
 #include "TypeCode.h"
 
-
 ACE_RCSID (tao,
            TypeCode,
            "$Id$")
@@ -12,11 +11,10 @@ ACE_RCSID (tao,
 # include "TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "SystemException.h"
-#include "CDR.h"
-#include "ORB_Constants.h"
-
-#include "debug.h"
+#include "tao/SystemException.h"
+#include "tao/CDR.h"
+#include "tao/ORB_Constants.h"
+#include "tao/debug.h"
 
 #include "ace/OS_NS_string.h"
 
