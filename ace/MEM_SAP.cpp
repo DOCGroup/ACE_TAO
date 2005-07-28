@@ -34,6 +34,12 @@ ACE_MEM_SAP::ACE_MEM_SAP (void)
   // ACE_TRACE ("ACE_MEM_SAP::ACE_MEM_SAP");
 }
 
+ACE_MEM_SAP::~ACE_MEM_SAP (void)
+{
+  // ACE_TRACE ("ACE_MEM_SAP::~ACE_MEM_SAP");
+  delete this->shm_malloc_;
+}
+
 int
 ACE_MEM_SAP::fini ()
 {

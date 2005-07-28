@@ -227,6 +227,10 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
 
+ACE_Sig_Handler::~ACE_Sig_Handler (void)
+{
+}
+
 void
 ACE_Sig_Handler::dump (void) const
 {

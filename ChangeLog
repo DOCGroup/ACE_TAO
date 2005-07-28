@@ -1,3 +1,18 @@
+Thu Jul 28 01:46:40 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Cache_Map_Manager_T.cpp:
+	* ace/Cache_Map_Manager_T.inl:
+	* ace/MEM_SAP.cpp:
+	* ace/MEM_SAP.inl:
+	* ace/Map_T.cpp:
+	* ace/Map_T.inl:
+	* ace/Signal.cpp:
+	* ace/Signal.inl:
+
+	  Moved virtual destructors in exported classes out of line.
+	  Addresses RTTI problems when the using g++ 4.0 hidden visibility
+	  for inline functions feature.
+
 Thu Jul 28 00:28:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Array_Map.cpp:

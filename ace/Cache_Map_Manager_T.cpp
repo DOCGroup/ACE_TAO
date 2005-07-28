@@ -410,4 +410,9 @@ ACE_Cache_Map_Manager<ACE_T2>::dump (void) const
 #undef ACE_T1
 #undef ACE_T2
 
+template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
+ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::~ACE_Cache_Map_Iterator (void)
+{
+}
+
 #endif /* ACE_CACHE_MAP_MANAGER_T_C */
