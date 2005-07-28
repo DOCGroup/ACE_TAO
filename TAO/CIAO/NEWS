@@ -66,7 +66,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.6 and CIAO-0.4.7
   could configure this through XML-based flattened deployment plan
   descriptor. 
   See $CIAO_ROOT/DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
-  for details.
+  for details. Currently DAnCE only provides resolving naming service
+  reference through multicast, so be sure to initialize the naming service
+  with multicast port.
 
 . Added the first cut of the RepositoryManager implementation.
 
