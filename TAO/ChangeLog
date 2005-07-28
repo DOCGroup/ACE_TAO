@@ -1,3 +1,25 @@
+Thu Jul 28 12:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AdapterActivatorA.cpp
+        * tao/PortableServer/ForwardRequestA.cpp
+        * tao/PortableServer/IdAssignmentPolicyA.cpp
+        * tao/PortableServer/IdUniquenessPolicyA.cpp
+        * tao/PortableServer/ImplicitActivationPolicyA.cpp
+        * tao/PortableServer/LifespanPolicyA.cpp
+        * tao/PortableServer/POAManagerA.cpp
+        * tao/PortableServer/PolicyS.cpp
+        * tao/PortableServer/PortableServerA.cpp
+        * tao/PortableServer/PS_ForwardA.cpp
+        * tao/PortableServer/RequestProcessingPolicyA.cpp
+        * tao/PortableServer/ServantActivatorA.cpp
+        * tao/PortableServer/ServantLocatorA.cpp
+        * tao/PortableServer/ServantManagerA.cpp
+        * tao/PortableServer/ServantRetentionPolicyA.cpp
+        * tao/PortableServer/ThreadPolicyA.cpp
+          Updated includes to the new AnyTypeCode library. Just a quick
+          search and replace to get this lib compiling again. Only have
+          an unresolved link error I have to investigate
+
 Thu Jul 28 11:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
