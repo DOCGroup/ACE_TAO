@@ -1,3 +1,272 @@
+Thu Jul 28 11:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+          New MPC file
+
+        * tao/Alias_TypeCode.cpp
+        * tao/Alias_TypeCode.h
+        * tao/Alias_TypeCode.inl
+        * tao/Alias_TypeCode_Static.cpp
+        * tao/Alias_TypeCode_Static.h
+        * tao/Alias_TypeCode_Static.inl
+        * tao/Any.cpp
+        * tao/Any.h
+        * tao/Any.i
+        * tao/AnySeq.pidl
+        * tao/AnySeqA.cpp
+        * tao/AnySeqC.cpp
+        * tao/AnySeqC.h
+        * tao/AnySeqS.h
+        * tao/Any_Arg_Traits.h
+        * tao/Any_Array_Impl_T.cpp
+        * tao/Any_Array_Impl_T.h
+        * tao/Any_Array_Impl_T.inl
+        * tao/Any_Basic_Impl.cpp
+        * tao/Any_Basic_Impl.h
+        * tao/Any_Basic_Impl_T.cpp
+        * tao/Any_Basic_Impl_T.h
+        * tao/Any_Basic_Impl_T.inl
+        * tao/Any_Dual_Impl_T.cpp
+        * tao/Any_Dual_Impl_T.h
+        * tao/Any_Dual_Impl_T.inl
+        * tao/Any_Impl.cpp
+        * tao/Any_Impl.h
+        * tao/Any_Impl_T.cpp
+        * tao/Any_Impl_T.h
+        * tao/Any_Impl_T.inl
+        * tao/Any_Special_Impl_T.cpp
+        * tao/Any_Special_Impl_T.h
+        * tao/Any_Special_Impl_T.inl
+        * tao/Any_SystemException.cpp
+        * tao/Any_SystemException.h
+        * tao/Any_Unknown_IDL_Type.cpp
+        * tao/Any_Unknown_IDL_Type.h
+        * tao/BooleanSeqA.cpp
+        * tao/Bounds.pidl
+        * tao/BoundsA.cpp
+        * tao/BoundsC.cpp
+        * tao/BoundsC.h
+        * tao/CONV_FRAMEA.cpp
+        * tao/CharSeqA.cpp
+        * tao/CurrentA.cpp
+        * tao/DomainA.cpp
+        * tao/DoubleSeqA.cpp
+        * tao/Dynamic.pidl
+        * tao/DynamicA.cpp
+        * tao/DynamicC.cpp
+        * tao/DynamicC.h
+        * tao/DynamicS.h
+        * tao/Dynamic_Parameter.pidl
+        * tao/Dynamic_ParameterA.cpp
+        * tao/Dynamic_ParameterC.cpp
+        * tao/Dynamic_ParameterC.h
+        * tao/Empty_Param_TypeCode.cpp
+        * tao/Empty_Param_TypeCode.h
+        * tao/Empty_Param_TypeCode.inl
+        * tao/Enum_TypeCode.cpp
+        * tao/Enum_TypeCode.h
+        * tao/Enum_TypeCode.inl
+        * tao/Enum_TypeCode_Static.cpp
+        * tao/Enum_TypeCode_Static.h
+        * tao/Enum_TypeCode_Static.inl
+        * tao/Fixed_TypeCode.cpp
+        * tao/Fixed_TypeCode.h
+        * tao/Fixed_TypeCode.inl
+        * tao/FloatSeqA.cpp
+        * tao/GIOPA.cpp
+        * tao/IIOPA.cpp
+        * tao/IIOP_EndpointsA.cpp
+        * tao/IOP_IORA.cpp
+        * tao/InvalidSlotA.cpp
+        * tao/LongDoubleSeqA.cpp
+        * tao/LongLongSeqA.cpp
+        * tao/LongSeqA.cpp
+        * tao/Marshal.cpp
+        * tao/Marshal.h
+        * tao/Marshal.i
+        * tao/Messaging_PolicyValueA.cpp
+        * tao/NVList.cpp
+        * tao/NVList.h
+        * tao/NVList.i
+        * tao/Null_RefCount_Policy.h
+        * tao/ObjectIdListA.cpp
+        * tao/Objref_TypeCode.cpp
+        * tao/Objref_TypeCode.h
+        * tao/Objref_TypeCode.inl
+        * tao/Objref_TypeCode_Static.cpp
+        * tao/Objref_TypeCode_Static.h
+        * tao/Objref_TypeCode_Static.inl
+        * tao/OctetSeqA.cpp
+        * tao/PICurrentA.cpp
+        * tao/ParameterModeA.cpp
+        * tao/PolicyA.cpp
+        * tao/Policy_ForwardA.cpp
+        * tao/Recursive_Type_TypeCode.cpp
+        * tao/Recursive_Type_TypeCode.h
+        * tao/Recursive_Type_TypeCode.inl
+        * tao/RefCount_Policy_Traits.h
+        * tao/Sequence_TypeCode.cpp
+        * tao/Sequence_TypeCode.h
+        * tao/Sequence_TypeCode.inl
+        * tao/Sequence_TypeCode_Static.cpp
+        * tao/Sequence_TypeCode_Static.h
+        * tao/Sequence_TypeCode_Static.inl
+        * tao/ShortSeqA.cpp
+        * tao/StringSeqA.cpp
+        * tao/String_TypeCode.cpp
+        * tao/String_TypeCode.h
+        * tao/String_TypeCode.inl
+        * tao/String_TypeCode_Static.cpp
+        * tao/String_TypeCode_Static.h
+        * tao/String_TypeCode_Static.inl
+        * tao/String_TypeCode_Traits.h
+        * tao/Struct_TypeCode.cpp
+        * tao/Struct_TypeCode.h
+        * tao/Struct_TypeCode.inl
+        * tao/Struct_TypeCode_Static.cpp
+        * tao/Struct_TypeCode_Static.h
+        * tao/Struct_TypeCode_Static.inl
+        * tao/SystemExceptionA.cpp
+        * tao/TAOA.cpp
+        * tao/TimeBaseA.cpp
+        * tao/True_RefCount_Policy.cpp
+        * tao/True_RefCount_Policy.h
+        * tao/True_RefCount_Policy.inl
+        * tao/TypeCode.cpp
+        * tao/TypeCode.h
+        * tao/TypeCode.inl
+        * tao/TypeCodeA.cpp
+        * tao/TypeCode_Base_Attributes.cpp
+        * tao/TypeCode_Base_Attributes.h
+        * tao/TypeCode_Base_Attributes.inl
+        * tao/TypeCode_CDR_Extraction.cpp
+        * tao/TypeCode_CDR_Extraction.h
+        * tao/TypeCode_Case.cpp
+        * tao/TypeCode_Case.h
+        * tao/TypeCode_Case.inl
+        * tao/TypeCode_Case_T.cpp
+        * tao/TypeCode_Case_T.h
+        * tao/TypeCode_Case_T.inl
+        * tao/TypeCode_Constants.cpp
+        * tao/TypeCode_Constants.h
+        * tao/TypeCode_Struct_Field.h
+        * tao/TypeCode_Traits.h
+        * tao/TypeCode_Value_Field.h
+        * tao/ULongLongSeqA.cpp
+        * tao/ULongSeqA.cpp
+        * tao/UShortSeqA.cpp
+        * tao/Union_TypeCode.cpp
+        * tao/Union_TypeCode.h
+        * tao/Union_TypeCode.inl
+        * tao/Union_TypeCode_Static.cpp
+        * tao/Union_TypeCode_Static.h
+        * tao/Union_TypeCode_Static.inl
+        * tao/Value_TypeCode.cpp
+        * tao/Value_TypeCode.h
+        * tao/Value_TypeCode.inl
+        * tao/Value_TypeCode_Static.cpp
+        * tao/Value_TypeCode_Static.h
+        * tao/Value_TypeCode_Static.inl
+        * tao/WCharSeqA.cpp
+        * tao/WStringSeqA.cpp
+        * tao/WrongTransactionA.cpp
+        * tao/append.cpp
+        * tao/skip.cpp
+          All these files are moved to the AnyTypeCode directory
+
+        * tao/UB_String_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Object_Argument_T.cpp:
+        * tao/operation_details.cpp
+        * tao/Invocation_Base.cpp
+          Only include Dynamic_ParameterC.h when interceptors are enabled
+
+        * tao/SystemException.{h,cpp}:
+          Moved excp_factory to this file, we need it here, temporarily
+          removed _tao_type, we need to work on this.
+
+        * tao/RequestInfo_Util.{h,cpp}:
+          Don't build these when interceptors are disabled
+
+        * tao/ORB_Core.cpp
+          Include ace/Message_Block.h to get ACE_Data_Block
+
+        * tao/ORB_Core.h:
+          Added forward declaration of ACE_Data_Block
+
+        * tao/extra_core.mpb:
+          Removed NVList
+
+        * tao/corba.h:
+          Removed BoundsC.h
+
+        * tao/PortableInterceptorC.cpp
+        * tao/VisibilityC.cpp
+        * tao/orb_typesC.cpp
+        * tao/ORB.cpp
+        * tao/PI_ForwardC.cpp
+        * tao/InvalidSlotC.cpp
+        * tao/WrongTransactionC.cpp
+        * tao/GIOPC.cpp
+
+        * tao/Exception.{h,cpp}:
+          Commented out the Any operators, they should go to another lib,
+          will handle this later
+
+        * tao/Buffering_Constraint_Policy.cpp:
+          Commented out Any usage, needs to be addressed
+
+        * tao/WrongTransactionC.{h,cpp}:
+        * tao/PolicyC.cpp:
+          Commented out _tao_type for exceptions, we have to solve this
+          because exceptions now use TypeCode but we have subsetted that
+
+        * tao/UShortSeqC.h
+        * tao/ULongSeqC.h
+        * tao/WCharSeqC.h
+        * tao/Typecode_typesC.h
+        * tao/ULongLongSeqC.h
+        * tao/StringSeqC.h
+        * tao/TAOC.h
+        * tao/TimeBaseC.h
+        * tao/Policy_ForwardC.h
+        * tao/PortableInterceptorC.h
+        * tao/ShortSeqC.h
+        * tao/VisibilityC.h
+        * tao/LongDoubleSeqC.h
+        * tao/LongLongSeqC.h
+        * tao/LongSeqC.h
+        * tao/Messaging_PolicyValueC.h
+        * tao/ObjectIdListC.h
+        * tao/OctetSeqC.h
+        * tao/PICurrentC.h
+        * tao/PI_ForwardC.h
+        * tao/ParameterModeC.h
+        * tao/PolicyC.h
+        * tao/GIOPC.h
+        * tao/IIOPC.h
+        * tao/IIOP_EndpointsC.h
+        * tao/IOP_IORC.h
+        * tao/InvalidSlotC.h
+        * tao/DomainC.h
+        * tao/CharSeqC.h
+        * tao/CurrentC.h
+        * tao/DoubleSeqC.h
+        * tao/Exception.h
+        * tao/FloatSeqC.h
+        * tao/WStringSeqC.h
+        * tao/WrongTransactionC.h
+        * tao/orb_typesC.h
+        * tao/BooleanSeqC.h
+        * tao/CONV_FRAMEC.h
+          Removed TypeCode and Any operators, these are now all
+          in AnyTypeCode/*.h. This has been by hand, with the
+          change of Jeff below we can automate this
+
+        * tao.mpc
+          Removed a lot of files
+
 Thu Jul 28 02:15:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -18,7 +287,7 @@ Thu Jul 28 02:15:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_codegen.h:
         * TAO_IDL/be_include/be_global.h:
         * TAO_IDL/be_include/be_visitor_context.h:
-        
+
           Modified -GA option to generate a *A.h file as well as
           a *A.cpp file, and added -Wb options 'anyop_export_macro'
           and 'anyop_export_include' to optionally compile the *A.*
