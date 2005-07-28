@@ -17,7 +17,7 @@
 #include "Union_TypeCode_T.h"
 #include "Value_TypeCode.h"
 
-#include "Recursive_Type_TypeCode_T.h"
+#include "Recursive_Type_TypeCode.h"
 
 #include "TypeCode_Case_T.h"
 #include "TypeCode_Struct_Field.h"

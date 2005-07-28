@@ -26,17 +26,17 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "CodecFactory.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/Recursive_Type_TypeCode.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:87
@@ -52,7 +52,7 @@ static TAO::TypeCode::Struct<char const *,
     "InvalidTypeForEncoding",
     _tao_fields_IOP_Codec_InvalidTypeForEncoding,
     0);
-  
+
 ::CORBA::TypeCode_ptr const IOP::Codec::_tc_InvalidTypeForEncoding =
   &_tao_tc_IOP_Codec_InvalidTypeForEncoding;
 
@@ -70,7 +70,7 @@ static TAO::TypeCode::Struct<char const *,
     "FormatMismatch",
     _tao_fields_IOP_Codec_FormatMismatch,
     0);
-  
+
 ::CORBA::TypeCode_ptr const IOP::Codec::_tc_FormatMismatch =
   &_tao_tc_IOP_Codec_FormatMismatch;
 
@@ -88,7 +88,7 @@ static TAO::TypeCode::Struct<char const *,
     "TypeMismatch",
     _tao_fields_IOP_Codec_TypeMismatch,
     0);
-  
+
 ::CORBA::TypeCode_ptr const IOP::Codec::_tc_TypeMismatch =
   &_tao_tc_IOP_Codec_TypeMismatch;
 
@@ -101,7 +101,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/IOP/Codec:1.0",
     "Codec");
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_Codec =
@@ -121,7 +121,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/EncodingFormat:1.0",
     "EncodingFormat",
     &CORBA::_tc_short);
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_EncodingFormat =
@@ -138,7 +138,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
     { "format", &IOP::_tc_EncodingFormat },
     { "major_version", &CORBA::_tc_octet },
     { "minor_version", &CORBA::_tc_octet }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -150,7 +150,7 @@ static TAO::TypeCode::Struct<char const *,
     "Encoding",
     _tao_fields_IOP_Encoding,
     3);
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_Encoding =
@@ -173,7 +173,7 @@ static TAO::TypeCode::Struct<char const *,
     "UnknownEncoding",
     _tao_fields_IOP_CodecFactory_UnknownEncoding,
     0);
-  
+
 ::CORBA::TypeCode_ptr const IOP::CodecFactory::_tc_UnknownEncoding =
   &_tao_tc_IOP_CodecFactory_UnknownEncoding;
 
@@ -186,7 +186,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/IOP/CodecFactory:1.0",
     "CodecFactory");
-  
+
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_CodecFactory =
@@ -219,7 +219,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
@@ -270,7 +270,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -281,7 +281,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<IOP::Codec::InvalidTypeForEncoding>::demarshal_value (TAO_InputCDR &)
@@ -345,7 +345,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -356,7 +356,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<IOP::Codec::FormatMismatch>::demarshal_value (TAO_InputCDR &)
@@ -420,7 +420,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -431,7 +431,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<IOP::Codec::TypeMismatch>::demarshal_value (TAO_InputCDR &)
@@ -495,7 +495,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -577,7 +577,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
@@ -628,7 +628,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -639,7 +639,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<IOP::CodecFactory::UnknownEncoding>::demarshal_value (TAO_InputCDR &)

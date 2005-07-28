@@ -26,17 +26,17 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "ORBInitInfoC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/String_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -49,7 +49,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/PortableInterceptor/ORBInitInfo/ObjectId:1.0",
     "ObjectId",
     &CORBA::_tc_string);
-  
+
 ::CORBA::TypeCode_ptr const PortableInterceptor::ORBInitInfo::_tc_ObjectId =
   &_tao_tc_PortableInterceptor_ORBInitInfo_ObjectId;
 
@@ -59,7 +59,7 @@ static TAO::TypeCode::Alias<char const *,
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ORBInitInfo_DuplicateName[] =
   {
     { "name", &CORBA::_tc_string }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -71,7 +71,7 @@ static TAO::TypeCode::Struct<char const *,
     "DuplicateName",
     _tao_fields_PortableInterceptor_ORBInitInfo_DuplicateName,
     1);
-  
+
 ::CORBA::TypeCode_ptr const PortableInterceptor::ORBInitInfo::_tc_DuplicateName =
   &_tao_tc_PortableInterceptor_ORBInitInfo_DuplicateName;
 
@@ -89,7 +89,7 @@ static TAO::TypeCode::Struct<char const *,
     "InvalidName",
     _tao_fields_PortableInterceptor_ORBInitInfo_InvalidName,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableInterceptor::ORBInitInfo::_tc_InvalidName =
   &_tao_tc_PortableInterceptor_ORBInitInfo_InvalidName;
 
@@ -102,7 +102,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableInterceptor/ORBInitInfo:1.0",
     "ORBInitInfo");
-  
+
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_ORBInitInfo =
@@ -135,7 +135,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR &)
@@ -186,7 +186,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -197,7 +197,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::demarshal_value (TAO_InputCDR &)
@@ -261,7 +261,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -272,7 +272,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::demarshal_value (TAO_InputCDR &)

@@ -22,7 +22,7 @@
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
     defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #include "tao/Sequence_T.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "ValueBase.h"
 #include "AbstractBase.h"
 #include "Sequence_T.h"

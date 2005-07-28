@@ -26,18 +26,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IFR_ExtendedC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/Sequence_TypeCode_Static.h"
 #include "tao/String_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/objref_typecode.cpp:76
@@ -48,7 +48,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_objref,
     "IDL:omg.org/CORBA/FixedDef:1.0",
     "FixedDef");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_FixedDef =
@@ -69,7 +69,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
     { "type", &CORBA::_tc_TypeCode },
     { "type_def", &CORBA::_tc_IDLType },
     { "access", &CORBA::_tc_Visibility }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              CORBA::TypeCode_ptr const *,
@@ -82,7 +82,7 @@ static TAO::TypeCode::Struct<char const *,
     "ValueMember",
     _tao_fields_CORBA_ValueMember,
     7);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ValueMember =
@@ -112,10 +112,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_ValueMember,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_CORBA_ValueMemberSeq_0 =
       &CORBA_ValueMemberSeq_0;
-    
+
   }
 }
 
@@ -129,7 +129,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ValueMemberSeq:1.0",
     "ValueMemberSeq",
     &TAO::TypeCode::tc_CORBA_ValueMemberSeq_0);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ValueMemberSeq =
@@ -147,7 +147,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_objref,
     "IDL:omg.org/CORBA/ValueMemberDef:1.0",
     "ValueMemberDef");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ValueMemberDef =
@@ -176,7 +176,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
     { "is_truncatable", &CORBA::_tc_boolean },
     { "base_value", &CORBA::_tc_RepositoryId },
     { "type", &CORBA::_tc_TypeCode }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              CORBA::TypeCode_ptr const *,
@@ -189,7 +189,7 @@ static TAO::TypeCode::Struct<char const *,
     "FullValueDescription",
     _tao_fields_CORBA_ValueDef_FullValueDescription,
     15);
-  
+
 ::CORBA::TypeCode_ptr const CORBA::ValueDef::_tc_FullValueDescription =
   &_tao_tc_CORBA_ValueDef_FullValueDescription;
 
@@ -202,7 +202,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_objref,
     "IDL:omg.org/CORBA/ValueDef:1.0",
     "ValueDef");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ValueDef =
@@ -226,7 +226,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
     { "abstract_base_values", &CORBA::_tc_RepositoryIdSeq },
     { "is_truncatable", &CORBA::_tc_boolean },
     { "base_value", &CORBA::_tc_RepositoryId }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              CORBA::TypeCode_ptr const *,
@@ -239,7 +239,7 @@ static TAO::TypeCode::Struct<char const *,
     "ValueDescription",
     _tao_fields_CORBA_ValueDescription,
     10);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ValueDescription =
@@ -268,7 +268,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
     { "is_truncatable", &CORBA::_tc_boolean },
     { "base_value", &CORBA::_tc_RepositoryId },
     { "type", &CORBA::_tc_TypeCode }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              CORBA::TypeCode_ptr const *,
@@ -281,7 +281,7 @@ static TAO::TypeCode::Struct<char const *,
     "ExtFullValueDescription",
     _tao_fields_CORBA_ExtValueDef_ExtFullValueDescription,
     15);
-  
+
 ::CORBA::TypeCode_ptr const CORBA::ExtValueDef::_tc_ExtFullValueDescription =
   &_tao_tc_CORBA_ExtValueDef_ExtFullValueDescription;
 
@@ -294,7 +294,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_objref,
     "IDL:omg.org/CORBA/ExtValueDef:1.0",
     "ExtValueDef");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ExtValueDef =
@@ -312,7 +312,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_objref,
     "IDL:omg.org/CORBA/ValueBoxDef:1.0",
     "ValueBoxDef");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ValueBoxDef =
@@ -379,7 +379,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -437,7 +437,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -612,7 +612,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -670,7 +670,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -786,7 +786,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.

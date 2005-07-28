@@ -10,9 +10,9 @@ ACE_RCSID (DynamicInterface,
 
 #include "tao/NVList.h"
 #include "tao/GIOP_Utils.h"
-#include "tao/Marshal.h"
-#include "tao/TypeCode.h"
-#include "tao/Any_Impl.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)

@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "RTScheduler.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/Enum_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/Sequence_TypeCode_Static.h"
 #include "tao/String_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
@@ -45,7 +45,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:RTScheduling/ThreadAction:1.0",
     "ThreadAction");
-  
+
 namespace RTScheduling
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadAction =
@@ -61,7 +61,7 @@ static char const * const _tao_enumerators_RTScheduling_DistributableThread_DT_S
   {
     "ACTIVE",
     "CANCELLED"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -72,7 +72,7 @@ static TAO::TypeCode::Enum<char const *,
     "DT_State",
     _tao_enumerators_RTScheduling_DistributableThread_DT_State,
     2);
-  
+
 ::CORBA::TypeCode_ptr const RTScheduling::DistributableThread::_tc_DT_State =
   &_tao_tc_RTScheduling_DistributableThread_DT_State;
 
@@ -85,7 +85,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:RTScheduling/DistributableThread:1.0",
     "DistributableThread");
-  
+
 namespace RTScheduling
 {
   ::CORBA::TypeCode_ptr const _tc_DistributableThread =
@@ -108,7 +108,7 @@ static TAO::TypeCode::Struct<char const *,
     "UNSUPPORTED_SCHEDULING_DISCIPLINE",
     _tao_fields_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE,
     0);
-  
+
 ::CORBA::TypeCode_ptr const RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE =
   &_tao_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 
@@ -133,10 +133,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_octet,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_RTScheduling_Current_IdType_0 =
       &RTScheduling_Current_IdType_0;
-    
+
   }
 }
 
@@ -151,7 +151,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:RTScheduling/Current/IdType:1.0",
     "IdType",
     &TAO::TypeCode::tc_RTScheduling_Current_IdType_0);
-  
+
 ::CORBA::TypeCode_ptr const RTScheduling::Current::_tc_IdType =
   &_tao_tc_RTScheduling_Current_IdType;
 
@@ -176,10 +176,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_string,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_RTScheduling_Current_NameList_0 =
       &RTScheduling_Current_NameList_0;
-    
+
   }
 }
 
@@ -194,7 +194,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:RTScheduling/Current/NameList:1.0",
     "NameList",
     &TAO::TypeCode::tc_RTScheduling_Current_NameList_0);
-  
+
 ::CORBA::TypeCode_ptr const RTScheduling::Current::_tc_NameList =
   &_tao_tc_RTScheduling_Current_NameList;
 
@@ -207,7 +207,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:RTScheduling/Current:1.0",
     "Current");
-  
+
 namespace RTScheduling
 {
   ::CORBA::TypeCode_ptr const _tc_Current =
@@ -225,7 +225,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:RTScheduling/ResourceManager:1.0",
     "ResourceManager");
-  
+
 namespace RTScheduling
 {
   ::CORBA::TypeCode_ptr const _tc_ResourceManager =
@@ -248,7 +248,7 @@ static TAO::TypeCode::Struct<char const *,
     "INCOMPATIBLE_SCHEDULING_DISCIPLINES",
     _tao_fields_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES,
     0);
-  
+
 ::CORBA::TypeCode_ptr const RTScheduling::Scheduler::_tc_INCOMPATIBLE_SCHEDULING_DISCIPLINES =
   &_tao_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES;
 
@@ -261,7 +261,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:RTScheduling/Scheduler:1.0",
     "Scheduler");
-  
+
 namespace RTScheduling
 {
   ::CORBA::TypeCode_ptr const _tc_Scheduler =

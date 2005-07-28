@@ -31,13 +31,13 @@
 
 #include "uiop_endpointsC.h"
 #include "tao/CDR.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/Sequence_TypeCode_Static.h"
 #include "tao/String_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -59,7 +59,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "rendezvous_point", &CORBA::_tc_string },
     { "priority", &CORBA::_tc_short }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              CORBA::TypeCode_ptr const *,
@@ -72,16 +72,16 @@ static TAO::TypeCode::Struct<char const *,
     "TAO_UIOP_Endpoint_Info",
     _tao_fields_TAO_UIOP_Endpoint_Info,
     2);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TAO_UIOP_Endpoint_Info =
   &_tao_tc_TAO_UIOP_Endpoint_Info;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/structure_cs.cpp:66
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_UIOPENDPOINTSEQUENCE_CS_)
@@ -146,10 +146,10 @@ namespace TAO
         CORBA::tk_sequence,
         &_tc_TAO_UIOP_Endpoint_Info,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_TAO_UIOPEndpointSequence_0 =
       &TAO_UIOPEndpointSequence_0;
-    
+
   }
 }
 
@@ -163,7 +163,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_UIOPEndpointSequence:1.0",
     "TAO_UIOPEndpointSequence",
     &TAO::TypeCode::tc_TAO_UIOPEndpointSequence_0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TAO_UIOPEndpointSequence =
   &_tao_tc_TAO_UIOPEndpointSequence;
 
@@ -202,20 +202,20 @@ CORBA::Boolean operator<< (
   )
 {
   const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = true;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return false;
 }
 
@@ -225,7 +225,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -235,28 +235,28 @@ CORBA::Boolean operator>> (
         {
           return false;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return true;
         }
-      
+
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = true;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
-    
+
     }
-  
+
   return false;
 }
 

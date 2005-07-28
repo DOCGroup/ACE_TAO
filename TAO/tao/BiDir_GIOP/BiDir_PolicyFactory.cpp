@@ -3,7 +3,7 @@
 #include "BiDir_Policy_i.h"
 
 #include "tao/ORB_Constants.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID (BiDir_GIOP,
            BiDir_PolicyFactory,

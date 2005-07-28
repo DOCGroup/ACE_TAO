@@ -2,12 +2,12 @@
 
 #include "Unknown_User_Exception.h"
 
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/Environment.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"

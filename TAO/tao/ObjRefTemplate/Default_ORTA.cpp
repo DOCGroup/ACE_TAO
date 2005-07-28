@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Default_ORTC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/String_TypeCode_Static.h"
-#include "tao/Value_TypeCode_Static.h"
-#include "tao/TypeCode_Value_Field.h"
+#include "tao/AnyTypeCode/Value_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/value_typecode.cpp:50
@@ -54,7 +54,7 @@ static TAO::TypeCode::Value<char const *,
     &CORBA::_tc_null,
     _tao_fields_TAO_Default_ORT_ObjectReferenceTemplate,
     0);
-  
+
 namespace TAO_Default_ORT
 {
   ::CORBA::TypeCode_ptr const _tc_ObjectReferenceTemplate =

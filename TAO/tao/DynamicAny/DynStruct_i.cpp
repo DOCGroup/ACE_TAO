@@ -3,8 +3,8 @@
 
 #include "DynStruct_i.h"
 #include "DynAnyFactory.h"
-#include "tao/Marshal.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,

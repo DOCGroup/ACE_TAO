@@ -9,7 +9,7 @@ ACE_RCSID (tao,
            ClientRequestInfo,
            "$Id$")
 
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/PolicyC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PICurrent.h"
