@@ -1,3 +1,18 @@
+Thu Jul 28 22:40:26 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        
+          Added logic to make the anyop export macro and export include
+          default to the corresponding stub values, if any, when the
+          former values have not been set on the command line, but -GA
+          is used. This behavior will enable the *A.* files to be
+          generated, but compiled into the same library as the stub
+          files. if desired.
+
 Thu Jul 28 18:35:07 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Buffering_Constraint_Policy.{h,cpp}:
