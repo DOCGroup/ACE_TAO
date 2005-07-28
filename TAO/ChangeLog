@@ -1,3 +1,35 @@
+Thu Jul 28 16:43:07 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added code generation to include *A.h files (in the
+          *A.cpp file) for each included IDL file. If possible,
+          existence checks for these included files will be added
+          at a future date.
+          
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        
+          Switched generation of the typecode declaration to the
+          *A.h file, if the -GA option is used.
+          
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        
+          Updated comment.
+          
+        * TAO_IDL/be/be_global.cpp:
+        
+          Fixed typo in generated usage message.
+          
+        * TAO_IDL/driver/drv_args.cpp:
+        
+          Added usage messages for each individual recognized
+          -W[p|b] option.
+          
+        * docs/compiler.html:
+        
+          Updated command line option table with the new -Wb options
+          for export macro and export include in *A.h files.
+
 Thu Jul 28 12:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/AdapterActivatorA.cpp
