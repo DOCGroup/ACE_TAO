@@ -25,17 +25,19 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "ServicesC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Sequence_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/Recursive_Type_TypeCode.h"
+#include "ServicesA.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode_T.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
+
+#include "tao/AnyTypeCode/OctetSeqA.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -48,7 +50,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ServiceType:1.0",
     "ServiceType",
     &CORBA::_tc_ushort);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceType =
@@ -68,7 +70,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ServiceOption:1.0",
     "ServiceOption",
     &CORBA::_tc_ulong);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceOption =
@@ -88,7 +90,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ServiceDetailType:1.0",
     "ServiceDetailType",
     &CORBA::_tc_ulong);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceDetailType =
@@ -108,7 +110,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ServiceDetailData:1.0",
     "ServiceDetailData",
     &CORBA::_tc_OctetSeq);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceDetailData =
@@ -138,10 +140,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_ServiceOption,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_CORBA_ServiceOptionSeq_0 =
       &CORBA_ServiceOptionSeq_0;
-    
+
   }
 }
 
@@ -156,7 +158,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ServiceOptionSeq:1.0",
     "ServiceOptionSeq",
     &TAO::TypeCode::tc_CORBA_ServiceOptionSeq_0);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceOptionSeq =
@@ -177,7 +179,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "service_detail_type", &CORBA::_tc_ServiceDetailType },
     { "service_detail", &CORBA::_tc_ServiceDetailData }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -189,7 +191,7 @@ static TAO::TypeCode::Struct<char const *,
     "ServiceDetail",
     _tao_fields_CORBA_ServiceDetail,
     2);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceDetail =
