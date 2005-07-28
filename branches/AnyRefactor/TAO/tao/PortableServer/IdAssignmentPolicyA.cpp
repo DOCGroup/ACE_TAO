@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IdAssignmentPolicyC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Enum_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/enum_typecode.cpp:34
@@ -43,7 +43,7 @@ static char const * const _tao_enumerators_PortableServer_IdAssignmentPolicyValu
   {
     "USER_ID",
     "SYSTEM_ID"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -54,7 +54,7 @@ static TAO::TypeCode::Enum<char const *,
     "IdAssignmentPolicyValue",
     _tao_enumerators_PortableServer_IdAssignmentPolicyValue,
     2);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_IdAssignmentPolicyValue =
@@ -72,7 +72,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/IdAssignmentPolicy:2.3",
     "IdAssignmentPolicy");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_IdAssignmentPolicy =
@@ -105,7 +105,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::IdAssignmentPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_IdAssignmentPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -133,7 +133,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableServer::IdAssignmentPolicy>::demarshal_value (TAO_InputCDR &)
