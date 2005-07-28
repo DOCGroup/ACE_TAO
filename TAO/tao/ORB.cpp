@@ -98,15 +98,7 @@ CORBA::ORB::InvalidName::operator= (const ::CORBA::ORB::InvalidName &_tao_excp)
 CORBA::ORB::InvalidName *
 CORBA::ORB::InvalidName::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0",
-                       exc->_rep_id ()))
-    {
-      return dynamic_cast<InvalidName *> (exc);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<InvalidName *> (exc);
 }
 
 CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
@@ -381,7 +373,7 @@ CORBA::ORB::create_environment (CORBA::Environment_ptr &environment
 
 void
 CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv
-                               ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (nv,
                     CORBA::NamedValue,
@@ -1111,7 +1103,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  CORBA::Object_var result = CORBA::Object::_nil ();
+  CORBA::Object_var result;
 
   if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     {
@@ -1546,26 +1538,6 @@ CORBA::ORB_init (int &argc,
   // The ORB was already initialized.  Just return that one.
   if (oc.get () != 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                                guard,
-                                *ACE_Static_Object_Lock::instance (),
-                                CORBA::ORB::_nil ()));
-
-      if (oc->has_shutdown ())
-        {
-          // As defined by the CORBA 2.3 specification, throw a
-          // CORBA::BAD_INV_ORDER exception with minor code 4 if the
-          // ORB has shutdown by the time an ORB function is
-          // called.
-
-          // @@ Does the BAD_INV_ORDER exception apply here?
-          //       -Ossama
-
-          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 4,
-                                                  CORBA::COMPLETED_NO),
-                            CORBA::ORB::_nil ());
-        }
-
       return CORBA::ORB::_duplicate (oc->orb ());
     }
   else
@@ -1583,8 +1555,8 @@ CORBA::ORB_init (int &argc,
 
       // The ORB table increases the reference count on the ORB Core
       // so do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr
-      // to decrease the reference on the ORB Core when it goes out of
-      // scope.
+      // to decrease the reference count on the ORB Core when it goes
+      // out of scope.
       oc.reset (tmp);
     }
 
@@ -1609,8 +1581,7 @@ CORBA::ORB_init (int &argc,
                         CORBA::ORB::_nil ());
     }
 
-
-  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry =
+  TAO::ORBInitializer_Registry_Adapter * orbinitializer_registry =
     oc.get ()->orbinitializer_registry ();
 
   PortableInterceptor::SlotId slotid = 0;

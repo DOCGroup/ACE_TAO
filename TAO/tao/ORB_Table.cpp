@@ -39,13 +39,13 @@ TAO::ORB_Table::bind (char const * orb_id,
       return -1;
     };
 
+  value_type const value =
+    std::make_pair (key_type (orb_id), data_type (orb_core));
+
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
                     -1);
-
-  value_type const value =
-    std::make_pair (key_type (orb_id), data_type (orb_core));
 
   std::pair<iterator, bool> result = this->table_.insert (value);
 
@@ -108,8 +108,7 @@ TAO::ORB_Table::unbind (const char *orb_id)
     {
       TAO::ORB_Core_Ref_Counter oc ((*result).second);
 
-      if (this->table_.erase (key_type (orb_id)) == 0)
-        return -1;
+      this->table_.erase (result);
 
       if (oc.core () == this->first_orb_)
         {
@@ -122,11 +121,6 @@ TAO::ORB_Table::unbind (const char *orb_id)
               this->first_orb_ = 0;
             }
         }
-
-      // Assign a default constructed ref counter, this will make sure
-      // we drop the refcount on the ORB_Core now, instead at the
-      // moment we destruct the table.
-      (*result).second = TAO::ORB_Core_Ref_Counter ();
     }
 
   return 0;
