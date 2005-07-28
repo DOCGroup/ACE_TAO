@@ -1,3 +1,16 @@
+Wed Jul 27 21:35:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+
+	  Regenerated.
+
 Wed Jul 27 15:59:54 2005  Gary Maxey <gary.maxey@hp.com>
 
         * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp
