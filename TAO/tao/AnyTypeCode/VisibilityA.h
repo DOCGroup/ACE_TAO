@@ -65,28 +65,9 @@ namespace CORBA
 {
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:379
-
-  typedef CORBA::Short Visibility;
-  typedef CORBA::Short_out Visibility_out;
-
-  // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Visibility;
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
-
-  const CORBA::Visibility PRIVATE_MEMBER = 0;
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
-
-  const CORBA::Visibility PUBLIC_MEMBER = 1;
-
-// TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
 

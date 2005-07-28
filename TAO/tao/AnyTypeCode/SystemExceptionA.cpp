@@ -1,6 +1,6 @@
 // $Id$
 
-#include "SystemException.h"
+#include "tao/SystemException.h"
 #include "Any_SystemException.h"
 #include "Any_Dual_Impl_T.h"
 #include "TypeCode.h"
@@ -9,8 +9,8 @@
 #include "TypeCode_Struct_Field.h"
 #include "Struct_TypeCode_Static.h"
 #include "Null_RefCount_Policy.h"
-#include "CORBA_String.h"
 
+#include "tao/CORBA_String.h"
 
 ACE_RCSID (tao,
            SystemExceptionA,
