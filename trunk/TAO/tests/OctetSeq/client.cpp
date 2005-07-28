@@ -82,6 +82,7 @@ main (int argc, char *argv[])
                             1);
         }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
       CORBA::String_var repository_id =
         server->_repository_id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -93,6 +94,7 @@ main (int argc, char *argv[])
                              repository_id.in ()),
                             1);
         }
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
       if (seed == 0)
         {

@@ -66,22 +66,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_BOOLEANSEQ_CH_)
 #define _CORBA_BOOLEANSEQ_CH_
-  
+
   class BooleanSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         BooleanSeq,
         CORBA::Boolean
       >
     BooleanSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         BooleanSeq,
@@ -89,7 +89,7 @@ namespace CORBA
         CORBA::Boolean
       >
     BooleanSeq_out;
-  
+
   class TAO_Export BooleanSeq
     : public
         TAO_Unbounded_Sequence<
@@ -102,23 +102,18 @@ namespace CORBA
     BooleanSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Boolean* buffer, 
+        CORBA::Boolean* buffer,
         CORBA::Boolean release = 0
       );
     BooleanSeq (const BooleanSeq &);
     ~BooleanSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef BooleanSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_BooleanSeq;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -132,14 +127,6 @@ namespace CORBA
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::BooleanSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::BooleanSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::BooleanSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::BooleanSeq *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71

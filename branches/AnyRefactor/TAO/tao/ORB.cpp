@@ -13,7 +13,6 @@ ACE_RCSID (tao,
 #include "ORB_Core.h"
 #include "ORB_Core_TSS_Resources.h"
 #include "TAO_Internal.h"
-#include "NVList.h"
 #include "Dynamic_Adapter.h"
 #include "Profile.h"
 #include "default_ports.h"
@@ -298,7 +297,9 @@ CORBA::ORB::create_list (CORBA::Long count,
                          ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
-
+/*-----------------27-7-2005 16:11------------------
+ * Todo, add an adapter
+ * --------------------------------------------------
   // Create an empty list
   ACE_NEW_THROW_EX (new_list,
                     CORBA::NVList,
@@ -328,7 +329,7 @@ CORBA::ORB::create_list (CORBA::Long count,
 
           new_list->values_.enqueue_tail (nv);
         }
-    }
+    }*/
 }
 
 void
@@ -383,13 +384,14 @@ void
 CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv
                                ACE_ENV_ARG_DECL)
 {
-  ACE_NEW_THROW_EX (nv,
+/* todo
+ *   ACE_NEW_THROW_EX (nv,
                     CORBA::NamedValue,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         0,
                         ENOMEM),
-                      CORBA::COMPLETED_NO));
+                      CORBA::COMPLETED_NO));*/
 }
 
 // The following functions are not implemented - they just throw

@@ -1,14 +1,18 @@
 //$Id$
+
 #include "operation_details.h"
 #include "Stub.h"
-#include "TypeCode.h"
 #include "ORB_Constants.h"
-#include "DynamicC.h"
 #include "Exception_Data.h"
 #include "SystemException.h"
+#include "Argument.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+# include "TypeCode.h"
+# include "DynamicC.h"
+#endif
 
 #include "ace/OS_NS_string.h"
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"
