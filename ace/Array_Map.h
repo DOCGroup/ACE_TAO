@@ -30,6 +30,7 @@
 
 #include <utility>
 #include <iterator>
+#include <functional>
 
 
 /**
@@ -82,7 +83,7 @@
  *       -# Copy constructor
  *       -# operator=
  */
-template<typename Key, typename Value>
+template<typename Key, typename Value, class EqualTo = std::equal_to<Key> >
 class ACE_Array_Map
 {
 public:
@@ -283,14 +284,14 @@ private:
 // --------------------------------------------------------------
 
 /// @c ACE_Array_Map equality operator.
-template <typename Key, typename Value>
-bool operator== (ACE_Array_Map<Key, Value> const & lhs,
-                 ACE_Array_Map<Key, Value> const & rhs);
+template <typename Key, typename Value, class EqualTo>
+bool operator== (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
+                 ACE_Array_Map<Key, Value, EqualTo> const & rhs);
 
 /// @c ACE_Array_Map lexicographical comparison operator.
-template <typename Key, typename Value>
-bool operator<  (ACE_Array_Map<Key, Value> const & lhs,
-                 ACE_Array_Map<Key, Value> const & rhs);
+template <typename Key, typename Value, class EqualTo>
+bool operator<  (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
+                 ACE_Array_Map<Key, Value, EqualTo> const & rhs);
 
 // --------------------------------------------------------------
 

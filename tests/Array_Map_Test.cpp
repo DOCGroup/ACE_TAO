@@ -16,6 +16,7 @@
 #include "ace/SString.h"
 #include "ace/Array_Map.h"
 
+#include <algorithm>
 //#include <map>  /* For STL portability testing. */
 
 
@@ -303,10 +304,10 @@ index_operator_test (void)
 
       const_reverse_iterator const rlast = const_phonetic.rend ();
       for (const_reverse_iterator r = const_phonetic.rbegin ();
-           r != rlast;
+           !(r == rlast); // Sun C++ Forte doesn't support operator!=
            ++r, --letter, --word)
         {
-          if ((*r).first  != *letter || (*r).second != *word)
+          if ((*r).first != *letter || (*r).second != *word)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Key/Datum mismatch:\n"
                                          "    key \"%c\" should be \"%c\"\n"
@@ -340,6 +341,113 @@ index_operator_test (void)
 
 // --------------------------------------------------------------
 
+class RefCounted
+{
+public:
+
+  RefCounted (void)
+    : refcount_ (0)
+  {
+  }
+
+  RefCounted (unsigned int * count)
+    : refcount_ (count)
+  {
+  }
+
+  ~RefCounted (void)
+  {
+    if (this->refcount_)
+      --(*this->refcount_);
+  }
+
+  RefCounted (RefCounted const & r)
+    : refcount_ (r.refcount_ptr ())
+  {
+    if (this->refcount_)
+      ++(*this->refcount_);
+  }
+
+  RefCounted &
+  operator= (RefCounted const & r)
+  {
+    RefCounted tmp (r);
+    std::swap (this->refcount_, tmp.refcount_);
+
+    return *this;
+  }
+
+  unsigned int *
+  refcount_ptr (void) const
+  {
+    return this->refcount_;
+  }
+
+  unsigned int
+  refcount (void) const
+  {
+    return *this->refcount_;
+  }
+
+private:
+
+  unsigned int * refcount_;
+
+};
+
+// --------
+
+bool
+reference_count_test (void)
+{
+  typedef ACE_Array_Map<ACE_TString, RefCounted> Map;
+
+  static Map::size_type const CAPACITY = 30;
+
+  unsigned int ref_count = 1;
+
+  RefCounted counted (&ref_count);
+
+  ACE_ASSERT (counted.refcount () == 1);
+
+  {
+    Map map (CAPACITY);  // Preallocate storage for a number of
+                         // elements even if they are not used to test
+                         // some internals.
+
+    map[ACE_TEXT("One")] = counted;
+
+    ACE_ASSERT (counted.refcount () == 2);
+
+    map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Two")),
+                                counted));
+
+    ACE_ASSERT (counted.refcount () == 3);
+
+    map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Three")),
+                                counted));
+
+    ACE_ASSERT (counted.refcount () == 4);
+
+    Map::size_type const erased = map.erase (ACE_TEXT ("One"));
+
+    ACE_ASSERT (erased == 1);
+    ACE_ASSERT (counted.refcount () == 3);
+  }
+
+  // Map instance no longer contains any references to the "counted"
+  // object so the reference count should be back to one.
+
+  ACE_ASSERT (counted.refcount () == 1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Reference count test passed.\n")));
+
+  return true;
+}
+
+// --------------------------------------------------------------
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -349,7 +457,8 @@ run_main (int, ACE_TCHAR *[])
 
   bool const success =
     ::insertion_removal_test ()
-    && ::index_operator_test ();
+    && ::index_operator_test ()
+    && ::reference_count_test ();
 
   ACE_END_TEST;
 

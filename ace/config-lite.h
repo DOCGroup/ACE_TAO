@@ -146,9 +146,9 @@
 // RCSID Macros
 // =========================================================================
 
-// By default, DO include RCS Id strings in object code.
+// By default, DO NOT include RCS Id strings in object code.
 #if ! defined (ACE_USE_RCSID)
-#  define ACE_USE_RCSID 1
+#  define ACE_USE_RCSID 0
 #endif /* #if ! defined (ACE_USE_RCSID) */
 
 #if (defined (ACE_USE_RCSID) && (ACE_USE_RCSID != 0))
