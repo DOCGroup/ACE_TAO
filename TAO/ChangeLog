@@ -51,7 +51,7 @@ Thu Jul 28 00:43:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Set the ACE_Array_Map equality functor template parameter to
 	  TAO::String_Var_Equal_To.  See changes to CORBA_String.h above
 	  for details.
-	
+
 	* tao/Object_Ref_Table.h:
 
 	  Set the ACE_Array_Map equality functor template parameter to
