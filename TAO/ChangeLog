@@ -444,8 +444,8 @@ Fri Jul 22 10:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Table.cpp:
           In the unbind, assign a default constructed refcount so that we
-          drop the refcount on the orb at this moment. It seems the array_map
-          keeps a refcount and only destructs then the ORB at process exit
+          drop the refcount on the orb at this moment. The array_map uses
+          lazy destruction and only destructs then the ORB at process exit
           and this causes then crashes with RTCorba.
 
 Fri Jul 22 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
