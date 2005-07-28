@@ -215,7 +215,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Descriptor_Interface.cpp
     Transport_Mux_Strategy.cpp
     Transport_Timer.cpp
-    True_RefCount_Policy.cpp
     TSS_Resources.cpp
     TypeCodeFactory_Adapter.cpp
     TypeCode_typesC.cpp
