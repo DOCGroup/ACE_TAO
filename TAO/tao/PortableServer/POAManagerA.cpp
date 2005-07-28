@@ -26,18 +26,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "POAManagerC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Enum_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:74
@@ -54,7 +54,7 @@ static TAO::TypeCode::Struct<char const *,
     "AdapterInactive",
     _tao_fields_PortableServer_POAManager_AdapterInactive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_AdapterInactive =
   &_tao_tc_PortableServer_POAManager_AdapterInactive;
 
@@ -67,7 +67,7 @@ static char const * const _tao_enumerators_PortableServer_POAManager_State[] =
     "ACTIVE",
     "DISCARDING",
     "INACTIVE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -78,7 +78,7 @@ static TAO::TypeCode::Enum<char const *,
     "State",
     _tao_enumerators_PortableServer_POAManager_State,
     4);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_State =
   &_tao_tc_PortableServer_POAManager_State;
 
@@ -91,7 +91,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/POAManager:2.3",
     "POAManager");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POAManager =
@@ -124,7 +124,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableServer::POAManager>::demarshal_value (TAO_InputCDR &)
@@ -175,7 +175,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -186,7 +186,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::demarshal_value (TAO_InputCDR &)
@@ -261,7 +261,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Basic_Impl_T<PortableServer::POAManager::State>::demarshal_value (TAO_InputCDR &)
@@ -291,6 +291,6 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::extract (
         _tao_any,
         PortableServer::POAManager::_tc_State,
-        _tao_elem 
+        _tao_elem
       );
 }

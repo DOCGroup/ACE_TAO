@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "ImplicitActivationPolicyC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Enum_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -45,7 +45,7 @@ static char const * const _tao_enumerators_PortableServer_ImplicitActivationPoli
   {
     "IMPLICIT_ACTIVATION",
     "NO_IMPLICIT_ACTIVATION"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -56,7 +56,7 @@ static TAO::TypeCode::Enum<char const *,
     "ImplicitActivationPolicyValue",
     _tao_enumerators_PortableServer_ImplicitActivationPolicyValue,
     2);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicyValue =
@@ -74,7 +74,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/ImplicitActivationPolicy:2.3",
     "ImplicitActivationPolicy");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicy =
@@ -107,7 +107,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ImplicitActivationPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ImplicitActivationPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -135,7 +135,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<PortableServer::ImplicitActivationPolicy>::demarshal_value (TAO_InputCDR &)
