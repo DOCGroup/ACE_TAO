@@ -66,22 +66,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_ULONGSEQ_CH_)
 #define _CORBA_ULONGSEQ_CH_
-  
+
   class ULongSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         ULongSeq,
         CORBA::ULong
       >
     ULongSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ULongSeq,
@@ -89,7 +89,7 @@ namespace CORBA
         CORBA::ULong
       >
     ULongSeq_out;
-  
+
   class TAO_Export ULongSeq
     : public
         TAO_Unbounded_Sequence<
@@ -102,23 +102,18 @@ namespace CORBA
     ULongSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::ULong* buffer, 
+        CORBA::ULong* buffer,
         CORBA::Boolean release = 0
       );
     ULongSeq (const ULongSeq &);
     ~ULongSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ULongSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ULongSeq;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -132,14 +127,6 @@ namespace CORBA
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ULongSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ULongSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ULongSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ULongSeq *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71

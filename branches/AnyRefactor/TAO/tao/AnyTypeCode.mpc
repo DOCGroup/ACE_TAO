@@ -1,0 +1,45 @@
+//$Id$
+project : taolib, core {
+  sharedname   = TAO_AnyTypeCode
+  dynamicflags = TAO_ANYTYPECODE_BUILD_DLL
+
+  Source_Files {
+    AnyTypeCode/*.cpp
+  }
+
+  Header_Files {
+    AnyTypeCode/*.h
+  }
+
+  Inline_Files {
+    AnyTypeCode/*.inl
+  }
+
+
+  Template_Files {
+    AnyTypeCode/*_T.cpp
+    AnyTypeCode/Alias_TypeCode.cpp
+    AnyTypecode/Enum_TypeCode.cpp
+    AnyTypecode/Fixed_TypeCode.cpp
+    AnyTypecode/Objref_TypeCode.cpp
+    AnyTypecode/Recursive_Type_TypeCode.cpp
+    AnyTypecode/Sequence_TypeCode.cpp
+    AnyTypecode/String_TypeCode.cpp
+    AnyTypecode/Struct_TypeCode.cpp
+    AnyTypecode/TypeCode_Base_Attributes.cpp
+    AnyTypecode/TypeCode_Case.cpp
+    AnyTypecode/Union_TypeCode.cpp
+    AnyTypecode/Value_TypeCode.cpp
+  }
+
+  Resource_Files {
+    AnyTypeCode
+  }
+
+  PIDL_Files {
+  }
+
+  Pkgconfig_Files {
+    AnyTypeCode/TAO_AnyTypeCode.pc.in
+  }
+}
