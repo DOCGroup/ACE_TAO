@@ -4,7 +4,10 @@
 #define TAO_UB_STRING_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/UB_String_SArgument_T.h"
-#include "tao/Dynamic_ParameterC.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+# include "tao/Dynamic_ParameterC.h"
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/UB_String_SArgument_T.inl"

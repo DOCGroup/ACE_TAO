@@ -1508,27 +1508,27 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // If not included here, it will appear in *C.cpp, if TCs not suppressed.
   this->gen_cond_file_include (
       idl_global->typecode_seen_,
-      "tao/TypeCode.h",
+      "tao/AnyTypeCode/TypeCode.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
       idl_global->any_seen_
       | idl_global->typecode_seen_,
-      "tao/TypeCode_Constants.h",
+      "tao/AnyTypeCode/TypeCode_Constants.h",
       this->client_header_);
 
   // This is true if we have an 'any' in the IDL file.
   // If not included here, it will appear in *C.cpp, if Anys not suppressed.
   this->gen_cond_file_include (
       idl_global->any_seen_,
-      "tao/Any.h",
+      "tao/AnyTypeCode/Any.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
       idl_global->any_seen_,
-      "tao/TypeCode.h",
+      "tao/AnyTypeCode/TypeCode.h",
       this->client_header_
     );
 
@@ -1755,9 +1755,9 @@ TAO_CodeGen::gen_skel_src_includes (void)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/Object_T.h");
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/TypeCode.h");
+                              "tao/AnyTypeCode/TypeCode.h");
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/DynamicC.h");
+                              "tao/AnyTypeCode/DynamicC.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/CDR.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1824,13 +1824,13 @@ TAO_CodeGen::gen_any_file_includes (void)
           this->gen_standard_include (stream,
                                       "tao/CDR.h");
           this->gen_standard_include (stream,
-                                      "tao/Any.h");
+                                      "tao/AnyTypeCode/Any.h");
         }
 
       this->gen_cond_file_include (
           idl_global->interface_seen_
           | idl_global->valuetype_seen_,
-          "tao/Any_Impl_T.h",
+          "tao/AnyTypeCode/Any_Impl_T.h",
           stream
         );
 
@@ -1838,19 +1838,19 @@ TAO_CodeGen::gen_any_file_includes (void)
           idl_global->aggregate_seen_
           | idl_global->seq_seen_
           | idl_global->exception_seen_,
-          "tao/Any_Dual_Impl_T.h",
+          "tao/AnyTypeCode/Any_Dual_Impl_T.h",
           stream
         );
 
       this->gen_cond_file_include (
           idl_global->array_seen_,
-          "tao/Any_Array_Impl_T.h",
+          "tao/AnyTypeCode/Any_Array_Impl_T.h",
           stream
         );
 
       this->gen_cond_file_include (
           idl_global->enum_seen_,
-          "tao/Any_Basic_Impl_T.h",
+          "tao/AnyTypeCode/Any_Basic_Impl_T.h",
           stream
         );
     }
@@ -2081,62 +2081,62 @@ void
 TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 {
   this->gen_standard_include (stream,
-                              "tao/Null_RefCount_Policy.h");
+                              "tao/AnyTypeCode/Null_RefCount_Policy.h");
 
   this->gen_standard_include (stream,
-                              "tao/TypeCode_Constants.h");
+                              "tao/AnyTypeCode/TypeCode_Constants.h");
 
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.
   this->gen_standard_include (stream,
-                              "tao/Alias_TypeCode_Static.h");
+                              "tao/AnyTypeCode/Alias_TypeCode_Static.h");
 
   this->gen_cond_file_include (idl_global->enum_seen_,
-                               "tao/Enum_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Enum_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->interface_seen_,
-                               "tao/Objref_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Objref_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->seq_seen_
                                | idl_global->array_seen_,
-                               "tao/Sequence_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Sequence_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->string_seen_,
-                               "tao/String_TypeCode_Static.h",
+                               "tao/AnyTypeCode/String_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (
       idl_global->exception_seen_
       | idl_global->aggregate_seen_,
-      "tao/Struct_TypeCode_Static.h",
+      "tao/AnyTypeCode/Struct_TypeCode_Static.h",
       stream);
 
   this->gen_cond_file_include (
       idl_global->exception_seen_
       | idl_global->aggregate_seen_,
-      "tao/TypeCode_Struct_Field.h",
+      "tao/AnyTypeCode/TypeCode_Struct_Field.h",
       stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/TypeCode_Case_T.h",
+                               "tao/AnyTypeCode/TypeCode_Case_T.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/Union_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Union_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->valuetype_seen_,
-                               "tao/Value_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Value_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->valuetype_seen_,
-                               "tao/TypeCode_Value_Field.h",
+                               "tao/AnyTypeCode/TypeCode_Value_Field.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->recursive_type_seen_,
-                               "tao/Recursive_Type_TypeCode.h",
+                               "tao/AnyTypeCode/Recursive_Type_TypeCode.h",
                                stream);
 }
