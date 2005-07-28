@@ -277,15 +277,15 @@ CORBA::WString_out::ptr (void)
 // ----------------------------------------------------------------------
 
 ACE_INLINE bool
-CORBA::operator== (CORBA::String_var const & lhs,
-                   CORBA::String_var const & rhs)
+TAO::String_Var_Equal_To::operator() (CORBA::String_var const & lhs,
+                                      CORBA::String_var const & rhs) const
 {
   return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
 }
 
 ACE_INLINE bool
-CORBA::operator== (CORBA::WString_var const & lhs,
-                   CORBA::WString_var const & rhs)
+TAO::String_Var_Equal_To::operator() (CORBA::WString_var const & lhs,
+                                      CORBA::WString_var const & rhs) const
 {
   return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
 }

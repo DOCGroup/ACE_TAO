@@ -1,3 +1,79 @@
+Thu Jul 28 00:43:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/CORBA_String.h:
+	* tao/CORBA_String.inl:
+
+	  Removed operator==({W}String_var,{W}String_var) from the CORBA
+	  namespace.  It was TAO-specific, only existed so that
+	  {W}String_var could be used as map key, and polluted the CORBA
+	  namespace.  Replaced with TAO::String_Var_Equal_To equality
+	  functor.
+
+	* tao/ORB.cpp (_downcast):
+
+	  Removed redundant/unnecessary repository ID string comparison
+	  from ORB::InvalidName::_downcast() method.  A simple
+	  dynamic_cast<>-based check is sufficient.
+
+	  (ORB_init):
+
+	  Removed ORB shutdown check.  The goal of the check was to cause
+	  the CORBA::BAD_INV_ORDER system exception to be thrown if the
+	  ORB was shutdown.  However, that only applies to ORB methods,
+	  not CORBA::ORB_init().  Just return the ORB.  ORB methods
+	  already check for ORB shutdown.
+
+	* tao/ORB_Table.cpp (bind):
+
+	  Moved pair creation before the lock acquisition.  Pair creation
+	  in this case need not be synchronized across threads.
+
+	  (unbind):
+
+	  Pass the iterator returned from the underlaying map's find()
+	  call to erase().  Saves us a duplicate element search found in
+	  the erase() overload that accepts a key_type instead of an
+	  iterator.
+
+	  Removed work around described here in ChangeLog entry "Fri Jul
+	  22 10:07:12 UTC 2005  Johnny Willemsen
+	  <jwillemsen@remedy.nl>".  It is no longer necessary due to
+	  changes in the ACE_Array_Map implementation.  Also addresses
+	  missing key object destruction in the workaround.
+
+	* tao/ORB_Table.h:
+	* tao/ORB_Table.inl:
+
+	  Removed the ORB_Core_Ref_Counter equality operator.  It is a
+	  vestige of a transitional ORB_Table and ORB_Core_Ref_Counter
+	  implementation, and is no longer needed.
+
+	  Set the ACE_Array_Map equality functor template parameter to
+	  TAO::String_Var_Equal_To.  See changes to CORBA_String.h above
+	  for details.
+	
+	* tao/Object_Ref_Table.h:
+
+	  Set the ACE_Array_Map equality functor template parameter to
+	  TAO::String_Var_Equal_To.  See changes to CORBA_String.h above
+	  for details.
+
+	* tao/Object_Ref_Table.cpp (bind):
+
+	  Moved pair creation before the lock acquisition.  Pair creation
+	  in this case need not be synchronized across threads.
+
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/PortableServer/Servant_Base.h:
+	* tao/PortableServer/Servant_Base.i:
+
+	  Inlined one-liners.  Reduces footprint.
+
+	  Use the ACE_Atomic_Op<long> specialization as the underlying
+	  synchronized reference counting mechanism instead of
+	  ACE_Atomic_Op<CORBA::ULong>.  Improves performance and reduces
+	  footprint.
+
 Wed Jul 27 21:35:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:

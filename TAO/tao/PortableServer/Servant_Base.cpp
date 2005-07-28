@@ -336,7 +336,7 @@ TAO_ServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 TAO_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  const CORBA::ULong new_count = --this->ref_count_;
+  long const new_count = --this->ref_count_;
 
   if (new_count == 0)
     delete this;
@@ -345,18 +345,10 @@ TAO_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 CORBA::ULong
 TAO_ServantBase::_refcount_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return this->ref_count_.value ();
+  return static_cast<CORBA::ULong> (this->ref_count_.value ());
 }
 
-TAO_ServantBase_var::TAO_ServantBase_var (void)
-  : ptr_ (0)
-{
-}
-
-TAO_ServantBase_var::TAO_ServantBase_var (TAO_ServantBase *p)
-  : ptr_ (p)
-{
-}
+// -------------------------------------------------------------------
 
 TAO_ServantBase_var::TAO_ServantBase_var (const TAO_ServantBase_var &b)
   : ptr_ (b.ptr_)
@@ -445,24 +437,6 @@ TAO_ServantBase_var::operator= (const TAO_ServantBase_var &b)
     }
 
   return *this;
-}
-
-TAO_ServantBase *
-TAO_ServantBase_var::operator->() const
-{
-  return this->ptr_;
-}
-
-TAO_ServantBase *
-TAO_ServantBase_var::in (void) const
-{
-  return this->ptr_;
-}
-
-TAO_ServantBase *&
-TAO_ServantBase_var::inout (void)
-{
-  return this->ptr_;
 }
 
 TAO_ServantBase *&

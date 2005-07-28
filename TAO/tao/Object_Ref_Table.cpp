@@ -36,15 +36,16 @@ TAO_Object_Ref_Table::bind (const char *id,
       return -1;
     };
 
+  Table::value_type const value =
+    std::make_pair (CORBA::String_var (id),
+                    CORBA::Object_var (CORBA::Object::_duplicate (obj)));
+
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
                     -1);
 
-  std::pair<iterator, bool> const result =
-    this->table_.insert (
-      std::make_pair (CORBA::String_var (id),
-                      CORBA::Object_var (CORBA::Object::_duplicate (obj))));
+  std::pair<iterator, bool> const result = this->table_.insert (value);
 
   if (!result.second)
     {
