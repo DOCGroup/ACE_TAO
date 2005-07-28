@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "tao/Basic_Types.h"
 #include "tao/TAO_Export.h"
 
@@ -74,6 +76,8 @@ public:
                                 ACE_ENV_ARG_DECL);
   //@}
 };
+
+#endif
 
 #include /**/ "ace/post.h"
 

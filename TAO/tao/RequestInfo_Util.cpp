@@ -3,6 +3,9 @@
 // $Id$
 
 #include "RequestInfo_Util.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "TypeCode.h"
 #include "ORB_Constants.h"
 #include "StringSeqC.h"
@@ -105,3 +108,5 @@ TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any
 
   return any;
 }
+
+#endif
