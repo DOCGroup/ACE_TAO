@@ -290,20 +290,25 @@ namespace CORBA
     void operator= (const CORBA::WString_var &);
   };
 
-  /**
-   * @name TAO-specific Equality Operators
-   *
-   * These equality operators exist to simplify usage of @c
-   * {W}String_var in containers.
-   */
-  //@{
-  bool operator== (CORBA::String_var const & lhs,
-                   CORBA::String_var const & rhs);
-  bool operator== (CORBA::WString_var const & lhs,
-                   CORBA::WString_var const & rhs);
-  //@}
-
 }  // End CORBA namespace.
+
+namespace TAO
+{
+  /**
+   * @struct TAO-specific @c {W}String_var Equality Functor
+   *
+   * This functor exist to simplify usage of @c {W}String_var in
+   * containers.
+   */
+  struct String_Var_Equal_To
+  {
+    bool operator() (CORBA::String_var const & lhs,
+                     CORBA::String_var const & rhs) const;
+
+    bool operator() (CORBA::WString_var const & lhs,
+                     CORBA::WString_var const & rhs) const;
+  };
+}
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 

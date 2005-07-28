@@ -75,23 +75,11 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (
     (void) this->core_->_incr_refcnt ();
 }
 
-ACE_INLINE
-void
+ACE_INLINE void
 TAO::ORB_Core_Ref_Counter::operator= (TAO::ORB_Core_Ref_Counter const & rhs)
 {
   // Strongly exception safe.  May not be strictly necessary, but
   // let's do things the right way, regardless.
   TAO::ORB_Core_Ref_Counter tmp (rhs);
   std::swap (this->core_, tmp.core_);
-}
-
-ACE_INLINE
-bool
-TAO::ORB_Core_Ref_Counter::operator== (TAO::ORB_Core_Ref_Counter const & rhs)
-{
-  return (this->core_ == rhs.core_
-          || (this->core_ != 0
-              && rhs.core_ != 0
-              && ACE_OS::strcmp (this->core_->orbid (),
-                                 rhs.core_->orbid ()) == 0));
 }

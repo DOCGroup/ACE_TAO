@@ -69,7 +69,9 @@ namespace TAO
      */
     ORB_Table (void);
 
-    typedef ACE_Array_Map<CORBA::String_var, ORB_Core_Ref_Counter> Table;
+    typedef ACE_Array_Map<CORBA::String_var,
+                          ORB_Core_Ref_Counter,
+                          TAO::String_Var_Equal_To> Table;
     typedef Table::key_type   key_type;
     typedef Table::data_type  data_type;
     typedef Table::value_type value_type;
@@ -182,9 +184,6 @@ namespace TAO
 
     /// Assignment operator.
     void operator= (ORB_Core_Ref_Counter const & rhs);
-
-    /// Equality operator.
-    bool operator== (ORB_Core_Ref_Counter const & rhs);
 
     /// ORB_Core pointer accessor.
     TAO_ORB_Core * core (void) const { return this->core_; }
