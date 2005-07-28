@@ -243,6 +243,9 @@ public:
 
   be_union *be_scope_as_union (void);
   // return the scope as union if possible
+  
+  const char *export_macro (void) const;
+  // return the export macro currently in force
 
 private:
   TAO_CodeGen::CG_STATE state_;

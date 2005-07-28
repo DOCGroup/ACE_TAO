@@ -47,22 +47,19 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl << be_nl
-      << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, const " << node->name ()
+      << macro << " void operator<<= (CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
-  *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+  *os << macro << " void operator<<= (CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << macro << " CORBA::Boolean operator>>= (const CORBA::Any &, "
       << node->name () << " *&); // deprecated\n";
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, const "
+  *os << macro << " CORBA::Boolean operator>>= (const CORBA::Any &, const "
       << node->name () << " *&);";
 
 
