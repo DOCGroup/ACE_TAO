@@ -295,11 +295,6 @@ ACE_Sig_Handler::ACE_Sig_Handler (void)
 {
 }
 
-ACE_INLINE
-ACE_Sig_Handler::~ACE_Sig_Handler (void)
-{
-}
-
 ACE_INLINE int
 ACE_Sig_Handler::in_range (int signum)
 {

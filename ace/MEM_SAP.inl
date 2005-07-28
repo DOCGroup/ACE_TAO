@@ -29,13 +29,6 @@ ACE_MEM_SAP_Node::data (void)
   return  this + 1;
 }
 
-ACE_INLINE
-ACE_MEM_SAP::~ACE_MEM_SAP (void)
-{
-  // ACE_TRACE ("ACE_MEM_SAP::~ACE_MEM_SAP");
-  delete this->shm_malloc_;
-}
-
 
 ACE_INLINE ACE_MEM_SAP_Node *
 ACE_MEM_SAP::acquire_buffer (const ssize_t size)

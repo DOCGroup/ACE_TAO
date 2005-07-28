@@ -13,6 +13,10 @@
 #include "ace/Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
+template <class KEY, class VALUE>
+ACE_Map<KEY, VALUE>::~ACE_Map (void)
+{
+}
 
 template <class T>
 ACE_Iterator_Impl<T>::~ACE_Iterator_Impl (void)
