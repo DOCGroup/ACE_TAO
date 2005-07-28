@@ -312,7 +312,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                            << "\"";
       *this->client_stubs_ << "\n#endif /* !defined INLINE */";
     }
-    
+
   return 0;
 }
 
@@ -1234,6 +1234,13 @@ TAO_CodeGen::end_server_skeletons (void)
 int
 TAO_CodeGen::end_anyop_header (void)
 {
+  if (be_global->post_include () != 0)
+    {
+      *this->anyop_header_ << "\n\n#include /**/ \""
+                           << be_global->post_include ()
+                           << "\"";
+    }
+
   // Code to put the last #endif.
   *this->anyop_header_ << "\n\n#endif /* ifndef */\n";
 
@@ -1666,7 +1673,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // strlen() for DCPS marshaling or
   // strcmp() is used with interfaces and exceptions.
   if ((be_global->gen_dcps_type_support ()
-	  && (idl_global->string_seen_ 
+	  && (idl_global->string_seen_
 	      || idl_global->string_seq_seen_
 		  || idl_global->wstring_seq_seen_) )
 	  || idl_global->interface_seen_
