@@ -637,6 +637,9 @@ public:
   void implrepo_service (const CORBA::Object_ptr ir);
   //@}
 
+  /// Do we attempt to register with the Implementation Repository
+  CORBA::Boolean use_implrepo (void);
+
   /// Do we put the ImR's endpoints into persistent object references we create
   CORBA::Boolean imr_endpoints_in_ior (void);
 
