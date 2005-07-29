@@ -29,10 +29,10 @@
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
-#include "tao/Enum_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
-#include "tao/Sequence_TypeCode_Static.h"
-#include "tao/String_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
@@ -40,7 +40,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
 // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/struct_typecode.cpp:87

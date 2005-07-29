@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Union_TypeCode_T.h
+ *  @file    Union_TypeCode.h
  *
  *  $Id$
  *
@@ -162,11 +162,11 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/Union_TypeCode_T.inl"
+# include "tao/AnyTypeCode/Union_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Union_TypeCode_T.cpp"
+# include "tao/AnyTypeCode/Union_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA

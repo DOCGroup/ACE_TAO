@@ -40,8 +40,6 @@
 #include "tao/SystemException.h"
 #include "tao/UserException.h"
 
-#include "tao/NVList.h"
-
 #include "tao/Object.h"
 #include "tao/LocalObject.h"
 #include "tao/Principal.h"

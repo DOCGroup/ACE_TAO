@@ -8,7 +8,7 @@ ACE_RCSID (DynamicInterface,
            Server_Request,
            "$Id$")
 
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/TypeCode.h"

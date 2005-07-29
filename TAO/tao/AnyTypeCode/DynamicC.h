@@ -86,6 +86,54 @@ namespace CORBA
 
 namespace Dynamic
 {
+  // TAO_IDL - Generated from
+  // be\be_visitor_sequence/sequence_ch.cpp:101
+
+#if !defined (_DYNAMIC_PARAMETERLIST_CH_)
+#define _DYNAMIC_PARAMETERLIST_CH_
+
+  class ParameterList;
+
+  typedef
+    TAO_VarSeq_Var_T<
+        ParameterList,
+        Parameter
+      >
+    ParameterList_var;
+
+  typedef
+    TAO_Seq_Out_T<
+        ParameterList,
+        ParameterList_var,
+        Parameter
+      >
+    ParameterList_out;
+
+  class TAO_Export ParameterList
+    : public
+        TAO_Unbounded_Sequence<
+            Parameter
+          >
+  {
+  public:
+    ParameterList (void);
+    ParameterList (CORBA::ULong max);
+    ParameterList (
+        CORBA::ULong max,
+        CORBA::ULong length,
+        Parameter* buffer,
+        CORBA::Boolean release = 0
+      );
+    ParameterList (const ParameterList &);
+    ~ParameterList (void);
+
+    static void _tao_any_destructor (void *);
+
+    typedef ParameterList_var _var_type;
+  };
+
+#endif /* end #if !defined */
+
 
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:472
@@ -163,6 +211,24 @@ namespace Dynamic
 
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61
+
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/cdr_op_ch.cpp:71
+
+#if !defined _TAO_CDR_OP_Dynamic_ParameterList_H_
+#define _TAO_CDR_OP_Dynamic_ParameterList_H_
+
+TAO_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const Dynamic::ParameterList &
+  );
+TAO_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Dynamic::ParameterList &
+  );
+
+#endif /* _TAO_CDR_OP_Dynamic_ParameterList_H_ */
+
 
 // Traits specializations.
 // TAO_IDL - Generated from
