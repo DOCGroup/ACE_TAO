@@ -24,6 +24,8 @@ namespace TAO
       ACE_ENV_ARG_DECL)
     {
       LifespanStrategy::strategy_init (poa ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
       this->use_imr_ = this->poa_->orb_core ().use_implrepo ();
     }
 
@@ -105,7 +107,7 @@ namespace TAO
                           ACE_TEXT ("(%P|%t) ERROR: No ImR_Client library ")
                           ACE_TEXT ("available but use IMR has been specified.\n")));
 
-              ACE_THROW (CORBA::INTERNAL ()); 
+              ACE_THROW (CORBA::INTERNAL ());
             }
         }
     }
