@@ -1,3 +1,10 @@
+Fri Jul 29 11:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.{h,cpp}:
+        * tao/AnyTypeCode/Exception.{h,cpp}:
+          Moved Any code from Exception to AnyTypeCode. Have to solve the
+          _tao_type issue.
+
 Fri Jul 29 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/AnyTypeCode_methods.h:
