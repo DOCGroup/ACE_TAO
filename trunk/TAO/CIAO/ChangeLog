@@ -1,3 +1,10 @@
+Fri Jul 29 03:52:11 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+
+	Made is such that Plan_Launcher_Impl library gets generated
+	and installed.
+
 Wed Jul 28 15:18:14 2005 Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * docs\schema\Modified_Deployment.xsd
