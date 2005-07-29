@@ -31,7 +31,14 @@ namespace TAO
       CORBA::Object_var imr = poa->orb_core ().implrepo_service ();
 
       if (CORBA::is_nil (imr.in ()))
-          return;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ERROR: No usable IMR initial reference ")
+                      ACE_TEXT ("available but use IMR has been specified.\n")));
+          ACE_THROW ((CORBA::TRANSIENT (
+              CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+              CORBA::COMPLETED_NO));
+        }
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
@@ -49,7 +56,15 @@ namespace TAO
       }
 
       if (CORBA::is_nil(imr_locator.in ()))
-          return;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ERROR: Narrowed IMR initial reference ")
+                      ACE_TEXT ("is nil but use IMR has been specified.\n")));
+
+          ACE_THROW ((CORBA::TRANSIENT (
+              CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+              CORBA::COMPLETED_NO));
+        }
 
       TAO_Root_POA *root_poa = poa->object_adapter ().root_poa ();
       ACE_NEW_THROW_EX (this->server_object_,

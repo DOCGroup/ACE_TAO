@@ -401,6 +401,12 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 }
 
 ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::use_implrepo (void)
+{
+  return use_implrepo_;
+}
+
+ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::imr_endpoints_in_ior (void)
 {
   return imr_endpoints_in_ior_;

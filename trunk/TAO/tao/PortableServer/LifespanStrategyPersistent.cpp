@@ -18,6 +18,15 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    void
+    LifespanStrategyPersistent::strategy_init (
+      TAO_Root_POA *poa
+      ACE_ENV_ARG_DECL)
+    {
+      LifespanStrategy::strategy_init (poa ACE_ENV_ARG_PARAMETER);
+      this->use_imr_ = this->poa_->orb_core ().use_implrepo ();
+    }
+
     bool
     LifespanStrategyPersistent::validate (
       CORBA::Boolean is_persistent,
@@ -57,37 +66,47 @@ namespace TAO
     void
     LifespanStrategyPersistent::notify_startup (ACE_ENV_SINGLE_ARG_DECL)
     {
-      ImR_Client_Adapter *adapter =
-        ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-          TAO_Root_POA::imr_client_adapter_name ()
-        );
+      if (this->use_imr_)
+        {
+          // The user specified that the ImR should be used.
+          ImR_Client_Adapter *adapter =
+            ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
+              TAO_Root_POA::imr_client_adapter_name ()
+            );
 
 #if !defined (TAO_AS_STATIC_LIBS)
-      // In case we build shared, try to load the ImR Client library, in a
-      // static build we just can't do this, so don't try it, lower layers
-      // output an error then.
-      if (adapter == 0)
-        {
-          ACE_Service_Config::process_directive (
-            ACE_DYNAMIC_SERVICE_DIRECTIVE(
-              "ImR_Client_Adapter", "TAO_ImR_Client",
-              "_make_ImR_Client_Adapter_Impl", ""));
+          // In case we build shared, try to load the ImR Client library, in a
+          // static build we just can't do this, so don't try it, lower layers
+          // output an error then.
+          if (adapter == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_DYNAMIC_SERVICE_DIRECTIVE(
+                  "ImR_Client_Adapter", "TAO_ImR_Client",
+                  "_make_ImR_Client_Adapter_Impl", ""));
 
-          adapter =
-            ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-              TAO_Root_POA::imr_client_adapter_name ());
-        }
+              adapter =
+                ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
+                  TAO_Root_POA::imr_client_adapter_name ());
+            }
 #endif /* !TAO_AS_STATIC_LIBS */
 
-      if (adapter != 0)
-        {
-          bool old_use_imr = this->use_imr_;
-          this->use_imr_ = false;
+          if (adapter != 0)
+            {
+              adapter->imr_notify_startup (this->poa_ ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
+          else
+            {
+              // When we don't have a ImR_Client adapter, but the user
+              // has specified that the ImR has to be used we have an
+              // error situation which has to be reported.
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) ERROR: No ImR_Client library ")
+                          ACE_TEXT ("available but use IMR has been specified.\n")));
 
-          adapter->imr_notify_startup (this->poa_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          this->use_imr_ = old_use_imr;
+              ACE_THROW (CORBA::INTERNAL ()); 
+            }
         }
     }
 
