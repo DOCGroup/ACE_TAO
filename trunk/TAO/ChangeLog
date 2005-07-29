@@ -1,6 +1,13 @@
 Fri Jul 29 18:41:50 2005  Simon McQueen  <sm@prismtech.com>
 
-	* 
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Fixed typo.
+
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
+
+          Forced link of ImR_Client to fix error on static builds.
 
 Fri Jul 29 17:55:23 2005  Simon McQueen  <sm@prismtech.com>
 

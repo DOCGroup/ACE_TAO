@@ -2,6 +2,10 @@
 
 #include "Test_i.h"
 
+// In case this is a static build we have to force 
+// the ImR_Client to be linked.
+#include "tao/ImR_Client/Imr_Client.h"
+
 Test_i::Test_i (CORBA::ORB_ptr orb) :
   orb_ (CORBA::ORB::_duplicate(orb)),
    policies_ (1)
