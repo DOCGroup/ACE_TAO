@@ -23,6 +23,8 @@ project : taolib, core {
     AnyTypeCode/DoubleSeqA.cpp
     AnyTypeCode/DynamicA.cpp
     AnyTypeCode/DynamicC.cpp
+    AnyTypeCode/Dynamic_ParameterA.cpp
+    AnyTypeCode/Dynamic_ParameterC.cpp
     AnyTypeCode/Empty_Param_TypeCode.cpp
     AnyTypeCode/Enum_TypeCode_Static.cpp
     AnyTypeCode/ExceptionA.cpp

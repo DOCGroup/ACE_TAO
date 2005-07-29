@@ -23,7 +23,7 @@
 // File: Dynamic.idl
 // Used primarily for Interceptors
 
-//#include "Dynamic_Parameter.pidl"
+#include "Dynamic_Parameter.pidl"
 #include "StringSeq.pidl"
 
 #ifndef _DYNAMIC_IDL_
@@ -38,7 +38,7 @@ module Dynamic
 {
   typeprefix Dynamic "omg.org";
 
-  //typedef sequence<Parameter> ParameterList;
+  typedef sequence<Parameter> ParameterList;
 
   typedef CORBA::StringSeq ContextList;
 
