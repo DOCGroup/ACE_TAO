@@ -21,7 +21,7 @@ Options::instance (void)
 void
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-        ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:l:a:idps"));
+	ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:l:u:ifds"));
 
   int c;
 
@@ -34,53 +34,55 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'd':
         this->delete_ = true;
         break;
-      case 'p':
-        this->plan_ = true;
+      case 'f':
+        this->find_ = true;
         break;
-          case 's':
+	  case 's':
         this->shutdown_ = true;
         break;
       case 'n':
-        this->package_ = get_opt.opt_arg ();
+        this->name_ = get_opt.opt_arg ();
         break;
       case 'l':
-        this->local_path_ = get_opt.opt_arg ();
+        this->path_ = get_opt.opt_arg ();
         break;
-      case 'a':
-        this->artifact_ = get_opt.opt_arg ();
+      case 'u':
+        this->uuid_ = get_opt.opt_arg ();
         break;
         // Usage fallthrough.
       default:
-                  this->usage ();
-                  
+		  this->usage ();
+		  
       }
 
-  if ((this->package_ == "") && (this->shutdown_ == false)) 
-          this->usage ();
-  if (this->package_ != "")
+  if ((this->name_ == "") && (this->shutdown_ == false) && (this->uuid_ == "")) 
+	  this->usage ();
+  else if (this->name_ != "")
   {
-        if (!(this->install_ || this->plan_ || this->delete_ || (this->artifact_ != "")))
-          this->usage ();
-    else if (this->install_ && this->local_path_ == "")
-          this->usage ();
+	if (!(this->install_ || this->find_ || this->delete_))
+	  this->usage ();
+    else if (this->install_ && this->path_ == "")
+	  this->usage ();
   }
+  else if (this->uuid_ != "" && !this->find_)
+	  this->usage ();
 }
 
 void Options::usage (void)
 {
-        ACE_DEBUG ((LM_DEBUG, "OPTIONS: -s <shutdown> -n <:package> [-i <install> -l <:local_path>] \
-                [-d <delete>] [-p <plan>] [-a <artifact>]\n"));
+	ACE_DEBUG ((LM_DEBUG, "OPTIONS: -s <shutdown> -n <:name> [-i <install> -l <:path>] \
+						  [-d <delete>] [-f <find>] [-u <:uuid>]\n"));
     ACE_OS::exit (1);
 }
 
 
 Options::Options (void) 
-  : package_ (""),
-        local_path_ (""),
-        artifact_ (""),
-        delete_ (false),
-        install_ (false),
-        plan_ (false),
-        shutdown_ (false)
+  : name_ (""),
+    uuid_ (""),
+	path_ (""),
+	delete_ (false),
+	install_ (false),
+	find_ (false),
+	shutdown_ (false)
 {
 }
