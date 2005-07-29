@@ -61,6 +61,7 @@ BE_GlobalData::BE_GlobalData (void)
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
+    anyop_output_dir_ (0),
     any_support_ (I_TRUE),
     tc_support_ (I_TRUE),
     obv_opt_accessor_ (0),
@@ -118,7 +119,8 @@ BE_GlobalData::changing_standard_include_files (void)
 static const char*
 be_change_idl_file_extension (UTL_String* idl_file,
                               const char *new_extension,
-                              int base_name_only = 0)
+                              int base_name_only = 0,
+                              bool for_anyop = false)
 {
   // @@ This shouldn't happen anyway; but a better error handling
   // mechanism is needed.
@@ -160,13 +162,20 @@ be_change_idl_file_extension (UTL_String* idl_file,
     {
       return 0;
     }
+    
+  // Anyop file output defaults to general output dir if not set.  
+  const char *output_path = (for_anyop 
+                             ? (be_global->anyop_output_dir () == 0
+                                ? be_global->output_dir ()
+                                : be_global->anyop_output_dir ())
+                             : be_global->output_dir ());
 
-  if ((!base_name_only) && (be_global->output_dir () != 0))
+  if (!base_name_only && output_path != 0)
     {
       // Path info should also be added to fname.
 
       // Add path and "/".
-      ACE_OS::sprintf (fname, "%s/", be_global->output_dir ());
+      ACE_OS::sprintf (fname, "%s/", output_path);
 
       // Append the base part to fname.
       ACE_OS::strncpy (fname + strlen (fname), string, base - string);
@@ -307,7 +316,8 @@ BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->anyop_header_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       true);
 }
 
 const char *
@@ -316,7 +326,8 @@ BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->anyop_source_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       true);
 }
 
 const char *
@@ -749,6 +760,19 @@ BE_GlobalData::output_dir (void) const
 }
 
 void
+BE_GlobalData::anyop_output_dir (const char* s)
+{
+  delete [] this->anyop_output_dir_;
+  this->anyop_output_dir_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::anyop_output_dir (void) const
+{
+  return this->anyop_output_dir_;
+}
+
+void
 BE_GlobalData::any_support (idl_bool val)
 {
   this->any_support_ = val;
@@ -1046,6 +1070,9 @@ BE_GlobalData::destroy (void)
 
   delete [] this->output_dir_;
   this->output_dir_ = 0;
+
+  delete [] this->anyop_output_dir_;
+  this->anyop_output_dir_ = 0;
 }
 
 AST_PredefinedType *
@@ -1403,6 +1430,47 @@ BE_GlobalData::parse_args (long &i, char **av)
 
             be_global->output_dir (av [i + 1]);
             i++;
+          }
+        else if (av[i][2] == 'A')
+          {
+            if (av[i][3] == '\0')
+              {
+                idl_global->append_idl_flag (av[i + 1]);
+
+                int result = ACE_OS::mkdir (av[i + 1]);
+
+                #if !defined (__BORLANDC__)
+                  if (result != 0 && errno != EEXIST)
+                #else
+                  // The Borland RTL doesn't give EEXIST back, only EACCES in case
+                  // the directory exists, reported to Borland as QC 9495
+                  if (result != 0 && errno != EEXIST && errno != EACCES)
+                #endif
+                  {
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: unable to create directory %s")
+                        ACE_TEXT (" specified by -oA option\n"),
+                        av[i + 1]
+                      ));
+
+                    ACE_OS::exit (99);
+                  }
+
+                be_global->anyop_output_dir (av [i + 1]);
+                i++;
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand")
+                    ACE_TEXT (" the '%s' option\n"),
+                    av[i]
+                  ));
+
+                ACE_OS::exit (99);
+              }
           }
         else
           {
@@ -2017,6 +2085,11 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -o <output_dir>\tOutput directory for the generated files.")
       ACE_TEXT (" Default is current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -oA <output_dir>\tOutput directory for the generated anyop")
+      ACE_TEXT ("files. Default is current directory\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
