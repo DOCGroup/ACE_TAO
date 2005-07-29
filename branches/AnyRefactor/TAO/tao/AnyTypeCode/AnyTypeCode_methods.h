@@ -36,11 +36,17 @@ namespace CORBA
   class NVList;
   typedef NVList *NVList_ptr;
 
+  class TypeCode;
+  typedef TypeCode *TypeCode_ptr;
+
   TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
 
   TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr );
+
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
 }
 
 #include /**/ "ace/post.h"

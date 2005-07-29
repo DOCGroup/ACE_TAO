@@ -1,38 +1,44 @@
+Fri Jul 29 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnyTypeCode_methods.h:
+        * tao/AnyTypeCode/TypeCode.h:
+          Moved is_nil and release from TypeCode.h to AnyTypeCode_methods.h
+
 Fri Jul 29 04:19:55 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/CORBA_methods.h:
-        
+
           Removed static CORBA is_nil() and release() methods for
           NamedValue and NVList.
-          
+
         * tao/SystemException.cpp:
-        
+
           Restored definition of static _tao_any_destructor()
           methods for system exceptions. They are used by Anys,
           but do not depend on them. This move eliminated
           'inconsistent dll linkage' warnings on MSVC.
-          
+
         * tao/SystemException.h:
-        
+
           Removed declarations of typecodes and Any operators
           for the system exceptions.
-          
+
         * tao/AnyTypeCode/NVList.h:
-        
+
           Added include of the new AnyTypeCode_methods.h file below.
-          
+
         * tao/AnyTypeCode/SystemExceptionA.cpp:
-        
+
           Removed definition of static _tao_any_destructor()
           methods for system exceptions.
-          
+
         * tao/AnyTypeCode/SystemExceptionA.h:
-        
+
           New file, contains typecode and Any operator declarations
           for system exceptions.
-          
+
         * tao/AnyTypeCode/AnyTypeCode_methods.h:
-        
+
           New file, contains declarations of static CORBA is_nil()
           and release() methods for NamedValue and NVList. This
           move eliminated 'inconsistent dll linkage' warnings on
@@ -45,7 +51,7 @@ Thu Jul 28 22:40:26 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_context.cpp:
         * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
         * TAO_IDL/be_include/be_visitor_context.h:
-        
+
           Added logic to make the anyop export macro and export include
           default to the corresponding stub values, if any, when the
           former values have not been set on the command line, but -GA

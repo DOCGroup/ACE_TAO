@@ -506,9 +506,6 @@ namespace CORBA
     TCKind const kind_;
 
   };
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
 }  // End namespace CORBA
 
 
