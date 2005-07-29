@@ -51,6 +51,7 @@
 #include "tao/Seq_Out_T.h"
 
 #include "tao/StringSeqC.h"
+#include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
