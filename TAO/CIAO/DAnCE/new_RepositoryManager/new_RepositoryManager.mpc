@@ -1,7 +1,10 @@
-// $Id$
+// -*- MPC -*-
+// RepositoryManager.mpc v1.0 Stoyan
 
+//RepositoryManager project: implementation of a repository manager 
+//compleint with the D&C spec
 
-project (new_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions, zzip, zlib {
+project (spec_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions, zzip, zlib {
 
   exename = RepositoryManagerDeamon
   after    += XSC_Config_Handlers
@@ -10,36 +13,35 @@ project (new_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_dep
   requires += zzip zlib
 
   IDL_Files {
-    new_RepositoryManager.idl
+    RepositoryManager.idl
   }
 
   Source_Files {
-    new_RepositoryManagerC.cpp
-    new_RepositoryManagerS.cpp
+    RepositoryManagerC.cpp
+    RepositoryManagerS.cpp
     ZIP_Wrapper.cpp
     RepositoryManager.cpp
-    new_RepositoryManager_Impl.cpp
+    RepositoryManager_Impl.cpp
   }
 }
 
 
-// -*- MPC -*-
-// RMadmin.mpc v1.0 Stoyan
+// RMadmin project: a sample client for the RM.
 
-project (RMAdmin) : ciao_client_dnc, ciao_deployment_stub, exceptions {
+project (spec_RMAdmin) : ciao_client_dnc, ciao_deployment_stub, exceptions {
   exename = RMadmin
-  after    += new_RepositoryManager
+  after    += RepositoryManager
   after    += XSC_Config_Handlers
   libs     += XSC_Config_Handlers
   libs     += CIAO_DnC_Client
 
   IDL_Files {
-   new_RepositoryManager.idl
+   RepositoryManager.idl
   }
 
   Source_Files {
     RMadmin.cpp
-    new_RepositoryManagerC.cpp
+    RepositoryManagerC.cpp
     Options.cpp
   }
 }
