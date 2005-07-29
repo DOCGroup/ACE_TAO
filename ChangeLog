@@ -1,3 +1,12 @@
+Fri Jul 29 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/codecfactory.mpb
+        * bin/MakeProjectCreator/config/dynamicany.mpb
+        * bin/MakeProjectCreator/config/ifr_client.mpb
+        * bin/MakeProjectCreator/config/iormanip.mpb
+        * bin/MakeProjectCreator/config/strategies.mpb
+          Added AnyTypeCode as base project
+
 Thu Jul 28 12:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/anytypecode.mpb:
