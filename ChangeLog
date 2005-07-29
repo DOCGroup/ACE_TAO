@@ -22,8 +22,9 @@ Fri Jul 29 07:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * include/makeinclude/platform_vxworks5.5.x.GNU:
         * include/makeinclude/platform_win32_interix.GNU:
           Updated location for libraries from $ACE_ROOT/ace to
-          $ACE_ROOT/lib. Thanks to <ianzag at megasignal dot com>
-          for reporting this. This fixes bugzilla 2202
+          $ACE_ROOT/lib. Thanks to Ian Zagorskih
+          <ianzag at megasignal dot com> for reporting this.
+          This fixes bugzilla 2202
 
 Thu Jul 28 13:59:11 2005  Simon McQueen  <sm@prismtech.com>
 
