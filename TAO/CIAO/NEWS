@@ -21,6 +21,16 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Modify the <Connection> IDL data structure to make it compliant to the
   D&C spec.
 
+. Implement Resource Allocation and Control Engine (RACE), which is a
+  component middleware framework built atop of CIAO/DAnCE that integrates
+  multiple resource allocation/control algorithms for (re)deploying and
+  (re)configuring component applications. RACE enables (1) system
+  developers to configure algorithms depending on the characteristics of
+  applications and operating environment, and (2) swapping in and swapping
+  out multiple algorithms to make different resource allocation and control
+  decisions, without handcrafting the mechanisms needed to (1) configure
+  the algorithms and (2) deploy the decisions made by the algorithms.
+
 PLANNED MAJOR CHANGES FOR CIAO-0.4.8
 ====================================
  
