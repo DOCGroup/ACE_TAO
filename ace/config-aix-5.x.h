@@ -34,6 +34,15 @@
 #  undef _ACE_DISABLE_AIO_CALLS_
 #endif
 
+// AIX's /usr/include/unistd.h sets _POSIX_SEMAPHORE to indicate the system
+// supplies such a facility, but the headers don't enable it unless
+// _XOPEN_SOURCE >= 500. So disable semaphores here if _XOPEN_SOURCE isn't
+// up to snuff.
+#if defined (ACE_HAS_POSIX_SEM) && \
+    (!defined (_XOPEN_SOURCE) || (_XOPEN_SOURCE-0 < 500))
+#  undef ACE_HAS_POSIX_SEM
+#endif
+
 // I think this is correct, but needs to be verified...   -Steve Huston
 #define ACE_HAS_SIGTIMEDWAIT
 

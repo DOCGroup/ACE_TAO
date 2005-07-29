@@ -1,3 +1,13 @@
+Fri Jul 29 14:25:12 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix-5.x.h: Disable ACE_HAS_POSIX_SEM if the Posix
+	  flags indicate its presence but _XOPEN_SOURCE is not >= 500.
+
+	* tests/run_test.pl: When looking for sub-log files, match the program
+	  name only at the start. Prevents finding, for example,
+	  Process_Manual_Event_Test-child.log when looking for
+	  Manual_Event_Test-*.log.
+
 Fri Jul 29 14:26:37 2005  Simon McQueen  <sm@prismtech.com>
 
         *  bin/tao_other_tests.lst:

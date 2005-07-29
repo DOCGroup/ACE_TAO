@@ -314,7 +314,7 @@ sub check_log ($)
             # sub-log has an error, print the sub-log.
             opendir (THISDIR, "log");
             local $sublognames = "$program\-.*".$log_suffix;
-            @sublogs = grep (/$sublognames/, readdir (THISDIR));
+            @sublogs = grep (/^$sublognames/, readdir (THISDIR));
             closedir (THISDIR);
             foreach $log (@sublogs) {
                 # Just like the main log, but no start/end check
@@ -353,7 +353,7 @@ sub check_log ($)
                     }
 
                     if ($number_starting != $number_ending) {
-                       print STDERR "Error ($log): Nuber of 'Starting' does not match number of 'Ending' ($number_starting != $number_ending)\n";
+                       print STDERR "Error ($log): Number of 'Starting' does not match number of 'Ending' ($number_starting != $number_ending)\n";
                        $print_log = 1;
                     }
 
