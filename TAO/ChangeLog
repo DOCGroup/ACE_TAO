@@ -1,3 +1,21 @@
+Fri Jul 29 17:55:23 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+
+          Add accessor for use_implrepo_ value.
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Make calling imr_notify_startup when the ImR ref cannot be
+          found or narrowed into an error condition.
+
+        * tao/PortableServer/LifespanStrategyPersistent.h:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+
+          Read the use_imr_ value from the ORB core. Only try and load
+          the ImR_Client and call imr_notify_startup if use_imr_ set.
+
 Fri Jul 29 14:15:11 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_1020_Basic_Regression/Server_Task.cpp:
