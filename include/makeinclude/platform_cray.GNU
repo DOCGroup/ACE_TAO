@@ -19,7 +19,7 @@ purify =
 # C++ prelinker: error: instantiation loop
 # So, we're using ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 CC              = cc
-LDLIB           += -L$(ACE_ROOT)/ace
+LDLIB           += -L$(ACE_ROOT)/lib
 CXX             = CC
 #CFLAGS         +=
 CCFLAGS         += -h noautoinstantiate

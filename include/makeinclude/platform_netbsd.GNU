@@ -27,7 +27,7 @@ CXX		= g++
 
 CFLAGS          += -W -Wall -Wpointer-arith
 DCFLAGS         += -g
-LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
+LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/lib
 DLD             = $(CXX)
 LD		= $(CXX)
 LIBS            +=

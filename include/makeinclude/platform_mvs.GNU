@@ -24,7 +24,7 @@ MVCMD         = @test ! -s $(@F) || mv $(@F) $(@D)/$(@F)
 ACELIB_STATIC = -lACE
 
 # Used to build shared executables (much smaller in size)
-ACELIB_DLL    = $(ACE_ROOT)/ace/libACE.x
+ACELIB_DLL    = $(ACE_ROOT)/lib/libACE.x
 
 # set accordingly to build either static or shared executables
 ACELIB        = $(ACELIB_DLL)

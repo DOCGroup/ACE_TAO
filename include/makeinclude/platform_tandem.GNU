@@ -34,7 +34,7 @@ CPPFLAGS	+= -woff 3106,3203,3262
 #CPPFLAGS	+= -n32 -woff 1174,1209,1375,1506,1110,1552,1021,1171
 # For the old C++ compiler (-32)
 #CPPFLAGS	+= +pp
-LDFLAGS		+= -rpath "$(ACE_ROOT)/ace"
+LDFLAGS		+= -rpath "$(ACE_ROOT)/lib"
 #LDFLAGS	+= -Wl,-woff,85
 LIBS		+= -lsocket
 LIBS		+= -ldl
@@ -64,7 +64,7 @@ SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 
 #DLD             = $(CXX)
 #LD		= $(CXX)
-#LDFLAGS         += -R $(ACE_ROOT)/ace
+#LDFLAGS         += -R $(ACE_ROOT)/lib
 #LIBS            += -lsocket -ldl -lnsl -lgen -lthread  # Threads
 #LIBS            += -lsocket -ldl -lnsl -lgen # No threads
 #PIC             = -PIC

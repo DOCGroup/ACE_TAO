@@ -15,7 +15,7 @@ optimize = 1
 
 CC              = gcc
 # for no threads
-LDLIBS		+= -lm -L $(ACE_ROOT)/ace 
+LDLIBS		+= -lm -L $(ACE_ROOT)/lib
 CXX		= g++
 CFLAGS		+= -melf -m386 -w 
 CCFLAGS		+= -melf -m386  

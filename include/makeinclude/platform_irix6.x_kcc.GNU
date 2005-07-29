@@ -29,13 +29,13 @@ endif
 DLD             = $(CC)
 LD              = $(CC)
 # warning 84: "" is not used for resolving any symbol.
-LDFLAGS         += -n32 -L$(ACE_ROOT)/ace -L. --backend -Wl,-woff,84
+LDFLAGS         += -n32 -L$(ACE_ROOT)/lib -L. --backend -Wl,-woff,84
 #LIBS            += -lpthread
 OCFLAGS         += +K3 -O2
 PIC             =
 AR              = $(CC)
 ARFLAGS         = $(KCCOPTS) -o
 RANLIB          = @true
-SOFLAGS         += $(CPPFLAGS) $(KCCOPTS) -L$(ACE_ROOT)/ace $(ACELIB)
+SOFLAGS         += $(CPPFLAGS) $(KCCOPTS) -L$(ACE_ROOT)/lib $(ACELIB)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true

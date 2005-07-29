@@ -82,7 +82,7 @@ endif
 kylix = 1
 INCLUDEPATH = $(BCB)/include/stlport:$(BCB)/include:$(BCB)/include/vcl:/usr/include:$(ACE_ROOT)
 LIBPATH = $(BCB)/lib/obj:$(BCB)/lib:/usr/lib:/lib:/usr/X11R6/lib:$(BCB)/bin
-ACELIBPATH = $(ACE_ROOT)/ace:./
+ACELIBPATH = $(ACE_ROOT)/lib:./
 
 AR      = ar
 ARFLAGS = rsuv

@@ -17,7 +17,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 CFLAGS          += -W -Wall -Wpointer-arith -pipe -frepo
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG) -D_ALL_SOURCE
 DCFLAGS         += -g
-LDFLAGS	    += -L /usr/lib -L$(ACE_ROOT)/ace -ldl -lc -dynamic
+LDFLAGS	    += -L /usr/lib -L$(ACE_ROOT)/lib -ldl -lc -dynamic
 DLD             = $(CXX)
 LD		    = $(CXX)
 LIBS            +=
