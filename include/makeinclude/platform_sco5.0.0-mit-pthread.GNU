@@ -11,9 +11,9 @@ CC              = gcc
 # for threads
 # for no threads
 #CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
-# LDFLAGS	+= -L $(ACE_ROOT)/ace -L ./ ${MIT_PTHREADS_DIR}/init/init.o # -z muldefs
-# LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ ${MIT_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
-LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ -lACE # -z muldefs
+# LDFLAGS	+= -L $(ACE_ROOT)/lib -L ./ ${MIT_PTHREADS_DIR}/init/init.o # -z muldefs
+# LDLIBS	+= -L $(ACE_ROOT)/lib -L ./ ${MIT_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
+LDLIBS	+= -L $(ACE_ROOT)/lib -L ./ -lACE # -z muldefs
 CXX		= g++
 CFLAGS		+= -melf -w
 

@@ -155,7 +155,7 @@ ifeq ("$(VXWORKSLINK)","true")
   override LARGE_PROJECT =
   PRJ_OBJS = $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
   ifeq ($(SHARED_LIBS),1)
-    ##LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
+    ##LD_PARTIAL += -L$(ACE_ROOT)/lib -L./ $(LDLIBPATH) $(LD_LINK_PATH)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
 	ifeq ($(VX_SO_BUILD),1)
 	  ## Shared lib builds for VxWorks will also build 'import' libraries
