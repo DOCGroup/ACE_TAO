@@ -25,6 +25,7 @@ project : taolib, core {
     AnyTypeCode/DynamicC.cpp
     AnyTypeCode/Empty_Param_TypeCode.cpp
     AnyTypeCode/Enum_TypeCode_Static.cpp
+    AnyTypeCode/ExceptionA.cpp
     AnyTypeCode/FloatSeqA.cpp
     AnyTypeCode/GIOPA.cpp
     AnyTypeCode/IIOPA.cpp
