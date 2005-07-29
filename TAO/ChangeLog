@@ -1,3 +1,16 @@
+Fri Jul 29 19:23:17 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        
+          Added -oA <path> option to direct the output of generated
+          *A.* files. The -oA option overrides path specified by 
+          -o, if any.
+          
+        * docs/compiler.html:
+        
+          Added above option to commandline option table.
+
 Fri Jul 29 18:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny.mpc

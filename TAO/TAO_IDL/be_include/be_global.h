@@ -307,6 +307,16 @@ public:
   // to be kept. Default  is current directory from which the
   // <tao_idl> is called.
 
+  void anyop_output_dir (const char* s);
+  // Set the directory where all the *A.* files are
+  // to be kept. Default  is current directory from which the
+  // <tao_idl> is called.
+
+  const char* anyop_output_dir (void) const;
+  // Get the directory where all the *A.* files are
+  // to be kept. Default  is current directory from which the
+  // <tao_idl> is called.
+
   void any_support (idl_bool);
   // Set any support.
 
@@ -558,6 +568,11 @@ private:
 
   char* output_dir_;
   // Directory where all the IDL-Compiler-Generated files are to be
+  // kept. Default value is 0 for this string which means the current
+  // directory from which the <tao_idl> is called.
+
+  char* anyop_output_dir_;
+  // Directory where all the *A.* files are to be
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_idl> is called.
 
