@@ -3,6 +3,7 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "JAWS/JAWS.h"
 #include "JAWS/Data_Block.h"

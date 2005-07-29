@@ -2,6 +2,7 @@
 
 #include "ace/Proactor.h"
 #include "ace/Filecache.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "JAWS/JAWS.h"
 #include "JAWS/IO.h"
@@ -336,7 +337,7 @@ JAWS_Asynch_Handler::open (ACE_HANDLE h,
 
   ACE_Asynch_Accept_Result_Impl *fake_result
     = ACE_Proactor::instance ()->create_asynch_accept_result
-      (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
+      (this->proxy (), JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
        h, mb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
        this->ioh_, ACE_INVALID_HANDLE, 0);
 

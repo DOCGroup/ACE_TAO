@@ -307,6 +307,17 @@ private:
         } \
      while (0)
 #endif /* defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS) */
+#if defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS)
+#   define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3> (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#else
 #   define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
      do { \
           if (POINTER) \
@@ -316,6 +327,18 @@ private:
             } \
         } \
      while (0)
+#endif /* defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS) */
+#if defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS)
+#   define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3, T_PARAM4> (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#else
 #   define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
      do { \
           if (POINTER) \
@@ -325,6 +348,7 @@ private:
             } \
         } \
      while (0)
+#endif /* defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS) */
 #   define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
      do { \
           if (POINTER) \
