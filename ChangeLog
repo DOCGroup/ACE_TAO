@@ -12,7 +12,8 @@ Fri Jul 29 09:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           a special version of ACE_DES_FREE_TEMPLATE3 and ACE_DES_FREE_TEMPLATE4
           just as we do for ACE_DES_FREE_TEMPLATE and ACE_DES_FREE_TEMPLATE2.
 
-          Thanks to <guerin35at hotmail dot com> for reporting this.
+          Thanks to Olivier Guérin <guerin35at hotmail dot com>
+          for reporting this.
 
 Fri Jul 29 07:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
