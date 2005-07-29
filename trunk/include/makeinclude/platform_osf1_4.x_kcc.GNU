@@ -50,7 +50,7 @@ ARFLAGS         = $(KCCOPTS) -o
 # When libraries are archived, a hash index is automatically created so there
 # is no need for ranlib
 RANLIB          = /usr/bin/true
-SOFLAGS         += $(CPPFLAGS) $(KCCOPTS) -L$(ACE_ROOT)/ace $(ACELIB) -lc
+SOFLAGS         += $(CPPFLAGS) $(KCCOPTS) -L$(ACE_ROOT)/lib $(ACELIB) -lc
 
 # With kcc 4, if it does template splitting and ends up with more than
 # a certain number of templates, it can screw up the link command so that

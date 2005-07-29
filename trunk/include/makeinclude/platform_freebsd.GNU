@@ -27,7 +27,7 @@ CFLAGS          += -W -Wall -Wpointer-arith
 DCFLAGS         += -g
 RET = $(shell test $(OSVERSION) -ge 300000 && printf 1)
 ifneq ($(RET),1)
-  LDFLAGS       += -Wl,-rpath $(ACE_ROOT)/ace
+  LDFLAGS       += -Wl,-rpath $(ACE_ROOT)/lib
 endif
 DLD             = $(CXX)
 LD              = $(CXX)
