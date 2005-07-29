@@ -1,4 +1,0 @@
-// $Id$
-project: orbsvcsexe, rtkokyuevent, rtevent_serv {
-  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/Sched
-}
