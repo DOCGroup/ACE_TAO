@@ -1,3 +1,10 @@
+Fri Jul 29 14:26:37 2005  Simon McQueen  <sm@prismtech.com>
+
+        *  bin/tao_other_tests.lst:
+
+           Scheduled TAO/orbsvcs/tests/CosEvent/Basic/run_test.pl to be
+           run on all not minimum or single threaded builds.
+
 Fri Jul 29 09:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Filecache.cpp:
