@@ -1,17 +1,33 @@
 // -*- MPC -*-
 // $Id$ 
 
-project(Plan_Launcher): naming, ciao_server_dnc, xerces, taoexe {
-  exename = plan_launcher
+project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
+
+  sharedname = Plan_Launcher_Impl
   requires += exceptions
   after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
   libs     += XSC_Config_Handlers
   libs     += ExecutionManager_stub
   after    += XSC_Config_Handlers
+  
+  dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
+  
+  Source_Files {
+    Plan_Launcher_Impl.cpp
+    DAM_Map.cpp
+  }
+}
+
+project(Plan_Launcher) : ciao_server_dnc, taoexe  {
+  exename = plan_launcher
+
+
+  after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
+  libs     += XSC_Config_Handlers Plan_Launcher_Impl
+  libs     += ExecutionManager_stub
+  after    += XSC_Config_Handlers Plan_Launcher_Impl
 
   Source_Files {
     Plan_Launcher.cpp
-    Plan_Launcher_Impl.cpp
-    DAM_Map.cpp
   }
 }
