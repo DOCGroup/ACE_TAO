@@ -854,6 +854,16 @@ TAO::excp_factory excp_array [] = {
       0
 };
 
+#define TAO_SYSTEM_EXCEPTION(name) \
+void \
+CORBA::name ::_tao_any_destructor (void * x) \
+{ \
+  delete static_cast<CORBA::name *> (x); \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
 CORBA::SystemException *
 TAO_Exceptions::create_system_exception (const char *id
                                          ACE_ENV_ARG_DECL_NOT_USED)

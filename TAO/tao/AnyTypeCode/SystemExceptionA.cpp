@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/SystemException.h"
+#include "SystemExceptionA.h"
 #include "Any_SystemException.h"
 #include "Any_Dual_Impl_T.h"
 #include "TypeCode.h"
@@ -15,7 +15,6 @@
 ACE_RCSID (tao,
            SystemExceptionA,
            "$Id$")
-
 
 #if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
@@ -78,17 +77,6 @@ CORBA::name ::_tao_type (void) const \
 
 STANDARD_EXCEPTION_LIST*/
 #undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA::name ::_tao_any_destructor (void * x) \
-{ \
-  delete static_cast<CORBA::name *> (x); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
 
 namespace TAO
 {

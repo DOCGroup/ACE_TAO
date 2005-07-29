@@ -55,13 +55,7 @@ namespace TAO
 
 namespace CORBA
 {
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
-
   class Environment;
-
-  class Any;
-  typedef Any *Any_ptr;
 
   /**
    * @enum CompletionStatus
@@ -201,11 +195,6 @@ namespace CORBA
       virtual CORBA::Exception *_tao_duplicate (void) const; \
       static CORBA::SystemException *_tao_create (void); \
     }; \
-  TAO_Export void operator<<= (CORBA::Any &, const CORBA::name &); \
-  TAO_Export void operator<<= (CORBA::Any &, CORBA::name *); \
-  TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, \
-                                         const CORBA::name *&); \
-  extern TAO_Export TypeCode_ptr const _tc_ ## name
 
   TAO_SYSTEM_EXCEPTION(UNKNOWN);          // the unknown exception
   TAO_SYSTEM_EXCEPTION(BAD_PARAM);        // an invalid parameter was passed
