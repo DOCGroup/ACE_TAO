@@ -23,7 +23,7 @@
 #define _REQUESTINFO_PIDL_
 
 #include <PI_Forward.pidl>
-#include <Dynamic.pidl>
+#include <tao/AnyTypeCode/Dynamic.pidl>
 #include <Messaging_SyncScope.pidl>
 #include <InvalidSlot.pidl>
 #include <IOP_IOR.pidl>

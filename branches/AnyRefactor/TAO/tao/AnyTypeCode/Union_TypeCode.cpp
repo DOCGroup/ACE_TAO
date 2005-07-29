@@ -3,11 +3,11 @@
 #ifndef TAO_UNION_TYPECODE_CPP
 #define TAO_UNION_TYPECODE_CPP
 
-#include "Union_TypeCode_T.h"
+#include "Union_TypeCode.h"
 #include "TypeCode_Case_Base_T.h"
 
 #ifndef __ACE_INLINE__
-# include "Union_TypeCode_T.inl"
+# include "Union_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/SystemException.h"

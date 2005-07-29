@@ -10,23 +10,23 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/SystemException.h"
 
-#include "tao/Alias_TypeCode.h"
-#include "tao/Enum_TypeCode.h"
-#include "tao/Fixed_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
-#include "tao/Union_TypeCode.h"
-#include "tao/Value_TypeCode.h"
+#include "tao/AnyTypeCode/Alias_TypeCode.h"
+#include "tao/AnyTypeCode/Enum_TypeCode.h"
+#include "tao/AnyTypeCode/Fixed_TypeCode.h"
+#include "tao/AnyTypeCode/Objref_TypeCode.h"
+#include "tao/AnyTypeCode/Sequence_TypeCode.h"
+#include "tao/AnyTypeCode/String_TypeCode.h"
+#include "tao/AnyTypeCode/Struct_TypeCode.h"
+#include "tao/AnyTypeCode/Union_TypeCode.h"
+#include "tao/AnyTypeCode/Value_TypeCode.h"
 
 #include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 
-#include "tao/TypeCode_Case_T.h"
+#include "tao/AnyTypeCode/TypeCode_Case_T.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 
-#include "tao/True_RefCount_Policy.h"
+#include "tao/AnyTypeCode/True_RefCount_Policy.h"
 
 
 #include "ace/SString.h"

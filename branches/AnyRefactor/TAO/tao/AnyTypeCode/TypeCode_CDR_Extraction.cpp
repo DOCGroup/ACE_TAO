@@ -14,7 +14,7 @@
 #include "Sequence_TypeCode.h"
 #include "String_TypeCode.h"
 #include "Struct_TypeCode.h"
-#include "Union_TypeCode_T.h"
+#include "Union_TypeCode.h"
 #include "Value_TypeCode.h"
 
 #include "Recursive_Type_TypeCode.h"

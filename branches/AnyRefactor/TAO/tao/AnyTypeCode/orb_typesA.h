@@ -40,14 +40,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
+#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "tao/orb_typesC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -65,31 +64,24 @@ namespace CORBA
 {
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:413
+  // be\be_visitor_typecode/typecode_decl.cpp:44
 
-  typedef char * ORBid;
-  typedef CORBA::String_var ORBid_var;
-  typedef CORBA::String_out ORBid_out;
+  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ORBid;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:379
+  // be\be_visitor_typecode/typecode_decl.cpp:44
 
-  typedef CORBA::ULong Flags;
-  typedef CORBA::ULong_out Flags_out;
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:413
-
-  typedef char * Identifier;
-  typedef CORBA::String_var Identifier_var;
-  typedef CORBA::String_out Identifier_out;
+  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Flags;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:413
+  // be\be_visitor_typecode/typecode_decl.cpp:44
 
-  typedef char * RepositoryId;
-  typedef CORBA::String_var RepositoryId_var;
-  typedef CORBA::String_out RepositoryId_out;
+  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Identifier;
+
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+
+  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_RepositoryId;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66

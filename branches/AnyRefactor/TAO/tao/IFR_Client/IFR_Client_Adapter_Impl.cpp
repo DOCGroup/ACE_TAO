@@ -7,7 +7,7 @@
 #include "tao/ORB.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (IFR_Client,

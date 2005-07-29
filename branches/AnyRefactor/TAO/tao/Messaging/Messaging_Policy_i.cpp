@@ -3,6 +3,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Messaging_Policy_i.i"

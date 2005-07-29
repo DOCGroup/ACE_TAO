@@ -35,11 +35,12 @@
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
-#include "tao/String_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Value_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 #include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

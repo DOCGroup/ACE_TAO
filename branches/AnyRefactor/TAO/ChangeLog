@@ -1,3 +1,62 @@
+Fri Jul 29 18:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny.mpc
+        * tao/IFR_Client.mpc
+        * tao/IORManipulation.mpc
+        * tao/Strategies.mpc
+        * tao/Valuetype.mpc
+        * tao/Var_Size_Argument_T.cpp
+        * tao/corba.h
+        * tao/AnyTypeCode/DynamicA.cpp
+        * tao/AnyTypeCode/DynamicA.h
+        * tao/AnyTypeCode/DynamicC.cpp
+        * tao/AnyTypeCode/DynamicC.h
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp
+        * tao/AnyTypeCode/orb_typesA.h
+        * tao/DynamicInterface/DII_Arguments.cpp
+        * tao/DynamicInterface/Request.cpp
+        * tao/DynamicInterface/Request.h
+        * tao/DynamicInterface/Server_Request.cpp
+        * tao/IFR_Client/IFR_BaseA.cpp
+        * tao/IFR_Client/IFR_BaseC.cpp
+        * tao/IFR_Client/IFR_BasicA.cpp
+        * tao/IFR_Client/IFR_BasicC.cpp
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp
+        * tao/IFR_Client/IFR_ComponentsA.cpp
+        * tao/IFR_Client/IFR_ExtendedA.cpp
+        * tao/IORManipulation/IORA.cpp
+        * tao/ImR_Client/ImplRepoA.cpp
+        * tao/Messaging/Messaging_PolicyFactory.cpp
+        * tao/Messaging/Messaging_Policy_i.cpp
+        * tao/Messaging/Messaging_RT_PolicyA.cpp
+        * tao/ObjRefTemplate/Default_ORTA.cpp
+        * tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp
+        * tao/PI/ClientRequestInfoA.cpp
+        * tao/PI/ClientRequestInterceptorA.cpp
+        * tao/PI/InterceptorA.cpp
+        * tao/PI/ORBInitInfoA.cpp
+        * tao/PI/RequestInfo.pidl
+        * tao/PI/RequestInfoA.cpp
+        * tao/PI_Server/ServerRequestInfoA.cpp
+        * tao/PI_Server/ServerRequestInterceptorA.cpp
+        * tao/PortableServer/Var_Size_SArgument_T.cpp
+        * tao/RTCORBA/RTCORBAA.cpp
+        * tao/RTCORBA/RT_Policy_i.cpp
+        * tao/RTPortableServer/RTPortableServerA.cpp
+        * tao/RTScheduling/RTSchedulerA.cpp
+        * tao/Strategies/sciop_endpointsC.cpp
+        * tao/Strategies/uiop_endpointsC.cpp
+        * tao/TypeCodeFactory/Recursive_TypeCode.h
+        * tao/TypeCodeFactory/TypeCodeFactoryA.cpp
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp
+        * tao/Valuetype/StringValueC.cpp
+        * tao/Valuetype/ValueBase.cpp
+          All kinds of changes to get things compiling again
+
+        * AnyTypeCode/Union_TypeCode.{h,cpp,inl}:
+        * AnyTypeCode/Union_TypeCode_T.{h,cpp,inl}:
+          Renamed _T back to normal file
+
 Fri Jul 29 15:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DynamicParameter*.{h,cpp}:

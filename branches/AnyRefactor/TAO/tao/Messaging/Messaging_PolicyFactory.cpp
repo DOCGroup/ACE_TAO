@@ -9,6 +9,7 @@ ACE_RCSID (Messaging,
 
 #include "tao/PolicyC.h"
 #include "tao/Buffering_Constraint_Policy.h"
+#include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
 
 CORBA::Policy_ptr
