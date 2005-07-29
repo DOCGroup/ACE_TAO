@@ -1,3 +1,10 @@
+Fri Jul 29 14:15:11 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_1020_Basic_Regression/Server_Task.cpp:
+
+          Added ACE_NOTREACHED to unreachable code to fix warning on
+          HP non stop build.
+
 Thu Jul 28 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
