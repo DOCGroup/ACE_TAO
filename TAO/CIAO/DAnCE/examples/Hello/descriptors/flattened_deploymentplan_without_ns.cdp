@@ -1,8 +1,3 @@
-<!-- This flattened deployment plan allows component instance to 
-     register to naming service, if you don't want to use naming
-     service at all, you can use the flattened_deployment_without_ns.cdp
-     as your deployment descriptor. -->
-
 <Deployment:deploymentPlan
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -68,20 +63,6 @@
           <string>Sender.ior</string>
         </value>
       </value>
-    </configProperty>
-
-    <!-- Add this property if you want to register with naming service -->
-    <!-- The string is the naming context to bind to naming service -->
-    <configProperty>
-      <name>RegisterNaming</name>
-      <value>
-        <type>
-         <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Sender_001</string>
-        </value>
-      </value> 
     </configProperty>
 
     <!-- Add this property if you want to initialize component attribute -->
