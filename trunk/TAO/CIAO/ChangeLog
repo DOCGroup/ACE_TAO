@@ -1,3 +1,15 @@
+Fri Jul 29 15:02:43 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
+        * DAnCE/examples/Hello/descriptors/run_test_without_ns.pl
+
+	  Added a flattened deployment plan and test script which
+	  doesn't use naming service.
+
+        * DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
+
+	  Documented the above another available test in the file.
+
 Fri Jul 29 09:30:43 2005  Nishanth Shanakran  <nshankar@dre.vanderbilt.edu>
 
         * NEWS:
