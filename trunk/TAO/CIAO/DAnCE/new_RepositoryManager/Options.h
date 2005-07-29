@@ -34,14 +34,14 @@ public:
   void parse_args (int argc, ACE_TCHAR *argv[]);
   // parses commandline arguments
 
-  ACE_CString package_;
+  ACE_CString name_;
   // Name of package
 
-  ACE_CString local_path_;
-  // specifies the local path for install
+  ACE_CString uuid_;
+  // Name of package
 
-  ACE_CString artifact_;
-  // Implementation Artifact requested
+  ACE_CString path_;
+  // specifies the local path for install
 
   bool delete_;
   // delete the package_ name
@@ -49,8 +49,8 @@ public:
   bool install_;
   // installs the package_ name
 
-  bool plan_;
-  // retrieves the DeploymentPlan specified in the package_ name
+  bool find_;
+  // installs the package_ name
 
   bool shutdown_;
   //shutdown the RepositoryManagerDemon

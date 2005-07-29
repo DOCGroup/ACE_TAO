@@ -1,9 +1,25 @@
+Thu Jul 28 23:00:11 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * DAnCE/new_RepositoryManager/Options.cpp
+        * DAnCE/new_RepositoryManager/Options.h
+        * DAnCE/new_RepositoryManager/README.txt
+        * DAnCE/new_RepositoryManager/RepositoryManager.cpp
+        * DAnCE/new_RepositoryManager/RepositoryManager.idl
+        * DAnCE/new_RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/new_RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/new_RepositoryManager/ZIP_Wrapper.h
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+
+        Checked in the changes to new_RepositoryManager
+
+
 Fri Jul 29 03:52:11 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
 
-	Made is such that Plan_Launcher_Impl library gets generated
-	and installed.
+        Made is such that Plan_Launcher_Impl library gets generated
+        and installed.
 
 Wed Jul 28 15:18:14 2005 Ming Xiong <mxiong@dre.vanderbilt.edu>
 

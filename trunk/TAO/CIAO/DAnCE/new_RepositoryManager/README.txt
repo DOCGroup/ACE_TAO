@@ -28,5 +28,3 @@ to compile the idl with the tao_idl compiler:
 
 tao_idl -GI new_RepositoryManager.idl -I%TAO_ROOT% -I%TAO_ROOT%\tao -I%TAO_ROOT%\orbsvcs -I%CIAO_ROOT%\DAnCE\ciao
 
-
-
