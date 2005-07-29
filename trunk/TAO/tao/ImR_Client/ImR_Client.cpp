@@ -35,7 +35,7 @@ namespace TAO
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ERROR: No usable IMR initial reference ")
                       ACE_TEXT ("available but use IMR has been specified.\n")));
-          ACE_THROW ((CORBA::TRANSIENT (
+          ACE_THROW (CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
               CORBA::COMPLETED_NO));
         }
@@ -61,7 +61,7 @@ namespace TAO
                       ACE_TEXT ("(%P|%t) ERROR: Narrowed IMR initial reference ")
                       ACE_TEXT ("is nil but use IMR has been specified.\n")));
 
-          ACE_THROW ((CORBA::TRANSIENT (
+          ACE_THROW (CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
               CORBA::COMPLETED_NO));
         }
