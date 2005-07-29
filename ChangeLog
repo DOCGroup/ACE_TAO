@@ -1,3 +1,19 @@
+Fri Jul 29 09:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/Filecache.cpp:
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS2/JAWS/IO_Handler.cpp:
+          Fixed compile errors when building with Borland C++. I have created
+          an MPC file but find it too risky to add that just before the
+          release, will do that when the release is out.
+
+        * ace/Global_Macros.h:
+          When ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS is defined, define
+          a special version of ACE_DES_FREE_TEMPLATE3 and ACE_DES_FREE_TEMPLATE4
+          just as we do for ACE_DES_FREE_TEMPLATE and ACE_DES_FREE_TEMPLATE2.
+
+          Thanks to <guerin35at hotmail dot com> for reporting this.
+
 Fri Jul 29 07:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cray.GNU:
