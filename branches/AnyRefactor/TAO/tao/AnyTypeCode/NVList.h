@@ -26,9 +26,9 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"
 
-#include "tao/CORBA_methods.h"
-#include "tao/AnyTypeCode/Any.h"
 #include "tao/Environment.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/AnyTypeCode/Any.h"
 
 class TAO_ORB_Core;
 class TAO_InputCDR;
@@ -55,8 +55,6 @@ namespace CORBA
     RESP_NO_WAIT            = 0x400
   };
 
-  class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
   typedef TAO_Pseudo_Var_T<NamedValue> NamedValue_var;
   typedef TAO_Pseudo_Out_T<NamedValue, NamedValue_var> NamedValue_out;
 
@@ -135,8 +133,6 @@ namespace CORBA
 
   // ****************************************************************
 
-  class NVList;
-  typedef NVList *NVList_ptr;
   typedef TAO_Pseudo_Var_T<NVList> NVList_var;
   typedef TAO_Pseudo_Out_T<NVList, NVList_var> NVList_out;
 
