@@ -1,3 +1,8 @@
+Sat Jul 30 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added missing semi colon for CosEvent basic test
+
 Fri Jul 29 14:25:12 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-aix-5.x.h: Disable ACE_HAS_POSIX_SEM if the Posix
