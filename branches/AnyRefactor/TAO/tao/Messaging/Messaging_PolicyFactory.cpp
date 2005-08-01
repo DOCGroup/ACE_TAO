@@ -15,7 +15,7 @@ ACE_RCSID (Messaging,
 CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
     const CORBA::Any& val
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL)
 {
   TAO::BufferingConstraint *buffering_constraint = 0;
   if ((val >>= buffering_constraint) == 0)
